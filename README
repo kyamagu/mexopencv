@@ -1,0 +1,35 @@
+mexopencv
+=========
+
+Collection of mex functions for OpenCV library
+
+Kota Yamaguchi 2011
+
+
+Compile
+=======
+
+Prerequisite: matlab, opencv, pkg-config
+
+  $ make
+
+Specify you matlab directory if you install matlab other than /usr/local/matlab
+
+  $ make MATLABDIR=/path/to/matlab
+
+Check Makefile for details
+
+
+Usage
+=====
+
+Once mex functions are compiled, you can add path to this directory and call
+mex functions from matlab with package name 'opencv'
+
+  addpath('/path/to/mexopencv');
+  result = opencv.filter2d(img, kern);    % with package name opencv
+
+Or, you can add path to matlab/ directory
+ 
+  addpath('/path/to/mexopencv/matlab');
+  result = filter2d(img, kern);           % no need to specify opencv
