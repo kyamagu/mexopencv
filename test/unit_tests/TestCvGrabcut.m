@@ -1,24 +1,24 @@
 classdef TestCvGrabcut
     % Functional Tests for grabcut
+    properties (Constant)
+        img = imread('img001.jpg')
+    end
+    
     methods (Static)
         function test_1
             % TEST 1: initialization with bbox must succeed
-            img = imread('img001.jpg');
-            bbox = [158 22 210 560]; % [y x w h]
-            res = grabcut(img,bbox,'Init','Rect');
+            bbox = [100,100,280,320]; % [x y w h]
+            res = grabcut(TestCvGrabcut.img,bbox,'Init','Rect');
             % grabcut has random components... it's hard to verify
-            % correctness
         end
 
         function test_2
             % TEST 2: initialization with mask must succeed
-            img = imread('img001.jpg');
-            bbox = [158 22 210 560]; % [y x w h]
-            mask = zeros(size(img,1),size(img,2),'uint8');
+            bbox = [100,100,200,320]; % [y x w h]
+            mask = zeros(size(TestCvGrabcut.img,1),size(TestCvGrabcut.img,2),'uint8');
             mask(bbox(2):(bbox(2)+bbox(4)-1),bbox(1):(bbox(1)+bbox(3)-1)) = 3; % Set trimap
-            res = grabcut(img,mask,'Init','Mask');
+            res = grabcut(TestCvGrabcut.img,mask,'Init','Mask');
             % grabcut has random components... it's hard to verify
-            % correctness
         end
         
         % add more sucess cases
@@ -35,9 +35,8 @@ classdef TestCvGrabcut
         function test_error_2
             % ERROR TEST 2
             try
-                img = imread('img001.jpg');
-                mask = zeros(size(img,1),size(img,2),'uint8');
-                grabcut(img,mask,'foo');
+                mask = zeros(size(TestCvGrabcut.img,1),size(TestCvGrabcut.img,2),'uint8');
+                grabcut(TestCvGrabcut.img,mask,'foo');
             catch e
                 assert(strcmp(e.identifier,'CvGrabcut:invalidArgs'));
             end
@@ -46,9 +45,8 @@ classdef TestCvGrabcut
         function test_error_3
             % ERROR TEST 3
             try
-                img = imread('img001.jpg');
-                mask = zeros(size(img,1),size(img,2),'uint8');
-                grabcut(img,mask,'foo','bar');
+                mask = zeros(size(TestCvGrabcut.img,1),size(TestCvGrabcut.img,2),'uint8');
+                grabcut(TestCvGrabcut.img,mask,'foo','bar');
             catch e
                 assert(strcmp(e.identifier,'CvGrabcut:invalidOption'));
             end
@@ -57,9 +55,8 @@ classdef TestCvGrabcut
         function test_error_4
             % ERROR TEST 4
             try
-                img = imread('img001.jpg');
-                mask = zeros(size(img,1),size(img,2),'uint8');
-                grabcut(img,mask,'Init','foo');
+                mask = zeros(size(TestCvGrabcut.img,1),size(TestCvGrabcut.img,2),'uint8');
+                grabcut(TestCvGrabcut.img,mask,'Init','foo');
             catch e
                 assert(strcmp(e.identifier,'CvGrabcut:invalidOption'));
             end
@@ -68,9 +65,8 @@ classdef TestCvGrabcut
         function test_error_5
             % ERROR TEST 5
             try
-                img = imread('img001.jpg');
-                mask = zeros(size(img,1),size(img,2),'uint8');
-                grabcut(img,mask,'MaxIter','foo');
+                mask = zeros(size(TestCvGrabcut.img,1),size(TestCvGrabcut.img,2),'uint8');
+                grabcut(TestCvGrabcut.img,mask,'MaxIter','foo');
             catch e
                 assert(strcmp(e.identifier,'CvGrabcut:invalidOption'));
             end

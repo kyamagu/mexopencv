@@ -1,9 +1,7 @@
 mexopencv
 =========
 
-Collection of mex functions for OpenCV library
-
-Kota Yamaguchi 2011
+Collection of matlab mex functions for OpenCV library
 
 
 Compile
@@ -33,3 +31,21 @@ Or, you can add path to matlab/ directory
  
   addpath('/path/to/mexopencv/matlab');
   result = filter2d(img, kern);           % no need to specify opencv
+
+
+Developing a new mex function
+=============================
+
+The project tree is organized as follows.
+
+  +opencv/       directory to put compiled mex files
+  Doxyfile       config file for doxygen
+  Makefile       make script
+  README         this file
+  doc/           directory for documentation
+  include/       header files
+  matlab/        simlink to +opencv
+  src/           directory for c++ source files
+  src/matlab/    directory for mexfunction source files
+  test/          directory for test scripts and resources
+
