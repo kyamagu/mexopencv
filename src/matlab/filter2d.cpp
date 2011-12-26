@@ -35,7 +35,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	
 	// Option processing
 	if (nrhs>2 && mxGetClassID(prhs[2])==mxCHAR_CLASS) {
-	    std::string str(mxArrayToString(prhs[2]));
+	    std::string str(cvmxArrayToString(prhs[2]));
 	    if (str=="conv2")   // Convolution
 	        flip(kernel,kernel,-1);
 	    else

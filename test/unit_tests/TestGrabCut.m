@@ -28,6 +28,7 @@ classdef TestGrabCut
             % ERROR TEST 1
             try
                 grabCut();
+                throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'grabCut:invalidArgs'));
             end
@@ -38,6 +39,7 @@ classdef TestGrabCut
             try
                 mask = zeros(size(TestGrabCut.img,1),size(TestGrabCut.img,2),'uint8');
                 grabCut(TestGrabCut.img,mask,'foo');
+                throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'grabCut:invalidArgs'));
             end
@@ -48,6 +50,7 @@ classdef TestGrabCut
             try
                 mask = zeros(size(TestGrabCut.img,1),size(TestGrabCut.img,2),'uint8');
                 grabCut(TestGrabCut.img,mask,'foo','bar');
+                throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'grabCut:invalidOption'));
             end
@@ -58,6 +61,7 @@ classdef TestGrabCut
             try
                 mask = zeros(size(TestGrabCut.img,1),size(TestGrabCut.img,2),'uint8');
                 grabCut(TestGrabCut.img,mask,'Init','foo');
+                throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'grabCut:invalidOption'));
             end
@@ -68,6 +72,7 @@ classdef TestGrabCut
             try
                 mask = zeros(size(TestGrabCut.img,1),size(TestGrabCut.img,2),'uint8');
                 grabCut(TestGrabCut.img,mask,'MaxIter','foo');
+                throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'grabCut:invalidOption'));
             end

@@ -1,6 +1,6 @@
 /**
  * @file cvmx.hpp
- * @brief data converter for mxArray and cv::Mat
+ * @brief data converter and utilities for mxArray and cv::Mat
  * @author Kota Yamaguchi
  * @date 2011
  * @details

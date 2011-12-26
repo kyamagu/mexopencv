@@ -20,9 +20,6 @@ The project tree is organized as follows.
     src/matlab/    directory for mex source files
     test/          directory for test scripts and resources
 
-As a sample implementation, two mex functions: filter2d.cpp and grabcut.cpp
-are attached to mexopencv.
-
 
 Compile
 =======

@@ -45,10 +45,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
 				sigmaSpace = mxGetScalar(prhs[i+1]);
 			else if (key=="BorderType" && classid==mxCHAR_CLASS) {
 				std::map<std::string,int>::const_iterator mi =
-				BorderType::m.find(cvmxArrayToString(prhs[i+1]));
+					BorderType::m.find(cvmxArrayToString(prhs[i+1]));
 				if (mi == BorderType::m.end())
 					mexErrMsgIdAndTxt("bilateralFilter:invalidOption","Unrecognized option");
-				borderType = mi->second;
+				borderType = (*mi).second;
 			}
 			else
 				mexErrMsgIdAndTxt("bilateralFilter:invalidOption","Unrecognized option");

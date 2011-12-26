@@ -1,6 +1,6 @@
 /**
  * @file cvmx.cpp
- * @brief Implemenation of data converters
+ * @brief Implemenation of data converters and utilities
  * @author Kota Yamaguchi
  * @date 2011
  */

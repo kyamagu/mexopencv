@@ -62,6 +62,7 @@ classdef TestFilter2D
         function test_error_1
             try
                 filter2D();
+                throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'filter2D:invalidArgs'));
             end
