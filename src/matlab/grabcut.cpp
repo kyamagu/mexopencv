@@ -1,15 +1,15 @@
 /**
- * @file grabcut.cpp
- * @brief mex interface for OpenCV's grabcut
+ * @file grabCut.cpp
+ * @brief mex interface for OpenCV's grabCut
  * @author Kota Yamaguchi
  * @date 2011
  * @details
  * <pre>
  * Usage:
- *   [ trimap ] = grabcut(img, bbox);
- *   [ trimap ] = grabcut(img, trimap);
- *   [ trimap ] = grabcut(img, trimap, 'Init', initMethod, ...);
- *   [ trimap ] = grabcut(img, trimap, 'MaxIter', maxIter, ...);
+ *   [ trimap ] = grabCut(img, bbox);
+ *   [ trimap ] = grabCut(img, trimap);
+ *   [ trimap ] = grabCut(img, trimap, 'Init', initMethod, ...);
+ *   [ trimap ] = grabCut(img, trimap, 'MaxIter', maxIter, ...);
  * Input:
  *   img: uint8 type H-by-W-by-3 RGB array
  *   bbox: 1-by-4 double array [x y w h]
@@ -25,11 +25,6 @@
 #include "cvmx.hpp"
 #include <string.h>
 using namespace cv;
-
-// Specialized template of the smart pointer for char array generated from mxArray
-namespace cv {
-	template<> inline void Ptr<char>::delete_obj() { mxFree(obj); }
-}
 
 // Local functions
 namespace {
@@ -51,11 +46,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
 {
 	// Check the input format
 	if (nrhs<2 || (nrhs%2)!=0 || nlhs>1)
-        mexErrMsgIdAndTxt("CvGrabcut:invalidArgs","Wrong number of arguments");
+        mexErrMsgIdAndTxt("grabCut:invalidArgs","Wrong number of arguments");
 	if (mxGetClassID(prhs[0])!=mxUINT8_CLASS)
-        mexErrMsgIdAndTxt("CvGrabcut:invalidArgs","Only UINT8 type is supported");
+        mexErrMsgIdAndTxt("grabCut:invalidArgs","Only UINT8 type is supported");
     if (mxGetNumberOfDimensions(prhs[0])!=3)
-        mexErrMsgIdAndTxt("CvGrabcut:invalidArgs","Only RGB format is supported");
+        mexErrMsgIdAndTxt("grabCut:invalidArgs","Only RGB format is supported");
 	
 	// Convert mxArray to cv::Mat
 	Mat img(cvmxArrayToMat(prhs[0],CV_8U));
@@ -67,23 +62,23 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	if (nrhs>2) {
 	    for (int i=2; i<nrhs; i+=2) {
             if (mxGetClassID(prhs[i])==mxCHAR_CLASS) {
-                Ptr<char> key(mxArrayToString(prhs[i]));
-                if (strcmp("Init",key)==0 && mxGetClassID(prhs[i+1])==mxCHAR_CLASS) {
-                    Ptr<char> val(mxArrayToString(prhs[i+1]));
-                    if (strcmp("Rect",val)==0)
+                std::string key(cvmxArrayToString(prhs[i]));
+                if (key=="Init" && mxGetClassID(prhs[i+1])==mxCHAR_CLASS) {
+                    std::string val(cvmxArrayToString(prhs[i+1]));
+                    if (val=="Rect")
                         mode = GC_INIT_WITH_RECT;
-                    else if (strcmp("Mask",val)==0)
+                    else if (val=="Mask")
                         mode = GC_INIT_WITH_MASK;
                     else
-                        mexErrMsgIdAndTxt("CvGrabcut:invalidOption","Unrecognized option");
+                        mexErrMsgIdAndTxt("grabCut:invalidOption","Unrecognized option");
                 }
-                else if (strcmp("MaxIter",key)==0 && mxGetClassID(prhs[i+1])==mxDOUBLE_CLASS)
+                else if (key=="MaxIter" && mxGetClassID(prhs[i+1])==mxDOUBLE_CLASS)
                     iterCount = static_cast<int>(mxGetScalar(prhs[i+1]));
                 else
-                    mexErrMsgIdAndTxt("CvGrabcut:invalidOption","Unrecognized option");
+                    mexErrMsgIdAndTxt("grabCut:invalidOption","Unrecognized option");
             }
             else
-                mexErrMsgIdAndTxt("CvGrabcut:invalidOption","Unrecognized option");
+                mexErrMsgIdAndTxt("grabCut:invalidOption","Unrecognized option");
         }
 	}
 	
@@ -94,17 +89,17 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		if (mxGetM(prhs[0])==mxGetM(prhs[1]) && mxGetNumberOfDimensions(prhs[1])==2)
 			mask = cvmxArrayToMat(prhs[1],CV_8U);
 		else
-	        mexErrMsgIdAndTxt("CvGrabcut:invalidArgs","Mask size incomatible to the image");
+	        mexErrMsgIdAndTxt("grabCut:invalidArgs","Mask size incomatible to the image");
 	else {
 	    if (mxIsDouble(prhs[1]) && numel(prhs[1])==4) {
     	    double *ptr = mxGetPr(prhs[1]);
 	        rect = Rect(ptr[1],ptr[0],ptr[3],ptr[2]); // Be careful that image is transposed
 	    }
 	    else
-	        mexErrMsgIdAndTxt("CvGrabcut:invalidArgs","Unsupported type: rect must be 1x4 double");
+	        mexErrMsgIdAndTxt("grabCut:invalidArgs","Unsupported type: rect must be 1x4 double");
 	}
 	
-	// Apply grabcut
+	// Apply grabCut
 	Mat bgdModel, fgdModel;
 	grabCut(img, mask, rect, bgdModel, fgdModel, iterCount, mode);
 	

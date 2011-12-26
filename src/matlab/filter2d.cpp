@@ -1,5 +1,5 @@
 /**
- * @file filter2d.cpp
+ * @file filter2D.cpp
  * @brief mex interface for filter2D
  * @author Kota Yamaguchi
  * @date 2011
@@ -12,12 +12,6 @@
 #include "cvmx.hpp"
 #include <string.h>
 using namespace cv;
-
-// Specialized template of the smart pointer for char array generated from mxArray
-namespace cv {
-	template<> inline void Ptr<char>::delete_obj() { mxFree(obj); }
-}
-
 
 /**
  * Main entry called from Matlab
@@ -33,7 +27,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 {
 	// Check the number of arguments
 	if(nrhs<2 || nrhs>3 || nlhs>1)
-        mexErrMsgIdAndTxt("filter2d:invalidArgs","Wrong number of arguments");
+        mexErrMsgIdAndTxt("filter2D:invalidArgs","Wrong number of arguments");
 	
 	// Convert mxArray to cv::Mat
 	Mat img = cvmxArrayToMat(prhs[0],CV_32F);
@@ -41,11 +35,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	
 	// Option processing
 	if (nrhs>2 && mxGetClassID(prhs[2])==mxCHAR_CLASS) {
-	    Ptr<char> str(mxArrayToString(prhs[2]));
-	    if (strcmp("conv2",str)==0)   // Convolution
+	    std::string str(mxArrayToString(prhs[2]));
+	    if (str=="conv2")   // Convolution
 	        flip(kernel,kernel,-1);
 	    else
-	        mexErrMsgIdAndTxt("filter2d:invalidOption","Unrecognized option");
+	        mexErrMsgIdAndTxt("filter2D:invalidOption","Unrecognized option");
 	}
 	
 	// Apply filter 2D

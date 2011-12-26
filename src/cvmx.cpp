@@ -5,44 +5,46 @@
  * @date 2011
  */
 #include "cvmx.hpp"
+using namespace cv;
+using namespace std;
 
 // Local namescope
 namespace {
-	/**
-	 * Translates data type definition used in OpenCV to that of Matlab
-	 * @param classid data type of matlab's mxArray. e.g., mxDOUBLE_CLASS
-	 * @return opencv's data type. e.g., CV_8U
-	 */
-	int cvmxClassIdToMatDepth(mxClassID classid) {
-		switch(classid) {
-		case mxDOUBLE_CLASS:	return CV_64F;
-		case mxSINGLE_CLASS:	return CV_32F;
-		case mxINT8_CLASS:		return CV_8S;
-		case mxUINT8_CLASS:		return CV_8U;
-		case mxINT16_CLASS:		return CV_16S;
-		case mxUINT16_CLASS:	return CV_16U;
-		case mxINT32_CLASS:		return CV_32S;
-		default: 				return CV_USRTYPE1;
-		}
+/**
+ * Translates data type definition used in OpenCV to that of Matlab
+ * @param classid data type of matlab's mxArray. e.g., mxDOUBLE_CLASS
+ * @return opencv's data type. e.g., CV_8U
+ */
+int cvmxClassIdToMatDepth(mxClassID classid) {
+	switch(classid) {
+	case mxDOUBLE_CLASS:	return CV_64F;
+	case mxSINGLE_CLASS:	return CV_32F;
+	case mxINT8_CLASS:		return CV_8S;
+	case mxUINT8_CLASS:		return CV_8U;
+	case mxINT16_CLASS:		return CV_16S;
+	case mxUINT16_CLASS:	return CV_16U;
+	case mxINT32_CLASS:		return CV_32S;
+	default: 				return CV_USRTYPE1;
 	}
-	
-	/**
-	 * Translates data type definition used in Matlab to that of OpenCV
-	 * @param depth data depth of opencv's Mat class. e.g., CV_32F
-	 * @return data type of matlab's mxArray. e.g., mxDOUBLE_CLASS
-	 */
-	mxClassID cvmxClassIdFromMatDepth(int depth) {
-		switch(depth) {
-		case CV_64F:	return mxDOUBLE_CLASS;
-		case CV_32F:	return mxSINGLE_CLASS;
-		case CV_8S:		return mxINT8_CLASS;
-		case CV_8U:		return mxUINT8_CLASS;
-		case CV_16S:	return mxINT16_CLASS;
-		case CV_16U:	return mxUINT16_CLASS;
-		case CV_32S:	return mxINT32_CLASS;
-		default: 		return mxUNKNOWN_CLASS;
-		}
+}
+
+/**
+ * Translates data type definition used in Matlab to that of OpenCV
+ * @param depth data depth of opencv's Mat class. e.g., CV_32F
+ * @return data type of matlab's mxArray. e.g., mxDOUBLE_CLASS
+ */
+mxClassID cvmxClassIdFromMatDepth(int depth) {
+	switch(depth) {
+	case CV_64F:	return mxDOUBLE_CLASS;
+	case CV_32F:	return mxSINGLE_CLASS;
+	case CV_8S:		return mxINT8_CLASS;
+	case CV_8U:		return mxUINT8_CLASS;
+	case CV_16S:	return mxINT16_CLASS;
+	case CV_16U:	return mxUINT16_CLASS;
+	case CV_32S:	return mxINT32_CLASS;
+	default: 		return mxUNKNOWN_CLASS;
 	}
+}
 }
 
 /**
@@ -115,3 +117,21 @@ mxArray* cvmxArrayFromMat(const cv::Mat& mat, mxClassID classid) {
 	
 	return arr;
 }
+
+
+// Initialize border type
+namespace {
+std::map<std::string, int> create_border_type() {
+	std::map<std::string, int> m;
+	m["Replicate"]		= BORDER_REPLICATE;
+	m["Constant"]   	= BORDER_CONSTANT;
+	m["Reflect"] 		= BORDER_REFLECT;
+	m["Wrap"]			= BORDER_WRAP;
+	m["Reflect101"] 	= BORDER_REFLECT_101;
+	m["Transparent"]	= BORDER_TRANSPARENT;
+	m["Default"] 		= BORDER_DEFAULT;
+	m["Isolated"]		= BORDER_ISOLATED;
+	return m;
+}
+}
+std::map<std::string, int> const BorderType::m = create_border_type();
