@@ -26,45 +26,51 @@ void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
 	// Check the number of arguments
-	if(nrhs<2 || nrhs>3 || nlhs>1)
+	if(nrhs<2 || (nrhs%2)==1 || nlhs>1)
         mexErrMsgIdAndTxt("filter2D:invalidArgs","Wrong number of arguments");
+	
+	// Option processing
+	Point anchor(-1,-1);
+	int borderType = BORDER_DEFAULT;
+	for (int i=2; i<nrhs; i+=2) {
+		if (mxGetClassID(prhs[i])==mxCHAR_CLASS) {
+			std::string key(cvmxArrayToString(prhs[i]));
+			mxClassID classid = mxGetClassID(prhs[i+1]);
+			if (key=="Anchor" && classid==mxDOUBLE_CLASS) {
+				Mat m(cvmxArrayToMat(prhs[i+1],CV_32S));
+				if ((m.cols*m.rows)!=2)
+					mexErrMsgIdAndTxt("filter2D:invalidOption","Invalid anchor");
+				anchor = Point(m.at<int>(0),m.at<int>(1));
+			}
+			else if (key=="BorderType" && classid==mxCHAR_CLASS) {
+				std::map<std::string,int>::const_iterator mi =
+					BorderType::m.find(cvmxArrayToString(prhs[i+1]));
+				if (mi == BorderType::m.end())
+					mexErrMsgIdAndTxt("filter2D:invalidOption","Unrecognized option");
+				borderType = (*mi).second;
+			}
+			else
+				mexErrMsgIdAndTxt("filter2D:invalidOption","Unrecognized option");
+		}
+		else
+			mexErrMsgIdAndTxt("filter2D:invalidOption","Unrecognized option");
+	}
 	
 	// Convert mxArray to cv::Mat
 	Mat img = cvmxArrayToMat(prhs[0],CV_32F);
 	Mat kernel = cvmxArrayToMat(prhs[1],CV_32F);
 	
-	// Option processing
-	if (nrhs>2 && mxGetClassID(prhs[2])==mxCHAR_CLASS) {
-	    std::string str(cvmxArrayToString(prhs[2]));
-	    if (str=="conv2")   // Convolution
-	        flip(kernel,kernel,-1);
-	    else
-	        mexErrMsgIdAndTxt("filter2D:invalidOption","Unrecognized option");
-	}
-	
 	// Apply filter 2D
 	// There seems to be a bug in filter when BORDER_CONSTANT is used
-	Point anchor((kernel.cols-1)/2,(kernel.rows-1)/2);
-	if (kernel.cols == 1 || kernel.rows == 1)
-	    filter2D(
-            img,                    // src type
-            img,                    // dst type
-            -1,                     // dst depth
-            kernel,                 // 2D kernel
-            anchor,                 // anchor point, center if (-1,-1)
-            0,                      // bias added after filtering
-            BORDER_DEFAULT          // border type
-            );
-	else
-	    filter2D(
-            img,                    // src type
-            img,                    // dst type
-            -1,                     // dst depth
-            kernel,                 // 2D kernel
-            anchor,                 // anchor point, center if (-1,-1)
-            0,                      // bias added after filtering
-            BORDER_CONSTANT         // border type
-            );
+	filter2D(
+		img,                    // src type
+		img,                    // dst type
+		-1,                     // dst depth
+		kernel,                 // 2D kernel
+		anchor,                 // anchor point, center if (-1,-1)
+		0,                      // bias added after filtering
+		borderType	            // border type
+		);
 	
 	// Convert cv::Mat to mxArray
 	plhs[0] = cvmxArrayFromMat(img,mxGetClassID(prhs[0]));
