@@ -42,13 +42,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 					mexErrMsgIdAndTxt("filter2D:invalidOption","Invalid anchor");
 				anchor = Point(m.at<int>(0),m.at<int>(1));
 			}
-			else if (key=="BorderType" && classid==mxCHAR_CLASS) {
-				std::map<std::string,int>::const_iterator mi =
-					BorderType::m.find(cvmxArrayToString(prhs[i+1]));
-				if (mi == BorderType::m.end())
-					mexErrMsgIdAndTxt("filter2D:invalidOption","Unrecognized option");
-				borderType = (*mi).second;
-			}
+			else if (key=="BorderType" && classid==mxCHAR_CLASS)
+				borderType = BorderType::get(prhs[i+1]);
 			else
 				mexErrMsgIdAndTxt("filter2D:invalidOption","Unrecognized option");
 		}

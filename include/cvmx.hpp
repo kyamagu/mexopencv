@@ -31,9 +31,24 @@ std::string inline cvmxArrayToString(const mxArray* arr) {
 	return std::string(cv::Ptr<char>(mxArrayToString(arr)));
 };
 
-// String to enum mapper
+/** BorderType helper for option processing
+ *
+ */
 struct BorderType {
+	static int get(const mxArray *arr);
 	static std::map<std::string, int> const m;
+	static std::map<std::string, int> create_border_type() {
+		std::map<std::string, int> m;
+		m["Replicate"]		= cv::BORDER_REPLICATE;
+		m["Constant"]   	= cv::BORDER_CONSTANT;
+		m["Reflect"] 		= cv::BORDER_REFLECT;
+		m["Wrap"]			= cv::BORDER_WRAP;
+		m["Reflect101"] 	= cv::BORDER_REFLECT_101;
+		m["Transparent"]	= cv::BORDER_TRANSPARENT;
+		m["Default"] 		= cv::BORDER_DEFAULT;
+		m["Isolated"]		= cv::BORDER_ISOLATED;
+		return m;
+	}
 };
 
 #endif

@@ -120,18 +120,11 @@ mxArray* cvmxArrayFromMat(const cv::Mat& mat, mxClassID classid) {
 
 
 // Initialize border type
-namespace {
-std::map<std::string, int> create_border_type() {
-	std::map<std::string, int> m;
-	m["Replicate"]		= BORDER_REPLICATE;
-	m["Constant"]   	= BORDER_CONSTANT;
-	m["Reflect"] 		= BORDER_REFLECT;
-	m["Wrap"]			= BORDER_WRAP;
-	m["Reflect101"] 	= BORDER_REFLECT_101;
-	m["Transparent"]	= BORDER_TRANSPARENT;
-	m["Default"] 		= BORDER_DEFAULT;
-	m["Isolated"]		= BORDER_ISOLATED;
-	return m;
+std::map<std::string, int> const BorderType::m = BorderType::create_border_type();
+int BorderType::get(const mxArray *arr) {
+	std::map<std::string,int>::const_iterator mi =
+		BorderType::m.find(cvmxArrayToString(arr));
+	if (mi == BorderType::m.end())
+		mexErrMsgIdAndTxt("cvmx:invalidOption","Unrecognized option");
+	return (*mi).second;
 }
-}
-std::map<std::string, int> const BorderType::m = create_border_type();

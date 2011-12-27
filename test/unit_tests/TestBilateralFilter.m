@@ -37,7 +37,7 @@ classdef TestBilateralFilter
                 bilateralFilter(TestBilateralFilter.img,'BorderType','foo');
                 throw('UnitTest:Fail');
             catch e
-                assert(strcmp(e.identifier,'bilateralFilter:invalidOption'));
+                assert(strcmp(e.identifier,'cvmx:invalidOption'));
             end
         end
     end
