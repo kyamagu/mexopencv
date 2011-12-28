@@ -9,7 +9,7 @@ Contents
 
 The project tree is organized as follows.
 
-    +opencv/       directory to put compiled mex files
+    +cv/       directory to put compiled mex files
     Doxyfile       config file for doxygen
     Makefile       make script
     README         this file
@@ -57,12 +57,12 @@ Once mex functions are compiled, you can add path to this directory and call
 mex functions from matlab with package name 'opencv'
 
     addpath('/path/to/mexopencv');
-    result = opencv.filter2d(img, kern);    % with package name opencv
+    result = cv.filter2d(img, kern);    % with package name 'cv'
 
 Or, you can add path to matlab/ directory
  
     addpath('/path/to/mexopencv/matlab');
-    result = filter2d(img, kern);           % no need to specify opencv
+    result = filter2d(img, kern);       % no need to specify 'cv'
 
 
 Developing a new mex function
@@ -72,26 +72,35 @@ All you need to do is to add your mex source file in src/matlab/. Suppose you
 want to add a mex function called myfunc. Then, create src/matlab/myfunc.cpp.
 The minimum contents of myfunc.cpp would look something like this:
 
-    #include "cvmx.hpp"
+    #include "mexopencv.hpp"
     void mexFunction( int nlhs, mxArray *plhs[],
                       int nrhs, const mxArray *prhs[] )
     {
         if (nlhs!=1 || nrhs!=1)
             mexErrMsgIdAndTxt("myfunc:invalidArgs","Wrong number of arguments");
-        cv::Mat m(cvmxArrayToMat(prhs[0]));
-        plhs[0] = cvmxArrayFromMat(m);
+        cv::Mat mat(MxArray(prhs[0]).toMat());
+        plhs[0] = MxArray(mat);
     }
 
 This example simply copies an input to cv::Mat object and then copies again to
 the output. Of course you would want to do something more with the object.
 Once you create a file, type 'make' to build your new function.
 
-Two data conversion functions are defined in cvmx.hpp
+The 'mexopencv' header contains a class `MxArray` to manipulate `mxArray`
+object. Mostly this class is used to convert between opencv data types and
+mxArray.
 
-    mxArray* cvmxArrayFromMat(const cv::Mat& mat, mxClassID classid=mxUNKNOWN_CLASS);
-    cv::Mat cvmxArrayToMat(const mxArray *arr, int depth=CV_USRTYPE1);
+    cv::Mat m = MxArray(prhs[0]).toMat();
+    int i = MxArray(prhs[0]).toInt();
+    double d = MxArray(prhs[0]).toDouble();
+    bool b = MxArray(prhs[0]).toBool();
+    std::string s = MxArray(prhs[0]).toString();
 
-These functions convert data between `mxArray` and `cv::Mat`.
+    mxArray* plhs[0] = MxArray(m);
+    mxArray* plhs[0] = MxArray(i);
+    mxArray* plhs[0] = MxArray(d);
+    mxArray* plhs[0] = MxArray(b);
+    mxArray* plhs[0] = MxArray(s);
 
 
 Testing
@@ -107,3 +116,11 @@ a couple of test cases are written as a static function whose name starts with
 If there is such a class inside `test/unit_tests/`, typing 'make test' would
 invoke all test cases and show your result. Use test/ directory to place any
 resouce file necessary for testing.
+
+Documentation
+-------------
+
+You can create a Matlab help documentation for mex function by having the same
+file with '.m' extension. For example, on linux 64-bit architecture, the help
+file for filter2D.mexa64 would be filter2D.m. Inside the help file should be
+only matlab comments.

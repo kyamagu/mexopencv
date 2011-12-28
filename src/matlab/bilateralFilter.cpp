@@ -10,8 +10,7 @@
  *   result = bilateralFilter(img, 'Diameter', 7, ...)
  * @endcode
  */
-#include "cvmx.hpp"
-#include <string.h>
+#include "mexopencv.hpp"
 using namespace cv;
 
 /**
@@ -26,7 +25,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 {
 	// Check the number of arguments
 	if (nrhs<1 || ((nrhs%2)!=1) || nlhs>1)
-        mexErrMsgIdAndTxt("bilateralFilter:invalidArgs","Wrong number of arguments");
+        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
 	
 	// Option processing
 	int d = 7;
@@ -34,21 +33,21 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	double sigmaSpace = 50.0;
 	int borderType = BORDER_DEFAULT;
 	for (int i=1; i<nrhs; i+=2) {
-		std::string key = MxArray(prhs[i]);
+		std::string key = MxArray(prhs[i]).toString();
 		if (key=="Diameter")
-			d = MxArray(prhs[i+1]);
+			d = MxArray(prhs[i+1]).toInt();
 		else if (key=="SigmaColor")
-			sigmaColor = MxArray(prhs[i+1]);
+			sigmaColor = MxArray(prhs[i+1]).toDouble();
 		else if (key=="SigmaSpace")
-			sigmaSpace = MxArray(prhs[i+1]);
+			sigmaSpace = MxArray(prhs[i+1]).toDouble();
 		else if (key=="BorderType")
 			borderType = BorderType::get(prhs[i+1]);
 		else
-			mexErrMsgIdAndTxt("bilateralFilter:invalidOption","Unrecognized option");
+			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 	}
 	
 	// Process
-	Mat img(MxArray(prhs[0]).convertTo(CV_32F));
+	Mat img(MxArray(prhs[0]).toMat(CV_32F));
 	Mat dst;
 	bilateralFilter(img, dst, d, sigmaColor, sigmaSpace, borderType);
 	plhs[0] = MxArray(dst,mxGetClassID(prhs[0]));

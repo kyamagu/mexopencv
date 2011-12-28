@@ -9,8 +9,7 @@
  *   result = fliter2d(img, kernel)
  * </pre>
  */
-#include "cvmx.hpp"
-#include <string.h>
+#include "mexopencv.hpp"
 using namespace cv;
 
 /**
@@ -27,24 +26,24 @@ void mexFunction( int nlhs, mxArray *plhs[],
 {
 	// Check the number of arguments
 	if(nrhs<2 || (nrhs%2)==1 || nlhs>1)
-        mexErrMsgIdAndTxt("filter2D:invalidArgs","Wrong number of arguments");
+        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
 	
 	// Option processing
 	Point anchor(-1,-1);
 	int borderType = BORDER_DEFAULT;
 	for (int i=2; i<nrhs; i+=2) {
-		std::string key = MxArray(prhs[i]);
+		std::string key = MxArray(prhs[i]).toString();
 		if (key=="Anchor")
-			anchor = MxArray(prhs[i+1]);
+			anchor = MxArray(prhs[i+1]).toPoint<int>();
 		else if (key=="BorderType")
 			borderType = BorderType::get(prhs[i+1]);
 		else
-			mexErrMsgIdAndTxt("filter2D:invalidOption","Unrecognized option");
+			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 	}
 	
 	// Convert mxArray to cv::Mat
-	Mat img(MxArray(prhs[0]).convertTo(CV_32F));
-	Mat kernel(MxArray(prhs[1]).convertTo(CV_32F));
+	Mat img(MxArray(prhs[0]).toMat(CV_32F));
+	Mat kernel(MxArray(prhs[1]).toMat(CV_32F));
 	
 	// Apply filter 2D
 	// There seems to be a bug in filter when BORDER_CONSTANT is used

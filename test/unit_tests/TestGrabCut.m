@@ -30,7 +30,7 @@ classdef TestGrabCut
                 grabCut();
                 throw('UnitTest:Fail');
             catch e
-                assert(strcmp(e.identifier,'grabCut:invalidArgs'));
+                assert(strcmp(e.identifier,'mexopencv:error'));
             end
         end
 
@@ -41,7 +41,7 @@ classdef TestGrabCut
                 grabCut(TestGrabCut.img,mask,'foo');
                 throw('UnitTest:Fail');
             catch e
-                assert(strcmp(e.identifier,'grabCut:invalidArgs'));
+                assert(strcmp(e.identifier,'mexopencv:error'));
             end
         end
 
@@ -52,7 +52,7 @@ classdef TestGrabCut
                 grabCut(TestGrabCut.img,mask,'foo','bar');
                 throw('UnitTest:Fail');
             catch e
-                assert(strcmp(e.identifier,'grabCut:invalidOption'));
+                assert(strcmp(e.identifier,'mexopencv:error'));
             end
         end
 
@@ -63,7 +63,7 @@ classdef TestGrabCut
                 grabCut(TestGrabCut.img,mask,'Init','foo');
                 throw('UnitTest:Fail');
             catch e
-                assert(strcmp(e.identifier,'grabCut:invalidOption'));
+                assert(strcmp(e.identifier,'mexopencv:error'));
             end
         end
 
@@ -74,7 +74,7 @@ classdef TestGrabCut
                 grabCut(TestGrabCut.img,mask,'MaxIter','foo');
                 throw('UnitTest:Fail');
             catch e
-                assert(strcmp(e.identifier,'grabCut:invalidOption'));
+                assert(strcmp(e.identifier,'mexopencv:error'));
             end
         end
         

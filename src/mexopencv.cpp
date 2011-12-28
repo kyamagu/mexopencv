@@ -1,10 +1,10 @@
 /**
- * @file cvmx.cpp
+ * @file mexopencv.cpp
  * @brief Implemenation of data converters and utilities
  * @author Kota Yamaguchi
  * @date 2011
  */
-#include "cvmx.hpp"
+#include "mexopencv.hpp"
 using namespace cv;
 using namespace std;
 
@@ -50,10 +50,7 @@ mxClassID cvmxClassIdFromMatDepth(int depth) {
 /** MxArray constructor from mxArray*
  * @param arr mxArray pointer given by mexFunction
  */
-MxArray::MxArray(const mxArray *arr)
-{
-	p_ = arr;
-}
+MxArray::MxArray(const mxArray *arr) : p_(arr) {}
 
 /** MxArray constructor from double
  * @param d reference to a double value
@@ -66,9 +63,25 @@ MxArray::MxArray(const double& d)
 /** MxArray constructor from std::string
  * @param s reference to a string value
  */
+MxArray::MxArray(const int& i)
+{
+	p_ = mxCreateDoubleScalar(static_cast<double>(i));
+}
+
+/** MxArray constructor from std::string
+ * @param s reference to a string value
+ */
 MxArray::MxArray(const string& s)
 {
 	p_ = mxCreateString(s.c_str());
+}
+
+/** MxArray constructor from std::string
+ * @param s reference to a string value
+ */
+MxArray::MxArray(const bool& b)
+{
+	p_ = mxCreateLogicalScalar(b);
 }
 
 /**
@@ -114,7 +127,7 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid)
  * The returned mat is transposed due to the memory alignment of Matlab.
  * To fix it, call mat.t() when needed. This however requires copying data
  */
-cv::Mat MxArray::convertTo(int depth) const
+cv::Mat MxArray::toMat(int depth) const
 {
 	// Create cv::Mat object
 	mwSize nDim = mxGetNumberOfDimensions(p_);
@@ -144,24 +157,25 @@ cv::Mat MxArray::convertTo(int depth) const
 /** Convert MxArray to scalar double
  * @return int value
  */
-MxArray::operator int() const { return scalar<int>(); }
+int MxArray::toInt() const { return scalar<int>(); }
 
 /** Convert MxArray to scalar int
  * @return double value
  */
-MxArray::operator double() const { return scalar<double>(); }
+double MxArray::toDouble() const { return scalar<double>(); }
 
 /** Convert MxArray to scalar int
  * @return double value
  */
-MxArray::operator bool() const { return scalar<bool>(); }
+bool MxArray::toBool() const { return scalar<bool>(); }
 
 /** Convert MxArray to std::string
+ * @return std::string value
  */
-MxArray::operator std::string() const
+std::string MxArray::toString() const
 {
-	if (!ischar())
-		mexErrMsgIdAndTxt("cvmx:invalidType","MxArray not of type char");
+	if (!isChar())
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray not of type char");
 	char *pc = mxArrayToString(p_);
 	std::string s(pc);
 	mxFree(pc);
@@ -172,8 +186,8 @@ MxArray::operator std::string() const
 std::map<std::string, int> const BorderType::m = BorderType::create_border_type();
 int BorderType::get(const mxArray *arr) {
 	std::map<std::string,int>::const_iterator mi =
-		BorderType::m.find(MxArray(arr));
+		BorderType::m.find(MxArray(arr).toString());
 	if (mi == BorderType::m.end())
-		mexErrMsgIdAndTxt("cvmx:invalidOption","Unrecognized option");
+		mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 	return (*mi).second;
 }

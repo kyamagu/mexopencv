@@ -19,7 +19,7 @@ classdef TestBilateralFilter
                 bilateralFilter();
                 throw('UnitTest:Fail');
             catch e
-                assert(strcmp(e.identifier,'bilateralFilter:invalidArgs'));
+                assert(strcmp(e.identifier,'mexopencv:error'));
             end
         end
         
@@ -28,7 +28,7 @@ classdef TestBilateralFilter
                 bilateralFilter(TestBilateralFilter.img,'foo','bar');
                 throw('UnitTest:Fail');
             catch e
-                assert(strcmp(e.identifier,'bilateralFilter:invalidOption'));
+                assert(strcmp(e.identifier,'mexopencv:error'));
             end
         end
         
@@ -37,7 +37,7 @@ classdef TestBilateralFilter
                 bilateralFilter(TestBilateralFilter.img,'BorderType','foo');
                 throw('UnitTest:Fail');
             catch e
-                assert(strcmp(e.identifier,'cvmx:invalidOption'));
+                assert(strcmp(e.identifier,'mexopencv:error'));
             end
         end
     end

@@ -16,11 +16,11 @@ VPATH       = $(TARGETDIR):$(SRCDIR):$(MEXDIR)
 
 all: $(TARGETS)
 
-cvmx.o: $(SRCDIR)/cvmx.cpp $(INCLUDEDIR)/cvmx.hpp
+mexopencv.o: $(SRCDIR)/mexopencv.cpp $(INCLUDEDIR)/mexopencv.hpp
 	$(MEX) $(MEXFLAGS) -c $<
 
-%.$(MEXEXT): %.cpp cvmx.o
-	$(MEX) $(MEXFLAGS) $< cvmx.o -o $@
+%.$(MEXEXT): %.cpp mexopencv.o
+	$(MEX) $(MEXFLAGS) $< mexopencv.o -o $@
 
 clean:
 	rm -rf *.o $(TARGETDIR)/*.$(MEXEXT)

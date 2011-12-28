@@ -22,8 +22,7 @@
  *   trimap: uint8 H-by-W array with {0:bg, 1:fg, 2:probably-bg, 3:probably-fg}
  * </pre>
  */
-#include "cvmx.hpp"
-#include <string.h>
+#include "mexopencv.hpp"
 using namespace cv;
 
 // Local functions
@@ -46,11 +45,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
 {
 	// Check the input format
 	if (nrhs<2 || (nrhs%2)!=0 || nlhs>1)
-        mexErrMsgIdAndTxt("grabCut:invalidArgs","Wrong number of arguments");
+        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
 	if (mxGetClassID(prhs[0])!=mxUINT8_CLASS)
-        mexErrMsgIdAndTxt("grabCut:invalidArgs","Only UINT8 type is supported");
+        mexErrMsgIdAndTxt("mexopencv:error","Only UINT8 type is supported");
     if (mxGetNumberOfDimensions(prhs[0])!=3)
-        mexErrMsgIdAndTxt("grabCut:invalidArgs","Only RGB format is supported");
+        mexErrMsgIdAndTxt("mexopencv:error","Only RGB format is supported");
 	
 	// Option processing
 	int iterCount = 10;
@@ -58,20 +57,20 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	            GC_INIT_WITH_RECT : GC_INIT_WITH_MASK; // Automatic determination
 	if (nrhs>2) {
 	    for (int i=2; i<nrhs; i+=2) {
-			std::string key = MxArray(prhs[i]);
+			std::string key = MxArray(prhs[i]).toString();
 			if (key=="Init") {
-				std::string val = MxArray(prhs[i+1]);
+				std::string val = MxArray(prhs[i+1]).toString();
 				if (val=="Rect")
 					mode = GC_INIT_WITH_RECT;
 				else if (val=="Mask")
 					mode = GC_INIT_WITH_MASK;
 				else
-					mexErrMsgIdAndTxt("grabCut:invalidOption","Unrecognized option");
+					mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 			}
 			else if (key=="MaxIter")
-				iterCount = MxArray(prhs[i+1]);
+				iterCount = MxArray(prhs[i+1]).toInt();
 			else
-				mexErrMsgIdAndTxt("grabCut:invalidOption","Unrecognized option");
+				mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
 	}
 	
@@ -80,20 +79,20 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	Rect rect;
 	if (mode == GC_INIT_WITH_MASK)
 		if (mxGetM(prhs[0])==mxGetM(prhs[1]) && mxGetNumberOfDimensions(prhs[1])==2)
-			mask = MxArray(prhs[1]).convertTo(CV_8U);
+			mask = MxArray(prhs[1]).toMat(CV_8U);
 		else
-	        mexErrMsgIdAndTxt("grabCut:invalidArgs","Mask size incomatible to the image");
+	        mexErrMsgIdAndTxt("mexopencv:error","Mask size incomatible to the image");
 	else {
 	    if (mxIsDouble(prhs[1]) && numel(prhs[1])==4) {
     	    double *ptr = mxGetPr(prhs[1]);
 	        rect = Rect(ptr[1],ptr[0],ptr[3],ptr[2]); // Be careful that image is transposed
 	    }
 	    else
-	        mexErrMsgIdAndTxt("grabCut:invalidArgs","Unsupported type: rect must be 1x4 double");
+	        mexErrMsgIdAndTxt("mexopencv:error","Unsupported type: rect must be 1x4 double");
 	}
 	
 	// Apply grabCut
-	Mat img = MxArray(prhs[0]);
+	Mat img = MxArray(prhs[0]).toMat();
 	Mat bgdModel, fgdModel;
 	grabCut(img, mask, rect, bgdModel, fgdModel, iterCount, mode);
 	

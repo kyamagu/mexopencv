@@ -65,7 +65,7 @@ classdef TestFilter2D
                 filter2D();
                 throw('UnitTest:Fail');
             catch e
-                assert(strcmp(e.identifier,'filter2D:invalidArgs'));
+                assert(strcmp(e.identifier,'mexopencv:error'));
             end
         end
     end

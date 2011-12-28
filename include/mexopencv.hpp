@@ -25,45 +25,46 @@ class MxArray {
 		// Constructor is converter
 		explicit MxArray(const mxArray *arr);
 		explicit MxArray(const cv::Mat& mat, mxClassID classid=mxUNKNOWN_CLASS);
+		explicit MxArray(const int& i);
 		explicit MxArray(const double& d);
+		explicit MxArray(const bool& b);
 		explicit MxArray(const std::string& s);
 		virtual ~MxArray() {};
 		
-		// Explicit converters
-		cv::Mat convertTo(int depth=CV_USRTYPE1) const;
-		template <typename T> T scalar() const;
-		
-		// Implicit converters
+		// Converters
 		operator const mxArray*() const { return p_; };
 		operator mxArray*() const { return const_cast<mxArray*>(p_); };
-		operator std::string() const;
-		operator int() const;
-		operator double() const;
-		operator bool() const;
-		operator cv::Mat() const { return convertTo(); };
-		template <typename T> operator cv::Point_<T>() const;
-		template <typename T> operator cv::Size_<T>() const;
-		template <typename T> operator cv::Rect_<T>() const;
+		std::string toString() const;
+		int toInt() const;
+		double toDouble() const;
+		bool toBool() const;
+		cv::Mat toMat(int depth=CV_USRTYPE1) const;
+		template <typename T> cv::Point_<T> toPoint() const;
+		template <typename T> cv::Size_<T> toSize() const;
+		template <typename T> cv::Rect_<T> toRect() const;
+		
+		// Generic scalar converter
+		template <typename T> T scalar() const;
 		
 		// Status checker
-		inline bool isint8() const { return mxIsInt8(p_); }
-		inline bool isuint8() const { return mxIsUint8(p_); }
-		inline bool isint16() const { return mxIsInt16(p_); }
-		inline bool isuint16() const { return mxIsUint16(p_); }
-		inline bool isint32() const { return mxIsInt32(p_); }
-		inline bool isuint32() const { return mxIsUint32(p_); }
-		inline bool isint64() const { return mxIsInt64(p_); }
-		inline bool isuint64() const { return mxIsUint64(p_); }
-		inline bool issingle() const { return mxIsSingle(p_); }
-		inline bool isdouble() const { return mxIsDouble(p_); }
-		inline bool ischar() const { return mxIsChar(p_); }
-		inline bool isnumeric() const { return mxIsNumeric(p_); }
-		inline bool islogical() const { return mxIsLogical(p_); }
-		inline bool isempty() const { return mxIsEmpty(p_); }
-		inline bool isscalar() const { return mxGetM(p_)==1&&mxGetN(p_)==1; }
-		inline bool isstruct() const { return mxIsStruct(p_); }
-		inline bool issparse() const { return mxIsSparse(p_); }
-		inline bool iscell() const { return mxIsCell(p_); }
+		inline bool isInt8() const { return mxIsInt8(p_); }
+		inline bool isUint8() const { return mxIsUint8(p_); }
+		inline bool isInt16() const { return mxIsInt16(p_); }
+		inline bool isUint16() const { return mxIsUint16(p_); }
+		inline bool isInt32() const { return mxIsInt32(p_); }
+		inline bool isUint32() const { return mxIsUint32(p_); }
+		inline bool isInt64() const { return mxIsInt64(p_); }
+		inline bool isUint64() const { return mxIsUint64(p_); }
+		inline bool isSingle() const { return mxIsSingle(p_); }
+		inline bool isDouble() const { return mxIsDouble(p_); }
+		inline bool isChar() const { return mxIsChar(p_); }
+		inline bool isNumeric() const { return mxIsNumeric(p_); }
+		inline bool isLogical() const { return mxIsLogical(p_); }
+		inline bool isEmpty() const { return mxIsEmpty(p_); }
+		inline bool isScalar() const { return mxGetM(p_)==1&&mxGetN(p_)==1; }
+		inline bool isStruct() const { return mxIsStruct(p_); }
+		inline bool isSparse() const { return mxIsSparse(p_); }
+		inline bool isCell() const { return mxIsCell(p_); }
 		
 		// Accessor
 		template <typename T> const T at(size_t index) const;
@@ -77,40 +78,40 @@ class MxArray {
 template <typename T>
 T MxArray::scalar() const
 {
-	if (!isscalar())
-		mexErrMsgIdAndTxt("cvmx:invalidType","MxArray is not scalar");
-	if (!(isnumeric()||ischar()||islogical()))
-		mexErrMsgIdAndTxt("cvmx:invalidType","MxArray is not primitive");
+	if (!isScalar())
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not scalar");
+	if (!(isNumeric()||isChar()||isLogical()))
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not primitive");
 	return static_cast<T>(mxGetScalar(p_));
 };
 
 /** Convert MxArray to Point_<T>
  */
 template <typename T>
-MxArray::operator cv::Point_<T>() const
+cv::Point_<T> MxArray::toPoint() const
 {
-	if (!isnumeric() || (mxGetM(p_)*mxGetN(p_))!=2)
-		mexErrMsgIdAndTxt("cvmx:invalidType","MxArray is not Point");
+	if (!isNumeric() || (mxGetM(p_)*mxGetN(p_))!=2)
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not Point");
 	return cv::Point_<T>(at<T>(0),at<T>(1));
 }
 
 /** Convert MxArray to Size_<T>
  */
 template <typename T>
-MxArray::operator cv::Size_<T>() const
+cv::Size_<T> MxArray::toSize() const
 {
-	if (!isnumeric() || (mxGetM(p_)*mxGetN(p_))!=2)
-		mexErrMsgIdAndTxt("cvmx:invalidType","MxArray is not Size");
+	if (!isNumeric() || (mxGetM(p_)*mxGetN(p_))!=2)
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not Size");
 	return cv::Size_<T>(at<T>(0),at<T>(1));
 }
 
 /** Convert MxArray to Rect_<T>
  */
 template <typename T>
-MxArray::operator cv::Rect_<T>() const
+cv::Rect_<T> MxArray::toRect() const
 {
-	if (!isnumeric() || (mxGetM(p_)*mxGetN(p_))!=4)
-		mexErrMsgIdAndTxt("cvmx:invalidType","MxArray is not Size");
+	if (!isNumeric() || (mxGetM(p_)*mxGetN(p_))!=4)
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not Size");
 	return cv::Rect_<T>(at<T>(0),at<T>(1),at<T>(2),at<T>(3));
 }
 
@@ -120,7 +121,7 @@ template <typename T>
 const T MxArray::at(size_t index) const
 {
 	if (mxGetM(p_)*mxGetN(p_) <= index)
-		mexErrMsgIdAndTxt("cvmx:rangeError","Accessing invalid range");
+		mexErrMsgIdAndTxt("mexopencv:error","Accessing invalid range");
 	switch (mxGetClassID(p_)) {
 		case mxCHAR_CLASS:
 			return static_cast<T>(*(mxGetChars(p_)+index));
@@ -147,7 +148,7 @@ const T MxArray::at(size_t index) const
 		case mxLOGICAL_CLASS:
 			static_cast<T>(*(reinterpret_cast<mxLogical*>(mxGetData(p_))+index));
 		default:
-			mexErrMsgIdAndTxt("cvmx:invalidType","MxArray is not primitive");
+			mexErrMsgIdAndTxt("mexopencv:error","MxArray is not primitive");
 	}
 }
 
