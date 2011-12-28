@@ -24,10 +24,10 @@ int cvmxClassIdToMatDepth(mxClassID classid) {
 	case mxINT16_CLASS:		return CV_16S;
 	case mxUINT16_CLASS:	return CV_16U;
 	case mxINT32_CLASS:		return CV_32S;
+	case mxLOGICAL_CLASS:	return CV_8U;
 	default: 				return CV_USRTYPE1;
 	}
 }
-
 /**
  * Translates data type definition used in Matlab to that of OpenCV
  * @param depth data depth of opencv's Mat class. e.g., CV_32F
@@ -38,7 +38,7 @@ mxClassID cvmxClassIdFromMatDepth(int depth) {
 	case CV_64F:	return mxDOUBLE_CLASS;
 	case CV_32F:	return mxSINGLE_CLASS;
 	case CV_8S:		return mxINT8_CLASS;
-	case CV_8U:		return mxUINT8_CLASS;
+	case CV_8U:		return mxUINT8_CLASS; // No mapping to logical
 	case CV_16S:	return mxINT16_CLASS;
 	case CV_16U:	return mxUINT16_CLASS;
 	case CV_32S:	return mxINT32_CLASS;
@@ -47,59 +47,48 @@ mxClassID cvmxClassIdFromMatDepth(int depth) {
 }
 }
 
-/**
- * Convert mxArray* cv::Mat
- * @param arr mxArray object
- * @param depth depth of cv::Mat. e.g., CV_8U, CV_32F. default: automatic conversion
- * @return cv::Mat object
- * 
- * The first/second/third dimensions of mxArray are mapped to width/height/channels, respectively
- * The returned mat is transposed due to the memory alignment of Matlab.
- * To fix it, call mat.t() when needed. This however requires copying data
+/** MxArray constructor from mxArray*
+ * @param arr mxArray pointer given by mexFunction
  */
-cv::Mat cvmxArrayToMat(const mxArray *arr, int depth) {
-	// Create cv::Mat object
-	mwSize nDim = mxGetNumberOfDimensions(arr);
-	const mwSize *dims = mxGetDimensions(arr);
-	int nChannels = (nDim > 2) ? dims[2] : 1;
-	if (depth == CV_USRTYPE1)
-		depth = cvmxClassIdToMatDepth(mxGetClassID(arr));
-	cv::Mat mat(dims[1],dims[0],CV_MAKETYPE(depth,nChannels));
-	
-	// Copy each channel
-	std::vector<cv::Mat> mv(nChannels);
-	mwSize subs[] = {0,0,0};
-	for (int i = 0; i<nChannels; ++i) {
-		subs[2] = i;
-		void *ptr = reinterpret_cast<void*>(
-				reinterpret_cast<size_t>(mxGetData(arr))+
-				mxGetElementSize(arr)*mxCalcSingleSubscript(arr,3,subs));
-		cv::Mat m(mat.rows,mat.cols,
-				CV_MAKETYPE(cvmxClassIdToMatDepth(mxGetClassID(arr)),1),
-				ptr,mxGetElementSize(arr)*mat.cols);
-		m.convertTo(mv[i],CV_MAKETYPE(depth,1)); // Read from mxArray through m
-	}
-	cv::merge(mv,mat);
-	return mat;
+MxArray::MxArray(const mxArray *arr)
+{
+	p_ = arr;
+}
+
+/** MxArray constructor from double
+ * @param d reference to a double value
+ */
+MxArray::MxArray(const double& d)
+{
+	p_ = mxCreateDoubleScalar(d);
+}
+
+/** MxArray constructor from std::string
+ * @param s reference to a string value
+ */
+MxArray::MxArray(const string& s)
+{
+	p_ = mxCreateString(s.c_str());
 }
 
 /**
- * Convert cv::Mat to mxArray*
+ * Convert cv::Mat to MxArray
  * @param mat cv::Mat object
  * @param classid classid of mxArray. e.g., mxDOUBLE_CLASS. default: automatic conversion
- * @return mxArray object
+ * @return MxArray object
  *
  * The width/height/channels of cv::Mat are are mapped to the first/second/third dimensions of
  * mxArray, respectively.
  */
-mxArray* cvmxArrayFromMat(const cv::Mat& mat, mxClassID classid) {
+MxArray::MxArray(const cv::Mat& mat, mxClassID classid)
+{
 	// Create a new mxArray
 	int nChannels = mat.channels();
 	mwSize nDim = (nChannels>1) ? 3 : 2;
 	mwSize dims[] = {mat.cols, mat.rows, (nChannels>1) ? nChannels : 0};
 	if (classid == mxUNKNOWN_CLASS)
 		classid = cvmxClassIdFromMatDepth(mat.depth());
-	mxArray *arr = mxCreateNumericArray(nDim,dims,classid,mxREAL);
+	p_ = mxCreateNumericArray(nDim,dims,classid,mxREAL);
 	
 	// Copy each channel
 	std::vector<cv::Mat> mv;
@@ -109,21 +98,81 @@ mxArray* cvmxArrayFromMat(const cv::Mat& mat, mxClassID classid) {
 	for (int i = 0; i < nChannels; ++i) {
 		subs[2] = i;
 		void *ptr = reinterpret_cast<void*>(
-				reinterpret_cast<size_t>(mxGetData(arr))+
-				mxGetElementSize(arr)*mxCalcSingleSubscript(arr,3,subs));
-		cv::Mat m(mat.rows,mat.cols,type,ptr,mxGetElementSize(arr)*mat.cols);
+				reinterpret_cast<size_t>(mxGetData(p_))+
+				mxGetElementSize(p_)*mxCalcSingleSubscript(p_,3,subs));
+		cv::Mat m(mat.rows,mat.cols,type,ptr,mxGetElementSize(p_)*mat.cols);
 		mv[i].convertTo(m,type); // Write to mxArray through m
 	}
-	
-	return arr;
 }
 
+/**
+ * Convert MxArray to cv::Mat
+ * @param depth depth of cv::Mat. e.g., CV_8U, CV_32F. default: automatic conversion
+ * @return cv::Mat object
+ * 
+ * The first/second/third dimensions of mxArray are mapped to width/height/channels, respectively
+ * The returned mat is transposed due to the memory alignment of Matlab.
+ * To fix it, call mat.t() when needed. This however requires copying data
+ */
+cv::Mat MxArray::convertTo(int depth) const
+{
+	// Create cv::Mat object
+	mwSize nDim = mxGetNumberOfDimensions(p_);
+	const mwSize *dims = mxGetDimensions(p_);
+	int nChannels = (nDim > 2) ? dims[2] : 1;
+	if (depth == CV_USRTYPE1)
+		depth = cvmxClassIdToMatDepth(mxGetClassID(p_));
+	cv::Mat mat(dims[1],dims[0],CV_MAKETYPE(depth,nChannels));
+	
+	// Copy each channel
+	std::vector<cv::Mat> mv(nChannels);
+	mwSize subs[] = {0,0,0};
+	for (int i = 0; i<nChannels; ++i) {
+		subs[2] = i;
+		void *pd = reinterpret_cast<void*>(
+				reinterpret_cast<size_t>(mxGetData(p_))+
+				mxGetElementSize(p_)*mxCalcSingleSubscript(p_,3,subs));
+		cv::Mat m(mat.rows,mat.cols,
+				CV_MAKETYPE(cvmxClassIdToMatDepth(mxGetClassID(p_)),1),
+				pd,mxGetElementSize(p_)*mat.cols);
+		m.convertTo(mv[i],CV_MAKETYPE(depth,1)); // Read from mxArray through m
+	}
+	cv::merge(mv,mat);
+	return mat;
+}
+
+/** Convert MxArray to scalar double
+ * @return int value
+ */
+MxArray::operator int() const { return scalar<int>(); }
+
+/** Convert MxArray to scalar int
+ * @return double value
+ */
+MxArray::operator double() const { return scalar<double>(); }
+
+/** Convert MxArray to scalar int
+ * @return double value
+ */
+MxArray::operator bool() const { return scalar<bool>(); }
+
+/** Convert MxArray to std::string
+ */
+MxArray::operator std::string() const
+{
+	if (!ischar())
+		mexErrMsgIdAndTxt("cvmx:invalidType","MxArray not of type char");
+	char *pc = mxArrayToString(p_);
+	std::string s(pc);
+	mxFree(pc);
+	return s;
+}
 
 // Initialize border type
 std::map<std::string, int> const BorderType::m = BorderType::create_border_type();
 int BorderType::get(const mxArray *arr) {
 	std::map<std::string,int>::const_iterator mi =
-		BorderType::m.find(cvmxArrayToString(arr));
+		BorderType::m.find(MxArray(arr));
 	if (mi == BorderType::m.end())
 		mexErrMsgIdAndTxt("cvmx:invalidOption","Unrecognized option");
 	return (*mi).second;

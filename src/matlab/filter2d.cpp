@@ -33,27 +33,18 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	Point anchor(-1,-1);
 	int borderType = BORDER_DEFAULT;
 	for (int i=2; i<nrhs; i+=2) {
-		if (mxGetClassID(prhs[i])==mxCHAR_CLASS) {
-			std::string key(cvmxArrayToString(prhs[i]));
-			mxClassID classid = mxGetClassID(prhs[i+1]);
-			if (key=="Anchor" && classid==mxDOUBLE_CLASS) {
-				Mat m(cvmxArrayToMat(prhs[i+1],CV_32S));
-				if ((m.cols*m.rows)!=2)
-					mexErrMsgIdAndTxt("filter2D:invalidOption","Invalid anchor");
-				anchor = Point(m.at<int>(0),m.at<int>(1));
-			}
-			else if (key=="BorderType" && classid==mxCHAR_CLASS)
-				borderType = BorderType::get(prhs[i+1]);
-			else
-				mexErrMsgIdAndTxt("filter2D:invalidOption","Unrecognized option");
-		}
+		std::string key = MxArray(prhs[i]);
+		if (key=="Anchor")
+			anchor = MxArray(prhs[i+1]);
+		else if (key=="BorderType")
+			borderType = BorderType::get(prhs[i+1]);
 		else
 			mexErrMsgIdAndTxt("filter2D:invalidOption","Unrecognized option");
 	}
 	
 	// Convert mxArray to cv::Mat
-	Mat img = cvmxArrayToMat(prhs[0],CV_32F);
-	Mat kernel = cvmxArrayToMat(prhs[1],CV_32F);
+	Mat img(MxArray(prhs[0]).convertTo(CV_32F));
+	Mat kernel(MxArray(prhs[1]).convertTo(CV_32F));
 	
 	// Apply filter 2D
 	// There seems to be a bug in filter when BORDER_CONSTANT is used
@@ -68,5 +59,5 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		);
 	
 	// Convert cv::Mat to mxArray
-	plhs[0] = cvmxArrayFromMat(img,mxGetClassID(prhs[0]));
+	plhs[0] = MxArray(img,mxGetClassID(prhs[0]));
 }

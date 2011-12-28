@@ -34,27 +34,22 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	double sigmaSpace = 50.0;
 	int borderType = BORDER_DEFAULT;
 	for (int i=1; i<nrhs; i+=2) {
-		if (mxGetClassID(prhs[i])==mxCHAR_CLASS) {
-			std::string key(cvmxArrayToString(prhs[i]));
-			mxClassID classid = mxGetClassID(prhs[i+1]);
-			if (key=="Diameter" && classid==mxDOUBLE_CLASS)
-				d = static_cast<int>(mxGetScalar(prhs[i+1]));
-			else if (key=="SigmaColor" && classid==mxDOUBLE_CLASS)
-				sigmaColor = mxGetScalar(prhs[i+1]);
-			else if (key=="SigmaSpace" && classid==mxDOUBLE_CLASS)
-				sigmaSpace = mxGetScalar(prhs[i+1]);
-			else if (key=="BorderType" && classid==mxCHAR_CLASS)
-				borderType = BorderType::get(prhs[i+1]);
-			else
-				mexErrMsgIdAndTxt("bilateralFilter:invalidOption","Unrecognized option");
-		}
+		std::string key = MxArray(prhs[i]);
+		if (key=="Diameter")
+			d = MxArray(prhs[i+1]);
+		else if (key=="SigmaColor")
+			sigmaColor = MxArray(prhs[i+1]);
+		else if (key=="SigmaSpace")
+			sigmaSpace = MxArray(prhs[i+1]);
+		else if (key=="BorderType")
+			borderType = BorderType::get(prhs[i+1]);
 		else
 			mexErrMsgIdAndTxt("bilateralFilter:invalidOption","Unrecognized option");
 	}
 	
 	// Process
-	Mat img = cvmxArrayToMat(prhs[0],CV_32F);
+	Mat img(MxArray(prhs[0]).convertTo(CV_32F));
 	Mat dst;
 	bilateralFilter(img, dst, d, sigmaColor, sigmaSpace, borderType);
-	plhs[0] = cvmxArrayFromMat(dst,mxGetClassID(prhs[0]));
+	plhs[0] = MxArray(dst,mxGetClassID(prhs[0]));
 }

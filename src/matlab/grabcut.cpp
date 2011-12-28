@@ -52,33 +52,26 @@ void mexFunction( int nlhs, mxArray *plhs[],
     if (mxGetNumberOfDimensions(prhs[0])!=3)
         mexErrMsgIdAndTxt("grabCut:invalidArgs","Only RGB format is supported");
 	
-	// Convert mxArray to cv::Mat
-	Mat img(cvmxArrayToMat(prhs[0],CV_8U));
-	
 	// Option processing
 	int iterCount = 10;
 	int mode = (mxIsDouble(prhs[1]) && numel(prhs[1])==4) ?
 	            GC_INIT_WITH_RECT : GC_INIT_WITH_MASK; // Automatic determination
 	if (nrhs>2) {
 	    for (int i=2; i<nrhs; i+=2) {
-            if (mxGetClassID(prhs[i])==mxCHAR_CLASS) {
-                std::string key(cvmxArrayToString(prhs[i]));
-                if (key=="Init" && mxGetClassID(prhs[i+1])==mxCHAR_CLASS) {
-                    std::string val(cvmxArrayToString(prhs[i+1]));
-                    if (val=="Rect")
-                        mode = GC_INIT_WITH_RECT;
-                    else if (val=="Mask")
-                        mode = GC_INIT_WITH_MASK;
-                    else
-                        mexErrMsgIdAndTxt("grabCut:invalidOption","Unrecognized option");
-                }
-                else if (key=="MaxIter" && mxGetClassID(prhs[i+1])==mxDOUBLE_CLASS)
-                    iterCount = static_cast<int>(mxGetScalar(prhs[i+1]));
-                else
-                    mexErrMsgIdAndTxt("grabCut:invalidOption","Unrecognized option");
-            }
-            else
-                mexErrMsgIdAndTxt("grabCut:invalidOption","Unrecognized option");
+			std::string key = MxArray(prhs[i]);
+			if (key=="Init") {
+				std::string val = MxArray(prhs[i+1]);
+				if (val=="Rect")
+					mode = GC_INIT_WITH_RECT;
+				else if (val=="Mask")
+					mode = GC_INIT_WITH_MASK;
+				else
+					mexErrMsgIdAndTxt("grabCut:invalidOption","Unrecognized option");
+			}
+			else if (key=="MaxIter")
+				iterCount = MxArray(prhs[i+1]);
+			else
+				mexErrMsgIdAndTxt("grabCut:invalidOption","Unrecognized option");
         }
 	}
 	
@@ -87,7 +80,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	Rect rect;
 	if (mode == GC_INIT_WITH_MASK)
 		if (mxGetM(prhs[0])==mxGetM(prhs[1]) && mxGetNumberOfDimensions(prhs[1])==2)
-			mask = cvmxArrayToMat(prhs[1],CV_8U);
+			mask = MxArray(prhs[1]).convertTo(CV_8U);
 		else
 	        mexErrMsgIdAndTxt("grabCut:invalidArgs","Mask size incomatible to the image");
 	else {
@@ -100,9 +93,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	}
 	
 	// Apply grabCut
+	Mat img = MxArray(prhs[0]);
 	Mat bgdModel, fgdModel;
 	grabCut(img, mask, rect, bgdModel, fgdModel, iterCount, mode);
 	
 	// Convert cv::Mat to mxArray
-	plhs[0] = cvmxArrayFromMat(mask, mxUINT8_CLASS);
+	plhs[0] = MxArray(mask, mxUINT8_CLASS);
 }
