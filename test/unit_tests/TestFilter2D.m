@@ -35,7 +35,7 @@ classdef TestFilter2D
 
             reference = filter2(kernel,TestFilter2D.img);
             result = filter2D(TestFilter2D.img,kernel,...
-                'Anchor',floor((size(kernel)-1)/2));
+                'Anchor',fliplr(floor((size(kernel)-1)/2)));
             assert(all(abs(reference(:) - result(:)) < 1e-15));
         end
         

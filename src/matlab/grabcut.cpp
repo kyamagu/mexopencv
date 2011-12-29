@@ -25,12 +25,6 @@
 #include "mexopencv.hpp"
 using namespace cv;
 
-// Local functions
-namespace {
-	// Number of element in a matrix (not in an n-d array)
-	inline size_t numel(const mxArray *arr) { return mxGetM(arr)*mxGetN(arr); }
-}
-
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments
@@ -52,8 +46,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
         mexErrMsgIdAndTxt("mexopencv:error","Only RGB format is supported");
 	
 	// Option processing
+	MxArray prhs1(prhs[1]);
 	int iterCount = 10;
-	int mode = (mxIsDouble(prhs[1]) && numel(prhs[1])==4) ?
+	int mode = (prhs1.isDouble() && prhs1.numel()==4) ?
 	            GC_INIT_WITH_RECT : GC_INIT_WITH_MASK; // Automatic determination
 	if (nrhs>2) {
 	    for (int i=2; i<nrhs; i+=2) {
@@ -78,21 +73,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	Mat mask;
 	Rect rect;
 	if (mode == GC_INIT_WITH_MASK)
-		if (mxGetM(prhs[0])==mxGetM(prhs[1]) && mxGetNumberOfDimensions(prhs[1])==2)
-			mask = MxArray(prhs[1]).toMat(CV_8U);
-		else
-	        mexErrMsgIdAndTxt("mexopencv:error","Mask size incomatible to the image");
-	else {
-	    if (mxIsDouble(prhs[1]) && numel(prhs[1])==4) {
-    	    double *ptr = mxGetPr(prhs[1]);
-	        rect = Rect(ptr[1],ptr[0],ptr[3],ptr[2]); // Be careful that image is transposed
-	    }
-	    else
-	        mexErrMsgIdAndTxt("mexopencv:error","Unsupported type: rect must be 1x4 double");
-	}
+		mask = prhs1.toMat(CV_8U);
+	else
+		rect = prhs1.toRect<int>();
 	
 	// Apply grabCut
-	Mat img = MxArray(prhs[0]).toMat();
+	Mat img(MxArray(prhs[0]).toMat());
 	Mat bgdModel, fgdModel;
 	grabCut(img, mask, rect, bgdModel, fgdModel, iterCount, mode);
 	

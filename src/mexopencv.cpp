@@ -6,7 +6,6 @@
  */
 #include "mexopencv.hpp"
 using namespace cv;
-using namespace std;
 
 // Local namescope
 namespace {
@@ -47,6 +46,20 @@ mxClassID cvmxClassIdFromMatDepth(int depth) {
 }
 }
 
+
+/** Convert MxArray to scalar primitive type T
+ */
+template <typename T>
+T MxArray::value() const
+{
+	if (numel()!=1)
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not a scalar value");
+	if (!(isNumeric()||isChar()||isLogical()))
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not primitive type");
+	return static_cast<T>(mxGetScalar(p_));
+};
+
+
 /** MxArray constructor from mxArray*
  * @param arr mxArray pointer given by mexFunction
  */
@@ -55,34 +68,22 @@ MxArray::MxArray(const mxArray *arr) : p_(arr) {}
 /** MxArray constructor from double
  * @param d reference to a double value
  */
-MxArray::MxArray(const double& d)
-{
-	p_ = mxCreateDoubleScalar(d);
-}
+MxArray::MxArray(const double d) : p_(mxCreateDoubleScalar(d)) {}
+
+/** MxArray constructor from int
+ * @param s reference to an int value
+ */
+MxArray::MxArray(const int i) : p_(mxCreateDoubleScalar(static_cast<double>(i))) {}
+
+/** MxArray constructor from bool
+ * @param s reference to a bool value
+ */
+MxArray::MxArray(const bool b) : p_(mxCreateLogicalScalar(b)) {}
 
 /** MxArray constructor from std::string
  * @param s reference to a string value
  */
-MxArray::MxArray(const int& i)
-{
-	p_ = mxCreateDoubleScalar(static_cast<double>(i));
-}
-
-/** MxArray constructor from std::string
- * @param s reference to a string value
- */
-MxArray::MxArray(const string& s)
-{
-	p_ = mxCreateString(s.c_str());
-}
-
-/** MxArray constructor from std::string
- * @param s reference to a string value
- */
-MxArray::MxArray(const bool& b)
-{
-	p_ = mxCreateLogicalScalar(b);
-}
+MxArray::MxArray(const string& s) : p_(mxCreateString(s.c_str())) {}
 
 /**
  * Convert cv::Mat to MxArray
@@ -93,27 +94,28 @@ MxArray::MxArray(const bool& b)
  * The width/height/channels of cv::Mat are are mapped to the first/second/third dimensions of
  * mxArray, respectively.
  */
-MxArray::MxArray(const cv::Mat& mat, mxClassID classid)
+MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 {
+	const cv::Mat& rm = (transpose) ? mat : cv::Mat(mat.t());
 	// Create a new mxArray
-	int nChannels = mat.channels();
+	int nChannels = rm.channels();
 	mwSize nDim = (nChannels>1) ? 3 : 2;
-	mwSize dims[] = {mat.cols, mat.rows, (nChannels>1) ? nChannels : 0};
+	mwSize dims[] = {rm.cols, rm.rows, (nChannels>1) ? nChannels : 0};
 	if (classid == mxUNKNOWN_CLASS)
-		classid = cvmxClassIdFromMatDepth(mat.depth());
+		classid = cvmxClassIdFromMatDepth(rm.depth());
 	p_ = mxCreateNumericArray(nDim,dims,classid,mxREAL);
 	
 	// Copy each channel
 	std::vector<cv::Mat> mv;
-	cv::split(mat,mv);
-	mwSize subs[] = {0,0,0};
+	cv::split(rm,mv);
+	std::vector<mwSize> si(3,0); // subscripted index
 	int type = CV_MAKETYPE(cvmxClassIdToMatDepth(classid),1); // destination type
 	for (int i = 0; i < nChannels; ++i) {
-		subs[2] = i;
+		si[2] = i;
 		void *ptr = reinterpret_cast<void*>(
 				reinterpret_cast<size_t>(mxGetData(p_))+
-				mxGetElementSize(p_)*mxCalcSingleSubscript(p_,3,subs));
-		cv::Mat m(mat.rows,mat.cols,type,ptr,mxGetElementSize(p_)*mat.cols);
+				mxGetElementSize(p_)*subs(si));
+		cv::Mat m(rm.rows,rm.cols,type,ptr,mxGetElementSize(p_)*rm.cols);
 		mv[i].convertTo(m,type); // Write to mxArray through m
 	}
 }
@@ -123,11 +125,9 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid)
  * @param depth depth of cv::Mat. e.g., CV_8U, CV_32F. default: automatic conversion
  * @return cv::Mat object
  * 
- * The first/second/third dimensions of mxArray are mapped to width/height/channels, respectively
- * The returned mat is transposed due to the memory alignment of Matlab.
- * To fix it, call mat.t() when needed. This however requires copying data
+ * The first/second/third dimensions of mxArray are mapped to height/width/channels, respectively
  */
-cv::Mat MxArray::toMat(int depth) const
+cv::Mat MxArray::toMat(int depth, bool transpose) const
 {
 	// Create cv::Mat object
 	mwSize nDim = mxGetNumberOfDimensions(p_);
@@ -139,35 +139,35 @@ cv::Mat MxArray::toMat(int depth) const
 	
 	// Copy each channel
 	std::vector<cv::Mat> mv(nChannels);
-	mwSize subs[] = {0,0,0};
+	std::vector<mwSize> si(3,0);
 	for (int i = 0; i<nChannels; ++i) {
-		subs[2] = i;
+		si[2] = i;
 		void *pd = reinterpret_cast<void*>(
 				reinterpret_cast<size_t>(mxGetData(p_))+
-				mxGetElementSize(p_)*mxCalcSingleSubscript(p_,3,subs));
+				mxGetElementSize(p_)*subs(si));
 		cv::Mat m(mat.rows,mat.cols,
 				CV_MAKETYPE(cvmxClassIdToMatDepth(mxGetClassID(p_)),1),
 				pd,mxGetElementSize(p_)*mat.cols);
 		m.convertTo(mv[i],CV_MAKETYPE(depth,1)); // Read from mxArray through m
 	}
 	cv::merge(mv,mat);
-	return mat;
+	return (transpose) ? mat : cv::Mat(mat.t());
 }
 
 /** Convert MxArray to scalar double
  * @return int value
  */
-int MxArray::toInt() const { return scalar<int>(); }
+int MxArray::toInt() const { return value<int>(); }
 
 /** Convert MxArray to scalar int
  * @return double value
  */
-double MxArray::toDouble() const { return scalar<double>(); }
+double MxArray::toDouble() const { return value<double>(); }
 
 /** Convert MxArray to scalar int
  * @return double value
  */
-bool MxArray::toBool() const { return scalar<bool>(); }
+bool MxArray::toBool() const { return value<bool>(); }
 
 /** Convert MxArray to std::string
  * @return std::string value
@@ -180,6 +180,34 @@ std::string MxArray::toString() const
 	std::string s(pc);
 	mxFree(pc);
 	return s;
+}
+
+/** Return dimension vector
+ * @return vector of number of elements in each dimension
+ */
+std::vector<mwSize> MxArray::dims() const
+{
+	const mwSize *d = mxGetDimensions(p_);
+	return std::vector<mwSize>(d,d+ndims());
+}
+
+/** Offset from first element to desired element
+ * @return linear offset of the specified subscript index
+ */
+mwIndex MxArray::subs(mwIndex i, mwIndex j) const
+{
+	if (i < 0 || i >= rows() || j < 0 || j >= cols())
+		mexErrMsgIdAndTxt("mexopencv:error","Subscript out of range");
+	mwIndex s[] = {i,j};
+	return mxCalcSingleSubscript(p_, 2, s);
+}
+
+/** Offset from first element to desired element
+ * @return linear offset of the specified subscript index
+ */
+mwIndex MxArray::subs(std::vector<mwIndex>& si) const
+{
+	return mxCalcSingleSubscript(p_, si.size(), &si[0]);
 }
 
 // Initialize border type
