@@ -9,7 +9,7 @@ Contents
 
 The project tree is organized as follows.
 
-    +cv/       directory to put compiled mex files
+    +cv/           directory to put compiled mex files
     Doxyfile       config file for doxygen
     Makefile       make script
     README         this file
@@ -54,15 +54,20 @@ Usage
 =====
 
 Once mex functions are compiled, you can add path to this directory and call
-mex functions from matlab with package name 'opencv'
+mex functions from matlab with package name `cv`.
 
     addpath('/path/to/mexopencv');
-    result = cv.filter2d(img, kern);    % with package name 'cv'
+    result = cv.filter2D(img, kern);    % with package name 'cv'
 
-Or, you can add path to matlab/ directory
+Or, you can add path to matlab/ directory.
  
     addpath('/path/to/mexopencv/matlab');
-    result = filter2d(img, kern);       % no need to specify 'cv'
+    result = filter2D(img, kern);       % no need to specify 'cv'
+
+You can use the latter syntax with the `import` function in matlab.
+
+    import cv.*;
+    result = filter2D(img, kern);       % no need to specify 'cv'
 
 
 Developing a new mex function
