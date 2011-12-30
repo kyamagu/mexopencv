@@ -23,6 +23,7 @@
  * </pre>
  */
 #include "mexopencv.hpp"
+using namespace std;
 using namespace cv;
 
 /**
@@ -37,33 +38,33 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
+	// Argument vector
+	vector<MxArray> rhs(prhs,prhs+nrhs);
+	
 	// Check the input format
 	if (nrhs<2 || (nrhs%2)!=0 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-	if (mxGetClassID(prhs[0])!=mxUINT8_CLASS)
+        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");	
+	if (rhs[0].classID()!=mxUINT8_CLASS)
         mexErrMsgIdAndTxt("mexopencv:error","Only UINT8 type is supported");
-    if (mxGetNumberOfDimensions(prhs[0])!=3)
+    if (rhs[0].ndims()!=3)
         mexErrMsgIdAndTxt("mexopencv:error","Only RGB format is supported");
 	
 	// Option processing
-	MxArray prhs1(prhs[1]);
+	Mat bgdModel, fgdModel;
 	int iterCount = 10;
-	int mode = (prhs1.isDouble() && prhs1.numel()==4) ?
+	int mode = (rhs[1].isDouble() && rhs[1].numel()==4) ?
 	            GC_INIT_WITH_RECT : GC_INIT_WITH_MASK; // Automatic determination
 	if (nrhs>2) {
 	    for (int i=2; i<nrhs; i+=2) {
-			std::string key = MxArray(prhs[i]).toString();
-			if (key=="Init") {
-				std::string val = MxArray(prhs[i+1]).toString();
-				if (val=="Rect")
-					mode = GC_INIT_WITH_RECT;
-				else if (val=="Mask")
-					mode = GC_INIT_WITH_MASK;
-				else
-					mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-			}
+			string key = rhs[i].toString();
+			if (key=="BgdModel")
+				bgdModel = rhs[i+1].toMat();
+			else if (key=="FgdModel")
+				fgdModel = rhs[i+1].toMat();
+			else if (key=="Init")
+				mode = GrabCutType[rhs[i+1].toString()];
 			else if (key=="MaxIter")
-				iterCount = MxArray(prhs[i+1]).toInt();
+				iterCount = rhs[i+1].toInt();
 			else
 				mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
@@ -73,15 +74,18 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	Mat mask;
 	Rect rect;
 	if (mode == GC_INIT_WITH_MASK)
-		mask = prhs1.toMat(CV_8U);
+		mask = rhs[1].toMat(CV_8U);
 	else
-		rect = prhs1.toRect<int>();
+		rect = rhs[1].toRect<int>();
 	
 	// Apply grabCut
-	Mat img(MxArray(prhs[0]).toMat());
-	Mat bgdModel, fgdModel;
+	Mat img(rhs[0].toMat());
 	grabCut(img, mask, rect, bgdModel, fgdModel, iterCount, mode);
 	
 	// Convert cv::Mat to mxArray
 	plhs[0] = MxArray(mask, mxUINT8_CLASS);
+	if (nlhs > 1)
+		plhs[1] = MxArray(bgdModel);
+	if (nlhs > 2)
+		plhs[2] = MxArray(fgdModel);
 }

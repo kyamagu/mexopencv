@@ -10,7 +10,7 @@ classdef TestGrabCut
             % TEST 1: initialization with bbox must succeed
             bbox = [100,100,280,320]; % [x y w h]
             res = grabCut(TestGrabCut.img,bbox,'Init','Rect');
-            imshow(TestGrabCut.img.*repmat(reshape(uint8(res==3),size(res)),[1,1,3]));
+            %imshow(TestGrabCut.img.*repmat(reshape(uint8(res==3),size(res)),[1,1,3]));
             % grabCut has random components... it's hard to verify
         end
 

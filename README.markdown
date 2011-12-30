@@ -15,7 +15,7 @@ The project tree is organized as follows.
     README         this file
     doc/           directory for documentation
     include/       header files
-    matlab/        simlink to +opencv
+    matlab/        simlink to +cv
     src/           directory for c++ source files
     src/matlab/    directory for mex source files
     test/          directory for test scripts and resources
@@ -28,7 +28,7 @@ Prerequisite: matlab, opencv, pkg-config
 
     $ make
 
-This will build all mex functions in `matlab/` (or `+opencv/`).
+This will build all mex functions in `+cv/` (or `matlab/`).
 Specify you matlab directory if you install matlab other than /usr/local/matlab
 
     $ make MATLABDIR=/path/to/matlab
@@ -81,10 +81,11 @@ The minimum contents of myfunc.cpp would look something like this:
     void mexFunction( int nlhs, mxArray *plhs[],
                       int nrhs, const mxArray *prhs[] )
     {
+    	// Check arguments
         if (nlhs!=1 || nrhs!=1)
             mexErrMsgIdAndTxt("myfunc:invalidArgs","Wrong number of arguments");
-        cv::Mat mat(MxArray(prhs[0]).toMat());
-        plhs[0] = MxArray(mat);
+        cv::Mat mat = MxArray(prhs[0]).toMat();  // Convert MxArray to cv::Mat
+        plhs[0] = MxArray(mat);  // Convert cv::Mat back to mxArray*
     }
 
 This example simply copies an input to cv::Mat object and then copies again to
@@ -129,3 +130,8 @@ You can create a Matlab help documentation for mex function by having the same
 file with '.m' extension. For example, on linux 64-bit architecture, the help
 file for filter2D.mexa64 would be filter2D.m. Inside the help file should be
 only matlab comments.
+
+License
+=======
+
+The code may be redistributed under BSD license.

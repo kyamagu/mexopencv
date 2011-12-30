@@ -4,28 +4,35 @@
 @date   December 2011
 @details
 
-@htmlonly
-<h1>Compile</h1>
-<p>Prerequisite: matlab, opencv, pkg-config</p>
-<pre>
-$ make
-</pre>
-<p>Specify you matlab directory if you install matlab other than /usr/local/matlab</p>
-<pre>
-$ make MATLABDIR=/path/to/matlab
-</pre>
-<p>Check Makefile for details</p>
-<h1>Usage</h1>
-<p>Once mex functions are compiled, you can add path to this directory and call
-mex functions from matlab with package name 'opencv'</p>
-<pre>
+@section Compile
+
+Prerequisite: matlab, opencv, pkg-config
+
+@code
+make
+@endcode
+
+Specify you matlab directory if you install matlab other than /usr/local/matlab
+
+@code
+make MATLABDIR=/path/to/matlab
+@endcode
+
+Check @c Makefile for details
+
+@section Usage
+
+Once mex functions are compiled, you can add path to this directory and call
+mex functions from matlab with package name 'opencv'
+
+@code
   addpath('/path/to/mexopencv');
-  result = opencv.filter2d(img, kern);    % with package name opencv
-</pre>
-<p>Or, you can add path to matlab/ directory</p>
-<pre>
+  result = cv.filter2D(img, kern); % with package name 'cv'
+@endcode
+
+Or, you can add path to matlab/ directory
+@code
   addpath('/path/to/mexopencv/matlab');
-  result = filter2d(img, kern);           % no need to specify opencv
-</pre>
-@endhtmlonly
+  result = filter2D(img, kern);    % no need to specify 'cv'
+@endcode
 */

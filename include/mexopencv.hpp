@@ -1,227 +1,266 @@
 /**
- * @file cvmx.hpp
- * @brief data converter and utilities for mxArray and cv::Mat
+ * @file mexopencv.hpp
+ * @brief MxArray and global constant definitions
  * @author Kota Yamaguchi
  * @date 2011
+ */
+#ifndef __MEXOPENCV_HPP__
+#define __MEXOPENCV_HPP__
+
+#include "MxArray.hpp"
+
+/** std::map wrapper with one-line initialization and lookup method
  * @details
- * Usage:
+ * Initialization
  * @code
- * Mat m = MxArray(a);
- * mxArray* a = MxArray(m);
+ * const ConstMap<std::string,int> BorderType = ConstMap<std::string,int>
+ *     ("Replicate",  cv::BORDER_REPLICATE)
+ *     ("Constant",   cv::BORDER_CONSTANT)
+ *     ("Reflect",    cv::BORDER_REFLECT);
+ * @endcode
+ * Lookup
+ * @code
+ * BorderType["Constant"] // => cv::BORDER_CONSTANT
  * @endcode
  */
-#ifndef __CVMX_HPP__
-#define __CVMX_HPP__
-
-#include "mex.h"
-#include "cv.h"
-#include <map>
-#include <string>
-
-/** mxArray object wrapper for conversion and manipulation
- */
-class MxArray {
-	public:
-		// Constructor is converter
-		explicit MxArray(const mxArray *arr);
-		explicit MxArray(const cv::Mat& mat, mxClassID classid=mxUNKNOWN_CLASS, bool transpose=false);
-		explicit MxArray(const int i);
-		explicit MxArray(const double d);
-		explicit MxArray(const bool b);
-		explicit MxArray(const std::string& s);
-		virtual ~MxArray() {};
-		
-		// Implicit converters
-		operator const mxArray*() const { return p_; };
-		operator mxArray*() const { return const_cast<mxArray*>(p_); };
-		
-		// Explicit converters
-		int toInt() const;
-		double toDouble() const;
-		bool toBool() const;
-		std::string toString() const;
-		cv::Mat toMat(int depth=CV_USRTYPE1, bool transpose=false) const;
-		template <typename T> cv::Point_<T> toPoint() const;
-		template <typename T> cv::Point3_<T> toPoint3() const;
-		template <typename T> cv::Size_<T> toSize() const;
-		template <typename T> cv::Rect_<T> toRect() const;
-		template <typename T> cv::Scalar_<T> toScalar() const;
-		
-		// API wrapper
-		inline const std::string className() const { return std::string(mxGetClassName(p_)); }
-		inline mwSize numel() const { return mxGetNumberOfElements(p_); }
-		inline mwSize ndims() const { return mxGetNumberOfDimensions(p_); }
-		std::vector<mwSize> dims() const;
-		/// Number of rows in array
-		inline mwSize rows() const { return mxGetM(p_); }
-		/// Number of columns in array
-		inline mwSize cols() const { return mxGetN(p_); }
-		mwIndex subs(mwIndex i, mwIndex j) const;
-		mwIndex subs(std::vector<mwIndex>& si) const;
-		
-		// Status checker
-		inline bool isCell() const { return mxIsCell(p_); }
-		inline bool isChar() const { return mxIsChar(p_); }
-		/** Determine whether array is member of specified class
-		 * @return true if the array is of the corresponding class s
-		 */
-		inline bool isClass(std::string s) const { return mxIsClass(p_, s.c_str()); }
-		inline bool isComplex() const { return mxIsComplex(p_); }
-		inline bool isDouble() const { return mxIsDouble(p_); }
-		inline bool isEmpty() const { return mxIsEmpty(p_); }
-		static inline bool isFinite(double d) { return mxIsFinite(d); }
-		inline bool isFromGlobalWS() const { return mxIsFromGlobalWS(p_); };
-		static inline bool isInf(double d) { return mxIsInf(d); }
-		inline bool isInt8() const { return mxIsInt8(p_); }
-		inline bool isInt16() const { return mxIsInt16(p_); }
-		inline bool isInt32() const { return mxIsInt32(p_); }
-		inline bool isInt64() const { return mxIsInt64(p_); }
-		inline bool isLogical() const { return mxIsLogical(p_); }
-		inline bool isLogicalScalar() const { return mxIsLogicalScalar(p_); }
-		inline bool isLogicalScalarTrue() const { return mxIsLogicalScalarTrue(p_); }
-		static inline bool isNaN(double d) { return mxIsNaN(d); }
-		inline bool isNumeric() const { return mxIsNumeric(p_); }
-		inline bool isSingle() const { return mxIsSingle(p_); }
-		inline bool isSparse() const { return mxIsSparse(p_); }
-		inline bool isStruct() const { return mxIsStruct(p_); }
-		inline bool isUint8() const { return mxIsUint8(p_); }
-		inline bool isUint16() const { return mxIsUint16(p_); }
-		inline bool isUint32() const { return mxIsUint32(p_); }
-		inline bool isUint64() const { return mxIsUint64(p_); }
-		
-		/// Element accessor
-		template <typename T> const T at(mwIndex index) const;
-		template <typename T> const T at(std::vector<mwIndex>& si) const;
-		
-		// CONSTANT
-		static double Inf() { return mxGetInf(); }
-		static double NaN() { return mxGetNaN(); }
-		static double Eps() { return mxGetEps(); }
+template <typename T, typename U>
+class ConstMap
+{
 	private:
-		const mxArray* p_;
-		
-		inline mxClassID classID() const { return mxGetClassID(p_); }
-		template <typename T> T value() const; // Generic scalar converter
+		std::map<T, U> m_;
+	public:
+		/// Constructor with a single key-value pair
+		ConstMap(const T& key, const U& val)
+		{
+			m_[key] = val;
+		}
+		/// Consecutive insertion operator
+		ConstMap<T, U>& operator()(const T& key, const U& val)
+		{
+			m_[key] = val;
+			return *this;
+		}
+		/// Implicit converter to std::map
+		operator std::map<T, U>() { return m_; }
+		/// Lookup operator; fail if not found
+		U operator [](const T& key) const
+		{
+			typename std::map<T,U>::const_iterator it = m_.find(key);
+			if (it==m_.end())
+				mexErrMsgIdAndTxt("mexopencv:error","Value not found");
+			return (*it).second;
+		}
 };
 
-/** Convert MxArray to Point_<T>
- */
-template <typename T>
-cv::Point_<T> MxArray::toPoint() const
-{
-	if (!isNumeric() || numel()!=2)
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not Point");
-	return cv::Point_<T>(at<T>(0),at<T>(1));
-}
+// Global constants
 
-/** Convert MxArray to Point3_<T>
+/** BorderType map for option processing
  */
-template <typename T>
-cv::Point3_<T> MxArray::toPoint3() const
-{
-	if (!isNumeric() || numel()!=3)
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not Point");
-	return cv::Point3_<T>(at<T>(0),at<T>(1),at<T>(2));
-}
+const ConstMap<std::string,int> BorderType = ConstMap<std::string,int>
+	("Replicate",	cv::BORDER_REPLICATE)
+	("Constant",	cv::BORDER_CONSTANT)
+	("Reflect",		cv::BORDER_REFLECT)
+	("Wrap",		cv::BORDER_WRAP)
+	("Reflect101",	cv::BORDER_REFLECT_101)
+	("Transparent",	cv::BORDER_TRANSPARENT)
+	("Default",		cv::BORDER_DEFAULT)
+	("Isolated",	cv::BORDER_ISOLATED);
 
-/** Convert MxArray to Size_<T>
+/** KernelType map for option processing
  */
-template <typename T>
-cv::Size_<T> MxArray::toSize() const
-{
-	if (!isNumeric() || numel()!=2)
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray is incompatible to cv::Size");
-	return cv::Size_<T>(at<T>(0),at<T>(1));
-}
+const ConstMap<std::string,int> KernelType = ConstMap<std::string,int>
+	("General",		cv::KERNEL_GENERAL)
+	("Symmetrical",	cv::KERNEL_SYMMETRICAL)
+	("Asymmetrical",cv::KERNEL_ASYMMETRICAL)
+	("Smooth",		cv::KERNEL_SMOOTH)
+	("Integer",		cv::KERNEL_INTEGER);
 
-/** Convert MxArray to Rect_<T>
- * @return cv::Rect_<T> value
+/** Type map for morphological operation for option processing
  */
-template <typename T>
-cv::Rect_<T> MxArray::toRect() const
-{
-	if (!isNumeric() || numel()!=4)
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray is incompatible to cv::Rect");
-	return cv::Rect_<T>(at<T>(0),at<T>(1),at<T>(2),at<T>(3));
-}
+const ConstMap<std::string,int> MorphType = ConstMap<std::string,int>
+	("Erode",	cv::MORPH_ERODE)
+	("Dilate",	cv::MORPH_DILATE)
+	("Open",	cv::MORPH_OPEN)
+	("Close",	cv::MORPH_CLOSE)
+	("Gradient",cv::MORPH_GRADIENT)
+	("Tophat",	cv::MORPH_TOPHAT)
+	("Blackhat",cv::MORPH_BLACKHAT);
 
-/** Convert MxArray to Scalar_<T>
- * @return cv::Scalar_<T> value
+/** Shape map for morphological operation for option processing
  */
-template <typename T>
-cv::Scalar_<T> MxArray::toScalar() const
-{
-	if (!isNumeric() || numel()!=4)
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray is incompatible to cv::Scalar");
-	return cv::Scalar_<T>(at<T>(0),at<T>(1),at<T>(2),at<T>(3));
-}
+const ConstMap<std::string,int> MorphShape = ConstMap<std::string,int>
+	("Rect",	cv::MORPH_RECT)
+	("Cross",	cv::MORPH_CROSS)
+	("Ellipse",	cv::MORPH_ELLIPSE);
 
-/** Template for element accessor
- * @return value of the element at index
+/** Interpolation type map for option processing
  */
-template <typename T>
-const T MxArray::at(mwIndex index) const
-{
-	if (numel() <= index)
-		mexErrMsgIdAndTxt("mexopencv:error","Accessing invalid range");
-	switch (classID()) {
-		case mxCHAR_CLASS:
-			return static_cast<T>(*(mxGetChars(p_)+index));
-		case mxDOUBLE_CLASS:
-			return static_cast<T>(*(mxGetPr(p_)+index));
-		case mxINT8_CLASS:
-			static_cast<T>(*(reinterpret_cast<int8_t*>(mxGetData(p_))+index));
-		case mxUINT8_CLASS:
-			static_cast<T>(*(reinterpret_cast<uint8_t*>(mxGetData(p_))+index));
-		case mxINT16_CLASS:
-			static_cast<T>(*(reinterpret_cast<int16_t*>(mxGetData(p_))+index));
-		case mxUINT16_CLASS:
-			static_cast<T>(*(reinterpret_cast<uint16_t*>(mxGetData(p_))+index));
-		case mxINT32_CLASS:
-			static_cast<T>(*(reinterpret_cast<int32_t*>(mxGetData(p_))+index));
-		case mxUINT32_CLASS:
-			static_cast<T>(*(reinterpret_cast<uint32_t*>(mxGetData(p_))+index));
-		case mxINT64_CLASS:
-			static_cast<T>(*(reinterpret_cast<int64_t*>(mxGetData(p_))+index));
-		case mxUINT64_CLASS:
-			static_cast<T>(*(reinterpret_cast<uint64_t*>(mxGetData(p_))+index));
-		case mxSINGLE_CLASS:
-			static_cast<T>(*(reinterpret_cast<float*>(mxGetData(p_))+index));
-		case mxLOGICAL_CLASS:
-			static_cast<T>(*(reinterpret_cast<mxLogical*>(mxGetData(p_))+index));
-		default:
-			mexErrMsgIdAndTxt("mexopencv:error","MxArray is not primitive");
-	}
-}
+const ConstMap<std::string,int> InterType = ConstMap<std::string,int>
+	("Nearest",	cv::INTER_NEAREST) 	//!< nearest neighbor interpolation
+	("Linear",	cv::INTER_LINEAR) 	//!< bilinear interpolation
+	("Cubic",	cv::INTER_CUBIC) 	//!< bicubic interpolation
+	("Area",	cv::INTER_AREA) 	//!< area-based (or super) interpolation
+	("Lanczos4",cv::INTER_LANCZOS4) //!< Lanczos interpolation over 8x8 neighborhood
+	("Max",		cv::INTER_MAX)
+	("WarpInverseMap",	cv::WARP_INVERSE_MAP);
 
-
-/** Template for element accessor
- * @return value of the element at subscript index
+/** Thresholding type map for option processing
  */
-template <typename T>
-const T MxArray::at(std::vector<mwIndex>& si) const
-{
-	return at<T>(subs(si));
-}
+const ConstMap<std::string,int> ThreshType = ConstMap<std::string,int>
+	("Binary",		cv::THRESH_BINARY)
+	("BinaryInv",	cv::THRESH_BINARY_INV)
+	("Trunc",		cv::THRESH_TRUNC)
+	("ToZero",		cv::THRESH_TOZERO)
+	("ToZeroInv",	cv::THRESH_TOZERO_INV)
+	("Mask",		cv::THRESH_MASK)
+    ("Otsu",		cv::THRESH_OTSU);
 
-/** BorderType helper for option processing
- *
+/** Adaptive thresholding type map for option processing
  */
-struct BorderType {
-	static int get(const mxArray *arr);
-	static std::map<std::string, int> const m;
-	static std::map<std::string, int> create_border_type() {
-		std::map<std::string, int> m;
-		m["Replicate"]		= cv::BORDER_REPLICATE;
-		m["Constant"]   	= cv::BORDER_CONSTANT;
-		m["Reflect"] 		= cv::BORDER_REFLECT;
-		m["Wrap"]			= cv::BORDER_WRAP;
-		m["Reflect101"] 	= cv::BORDER_REFLECT_101;
-		m["Transparent"]	= cv::BORDER_TRANSPARENT;
-		m["Default"] 		= cv::BORDER_DEFAULT;
-		m["Isolated"]		= cv::BORDER_ISOLATED;
-		return m;
-	}
-};
+const ConstMap<std::string,int> AdaptiveThreshType = ConstMap<std::string,int>
+	("Mean",	cv::ADAPTIVE_THRESH_MEAN_C)
+	("Gaussian",cv::ADAPTIVE_THRESH_GAUSSIAN_C);
+
+/** GrabCut algorithm types for option processing
+ */
+const ConstMap<std::string,int> GrabCutType = ConstMap<std::string,int>
+	("Rect",cv::GC_INIT_WITH_RECT)
+	("Mask",cv::GC_INIT_WITH_MASK)
+	("Eval",cv::GC_EVAL);
+
+/** Inpainting algorithm types for option processing
+ */
+const ConstMap<std::string,int> InpaintType = ConstMap<std::string,int>
+	("NS",		cv::INPAINT_NS)
+	("Telea",	cv::INPAINT_TELEA);
+
+/** Color conversion types for option processing
+ */
+const ConstMap<std::string,int> ColorConv = ConstMap<std::string,int>
+	("BGR2BGRA",		cv::COLOR_BGR2BGRA)
+	("RGB2RGBA",		cv::COLOR_RGB2RGBA)
+	("BGRA2BGR",		cv::COLOR_BGRA2BGR)
+	("RGBA2RGB",		cv::COLOR_RGBA2RGB)
+	("BGR2RGBA",		cv::COLOR_BGR2RGBA)
+	("RGB2BGRA",		cv::COLOR_RGB2BGRA)
+	("RGBA2BGR",		cv::COLOR_RGBA2BGR)
+	("BGRA2RGB",		cv::COLOR_BGRA2RGB)
+	("BGR2RGB",			cv::COLOR_BGR2RGB)
+	("RGB2BGR",			cv::COLOR_RGB2BGR)
+	("BGRA2RGBA",		cv::COLOR_BGRA2RGBA)
+	("RGBA2BGRA",		cv::COLOR_RGBA2BGRA)
+	("BGR2GRAY",		cv::COLOR_BGR2GRAY)
+	("RGB2GRAY",		cv::COLOR_RGB2GRAY)
+	("GRAY2BGR",		cv::COLOR_GRAY2BGR)
+	("GRAY2RGB",		cv::COLOR_GRAY2RGB)
+	("GRAY2BGRA",		cv::COLOR_GRAY2BGRA)
+	("GRAY2RGBA",		cv::COLOR_GRAY2RGBA)
+	("BGRA2GRAY",		cv::COLOR_BGRA2GRAY)
+	("RGBA2GRAY",		cv::COLOR_RGBA2GRAY)
+	("BGR2BGR565",		cv::COLOR_BGR2BGR565)
+	("RGB2BGR565",		cv::COLOR_RGB2BGR565)
+	("BGR5652BGR",		cv::COLOR_BGR5652BGR)
+	("BGR5652RGB",		cv::COLOR_BGR5652RGB)
+	("BGRA2BGR565",		cv::COLOR_BGRA2BGR565)
+	("RGBA2BGR565",		cv::COLOR_RGBA2BGR565)
+	("BGR5652BGRA",		cv::COLOR_BGR5652BGRA)
+	("BGR5652RGBA",		cv::COLOR_BGR5652RGBA)
+	("GRAY2BGR565",		cv::COLOR_GRAY2BGR565)
+	("BGR5652GRAY",		cv::COLOR_BGR5652GRAY)
+	("BGR2BGR555",		cv::COLOR_BGR2BGR555)
+	("RGB2BGR555",		cv::COLOR_RGB2BGR555)
+	("BGR5552BGR",		cv::COLOR_BGR5552BGR)
+	("BGR5552RGB",		cv::COLOR_BGR5552RGB)
+	("BGRA2BGR555",		cv::COLOR_BGRA2BGR555)
+	("RGBA2BGR555",		cv::COLOR_RGBA2BGR555)
+	("BGR5552BGRA",		cv::COLOR_BGR5552BGRA)
+	("BGR5552RGBA",		cv::COLOR_BGR5552RGBA)
+	("GRAY2BGR555",		cv::COLOR_GRAY2BGR555)
+	("BGR5552GRAY",		cv::COLOR_BGR5552GRAY)
+	("BGR2XYZ",			cv::COLOR_BGR2XYZ)
+	("RGB2XYZ",			cv::COLOR_RGB2XYZ)
+	("XYZ2BGR",			cv::COLOR_XYZ2BGR)
+	("XYZ2RGB",			cv::COLOR_XYZ2RGB)
+	("BGR2YCrCb",		cv::COLOR_BGR2YCrCb)
+	("RGB2YCrCb",		cv::COLOR_RGB2YCrCb)
+	("YCrCb2BGR",		cv::COLOR_YCrCb2BGR)
+	("YCrCb2RGB",		cv::COLOR_YCrCb2RGB)
+	("BGR2HSV",			cv::COLOR_BGR2HSV)
+	("RGB2HSV",			cv::COLOR_RGB2HSV)
+	("BGR2Lab",			cv::COLOR_BGR2Lab)
+	("RGB2Lab",			cv::COLOR_RGB2Lab)
+	("BayerBG2BGR",		cv::COLOR_BayerBG2BGR)
+	("BayerGB2BGR",		cv::COLOR_BayerGB2BGR)
+	("BayerRG2BGR",		cv::COLOR_BayerRG2BGR)
+	("BayerGR2BGR",		cv::COLOR_BayerGR2BGR)
+	("BayerBG2RGB",		cv::COLOR_BayerBG2RGB)
+	("BayerGB2RGB",		cv::COLOR_BayerGB2RGB)
+	("BayerRG2RGB",		cv::COLOR_BayerRG2RGB)
+	("BayerGR2RGB",		cv::COLOR_BayerGR2RGB)
+	("BGR2Luv",			cv::COLOR_BGR2Luv)
+	("RGB2Luv",			cv::COLOR_RGB2Luv)
+	("BGR2HLS",			cv::COLOR_BGR2HLS)
+	("RGB2HLS",			cv::COLOR_RGB2HLS)
+	("HSV2BGR",			cv::COLOR_HSV2BGR)
+	("HSV2RGB",			cv::COLOR_HSV2RGB)
+	("Lab2BGR",			cv::COLOR_Lab2BGR)
+	("Lab2RGB",			cv::COLOR_Lab2RGB)
+	("Luv2BGR",			cv::COLOR_Luv2BGR)
+	("Luv2RGB",			cv::COLOR_Luv2RGB)
+	("HLS2BGR",			cv::COLOR_HLS2BGR)
+	("HLS2RGB",			cv::COLOR_HLS2RGB)
+	("BayerBG2BGR_VNG", cv::COLOR_BayerBG2BGR_VNG)
+	("BayerGB2BGR_VNG", cv::COLOR_BayerGB2BGR_VNG)
+	("BayerRG2BGR_VNG", cv::COLOR_BayerRG2BGR_VNG)
+	("BayerGR2BGR_VNG", cv::COLOR_BayerGR2BGR_VNG)
+	("BayerBG2RGB_VNG", cv::COLOR_BayerBG2RGB_VNG)
+	("BayerGB2RGB_VNG", cv::COLOR_BayerGB2RGB_VNG)
+	("BayerRG2RGB_VNG", cv::COLOR_BayerRG2RGB_VNG)
+	("BayerGR2RGB_VNG", cv::COLOR_BayerGR2RGB_VNG)
+	("BGR2HSV_FULL",	cv::COLOR_BGR2HSV_FULL)
+	("RGB2HSV_FULL",	cv::COLOR_RGB2HSV_FULL)
+	("BGR2HLS_FULL",	cv::COLOR_BGR2HLS_FULL)
+	("RGB2HLS_FULL",	cv::COLOR_RGB2HLS_FULL)
+	("HSV2BGR_FULL",	cv::COLOR_HSV2BGR_FULL)
+	("HSV2RGB_FULL",	cv::COLOR_HSV2RGB_FULL)
+	("HLS2BGR_FULL",	cv::COLOR_HLS2BGR_FULL)
+	("HLS2RGB_FULL",	cv::COLOR_HLS2RGB_FULL)
+	("LBGR2Lab",		cv::COLOR_LBGR2Lab)
+	("LRGB2Lab",		cv::COLOR_LRGB2Lab)
+	("LBGR2Luv",		cv::COLOR_LBGR2Luv)
+	("LRGB2Luv",		cv::COLOR_LRGB2Luv)
+	("Lab2LBGR",		cv::COLOR_Lab2LBGR)
+	("Lab2LRGB",		cv::COLOR_Lab2LRGB)
+	("Luv2LBGR",		cv::COLOR_Luv2LBGR)
+	("Luv2LRGB",		cv::COLOR_Luv2LRGB)
+	("BGR2YUV",			cv::COLOR_BGR2YUV)
+	("RGB2YUV",			cv::COLOR_RGB2YUV)
+	("YUV2BGR",			cv::COLOR_YUV2BGR)
+	("YUV2RGB",			cv::COLOR_YUV2RGB)
+	("BayerBG2GRAY",	cv::COLOR_BayerBG2GRAY)
+	("BayerGB2GRAY",	cv::COLOR_BayerGB2GRAY)
+	("BayerRG2GRAY",	cv::COLOR_BayerRG2GRAY)
+	("BayerGR2GRAY",	cv::COLOR_BayerGR2GRAY)
+	("YUV420i2RGB",		cv::COLOR_YUV420i2RGB)
+	("YUV420i2BGR",		cv::COLOR_YUV420i2BGR)
+	("YUV420sp2RGB",	cv::COLOR_YUV420sp2RGB)
+	("YUV420sp2BGR",	cv::COLOR_YUV420sp2BGR)
+	("COLORCVT_MAX",	cv::COLOR_COLORCVT_MAX);
+
+/** Mode of the contour retrieval algorithm for option processing
+ */
+const ConstMap<std::string,int> ContourMode = ConstMap<std::string,int>
+	("External",cv::RETR_EXTERNAL)	//!< retrieve only the most external (top-level) contours
+	("List",	cv::RETR_LIST)		//!< retrieve all the contours without any hierarchical information
+	("CComp",	cv::RETR_CCOMP)		//!< retrieve the connected components (that can possibly be nested)
+	("Tree",	cv::RETR_TREE); 	//!< retrieve all the contours and the whole hierarchy
+
+/** Type of the contour approximation algorithm for option processing
+ */
+const ConstMap<std::string,int> ContourType = ConstMap<std::string,int>
+	("None",		cv::CHAIN_APPROX_NONE)
+	("Simple",		cv::CHAIN_APPROX_SIMPLE)
+	("TC89_L1",		cv::CHAIN_APPROX_TC89_L1)
+	("TC89_KCOS",	cv::CHAIN_APPROX_TC89_KCOS);
 
 #endif
