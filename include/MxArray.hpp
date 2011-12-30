@@ -23,11 +23,12 @@
 class MxArray {
 	public:
 		explicit MxArray(const mxArray *arr);
-		explicit MxArray(const cv::Mat& mat, mxClassID classid=mxUNKNOWN_CLASS, bool transpose=false);
 		explicit MxArray(const int i);
 		explicit MxArray(const double d);
 		explicit MxArray(const bool b);
 		explicit MxArray(const std::string& s);
+		explicit MxArray(const cv::Mat& mat, mxClassID classid=mxUNKNOWN_CLASS, bool transpose=false);
+		template <typename T> explicit MxArray(const std::vector<T>& v);
 		/// Destructor
 		virtual ~MxArray() {};
 		
@@ -134,6 +135,17 @@ class MxArray {
 		const MxArray& operator=(const MxArray& rhs) {}
 		template <typename T> T value() const;
 };
+
+
+/** MxArray constructor from vector<T>
+ * @param v vector of type T
+ */
+template <typename T>
+MxArray::MxArray(const std::vector<T>& v) : p_(mxCreateCellMatrix(1,v.size()))
+{
+	for (int i = 0; i < v.size(); ++i)
+		mxSetCell(const_cast<mxArray*>(p_), i, MxArray(v[i]));
+}
 
 /** Convert MxArray to Point_<T>
  */
