@@ -1,6 +1,6 @@
 /**
- * @file erode.cpp
- * @brief mex interface for erode
+ * @file GaussianBlur.cpp
+ * @brief mex interface for GaussianBlur
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -26,29 +26,26 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	vector<MxArray> rhs(prhs,prhs+nrhs);
 	
 	// Option processing
-	Mat element;
-	Point anchor(-1,-1);
-	int iterations = 1;
+	Size ksize(5,5);
+	double sigmaX = 0;
+	double sigmaY = 0;
 	int borderType = BORDER_DEFAULT;
-	Scalar borderValue = morphologyDefaultBorderValue();
 	for (int i=1; i<nrhs; i+=2) {
 		string key = rhs[i].toString();
-		if (key=="Element")
-			element = rhs[i+1].toMat(CV_8U);
-		else if (key=="Anchor")
-			anchor = rhs[i+1].toPoint<int>();
-		else if (key=="Iterations")
-			iterations = rhs[i+1].toInt();
+		if (key=="KSize")
+			ksize = rhs[i+1].toSize<int>();
+		else if (key=="SigmaX")
+			sigmaX = rhs[i+1].toDouble();
+		else if (key=="SigmaY")
+			sigmaY = rhs[i+1].toDouble();
 		else if (key=="BorderType")
 			borderType = BorderType[rhs[i+1].toString()];
-		else if (key=="BorderType")
-			borderValue = rhs[i+1].toScalar<float>();
 		else
 			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 	}
 	
 	// Process
 	Mat src(rhs[0].toMat()), dst;
-	erode(src, dst, element, anchor, iterations, borderType, borderValue);
+	GaussianBlur(src, dst, ksize, sigmaX, sigmaY, borderType);
 	plhs[0] = MxArray(dst);
 }
