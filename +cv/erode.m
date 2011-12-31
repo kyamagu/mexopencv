@@ -14,12 +14,12 @@
 % Output:
 %     dst: Destination image of the same size and type as src.
 % Options:
-%     'Element': Structuring element used for dilation. By default, a 3 x 3
+%     'Element': Structuring element used for erosion. By default, a 3 x 3
 %                rectangular structuring element is used
 %     'Anchor': Position of the anchor within the element. The default value
 %               [-1, -1] means that the anchor is at the element center.
-%     'iterations': Number of times dilation is applied.
+%     'iterations': Number of times erosion is applied.
 %     'BorderType': Border mode used to extrapolate pixels outside of the
-%                   image. default 'Default'
+%                   image. default 'Constant'
 %     'borderValue': Border value in case of a constant border. The default
 %                    value has a special meaning.

@@ -20,6 +20,6 @@
 %               [-1, -1] means that the anchor is at the element center.
 %     'iterations': Number of times dilation is applied.
 %     'BorderType': Border mode used to extrapolate pixels outside of the
-%                   image. default 'Default'
+%                   image. default 'Constant'
 %     'borderValue': Border value in case of a constant border. The default
 %                    value has a special meaning.

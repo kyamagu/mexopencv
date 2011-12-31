@@ -1,6 +1,6 @@
 /**
- * @file dilate.cpp
- * @brief mex interface for dilate
+ * @file morphologyEx.cpp
+ * @brief mex interface for morphologyEx
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -19,7 +19,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
 	// Check the number of arguments
-	if (nrhs<1 || ((nrhs%2)!=1) || nlhs>1)
+	if (nrhs<2 || ((nrhs%2)!=0) || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
 	// Argument vector
@@ -31,7 +31,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	int iterations = 1;
 	int borderType = BORDER_CONSTANT;
 	Scalar borderValue = morphologyDefaultBorderValue();
-	for (int i=1; i<nrhs; i+=2) {
+	for (int i=2; i<nrhs; i+=2) {
 		string key = rhs[i].toString();
 		if (key=="Element")
 			element = rhs[i+1].toMat(CV_8U);
@@ -49,6 +49,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	
 	// Process
 	Mat src(rhs[0].toMat()), dst;
-	dilate(src, dst, element, anchor, iterations, borderType, borderValue);
+	int op = MorphType[rhs[1].toString()];
+	morphologyEx(src, dst, op, element, anchor, iterations, borderType, borderValue);
 	plhs[0] = MxArray(dst);
 }
