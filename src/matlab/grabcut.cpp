@@ -1,6 +1,6 @@
 /**
  * @file grabCut.cpp
- * @brief mex interface for OpenCV's grabCut
+ * @brief mex interface for grabCut
  * @author Kota Yamaguchi
  * @date 2011
  * @details

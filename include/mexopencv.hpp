@@ -117,7 +117,7 @@ const ConstMap<std::string,int> ThreshType = ConstMap<std::string,int>
 
 /** Adaptive thresholding type map for option processing
  */
-const ConstMap<std::string,int> AdaptiveThreshType = ConstMap<std::string,int>
+const ConstMap<std::string,int> AdaptiveMethod = ConstMap<std::string,int>
 	("Mean",	cv::ADAPTIVE_THRESH_MEAN_C)
 	("Gaussian",cv::ADAPTIVE_THRESH_GAUSSIAN_C);
 
