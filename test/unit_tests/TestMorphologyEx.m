@@ -30,7 +30,7 @@ classdef TestMorphologyEx
         
         function test_error_1
             try
-                dilate();
+                morphologyEx();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

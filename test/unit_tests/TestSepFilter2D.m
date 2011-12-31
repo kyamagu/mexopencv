@@ -1,7 +1,7 @@
-classdef TestGaussianBlur
-    %TestGaussianBlur
+classdef TestSepFilter2D
+    %TestSepFilter2D
     properties (Constant)
-        img = uint8([...
+        img = [...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
@@ -12,21 +12,20 @@ classdef TestGaussianBlur
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
-            ]);
+            ];
     end
     
     methods (Static)
         function test_1
-            result = GaussianBlur(TestGaussianBlur.img);
-        end
-        
-        function test_2
-            result = GaussianBlur(TestGaussianBlur.img, 'KSize', [5,7]);
+            kernel = [1 1 1;];
+            reference = filter2(kernel,TestSepFilter2D.img);
+            result = sepFilter2D(TestSepFilter2D.img,kernel,1);
+            assert(all(abs(reference(:) - result(:)) < 1e-15));
         end
         
         function test_error_1
             try
-                GaussianBlur();
+                sepFilter2D();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

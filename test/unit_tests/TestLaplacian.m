@@ -1,5 +1,5 @@
-classdef TestGaussianBlur
-    %TestGaussianBlur
+classdef TestLaplacian
+    %TestLaplacian
     properties (Constant)
         img = uint8([...
             0 0 0 0 0 0 0 0 0 0;...
@@ -17,16 +17,16 @@ classdef TestGaussianBlur
     
     methods (Static)
         function test_1
-            result = GaussianBlur(TestGaussianBlur.img);
+            result = Laplacian(TestLaplacian.img);
         end
         
         function test_2
-            result = GaussianBlur(TestGaussianBlur.img, 'KSize', [5,7]);
+            result = Laplacian(TestLaplacian.img,'KSize',5);
         end
         
         function test_error_1
             try
-                GaussianBlur();
+                Laplacian();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

@@ -1,6 +1,6 @@
 /**
- * @file filter2D.cpp
- * @brief mex interface for filter2D
+ * @file sepFilter2D.cpp
+ * @brief mex interface for sepFilter2D
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -14,14 +14,12 @@ using namespace cv;
  * @param plhs pointers to mxArrays in the left-hand-side
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
- *
- * Wrapper for filter2D
  */
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
 	// Check the number of arguments
-	if (nrhs<2 || (nrhs%2)==1 || nlhs>1)
+	if (nrhs<3 || (nrhs%2)!=1 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
 
 	// Argument vector
@@ -32,7 +30,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	int ddepth = -1;
 	int delta = 0;
 	int borderType = BORDER_DEFAULT;
-	for (int i=2; i<nrhs; i+=2) {
+	for (int i=3; i<nrhs; i+=2) {
 		string key = rhs[i].toString();
 		if (key=="Anchor")
 			anchor = rhs[i+1].toPoint<int>();
@@ -47,20 +45,22 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	}
 	
 	// Convert mxArray to cv::Mat
-	Mat img(rhs[0].toMat()), kernel(rhs[1].toMat());
+	Mat img(rhs[0].toMat());
+	Mat rowKernel(rhs[1].toMat()), columnKernel(rhs[2].toMat());
 	
 	// Apply filter 2D
 	// There seems to be a bug in filter when BORDER_CONSTANT is used
-	filter2D(
+	sepFilter2D(
 		img,                    // src type
 		img,                    // dst type
 		ddepth,                 // dst depth
-		kernel,                 // 2D kernel
+		rowKernel,              // 1D kernel
+		columnKernel,           // 1D kernel
 		anchor,                 // anchor point, center if (-1,-1)
 		delta,                  // bias added after filtering
 		borderType	            // border type
 		);
 	
 	// Convert cv::Mat to mxArray
-	plhs[0] = MxArray(img,rhs[0].classID());
+	plhs[0] = MxArray(img);
 }
