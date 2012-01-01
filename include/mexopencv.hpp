@@ -340,4 +340,17 @@ const ConstMap<std::string,int> ContourType = ConstMap<std::string,int>
 	("TC89_L1",		cv::CHAIN_APPROX_TC89_L1)
 	("TC89_KCOS",	cv::CHAIN_APPROX_TC89_KCOS);
 
+/** Distance types for Distance Transform and M-estimators
+ */
+const ConstMap<std::string,int> DistType = ConstMap<std::string,int>
+    ("User",	CV_DIST_USER)
+    ("L1",		CV_DIST_L1)
+    ("L2",		CV_DIST_L2)
+    ("C",		CV_DIST_C)
+    ("L12",		CV_DIST_L12)
+    ("Fair",	CV_DIST_FAIR)
+    ("Welsch",	CV_DIST_WELSCH)
+    ("Huber",	CV_DIST_HUBER);
+
+
 #endif

@@ -83,7 +83,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	grabCut(img, mask, rect, bgdModel, fgdModel, iterCount, mode);
 	
 	// Convert cv::Mat to mxArray
-	plhs[0] = MxArray(mask, mxUINT8_CLASS);
+	plhs[0] = MxArray(mask);
 	if (nlhs > 1)
 		plhs[1] = MxArray(bgdModel);
 	if (nlhs > 2)
