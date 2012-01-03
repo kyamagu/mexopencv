@@ -1,4 +1,5 @@
-%DISTANCETRANSFORM  Calculates the distance to the closest zero pixel for each pixel of the source image
+%DISTANCETRANSFORM  Calculates the distance to the closest zero pixel for
+% each pixel of the source image
 %
 %    dst = distanceTransform(src)
 %    dst = distanceTransform(src, 'DistanceType', distanceType, ...)

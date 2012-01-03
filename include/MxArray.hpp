@@ -28,6 +28,11 @@ class MxArray {
 		explicit MxArray(const bool b);
 		explicit MxArray(const std::string& s);
 		explicit MxArray(const cv::Mat& mat, mxClassID classid=mxUNKNOWN_CLASS, bool transpose=false);
+		template <typename T> explicit MxArray(const cv::Point_<T>& p);
+		template <typename T> explicit MxArray(const cv::Point3_<T>& p);
+		template <typename T> explicit MxArray(const cv::Size_<T>& s);
+		template <typename T> explicit MxArray(const cv::Rect_<T>& r);
+		template <typename T> explicit MxArray(const cv::Scalar_<T>& r);
 		template <typename T> explicit MxArray(const std::vector<T>& v);
 		/// Destructor
 		virtual ~MxArray() {};
@@ -137,7 +142,7 @@ class MxArray {
 };
 
 
-/** MxArray constructor from vector<T>
+/** MxArray constructor from vector<T>. Make a cell array.
  * @param v vector of type T
  */
 template <typename T>
@@ -145,6 +150,66 @@ MxArray::MxArray(const std::vector<T>& v) : p_(mxCreateCellMatrix(1,v.size()))
 {
 	for (int i = 0; i < v.size(); ++i)
 		mxSetCell(const_cast<mxArray*>(p_), i, MxArray(v[i]));
+}
+
+/** MxArray constructor from cv::Point_<T>
+ */
+template <typename T>
+MxArray::MxArray(const cv::Point_<T>& p) :
+	p_(mxCreateNumericMatrix(1,2,mxDOUBLE_CLASS,mxREAL))
+{
+	double *x = mxGetPr(p_);
+	x[0] = p.x;
+	x[1] = p.y;
+}
+
+/** MxArray constructor from cv::Point3_<T>
+ */
+template <typename T>
+MxArray::MxArray(const cv::Point3_<T>& p) :
+	p_(mxCreateNumericMatrix(1,3,mxDOUBLE_CLASS,mxREAL))
+{
+	double *x = mxGetPr(p_);
+	x[0] = p.x;
+	x[1] = p.y;
+	x[2] = p.z;
+}
+
+/** MxArray constructor from cv::Size_<T>
+ */
+template <typename T>
+MxArray::MxArray(const cv::Size_<T>& s) :
+	p_(mxCreateNumericMatrix(1,2,mxDOUBLE_CLASS,mxREAL))
+{
+	double *x = mxGetPr(p_);
+	x[0] = s.width;
+	x[1] = s.height;
+}
+
+/** MxArray constructor from cv::Rect_<T>
+ */
+template <typename T>
+MxArray::MxArray(const cv::Rect_<T>& r) :
+	p_(mxCreateNumericMatrix(1,4,mxDOUBLE_CLASS,mxREAL))
+{
+	double *x = mxGetPr(p_);
+	x[0] = r.x;
+	x[1] = r.y;
+	x[2] = r.width;
+	x[3] = r.height;
+}
+
+/** MxArray constructor from cv::Scalar_<T>
+ */
+template <typename T>
+MxArray::MxArray(const cv::Scalar_<T>& s) :
+	p_(mxCreateNumericMatrix(1,4,mxDOUBLE_CLASS,mxREAL))
+{
+	double *x = mxGetPr(p_);
+	x[0] = s[0];
+	x[1] = s[1];
+	x[2] = s[2];
+	x[3] = x[3];
 }
 
 /** Convert MxArray to Point_<T>
@@ -194,9 +259,14 @@ cv::Rect_<T> MxArray::toRect() const
 template <typename T>
 cv::Scalar_<T> MxArray::toScalar() const
 {
-	if (!isNumeric() || numel()!=4)
+	if (!(isNumeric() && 1<=numel() && numel()<=4))
 		mexErrMsgIdAndTxt("mexopencv:error","MxArray is incompatible to cv::Scalar");
-	return cv::Scalar_<T>(at<T>(0),at<T>(1),at<T>(2),at<T>(3));
+	switch (numel()) {
+		case 1: return cv::Scalar_<T>(at<T>(0));
+		case 2: return cv::Scalar_<T>(at<T>(0),at<T>(1));
+		case 3: return cv::Scalar_<T>(at<T>(0),at<T>(1),at<T>(2));
+		case 4: return cv::Scalar_<T>(at<T>(0),at<T>(1),at<T>(2),at<T>(3));
+	}
 }
 
 /** Template for element accessor
