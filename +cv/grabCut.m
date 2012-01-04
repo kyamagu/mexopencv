@@ -1,4 +1,4 @@
-%grabCut  Runs the GrabCut algorithm
+%GRABCUT  Runs the GrabCut algorithm
 %
 %    [ trimap ] = grabCut(img, bbox);
 %    [ trimap ] = grabCut(img, trimap);

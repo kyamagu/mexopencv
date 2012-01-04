@@ -2,7 +2,7 @@
  * @file floodFill.cpp
  * @brief mex interface for floodFill
  * @author Kota Yamaguchi
- * @date 2011
+ * @date 2012
  */
 #include "mexopencv.hpp"
 using namespace std;

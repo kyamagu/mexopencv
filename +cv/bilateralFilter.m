@@ -1,4 +1,4 @@
-%bilateralFilter  apply bilateral filter
+%BILATERALFILTER  Applies the bilateral filter to an image
 %
 %    result = bilateralFilter(img)
 %    result = bilateralFilter(img, 'Diameter', -1, ...)

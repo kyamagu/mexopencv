@@ -2,7 +2,7 @@
  * @file grabCut.cpp
  * @brief mex interface for grabCut
  * @author Kota Yamaguchi
- * @date 2011
+ * @date 2012
  * @details
  * <pre>
  * Usage:

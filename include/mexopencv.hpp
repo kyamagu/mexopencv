@@ -112,8 +112,8 @@ const ConstMap<std::string,int> ThreshType = ConstMap<std::string,int>
 	("Trunc",		cv::THRESH_TRUNC)
 	("ToZero",		cv::THRESH_TOZERO)
 	("ToZeroInv",	cv::THRESH_TOZERO_INV)
-	("Mask",		cv::THRESH_MASK)
-    ("Otsu",		cv::THRESH_OTSU);
+	("Mask",		cv::THRESH_MASK);
+    //("Otsu",		cv::THRESH_OTSU);
 
 /** Adaptive thresholding type map for option processing
  */

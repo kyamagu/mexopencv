@@ -1,7 +1,7 @@
-%filter2D  apply 2D filter
+%FILTER2D  Convolves an image with the kernel
 %
-%    result = filter2D(img, kernel)
-%    result = filter2D(img, kernel, 'Anchor', [0,1], ...)
+%    dst = filter2D(src, kernel)
+%    dst = filter2D(src, kernel, 'Anchor', [0,1], ...)
 %
 %  Input:
 %    img:

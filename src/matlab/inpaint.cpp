@@ -1,6 +1,6 @@
 /**
- * @file cvtColor.cpp
- * @brief mex interface for cvtColor
+ * @file inpaint.cpp
+ * @brief mex interface for inpaint
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -26,18 +26,20 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	vector<MxArray> rhs(prhs,prhs+nrhs);
 	
 	// Option processing
-	int dstCn = 0;
+	double inpaintRadius = 3.0;
+	int flags = INPAINT_NS;
 	for (int i=2; i<nrhs; i+=2) {
 		string key = rhs[i].toString();
-		if (key=="DstCn")
-			dstCn = rhs[i+1].toInt();
+		if (key=="Radius")
+			inpaintRadius = rhs[i+1].toDouble();
+		else if (key=="Method")
+			flags = InpaintType[rhs[i+1].toString()];
 		else
 			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 	}
 	
 	// Process
-	Mat src(rhs[0].toMat()), dst;
-	int code = ColorConv[rhs[1].toString()];
-	cvtColor(src, dst, code, dstCn);
+	Mat src(rhs[0].toMat(CV_8U)), mask(rhs[1].toMat(CV_8U)), dst;
+	inpaint(src, mask, dst, inpaintRadius, flags);
 	plhs[0] = MxArray(dst);
 }

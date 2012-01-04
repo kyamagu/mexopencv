@@ -2,7 +2,7 @@
  * @file distanceTransform.cpp
  * @brief mex interface for distanceTransform
  * @author Kota Yamaguchi
- * @date 2011
+ * @date 2012
  */
 #include "mexopencv.hpp"
 using namespace std;
