@@ -38,7 +38,7 @@ classdef UnitTest
             if isprop(mc,'MethodList')
                 mt = {mc.MethodList.Name};
             else
-                mt = cellfun(@(x) x.Name,mc.Properties,'UniformOutput',false);
+                mt = cellfun(@(x) x.Name,mc.Methods,'UniformOutput',false);
             end
             mt = sort(mt(:))';
             for m = mt(strncmp('test',mt,length('test')))
