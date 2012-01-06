@@ -74,9 +74,9 @@ Check a list of functions available by `help` command in matlab.
 Developing a new mex function
 =============================
 
-All you need to do is to add your mex source file in src/matlab/. Suppose you
-want to add a mex function called myfunc. Then, create src/matlab/myfunc.cpp.
-The minimum contents of myfunc.cpp would look something like this:
+All you need to do is to add your mex source file in src/matlab/. If you
+want to add a mex function called myfunc, create src/matlab/myfunc.cpp.
+The minimum contents of the myfunc.cpp would look like this:
 
     #include "mexopencv.hpp"
     void mexFunction( int nlhs, mxArray *plhs[],
@@ -96,12 +96,13 @@ The minimum contents of myfunc.cpp would look something like this:
     }
 
 This example simply copies an input to cv::Mat object and then copies again to
-the output. Of course you would want to do something more with the object.
-Once you create a file, type 'make' to build your new function. The compiled
-mex function will be located under `+cv/` and accessible through `cv.myfunc`
-within matlab.
+the output. Notice how the `MxArray` class provided by mexopencv converts
+mxArray to cv::Mat object. Of course you would want to do something more with
+the object. Once you create a file, type 'make' to build your new function. The
+compiled mex function will be located under `+cv/` and accessible through
+`cv.myfunc` within matlab.
 
-The 'mexopencv' header contains a class `MxArray` to manipulate `mxArray`
+The `mexopencv.hpp` header contains a class `MxArray` to manipulate `mxArray`
 object. Mostly this class is used to convert between opencv data types and
 mxArray.
 
