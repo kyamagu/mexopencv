@@ -26,10 +26,12 @@ Compile
 
 Prerequisite: matlab, opencv, pkg-config
 
+First make sure you have OpenCV installed in the system. Then,
+
     $ make
 
-This will build all mex functions in `+cv/` (or `matlab/`).
-Specify you matlab directory if you install matlab other than /usr/local/matlab
+will build all mex functions in located in `+cv/` (or `matlab/`).
+Specify your matlab directory if you install matlab other than /usr/local/matlab
 
     $ make MATLABDIR=/path/to/matlab
 
@@ -53,8 +55,8 @@ This will create html and latex files under `doc/`.
 Usage
 =====
 
-Once mex functions are compiled, you can add path to this directory and call
-mex functions from matlab with package name `cv`.
+Once mex functions are compiled, you can add path to the project directory and
+call mex functions within matlab using package name `cv`.
 
     addpath('/path/to/mexopencv');
     result = cv.filter2D(img, kern);    % with package name 'cv'
@@ -106,10 +108,10 @@ The `mexopencv.hpp` header contains a class `MxArray` to manipulate `mxArray`
 object. Mostly this class is used to convert between opencv data types and
 mxArray.
 
-    cv::Mat m = MxArray(prhs[0]).toMat();
-    int i = MxArray(prhs[0]).toInt();
-    double d = MxArray(prhs[0]).toDouble();
-    bool b = MxArray(prhs[0]).toBool();
+    cv::Mat m     = MxArray(prhs[0]).toMat();
+    int i         = MxArray(prhs[0]).toInt();
+    double d      = MxArray(prhs[0]).toDouble();
+    bool b        = MxArray(prhs[0]).toBool();
     std::string s = MxArray(prhs[0]).toString();
 
     mxArray* plhs[0] = MxArray(m);
