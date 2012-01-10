@@ -108,17 +108,19 @@ The `mexopencv.hpp` header contains a class `MxArray` to manipulate `mxArray`
 object. Mostly this class is used to convert between opencv data types and
 mxArray.
 
-    cv::Mat m     = MxArray(prhs[0]).toMat();
+    cv::Mat m     = MxArray(prhs[0]).toMat();   # Pixels
     int i         = MxArray(prhs[0]).toInt();
     double d      = MxArray(prhs[0]).toDouble();
     bool b        = MxArray(prhs[0]).toBool();
     std::string s = MxArray(prhs[0]).toString();
+    cv::Mat arr   = MxArray(prhs[0]).toArray(); # N-D array
 
     mxArray* plhs[0] = MxArray(m);
     mxArray* plhs[0] = MxArray(i);
     mxArray* plhs[0] = MxArray(d);
     mxArray* plhs[0] = MxArray(b);
     mxArray* plhs[0] = MxArray(s);
+    mxArray* plhs[0] = MxArray::fromArray(arr);
 
 
 Testing
