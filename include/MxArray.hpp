@@ -34,6 +34,7 @@ class MxArray {
 		template <typename T> explicit MxArray(const cv::Rect_<T>& r);
 		template <typename T> explicit MxArray(const cv::Scalar_<T>& r);
 		template <typename T> explicit MxArray(const std::vector<T>& v);
+		
 		/// Destructor
 		virtual ~MxArray() {};
 		
@@ -53,6 +54,9 @@ class MxArray {
 		template <typename T> cv::Rect_<T> toRect() const;
 		template <typename T> cv::Scalar_<T> toScalar() const;
 		
+		static MxArray fromArray(const cv::Mat&);
+		const cv::Mat toArray() const;
+		
 		// mxArray API wrapper
 		
 		/// Class ID of mxArray
@@ -63,7 +67,7 @@ class MxArray {
 		inline mwSize numel() const { return mxGetNumberOfElements(p_); }
 		/// Number of dimensions
 		inline mwSize ndims() const { return mxGetNumberOfDimensions(p_); }
-		std::vector<mwSize> dims() const;
+		inline const mwSize* dims() const { return mxGetDimensions(p_); };
 		/// Number of rows in array
 		inline mwSize rows() const { return mxGetM(p_); }
 		/// Number of columns in array
@@ -134,8 +138,6 @@ class MxArray {
 		static double Eps() { return mxGetEps(); }
 	private:
 		const mxArray* p_;
-		/// Copy constructor (prohibited)
-		explicit MxArray(const MxArray& rhs) {}
 		/// Assignment operator (prohibited)
 		const MxArray& operator=(const MxArray& rhs) {}
 		template <typename T> T value() const;

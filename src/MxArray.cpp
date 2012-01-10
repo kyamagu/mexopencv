@@ -88,11 +88,11 @@ MxArray::MxArray(const std::string& s) : p_(mxCreateString(s.c_str())) {}
  * Convert cv::Mat to MxArray
  * @param mat cv::Mat object
  * @param classid classid of mxArray. e.g., mxDOUBLE_CLASS. default: automatic conversion
- * @param transpose optional Optional transposition to the return value. default
- *                  false. When true, it reduces internal copying operation
+ * @param transpose Optional transposition to the return value. default
+ *                  false. When true, it skips internal copying operation
  * @return MxArray object
  *
- * The width/height/channels of cv::Mat are are mapped to the first/second/third dimensions of
+ * The width/height/channels of cv::Mat are mapped to the first/second/third dimensions of
  * mxArray, respectively.
  */
 MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
@@ -101,10 +101,10 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 	// Create a new mxArray
 	int nChannels = rm.channels();
 	mwSize nDim = (nChannels>1) ? 3 : 2;
-	mwSize dims[] = {rm.cols, rm.rows, (nChannels>1) ? nChannels : 0};
+	mwSize d[] = {rm.cols, rm.rows, (nChannels>1) ? nChannels : 0};
 	if (classid == mxUNKNOWN_CLASS)
 		classid = depthToClassId(rm.depth());
-	p_ = mxCreateNumericArray(nDim,dims,classid,mxREAL);
+	p_ = mxCreateNumericArray(nDim,d,classid,mxREAL);
 	
 	// Copy each channel
 	std::vector<cv::Mat> mv;
@@ -122,10 +122,30 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 }
 
 /**
+ * Convert cv::Mat to N-D MxArray
+ * @param mat cv::Mat object
+ * @return MxArray object
+ *
+ * The method makes N-D mxArray from cv::Mat
+ */
+MxArray MxArray::fromArray(const cv::Mat& mat)
+{
+	
+	// Create a new mxArray
+	mxClassID classid = depthToClassId(mat.depth());
+	MxArray arr(mxCreateNumericArray(mat.dims, mat.size, classid, mxREAL));
+	
+	// Copy data
+	cv::Mat m(arr.ndims(),arr.dims(),CV_MAKETYPE(mat.depth(),1),mxGetData(arr));
+	mat.copyTo(m);
+	return arr;
+}
+
+/**
  * Convert MxArray to cv::Mat
  * @param depth depth of cv::Mat. e.g., CV_8U, CV_32F. default: automatic conversion
- * @param transpose optional Optional transposition of the input value. default
- *                  false. When true, it reduces internal copying operation
+ * @param transpose Optional transposition of the input value. default
+ *                  false. When true, it skips internal copying operation
  * @return cv::Mat object
  * 
  * The first/second/third dimensions of mxArray are mapped to height/width/channels, respectively
@@ -133,8 +153,8 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 cv::Mat MxArray::toMat(int depth, bool transpose) const
 {
 	// Create cv::Mat object
-	std::vector<mwSize> d = dims();
-	int nChannels = (d.size() > 2) ? d[2] : 1;
+	const mwSize* d = dims();
+	int nChannels = (ndims() > 2) ? d[2] : 1;
 	if (depth == CV_USRTYPE1)
 		depth = classIdToDepth(classID());
 	cv::Mat mat(d[1],d[0],CV_MAKETYPE(depth,nChannels));
@@ -154,6 +174,19 @@ cv::Mat MxArray::toMat(int depth, bool transpose) const
 	}
 	cv::merge(mv,mat);
 	return (transpose) ? mat : cv::Mat(mat.t());
+}
+
+/**
+ * Convert N-D MxArray to cv::Mat
+ * @return const cv::Mat object
+ * 
+ * N-D mxArray is convereted to N-dimensional cv::Mat
+ */
+const cv::Mat MxArray::toArray() const
+{
+	// Create cv::Mat object
+	int depth = classIdToDepth(classID());
+	return cv::Mat(ndims(),dims(),CV_MAKETYPE(depth,1),mxGetData(p_));
 }
 
 /** Convert MxArray to scalar double
@@ -184,14 +217,14 @@ std::string MxArray::toString() const
 	return s;
 }
 
-/** Return dimension vector
- * @return vector of number of elements in each dimension
- */
-std::vector<mwSize> MxArray::dims() const
-{
-	const mwSize *d = mxGetDimensions(p_);
-	return std::vector<mwSize>(d,d+ndims());
-}
+///** Return dimension vector
+// * @return vector of number of elements in each dimension
+// */
+//std::vector<mwSize> MxArray::dims() const
+//{
+//	const mwSize *d = mxGetDimensions(p_);
+//	return std::vector<mwSize>(d,d+ndims());
+//}
 
 /** Offset from first element to desired element
  * @return linear offset of the specified subscript index
