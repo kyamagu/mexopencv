@@ -1,7 +1,7 @@
 mexopencv
 =========
 
-Collection and development kit of matlab mex functions for OpenCV library
+Collection and a development kit of matlab mex functions for OpenCV library
 
 
 Contents
@@ -9,22 +9,22 @@ Contents
 
 The project tree is organized as follows.
 
-    +cv/           directory to put compiled mex files
-    Doxyfile       config file for doxygen
-    Makefile       make script
-    README         this file
-    doc/           directory for documentation
-    include/       header files
-    matlab/        simlink to +cv
-    src/           directory for c++ source files
-    src/matlab/    directory for mex source files
-    test/          directory for test scripts and resources
+    +cv/            directory to put compiled mex files
+    Doxyfile        config file for doxygen
+    Makefile        make script
+    README.markdown this file
+    doc/            directory for documentation
+    include/        header files
+    matlab/         simlink to +cv
+    src/            directory for c++ source files
+    src/matlab/     directory for mex source files
+    test/           directory for test scripts and resources
 
 
 Compile
 =======
 
-Prerequisite: matlab, opencv, pkg-config
+Prerequisite: GNU make, matlab, opencv, pkg-config
 
 First make sure you have OpenCV installed in the system. Then,
 

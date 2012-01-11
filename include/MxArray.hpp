@@ -15,6 +15,7 @@
 
 #include "mex.h"
 #include "cv.h"
+#include <stdint.h>
 #include <map>
 #include <string>
 
@@ -54,7 +55,7 @@ class MxArray {
 		template <typename T> cv::Rect_<T> toRect() const;
 		template <typename T> cv::Scalar_<T> toScalar() const;
 		
-		static MxArray fromArray(const cv::Mat&);
+		static MxArray fromArray(const cv::Mat& mat);
 		const cv::Mat toArray() const;
 		
 		// mxArray API wrapper
@@ -67,6 +68,7 @@ class MxArray {
 		inline mwSize numel() const { return mxGetNumberOfElements(p_); }
 		/// Number of dimensions
 		inline mwSize ndims() const { return mxGetNumberOfDimensions(p_); }
+		/// Array of each dimension
 		inline const mwSize* dims() const { return mxGetDimensions(p_); };
 		/// Number of rows in array
 		inline mwSize rows() const { return mxGetM(p_); }

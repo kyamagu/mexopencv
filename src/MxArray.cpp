@@ -97,6 +97,9 @@ MxArray::MxArray(const std::string& s) : p_(mxCreateString(s.c_str())) {}
  */
 MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 {
+	if (mat.dims > 2)
+		mexErrMsgIdAndTxt("mexopencv:error","cv::Mat is not 2D");
+	
 	const cv::Mat& rm = (transpose) ? mat : cv::Mat(mat.t());
 	// Create a new mxArray
 	int nChannels = rm.channels();
@@ -123,14 +126,16 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 
 /**
  * Convert cv::Mat to N-D MxArray
- * @param mat cv::Mat object
+ * @param mat single-channel cv::Mat object
  * @return MxArray object
  *
  * The method makes N-D mxArray from cv::Mat
  */
 MxArray MxArray::fromArray(const cv::Mat& mat)
 {
-	
+	if (mat.channels() > 1)
+		mexErrMsgIdAndTxt("mexopencv:error","cv::Mat is not single channel");
+		
 	// Create a new mxArray
 	mxClassID classid = depthToClassId(mat.depth());
 	MxArray arr(mxCreateNumericArray(mat.dims, mat.size, classid, mxREAL));
@@ -180,7 +185,7 @@ cv::Mat MxArray::toMat(int depth, bool transpose) const
  * Convert N-D MxArray to cv::Mat
  * @return const cv::Mat object
  * 
- * N-D mxArray is convereted to N-dimensional cv::Mat
+ * N-D mxArray is converted to single-channel, N-dimensional cv::Mat
  */
 const cv::Mat MxArray::toArray() const
 {
