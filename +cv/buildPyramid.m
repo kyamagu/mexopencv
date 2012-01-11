@@ -16,3 +16,4 @@
 % Options:
 %     'MaxLevel': 0-based index of the last (the smallest) pyramid layer. It
 %                 must be non-negative. default 5
+%

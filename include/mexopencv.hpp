@@ -101,8 +101,8 @@ const ConstMap<std::string,int> InterType = ConstMap<std::string,int>
 	("Cubic",	cv::INTER_CUBIC) 	//!< bicubic interpolation
 	("Area",	cv::INTER_AREA) 	//!< area-based (or super) interpolation
 	("Lanczos4",cv::INTER_LANCZOS4) //!< Lanczos interpolation over 8x8 neighborhood
-	("Max",		cv::INTER_MAX)
-	("WarpInverseMap",	cv::WARP_INVERSE_MAP);
+	("Max",		cv::INTER_MAX);
+	//("WarpInverseMap",	cv::WARP_INVERSE_MAP);
 
 /** Thresholding type map for option processing
  */

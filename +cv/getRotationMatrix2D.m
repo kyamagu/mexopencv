@@ -21,4 +21,5 @@
 %     a = scale * cos(angle)
 %     b = scale * sin(angle)
 %
-% See also getAffineTransform, warpAffine, transform
+% See also cv.getAffineTransform, cv.warpAffine
+%

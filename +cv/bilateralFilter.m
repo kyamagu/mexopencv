@@ -38,3 +38,4 @@
 % Filter size: Large filters (d > 5) are very slow, so it is recommended
 % to use d=5 for real-time applications, and perhaps d=9 for offline
 % applications that need heavy noise filtering.
+%

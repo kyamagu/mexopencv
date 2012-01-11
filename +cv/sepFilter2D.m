@@ -14,3 +14,4 @@
 %              means that the anchor is at the kernel center.
 %    'Delta': Value added to the filtered results before storing them.
 %    'BorderType': Pixel extrapolation method
+%

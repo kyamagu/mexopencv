@@ -43,3 +43,4 @@
 % information lost. For many applications, this will not be noticeable but it
 % is recommended to use 32-bit images in applications that need the full range
 % of colors or that convert an image before an operation and then convert back.
+%

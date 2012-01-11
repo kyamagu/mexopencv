@@ -20,3 +20,4 @@
 % area boundary. The function may be used to remove dust and scratches from a
 % scanned photo, or to remove undesirable objects from still images or video.
 % See http://en.wikipedia.org/wiki/Inpainting for more details.
+%

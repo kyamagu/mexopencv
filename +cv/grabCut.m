@@ -17,4 +17,5 @@
 %             'MaxIter' specifies maximum number of iteration.
 %  Output:
 %    trimap: uint8 H-by-W array with
-%            {0:bg, 1:fg, 2:probably-bg, 3:probably-fg}   
+%            {0:bg, 1:fg, 2:probably-bg, 3:probably-fg}
+%

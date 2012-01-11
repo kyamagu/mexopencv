@@ -15,3 +15,4 @@
 % Options:
 %     'KSize': Aperture linear size. It must be odd and greater than 1, for
 %              example: 3, 5, 7 ...
+%

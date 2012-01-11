@@ -27,3 +27,4 @@
 % Note: Any two neighbor connected components are not necessarily separated by
 % a watershed boundary (-1’s pixels); for example, they can touch each other in
 % the initial marker image passed to the function.
+%

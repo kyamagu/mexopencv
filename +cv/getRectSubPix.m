@@ -21,3 +21,4 @@
 % independently. While the center of the rectangle must be inside the image,
 % parts of the rectangle may be outside. In this case, the replication border
 % mode is used to extrapolate the pixel values outside of the image.
+%

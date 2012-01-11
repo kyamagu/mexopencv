@@ -59,3 +59,4 @@
 % In this mode, the complexity is still linear. That is, the function provides
 % a very fast way to compute the Voronoi diagram for a binary image. Currently,
 % the second variant can use only the approximate distance transform algorithm.
+%

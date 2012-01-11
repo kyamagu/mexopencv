@@ -17,3 +17,4 @@
 %               the anchor is at the kernel center.
 %     'BorderType': Border mode used to extrapolate pixels outside of the
 %                   image. default 'Default'
+%

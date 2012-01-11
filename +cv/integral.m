@@ -31,3 +31,4 @@
 % It makes possible to do a fast blurring or fast block correlation with a
 % variable window size, for example. In case of multi-channel images, sums for
 % each channel are accumulated independently.
+%

@@ -37,3 +37,4 @@
 % The function uses the DFT-based algorithm in case of sufficiently large
 % kernels (~``11 x 11`` or larger) and the direct algorithm (that uses the
 % engine retrieved by createLinearFilter() ) for small kernels.
+%

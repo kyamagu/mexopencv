@@ -31,3 +31,4 @@
 % value using the Otsu’s algorithm and uses it instead of the specified thresh.
 % The function returns the computed threshold value. Currently, the Otsu’s
 % method is implemented only for 8-bit images.
+%

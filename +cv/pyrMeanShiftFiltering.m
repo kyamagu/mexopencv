@@ -45,3 +45,4 @@
 % sharper. Note that the results will be actually different from the ones
 % obtained by running the meanshift procedure on the whole original image (i.e.
 % when maxLevel = 0)
+%

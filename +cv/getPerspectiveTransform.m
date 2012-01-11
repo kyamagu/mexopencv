@@ -18,4 +18,5 @@
 %
 %     dst(i,:) = [X_i, Y_i], src(i,:) = [x_i, y_i]
 %
-% See also perspectiveTransform
+% See also cv.perspectiveTransform
+%

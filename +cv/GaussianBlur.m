@@ -22,3 +22,4 @@
 %               of all this semantics, it is recommended to specify all of
 %               ksize, sigmaX, and sigmaY. default 0
 %     'BorderType': Pixel extrapolation method. default 'Default'
+%

@@ -18,3 +18,4 @@
 %                 threshold value for the pixel: 3, 5, 7, and so on.
 %    'C': Constant subtracted from the mean or weighted mean. Normally, it is
 %         positive but may be zero or negative as well.
+%
