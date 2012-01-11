@@ -135,7 +135,7 @@ a couple of test cases are written as a static function whose name starts with
 
 If there is such a class inside `test/unit_tests/`, typing 'make test' would
 invoke all test cases and show your result. Use test/ directory to place any
-resouce file necessary for testing. An example of testing class is shown below:
+resource file necessary for testing. An example of testing class is shown below:
 
     classdef TestMyFunc
         methods (Static)
