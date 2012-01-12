@@ -68,6 +68,9 @@ Or, you can add path to matlab/ directory.
     addpath('/path/to/mexopencv/matlab');
     result = filter2D(img, kern);       % no need to specify 'cv'
 
+Note that some functions such as `cv.imread` overloads Matlab's builtin method.
+Use the scoped name when you need to avoid name collision.
+
 Check a list of functions available by `help` command in matlab.
 
     help cv;    % shows list of functions
