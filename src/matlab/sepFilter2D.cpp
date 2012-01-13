@@ -33,7 +33,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	for (int i=3; i<nrhs; i+=2) {
 		string key = rhs[i].toString();
 		if (key=="Anchor")
-			anchor = rhs[i+1].toPoint<int>();
+			anchor = rhs[i+1].toPoint();
 		else if (key=="DDepth")
 			ddepth = rhs[i+1].toInt();
 		else if (key=="Delta")

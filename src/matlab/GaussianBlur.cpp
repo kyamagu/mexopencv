@@ -33,7 +33,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	for (int i=1; i<nrhs; i+=2) {
 		string key = rhs[i].toString();
 		if (key=="KSize")
-			ksize = rhs[i+1].toSize<int>();
+			ksize = rhs[i+1].toSize();
 		else if (key=="SigmaX")
 			sigmaX = rhs[i+1].toDouble();
 		else if (key=="SigmaY")

@@ -36,13 +36,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		if (key=="Element")
 			element = rhs[i+1].toMat(CV_8U);
 		else if (key=="Anchor")
-			anchor = rhs[i+1].toPoint<int>();
+			anchor = rhs[i+1].toPoint();
 		else if (key=="Iterations")
 			iterations = rhs[i+1].toInt();
 		else if (key=="BorderType")
 			borderType = BorderType[rhs[i+1].toString()];
 		else if (key=="BorderType")
-			borderValue = rhs[i+1].toScalar<float>();
+			borderValue = rhs[i+1].toScalar();
 		else
 			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 	}

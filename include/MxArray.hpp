@@ -49,11 +49,20 @@ class MxArray {
 		bool toBool() const;
 		std::string toString() const;
 		cv::Mat toMat(int depth=CV_USRTYPE1, bool transpose=false) const;
-		template <typename T> cv::Point_<T> toPoint() const;
-		template <typename T> cv::Point3_<T> toPoint3() const;
-		template <typename T> cv::Size_<T> toSize() const;
-		template <typename T> cv::Rect_<T> toRect() const;
-		template <typename T> cv::Scalar_<T> toScalar() const;
+		template <typename T> cv::Point_<T> toPoint_() const;
+		template <typename T> cv::Point3_<T> toPoint3_() const;
+		template <typename T> cv::Size_<T> toSize_() const;
+		template <typename T> cv::Rect_<T> toRect_() const;
+		template <typename T> cv::Scalar_<T> toScalar_() const;
+		
+		/// Alias to toPoint_<int>
+		inline cv::Point toPoint() const { return toPoint_<int>(); }
+		/// Alias to toSize_<int>
+		inline cv::Size toSize() const { return toSize_<int>(); }
+		/// Alias to toRect_<int>
+		inline cv::Rect toRect() const { return toRect_<int>(); }
+		/// Alias to toScalar_<double>
+		inline cv::Scalar toScalar() const { return toScalar_<double>(); }
 		
 		static MxArray fromArray(const cv::Mat& mat);
 		const cv::Mat toArray() const;
@@ -219,7 +228,7 @@ MxArray::MxArray(const cv::Scalar_<T>& s) :
 /** Convert MxArray to Point_<T>
  */
 template <typename T>
-cv::Point_<T> MxArray::toPoint() const
+cv::Point_<T> MxArray::toPoint_() const
 {
 	if (!isNumeric() || numel()!=2)
 		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not Point");
@@ -229,7 +238,7 @@ cv::Point_<T> MxArray::toPoint() const
 /** Convert MxArray to Point3_<T>
  */
 template <typename T>
-cv::Point3_<T> MxArray::toPoint3() const
+cv::Point3_<T> MxArray::toPoint3_() const
 {
 	if (!isNumeric() || numel()!=3)
 		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not Point");
@@ -239,7 +248,7 @@ cv::Point3_<T> MxArray::toPoint3() const
 /** Convert MxArray to Size_<T>
  */
 template <typename T>
-cv::Size_<T> MxArray::toSize() const
+cv::Size_<T> MxArray::toSize_() const
 {
 	if (!isNumeric() || numel()!=2)
 		mexErrMsgIdAndTxt("mexopencv:error","MxArray is incompatible to cv::Size");
@@ -250,7 +259,7 @@ cv::Size_<T> MxArray::toSize() const
  * @return cv::Rect_<T> value
  */
 template <typename T>
-cv::Rect_<T> MxArray::toRect() const
+cv::Rect_<T> MxArray::toRect_() const
 {
 	if (!isNumeric() || numel()!=4)
 		mexErrMsgIdAndTxt("mexopencv:error","MxArray is incompatible to cv::Rect");
@@ -261,11 +270,12 @@ cv::Rect_<T> MxArray::toRect() const
  * @return cv::Scalar_<T> value
  */
 template <typename T>
-cv::Scalar_<T> MxArray::toScalar() const
+cv::Scalar_<T> MxArray::toScalar_() const
 {
-	if (!(isNumeric() && 1<=numel() && numel()<=4))
+	int n = numel();
+	if (!isNumeric() || n < 1 || 4 < n)
 		mexErrMsgIdAndTxt("mexopencv:error","MxArray is incompatible to cv::Scalar");
-	switch (numel()) {
+	switch (n) {
 		case 1: return cv::Scalar_<T>(at<T>(0));
 		case 2: return cv::Scalar_<T>(at<T>(0),at<T>(1));
 		case 3: return cv::Scalar_<T>(at<T>(0),at<T>(1),at<T>(2));

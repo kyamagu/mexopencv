@@ -35,7 +35,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	for (int i=2; i<nrhs; i+=2) {
 		string key = rhs[i].toString();
 		if (key=="DSize")
-			dsize = rhs[i+1].toSize<int>();
+			dsize = rhs[i+1].toSize();
 		else if (key=="Interpolation")
 			interpolation = InterType[rhs[i+1].toString()];
 		else if (key=="WarpInverse")
@@ -43,7 +43,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		else if (key=="BorderType")
 			borderType = BorderType[rhs[i+1].toString()];
 		else if (key=="BorderValue")
-			borderValue = rhs[i+1].toScalar<int>();
+			borderValue = rhs[i+1].toScalar();
 		else
 			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 	}

@@ -41,7 +41,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	if (rhs[1].numel()==1)
 		fx = fy = rhs[1].toDouble();		
 	else if (rhs[1].numel()==2)
-		dsize = rhs[1].toSize<int>();
+		dsize = rhs[1].toSize();
 	else
 		mexErrMsgIdAndTxt("mexopencv:error","Invalid second argument");
 	

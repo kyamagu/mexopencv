@@ -30,7 +30,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
 	
 	// Process
-	Point2f center = rhs[0].toPoint<float>();
+	Point2f center = rhs[0].toPoint_<float>();
 	double angle = rhs[1].toDouble();
 	double scale = rhs[2].toDouble();
 	Mat t = getRotationMatrix2D(center, angle, scale);

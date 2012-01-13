@@ -48,7 +48,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		else if (key=="BorderType")
 			borderType = BorderType[rhs[i+1].toString()];
 		else if (key=="BorderValue")
-			borderValue = rhs[i+1].toScalar<int>();
+			borderValue = rhs[i+1].toScalar();
 		else
 			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 	}

@@ -32,9 +32,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	for (int i=1; i<nrhs; i+=2) {
 		string key = rhs[i].toString();
 		if (key=="KSize")
-			ksize = rhs[i+1].toSize<int>();
+			ksize = rhs[i+1].toSize();
 		else if (key=="Anchor")
-			anchor = rhs[i+1].toPoint<int>();
+			anchor = rhs[i+1].toPoint();
 		else if (key=="BorderType")
 			borderType = BorderType[rhs[i+1].toString()];
 		else

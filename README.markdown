@@ -73,7 +73,7 @@ Use the scoped name when you need to avoid name collision.
 
 Check a list of functions available by `help` command in matlab.
 
-    help cv;    % shows list of functions
+    help cv;          % shows list of functions
     help cv.filter2D; % shows documentation of filter2D
 
 Developing a new mex function
@@ -117,6 +117,10 @@ mxArray.
     bool b        = MxArray(prhs[0]).toBool();
     std::string s = MxArray(prhs[0]).toString();
     cv::Mat arr   = MxArray(prhs[0]).toArray(); # N-D array
+    cv::Point p   = MxArray(prhs[0]).toPoint();
+    cv::Size sz   = MxArray(prhs[0]).toSize();
+    cv::Rect r    = MxArray(prhs[0]).toRect();
+    cv::Scalar sc = MxArray(prhs[0]).toScalar();
 
     mxArray* plhs[0] = MxArray(m);
     mxArray* plhs[0] = MxArray(i);
@@ -124,6 +128,10 @@ mxArray.
     mxArray* plhs[0] = MxArray(b);
     mxArray* plhs[0] = MxArray(s);
     mxArray* plhs[0] = MxArray::fromArray(arr);
+    mxArray* plhs[0] = MxArray(p);
+    mxArray* plhs[0] = MxArray(sz);
+    mxArray* plhs[0] = MxArray(r);
+    mxArray* plhs[0] = MxArray(sc);
 
 
 Testing

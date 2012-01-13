@@ -42,9 +42,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
 			mask = rhs[i+1].toMat(CV_8U);
 		}
 		else if (key=="LoDiff")
-			loDiff = rhs[i+1].toScalar<int>();
+			loDiff = rhs[i+1].toScalar();
 		else if (key=="UpDiff")
-			upDiff = rhs[i+1].toScalar<int>();
+			upDiff = rhs[i+1].toScalar();
 		else if (key=="Connectivity") {
 			connectivity = rhs[i+1].toInt();
 			if (!(connectivity==4||connectivity==8))
@@ -61,8 +61,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	
 	// Apply
 	Mat img(rhs[0].toMat());
-	Point seed = rhs[1].toPoint<int>() + Point(1,1);
-	Scalar newVal = rhs[2].toScalar<double>();
+	Point seed = rhs[1].toPoint() + Point(1,1);
+	Scalar newVal = rhs[2].toScalar();
 	Rect rect;
 	int flags = connectivity |
 		((fixedRange) ? FLOODFILL_FIXED_RANGE : 0) |

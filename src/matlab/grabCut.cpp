@@ -76,7 +76,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	if (mode == GC_INIT_WITH_MASK)
 		mask = rhs[1].toMat(CV_8U);
 	else
-		rect = rhs[1].toRect<int>();
+		rect = rhs[1].toRect();
 	
 	// Apply grabCut
 	Mat img(rhs[0].toMat());

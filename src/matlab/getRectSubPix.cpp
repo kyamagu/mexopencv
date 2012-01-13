@@ -37,8 +37,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	
 	// Process
 	Mat image(rhs[0].toMat()), dst;
-	Size patchSize = rhs[1].toSize<int>();
-	Point2f center = rhs[2].toPoint<float>();
+	Size patchSize = rhs[1].toSize();
+	Point2f center = rhs[2].toPoint_<float>();
 	getRectSubPix(image, patchSize, center, dst, patchType);
 	plhs[0] = MxArray(dst);
 }
