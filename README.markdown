@@ -121,7 +121,7 @@ mxArray.
     cv::Size sz      = MxArray(prhs[0]).toSize();
     cv::Rect r       = MxArray(prhs[0]).toRect();
     cv::Scalar sc    = MxArray(prhs[0]).toScalar();
-    cv::SparseMat sm = MxArray(prhs[0]).toArray(); # Only double to float
+    cv::SparseMat sm = MxArray(prhs[0]).toSparseMat(); # Only double to float
 
     mxArray* plhs[0] = MxArray(m);
     mxArray* plhs[0] = MxArray(i);
