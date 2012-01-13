@@ -124,6 +124,61 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 	}
 }
 
+namespace {
+struct compareSparseMatNode_ {
+	bool operator () (const SparseMat::Node* rhs, const SparseMat::Node* lhs)
+	{
+		if (rhs->idx[1] < lhs->idx[1]) // column index
+			return true;
+		if (rhs->idx[0] < lhs->idx[0]) // row index
+			return true;
+		return false;
+	}
+} compareSparseMatNode;
+}
+
+/**
+ * Convert float cv::SparseMat to MxArray
+ * @param mat cv::SparseMat object
+ * @return MxArray object
+ */
+MxArray::MxArray(const cv::SparseMat& mat)
+{
+	if (mat.dims() != 2)
+		mexErrMsgIdAndTxt("mexopencv:error","cv::Mat is not 2D");
+	if (mat.type() != CV_32FC1)
+		mexErrMsgIdAndTxt("mexopencv:error","cv::Mat is not float");
+	
+	// Create sparse array
+	int m = mat.size(0), n = mat.size(1), nnz = mat.nzcount();
+	p_ = mxCreateSparse(m, n, nnz, mxREAL);
+	mwIndex *ir = mxGetIr(p_);
+	mwIndex *jc = mxGetJc(p_);
+	if (ir==NULL || jc==NULL)
+		mexErrMsgIdAndTxt("mexopencv:error","Unknown error");
+
+	// Sort nodes before we put elems into mxArray
+	vector<const SparseMat::Node*> nodes;
+	nodes.reserve(nnz);
+	for (SparseMatConstIterator it = mat.begin(); it != mat.end(); ++it)
+		nodes.push_back(it.node());
+	sort(nodes.begin(),nodes.end(),compareSparseMatNode);
+
+	// Copy data
+	double *pr = mxGetPr(p_);
+	int i = 0;
+	jc[0] = 0;
+	for (vector<const SparseMat::Node*>::const_iterator it = nodes.begin();
+		 it != nodes.end(); ++it)
+	{
+		mwIndex row = (*it)->idx[0], col = (*it)->idx[1];
+		ir[i] = row;
+		jc[col+1] = i+1;
+		pr[i] = static_cast<double>(mat.value<float>(*it));
+		++i;
+	}
+}
+
 /**
  * Convert cv::Mat to N-D MxArray
  * @param mat single-channel cv::Mat object
@@ -138,10 +193,13 @@ MxArray MxArray::fromArray(const cv::Mat& mat)
 		
 	// Create a new mxArray
 	mxClassID classid = depthToClassId(mat.depth());
-	MxArray arr(mxCreateNumericArray(mat.dims, mat.size, classid, mxREAL));
+	const int* siz = mat.size;
+	std::vector<mwSize> vsiz(siz, siz + mat.dims);
+	MxArray arr(mxCreateNumericArray(mat.dims, &vsiz[0], classid, mxREAL));
 	
 	// Copy data
-	cv::Mat m(arr.ndims(),arr.dims(),CV_MAKETYPE(mat.depth(),1),mxGetData(arr));
+	std::vector<int> vdims(arr.dims(),arr.dims()+arr.ndims());
+	cv::Mat m(arr.ndims(),&vdims[0],CV_MAKETYPE(mat.depth(),1),mxGetData(arr));
 	mat.copyTo(m);
 	return arr;
 }
@@ -191,7 +249,8 @@ const cv::Mat MxArray::toArray() const
 {
 	// Create cv::Mat object
 	int depth = classIdToDepth(classID());
-	return cv::Mat(ndims(),dims(),CV_MAKETYPE(depth,1),mxGetData(p_));
+	std::vector<int> vdims(dims(),dims()+ndims());
+	return cv::Mat(ndims(),&vdims[0],CV_MAKETYPE(depth,1),mxGetData(p_));
 }
 
 /** Convert MxArray to scalar double
@@ -220,6 +279,35 @@ std::string MxArray::toString() const
 	std::string s(pc);
 	mxFree(pc);
 	return s;
+}
+
+/**
+ * Convert MxArray to float cv::SparseMat
+ * @return cv::SparseMat object
+ */
+cv::SparseMat MxArray::toSparseMat() const
+{
+	// Check if it's sparse
+	if (!isSparse() || !isDouble())
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not sparse");		
+	mwIndex *ir = mxGetIr(p_);
+	mwIndex *jc = mxGetJc(p_);
+	if (ir==NULL || jc==NULL)
+		mexErrMsgIdAndTxt("mexopencv:error","Unknown error");
+	
+	// Create cv::SparseMat
+	int m = mxGetM(p_), n = mxGetN(p_);
+	int dims[] = {m, n};
+	SparseMat mat(2, dims, CV_32F);
+	
+	// Copy data
+	double *pr = mxGetPr(p_);
+	for (mwIndex j=0; j<n; ++j) {
+		mwIndex start = jc[j], end = jc[j+1]-1;
+		for (mwIndex i=start; i<=end; ++i)
+			mat.ref<float>(ir[i],j) = static_cast<float>(pr[i]); // (row,col) <= val
+	}
+	return mat;
 }
 
 ///** Return dimension vector

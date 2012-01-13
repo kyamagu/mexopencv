@@ -29,6 +29,7 @@ class MxArray {
 		explicit MxArray(const bool b);
 		explicit MxArray(const std::string& s);
 		explicit MxArray(const cv::Mat& mat, mxClassID classid=mxUNKNOWN_CLASS, bool transpose=false);
+		explicit MxArray(const cv::SparseMat& mat);
 		template <typename T> explicit MxArray(const cv::Point_<T>& p);
 		template <typename T> explicit MxArray(const cv::Point3_<T>& p);
 		template <typename T> explicit MxArray(const cv::Size_<T>& s);
@@ -49,6 +50,7 @@ class MxArray {
 		bool toBool() const;
 		std::string toString() const;
 		cv::Mat toMat(int depth=CV_USRTYPE1, bool transpose=false) const;
+		cv::SparseMat toSparseMat() const;
 		template <typename T> cv::Point_<T> toPoint_() const;
 		template <typename T> cv::Point3_<T> toPoint3_() const;
 		template <typename T> cv::Size_<T> toSize_() const;

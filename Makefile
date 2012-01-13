@@ -8,7 +8,7 @@ SRCDIR		:= src
 MEXDIR		:= $(SRCDIR)/$(TARGETDIR)
 SRCS        := $(wildcard $(MEXDIR)/*.cpp)
 TARGETS     := $(subst $(MEXDIR), $(TARGETDIR), $(SRCS:.cpp=.$(MEXEXT)))
-MEXFLAGS    := -cxx -I$(INCLUDEDIR) $(shell pkg-config --cflags --libs opencv)
+MEXFLAGS    := -cxx -I$(INCLUDEDIR) $(shell pkg-config --cflags --libs opencv) -largeArrayDims
 
 VPATH       = $(TARGETDIR):$(SRCDIR):$(MEXDIR)
 
