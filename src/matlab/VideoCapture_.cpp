@@ -31,7 +31,7 @@ const ConstMap<std::string,int> CapProp = ConstMap<std::string,int>
 	("Hue",CV_CAP_PROP_HUE)  // Hue of the image (only for cameras).
 	("Gain",CV_CAP_PROP_GAIN)  // Gain of the image (only for cameras).
 	("Exposure",CV_CAP_PROP_EXPOSURE)  // Exposure (only for cameras).
-	("RGB",CV_CAP_PROP_CONVERT_RGB)  // Boolean flags indicating whether images should be converted to RGB.
+	("ConvertRGB",CV_CAP_PROP_CONVERT_RGB)  // Boolean flags indicating whether images should be converted to RGB.
 	//("WhiteBalance",CV_CAP_PROP_WHITE_BALANCE)  // Currently not supported
 	("Rectification",CV_CAP_PROP_RECTIFICATION)  // Rectification flag for stereo cameras (note: only supported by DC1394 v 2.x backend currently)
 ;
