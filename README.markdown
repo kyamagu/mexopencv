@@ -73,8 +73,24 @@ Use the scoped name when you need to avoid name collision.
 
 Check a list of functions available by `help` command in matlab.
 
-    help cv;          % shows list of functions
-    help cv.filter2D; % shows documentation of filter2D
+    >> help cv;          % shows list of functions in package 'cv'
+    
+    Contents of cv:
+    
+    GaussianBlur                   - Smoothes an image using a Gaussian filter
+    Laplacian                      - Calculates the Laplacian of an image
+    VideoCapture                   - VideoCapture wrapper class
+    ...
+    
+    >> help cv.VideoCapture; % shows documentation of VideoCapture
+    
+    VIDEOCAPTURE  VideoCapture wrapper class
+    
+     Class for video capturing from video files or cameras. The class
+     provides Matlab API for capturing video from cameras or for reading
+     video files. Here is how the class can be used:
+    ...
+
 
 Developing a new mex function
 =============================
