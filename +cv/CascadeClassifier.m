@@ -1,0 +1,97 @@
+classdef CascadeClassifier
+    %CascadeClassifier  Haar Feature-based Cascade Classifier for Object Detection
+    %
+    % The object detector described below has been initially proposed by
+    % Paul Viola [Viola01] and improved by Rainer Lienhart [Lienhart02].
+    % 
+    % The usage example is shown in the following:
+    %
+    %   filename = 'haarcascades/haarcascade_frontalface_alt.xml';
+    %   cls = cv.CascadeClassifier(filename);
+    %   boxes = cls.detect(im);
+    %
+    % See also cv.CascadeClassifier.CascadeClassifier
+    % cv.CascadeClassifier.empty cv.CascadeClassifier.load
+    % cv.CascadeClassifier.detect
+    %
+    
+    properties (SetAccess = private)
+        id
+    end
+    
+    methods
+        function this = CascadeClassifier(filename)
+            %CASCADECLASSIFIER  Loads a classifier from a file
+            %
+            %    classifier = cv.CascadeClassifier(filename)
+            %
+            % filename specifies an XML file containing trained classifier.
+            %
+            % See also cv.CascadeClassifier
+            %
+            this.id = cv.CascadeClassifier_(filename);
+        end
+        
+        function delete(this)
+            %DELETE  Destructor
+            %
+            % See also cv.CascadeClassifier
+            %
+            cv.CascadeClassifier_(this.id, 'delete');
+        end
+        
+        function status = empty(this)
+            %EMPTY  Checks whether the classifier has been loaded
+            %
+            %    S = classifier.load(filename)
+            %
+            % S is a logical value indicating empty object when true
+            %
+            % See also cv.CascadeClassifier
+            %
+            status = cv.CascadeClassifier_(this.id, 'empty');
+        end
+        
+        function status = load(this, filename)
+            %LOAD  Loads a classifier from a file
+            %
+            %    S = classifier.load(filename)
+            %
+            % S is a logical value indicating success of load when true
+            %
+            % See also cv.CascadeClassifier
+            %
+            status = cv.CascadeClassifier_(this.id, 'load', filename);
+        end
+        
+        function boxes = detect(this, im, varargin)
+            %DETECT Detects objects of different sizes in the input image.
+            %
+            %   boxes = classifier.detect(im, 'Option', optionValue, ...)
+            %
+            % The detected objects are returned as a cell array of rectangles.
+            %
+            % Input:
+            %   im: Matrix of the type CV_8U containing an image where
+            %       objects are detected.
+            % Output:
+            %   boxes: Cell array of rectangles where each rectangle
+            %       contains the detected object.
+            % Options:
+            %   'scaleFactor': Parameter specifying how much the image size
+            %       is reduced at each image scale.
+            %   'minNeighbors': Parameter specifying how many neighbors
+            %       each candiate rectangle should have to retain it.
+            %   'minSize': Minimum possible object size. Objects smaller
+            %       than that are ignored.
+            %   'maxSize': Maximum possible object size. Objects larger
+            %       than that are ignored.
+            %
+            % See also cv.CascadeClassifier
+            %
+            boxes = cv.CascadeClassifier_(this.id, 'detectMultiScale', im, varargin{:});
+        end
+    end
+    
+end
+

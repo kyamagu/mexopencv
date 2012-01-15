@@ -12,7 +12,7 @@ using namespace cv;
 /// Persistent video capture object
 VideoCapture cap;
 
-/** KernelType map for option processing
+/** Capture Property map for option processing
  */
 const ConstMap<std::string,int> CapProp = ConstMap<std::string,int>
 	("PosMsec",CV_CAP_PROP_POS_MSEC)  // Current position of the video file in milliseconds or video capture timestamp.
