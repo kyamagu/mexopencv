@@ -9,8 +9,9 @@
 using namespace std;
 using namespace cv;
 
-/// Persistent video capture object
-VideoCapture cap;
+/// Persistent video capture objects
+int last_id = 0;
+map<int,VideoCapture> cap_;
 
 /** Capture Property map for option processing
  */
@@ -49,28 +50,56 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	if (nrhs<1 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
-	// Argument vector
+	// Determine argument format between constructor or (id,method,...)
 	vector<MxArray> rhs(prhs,prhs+nrhs);
+	int cap_id = 0;
+	string method;
+	if (nrhs==1) {
+		// Constructor is called. Create a new object from argument
+		cap_[++last_id] = (rhs[0].isChar()) ? 
+			VideoCapture(rhs[0].toString()) : VideoCapture(rhs[0].toInt());
+		plhs[0] = MxArray(last_id);
+		return;
+	}
+	else if (rhs[0].isNumeric() && rhs[0].numel()==1 && nrhs>1) {
+		cap_id = rhs[0].toInt();
+		method = rhs[1].toString();
+	}
+	else
+        mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
 	
 	// Big operation switch
-	string method = rhs[0].toString();
-    if (method == "open") {
-    	if (nrhs!=2)
+	VideoCapture& cap = cap_[cap_id];
+    if (method == "delete") {
+    	if (nrhs!=2 || nlhs!=0)
+    		mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
+    	cap_.erase(cap_id);
+    }
+    else if (method == "open") {
+    	if (nrhs!=3)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	bool b = (rhs[1].isChar()) ?
-    		cap.open(rhs[1].toString()) : cap.open(rhs[1].toInt());
+    	bool b = (rhs[2].isChar()) ?
+    		cap.open(rhs[2].toString()) : cap.open(rhs[2].toInt());
     	plhs[0] = MxArray(b);
     }
-    else if (method == "isOpened")
+    else if (method == "isOpened") {
+    	if (nrhs!=2)
+    		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     	plhs[0] = MxArray(cap.isOpened());
+    }
     else if (method == "release") {
-    	if (nlhs!=0)
+    	if (nrhs!=2 || nlhs!=0)
     		mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
     	cap.release();
     }
-    else if (method == "grab")
+    else if (method == "grab") {
+    	if (nrhs!=2)
+    		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     	plhs[0] = MxArray(cap.grab());
+    }
     else if (method == "retrieve") {
+    	if (nrhs!=2)
+    		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     	Mat frame;
     	if (cap.retrieve(frame)) {
     		if (frame.type()==CV_8UC3)
@@ -81,6 +110,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     		plhs[0] = MxArray(Mat(0,0,CV_8UC1,Scalar(0)));
     }
     else if (method == "read") {
+    	if (nrhs!=2)
+    		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     	Mat frame;
     	if (cap.read(frame)) {
     		if (frame.type()==CV_8UC3)
@@ -91,14 +122,14 @@ void mexFunction( int nlhs, mxArray *plhs[],
     		plhs[0] = MxArray(Mat(0,0,CV_8UC1,Scalar(0)));
     }
     else if (method == "get") {
-    	if (nrhs!=2)
-    		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	plhs[0] = MxArray(cap.get(CapProp[rhs[1].toString()]));
-    }
-    else if (method == "set") {
     	if (nrhs!=3)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	plhs[0] = MxArray(cap.set(CapProp[rhs[1].toString()],rhs[2].toDouble()));
+    	plhs[0] = MxArray(cap.get(CapProp[rhs[2].toString()]));
+    }
+    else if (method == "set") {
+    	if (nrhs!=4)
+    		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    	plhs[0] = MxArray(cap.set(CapProp[rhs[2].toString()],rhs[3].toDouble()));
     }
     else
 		mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");

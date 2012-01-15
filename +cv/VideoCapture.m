@@ -8,23 +8,21 @@ classdef VideoCapture < handle
 	%   cap = cv.VideoCapture;
 	%   pause(3); % Note below
 	%   for t = 1:30
-	%      im = cap.read;
-	%      imshow(im);
+	%      imshow(cap.read);
 	%      pause(0.1);
 	%   end
     %
-    % Note:
-    %
-    % In some environment, there is a concurrency issue during camera
+    % Note: In some environment, there is a concurrency issue during camera
     % initialization. To avoid unexpected crash, pause for seconds after
     % the initialization of VideoCapture object.
-	%   
-	% Currently the class cannot have two instances of the VideoCapture at
-    % the same time.
     %
     % See also cv.VideoCapture.VideoCapture cv.VideoCapture.read
     % cv.VideoCapture.get cv.VideoCapture.set
     %
+    
+    properties (SetAccess = private)
+    	id
+    end
     
     methods
         function this = VideoCapture(filename)
@@ -43,14 +41,12 @@ classdef VideoCapture < handle
             % See also cv.VideoCapture
             %
             if nargin < 1, filename = 0; end
-            if ~cv.VideoCapture_('open', filename)
-                error('VideoCapture:open','Could not open a video');
-            end
+            this.id = cv.VideoCapture_(filename)
         end
         
         function delete(this)
             %DELETE  Destructor of VideoCapture object
-            cv.VideoCapture_('release');
+            cv.VideoCapture_(this.id, 'delete');
         end
         
         function frame = read(this)
@@ -63,7 +59,7 @@ classdef VideoCapture < handle
             %
             % See also cv.VideoCapture
             %
-            frame = cv.VideoCapture_('read');
+            frame = cv.VideoCapture_(this.id, 'read');
         end
         
         function value = get(this, key)
@@ -95,7 +91,7 @@ classdef VideoCapture < handle
             %
             % See also cv.VideoCapture
             %
-            value = cv.VideoCapture_('get', key);
+            value = cv.VideoCapture_(this.id, 'get', key);
         end
         
         function set(this, key, value)
@@ -127,7 +123,7 @@ classdef VideoCapture < handle
             %
             % See also cv.VideoCapture
             %
-            cv.VideoCapture_('set', key, value);
+            cv.VideoCapture_(this.id, 'set', key, value);
         end
     end
     
