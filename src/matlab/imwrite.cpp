@@ -5,7 +5,6 @@
  * @date 2012
  */
 #include "mexopencv.hpp"
-#include "highgui.h"
 using namespace std;
 using namespace cv;
 

@@ -24,7 +24,12 @@ The project tree is organized as follows.
 Compile
 =======
 
-Prerequisite: GNU make, matlab, opencv, pkg-config
+Prerequisite:
+Windows: matlab, opencv, Visual C++
+Unix: matlab, opencv, g++, GNU make, pkg-config
+
+Unix
+----
 
 First make sure you have OpenCV installed in the system. Then,
 
@@ -50,6 +55,20 @@ Documentation can be generated with doxygen (if installed)
     $ make doc
 
 This will create html and latex files under `doc/`.
+
+
+Windows
+-------
+
+Make sure you have OpenCV installed in the system and correctly set up PATH
+system variable. Then, in the matlab shell,
+
+    >> cv.make
+
+to build all mex functions. By default, mexopencv assumes the OpenCV library is
+installed in C:\opencv. If this is different, specify the path as an argument.
+
+    >> cv.make('opencv_path', your_path)
 
 
 Usage

@@ -14,7 +14,7 @@
 #define __MXARRAY_HPP__
 
 #include "mex.h"
-#include "cv.h"
+#include "opencv2/opencv.hpp"
 #include <stdint.h>
 #include <map>
 #include <string>
@@ -151,8 +151,6 @@ class MxArray {
 		static double Eps() { return mxGetEps(); }
 	private:
 		const mxArray* p_;
-		/// Assignment operator (prohibited)
-		const MxArray& operator=(const MxArray& rhs) {}
 		template <typename T> T value() const;
 };
 
