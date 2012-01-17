@@ -15,7 +15,7 @@ The project tree is organized as follows.
     README.markdown this file
     doc/            directory for documentation
     include/        header files
-    matlab/         simlink to +cv
+    matlab/         symlink to +cv
     samples/        directory for sample application codes
     src/            directory for c++ source files
     src/matlab/     directory for mex source files
