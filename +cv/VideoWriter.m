@@ -49,7 +49,7 @@ classdef VideoWriter < handle
             % See also cv.VideoWriter cv.VideoWriter.write
             %
             if nargin < 1, filename = 0; end
-            this.id = cv.VideoWriter_(filename, siz, varargin{:})
+            this.id = cv.VideoWriter_(filename, siz, varargin{:});
         end
         
         function delete(this)
@@ -65,7 +65,12 @@ classdef VideoWriter < handle
             %
             %   vid.write(frame)
             %
-            % The method writes a frame to the video.
+            % Input:
+            %   frame: The written frame
+            %
+            % The method writes a frame to the video. The size of the frame
+            % must be the same to the parameter specified in the
+            % constructor.
             %
             % See also cv.VideoWriter
             %
