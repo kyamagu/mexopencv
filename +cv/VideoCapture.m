@@ -41,7 +41,7 @@ classdef VideoCapture < handle
             % See also cv.VideoCapture
             %
             if nargin < 1, filename = 0; end
-            this.id = cv.VideoCapture_(filename)
+            this.id = cv.VideoCapture_(filename);
         end
         
         function delete(this)

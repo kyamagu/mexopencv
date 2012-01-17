@@ -10,7 +10,7 @@ using namespace cv;
 
 /// Persistent cascade classifier objects
 int last_id = 0;
-map<int,CascadeClassifier> cls_;
+map<int,CascadeClassifier> obj_;
 
 /**
  * Main entry called from Matlab
@@ -27,37 +27,39 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
 	// Determine argument format between (filename,...) or (id,method,...)
 	vector<MxArray> rhs(prhs,prhs+nrhs);
-	int cls_id = 0;
+	int id = 0;
 	string method;
 	if (nrhs==1 && rhs[0].isChar()) {
 		// Constructor is called. Allocate a new classifier from filename
-		cls_[++last_id] = CascadeClassifier(rhs[0].toString());
+		obj_[++last_id] = CascadeClassifier(rhs[0].toString());
+		if (obj_[last_id].empty())
+			mexWarnMsgIdAndTxt("mexopencv:warning","Invalid path or file specified");
 		plhs[0] = MxArray(last_id);
 		return;
 	}
 	else if (rhs[0].isNumeric() && rhs[0].numel()==1 && nrhs>1) {
-		cls_id = rhs[0].toInt();
+		id = rhs[0].toInt();
 		method = rhs[1].toString();
 	}
 	else
         mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
 	
 	// Big operation switch
-	CascadeClassifier& cls = cls_[cls_id];
+	CascadeClassifier& obj = obj_[id];
 	if (method == "delete") {
 		if (nrhs!=2 || nlhs>0)
 			mexErrMsgIdAndTxt("mexopencv:error","Output argument not assigned");
-		cls_.erase(cls_id);
+		obj_.erase(id);
 	}
     else if (method == "empty") {
 		if (nrhs!=2)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	plhs[0] = MxArray(cls.empty());
+    	plhs[0] = MxArray(obj.empty());
     }
     else if (method == "load") {
     	if (nrhs!=3)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	plhs[0] = MxArray(cls.load(rhs[2].toString()));
+    	plhs[0] = MxArray(obj.load(rhs[2].toString()));
     }
     else if (method == "detectMultiScale") {
     	if (nrhs<3 || (nrhs%2)!=1)
@@ -65,7 +67,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	
     	// Option processing
     	double scaleFactor=1.1;
-    	int minNeighbors=3, flags=0;
+    	int minNeighbors=3, flags=CV_HAAR_SCALE_IMAGE;
     	Size minSize, maxSize;
 		for (int i=3; i<rhs.size(); i+=2) {
 			string key = rhs[i].toString();
@@ -84,9 +86,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		}
     	
     	// Run
-    	const Mat image(rhs[2].toMat());
+    	Mat image(rhs[2].toMat());
     	vector<Rect> objects;
-    	cls.detectMultiScale(image, objects, scaleFactor, minNeighbors, flags, minSize, maxSize);
+    	obj.detectMultiScale(image, objects, scaleFactor, minNeighbors, flags, minSize, maxSize);
     	plhs[0] = MxArray(objects);
     }
     else

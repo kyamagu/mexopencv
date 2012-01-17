@@ -78,13 +78,13 @@ classdef CascadeClassifier
             %   boxes: Cell array of rectangles where each rectangle
             %       contains the detected object.
             % Options:
-            %   'scaleFactor': Parameter specifying how much the image size
+            %   'ScaleFactor': Parameter specifying how much the image size
             %       is reduced at each image scale.
-            %   'minNeighbors': Parameter specifying how many neighbors
+            %   'MinNeighbors': Parameter specifying how many neighbors
             %       each candiate rectangle should have to retain it.
-            %   'minSize': Minimum possible object size. Objects smaller
+            %   'MinSize': Minimum possible object size. Objects smaller
             %       than that are ignored.
-            %   'maxSize': Maximum possible object size. Objects larger
+            %   'MaxSize': Maximum possible object size. Objects larger
             %       than that are ignored.
             %
             % See also cv.CascadeClassifier

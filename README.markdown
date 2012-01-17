@@ -16,6 +16,7 @@ The project tree is organized as follows.
     doc/            directory for documentation
     include/        header files
     matlab/         simlink to +cv
+    samples/        directory for sample application codes
     src/            directory for c++ source files
     src/matlab/     directory for mex source files
     test/           directory for test scripts and resources
@@ -35,7 +36,7 @@ First make sure you have OpenCV installed in the system. Then,
 
     $ make
 
-will build all mex functions in located in `+cv/` (or `matlab/`).
+will build all mex functions located inside `+cv/` (or `matlab/`).
 Specify your matlab directory if you install matlab other than /usr/local/matlab
 
     $ make MATLABDIR=/path/to/matlab
@@ -109,6 +110,8 @@ Check a list of functions available by `help` command in matlab.
      provides Matlab API for capturing video from cameras or for reading
      video files. Here is how the class can be used:
     ...
+
+Look at the `samples/` directory for an example of an application.
 
 
 Developing a new mex function
