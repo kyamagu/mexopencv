@@ -31,7 +31,7 @@ while true
         rectangle('Position',boxes{i},'EdgeColor','g');
     end
     hold off;
-    pause(0.3);
+    pause(0.1);
 end
 
 end

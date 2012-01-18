@@ -35,8 +35,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	if (nrhs==1 && rhs[0].isChar()) {
 		// Constructor is called. Allocate a new classifier from filename
 		obj_[++last_id] = CascadeClassifier(rhs[0].toString());
-		if (obj_[last_id].empty())
-			mexWarnMsgIdAndTxt("mexopencv:warning","Invalid path or file specified");
+		if (obj_[last_id].empty()) {
+			obj_.erase(last_id);
+			mexErrMsgIdAndTxt("mexopencv:error","Invalid path or file specified");
+		}
 		plhs[0] = MxArray(last_id);
 		return;
 	}
@@ -70,7 +72,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	
     	// Option processing
     	double scaleFactor=1.1;
-    	int minNeighbors=3, flags=CV_HAAR_SCALE_IMAGE;
+    	int minNeighbors=3, flags=0;
     	Size minSize, maxSize;
 		for (int i=3; i<rhs.size(); i+=2) {
 			string key = rhs[i].toString();
