@@ -8,8 +8,11 @@
 using namespace std;
 using namespace cv;
 
-/// Persistent cascade classifier objects
+// Persistent objects
+
+/// Last object id to allocate
 int last_id = 0;
+/// Object container
 map<int,CascadeClassifier> obj_;
 
 /**
