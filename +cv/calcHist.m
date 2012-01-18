@@ -11,9 +11,9 @@
 % Options:
 %   'Mask': Optional mask. If the matrix is not empty, it must be an array
 %       of the same size as arrays. The non-zero mask elements mark the
-%       array elements counted in the histogram
+%       array elements counted in the histogram.
 %   'Uniform': Logical flag indicating whether the histogram is uniform
-%       or not.
+%       or not. default false.
 %   'Sparse': Logical flag indicating whether the output should be sparse.
 %   'HistSize': Array of histogram sizes in each dimension. Use together
 %       with the 'Uniform' flag.
@@ -26,4 +26,6 @@
 %    im = cv.cvtColor(im,'RGB2HSV');
 %    edges = {linspace(0,180,30+1),linspace(0,256,32+1)};
 %    h = cv.calcHist(im(:,:,1:2), edges);
+%
+% See also cv.calcBackProject cv.compareHist cv.EMD
 %

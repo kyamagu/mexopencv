@@ -340,6 +340,22 @@ const ConstMap<std::string,int> ContourType = ConstMap<std::string,int>
 	("TC89_L1",		cv::CHAIN_APPROX_TC89_L1)
 	("TC89_KCOS",	cv::CHAIN_APPROX_TC89_KCOS);
 
+
+/** Histogram comparison methods
+ */
+const ConstMap<std::string,int> HistComp = ConstMap<std::string,int>
+    ("Correl",CV_COMP_CORREL)
+    ("ChiSqr",CV_COMP_CHISQR)
+    ("Intersect",CV_COMP_INTERSECT)
+    ("Bhattacharyya",CV_COMP_BHATTACHARYYA);
+
+/** Mask size for distance transform
+ */
+const ConstMap<std::string,int> DistMask = ConstMap<std::string,int>
+    ("3",CV_DIST_MASK_3)
+    ("5",CV_DIST_MASK_5)
+    ("Precise",CV_DIST_MASK_PRECISE);
+
 /** Distance types for Distance Transform and M-estimators
  */
 const ConstMap<std::string,int> DistType = ConstMap<std::string,int>
