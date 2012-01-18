@@ -26,7 +26,9 @@ Compile
 =======
 
 Prerequisite:
+
 Windows: matlab, opencv, Visual C++
+
 Unix: matlab, opencv, g++, GNU make, pkg-config
 
 Unix
