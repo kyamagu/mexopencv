@@ -56,6 +56,7 @@ class MxArray {
 		template <typename T> cv::Size_<T> toSize_() const;
 		template <typename T> cv::Rect_<T> toRect_() const;
 		template <typename T> cv::Scalar_<T> toScalar_() const;
+		template <typename T> std::vector<T> toStdVector() const;
 		
 		/// Alias to toPoint_<int>
 		inline cv::Point toPoint() const { return toPoint_<int>(); }
@@ -281,6 +282,25 @@ cv::Scalar_<T> MxArray::toScalar_() const
 		case 3: return cv::Scalar_<T>(at<T>(0),at<T>(1),at<T>(2));
 		case 4: return cv::Scalar_<T>(at<T>(0),at<T>(1),at<T>(2),at<T>(3));
 	}
+}
+
+/** Convert MxArray to std::vector<T>
+ * @return std::vector<T> value
+ */
+template <typename T>
+std::vector<T> MxArray::toStdVector() const
+{
+	int n = numel();
+	std::vector<T> v(n);
+	if (isCell()) {
+		for (int i=0; i<n; ++i)
+			v[i] = MxArray(mxGetCell(p_, i)).at<T>(0);
+	}
+	else if (isNumeric()) {
+		for (int i=0; i<n; ++i)
+			v[i] = at<T>(i);
+	}
+	return v;
 }
 
 /** Template for element accessor

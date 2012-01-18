@@ -353,4 +353,60 @@ const ConstMap<std::string,int> DistType = ConstMap<std::string,int>
     ("Huber",	CV_DIST_HUBER);
 
 
+/** Convert MxArray to std::vector<MxArray>
+ * @return std::vector<MxArray> value
+ */
+template <>
+std::vector<MxArray> MxArray::toStdVector() const
+{
+	int n = numel();
+	if (isCell()) {
+		std::vector<MxArray> v(n,MxArray(static_cast<mxArray*>(NULL)));
+		for (int i=0; i<n; ++i)
+			v[i] = MxArray(mxGetCell(p_, i));
+		return v;
+	}
+	else
+		return std::vector<MxArray>(1,*this);
+}
+
+/** Convert MxArray to std::vector<std::string>
+ * @return std::vector<std::string> value
+ */
+template <>
+std::vector<std::string> MxArray::toStdVector() const
+{
+	int n = numel();
+	if (isCell()) {
+		std::vector<std::string> v(n);
+		for (int i=0; i<n; ++i)
+			v[i] = MxArray(mxGetCell(p_, i)).toString();
+		return v;
+	}
+	else if (isChar())
+		return std::vector<std::string>(1,this->toString());
+	else
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to std::vector");
+		
+}
+
+/** Convert MxArray to std::vector<cv::Mat>
+ * @return std::vector<cv::Mat> value
+ */
+template <>
+std::vector<cv::Mat> MxArray::toStdVector() const
+{
+	int n = numel();
+	if (isCell()) {
+		std::vector<cv::Mat> v(n);
+		for (int i=0; i<n; ++i)
+			v[i] = MxArray(mxGetCell(p_, i)).toMat();
+		return v;
+	}
+	else if (isNumeric())
+		return std::vector<cv::Mat>(1,this->toMat());
+	else
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to std::vector");
+}
+
 #endif
