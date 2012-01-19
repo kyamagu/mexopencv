@@ -25,6 +25,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	// Argument vector
 	vector<MxArray> rhs(prhs,prhs+nrhs);
 	
+	if (nrhs==1 && rhs[0].isChar() && rhs[0].toString()=="DescriptorSize") {
+		plhs[0] = MxArray(SIFT().descriptorSize());
+		return;
+	}
+	
 	// Option processing
 	double hessianThreshold=400;
 	int nOctaves=4;
