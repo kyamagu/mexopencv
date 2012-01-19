@@ -1,7 +1,7 @@
 %ADAPTIVETHRESHOLD  Applies an adaptive threshold to an array
 %
-%    dst = adaptiveThreshold(src, maxVal)
-%    dst = adaptiveThreshold(src, maxVal, 'AdaptiveMethod', 'Mean', ...)
+%    dst = cv.adaptiveThreshold(src, maxVal)
+%    dst = cv.adaptiveThreshold(src, maxVal, 'AdaptiveMethod', 'Mean', ...)
 %
 %  Input:
 %    src: Source 8-bit single-channel image.

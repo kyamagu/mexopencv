@@ -1,8 +1,8 @@
 %RESIZE  Resizes an image
 %
-%    dst = resize(src, scale)
-%    dst = resize(src, siz)
-%    dst = resize(src, scale, 'Interpolation', interpolation)
+%    dst = cv.resize(src, scale)
+%    dst = cv.resize(src, siz)
+%    dst = cv.resize(src, scale, 'Interpolation', interpolation)
 %
 %  Input:
 %    src: Source image.

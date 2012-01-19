@@ -1,7 +1,7 @@
 %BILATERALFILTER  Applies the bilateral filter to an image
 %
-%    result = bilateralFilter(img)
-%    result = bilateralFilter(img, 'Diameter', -1, ...)
+%    result = cv.bilateralFilter(img)
+%    result = cv.bilateralFilter(img, 'Diameter', -1, ...)
 %
 %  Input:
 %    img:

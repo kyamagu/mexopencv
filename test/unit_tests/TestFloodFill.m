@@ -10,12 +10,12 @@ classdef TestFloodFill
             im = rgb2gray(TestFloodFill.img);
             seed = [100,100];
             value = 255;
-            rslt = floodFill(im, seed, value);
+            rslt = cv.floodFill(im, seed, value);
         end
         
         function test_error_1
             try
-                floodFill();
+                cv.floodFill();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

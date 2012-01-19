@@ -8,7 +8,7 @@ classdef TestImwrite
     
     methods (Static)
         function test_1
-            imwrite(TestImwrite.filename,TestImwrite.im);
+            cv.imwrite(TestImwrite.filename,TestImwrite.im);
             if exist(TestImwrite.filename,'file')
             	delete(TestImwrite.filename);
             end
@@ -16,7 +16,7 @@ classdef TestImwrite
         
         function test_error_1
             try
-                imwrite();
+                cv.imwrite();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));
@@ -25,7 +25,7 @@ classdef TestImwrite
         
         function test_error_2
             try
-                imwrite(TestImwrite.filename,TestImwrite.im,'JpegQuality',-1);
+                cv.imwrite(TestImwrite.filename,TestImwrite.im,'JpegQuality',-1);
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

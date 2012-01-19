@@ -7,16 +7,16 @@ classdef TestBilateralFilter
     
     methods (Static)
         function test_1
-            result = bilateralFilter(TestBilateralFilter.img);
+            result = cv.bilateralFilter(TestBilateralFilter.img);
         end
         
         function test_2
-			result = bilateralFilter(TestBilateralFilter.img,'BorderType','Wrap');
+			result = cv.bilateralFilter(TestBilateralFilter.img,'BorderType','Wrap');
         end
         
         function test_error_1
             try
-                bilateralFilter();
+                cv.bilateralFilter();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));
@@ -25,7 +25,7 @@ classdef TestBilateralFilter
         
         function test_error_2
             try
-                bilateralFilter(TestBilateralFilter.img,'foo','bar');
+                cv.bilateralFilter(TestBilateralFilter.img,'foo','bar');
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));
@@ -34,7 +34,7 @@ classdef TestBilateralFilter
         
         function test_error_3
             try
-                bilateralFilter(TestBilateralFilter.img,'BorderType','foo');
+                cv.bilateralFilter(TestBilateralFilter.img,'BorderType','foo');
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

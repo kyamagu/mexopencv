@@ -1,7 +1,7 @@
 %CONVERTMAPS  Converts image transformation maps from one representation to another
 %
-%    [map1, map2] = convertMaps(X, Y)
-%    [map1, map2] = convertMaps(XY)
+%    [map1, map2] = cv.convertMaps(X, Y)
+%    [map1, map2] = cv.convertMaps(XY)
 %
 %  Input:
 %    src: Source image.

@@ -1,7 +1,7 @@
 %INPAINT  Restores the selected region in an image using the region neighborhood
 %
-%    dst = inpaint(src, mask)
-%    dst = inpaint(src, mask, 'Method', 'Telea', ...)
+%    dst = cv.inpaint(src, mask)
+%    dst = cv.inpaint(src, mask, 'Method', 'Telea', ...)
 %
 %  Input:
 %    src: Input 8-bit 1-channel or 3-channel image.

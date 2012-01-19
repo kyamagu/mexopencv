@@ -1,8 +1,8 @@
 %EMD  Computes the 'minimal' work distance between two weighted point configurations
 %
-%    d = EMD(signature1, signature2)
-%    d = EMD(signature1, signature2, 'OptionName', optionValue, ...)
-%    [d, lowerBound, flow] = EMD(...)
+%    d = cv.EMD(signature1, signature2)
+%    d = cv.EMD(signature1, signature2, 'OptionName', optionValue, ...)
+%    [d, lowerBound, flow] = cv.EMD(...)
 %
 % Input:
 %   signature1: First signature, a size1 x dims + 1 floating-point matrix.

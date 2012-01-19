@@ -1,7 +1,7 @@
 %BLUR  Smoothes an image using the normalized box filter
 %
-%   dst = blur(src)
-%   dst = blur(src, 'KSize', [5,5], ...)
+%   dst = cv.blur(src)
+%   dst = cv.blur(src, 'KSize', [5,5], ...)
 %
 % The function smoothes an image using the kernel:
 % 

@@ -1,8 +1,8 @@
 %THRESHOLD  Applies a fixed-level threshold to each array element
 %
-%    dst = threshold(src, thresh)
-%    dst = threshold(src, thresh, 'Method', 'Binary', ...)
-%    [dst, thresh] = threshold(src, 'auto', ...)
+%    dst = cv.threshold(src, thresh)
+%    dst = cv.threshold(src, thresh, 'Method', 'Binary', ...)
+%    [dst, thresh] = cv.threshold(src, 'auto', ...)
 %
 %  Input:
 %    src: Source array (single-channel, 8-bit of 32-bit floating point).

@@ -1,6 +1,6 @@
 %WATERSHED  Performs a marker-based image segmentation using the watershed algrorithm
 %
-%    marker = watershed(image, marker)
+%    marker = cv.watershed(image, marker)
 %
 %  Input:
 %    image: Input 8-bit 3-channel image.
@@ -27,4 +27,6 @@
 % Note: Any two neighbor connected components are not necessarily separated by
 % a watershed boundary (-1’s pixels); for example, they can touch each other in
 % the initial marker image passed to the function.
+%
+% See also cv.grabCut
 %

@@ -1,5 +1,5 @@
 classdef CascadeClassifier
-    %CascadeClassifier  Haar Feature-based Cascade Classifier for Object Detection
+    %CASCADECLASSIFIER  Haar Feature-based Cascade Classifier for Object Detection
     %
     % The object detector described below has been initially proposed by
     % Paul Viola [Viola01] and improved by Rainer Lienhart [Lienhart02].

@@ -6,12 +6,12 @@ classdef TestThreshold
     
     methods (Static)
         function test_1
-            result = threshold(TestThreshold.img,0.5);
+            result = cv.threshold(TestThreshold.img,0.5);
         end
         
         function test_error_1
             try
-                threshold();
+                cv.threshold();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

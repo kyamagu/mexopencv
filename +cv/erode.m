@@ -1,7 +1,7 @@
 %ERODE  Erodes an image by using a specific structuring element
 %
-%   dst = erode(src)
-%   dst = erode(src, 'Element', [0,1,0;1,1,1;0,1,0], ...)
+%   dst = cv.erode(src)
+%   dst = cv.erode(src, 'Element', [0,1,0;1,1,1;0,1,0], ...)
 %
 % The function erodes the source image using the specified structuring element
 % that determines the shape of a pixel neighborhood over which the minimum is
@@ -23,4 +23,6 @@
 %                   image. default 'Constant'
 %     'borderValue': Border value in case of a constant border. The default
 %                    value has a special meaning.
+%
+% See also cv.dilate
 %

@@ -1,7 +1,7 @@
 %WARPPERSPECTIVE  Applies a perspective transformation to an image
 %
-%    dst = warpPerspective(src, M)
-%    dst = warpPerspective(src, M, 'DSize', dsize, ...)
+%    dst = cv.warpPerspective(src, M)
+%    dst = cv.warpPerspective(src, M, 'DSize', dsize, ...)
 %
 %  Input:
 %    src: Source image.
@@ -12,11 +12,11 @@
 %    'DSize': Size of the destination image
 %    'Interpolation': interpolation method. default: 'Linear'
 %    'WarpInverse': Logical flag to apply inverse affine transform, meaning
-%                   that M is the inverse transformation (dst -> src)
+%        that M is the inverse transformation (dst -> src)
 %    'BorderType': Pixel extrapolation method. When 'Transparent', it means
-%                  that the pixels in the destination image corresponding to
-%                  the “outliers” in the source image are not modified by the
-%                  function. default: 'Constant'
+%        that the pixels in the destination image corresponding to
+%        the “outliers” in the source image are not modified by the
+%        function. default: 'Constant'
 %    'BorderValue': Value used in case of a constant border. default: 0
 %
 % The function warpPerspective transforms the source image using the specified

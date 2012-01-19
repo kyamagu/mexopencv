@@ -1,6 +1,6 @@
 %GETROTATIONMATRIX2D  Calculates an affine matrix of 2D rotation
 %
-%    T = getRotationMatrix2D(center, angle, scale)
+%    T = cv.getRotationMatrix2D(center, angle, scale)
 %
 %  Input:
 %    center: Center of the rotation in the source image.

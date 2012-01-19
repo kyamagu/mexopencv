@@ -1,6 +1,6 @@
 %GETAFFINETRANSFORM  Calculates an affine transform from three pairs of the corresponding points
 %
-%    T = getAffineTransform(src, dst)
+%    T = cv.getAffineTransform(src, dst)
 %
 %  Input:
 %    src: 3-by-2 row vectors of coordinates of triangle vertices in the source

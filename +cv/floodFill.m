@@ -1,9 +1,9 @@
 %FLOODFILL  Fills a connected component with the given color
 %
-%    dst = floodFill(src, seed, newVal)
-%    dst = floodFill(src, seed, newVal, 'Mask', mask, ...)
-%    [dst, rect, area] = floodFill(src, seed, newVal, ...)
-%    [dst, mask, rect, area] = floodFill(src, seed, newVal, 'Mask', mask, ...)
+%    dst = cv.floodFill(src, seed, newVal)
+%    dst = cv.floodFill(src, seed, newVal, 'Mask', mask, ...)
+%    [dst, rect, area] = cv.floodFill(src, seed, newVal, ...)
+%    [dst, mask, rect, area] = cv.floodFill(src, seed, newVal, 'Mask', mask, ...)
 %
 %  Input:
 %    src: Input/output 1- or 3-channel, 8-bit, or floating-point image. It is

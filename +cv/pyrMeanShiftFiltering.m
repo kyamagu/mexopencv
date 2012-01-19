@@ -1,7 +1,7 @@
 %PYRMEANSHIFTFILTERING  Performs initial step of meanshift segmentation of an image
 %
-%    dst = pyrMeanShiftFiltering(src)
-%    dst = pyrMeanShiftFiltering(src, 'SP', 5, ...)
+%    dst = cv.pyrMeanShiftFiltering(src)
+%    dst = cv.pyrMeanShiftFiltering(src, 'SP', 5, ...)
 %
 %  Input:
 %    src: The source 8-bit, 3-channel image.

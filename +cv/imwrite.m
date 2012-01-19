@@ -1,7 +1,7 @@
 %IMWRITE  Saves an image to a specified file
 %
-%    status = imwrite(filename, src)
-%    status = imread(filename, src, 'Option1', option1_value, ...)
+%    status = cv.imwrite(filename, src)
+%    status = cv.imread(filename, src, 'Option1', option1_value, ...)
 %
 %  Input:
 %    filename: Name of the file.

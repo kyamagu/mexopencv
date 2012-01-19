@@ -1,7 +1,7 @@
 %GAUSSIANBLUR  Smoothes an image using a Gaussian filter
 %
-%   dst = GaussianBlur(src)
-%   dst = GaussianBlur(src, 'KSize', [5,5], ...)
+%   dst = cv.GaussianBlur(src)
+%   dst = cv.GaussianBlur(src, 'KSize', [5,5], ...)
 %
 % The function convolves the source image with the specified Gaussian kernel.
 %

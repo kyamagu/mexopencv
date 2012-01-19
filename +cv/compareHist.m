@@ -1,7 +1,7 @@
 %COMPAREHIST  Compares two histograms
 %
-%    d = compareHist(H1, H2)
-%    d = compareHist(H1, H2, 'Method', method)
+%    d = cv.compareHist(H1, H2)
+%    d = cv.compareHist(H1, H2, 'Method', method)
 %
 % Input:
 %   H1: First compared histogram.

@@ -17,16 +17,16 @@ classdef TestLaplacian
     
     methods (Static)
         function test_1
-            result = Laplacian(TestLaplacian.img);
+            result = cv.Laplacian(TestLaplacian.img);
         end
         
         function test_2
-            result = Laplacian(TestLaplacian.img,'KSize',5);
+            result = cv.Laplacian(TestLaplacian.img,'KSize',5);
         end
         
         function test_error_1
             try
-                Laplacian();
+                cv.Laplacian();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

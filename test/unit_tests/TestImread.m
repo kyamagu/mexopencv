@@ -7,12 +7,12 @@ classdef TestImread
     
     methods (Static)
         function test_1
-            im = imread(TestImread.filename);
+            im = cv.imread(TestImread.filename);
         end
         
         function test_error_1
             try
-                imread();
+                cv.imread();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));
@@ -21,7 +21,7 @@ classdef TestImread
         
         function test_error_2
             try
-                imread('foo.jpg');
+                cv.imread('foo.jpg');
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

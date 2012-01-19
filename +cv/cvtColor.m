@@ -1,7 +1,7 @@
 %CVTCOLOR  Converts an image from one color space to another
 %
-%    dst = cvtColor(src, code)
-%    dst = cvtColor(src, code, 'DstCn', 1)
+%    dst = cv.cvtColor(src, code)
+%    dst = cv.cvtColor(src, code, 'DstCn', 1)
 %
 %  Input:
 %    src: Source image: 8-bit unsigned, 16-bit unsigned (CV_16UC...), or

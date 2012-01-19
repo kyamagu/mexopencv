@@ -1,7 +1,7 @@
 %LAPLACIAN  Calculates the Laplacian of an image
 %
-%    dst = Laplacian(src)
-%    dst = Laplacian(src, 'KSize', 5, ...)
+%    dst = cv.Laplacian(src)
+%    dst = cv.Laplacian(src, 'KSize', 5, ...)
 %
 %  Input:
 %    src: Source image.

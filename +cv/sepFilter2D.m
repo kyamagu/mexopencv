@@ -1,7 +1,7 @@
 %SEPFILTER2D  Applies a separable linear filter to an image
 %
-%    dst = sepFilter2D(src, rowKernel, columnKernel)
-%    dst = sepFilter2D(src, rowKernel, columnKernel, 'Anchor', [0,1], ...)
+%    dst = cv.sepFilter2D(src, rowKernel, columnKernel)
+%    dst = cv.sepFilter2D(src, rowKernel, columnKernel, 'Anchor', [0,1], ...)
 %
 %  Input:
 %    src: Source image.
@@ -14,4 +14,6 @@
 %              means that the anchor is at the kernel center.
 %    'Delta': Value added to the filtered results before storing them.
 %    'BorderType': Pixel extrapolation method
+%
+% See also cv.filter2D
 %

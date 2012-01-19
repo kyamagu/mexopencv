@@ -17,20 +17,20 @@ classdef TestDilate
     
     methods (Static)
         function test_1
-            result = dilate(TestDilate.img);
+            result = cv.dilate(TestDilate.img);
         end
         
         function test_3
-            result = dilate(TestDilate.img, 'Anchor', [0,1]);
+            result = cv.dilate(TestDilate.img, 'Anchor', [0,1]);
         end
         
         function test_4
-            result = dilate(TestDilate.img, 'BorderType', 'Constant');
+            result = cv.dilate(TestDilate.img, 'BorderType', 'Constant');
         end
         
         function test_error_1
             try
-                dilate();
+                cv.dilate();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

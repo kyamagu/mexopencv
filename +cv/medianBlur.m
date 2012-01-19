@@ -1,7 +1,7 @@
 %MEDIANBLUR  Smoothes an image using the median filter
 %
-%   dst = medianBlur(src)
-%   dst = medianBlur(src, 'KSize', [5,5])
+%   dst = cv.medianBlur(src)
+%   dst = cv.medianBlur(src, 'KSize', [5,5])
 %
 % The function smoothes an image using the median filter with the aperture.
 % Each channel of a multi-channel image is processed independently.

@@ -1,7 +1,7 @@
 %BUILDPYRAMID  Constructs the Gaussian pyramid for an image
 %
-%   dst = buildPyramid(src)
-%   dst = buildPyramid(src, 'MaxLevel', 5)
+%   dst = cv.buildPyramid(src)
+%   dst = cv.buildPyramid(src, 'MaxLevel', 5)
 %
 % The function constructs a vector of images and builds the Gaussian pyramid by
 % recursively applying pyrDown() to the previously built pyramid layers,

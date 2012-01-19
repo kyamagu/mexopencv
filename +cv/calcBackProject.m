@@ -1,6 +1,6 @@
 %CALCBACKPROJECT  Calculates the back projection of a histogram
 %
-%    Y = calcBackProject(X, H, edges)
+%    Y = cv.calcBackProject(X, H, edges)
 %
 % Input:
 %   X: Source pixel arrays. A numeric array, or cell array of numeric

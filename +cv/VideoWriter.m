@@ -18,8 +18,8 @@ classdef VideoWriter < handle
         function this = VideoWriter(filename, siz, varargin)
             %VIDEOWRITER  VideoWriter constructors
             %
-            %  vid = VideoWriter(filename, siz)
-            %  vid = VideoWriter(filename, siz, 'option', option_value, ...)
+            %  vid = cv.VideoWriter(filename, siz)
+            %  vid = cv.VideoWriter(filename, siz, 'option', option_value, ...)
             %
             % Input:
             %   filename: Name of the video file

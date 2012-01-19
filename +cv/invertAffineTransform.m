@@ -1,6 +1,6 @@
 %INVERTAFFINETRANSFORM  Inverts an affine transformation
 %
-%    iM = invertAffineTransform(M)
+%    iM = cv.invertAffineTransform(M)
 %
 %  Input:
 %    M: Original affine transformation.

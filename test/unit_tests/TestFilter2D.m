@@ -23,7 +23,7 @@ classdef TestFilter2D
                 1 1 1;...
                 ];
             reference = filter2(kernel,TestFilter2D.img);
-            result = filter2D(TestFilter2D.img,kernel);
+            result = cv.filter2D(TestFilter2D.img,kernel);
             assert(all(abs(reference(:) - result(:)) < 1e-15));
         end
         
@@ -34,7 +34,7 @@ classdef TestFilter2D
                 ];
 
             reference = filter2(kernel,TestFilter2D.img);
-            result = filter2D(TestFilter2D.img,kernel,...
+            result = cv.filter2D(TestFilter2D.img,kernel,...
                 'Anchor',fliplr(floor((size(kernel)-1)/2)));
             assert(all(abs(reference(:) - result(:)) < 1e-15));
         end
@@ -45,24 +45,24 @@ classdef TestFilter2D
                 ];
 
             reference = filter2(kernel,TestFilter2D.img);
-            result = filter2D(TestFilter2D.img,kernel);
+            result = cv.filter2D(TestFilter2D.img,kernel);
             assert(all(abs(reference(:) - result(:)) < 1e-15));
             
             reference = filter2(kernel,TestFilter2D.img);
-            result = filter2D(TestFilter2D.img,kernel);
+            result = cv.filter2D(TestFilter2D.img,kernel);
             assert(all(abs(reference(:) - result(:)) < 1e-15));
         end
         
         function test_4
             kernel = 1;
             reference = filter2(kernel,TestFilter2D.img);
-            result = filter2D(TestFilter2D.img,kernel);
+            result = cv.filter2D(TestFilter2D.img,kernel);
             assert(all(abs(reference(:) - result(:)) < 1e-15));
         end
         
         function test_error_1
             try
-                filter2D();
+                cv.filter2D();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

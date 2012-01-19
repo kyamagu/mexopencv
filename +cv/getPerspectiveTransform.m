@@ -1,6 +1,6 @@
 %GETPERSPECTIVETRANSFORM  Calculates a perspective transform from four pairs of the corresponding points
 %
-%    T = getPerspectiveTransform(src, dst)
+%    T = cv.getPerspectiveTransform(src, dst)
 %
 %  Input:
 %    src: 4-by-2 row vectors of coordinates of quadrangle vertices in the source image

@@ -1,7 +1,7 @@
 %IMREAD  Loads an image from a file
 %
-%    dst = imread(filename)
-%    dst = imread(filename, 'Flags', flags)
+%    dst = cv.imread(filename)
+%    dst = cv.imread(filename, 'Flags', flags)
 %
 %  Input:
 %    filename: Name of a file to be loaded.

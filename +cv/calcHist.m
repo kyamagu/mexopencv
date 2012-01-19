@@ -1,6 +1,6 @@
 %CALCHIST  Calculates a histogram of a set of arrays
 %
-%    H = calcHist(X, edges)
+%    H = cv.calcHist(X, edges)
 %
 % Input:
 %   X: Source pixel arrays. A numeric array, or cell array of numeric

@@ -18,16 +18,16 @@ classdef TestInpaint
     
     methods (Static)
         function test_1
-            result = inpaint(TestInpaint.img,TestInpaint.mask);
+            result = cv.inpaint(TestInpaint.img,TestInpaint.mask);
         end
         
         function test_2
-            result = inpaint(TestInpaint.img,TestInpaint.mask,'Method','Telea');
+            result = cv.inpaint(TestInpaint.img,TestInpaint.mask,'Method','Telea');
         end
         
         function test_error_1
             try
-                inpaint();
+                cv.inpaint();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

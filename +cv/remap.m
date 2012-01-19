@@ -1,11 +1,11 @@
 %REMAP  Applies a generic geometrical transformation to an image
 %
-%    dst = remap(src, X, Y)
-%    dst = remap(src, XY)
-%    dst = remap(src, map1, map2)
-%    dst = remap(src, X, Y, 'BorderType', borderType, ...)
-%    dst = remap(src, XY, 'BorderType', borderType, ...)
-%    dst = remap(src, map1, map2, 'BorderType', borderType, ...)
+%    dst = cv.remap(src, X, Y)
+%    dst = cv.remap(src, XY)
+%    dst = cv.remap(src, map1, map2)
+%    dst = cv.remap(src, X, Y, 'BorderType', borderType, ...)
+%    dst = cv.remap(src, XY, 'BorderType', borderType, ...)
+%    dst = cv.remap(src, map1, map2, 'BorderType', borderType, ...)
 %
 %  Input:
 %    src: Source image.

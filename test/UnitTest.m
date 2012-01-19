@@ -13,7 +13,7 @@ classdef UnitTest
         function obj = UnitTest()
             %UNITTEST execute all unit tests
             addpath(UnitTest.TESTDIR);
-            addpath(UnitTest.BINDIR);
+            addpath(fileparts(UnitTest.ROOT));
             d = dir([UnitTest.TESTDIR,filesep,'*.m']);
             for i = 1:numel(d)
                 class_name = strrep(d(i).name,'.m','');

@@ -17,20 +17,20 @@ classdef TestErode
     
     methods (Static)
         function test_1
-            result = erode(TestErode.img);
+            result = cv.erode(TestErode.img);
         end
         
         function test_3
-            result = erode(TestErode.img, 'Anchor', [0,1]);
+            result = cv.erode(TestErode.img, 'Anchor', [0,1]);
         end
         
         function test_4
-            result = erode(TestErode.img, 'BorderType', 'Constant');
+            result = cv.erode(TestErode.img, 'BorderType', 'Constant');
         end
         
         function test_error_1
             try
-                erode();
+                cv.erode();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

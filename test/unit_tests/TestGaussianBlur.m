@@ -17,16 +17,16 @@ classdef TestGaussianBlur
     
     methods (Static)
         function test_1
-            result = GaussianBlur(TestGaussianBlur.img);
+            result = cv.GaussianBlur(TestGaussianBlur.img);
         end
         
         function test_2
-            result = GaussianBlur(TestGaussianBlur.img, 'KSize', [5,7]);
+            result = cv.GaussianBlur(TestGaussianBlur.img, 'KSize', [5,7]);
         end
         
         function test_error_1
             try
-                GaussianBlur();
+                cv.GaussianBlur();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

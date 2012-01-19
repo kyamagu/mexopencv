@@ -1,7 +1,7 @@
 %DILATE  Dilates an image by using a specific structuring element
 %
-%   dst = dilate(src)
-%   dst = dilate(src, 'Element', [0,1,0;1,1,1;0,1,0], ...)
+%   dst = cv.dilate(src)
+%   dst = cv.dilate(src, 'Element', [0,1,0;1,1,1;0,1,0], ...)
 %
 % The function dilates the source image using the specified structuring element
 % that determines the shape of a pixel neighborhood over which the maximum is
@@ -23,4 +23,6 @@
 %                   image. default 'Constant'
 %     'borderValue': Border value in case of a constant border. The default
 %                    value has a special meaning.
+%
+% See also cv.erode
 %

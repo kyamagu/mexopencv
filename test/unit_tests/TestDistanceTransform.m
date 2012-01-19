@@ -29,17 +29,17 @@ classdef TestDistanceTransform
 				0 0 0 0 0 0 0 0 0 0;...
 				0 0 0 0 0 0 0 0 0 0;...
 				]);
-            result = distanceTransform(TestDistanceTransform.img, 'DistanceType', 'L1');
+            result = cv.distanceTransform(TestDistanceTransform.img, 'DistanceType', 'L1');
             assert(all(rslt(:)==result(:)));
         end
         
         function test_2
-            [result,labels] = distanceTransform(TestDistanceTransform.img);
+            [result,labels] = cv.distanceTransform(TestDistanceTransform.img);
         end
         
         function test_error_1
             try
-                distanceTransform();
+                cv.distanceTransform();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

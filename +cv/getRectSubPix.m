@@ -1,6 +1,6 @@
 %GETRECTSUBPIX  Retrieves a pixel rectangle from an image with sub-pixel accuracy
 %
-%   dst = getRectSubPix(src, siz, center)
+%   dst = cv.getRectSubPix(src, siz, center)
 %
 % Input:
 %     src: Source image.

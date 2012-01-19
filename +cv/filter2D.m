@@ -1,7 +1,7 @@
 %FILTER2D  Convolves an image with the kernel
 %
-%    dst = filter2D(src, kernel)
-%    dst = filter2D(src, kernel, 'Anchor', [0,1], ...)
+%    dst = cv.filter2D(src, kernel)
+%    dst = cv.filter2D(src, kernel, 'Anchor', [0,1], ...)
 %
 %  Input:
 %    img:

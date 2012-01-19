@@ -28,9 +28,9 @@ classdef VideoCapture < handle
         function this = VideoCapture(filename)
             %VIDEOCAPTURE  Create a new VideoCapture object
             %
-            %  cap = VideoCapture
-            %  cap = VideoCapture(devid)
-            %  cap = VideoCapture(filename)
+            %  cap = cv.VideoCapture
+            %  cap = cv.VideoCapture(devid)
+            %  cap = cv.VideoCapture(filename)
             %
             % VideoCapture create a new instance. With no argument, it
             % connects to the default camera device found in the system.

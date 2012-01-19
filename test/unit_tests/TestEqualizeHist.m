@@ -17,12 +17,12 @@ classdef TestEqualizeHist
     
     methods (Static)
         function test_1
-            result = equalizeHist(TestErode.img);
+            result = cv.equalizeHist(TestErode.img);
         end
         
         function test_error_1
             try
-                equalizeHist();
+                cv.equalizeHist();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

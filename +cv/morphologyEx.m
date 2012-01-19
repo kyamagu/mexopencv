@@ -1,7 +1,7 @@
 %MORPHOLOGYEX  Performs advanced morphological transformations
 %
-%   dst = morphologyEx(src, op)
-%   dst = morphologyEx(src, op, 'Element', [0,1,0;1,1,1;0,1,0], ...)
+%   dst = cv.morphologyEx(src, op)
+%   dst = cv.morphologyEx(src, op, 'Element', [0,1,0;1,1,1;0,1,0], ...)
 %
 % The function can perform advanced morphological transformations using an
 % erosion and dilation as basic operations.

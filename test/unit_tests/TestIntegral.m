@@ -17,20 +17,20 @@ classdef TestIntegral
     
     methods (Static)
         function test_1
-            s = integral(TestIntegral.img);
+            s = cv.integral(TestIntegral.img);
         end
         
         function test_2
-            [s,sqsum] = integral(TestIntegral.img);
+            [s,sqsum] = cv.integral(TestIntegral.img);
         end
         
         function test_3
-            [s,sqsum,tilted] = integral(TestIntegral.img);
+            [s,sqsum,tilted] = cv.integral(TestIntegral.img);
         end
         
         function test_error_1
             try
-                integral();
+                cv.integral();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

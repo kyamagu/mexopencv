@@ -17,16 +17,16 @@ classdef TestMedianBlur
     
     methods (Static)
         function test_1
-            result = medianBlur(TestMedianBlur.img);
+            result = cv.medianBlur(TestMedianBlur.img);
         end
         
         function test_2
-            result = medianBlur(TestMedianBlur.img, 'KSize', 7);
+            result = cv.medianBlur(TestMedianBlur.img, 'KSize', 7);
         end
         
         function test_error_1
             try
-                medianBlur();
+                cv.medianBlur();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

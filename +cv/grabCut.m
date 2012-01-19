@@ -1,9 +1,9 @@
 %GRABCUT  Runs the GrabCut algorithm
 %
-%    [ trimap ] = grabCut(img, bbox);
-%    [ trimap ] = grabCut(img, trimap);
-%    [ trimap ] = grabCut(img, trimap, 'Init', initMethod, ...);
-%    [ trimap ] = grabCut(img, trimap, 'MaxIter', maxIter, ...);
+%    [ trimap ] = cv.grabCut(img, bbox);
+%    [ trimap ] = cv.grabCut(img, trimap);
+%    [ trimap ] = cv.grabCut(img, trimap, 'Init', initMethod, ...);
+%    [ trimap ] = cv.grabCut(img, trimap, 'MaxIter', maxIter, ...);
 %
 %  Input:
 %    img: uint8 type H-by-W-by-3 RGB array
@@ -18,4 +18,6 @@
 %  Output:
 %    trimap: uint8 H-by-W array with
 %            {0:bg, 1:fg, 2:probably-bg, 3:probably-fg}
+%
+% See also cv.watershed
 %

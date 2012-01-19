@@ -17,12 +17,12 @@ classdef TestBuildPyramid
     
     methods (Static)
         function test_1
-            py = buildPyramid(TestBuildPyramid.img,'MaxLevel',3);
+            py = cv.buildPyramid(TestBuildPyramid.img,'MaxLevel',3);
         end
         
         function test_error_1
             try
-                buildPyramid();
+                cv.buildPyramid();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));
