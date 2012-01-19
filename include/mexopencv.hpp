@@ -425,4 +425,42 @@ std::vector<cv::Mat> MxArray::toStdVector() const
 		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to std::vector");
 }
 
+/** Convert MxArray to std::vector<cv::Mat>
+ * @return std::vector<cv::Mat> value
+ */
+template <>
+std::vector<cv::KeyPoint> MxArray::toStdVector() const
+{
+	int n = numel();
+	std::vector<cv::KeyPoint> v(n);
+	if (isCell())
+		for (int i=0; i<n; ++i)
+			v[i] = MxArray(mxGetCell(p_, i)).toKeyPoint();
+	else if (isStruct())
+		for (int i=0; i<n; ++i)
+			v[i] = toKeyPoint(i);
+	else
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to std::vector");
+	return v;
+}
+
+/** MxArray constructor from vector<T>. Make a cell array.
+ * @param v vector of type T
+ */
+template <>
+MxArray::MxArray(const std::vector<cv::KeyPoint>& v) :
+	p_(mxCreateStructMatrix(1,v.size(),6,keypoint_fields_))
+{
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
+	for (int i = 0; i < v.size(); ++i) {
+		mxSetField(const_cast<mxArray*>(p_),i,"pt",      MxArray(v[i].pt));
+		mxSetField(const_cast<mxArray*>(p_),i,"size",    MxArray(v[i].size));
+		mxSetField(const_cast<mxArray*>(p_),i,"angle",   MxArray(v[i].angle));
+		mxSetField(const_cast<mxArray*>(p_),i,"response",MxArray(v[i].response));
+		mxSetField(const_cast<mxArray*>(p_),i,"octave",  MxArray(v[i].octave));
+		mxSetField(const_cast<mxArray*>(p_),i,"class_id",MxArray(v[i].class_id));
+	}
+}
+
 #endif

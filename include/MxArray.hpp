@@ -30,6 +30,7 @@ class MxArray {
 		explicit MxArray(const std::string& s);
 		explicit MxArray(const cv::Mat& mat, mxClassID classid=mxUNKNOWN_CLASS, bool transpose=false);
 		explicit MxArray(const cv::SparseMat& mat);
+		explicit MxArray(const cv::KeyPoint& p);
 		template <typename T> explicit MxArray(const cv::Point_<T>& p);
 		template <typename T> explicit MxArray(const cv::Point3_<T>& p);
 		template <typename T> explicit MxArray(const cv::Size_<T>& s);
@@ -51,6 +52,7 @@ class MxArray {
 		std::string toString() const;
 		cv::Mat toMat(int depth=CV_USRTYPE1, bool transpose=false) const;
 		cv::SparseMat toSparseMat() const;
+		cv::KeyPoint toKeyPoint(mwIndex index=0) const;
 		template <typename T> cv::Point_<T> toPoint_() const;
 		template <typename T> cv::Point3_<T> toPoint3_() const;
 		template <typename T> cv::Size_<T> toSize_() const;
@@ -162,6 +164,8 @@ class MxArray {
 template <typename T>
 MxArray::MxArray(const std::vector<T>& v) : p_(mxCreateCellMatrix(1,v.size()))
 {
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
 	for (int i = 0; i < v.size(); ++i)
 		mxSetCell(const_cast<mxArray*>(p_), i, MxArray(v[i]));
 }
@@ -172,6 +176,8 @@ template <typename T>
 MxArray::MxArray(const cv::Point_<T>& p) :
 	p_(mxCreateNumericMatrix(1,2,mxDOUBLE_CLASS,mxREAL))
 {
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
 	double *x = mxGetPr(p_);
 	x[0] = p.x;
 	x[1] = p.y;
@@ -183,6 +189,8 @@ template <typename T>
 MxArray::MxArray(const cv::Point3_<T>& p) :
 	p_(mxCreateNumericMatrix(1,3,mxDOUBLE_CLASS,mxREAL))
 {
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
 	double *x = mxGetPr(p_);
 	x[0] = p.x;
 	x[1] = p.y;
@@ -195,6 +203,8 @@ template <typename T>
 MxArray::MxArray(const cv::Size_<T>& s) :
 	p_(mxCreateNumericMatrix(1,2,mxDOUBLE_CLASS,mxREAL))
 {
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
 	double *x = mxGetPr(p_);
 	x[0] = s.width;
 	x[1] = s.height;
@@ -206,6 +216,8 @@ template <typename T>
 MxArray::MxArray(const cv::Rect_<T>& r) :
 	p_(mxCreateNumericMatrix(1,4,mxDOUBLE_CLASS,mxREAL))
 {
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
 	double *x = mxGetPr(p_);
 	x[0] = r.x;
 	x[1] = r.y;
@@ -219,6 +231,8 @@ template <typename T>
 MxArray::MxArray(const cv::Scalar_<T>& s) :
 	p_(mxCreateNumericMatrix(1,4,mxDOUBLE_CLASS,mxREAL))
 {
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
 	double *x = mxGetPr(p_);
 	x[0] = s[0];
 	x[1] = s[1];
@@ -309,7 +323,7 @@ std::vector<T> MxArray::toStdVector() const
 template <typename T>
 const T MxArray::at(mwIndex index) const
 {
-	if (numel() <= index)
+	if (!p_ || numel() <= index)
 		mexErrMsgIdAndTxt("mexopencv:error","Accessing invalid range");
 	switch (classID()) {
 		case mxCHAR_CLASS:
@@ -350,5 +364,8 @@ const T MxArray::at(std::vector<mwIndex>& si) const
 {
 	return at<T>(subs(si));
 }
+
+/// Field names of KeyPoint
+extern const char *keypoint_fields_[6];
 
 #endif

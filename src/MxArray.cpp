@@ -67,22 +67,38 @@ MxArray::MxArray(const mxArray *arr) : p_(arr) {}
 /** MxArray constructor from double
  * @param d double value
  */
-MxArray::MxArray(const double d) : p_(mxCreateDoubleScalar(d)) {}
+MxArray::MxArray(const double d) : p_(mxCreateDoubleScalar(d))
+{
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
+}
 
 /** MxArray constructor from int
  * @param i int value
  */
-MxArray::MxArray(const int i) : p_(mxCreateDoubleScalar(static_cast<double>(i))) {}
+MxArray::MxArray(const int i) : p_(mxCreateDoubleScalar(static_cast<double>(i)))
+{
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
+}
 
 /** MxArray constructor from bool
  * @param b bool value
  */
-MxArray::MxArray(const bool b) : p_(mxCreateLogicalScalar(b)) {}
+MxArray::MxArray(const bool b) : p_(mxCreateLogicalScalar(b))
+{
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
+}
 
 /** MxArray constructor from std::string
  * @param s reference to a string value
  */
-MxArray::MxArray(const std::string& s) : p_(mxCreateString(s.c_str())) {}
+MxArray::MxArray(const std::string& s) : p_(mxCreateString(s.c_str()))
+{
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
+}
 
 /**
  * Convert cv::Mat to MxArray
@@ -108,6 +124,8 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 	if (classid == mxUNKNOWN_CLASS)
 		classid = depthToClassId(rm.depth());
 	p_ = mxCreateNumericArray(nDim,d,classid,mxREAL);
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
 	
 	// Copy each channel
 	std::vector<cv::Mat> mv;
@@ -152,6 +170,8 @@ MxArray::MxArray(const cv::SparseMat& mat)
 	// Create sparse array
 	int m = mat.size(0), n = mat.size(1), nnz = mat.nzcount();
 	p_ = mxCreateSparse(m, n, nnz, mxREAL);
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
 	mwIndex *ir = mxGetIr(p_);
 	mwIndex *jc = mxGetJc(p_);
 	if (ir==NULL || jc==NULL)
@@ -177,6 +197,26 @@ MxArray::MxArray(const cv::SparseMat& mat)
 		pr[i] = static_cast<double>(mat.value<float>(*it));
 		++i;
 	}
+}
+
+/**
+ * Convert cv::KeyPoint to MxArray
+ * @param mat cv::KeyPoint object
+ * @return MxArray object
+ */
+extern const char *keypoint_fields_[6] = {"pt", "size", "angle", "response", "octave", "class_id"};
+
+MxArray::MxArray(const cv::KeyPoint& p) :
+	p_(mxCreateStructMatrix(1,1,6,keypoint_fields_))
+{
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
+	mxSetField(const_cast<mxArray*>(p_),0,"pt",      MxArray(p.pt));
+	mxSetField(const_cast<mxArray*>(p_),0,"size",    MxArray(p.size));
+	mxSetField(const_cast<mxArray*>(p_),0,"angle",   MxArray(p.angle));
+	mxSetField(const_cast<mxArray*>(p_),0,"response",MxArray(p.response));
+	mxSetField(const_cast<mxArray*>(p_),0,"octave",  MxArray(p.octave));
+	mxSetField(const_cast<mxArray*>(p_),0,"class_id",MxArray(p.class_id));
 }
 
 /**
@@ -308,6 +348,29 @@ cv::SparseMat MxArray::toSparseMat() const
 			mat.ref<float>(ir[i],j) = static_cast<float>(pr[i]); // (row,col) <= val
 	}
 	return mat;
+}
+
+/** Convert MxArray to cv::KeyPoint
+ * @return cv::KeyPoint
+ */
+cv::KeyPoint MxArray::toKeyPoint(mwIndex index) const
+{
+	if (!isStruct())
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not struct");
+	if (index < 0 || numel() <= index)
+		mexErrMsgIdAndTxt("mexopencv:error","Out of range in struct array");
+	mxArray* pm;
+	if (!(pm=mxGetField(p_,index,"pt")))
+		mexErrMsgIdAndTxt("mexopencv:error","Struct incompatible to KeyPoint");
+	Point2f _pt = MxArray(pm).toPoint_<float>();
+	if (!(pm=mxGetField(p_,index,"size")))
+		mexErrMsgIdAndTxt("mexopencv:error","Struct incompatible to KeyPoint");
+	float _size = MxArray(pm).toDouble();
+	float _angle = (pm=mxGetField(p_,index,"angle")) ?       MxArray(pm).toDouble() : -1;
+	float _response = (pm=mxGetField(p_,index,"response")) ? MxArray(pm).toDouble() : 0;
+	int _octave = (pm=mxGetField(p_,index,"octave")) ?       MxArray(pm).toInt() : 0;
+	int _class_id = (pm=mxGetField(p_,index,"class_id")) ?   MxArray(pm).toInt() : -1;
+	return cv::KeyPoint(_pt,_size,_angle,_response,_octave,_class_id);
 }
 
 ///** Return dimension vector
