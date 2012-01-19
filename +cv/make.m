@@ -32,12 +32,12 @@ if ispc % Windows
 	end
 	
 	% Compile other files
-	srcs = dir('src\matlab\*.cpp');
+	srcs = [dir('src\+cv\*.cpp'),dir('src\+cv\private\*.cpp')];
 	srcs = cellfun(@(x) regexprep(x,'(.*)\.cpp','$1'), {srcs.name},...
 		'UniformOutput', false);
 	for i = 1:numel(srcs)
-		cmd = sprintf('mex %s %s -outdir +cv src\\matlab\\%s.cpp MxArray.obj',...
-			mex_flags,pkg_config,srcs{i});
+		cmd = sprintf('mex %s %s +cv src\\matlab\\%s.cpp MxArray.obj -o %s',...
+			mex_flags,pkg_config,srcs{i},srcs{i});
 		disp(cmd);
 		eval(cmd);
 	end
