@@ -29,7 +29,7 @@ classdef CascadeClassifier
             %
             % See also cv.CascadeClassifier
             %
-            this.id = cv.CascadeClassifier_(filename);
+            this.id = CascadeClassifier_(filename);
         end
         
         function delete(this)
@@ -37,7 +37,7 @@ classdef CascadeClassifier
             %
             % See also cv.CascadeClassifier
             %
-            cv.CascadeClassifier_(this.id, 'delete');
+            CascadeClassifier_(this.id, 'delete');
         end
         
         function status = empty(this)
@@ -49,7 +49,7 @@ classdef CascadeClassifier
             %
             % See also cv.CascadeClassifier
             %
-            status = cv.CascadeClassifier_(this.id, 'empty');
+            status = CascadeClassifier_(this.id, 'empty');
         end
         
         function status = load(this, filename)
@@ -61,7 +61,7 @@ classdef CascadeClassifier
             %
             % See also cv.CascadeClassifier
             %
-            status = cv.CascadeClassifier_(this.id, 'load', filename);
+            status = CascadeClassifier_(this.id, 'load', filename);
         end
         
         function boxes = detect(this, im, varargin)
@@ -89,7 +89,7 @@ classdef CascadeClassifier
             %
             % See also cv.CascadeClassifier
             %
-            boxes = cv.CascadeClassifier_(this.id, 'detectMultiScale', im, varargin{:});
+            boxes = CascadeClassifier_(this.id, 'detectMultiScale', im, varargin{:});
         end
     end
     

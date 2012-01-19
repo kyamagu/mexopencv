@@ -2,15 +2,15 @@ MATLABDIR   ?= /usr/local/matlab
 MEX         ?= $(MATLABDIR)/bin/mex
 MEXEXT      ?= $(shell $(MATLABDIR)/bin/mexext)
 MATLAB      ?= $(MATLABDIR)/bin/matlab
-TARGETDIR   := matlab
+TARGETDIR   := +cv
 INCLUDEDIR	:= include
 SRCDIR		:= src
 MEXDIR		:= $(SRCDIR)/$(TARGETDIR)
-SRCS        := $(wildcard $(MEXDIR)/*.cpp)
+SRCS        := $(wildcard $(MEXDIR)/*.cpp) $(wildcard $(MEXDIR)/private/*.cpp)
 TARGETS     := $(subst $(MEXDIR), $(TARGETDIR), $(SRCS:.cpp=.$(MEXEXT)))
 MEXFLAGS    := -cxx -I$(INCLUDEDIR) $(shell pkg-config --cflags --libs opencv) -largeArrayDims
 
-VPATH       = $(TARGETDIR):$(SRCDIR):$(MEXDIR)
+VPATH       = $(TARGETDIR):$(SRCDIR):$(MEXDIR):$(TARGETDIR)/private:$(SRCDIR)/private
 
 .PHONY : all clean doc test
 

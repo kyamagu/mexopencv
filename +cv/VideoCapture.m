@@ -41,12 +41,12 @@ classdef VideoCapture < handle
             % See also cv.VideoCapture
             %
             if nargin < 1, filename = 0; end
-            this.id = cv.VideoCapture_(filename);
+            this.id = VideoCapture_(filename);
         end
         
         function delete(this)
             %DELETE  Destructor of VideoCapture object
-            cv.VideoCapture_(this.id, 'delete');
+            VideoCapture_(this.id, 'delete');
         end
         
         function frame = read(this)
@@ -59,7 +59,7 @@ classdef VideoCapture < handle
             %
             % See also cv.VideoCapture
             %
-            frame = cv.VideoCapture_(this.id, 'read');
+            frame = VideoCapture_(this.id, 'read');
         end
         
         function value = get(this, key)
@@ -91,7 +91,7 @@ classdef VideoCapture < handle
             %
             % See also cv.VideoCapture
             %
-            value = cv.VideoCapture_(this.id, 'get', key);
+            value = VideoCapture_(this.id, 'get', key);
         end
         
         function set(this, key, value)
@@ -123,7 +123,7 @@ classdef VideoCapture < handle
             %
             % See also cv.VideoCapture
             %
-            cv.VideoCapture_(this.id, 'set', key, value);
+            VideoCapture_(this.id, 'set', key, value);
         end
     end
     

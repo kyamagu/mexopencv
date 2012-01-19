@@ -9,16 +9,16 @@ Contents
 
 The project tree is organized as follows.
 
-    +cv/            directory to put compiled mex files
+    +cv/            directory to put compiled mex files, wrappers, or help files
     Doxyfile        config file for doxygen
     Makefile        make script
     README.markdown this file
     doc/            directory for documentation
     include/        header files
-    matlab/         symlink to +cv
     samples/        directory for sample application codes
     src/            directory for c++ source files
-    src/matlab/     directory for mex source files
+    src/+cv/        directory for mex source files
+    src/+cv/private directory for private mex source files
     test/           directory for test scripts and resources
 
 
@@ -38,7 +38,7 @@ First make sure you have OpenCV installed in the system. Then,
 
     $ make
 
-will build all mex functions located inside `+cv/` (or `matlab/`).
+will build all mex functions located inside `+cv/`.
 Specify your matlab directory if you install matlab other than /usr/local/matlab
 
     $ make MATLABDIR=/path/to/matlab
@@ -81,21 +81,16 @@ Once mex functions are compiled, you can add path to the project directory and
 call mex functions within matlab using package name `cv`.
 
     addpath('/path/to/mexopencv');
-    result = cv.filter2D(img, kern);    % with package name 'cv'
+    result = cv.filter2D(img, kern);  % with package name 'cv'
     import cv.*;
-    result = filter2D(img, kern);       % no need to specify 'cv' after import
+    result = filter2D(img, kern);     % no need to specify 'cv' after imported
 
-Or, you can add path to matlab/ directory.
- 
-    addpath('/path/to/mexopencv/matlab');
-    result = filter2D(img, kern);       % no need to specify 'cv'
-
-Note that some functions such as `cv.imread` overloads Matlab's builtin method.
-Use the scoped name when you need to avoid name collision.
+Note that some functions such as `cv.imread` overloads Matlab's builtin method
+when imported. Use the scoped name when you need to avoid name collision.
 
 Check a list of functions available by `help` command in matlab.
 
-    >> help cv;          % shows list of functions in package 'cv'
+    >> help cv; % shows list of functions in package 'cv'
     
     Contents of cv:
     
@@ -119,8 +114,8 @@ Look at the `samples/` directory for an example of an application.
 Developing a new mex function
 =============================
 
-All you need to do is to add your mex source file in src/matlab/. If you
-want to add a mex function called myfunc, create src/matlab/myfunc.cpp.
+All you need to do is to add your mex source file in src/+cv/. If you
+want to add a mex function called myfunc, create src/+cv/myfunc.cpp.
 The minimum contents of the myfunc.cpp would look like this:
 
     #include "mexopencv.hpp"
@@ -144,7 +139,7 @@ This example simply copies an input to cv::Mat object and then copies again to
 the output. Notice how the `MxArray` class provided by mexopencv converts
 mxArray to cv::Mat object. Of course you would want to do something more with
 the object. Once you create a file, type 'make' to build your new function. The
-compiled mex function will be located under `+cv/` and accessible through
+compiled mex function will be located inside `+cv/` and accessible through
 `cv.myfunc` within matlab.
 
 The `mexopencv.hpp` header contains a class `MxArray` to manipulate `mxArray`
@@ -175,6 +170,14 @@ mxArray.
     mxArray* plhs[0] = MxArray(sc);
     mxArray* plhs[0] = MxArray(sm); # Only 2D float to double
 
+If you rather want to develop a matlab function that internally calls a mex
+function, make use of the `+cv/private` directory. Any function placed under
+private directory is only accessible from `+cv/` directory. So, for example,
+when you want to design a matlab class that wraps the various behavior of the
+mex function, define your class at `+cv/MyClass.m` and develop a mex function
+dedicated for that class in `src/+cv/private/MyClass_.cpp`. Inside of
+`+cv/MyClass.m`, you can call `MyClass_()` without cv namescope.
+
 
 Testing
 -------
@@ -194,15 +197,15 @@ resource file necessary for testing. An example of testing class is shown below:
         methods (Static)
             function test_1
                 src = imread('/path/to/myimg');
-                ref = 1;             % reference output
-                dst = myfunc(src);   % execute
-                assert(dst == ref);  % check the output
+                ref = [1,2,3];                  % reference output
+                dst = cv.myfunc(src);           % execute your function
+                assert(all(dst(:) == ref(:)));  % check the output
             end
             
             function test_error_1
                 try
-                    myfunc('foo'); % myfunc should throw an error
-                    throw('UnitTest:Fail');
+                    cv.myfunc('foo');           % myfunc should throw an error
+                    error('UnitTest:Fail','myfunc incorrectly returned');
                 catch e
                     assert(strcmp(e.identifier,'mexopencv:error'));
                 end

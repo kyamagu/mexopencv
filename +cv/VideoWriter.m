@@ -49,7 +49,7 @@ classdef VideoWriter < handle
             % See also cv.VideoWriter cv.VideoWriter.write
             %
             if nargin < 1, filename = 0; end
-            this.id = cv.VideoWriter_(filename, siz, varargin{:});
+            this.id = VideoWriter_(filename, siz, varargin{:});
         end
         
         function delete(this)
@@ -57,7 +57,7 @@ classdef VideoWriter < handle
             %
             % See also cv.VideoWriter
             %
-            cv.VideoWriter_(this.id, 'delete');
+            VideoWriter_(this.id, 'delete');
         end
         
         function write(this, frame)
@@ -74,7 +74,7 @@ classdef VideoWriter < handle
             %
             % See also cv.VideoWriter
             %
-            cv.VideoWriter_(this.id, 'write', frame);
+            VideoWriter_(this.id, 'write', frame);
         end
     end
     
