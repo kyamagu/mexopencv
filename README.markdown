@@ -71,7 +71,7 @@ system variable. Then, in the matlab shell,
 to build all mex functions. By default, mexopencv assumes the OpenCV library is
 installed in C:\opencv. If this is different, specify the path as an argument.
 
-    >> cv.make('opencv_path', your_path)
+    >> cv.make('opencv_path', 'c:\your\path\to\opencv')
 
 
 Usage
@@ -156,7 +156,7 @@ mxArray.
     cv::Size siz     = MxArray(prhs[0]).toSize();
     cv::Rect rct     = MxArray(prhs[0]).toRect();
     cv::Scalar sc    = MxArray(prhs[0]).toScalar();
-    cv::SparseMat sp = MxArray(prhs[0]).toSparseMat(); # Only double to float
+    cv::SparseMat sp = MxArray(prhs[0]).toSparseMat(); // Only double to float
 
     mxArray* plhs[0] = MxArray(i);
     mxArray* plhs[0] = MxArray(d);
