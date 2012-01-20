@@ -146,29 +146,29 @@ The `mexopencv.hpp` header contains a class `MxArray` to manipulate `mxArray`
 object. Mostly this class is used to convert between opencv data types and
 mxArray.
 
-    cv::Mat m        = MxArray(prhs[0]).toMat();   # Pixels
     int i            = MxArray(prhs[0]).toInt();
     double d         = MxArray(prhs[0]).toDouble();
     bool b           = MxArray(prhs[0]).toBool();
     std::string s    = MxArray(prhs[0]).toString();
-    cv::Mat arr      = MxArray(prhs[0]).toArray(); # N-D array
-    cv::Point p      = MxArray(prhs[0]).toPoint();
-    cv::Size sz      = MxArray(prhs[0]).toSize();
-    cv::Rect r       = MxArray(prhs[0]).toRect();
+    cv::Mat mat      = MxArray(prhs[0]).toMat();   # For pixels
+    cv::Mat ndmat    = MxArray(prhs[0]).toMatND(); # For N-D array
+    cv::Point pt     = MxArray(prhs[0]).toPoint();
+    cv::Size siz     = MxArray(prhs[0]).toSize();
+    cv::Rect rct     = MxArray(prhs[0]).toRect();
     cv::Scalar sc    = MxArray(prhs[0]).toScalar();
-    cv::SparseMat sm = MxArray(prhs[0]).toSparseMat(); # Only double to float
+    cv::SparseMat sp = MxArray(prhs[0]).toSparseMat(); # Only double to float
 
-    mxArray* plhs[0] = MxArray(m);
     mxArray* plhs[0] = MxArray(i);
     mxArray* plhs[0] = MxArray(d);
     mxArray* plhs[0] = MxArray(b);
     mxArray* plhs[0] = MxArray(s);
-    mxArray* plhs[0] = MxArray::fromArray(arr);
-    mxArray* plhs[0] = MxArray(p);
-    mxArray* plhs[0] = MxArray(sz);
-    mxArray* plhs[0] = MxArray(r);
+    mxArray* plhs[0] = MxArray(mat);
+    mxArray* plhs[0] = MxArray(ndmat);
+    mxArray* plhs[0] = MxArray(pt);
+    mxArray* plhs[0] = MxArray(siz);
+    mxArray* plhs[0] = MxArray(rct);
     mxArray* plhs[0] = MxArray(sc);
-    mxArray* plhs[0] = MxArray(sm); # Only 2D float to double
+    mxArray* plhs[0] = MxArray(sp); # Only 2D float to double
 
 If you rather want to develop a matlab function that internally calls a mex
 function, make use of the `+cv/private` directory. Any function placed under

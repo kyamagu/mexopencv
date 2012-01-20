@@ -9,49 +9,6 @@
 
 #include "MxArray.hpp"
 
-/** std::map wrapper with one-line initialization and lookup method
- * @details
- * Initialization
- * @code
- * const ConstMap<std::string,int> BorderType = ConstMap<std::string,int>
- *     ("Replicate",  cv::BORDER_REPLICATE)
- *     ("Constant",   cv::BORDER_CONSTANT)
- *     ("Reflect",    cv::BORDER_REFLECT);
- * @endcode
- * Lookup
- * @code
- * BorderType["Constant"] // => cv::BORDER_CONSTANT
- * @endcode
- */
-template <typename T, typename U>
-class ConstMap
-{
-	private:
-		std::map<T, U> m_;
-	public:
-		/// Constructor with a single key-value pair
-		ConstMap(const T& key, const U& val)
-		{
-			m_[key] = val;
-		}
-		/// Consecutive insertion operator
-		ConstMap<T, U>& operator()(const T& key, const U& val)
-		{
-			m_[key] = val;
-			return *this;
-		}
-		/// Implicit converter to std::map
-		operator std::map<T, U>() { return m_; }
-		/// Lookup operator; fail if not found
-		U operator [](const T& key) const
-		{
-			typename std::map<T,U>::const_iterator it = m_.find(key);
-			if (it==m_.end())
-				mexErrMsgIdAndTxt("mexopencv:error","Value not found");
-			return (*it).second;
-		}
-};
-
 // Global constants
 
 /** BorderType map for option processing
@@ -449,7 +406,7 @@ std::vector<cv::KeyPoint> MxArray::toStdVector() const
  */
 template <>
 MxArray::MxArray(const std::vector<cv::KeyPoint>& v) :
-	p_(mxCreateStructMatrix(1,v.size(),6,keypoint_fields_))
+	p_(mxCreateStructMatrix(1,v.size(),6,cv_keypoint_fields))
 {
 	if (!p_)
 		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");

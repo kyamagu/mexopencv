@@ -28,7 +28,7 @@ class MxArray {
 		explicit MxArray(const double d);
 		explicit MxArray(const bool b);
 		explicit MxArray(const std::string& s);
-		explicit MxArray(const cv::Mat& mat, mxClassID classid=mxUNKNOWN_CLASS, bool transpose=false);
+		explicit MxArray(const cv::Mat& mat, mxClassID classid=mxUNKNOWN_CLASS, bool transpose=true);
 		explicit MxArray(const cv::SparseMat& mat);
 		explicit MxArray(const cv::KeyPoint& p);
 		template <typename T> explicit MxArray(const cv::Point_<T>& p);
@@ -50,7 +50,8 @@ class MxArray {
 		double toDouble() const;
 		bool toBool() const;
 		std::string toString() const;
-		cv::Mat toMat(int depth=CV_USRTYPE1, bool transpose=false) const;
+		cv::Mat toMat(int depth=CV_USRTYPE1, bool transpose=true) const;
+		cv::Mat toMatND(int depth=CV_USRTYPE1, bool transpose=true) const;
 		cv::SparseMat toSparseMat() const;
 		cv::KeyPoint toKeyPoint(mwIndex index=0) const;
 		template <typename T> cv::Point_<T> toPoint_() const;
@@ -68,9 +69,6 @@ class MxArray {
 		inline cv::Rect toRect() const { return toRect_<int>(); }
 		/// Alias to toScalar_<double>
 		inline cv::Scalar toScalar() const { return toScalar_<double>(); }
-		
-		static MxArray fromArray(const cv::Mat& mat);
-		const cv::Mat toArray() const;
 		
 		// mxArray API wrapper
 		
@@ -157,6 +155,48 @@ class MxArray {
 		template <typename T> T value() const;
 };
 
+/** std::map wrapper with one-line initialization and lookup method
+ * @details
+ * Initialization
+ * @code
+ * const ConstMap<std::string,int> BorderType = ConstMap<std::string,int>
+ *     ("Replicate",  cv::BORDER_REPLICATE)
+ *     ("Constant",   cv::BORDER_CONSTANT)
+ *     ("Reflect",    cv::BORDER_REFLECT);
+ * @endcode
+ * Lookup
+ * @code
+ * BorderType["Constant"] // => cv::BORDER_CONSTANT
+ * @endcode
+ */
+template <typename T, typename U>
+class ConstMap
+{
+	private:
+		std::map<T, U> m_;
+	public:
+		/// Constructor with a single key-value pair
+		ConstMap(const T& key, const U& val)
+		{
+			m_[key] = val;
+		}
+		/// Consecutive insertion operator
+		ConstMap<T, U>& operator()(const T& key, const U& val)
+		{
+			m_[key] = val;
+			return *this;
+		}
+		/// Implicit converter to std::map
+		operator std::map<T, U>() { return m_; }
+		/// Lookup operator; fail if not found
+		U operator [](const T& key) const
+		{
+			typename std::map<T,U>::const_iterator it = m_.find(key);
+			if (it==m_.end())
+				mexErrMsgIdAndTxt("mexopencv:error","Value not found");
+			return (*it).second;
+		}
+};
 
 /** MxArray constructor from vector<T>. Make a cell array.
  * @param v vector of type T
@@ -366,6 +406,6 @@ const T MxArray::at(std::vector<mwIndex>& si) const
 }
 
 /// Field names of KeyPoint
-extern const char *keypoint_fields_[6];
+extern const char *cv_keypoint_fields[6];
 
 #endif

@@ -14,36 +14,30 @@ namespace {
  * @param classid data type of matlab's mxArray. e.g., mxDOUBLE_CLASS
  * @return opencv's data type. e.g., CV_8U
  */
-int classIdToDepth(mxClassID classid) {
-	switch (classid) {
-	case mxDOUBLE_CLASS:	return CV_64F;
-	case mxSINGLE_CLASS:	return CV_32F;
-	case mxINT8_CLASS:		return CV_8S;
-	case mxUINT8_CLASS:		return CV_8U;
-	case mxINT16_CLASS:		return CV_16S;
-	case mxUINT16_CLASS:	return CV_16U;
-	case mxINT32_CLASS:		return CV_32S;
-	case mxLOGICAL_CLASS:	return CV_8U;
-	default: 				return CV_USRTYPE1;
-	}
-}
+const ConstMap<mxClassID,int> DepthOf = ConstMap<mxClassID,int>
+    (mxDOUBLE_CLASS,	CV_64F)
+    (mxSINGLE_CLASS,	CV_32F)
+    (mxINT8_CLASS,		CV_8S)
+    (mxUINT8_CLASS,		CV_8U)
+    (mxINT16_CLASS,		CV_16S)
+    (mxUINT16_CLASS,	CV_16U)
+    (mxINT32_CLASS,		CV_32S)
+    (mxUINT32_CLASS,	CV_32S)
+    (mxLOGICAL_CLASS,	CV_8U);
+
 /**
  * Translates data type definition used in Matlab to that of OpenCV
  * @param depth data depth of opencv's Mat class. e.g., CV_32F
  * @return data type of matlab's mxArray. e.g., mxDOUBLE_CLASS
  */
-mxClassID depthToClassId(int depth) {
-	switch (depth) {
-	case CV_64F:	return mxDOUBLE_CLASS;
-	case CV_32F:	return mxSINGLE_CLASS;
-	case CV_8S:		return mxINT8_CLASS;
-	case CV_8U:		return mxUINT8_CLASS; // No mapping to logical
-	case CV_16S:	return mxINT16_CLASS;
-	case CV_16U:	return mxUINT16_CLASS;
-	case CV_32S:	return mxINT32_CLASS;
-	default: 		return mxUNKNOWN_CLASS;
-	}
-}
+const ConstMap<int,mxClassID> ClassIDOf = ConstMap<int,mxClassID>
+    (CV_64F,	mxDOUBLE_CLASS)
+    (CV_32F,	mxSINGLE_CLASS)
+    (CV_8S,		mxINT8_CLASS)
+    (CV_8U,		mxUINT8_CLASS)
+    (CV_16S,	mxINT16_CLASS)
+    (CV_16U,	mxUINT16_CLASS)
+    (CV_32S,	mxINT32_CLASS);
 }
 
 /** Convert MxArray to scalar primitive type T
@@ -103,41 +97,54 @@ MxArray::MxArray(const std::string& s) : p_(mxCreateString(s.c_str()))
 /**
  * Convert cv::Mat to MxArray
  * @param mat cv::Mat object
- * @param classid classid of mxArray. e.g., mxDOUBLE_CLASS. default: automatic conversion
- * @param transpose Optional transposition to the return value. default
- *                  false. When true, it skips internal copying operation
+ * @param classid classid of mxArray. e.g., mxDOUBLE_CLASS. When mxUNKNOWN_CLASS
+ *                is specified, classid will be automatically determined from
+ *                the type of cv::Mat. default: mxUNKNOWN_CLASS
+ * @param transpose Optional transposition to the return value so that rows and
+ *                  columns of the 2D Mat are mapped to the 2nd and 1st
+ *                  dimensions in MxArray, respectively. This does not apply
+ *                  the N-D array conversion. default true.
  * @return MxArray object
  *
- * The width/height/channels of cv::Mat are mapped to the first/second/third dimensions of
- * mxArray, respectively.
+ * Convert cv::Mat object to an MxArray. When the cv::Mat object is 2D, the
+ * width, height, and channels are mapped to the first, second, and third
+ * dimensions of the MxArray unless transpose flag is set to false. When the
+ * cv::Mat object is N-D, (dim 1, dim 2,...dim N, channels) are mapped to (dim
+ * 2, dim 1, ..., dim N, dim N+1), respectively.
+ *
+ * Example:
+ * @code
+ * cv::Mat x(120, 90, CV_8UC3, Scalar(0));
+ * mxArray* plhs[0] = MxArray(x);
+ * @endcode
+ *
  */
 MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 {
-	if (mat.dims > 2)
-		mexErrMsgIdAndTxt("mexopencv:error","cv::Mat is not 2D");
+	const cv::Mat& rm = (mat.dims==2 && transpose) ? cv::Mat(mat.t()) : mat;
 	
-	const cv::Mat& rm = (transpose) ? mat : cv::Mat(mat.t());
 	// Create a new mxArray
-	int nChannels = rm.channels();
-	mwSize nDim = (nChannels>1) ? 3 : 2;
-	mwSize d[] = {rm.cols, rm.rows, (nChannels>1) ? nChannels : 0};
-	if (classid == mxUNKNOWN_CLASS)
-		classid = depthToClassId(rm.depth());
-	p_ = mxCreateNumericArray(nDim,d,classid,mxREAL);
+	int nchannels = rm.channels();
+	const int* dims_ = rm.size;
+	vector<mwSize> d(dims_,dims_+rm.dims);
+	d.push_back(nchannels);
+	classid = (classid == mxUNKNOWN_CLASS) ? ClassIDOf[rm.depth()] : classid;
+	std::swap(d[0],d[1]);
+	p_ = mxCreateNumericArray(d.size(),&d[0],classid,mxREAL);
 	if (!p_)
 		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
 	
 	// Copy each channel
 	std::vector<cv::Mat> mv;
 	cv::split(rm,mv);
-	std::vector<mwSize> si(3,0); // subscript index
-	int type = CV_MAKETYPE(classIdToDepth(classid),1); // destination type
-	for (int i = 0; i < nChannels; ++i) {
-		si[2] = i;
+	std::vector<mwSize> si(d.size(),0);      // subscript index
+	int type = CV_MAKETYPE(DepthOf[classid],1); // destination type
+	for (int i = 0; i < nchannels; ++i) {
+		si[rm.dims] = i; // last dim is a channel index
 		void *ptr = reinterpret_cast<void*>(
 				reinterpret_cast<size_t>(mxGetData(p_))+
 				mxGetElementSize(p_)*subs(si));
-		cv::Mat m(rm.rows,rm.cols,type,ptr,mxGetElementSize(p_)*rm.cols);
+		cv::Mat m(rm.dims,dims_,type,ptr);
 		mv[i].convertTo(m,type); // Write to mxArray through m
 	}
 }
@@ -204,10 +211,10 @@ MxArray::MxArray(const cv::SparseMat& mat)
  * @param mat cv::KeyPoint object
  * @return MxArray object
  */
-const char *keypoint_fields_[6] = {"pt", "size", "angle", "response", "octave", "class_id"};
+const char *cv_keypoint_fields[6] = {"pt", "size", "angle", "response", "octave", "class_id"};
 
 MxArray::MxArray(const cv::KeyPoint& p) :
-	p_(mxCreateStructMatrix(1,1,6,keypoint_fields_))
+	p_(mxCreateStructMatrix(1,1,6,cv_keypoint_fields))
 {
 	if (!p_)
 		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
@@ -220,77 +227,95 @@ MxArray::MxArray(const cv::KeyPoint& p) :
 }
 
 /**
- * Convert cv::Mat to N-D MxArray
- * @param mat single-channel cv::Mat object
- * @return MxArray object
- *
- * The method makes N-D mxArray from cv::Mat
- */
-MxArray MxArray::fromArray(const cv::Mat& mat)
-{
-	if (mat.channels() > 1)
-		mexErrMsgIdAndTxt("mexopencv:error","cv::Mat is not single channel");
-		
-	// Create a new mxArray
-	mxClassID classid = depthToClassId(mat.depth());
-	const int* siz = mat.size;
-	std::vector<mwSize> vsiz(siz, siz + mat.dims);
-	MxArray arr(mxCreateNumericArray(mat.dims, &vsiz[0], classid, mxREAL));
-	
-	// Copy data
-	std::vector<int> vdims(arr.dims(),arr.dims()+arr.ndims());
-	cv::Mat m(arr.ndims(),&vdims[0],CV_MAKETYPE(mat.depth(),1),mxGetData(arr));
-	mat.copyTo(m);
-	return arr;
-}
-
-/**
  * Convert MxArray to cv::Mat
- * @param depth depth of cv::Mat. e.g., CV_8U, CV_32F. default: automatic conversion
- * @param transpose Optional transposition of the input value. default
- *                  false. When true, it skips internal copying operation
+ * @param depth depth of cv::Mat. e.g., CV_8U, CV_32F.  When CV_USERTYPE1 is
+ *                specified, depth will be automatically determined from the
+ *                the classid of the MxArray. default: CV_USERTYPE1
+ * @param transpose Optional transposition to the return value so that rows and
+ *                  columns of the 2D Mat are mapped to the 2nd and 1st
+ *                  dimensions in MxArray, respectively. This does not apply
+ *                  the N-D array conversion. default true.
  * @return cv::Mat object
- * 
- * The first/second/third dimensions of mxArray are mapped to height/width/channels, respectively
+ *
+ * Convert a MxArray object to a cv::Mat object. When the dimensionality of the
+ * MxArray is more than 2, the last dimension will be mapped to the channels of
+ * the cv::Mat. Also, if the resulting cv::Mat is 2D, the 1st and 2nd dimensions
+ * of the MxArray are mapped to rows and columns of the cv::Mat unless transpose
+ * flag is false. That is, when MxArray is 3D, (dim 1, dim 2, dim 3) are mapped
+ * to (cols, rows, channels) of the cv::Mat by default, whereas if MxArray is
+ * more than 4D, (dim 1, dim 2, ..., dim N-1, dim N) are mapped to (dim 2, dim
+ * 1, ..., dim N-1, channels) of the cv::Mat, respectively.
+ *
+ * Example:
+ * @code
+ * cv::Mat x(MxArray(prhs[0]).toMat());
+ * @endcode
+ *
  */
 cv::Mat MxArray::toMat(int depth, bool transpose) const
 {
 	// Create cv::Mat object
-	const mwSize* d = dims();
-	int nChannels = (ndims() > 2) ? d[2] : 1;
-	if (depth == CV_USRTYPE1)
-		depth = classIdToDepth(classID());
-	cv::Mat mat(d[1],d[0],CV_MAKETYPE(depth,nChannels));
+	vector<int> d(dims(),dims()+ndims());
+	int ndims = (d.size()>2) ? d.size()-1 : d.size();
+	int nchannels = (d.size()>2) ? *(d.end()-1) : 1;
+	depth = (depth==CV_USRTYPE1) ? DepthOf[classID()] : depth;
+	std::swap(d[0],d[1]);
+	cv::Mat mat(ndims,&d[0],CV_MAKETYPE(depth,nchannels));
 	
 	// Copy each channel
-	std::vector<cv::Mat> mv(nChannels);
-	std::vector<mwSize> si(3,0); // subscript index
-	for (int i = 0; i<nChannels; ++i) {
-		si[2] = i;
+	std::vector<cv::Mat> mv(nchannels);
+	std::vector<mwSize> si(d.size(),0); // subscript index
+	int type = CV_MAKETYPE(DepthOf[classID()],1); // Source type
+	for (int i = 0; i<nchannels; ++i) {
+		si[d.size()-1] = i;
 		void *pd = reinterpret_cast<void*>(
 				reinterpret_cast<size_t>(mxGetData(p_))+
 				mxGetElementSize(p_)*subs(si));
-		cv::Mat m(mat.rows,mat.cols,
-				CV_MAKETYPE(classIdToDepth(classID()),1),
-				pd,mxGetElementSize(p_)*mat.cols);
+		cv::Mat m(ndims,&d[0],type,pd);
 		m.convertTo(mv[i],CV_MAKETYPE(depth,1)); // Read from mxArray through m
 	}
 	cv::merge(mv,mat);
-	return (transpose) ? mat : cv::Mat(mat.t());
+	return (mat.dims==2 && transpose) ? cv::Mat(mat.t()) : mat;
 }
 
 /**
- * Convert N-D MxArray to cv::Mat
+ * Convert MxArray to single-channel cv::Mat
+ * @param depth depth of cv::Mat. e.g., CV_8U, CV_32F.  When CV_USERTYPE1 is
+ *                specified, depth will be automatically determined from the
+ *                the classid of the MxArray. default: CV_USERTYPE1
+ * @param transpose Optional transposition to the return value so that rows and
+ *                  columns of the 2D Mat are mapped to the 2nd and 1st
+ *                  dimensions in MxArray, respectively. This does not apply
+ *                  the N-D array conversion. default true.
  * @return const cv::Mat object
- * 
- * N-D mxArray is converted to single-channel, N-dimensional cv::Mat
+ *
+ * Convert a MxArray object to a single-channel cv::Mat object. If the MxArray
+ * is 2D, the 1st and 2nd dimensions of the MxArray are mapped to rows and
+ * columns of the cv::Mat unless transpose flag is false. If the MxArray is more
+ * than 3D, the 1st and 2nd dimensions of the MxArray are mapped to 2nd and 1st
+ * dimensions of the cv::Mat. That is, when MxArray is 2D, (dim 1, dim 2) are
+ * mapped to (cols, rows) of the cv::Mat by default, whereas if MxArray is
+ * more than 3D, (dim 1, dim 2, dim 3, ..., dim N) are mapped to (dim 2, dim
+ * 1, dim 3, ..., dim N) of the cv::Mat, respectively.
+ *
+ * Example:
+ * @code
+ * cv::Mat x(MxArray(prhs[0]).toMatND());
+ * @endcode
  */
-const cv::Mat MxArray::toArray() const
+cv::Mat MxArray::toMatND(int depth, bool transpose) const
 {
 	// Create cv::Mat object
-	int depth = classIdToDepth(classID());
-	std::vector<int> vdims(dims(),dims()+ndims());
-	return cv::Mat(ndims(),&vdims[0],CV_MAKETYPE(depth,1),mxGetData(p_));
+	std::vector<int> d(dims(),dims()+ndims());
+	std::swap(d[0],d[1]);
+	cv::Mat m(ndims(),&d[0],CV_MAKETYPE(DepthOf[classID()],1),mxGetData(p_));
+	
+	// Copy
+	cv::Mat mat;
+	depth = (depth==CV_USRTYPE1) ? CV_MAKETYPE(DepthOf[classID()],1) : depth;
+	m.convertTo(mat,CV_MAKETYPE(depth,1));
+	
+	return (mat.dims==2 && transpose) ? cv::Mat(mat.t()) : mat;
 }
 
 /** Convert MxArray to scalar double
@@ -372,15 +397,6 @@ cv::KeyPoint MxArray::toKeyPoint(mwIndex index) const
 	int _class_id = (pm=mxGetField(p_,index,"class_id")) ?   MxArray(pm).toInt() : -1;
 	return cv::KeyPoint(_pt,_size,_angle,_response,_octave,_class_id);
 }
-
-///** Return dimension vector
-// * @return vector of number of elements in each dimension
-// */
-//std::vector<mwSize> MxArray::dims() const
-//{
-//	const mwSize *d = mxGetDimensions(p_);
-//	return std::vector<mwSize>(d,d+ndims());
-//}
 
 /** Offset from first element to desired element
  * @return linear offset of the specified subscript index
