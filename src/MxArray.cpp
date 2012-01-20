@@ -204,7 +204,7 @@ MxArray::MxArray(const cv::SparseMat& mat)
  * @param mat cv::KeyPoint object
  * @return MxArray object
  */
-extern const char *keypoint_fields_[6] = {"pt", "size", "angle", "response", "octave", "class_id"};
+const char *keypoint_fields_[6] = {"pt", "size", "angle", "response", "octave", "class_id"};
 
 MxArray::MxArray(const cv::KeyPoint& p) :
 	p_(mxCreateStructMatrix(1,1,6,keypoint_fields_))
