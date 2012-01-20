@@ -150,8 +150,8 @@ mxArray.
     double d         = MxArray(prhs[0]).toDouble();
     bool b           = MxArray(prhs[0]).toBool();
     std::string s    = MxArray(prhs[0]).toString();
-    cv::Mat mat      = MxArray(prhs[0]).toMat();   # For pixels
-    cv::Mat ndmat    = MxArray(prhs[0]).toMatND(); # For N-D array
+    cv::Mat mat      = MxArray(prhs[0]).toMat();   // For pixels
+    cv::Mat ndmat    = MxArray(prhs[0]).toMatND(); // For N-D array
     cv::Point pt     = MxArray(prhs[0]).toPoint();
     cv::Size siz     = MxArray(prhs[0]).toSize();
     cv::Rect rct     = MxArray(prhs[0]).toRect();
@@ -168,7 +168,7 @@ mxArray.
     mxArray* plhs[0] = MxArray(siz);
     mxArray* plhs[0] = MxArray(rct);
     mxArray* plhs[0] = MxArray(sc);
-    mxArray* plhs[0] = MxArray(sp); # Only 2D float to double
+    mxArray* plhs[0] = MxArray(sp); // Only 2D float to double
 
 If you rather want to develop a matlab function that internally calls a mex
 function, make use of the `+cv/private` directory. Any function placed under
