@@ -8,25 +8,6 @@
 using namespace std;
 using namespace cv;
 
-/** Convert MxArray to std::vector<Point>
- * @return std::vector<Point> value
- */
-template <>
-std::vector<Point> MxArray::toStdVector() const
-{
-	int n = numel();
-	if (isCell()) {
-		std::vector<Point> v(n);
-		for (int i=0; i<n; ++i)
-			v[i] = MxArray(mxGetCell(p_, i)).toPoint();
-		return v;
-	}
-	else if (isNumeric())
-		return std::vector<Point>(1,this->toPoint());
-	else
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to cv::Point");
-}
-
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments

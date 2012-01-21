@@ -382,6 +382,25 @@ std::vector<cv::Mat> MxArray::toStdVector() const
 		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to std::vector");
 }
 
+/** Convert MxArray to std::vector<Point>
+ * @return std::vector<Point> value
+ */
+template <>
+std::vector<cv::Point> MxArray::toStdVector() const
+{
+	int n = numel();
+	if (isCell()) {
+		std::vector<cv::Point> v(n);
+		for (int i=0; i<n; ++i)
+			v[i] = MxArray(mxGetCell(p_, i)).toPoint();
+		return v;
+	}
+	else if (isNumeric())
+		return std::vector<cv::Point>(1,this->toPoint());
+	else
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to std::vector");
+}
+
 /** Convert MxArray to std::vector<cv::Mat>
  * @return std::vector<cv::Mat> value
  */
