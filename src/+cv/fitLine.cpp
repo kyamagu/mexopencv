@@ -1,6 +1,6 @@
 /**
- * @file convexHull.cpp
- * @brief mex interface for convexHull
+ * @file fitLine.cpp
+ * @brief mex interface for fitLine
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -24,29 +24,38 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
 	// Argument vector
 	vector<MxArray> rhs(prhs,prhs+nrhs);
-	bool clockwise=false;
-	bool returnPoints=true;
+	int distType=CV_DIST_L2;
+	double param=0;
+	double reps=0.01;
+	double aeps=0.01;
 	for (int i=1; i<nrhs; i+=2) {
 		string key = rhs[i].toString();
-		if (key=="Clockwise")
-			clockwise = rhs[i+1].toBool();
-		//else if (key=="ReturnPoints")
-		//	returnPoints = rhs[i+1].toBool();
+		if (key=="DistType")
+			distType = DistType[rhs[i+1].toString()];
+		else if (key=="Param")
+			param = rhs[i+1].toDouble();
+		else if (key=="REps")
+			reps = rhs[i+1].toDouble();
+		else if (key=="AEps")
+			aeps = rhs[i+1].toDouble();
 		else
 			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 	}
 	
 	// Process
 	if (rhs[0].isNumeric()) {
-		Mat points(rhs[0].toMat(CV_32S));
-		vector<Point> hull;
-		convexHull(points, hull, clockwise, returnPoints);
-		plhs[0] = MxArray(Mat(hull));
+		Mat points(rhs[0].toMat());
+		Vec4f line;
+		fitLine(points, line, distType, param, reps, aeps);
+		plhs[0] = MxArray(Mat(line));
 	}
 	else if (rhs[0].isCell()) {
-		vector<Point> points(rhs[0].toStdVector<Point>());
-		vector<Point> hull;
-		convexHull(points, hull, clockwise, returnPoints);
-		plhs[0] = MxArray(hull);		
+		vector<MxArray> vm(rhs[0].toStdVector<MxArray>());
+		vector<Point2f> points(vm.size());
+		for (int i=0; i<vm.size(); ++i)
+			points[i] = vm[i].toPoint_<float>();
+		Vec4f line;
+		fitLine(points, line, distType, param, reps, aeps);
+		plhs[0] = MxArray(Mat(line));
 	}
 }

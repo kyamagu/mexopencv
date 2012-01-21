@@ -33,6 +33,7 @@ class MxArray {
 		explicit MxArray(const cv::KeyPoint& p);
 		explicit MxArray(const cv::DMatch& m);
 		explicit MxArray(const cv::Moments& m);
+		explicit MxArray(const cv::RotatedRect& m);
 		template <typename T> explicit MxArray(const cv::Point_<T>& p);
 		template <typename T> explicit MxArray(const cv::Point3_<T>& p);
 		template <typename T> explicit MxArray(const cv::Size_<T>& s);
@@ -409,9 +410,13 @@ const T MxArray::at(std::vector<mwIndex>& si) const
 	return at<T>(subs(si));
 }
 
-/// Field names of KeyPoint
+/// Field names of RotatedRect
+extern const char *cv_rotated_rect_fields[3];
+/// Field names of Moments
 extern const char *cv_moments_fields[10];
+/// Field names of KeyPoint
 extern const char *cv_keypoint_fields[6];
+/// Field names of DMatch
 extern const char *cv_dmatch_fields[4];
 
 #endif

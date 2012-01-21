@@ -266,6 +266,22 @@ MxArray::MxArray(const cv::DMatch& m) :
 const char *cv_dmatch_fields[4] = {"queryIdx","trainIdx","imgIdx","distance"};
 
 /**
+ * Convert cv::RotatedRect to MxArray
+ * @param mat cv::RotatedRect object
+ * @return MxArray object
+ */
+MxArray::MxArray(const cv::RotatedRect& m) :
+	p_(mxCreateStructMatrix(1,1,3,cv_rotated_rect_fields))
+{
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
+	mxSetField(const_cast<mxArray*>(p_),0,"center", MxArray(m.center));
+	mxSetField(const_cast<mxArray*>(p_),0,"size",   MxArray(m.size));
+	mxSetField(const_cast<mxArray*>(p_),0,"angle",  MxArray(m.angle));
+}
+const char *cv_rotated_rect_fields[3] = {"center","size","angle"};
+
+/**
  * Convert MxArray to cv::Mat
  * @param depth depth of cv::Mat. e.g., CV_8U, CV_32F.  When CV_USERTYPE1 is
  *                specified, depth will be automatically determined from the
