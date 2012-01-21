@@ -19,7 +19,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
 	// Check the number of arguments
-	if (nrhs<1 || ((nrhs%2)!=1) || nlhs>2)
+	if (nrhs<1 || ((nrhs%2)!=1) || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
 	// Argument vector

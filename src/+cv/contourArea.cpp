@@ -1,6 +1,6 @@
 /**
- * @file arcLength.cpp
- * @brief mex interface for arcLength
+ * @file contourArea.cpp
+ * @brief mex interface for contourArea
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -24,11 +24,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
 	// Argument vector
 	vector<MxArray> rhs(prhs,prhs+nrhs);
-	bool closed=false;
+	bool oriented=false;
 	for (int i=1; i<nrhs; i+=2) {
 		string key = rhs[i].toString();
-		if (key=="Closed")
-			closed = rhs[i+1].toBool();
+		if (key=="Oriented")
+			oriented = rhs[i+1].toBool();
 		else
 			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 	}
@@ -36,12 +36,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	// Process
 	if (rhs[0].isNumeric()) {
 		Mat curve(rhs[0].toMat());
-		double d = arcLength(curve, closed);
-		plhs[0] = MxArray(d);
+		double a = contourArea(curve, oriented);
+		plhs[0] = MxArray(a);
 	}
 	else if (rhs[0].isCell()) {
 		vector<Point> curve(rhs[0].toStdVector<Point>());
-		double d = arcLength(curve, closed);
-		plhs[0] = MxArray(d);		
+		double a = contourArea(curve, oriented);
+		plhs[0] = MxArray(a);		
 	}
 }

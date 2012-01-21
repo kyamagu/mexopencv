@@ -1,6 +1,6 @@
 /**
- * @file arcLength.cpp
- * @brief mex interface for arcLength
+ * @file convexHull.cpp
+ * @brief mex interface for convexHull
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -24,24 +24,29 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
 	// Argument vector
 	vector<MxArray> rhs(prhs,prhs+nrhs);
-	bool closed=false;
+	bool clockwise=false;
+	bool returnPoints=true;
 	for (int i=1; i<nrhs; i+=2) {
 		string key = rhs[i].toString();
-		if (key=="Closed")
-			closed = rhs[i+1].toBool();
+		if (key=="Clockwise")
+			clockwise = rhs[i+1].toBool();
+		//else if (key=="ReturnPoints")
+		//	returnPoints = rhs[i+1].toBool();
 		else
 			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 	}
 	
 	// Process
 	if (rhs[0].isNumeric()) {
-		Mat curve(rhs[0].toMat());
-		double d = arcLength(curve, closed);
-		plhs[0] = MxArray(d);
+		Mat points(rhs[0].toMat(CV_32F));
+		vector<Point> hull;
+		convexHull(points, hull, clockwise, returnPoints);
+		plhs[0] = MxArray(Mat(hull));
 	}
 	else if (rhs[0].isCell()) {
-		vector<Point> curve(rhs[0].toStdVector<Point>());
-		double d = arcLength(curve, closed);
-		plhs[0] = MxArray(d);		
+		vector<Point> points(rhs[0].toStdVector<Point>());
+		vector<Point> hull;
+		convexHull(points, hull, clockwise, returnPoints);
+		plhs[0] = MxArray(hull);		
 	}
 }
