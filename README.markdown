@@ -85,7 +85,7 @@ call mex functions within matlab using package name `cv`.
     import cv.*;
     result = filter2D(img, kern);     % no need to specify 'cv' after imported
 
-Note that some functions such as `cv.imread` overloads Matlab's builtin method
+Note that some functions such as `cv.imread` overload Matlab's builtin function
 when imported. Use the scoped name when you need to avoid name collision.
 
 Check a list of functions available by `help` command in matlab.
@@ -212,6 +212,9 @@ resource file necessary for testing. An example of testing class is shown below:
             end
         end
     end
+
+In Windows, add path to the `test` directory and invoke `UnitTest` to run all
+the test routines.
 
 Documenting
 -----------
