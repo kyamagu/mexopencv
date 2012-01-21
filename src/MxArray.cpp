@@ -211,8 +211,6 @@ MxArray::MxArray(const cv::SparseMat& mat)
  * @param mat cv::KeyPoint object
  * @return MxArray object
  */
-const char *cv_keypoint_fields[6] = {"pt", "size", "angle", "response", "octave", "class_id"};
-
 MxArray::MxArray(const cv::KeyPoint& p) :
 	p_(mxCreateStructMatrix(1,1,6,cv_keypoint_fields))
 {
@@ -225,6 +223,24 @@ MxArray::MxArray(const cv::KeyPoint& p) :
 	mxSetField(const_cast<mxArray*>(p_),0,"octave",  MxArray(p.octave));
 	mxSetField(const_cast<mxArray*>(p_),0,"class_id",MxArray(p.class_id));
 }
+const char *cv_keypoint_fields[6] = {"pt", "size", "angle", "response", "octave", "class_id"};
+
+/**
+ * Convert cv::KeyPoint to MxArray
+ * @param mat cv::KeyPoint object
+ * @return MxArray object
+ */
+MxArray::MxArray(const cv::DMatch& m) :
+	p_(mxCreateStructMatrix(1,1,4,cv_keypoint_fields))
+{
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
+	mxSetField(const_cast<mxArray*>(p_),0,"queryIdx", MxArray(m.queryIdx));
+	mxSetField(const_cast<mxArray*>(p_),0,"trainIdx", MxArray(m.trainIdx));
+	mxSetField(const_cast<mxArray*>(p_),0,"imgIdx",   MxArray(m.imgIdx));
+	mxSetField(const_cast<mxArray*>(p_),0,"distance", MxArray(m.distance));
+}
+const char *cv_dmatch_fields[6] = {"queryIdx","trainIdx","imgIdx","distance"};
 
 /**
  * Convert MxArray to cv::Mat
@@ -396,6 +412,28 @@ cv::KeyPoint MxArray::toKeyPoint(mwIndex index) const
 	int _octave = (pm=mxGetField(p_,index,"octave")) ?       MxArray(pm).toInt() : 0;
 	int _class_id = (pm=mxGetField(p_,index,"class_id")) ?   MxArray(pm).toInt() : -1;
 	return cv::KeyPoint(_pt,_size,_angle,_response,_octave,_class_id);
+}
+
+/** Convert MxArray to cv::DMatch
+ * @return cv::DMatch
+ */
+cv::DMatch MxArray::toDMatch(mwIndex index) const
+{
+	if (!isStruct())
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not struct");
+	if (index < 0 || numel() <= index)
+		mexErrMsgIdAndTxt("mexopencv:error","Out of range in struct array");
+	mxArray* pm;
+	cv::DMatch dmatch;
+	if (pm=mxGetField(p_,index,"queryIdx"))
+		dmatch.queryIdx = MxArray(pm).toInt();
+	if (pm=mxGetField(p_,index,"trainIdx"))
+		dmatch.trainIdx = MxArray(pm).toInt();
+	if (pm=mxGetField(p_,index,"imgIdx"))
+		dmatch.imgIdx = MxArray(pm).toInt();
+	if (pm=mxGetField(p_,index,"distance"))
+		dmatch.distance = MxArray(pm).toDouble();
+	return dmatch;
 }
 
 /** Offset from first element to desired element

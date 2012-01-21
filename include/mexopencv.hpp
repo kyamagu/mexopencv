@@ -420,4 +420,40 @@ MxArray::MxArray(const std::vector<cv::KeyPoint>& v) :
 	}
 }
 
+/** Convert MxArray to std::vector<cv::DMatch>
+ * @return std::vector<cv::DMatch> value
+ */
+template <>
+std::vector<cv::DMatch> MxArray::toStdVector() const
+{
+	int n = numel();
+	std::vector<cv::DMatch> v(n);
+	if (isCell())
+		for (int i=0; i<n; ++i)
+			v[i] = MxArray(mxGetCell(p_, i)).toDMatch();
+	else if (isStruct())
+		for (int i=0; i<n; ++i)
+			v[i] = toDMatch(i);
+	else
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to std::vector");
+	return v;
+}
+
+/** MxArray constructor from vector<T>. Make a cell array.
+ * @param v vector of type T
+ */
+template <>
+MxArray::MxArray(const std::vector<cv::DMatch>& v) :
+	p_(mxCreateStructMatrix(1,v.size(),4,cv_dmatch_fields))
+{
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
+	for (int i = 0; i < v.size(); ++i) {
+		mxSetField(const_cast<mxArray*>(p_),i,"queryIdx", MxArray(v[i].queryIdx));
+		mxSetField(const_cast<mxArray*>(p_),i,"trainIdx", MxArray(v[i].trainIdx));
+		mxSetField(const_cast<mxArray*>(p_),i,"imgIdx",   MxArray(v[i].imgIdx));
+		mxSetField(const_cast<mxArray*>(p_),i,"distance", MxArray(v[i].distance));
+	}
+}
+
 #endif
