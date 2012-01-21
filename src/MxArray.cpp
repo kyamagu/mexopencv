@@ -207,6 +207,29 @@ MxArray::MxArray(const cv::SparseMat& mat)
 }
 
 /**
+ * Convert cv::Moments to MxArray
+ * @param m cv::Moments object
+ * @return MxArray object
+ */
+MxArray::MxArray(const cv::Moments& m) :
+	p_(mxCreateStructMatrix(1,1,10,cv_moments_fields))
+{
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
+	mxSetField(const_cast<mxArray*>(p_),0,"m00", MxArray(m.m00));
+	mxSetField(const_cast<mxArray*>(p_),0,"m10", MxArray(m.m10));
+	mxSetField(const_cast<mxArray*>(p_),0,"m01", MxArray(m.m01));
+	mxSetField(const_cast<mxArray*>(p_),0,"m20", MxArray(m.m20));
+	mxSetField(const_cast<mxArray*>(p_),0,"m11", MxArray(m.m11));
+	mxSetField(const_cast<mxArray*>(p_),0,"m02", MxArray(m.m02));
+	mxSetField(const_cast<mxArray*>(p_),0,"m30", MxArray(m.m30));
+	mxSetField(const_cast<mxArray*>(p_),0,"m21", MxArray(m.m21));
+	mxSetField(const_cast<mxArray*>(p_),0,"m12", MxArray(m.m12));
+	mxSetField(const_cast<mxArray*>(p_),0,"m03", MxArray(m.m03));
+}
+const char *cv_moments_fields[10] = {"m00","m10","m01","m20","m11","m02","m30","m21","m12","m03"};
+
+/**
  * Convert cv::KeyPoint to MxArray
  * @param mat cv::KeyPoint object
  * @return MxArray object
@@ -240,7 +263,7 @@ MxArray::MxArray(const cv::DMatch& m) :
 	mxSetField(const_cast<mxArray*>(p_),0,"imgIdx",   MxArray(m.imgIdx));
 	mxSetField(const_cast<mxArray*>(p_),0,"distance", MxArray(m.distance));
 }
-const char *cv_dmatch_fields[6] = {"queryIdx","trainIdx","imgIdx","distance"};
+const char *cv_dmatch_fields[4] = {"queryIdx","trainIdx","imgIdx","distance"};
 
 /**
  * Convert MxArray to cv::Mat
@@ -389,6 +412,29 @@ cv::SparseMat MxArray::toSparseMat() const
 			mat.ref<float>(ir[i],j) = static_cast<float>(pr[i]); // (row,col) <= val
 	}
 	return mat;
+}
+
+/** Convert MxArray to cv::Moments
+ * @return cv::Moments
+ */
+cv::Moments MxArray::toMoments(mwIndex index) const
+{
+	if (!isStruct())
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not struct");
+	if (index < 0 || numel() <= index)
+		mexErrMsgIdAndTxt("mexopencv:error","Out of range in struct array");
+	mxArray* pm;
+	double m00 = (pm=mxGetField(p_,index,"m00")) ? MxArray(pm).toDouble() : 0;
+	double m10 = (pm=mxGetField(p_,index,"m10")) ? MxArray(pm).toDouble() : 0;
+	double m01 = (pm=mxGetField(p_,index,"m01")) ? MxArray(pm).toDouble() : 0;
+	double m20 = (pm=mxGetField(p_,index,"m20")) ? MxArray(pm).toDouble() : 0;
+	double m11 = (pm=mxGetField(p_,index,"m11")) ? MxArray(pm).toDouble() : 0;
+	double m02 = (pm=mxGetField(p_,index,"m02")) ? MxArray(pm).toDouble() : 0;
+	double m30 = (pm=mxGetField(p_,index,"m30")) ? MxArray(pm).toDouble() : 0;
+	double m21 = (pm=mxGetField(p_,index,"m21")) ? MxArray(pm).toDouble() : 0;
+	double m12 = (pm=mxGetField(p_,index,"m12")) ? MxArray(pm).toDouble() : 0;
+	double m03 = (pm=mxGetField(p_,index,"m03")) ? MxArray(pm).toDouble() : 0;
+	return cv::Moments(m00,m10,m01,m20,m11,m02,m30,m21,m12,m30);
 }
 
 /** Convert MxArray to cv::KeyPoint

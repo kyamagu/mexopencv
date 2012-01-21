@@ -32,6 +32,7 @@ class MxArray {
 		explicit MxArray(const cv::SparseMat& mat);
 		explicit MxArray(const cv::KeyPoint& p);
 		explicit MxArray(const cv::DMatch& m);
+		explicit MxArray(const cv::Moments& m);
 		template <typename T> explicit MxArray(const cv::Point_<T>& p);
 		template <typename T> explicit MxArray(const cv::Point3_<T>& p);
 		template <typename T> explicit MxArray(const cv::Size_<T>& s);
@@ -54,6 +55,7 @@ class MxArray {
 		cv::Mat toMat(int depth=CV_USRTYPE1, bool transpose=true) const;
 		cv::Mat toMatND(int depth=CV_USRTYPE1, bool transpose=true) const;
 		cv::SparseMat toSparseMat() const;
+		cv::Moments toMoments(mwIndex index=0) const;
 		cv::KeyPoint toKeyPoint(mwIndex index=0) const;
 		cv::DMatch toDMatch(mwIndex index=0) const;
 		template <typename T> cv::Point_<T> toPoint_() const;
@@ -408,7 +410,8 @@ const T MxArray::at(std::vector<mwIndex>& si) const
 }
 
 /// Field names of KeyPoint
+extern const char *cv_moments_fields[10];
 extern const char *cv_keypoint_fields[6];
-extern const char *cv_dmatch_fields[6];
+extern const char *cv_dmatch_fields[4];
 
 #endif
