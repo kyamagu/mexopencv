@@ -161,7 +161,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	plhs[0] = MxArray(b);
     }
     else if (method == "predict") {
-    	if (nrhs<3 || nlhs>3)
+    	if (nrhs<3 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     	Mat samples(rhs[2].toMatND(CV_32F)), missing;
     	Range slice = Range::all();
@@ -176,8 +176,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
     			k = rhs[i+1].toInt();
     	}
 		Mat results(samples.rows,1,CV_64F);
-		for (int i=0; i<samples.rows; ++i)
-			results.at<double>(i) = obj.predict(samples.row(i),missing,slice,k);
+		if (missing.empty())
+			for (int i=0; i<samples.rows; ++i)
+				results.at<double>(i) = obj.predict(samples.row(i),missing,slice,k);
+		else
+			for (int i=0; i<samples.rows; ++i)
+				results.at<double>(i) = obj.predict(samples.row(i),missing.row(i),slice,k);
 		plhs[0] = MxArray(results);
     }
     //else if (method == "get_params") {

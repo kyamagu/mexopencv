@@ -1,6 +1,6 @@
 /**
- * @file DTree.cpp
- * @brief mex interface for DTree
+ * @file RTrees.cpp
+ * @brief mex interface for RTrees
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -13,17 +13,17 @@ namespace {
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,CvDTree> obj_;
+map<int,CvRTrees> obj_;
 
-/** Obtain CvDTreeParams object from input arguments
+/** Obtain CvRTParams object from input arguments
  * @param it iterator at the beginning of the argument vector
  * @param end iterator at the end of the argument vector
- * @return CvDTreeParams objects
+ * @return CvRTParams objects
  */
-CvDTreeParams getParams(vector<MxArray>::iterator it,
+CvRTParams getParams(vector<MxArray>::iterator it,
 						vector<MxArray>::iterator end)
 {
-	CvDTreeParams params;
+	CvRTParams params;
 	for (;it<end;it+=2) {
 		string key((*it).toString());
 		MxArray& val = *(it+1);
@@ -37,17 +37,35 @@ CvDTreeParams getParams(vector<MxArray>::iterator it,
 			params.use_surrogates = val.toBool();
 		else if (key=="MaxCategories")
 			params.max_categories = val.toInt();
-		else if (key=="CVFolds")
-			params.cv_folds = val.toInt();
-		else if (key=="Use1seRule")
-			params.use_1se_rule = val.toBool();
-		else if (key=="TruncatePrunedTree")
-			params.truncate_pruned_tree = val.toBool();
+		else if (key=="CalcVarImportance")
+			params.calc_var_importance = val.toBool();
+		else if (key=="NActiveVars")
+			params.nactive_vars = val.toInt();
+		else if (key=="MaxNumOfTreesInTheForest")
+			params.term_crit.max_iter = val.toInt();
+		else if (key=="ForestAccuracy")
+			params.term_crit.epsilon = val.toDouble();
+		else if (key=="TermCritType") {
+			if (val.isChar()) {
+				string s(val.toString());
+				if (s=="Iter")
+					params.term_crit.type = CV_TERMCRIT_ITER;
+				else if (s=="EPS")
+					params.term_crit.type = CV_TERMCRIT_EPS;
+				else if (s=="Iter+EPS")
+					params.term_crit.type = CV_TERMCRIT_ITER|CV_TERMCRIT_EPS;
+				else
+					mexErrMsgIdAndTxt("mexopencv:error","Unrecognized TermCritType");
+			}
+			else
+				params.term_crit.type = val.toInt();
+		}
 		//else
 		//	mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 	}
 	return params;
 }
+
 }
 
 /**
@@ -69,7 +87,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	string method;
 	if (nrhs==0) {
 		// Constructor is called. Create a new object from argument
-		obj_[++last_id] = CvDTree();
+		obj_[++last_id] = CvRTrees();
 		plhs[0] = MxArray(last_id);
 		return;
 	}
@@ -81,7 +99,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
 	
 	// Big operation switch
-	CvDTree& obj = obj_[id];
+	CvRTrees& obj = obj_[id];
     if (method == "delete") {
     	if (nrhs!=2 || nlhs!=0)
     		mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
@@ -107,8 +125,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     	Mat trainData(rhs[2].toMatND(CV_32F));
     	Mat responses(rhs[3].toMatND(CV_32S));
-    	Mat varIdx, sampleIdx, var_type, missing_mask;
-    	CvDTreeParams params = getParams(rhs.begin()+4,rhs.end());
+    	Mat varIdx, sampleIdx, varType, missingMask;
+    	CvRTParams params = getParams(rhs.begin()+4,rhs.end());
     	vector<float> priors;
     	for (int i=4; i<nrhs; i+=2) {
     		string key(rhs[i].toString());
@@ -117,9 +135,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
     		else if (key=="SampleIdx")
     			sampleIdx = rhs[i+1].toMatND(CV_32S);
     		else if (key=="VarType")
-    			var_type = rhs[i+1].toMatND();
+    			varType = rhs[i+1].toMatND();
     		else if (key=="MissingMask")
-    			missing_mask = rhs[i+1].toMatND();
+    			missingMask = rhs[i+1].toMatND();
     		else if (key=="Priors") {
     			MxArray& m = rhs[i+1];
 				priors.reserve(m.numel());
@@ -129,35 +147,78 @@ void mexFunction( int nlhs, mxArray *plhs[],
     		}
     	}
     	bool b = obj.train(trainData, CV_ROW_SAMPLE, responses, varIdx,
-    		sampleIdx, var_type, missing_mask, params);
+    		sampleIdx, varType, missingMask, params);
     	plhs[0] = MxArray(b);
     }
     else if (method == "predict") {
     	if (nrhs<3 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	Mat samples(rhs[2].toMatND(CV_32F)), missingDataMask;
-    	bool preprocessedInput=false;
+    	Mat samples(rhs[2].toMatND(CV_32F)), missing;
     	for (int i=3; i<nrhs; i+=2) {
     		string key(rhs[i].toString());
     		if (key=="MissingDataMask")
-    			missingDataMask = rhs[i+1].toMatND(CV_8U);
-    		else if (key=="PreprocessedInput")
-    			preprocessedInput = rhs[i+1].toBool();
+    			missing = rhs[i+1].toMatND(CV_8U);
     	}
 		Mat results(samples.rows,1,CV_64F);
-		for (int i=0; i<samples.rows; ++i)
-			results.at<double>(i) = obj.predict(samples.row(i))->value;
+		if (missing.empty())
+			for (int i=0; i<samples.rows; ++i)
+				results.at<double>(i) = obj.predict(samples.row(i),missing);
+		else
+			for (int i=0; i<samples.rows; ++i)
+				results.at<double>(i) = obj.predict(samples.row(i),missing.row(i));
+		plhs[0] = MxArray(results);
+    }
+    else if (method == "predict_prob") {
+    	if (nrhs<3 || nlhs>1)
+    		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    	Mat samples(rhs[2].toMatND(CV_32F)), missing;
+    	for (int i=3; i<nrhs; i+=2) {
+    		string key(rhs[i].toString());
+    		if (key=="MissingDataMask")
+    			missing = rhs[i+1].toMatND(CV_8U);
+    	}
+		Mat results(samples.rows,1,CV_64F);
+		if (missing.empty())
+			for (int i=0; i<samples.rows; ++i)
+				results.at<double>(i) = obj.predict_prob(samples.row(i),missing);
+		else
+			for (int i=0; i<samples.rows; ++i)
+				results.at<double>(i) = obj.predict_prob(samples.row(i),missing.row(i));
 		plhs[0] = MxArray(results);
     }
     else if (method == "getVarImportance") {
     	if (nrhs!=2 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	plhs[0] = MxArray((obj.get_data()==NULL) ? Mat() : obj.getVarImportance());
+    	plhs[0] = MxArray(obj.getVarImportance());
     }
-    else if (method == "get_pruned_tree_idx") {
+    else if (method == "get_proximity") {
+    	if (nrhs<4 || nlhs>1)
+    		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    	Mat sample1(rhs[2].toMatND(CV_32F)), sample2(rhs[3].toMatND(CV_32F));
+    	Mat missing1, missing2;
+    	for (int i=4; i<nrhs; i+=2) {
+    		string key(rhs[i].toString());
+    		if (key=="Missing1")
+    			missing1 = rhs[i+1].toMatND(CV_8U);
+    		else if (key=="Missing2")
+    			missing2 = rhs[i+1].toMatND(CV_8U);
+    	}
+		CvMat _sample1 = sample1, _sample2 = sample2;
+		CvMat _missing1 = missing1, _missing2 = missing2;
+		float x = obj.get_proximity(&_sample1, &_sample2,
+			(missing1.empty()) ? NULL : &_missing1,
+			(missing2.empty()) ? NULL : &_missing2);
+		plhs[0] = MxArray(x);
+    }
+    else if (method == "get_train_error") {
     	if (nrhs!=2 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	plhs[0] = MxArray(obj.get_pruned_tree_idx());
+    	plhs[0] = MxArray(obj.get_train_error());
+    }
+    else if (method == "get_tree_count") {
+    	if (nrhs!=2 || nlhs>1)
+    		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    	plhs[0] = MxArray(obj.get_tree_count());
     }
     else
 		mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");

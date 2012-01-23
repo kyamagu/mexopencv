@@ -22,7 +22,7 @@ classdef GBTrees
     
     methods
         function this = GBTrees
-            %GBTREES  GBTreesed tree classifier
+            %GBTREES  GBTrees classifier
             %
             %    classifier = cv.GBTrees
             %
