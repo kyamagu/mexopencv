@@ -139,7 +139,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	bool preprocessedInput=false;
     	for (int i=3; i<nrhs; i+=2) {
     		string key(rhs[i].toString());
-    		if (key=="MissingDataMask")
+    		if (key=="MissingMask")
     			missingDataMask = rhs[i+1].toMatND(CV_8U);
     		else if (key=="PreprocessedInput")
     			preprocessedInput = rhs[i+1].toBool();
@@ -152,7 +152,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "getVarImportance") {
     	if (nrhs!=2 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	plhs[0] = MxArray((obj.get_data()==NULL) ? Mat() : obj.getVarImportance());
+		plhs[0] = MxArray((obj.get_data())?obj.getVarImportance():Mat());
     }
     else if (method == "get_pruned_tree_idx") {
     	if (nrhs!=2 || nlhs>1)

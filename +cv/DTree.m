@@ -175,7 +175,7 @@ classdef DTree
             % Output:
             %     results: Output labels or regression values
             % Options:
-            %     'MissingDataMask': Optional input missing measurement mask.
+            %     'MissingMask': Optional input missing measurement mask.
             %     'PreprocessedInput': This parameter is normally set to false,
             %         implying a regular input. If it is true, the method
             %         assumes that all the values of the discrete input

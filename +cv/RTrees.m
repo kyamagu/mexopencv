@@ -124,7 +124,7 @@ classdef RTrees
         end
         
         function status = train(this, trainData, responses, varargin)
-            %TRAIN  Trains a Gradient boosted tree model
+            %TRAIN  Trains the Random Trees model
             %
             %    classifier.train(trainData, responses)
             %    classifier.train(trainData, responses, 'OptionName', optionValue, ...)
@@ -190,7 +190,7 @@ classdef RTrees
 			%         then each mistake in predicting the second category is
 			%         equivalent to making 10 mistakes in predicting the first
 			%         category. default none.
-			%     'calc_var_importance': If true then variable importance will
+			%     'CalcVarImportance': If true then variable importance will
 			%         be calculated and then it can be retrieved by
 			%         getVarImportance(). default false.
 			%     'NActiveVars': The size of the randomly selected subset of
@@ -247,7 +247,7 @@ classdef RTrees
             % Output:
             %     results: Output labels or regression values
             % Options:
-            %     'MissingDataMask':  Missing values mask, which is a
+            %     'MissingMask':  Missing values mask, which is a
             %         dimentional matrix of the same size as sample having the
             %         uint8 type. 1 corresponds to the missing value in the same
             %         position in the sample vector. If there are no missing
@@ -271,17 +271,21 @@ classdef RTrees
         end
         
         function value = get_proximity(this, sample1, sample2, varargin)
-        	%GET_PROXIMITY  Returns the variable importance array
+        	%GET_PROXIMITY  Retrieves the proximity measure between two training samples
+            % Options:
+            %     'Missing1':  Missing values mask for sample1
+            %     'Missing2':  Missing values mask for sample2
+            %
         	value = RTrees_(this.id, 'get_proximity', sample1, sample2, varargin{:});
         end
         
         function value = get_train_error(this)
-        	%GET_TRAIN_ERROR  Returns the variable importance array
+        	%GET_TRAIN_ERROR  Returns the train error
         	value = RTrees_(this.id, 'get_train_error');
         end
         
         function value = get_tree_count(this)
-        	%GET_TREE_COUNT  Returns the variable importance array
+        	%GET_TREE_COUNT  Returns the number of trees in the constructed random forest
         	value = RTrees_(this.id, 'get_tree_count');
         end
     end

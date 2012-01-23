@@ -174,7 +174,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	Mat samples(rhs[2].toMatND(CV_32F)), missing;
     	for (int i=3; i<nrhs; i+=2) {
     		string key(rhs[i].toString());
-    		if (key=="MissingDataMask")
+    		if (key=="MissingMask")
     			missing = rhs[i+1].toMatND(CV_8U);
     	}
 		Mat results(samples.rows,1,CV_64F);
@@ -189,7 +189,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "getVarImportance") {
     	if (nrhs!=2 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	plhs[0] = MxArray(obj.getVarImportance());
+		plhs[0] = MxArray((obj.get_tree_count()>0)?obj.getVarImportance():Mat());
     }
     else if (method == "get_proximity") {
     	if (nrhs<4 || nlhs>1)

@@ -132,7 +132,7 @@ classdef GBTrees
             % Output:
             %     results: Output labels or regression values
             % Options:
-            %     'MissingDataMask':  Missing values mask, which is a
+            %     'MissingMask':  Missing values mask, which is a
             %         dimentional matrix of the same size as sample having the
             %         uint8 type. 1 corresponds to the missing value in the same
             %         position in the sample vector. If there are no missing

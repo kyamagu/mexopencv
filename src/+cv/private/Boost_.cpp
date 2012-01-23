@@ -181,7 +181,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	bool rawMode=false, returnSum=false;
     	for (int i=3; i<nrhs; i+=2) {
     		string key(rhs[i].toString());
-    		if (key=="MissingDataMask")
+    		if (key=="MissingMask")
     			missing = rhs[i+1].toMatND(CV_8U);
     		else if (key=="Slice")
     			slice = rhs[i+1].toRange();

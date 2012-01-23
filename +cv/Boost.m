@@ -178,7 +178,7 @@ classdef Boost
             % Output:
             %     results: Output labels or regression values
             % Options:
-            %     'MissingDataMask': Optional mask of missing measurements. To
+            %     'MissingMask': Optional mask of missing measurements. To
             %         handle missing measurements, the weak classifiers must
             %         include surrogate splits.
             %     'Slice': Continuous subset of the sequence of weak classifiers

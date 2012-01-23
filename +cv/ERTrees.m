@@ -82,7 +82,7 @@ classdef ERTrees
         end
         
         function status = train(this, trainData, responses, varargin)
-            %TRAIN  Trains a Gradient boosted tree model
+            %TRAIN  Trains the Extremely Random Trees model
             %
             %    classifier.train(trainData, responses)
             %    classifier.train(trainData, responses, 'OptionName', optionValue, ...)
@@ -148,7 +148,7 @@ classdef ERTrees
 			%         then each mistake in predicting the second category is
 			%         equivalent to making 10 mistakes in predicting the first
 			%         category. default none.
-			%     'calc_var_importance': If true then variable importance will
+			%     'CalcVarImportance': If true then variable importance will
 			%         be calculated and then it can be retrieved by
 			%         getVarImportance(). default false.
 			%     'NActiveVars': The size of the randomly selected subset of
@@ -205,7 +205,7 @@ classdef ERTrees
             % Output:
             %     results: Output labels or regression values
             % Options:
-            %     'MissingDataMask':  Missing values mask, which is a
+            %     'MissingMask':  Missing values mask, which is a
             %         dimentional matrix of the same size as sample having the
             %         uint8 type. 1 corresponds to the missing value in the same
             %         position in the sample vector. If there are no missing

@@ -121,6 +121,10 @@ MxArray::MxArray(const std::string& s) : p_(mxCreateString(s.c_str()))
  */
 MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 {
+	if (mat.empty()) {
+		p_ = mxCreateNumericArray(0,0,mxDOUBLE_CLASS,mxREAL);
+		return;
+	}
 	const cv::Mat& rm = (mat.dims==2 && transpose) ? cv::Mat(mat.t()) : mat;
 	
 	// Create a new mxArray
