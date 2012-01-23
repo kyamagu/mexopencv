@@ -15,6 +15,73 @@ classdef ANN_MLP
     % term. The sum is transformed using the activation function  that may be
     % also different for different neurons.
     %
+    % In other words, given the outputs x_j of the layer n, the outputs y_i of
+    % the layer n+1 are computed as:
+    %
+    %     u_i = \sum_j (w_{i,j}^{n+1} * x_j) + w_{i,bias}^{n+1}
+    %     y_i = f(u_i)
+    %
+    % Different activation functions may be used. OpenCV implements three
+    % standard functions:
+    %     Identity:
+    %         f(x) = y
+    %     Symmetrical sigmoid: (default)
+    %         f(x) = \beta * (1-\exp{- \alpha * x}) / (1+\exp{- \alpha * x})
+    %     Gaussian function:
+    %         f(x) = \beta * \exp{- \alpha * x * x}
+    %
+    % In OpenCV, all the neurons have the same activation functions, with the
+    % same free parameters (\alpha,\beta) that are specified by user and are
+    % not altered by the training algorithms.
+    %
+    % So, the whole trained network works as follows:
+    %
+    %   1. Take the feature vector as input. The vector size is equal to the
+    %      size of the input layer.
+    %   2. Pass values as input to the first hidden layer.
+    %   3. Compute outputs of the hidden layer using the weights and the
+    %      activation functions.
+    %   4. Pass outputs further downstream until you compute the output layer.
+    %
+    % So, to compute the network, you need to know all the weights w_{i,j}^{n+1}.
+    % The weights are computed by the training algorithm. The algorithm takes a
+    % training set, multiple input vectors with the corresponding output vectors,
+    % and iteratively adjusts the weights to enable the network to give the
+    % desired response to the provided input vectors.
+    %
+    % The larger the network size (the number of hidden layers and their sizes)
+    % is, the more the potential network flexibility is. The error on the
+    % training set could be made arbitrarily small. But at the same time the
+    % learned network also “learns” the noise present in the training set, so
+    % the error on the test set usually starts increasing after the network size
+    % reaches a limit. Besides, the larger networks are trained much longer than
+    % the smaller ones, so it is reasonable to pre-process the data, using PCA
+    % or similar technique, and train a smaller network on only essential
+    % features.
+    %
+    % Another MPL feature is an inability to handle categorical data as is.
+    % However, there is a workaround. If a certain feature in the input or
+    % output (in case of n-class classifier for n>2) layer is categorical and
+    % can take M>2 different values, it makes sense to represent it as a binary
+    % tuple of M elements, where the i -th element is 1 if and only if the
+    % feature is equal to the i -th value out of M possible. It increases the
+    % size of the input/output layer but speeds up the training algorithm
+    % convergence and at the same time enables “fuzzy” values of such variables,
+    % that is, a tuple of probabilities instead of a fixed value.
+    %
+    % OpenCV implements two algorithms for training MLP’s. The first algorithm
+    % is a classical random sequential back-propagation algorithm. The second
+    % (default) one is a batch RPROP algorithm.
+    %
+    % [BackPropWikipedia] http://en.wikipedia.org/wiki/Backpropagation.
+    %     Wikipedia article about the back-propagation algorithm.
+    % [LeCun98] LeCun, L. Bottou, G.B. Orr and K.-R. Muller, Efficient backprop,
+    %     in Neural Networks—Tricks of the Trade, Springer Lecture Notes in
+    %     Computer Sciences 1524, pp.5-50, 1998.
+    % [RPROP93] M. Riedmiller and H. Braun, A Direct Adaptive Method for Faster
+    %     Backpropagation Learning: The RPROP Algorithm, Proc. ICNN, San
+    %     Francisco (1993).
+    %
     % See also cv.ANN_MLP.ANN_MLP  cv.ANN_MLP.create cv.ANN_MLP.train
     % cv.ANN_MLP.predict
     %
