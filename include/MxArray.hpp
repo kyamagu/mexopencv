@@ -60,6 +60,7 @@ class MxArray {
 		cv::Moments toMoments(mwIndex index=0) const;
 		cv::KeyPoint toKeyPoint(mwIndex index=0) const;
 		cv::DMatch toDMatch(mwIndex index=0) const;
+		cv::Range toRange() const;
 		cv::TermCriteria toTermCriteria(mwIndex index=0) const;
 		template <typename T> cv::Point_<T> toPoint_() const;
 		template <typename T> cv::Point3_<T> toPoint3_() const;

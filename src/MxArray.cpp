@@ -514,6 +514,19 @@ cv::DMatch MxArray::toDMatch(mwIndex index) const
 	return dmatch;
 }
 
+/** Convert MxArray to cv::Range
+ * @return cv::Range
+ */
+cv::Range MxArray::toRange() const
+{
+	if (isNumeric() && numel()==2)
+		return cv::Range(at<int>(0),at<int>(1));
+	else if (isChar() && toString()==":")
+		return cv::Range::all();
+	else
+		mexErrMsgIdAndTxt("mexopencv:error","Invalid range value");
+}
+
 /** Convert MxArray to cv::TermCriteria
  * @return cv::TermCriteria
  */
