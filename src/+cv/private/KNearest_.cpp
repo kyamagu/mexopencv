@@ -25,7 +25,7 @@ map<int,KNearest> obj_;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-	if (nlhs>1)
+	if (nlhs>3)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
 	// Determine argument format between constructor or (id,method,...)

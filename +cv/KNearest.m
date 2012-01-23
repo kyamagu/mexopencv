@@ -106,15 +106,16 @@ classdef KNearest
                 responses, varargin{:});
         end
         
-        function results = find_nearest(this, samples, varargin)
+        function [results,neiResp,dists] = find_nearest(this, samples, varargin)
             %FIND_NEAREST  Finds the neighbors and predicts responses for input vectors
             %
             %    results = classifier.find_nearest(samples)
             %    results = classifier.find_nearest(samples, 'OptionName', optionValue, ...)
+            %    [results,neiResp,dists] = classifier.find_nearest(...)
             %
             % For each input vector (a row of the matrix samples), the method
             % finds the k nearest neighbors. In case of regression, the
-            % predicted result is a mean value of the particular vectorâ€™s
+            % predicted result is a mean value of the particular vector'€™s
             % neighbor responses. In case of classification, the class is
             % determined by voting.
             %
@@ -123,10 +124,10 @@ classdef KNearest
             %
             % See also cv.KNearest
             %
-            results = KNearest_(this.id, 'find_nearest', samples, varargin{:});
+            [results,neiResp,dists] = KNearest_(this.id, 'find_nearest', samples, varargin{:});
         end
         
-        function results = predict(this, varargin)
+        function [results,neiResp,dists] = predict(this, varargin)
             %PREDICT  Predicts the response for a sample
             %
             %    results = classifier.predict(samples)
@@ -136,7 +137,7 @@ classdef KNearest
             %
             % See also cv.KNearest.find_nearest
             %
-            results = this.find_nearest(varargin{:});
+            [results,neiResp,dists] = this.find_nearest(varargin{:});
         end
         
         function value = get.MaxK(this)
