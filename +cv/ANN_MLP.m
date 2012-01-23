@@ -157,7 +157,11 @@ classdef ANN_MLP
             %
             % Input:
             %     layerSizes: Integer vector specifying the number of neurons in
-            %         each layer including the input and output layers.
+            %         each layer including the input and output layers. The first
+            %         element must be the size of the inputs (feature dimensions)
+            %         and the last element must be the size of outputs (regression
+            %         dimensions). For example, [N,1] means two-layer network that
+            %         takes an N-dimensional vector as an input and output scalar.
             % Options:
             %     'ActivateFunc': Parameter specifying the activation function
             %         for each neuron: one of 'Identity', 'Sigmoid', 'Gaussian'.
