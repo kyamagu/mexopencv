@@ -198,6 +198,14 @@ classdef SVM
             %
             %    results = classifier.predict(samples)
             %
+            % Options:
+            %     'ReturnDFVal' Specifies a type of the return value. If
+            %         true and the problem is 2-class classification then
+            %         the method returns the decision function value that
+            %         is signed distance to the margin, else the function
+            %         returns a class label (classification) or estimated
+            %         function value (regression).
+            %
             % The method estimates the most probable classes for input vectors.
             % Input vectors (one or more) are stored as rows of the matrix
             % samples.

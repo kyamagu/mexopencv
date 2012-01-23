@@ -189,7 +189,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	if (nrhs<4 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     	Mat trainData(rhs[2].toMatND(CV_32F));
-    	Mat responses(rhs[3].toMatND(CV_32S));
+    	Mat responses(rhs[3].toMatND(CV_32F));
     	Mat varIdx, sampleIdx;
     	CvSVMParams params = getParams(rhs.begin()+4,rhs.end());
     	Mat class_weights;
@@ -212,17 +212,24 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	if (nrhs<3 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     	Mat samples(rhs[2].toMatND(CV_32F));
-    	Mat results(samples.rows,1,CV_32SC1);
-    	CvMat _samples = samples;
-    	CvMat _results = results;
-    	obj.predict(&_samples,&_results);
+    	Mat results(samples.rows,1,CV_32FC1);
+    	bool returnDFVal=false;
+    	for (int i=3; i<nrhs; i+=2) {
+    		string key(rhs[i].toString());
+    		if (key=="ReturnDFVal")
+    			returnDFVal = rhs[i+1].toBool();
+			else
+				mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+    	}
+    	for (int i=0; i<samples.rows; ++i)
+			results.at<float>(i) = obj.predict(samples.row(i));
     	plhs[0] = MxArray(results);
     }
     else if (method == "train_auto") {
     	if (nrhs<4 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     	Mat trainData(rhs[2].toMatND(CV_32F));
-    	Mat responses(rhs[3].toMatND(CV_32S));
+    	Mat responses(rhs[3].toMatND(CV_32F));
     	Mat varIdx, sampleIdx;
     	int k_fold=10;
     	CvParamGrid Cgrid=CvSVM::get_default_grid(CvSVM::C);

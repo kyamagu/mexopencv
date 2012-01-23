@@ -71,7 +71,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	if (nrhs<4 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     	Mat trainData(rhs[2].toMatND(CV_32F));
-    	Mat responses(rhs[3].toMatND(CV_32S));
+    	Mat responses(rhs[3].toMatND(CV_32F));
     	Mat varIdx;
     	Mat sampleIdx;
     	bool update=false;

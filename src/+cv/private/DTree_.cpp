@@ -106,8 +106,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	if (nrhs<4 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     	Mat trainData(rhs[2].toMatND(CV_32F));
-    	Mat responses(rhs[3].toMatND(CV_32S));
-    	Mat varIdx, sampleIdx, var_type, missing_mask;
+    	Mat responses(rhs[3].toMatND(CV_32F));
+    	Mat varIdx, sampleIdx, varType, missing_mask;
     	CvDTreeParams params = getParams(rhs.begin()+4,rhs.end());
     	vector<float> priors;
     	for (int i=4; i<nrhs; i+=2) {
@@ -116,10 +116,16 @@ void mexFunction( int nlhs, mxArray *plhs[],
     			varIdx = rhs[i+1].toMatND(CV_32S);
     		else if (key=="SampleIdx")
     			sampleIdx = rhs[i+1].toMatND(CV_32S);
-    		else if (key=="VarType")
-    			var_type = rhs[i+1].toMatND();
+    		else if (key=="VarType") {
+    			if (rhs[i+1].isChar() && rhs[i+1].toString()=="Categorical") {
+    				varType = Mat(1,trainData.cols+1,CV_8U,Scalar(CV_VAR_ORDERED));
+    				varType.at<uchar>(trainData.cols) = CV_VAR_CATEGORICAL;
+    			}
+				else if (rhs[i+1].isNumeric())
+					varType = rhs[i+1].toMatND(CV_8U);
+    		}
     		else if (key=="MissingMask")
-    			missing_mask = rhs[i+1].toMatND();
+    			missing_mask = rhs[i+1].toMatND(CV_8U);
     		else if (key=="Priors") {
     			MxArray& m = rhs[i+1];
 				priors.reserve(m.numel());
@@ -129,7 +135,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     		}
     	}
     	bool b = obj.train(trainData, CV_ROW_SAMPLE, responses, varIdx,
-    		sampleIdx, var_type, missing_mask, params);
+    		sampleIdx, varType, missing_mask, params);
     	plhs[0] = MxArray(b);
     }
     else if (method == "predict") {
