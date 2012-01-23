@@ -98,6 +98,9 @@ classdef ANN_MLP
             %ANN_MLP  Constructs MLP model
             %
             %    classifier = cv.ANN_MLP
+            %    classifier = cv.ANN_MLP(...)
+            %
+            % The constructor optionally takes the argument of create method.
             %
             % See also cv.ANN_MLP
             %

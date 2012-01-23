@@ -235,7 +235,7 @@ const char *cv_moments_fields[10] = {"m00","m10","m01","m20","m11","m02","m30","
 
 /**
  * Convert cv::KeyPoint to MxArray
- * @param mat cv::KeyPoint object
+ * @param p cv::KeyPoint object
  * @return MxArray object
  */
 MxArray::MxArray(const cv::KeyPoint& p) :
@@ -253,8 +253,8 @@ MxArray::MxArray(const cv::KeyPoint& p) :
 const char *cv_keypoint_fields[6] = {"pt", "size", "angle", "response", "octave", "class_id"};
 
 /**
- * Convert cv::KeyPoint to MxArray
- * @param mat cv::KeyPoint object
+ * Convert cv::DMatch to MxArray
+ * @param m cv::DMatch object
  * @return MxArray object
  */
 MxArray::MxArray(const cv::DMatch& m) :
@@ -271,7 +271,7 @@ const char *cv_dmatch_fields[4] = {"queryIdx","trainIdx","imgIdx","distance"};
 
 /**
  * Convert cv::RotatedRect to MxArray
- * @param mat cv::RotatedRect object
+ * @param m cv::RotatedRect object
  * @return MxArray object
  */
 MxArray::MxArray(const cv::RotatedRect& m) :
@@ -287,7 +287,7 @@ const char *cv_rotated_rect_fields[3] = {"center","size","angle"};
 
 /**
  * Convert cv::TermCriteria to MxArray
- * @param mat cv::TermCriteria object
+ * @param t cv::TermCriteria object
  * @return MxArray object
  */
 MxArray::MxArray(const cv::TermCriteria& t) :
