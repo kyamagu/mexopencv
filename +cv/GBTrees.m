@@ -90,8 +90,9 @@ classdef GBTrees
             %         Must have the same size to responses.
             %     'SampleIdx': Indicator samples of interest. Must have the
             %         the same size to responses.
-            %     'VarType': 
-			%     'MissingMask': 
+            %     'VarType': Solves classification problem when 'Categorical'.
+            %         Otherwise, the training is treated as a regression problem.
+			%     'MissingMask': Indicator mask for missing observation.
 			%     'LossFunctionType': Type of the loss function used for
 			%         training. It must be one of the following types:
 			%         'Squared', 'Absolute', 'Huber', 'Deviance'. The first

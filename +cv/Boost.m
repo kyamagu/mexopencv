@@ -113,8 +113,9 @@ classdef Boost
             %         Must have the same size to responses.
             %     'SampleIdx': Indicator samples of interest. Must have the
             %         the same size to responses.
-            %     'VarType': 
-			%     'MissingMask': 
+            %     'VarType': Solves classification problem when 'Categorical'.
+            %         Otherwise, the training is treated as a regression problem.
+			%     'MissingMask': Indicator mask for missing observation.
 			%     'BoostType': Type of the boosting algorithm. Possible values
 			%         are:
 			%         'Discrete' Discrete AbaBoost.

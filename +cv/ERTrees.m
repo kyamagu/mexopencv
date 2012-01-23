@@ -95,8 +95,9 @@ classdef ERTrees
             %         Must have the same size to responses.
             %     'SampleIdx': Indicator samples of interest. Must have the
             %         the same size to responses.
-            %     'VarType': 
-			%     'MissingMask': 
+            %     'VarType': Solves classification problem when 'Categorical'.
+            %         Otherwise, the training is treated as a regression problem.
+			%     'MissingMask': Indicator mask for missing observation.
 			%     'MaxDepth': The maximum possible depth of the tree. That is
 			%         the training algorithms attempts to split a node while its
 			%         depth is less than max_depth. The actual depth may be
