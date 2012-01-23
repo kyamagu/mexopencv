@@ -1,5 +1,5 @@
 /**
- * @file GBTrees.cpp
+ * @file GBTrees_.cpp
  * @brief mex interface for GBTrees
  * @author Kota Yamaguchi
  * @date 2012

@@ -1,5 +1,5 @@
 /**
- * @file KNearest.cpp
+ * @file KNearest_.cpp
  * @brief mex interface for KNearest
  * @author Kota Yamaguchi
  * @date 2012

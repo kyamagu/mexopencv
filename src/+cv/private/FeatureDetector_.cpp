@@ -1,5 +1,5 @@
 /**
- * @file FeatureDetector.cpp
+ * @file FeatureDetector_.cpp
  * @brief mex interface for FeatureDetector
  * @author Kota Yamaguchi
  * @date 2012

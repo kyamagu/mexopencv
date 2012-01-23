@@ -1,5 +1,5 @@
 /**
- * @file SVM.cpp
+ * @file SVM_.cpp
  * @brief mex interface for SVM
  * @author Kota Yamaguchi
  * @date 2012
@@ -209,7 +209,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	plhs[0] = MxArray(b);
     }
     else if (method == "predict") {
-    	if (nrhs<3 || nlhs>3)
+    	if (nrhs<3 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     	Mat samples(rhs[2].toMatND(CV_32F));
     	Mat results(samples.rows,1,CV_32SC1);

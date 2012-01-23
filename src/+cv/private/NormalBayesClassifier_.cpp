@@ -1,5 +1,5 @@
 /**
- * @file NormalBayesClassifier.cpp
+ * @file NormalBayesClassifier_.cpp
  * @brief mex interface for NormalBayesClassifier
  * @author Kota Yamaguchi
  * @date 2012

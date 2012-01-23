@@ -1,5 +1,5 @@
 /**
- * @file DescriptorExtractor.cpp
+ * @file DescriptorExtractor_.cpp
  * @brief mex interface for DescriptorExtractor
  * @author Kota Yamaguchi
  * @date 2012

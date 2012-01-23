@@ -1,5 +1,5 @@
 /**
- * @file RTrees.cpp
+ * @file RTrees_.cpp
  * @brief mex interface for RTrees
  * @author Kota Yamaguchi
  * @date 2012

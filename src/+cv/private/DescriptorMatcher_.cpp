@@ -1,5 +1,5 @@
 /**
- * @file DescriptorMatcher.cpp
+ * @file DescriptorMatcher_.cpp
  * @brief mex interface for DescriptorMatcher
  * @author Kota Yamaguchi
  * @date 2012

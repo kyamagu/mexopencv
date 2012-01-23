@@ -1,5 +1,5 @@
 /**
- * @file ERTrees.cpp
+ * @file ERTrees_.cpp
  * @brief mex interface for ERTrees
  * @author Kota Yamaguchi
  * @date 2012

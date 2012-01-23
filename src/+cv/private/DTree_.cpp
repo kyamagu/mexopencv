@@ -1,5 +1,5 @@
 /**
- * @file DTree.cpp
+ * @file DTree_.cpp
  * @brief mex interface for DTree
  * @author Kota Yamaguchi
  * @date 2012
