@@ -79,13 +79,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	for (int i=4; i<nrhs; i+=2) {
     		string key(rhs[i].toString());
     		if (key=="SampleIdx")
-    			sampleIdx = rhs[i].toMatND(CV_32S);
+    			sampleIdx = rhs[i+1].toMatND(CV_32S);
     		else if (key=="IsRegression")
-    			isRegression = rhs[i].toBool();
+    			isRegression = rhs[i+1].toBool();
     		else if (key=="MaxK")
     			maxK = rhs[i].toInt();
     		else if (key=="Update"||key=="UpdateBase")
-    			updateBase = rhs[i].toBool();
+    			updateBase = rhs[i+1].toBool();
     		else
     			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     	}
@@ -100,7 +100,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	for (int i=3; i<nrhs; i+=2) {
     		string key(rhs[i].toString());
     		if (key=="K")
-    			k = rhs[i].toInt();
+    			k = rhs[i+1].toInt();
     		else
     			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     	}

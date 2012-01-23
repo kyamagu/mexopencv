@@ -78,11 +78,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	for (int i=4; i<nrhs; i+=2) {
     		string key(rhs[i].toString());
     		if (key=="VarIdx")
-    			varIdx = rhs[i].toMatND(CV_32S);
+    			varIdx = rhs[i+1].toMatND(CV_32S);
     		else if (key=="SampleIdx")
-    			sampleIdx = rhs[i].toMatND(CV_32S);
+    			sampleIdx = rhs[i+1].toMatND(CV_32S);
     		else if (key=="Update")
-    			update = rhs[i].toBool();
+    			update = rhs[i+1].toBool();
     		else
     			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     	}

@@ -34,6 +34,7 @@ class MxArray {
 		explicit MxArray(const cv::DMatch& m);
 		explicit MxArray(const cv::Moments& m);
 		explicit MxArray(const cv::RotatedRect& m);
+		explicit MxArray(const cv::TermCriteria& t);
 		template <typename T> explicit MxArray(const cv::Point_<T>& p);
 		template <typename T> explicit MxArray(const cv::Point3_<T>& p);
 		template <typename T> explicit MxArray(const cv::Size_<T>& s);
@@ -59,6 +60,7 @@ class MxArray {
 		cv::Moments toMoments(mwIndex index=0) const;
 		cv::KeyPoint toKeyPoint(mwIndex index=0) const;
 		cv::DMatch toDMatch(mwIndex index=0) const;
+		cv::TermCriteria toTermCriteria(mwIndex index=0) const;
 		template <typename T> cv::Point_<T> toPoint_() const;
 		template <typename T> cv::Point3_<T> toPoint3_() const;
 		template <typename T> cv::Size_<T> toSize_() const;
@@ -412,6 +414,8 @@ const T MxArray::at(std::vector<mwIndex>& si) const
 
 /// Field names of RotatedRect
 extern const char *cv_rotated_rect_fields[3];
+/// Field names of TermCriteria
+extern const char *cv_term_criteria_fields[3];
 /// Field names of Moments
 extern const char *cv_moments_fields[10];
 /// Field names of KeyPoint

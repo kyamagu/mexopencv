@@ -282,6 +282,22 @@ MxArray::MxArray(const cv::RotatedRect& m) :
 const char *cv_rotated_rect_fields[3] = {"center","size","angle"};
 
 /**
+ * Convert cv::TermCriteria to MxArray
+ * @param mat cv::TermCriteria object
+ * @return MxArray object
+ */
+MxArray::MxArray(const cv::TermCriteria& t) :
+	p_(mxCreateStructMatrix(1,1,3,cv_term_criteria_fields))
+{
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
+	mxSetField(const_cast<mxArray*>(p_),0,"type",     MxArray(t.type));
+	mxSetField(const_cast<mxArray*>(p_),0,"maxCount", MxArray(t.maxCount));
+	mxSetField(const_cast<mxArray*>(p_),0,"epsilon",  MxArray(t.epsilon));
+}
+const char *cv_term_criteria_fields[3] = {"type","maxCount","epsilon"};
+
+/**
  * Convert MxArray to cv::Mat
  * @param depth depth of cv::Mat. e.g., CV_8U, CV_32F.  When CV_USERTYPE1 is
  *                specified, depth will be automatically determined from the
@@ -496,6 +512,40 @@ cv::DMatch MxArray::toDMatch(mwIndex index) const
 	if (pm=mxGetField(p_,index,"distance"))
 		dmatch.distance = MxArray(pm).toDouble();
 	return dmatch;
+}
+
+/** Convert MxArray to cv::TermCriteria
+ * @return cv::TermCriteria
+ */
+cv::TermCriteria MxArray::toTermCriteria(mwIndex index) const
+{
+	if (!isStruct())
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not struct");
+	if (index < 0 || numel() <= index)
+		mexErrMsgIdAndTxt("mexopencv:error","Out of range in struct array");
+	mxArray* pm;
+	cv::TermCriteria term_crit;
+	if (pm=mxGetField(p_,index,"type")) {
+		MxArray m(pm);
+		if (m.isChar()) {
+			string s(m.toString());
+			if (s=="Count")
+				term_crit.type = cv::TermCriteria::COUNT;
+			else if (s=="EPS")
+				term_crit.type = cv::TermCriteria::EPS;
+			else if (s=="Count+EPS")
+				term_crit.type = cv::TermCriteria::COUNT+cv::TermCriteria::EPS;
+			else
+				mexErrMsgIdAndTxt("mexopencv:error","Unrecognized term criteria type");
+		}
+		else
+			term_crit.type = m.toInt();
+	}
+	if (pm=mxGetField(p_,index,"maxCount"))
+		term_crit.maxCount = MxArray(pm).toInt();
+	if (pm=mxGetField(p_,index,"epsilon"))
+		term_crit.epsilon = MxArray(pm).toDouble();
+	return term_crit;
 }
 
 /** Offset from first element to desired element
