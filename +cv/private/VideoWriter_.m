@@ -1,1 +1,0 @@
-%VIDEOWRITER_  Mex function internally used by cv.VideoWriter class
