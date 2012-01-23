@@ -20,8 +20,7 @@ classdef SVM
     % SVM implementation in OpenCV is based on [LibSVM].
     % http://www.csie.ntu.edu.tw/~cjlin/papers/libsvm.pdf
     %
-    % See also cv.SVM.SVM
-    % cv.SVM.train cv.SVM.predict
+    % See also cv.SVM.SVM cv.SVM.train cv.SVM.predict cv.SVM.train_auto
     %
     
     properties (SetAccess = private)
@@ -152,11 +151,15 @@ classdef SVM
 			%     'TermCrit': Termination criteria of the iterative SVM training
 			%         procedure which solves a partial case of constrained quadratic
 			%         optimization problem. You can specify tolerance and/or the
-			%         maximum number of iterations.
+			%         maximum number of iterations. A struct with the
+			%         following fields are accepted:
+            %         'type'      one of {'Count','EPS','Count+EPS'}
+            %         'maxCount'  maximum number of iterations
+            %         'epsilon'   tolerance value
             %
             % The method trains the SVM model.
             %
-            % See also cv.SVM
+            % See also cv.SVM cv.SVM.train_auto
             %
             status = SVM_(this.id, 'train', trainData, responses, varargin{:});
         end
@@ -185,7 +188,7 @@ classdef SVM
             %         a 3-element vector in which each parameter is specified in
             %         the same order to the struct is supported.
             %
-            % See also cv.SVM.train
+            % See also cv.SVM cv.SVM.train
             %
             status = SVM_(this.id, 'train_auto', trainData, responses, varargin{:});
         end

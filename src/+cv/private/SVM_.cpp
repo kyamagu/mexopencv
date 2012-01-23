@@ -73,17 +73,9 @@ CvSVMParams getParams(	vector<MxArray>::iterator it,
 			params.nu = val.toDouble();
 		else if (key=="P")
 			params.p = val.toDouble();
-		else if (key=="ClassWeights") {
-			Mat m = val.toMatND();
-			CvMat _m = m;
-			params.class_weights = &_m;
-		}
 		else if (key=="TermCrit") {
 			params.term_crit = val.toTermCriteria();
 		}
-		else if (key=="VarIdx"||key=="SampleIdx") {}
-		else
-			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 	}
 	return params;
 }
@@ -199,14 +191,20 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	Mat trainData(rhs[2].toMatND(CV_32F));
     	Mat responses(rhs[3].toMatND(CV_32S));
     	Mat varIdx, sampleIdx;
+    	CvSVMParams params = getParams(rhs.begin()+4,rhs.end());
+    	Mat class_weights;
     	for (int i=4; i<nrhs; i+=2) {
     		string key(rhs[i].toString());
     		if (key=="VarIdx")
     			varIdx = rhs[i+1].toMatND(CV_32S);
     		else if (key=="SampleIdx")
     			sampleIdx = rhs[i+1].toMatND(CV_32S);
+			else if (key=="ClassWeights") {
+				class_weights = rhs[i+1].toMatND();
+				CvMat _m = class_weights;
+				params.class_weights = &_m;
+			}
     	}
-    	CvSVMParams params = getParams(rhs.begin()+4,rhs.end());
     	bool b = obj.train(trainData,responses,varIdx,sampleIdx,params);
     	plhs[0] = MxArray(b);
     }
