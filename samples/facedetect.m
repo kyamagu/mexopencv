@@ -16,7 +16,7 @@ pause(3); % Necessary in some environment. See help cv.VideoCapture
 
 % Set up display window
 window = figure('KeyPressFcn',@(obj,evt)setappdata(obj,'flag',true));
-setappdata(window,'flag',0);
+setappdata(window,'flag',false);
 
 % Start main loop
 while true
