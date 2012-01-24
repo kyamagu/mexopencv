@@ -3,7 +3,7 @@ function facedetect
 %
 % Before start, addpath('/path/to/mexopencv');
 %
-disp('Face detection demo. Press Ctrl-C when done.');
+disp('Face detection demo. Press any key when done.');
 
 % Load cascade file
 root = fileparts(fileparts(mfilename('fullpath')));
@@ -14,6 +14,8 @@ classifier = cv.CascadeClassifier(xml_file);
 camera = cv.VideoCapture;
 pause(3); % Necessary in some environment. See help cv.VideoCapture
 
+window = figure('KeyPressFcn',@(obj,evt)setappdata(obj,'flag',true));
+setappdata(window,'flag',0);
 while true
 	% Grab and preprocess an image
     im = camera.read;
@@ -31,7 +33,11 @@ while true
         rectangle('Position',boxes{i},'EdgeColor','g');
     end
     hold off;
+    
+    % Terminate if any user input
+    if getappdata(window,'flag')==true, break; end
     pause(0.1);
 end
+close(window);
 
 end
