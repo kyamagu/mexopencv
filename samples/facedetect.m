@@ -14,8 +14,11 @@ classifier = cv.CascadeClassifier(xml_file);
 camera = cv.VideoCapture;
 pause(3); % Necessary in some environment. See help cv.VideoCapture
 
+% Set up display window
 window = figure('KeyPressFcn',@(obj,evt)setappdata(obj,'flag',true));
 setappdata(window,'flag',0);
+
+% Start main loop
 while true
 	% Grab and preprocess an image
     im = camera.read;
@@ -38,6 +41,8 @@ while true
     if getappdata(window,'flag')==true, break; end
     pause(0.1);
 end
+
+% Close
 close(window);
 
 end
