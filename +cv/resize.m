@@ -10,13 +10,13 @@
 %    scale: Scale factor along both x and y axis.
 %  Output:
 %    dst: Destination image. It has the size siz or the size computed from
-%         size(src) and scale. The type of dst is the same as of src.
+%        size(src) and scale. The type of dst is the same as of src.
 %  Options:
 %    'Interpolation': interpolation method. default: 'Linear'
 %      'Nearest':  a nearest-neighbor interpolation
 %      'Linear':   a bilinear interpolation (used by default)
 %      'Area':     resampling using pixel area relation. It may be a preferred
-%                  method for image decimation, as it gives moire’-free results.
+%                  method for image decimation, as it gives moire-free results.
 %                  But when the image is zoomed, it is similar to the 'Nearest'
 %                  method.
 %      'Cubic':    a bicubic interpolation over 4x4 pixel neighborhood

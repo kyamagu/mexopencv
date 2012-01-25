@@ -3,10 +3,6 @@
 %   dst = cv.buildPyramid(src)
 %   dst = cv.buildPyramid(src, 'MaxLevel', 5)
 %
-% The function constructs a vector of images and builds the Gaussian pyramid by
-% recursively applying pyrDown() to the previously built pyramid layers,
-% starting from dst{1}==src.
-%
 % Input:
 %     src: Source image.
 % Output:
@@ -16,4 +12,8 @@
 % Options:
 %     'MaxLevel': 0-based index of the last (the smallest) pyramid layer. It
 %                 must be non-negative. default 5
+%
+% The function constructs a vector of images and builds the Gaussian pyramid by
+% recursively applying pyrDown() to the previously built pyramid layers,
+% starting from dst{1}==src.
 %

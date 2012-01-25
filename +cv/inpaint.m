@@ -12,7 +12,7 @@
 %  Options:
 %    'Radius': Radius of a circlular neighborhood of each point inpainted that
 %              is considered by the algorithm.
-%	 'Method': Inpainting method that could be one of the following:
+%    'Method': Inpainting method that could be one of the following:
 %       'NS': Navier-Stokes based method.
 %       'Telea': Method by Alexandru Telea [Telea04].
 %

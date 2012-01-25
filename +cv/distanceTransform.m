@@ -9,16 +9,16 @@
 %    src: 8-bit, single-channel (binary) source image.
 %  Output:
 %    dst: Output image with calculated distances. It is a 32-bit
-%         floating-point, single-channel image of the same size as src.
+%        floating-point, single-channel image of the same size as src.
 %    labels: Optional output 2D array of labels (the discrete Voronoi diagram).
-%            It has the type int32 and the same size as src
+%        It has the type int32 and the same size as src
 %  Options:
 %    'DistanceType': Type of distance. It can be 'L1', 'L2' , or 'C'
 %    'MaskSize': Size of the distance transform mask. It can be 3, 5, or
-%                'MaskPrecise' (the latter option is only supported by the
-%                first function). In case of the 'L1' or 'C' distance type, the
-%                parameter is forced to 3 because a 3 x 3 mask gives the same
-%                result as 5 x 5 or any larger aperture.
+%        'MaskPrecise' (the latter option is only supported by the
+%        first function). In case of the 'L1' or 'C' distance type, the
+%        parameter is forced to 3 because a 3 x 3 mask gives the same
+%        result as 5 x 5 or any larger aperture.
 %
 % The functions distanceTransform calculate the approximate or precise distance
 % from every binary image pixel to the nearest zero pixel. For zero image

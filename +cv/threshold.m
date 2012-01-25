@@ -28,7 +28,7 @@
 %   'ToZeroInv':  dst(x,y) = (src(x,y)>thresh) ? 0 : src(x,y)
 %
 % When thresh is set 'auto', the function determines the optimal threshold
-% value using the Otsu’s algorithm and uses it instead of the specified thresh.
-% The function returns the computed threshold value. Currently, the Otsu’s
-% method is implemented only for 8-bit images.
+% value using the Otsu's algorithm and uses it instead of the specified
+% thresh. The function returns the computed threshold value. Currently, the
+% Otsu's method is implemented only for 8-bit images.
 %

@@ -8,11 +8,11 @@
 %    src: Source image as W x H, 8-bit or floating-point (32f or 64f).
 %  Output:
 %    s: Integral image as (W+1) x (H+1), 32-bit integer or floating-point (32f
-%       or 64f).
+%        or 64f).
 %    sqsum: Integral image for squared pixel values. It is (W+1) x (H+1),
-%           double-precision floating-point (64f) array.
+%        double-precision floating-point (64f) array.
 %    tilted: Integral for the image rotated by 45 degrees. It is (W+1) x (H+1)
-%            array with the same data type as sum.
+%        array with the same data type as sum.
 %
 % The functions calculate one or more integral images for the source image as
 % follows:
