@@ -3,6 +3,12 @@ mexopencv
 
 Collection and a development kit of matlab mex functions for OpenCV library
 
+The package provides matlab mex functions that interface a hundred of
+OpenCV functions. Also the package contains C++ class that converts between 
+Matlab's native data type and OpenCV data types. The package is suitable for
+fast prototyping of OpenCV application in Matlab, use of OpenCV as an external
+toolbox in Matlab, and development of an original mex function.
+
 
 Contents
 ========
