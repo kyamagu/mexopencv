@@ -3,6 +3,10 @@
  * @brief MxArray and global constant definitions
  * @author Kota Yamaguchi
  * @date 2011
+ *
+ * The header file for a Matlab mex function that uses OpenCV library.
+ * The file includes definition of MxArray class that converts between mxArray
+ * and a couple of std:: and cv:: data types including cv::Mat.
  */
 #ifndef __MEXOPENCV_HPP__
 #define __MEXOPENCV_HPP__
