@@ -1,0 +1,36 @@
+classdef TestCalcOpticalFlowFarneback
+    %TestCalcOpticalFlowFarneback
+    properties (Constant)
+    	im = im2uint8([...
+            0 0 0 0 0 0 0 0 0 0;...
+            0 0 0 0 0 0 0 0 0 0;...
+            0 0 0 0 0 0 0 0 0 0;...
+            0 0 0 1 1 1 0 0 0 0;...
+            0 0 0 1 0 1 0 0 0 0;...
+            0 0 0 1 1 1 0 0 0 0;...
+            0 0 0 0 0 0 0 0 0 0;...
+            0 0 0 0 0 0 0 0 0 0;...
+            0 0 0 0 0 0 0 0 0 0;...
+            0 0 0 0 0 0 0 0 0 0;...
+            ]);
+    end
+    
+    methods (Static)
+        function test_1
+        	im1 = TestCalcOpticalFlowFarneback.im;
+        	im2 = [zeros(10,1,'uint8'),im1(:,1:end-1)];
+            flow = cv.calcOpticalFlowFarneback(im1,im2);
+        end
+        
+        function test_error_1
+            try
+                cv.calcOpticalFlowFarneback();
+                throw('UnitTest:Fail');
+            catch e
+                assert(strcmp(e.identifier,'mexopencv:error'));
+            end
+        end
+    end
+    
+end
+
