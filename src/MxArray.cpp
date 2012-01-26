@@ -166,6 +166,50 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 	}
 }
 
+
+#if CV_MINOR_VERSION < 2
+/**
+ * Convert cv::MatND to MxArray
+ * @param mat cv::MatND object
+ * @param classid classid of mxArray. e.g., mxDOUBLE_CLASS. When mxUNKNOWN_CLASS
+ *                is specified, classid will be automatically determined from
+ *                the type of cv::Mat. default: mxUNKNOWN_CLASS
+ * @return MxArray object
+ */
+MxArray::MxArray(const cv::MatND& mat, mxClassID classid)
+{
+	if (mat.datastart==mat.dataend) {
+		p_ = mxCreateNumericArray(0,0,mxDOUBLE_CLASS,mxREAL);
+		return;
+	}
+	// Create a new mxArray
+	int nchannels = mat.channels();
+	const int* dims_ = mat.size;
+	vector<mwSize> d(dims_,dims_+mat.dims);
+	d.push_back(nchannels);
+	classid = (classid == mxUNKNOWN_CLASS) ? ClassIDOf[mat.depth()] : classid;
+	std::swap(d[0],d[1]);
+	p_ = mxCreateNumericArray(d.size(),&d[0],classid,mxREAL);
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
+	
+	// Copy
+	int depth = CV_MAKETYPE(DepthOf[classid],1);
+	cv::MatND m(mat.dims,mat.size,CV_MAKETYPE(depth,1));
+	uchar* _data = m.data;
+	uchar* _datastart = m.datastart;
+	uchar* _dataend = m.dataend;
+	m.data = m.datastart = reinterpret_cast<uchar*>(mxGetData(p_));
+	m.dataend = reinterpret_cast<uchar*>(
+		reinterpret_cast<size_t>(mxGetData(p_))+mxGetElementSize(p_)*numel());
+	mat.convertTo(m,CV_MAKETYPE(depth,1));
+	m.data = _data;
+	m.datastart = _datastart;
+	m.dataend = _dataend;
+}
+#endif
+
+
 namespace {
 struct compareSparseMatNode_ {
 	bool operator () (const SparseMat::Node* rhs, const SparseMat::Node* lhs)
@@ -265,6 +309,7 @@ MxArray::MxArray(const cv::KeyPoint& p) :
 }
 const char *cv_keypoint_fields[6] = {"pt", "size", "angle", "response", "octave", "class_id"};
 
+#if CV_MINOR_VERSION >= 2
 /**
  * Convert cv::DMatch to MxArray
  * @param m cv::DMatch object
@@ -280,6 +325,7 @@ MxArray::MxArray(const cv::DMatch& m) :
 	mxSetField(const_cast<mxArray*>(p_),0,"imgIdx",   MxArray(m.imgIdx));
 	mxSetField(const_cast<mxArray*>(p_),0,"distance", MxArray(m.distance));
 }
+#endif
 const char *cv_dmatch_fields[4] = {"queryIdx","trainIdx","imgIdx","distance"};
 
 /**
@@ -413,14 +459,31 @@ cv::MatND MxArray::toMatND(int depth, bool transpose) const
 	// Create cv::Mat object
 	std::vector<int> d(dims(),dims()+ndims());
 	std::swap(d[0],d[1]);
-	cv::Mat m(ndims(),&d[0],CV_MAKETYPE(DepthOf[classID()],1),mxGetData(p_));
+#if CV_MINOR_VERSION >= 2
+	cv::MatND m(ndims(),&d[0],CV_MAKETYPE(DepthOf[classID()],1),mxGetData(p_));
+#else
+	cv::MatND m(ndims(),&d[0],CV_MAKETYPE(DepthOf[classID()],1));
+	uchar* _data = m.data;
+	uchar* _datastart = m.datastart;
+	uchar* _dataend = m.dataend;
+	m.data = m.datastart = reinterpret_cast<uchar*>(mxGetData(p_));
+	m.dataend = reinterpret_cast<uchar*>(
+		reinterpret_cast<size_t>(mxGetData(p_))+mxGetElementSize(p_)*numel());
+#endif
 	
 	// Copy
-	cv::Mat mat;
+	cv::MatND mat;
 	depth = (depth==CV_USRTYPE1) ? CV_MAKETYPE(DepthOf[classID()],1) : depth;
 	m.convertTo(mat,CV_MAKETYPE(depth,1));
 	
+#if CV_MINOR_VERSION >= 2
 	return (mat.dims==2 && transpose) ? cv::Mat(mat.t()) : mat;
+#else
+	m.data = _data;
+	m.datastart = _datastart;
+	m.dataend = _dataend;
+	return mat;
+#endif
 }
 
 /** Convert MxArray to scalar double
@@ -526,6 +589,7 @@ cv::KeyPoint MxArray::toKeyPoint(mwIndex index) const
 	return cv::KeyPoint(_pt,_size,_angle,_response,_octave,_class_id);
 }
 
+#if CV_MINOR_VERSION >= 2
 /** Convert MxArray to cv::DMatch
  * @return cv::DMatch
  */
@@ -547,6 +611,7 @@ cv::DMatch MxArray::toDMatch(mwIndex index) const
 		dmatch.distance = MxArray(pm).toDouble();
 	return dmatch;
 }
+#endif
 
 /** Convert MxArray to cv::Range
  * @return cv::Range

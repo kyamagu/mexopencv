@@ -49,6 +49,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	
 	// Process
 	HoughLines(image, lines, rho, theta, threshold, srn, stn);
+#if CV_MINOR_VERSION >= 2
 	vector<Mat> vl(lines.begin(),lines.end());
+#else
+	vector<Mat> vl(lines.size());
+	for (int i=0;i<vl.size();++i)
+		vl[i] = Mat(1,2,CV_32FC1,&lines[i][0]);
+#endif
 	plhs[0] = MxArray(vl);
 }

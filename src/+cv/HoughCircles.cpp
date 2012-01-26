@@ -55,6 +55,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	
 	// Process
 	HoughCircles(image, circles, method, dp, minDist, param1, param2, minRadius, maxRadius);
+#if CV_MINOR_VERSION >= 2
 	vector<Mat> vc(circles.begin(),circles.end());
+#else
+	vector<Mat> vc(circles.size());
+	for (int i=0;i<vc.size();++i)
+		vc[i] = Mat(1,3,CV_32FC1,&circles[i][0]);
+#endif
 	plhs[0] = MxArray(vc);
 }

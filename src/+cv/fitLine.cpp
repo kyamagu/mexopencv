@@ -43,6 +43,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	}
 	
 	// Process
+#if CV_MINOR_VERSION >= 2
 	if (rhs[0].isNumeric()) {
 		Mat points(rhs[0].toMat());
 		Vec4f line;
@@ -58,4 +59,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		fitLine(points, line, distType, param, reps, aeps);
 		plhs[0] = MxArray(Mat(line));
 	}
+#else
+	Mat points(rhs[0].toMat());
+	Vec4f line;
+	fitLine(points, line, distType, param, reps, aeps);
+	Mat x(1,4,CV_32FC1,&line[0]);
+	plhs[0] = MxArray(x);
+#endif
 }

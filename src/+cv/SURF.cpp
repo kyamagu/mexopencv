@@ -18,6 +18,7 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
+#if CV_MINOR_VERSION >= 2
 	// Check the number of arguments
 	if (nrhs<1 || ((nrhs%2)!=1) || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
@@ -26,7 +27,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	vector<MxArray> rhs(prhs,prhs+nrhs);
 	
 	if (nrhs==1 && rhs[0].isChar() && rhs[0].toString()=="DescriptorSize") {
-		plhs[0] = MxArray(SIFT().descriptorSize());
+		plhs[0] = MxArray(SURF().descriptorSize());
 		return;
 	}
 	
@@ -68,4 +69,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	else
 		surf(image, mask, keypoints);
 	plhs[0] = MxArray(keypoints);
+#else
+	mexErrMsgIdAndTxt("mexopencv:error","SURF not supported in this version");
+#endif
 }

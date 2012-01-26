@@ -137,7 +137,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     		else if (key=="VarType") {
     			if (rhs[i+1].isChar() && rhs[i+1].toString()=="Categorical") {
     				varType = Mat(1,trainData.cols+1,CV_8U,Scalar(CV_VAR_ORDERED));
-    				varType.at<uchar>(trainData.cols) = CV_VAR_CATEGORICAL;
+    				varType.at<uchar>(0,trainData.cols) = CV_VAR_CATEGORICAL;
     			}
 				else if (rhs[i+1].isNumeric())
 					varType = rhs[i+1].toMat(CV_8U);
@@ -168,10 +168,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		Mat results(samples.rows,1,CV_64F);
 		if (missing.empty())
 			for (int i=0; i<samples.rows; ++i)
-				results.at<double>(i) = obj.predict(samples.row(i),missing);
+				results.at<double>(i,0) = obj.predict(samples.row(i),missing);
 		else
 			for (int i=0; i<samples.rows; ++i)
-				results.at<double>(i) = obj.predict(samples.row(i),missing.row(i));
+				results.at<double>(i,0) = obj.predict(samples.row(i),missing.row(i));
 		plhs[0] = MxArray(results);
     }
     else if (method == "predict_prob") {
@@ -186,16 +186,20 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		Mat results(samples.rows,1,CV_64F);
 		if (missing.empty())
 			for (int i=0; i<samples.rows; ++i)
-				results.at<double>(i) = obj.predict_prob(samples.row(i),missing);
+				results.at<double>(i,0) = obj.predict_prob(samples.row(i),missing);
 		else
 			for (int i=0; i<samples.rows; ++i)
-				results.at<double>(i) = obj.predict_prob(samples.row(i),missing.row(i));
+				results.at<double>(i,0) = obj.predict_prob(samples.row(i),missing.row(i));
 		plhs[0] = MxArray(results);
     }
     else if (method == "getVarImportance") {
+#if CV_MINOR_VERSION >= 2
     	if (nrhs!=2 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
 		plhs[0] = MxArray((obj.get_tree_count()>0)?obj.getVarImportance():Mat());
+#else
+		mexErrMsgIdAndTxt("mexopencv:error","getVarImportance not supported in this version");
+#endif
     }
     else if (method == "get_proximity") {
     	if (nrhs<4 || nlhs>1)

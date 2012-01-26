@@ -51,8 +51,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		else if (key=="LineType")
 			lineType = rhs[i+1].toInt();
 		else if (key=="Hierarchy") {
+#if CV_MINOR_VERSION >= 2
 			vector<Mat> hm(rhs[i+1].toStdVector<Mat>());
 			hierarchy = vector<Vec4i>(hm.begin(),hm.end());
+#endif
 			//for (int i=0; i<hm.size(); ++i)
 			//	  hierarchy.push_back(Vec4i(hm[i].at<int>(0),hm[i].at<int>(1),
 			//        hm[i].at<int>(2),hm[i].at<int>(3)));

@@ -443,6 +443,7 @@ MxArray::MxArray(const std::vector<cv::KeyPoint>& v) :
 	}
 }
 
+#if CV_MINOR_VERSION >= 2
 /** Convert MxArray to std::vector<cv::DMatch>
  * @return std::vector<cv::DMatch> value
  */
@@ -478,5 +479,6 @@ MxArray::MxArray(const std::vector<cv::DMatch>& v) :
 		mxSetField(const_cast<mxArray*>(p_),i,"distance", MxArray(v[i].distance));
 	}
 }
+#endif
 
 #endif

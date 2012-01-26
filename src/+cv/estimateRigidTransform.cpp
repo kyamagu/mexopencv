@@ -36,6 +36,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	}
 	
 	// Process
+#if CV_MINOR_VERSION >= 2
 	if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
 		Mat src(rhs[0].toMat()), dst(rhs[0].toMat());
 		Mat m = estimateRigidTransform(src,dst,fullAffine);
@@ -56,4 +57,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	}
 	else
 		mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
+#else
+		Mat src(rhs[0].toMat()), dst(rhs[0].toMat());
+		Mat m = estimateRigidTransform(src,dst,fullAffine);
+		plhs[0] = MxArray(m);
+#endif
 }

@@ -105,7 +105,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
     			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     	}
     	Mat neighborResponses, dists;
+#if CV_MINOR_VERSION >= 2
     	obj.find_nearest(samples,k,results,neighborResponses,dists);
+#else
+		results = Mat(samples.rows,k,CV_32F);
+		CvMat _samples = samples, _results = results;
+    	obj.find_nearest(&_samples,k,&_results);
+#endif
     	plhs[0] = MxArray(results);
     	if (nlhs>1)
     		plhs[1] = MxArray(neighborResponses);

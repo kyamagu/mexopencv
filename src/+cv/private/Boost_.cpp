@@ -158,7 +158,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     		else if (key=="VarType") {
     			if (rhs[i+1].isChar() && rhs[i+1].toString()=="Categorical") {
     				varType = Mat(1,trainData.cols+1,CV_8U,Scalar(CV_VAR_ORDERED));
-    				varType.at<uchar>(trainData.cols) = CV_VAR_CATEGORICAL;
+    				varType.at<uchar>(0,trainData.cols) = CV_VAR_CATEGORICAL;
     			}
 				else if (rhs[i+1].isNumeric())
 					varType = rhs[i+1].toMat(CV_8U);
@@ -197,12 +197,25 @@ void mexFunction( int nlhs, mxArray *plhs[],
     			returnSum = rhs[i+1].toBool();
     	}
 		Mat results(samples.rows,1,CV_64F);
+#if CV_MINOR_VERSION >= 2
 		if (missing.empty())
 			for (int i=0; i<samples.rows; ++i)
-				results.at<double>(i) = obj.predict(samples.row(i),missing,slice,rawMode,returnSum);
+				results.at<double>(i,0) = obj.predict(samples.row(i),missing,slice,rawMode,returnSum);
 		else
 			for (int i=0; i<samples.rows; ++i)
-				results.at<double>(i) = obj.predict(samples.row(i),missing.row(i),slice,rawMode,returnSum);
+				results.at<double>(i,0) = obj.predict(samples.row(i),missing.row(i),slice,rawMode,returnSum);
+#else
+		if (missing.empty())
+			for (int i=0; i<samples.rows; ++i) {
+				CvMat _row = samples.row(i);
+				results.at<double>(i,0) = obj.predict(&_row,NULL,NULL,CV_WHOLE_SEQ,rawMode,returnSum);
+			}
+		else
+			for (int i=0; i<samples.rows; ++i) {
+				CvMat _row = samples.row(i), _missing = missing.row(i);
+				results.at<double>(i,0) = obj.predict(&_row,&_missing,NULL,CV_WHOLE_SEQ,rawMode,returnSum);
+			}
+#endif
 		plhs[0] = MxArray(results);
     }
     else if (method == "get_params") {

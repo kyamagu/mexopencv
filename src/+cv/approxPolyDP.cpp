@@ -35,8 +35,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		else
 			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 	}
-	
 	// Process
+#if CV_MINOR_VERSION >= 2
 	if (rhs[0].isNumeric()) {
 		Mat curve(rhs[0].toMat()), approxCurve;
 		approxPolyDP(curve, approxCurve, epsilon, closed);
@@ -45,6 +45,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	else if (rhs[0].isCell()) {
 		vector<Point> curve(rhs[0].toStdVector<Point>()), approxCurve;
 		approxPolyDP(curve, approxCurve, epsilon, closed);
-		plhs[0] = MxArray(approxCurve);		
+		plhs[0] = MxArray(approxCurve);
 	}
+#else
+	Mat curve(rhs[0].toMat());
+	vector<Point2f> approxCurve;
+	approxPolyDP(curve, approxCurve, epsilon, closed);
+	plhs[0] = MxArray(approxCurve);
+#endif
 }

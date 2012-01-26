@@ -8,6 +8,7 @@
 using namespace std;
 using namespace cv;
 
+#if CV_MINOR_VERSION >= 2
 // Persistent objects
 
 /// Last object id to allocate
@@ -90,3 +91,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else
 		mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
 }
+#else
+void mexFunction( int nlhs, mxArray *plhs[],
+                  int nrhs, const mxArray *prhs[] )
+{
+	mexErrMsgIdAndTxt("mexopencv:error","FeatureDetector not supported in this version");
+}
+#endif

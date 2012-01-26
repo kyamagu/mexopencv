@@ -222,7 +222,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 				mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     	}
     	for (int i=0; i<samples.rows; ++i)
-			results.at<float>(i) = obj.predict(samples.row(i));
+			results.at<float>(i,0) = obj.predict(samples.row(i));
     	plhs[0] = MxArray(results);
     }
     else if (method == "train_auto") {
@@ -263,8 +263,15 @@ void mexFunction( int nlhs, mxArray *plhs[],
     			degreeGrid = getGrid(rhs[i+1]);
     	}
     	CvSVMParams params = getParams(rhs.begin()+4,rhs.end());
+#if CV_MINOR_VERSION >= 2
     	bool b = obj.train_auto(trainData,responses,varIdx,sampleIdx,params,
     		k_fold, Cgrid, gammaGrid, pGrid, nuGrid, coeffGrid, degreeGrid, balanced);
+#else
+		CvMat _trainData = trainData, _responses = responses, _varIdx = varIdx,
+			_sampleIdx = sampleIdx;
+    	bool b = obj.train_auto(&_trainData,&_responses,&_varIdx,&_sampleIdx,params,
+    		k_fold, Cgrid, gammaGrid, pGrid, nuGrid, coeffGrid, degreeGrid);
+#endif
     	plhs[0] = MxArray(b);
     }
     else if (method == "get_var_count") {

@@ -53,6 +53,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		double d = matchShapes(object1,object2,method,parameter);
 		plhs[0] = MxArray(d);
 	}
+#if CV_MINOR_VERSION >= 2
 	else if (rhs[0].isCell() && rhs[1].isCell()) {
 		vector<MxArray> vm(rhs[0].toStdVector<MxArray>());
 		vector<Point2f> object1(vm.size());
@@ -66,6 +67,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		double d = matchShapes(object1,object2,method,parameter);
 		plhs[0] = MxArray(d);
 	}
+#endif
 	else
 		mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
 }

@@ -18,6 +18,7 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
+#if CV_MINOR_VERSION >= 2
 	// Check the number of arguments
 	if (nrhs<2 || ((nrhs%2)!=0) || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
@@ -46,4 +47,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	Mat outImg;
 	drawKeypoints(image,keypoints,outImg,color,flags);
 	plhs[0] = MxArray(outImg);
+#else
+	mexErrMsgIdAndTxt("mexopencv:error","drawKeyPoints not supported in this version");
+#endif
 }

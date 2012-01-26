@@ -209,7 +209,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	int layer = rhs[2].toInt();
     	const Mat ls(obj.get_layer_sizes());
     	double* w = obj.get_weights(layer);
-    	vector<double> wv(w,w+ls.at<int>(layer));
+    	vector<double> wv(w,w+ls.at<int>(0,layer));
     	plhs[0] = MxArray(Mat(wv));
     }
     else
