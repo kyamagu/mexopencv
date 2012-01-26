@@ -188,19 +188,19 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "train") {
     	if (nrhs<4 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	Mat trainData(rhs[2].toMatND(CV_32F));
-    	Mat responses(rhs[3].toMatND(CV_32F));
+    	Mat trainData(rhs[2].toMat(CV_32F));
+    	Mat responses(rhs[3].toMat(CV_32F));
     	Mat varIdx, sampleIdx;
     	CvSVMParams params = getParams(rhs.begin()+4,rhs.end());
     	Mat class_weights;
     	for (int i=4; i<nrhs; i+=2) {
     		string key(rhs[i].toString());
     		if (key=="VarIdx")
-    			varIdx = rhs[i+1].toMatND(CV_32S);
+    			varIdx = rhs[i+1].toMat(CV_32S);
     		else if (key=="SampleIdx")
-    			sampleIdx = rhs[i+1].toMatND(CV_32S);
+    			sampleIdx = rhs[i+1].toMat(CV_32S);
 			else if (key=="ClassWeights") {
-				class_weights = rhs[i+1].toMatND();
+				class_weights = rhs[i+1].toMat();
 				CvMat _m = class_weights;
 				params.class_weights = &_m;
 			}
@@ -211,7 +211,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "predict") {
     	if (nrhs<3 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	Mat samples(rhs[2].toMatND(CV_32F));
+    	Mat samples(rhs[2].toMat(CV_32F));
     	Mat results(samples.rows,1,CV_32FC1);
     	bool returnDFVal=false;
     	for (int i=3; i<nrhs; i+=2) {
@@ -228,8 +228,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "train_auto") {
     	if (nrhs<4 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	Mat trainData(rhs[2].toMatND(CV_32F));
-    	Mat responses(rhs[3].toMatND(CV_32F));
+    	Mat trainData(rhs[2].toMat(CV_32F));
+    	Mat responses(rhs[3].toMat(CV_32F));
     	Mat varIdx, sampleIdx;
     	int k_fold=10;
     	CvParamGrid Cgrid=CvSVM::get_default_grid(CvSVM::C);
@@ -242,9 +242,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	for (int i=4; i<nrhs; i+=2) {
     		string key(rhs[i].toString());
     		if (key=="VarIdx")
-    			varIdx = rhs[i+1].toMatND(CV_32S);
+    			varIdx = rhs[i+1].toMat(CV_32S);
     		else if (key=="SampleIdx")
-    			sampleIdx = rhs[i+1].toMatND(CV_32S);
+    			sampleIdx = rhs[i+1].toMat(CV_32S);
     		else if (key=="KFold")
     			k_fold = rhs[i+1].toInt();
     		else if (key=="Balanced")

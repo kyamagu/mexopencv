@@ -70,8 +70,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "train") {
     	if (nrhs<4 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	Mat trainData(rhs[2].toMatND(CV_32F));
-    	Mat responses(rhs[3].toMatND(CV_32F));
+    	Mat trainData(rhs[2].toMat(CV_32F));
+    	Mat responses(rhs[3].toMat(CV_32F));
     	Mat sampleIdx;
     	bool isRegression=false;
     	int maxK=32;
@@ -79,7 +79,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	for (int i=4; i<nrhs; i+=2) {
     		string key(rhs[i].toString());
     		if (key=="SampleIdx")
-    			sampleIdx = rhs[i+1].toMatND(CV_32S);
+    			sampleIdx = rhs[i+1].toMat(CV_32S);
     		else if (key=="IsRegression")
     			isRegression = rhs[i+1].toBool();
     		else if (key=="MaxK")
@@ -95,7 +95,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "find_nearest") {
     	if (nrhs<3 || nlhs>3)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	Mat samples(rhs[2].toMatND(CV_32F)),results;
+    	Mat samples(rhs[2].toMat(CV_32F)),results;
     	int k=1;
     	for (int i=3; i<nrhs; i+=2) {
     		string key(rhs[i].toString());

@@ -72,7 +72,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		plhs[0] = MxArray(backProject);
 	}
 	else {
-		Mat hist(rhs[1].toMatND());
+		MatND hist(rhs[1].toMatND());
 		calcBackProject(&arrays[0], arrays.size(), &channels[0], hist,
 			backProject, &ranges_ptr[0], scale, uniform);
 		plhs[0] = MxArray(backProject);

@@ -55,7 +55,7 @@ class MxArray {
 		bool toBool() const;
 		std::string toString() const;
 		cv::Mat toMat(int depth=CV_USRTYPE1, bool transpose=true) const;
-		cv::Mat toMatND(int depth=CV_USRTYPE1, bool transpose=true) const;
+		cv::MatND toMatND(int depth=CV_USRTYPE1, bool transpose=true) const;
 		cv::SparseMat toSparseMat() const;
 		cv::Moments toMoments(mwIndex index=0) const;
 		cv::KeyPoint toKeyPoint(mwIndex index=0) const;

@@ -86,7 +86,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		plhs[0] = MxArray(hist);
 	}
 	else {
-		Mat hist;
+		MatND hist;
 		calcHist(&arrays[0], arrays.size(), &channels[0], mask, hist, dims,
 			&histSize[0], &ranges_ptr[0], uniform, accumulate);
 		plhs[0] = MxArray(hist);

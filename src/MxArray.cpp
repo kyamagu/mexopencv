@@ -125,12 +125,21 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 		p_ = mxCreateNumericArray(0,0,mxDOUBLE_CLASS,mxREAL);
 		return;
 	}
+#if CV_MINOR_VERSION >= 2
 	const cv::Mat& rm = (mat.dims==2 && transpose) ? cv::Mat(mat.t()) : mat;
+#else
+	const cv::Mat& rm = (transpose) ? cv::Mat(mat.t()) : mat;
+#endif
 	
 	// Create a new mxArray
 	int nchannels = rm.channels();
+#if CV_MINOR_VERSION >= 2
 	const int* dims_ = rm.size;
 	vector<mwSize> d(dims_,dims_+rm.dims);
+#else
+	int dims_[] = {rm.rows,rm.cols};
+	vector<mwSize> d(dims_,dims_+2);
+#endif
 	d.push_back(nchannels);
 	classid = (classid == mxUNKNOWN_CLASS) ? ClassIDOf[rm.depth()] : classid;
 	std::swap(d[0],d[1]);
@@ -144,11 +153,15 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 	std::vector<mwSize> si(d.size(),0);      // subscript index
 	int type = CV_MAKETYPE(DepthOf[classid],1); // destination type
 	for (int i = 0; i < nchannels; ++i) {
-		si[rm.dims] = i; // last dim is a channel index
+		si[si.size()-1] = i; // last dim is a channel index
 		void *ptr = reinterpret_cast<void*>(
 				reinterpret_cast<size_t>(mxGetData(p_))+
 				mxGetElementSize(p_)*subs(si));
+#if CV_MINOR_VERSION >= 2
 		cv::Mat m(rm.dims,dims_,type,ptr);
+#else
+		cv::Mat m(dims_[0],dims_[1],type,ptr);
+#endif
 		mv[i].convertTo(m,type); // Write to mxArray through m
 	}
 }
@@ -329,13 +342,22 @@ const char *cv_term_criteria_fields[3] = {"type","maxCount","epsilon"};
  */
 cv::Mat MxArray::toMat(int depth, bool transpose) const
 {
+#if CV_MINOR_VERSION < 2
+	if (ndims()>3)
+		mexErrMsgIdAndTxt("mexopencv:error",
+			"N-D array not supported in this version of OpenCV + mexopencv");
+#endif
 	// Create cv::Mat object
 	vector<int> d(dims(),dims()+ndims());
 	int ndims = (d.size()>2) ? d.size()-1 : d.size();
 	int nchannels = (d.size()>2) ? *(d.end()-1) : 1;
 	depth = (depth==CV_USRTYPE1) ? DepthOf[classID()] : depth;
 	std::swap(d[0],d[1]);
+#if CV_MINOR_VERSION >= 2
 	cv::Mat mat(ndims,&d[0],CV_MAKETYPE(depth,nchannels));
+#else
+	cv::Mat mat(d[0],d[1],CV_MAKETYPE(depth,nchannels));
+#endif
 	
 	// Copy each channel
 	std::vector<cv::Mat> mv(nchannels);
@@ -346,11 +368,19 @@ cv::Mat MxArray::toMat(int depth, bool transpose) const
 		void *pd = reinterpret_cast<void*>(
 				reinterpret_cast<size_t>(mxGetData(p_))+
 				mxGetElementSize(p_)*subs(si));
+#if CV_MINOR_VERSION >= 2
 		cv::Mat m(ndims,&d[0],type,pd);
+#else
+		cv::Mat m(d[0],d[1],type,pd);
+#endif
 		m.convertTo(mv[i],CV_MAKETYPE(depth,1)); // Read from mxArray through m
 	}
 	cv::merge(mv,mat);
+#if CV_MINOR_VERSION >= 2
 	return (mat.dims==2 && transpose) ? cv::Mat(mat.t()) : mat;
+#else
+	return (transpose) ? cv::Mat(mat.t()) : mat;
+#endif
 }
 
 /**
@@ -378,7 +408,7 @@ cv::Mat MxArray::toMat(int depth, bool transpose) const
  * cv::Mat x(MxArray(prhs[0]).toMatND());
  * @endcode
  */
-cv::Mat MxArray::toMatND(int depth, bool transpose) const
+cv::MatND MxArray::toMatND(int depth, bool transpose) const
 {
 	// Create cv::Mat object
 	std::vector<int> d(dims(),dims()+ndims());

@@ -37,7 +37,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	}
 	
 	// Process
-	Mat H1(rhs[0].toMat()), H2(rhs[1].toMat());
+	MatND H1(rhs[0].toMat()), H2(rhs[1].toMat());
 	double d = compareHist(H1, H2, method);
 	plhs[0] = MxArray(d);
 }

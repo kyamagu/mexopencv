@@ -143,8 +143,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "train") {
     	if (nrhs<4 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	Mat trainData(rhs[2].toMatND(CV_32F));
-    	Mat responses(rhs[3].toMatND(CV_32F));
+    	Mat trainData(rhs[2].toMat(CV_32F));
+    	Mat responses(rhs[3].toMat(CV_32F));
     	Mat varIdx, sampleIdx, varType, missingMask;
     	CvBoostParams params = getParams(rhs.begin()+4,rhs.end());
     	vector<float> priors;
@@ -152,19 +152,19 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	for (int i=4; i<nrhs; i+=2) {
     		string key(rhs[i].toString());
     		if (key=="VarIdx")
-    			varIdx = rhs[i+1].toMatND(CV_32S);
+    			varIdx = rhs[i+1].toMat(CV_32S);
     		else if (key=="SampleIdx")
-    			sampleIdx = rhs[i+1].toMatND(CV_32S);
+    			sampleIdx = rhs[i+1].toMat(CV_32S);
     		else if (key=="VarType") {
     			if (rhs[i+1].isChar() && rhs[i+1].toString()=="Categorical") {
     				varType = Mat(1,trainData.cols+1,CV_8U,Scalar(CV_VAR_ORDERED));
     				varType.at<uchar>(trainData.cols) = CV_VAR_CATEGORICAL;
     			}
 				else if (rhs[i+1].isNumeric())
-					varType = rhs[i+1].toMatND(CV_8U);
+					varType = rhs[i+1].toMat(CV_8U);
     		}
     		else if (key=="MissingMask")
-    			missingMask = rhs[i+1].toMatND(CV_8U);
+    			missingMask = rhs[i+1].toMat(CV_8U);
     		else if (key=="Priors") {
     			MxArray& m = rhs[i+1];
 				priors.reserve(m.numel());
@@ -182,13 +182,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "predict") {
     	if (nrhs<3 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	Mat samples(rhs[2].toMatND(CV_32F)), missing;
+    	Mat samples(rhs[2].toMat(CV_32F)), missing;
     	Range slice = Range::all();
     	bool rawMode=false, returnSum=false;
     	for (int i=3; i<nrhs; i+=2) {
     		string key(rhs[i].toString());
     		if (key=="MissingMask")
-    			missing = rhs[i+1].toMatND(CV_8U);
+    			missing = rhs[i+1].toMat(CV_8U);
     		else if (key=="Slice")
     			slice = rhs[i+1].toRange();
     		else if (key=="RawMode")

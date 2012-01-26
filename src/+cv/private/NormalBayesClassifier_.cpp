@@ -70,17 +70,17 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "train") {
     	if (nrhs<4 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	Mat trainData(rhs[2].toMatND(CV_32F));
-    	Mat responses(rhs[3].toMatND(CV_32F));
+    	Mat trainData(rhs[2].toMat(CV_32F));
+    	Mat responses(rhs[3].toMat(CV_32F));
     	Mat varIdx;
     	Mat sampleIdx;
     	bool update=false;
     	for (int i=4; i<nrhs; i+=2) {
     		string key(rhs[i].toString());
     		if (key=="VarIdx")
-    			varIdx = rhs[i+1].toMatND(CV_32S);
+    			varIdx = rhs[i+1].toMat(CV_32S);
     		else if (key=="SampleIdx")
-    			sampleIdx = rhs[i+1].toMatND(CV_32S);
+    			sampleIdx = rhs[i+1].toMat(CV_32S);
     		else if (key=="Update")
     			update = rhs[i+1].toBool();
     		else
@@ -92,7 +92,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "predict") {
     	if (nrhs<3 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	Mat samples(rhs[2].toMatND(CV_32F)),results;
+    	Mat samples(rhs[2].toMat(CV_32F)),results;
     	obj.predict(samples,&results);
     	plhs[0] = MxArray(results);
     }

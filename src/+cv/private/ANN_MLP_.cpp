@@ -140,7 +140,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "create") {
     	if (nrhs<3 || nlhs>0)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	Mat layerSizes(rhs[2].toMatND(CV_32S));
+    	Mat layerSizes(rhs[2].toMat(CV_32S));
     	int activateFunc=CvANN_MLP::SIGMOID_SYM;
     	double fparam1=0, fparam2=0;
     	for (int i=3; i<nrhs; i+=2) {
@@ -159,8 +159,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "train") {
     	if (nrhs<4 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	Mat inputs(rhs[2].toMatND(CV_32F));
-    	Mat outputs(rhs[3].toMatND(CV_32F));
+    	Mat inputs(rhs[2].toMat(CV_32F));
+    	Mat outputs(rhs[3].toMat(CV_32F));
     	Mat sampleWeights, sampleIdx;
     	CvANN_MLP_TrainParams params = getParams(rhs.begin()+4,rhs.end());
     	bool updateWeights=false;
@@ -169,9 +169,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	for (int i=4; i<nrhs; i+=2) {
     		string key(rhs[i].toString());
     		if (key=="SampleWeights")
-    			sampleWeights = rhs[i+1].toMatND(CV_32F);
+    			sampleWeights = rhs[i+1].toMat(CV_32F);
     		else if (key=="SampleIdx")
-    			sampleIdx = rhs[i+1].toMatND(CV_32S);
+    			sampleIdx = rhs[i+1].toMat(CV_32S);
 			else if (key=="UpdateWeights")
 				updateWeights = rhs[i+1].toBool();
 			else if (key=="NoInputScale")
@@ -188,7 +188,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "predict") {
     	if (nrhs<3 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	Mat inputs(rhs[2].toMatND(CV_32F)), outputs;
+    	Mat inputs(rhs[2].toMat(CV_32F)), outputs;
     	obj.predict(inputs, outputs);
     	plhs[0] = MxArray(outputs);
     }
