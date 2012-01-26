@@ -269,7 +269,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
 #else
 		CvMat _trainData = trainData, _responses = responses, _varIdx = varIdx,
 			_sampleIdx = sampleIdx;
-    	bool b = obj.train_auto(&_trainData,&_responses,&_varIdx,&_sampleIdx,params,
+    	bool b = obj.train_auto(&_trainData,&_responses,
+    		(varIdx.empty())? NULL : &_varIdx,
+    		(sampleIdx.empty())? NULL : &_sampleIdx,params,
     		k_fold, Cgrid, gammaGrid, pGrid, nuGrid, coeffGrid, degreeGrid);
 #endif
     	plhs[0] = MxArray(b);

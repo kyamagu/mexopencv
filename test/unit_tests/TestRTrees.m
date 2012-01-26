@@ -8,7 +8,7 @@ classdef TestRTrees
     		X = [randn(50,3)+1;randn(50,3)-1];
     		Y = [ones(50,1);-ones(50,1)];
     		classifier = cv.RTrees;
-    		classifier.train(X,Y);
+    		classifier.train(X,Y,'VarType','Regression');
     		Yhat = classifier.predict(X);
         end
         
@@ -16,9 +16,9 @@ classdef TestRTrees
     		X = [randn(50,3)+1;randn(50,3)-1];
     		Y = [ones(50,1);-ones(50,1)];
     		classifier = cv.RTrees;
-    		classifier.train(X,Y,'VarType','Categorical','CalcVarImportance',true);
+    		classifier.train(X,Y,'CalcVarImportance',true);
     		Yhat = classifier.predict(X);
-            classifier.get_train_error;
+            %classifier.get_train_error;
             classifier.getVarImportance;
     		P = classifier.predict_prob(X);
         end

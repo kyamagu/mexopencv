@@ -7,14 +7,15 @@ classdef TestWarpPerspective
     
     methods (Static)
     	function test_1
+    		im = TestWarpPerspective.img;
             M = eye(3); % identity transform
-            dst = cv.warpPerspective(TestWarpPerspective.img,M);
-            assert(all(TestWarpPerspective.img(:)==dst(:)));
+            dst = cv.warpPerspective(im,M);
+            assert(all(im(:)==dst(:)));
     	end
     	
         function test_error_1
             try
-                cv.warpAffine();
+                cv.warpPerspective();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

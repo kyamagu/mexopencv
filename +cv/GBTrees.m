@@ -92,6 +92,7 @@ classdef GBTrees
             %         the same size to responses.
             %     'VarType': Solves classification problem when 'Categorical'.
             %         Otherwise, the training is treated as a regression problem.
+            %         default 'Categorical'
 			%     'MissingMask': Indicator mask for missing observation.
 			%     'LossFunctionType': Type of the loss function used for
 			%         training. It must be one of the following types:

@@ -141,7 +141,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     	Mat trainData(rhs[2].toMat(CV_32F));
     	Mat responses(rhs[3].toMat(CV_32F));
-    	Mat varIdx, sampleIdx, varType, missingMask;
+    	Mat varIdx, sampleIdx, missingMask;
+		Mat varType(1,trainData.cols+1,CV_8U,Scalar(CV_VAR_ORDERED));
+		varType.at<uchar>(0,trainData.cols) = CV_VAR_CATEGORICAL;
     	CvGBTreesParams params = getParams(rhs.begin()+4,rhs.end());
     	bool update=false;
     	for (int i=4; i<nrhs; i+=2) {
@@ -151,10 +153,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     		else if (key=="SampleIdx")
     			sampleIdx = rhs[i+1].toMat(CV_32S);
     		else if (key=="VarType") {
-    			if (rhs[i+1].isChar() && rhs[i+1].toString()=="Categorical") {
-    				varType = Mat(1,trainData.cols+1,CV_8U,Scalar(CV_VAR_ORDERED));
-    				varType.at<uchar>(trainData.cols) = CV_VAR_CATEGORICAL;
-    			}
+    			if (rhs[i+1].isChar())
+    				varType.at<uchar>(0,trainData.cols) = 
+						(rhs[i+1].toString()=="Categorical") ? 
+    					CV_VAR_CATEGORICAL : CV_VAR_ORDERED;
 				else if (rhs[i+1].isNumeric())
 					varType = rhs[i+1].toMat(CV_8U);
     		}

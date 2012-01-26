@@ -9,7 +9,7 @@ classdef TestBoost
     		Y = [ones(50,1);-ones(50,1)];
     		classifier = cv.Boost;
     		classifier.train(X,Y);
-    		Yhat = classifier.predict(X);
+    		Yhat = classifier.predict(X,'VarType','Categorical');
     	end
     end
     

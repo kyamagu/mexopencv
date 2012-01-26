@@ -7,10 +7,11 @@ classdef TestWarpAffine
     
     methods (Static)
     	function test_1
+    		im = TestWarpAffine.img;
     		x0 = [0,0;1,0;1,1];
             M = cv.getAffineTransform(x0,x0); % identity transform
-            dst = cv.warpAffine(TestWarpAffine.img,M);
-            assert(all(TestWarpAffine.img(:)==dst(:)));
+            dst = cv.warpAffine(im,M);
+            assert(all(im(:)==dst(:)));
     	end
     	
         function test_error_1

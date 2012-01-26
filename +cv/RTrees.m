@@ -139,6 +139,7 @@ classdef RTrees
             %         the same size to responses.
             %     'VarType': Solves classification problem when 'Categorical'.
             %         Otherwise, the training is treated as a regression problem.
+            %         default 'Categorical'
 			%     'MissingMask': Indicator mask for missing observation.
 			%     'MaxDepth': The maximum possible depth of the tree. That is
 			%         the training algorithms attempts to split a node while its

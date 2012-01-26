@@ -11,7 +11,7 @@ classdef TestBilateralFilter
         end
         
         function test_2
-			result = cv.bilateralFilter(TestBilateralFilter.img,'BorderType','Wrap');
+			result = cv.bilateralFilter(TestBilateralFilter.img,'BorderType','Default');
         end
         
         function test_error_1

@@ -7,9 +7,10 @@ classdef TestCalcBackProject
     
     methods (Static)
     	function test_1
+    		im = TestCalcBackProject.img;
             edges = {linspace(0,256,32+1),linspace(0,256,32+1)};
-            H = cv.calcHist(TestCalcBackProject.img(:,:,1:2),edges);
-            b = cv.calcBackProject(TestCalcBackProject.img(:,:,1:2),H,edges);
+            H = cv.calcHist(im(:,:,1:2),edges);
+            b = cv.calcBackProject(im(:,:,1:2),H,edges);
     	end
     	
         function test_error_1
