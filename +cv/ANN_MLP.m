@@ -52,7 +52,7 @@ classdef ANN_MLP
     % The larger the network size (the number of hidden layers and their sizes)
     % is, the more the potential network flexibility is. The error on the
     % training set could be made arbitrarily small. But at the same time the
-    % learned network also “learns” the noise present in the training set, so
+    % learned network also learn� the noise present in the training set, so
     % the error on the test set usually starts increasing after the network size
     % reaches a limit. Besides, the larger networks are trained much longer than
     % the smaller ones, so it is reasonable to pre-process the data, using PCA
@@ -66,7 +66,7 @@ classdef ANN_MLP
     % tuple of M elements, where the i -th element is 1 if and only if the
     % feature is equal to the i -th value out of M possible. It increases the
     % size of the input/output layer but speeds up the training algorithm
-    % convergence and at the same time enables “fuzzy” values of such variables,
+    % convergence and at the same time enables fuzzy values of such variables,
     % that is, a tuple of probabilities instead of a fixed value.
     %
     % OpenCV implements two algorithms for training MLP’s. The first algorithm
@@ -76,7 +76,7 @@ classdef ANN_MLP
     % [BackPropWikipedia] http://en.wikipedia.org/wiki/Backpropagation.
     %     Wikipedia article about the back-propagation algorithm.
     % [LeCun98] LeCun, L. Bottou, G.B. Orr and K.-R. Muller, Efficient backprop,
-    %     in Neural Networks—Tricks of the Trade, Springer Lecture Notes in
+    %     in Neural Networks Tricks of the Trade, Springer Lecture Notes in
     %     Computer Sciences 1524, pp.5-50, 1998.
     % [RPROP93] M. Riedmiller and H. Braun, A Direct Adaptive Method for Faster
     %     Backpropagation Learning: The RPROP Algorithm, Proc. ICNN, San

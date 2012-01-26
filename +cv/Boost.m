@@ -9,7 +9,7 @@ classdef Boost
     %
     % Boosting is a powerful learning concept that provides a solution to the
     % supervised classification learning task. It combines the performance of
-    % many “weak” classifiers to produce a powerful committee [HTF01]. A weak
+    % many weak classifiers to produce a powerful committee [HTF01]. A weak
     % classifier is only required to be better than chance, and thus can be very
     % simple and computationally inexpensive. However, many of them smartly
     % combine results to a strong classifier that often outperforms most
