@@ -58,17 +58,25 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	int dynamParams=rhs[2].toInt();
     	int measureParams=rhs[3].toInt();
     	int controlParams=0;
+#if CV_MINOR_VERSION >= 2
     	int type=CV_64F;
+#endif
     	for (int i=4; i<nrhs; i+=2) {
     		string key(rhs[i].toString());
     		if (key=="ControlParams")
     			controlParams = rhs[i+1].toInt();
+#if CV_MINOR_VERSION >= 2
     		else if (key=="type")
     			type = rhs[i+1].toInt();
+#endif
     		else
     			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     	}
+#if CV_MINOR_VERSION >= 2
     	obj.init(dynamParams,measureParams,controlParams,type);
+#else
+    	obj.init(dynamParams,measureParams,controlParams);
+#endif
     }
     else if (method == "predict") {
     	if ((nrhs%2)!=0)
