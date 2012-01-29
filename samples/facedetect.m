@@ -38,7 +38,8 @@ while true
     hold off;
     
     % Terminate if any user input
-    if getappdata(window,'flag')==true, break; end
+    flag = getappdata(window,'flag');
+    if isempty(flag)||flag, break; end
     pause(0.1);
 end
 
