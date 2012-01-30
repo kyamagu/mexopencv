@@ -61,5 +61,5 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	// Process
 	vector<Point2f> corners;
 	bool b = findChessboardCorners(image, patternSize, corners, flags);
-	plhs[0] = MxArray(corners);
+	plhs[0] = MxArray((b) ? corners : Mat());
 }
