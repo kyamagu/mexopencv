@@ -33,14 +33,19 @@ Compile
 
 Prerequisite:
 
-Windows: matlab, opencv (>=2.3.1), Visual C++
+ * Unix: matlab, opencv (>=2.3.1), g++, make, pkg-config
+ * Windows: matlab, opencv (>=2.3.1), Visual C++
 
-Unix: matlab, opencv (>=2.3.1), g++, GNU make, pkg-config
+Note: opencv (>=2.1.0) is partially supported.
 
 Unix
 ----
 
-First make sure you have OpenCV installed in the system. Then,
+First make sure you have OpenCV installed in the system. If not, install the 
+package available in your package manager (e.g., libcv-dev in Debian/Ubuntu,
+opencv-devel in Fedora, opencv in Macports), or install the source package from
+http://opencv.willowgarage.com/wiki/ . If you have all the prerequisite, going
+to the mexopencv directory and typing:
 
     $ make
 
@@ -70,7 +75,8 @@ Windows
 -------
 
 Make sure you have OpenCV installed in the system and correctly set up PATH
-system variable. Then, in the matlab shell,
+system variable. (See http://opencv.willowgarage.com/wiki/ ) Then, in the matlab
+shell, type
 
     >> cv.make
 
@@ -148,7 +154,7 @@ the object. Once you create a file, type 'make' to build your new function. The
 compiled mex function will be located inside `+cv/` and accessible through
 `cv.myfunc` within matlab.
 
-The `mexopencv.hpp` header contains a class `MxArray` to manipulate `mxArray`
+The `mexopencv.hpp` header includes a class `MxArray` to manipulate `mxArray`
 object. Mostly this class is used to convert between opencv data types and
 mxArray.
 
@@ -175,6 +181,8 @@ mxArray.
     mxArray* plhs[0] = MxArray(rct);
     mxArray* plhs[0] = MxArray(sc);
     mxArray* plhs[0] = MxArray(sp); // Only 2D float to double
+
+Check `MxArraay.hpp` for the complete list of conversion API.
 
 If you rather want to develop a matlab function that internally calls a mex
 function, make use of the `+cv/private` directory. Any function placed under
