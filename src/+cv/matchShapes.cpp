@@ -55,15 +55,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	}
 #if CV_MINOR_VERSION >= 2
 	else if (rhs[0].isCell() && rhs[1].isCell()) {
-		vector<MxArray> vm(rhs[0].toStdVector<MxArray>());
-		vector<Point2f> object1(vm.size());
-		for (int i=0; i<vm.size(); ++i)
-			object1[i] = vm[i].toPoint_<float>();
-		vm = rhs[1].toStdVector<MxArray>();
-		vector<Point2f> object2(vm.size());
-		for (int i=0; i<vm.size(); ++i)
-			object2[i] = vm[i].toPoint_<float>();
-		
+		vector<Point2f> object1(rhs[0].toStdVector<Point2f>());
+		vector<Point2f> object2(rhs[1].toStdVector<Point2f>());
 		double d = matchShapes(object1,object2,method,parameter);
 		plhs[0] = MxArray(d);
 	}

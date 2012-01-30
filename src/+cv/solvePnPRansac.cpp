@@ -87,8 +87,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 			minInliersCount, inliers);
 	}
 	else if (rhs[0].isCell() && rhs[1].isCell()) {
-		vector<Point3f> objectPoints(MxArrayToVecPt3<float>(rhs[0]));
-		vector<Point2f> imagePoints(MxArrayToVecPt<float>(rhs[0]));
+		vector<Point3f> objectPoints(rhs[0].toStdVector<Point3f>());
+		vector<Point2f> imagePoints(rhs[1].toStdVector<Point2f>());
 		solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs, rvec,
 			tvec, useExtrinsicGuess, iterationsCount, reprojectionError,
 			minInliersCount, inliers);

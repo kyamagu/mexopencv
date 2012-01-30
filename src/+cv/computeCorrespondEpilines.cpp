@@ -46,11 +46,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	}
 #if CV_MINOR_VERSION >= 2
 	else if (rhs[0].isCell()) {
-		vector<MxArray> _points(rhs[0].toStdVector<MxArray>());
-		vector<Point2f> points;
-		points.reserve(_points.size());
-		for (vector<MxArray>::iterator it=_points.begin(); it<_points.end(); ++it)
-			points.push_back((*it).toPoint_<float>());
+		vector<Point2f> points(rhs[0].toStdVector<Point2f>());
 		computeCorrespondEpilines(points, whichImage, F, lines);
 	}
 #endif

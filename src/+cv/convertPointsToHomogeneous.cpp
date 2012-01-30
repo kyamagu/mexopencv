@@ -30,12 +30,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	vector<MxArray> rhs(prhs,prhs+nrhs);
 	
 	// Process
-#if CV_MINOR_VERSION >= 2
-	if (rhs[0].isNumeric()) {
-		Mat src(rhs[0].toMat(CV_32F)), dst;
-		convertPointsToHomogeneous(src,dst);
-		plhs[0] = MxArray(dst);
-#else
+#if CV_MINOR_VERSION < 2
 	if (rhs[0].isNumeric()) {
 		Mat src(rhs[0].toMat(CV_32F));
 		int n = src.channels();
@@ -46,28 +41,25 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		}
 		else
 			mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
-#endif
 	}
-#if CV_MINOR_VERSION >= 2
+#else
+	if (rhs[0].isNumeric()) {
+		Mat src(rhs[0].toMat(CV_32F)), dst;
+		convertPointsToHomogeneous(src,dst);
+		plhs[0] = MxArray(dst);
+	}
 	else if (rhs[0].isCell()) {
 		vector<MxArray> _src(rhs[0].toStdVector<MxArray>());
-		if (_src.empty())
-			mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
 		int n = _src[0].numel();
 		if (n==2) {
-			vector<Point2f> src;
+			vector<Point2f> src(rhs[0].toStdVector<Point2f>());
 			vector<Point3f> dst;
-			src.reserve(_src.size());
-			for (vector<MxArray>::iterator it=_src.begin(); it<_src.end(); ++it)
-				src.push_back((*it).toPoint_<float>());
+			dst.reserve(src.size());
 			convertPointsToHomogeneous(src, dst);
 			plhs[0] = MxArray(dst);
 		}
 		else if (n==3) {
-			vector<Point3f> src;
-			src.reserve(_src.size());
-			for (vector<MxArray>::iterator it=_src.begin(); it<_src.end(); ++it)
-				src.push_back((*it).toPoint3_<float>());
+			vector<Point3f> src(rhs[0].toStdVector<Point3f>());
 			vector<Vec4f> dst;
 			convertPointsToHomogeneous(src, dst);
 			vector<Mat> _dst;

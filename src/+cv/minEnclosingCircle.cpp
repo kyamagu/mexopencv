@@ -24,17 +24,20 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
 	// Argument vector
 	vector<MxArray> rhs(prhs,prhs+nrhs);
-#if CV_MINOR_VERSION >= 2
-	vector<MxArray> vm(rhs[0].toStdVector<MxArray>());
-	vector<Point2f> points(vm.size());
-	for (int i=0; i<vm.size(); ++i)
-		points[i] = vm[i].toPoint_<float>();
-#else
-	Mat points(rhs[0].toMat(CV_32F));
-#endif
 	Point2f center;
 	float radius;
-	minEnclosingCircle(points,center,radius);
+	if (rhs[0].isNumeric()) {
+		Mat points(rhs[0].toMat(CV_32F));
+		minEnclosingCircle(points,center,radius);
+	}
+#if CV_MINOR_VERSION >= 2
+	else if (rhs[0].isCell()) {
+		vector<Point2f> points(rhs[0].toStdVector<Point2f>());
+		minEnclosingCircle(points,center,radius);
+	}
+#endif
+	else
+		mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
 	plhs[0] = MxArray(center);
 	if (nlhs>1)
 		plhs[1] = MxArray(radius);

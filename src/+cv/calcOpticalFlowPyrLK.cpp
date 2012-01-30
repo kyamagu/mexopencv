@@ -26,11 +26,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	vector<MxArray> rhs(prhs,prhs+nrhs);
 	
 	Mat prevImg(rhs[0].toMat(CV_8U)), nextImg(rhs[1].toMat(CV_8U));
-	vector<MxArray> _prevPts(rhs[2].toStdVector<MxArray>());
-	vector<Point2f> prevPts, nextPts;
-	prevPts.reserve(_prevPts.size());
-	for (vector<MxArray>::iterator it=_prevPts.begin();it<_prevPts.end();++it)
-		prevPts.push_back((*it).toPoint_<float>());
+	vector<Point2f> prevPts(rhs[2].toStdVector<Point2f>()), nextPts;
 	
 	Size winSize=Size(15,15);
 	int maxLevel=3;
@@ -59,8 +55,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	}
 	
 	// Process
-	vector<uchar> status(_prevPts.size());
-	vector<float> err(_prevPts.size());
+	vector<uchar> status(prevPts.size());
+	vector<float> err(prevPts.size());
 	calcOpticalFlowPyrLK(prevImg, nextImg, prevPts, nextPts, status, err,
 		winSize, maxLevel, criteria, derivLambda, flags);
 	plhs[0] = MxArray(nextPts);

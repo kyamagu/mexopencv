@@ -8,31 +8,6 @@
 using namespace std;
 using namespace cv;
 
-/// Conversion to vector<Point_<T> >
-template <typename T>
-vector<Point_<T> > MxArrayToVecPt(MxArray& arr)
-{
-	vector<MxArray> va = arr.toStdVector<MxArray>();
-	vector<Point_<T> > vp;
-	vp.reserve(va.size());
-	for (vector<MxArray>::iterator it=va.begin(); it<va.end(); ++it)
-		vp.push_back((*it).toPoint_<T>());
-	return vp;
-}
-
-/// Conversion to vector<Point_<T> >
-template <typename T>
-vector<Point3_<T> > MxArrayToVecPt3(MxArray& arr)
-{
-	vector<MxArray> va = arr.toStdVector<MxArray>();
-	vector<Point3_<T> > vp;
-	vp.reserve(va.size());
-	for (vector<MxArray>::iterator it=va.begin(); it<va.end(); ++it)
-		vp.push_back((*it).toPoint3_<T>());
-	return vp;
-}
-
-
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments
@@ -76,8 +51,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	}
 #if CV_MINOR_VERSION >= 2
 	else if (rhs[0].isCell() && rhs[1].isCell()) {
-		vector<Point3f> objectPoints(MxArrayToVecPt3<float>(rhs[0]));
-		vector<Point2f> imagePoints(MxArrayToVecPt<float>(rhs[0]));
+		vector<Point3f> objectPoints(rhs[0].toStdVector<Point3f>());
+		vector<Point2f> imagePoints(rhs[1].toStdVector<Point2f>());
 		solvePnP(objectPoints, imagePoints, cameraMatrix, distCoeffs, rvec,
 			tvec, useExtrinsicGuess);
 	}

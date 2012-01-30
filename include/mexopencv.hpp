@@ -405,6 +405,44 @@ std::vector<cv::Point> MxArray::toStdVector() const
 		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to std::vector");
 }
 
+/** Convert MxArray to std::vector<Point2f>
+ * @return std::vector<Point2f> value
+ */
+template <>
+std::vector<cv::Point2f> MxArray::toStdVector() const
+{
+	int n = numel();
+	if (isCell()) {
+		std::vector<cv::Point2f> v(n);
+		for (int i=0; i<n; ++i)
+			v[i] = MxArray(mxGetCell(p_, i)).toPoint_<float>();
+		return v;
+	}
+	else if (isNumeric())
+		return std::vector<cv::Point2f>(1,this->toPoint_<float>());
+	else
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to std::vector");
+}
+
+/** Convert MxArray to std::vector<Point3f>
+ * @return std::vector<Point3f> value
+ */
+template <>
+std::vector<cv::Point3f> MxArray::toStdVector() const
+{
+	int n = numel();
+	if (isCell()) {
+		std::vector<cv::Point3f> v(n);
+		for (int i=0; i<n; ++i)
+			v[i] = MxArray(mxGetCell(p_, i)).toPoint3_<float>();
+		return v;
+	}
+	else if (isNumeric())
+		return std::vector<cv::Point3f>(1,this->toPoint3_<float>());
+	else
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to std::vector");
+}
+
 /** Convert MxArray to std::vector<cv::Mat>
  * @return std::vector<cv::Mat> value
  */

@@ -25,10 +25,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	// Argument vector
 	vector<MxArray> rhs(prhs,prhs+nrhs);
 #if CV_MINOR_VERSION >= 2
-	vector<MxArray> vm(rhs[0].toStdVector<MxArray>());
-	vector<Point2f> contour(vm.size());
-	for (int i=0; i<vm.size(); ++i)
-		contour[i] = vm[i].toPoint_<float>();
+	vector<Point2f> contour(rhs[0].toStdVector<Point2f>());
 #else
 	Mat contour(rhs[0].toMat(CV_32F));
 #endif

@@ -36,30 +36,19 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	}
 	
 	// Process
-#if CV_MINOR_VERSION >= 2
 	if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
-		Mat src(rhs[0].toMat()), dst(rhs[0].toMat());
+		Mat src(rhs[0].toMat()), dst(rhs[1].toMat());
 		Mat m = estimateRigidTransform(src,dst,fullAffine);
 		plhs[0] = MxArray(m);
 	}
+#if CV_MINOR_VERSION >= 2
 	else if (rhs[0].isCell() && rhs[1].isCell()) {
-		vector<MxArray> vm(rhs[0].toStdVector<MxArray>());
-		vector<Point2f> src(vm.size());
-		for (int i=0; i<vm.size(); ++i)
-			src[i] = vm[i].toPoint_<float>();
-		vm = rhs[1].toStdVector<MxArray>();
-		vector<Point2f> dst(vm.size());
-		for (int i=0; i<vm.size(); ++i)
-			dst[i] = vm[i].toPoint_<float>();
-		
+		vector<Point2f> src(rhs[0].toStdVector<Point2f>());
+		vector<Point2f> dst(rhs[1].toStdVector<Point2f>());		
 		Mat m = estimateRigidTransform(src,dst,fullAffine);
 		plhs[0] = MxArray(m);
 	}
+#endif
 	else
 		mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
-#else
-		Mat src(rhs[0].toMat()), dst(rhs[0].toMat());
-		Mat m = estimateRigidTransform(src,dst,fullAffine);
-		plhs[0] = MxArray(m);
-#endif
 }
