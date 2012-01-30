@@ -8,7 +8,7 @@
 using namespace std;
 using namespace cv;
 
-/** BorderType map for option processing
+/** Method for option processing
  */
 const ConstMap<std::string,int> FMMethod = ConstMap<std::string,int>
 	("7Point",	CV_FM_7POINT)

@@ -8,7 +8,7 @@
 using namespace std;
 using namespace cv;
 
-/** BorderType map for option processing
+/** Methods for option processing
  */
 const ConstMap<std::string,int> Method = ConstMap<std::string,int>
 	("0",	0)
