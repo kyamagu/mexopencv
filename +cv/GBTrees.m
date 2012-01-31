@@ -1,4 +1,4 @@
-classdef GBTrees
+classdef GBTrees < handle
     %GBTREES  Gradient Boosted Trees
     %
     % Gradient Boosted Trees (GBT) is a generalized boosting algorithm

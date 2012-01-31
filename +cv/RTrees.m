@@ -1,4 +1,4 @@
-classdef RTrees
+classdef RTrees < handle
     %RTREES  Random Trees
     %
     % Random trees have been introduced by Leo Breiman and Adele Cutler:

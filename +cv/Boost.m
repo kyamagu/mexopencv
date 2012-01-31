@@ -1,4 +1,4 @@
-classdef Boost
+classdef Boost < handle
     %BOOST  Boosting
     %
     % A common machine learning task is supervised learning. In supervised

@@ -1,4 +1,4 @@
-classdef SVM
+classdef SVM < handle
     %SVM  Support Vector Machines
     %
     % Originally, support vector machines (SVM) was a technique for building an

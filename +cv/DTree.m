@@ -1,4 +1,4 @@
-classdef DTree
+classdef DTree < handle
     %DTREE  Decision Trees
     %
     % The ML classes discussed in this section implement Classification and

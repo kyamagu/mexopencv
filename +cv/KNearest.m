@@ -1,4 +1,4 @@
-classdef KNearest
+classdef KNearest < handle
     %KNearest  The class implements K-Nearest Neighbors model
     %
     % The algorithm caches all training samples and predicts the response for a

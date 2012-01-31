@@ -1,4 +1,4 @@
-classdef NormalBayesClassifier
+classdef NormalBayesClassifier < handle
     %NormalBayesClassifier  Bayes classifier for normally distributed data
     %
     % This simple classification model assumes that feature vectors from

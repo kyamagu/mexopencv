@@ -1,4 +1,4 @@
-classdef ERTrees
+classdef ERTrees < handle
     %ERTREES  Extremely randomized trees
     %
     % Extremely randomized trees have been introduced by Pierre Geurts, Damien

@@ -1,4 +1,4 @@
-classdef CascadeClassifier
+classdef CascadeClassifier < handle
     %CASCADECLASSIFIER  Haar Feature-based Cascade Classifier for Object Detection
     %
     % The object detector described below has been initially proposed by

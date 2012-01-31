@@ -1,4 +1,4 @@
-classdef ANN_MLP
+classdef ANN_MLP < handle
     %ANN_MLP  Neural Networks
     %
     % ML implements feed-forward artificial neural networks or, more
