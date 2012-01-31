@@ -25,11 +25,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	// Argument vector
 	vector<MxArray> rhs(prhs,prhs+nrhs);
 	
-	vector<Point2f> points1(rhs[0].toStdVector<Point2f>());
-	vector<Point2f> points2(rhs[1].toStdVector<Point2f>());
 	Mat F(rhs[2].toMat(CV_32F));
 	Size imgSize(rhs[3].toSize());
-	Mat H1, H2;
 	// Option processing
 	double threshold=5;
 	for (int i=4; i<nrhs; i+=2) {
@@ -41,7 +38,18 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	}
 	
 	// Process
-	stereoRectifyUncalibrated(points1, points2, F, imgSize, H1, H2, threshold);
+	Mat H1, H2;
+	if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
+		Mat points1(rhs[0].toMat(CV_32F)), points2(rhs[0].toMat(CV_32F));
+		stereoRectifyUncalibrated(points1, points2, F, imgSize, H1, H2, threshold);
+	}
+#if CV_MINOR_VERSION >= 2
+	else if (rhs[0].isCell() && rhs[1].isCell()) {
+		vector<Point2f> points1(rhs[0].toStdVector<Point2f>());
+		vector<Point2f> points2(rhs[1].toStdVector<Point2f>());
+		stereoRectifyUncalibrated(points1, points2, F, imgSize, H1, H2, threshold);
+	}
+#endif
 	plhs[0] = MxArray(H1);
 	if (nlhs>1)
 		plhs[1] = MxArray(H2);
