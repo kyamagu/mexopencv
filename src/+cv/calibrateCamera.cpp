@@ -78,7 +78,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		string key = rhs[i].toString();
 		if (key=="CameraMatrix")
 			cameraMatrix = rhs[i+1].toMat(CV_32F);
-		if (key=="DistCoeffs")
+		else if (key=="DistCoeffs")
 			distCoeffs = rhs[i+1].toMat(CV_32F);
 		else if (key=="UseIntrinsicGuess" && rhs[i+1].toBool())
 			flags |= CV_CALIB_USE_INTRINSIC_GUESS;
