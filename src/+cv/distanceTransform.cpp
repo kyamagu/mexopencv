@@ -8,6 +8,13 @@
 using namespace std;
 using namespace cv;
 
+/** Mask size for distance transform
+ */
+const ConstMap<std::string,int> DistMask = ConstMap<std::string,int>
+    ("3",CV_DIST_MASK_3)
+    ("5",CV_DIST_MASK_5)
+    ("Precise",CV_DIST_MASK_PRECISE);
+
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments

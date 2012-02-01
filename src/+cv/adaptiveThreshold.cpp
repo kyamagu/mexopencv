@@ -8,6 +8,12 @@
 using namespace std;
 using namespace cv;
 
+/** Adaptive thresholding type map for option processing
+ */
+const ConstMap<std::string,int> AdaptiveMethod = ConstMap<std::string,int>
+	("Mean",	cv::ADAPTIVE_THRESH_MEAN_C)
+	("Gaussian",cv::ADAPTIVE_THRESH_GAUSSIAN_C);
+
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments

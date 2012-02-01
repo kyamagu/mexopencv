@@ -8,6 +8,17 @@
 using namespace std;
 using namespace cv;
 
+/** Type map for morphological operation for option processing
+ */
+const ConstMap<std::string,int> MorphType = ConstMap<std::string,int>
+	("Erode",	cv::MORPH_ERODE)
+	("Dilate",	cv::MORPH_DILATE)
+	("Open",	cv::MORPH_OPEN)
+	("Close",	cv::MORPH_CLOSE)
+	("Gradient",cv::MORPH_GRADIENT)
+	("Tophat",	cv::MORPH_TOPHAT)
+	("Blackhat",cv::MORPH_BLACKHAT);
+
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments

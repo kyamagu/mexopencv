@@ -8,6 +8,13 @@
 using namespace std;
 using namespace cv;
 
+/** Shape map for morphological operation for option processing
+ */
+const ConstMap<std::string,int> MorphShape = ConstMap<std::string,int>
+	("Rect",	cv::MORPH_RECT)
+	("Cross",	cv::MORPH_CROSS)
+	("Ellipse",	cv::MORPH_ELLIPSE);
+
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments

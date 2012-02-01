@@ -8,6 +8,14 @@
 using namespace std;
 using namespace cv;
 
+/** Histogram comparison methods
+ */
+const ConstMap<std::string,int> HistComp = ConstMap<std::string,int>
+    ("Correl",CV_COMP_CORREL)
+    ("ChiSqr",CV_COMP_CHISQR)
+    ("Intersect",CV_COMP_INTERSECT)
+    ("Bhattacharyya",CV_COMP_BHATTACHARYYA);
+
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments

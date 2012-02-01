@@ -26,6 +26,13 @@
 using namespace std;
 using namespace cv;
 
+/** GrabCut algorithm types for option processing
+ */
+const ConstMap<std::string,int> GrabCutType = ConstMap<std::string,int>
+	("Rect",cv::GC_INIT_WITH_RECT)
+	("Mask",cv::GC_INIT_WITH_MASK)
+	("Eval",cv::GC_EVAL);
+
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments

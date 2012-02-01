@@ -8,6 +8,12 @@
 using namespace std;
 using namespace cv;
 
+/** Inpainting algorithm types for option processing
+ */
+const ConstMap<std::string,int> InpaintType = ConstMap<std::string,int>
+	("NS",		cv::INPAINT_NS)
+	("Telea",	cv::INPAINT_TELEA);
+
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments

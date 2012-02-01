@@ -298,7 +298,7 @@ MxArray::MxArray(const cv::Scalar_<T>& s) :
 	x[0] = s[0];
 	x[1] = s[1];
 	x[2] = s[2];
-	x[3] = x[3];
+	x[3] = s[3];
 }
 
 /** Convert MxArray to Point_<T>
