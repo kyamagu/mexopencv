@@ -392,25 +392,28 @@ const T MxArray::at(mwIndex index) const
 		case mxDOUBLE_CLASS:
 			return static_cast<T>(*(mxGetPr(p_)+index));
 		case mxINT8_CLASS:
-			static_cast<T>(*(reinterpret_cast<int8_t*>(mxGetData(p_))+index));
+			return static_cast<T>(*(reinterpret_cast<int8_t*>(mxGetData(p_))+index));
 		case mxUINT8_CLASS:
-			static_cast<T>(*(reinterpret_cast<uint8_t*>(mxGetData(p_))+index));
+			return static_cast<T>(*(reinterpret_cast<uint8_t*>(mxGetData(p_))+index));
 		case mxINT16_CLASS:
-			static_cast<T>(*(reinterpret_cast<int16_t*>(mxGetData(p_))+index));
+			return static_cast<T>(*(reinterpret_cast<int16_t*>(mxGetData(p_))+index));
 		case mxUINT16_CLASS:
-			static_cast<T>(*(reinterpret_cast<uint16_t*>(mxGetData(p_))+index));
+			return static_cast<T>(*(reinterpret_cast<uint16_t*>(mxGetData(p_))+index));
 		case mxINT32_CLASS:
-			static_cast<T>(*(reinterpret_cast<int32_t*>(mxGetData(p_))+index));
+			return static_cast<T>(*(reinterpret_cast<int32_t*>(mxGetData(p_))+index));
 		case mxUINT32_CLASS:
-			static_cast<T>(*(reinterpret_cast<uint32_t*>(mxGetData(p_))+index));
+			return static_cast<T>(*(reinterpret_cast<uint32_t*>(mxGetData(p_))+index));
 		case mxINT64_CLASS:
-			static_cast<T>(*(reinterpret_cast<int64_t*>(mxGetData(p_))+index));
+			return static_cast<T>(*(reinterpret_cast<int64_t*>(mxGetData(p_))+index));
 		case mxUINT64_CLASS:
-			static_cast<T>(*(reinterpret_cast<uint64_t*>(mxGetData(p_))+index));
+			return static_cast<T>(*(reinterpret_cast<uint64_t*>(mxGetData(p_))+index));
 		case mxSINGLE_CLASS:
-			static_cast<T>(*(reinterpret_cast<float*>(mxGetData(p_))+index));
+			return static_cast<T>(*(reinterpret_cast<float*>(mxGetData(p_))+index));
 		case mxLOGICAL_CLASS:
-			static_cast<T>(*(mxGetLogicals(p_)+index));
+			return static_cast<T>(*(mxGetLogicals(p_)+index));
+		case mxCELL_CLASS:
+		case mxSTRUCT_CLASS:
+		case mxFUNCTION_CLASS:
 		default:
 			mexErrMsgIdAndTxt("mexopencv:error","MxArray is not primitive");
 	}
