@@ -51,19 +51,6 @@ const ConstMap<int,mxClassID> ClassIDOf = ConstMap<int,mxClassID>
     (CV_32S,	mxINT32_CLASS);
 }
 
-/** Convert MxArray to scalar primitive type T
-
-template <typename T>
-T MxArray::value() const
-{
-	if (numel()!=1)
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not a scalar value");
-	if (!(isNumeric()||isChar()||isLogical()))
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not primitive type");
-	return static_cast<T>(mxGetScalar(p_));
-}; */
-
-
 /** MxArray constructor from mxArray*
  * @param arr mxArray pointer given by mexFunction
  */
@@ -177,7 +164,6 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 	}
 }
 
-
 #if CV_MINOR_VERSION < 2
 /**
  * Convert cv::MatND to MxArray
@@ -220,8 +206,8 @@ MxArray::MxArray(const cv::MatND& mat, mxClassID classid)
 }
 #endif
 
-
 namespace {
+/// Comparison operator for sparse matrix elements
 struct compareSparseMatNode_ {
 	bool operator () (const SparseMat::Node* rhs, const SparseMat::Node* lhs)
 	{
@@ -370,8 +356,7 @@ MxArray::MxArray(const std::vector<cv::DMatch>& v) :
 }
 #endif
 
-/**
- * Convert cv::RotatedRect to MxArray
+/** Convert cv::RotatedRect to MxArray
  * @param m cv::RotatedRect object
  * @return MxArray object
  */
@@ -394,8 +379,7 @@ const ConstMap<int,std::string> InvTermCritType = ConstMap<int,std::string>
 	(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, "Count+EPS");
 }
 
-/**
- * Convert cv::TermCriteria to MxArray
+/** Convert cv::TermCriteria to MxArray
  * @param t cv::TermCriteria object
  * @return MxArray object
  */
@@ -409,8 +393,26 @@ MxArray::MxArray(const cv::TermCriteria& t) :
 	set("epsilon",  t.epsilon);
 }
 
-/**
- * Convert MxArray to cv::Mat
+/** Generic constructor for a struct array
+ * @param fields field names
+ * @param m size of the first dimension
+ * @param n size of the second dimension
+ *
+ * Example:
+ * @code
+ * MxArray m(vector<const char*>(0));
+ * m.set("field1",1);
+ * m.set("field2","field2 value");
+ * @endcode
+ */
+MxArray::MxArray(std::vector<const char*>& fields, int m, int n) :
+	p_(mxCreateStructMatrix(m,n,fields.size(),&fields[0]))
+{
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
+}
+
+/** Convert MxArray to cv::Mat
  * @param depth depth of cv::Mat. e.g., CV_8U, CV_32F.  When CV_USERTYPE1 is
  *                specified, depth will be automatically determined from the
  *                the classid of the MxArray. default: CV_USERTYPE1
@@ -692,23 +694,6 @@ cv::TermCriteria MxArray::toTermCriteria(mwIndex index) const
 	);
 }
 
-/** Convert MxArray to std::vector<MxArray>
- * @return std::vector<MxArray> value
- */
-std::vector<MxArray> MxArray::toVector() const
-{
-	int n = numel();
-	if (isCell()) {
-		std::vector<MxArray> v;
-		v.reserve(n);
-		for (int i=0; i<n; ++i)
-			v.push_back(MxArray(mxGetCell(p_, i)));
-		return v;
-	}
-	else
-		return std::vector<MxArray>(1,*this);
-}
-
 /** Offset from first element to desired element
  * @param i index of the first dimension of the array
  * @param j index of the second dimension of the array
@@ -729,17 +714,6 @@ mwIndex MxArray::subs(mwIndex i, mwIndex j) const
 mwIndex MxArray::subs(const std::vector<mwIndex>& si) const
 {
 	return mxCalcSingleSubscript(p_, si.size(), &si[0]);
-}
-
-/** Cell element accessor
- * @param index index of the cell array
- * @return MxArray of the element at index
- */
-MxArray MxArray::at(mwIndex index) const
-{
-	if (!isCell())
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not cell");
-	return MxArray(mxGetCell(p_,index));
 }
 
 /** Struct element accessor

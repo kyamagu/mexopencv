@@ -29,7 +29,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	vector<MxArray> rhs(prhs,prhs+nrhs);
 	
 	// arrays
-	vector<MxArray> arrays_(rhs[0].toVector());
+	vector<MxArray> arrays_(rhs[0].toVector<MxArray>());
 	vector<Mat> arrays(arrays_.size());
 	for (int i=0; i<arrays_.size(); ++i)
 		arrays[i] = (arrays_[i].isUint8()) ?
@@ -44,7 +44,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		channels[i] = i;
 	
 	// dims, histSize, ranges
-	vector<MxArray> ranges_(rhs[1].toVector());
+	vector<MxArray> ranges_(rhs[1].toVector<MxArray>());
 	vector<Mat> ranges(ranges_.size());
 	for (int i=0; i<ranges_.size(); ++i)
 		ranges[i] = ranges_[i].toMat(CV_32F);

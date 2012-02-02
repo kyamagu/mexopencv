@@ -9,6 +9,8 @@ using namespace std;
 using namespace cv;
 
 #if CV_MINOR_VERSION < 2
+/** Alias to the old API
+ */
 #define convertPointsToHomogeneous convertPointsHomogeneous
 #endif
 
@@ -49,7 +51,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		plhs[0] = MxArray(dst);
 	}
 	else if (rhs[0].isCell()) {
-		vector<MxArray> _src(rhs[0].toVector());
+		vector<MxArray> _src(rhs[0].toVector<MxArray>());
 		int n = _src[0].numel();
 		if (n==2) {
 			vector<Point2f> src(rhs[0].toVector<Point2f>());

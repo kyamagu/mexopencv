@@ -12,7 +12,7 @@ using namespace cv;
 template <typename T>
 vector<Point_<T> > MxArrayToVecPt(MxArray& arr)
 {
-	vector<MxArray> va = arr.toVector();
+	vector<MxArray> va = arr.toVector<MxArray>();
 	vector<Point_<T> > vp;
 	vp.reserve(va.size());
 	for (vector<MxArray>::iterator it=va.begin(); it<va.end(); ++it)
@@ -24,7 +24,7 @@ vector<Point_<T> > MxArrayToVecPt(MxArray& arr)
 template <typename T>
 vector<Point3_<T> > MxArrayToVecPt3(MxArray& arr)
 {
-	vector<MxArray> va = arr.toVector();
+	vector<MxArray> va = arr.toVector<MxArray>();
 	vector<Point3_<T> > vp;
 	vp.reserve(va.size());
 	for (vector<MxArray>::iterator it=va.begin(); it<va.end(); ++it)

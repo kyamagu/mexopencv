@@ -55,6 +55,7 @@ class MxArray {
 		template <typename T> explicit MxArray(const cv::Rect_<T>& r);
 		template <typename T> explicit MxArray(const cv::Scalar_<T>& r);
 		template <typename T> explicit MxArray(const std::vector<T>& v);
+		MxArray(std::vector<const char*>& fields, int m=1, int n=1);
 		
 		/// Destructor
 		virtual ~MxArray() {};
@@ -83,7 +84,6 @@ class MxArray {
 		template <typename T> cv::Size_<T> toSize_() const;
 		template <typename T> cv::Rect_<T> toRect_() const;
 		template <typename T> cv::Scalar_<T> toScalar_() const;
-		std::vector<MxArray> toVector() const;
 		template <typename T> std::vector<T> toVector() const;
 		template <typename T>
 		std::vector<T> toVector(std::const_mem_fun_ref_t<T,MxArray> f) const;
@@ -177,7 +177,6 @@ class MxArray {
 		// Element accessor
 		
 		template <typename T> T at(mwIndex index) const;
-		MxArray at(mwIndex index) const;
 		template <typename T> T at(mwIndex i, mwIndex j) const;
 		template <typename T> T at(const std::vector<mwIndex>& si) const;
 		MxArray at(const std::string& fieldName, mwIndex index=0) const;
@@ -381,40 +380,51 @@ cv::Scalar_<T> MxArray::toScalar_() const
 	}
 }
 
-/** Convert MxArray to std::vector<T>
+/** Convert MxArray to std::vector<T> for a primitive type
  * @return std::vector<T> value
+ *
+ * The method is intended for conversion to a raw numeric vector such
+ * as std::vector<int> or std::vector<double>. Example:
+ *
+ * @code
+ * MxArray numArray(prhs[0]);
+ * vector<double> vd = numArray.toVector<double>();
+ * @endcode
  */
 template <typename T>
 std::vector<T> MxArray::toVector() const
 {
-	if (isNumeric()) {
-		int n = numel();
-		std::vector<T> vt(n);
-		for (int i=0; i<numel(); ++i)
+	int n = numel();
+	std::vector<T> vt(n);
+	if (isNumeric())
+		for (int i=0; i<n; ++i)
 			vt[i] = at<T>(i);
-		return vt;
-	}
-	else if (isCell()) {
-		std::vector<MxArray> v = MxArray::toVector();
-		std::vector<T> vt;
-		vt.reserve(v.size());
-		for (std::vector<MxArray>::iterator it=v.begin(); it<v.end(); ++it)
-			vt.push_back((*it).at<T>(0));
-		return vt;
-	}
+	else if (isCell())
+		for (int i=0; i<n; ++i)
+			vt[i] = MxArray(mxGetCell(p_, i)).at<T>(0);
 	else
 		mexErrMsgIdAndTxt("mexopencv:error","Cannot convert to std::vector");
+	return vt;
 }
 
-
-/** Convert MxArray to std::vector<T>
+/** Convert MxArray to std::vector<T> by a specified conversion method
  * @param f member function of MxArray (e.g., &MxArray::toMat, &MxArray::toInt)
  * @return std::vector<T> value
+ *
+ * The method constructs std::vector<T> by applying conversion method f to each
+ * cell array element. This is similar to std::transform function. The example
+ * usage is shown below:
+ *
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * const_mem_fun_ref_t<Point3i,MxArray> converter(&MxArray::toPoint3_<int>);
+ * vector<Point3i> v = cellArray.toVector(converter);
+ * @endcode
  */
 template <typename T>
 std::vector<T> MxArray::toVector(std::const_mem_fun_ref_t<T,MxArray> f) const
 {
-	std::vector<MxArray> v(toVector());
+	std::vector<MxArray> v = toVector<MxArray>();
 	std::vector<T> vt;
 	vt.reserve(v.size());
 	for (std::vector<MxArray>::iterator it=v.begin(); it<v.end(); ++it)
@@ -425,6 +435,12 @@ std::vector<T> MxArray::toVector(std::const_mem_fun_ref_t<T,MxArray> f) const
 /** Template for element accessor
  * @param index index of the array element
  * @return value of the element at index
+ *
+ * Example:
+ * @code
+ * MxArray m(prhs[0]);
+ * double d = m.at<double>(0);
+ * @endcode
  */
 template <typename T>
 T MxArray::at(mwIndex index) const
@@ -529,7 +545,8 @@ void MxArray::set(mwIndex index, const T& value)
 }
 
 /** Template for element write accessor
- * @param i linear index of the cell array element
+ * @param i index of the first dimension of the array element
+ * @param j index of the first dimension of the array element
  * @param value value of the field
  */
 template <typename T>

@@ -83,6 +83,7 @@ mxArray* cvGBTreesParamsToMxArray(const CvGBTreesParams& params)
 }
 
 }
+#endif
 
 /**
  * Main entry called from Matlab
@@ -94,6 +95,7 @@ mxArray* cvGBTreesParamsToMxArray(const CvGBTreesParams& params)
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
+#if CV_MINOR_VERSION >= 2
 	if (nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
@@ -200,12 +202,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     //}
     else
 		mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
-}
 #else
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
-{
-	mexErrMsgIdAndTxt("mexopencv:error","FeatureDetector not supported in this version");
-}
+	mexErrMsgIdAndTxt("mexopencv:error","GBTrees not supported in this version");
 #endif
+}
 

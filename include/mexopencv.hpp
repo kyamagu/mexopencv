@@ -61,8 +61,58 @@ const ConstMap<std::string,int> DistType = ConstMap<std::string,int>
     ("Welsch",	CV_DIST_WELSCH)
     ("Huber",	CV_DIST_HUBER);
 
+// Template specializations
+
+/** Cell element accessor
+ * @param index index of the cell array
+ * @return MxArray of the element at index
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * MxArray m = cellArray.at<MxArray>(0);
+ * @endcode
+ */
+template <>
+MxArray MxArray::at(mwIndex index) const
+{
+	if (!isCell())
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not cell");
+	return MxArray(mxGetCell(p_,index));
+}
+
+/** Convert MxArray to std::vector<MxArray>
+ * @return std::vector<MxArray> value
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<MxArray> v = cellArray.toVector<MxArray>();
+ * @endcode
+ */
+template <>
+std::vector<MxArray> MxArray::toVector() const
+{
+	if (isCell()) {
+		int n = numel();
+		std::vector<MxArray> v;
+		v.reserve(n);
+		for (int i=0; i<n; ++i)
+			v.push_back(MxArray(mxGetCell(p_, i)));
+		return v;
+	}
+	else
+		return std::vector<MxArray>(1,*this);
+}
+
 /** Convert MxArray to std::vector<std::string>
  * @return std::vector<std::string> value
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<string> v = cellArray.toVector<string>();
+ * @endcode
  */
 template <>
 std::vector<std::string> MxArray::toVector() const
@@ -72,11 +122,17 @@ std::vector<std::string> MxArray::toVector() const
 
 /** Convert MxArray to std::vector<cv::Mat>
  * @return std::vector<cv::Mat> value
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Mat> v = cellArray.toVector<Mat>();
+ * @endcode
  */
 template <>
 std::vector<cv::Mat> MxArray::toVector() const
 {
-	std::vector<MxArray> v(toVector());
+	std::vector<MxArray> v(toVector<MxArray>());
 	std::vector<cv::Mat> vm;
 	vm.reserve(v.size());
 	for (std::vector<MxArray>::iterator it=v.begin(); it<v.end(); ++it)
@@ -86,6 +142,12 @@ std::vector<cv::Mat> MxArray::toVector() const
 
 /** Convert MxArray to std::vector<Point>
  * @return std::vector<Point> value
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Point> v = cellArray.toVector<Point>();
+ * @endcode
  */
 template <>
 std::vector<cv::Point> MxArray::toVector() const
@@ -95,6 +157,12 @@ std::vector<cv::Point> MxArray::toVector() const
 
 /** Convert MxArray to std::vector<Point2f>
  * @return std::vector<Point2f> value
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Point2f> v = cellArray.toVector<Point2f>();
+ * @endcode
  */
 template <>
 std::vector<cv::Point2f> MxArray::toVector() const
@@ -104,6 +172,12 @@ std::vector<cv::Point2f> MxArray::toVector() const
 
 /** Convert MxArray to std::vector<Point3f>
  * @return std::vector<Point3f> value
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Point3f> v = cellArray.toVector<Point3f>();
+ * @endcode
  */
 template <>
 std::vector<cv::Point3f> MxArray::toVector() const
@@ -111,8 +185,14 @@ std::vector<cv::Point3f> MxArray::toVector() const
 	return toVector(std::const_mem_fun_ref_t<cv::Point3f,MxArray>(&MxArray::toPoint3f));
 }
 
-/** Convert MxArray to std::vector<cv::Mat>
- * @return std::vector<cv::Mat> value
+/** Convert MxArray to std::vector<cv::KeyPoint>
+ * @return std::vector<cv::KeyPoint> value
+ *
+ * Example:
+ * @code
+ * MxArray structArray(prhs[0]);
+ * vector<KeyPoint> v = structArray.toVector<KeyPoint>();
+ * @endcode
  */
 template <>
 std::vector<cv::KeyPoint> MxArray::toVector() const
@@ -122,7 +202,7 @@ std::vector<cv::KeyPoint> MxArray::toVector() const
 	v.reserve(n);
 	if (isCell())
 		for (int i=0; i<n; ++i)
-			v.push_back(at(i).toKeyPoint());
+			v.push_back(at<MxArray>(i).toKeyPoint());
 	else if (isStruct())
 		for (int i=0; i<n; ++i)
 			v.push_back(toKeyPoint(i));
@@ -134,6 +214,12 @@ std::vector<cv::KeyPoint> MxArray::toVector() const
 #if CV_MINOR_VERSION >= 2
 /** Convert MxArray to std::vector<cv::DMatch>
  * @return std::vector<cv::DMatch> value
+ *
+ * Example:
+ * @code
+ * MxArray structArray(prhs[0]);
+ * vector<DMatch> v = structArray.toVector<DMatch>();
+ * @endcode
  */
 template <>
 std::vector<cv::DMatch> MxArray::toVector() const
@@ -143,7 +229,7 @@ std::vector<cv::DMatch> MxArray::toVector() const
 	v.reserve(n);
 	if (isCell())
 		for (int i=0; i<n; ++i)
-			v.push_back(at(i).toDMatch());
+			v.push_back(at<MxArray>(i).toDMatch());
 	else if (isStruct())
 		for (int i=0; i<n; ++i)
 			v.push_back(toDMatch(i));

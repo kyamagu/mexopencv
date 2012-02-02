@@ -15,6 +15,7 @@ using namespace cv;
 int last_id = 0;
 /// Object container
 map<int,Ptr<FeatureDetector> > obj_;
+#endif
 
 /**
  * Main entry called from Matlab
@@ -26,6 +27,7 @@ map<int,Ptr<FeatureDetector> > obj_;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
+#if CV_MINOR_VERSION >= 2
 	if (nrhs<1 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
@@ -90,11 +92,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else
 		mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
-}
 #else
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
-{
 	mexErrMsgIdAndTxt("mexopencv:error","FeatureDetector not supported in this version");
-}
 #endif
+}

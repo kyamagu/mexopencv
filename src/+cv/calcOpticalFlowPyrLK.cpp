@@ -36,7 +36,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	for (int i=3; i<nrhs; i+=2) {
 		string key = rhs[i].toString();
 		if (key=="InitialFlow") {
-			vector<MxArray> _nextPts(rhs[i+1].toVector());
+			vector<MxArray> _nextPts(rhs[i+1].toVector<MxArray>());
 			nextPts.reserve(_nextPts.size());
 			for (vector<MxArray>::iterator it=_nextPts.begin();it<_nextPts.end();++it)
 				nextPts.push_back((*it).toPoint_<float>());
