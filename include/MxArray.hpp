@@ -177,12 +177,12 @@ class MxArray {
 		// Element accessor
 		
 		template <typename T> T at(mwIndex index) const;
-		template <typename T> T at(mwIndex i, mwIndex j) const;
-		template <typename T> T at(const std::vector<mwIndex>& si) const;
+		template <typename T> inline T at(mwIndex i, mwIndex j) const;
+		template <typename T> inline T at(const std::vector<mwIndex>& si) const;
 		MxArray at(const std::string& fieldName, mwIndex index=0) const;
 		template <typename T> void set(mwIndex index, const T& value);
-		template <typename T> void set(mwIndex i, mwIndex j, const T& value);
-		template <typename T> void set(const std::vector<mwIndex>& si, const T& value);
+		template <typename T> inline void set(mwIndex i, mwIndex j, const T& value);
+		template <typename T> inline void set(const std::vector<mwIndex>& si, const T& value);
 		template <typename T> void set(const std::string& fieldName, const T& value, mwIndex index=0);
 		
 		// CONSTANT
@@ -581,5 +581,19 @@ void MxArray::set(const std::string& fieldName, const T& value, mwIndex index)
 	}
 	mxSetField(const_cast<mxArray*>(p_),index,fieldName.c_str(), MxArray(value));
 }
+
+// Template specializations
+template <> MxArray MxArray::at(mwIndex index) const;
+template <> std::vector<MxArray> MxArray::toVector() const;
+template <> std::vector<std::string> MxArray::toVector() const;
+template <> std::vector<cv::Mat> MxArray::toVector() const;
+template <> std::vector<cv::Point> MxArray::toVector() const;
+template <> std::vector<cv::Point2f> MxArray::toVector() const;
+template <> std::vector<cv::Point3f> MxArray::toVector() const;
+template <> std::vector<MxArray> MxArray::toVector() const;
+template <> std::vector<cv::KeyPoint> MxArray::toVector() const;
+#if CV_MINOR_VERSION >= 2
+template <> std::vector<cv::DMatch> MxArray::toVector() const;
+#endif
 
 #endif
