@@ -1,8 +1,8 @@
 /**
  * @file MxArray.cpp
- * @brief Implemenation of data converters and utilities
+ * @brief Implemenation of MxArray
  * @author Kota Yamaguchi
- * @date 2011
+ * @date 2012
  */
 #include "MxArray.hpp"
 using namespace cv;

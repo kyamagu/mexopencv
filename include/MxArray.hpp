@@ -1,14 +1,8 @@
 /**
  * @file MxArray.hpp
- * @brief data converter and utilities for mxArray and cv::Mat
+ * @brief MxArray and ConstMap declaration
  * @author Kota Yamaguchi
- * @date 2011
- * @details
- * Usage:
- * @code
- * Mat m = MxArray(a);
- * mxArray* a = MxArray(m);
- * @endcode
+ * @date 2012
  */
 #ifndef __MXARRAY_HPP__
 #define __MXARRAY_HPP__
@@ -502,7 +496,7 @@ T MxArray::at(const std::vector<mwIndex>& si) const
 }
 
 /** Template for element write accessor
- * @param index linear index of the cell array element
+ * @param index offset of the array element
  * @param value value of the field
  */
 template <typename T>
