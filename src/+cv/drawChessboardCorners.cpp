@@ -36,7 +36,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	}
 #if CV_MINOR_VERSION >= 2
 	else if (rhs[2].isCell()) {
-		vector<Point2f> corners(rhs[2].toStdVector<Point2f>());
+		vector<Point2f> corners(rhs[2].toVector<Point2f>());
 		drawChessboardCorners(image, patternSize, corners, patternWasFound);
 	}
 #endif

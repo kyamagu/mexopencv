@@ -43,8 +43,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	}
 #if CV_MINOR_VERSION >= 2
 	else if (rhs[0].isCell() && rhs[1].isCell()) {
-		vector<Point2f> src(rhs[0].toStdVector<Point2f>());
-		vector<Point2f> dst(rhs[1].toStdVector<Point2f>());		
+		vector<Point2f> src(rhs[0].toVector<Point2f>());
+		vector<Point2f> dst(rhs[1].toVector<Point2f>());		
 		Mat m = estimateRigidTransform(src,dst,fullAffine);
 		plhs[0] = MxArray(m);
 	}

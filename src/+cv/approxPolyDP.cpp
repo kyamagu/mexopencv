@@ -43,7 +43,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		plhs[0] = MxArray(approxCurve);
 	}
 	else if (rhs[0].isCell()) {
-		vector<Point> curve(rhs[0].toStdVector<Point>()), approxCurve;
+		vector<Point> curve(rhs[0].toVector<Point>()), approxCurve;
 		approxPolyDP(curve, approxCurve, epsilon, closed);
 		plhs[0] = MxArray(approxCurve);
 	}

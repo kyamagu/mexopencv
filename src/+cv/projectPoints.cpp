@@ -48,7 +48,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		plhs[0] = MxArray(imagePoints);
 	}
 	else if (rhs[0].isCell()) {
-		vector<Point3f> objectPoints(rhs[0].toStdVector<Point3f>());
+		vector<Point3f> objectPoints(rhs[0].toVector<Point3f>());
 		vector<Point2f> imagePoints;
 		projectPoints(objectPoints, rvec, tvec, cameraMatrix, distCoeffs,
 			imagePoints, jacobian, aspectRatio);

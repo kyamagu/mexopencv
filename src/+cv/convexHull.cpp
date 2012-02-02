@@ -45,7 +45,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		plhs[0] = MxArray(Mat(hull));
 	}
 	else if (rhs[0].isCell()) {
-		vector<Point> points(rhs[0].toStdVector<Point>());
+		vector<Point> points(rhs[0].toVector<Point>());
 		vector<Point> hull;
 		convexHull(points, hull, clockwise, returnPoints);
 		plhs[0] = MxArray(hull);		

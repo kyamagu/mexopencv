@@ -28,7 +28,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	
 	// Option processing
 	Mat image(rhs[0].toMat());
-	vector<KeyPoint> keypoints(rhs[1].toStdVector<KeyPoint>());
+	vector<KeyPoint> keypoints(rhs[1].toVector<KeyPoint>());
 	Scalar color=Scalar::all(-1);
 	int flags=DrawMatchesFlags::DEFAULT;
 	for (int i=2; i<nrhs; i+=2) {

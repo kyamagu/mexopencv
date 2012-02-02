@@ -43,7 +43,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	
 	// Process
 	Mat src = (rhs[0].isUint8()) ? rhs[0].toMat(CV_8U) : rhs[0].toMat(CV_32F);
-	vector<Point2f> corners(rhs[1].toStdVector<Point2f>());
+	vector<Point2f> corners(rhs[1].toVector<Point2f>());
 	cornerSubPix(src, corners, winSize, zeroZone, criteria);
 	plhs[0] = MxArray(corners);
 }

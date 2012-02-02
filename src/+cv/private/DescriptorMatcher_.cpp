@@ -62,7 +62,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "add") {
     	if (nrhs!=3 || nlhs!=0)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	vector<Mat> descriptors(rhs[2].toStdVector<Mat>());
+    	vector<Mat> descriptors(rhs[2].toVector<Mat>());
     	obj->add(descriptors);
     }
     else if (method == "getTrainDescriptors") {
@@ -112,7 +112,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 			for (int i=3; i<nrhs; i+=2) {
 				string key(rhs[i].toString());
 				if (key=="Mask")
-					masks = rhs[i+1].toStdVector<Mat>();
+					masks = rhs[i+1].toVector<Mat>();
 				else
 					mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 			}
@@ -149,7 +149,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 			for (int i=4; i<nrhs; i+=2) {
 				string key(rhs[i].toString());
 				if (key=="Mask")
-					masks = rhs[i+1].toStdVector<Mat>();
+					masks = rhs[i+1].toVector<Mat>();
 				else if (key=="CompactResult")
 					compactResult = rhs[i+1].toBool();
 				else
@@ -188,7 +188,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 			for (int i=4; i<nrhs; i+=2) {
 				string key(rhs[i].toString());
 				if (key=="Mask")
-					masks = rhs[i+1].toStdVector<Mat>();
+					masks = rhs[i+1].toVector<Mat>();
 				else if (key=="CompactResult")
 					compactResult = rhs[i+1].toBool();
 				else

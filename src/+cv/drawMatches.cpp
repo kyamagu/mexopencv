@@ -28,10 +28,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	
 	// Option processing
 	Mat img1(rhs[0].toMat());
-	vector<KeyPoint> keypoints1(rhs[1].toStdVector<KeyPoint>());
+	vector<KeyPoint> keypoints1(rhs[1].toVector<KeyPoint>());
 	Mat img2(rhs[2].toMat());
-	vector<KeyPoint> keypoints2(rhs[3].toStdVector<KeyPoint>());
-	vector<DMatch> matches1to2(rhs[4].toStdVector<DMatch>());
+	vector<KeyPoint> keypoints2(rhs[3].toVector<KeyPoint>());
+	vector<DMatch> matches1to2(rhs[4].toVector<DMatch>());
 	Scalar matchColor=Scalar::all(-1);
 	Scalar singlePointColor=Scalar::all(-1);
 	vector<char> matchesMask=vector<char>();

@@ -9,6 +9,17 @@ using namespace cv;
 
 // Local namescope
 namespace {
+/// Field names for cv::Moments
+const char *cv_moments_fields[10] = {"m00","m10","m01","m20","m11","m02","m30","m21","m12","m03"};
+/// Field names for cv::RotatedRect
+const char *cv_rotated_rect_fields[3] = {"center","size","angle"};
+/// Field names for cv::TermCriteria
+const char *cv_term_criteria_fields[3] = {"type","maxCount","epsilon"};
+/// Field names for cv::Keypoint
+const char *cv_keypoint_fields[6] = {"pt", "size", "angle", "response", "octave", "class_id"};
+/// Field names for cv::DMatch
+const char *cv_dmatch_fields[4] = {"queryIdx","trainIdx","imgIdx","distance"};
+
 /**
  * Translates data type definition used in OpenCV to that of Matlab
  * @param classid data type of matlab's mxArray. e.g., mxDOUBLE_CLASS
@@ -41,7 +52,7 @@ const ConstMap<int,mxClassID> ClassIDOf = ConstMap<int,mxClassID>
 }
 
 /** Convert MxArray to scalar primitive type T
- */
+
 template <typename T>
 T MxArray::value() const
 {
@@ -50,7 +61,7 @@ T MxArray::value() const
 	if (!(isNumeric()||isChar()||isLogical()))
 		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not primitive type");
 	return static_cast<T>(mxGetScalar(p_));
-};
+}; */
 
 
 /** MxArray constructor from mxArray*
@@ -277,18 +288,17 @@ MxArray::MxArray(const cv::Moments& m) :
 {
 	if (!p_)
 		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
-	mxSetField(const_cast<mxArray*>(p_),0,"m00", MxArray(m.m00));
-	mxSetField(const_cast<mxArray*>(p_),0,"m10", MxArray(m.m10));
-	mxSetField(const_cast<mxArray*>(p_),0,"m01", MxArray(m.m01));
-	mxSetField(const_cast<mxArray*>(p_),0,"m20", MxArray(m.m20));
-	mxSetField(const_cast<mxArray*>(p_),0,"m11", MxArray(m.m11));
-	mxSetField(const_cast<mxArray*>(p_),0,"m02", MxArray(m.m02));
-	mxSetField(const_cast<mxArray*>(p_),0,"m30", MxArray(m.m30));
-	mxSetField(const_cast<mxArray*>(p_),0,"m21", MxArray(m.m21));
-	mxSetField(const_cast<mxArray*>(p_),0,"m12", MxArray(m.m12));
-	mxSetField(const_cast<mxArray*>(p_),0,"m03", MxArray(m.m03));
+	set("m00",m.m00);
+	set("m10",m.m10);
+	set("m01",m.m01);
+	set("m20",m.m20);
+	set("m11",m.m11);
+	set("m02",m.m02);
+	set("m30",m.m30);
+	set("m12",m.m12);
+	set("m21",m.m21);
+	set("m03",m.m03);
 }
-const char *cv_moments_fields[10] = {"m00","m10","m01","m20","m11","m02","m30","m21","m12","m03"};
 
 /**
  * Convert cv::KeyPoint to MxArray
@@ -300,14 +310,31 @@ MxArray::MxArray(const cv::KeyPoint& p) :
 {
 	if (!p_)
 		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
-	mxSetField(const_cast<mxArray*>(p_),0,"pt",      MxArray(p.pt));
-	mxSetField(const_cast<mxArray*>(p_),0,"size",    MxArray(p.size));
-	mxSetField(const_cast<mxArray*>(p_),0,"angle",   MxArray(p.angle));
-	mxSetField(const_cast<mxArray*>(p_),0,"response",MxArray(p.response));
-	mxSetField(const_cast<mxArray*>(p_),0,"octave",  MxArray(p.octave));
-	mxSetField(const_cast<mxArray*>(p_),0,"class_id",MxArray(p.class_id));
+	set("pt",       p.pt);
+	set("size",     p.size);
+	set("angle",    p.angle);
+	set("response", p.response);
+	set("octave",   p.octave);
+	set("class_id", p.class_id);
 }
-const char *cv_keypoint_fields[6] = {"pt", "size", "angle", "response", "octave", "class_id"};
+
+/** MxArray constructor from vector<KeyPoint>. Make a cell array.
+ * @param v vector of KeyPoint
+ */
+MxArray::MxArray(const std::vector<cv::KeyPoint>& v) :
+	p_(mxCreateStructMatrix(1,v.size(),6,cv_keypoint_fields))
+{
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
+	for (int i = 0; i < v.size(); ++i) {
+		set("pt", v[i].pt, i);
+		set("size", v[i].size, i);
+		set("angle", v[i].angle, i);
+		set("response", v[i].response, i);
+		set("octave", v[i].octave, i);
+		set("class_id", v[i].class_id, i);
+	}
+}
 
 #if CV_MINOR_VERSION >= 2
 /**
@@ -320,13 +347,28 @@ MxArray::MxArray(const cv::DMatch& m) :
 {
 	if (!p_)
 		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
-	mxSetField(const_cast<mxArray*>(p_),0,"queryIdx", MxArray(m.queryIdx));
-	mxSetField(const_cast<mxArray*>(p_),0,"trainIdx", MxArray(m.trainIdx));
-	mxSetField(const_cast<mxArray*>(p_),0,"imgIdx",   MxArray(m.imgIdx));
-	mxSetField(const_cast<mxArray*>(p_),0,"distance", MxArray(m.distance));
+	set("queryIdx", m.queryIdx);
+	set("trainIdx", m.trainIdx);
+	set("imgIdx",   m.imgIdx);
+	set("distance", m.distance);
+}
+
+/** MxArray constructor from vector<T>. Make a cell array.
+ * @param v vector of type T
+ */
+MxArray::MxArray(const std::vector<cv::DMatch>& v) :
+	p_(mxCreateStructMatrix(1,v.size(),4,cv_dmatch_fields))
+{
+	if (!p_)
+		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
+	for (int i = 0; i < v.size(); ++i) {
+		set("queryIdx", v[i].queryIdx, i);
+		set("trainIdx", v[i].trainIdx, i);
+		set("imgIdx", v[i].imgIdx, i);
+		set("distance", v[i].distance, i);
+	}
 }
 #endif
-const char *cv_dmatch_fields[4] = {"queryIdx","trainIdx","imgIdx","distance"};
 
 /**
  * Convert cv::RotatedRect to MxArray
@@ -338,11 +380,19 @@ MxArray::MxArray(const cv::RotatedRect& m) :
 {
 	if (!p_)
 		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
-	mxSetField(const_cast<mxArray*>(p_),0,"center", MxArray(m.center));
-	mxSetField(const_cast<mxArray*>(p_),0,"size",   MxArray(m.size));
-	mxSetField(const_cast<mxArray*>(p_),0,"angle",  MxArray(m.angle));
+	set("center", m.center);
+	set("size",   m.size);
+	set("angle",  m.angle);
 }
-const char *cv_rotated_rect_fields[3] = {"center","size","angle"};
+
+namespace {
+/** InvTermCritType map for option processing
+ */
+const ConstMap<int,std::string> InvTermCritType = ConstMap<int,std::string>
+	(cv::TermCriteria::COUNT, "Count")
+	(cv::TermCriteria::EPS, "EPS")
+	(cv::TermCriteria::COUNT+cv::TermCriteria::EPS, "Count+EPS");
+}
 
 /**
  * Convert cv::TermCriteria to MxArray
@@ -354,11 +404,10 @@ MxArray::MxArray(const cv::TermCriteria& t) :
 {
 	if (!p_)
 		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
-	mxSetField(const_cast<mxArray*>(p_),0,"type",     MxArray(t.type));
-	mxSetField(const_cast<mxArray*>(p_),0,"maxCount", MxArray(t.maxCount));
-	mxSetField(const_cast<mxArray*>(p_),0,"epsilon",  MxArray(t.epsilon));
+	set("type",     InvTermCritType[t.type]);
+	set("maxCount", t.maxCount);
+	set("epsilon",  t.epsilon);
 }
-const char *cv_term_criteria_fields[3] = {"type","maxCount","epsilon"};
 
 /**
  * Convert MxArray to cv::Mat
@@ -486,20 +535,32 @@ cv::MatND MxArray::toMatND(int depth, bool transpose) const
 #endif
 }
 
-/** Convert MxArray to scalar double
+/** Convert MxArray to int
  * @return int value
  */
-int MxArray::toInt() const { return value<int>(); }
+int MxArray::toInt() const {
+	if (numel()!=1)
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not a scalar");
+	return at<int>(0);
+};
 
-/** Convert MxArray to scalar int
+/** Convert MxArray to double
  * @return double value
  */
-double MxArray::toDouble() const { return value<double>(); }
+double MxArray::toDouble() const {
+	if (numel()!=1)
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not a scalar");
+	return at<double>(0);
+};
 
-/** Convert MxArray to scalar int
- * @return double value
+/** Convert MxArray to bool
+ * @return bool value
  */
-bool MxArray::toBool() const { return value<bool>(); }
+bool MxArray::toBool() const {
+	if (numel()!=1)
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not a scalar");
+	return at<bool>(0);
+};
 
 /** Convert MxArray to std::string
  * @return std::string value
@@ -544,72 +605,54 @@ cv::SparseMat MxArray::toSparseMat() const
 }
 
 /** Convert MxArray to cv::Moments
+ * @param index index of the struct array
  * @return cv::Moments
  */
 cv::Moments MxArray::toMoments(mwIndex index) const
 {
-	if (!isStruct())
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not struct");
-	if (index < 0 || numel() <= index)
-		mexErrMsgIdAndTxt("mexopencv:error","Out of range in struct array");
-	mxArray* pm;
-	double m00 = (pm=mxGetField(p_,index,"m00")) ? MxArray(pm).toDouble() : 0;
-	double m10 = (pm=mxGetField(p_,index,"m10")) ? MxArray(pm).toDouble() : 0;
-	double m01 = (pm=mxGetField(p_,index,"m01")) ? MxArray(pm).toDouble() : 0;
-	double m20 = (pm=mxGetField(p_,index,"m20")) ? MxArray(pm).toDouble() : 0;
-	double m11 = (pm=mxGetField(p_,index,"m11")) ? MxArray(pm).toDouble() : 0;
-	double m02 = (pm=mxGetField(p_,index,"m02")) ? MxArray(pm).toDouble() : 0;
-	double m30 = (pm=mxGetField(p_,index,"m30")) ? MxArray(pm).toDouble() : 0;
-	double m21 = (pm=mxGetField(p_,index,"m21")) ? MxArray(pm).toDouble() : 0;
-	double m12 = (pm=mxGetField(p_,index,"m12")) ? MxArray(pm).toDouble() : 0;
-	double m03 = (pm=mxGetField(p_,index,"m03")) ? MxArray(pm).toDouble() : 0;
-	return cv::Moments(m00,m10,m01,m20,m11,m02,m30,m21,m12,m30);
+	return cv::Moments(
+		(isField("m00")) ? at("m00",index).toDouble() : 0,
+		(isField("m10")) ? at("m10",index).toDouble() : 0,
+		(isField("m01")) ? at("m01",index).toDouble() : 0,
+		(isField("m20")) ? at("m20",index).toDouble() : 0,
+		(isField("m11")) ? at("m11",index).toDouble() : 0,
+		(isField("m02")) ? at("m02",index).toDouble() : 0,
+		(isField("m30")) ? at("m30",index).toDouble() : 0,
+		(isField("m12")) ? at("m12",index).toDouble() : 0,
+		(isField("m21")) ? at("m21",index).toDouble() : 0,
+		(isField("m03")) ? at("m03",index).toDouble() : 0
+	);
 }
 
 /** Convert MxArray to cv::KeyPoint
+ * @param index index of the struct array
  * @return cv::KeyPoint
  */
 cv::KeyPoint MxArray::toKeyPoint(mwIndex index) const
 {
-	if (!isStruct())
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not struct");
-	if (index < 0 || numel() <= index)
-		mexErrMsgIdAndTxt("mexopencv:error","Out of range in struct array");
-	mxArray* pm;
-	if (!(pm=mxGetField(p_,index,"pt")))
-		mexErrMsgIdAndTxt("mexopencv:error","Struct incompatible to KeyPoint");
-	Point2f _pt = MxArray(pm).toPoint_<float>();
-	if (!(pm=mxGetField(p_,index,"size")))
-		mexErrMsgIdAndTxt("mexopencv:error","Struct incompatible to KeyPoint");
-	float _size = MxArray(pm).toDouble();
-	float _angle = (pm=mxGetField(p_,index,"angle")) ?       MxArray(pm).toDouble() : -1;
-	float _response = (pm=mxGetField(p_,index,"response")) ? MxArray(pm).toDouble() : 0;
-	int _octave = (pm=mxGetField(p_,index,"octave")) ?       MxArray(pm).toInt() : 0;
-	int _class_id = (pm=mxGetField(p_,index,"class_id")) ?   MxArray(pm).toInt() : -1;
-	return cv::KeyPoint(_pt,_size,_angle,_response,_octave,_class_id);
+	return cv::KeyPoint(
+		at("pt",index).toPoint2f(),
+		at("size",index).toDouble(),
+		(isField("angle"))    ? at("angle",index).toDouble()    : -1,
+		(isField("response")) ? at("response",index).toDouble() :  0,
+		(isField("octave"))   ? at("octave",index).toInt()      :  0,
+		(isField("class_id")) ? at("class_id",index).toInt()    : -1
+	);
 }
 
 #if CV_MINOR_VERSION >= 2
 /** Convert MxArray to cv::DMatch
+ * @param index index of the struct array
  * @return cv::DMatch
  */
 cv::DMatch MxArray::toDMatch(mwIndex index) const
 {
-	if (!isStruct())
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not struct");
-	if (index < 0 || numel() <= index)
-		mexErrMsgIdAndTxt("mexopencv:error","Out of range in struct array");
-	mxArray* pm;
-	cv::DMatch dmatch;
-	if (pm=mxGetField(p_,index,"queryIdx"))
-		dmatch.queryIdx = MxArray(pm).toInt();
-	if (pm=mxGetField(p_,index,"trainIdx"))
-		dmatch.trainIdx = MxArray(pm).toInt();
-	if (pm=mxGetField(p_,index,"imgIdx"))
-		dmatch.imgIdx = MxArray(pm).toInt();
-	if (pm=mxGetField(p_,index,"distance"))
-		dmatch.distance = MxArray(pm).toDouble();
-	return dmatch;
+	return cv::DMatch(
+		(isField("queryIdx")) ? at("queryIdx",index).toInt() : 0,
+		(isField("trainIdx")) ? at("trainIdx",index).toInt() : 0,
+		(isField("imgIdx"))   ? at("imgIdx",index).toInt() : 0,
+		(isField("distance")) ? at("distance",index).toDouble() : 0
+	);
 }
 #endif
 
@@ -626,41 +669,49 @@ cv::Range MxArray::toRange() const
 		mexErrMsgIdAndTxt("mexopencv:error","Invalid range value");
 }
 
+namespace {
+/** TermCritType map for option processing
+ */
+const ConstMap<std::string,int> TermCritType = ConstMap<std::string,int>
+	("Count",		cv::TermCriteria::COUNT)
+	("EPS",			cv::TermCriteria::EPS)
+	("Count+EPS",	cv::TermCriteria::COUNT+cv::TermCriteria::EPS);
+}
+
 /** Convert MxArray to cv::TermCriteria
+ * @param index index of the struct array
  * @return cv::TermCriteria
  */
 cv::TermCriteria MxArray::toTermCriteria(mwIndex index) const
 {
-	if (!isStruct())
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not struct");
-	if (index < 0 || numel() <= index)
-		mexErrMsgIdAndTxt("mexopencv:error","Out of range in struct array");
-	mxArray* pm;
-	cv::TermCriteria term_crit;
-	if (pm=mxGetField(p_,index,"type")) {
-		MxArray m(pm);
-		if (m.isChar()) {
-			string s(m.toString());
-			if (s=="Count")
-				term_crit.type = cv::TermCriteria::COUNT;
-			else if (s=="EPS")
-				term_crit.type = cv::TermCriteria::EPS;
-			else if (s=="Count+EPS")
-				term_crit.type = cv::TermCriteria::COUNT+cv::TermCriteria::EPS;
-			else
-				mexErrMsgIdAndTxt("mexopencv:error","Unrecognized term criteria type");
-		}
-		else
-			term_crit.type = m.toInt();
+	MxArray _type(at("type",index));
+	return cv::TermCriteria(
+		(_type.isChar()) ? TermCritType[_type.toString()] : _type.toInt(),
+		at("maxCount",index).toInt(),
+		at("epsilon",index).toDouble()
+	);
+}
+
+/** Convert MxArray to std::vector<MxArray>
+ * @return std::vector<MxArray> value
+ */
+std::vector<MxArray> MxArray::toVector() const
+{
+	int n = numel();
+	if (isCell()) {
+		std::vector<MxArray> v;
+		v.reserve(n);
+		for (int i=0; i<n; ++i)
+			v.push_back(MxArray(mxGetCell(p_, i)));
+		return v;
 	}
-	if (pm=mxGetField(p_,index,"maxCount"))
-		term_crit.maxCount = MxArray(pm).toInt();
-	if (pm=mxGetField(p_,index,"epsilon"))
-		term_crit.epsilon = MxArray(pm).toDouble();
-	return term_crit;
+	else
+		return std::vector<MxArray>(1,*this);
 }
 
 /** Offset from first element to desired element
+ * @param i index of the first dimension of the array
+ * @param j index of the second dimension of the array
  * @return linear offset of the specified subscript index
  */
 mwIndex MxArray::subs(mwIndex i, mwIndex j) const
@@ -672,9 +723,38 @@ mwIndex MxArray::subs(mwIndex i, mwIndex j) const
 }
 
 /** Offset from first element to desired element
+ * @param si subscript index of the array
  * @return linear offset of the specified subscript index
  */
-mwIndex MxArray::subs(std::vector<mwIndex>& si) const
+mwIndex MxArray::subs(const std::vector<mwIndex>& si) const
 {
 	return mxCalcSingleSubscript(p_, si.size(), &si[0]);
+}
+
+/** Cell element accessor
+ * @param index index of the cell array
+ * @return MxArray of the element at index
+ */
+MxArray MxArray::at(mwIndex index) const
+{
+	if (!isCell())
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not cell");
+	return MxArray(mxGetCell(p_,index));
+}
+
+/** Struct element accessor
+ * @param fieldName field name of the struct array
+ * @param index index of the struct array
+ * @return value of the element at the specified field
+ */
+MxArray MxArray::at(const std::string& fieldName, mwIndex index) const
+{
+	if (!isStruct())
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not struct");
+	if (index < 0 || numel() <= index)
+		mexErrMsgIdAndTxt("mexopencv:error","Out of range in struct array");
+	mxArray* pm = mxGetField(p_,index,fieldName.c_str());
+	if (!pm)
+		mexErrMsgIdAndTxt("mexopencv:error","Field '%s' doesn't exist",fieldName.c_str());
+	return MxArray(pm);
 }

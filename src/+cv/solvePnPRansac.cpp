@@ -12,7 +12,7 @@ using namespace cv;
 template <typename T>
 vector<Point_<T> > MxArrayToVecPt(MxArray& arr)
 {
-	vector<MxArray> va = arr.toStdVector<MxArray>();
+	vector<MxArray> va = arr.toVector();
 	vector<Point_<T> > vp;
 	vp.reserve(va.size());
 	for (vector<MxArray>::iterator it=va.begin(); it<va.end(); ++it)
@@ -24,7 +24,7 @@ vector<Point_<T> > MxArrayToVecPt(MxArray& arr)
 template <typename T>
 vector<Point3_<T> > MxArrayToVecPt3(MxArray& arr)
 {
-	vector<MxArray> va = arr.toStdVector<MxArray>();
+	vector<MxArray> va = arr.toVector();
 	vector<Point3_<T> > vp;
 	vp.reserve(va.size());
 	for (vector<MxArray>::iterator it=va.begin(); it<va.end(); ++it)
@@ -87,8 +87,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 			minInliersCount, inliers);
 	}
 	else if (rhs[0].isCell() && rhs[1].isCell()) {
-		vector<Point3f> objectPoints(rhs[0].toStdVector<Point3f>());
-		vector<Point2f> imagePoints(rhs[1].toStdVector<Point2f>());
+		vector<Point3f> objectPoints(rhs[0].toVector<Point3f>());
+		vector<Point2f> imagePoints(rhs[1].toVector<Point2f>());
 		solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs, rvec,
 			tvec, useExtrinsicGuess, iterationsCount, reprojectionError,
 			minInliersCount, inliers);

@@ -68,7 +68,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	if (nrhs!=4)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     	Mat image(rhs[2].toMat()), descriptors;
-    	vector<KeyPoint> keypoints(rhs[3].toStdVector<KeyPoint>());
+    	vector<KeyPoint> keypoints(rhs[3].toVector<KeyPoint>());
     	obj->compute(image, keypoints, descriptors);
     	plhs[0] = MxArray(descriptors);
     }

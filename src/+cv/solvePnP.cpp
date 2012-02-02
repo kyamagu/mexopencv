@@ -51,8 +51,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	}
 #if CV_MINOR_VERSION >= 2
 	else if (rhs[0].isCell() && rhs[1].isCell()) {
-		vector<Point3f> objectPoints(rhs[0].toStdVector<Point3f>());
-		vector<Point2f> imagePoints(rhs[1].toStdVector<Point2f>());
+		vector<Point3f> objectPoints(rhs[0].toVector<Point3f>());
+		vector<Point2f> imagePoints(rhs[1].toVector<Point2f>());
 		solvePnP(objectPoints, imagePoints, cameraMatrix, distCoeffs, rvec,
 			tvec, useExtrinsicGuess);
 	}

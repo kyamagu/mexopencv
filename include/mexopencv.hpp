@@ -61,155 +61,74 @@ const ConstMap<std::string,int> DistType = ConstMap<std::string,int>
     ("Welsch",	CV_DIST_WELSCH)
     ("Huber",	CV_DIST_HUBER);
 
-/** Convert MxArray to std::vector<MxArray>
- * @return std::vector<MxArray> value
- */
-template <>
-std::vector<MxArray> MxArray::toStdVector() const
-{
-	int n = numel();
-	if (isCell()) {
-		std::vector<MxArray> v(n,MxArray(static_cast<mxArray*>(NULL)));
-		for (int i=0; i<n; ++i)
-			v[i] = MxArray(mxGetCell(p_, i));
-		return v;
-	}
-	else
-		return std::vector<MxArray>(1,*this);
-}
-
 /** Convert MxArray to std::vector<std::string>
  * @return std::vector<std::string> value
  */
 template <>
-std::vector<std::string> MxArray::toStdVector() const
+std::vector<std::string> MxArray::toVector() const
 {
-	int n = numel();
-	if (isCell()) {
-		std::vector<std::string> v(n);
-		for (int i=0; i<n; ++i)
-			v[i] = MxArray(mxGetCell(p_, i)).toString();
-		return v;
-	}
-	else if (isChar())
-		return std::vector<std::string>(1,this->toString());
-	else
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to std::vector");
-		
+	return toVector(std::const_mem_fun_ref_t<std::string,MxArray>(&MxArray::toString));
 }
 
 /** Convert MxArray to std::vector<cv::Mat>
  * @return std::vector<cv::Mat> value
  */
 template <>
-std::vector<cv::Mat> MxArray::toStdVector() const
+std::vector<cv::Mat> MxArray::toVector() const
 {
-	int n = numel();
-	if (isCell()) {
-		std::vector<cv::Mat> v(n);
-		for (int i=0; i<n; ++i)
-			v[i] = MxArray(mxGetCell(p_, i)).toMat();
-		return v;
-	}
-	else if (isNumeric())
-		return std::vector<cv::Mat>(1,this->toMat());
-	else
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to std::vector");
+	std::vector<MxArray> v(toVector());
+	std::vector<cv::Mat> vm;
+	vm.reserve(v.size());
+	for (std::vector<MxArray>::iterator it=v.begin(); it<v.end(); ++it)
+		vm.push_back((*it).toMat());
+	return vm;
 }
 
 /** Convert MxArray to std::vector<Point>
  * @return std::vector<Point> value
  */
 template <>
-std::vector<cv::Point> MxArray::toStdVector() const
+std::vector<cv::Point> MxArray::toVector() const
 {
-	int n = numel();
-	if (isCell()) {
-		std::vector<cv::Point> v(n);
-		for (int i=0; i<n; ++i)
-			v[i] = MxArray(mxGetCell(p_, i)).toPoint();
-		return v;
-	}
-	else if (isNumeric())
-		return std::vector<cv::Point>(1,this->toPoint());
-	else
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to std::vector");
+	return toVector(std::const_mem_fun_ref_t<cv::Point,MxArray>(&MxArray::toPoint));
 }
 
 /** Convert MxArray to std::vector<Point2f>
  * @return std::vector<Point2f> value
  */
 template <>
-std::vector<cv::Point2f> MxArray::toStdVector() const
+std::vector<cv::Point2f> MxArray::toVector() const
 {
-	int n = numel();
-	if (isCell()) {
-		std::vector<cv::Point2f> v(n);
-		for (int i=0; i<n; ++i)
-			v[i] = MxArray(mxGetCell(p_, i)).toPoint_<float>();
-		return v;
-	}
-	else if (isNumeric())
-		return std::vector<cv::Point2f>(1,this->toPoint_<float>());
-	else
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to std::vector");
+	return toVector(std::const_mem_fun_ref_t<cv::Point2f,MxArray>(&MxArray::toPoint2f));
 }
 
 /** Convert MxArray to std::vector<Point3f>
  * @return std::vector<Point3f> value
  */
 template <>
-std::vector<cv::Point3f> MxArray::toStdVector() const
+std::vector<cv::Point3f> MxArray::toVector() const
 {
-	int n = numel();
-	if (isCell()) {
-		std::vector<cv::Point3f> v(n);
-		for (int i=0; i<n; ++i)
-			v[i] = MxArray(mxGetCell(p_, i)).toPoint3_<float>();
-		return v;
-	}
-	else if (isNumeric())
-		return std::vector<cv::Point3f>(1,this->toPoint3_<float>());
-	else
-		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to std::vector");
+	return toVector(std::const_mem_fun_ref_t<cv::Point3f,MxArray>(&MxArray::toPoint3f));
 }
 
 /** Convert MxArray to std::vector<cv::Mat>
  * @return std::vector<cv::Mat> value
  */
 template <>
-std::vector<cv::KeyPoint> MxArray::toStdVector() const
+std::vector<cv::KeyPoint> MxArray::toVector() const
 {
 	int n = numel();
-	std::vector<cv::KeyPoint> v(n);
+	std::vector<cv::KeyPoint> v;
+	v.reserve(n);
 	if (isCell())
 		for (int i=0; i<n; ++i)
-			v[i] = MxArray(mxGetCell(p_, i)).toKeyPoint();
+			v.push_back(at(i).toKeyPoint());
 	else if (isStruct())
 		for (int i=0; i<n; ++i)
-			v[i] = toKeyPoint(i);
+			v.push_back(toKeyPoint(i));
 	else
 		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to std::vector");
 	return v;
-}
-
-/** MxArray constructor from vector<T>. Make a cell array.
- * @param v vector of type T
- */
-template <>
-MxArray::MxArray(const std::vector<cv::KeyPoint>& v) :
-	p_(mxCreateStructMatrix(1,v.size(),6,cv_keypoint_fields))
-{
-	if (!p_)
-		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
-	for (int i = 0; i < v.size(); ++i) {
-		mxSetField(const_cast<mxArray*>(p_),i,"pt",      MxArray(v[i].pt));
-		mxSetField(const_cast<mxArray*>(p_),i,"size",    MxArray(v[i].size));
-		mxSetField(const_cast<mxArray*>(p_),i,"angle",   MxArray(v[i].angle));
-		mxSetField(const_cast<mxArray*>(p_),i,"response",MxArray(v[i].response));
-		mxSetField(const_cast<mxArray*>(p_),i,"octave",  MxArray(v[i].octave));
-		mxSetField(const_cast<mxArray*>(p_),i,"class_id",MxArray(v[i].class_id));
-	}
 }
 
 #if CV_MINOR_VERSION >= 2
@@ -217,36 +136,20 @@ MxArray::MxArray(const std::vector<cv::KeyPoint>& v) :
  * @return std::vector<cv::DMatch> value
  */
 template <>
-std::vector<cv::DMatch> MxArray::toStdVector() const
+std::vector<cv::DMatch> MxArray::toVector() const
 {
 	int n = numel();
-	std::vector<cv::DMatch> v(n);
+	std::vector<cv::DMatch> v;
+	v.reserve(n);
 	if (isCell())
 		for (int i=0; i<n; ++i)
-			v[i] = MxArray(mxGetCell(p_, i)).toDMatch();
+			v.push_back(at(i).toDMatch());
 	else if (isStruct())
 		for (int i=0; i<n; ++i)
-			v[i] = toDMatch(i);
+			v.push_back(toDMatch(i));
 	else
 		mexErrMsgIdAndTxt("mexopencv:error","MxArray unable to convert to std::vector");
 	return v;
-}
-
-/** MxArray constructor from vector<T>. Make a cell array.
- * @param v vector of type T
- */
-template <>
-MxArray::MxArray(const std::vector<cv::DMatch>& v) :
-	p_(mxCreateStructMatrix(1,v.size(),4,cv_dmatch_fields))
-{
-	if (!p_)
-		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
-	for (int i = 0; i < v.size(); ++i) {
-		mxSetField(const_cast<mxArray*>(p_),i,"queryIdx", MxArray(v[i].queryIdx));
-		mxSetField(const_cast<mxArray*>(p_),i,"trainIdx", MxArray(v[i].trainIdx));
-		mxSetField(const_cast<mxArray*>(p_),i,"imgIdx",   MxArray(v[i].imgIdx));
-		mxSetField(const_cast<mxArray*>(p_),i,"distance", MxArray(v[i].distance));
-	}
 }
 #endif
 

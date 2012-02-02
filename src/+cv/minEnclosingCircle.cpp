@@ -32,7 +32,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	}
 #if CV_MINOR_VERSION >= 2
 	else if (rhs[0].isCell()) {
-		vector<Point2f> points(rhs[0].toStdVector<Point2f>());
+		vector<Point2f> points(rhs[0].toVector<Point2f>());
 		minEnclosingCircle(points,center,radius);
 	}
 #endif

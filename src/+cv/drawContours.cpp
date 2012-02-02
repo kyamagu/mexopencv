@@ -18,6 +18,8 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
+	typedef vector<Point> VecP;
+	
 	// Check the number of arguments
 	if (nrhs<2 || ((nrhs%2)!=0) || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
@@ -27,10 +29,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	
 	Mat image(rhs[0].toMat(CV_8U));
 	
-	vector<MxArray> cm(rhs[1].toStdVector<MxArray>());
-	vector<vector<Point> > contours(cm.size());
-	for (int i=0; i<cm.size(); ++i)
-		contours[i] = cm[i].toStdVector<Point>();
+	const_mem_fun_ref_t<VecP,MxArray> f(&MxArray::toVector<Point>);
+	vector<VecP> contours(rhs[1].toVector(f));
 	
 	int contourIdx=-1;
 	Scalar color(255,255,255);
@@ -52,7 +52,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 			lineType = rhs[i+1].toInt();
 #if CV_MINOR_VERSION >= 2
 		else if (key=="Hierarchy") {
-			vector<Mat> hm(rhs[i+1].toStdVector<Mat>());
+			vector<Mat> hm(rhs[i+1].toVector<Mat>());
 			hierarchy = vector<Vec4i>(hm.begin(),hm.end());
 		}
 #endif

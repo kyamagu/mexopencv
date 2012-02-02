@@ -51,7 +51,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		plhs[0] = MxArray(Mat(line));
 	}
 	else if (rhs[0].isCell()) {
-		vector<Point2f> points(rhs[0].toStdVector<Point2f>());
+		vector<Point2f> points(rhs[0].toVector<Point2f>());
 		Vec4f line;
 		fitLine(points, line, distType, param, reps, aeps);
 		plhs[0] = MxArray(Mat(line));

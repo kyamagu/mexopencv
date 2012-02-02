@@ -41,7 +41,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		plhs[0] = MxArray(a);
 	}
 	else if (rhs[0].isCell()) {
-		vector<Point> curve(rhs[0].toStdVector<Point>());
+		vector<Point> curve(rhs[0].toVector<Point>());
 		double a = contourArea(curve, oriented);
 		plhs[0] = MxArray(a);		
 	}

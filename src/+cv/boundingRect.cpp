@@ -32,7 +32,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		plhs[0] = MxArray(boundingRect(curve));
 	}
 	else if (rhs[0].isCell()) {
-		vector<Point> curve(rhs[0].toStdVector<Point>());
+		vector<Point> curve(rhs[0].toVector<Point>());
 		plhs[0] = MxArray(boundingRect(curve));		
 	}
 #else

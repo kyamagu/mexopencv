@@ -35,12 +35,12 @@ mxArray* valueStruct(const Mat& cameraMatrix1, const Mat& distCoeffs1,
 template <typename T>
 vector<vector<Point_<T> > > MxArrayToVecVecPt(MxArray& arr)
 {
-	vector<MxArray> va = arr.toStdVector<MxArray>();
+	vector<MxArray> va = arr.toVector();
 	vector<vector<Point_<T> > > vvp;
 	vvp.reserve(va.size());
 	for (vector<MxArray>::iterator it=va.begin(); it<va.end(); ++it)
 	{
-		vector<MxArray> v = (*it).toStdVector<MxArray>();
+		vector<MxArray> v = (*it).toVector();
 		vector<Point_<T> > vp;
 		vp.reserve(v.size());
 		for (vector<MxArray>::iterator jt=v.begin(); jt<v.end(); ++jt)
@@ -54,12 +54,12 @@ vector<vector<Point_<T> > > MxArrayToVecVecPt(MxArray& arr)
 template <typename T>
 vector<vector<Point3_<T> > > MxArrayToVecVecPt3(MxArray& arr)
 {
-	vector<MxArray> va = arr.toStdVector<MxArray>();
+	vector<MxArray> va = arr.toVector();
 	vector<vector<Point3_<T> > > vvp;
 	vvp.reserve(va.size());
 	for (vector<MxArray>::iterator it=va.begin(); it<va.end(); ++it)
 	{
-		vector<MxArray> v = (*it).toStdVector<MxArray>();
+		vector<MxArray> v = (*it).toVector();
 		vector<Point3_<T> > vp;
 		vp.reserve(v.size());
 		for (vector<MxArray>::iterator jt=v.begin(); jt<v.end(); ++jt)

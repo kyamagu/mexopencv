@@ -26,7 +26,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	vector<MxArray> rhs(prhs,prhs+nrhs);
 	
 	// arrays
-	vector<MxArray> arrays_(rhs[0].toStdVector<MxArray>());
+	vector<MxArray> arrays_(rhs[0].toVector());
 	vector<Mat> arrays(arrays_.size());
 	for (int i=0; i<arrays_.size(); ++i)
 		arrays[i] = (arrays_[i].isUint8()) ?
@@ -41,13 +41,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		channels[i] = i;
 	
 	// dims, histSize, ranges
-	vector<MxArray> ranges_(rhs[2].toStdVector<MxArray>());
-	vector< vector<float> > ranges(ranges_.size());
+	vector<MxArray> ranges_(rhs[2].toVector());
+	vector<Mat> ranges(ranges_.size());
 	for (int i=0; i<ranges_.size(); ++i)
-		ranges[i] = ranges_[i].toStdVector<float>();
+		ranges[i] = ranges_[i].toMat(CV_32F);
 	vector<const float*> ranges_ptr(ranges.size());
 	for (int i=0; i<ranges.size(); ++i)
-		ranges_ptr[i] = &(ranges[i][0]);
+		ranges_ptr[i] = ranges[i].ptr<float>(0);
 	
 	// Option processing
 	bool scale=1;
@@ -59,7 +59,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		else if (key=="Scale")
 			scale = rhs[i+1].toDouble();
 		else if (key=="Channels")
-			channels = rhs[i+1].toStdVector<int>();
+			channels = rhs[i+1].toVector<int>();
 		else
 			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 	}

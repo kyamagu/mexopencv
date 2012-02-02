@@ -24,6 +24,7 @@
 #include <stdint.h>
 #include <map>
 #include <string>
+#include <functional>
 
 /** mxArray object wrapper for conversion and manipulation
  */
@@ -40,8 +41,10 @@ class MxArray {
 #endif
 		explicit MxArray(const cv::SparseMat& mat);
 		explicit MxArray(const cv::KeyPoint& p);
+		explicit MxArray(const std::vector<cv::KeyPoint>& p);
 #if CV_MINOR_VERSION >= 2
 		explicit MxArray(const cv::DMatch& m);
+		explicit MxArray(const std::vector<cv::DMatch>& m);
 #endif
 		explicit MxArray(const cv::Moments& m);
 		explicit MxArray(const cv::RotatedRect& m);
@@ -60,7 +63,7 @@ class MxArray {
 		operator const mxArray*() const { return p_; };
 		/// Implicit conversion to mxArray*
 		operator mxArray*() const { return const_cast<mxArray*>(p_); };
-		
+
 		int toInt() const;
 		double toDouble() const;
 		bool toBool() const;
@@ -80,10 +83,17 @@ class MxArray {
 		template <typename T> cv::Size_<T> toSize_() const;
 		template <typename T> cv::Rect_<T> toRect_() const;
 		template <typename T> cv::Scalar_<T> toScalar_() const;
-		template <typename T> std::vector<T> toStdVector() const;
+		std::vector<MxArray> toVector() const;
+		template <typename T> std::vector<T> toVector() const;
+		template <typename T>
+		std::vector<T> toVector(std::const_mem_fun_ref_t<T,MxArray> f) const;
 		
 		/// Alias to toPoint_<int>
 		inline cv::Point toPoint() const { return toPoint_<int>(); }
+		/// Alias to toPoint_<float>
+		inline cv::Point2f toPoint2f() const { return toPoint_<float>(); }
+		/// Alias to toPoint3_<float>
+		inline cv::Point3f toPoint3f() const { return toPoint3_<float>(); }
 		/// Alias to toSize_<int>
 		inline cv::Size toSize() const { return toSize_<int>(); }
 		/// Alias to toRect_<int>
@@ -107,8 +117,8 @@ class MxArray {
 		inline mwSize rows() const { return mxGetM(p_); }
 		/// Number of columns in array
 		inline mwSize cols() const { return mxGetN(p_); }
-		mwIndex subs(mwIndex i, mwIndex j) const;
-		mwIndex subs(std::vector<mwIndex>& si) const;
+		mwIndex subs(mwIndex i, mwIndex j=0) const;
+		mwIndex subs(const std::vector<mwIndex>& si) const;
 		/// Determine whether input is cell array
 		inline bool isCell() const { return mxIsCell(p_); }
 		/// Determine whether input is string array
@@ -159,21 +169,33 @@ class MxArray {
 		inline bool isUint32() const { return mxIsUint32(p_); }
 		/// Determine whether array represents data as unsigned 64-bit integers
 		inline bool isUint64() const { return mxIsUint64(p_); }
+		/// Determine whether a struct array has a specified field
+		bool isField(const std::string& fieldName, mwIndex index=0) const {
+			return isStruct() && mxGetField(p_, index, fieldName.c_str())!=NULL;
+		}
 		
-		/// Element accessor
-		template <typename T> const T at(mwIndex index) const;
-		template <typename T> const T at(std::vector<mwIndex>& si) const;
+		// Element accessor
+		
+		template <typename T> T at(mwIndex index) const;
+		MxArray at(mwIndex index) const;
+		template <typename T> T at(mwIndex i, mwIndex j) const;
+		template <typename T> T at(const std::vector<mwIndex>& si) const;
+		MxArray at(const std::string& fieldName, mwIndex index=0) const;
+		template <typename T> void set(mwIndex index, const T& value);
+		template <typename T> void set(mwIndex i, mwIndex j, const T& value);
+		template <typename T> void set(const std::vector<mwIndex>& si, const T& value);
+		template <typename T> void set(const std::string& fieldName, const T& value, mwIndex index=0);
 		
 		// CONSTANT
 		/// Value of infinity
-		static double Inf() { return mxGetInf(); }
+		static inline double Inf() { return mxGetInf(); }
 		/// Value of NaN (Not-a-Number)
-		static double NaN() { return mxGetNaN(); }
+		static inline double NaN() { return mxGetNaN(); }
 		/// Value of EPS
-		static double Eps() { return mxGetEps(); }
+		static inline double Eps() { return mxGetEps(); }
 	private:
+		/// Pointer to the mxArray
 		const mxArray* p_;
-		template <typename T> T value() const;
 };
 
 /** std::map wrapper with one-line initialization and lookup method
@@ -363,26 +385,49 @@ cv::Scalar_<T> MxArray::toScalar_() const
  * @return std::vector<T> value
  */
 template <typename T>
-std::vector<T> MxArray::toStdVector() const
+std::vector<T> MxArray::toVector() const
 {
-	int n = numel();
-	std::vector<T> v(n);
-	if (isCell()) {
-		for (int i=0; i<n; ++i)
-			v[i] = MxArray(mxGetCell(p_, i)).at<T>(0);
+	if (isNumeric()) {
+		int n = numel();
+		std::vector<T> vt(n);
+		for (int i=0; i<numel(); ++i)
+			vt[i] = at<T>(i);
+		return vt;
 	}
-	else if (isNumeric()) {
-		for (int i=0; i<n; ++i)
-			v[i] = at<T>(i);
+	else if (isCell()) {
+		std::vector<MxArray> v = MxArray::toVector();
+		std::vector<T> vt;
+		vt.reserve(v.size());
+		for (std::vector<MxArray>::iterator it=v.begin(); it<v.end(); ++it)
+			vt.push_back((*it).at<T>(0));
+		return vt;
 	}
-	return v;
+	else
+		mexErrMsgIdAndTxt("mexopencv:error","Cannot convert to std::vector");
+}
+
+
+/** Convert MxArray to std::vector<T>
+ * @param f member function of MxArray (e.g., &MxArray::toMat, &MxArray::toInt)
+ * @return std::vector<T> value
+ */
+template <typename T>
+std::vector<T> MxArray::toVector(std::const_mem_fun_ref_t<T,MxArray> f) const
+{
+	std::vector<MxArray> v(toVector());
+	std::vector<T> vt;
+	vt.reserve(v.size());
+	for (std::vector<MxArray>::iterator it=v.begin(); it<v.end(); ++it)
+		vt.push_back(f(*it));
+	return vt;
 }
 
 /** Template for element accessor
+ * @param index index of the array element
  * @return value of the element at index
  */
 template <typename T>
-const T MxArray::at(mwIndex index) const
+T MxArray::at(mwIndex index) const
 {
 	if (!p_ || numel() <= index)
 		mexErrMsgIdAndTxt("mexopencv:error","Accessing invalid range");
@@ -419,25 +464,105 @@ const T MxArray::at(mwIndex index) const
 	}
 }
 
+/** Template for element accessor
+ * @param i index of the first dimension
+ * @param j index of the second dimension
+ * @return value of the element at (i,j)
+ */
+template <typename T>
+T MxArray::at(mwIndex i, mwIndex j) const
+{
+	return at<T>(subs(i,j));
+}
 
 /** Template for element accessor
+ * @param si subscript index of the element
  * @return value of the element at subscript index
  */
 template <typename T>
-const T MxArray::at(std::vector<mwIndex>& si) const
+T MxArray::at(const std::vector<mwIndex>& si) const
 {
 	return at<T>(subs(si));
 }
 
-/// Field names of RotatedRect
-extern const char *cv_rotated_rect_fields[3];
-/// Field names of TermCriteria
-extern const char *cv_term_criteria_fields[3];
-/// Field names of Moments
-extern const char *cv_moments_fields[10];
-/// Field names of KeyPoint
-extern const char *cv_keypoint_fields[6];
-/// Field names of DMatch
-extern const char *cv_dmatch_fields[4];
+/** Template for element write accessor
+ * @param index linear index of the cell array element
+ * @param value value of the field
+ */
+template <typename T>
+void MxArray::set(mwIndex index, const T& value)
+{
+	if (index < 0 || numel() <= index)
+		mexErrMsgIdAndTxt("mexopencv:error","Accessing invalid range");
+	switch (classID()) {
+		case mxCHAR_CLASS:
+			*(mxGetChars(p_)+index) = static_cast<mxChar>(value); break;
+		case mxDOUBLE_CLASS:
+			*(mxGetPr(p_)+index) = static_cast<double>(value); break;
+		case mxINT8_CLASS:
+			*(reinterpret_cast<int8_t*>(mxGetData(p_))+index) = static_cast<int8_t>(value); break;
+		case mxUINT8_CLASS:
+			*(reinterpret_cast<uint8_t*>(mxGetData(p_))+index) = static_cast<uint8_t>(value); break;
+		case mxINT16_CLASS:
+			*(reinterpret_cast<int16_t*>(mxGetData(p_))+index) = static_cast<int16_t>(value); break;
+		case mxUINT16_CLASS:
+			*(reinterpret_cast<uint16_t*>(mxGetData(p_))+index) = static_cast<uint16_t>(value); break;
+		case mxINT32_CLASS:
+			*(reinterpret_cast<int32_t*>(mxGetData(p_))+index) = static_cast<int32_t>(value); break;
+		case mxUINT32_CLASS:
+			*(reinterpret_cast<uint32_t*>(mxGetData(p_))+index) = static_cast<uint32_t>(value); break;
+		case mxINT64_CLASS:
+			*(reinterpret_cast<int64_t*>(mxGetData(p_))+index) = static_cast<int64_t>(value); break;
+		case mxUINT64_CLASS:
+			*(reinterpret_cast<uint64_t*>(mxGetData(p_))+index) = static_cast<uint64_t>(value); break;
+		case mxSINGLE_CLASS:
+			*(reinterpret_cast<float*>(mxGetData(p_))+index) = static_cast<float>(value); break;
+		case mxLOGICAL_CLASS:
+			*(mxGetLogicals(p_)+index) = static_cast<mxLogical>(value); break;
+		case mxCELL_CLASS:
+			mxSetCell(const_cast<mxArray*>(p_), index, MxArray(value)); break;
+		case mxSTRUCT_CLASS:
+		case mxFUNCTION_CLASS:
+		default:
+			mexErrMsgIdAndTxt("mexopencv:error","MxArray type is not valid");
+	}
+}
+
+/** Template for element write accessor
+ * @param i linear index of the cell array element
+ * @param value value of the field
+ */
+template <typename T>
+void MxArray::set(mwIndex i, mwIndex j, const T& value)
+{
+	set<T>(subs(i,j),value);
+}
+
+/** Template for element write accessor
+ * @param si subscript index of the element
+ * @param value value of the field
+ */
+template <typename T>
+void MxArray::set(const std::vector<mwIndex>& si, const T& value)
+{
+	set<T>(subs(si),value);
+}
+
+/** Template for struct element write accessor
+ * @param fieldName field name of the struct array
+ * @param value value of the field
+ * @param index linear index of the struct array element
+ */
+template <typename T>
+void MxArray::set(const std::string& fieldName, const T& value, mwIndex index)
+{
+	if (!isStruct())
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not struct");
+	if (!isField(fieldName)) {
+		if (mxAddField(const_cast<mxArray*>(p_), fieldName.c_str())<0)
+			mexErrMsgIdAndTxt("mexopencv:error","Failed to create a field '%s'", fieldName.c_str());
+	}
+	mxSetField(const_cast<mxArray*>(p_),index,fieldName.c_str(), MxArray(value));
+}
 
 #endif

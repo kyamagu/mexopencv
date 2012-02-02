@@ -55,8 +55,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		F = findFundamentalMat(points1, points2, method, param1, param2, mask);
 	}
 	else if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
-		vector<Point2f> points1(rhs[0].toStdVector<Point2f>());
-		vector<Point2f> points2(rhs[1].toStdVector<Point2f>());
+		vector<Point2f> points1(rhs[0].toVector<Point2f>());
+		vector<Point2f> points2(rhs[1].toVector<Point2f>());
 		F = findFundamentalMat(points1, points2, method, param1, param2, mask);
 	}
 	else

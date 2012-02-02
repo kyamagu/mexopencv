@@ -49,12 +49,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		plhs[0] = MxArray(dst);
 	}
 	else if (rhs[0].isCell()) {
-		vector<MxArray> _src(rhs[0].toStdVector<MxArray>());
+		vector<MxArray> _src(rhs[0].toVector());
 		if (_src.empty())
 			mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
 		int n = _src[0].numel();
 		if (n==3) {
-			vector<Point3f> src(rhs[0].toStdVector<Point3f>());
+			vector<Point3f> src(rhs[0].toVector<Point3f>());
 			vector<Point2f> dst;
 			convertPointsFromHomogeneous(src, dst);
 			plhs[0] = MxArray(dst);

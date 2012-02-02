@@ -51,8 +51,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		H = findHomography(points1, points2, method, ransacReprojThreshold, mask);
 	}
 	else if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
-		vector<Point2f> points1(rhs[0].toStdVector<Point2f>());
-		vector<Point2f> points2(rhs[1].toStdVector<Point2f>());
+		vector<Point2f> points1(rhs[0].toVector<Point2f>());
+		vector<Point2f> points2(rhs[1].toVector<Point2f>());
 		H = findHomography(points1, points2, method, ransacReprojThreshold, mask);
 	}
 	else
