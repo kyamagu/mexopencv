@@ -57,33 +57,28 @@ CvBoostParams getParams(vector<MxArray>::iterator it,
 	return params;
 }
 
-/// Field names of boost_params struct
-const char* cv_boost_params_fields[] = {"boost_type","weak_count",
-	"weight_trim_rate","max_depth","use_surrogates","priors"};
-
 /** Create a new mxArray* from CvBoostParams
  * @param params CvBoostParams object
- * @return CvBoostParams objects
+ * @return MxArray objects
  */
-mxArray* cvBoostParamsToMxArray(const CvBoostParams& params)
+MxArray paramsToMxArray(const CvBoostParams& params)
 {
-	mxArray *p = mxCreateStructMatrix(1,1,6,cv_boost_params_fields);
-	if (!p)
-		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
-	mxSetField(const_cast<mxArray*>(p),0,"boost_type",       MxArray(InvBoostType[params.boost_type]));
-	mxSetField(const_cast<mxArray*>(p),0,"weak_count",       MxArray(params.weak_count));
-	mxSetField(const_cast<mxArray*>(p),0,"weight_trim_rate", MxArray(params.weight_trim_rate));
-	mxSetField(const_cast<mxArray*>(p),0,"max_depth",        MxArray(params.max_depth));
-	mxSetField(const_cast<mxArray*>(p),0,"use_surrogates",   MxArray(params.use_surrogates));
-	//if (params.priors) {
-	//	vector<float> pv(params.priors,params.priors+num_classes);
-	//	mxSetField(const_cast<mxArray*>(p),0,"priors", MxArray(Mat));
-	//}
-	//else {
-		mxSetField(const_cast<mxArray*>(p),0,"priors",
-			MxArray(mxCreateNumericMatrix(0,0,mxDOUBLE_CLASS,mxREAL)));
-	//}
-	return p;
+	const char* fields[] = {"BoostType", "WeakCount", "WeightTrimRate",
+		"MaxDepth", "UseSurrogates", "MaxCategories", "MinSampleCount",
+		"CVFolds", "Use1seRule", "TruncatePrunedTree", "RegressionAccuracy"};
+	MxArray m(fields,11);
+	m.set("BoostType",InvBoostType[params.boost_type]);
+	m.set("WeakCount",params.weak_count);
+	m.set("WeightTrimRate",params.weight_trim_rate);
+	m.set("MaxDepth",params.max_depth);
+	m.set("UseSurrogates",params.use_surrogates);
+	m.set("MaxCategories",params.max_categories);
+	m.set("MinSampleCount",params.min_sample_count);
+	m.set("CVFolds",params.cv_folds);
+	m.set("Use1seRule",params.use_1se_rule);
+	m.set("TruncatePrunedTree",params.truncate_pruned_tree);
+	m.set("RegressionAccuracy",params.regression_accuracy);
+	return m;
 }
 
 }
@@ -223,7 +218,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "get_params") {
     	if (nrhs!=2 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    	plhs[0] = MxArray(cvBoostParamsToMxArray(obj.get_params()));
+    	plhs[0] = paramsToMxArray(obj.get_params());
     }
     else
 		mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");

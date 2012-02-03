@@ -21,7 +21,7 @@ classdef GBTrees < handle
     end
     
     methods
-        function this = GBTrees
+        function this = GBTrees(varargin)
             %GBTREES  GBTrees classifier
             %
             %    classifier = cv.GBTrees
@@ -29,6 +29,7 @@ classdef GBTrees < handle
             % See also cv.GBTrees
             %
             this.id = GBTrees_();
+            if nargin>0, this.train(varargin{:}); end
         end
         
         function delete(this)

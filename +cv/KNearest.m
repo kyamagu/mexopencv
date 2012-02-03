@@ -24,7 +24,7 @@ classdef KNearest < handle
     end
     
     methods
-        function this = KNearest
+        function this = KNearest(varargin)
             %KNEAREST  K-Nearest Neighbors constructor
             %
             %    classifier = cv.KNearest
@@ -32,6 +32,7 @@ classdef KNearest < handle
             % See also cv.KNearest
             %
             this.id = KNearest_();
+            if nargin>0, this.train(varargin{:}); end
         end
         
         function delete(this)

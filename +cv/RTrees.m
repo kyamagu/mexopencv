@@ -65,10 +65,13 @@ classdef RTrees < handle
     end
     
     properties (SetAccess = private, Dependent)
+        ActiveVarMask
+        TreeCount
+        Params
     end
     
     methods
-        function this = RTrees
+        function this = RTrees(varargin)
             %RTREES  Random Trees classifier
             %
             %    classifier = cv.RTrees
@@ -76,6 +79,7 @@ classdef RTrees < handle
             % See also cv.RTrees
             %
             this.id = RTrees_();
+            if nargin>0, this.train(varargin{:}); end
         end
         
         function delete(this)
@@ -282,12 +286,27 @@ classdef RTrees < handle
         end
         
         function value = get_train_error(this)
-        	%GET_TRAIN_ERROR  Returns the train error
+        	%GET_TRAIN_ERROR  Returns the training error
         	value = RTrees_(this.id, 'get_train_error');
         end
         
         function value = get_tree_count(this)
         	%GET_TREE_COUNT  Returns the number of trees in the constructed random forest
+        	value = RTrees_(this.id, 'get_tree_count');
+        end
+        
+        function value = get.Params(this)
+        	%PARAMS
+        	value = RTrees_(this.id, 'params');
+        end
+        
+        function value = get.ActiveVarMask(this)
+            %ACTIVEVARMASK
+        	value = RTrees_(this.id, 'get_active_var_mask');
+        end
+        
+        function value = get.TreeCount(this)
+        	%TREECOUNT  Returns the number of trees in the constructed random forest
         	value = RTrees_(this.id, 'get_tree_count');
         end
     end

@@ -409,8 +409,8 @@ MxArray::MxArray(const cv::TermCriteria& t) :
  * m.set("field2","field2 value");
  * @endcode
  */
-MxArray::MxArray(std::vector<const char*>& fields, int m, int n) :
-	p_(mxCreateStructMatrix(m,n,fields.size(),&fields[0]))
+MxArray::MxArray(const char** fields, int nfields, int m, int n) :
+	p_(mxCreateStructMatrix(m,n,nfields,fields))
 {
 	if (!p_)
 		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");

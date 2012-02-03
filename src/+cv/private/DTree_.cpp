@@ -48,6 +48,25 @@ CvDTreeParams getParams(vector<MxArray>::iterator it,
 	}
 	return params;
 }
+
+/** Create a struct from CvDTreeParams
+ */
+MxArray paramsToMxArray(CvDTreeParams& params)
+{
+	const char* fields[] = {"MaxCategories","MaxDepth","MinSampleCount",
+		"CVFolds","UseSurrogates","Use1seRule","TruncatePrunedTree",
+		"RegressionAccuracy"};
+	MxArray m(fields,8);
+	m.set("MaxCategories",params.max_categories);
+	m.set("MaxDepth",params.max_depth);
+	m.set("MinSampleCount",params.min_sample_count);
+	m.set("CVFolds",params.cv_folds);
+	m.set("UseSurrogates",params.use_surrogates);
+	m.set("Use1seRule",params.use_1se_rule);
+	m.set("TruncatePrunedTree",params.truncate_pruned_tree);
+	m.set("RegressionAccuracy",params.regression_accuracy);
+	return m;
+}
 }
 
 /**
@@ -158,18 +177,21 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		plhs[0] = MxArray(results);
     }
     else if (method == "getVarImportance") {
-#if CV_MINOR_VERSION >= 2
     	if (nrhs!=2 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-		plhs[0] = MxArray((obj.get_data())?obj.getVarImportance():Mat());
-#else
-		mexErrMsgIdAndTxt("mexopencv:error","getVarImportance not supported in this version");
-#endif
+    	const CvMat* m = obj.get_var_importance();
+		plhs[0] = MxArray((m) ? Mat(m) : Mat());
     }
     else if (method == "get_pruned_tree_idx") {
     	if (nrhs!=2 || nlhs>1)
     		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     	plhs[0] = MxArray(obj.get_pruned_tree_idx());
+    }
+    else if (method == "params") {
+    	if (nrhs!=2 || nlhs>1)
+    		mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    	CvDTreeTrainData* d = obj.get_data();
+    	plhs[0] = (d) ? paramsToMxArray(d->params) : MxArray(Mat());
     }
     else
 		mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");

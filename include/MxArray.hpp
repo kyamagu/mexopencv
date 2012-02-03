@@ -49,7 +49,7 @@ class MxArray {
 		template <typename T> explicit MxArray(const cv::Rect_<T>& r);
 		template <typename T> explicit MxArray(const cv::Scalar_<T>& r);
 		template <typename T> explicit MxArray(const std::vector<T>& v);
-		MxArray(std::vector<const char*>& fields, int m=1, int n=1);
+		MxArray(const char**fields, int nfields, int m=1, int n=1);
 		
 		/// Destructor
 		virtual ~MxArray() {};

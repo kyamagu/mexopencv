@@ -17,7 +17,7 @@ classdef NormalBayesClassifier < handle
     end
     
     methods
-        function this = NormalBayesClassifier
+        function this = NormalBayesClassifier(varargin)
             %NORMALBAYESCLASSIFIER
             %
             %    classifier = cv.NormalBayesClassifier
@@ -25,6 +25,7 @@ classdef NormalBayesClassifier < handle
             % See also cv.NormalBayesClassifier
             %
             this.id = NormalBayesClassifier_();
+            if nargin>0, this.train(varargin{:}); end
         end
         
         function delete(this)

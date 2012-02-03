@@ -34,7 +34,7 @@ classdef SVM < handle
     end
     
     methods
-        function this = SVM
+        function this = SVM(varargin)
             %SVM
             %
             %    classifier = cv.SVM
@@ -42,6 +42,7 @@ classdef SVM < handle
             % See also cv.SVM
             %
             this.id = SVM_();
+            if nargin>0, this.train(varargin{:}); end
         end
         
         function delete(this)

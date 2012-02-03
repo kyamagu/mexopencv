@@ -44,7 +44,7 @@ classdef Boost < handle
     end
     
     methods
-        function this = Boost
+        function this = Boost(varargin)
             %BOOST  Boosted tree classifier
             %
             %    classifier = cv.Boost
@@ -52,6 +52,7 @@ classdef Boost < handle
             % See also cv.Boost
             %
             this.id = Boost_();
+            if nargin>0, this.train(varargin{:}); end
         end
         
         function delete(this)

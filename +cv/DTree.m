@@ -22,10 +22,11 @@ classdef DTree < handle
     end
     
     properties (SetAccess = private, Dependent)
+        Params
     end
     
     methods
-        function this = DTree
+        function this = DTree(varargin)
             %DTREE
             %
             %    classifier = cv.DTree
@@ -33,6 +34,7 @@ classdef DTree < handle
             % See also cv.DTree
             %
             this.id = DTree_();
+            if nargin>0, this.train(varargin{:}); end
         end
         
         function delete(this)
@@ -199,6 +201,11 @@ classdef DTree < handle
         function value = getVarImportance(this)
         	%GETVARIMPORTANCE  Returns the variable importance array
         	value = DTree_(this.id, 'getVarImportance');
+        end
+        
+        function value = get.Params(this)
+        	%PARAMS
+        	value = DTree_(this.id, 'params');
         end
     end
     
