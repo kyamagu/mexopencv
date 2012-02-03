@@ -121,6 +121,8 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 {
 	if (mat.empty()) {
 		p_ = mxCreateNumericArray(0,0,mxDOUBLE_CLASS,mxREAL);
+		if (!p_)
+			mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
 		return;
 	}
 #if CV_MINOR_VERSION >= 2
@@ -141,7 +143,9 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 	d.push_back(nchannels);
 	classid = (classid == mxUNKNOWN_CLASS) ? ClassIDOf[rm.depth()] : classid;
 	std::swap(d[0],d[1]);
-	p_ = mxCreateNumericArray(d.size(),&d[0],classid,mxREAL);
+	p_ = (classid==mxLOGICAL_CLASS) ?
+		mxCreateLogicalArray(d.size(),&d[0]) :
+		mxCreateNumericArray(d.size(),&d[0],classid,mxREAL);
 	if (!p_)
 		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
 	

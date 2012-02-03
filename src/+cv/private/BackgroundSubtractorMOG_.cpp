@@ -85,7 +85,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	}
     	Mat image(rhs[2].toMat()), fgmask;
     	obj(image, fgmask, learningRate);
-    	plhs[0] = MxArray(fgmask);
+    	plhs[0] = MxArray(fgmask,mxLOGICAL_CLASS);
     }
     else if (method == "getBackgroundImage") {
     	if (nrhs!=2 || nlhs>1)

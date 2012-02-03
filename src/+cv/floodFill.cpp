@@ -61,7 +61,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	
 	// Apply
 	Mat img(rhs[0].toMat());
-	Point seed = rhs[1].toPoint() + Point(1,1);
+	Point seed = rhs[1].toPoint();
 	Scalar newVal = rhs[2].toScalar();
 	Rect rect;
 	int flags = connectivity |
@@ -72,7 +72,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		area = floodFill(img, mask, seed, newVal, &rect, loDiff, upDiff, flags);
 		plhs[0] = MxArray(img);
 		if (nlhs>1)
-			plhs[1] = MxArray(mask);
+			plhs[1] = MxArray(mask,mxLOGICAL_CLASS);
 		if (nlhs>2)
 			plhs[2] = MxArray(rect);
 		if (nlhs>3)
