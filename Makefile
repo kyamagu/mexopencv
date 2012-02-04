@@ -1,6 +1,6 @@
 MATLABDIR   ?= /usr/local/matlab
 MEX         ?= $(MATLABDIR)/bin/mex
-AR          ?= ar
+MV          ?= mv
 RM          ?= rm
 DOXYGEN     ?= doxygen
 MEXEXT      ?= $(shell $(MATLABDIR)/bin/mexext)
@@ -20,16 +20,14 @@ VPATH       = $(TARGETDIR):$(SRCDIR):$(MEXDIR):$(TARGETDIR)/private:$(SRCDIR)/pr
 
 all: $(TARGETS)
 
-$(LIBDIR)/libMxArray.a: $(SRCDIR)/MxArray.cpp $(INCLUDEDIR)/MxArray.hpp
+$(LIBDIR)/MxArray.o: $(SRCDIR)/MxArray.cpp $(INCLUDEDIR)/MxArray.hpp
 	$(MEX) -c $(MEX_FLAGS) $< -outdir $(LIBDIR)
-	$(AR) -cq $(LIBDIR)/libMxArray.a $(LIBDIR)/*.o
-	$(RM) -f $(LIBDIR)/*.o
 
-%.$(MEXEXT): %.cpp $(LIBDIR)/libMxArray.a $(INCLUDEDIR)/mexopencv.hpp
-	$(MEX) $(MEX_FLAGS) -lMxArray $< -o $@
+%.$(MEXEXT): %.cpp $(LIBDIR)/MxArray.o $(INCLUDEDIR)/mexopencv.hpp
+	$(MEX) $(MEX_FLAGS) $(LIBDIR)/MxArray.o $< -o $@
 
 clean:
-	$(RM) -rf $(LIBDIR)/*.a $(TARGETDIR)/*.$(MEXEXT)
+	$(RM) -rf $(LIBDIR)/*.o $(TARGETDIR)/*.$(MEXEXT)
 
 doc:
 	$(DOXYGEN) Doxyfile
