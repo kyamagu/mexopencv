@@ -399,12 +399,14 @@ MxArray::MxArray(const cv::TermCriteria& t) :
 
 /** Generic constructor for a struct array
  * @param fields field names
+ * @param nfields number of field names
  * @param m size of the first dimension
  * @param n size of the second dimension
  *
  * Example:
  * @code
- * MxArray m(vector<const char*>(0));
+ * const char* fields[] = {"field1","field2"};
+ * MxArray m(fields,2);
  * m.set("field1",1);
  * m.set("field2","field2 value");
  * @endcode
