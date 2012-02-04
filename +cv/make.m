@@ -23,11 +23,11 @@ if ispc % Windows
 	mex_flags = ['-largeArrayDims -Iinclude ',pkg_config(opencv_path)];
 	
 	% Compile MxArray
-	cmd = sprintf('mex -c %s src\\MxArray.cpp',mex_flags);
+	cmd = sprintf('mex -c %s src\\MxArray.cpp -outdir lib',mex_flags);
 	disp(cmd);
 	eval(cmd);
-	if ~exist('MxArray.obj','file')
-		error('cv:make','MxArray.obj not found');
+	if ~exist('lib\MxArray.obj','file')
+		error('cv:make','lib\MxArray.obj not found');
 	end
 	
 	% Compile other files
@@ -39,7 +39,7 @@ if ispc % Windows
 		'UniformOutput', false);
     srcs = [srcs,psrcs];
 	for i = 1:numel(srcs)
-		cmd = sprintf('mex %s src\\+cv\\%s.cpp MxArray.obj -output +cv\\%s',...
+		cmd = sprintf('mex %s src\\+cv\\%s.cpp lib\\MxArray.obj -output +cv\\%s',...
 			mex_flags,srcs{i},srcs{i});
 		disp(cmd);
 		eval(cmd);

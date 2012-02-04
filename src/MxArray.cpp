@@ -316,7 +316,7 @@ MxArray::MxArray(const std::vector<cv::KeyPoint>& v) :
 {
 	if (!p_)
 		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
-	for (int i = 0; i < v.size(); ++i) {
+	for (size_t i = 0; i < v.size(); ++i) {
 		set("pt", v[i].pt, i);
 		set("size", v[i].size, i);
 		set("angle", v[i].angle, i);
@@ -351,7 +351,7 @@ MxArray::MxArray(const std::vector<cv::DMatch>& v) :
 {
 	if (!p_)
 		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
-	for (int i = 0; i < v.size(); ++i) {
+	for (size_t i = 0; i < v.size(); ++i) {
 		set("queryIdx", v[i].queryIdx, i);
 		set("trainIdx", v[i].trainIdx, i);
 		set("imgIdx", v[i].imgIdx, i);
@@ -604,7 +604,7 @@ cv::SparseMat MxArray::toSparseMat() const
 	
 	// Copy data
 	double *pr = mxGetPr(p_);
-	for (mwIndex j=0; j<n; ++j) {
+	for (int j=0; j<n; ++j) {
 		mwIndex start = jc[j], end = jc[j+1]-1;
 		for (mwIndex i=start; i<=end; ++i)
 			mat.ref<float>(ir[i],j) = static_cast<float>(pr[i]); // (row,col) <= val
@@ -669,12 +669,14 @@ cv::DMatch MxArray::toDMatch(mwIndex index) const
  */
 cv::Range MxArray::toRange() const
 {
+	cv::Range r;
 	if (isNumeric() && numel()==2)
-		return cv::Range(at<int>(0),at<int>(1));
+		r = cv::Range(at<int>(0),at<int>(1));
 	else if (isChar() && toString()==":")
-		return cv::Range::all();
+		r = cv::Range::all();
 	else
 		mexErrMsgIdAndTxt("mexopencv:error","Invalid range value");
+	return r;
 }
 
 namespace {

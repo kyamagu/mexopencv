@@ -471,6 +471,7 @@ T MxArray::at(mwIndex index) const
 		case mxFUNCTION_CLASS:
 		default:
 			mexErrMsgIdAndTxt("mexopencv:error","MxArray is not primitive");
+			return static_cast<T>(0);
 	}
 }
 

@@ -1,14 +1,18 @@
 MATLABDIR   ?= /usr/local/matlab
 MEX         ?= $(MATLABDIR)/bin/mex
+AR          ?= ar
+RM          ?= rm
+DOXYGEN     ?= doxygen
 MEXEXT      ?= $(shell $(MATLABDIR)/bin/mexext)
 MATLAB      ?= $(MATLABDIR)/bin/matlab
 TARGETDIR   := +cv
 INCLUDEDIR	:= include
+LIBDIR      := lib
 SRCDIR		:= src
 MEXDIR		:= $(SRCDIR)/$(TARGETDIR)
 SRCS        := $(wildcard $(MEXDIR)/*.cpp) $(wildcard $(MEXDIR)/private/*.cpp)
 TARGETS     := $(subst $(MEXDIR), $(TARGETDIR), $(SRCS:.cpp=.$(MEXEXT)))
-MEXFLAGS    := -cxx -I$(INCLUDEDIR) $(shell pkg-config --cflags --libs opencv) -largeArrayDims
+MEX_FLAGS   := -cxx -largeArrayDims -I$(INCLUDEDIR) -L$(LIBDIR) $(shell pkg-config --cflags --libs opencv)
 
 VPATH       = $(TARGETDIR):$(SRCDIR):$(MEXDIR):$(TARGETDIR)/private:$(SRCDIR)/private
 
@@ -16,17 +20,19 @@ VPATH       = $(TARGETDIR):$(SRCDIR):$(MEXDIR):$(TARGETDIR)/private:$(SRCDIR)/pr
 
 all: $(TARGETS)
 
-MxArray.o: $(SRCDIR)/MxArray.cpp $(INCLUDEDIR)/MxArray.hpp
-	$(MEX) $(MEXFLAGS) -c $<
+$(LIBDIR)/libMxArray.a: $(SRCDIR)/MxArray.cpp $(INCLUDEDIR)/MxArray.hpp
+	$(MEX) -c $(MEX_FLAGS) $< -outdir $(LIBDIR)
+	$(AR) -cq $(LIBDIR)/libMxArray.a $(LIBDIR)/*.o
+	$(RM) -f $(LIBDIR)/*.o
 
-%.$(MEXEXT): %.cpp MxArray.o $(INCLUDEDIR)/mexopencv.hpp
-	$(MEX) $(MEXFLAGS) $< MxArray.o -o $@
+%.$(MEXEXT): %.cpp $(LIBDIR)/libMxArray.a $(INCLUDEDIR)/mexopencv.hpp
+	$(MEX) $(MEX_FLAGS) -lMxArray $< -o $@
 
 clean:
-	rm -rf *.o $(TARGETDIR)/*.$(MEXEXT)
+	$(RM) -rf $(LIBDIR)/*.a $(TARGETDIR)/*.$(MEXEXT)
 
 doc:
-	doxygen Doxyfile
+	$(DOXYGEN) Doxyfile
 
 test:
 	$(MATLAB) -nodisplay -r "cd test;try,UnitTest;catch e,disp(e.getReport);end;exit;"
