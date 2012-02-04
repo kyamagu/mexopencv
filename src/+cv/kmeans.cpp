@@ -53,8 +53,14 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	flags |= (labels.empty()) ? 0 : KMEANS_USE_INITIAL_LABELS;
 	
 	// Process
+#if CV_MINOR_VERSION >= 2
 	double d = kmeans(samples, clusterCount, labels, criteria, attempts, flags,
 		centers);
+#else
+	centers = Mat(samples.rows,clusterCount,CV_32FC1);
+	double d = kmeans(samples, clusterCount, labels, criteria, attempts, flags,
+		&centers);
+#endif
 	plhs[0] = MxArray(labels);
 	if (nlhs>1)
 		plhs[1] = MxArray(centers);
