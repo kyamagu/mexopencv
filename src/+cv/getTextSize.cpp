@@ -1,8 +1,8 @@
 /**
- * @file Scharr.cpp
- * @brief mex interface for Scharr
+ * @file getTextSize.cpp
+ * @brief mex interface for getTextSize
  * @author Kota Yamaguchi
- * @date 2011
+ * @date 2012
  */
 #include "mexopencv.hpp"
 using namespace std;
@@ -19,39 +19,37 @@ void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
 	// Check the number of arguments
-	if (nrhs<1 || (nrhs%2)!=1 || nlhs>1)
+	if (nrhs<1 || (nrhs%2)!=1 || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
 
 	// Argument vector
 	vector<MxArray> rhs(prhs,prhs+nrhs);
 	
 	// Option processing
-	int ddepth=-1;
-	int xorder=1;
-	int yorder=0;
-	double scale=1;
-	double delta=0;
-	int borderType=BORDER_DEFAULT;
+	const string text(rhs[0].toString());
+	int fontFace=FONT_HERSHEY_SIMPLEX;
+	double fontScale=1.0;
+	int thickness=1;
+	int fontStyle=0;
 	for (int i=1; i<nrhs; i+=2) {
 		string key = rhs[i].toString();
-		if (key=="DDepth")
-			ddepth = rhs[i+1].toInt();
-		else if (key=="XOrder")
-			xorder = rhs[i+1].toInt();
-		else if (key=="YOrder")
-			yorder = rhs[i+1].toInt();
-		else if (key=="Scale")
-			scale = rhs[i+1].toDouble();
-		else if (key=="Delta")
-			delta = rhs[i+1].toDouble();
-		else if (key=="BorderType")
-			borderType = BorderType[rhs[i+1].toString()];
+		if (key=="FontFace")
+			fontFace = FontFace[rhs[i+1].toString()];
+		else if (key=="FontScale")
+			fontScale = rhs[i+1].toDouble();
+		else if (key=="Thickness")
+			thickness = rhs[i+1].toInt();
+		else if (key=="FontStyle")
+			fontStyle = FontStyle[rhs[i+1].toString()];
 		else
 			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 	}
 	
 	// Execute function
-	Mat img(rhs[0].toMat());
-	Scharr(img, img, ddepth, xorder, yorder, scale, delta, borderType);
-	plhs[0] = MxArray(img);
+	vector<int> baseLine;
+	Size s = getTextSize(text, fontFace | fontStyle, fontScale, thickness,
+		&baseLine[0]);
+	plhs[0] = MxArray(s);
+	if (nlhs>1)
+		plhs[1] = MxArray(baseLine);
 }

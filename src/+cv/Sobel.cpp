@@ -14,8 +14,6 @@ using namespace cv;
  * @param plhs pointers to mxArrays in the left-hand-side
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
- *
- * Wrapper for Laplacian
  */
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )

@@ -61,4 +61,28 @@ const ConstMap<std::string,int> DistType = ConstMap<std::string,int>
     ("Welsch",	CV_DIST_WELSCH)
     ("Huber",	CV_DIST_HUBER);
 
+/** Line type for drawing
+ */
+const ConstMap<std::string,int> LineType = ConstMap<std::string,int>
+    ("8",8)
+    ("4",4)
+    ("AA",CV_AA);
+
+/** Font faces for drawing
+ */
+const ConstMap<std::string,int> FontFace = ConstMap<std::string,int>
+	("HersheySimplex",       CV_FONT_HERSHEY_SIMPLEX)
+	("HersheyPlain",         CV_FONT_HERSHEY_PLAIN)
+	("HersheyDuplex",        CV_FONT_HERSHEY_DUPLEX)
+	("HersheyComplex",       CV_FONT_HERSHEY_COMPLEX)
+	("HersheyTriplex",       CV_FONT_HERSHEY_TRIPLEX)
+	("HersheyComplexSmall",  CV_FONT_HERSHEY_COMPLEX_SMALL)
+	("HersheyScriptSimplex", CV_FONT_HERSHEY_SCRIPT_SIMPLEX)
+	("HersheyScriptComplex", CV_FONT_HERSHEY_SCRIPT_COMPLEX);
+
+/** Font styles for drawing
+ */
+const ConstMap<std::string,int> FontStyle = ConstMap<std::string,int>
+	("Regular", 0)
+	("Italic", CV_FONT_ITALIC);
 #endif
