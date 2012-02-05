@@ -31,11 +31,9 @@ while true
                                  'MinSize',[30,30]);
 	% Draw results
     imshow(im);
-    hold on;
     for i = 1:numel(boxes)
         rectangle('Position',boxes{i},'EdgeColor','g');
     end
-    hold off;
     
     % Terminate if any user input
     flag = getappdata(window,'flag');
