@@ -107,10 +107,16 @@ class MxArray {
 		inline mwSize ndims() const { return mxGetNumberOfDimensions(p_); }
 		/// Array of each dimension
 		inline const mwSize* dims() const { return mxGetDimensions(p_); };
-		/// Number of rows in array
+		/// Number of rows in an array
 		inline mwSize rows() const { return mxGetM(p_); }
-		/// Number of columns in array
+		/// Number of columns in an array
 		inline mwSize cols() const { return mxGetN(p_); }
+		/// Number of fields in a struct array
+		inline int nfields() const { return mxGetNumberOfFields(p_); }
+		std::string fieldname(int index=0) const;
+		std::vector<std::string> fieldnames() const;
+		/// Number of elements in IR, PR, and PI arrays
+		inline mwSize nzmax() const { return mxGetNzmax(p_); }
 		mwIndex subs(mwIndex i, mwIndex j=0) const;
 		mwIndex subs(const std::vector<mwIndex>& si) const;
 		/// Determine whether input is cell array

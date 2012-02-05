@@ -702,6 +702,33 @@ cv::TermCriteria MxArray::toTermCriteria(mwIndex index) const
 	);
 }
 
+/** Get field name of a struct array
+ * @param index index of the struct array
+ * @return std::string
+ */
+std::string MxArray::fieldname(int index) const
+{
+	const char *f = mxGetFieldNameByNumber(p_, index);
+	if (!f)
+		mexErrMsgIdAndTxt("mexopencv:error","Failed to get field name at %d\n",index);
+	return std::string(f);
+}
+
+/** Get field names of a struct array
+ * @return std::string
+ */
+std::vector<std::string> MxArray::fieldnames() const
+{
+	if (!isStruct())
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not a struct array");
+	int n = nfields();
+	std::vector<std::string> v;
+	v.reserve(n);
+	for (int i=0; i<n; ++i)
+		v.push_back(fieldname(i));
+	return v;
+}
+
 /** Offset from first element to desired element
  * @param i index of the first dimension of the array
  * @param j index of the second dimension of the array
