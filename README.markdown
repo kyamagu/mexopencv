@@ -131,6 +131,7 @@ files for matlab. The following command creates a user documentation under
     addpath('utils');
     MDoc;
 
+Online documentation is available at http://www.cs.stonybrook.edu/~kyamagu/mexopencv
 
 Developing a new mex function
 =============================
