@@ -13,13 +13,18 @@ classdef KNearest < handle
     %
     
     properties (SetAccess = private)
+        % Object ID
         id
     end
     
     properties (SetAccess = private, Dependent)
+        % Maximum number of K
         MaxK
+        % Variable count
         VarCount
+        % Sample count
         SampleCount
+        % Logical flag to indicate regression problem
         IsRegression
     end
     

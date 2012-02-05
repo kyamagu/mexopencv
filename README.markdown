@@ -27,6 +27,7 @@ The project tree is organized as follows.
     src/+cv/        directory for mex source files
     src/+cv/private directory for private mex source files
     test/           directory for test scripts and resources
+    utils/          directory for utilities
 
 
 Compile
@@ -65,7 +66,7 @@ to fix this issue by preloading the library file. On linux, set the correct
 library path in `LD_PRELOAD` environmental variable. On Mac OS X, this variable
 is named `DYLD_INSERT_LIBRARIES`.
 
-Documentation can be generated with doxygen (if installed)
+Developer documentation can be generated with doxygen (if installed)
 
     $ make doc
 
@@ -122,6 +123,13 @@ Check a list of functions available by `help` command in matlab.
     ...
 
 Look at the `samples/` directory for an example of an application.
+
+Also mexopencv includes a simple documentation utility that generates HTML help
+files for matlab. The following command creates a user documentation under
+`doc/matlab/` directory.
+
+    addpath('utils');
+    MDoc;
 
 
 Developing a new mex function

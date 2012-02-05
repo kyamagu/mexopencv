@@ -16,6 +16,7 @@ classdef CascadeClassifier < handle
     %
     
     properties (SetAccess = private)
+        % Object ID
         id
     end
     

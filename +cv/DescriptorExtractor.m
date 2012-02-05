@@ -11,11 +11,14 @@ classdef DescriptorExtractor < handle
     %
     
     properties (SetAccess = private)
+        % Object ID
     	id
     end
     
     properties (SetAccess = private, Dependent)
+        % Size of the DescriptorExtractor
         size
+        % Type of the extractor
     	type
     end
     

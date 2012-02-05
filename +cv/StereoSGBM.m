@@ -30,6 +30,7 @@ classdef StereoSGBM < handle
     %
     
     properties (SetAccess = private)
+        % Object ID
         id
     end
     

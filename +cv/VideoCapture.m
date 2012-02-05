@@ -21,6 +21,7 @@ classdef VideoCapture < handle
     %
     
     properties (SetAccess = private)
+        % Object ID
     	id
     end
     

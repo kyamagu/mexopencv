@@ -11,6 +11,7 @@ classdef VideoWriter < handle
     %
     
     properties (SetAccess = private)
+        % Object ID
     	id
     end
     

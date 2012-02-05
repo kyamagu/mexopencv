@@ -52,7 +52,7 @@ classdef ANN_MLP < handle
     % The larger the network size (the number of hidden layers and their sizes)
     % is, the more the potential network flexibility is. The error on the
     % training set could be made arbitrarily small. But at the same time the
-    % learned network also learn the noise present in the training set, so
+    % learned network also learn the noise present in the training set, so
     % the error on the test set usually starts increasing after the network size
     % reaches a limit. Besides, the larger networks are trained much longer than
     % the smaller ones, so it is reasonable to pre-process the data, using PCA
@@ -87,7 +87,7 @@ classdef ANN_MLP < handle
     %
     
     properties (SetAccess = private)
-        id
+        id % Object ID
     end
     
     properties (SetAccess = private, Dependent)
