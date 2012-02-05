@@ -58,7 +58,7 @@ void read(FileStorage& fs, MxArray& x, const FileNode& node)
 					v[i] = MxArray(m);
 				}
 				else {
-					MxArray y(static_cast<const char**>(NULL),0);
+					MxArray y = MxArray::Struct();
 					read(fs, y, elem);
 					v[i] = y;
 				}
@@ -93,7 +93,7 @@ void read(FileStorage& fs, MxArray& x, const FileNode& node)
 					x.set(elem.name(), m);
 				}
 				else {
-					MxArray y(static_cast<const char**>(NULL),0);
+					MxArray y = MxArray::Struct();
 					read(fs, y, elem);
 					x.set(elem.name(), y);
 				}
@@ -163,21 +163,39 @@ void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
 	// Check arguments
-	if (!(nrhs==2&&nlhs==0)&&!(nrhs==1&&nlhs<=1))
+	if (!(nrhs>=2&&nlhs==0)&&!(nrhs==1&&nlhs<=1))
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    
 	string filename(MxArray(prhs[0]).toString());
 	if (nrhs==1) {
+		// Read
 		FileStorage fs(filename, FileStorage::READ);
-		MxArray x(static_cast<const char**>(NULL),0);
 		FileNode node = fs.root();
-		read(fs, x, node);
-		plhs[0] = x;
+		MxArray s = MxArray::Struct();
+		read(fs, s, node);
+		plhs[0] = s;
     }
     else {
-		MxArray x(prhs[1]);
-		if (!x.isStruct() || x.numel()!=1)
-			mexErrMsgIdAndTxt("mexopencv:error","Input is not a scalar struct array");
+    	// Write
+    	vector<MxArray> rhs(prhs+1,prhs+nrhs);
 		FileStorage fs(filename, FileStorage::WRITE);
-		write(fs, x, true);
+		if (rhs[0].isStruct() && rhs[0].numel()==1)
+			// Write a scalar struct
+			write(fs, rhs[0], true);
+		else {
+			// Create a temporary scalar struct and write
+			string nodeName(FileStorage::getDefaultObjectName(filename));
+			MxArray s = MxArray::Struct();
+			if (rhs.size()==1)
+				s.set(nodeName, rhs[0].clone());
+			else {
+				MxArray cell = MxArray::Cell(rhs.size());
+				for (int i=0; i<rhs.size(); ++i)
+					cell.set(i, rhs[i].clone());
+				s.set(nodeName, cell);
+			}
+			write(fs, s, true);
+			s.destroy();
+		}
     }
 }

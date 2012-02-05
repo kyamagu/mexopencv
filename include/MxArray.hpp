@@ -51,6 +51,25 @@ class MxArray {
 		template <typename T> explicit MxArray(const std::vector<T>& v);
 		MxArray(const char**fields, int nfields, int m=1, int n=1);
 		
+		/// Create a new cell array
+		/// @param m Number of rows
+		/// @param n Number of cols
+		static inline MxArray Cell(int m=1, int n=1) {
+			return MxArray(mxCreateCellMatrix(m,n));
+		}
+		/// Create a new struct array
+		/// @param fields Field names
+		/// @param nfields Number of fields
+		/// @param m Number of rows
+		/// @param n Number of cols
+		static inline MxArray Struct(const char**fields=NULL, int nfields=0, int m=1, int n=1) {
+			return MxArray(mxCreateStructMatrix(m,n,nfields,fields));
+		}
+		/// Clone mxArray
+		MxArray clone() { return MxArray(mxDuplicateArray(p_)); }
+		/// Destroy allocated mxArray
+		void destroy() { mxDestroyArray(const_cast<mxArray*>(p_)); }
+		
 		/// Destructor
 		virtual ~MxArray() {};
 		
@@ -585,6 +604,7 @@ void MxArray::set(const std::string& fieldName, const T& value, mwIndex index)
 
 // Template specializations
 template <> MxArray MxArray::at(mwIndex index) const;
+template <> void MxArray::set(mwIndex index, const MxArray& value);
 template <> std::vector<MxArray> MxArray::toVector() const;
 template <> std::vector<std::string> MxArray::toVector() const;
 template <> std::vector<cv::Mat> MxArray::toVector() const;

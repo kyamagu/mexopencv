@@ -788,6 +788,20 @@ MxArray MxArray::at(mwIndex index) const
 	return MxArray(mxGetCell(p_,index));
 }
 
+/** Template for element write accessor
+ * @param index offset of the array element
+ * @param value value of the field
+ */
+template <>
+void MxArray::set(mwIndex index, const MxArray& value)
+{
+	if (index < 0 || numel() <= index)
+		mexErrMsgIdAndTxt("mexopencv:error","Accessing invalid range");
+	if (!isCell())
+		mexErrMsgIdAndTxt("mexopencv:error","Not cell array");
+	mxSetCell(const_cast<mxArray*>(p_), index, value);
+}
+
 /** Convert MxArray to std::vector<MxArray>
  * @return std::vector<MxArray> value
  *
