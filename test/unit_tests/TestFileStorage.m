@@ -11,8 +11,8 @@ classdef TestFileStorage
             assert(all(S.field1(:)==S2.field1(:)));
             assert(strcmp(S.field2,S2.field2));
             if exist('.my.yml','file')
-				delete my.yml;
-			end
+                delete .my.yml;
+            end
         end
         
         function test_error_1
