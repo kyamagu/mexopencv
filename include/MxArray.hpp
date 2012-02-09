@@ -24,7 +24,7 @@
  */
 class MxArray {
 	public:
-		explicit MxArray(const mxArray *arr);
+		MxArray(const mxArray *arr);
 		explicit MxArray(const int i);
 		explicit MxArray(const double d);
 		explicit MxArray(const bool b);
