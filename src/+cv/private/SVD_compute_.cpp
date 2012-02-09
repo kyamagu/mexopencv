@@ -42,11 +42,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	int flags = (modifyA) ? SVD::MODIFY_A : 0|
 				(noUV) ?    SVD::NO_UV :    0|
 				(fullUV) ?  SVD::FULL_UV :  0;
-	Mat w, u, vt;
-	SVD::compute(A, w, u, vt, flags);
-	plhs[0] = MxArray(w);
+	SVD svd(A, flags);
+	plhs[0] = MxArray(svd.w);
 	if (nlhs>1)
-		plhs[1] = MxArray(u);
+		plhs[1] = MxArray(svd.u);
 	if (nlhs>2)
-		plhs[2] = MxArray(vt);
+		plhs[2] = MxArray(svd.vt);
 }
