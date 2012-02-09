@@ -65,7 +65,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	if (nlhs > 1) {
 		vector<Mat> vc(hierarchy.size());
 		for (int i=0;i<vc.size();++i)
-			vc[i] = Mat(1,3,CV_32FC1,&hierarchy[i][0]);
+			vc[i] = Mat(1,4,CV_32SC1,&hierarchy[i][0]);
 		plhs[1] = MxArray(vc);
 	}
 #endif
