@@ -702,6 +702,33 @@ cv::TermCriteria MxArray::toTermCriteria(mwIndex index) const
 	);
 }
 
+/** Get field name of a struct array
+ * @param index index of the struct array
+ * @return std::string
+ */
+std::string MxArray::fieldname(int index) const
+{
+	const char *f = mxGetFieldNameByNumber(p_, index);
+	if (!f)
+		mexErrMsgIdAndTxt("mexopencv:error","Failed to get field name at %d\n",index);
+	return std::string(f);
+}
+
+/** Get field names of a struct array
+ * @return std::string
+ */
+std::vector<std::string> MxArray::fieldnames() const
+{
+	if (!isStruct())
+		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not a struct array");
+	int n = nfields();
+	std::vector<std::string> v;
+	v.reserve(n);
+	for (int i=0; i<n; ++i)
+		v.push_back(fieldname(i));
+	return v;
+}
+
 /** Offset from first element to desired element
  * @param i index of the first dimension of the array
  * @param j index of the second dimension of the array
@@ -759,6 +786,20 @@ MxArray MxArray::at(mwIndex index) const
 	if (!isCell())
 		mexErrMsgIdAndTxt("mexopencv:error","MxArray is not cell");
 	return MxArray(mxGetCell(p_,index));
+}
+
+/** Template for element write accessor
+ * @param index offset of the array element
+ * @param value value of the field
+ */
+template <>
+void MxArray::set(mwIndex index, const MxArray& value)
+{
+	if (index < 0 || numel() <= index)
+		mexErrMsgIdAndTxt("mexopencv:error","Accessing invalid range");
+	if (!isCell())
+		mexErrMsgIdAndTxt("mexopencv:error","Not cell array");
+	mxSetCell(const_cast<mxArray*>(p_), index, value);
 }
 
 /** Convert MxArray to std::vector<MxArray>

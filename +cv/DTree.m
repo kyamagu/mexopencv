@@ -5,7 +5,7 @@ classdef DTree < handle
     % Regression Tree algorithms described in [Breiman84].
 	%
 	% The class CvDTree represents a single decision tree that may be used alone
-	% or as a base class in tree ensembles (see Boosting and Random Trees ).
+	% or as a base class in tree ensembles (see Boosting and Random Trees).
 	%
 	% A decision tree is a binary tree (tree where each non-leaf node has two
 	% child nodes). It can be used either for classification or for regression.
@@ -18,10 +18,12 @@ classdef DTree < handle
     %
     
     properties (SetAccess = private)
+        % Object ID
         id
     end
     
     properties (SetAccess = private, Dependent)
+        % Object parameters
         Params
     end
     

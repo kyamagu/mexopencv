@@ -24,12 +24,16 @@ classdef SVM < handle
     %
     
     properties (SetAccess = private)
+        % Object ID
         id
     end
     
     properties (SetAccess = private, Dependent)
+        % Object parameters
         Params
+        % Variable count
         VarCount
+        % Support vector count
         SupportVectorCount
     end
     

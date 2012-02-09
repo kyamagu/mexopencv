@@ -19,12 +19,16 @@ classdef ERTrees < handle
     %
     
     properties (SetAccess = private)
+        % Object ID
         id
     end
     
     properties (SetAccess = private, Dependent)
+        % Mask of active variables
         ActiveVarMask
+        % Number of trees
         TreeCount
+        % Object parameters
         Params
     end
     

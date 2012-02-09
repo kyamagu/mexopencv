@@ -10,10 +10,12 @@ classdef DescriptorMatcher < handle
     %
     
     properties (SetAccess = private)
+        % Object ID
     	id
     end
     
     properties (SetAccess = private, Dependent)
+        % Type of the detector
     	type
     end
     

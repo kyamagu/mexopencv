@@ -4,7 +4,7 @@ mexopencv
 Collection and a development kit of matlab mex functions for OpenCV library
 
 The package provides matlab mex functions that interface a hundred of
-OpenCV functions. Also the package contains C++ class that converts between 
+OpenCV APIs. Also the package contains C++ class that converts between 
 Matlab's native data type and OpenCV data types. The package is suitable for
 fast prototyping of OpenCV application in Matlab, use of OpenCV as an external
 toolbox in Matlab, and development of an original mex function.
@@ -21,11 +21,13 @@ The project tree is organized as follows.
     README.markdown this file
     doc/            directory for documentation
     include/        header files
+    lib/            directory for compiled c++ library files
     samples/        directory for sample application codes
     src/            directory for c++ source files
     src/+cv/        directory for mex source files
     src/+cv/private directory for private mex source files
     test/           directory for test scripts and resources
+    utils/          directory for utilities
 
 
 Compile
@@ -64,7 +66,7 @@ to fix this issue by preloading the library file. On linux, set the correct
 library path in `LD_PRELOAD` environmental variable. On Mac OS X, this variable
 is named `DYLD_INSERT_LIBRARIES`.
 
-Documentation can be generated with doxygen (if installed)
+Developer documentation can be generated with doxygen (if installed)
 
     $ make doc
 
@@ -122,6 +124,14 @@ Check a list of functions available by `help` command in matlab.
 
 Look at the `samples/` directory for an example of an application.
 
+Also mexopencv includes a simple documentation utility that generates HTML help
+files for matlab. The following command creates a user documentation under
+`doc/matlab/` directory.
+
+    addpath('utils');
+    MDoc;
+
+Online documentation is available at http://www.cs.stonybrook.edu/~kyamagu/mexopencv
 
 Developing a new mex function
 =============================

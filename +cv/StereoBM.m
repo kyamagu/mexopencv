@@ -10,6 +10,7 @@ classdef StereoBM < handle
     %
     
     properties (SetAccess = private)
+        % Object ID
         id
     end
     

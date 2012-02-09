@@ -30,16 +30,16 @@ classdef BackgroundSubtractorMOG2 < handle
     %
     
     properties (SetAccess = private)
-        id % Object id
+        id % Object ID
     end
     
     properties (Dependent)
-    	frameSize       %
-    	nframes         %
-    	history         %
-    	nmixtures       %
-    	varThreshold    %
-    	backgroundRatio %
+    	frameSize       % Size of the frame
+    	nframes         % Number of frames
+    	history         % History
+    	nmixtures       % Number of mixture components
+    	varThreshold    % Threshold value
+    	backgroundRatio % Ratio of the background
     end
     
     methods

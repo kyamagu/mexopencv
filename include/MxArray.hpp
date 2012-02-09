@@ -51,6 +51,25 @@ class MxArray {
 		template <typename T> explicit MxArray(const std::vector<T>& v);
 		MxArray(const char**fields, int nfields, int m=1, int n=1);
 		
+		/// Create a new cell array
+		/// @param m Number of rows
+		/// @param n Number of cols
+		static inline MxArray Cell(int m=1, int n=1) {
+			return MxArray(mxCreateCellMatrix(m,n));
+		}
+		/// Create a new struct array
+		/// @param fields Field names
+		/// @param nfields Number of fields
+		/// @param m Number of rows
+		/// @param n Number of cols
+		static inline MxArray Struct(const char**fields=NULL, int nfields=0, int m=1, int n=1) {
+			return MxArray(mxCreateStructMatrix(m,n,nfields,fields));
+		}
+		/// Clone mxArray
+		MxArray clone() { return MxArray(mxDuplicateArray(p_)); }
+		/// Destroy allocated mxArray
+		void destroy() { mxDestroyArray(const_cast<mxArray*>(p_)); }
+		
 		/// Destructor
 		virtual ~MxArray() {};
 		
@@ -107,10 +126,16 @@ class MxArray {
 		inline mwSize ndims() const { return mxGetNumberOfDimensions(p_); }
 		/// Array of each dimension
 		inline const mwSize* dims() const { return mxGetDimensions(p_); };
-		/// Number of rows in array
+		/// Number of rows in an array
 		inline mwSize rows() const { return mxGetM(p_); }
-		/// Number of columns in array
+		/// Number of columns in an array
 		inline mwSize cols() const { return mxGetN(p_); }
+		/// Number of fields in a struct array
+		inline int nfields() const { return mxGetNumberOfFields(p_); }
+		std::string fieldname(int index=0) const;
+		std::vector<std::string> fieldnames() const;
+		/// Number of elements in IR, PR, and PI arrays
+		inline mwSize nzmax() const { return mxGetNzmax(p_); }
 		mwIndex subs(mwIndex i, mwIndex j=0) const;
 		mwIndex subs(const std::vector<mwIndex>& si) const;
 		/// Determine whether input is cell array
@@ -579,6 +604,7 @@ void MxArray::set(const std::string& fieldName, const T& value, mwIndex index)
 
 // Template specializations
 template <> MxArray MxArray::at(mwIndex index) const;
+template <> void MxArray::set(mwIndex index, const MxArray& value);
 template <> std::vector<MxArray> MxArray::toVector() const;
 template <> std::vector<std::string> MxArray::toVector() const;
 template <> std::vector<cv::Mat> MxArray::toVector() const;
