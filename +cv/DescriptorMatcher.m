@@ -162,7 +162,8 @@ classdef DescriptorMatcher < handle
             %       true, the matches vector does not contain matches for fully
             %       masked-out query descriptors.
         	%
-        	matches = DescriptorMatcher_(this.id, 'knnMatch',queryDescriptors, varargin{:});
+        	matches = DescriptorMatcher_(this.id, 'knnMatch', ...
+        		queryDescriptors, trainDescriptors, k, varargin{:});
         end
         
         function matches = radiusMatch(this, queryDescriptors, trainDescriptors, maxDistance, varargin)
@@ -191,7 +192,8 @@ classdef DescriptorMatcher < handle
             %       true, the matches vector does not contain matches for fully
             %       masked-out query descriptors.
         	%
-        	matches = DescriptorMatcher_(this.id, 'radiusMatch',queryDescriptors, varargin{:});
+        	matches = DescriptorMatcher_(this.id, 'radiusMatch',...
+        		queryDescriptors, trainDescriptors, maxDistance, varargin{:});
         end
         
         function read(this, filename)
