@@ -29,11 +29,14 @@ classdef DTree < handle
     
     methods
         function this = DTree(varargin)
-            %DTREE
+            %DTREE  Create a new instance of DTree
             %
             %    classifier = cv.DTree
+            %    classifier = cv.DTree(...)
             %
-            % See also cv.DTree
+            % The constructor takes the same parameter to the train method.
+            %
+            % See also cv.DTree cv.DTree.train
             %
             this.id = DTree_();
             if nargin>0, this.train(varargin{:}); end
@@ -88,7 +91,7 @@ classdef DTree < handle
             %TRAIN  Trains a decision tree
             %
             %    classifier.train(trainData, responses)
-            %    classifier.train(trainData, responses, 'OptionName', optionValue, ...)
+            %    classifier.train(..., 'OptionName', optionValue, ...)
             %
             % Input:
             %     trainData: Row vectors of feature.
@@ -175,6 +178,7 @@ classdef DTree < handle
             %PREDICT  Predicts the response for input samples.
             %
             %    results = classifier.predict(samples)
+            %    [...] = classifier.predict(..., 'OptionName', optionValue, ...)
             %
             % Input:
             %     samples: Input row vectors

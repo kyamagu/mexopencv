@@ -50,8 +50,11 @@ classdef Boost < handle
             %BOOST  Boosted tree classifier
             %
             %    classifier = cv.Boost
+            %    classifier = cv.Boost(...)
             %
-            % See also cv.Boost
+            % The constructor takes the same parameter to the train method.
+            %
+            % See also cv.Boost cv.Boost.train
             %
             this.id = Boost_();
             if nargin>0, this.train(varargin{:}); end
@@ -106,7 +109,7 @@ classdef Boost < handle
             %TRAIN  Trains a boosted tree classifier
             %
             %    classifier.train(trainData, responses)
-            %    classifier.train(trainData, responses, 'OptionName', optionValue, ...)
+            %    classifier.train(..., 'OptionName', optionValue, ...)
             %
             % Input:
             %     trainData: Row vectors of feature.
@@ -177,6 +180,7 @@ classdef Boost < handle
             %PREDICT  Predicts responses for input samples
             %
             %    results = classifier.predict(samples)
+            %    [...] = classifier.predict(..., 'OptionName', optionValue, ...)
             %
             % Input:
             %     samples: Input row vectors

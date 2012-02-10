@@ -79,8 +79,11 @@ classdef RTrees < handle
             %RTREES  Random Trees classifier
             %
             %    classifier = cv.RTrees
+            %    classifier = cv.RTrees(...)
             %
-            % See also cv.RTrees
+            % The constructor takes the same parameter to the train method.
+            %
+            % See also cv.RTrees cv.RTrees.train
             %
             this.id = RTrees_();
             if nargin>0, this.train(varargin{:}); end
@@ -225,6 +228,7 @@ classdef RTrees < handle
             %PREDICT  Predicts a response for an input sample
             %
             %    results = classifier.predict(samples)
+            %    [...] = classifier.predict(..., 'OptionName', optionValue, ...)
             %
             % Input:
             %     samples: Input row vectors
@@ -250,7 +254,8 @@ classdef RTrees < handle
         function results = predict_prob(this, samples, varargin)
             %PREDICT_PROB  Returns a fuzzy-predicted class label
             %
-            %    results = classifier.predict(samples)
+            %    results = classifier.predict_prob(samples)
+            %    [...] = classifier.predict_prob(..., 'OptionName', optionValue, ...)
             %
             % Input:
             %     samples: Input row vectors
@@ -282,6 +287,10 @@ classdef RTrees < handle
         
         function value = get_proximity(this, sample1, sample2, varargin)
         	%GET_PROXIMITY  Retrieves the proximity measure between two training samples
+        	%
+        	%    value = classifier.get_proximity(sample1, sample2)
+        	%    [...] = classifier.get_proximity(..., 'OptionName', optionValue, ...)
+        	%
             % Options:
             %     'Missing1':  Missing values mask for sample1
             %     'Missing2':  Missing values mask for sample2

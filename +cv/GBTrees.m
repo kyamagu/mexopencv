@@ -26,8 +26,11 @@ classdef GBTrees < handle
             %GBTREES  GBTrees classifier
             %
             %    classifier = cv.GBTrees
+            %    classifier = cv.GBTrees(...)
             %
-            % See also cv.GBTrees
+            % The constructor takes the same parameter to the train method.
+            %
+            % See also cv.GBTrees cv.GBTrees.train
             %
             this.id = GBTrees_();
             if nargin>0, this.train(varargin{:}); end
@@ -82,7 +85,7 @@ classdef GBTrees < handle
             %TRAIN  Trains a Gradient boosted tree model
             %
             %    classifier.train(trainData, responses)
-            %    classifier.train(trainData, responses, 'OptionName', optionValue, ...)
+            %    classifier.train(..., 'OptionName', optionValue, ...)
             %
             % Input:
             %     trainData: Row vectors of feature.
@@ -130,6 +133,7 @@ classdef GBTrees < handle
             %PREDICT  Predicts a response for an input sample
             %
             %    results = classifier.predict(samples)
+            %    [...] = classifier.predict(..., 'OptionName', optionValue, ...)
             %
             % Input:
             %     samples: Input row vectors

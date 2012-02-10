@@ -37,8 +37,11 @@ classdef ERTrees < handle
             %ERTREES  Random Trees classifier
             %
             %    classifier = cv.ERTrees
+            %    classifier = cv.ERTrees(...)
             %
-            % See also cv.ERTrees
+            % The constructor takes the same parameter to the train method.
+            %
+            % See also cv.ERTrees cv.ERTrees.train
             %
             this.id = ERTrees_();
             if nargin>0, this.train(varargin{:}); end
@@ -93,7 +96,7 @@ classdef ERTrees < handle
             %TRAIN  Trains the Extremely Random Trees model
             %
             %    classifier.train(trainData, responses)
-            %    classifier.train(trainData, responses, 'OptionName', optionValue, ...)
+            %    classifier.train(..., 'OptionName', optionValue, ...)
             %
             % Input:
             %     trainData: Row vectors of feature.
@@ -183,6 +186,7 @@ classdef ERTrees < handle
             %PREDICT  Predicts a response for an input sample
             %
             %    results = classifier.predict(samples)
+            %    [...] = classifier.predict(..., 'OptionName', optionValue, ...)
             %
             % Input:
             %     samples: Input row vectors
@@ -208,7 +212,8 @@ classdef ERTrees < handle
         function results = predict_prob(this, samples, varargin)
             %PREDICT_PROB  Returns a fuzzy-predicted class label
             %
-            %    results = classifier.predict(samples)
+            %    results = classifier.predict_prob(samples)
+            %    [...] = classifier.predict_prob(..., 'OptionName', optionValue, ...)
             %
             % Input:
             %     samples: Input row vectors
@@ -240,6 +245,14 @@ classdef ERTrees < handle
         
         function value = get_proximity(this, sample1, sample2, varargin)
         	%GET_PROXIMITY  Returns the variable importance array
+        	%
+        	%    value = classifier.get_proximity(sample1, sample2)
+        	%    [...] = classifier.get_proximity(..., 'OptionName', optionValue, ...)
+        	%
+            % Options:
+            %     'Missing1':  Missing values mask for sample1
+            %     'Missing2':  Missing values mask for sample2
+            %
         	value = ERTrees_(this.id, 'get_proximity', sample1, sample2, varargin{:});
         end
         

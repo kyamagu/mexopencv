@@ -26,12 +26,12 @@ classdef DescriptorExtractor < handle
         function this = DescriptorExtractor(type)
             %DESCRIPTOREXTRACTOR  DescriptorExtractor constructors
             %
-            %  detector = cv.DescriptorExtractor(type)
+            %  extractor = cv.DescriptorExtractor(type)
             %
             % Input:
             %   type: Type of the detector. see below. default 'FAST'
             % Output:
-            %   detector: New instance of the DescriptorExtractor
+            %   extractor: New instance of the DescriptorExtractor
             %
             % The following extractor types are supported:
             %

@@ -62,6 +62,8 @@ classdef DescriptorMatcher < handle
         
         function add(this, descriptors)
         	%ADD  Adds descriptors to train a descriptor collection
+            %
+            %  matcher.add(descriptors)
         	%
         	% If the collection trainDescCollectionis is not empty, the new
         	% descriptors are added to existing train descriptors.
@@ -78,11 +80,15 @@ classdef DescriptorMatcher < handle
         function clear(this)
         	%CLEAR  Clears the train descriptor collection
         	%
+            %  matcher.clear()
+        	%
         	DescriptorMatcher_(this.id, 'clear');
         end
         
         function status = empty(this)
         	%EMPTY  Returns true if there are no train descriptors in the collection
+            %
+            %  matcher.empty()
         	%
         	status = DescriptorMatcher_(this.id, 'empty');
         end
@@ -95,6 +101,8 @@ classdef DescriptorMatcher < handle
         
         function train(this)
         	%TRAIN  Trains a descriptor matcher
+        	%
+            %  matcher.train()
         	%
         	% Trains a descriptor matcher (for example, the flann index). In all
         	% methods to match, the method train() is run every time before
@@ -110,6 +118,7 @@ classdef DescriptorMatcher < handle
         	%MATCH  Finds the best match for each descriptor from a query set
         	%
             %   matches = matcher.match(queryDescriptors, trainDescriptors)
+            %   [...] = matcher.match(..., 'OptionName', optionValue, ...)
             %
             % Input:
             %   queryDescriptors: Query set of descriptors.
@@ -131,6 +140,7 @@ classdef DescriptorMatcher < handle
         	%KNNMATCH  Finds the k best matches for each descriptor from a query set
         	%
             %   matches = matcher.knnMatch(queryDescriptors, trainDescriptors, k)
+            %   [...] = matcher.knnMatch(..., 'OptionName', optionValue, ...)
             %
             % Input:
             %   queryDescriptors: Query set of descriptors.
@@ -156,10 +166,11 @@ classdef DescriptorMatcher < handle
         end
         
         function matches = radiusMatch(this, queryDescriptors, trainDescriptors, maxDistance, varargin)
-        	%KNNMATCH  Finds the k best matches for each descriptor from a query set
+        	%RADIUSMATCH  For each query descriptor, finds the training descriptors not farther than the specified distance
         	%
-            %   matches = matcher.knnMatch(queryDescriptors, k)
-            %   matches = matcher.knnMatch(queryDescriptors, trainDescriptors, k)
+            %   matches = matcher.radiusMatch(queryDescriptors, k)
+            %   matches = matcher.radiusMatch(queryDescriptors, trainDescriptors, k)
+            %   [...] = matcher.radiusMatch(..., 'OptionName', optionValue, ...)
             %
             % Input:
             %   queryDescriptors: Query set of descriptors.
