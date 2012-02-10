@@ -64,7 +64,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	if (nlhs>1) {
 		vector<float> descriptors;
 		surf(image, mask, keypoints, descriptors, useProvidedKeypoints);
-		plhs[1] = MxArray(Mat(descriptors));
+		Mat m(descriptors);
+		plhs[1] = MxArray(m.reshape(0, keypoints.size()));
 	}
 	else
 		surf(image, mask, keypoints);
