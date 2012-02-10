@@ -95,10 +95,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "match") {
     	if (nrhs<3)
     		mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
-    	Mat queryDescriptors(rhs[2].toMat());
+    	Mat queryDescriptors(rhs[2].toMat(CV_32F));
         vector<DMatch> matches;
     	if (rhs[3].isNumeric()) { // First format
-			Mat trainDescriptors(rhs[3].toMat());
+			Mat trainDescriptors(rhs[3].toMat(CV_32F));
 			Mat mask;
 			for (int i=4; i<nrhs; i+=2) {
 				string key(rhs[i].toString());
@@ -125,10 +125,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "knnMatch") {
     	if (nrhs<4)
     		mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
-    	Mat queryDescriptors(rhs[2].toMat());
+    	Mat queryDescriptors(rhs[2].toMat(CV_32F));
         vector<vector<DMatch> > matches;
         if (rhs[3].isNumeric()) { // First format
-        	Mat trainDescriptors(rhs[3].toMat());
+        	Mat trainDescriptors(rhs[3].toMat(CV_32F));
 			int k = rhs[4].toInt();
 			Mat mask;
 			bool compactResult=false;
@@ -164,10 +164,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "radiusMatch") {
     	if (nrhs<4)
     		mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
-    	Mat queryDescriptors(rhs[2].toMat());
+    	Mat queryDescriptors(rhs[2].toMat(CV_32F));
         vector<vector<DMatch> > matches;
         if (rhs[3].isNumeric()) { // First format
-        	Mat trainDescriptors(rhs[3].toMat());
+        	Mat trainDescriptors(rhs[3].toMat(CV_32F));
 			float maxDistance = rhs[4].toDouble();
 			Mat mask;
 			bool compactResult=false;
