@@ -26,7 +26,7 @@ classdef DescriptorMatcher < handle
             %  matcher = cv.DescriptorMatcher(type)
             %
             % Input:
-            %   type: Type of the detector. see below. default 'FAST'
+            %   type: Type of the detector. see below. default 'BruteForce'
             % Output:
             %   detector: New instance of the DescriptorMatcher
             %
@@ -117,6 +117,7 @@ classdef DescriptorMatcher < handle
         function matches = match(this, queryDescriptors, varargin)
         	%MATCH  Finds the best match for each descriptor from a query set
         	%
+            %   matches = matcher.match(queryDescriptors)
             %   matches = matcher.match(queryDescriptors, trainDescriptors)
             %   [...] = matcher.match(..., 'OptionName', optionValue, ...)
             %
@@ -136,9 +137,10 @@ classdef DescriptorMatcher < handle
         	matches = DescriptorMatcher_(this.id, 'match', queryDescriptors, varargin{:});
         end
         
-        function matches = knnMatch(this, queryDescriptors, trainDescriptors, k, varargin)
+        function matches = knnMatch(this, queryDescriptors, varargin)
         	%KNNMATCH  Finds the k best matches for each descriptor from a query set
         	%
+            %   matches = matcher.knnMatch(queryDescriptors, k)
             %   matches = matcher.knnMatch(queryDescriptors, trainDescriptors, k)
             %   [...] = matcher.knnMatch(..., 'OptionName', optionValue, ...)
             %
@@ -163,10 +165,10 @@ classdef DescriptorMatcher < handle
             %       masked-out query descriptors.
         	%
         	matches = DescriptorMatcher_(this.id, 'knnMatch', ...
-        		queryDescriptors, trainDescriptors, k, varargin{:});
+        		queryDescriptors, varargin{:});
         end
         
-        function matches = radiusMatch(this, queryDescriptors, trainDescriptors, maxDistance, varargin)
+        function matches = radiusMatch(this, queryDescriptors, varargin)
         	%RADIUSMATCH  For each query descriptor, finds the training descriptors not farther than the specified distance
         	%
             %   matches = matcher.radiusMatch(queryDescriptors, k)
@@ -193,7 +195,7 @@ classdef DescriptorMatcher < handle
             %       masked-out query descriptors.
         	%
         	matches = DescriptorMatcher_(this.id, 'radiusMatch',...
-        		queryDescriptors, trainDescriptors, maxDistance, varargin{:});
+        		queryDescriptors, varargin{:});
         end
         
         function read(this, filename)
