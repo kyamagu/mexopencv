@@ -1,10 +1,14 @@
 classdef DescriptorMatcher < handle
 	%DESCRIPTORMATCHER  DescriptorMatcher class
 	%
-	% Descriptor matcher class. Here is how to use:
+	% Descriptor matcher class. Basic usage is the following:
 	%
+    %   X = rand(100,10);
+    %   Y = rand(100,10);
 	%   matcher = cv.DescriptorMatcher('BruteForce');
-	%   matches = matcher.match();
+    %   matcher.add(X);
+    %   matcher.train(); % Optional for BruteForce matcher
+	%   matches = matcher.match(Y);
     %
     % See also cv.DescriptorMatcher.DescriptorMatcher
     %
@@ -20,31 +24,128 @@ classdef DescriptorMatcher < handle
     end
     
     methods
-        function this = DescriptorMatcher(type)
+        function this = DescriptorMatcher(type, varargin)
             %DESCRIPTORMATCHER  DescriptorMatcher constructors
             %
             %  matcher = cv.DescriptorMatcher(type)
+            %  matcher = cv.DescriptorMatcher('FlannBased', 'OptionName', optionValue, ...)
             %
             % Input:
             %   type: Type of the detector. see below. default 'BruteForce'
             % Output:
-            %   detector: New instance of the DescriptorMatcher
+            %   matcher: New instance of the DescriptorMatcher
             %
             % The following matcher types are supported:
             %
-            %     'BruteForce' (it uses L2)
-            %     'BruteForce-L1'
-            %     'BruteForce-Hamming'
-            %     'BruteForce-HammingLUT'
-            %     'FlannBased'
+            %     'BruteForce'             L2 distance
+            %     'BruteForce-L1'          L1 distance
+            %     'BruteForce-Hamming'     Hamming distance
+            %     'BruteForce-HammingLUT'  Hamming distance lookup table
+            %     'FlannBased'             Flann-based indexing
             %
-            % See also cv.DescriptorMatcher cv.DescriptorMatcher.write
+            % The FlannBased matcher takes optional arguments
+            %
+            %     'Index': Type of indexer. One of the following:
+            %         'Linear'     Brute-force matching
+            %         'KDTree'     Randomized kd-trees
+            %         'KMeans'     Hierarchical k-means tree
+            %         'Composite'  Combination of KDTree and KMeans
+            %         'Autotuned'  Automatic tuning to one of the above
+            %         'Saved'      Load saved index from a file
+            %        Each index type takes optional arguments. You can
+            %        specify the indexer by a cell array that starts
+            %        from the type name followed by option arguments:
+            %        
+            %            {'Type', 'OptionName', optionValue,...}
+            %
+            %     'Search': Option in matching operation. Takes a cell
+            %         array of option pairs.
+            %
+            % For example, KDTree with tree size=4 is specified by:
+            %
+            %    matcher = cv.DescriptorMatcher('FlannBased',...
+            %        'Index',  {'KDTree', 'Trees', 4},...
+            %        'Search', {'Sorted', true})
+            %
+            % Options for FlannBased indexers are the following:
+            %
+            % KDTree and Composite
+            %    'Trees': The number of parallel kd-trees to use. Good
+            %        values are in the range [1..16]. default 4
+            % KMeans and Composite
+            %    'Branching': The branching factor to use for the
+            %        hierarchical k-means tree. default 32
+            %    'Iterations': The maximum number of iterations to use in
+            %        the k-means clustering stage when building the k-means
+            %        tree. A value of -1 used here means that the k-means
+            %        clustering should be iterated until convergenceThe
+            %        maximum number of iterations to use in the k-means
+            %        clustering stage when building the k-means tree. A
+            %        value of -1 used here means that the k-means
+            %        clustering should be iterated until convergence.
+            %        default 11
+            %    'CentersInit': The algorithm to use for selecting the
+            %        initial centers when performing a k-means clustering
+            %        step. The possible values are 'Random' (picks
+            %        the initial cluster centers randomly),
+            %        'Gonzales' (picks the initial centers using
+            %        Gonzales? algorithm) and 'KMeansPP' (picks the
+            %        initial centers using the algorithm suggested in
+            %        arthur_kmeanspp_2007 ) default 'Random'
+            %    'CBIndex': This parameter (cluster boundary index)
+            %        influences the way exploration is performed in the
+            %        hierarchical kmeans tree. When cb_index is zero the
+            %        next kmeans domain to be explored is choosen to be the
+            %        one with the closest center. A value greater then zero
+            %        also takes into account the size of the domain.
+            %        default 0.2
+            % Autotuned
+            %    'TargetPrecision': Is a number between 0 and 1 specifying
+            %        the percentage of the approximate nearest-neighbor
+            %        searches that return the exact nearest-neighbor. Using
+            %        a higher value for this parameter gives more accurate
+            %        results, but the search takes longer. The optimum
+            %        value usually depends on the application. default 0.9
+            %    'BuildWeight': Specifies the importance of the index build
+            %        time raported to the nearest-neighbor search time. In
+            %        some applications it?s acceptable for the index build
+            %        step to take a long time if the subsequent searches in
+            %        the index can be performed very fast. In other
+            %        applications it?s required that the index be build as
+            %        fast as possible even if that leads to slightly longer
+            %        search times. default 0.01
+            %    'MemoryWeight': Is used to specify the tradeoff between
+            %        time (index build time and search time) and memory
+            %        used by the index. A value less than 1 gives more
+            %        importance to the time spent and a value greater than
+            %        1 gives more importance to the memory usage. default 0
+            %    'SampleFraction': Is a number between 0 and 1 indicating
+            %        what fraction of the dataset to use in the automatic
+            %        parameter configuration algorithm. Running the
+            %        algorithm on the full dataset gives the most accurate
+            %        results, but for very large datasets can take longer
+            %        than desired. In such case using just a fraction of
+            %        the data helps speeding up this algorithm while still
+            %        giving good approximations of the optimum parameters.
+            %        default 0.1
+            % Saved
+            %    Saved index takes only one argument specifing filename:
+            %    
+            %        cv.DescriptorMatcher('FlannBased',...
+            %            'Index', {'Saved', '/path/to/saved/index.xml')}
+            %
+            % Search
+            %    'Checks': default 32
+            %    'EPS': default 0
+            %    'Sorted': default false
+            %
+            % See also cv.DescriptorMatcher
             %
             if nargin < 1, type = 'BruteForce'; end
             if ~ischar(type)
                 error('DescriptorMatcher:error','Invalid type');
             end
-            this.id = DescriptorMatcher_(type);
+            this.id = DescriptorMatcher_(0,'new',type,varargin{:});
         end
         
         function delete(this)
@@ -63,7 +164,7 @@ classdef DescriptorMatcher < handle
         function add(this, descriptors)
         	%ADD  Adds descriptors to train a descriptor collection
             %
-            %  matcher.add(descriptors)
+            %    matcher.add(descriptors)
         	%
         	% If the collection trainDescCollectionis is not empty, the new
         	% descriptors are added to existing train descriptors.
@@ -80,7 +181,7 @@ classdef DescriptorMatcher < handle
         function clear(this)
         	%CLEAR  Clears the train descriptor collection
         	%
-            %  matcher.clear()
+            %   matcher.clear()
         	%
         	DescriptorMatcher_(this.id, 'clear');
         end
@@ -88,7 +189,7 @@ classdef DescriptorMatcher < handle
         function status = empty(this)
         	%EMPTY  Returns true if there are no train descriptors in the collection
             %
-            %  matcher.empty()
+            %   matcher.empty()
         	%
         	status = DescriptorMatcher_(this.id, 'empty');
         end
@@ -102,7 +203,7 @@ classdef DescriptorMatcher < handle
         function train(this)
         	%TRAIN  Trains a descriptor matcher
         	%
-            %  matcher.train()
+            %   matcher.train()
         	%
         	% Trains a descriptor matcher (for example, the flann index). In all
         	% methods to match, the method train() is run every time before
@@ -183,8 +284,7 @@ classdef DescriptorMatcher < handle
             %   maxDistance: Threshold for the distance between matched
             %       descriptors.
             % Output:
-            %   matches: Matches. Each matches{i} is k or less matches for the
-            %       same query descriptor.
+            %   matches: Found matches.
             % Options:
             %   'Mask': Mask specifying permissible matches between an input
             %       query and train matrices of descriptors.
