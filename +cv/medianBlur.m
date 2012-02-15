@@ -13,7 +13,7 @@
 %
 % ## Options
 % * __KSize__ Aperture linear size. It must be odd and greater than 1, for
-% * __example__ 3, 5, 7 ...
+%     example 3, 5, 7 ...
 %
 % The function smoothes an image using the median filter with the aperture.
 % Each channel of a multi-channel image is processed independently.

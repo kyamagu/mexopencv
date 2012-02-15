@@ -14,11 +14,11 @@
 % * __DSize__ Size of the destination image
 % * __Interpolation__ interpolation method. default: 'Linear'
 % * __WarpInverse__ Logical flag to apply inverse affine transform, meaning
-%        that M is the inverse transformation (dst -> src)
+%     that M is the inverse transformation (dst -> src)
 % * __BorderType__ Pixel extrapolation method. When 'Transparent', it means
-%        that the pixels in the destination image corresponding to
-%        the “outliers” in the source image are not modified by the
-%        function. default: 'Constant'
+%     that the pixels in the destination image corresponding to
+%     the outliers in the source image are not modified by the
+%     function. default: 'Constant'
 % * __BorderValue__ Value used in case of a constant border. default: 0
 %
 % The function warpAffine transforms the source image using the specified
