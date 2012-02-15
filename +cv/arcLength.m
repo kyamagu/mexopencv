@@ -1,7 +1,7 @@
 %ARCLENGTH  Calculates a contour perimeter or a curve length
 %
-%   len = cv.arcLength(curve)
-%   len = cv.arcLength(curve, 'OptionName', optionValue)
+%    len = cv.arcLength(curve)
+%    len = cv.arcLength(curve, 'OptionName', optionValue)
 %
 % ## Input
 % * __curve__ Input vector of a 2D point stored in numeric array or cell array.
