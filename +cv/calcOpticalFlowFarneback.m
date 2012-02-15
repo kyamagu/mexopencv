@@ -1,4 +1,4 @@
-%CALCOPTICALFLOWFARNEBACK  Computes a dense optical flow using the Gunnar Farneback’s algorithm
+%CALCOPTICALFLOWFARNEBACK  Computes a dense optical flow using the Gunnar Farneback's algorithm
 %
 %    flow = cv.calcOpticalFlowFarneback(prevImg, nextImg)
 %

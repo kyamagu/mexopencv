@@ -10,7 +10,7 @@
 %
 % ## Options
 % * __BinaryImage__ If it is true, all non-zero image pixels are treated as
-%         1’s. The parameter is used for images only.
+%         1's. The parameter is used for images only.
 %
 % The function computes moments, up to the 3rd order, of a vector shape or a
 % rasterized shape. The results are returned in the moments struct with the

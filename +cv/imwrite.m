@@ -26,7 +26,7 @@
 % The function imwrite saves the image to the specified file. The image format
 % is chosen based on the filename extension (see cv.imread for the list of
 % extensions). Only 8-bit (or 16-bit in case of PNG, JPEG 2000, and TIFF)
-% single-channel or 3-channel (with ‘RGB’ channel order) images can be saved
+% single-channel or 3-channel (with RGB channel order) images can be saved
 % using this function.
 %
 % See also cv.imread

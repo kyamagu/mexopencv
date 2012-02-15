@@ -8,7 +8,7 @@ classdef RTrees < handle
     % in this section (the term has been also introduced by L. Breiman). The
     % classification works as follows: the random trees classifier takes the
     % input feature vector, classifies it with every tree in the forest, and
-    % outputs the class label that recieved the majority of votes. In case of
+    % outputs the class label that recieved the majority of votes.In case of
     % a regression, the classifier response is the average of the responses over
     % all the trees in the forest.
     %
