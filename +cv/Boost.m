@@ -127,15 +127,14 @@ classdef Boost < handle
 			% * __BoostType__ Type of the boosting algorithm. Possible values
 			%         are listed below. Gentle AdaBoost and Real AdaBoost are often the preferable
 			%         choices. default 'Real'.
-            %
-			%         'Discrete' Discrete AbaBoost.
-			%         'Real'     Real AbaBoost. It is a technique that utilizes
-			%                    confidence-rated predictions and works well
-			%                    with categorical data.
-			%         'Logit'    LogitBoost. It can produce good regression fits.
-			%         'Gentle'   Gentle AdaBoost. It puts less weight on outlier
-			%                    data points and for that reason is often good
-			%                    with regression data.
+			%     * 'Discrete' Discrete AbaBoost.
+			%     * 'Real'     Real AbaBoost. It is a technique that utilizes
+			%                  confidence-rated predictions and works well
+			%                  with categorical data.
+			%     * 'Logit'    LogitBoost. It can produce good regression fits.
+			%     * 'Gentle'   Gentle AdaBoost. It puts less weight on outlier
+			%                  data points and for that reason is often good
+			%                  with regression data.
             %
 			% * __WeakCount__ The number of weak classifiers. default 100.
 			% * __WeightTrimRate__ A threshold between 0 and 1 used to save
