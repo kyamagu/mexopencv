@@ -7,7 +7,7 @@ classdef ERTrees < handle
     % The algorithm of growing Extremely randomized trees is similar to Random
     % Trees (Random Forest), but there are two differences:
     %
-    % 1. Extremely randomized trees don’t apply the bagging procedure to
+    % 1. Extremely randomized trees don't apply the bagging procedure to
     %    constract the training samples for each tree. The same input training
     %    set is used to train all trees.
     % 2. Extremely randomized trees pick a node split very extremely (both a
