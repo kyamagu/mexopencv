@@ -108,9 +108,9 @@ classdef DTree < handle
 			% * __MissingMask__ Indicator mask for missing observation.
 			% * __MaxDepth__ The maximum possible depth of the tree. That is
 			%         the training algorithms attempts to split a node while its
-			%         depth is less than max_depth. The actual depth may be
+			%         depth is less than MaxDepth. The actual depth may be
 			%         smaller if the other termination criteria are met, and/or
-			%         if the tree is pruned. default INT_MAX.
+			%         if the tree is pruned. default INT\_MAX.
 			% * __MinSampleCount__ If the number of samples in a node is less
 			%         than this parameter then the node will not be splitted.
 			%         default 10.
@@ -130,10 +130,10 @@ classdef DTree < handle
 			%         may take a very long time because the algorithm is
 			%         exponential. Instead, many decision trees engines
 			%         (including ML) try to find sub-optimal split in this case
-			%         by clustering all the samples into max_categories clusters
+			%         by clustering all the samples into MaxCategories clusters
 			%         that is some categories are merged together. The
 			%         clustering is applied only in n>2-class classification
-			%         problems for categorical variables with N > max_categories
+			%         problems for categorical variables with N > MaxCategories
 			%         possible values. In case of regression and 2-class
 			%         classification the optimal split can be found efficiently
 			%         without employing clustering, thus the parameter is not
@@ -147,7 +147,7 @@ classdef DTree < handle
 			%         physically removed from the tree. Otherwise they are
 			%         retained and it is possible to get results from the
 			%         original unpruned (or pruned less aggressively) tree by
-			%         decreasing pruned_tree_idx parameter. default true.
+			%         decreasing PrunedTreeIdx parameter. default true.
 			% * __Priors__ The array of a priori class probabilities, sorted by
 			%         the class label value. The parameter can be used to tune
 			%         the decision tree preferences toward a certain class. For

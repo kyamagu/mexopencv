@@ -12,10 +12,10 @@
 %
 % ## Options
 % * __Method__ Comparison method that could be one of the following:
-% * __Correl__ Correlation
-% * __ChiSqr__ Chi-Square
-% * __Intersect__ Intersection
-% * __Bhattacharyya__ Bhattacharyya distance
+%     * __'Correl'__ Correlation
+%     * __'ChiSqr'__ Chi-Square
+%     * __'Intersect'__ Intersection
+%     * __'Bhattacharyya'__ Bhattacharyya distance
 %
 % The functions compareHist compare two dense or two sparse histograms
 % using the specified method.

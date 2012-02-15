@@ -111,33 +111,33 @@ classdef SVM < handle
             % * __SampleIdx__ Indicator samples of interest. Must have the
             %         the same size to responses.
             % * __SvmType__ Type of a SVM formulation. Possible values are:
-			%     * `'C_SVC'`     C-Support Vector Classification. n-class
-			%                     classification (n  2), allows imperfect separation
-			%                     of classes with penalty multiplier C for outliers.
-			%                     This is the default.
-			%     * `'NU_SVC'`    Nu-Support Vector Classification. n-class
-			%                     classification with possible imperfect separation.
-			%                     Parameter  (in the range 0..1, the larger the value,
-			%                     the smoother the decision boundary) is used instead
-			%                     of C.
-			%     * `'ONE_CLASS'` Distribution Estimation (One-class SVM). All the
-			%                     training data are from the same class, SVM builds
-			%                     a boundary that separates the class from the rest
-			%                     of the feature space.
-			%     * `'EPS_SVR'`   Support Vector Regression. The distance between
-			%                     feature vectors from the training set and the fitting
-			%                     hyper-plane must be less than p. For outliers the
-			%                     penalty multiplier C is used.
-			%     * `'NU_SVR'`    Nu-Support Vector Regression. Nu is used instead of p.
+			%     * 'C_SVC'     C-Support Vector Classification. n-class
+			%                   classification (n  2), allows imperfect separation
+			%                   of classes with penalty multiplier C for outliers.
+			%                   This is the default.
+			%     * 'NU_SVC'    Nu-Support Vector Classification. n-class
+			%                   classification with possible imperfect separation.
+			%                   Parameter  (in the range 0..1, the larger the value,
+			%                   the smoother the decision boundary) is used instead
+			%                   of C.
+			%     * 'ONE_CLASS' Distribution Estimation (One-class SVM). All the
+			%                   training data are from the same class, SVM builds
+			%                   a boundary that separates the class from the rest
+			%                   of the feature space.
+			%     * 'EPS_SVR'   Support Vector Regression. The distance between
+			%                   feature vectors from the training set and the fitting
+			%                   hyper-plane must be less than p. For outliers the
+			%                   penalty multiplier C is used.
+			%     * 'NU_SVR'    Nu-Support Vector Regression. Nu is used instead of p.
 			%         See [LibSVM] for details.
 			% * __KernelType__ Type of a SVM kernel. Possible values are:
-			%     * `'Linear'`    Linear kernel. No mapping is done, linear discrimination
-			%                     (or regression) is done in the original feature space.
-			%                     It is the fastest option.
-			%     * `'Poly'`      Polynomial kernel.
-			%     * `'RBF'`       Radial basis function (RBF), a good choice in most cases.
-			%                     This is the default kernel.
-			%     * `'Sigmoid'`   Sigmoid kernel.
+			%     * 'Linear'    Linear kernel. No mapping is done, linear discrimination
+			%                   (or regression) is done in the original feature space.
+			%                   It is the fastest option.
+			%     * 'Poly'      Polynomial kernel.
+			%     * 'RBF'       Radial basis function (RBF), a good choice in most cases.
+			%                   This is the default kernel.
+			%     * 'Sigmoid'   Sigmoid kernel.
 			% * __Degree__ Parameter degree of a kernel function (POLY). default 0.
 			% * __Gamma__ Parameter  of a kernel function (POLY / RBF / SIGMOID).
 			%         The default is 1.
@@ -160,9 +160,9 @@ classdef SVM < handle
 			%         optimization problem. You can specify tolerance and/or the
 			%         maximum number of iterations. A struct with the
 			%         following fields are accepted:
-            %     * `'type'`      one of {'Count','EPS','Count+EPS'}
-            %     * `'maxCount'`  maximum number of iterations
-            %     * `'epsilon'`   tolerance value
+            %     * 'type'      one of {'Count','EPS','Count+EPS'}
+            %     * 'maxCount'  maximum number of iterations
+            %     * 'epsilon'   tolerance value
             %
             % The method trains the SVM model.
             %
@@ -193,7 +193,7 @@ classdef SVM < handle
             %         proportion in the whole train dataset.
             % * __CGrid__, __GammaGrid__, __NuGrid__, __PGrid__, __CoeffGrid__, __DegreeGrid__
             %         Iteration grid for the corresponding SVM parameter. It accepts
-            %         a struct having {'min_val','max_val','log_step'} fields, or
+            %         a struct having {'min_val', 'max_val', 'log_step'} fields, or
             %         a 3-element vector in which each parameter is specified in
             %         the same order to the struct is supported.
             %

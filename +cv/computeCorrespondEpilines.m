@@ -22,12 +22,12 @@
 % finds the equation of the corresponding epipolar line in the other image.
 %
 % From the fundamental matrix definition (see cv.findFundamentalMat), line
-% l_i^(2) in the second image for the point p_i^(1) in the first image
+% l\_i^(2) in the second image for the point p\_i^(1) in the first image
 % (when whichImage=1) is computed as:
 %
 %    l_i^(2) = F * p_i^(1)
 %
-% And vice versa, when whichImage=2, l_i^(1) is computed from p_i^(2) as:
+% And vice versa, when whichImage=2, l\_i^(1) is computed from p\_i^(2) as:
 %
 %    l_i^(2) = F^T * p_i^(1)
 %

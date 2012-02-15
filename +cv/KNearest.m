@@ -96,12 +96,12 @@ classdef KNearest < handle
             % * __IsRegression__ Type of the problem: true for regression and
             %         false for classification.
             % * __MaxK__ Number of maximum neighbors that may be passed to the
-            %         method find_nearest.
+            %         method find\_nearest.
             % * __SampleIdx__ Indicator samples of interest. Must have the
             %         the same size to responses.
             % * __UpdateBase__ Specifies whether the model is trained from
-            %         scratch (update_base=false), or it is updated using the
-            %         new training data (update_base=true). In the latter case,
+            %         scratch (UpdateBase=false), or it is updated using the
+            %         new training data (UpdateBase=true). In the latter case,
             %         the parameter maxK must not be larger than the original
             %         value.
             %
@@ -122,7 +122,7 @@ classdef KNearest < handle
             %
             % For each input vector (a row of the matrix samples), the method
             % finds the k nearest neighbors. In case of regression, the
-            % predicted result is a mean value of the particular vector'€™s
+            % predicted result is a mean value of the particular vector's
             % neighbor responses. In case of classification, the class is
             % determined by voting.
             %

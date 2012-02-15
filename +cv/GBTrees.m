@@ -116,7 +116,7 @@ classdef GBTrees < handle
 			%         http://www.salfordsystems.com/doc/StochasticBoostingSS.pdf
 			% * __MaxDepth__ The maximum possible depth of the tree. That is
 			%         the training algorithms attempts to split a node while its
-			%         depth is less than max_depth. The actual depth may be
+			%         depth is less than MaxDepth. The actual depth may be
 			%         smaller if the other termination criteria are met, and/or
 			%         if the tree is pruned. default 1.
 			% * __UseSurrogates__ If true then surrogate splits will be built.

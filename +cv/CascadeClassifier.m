@@ -73,7 +73,7 @@ classdef CascadeClassifier < handle
             % The detected objects are returned as a cell array of rectangles.
             %
             % ## Input
-            % * __im__ Matrix of the type CV_8U containing an image where
+            % * __im__ Matrix of the type uint8 containing an image where
             %       objects are detected.
             %
             % ## Output

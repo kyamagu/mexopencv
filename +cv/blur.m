@@ -18,5 +18,7 @@
 %
 % The function smoothes an image using the kernel:
 % 
-%   K = ones(KSize) / prod(KSize)
+%    K = ones(KSize) / prod(KSize)
+%
+% See also cv.medianBlur cv.GaussianBlur
 %

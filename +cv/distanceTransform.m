@@ -26,20 +26,20 @@
 % from every binary image pixel to the nearest zero pixel. For zero image
 % pixels, the distance will obviously be zero.
 %
-% When maskSize == CV_DIST_MASK_PRECISE and distanceType == CV_DIST_L2 , the
+% When MaskSize is 'MaskPrecise' and DistanceType is 'L2', the
 % function runs the algorithm described in [Felzenszwalb04].
 %
 % In other cases, the algorithm [Borgefors86] is used. This means that for a
 % pixel the function finds the shortest path to the nearest zero pixel
-% consisting of basic shifts: horizontal, vertical, diagonal, or knight’s move
+% consisting of basic shifts: horizontal, vertical, diagonal, or knight's move
 % (the latest is available for a  mask). The overall distance is calculated as
 % a sum of these basic distances. Since the distance function should be
 % symmetric, all of the horizontal and vertical shifts must have the same cost
 % (denoted as a ), all the diagonal shifts must have the same cost (denoted as
-% b ), and all knight’s moves must have the same cost (denoted as c ). For the
+% b ), and all knight's moves must have the same cost (denoted as c ). For the
 % 'C' and 'L1' types, the distance is calculated precisely, whereas for 'L2'
 % (Euclidian distance) the distance can be calculated only with a relative
-% error (a 5 x 5 mask gives more accurate results). For a,``b`` , and c ,
+% error (a 5 x 5 mask gives more accurate results). For a, b, and c,
 % OpenCV uses the values suggested in the original paper:
 %
 %     'C'   3 x 3    a = 1,     b = 1
@@ -47,8 +47,8 @@
 %     'L2'  3 x 3    a = 0.955, b = 1.3693
 %     'L2'  5 x 5    a = 1,     b = 1.4,    c = 2.1969
 %
-% Typically, for a fast, coarse distance estimation CV_DIST_L2, a 3 x 3 mask is
-% used. For a more accurate distance estimation 'L2' , a 5 x 5 mask or the
+% Typically, for a fast, coarse distance estimation 'L2', a 3 x 3 mask is
+% used. For a more accurate distance estimation 'L2', a 5 x 5 mask or the
 % precise algorithm is used. Note that both the precise and the approximate
 % algorithms are linear on the number of pixels.
 %

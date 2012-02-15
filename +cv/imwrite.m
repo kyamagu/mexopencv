@@ -21,7 +21,7 @@
 %          A higher value means a smaller size and longer compression time.
 %          Default value is 3.
 % * __PxmBinary__ For PPM, PGM, or PBM, it can be a binary format flag, 0 or
-%          1. Default value is 1.
+%          1 . Default value is 1.
 %
 % The function imwrite saves the image to the specified file. The image format
 % is chosen based on the filename extension (see cv.imread for the list of

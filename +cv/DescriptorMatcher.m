@@ -93,10 +93,10 @@ classdef DescriptorMatcher < handle
             %        'Gonzales' (picks the initial centers using
             %        Gonzales? algorithm) and 'KMeansPP' (picks the
             %        initial centers using the algorithm suggested in
-            %        arthur_kmeanspp_2007 ) default 'Random'
+            %        arthur kmeanspp 2007 ) default 'Random'
             % * __CBIndex__ This parameter (cluster boundary index)
             %        influences the way exploration is performed in the
-            %        hierarchical kmeans tree. When cb_index is zero the
+            %        hierarchical kmeans tree. When CBIndex is zero the
             %        next kmeans domain to be explored is choosen to be the
             %        one with the closest center. A value greater then zero
             %        also takes into account the size of the domain.

@@ -11,7 +11,7 @@
 %
 % ## Options
 % * __Delta__ delta, in the code, it compares
-%       (size_{i}-size_{i-delta})/size_{i-delta}. default 5.
+%       `(size_{i}-size_{i-delta})/size_{i-delta}`. default 5.
 % * __MinArea__ prune the area which smaller than minArea. default 60.
 % * __MaxArea__ prune the area which bigger than maxArea. default 14400.
 % * __MaxVariation__ prune the area have simliar size to its children. default 0.25

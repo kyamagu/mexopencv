@@ -16,13 +16,13 @@
 % * __MaxLevel__ Maximum level of the pyramid for the segmentation
 %
 % The function implements the filtering stage of meanshift segmentation, that
-% is, the output of the function is the filtered “posterized” image with color
+% is, the output of the function is the filtered posterized image with color
 % gradients and fine-grain texture flattened. At every pixel (X,Y) of the input
 % image (or down-sized input image, see below) the function executes meanshift
 % iterations, that is, the pixel (X,Y) neighborhood in the joint space-color
 % hyperspace is considered:
 % 
-%   (x,y): X-sp <= x <= X+sp, Y-sp <= y <= Y+sp, ||(R,G,B) - (r,g,b)|| <= sr
+%    (x,y): X-sp <= x <= X+sp, Y-sp <= y <= Y+sp, ||(R,G,B) - (r,g,b)|| <= sr
 %
 % where (R,G,B) and (r,g,b) are the vectors of color components at (X,Y) and
 % (x,y), respectively (though, the algorithm does not depend on the color space
@@ -31,13 +31,13 @@
 % (R',G',B') are found and they act as the neighborhood center on the next
 % iteration
 %
-%   (X,Y) (X',Y'), (R,G,B) (R',G',B').
+%    (X,Y) (X',Y'), (R,G,B) (R',G',B').
 %
 % After the iterations over, the color components of the initial pixel (that
 % is, the pixel from where the iterations started) are set to the final value
 % (average color at the last iteration):
 %
-%   I(X,Y) < -(R*,G*,B*)
+%    I(X,Y) < -(R*,G*,B*)
 %
 % When maxLevel > 0, the gaussian pyramid of maxLevel+1 levels is built, and
 % the above procedure is run on the smallest layer first. After that, the

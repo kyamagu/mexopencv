@@ -21,7 +21,7 @@
 % derivatives over the neighborhood.
 %
 % After that, it finds eigenvectors and eigenvalues of M and stores them in the
-% destination image as where (\lambda_1, \lambda_2, x_1, y_1, x_2, y_2) where
+% destination image as where (\lambda\_1, \lambda\_2, x\_1, y\_1, x\_2, y\_2) where
 %
 %     \lambda_N are the non-sorted eigenvalues of M
 %     x_N are the eigenvectors corresponding to \lambda_N

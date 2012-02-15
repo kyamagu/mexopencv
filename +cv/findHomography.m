@@ -23,7 +23,7 @@
 % * __RansacReprojThreshold__ Maximum allowed reprojection error to treat a
 %        point pair as an inlier (used in the RANSAC method only). That is,
 %        if
-%            ||dstPoints_i - convertPointsToHomogeneous(H*srcPoints_i)||
+%            || dstPoints\_i - convertPointsToHomogeneous(H*srcPoints\_i) ||
 %            > RansacReprojThreshold
 %        then the point i is considered an outlier. If srcPoints and
 %        dstPoints are measured in pixels, it usually makes sense to set
@@ -39,7 +39,7 @@
 % compute an initial homography estimate with a simple least-squares
 % scheme.
 %
-% However, if not all of the point pairs (srcPoints_i, dstPoints_i) fit the
+% However, if not all of the point pairs (srcPoints\_i, dstPoints\_i) fit the
 % rigid perspective transformation (that is, there are some outliers), this
 % initial estimate will be poor. In this case, you can use one of the two
 % robust methods. Both methods, RANSAC and LMeDS , try many different

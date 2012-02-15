@@ -27,7 +27,7 @@
 % in a constant time, for example:
 %
 %     \sum_{x_1 \leq x < x_2, y_1 \leq y < y_2} src(x,y)
-%     = s(x_2,y_2) - s(x_1,y_2) - s(x_2,y_1) + s(x_1,y_1)
+%     = s(x_2, y_2) - s(x_1, y_2) - s(x_2, y_1) + s(x_1, y_1)
 %
 % It makes possible to do a fast blurring or fast block correlation with a
 % variable window size, for example. In case of multi-channel images, sums for

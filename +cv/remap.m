@@ -22,7 +22,7 @@
 % ## Options
 % * __BorderType__ Pixel extrapolation method. When 'Transparent' , it means
 %                  that the pixels in the destination image that corresponds to
-%                  the “outliers” in the source image are not modified by the
+%                  the outliers in the source image are not modified by the
 %                  function. default: 'Constant'
 % * __BorderValue__ Value used in case of a constant border. default: 0
 % * __Interpolation__ interpolation method. default: 'Linear'

@@ -20,9 +20,9 @@
 % invariants (see HuMoments() ) as follows (A denotes object1,:math:B denotes
 % object2):
 %
-%   'I1'    I_1(A,B) = \sum_{i=1,...,7} | 1/m_i^A - 1/m_i^B |
-%   'I2'    I_2(A,B) = \sum_{i=1,...,7} | m_i^A - m_i^B |
-%   'I3'    I_3(A,B) = \sum_{i=1,...,7} | m_i^A - m_i^B | / | m_i^A |
+%    'I1'    I_1(A,B) = \sum_{i=1,...,7} | 1/m_i^A - 1/m_i^B |
+%    'I2'    I_2(A,B) = \sum_{i=1,...,7} | m_i^A - m_i^B |
+%    'I3'    I_3(A,B) = \sum_{i=1,...,7} | m_i^A - m_i^B | / | m_i^A |
 %
 % where
 %
