@@ -11,7 +11,7 @@
 % ## Output
 % * __T__ 2-by-3 transformation matrix
 %
-% The function calculates the 2 × 3 matrix of an affine transform so that
+% The function calculates the 2 x 3 matrix of an affine transform so that
 % 
 %     [X_i; X_i] = T * [x_i; y_i; 1]
 % 
