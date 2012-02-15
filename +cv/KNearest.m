@@ -4,7 +4,7 @@ classdef KNearest < handle
     % The algorithm caches all training samples and predicts the response for a
     % new sample by analyzing a certain number (K) of the nearest neighbors of
     % the sample using voting, calculating weighted sum, and so on. The method
-    % is sometimes referred to as “learning by example” because for prediction
+    % is sometimes referred to as "learning by example" because for prediction
     % it looks for the feature vector with a known response that is closest to
     % the given vector.
     %
