@@ -2,13 +2,14 @@
 %
 %    T = cv.getPerspectiveTransform(src, dst)
 %
-%  Input:
-%    src: 4-by-2 row vectors of coordinates of quadrangle vertices in the source image
+% ## Input
+% * __src__ 4-by-2 row vectors of coordinates of quadrangle vertices in the source image
 %         image.
-%	 dst: 4-by-2 row vectors of the corresponding quadrangle vertices in the
+% * __dst__ 4-by-2 row vectors of the corresponding quadrangle vertices in the
 %         destination image.
-%  Output:
-%    T:   3-by-3 transformation matrix
+%
+% ## Output
+% * __T__ 3-by-3 transformation matrix
 %
 % The function calculates the 3 × 3 matrix of a perspective transform so that
 % 

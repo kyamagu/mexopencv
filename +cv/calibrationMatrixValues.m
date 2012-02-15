@@ -1,20 +1,21 @@
 %CALIBRATIONMATRIXVALUES  Computes useful camera characteristics from the camera matrix
 %
-%   S = cv.calibrationMatrixValues(cameraMatrix, imageSize, apertureWidth, apertureHeight)
+%    S = cv.calibrationMatrixValues(cameraMatrix, imageSize, apertureWidth, apertureHeight)
 %
-% Input:
-%    cameraMatrix: Input camera matrix that can be estimated by
+% ## Input
+% * __cameraMatrix__ Input camera matrix that can be estimated by
 %        cv.calibrateCamera or cv.stereoCalibrate.
-%    imageSize: Input image size [w,h] in pixels.
-%    apertureWidth: Physical width of the sensor.
-%    apertureHeight: Physical height of the sensor.
-% Output:
-%    S: Struct with the following fields
-%        fovx: Output field of view in degrees along the horizontal sensor axis.
-%        fovy: Output field of view in degrees along the vertical sensor axis.
-%        focalLength: Focal length of the lens in mm.
-%        principalPoint: Principal point in pixels.
-%        aspectRatio: fy/fx.
+% * __imageSize__ Input image size [w,h] in pixels.
+% * __apertureWidth__ Physical width of the sensor.
+% * __apertureHeight__ Physical height of the sensor.
+%
+% ## Output
+% * __S__ Struct with the following fields
+% * __fovx__ Output field of view in degrees along the horizontal sensor axis.
+% * __fovy__ Output field of view in degrees along the vertical sensor axis.
+% * __focalLength__ Focal length of the lens in mm.
+% * __principalPoint__ Principal point in pixels.
+% * __aspectRatio__ fy/fx.
 %
 % The function computes various useful camera characteristics from the
 % previously estimated camera matrix.

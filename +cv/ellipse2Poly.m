@@ -1,19 +1,21 @@
 %ELLIPSE2POLY  Approximates an elliptic arc with a polyline
 %
-%   pts = cv.ellipse2Poly(center, axes)
-%   [...] = cv.ellipse2Poly(..., 'OptionName', optionValue, ...)
+%    pts = cv.ellipse2Poly(center, axes)
+%    [...] = cv.ellipse2Poly(..., 'OptionName', optionValue, ...)
 %
-% Input:
-%    img: Image where the ellipse is drawn.
-%    center: Center of the ellipse [x,y].
-%    axes: Length of the ellipse axes [a,b].
-% Output:
-%    pts: Output polyline points.
-% Options:
-%    'Angle': Rotation angle of the ellipse in degrees. default 0.
-%    'StartAngle': Starting angle of the elliptic arc in degrees. default 0
-%    'EndAngle': Ending angle of the elliptic arc in degrees. default 360
-%    'Delta': Angle between the subsequent polyline vertices. It defines
+% ## Input
+% * __img__ Image where the ellipse is drawn.
+% * __center__ Center of the ellipse [x,y].
+% * __axes__ Length of the ellipse axes [a,b].
+%
+% ## Output
+% * __pts__ Output polyline points.
+%
+% ## Options
+% * __Angle__ Rotation angle of the ellipse in degrees. default 0.
+% * __StartAngle__ Starting angle of the elliptic arc in degrees. default 0
+% * __EndAngle__ Ending angle of the elliptic arc in degrees. default 360
+% * __Delta__ Angle between the subsequent polyline vertices. It defines
 %        the approximation accuracy. default 5.
 %
 % The function ellipse2Poly computes the vertices of a polyline that

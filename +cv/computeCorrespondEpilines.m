@@ -3,17 +3,19 @@
 %    lines = cv.computeCorrespondEpilines(points, F)
 %    [...] = cv.computeCorrespondEpilines(..., 'OptionName', optionValue, ...)
 %
-% Input:
-%    points: Input points. Nx1x2 or 1xNx2 array, or cell array of 2 element
+% ## Input
+% * __points__ Input points. Nx1x2 or 1xNx2 array, or cell array of 2 element
 %        vectors.
-%    F: Fundamental matrix that can be estimated using
+% * __F__ Fundamental matrix that can be estimated using
 %        cv.findFundamentalMat or cv.stereoRectify.
-% Output:
-%    lines: Output vector of the epipolar lines corresponding to the points
+%
+% ## Output
+% * __lines__ Output vector of the epipolar lines corresponding to the points
 %        in the other image. Each line ax+by+c=0 is encoded by 3 numbers
 %        (a,b,c).
-% Options:
-%    'WhichImage': Index of the image (1 or 2) that contains the points.
+%
+% ## Options
+% * __WhichImage__ Index of the image (1 or 2) that contains the points.
 %        default 1.
 %
 % For every point in one of the two images of a stereo pair, the function

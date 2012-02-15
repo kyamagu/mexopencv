@@ -32,6 +32,16 @@ classdef MDoc < handle
             %MDOC  execute MDoc
             if ~exist(MDoc.DIR,'dir'), mkdir(MDoc.DIR); end
             
+            % Copy CSS file
+            txt = fileread(MDoc.CSS);
+            txt = this.process_css(txt);
+            fid = fopen(fullfile(MDoc.DIR,'helpwin.css'),'w');
+            fprintf(fid,'%s',txt);
+            fclose(fid);
+            
+            % Make contents index
+            this.process_index();
+            
             % Get a list of functions
             list = dir('+cv/*.m');
             this.yet = strrep({list.name},'.m','');
@@ -41,29 +51,19 @@ classdef MDoc < handle
                 this.yet = setdiff(this.yet, fname);
                 this.processed = union(this.processed,fname);
             end
-            
-            % Make contents index
-            this.process('cv');
-            
-            % Copy CSS file
-            copyfile(MDoc.CSS,MDoc.DIR,'f');
         end
         
         function txt = process(this, func)
             %PROCESS  process an entity
-            if strcmp(func,'cv')
-                txt = help2html('cv');
-                filename = fullfile(MDoc.DIR,'index.html');
-                txt = strrep(txt,'<div class="title">cv</div>',...
-                    '<div class="title">mexopencv</div>');
-            else
-                txt = help2html(['cv.',func]);
-                filename = fullfile(MDoc.DIR,[func,'.html']);
-            end
+            txt = help2html(['cv.',func]);
+            filename = fullfile(MDoc.DIR,[func,'.html']);
             fprintf('%s\n',filename);
             
-            % Write
+            % Filter
             txt = this.filter_text(txt);
+            txt = this.markdown(txt);
+            
+            % Write
             fid = fopen(filename,'w');
             fprintf(fid,'%s',txt);
             fclose(fid);
@@ -72,6 +72,7 @@ classdef MDoc < handle
         function txt = filter_text(this, txt)
             %FILTER_TEXT  Filter anchor tags
             txt = strrep(txt,sprintf('file:///%s',MDoc.CSS),'helpwin.css');
+            txt = regexprep(txt,'<span class="helptopic">([^<]*)</span>','$1');
             [splt,tokens] = regexp(txt,'<a href=\"matlab:(\S+\s*[^\"]*)">([^<]*)</a>',...
                 'split','tokens');
             tokens = cellfun(@(tok) this.make_link(tok{1},tok{2}),...
@@ -106,6 +107,73 @@ classdef MDoc < handle
                 txt = sprintf(A, href, txt);
                 if ~any(strcmp(this.processed,fname))
                     this.yet = union(this.yet,fname);
+                end
+            end
+        end
+        
+        function txt = markdown(this, txt)
+            %MARKDOWN
+            [splt,tok] = regexp(txt,'(<div class="helptext">\s*<pre>.*</pre>\s*</div>)','split','tokens');
+            if ~isempty(tok)
+                tok = regexp(tok{1}{1},'<pre><!--helptext -->\s*(.*)</pre>','tokens');
+                if ~isempty(tok)
+                    tok = regexprep(tok{1}{1},'\n ','\n');
+                    tok = regexprep(tok,'^[A-Z0-9_]+\s+(.*)$','$1');
+                    tok = MarkdownPapers(tok);
+                    txt = [splt;{sprintf('<div class="helpcontent">%s</div>',tok),''}];
+                    txt = [txt{:}];
+                end
+            end
+        end
+        
+        function txt = process_css(this, txt)
+            %PROCESS_CSS
+            txt = strrep(txt,'font-size: 12px;','font-size: 14px;');
+            txt = sprintf(['%s\npre {\n'...
+                '    margin: 0em 2em;\n'...
+                '    padding: .5em 1em;\n'...
+                '    background-color: #E7EBF7;\n'...
+                '}\n'...
+                '\nh1, h2, h3, h4, h5, h6 {\n'...
+                '    color:#990000;'...
+                '}'],txt);
+        end
+        
+        function txt = process_index(this)
+            %PROCESS_INDEX
+            txt = help2html('cv');
+            filename = fullfile(MDoc.DIR,'index.html');
+            
+            % Filter
+            description = ['<p>Collection and a development kit of matlab '...
+                'mex functions for OpenCV library</p>'...
+                '<p><a href="http://www.cs.stonybrook.edu/~kyamagu/mexopencv/">'...
+                'http://www.cs.stonybrook.edu/~kyamagu/mexopencv/</a></p>'];
+            txt = strrep(txt,'<div class="title">cv</div>',...
+                sprintf('<div class="title">mexopencv</div>%s',description));
+            txt = regexprep(txt,'Contents of \w+:\s*','');
+            txt = this.filter_text(txt);
+            txt = this.build_table(txt);
+            
+            % Write
+            fid = fopen(filename,'w');
+            fprintf(fid,'%s',txt);
+            fclose(fid);
+        end
+        
+        function txt = build_table(this, txt)
+            %BUILD_TABLE
+            [splt,tok] = regexp(txt,'(<div class="helptext">\s*<pre>.*</pre>\s*</div>)','split','tokens');
+            if ~isempty(tok)
+                tok = regexp(tok{1}{1},'<pre><!--helptext -->\s*(.*)</pre>','tokens');
+                if ~isempty(tok)
+                    tok = sprintf('%s\n',tok{1}{1});
+                    t = regexp(tok,'(<a[^<]+</a>)\s*-\s*([^\n]*)\n','tokens');
+                    tok = cellfun(@(x) sprintf('<tr><td>%s</td><td>%s</td></tr>\n',x{1},x{2}),...
+                        t, 'UniformOutput', false);
+                    tok = sprintf('<table>\n%s</table>\n',[tok{:}]);
+                    txt = [splt;{sprintf('<div class="helpcontent">%s</div>',tok),''}];
+                    txt = [txt{:}];
                 end
             end
         end

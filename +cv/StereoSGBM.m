@@ -1,7 +1,7 @@
 classdef StereoSGBM < handle
     %STEREOSGBM  Class for computing stereo correspondence using the semi-global block matching algorithm
     %
-    % Usage:
+    % # Usage
     %
     %    bm = cv.StereoSGBM('MinDisparity',0,...);
     %    disparity = bm.compute(left, right);
@@ -41,52 +41,53 @@ classdef StereoSGBM < handle
             %    bm = cv.StereoSGBM
             %    bm = cv.StereoSGBM('OptionName', optionValue, ...)
             %
-            % Options:
-            %    'MinDisparity': Minimum possible disparity value.
+            %
+            % ## Options
+            % * __MinDisparity__ Minimum possible disparity value.
             %        Normally, it is zero but sometimes rectification
             %        algorithms can shift images, so this parameter needs
             %        to be adjusted accordingly. default 0
-            %    'NumDisparities': Maximum disparity minus minimum
+            % * __NumDisparities__ Maximum disparity minus minimum
             %        disparity. The value is always greater than zero. In
             %        the current implementation, this parameter must be
             %        divisible by 16. default 64
-            %    'SADWindowSize': Matched block size. It must be an odd
+            % * __SADWindowSize__ Matched block size. It must be an odd
             %        number >=1 . Normally, it should be somewhere in the
             %        3..11 range. default 7
-            %    'P1': The first parameter controlling the disparity
+            % * __P1__ The first parameter controlling the disparity
             %        smoothness. See P2. default 0.
-            %    'P2': The second parameter controlling the disparity
+            % * __P2__ The second parameter controlling the disparity
             %        smoothness. The larger the values are, the smoother
             %        the disparity is. P1 is the penalty on the disparity
             %        change by plus or minus 1 between neighbor pixels. P2
             %        is the penalty on the disparity change by more than 1
             %        between neighbor pixels. The algorithm requires P2 >
             %        P1. default 0.
-            %    'Disp12MaxDiff': Maximum allowed difference (in integer
+            % * __Disp12MaxDiff__ Maximum allowed difference (in integer
             %        pixel units) in the left-right disparity check. Set
             %        it to a non-positive value to disable the check.
             %        default 0
-            %    'PreFilterCap': Truncation value for the prefiltered image
+            % * __PreFilterCap__ Truncation value for the prefiltered image
             %        pixels. The algorithm first computes x-derivative at
             %        each pixel and clips its value by [-preFilterCap,
             %        preFilterCap] interval. The result values are passed
             %        to the Birchfield-Tomasi pixel cost function. default
             %        0
-            %    'UniquenessRatio': Margin in percentage by which the best
+            % * __UniquenessRatio__ Margin in percentage by which the best
             %        (minimum) computed cost function value should "win"
             %        the second best value to consider the found match
             %        correct. Normally, a value within the 5-15 range is
             %        good enough. default 0
-            %    'SpeckleWindowSize': Maximum size of smooth disparity
+            % * __SpeckleWindowSize__ Maximum size of smooth disparity
             %        regions to consider their noise speckles and
             %        invalidate. Set it to 0 to disable speckle filtering.
             %        Otherwise, set it somewhere in the 50-200 range.
             %        default 0
-            %    'SpeckleRange': Maximum disparity variation within each
+            % * __SpeckleRange__ Maximum disparity variation within each
             %        connected component. If you do speckle filtering, set
             %        the parameter to a positive value, multiple of 16.
             %        Normally, 16 or 32 is good enough. default 0
-            %    'FullDP': Set it to true to run the full-scale two-pass
+            % * __FullDP__ Set it to true to run the full-scale two-pass
             %        dynamic programming algorithm. It will consume
             %        O(W*H*numDisparities) bytes, which is large for
             %        640x480 stereo and huge for HD-size pictures. By
@@ -110,12 +111,13 @@ classdef StereoSGBM < handle
             %
             %    disparity = bm.compute(left, right)
             %
-            % Input:
-            %    left: Left 8-bit single-channel or 3-channel image.
-            %    right: Right image of the same size and the same type as
+            % ## Input
+            % * __left__ Left 8-bit single-channel or 3-channel image.
+            % * __right__ Right image of the same size and the same type as
             %        the left one.
-            % Output:
-            %    disparity: Output disparity map. It is a 16-bit signed
+            %
+            % ## Output
+            % * __disparity__ Output disparity map. It is a 16-bit signed
             %        single-channel image of the same size as the input
             %        image. It contains disparity values scaled by 16. So,
             %        to get the floating-point disparity map, you need to

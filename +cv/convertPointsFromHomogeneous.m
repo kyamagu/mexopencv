@@ -2,10 +2,11 @@
 %
 %    dst = cv.convertPointsFromHomogeneous(src)
 %
-% Input:
-%    src: Input vector of N-dimensional points.
-% Output:
-%    dst: Output vector of N-1-dimensional points.
+% ## Input
+% * __src__ Input vector of N-dimensional points.
+%
+% ## Output
+% * __dst__ Output vector of N-1-dimensional points.
 %
 % The function converts points homogeneous to Euclidean space using
 % perspective projection. That is, each point (x1, x2, ... x(n-1), xn) is

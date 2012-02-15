@@ -93,35 +93,36 @@ classdef DTree < handle
             %    classifier.train(trainData, responses)
             %    classifier.train(..., 'OptionName', optionValue, ...)
             %
-            % Input:
-            %     trainData: Row vectors of feature.
-            %     responses: Output of the corresponding feature vectors.
-            % Options:
-            %     'VarIdx': Indicator variables (features) of interest.
+            % ## Input
+            % * __trainData__ Row vectors of feature.
+            % * __responses__ Output of the corresponding feature vectors.
+            %
+            % ## Options
+            % * __VarIdx__ Indicator variables (features) of interest.
             %         Must have the same size to responses.
-            %     'SampleIdx': Indicator samples of interest. Must have the
+            % * __SampleIdx__ Indicator samples of interest. Must have the
             %         the same size to responses.
-            %     'VarType': Solves classification problem when 'Categorical'.
+            % * __VarType__ Solves classification problem when 'Categorical'.
             %         Otherwise, the training is treated as a regression problem.
             %         default 'Categorical'
-			%     'MissingMask': Indicator mask for missing observation.
-			%     'MaxDepth': The maximum possible depth of the tree. That is
+			% * __MissingMask__ Indicator mask for missing observation.
+			% * __MaxDepth__ The maximum possible depth of the tree. That is
 			%         the training algorithms attempts to split a node while its
 			%         depth is less than max_depth. The actual depth may be
 			%         smaller if the other termination criteria are met, and/or
 			%         if the tree is pruned. default INT_MAX.
-			%     'MinSampleCount': If the number of samples in a node is less
+			% * __MinSampleCount__ If the number of samples in a node is less
 			%         than this parameter then the node will not be splitted.
 			%         default 10.
-			%     'RegressionAccuracy': Termination criteria for regression
+			% * __RegressionAccuracy__ Termination criteria for regression
 			%         trees. If all absolute differences between an estimated
 			%         value in a node and values of train samples in this node
 			%         are less than this parameter then the node will not be
 			%         splitted. default 0.01.
-			%     'UseSurrogates': If true then surrogate splits will be built.
+			% * __UseSurrogates__ If true then surrogate splits will be built.
 			%         These splits allow to work with missing data and compute
 			%         variable importance correctly. default true.
-			%     'MaxCategories': Cluster possible values of a categorical
+			% * __MaxCategories__ Cluster possible values of a categorical
 			%         variable into K <= MaxCategories clusters to find a
 			%         suboptimal split. If a discrete variable, on which the
 			%         training procedure tries to make a split, takes more than
@@ -137,17 +138,17 @@ classdef DTree < handle
 			%         classification the optimal split can be found efficiently
 			%         without employing clustering, thus the parameter is not
 			%         used in these cases. default 10.
-			%     'CVFolds': If CVFolds > 1 then prune a tree with K-fold
+			% * __CVFolds__ If CVFolds > 1 then prune a tree with K-fold
 			%         cross-validation where K is equal to CVFolds. default 10.
-			%     'Use1seRule': If true then a pruning will be harsher. This
+			% * __Use1seRule__ If true then a pruning will be harsher. This
 			%         will make a tree more compact and more resistant to the
 			%         training data noise but a bit less accurate. default true.
-			%     'TruncatePrunedTree': If true then pruned branches are
+			% * __TruncatePrunedTree__ If true then pruned branches are
 			%         physically removed from the tree. Otherwise they are
 			%         retained and it is possible to get results from the
 			%         original unpruned (or pruned less aggressively) tree by
 			%         decreasing pruned_tree_idx parameter. default true.
-			%     'Priors': The array of a priori class probabilities, sorted by
+			% * __Priors__ The array of a priori class probabilities, sorted by
 			%         the class label value. The parameter can be used to tune
 			%         the decision tree preferences toward a certain class. For
 			%         example, if you want to detect some rare anomaly
@@ -180,13 +181,15 @@ classdef DTree < handle
             %    results = classifier.predict(samples)
             %    [...] = classifier.predict(..., 'OptionName', optionValue, ...)
             %
-            % Input:
-            %     samples: Input row vectors
-            % Output:
-            %     results: Output labels or regression values
-            % Options:
-            %     'MissingMask': Optional input missing measurement mask.
-            %     'PreprocessedInput': This parameter is normally set to false,
+            % ## Input
+            % * __samples__ Input row vectors
+            %
+            % ## Output
+            % * __results__ Output labels or regression values
+            %
+            % ## Options
+            % * __MissingMask__ Optional input missing measurement mask.
+            % * __PreprocessedInput__ This parameter is normally set to false,
             %         implying a regular input. If it is true, the method
             %         assumes that all the values of the discrete input
             %         variables have been already normalized to 0 to #categories

@@ -4,29 +4,31 @@
 %    d = cv.EMD(signature1, signature2, 'OptionName', optionValue, ...)
 %    [d, lowerBound, flow] = cv.EMD(...)
 %
-% Input:
-%   signature1: First signature, a size1 x dims + 1 floating-point matrix.
+% ## Input
+% * __signature1__ First signature, a size1 x dims + 1 floating-point matrix.
 %       Each row stores the point weight followed by the point coordinates.
 %       The matrix is allowed to have a single column (weights only) if the
 %       user-defined cost matrix is used.
-%   signature2: Second signature of the same format as signature1, though
+% * __signature2__ Second signature of the same format as signature1, though
 %       the number of rows may be different. The total weights may be
 %       different. In this case an extra ?dummy? point is added to either
 %       signature1 or signature2.
-% Output:
-%   d: Output distance value.
-%   lowerBound: lower boundary of a distance between the two signatures.
+%
+% ## Output
+% * __d__ Output distance value.
+% * __lowerBound__ lower boundary of a distance between the two signatures.
 %       See 'LowerBound' in options.
-%   flow: Resultant size1 x size2 flow matrix: flow(i,j) is a flow from
+% * __flow__ Resultant size1 x size2 flow matrix: flow(i,j) is a flow from
 %       i-th point of signature1 to j-th point of signature2
-% Options:
-%   'DistType': Used metric.'L1', 'L2', and 'C' stand for one of the
+%
+% ## Options
+% * __DistType__ Used metric.'L1', 'L2', and 'C' stand for one of the
 %       standard metrics. 'User' means that a pre-calculated cost matrix
 %       cost is used. default 'L2'.
-%   'Cost': User-defined  size1 x size2 cost matrix. Also, if a cost matrix
+% * __Cost__ User-defined  size1 x size2 cost matrix. Also, if a cost matrix
 %       is used, lower boundary lowerBound cannot be calculated because it
 %       needs a metric function.
-%   'LowerBound': Optional input/output parameter: lower boundary of a
+% * __LowerBound__ Optional input/output parameter: lower boundary of a
 %       distance between the two signatures that is a distance between
 %       mass centers. The lower boundary may not be calculated if the
 %       user-defined cost matrix is used, the total weights of point

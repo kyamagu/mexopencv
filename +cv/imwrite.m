@@ -4,20 +4,23 @@
 %    cv.imwrite(filename, src, 'OptionName', optionValue, ...)
 %    status = cv.imwrite(...)
 %
-% Input:
-%    filename: Name of the file.
-%    src: Image to be saved.
-% Output:
-%    status: Logical value indicating success when true.
-% Options:
-%    Format-specific save parameters. The following parameters are currently
-%    supported:
-%      'JpegQuality': For JPEG, it can be a quality from 0 to 100 (the higher
+% ## Input
+% * __filename__ Name of the file.
+% * __src__ Image to be saved.
+%
+% ## Output
+% * __status__ Logical value indicating success when true.
+%
+% ## Options
+% Format-specific save parameters. The following parameters are currently
+% supported
+%
+% * __JpegQuality__ For JPEG, it can be a quality from 0 to 100 (the higher
 %          is the better). Default value is 95.
-%      'PngCompression': For PNG, it can be the compression level from 0 to 9.
+% * __PngCompression__ For PNG, it can be the compression level from 0 to 9.
 %          A higher value means a smaller size and longer compression time.
 %          Default value is 3.
-%      'PxmBinary': For PPM, PGM, or PBM, it can be a binary format flag, 0 or
+% * __PxmBinary__ For PPM, PGM, or PBM, it can be a binary format flag, 0 or
 %          1. Default value is 1.
 %
 % The function imwrite saves the image to the specified file. The image format

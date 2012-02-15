@@ -1,62 +1,64 @@
 %STEREOCALIBRATE  Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern
 %
-%   S = cv.stereoCalibrate(objectPoints, imagePoints1, imagePoints2, imageSize)
-%   [...] = cv.stereoCalibrate(..., 'OptionName', optionValue, ...)
+%    S = cv.stereoCalibrate(objectPoints, imagePoints1, imagePoints2, imageSize)
+%    [...] = cv.stereoCalibrate(..., 'OptionName', optionValue, ...)
 %
-% Input:
-%    objectPoints: A cell array of cells of calibration pattern points in the
+% ## Input
+% * __objectPoints__ A cell array of cells of calibration pattern points in the
 %        calibration pattern coordinate space.
-%    imagePoints1: A cell array of cells of the projections of calibration
+% * __imagePoints1__ A cell array of cells of the projections of calibration
 %        pattern points, observed by the first camera.
-%    imagePoints2: A cell array of cells of the projections of calibration
+% * __imagePoints2__ A cell array of cells of the projections of calibration
 %        pattern points, observed by the second camera.
-%    imageSize: Size of the image used only to initialize the intrinsic camera
+% * __imageSize__ Size of the image used only to initialize the intrinsic camera
 %        matrix. [w,h].
-% Output:
-%    S: struct having the following fields:
-%        cameraMatrix1: Input/output first camera matrix A = [fx, 0, cx; 0, 
+%
+% ## Output
+% * __S__ struct having the following fields:
+% * __cameraMatrix1__ Input/output first camera matrix A = [fx, 0, cx; 0, 
 %            fy, cy; 0, 0, 1]. If any of 'UseIntrinsicGuess' ,
 %            'FixAspectRatio' , 'FixIntrinsic' (default) , or
 %            'FixFocalLength' are specified, some or all of the matrix
 %            components must be initialized.
-%        distCoeffs1: vector of distortion coefficients [k1,k2,p1,p2,k3,k4,
+% * __distCoeffs1__ vector of distortion coefficients [k1,k2,p1,p2,k3,k4,
 %            k5,k6] of 4, 5, or 8 elements. The output vector length
 %            depends on the options.
-%        cameraMatrix2: second camera matrix. The parameter is similar to
+% * __cameraMatrix2__ second camera matrix. The parameter is similar to
 %            cameraMatrix1
-%        distCoeffs2: lens distortion coefficients for the second camera.
+% * __distCoeffs2__ lens distortion coefficients for the second camera.
 %            The parameter is similar to distCoeffs1.
-%        R: rotation matrix between the 1st and the 2nd camera coordinate
+% * __R__ rotation matrix between the 1st and the 2nd camera coordinate
 %            systems.
-%        T: translation vector between the coordinate systems of the
+% * __T__ translation vector between the coordinate systems of the
 %            cameras.
-%        E: essential matrix.
-%        F: fundamental matrix.
-%        d: Output final re-projection error.
-% Options:
+% * __E__ essential matrix.
+% * __F__ fundamental matrix.
+% * __d__ Output final re-projection error.
+%
+% ## Options
 %    'CameraMatrix1', 'CameraMatrix2: Initial camera matrices.
 %    'DistCoeffs1', 'DistCoeffs2: Initial lens distortion coefficients.
-%    'TermCrit': Termination criteria for the iterative optimization
+% * __TermCrit__ Termination criteria for the iterative optimization
 %        algorithm. struct with 'type', 'maxCount', 'epsilon' fields.
-%    'FixIntrinsic': Fix cameraMatrixN and distCoeffsN so that only R, T,
+% * __FixIntrinsic__ Fix cameraMatrixN and distCoeffsN so that only R, T,
 %        E , and F matrices are estimated. default true.
-%    'UseIntrinsicGuess': Optimize some or all of the intrinsic parameters
+% * __UseIntrinsicGuess__ Optimize some or all of the intrinsic parameters
 %        according to the specified flags. Initial values are provided by
 %        the user. default false.
-%    'FixPrincipalPoint': Fix the principal points during the optimization.
+% * __FixPrincipalPoint__ Fix the principal points during the optimization.
 %        default false.
-%    'FixFocalLength': Fix fx and fy. default false
-%    'FixAspectRatio': Optimize fy and fix the ratio fx/fy. default false.
-%    'SameFocalLength': Enforce same fx and fy for two cameras. default
+% * __FixFocalLength__ Fix fx and fy. default false
+% * __FixAspectRatio__ Optimize fy and fix the ratio fx/fy. default false.
+% * __SameFocalLength__ Enforce same fx and fy for two cameras. default
 %        false.
-%    'ZeroTangentDist': Set tangential distortion coefficients for each
+% * __ZeroTangentDist__ Set tangential distortion coefficients for each
 %        camera to zeros and fix there. default false.
 %    'FixK1', 'FixK2', ..., 'FixK6': Do not change the corresponding radial
 %        distortion coefficient during the optimization. If
 %        'UseIntrinsicGuess' is set, the coefficient from the supplied
 %        distCoeffs matrix is used. Otherwise, it is set to 0. default
 %        false.
-%    'RationalModel': Enable coefficients k4, k5, and k6. To provide the
+% * __RationalModel__ Enable coefficients k4, k5, and k6. To provide the
 %        backward compatibility, this extra flag should be explicitly
 %        specified to make the calibration function use the rational model
 %        and return 8 coefficients. If the flag is not set, the function
@@ -72,8 +74,7 @@
 % T1 ), it should be possible to compute (R2,T2). You only need to know the
 % position and orientation of the second camera relative to the first
 % camera. This is what the described function does. It computes (R,T) so
-% that:
-%
+% that
 %    R2 = R * R1 T2 = R * T1 + T
 %
 % Optionally, it computes the essential matrix E:

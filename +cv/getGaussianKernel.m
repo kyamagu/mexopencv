@@ -2,17 +2,19 @@
 %
 %    kernel = cv.getGaussianKernel('OptionName', optionValue, ...)
 %
-% Output:
-%    kernel: Output kernel.
-% Options:
-%    'KSize': Aperture size. It should be odd (ksize % 2 ==1) and positive.
+%
+% ## Output
+% * __kernel__ Output kernel.
+%
+% ## Options
+% * __KSize__ Aperture size. It should be odd (ksize % 2 ==1) and positive.
 %        default 5.
-%    'Sigma': Gaussian standard deviation. If it is non-positive, it is
+% * __Sigma__ Gaussian standard deviation. If it is non-positive, it is
 %        computed from ksize as sigma = 0.3*((ksize-1)*0.5 - 1) + 0.8.
 %        default -1.
 %
 % The function computes and returns the ksize x 1 matrix of Gaussian filter
-% coefficients:
+% coefficients
 %
 %     G_i = \alpha * \exp(-(i-(ksize-1)/2)^2/(2*\sigma)^2)
 %

@@ -43,12 +43,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	
 	// Big operation switch
 	if (method == "new") {
-		if (nrhs>5  && (nrhs%2)==1) {
-			int history = rhs[3].toInt();
-			int nmixtures = rhs[4].toInt();
-			double backgroundRatio = rhs[5].toDouble();
+		if (nrhs>4 && (nrhs%2)==1) {
+			int history = rhs[2].toInt();
+			int nmixtures = rhs[3].toInt();
+			double backgroundRatio = rhs[4].toDouble();
 			double noiseSigma=0;
-			for (int i=6;i<nrhs;i+=2) {
+			for (int i=5;i<nrhs;i+=2) {
 				string key(rhs[i].toString());
 				if (key=="NoiseSigma")
 					noiseSigma = rhs[i+1].toDouble();

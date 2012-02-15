@@ -1,7 +1,7 @@
 classdef StereoBM < handle
     %STEREOBM  Class for computing stereo correspondence using the block matching algorithm
     %
-    % Usage:
+    % # Usage
     %
     %    bm = cv.StereoBM('Preset', 'Basic', 'NDisparity', 0);
     %    disparity = bm.compute(left, right);
@@ -42,17 +42,18 @@ classdef StereoBM < handle
             %
             %    bm.init('OptionName', optionValue, ...)
             %
-            % Options:
-            %    'Preset': specifies the whole set of algorithm parameters,
+            %
+            % ## Options
+            % * __Preset__ specifies the whole set of algorithm parameters,
             %        one of: 'Basic', 'FishEye', 'Narrow'. After
             %        constructing the class, you can override any
             %        parameters set by the preset.
-            %    'NDisparities': the disparity search range. For each pixel
+            % * __NDisparities__ the disparity search range. For each pixel
             %        algorithm will find the best disparity from 0 (default
             %        minimum disparity) to ndisparities. The search range
             %        can then be shifted by changing the minimum disparity.
             %        default 0.
-            %    'SADWindowSize': the linear size of the blocks compared by
+            % * __SADWindowSize__ the linear size of the blocks compared by
             %        the algorithm. The size should be odd (as the block is
             %        centered at the current pixel). Larger block size
             %        implies smoother, though less accurate disparity map.
@@ -70,12 +71,13 @@ classdef StereoBM < handle
             %
             %    disparity = bm.compute(left, right)
             %
-            % Input:
-            %    left: Left 8-bit single-channel or 3-channel image.
-            %    right: Right image of the same size and the same type as
+            % ## Input
+            % * __left__ Left 8-bit single-channel or 3-channel image.
+            % * __right__ Right image of the same size and the same type as
             %        the left one.
-            % Output:
-            %    disparity: Output disparity map. It has the same size as
+            %
+            % ## Output
+            % * __disparity__ Output disparity map. It has the same size as
             %        the input images. When disptype==CV_16S, the map is a
             %        16-bit signed single-channel image, containing
             %        disparity values scaled by 16. To get the true

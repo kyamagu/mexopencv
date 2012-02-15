@@ -1,20 +1,22 @@
 %DISTANCETRANSFORM  Calculates the distance to the closest zero pixel for
 % each pixel of the source image
 %
-%    dst = cv.distanceTransform(src)
-%    dst = cv.distanceTransform(src, 'DistanceType', distanceType, ...)
-%    [dst, labels] = distanceTransform(src, code, ...)
+%     dst = cv.distanceTransform(src)
+%     dst = cv.distanceTransform(src, 'DistanceType', distanceType, ...)
+%     [dst, labels] = distanceTransform(src, code, ...)
 %
-%  Input:
-%    src: 8-bit, single-channel (binary) source image.
-%  Output:
-%    dst: Output image with calculated distances. It is a 32-bit
+% ## Input
+% * __src__ 8-bit, single-channel (binary) source image.
+%
+% ## Output
+% * __dst__ Output image with calculated distances. It is a 32-bit
 %        floating-point, single-channel image of the same size as src.
-%    labels: Optional output 2D array of labels (the discrete Voronoi diagram).
+% * __labels__ Optional output 2D array of labels (the discrete Voronoi diagram).
 %        It has the type int32 and the same size as src
-%  Options:
-%    'DistanceType': Type of distance. It can be 'L1', 'L2' , or 'C'
-%    'MaskSize': Size of the distance transform mask. It can be 3, 5, or
+%
+% ## Options
+% * __DistanceType__ Type of distance. It can be 'L1', 'L2' , or 'C'
+% * __MaskSize__ Size of the distance transform mask. It can be 3, 5, or
 %        'MaskPrecise' (the latter option is only supported by the
 %        first function). In case of the 'L1' or 'C' distance type, the
 %        parameter is forced to 3 because a 3 x 3 mask gives the same

@@ -1,24 +1,26 @@
 %FINDHOMOGRAPHY  Calculates a fundamental matrix from the corresponding points in two images
 %
-%   F = cv.findHomography(srcPoints, dstPoints)
-%   [F, mask] = cv.findHomography(...)
-%   [...] = cv.findHomography(..., 'OptionName', optionValue, ...)
+%    F = cv.findHomography(srcPoints, dstPoints)
+%    [F, mask] = cv.findHomography(...)
+%    [...] = cv.findHomography(..., 'OptionName', optionValue, ...)
 %
-% Input:
-%    srcPoints: Coordinates of the points in the original plane, a numeric
+% ## Input
+% * __srcPoints__ Coordinates of the points in the original plane, a numeric
 %        array of size 1xNx2 or cell array of two-element vectors.
-%    dstPoints: Coordinates of the points in the target plane, a numeric
+% * __dstPoints__ Coordinates of the points in the target plane, a numeric
 %        array of size 1xNx2 or cell array of two-element vectors.
-% Output:
-%    H: Homography matrix.
-%    mask: Mask array.
-% Options:
-%    'Method': Method used to computed a homography matrix. The following
+%
+% ## Output
+% * __H__ Homography matrix.
+% * __mask__ Mask array.
+%
+% ## Options
+% * __Method__ Method used to computed a homography matrix. The following
 %        methods are possible:
-%        '0': a regular method using all the points. (default)
-%        'Ransac': RANSAC-based robust method.
-%        'LMedS': Least-Median robust method.
-%    'RansacReprojThreshold': Maximum allowed reprojection error to treat a
+% * __0__ a regular method using all the points. (default)
+% * __Ransac__ RANSAC-based robust method.
+% * __LMedS__ Least-Median robust method.
+% * __RansacReprojThreshold__ Maximum allowed reprojection error to treat a
 %        point pair as an inlier (used in the RANSAC method only). That is,
 %        if
 %            ||dstPoints_i - convertPointsToHomogeneous(H*srcPoints_i)||

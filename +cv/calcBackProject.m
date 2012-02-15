@@ -2,18 +2,20 @@
 %
 %    Y = cv.calcBackProject(X, H, edges)
 %
-% Input:
-%   X: Source pixel arrays. A numeric array, or cell array of numeric
+% ## Input
+% * __X__ Source pixel arrays. A numeric array, or cell array of numeric
 %       arrays are accepted. They all should have the same class and the
 %       same size.
-%   H: Input histogram that can be dense or sparse.
-% Output:
-%   Y: Destination back projection array that is a single-channel array of
+% * __H__ Input histogram that can be dense or sparse.
+%
+% ## Output
+% * __Y__ Destination back projection array that is a single-channel array of
 %       the same size as X or the first element of X if X is a cell array.
-% Options:
-%   'Uniform': Logical flag indicating whether the histogram is uniform
+%
+% ## Options
+% * __Uniform__ Logical flag indicating whether the histogram is uniform
 %       or not. default false.
-%   'Scale': Optional scale factor for the output back projection. default
+% * __Scale__ Optional scale factor for the output back projection. default
 %       1.
 %
 % The functions calcBackProject calculate the back project of the

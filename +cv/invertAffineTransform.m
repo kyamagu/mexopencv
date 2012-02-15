@@ -2,10 +2,11 @@
 %
 %    iM = cv.invertAffineTransform(M)
 %
-%  Input:
-%    M: Original affine transformation.
-%  Output:
-%    iM: Output reverse affine transformation.
+% ## Input
+% * __M__ Original affine transformation.
+%
+% ## Output
+% * __iM__ Output reverse affine transformation.
 %
 % The function computes an inverse affine transformation represented by 2 x 3
 % matrix M :

@@ -3,8 +3,8 @@ classdef FeatureDetector < handle
 	%
 	% Feature detector class. Here is how to use:
 	%
-	%   detector = cv.FeatureDetector('SURF');
-	%   keypoints = detector.detect(im);
+	%    detector = cv.FeatureDetector('SURF');
+	%    keypoints = detector.detect(im);
     %
     % See also cv.FeatureDetector.FeatureDetector cv.FeatureDetector.write
     %
@@ -21,12 +21,13 @@ classdef FeatureDetector < handle
         function this = FeatureDetector(type)
             %FEATUREDETECTOR  FeatureDetector constructors
             %
-            %  detector = cv.FeatureDetector(type)
+            %    detector = cv.FeatureDetector(type)
             %
-            % Input:
-            %   type: Type of the detector. see below. default 'FAST'
-            % Output:
-            %   detector: New instance of the FeatureDetector
+            % ## Input
+            % * __type__ Type of the detector. see below. default 'FAST'
+            %
+            % ## Output
+            % * __detector__ New instance of the FeatureDetector
             %
             % The following detector types are supported:
             %
@@ -42,7 +43,7 @@ classdef FeatureDetector < handle
             %     'SimpleBlob' SimpleBlobDetector
             %
             % Also a combined format with one of the following adaptor is
-            % supported:
+            % supported
             %
             %     'Grid'       GridAdaptedFeatureDetector
             %     'Pyramid'    PyramidAdaptedFeatureDetector
@@ -74,12 +75,13 @@ classdef FeatureDetector < handle
         function keypoints = detect(this, im)
             %DETECT  Detects keypoints in an image
             %
-            %   keypoints = detector.detect(im)
+            %    keypoints = detector.detect(im)
             %
-            % Input:
-            %   im: Image
-            % Output:
-            %   keypoints: The detected keypoints
+            % ## Input
+            % * __im__ Image
+            %
+            % ## Output
+            % * __keypoints__ The detected keypoints
             %
             % See also cv.FeatureDetector
             %
@@ -89,10 +91,10 @@ classdef FeatureDetector < handle
         function read(this, filename)
             %READ  Reads a feature detector object from a file
             %
-            %   detector.read(filename)
+            %    detector.read(filename)
             %
-            % Input:
-            %   filename: name of the xml/yaml file
+            % ## Input
+            % * __filename__ name of the xml/yaml file
             %
             % See also cv.FeatureDetector
             %
@@ -102,10 +104,10 @@ classdef FeatureDetector < handle
         function write(this, filename)
             %WRITE  Writes a feature detector object to a file
             %
-            %   detector.write(filename)
+            %    detector.write(filename)
             %
-            % Input:
-            %   filename: name of the xml/yaml file
+            % ## Input
+            % * __filename__ name of the xml/yaml file
             %
             % See also cv.FeatureDetector
             %

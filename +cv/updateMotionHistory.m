@@ -1,17 +1,18 @@
 %UPDATEMOTIONHISTORY  Updates the motion history image by a moving silhouette
 %
-%   mhi = cv.updateMotionHistory(silhouette, mhi, timestamp, duration)
+%    mhi = cv.updateMotionHistory(silhouette, mhi, timestamp, duration)
 %
-% Input:
-%     silhouette: Silhouette mask that has non-zero pixels where the motion
+% ## Input
+% * __silhouette__ Silhouette mask that has non-zero pixels where the motion
 %         occurs.
-%     mhi: Motion history image to be updated by the function (single-channel,
+% * __mhi__ Motion history image to be updated by the function (single-channel,
 %         32-bit floating-point).
-%     timestamp: Current time in milliseconds or other units.
-%     duration: Maximal duration of the motion track in the same units as
+% * __timestamp__ Current time in milliseconds or other units.
+% * __duration__ Maximal duration of the motion track in the same units as
 %         timestamp.
-% Output:
-%     mhi: Motion history image that is updated by the function (single-channel,
+%
+% ## Output
+% * __mhi__ Motion history image that is updated by the function (single-channel,
 %         32-bit floating-point).
 %
 % The function updates the motion history image as follows:

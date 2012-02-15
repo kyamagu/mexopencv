@@ -3,15 +3,17 @@
 %    dst = cv.pyrMeanShiftFiltering(src)
 %    dst = cv.pyrMeanShiftFiltering(src, 'SP', 5, ...)
 %
-%  Input:
-%    src: The source 8-bit, 3-channel image.
-%  Output:
-%    dst: The destination image of the same format and the same size as the
+% ## Input
+% * __src__ The source 8-bit, 3-channel image.
+%
+% ## Output
+% * __dst__ The destination image of the same format and the same size as the
 %         source.
-%  Options:
-%	 'SP': The spatial window radius. default 5
-%    'SR': The color window radius. default 10
-%    'MaxLevel': Maximum level of the pyramid for the segmentation
+%
+% ## Options
+% * __SP__ The spatial window radius. default 5
+% * __SR__ The color window radius. default 10
+% * __MaxLevel__ Maximum level of the pyramid for the segmentation
 %
 % The function implements the filtering stage of meanshift segmentation, that
 % is, the output of the function is the filtered “posterized” image with color
@@ -27,7 +29,7 @@
 % used, so any 3-component color space can be used instead). Over the
 % neighborhood the average spatial value (X',Y') and average color vector
 % (R',G',B') are found and they act as the neighborhood center on the next
-% iteration:
+% iteration
 %
 %   (X,Y) (X',Y'), (R,G,B) (R',G',B').
 %

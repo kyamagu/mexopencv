@@ -3,12 +3,12 @@ classdef DescriptorMatcher < handle
 	%
 	% Descriptor matcher class. Basic usage is the following:
 	%
-    %   X = rand(100,10);
-    %   Y = rand(100,10);
-	%   matcher = cv.DescriptorMatcher('BruteForce');
-    %   matcher.add(X);
-    %   matcher.train(); % Optional for BruteForce matcher
-	%   matches = matcher.match(Y);
+    %    X = rand(100,10);
+    %    Y = rand(100,10);
+	%    matcher = cv.DescriptorMatcher('BruteForce');
+    %    matcher.add(X);
+    %    matcher.train(); % Optional for BruteForce matcher
+	%    matches = matcher.match(Y);
     %
     % See also cv.DescriptorMatcher.DescriptorMatcher
     %
@@ -27,13 +27,14 @@ classdef DescriptorMatcher < handle
         function this = DescriptorMatcher(type, varargin)
             %DESCRIPTORMATCHER  DescriptorMatcher constructors
             %
-            %  matcher = cv.DescriptorMatcher(type)
-            %  matcher = cv.DescriptorMatcher('FlannBased', 'OptionName', optionValue, ...)
+            %    matcher = cv.DescriptorMatcher(type)
+            %    matcher = cv.DescriptorMatcher('FlannBased', 'OptionName', optionValue, ...)
             %
-            % Input:
-            %   type: Type of the detector. see below. default 'BruteForce'
-            % Output:
-            %   matcher: New instance of the DescriptorMatcher
+            % ## Input
+            % * __type__ Type of the detector. see below. default 'BruteForce'
+            %
+            % ## Output
+            % * __matcher__ New instance of the DescriptorMatcher
             %
             % The following matcher types are supported:
             %
@@ -45,7 +46,7 @@ classdef DescriptorMatcher < handle
             %
             % The FlannBased matcher takes optional arguments
             %
-            %     'Index': Type of indexer. One of the following:
+            % * __Index__ Type of indexer. One of the following:
             %         'Linear'     Brute-force matching
             %         'KDTree'     Randomized kd-trees
             %         'KMeans'     Hierarchical k-means tree
@@ -58,7 +59,7 @@ classdef DescriptorMatcher < handle
             %        
             %            {'Type', 'OptionName', optionValue,...}
             %
-            %     'Search': Option in matching operation. Takes a cell
+            % * __Search__ Option in matching operation. Takes a cell
             %         array of option pairs.
             %
             % For example, KDTree with tree size=4 is specified by:
@@ -69,13 +70,14 @@ classdef DescriptorMatcher < handle
             %
             % Options for FlannBased indexers are the following:
             %
-            % KDTree and Composite
-            %    'Trees': The number of parallel kd-trees to use. Good
+            % ### KDTree and Composite
+            % * __Trees__ The number of parallel kd-trees to use. Good
             %        values are in the range [1..16]. default 4
-            % KMeans and Composite
-            %    'Branching': The branching factor to use for the
+            %
+            % ### KMeans and Composite
+            % * __Branching__ The branching factor to use for the
             %        hierarchical k-means tree. default 32
-            %    'Iterations': The maximum number of iterations to use in
+            % * __Iterations__ The maximum number of iterations to use in
             %        the k-means clustering stage when building the k-means
             %        tree. A value of -1 used here means that the k-means
             %        clustering should be iterated until convergenceThe
@@ -84,7 +86,7 @@ classdef DescriptorMatcher < handle
             %        value of -1 used here means that the k-means
             %        clustering should be iterated until convergence.
             %        default 11
-            %    'CentersInit': The algorithm to use for selecting the
+            % * __CentersInit__ The algorithm to use for selecting the
             %        initial centers when performing a k-means clustering
             %        step. The possible values are 'Random' (picks
             %        the initial cluster centers randomly),
@@ -92,21 +94,22 @@ classdef DescriptorMatcher < handle
             %        Gonzales? algorithm) and 'KMeansPP' (picks the
             %        initial centers using the algorithm suggested in
             %        arthur_kmeanspp_2007 ) default 'Random'
-            %    'CBIndex': This parameter (cluster boundary index)
+            % * __CBIndex__ This parameter (cluster boundary index)
             %        influences the way exploration is performed in the
             %        hierarchical kmeans tree. When cb_index is zero the
             %        next kmeans domain to be explored is choosen to be the
             %        one with the closest center. A value greater then zero
             %        also takes into account the size of the domain.
             %        default 0.2
-            % Autotuned
-            %    'TargetPrecision': Is a number between 0 and 1 specifying
+            %
+            % ### Autotuned
+            % * __TargetPrecision__ Is a number between 0 and 1 specifying
             %        the percentage of the approximate nearest-neighbor
             %        searches that return the exact nearest-neighbor. Using
             %        a higher value for this parameter gives more accurate
             %        results, but the search takes longer. The optimum
             %        value usually depends on the application. default 0.9
-            %    'BuildWeight': Specifies the importance of the index build
+            % * __BuildWeight__ Specifies the importance of the index build
             %        time raported to the nearest-neighbor search time. In
             %        some applications it?s acceptable for the index build
             %        step to take a long time if the subsequent searches in
@@ -114,12 +117,12 @@ classdef DescriptorMatcher < handle
             %        applications it?s required that the index be build as
             %        fast as possible even if that leads to slightly longer
             %        search times. default 0.01
-            %    'MemoryWeight': Is used to specify the tradeoff between
+            % * __MemoryWeight__ Is used to specify the tradeoff between
             %        time (index build time and search time) and memory
             %        used by the index. A value less than 1 gives more
             %        importance to the time spent and a value greater than
             %        1 gives more importance to the memory usage. default 0
-            %    'SampleFraction': Is a number between 0 and 1 indicating
+            % * __SampleFraction__ Is a number between 0 and 1 indicating
             %        what fraction of the dataset to use in the automatic
             %        parameter configuration algorithm. Running the
             %        algorithm on the full dataset gives the most accurate
@@ -128,16 +131,17 @@ classdef DescriptorMatcher < handle
             %        the data helps speeding up this algorithm while still
             %        giving good approximations of the optimum parameters.
             %        default 0.1
-            % Saved
-            %    Saved index takes only one argument specifing filename:
-            %    
-            %        cv.DescriptorMatcher('FlannBased',...
-            %            'Index', {'Saved', '/path/to/saved/index.xml')}
             %
-            % Search
-            %    'Checks': default 32
-            %    'EPS': default 0
-            %    'Sorted': default false
+            % ### Saved
+            % Saved index takes only one argument specifing filename:
+            %    
+            %    cv.DescriptorMatcher('FlannBased',...
+            %        'Index', {'Saved', '/path/to/saved/index.xml')}
+            %
+            % ### Search
+            % * __Checks__ default 32
+            % * __EPS__ default 0
+            % * __Sorted__ default false
             %
             % See also cv.DescriptorMatcher
             %
@@ -181,7 +185,7 @@ classdef DescriptorMatcher < handle
         function clear(this)
         	%CLEAR  Clears the train descriptor collection
         	%
-            %   matcher.clear()
+            %    matcher.clear()
         	%
         	DescriptorMatcher_(this.id, 'clear');
         end
@@ -189,7 +193,7 @@ classdef DescriptorMatcher < handle
         function status = empty(this)
         	%EMPTY  Returns true if there are no train descriptors in the collection
             %
-            %   matcher.empty()
+            %    matcher.empty()
         	%
         	status = DescriptorMatcher_(this.id, 'empty');
         end
@@ -203,7 +207,7 @@ classdef DescriptorMatcher < handle
         function train(this)
         	%TRAIN  Trains a descriptor matcher
         	%
-            %   matcher.train()
+            %    matcher.train()
         	%
         	% Trains a descriptor matcher (for example, the flann index). In all
         	% methods to match, the method train() is run every time before
@@ -218,20 +222,22 @@ classdef DescriptorMatcher < handle
         function matches = match(this, queryDescriptors, varargin)
         	%MATCH  Finds the best match for each descriptor from a query set
         	%
-            %   matches = matcher.match(queryDescriptors)
-            %   matches = matcher.match(queryDescriptors, trainDescriptors)
-            %   [...] = matcher.match(..., 'OptionName', optionValue, ...)
+            %    matches = matcher.match(queryDescriptors)
+            %    matches = matcher.match(queryDescriptors, trainDescriptors)
+            %    [...] = matcher.match(..., 'OptionName', optionValue, ...)
             %
-            % Input:
-            %   queryDescriptors: Query set of descriptors.
-            %   trainDescriptors: Train set of descriptors. This set is not
+            % ## Input
+            % * __queryDescriptors__ Query set of descriptors.
+            % * __trainDescriptors__ Train set of descriptors. This set is not
             %       added to the train descriptors collection stored in the
             %       class object.
-            % Output:
-            %   matches: Matches. If a query descriptor is masked out in mask,
+            %
+            % ## Output
+            % * __matches__ Matches. If a query descriptor is masked out in mask,
             %       no match is added for this descriptor. So, matches size may
             %       be smaller than the query descriptors count.
-            % Options:
+            %
+            % ## Options
             %   'Mask' Mask specifying permissible matches between an input
             %       query and train matrices of descriptors.
         	%
@@ -241,25 +247,27 @@ classdef DescriptorMatcher < handle
         function matches = knnMatch(this, queryDescriptors, varargin)
         	%KNNMATCH  Finds the k best matches for each descriptor from a query set
         	%
-            %   matches = matcher.knnMatch(queryDescriptors, k)
-            %   matches = matcher.knnMatch(queryDescriptors, trainDescriptors, k)
-            %   [...] = matcher.knnMatch(..., 'OptionName', optionValue, ...)
+            %    matches = matcher.knnMatch(queryDescriptors, k)
+            %    matches = matcher.knnMatch(queryDescriptors, trainDescriptors, k)
+            %    [...] = matcher.knnMatch(..., 'OptionName', optionValue, ...)
             %
-            % Input:
-            %   queryDescriptors: Query set of descriptors.
-            %   trainDescriptors: Train set of descriptors. This set is not
+            % ## Input
+            % * __queryDescriptors__ Query set of descriptors.
+            % * __trainDescriptors__ Train set of descriptors. This set is not
             %       added to the train descriptors collection stored in the
             %       class object.
-            %   k: Count of best matches found per each query descriptor or less
+            % * __k__ Count of best matches found per each query descriptor or less
             %       if a query descriptor has less than k possible matches in
             %       total
-            % Output:
-            %   matches: Matches. Each matches{i} is k or less matches for the
+            %
+            % ## Output
+            % * __matches__ Matches. Each matches{i} is k or less matches for the
             %       same query descriptor.
-            % Options:
-            %   'Mask': Mask specifying permissible matches between an input
+            %
+            % ## Options
+            % * __Mask__ Mask specifying permissible matches between an input
             %       query and train matrices of descriptors.
-            %   'CompactResult': Parameter used when the mask (or masks) is not
+            % * __CompactResult__ Parameter used when the mask (or masks) is not
             %       empty. If compactResult is false, the matches vector has the
             %       same size as queryDescriptors rows. If compactResult is
             %       true, the matches vector does not contain matches for fully
@@ -272,23 +280,25 @@ classdef DescriptorMatcher < handle
         function matches = radiusMatch(this, queryDescriptors, varargin)
         	%RADIUSMATCH  For each query descriptor, finds the training descriptors not farther than the specified distance
         	%
-            %   matches = matcher.radiusMatch(queryDescriptors, k)
-            %   matches = matcher.radiusMatch(queryDescriptors, trainDescriptors, k)
-            %   [...] = matcher.radiusMatch(..., 'OptionName', optionValue, ...)
+            %    matches = matcher.radiusMatch(queryDescriptors, k)
+            %    matches = matcher.radiusMatch(queryDescriptors, trainDescriptors, k)
+            %    [...] = matcher.radiusMatch(..., 'OptionName', optionValue, ...)
             %
-            % Input:
-            %   queryDescriptors: Query set of descriptors.
-            %   trainDescriptors: Train set of descriptors. This set is not
+            % ## Input
+            % * __queryDescriptors__ Query set of descriptors.
+            % * __trainDescriptors__ Train set of descriptors. This set is not
             %       added to the train descriptors collection stored in the
             %       class object.
-            %   maxDistance: Threshold for the distance between matched
+            % * __maxDistance__ Threshold for the distance between matched
             %       descriptors.
-            % Output:
-            %   matches: Found matches.
-            % Options:
-            %   'Mask': Mask specifying permissible matches between an input
+            %
+            % ## Output
+            % * __matches__ Found matches.
+            %
+            % ## Options
+            % * __Mask__ Mask specifying permissible matches between an input
             %       query and train matrices of descriptors.
-            %   'CompactResult': Parameter used when the mask (or masks) is not
+            % * __CompactResult__ Parameter used when the mask (or masks) is not
             %       empty. If compactResult is false, the matches vector has the
             %       same size as queryDescriptors rows. If compactResult is
             %       true, the matches vector does not contain matches for fully
@@ -301,10 +311,10 @@ classdef DescriptorMatcher < handle
         function read(this, filename)
             %READ  Reads a descriptor matcher object from a file
             %
-            %   matcher.read(filename)
+            %    matcher.read(filename)
             %
-            % Input:
-            %   filename: name of the xml/yaml file
+            % ## Input
+            % * __filename__ name of the xml/yaml file
             %
             % See also cv.DescriptorMatcher
             %
@@ -314,10 +324,10 @@ classdef DescriptorMatcher < handle
         function write(this, filename)
             %WRITE  Writes a descriptor matcher object to a file
             %
-            %   matcher.write(filename)
+            %    matcher.write(filename)
             %
-            % Input:
-            %   filename: name of the xml/yaml file
+            % ## Input
+            % * __filename__ name of the xml/yaml file
             %
             % See also cv.DescriptorMatcher
             %

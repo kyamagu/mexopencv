@@ -22,11 +22,11 @@ classdef PCA < handle
     % The following shows a quick example of how to reduce dimensionality
     % of samples from 10 to 3.
     %
-    %   Xtrain = randn(100,10);
-    %   Xtest  = randn(100,10);
-    %   pca = cv.PCA(Xtrain, 'MaxComponents', 3);
-    %   Y = pca.project(Xtest);
-    %   Xapprox = pca.backProject(Y);
+    %    Xtrain = randn(100,10);
+    %    Xtest  = randn(100,10);
+    %    pca = cv.PCA(Xtrain, 'MaxComponents', 3);
+    %    Y = pca.project(Xtest);
+    %    Xapprox = pca.backProject(Y);
     %
     % See also cv.PCA.PCA
     %
@@ -46,20 +46,21 @@ classdef PCA < handle
         function this = PCA(varargin)
             %PCA  PCA constructors
             %
-            %   pca = cv.PCA()
-            %   pca = cv.PCA(X, 'OptionName', optionValue, ...)
-            %   pca = cv.PCA(S)
+            %    pca = cv.PCA()
+            %    pca = cv.PCA(X, 'OptionName', optionValue, ...)
+            %    pca = cv.PCA(S)
             %
-            % Input:
-            %   X: Vectors to be analyzed
-            %   S: A scalar struct to be imported
-            % Options:
-            %   'DataAs': Data layout option. One of 'row' or 'col'.
+            % ## Input
+            % * __X__ Vectors to be analyzed
+            % * __S__ A scalar struct to be imported
+            %
+            % ## Options
+            % * __DataAs__ Data layout option. One of 'row' or 'col'.
             %       default 'row'.
-            %   'MaxComponents': Maximum number of components that PCA
+            % * __MaxComponents__ Maximum number of components that PCA
             %       should retain. By default, all the components are
             %       retained.
-            %   'Mean': Optional mean value. By default, the mean is
+            % * __Mean__ Optional mean value. By default, the mean is
             %       computed from the data.
             %
             % The constructor creates an empty pca object without an
@@ -95,11 +96,12 @@ classdef PCA < handle
         function S = struct(this)
             %STRUCT  Converts to a struct array
             %
-            %   S = this.struct
-            %   S = struct(this)
+            %    S = this.struct
+            %    S = struct(this)
             %
-            % Output:
-            %   S: struct array
+            %
+            % ## Output
+            % * __S__ struct array
             %
             % See also cv.PCA
             %
@@ -119,17 +121,18 @@ classdef PCA < handle
         function compute(this, X, varargin)
             %COMPUTE  Performs Principal Component Analysis of the supplied dataset
             %
-            %   pca.compute(X)
+            %    pca.compute(X)
             %
-            % Input:
-            %   X: Vectors to be analyzed
-            % Options:
-            %   'DataAs': Data layout option. One of 'row' or 'col'.
+            % ## Input
+            % * __X__ Vectors to be analyzed
+            %
+            % ## Options
+            % * __DataAs__ Data layout option. One of 'row' or 'col'.
             %       default 'row'.
-            %   'MaxComponents': Maximum number of components that PCA
+            % * __MaxComponents__ Maximum number of components that PCA
             %       should retain. By default, all the components are
             %       retained.
-            %   'Mean': Optional mean value. By default, the mean is
+            % * __Mean__ Optional mean value. By default, the mean is
             %       computed from the data.
             %
             % The method performs PCA of the supplied dataset. It is safe
@@ -154,12 +157,13 @@ classdef PCA < handle
         function Y = project(this, X)
             %PROJECT  Projects vector(s) to the principal component subspace
             %
-            %   Y = pca.project(X)
+            %    Y = pca.project(X)
             %
-            % Input:
-            %   X: Vectors to be projected
-            % Output:
-            %   Y: PC coefficients
+            % ## Input
+            % * __X__ Vectors to be projected
+            %
+            % ## Output
+            % * __Y__ PC coefficients
             %
             % The methods project one or more vectors to the principal
             % component subspace, where each vector projection is
@@ -177,12 +181,13 @@ classdef PCA < handle
         function X = backProject(this, Y)
             %BACKPROJECT  Reconstructs vectors from their PC projections
             %
-            %   X = pca.backProject(Y)
+            %    X = pca.backProject(Y)
             %
-            % Input:
-            %   Y: PC coefficients
-            % Output:
-            %   X: Reconstructed vectors
+            % ## Input
+            % * __Y__ PC coefficients
+            %
+            % ## Output
+            % * __X__ Reconstructed vectors
             %
             % The methods are inverse operations to pca.project. They
             % take PC coordinates of projected vectors and reconstruct the

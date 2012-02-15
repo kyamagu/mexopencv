@@ -2,18 +2,18 @@ classdef ERTrees < handle
     %ERTREES  Extremely randomized trees
     %
     % Extremely randomized trees have been introduced by Pierre Geurts, Damien
-    % Ernst and Louis Wehenkel in the article “Extremely randomized trees”,
+    % Ernst and Louis Wehenkel in the article Extremely randomized trees,
     % 2006 [http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.65.7485&rep=rep1&type=pdf].
     % The algorithm of growing Extremely randomized trees is similar to Random
     % Trees (Random Forest), but there are two differences:
     %
-    %   1. Extremely randomized trees don’t apply the bagging procedure to
-    %      constract the training samples for each tree. The same input training
-    %      set is used to train all trees.
-    %   2. Extremely randomized trees pick a node split very extremely (both a
-    %      variable index and variable spliting value are chosen randomly),
-    %      whereas Random Forest finds the best split (optimal one by variable
-    %      index and variable spliting value) among random subset of variables.
+    % 1. Extremely randomized trees don’t apply the bagging procedure to
+    %    constract the training samples for each tree. The same input training
+    %    set is used to train all trees.
+    % 2. Extremely randomized trees pick a node split very extremely (both a
+    %    variable index and variable spliting value are chosen randomly),
+    %    whereas Random Forest finds the best split (optimal one by variable
+    %    index and variable spliting value) among random subset of variables.
     %
     % See also cv.RTrees cv.ERTrees.ERTrees cv.ERTrees.train cv.ERTrees.predict
     %
@@ -98,35 +98,36 @@ classdef ERTrees < handle
             %    classifier.train(trainData, responses)
             %    classifier.train(..., 'OptionName', optionValue, ...)
             %
-            % Input:
-            %     trainData: Row vectors of feature.
-            %     responses: Output of the corresponding feature vectors.
-            % Options:
-            %     'VarIdx': Indicator variables (features) of interest.
+            % ## Input
+            % * __trainData__ Row vectors of feature.
+            % * __responses__ Output of the corresponding feature vectors.
+            %
+            % ## Options
+            % * __VarIdx__ Indicator variables (features) of interest.
             %         Must have the same size to responses.
-            %     'SampleIdx': Indicator samples of interest. Must have the
+            % * __SampleIdx__ Indicator samples of interest. Must have the
             %         the same size to responses.
-            %     'VarType': Solves classification problem when 'Categorical'.
+            % * __VarType__ Solves classification problem when 'Categorical'.
             %         Otherwise, the training is treated as a regression problem.
             %         default 'Categorical'
-			%     'MissingMask': Indicator mask for missing observation.
-			%     'MaxDepth': The maximum possible depth of the tree. That is
+			% * __MissingMask__ Indicator mask for missing observation.
+			% * __MaxDepth__ The maximum possible depth of the tree. That is
 			%         the training algorithms attempts to split a node while its
 			%         depth is less than max_depth. The actual depth may be
 			%         smaller if the other termination criteria are met, and/or
 			%         if the tree is pruned. default 5.
-			%     'MinSampleCount': If the number of samples in a node is less
+			% * __MinSampleCount__ If the number of samples in a node is less
 			%         than this parameter then the node will not be splitted.
 			%         default 10.
-			%     'RegressionAccuracy': Termination criteria for regression
+			% * __RegressionAccuracy__ Termination criteria for regression
 			%         trees. If all absolute differences between an estimated
 			%         value in a node and values of train samples in this node
 			%         are less than this parameter then the node will not be
 			%         splitted. default 0.
-			%     'UseSurrogates': If true then surrogate splits will be built.
+			% * __UseSurrogates__ If true then surrogate splits will be built.
 			%         These splits allow to work with missing data and compute
 			%         variable importance correctly. default false.
-			%     'MaxCategories': Cluster possible values of a categorical
+			% * __MaxCategories__ Cluster possible values of a categorical
 			%         variable into K <= MaxCategories clusters to find a
 			%         suboptimal split. If a discrete variable, on which the
 			%         training procedure tries to make a split, takes more than
@@ -142,7 +143,7 @@ classdef ERTrees < handle
 			%         classification the optimal split can be found efficiently
 			%         without employing clustering, thus the parameter is not
 			%         used in these cases. default 0.
-			%     'Priors': The array of a priori class probabilities, sorted by
+			% * __Priors__ The array of a priori class probabilities, sorted by
 			%         the class label value. The parameter can be used to tune
 			%         the decision tree preferences toward a certain class. For
 			%         example, if you want to detect some rare anomaly
@@ -161,18 +162,18 @@ classdef ERTrees < handle
 			%         then each mistake in predicting the second category is
 			%         equivalent to making 10 mistakes in predicting the first
 			%         category. default none.
-			%     'CalcVarImportance': If true then variable importance will
+			% * __CalcVarImportance__ If true then variable importance will
 			%         be calculated and then it can be retrieved by
 			%         getVarImportance(). default false.
-			%     'NActiveVars': The size of the randomly selected subset of
+			% * __NActiveVars__ The size of the randomly selected subset of
 			%         features at each tree node and that are used to find the
 			%         best split(s). If you set it to 0 then the size will be
 			%         set to the square root of the total number of features.
 			%         default 0.
-			%     'MaxNumOfTreesInTheForest': The maximum number of trees in the
+			% * __MaxNumOfTreesInTheForest__ The maximum number of trees in the
 			%         forest (suprise, suprise). default 50.
-			%     'ForestAccuracy': Sufficient accuracy (OOB error). default 0.1
-			%     'TermCritType': The type of the termination criteria. One of
+			% * __ForestAccuracy__ Sufficient accuracy (OOB error). default 0.1
+			% * __TermCritType__ The type of the termination criteria. One of
 			%         'Iter', 'EPS', or 'Iter+EPS'. default 'Iter+EPS'
             %
             % The method trains the ERTrees model.
@@ -188,12 +189,14 @@ classdef ERTrees < handle
             %    results = classifier.predict(samples)
             %    [...] = classifier.predict(..., 'OptionName', optionValue, ...)
             %
-            % Input:
-            %     samples: Input row vectors
-            % Output:
-            %     results: Output labels or regression values
-            % Options:
-            %     'MissingDataMask':  Missing values mask, which is a
+            % ## Input
+            % * __samples__ Input row vectors
+            %
+            % ## Output
+            % * __results__ Output labels or regression values
+            %
+            % ## Options
+            % * __MissingDataMask__ Missing values mask, which is a
             %         dimentional matrix of the same size as sample having the
             %         uint8 type. 1 corresponds to the missing value in the same
             %         position in the sample vector. If there are no missing
@@ -215,12 +218,14 @@ classdef ERTrees < handle
             %    results = classifier.predict_prob(samples)
             %    [...] = classifier.predict_prob(..., 'OptionName', optionValue, ...)
             %
-            % Input:
-            %     samples: Input row vectors
-            % Output:
-            %     results: Output labels or regression values
-            % Options:
-            %     'MissingMask':  Missing values mask, which is a
+            % ## Input
+            % * __samples__ Input row vectors
+            %
+            % ## Output
+            % * __results__ Output labels or regression values
+            %
+            % ## Options
+            % * __MissingMask__ Missing values mask, which is a
             %         dimentional matrix of the same size as sample having the
             %         uint8 type. 1 corresponds to the missing value in the same
             %         position in the sample vector. If there are no missing
@@ -249,9 +254,10 @@ classdef ERTrees < handle
         	%    value = classifier.get_proximity(sample1, sample2)
         	%    [...] = classifier.get_proximity(..., 'OptionName', optionValue, ...)
         	%
-            % Options:
-            %     'Missing1':  Missing values mask for sample1
-            %     'Missing2':  Missing values mask for sample2
+            %
+            % ## Options
+            % * __Missing1__ Missing values mask for sample1
+            % * __Missing2__ Missing values mask for sample2
             %
         	value = ERTrees_(this.id, 'get_proximity', sample1, sample2, varargin{:});
         end

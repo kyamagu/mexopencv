@@ -1,20 +1,22 @@
 %STEREORECTIFYUNCALIBRATED  Computes a rectification transform for an uncalibrated stereo camera
 %
-%   [H1,H2] = cv.stereoRectifyUncalibrated(points1, points2, F, imgSize)
-%   [...] = cv.stereoRectifyUncalibrated(..., 'OptionName', optionValue, ...)
+%    [H1,H2] = cv.stereoRectifyUncalibrated(points1, points2, F, imgSize)
+%    [...] = cv.stereoRectifyUncalibrated(..., 'OptionName', optionValue, ...)
 %
-% Input:
-%    points1: Cell array of feature points in the first image.
-%    points2: The corresponding points in the second image. The same
+% ## Input
+% * __points1__ Cell array of feature points in the first image.
+% * __points2__ The corresponding points in the second image. The same
 %        formats as in cv.findFundamentalMat are supported.
-%    F: Input fundamental matrix. It can be computed from the same set of
+% * __F__ Input fundamental matrix. It can be computed from the same set of
 %        point pairs using cv.findFundamentalMat.
-%    imageSize: Size of the image.
-% Output:
-%    H1: 3x3 rectification homography matrix for the first image.
-%    H2: 3x3 rectification homography matrix for the second image.
-% Options:
-%    'Threshold': Optional threshold used to filter out the outliers. If
+% * __imageSize__ Size of the image.
+%
+% ## Output
+% * __H1__ 3x3 rectification homography matrix for the first image.
+% * __H2__ 3x3 rectification homography matrix for the second image.
+%
+% ## Options
+% * __Threshold__ Optional threshold used to filter out the outliers. If
 %        the parameter is greater than zero, all the point pairs that do
 %        not comply with the epipolar geometry (that is, the points for
 %        which points2{i}*F*points1{i}'>Threshold) are rejected prior to
@@ -29,7 +31,8 @@
 % perspective transformations encoded by the homography matrices H1 and H2.
 % The function implements the algorithm [Hartley99].
 %
-% Note: While the algorithm does not need to know the intrinsic parameters
+% ## Note
+% While the algorithm does not need to know the intrinsic parameters
 % of the cameras, it heavily depends on the epipolar geometry. Therefore,
 % if the camera lenses have a significant distortion, it would be better to
 % correct it before computing the fundamental matrix and calling this

@@ -1,25 +1,27 @@
 %ELLIPSE  Draws a simple or thick elliptic arc or fills an ellipse sector
 %
-%   img = cv.ellipse(img, center, axes)
-%   [...] = cv.ellipse(..., 'OptionName', optionValue, ...)
+%    img = cv.ellipse(img, center, axes)
+%    [...] = cv.ellipse(..., 'OptionName', optionValue, ...)
 %
-% Input:
-%    img: Image where the ellipse is drawn.
-%    center: Center of the ellipse [x,y].
-%    axes: Length of the ellipse axes [a,b].
-% Output:
-%    img: Output image.
-% Options:
-%    'Angle': Ellipse rotation angle in degrees. default 0.
-%    'StartAngle': Starting angle of the elliptic arc in degrees. default 0
-%    'EndAngle': Ending angle of the elliptic arc in degrees. default 360
-%    'Color': 3-element floating point vector specifying ellipse color.
-%    'Thickness': Thickness of the ellipse arc outline, if positive.
+% ## Input
+% * __img__ Image where the ellipse is drawn.
+% * __center__ Center of the ellipse [x,y].
+% * __axes__ Length of the ellipse axes [a,b].
+%
+% ## Output
+% * __img__ Output image.
+%
+% ## Options
+% * __Angle__ Ellipse rotation angle in degrees. default 0.
+% * __StartAngle__ Starting angle of the elliptic arc in degrees. default 0
+% * __EndAngle__ Ending angle of the elliptic arc in degrees. default 360
+% * __Color__ 3-element floating point vector specifying ellipse color.
+% * __Thickness__ Thickness of the ellipse arc outline, if positive.
 %         Otherwise, this indicates that a filled ellipse sector is to be
 %         drawn. default 1.
-%    'LineType': Type of the ellipse boundary. One of 8,4,'AA'
+% * __LineType__ Type of the ellipse boundary. One of 8,4,'AA'
 %        (Anti-aliased line). default 8.
-%    'Shift': Number of fractional bits in the coordinates of the center
+% * __Shift__ Number of fractional bits in the coordinates of the center
 %        and values of axes. default 0.
 %
 % The functions ellipse with less parameters draw an ellipse outline, a

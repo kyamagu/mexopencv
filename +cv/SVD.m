@@ -21,16 +21,18 @@ classdef SVD
             %    [w, u, vt] = cv.SVD.compute(A)
             %    [...] = cv.SVD.compute(..., 'OptionName', optionValue, ...)
             %
-            % Input:
-            %    A: Decomposed matrix
-            % Output:
-            %    w: Computed singular values
-            %    u: Computed left singular vectors
-            %    vt: Transposed matrix of right singular vectors
-            % Options:
-            %    'NoUV': Use only singular values. The algorithm does not
+            % ## Input
+            % * __A__ Decomposed matrix
+            %
+            % ## Output
+            % * __w__ Computed singular values
+            % * __u__ Computed left singular vectors
+            % * __vt__ Transposed matrix of right singular vectors
+            %
+            % ## Options
+            % * __NoUV__ Use only singular values. The algorithm does not
             %        compute u and vt matrices. default false
-            %    'FullUV': When the matrix is not square, by default the
+            % * __FullUV__ When the matrix is not square, by default the
             %        algorithm produces u and vt matrices of sufficiently
             %        large size for the further A reconstruction. If,
             %        however, the 'FullUV' flag is specified, u and vt are
@@ -48,16 +50,17 @@ classdef SVD
             %
             %    dst = cv.SVD.solveZ(src)
             %
-            % Input:
-            %    src: Left-hand-side matrix.
-            % Output:
-            %    dst: Found solution.
+            % ## Input
+            % * __src__ Left-hand-side matrix.
+            %
+            % ## Output
+            % * __dst__ Found solution.
             %
             % The method finds a unit-length solution x of a singular
             % linear system A*x = 0. Depending on the rank of A, there can
             % be no solutions, a single solution or an infinite number of
             % solutions. In general, the algorithm solves the following
-            % problem:
+            % problem
             %
             %    dst = argmin_{x:||x||=1} || src * x ||
             %
@@ -71,14 +74,15 @@ classdef SVD
             %
             %    dst = cv.SVD.backSubst(w, u, vt, src)
             %
-            % Input:
-            %    w: Singular values
-            %    u: Left singular vectors
-            %    vt: Transposed matrix of right singular vectors
-            %    src: Right-hand side of a linear system (u*w*v')*dst = src
+            % ## Input
+            % * __w__ Singular values
+            % * __u__ Left singular vectors
+            % * __vt__ Transposed matrix of right singular vectors
+            % * __src__ Right-hand side of a linear system (u*w*v')*dst = src
             %        to be solved, where A has been previously decomposed.
-            % Output:
-            %    dst: Found solution of the system.
+            %
+            % ## Output
+            % * __dst__ Found solution of the system.
             %
             % The method computes a back substitution for the specified
             % right-hand side:
@@ -91,8 +95,7 @@ classdef SVD
             % least-squares terms) pseudo-solution of an overdetermined
             % linear system.
             %
-            % Note:
-            %
+            % ## Note
             % Explicit SVD with the further back substitution only
             % makes sense if you need to solve many linear systems with the
             % same left-hand side (for example, src ). If all you need is

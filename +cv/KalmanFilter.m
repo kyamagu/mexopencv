@@ -52,11 +52,12 @@ classdef KalmanFilter < handle
             %
             %    kf.init(dynamParams, measureParams, 'OptionName', optionValue, ...)
             %
-            % Input:
-            %    dynamParams: Dimensionality of the state.
-            %    measureParams: Dimensionality of the measurement.
-            % Options:
-            %    'ControlParams': Dimensionality of the control vector.
+            % ## Input
+            % * __dynamParams__ Dimensionality of the state.
+            % * __measureParams__ Dimensionality of the measurement.
+            %
+            % ## Options
+            % * __ControlParams__ Dimensionality of the control vector.
             %
             % See also cv.KalmanFilter
             %
@@ -68,10 +69,12 @@ classdef KalmanFilter < handle
             %
             %    s = kf.predict('OptionName', optionValue, ...)
             %
-            % Output:
-            %    s: Output predicted state.
-            % Options:
-            %    'Control': The optional control input.
+            %
+            % ## Output
+            % * __s__ Output predicted state.
+            %
+            % ## Options
+            % * __Control__ The optional control input.
             %
             % See also cv.KalmanFilter
             %
@@ -83,10 +86,11 @@ classdef KalmanFilter < handle
             %
             %    s = kf.correct(measurement)
             %
-            % Input:
-            %    measurement: Input measurement.
-            % Output:
-            %    s: Output corrected state.
+            % ## Input
+            % * __measurement__ Input measurement.
+            %
+            % ## Output
+            % * __s__ Output corrected state.
             %
             % See also cv.KalmanFilter
             %

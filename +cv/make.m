@@ -1,8 +1,8 @@
 function make(varargin)
 %MAKE  compile mex functions
 %
-%   cv.make
-%   cv.make('opencv_path',pathname) % Windows only
+%    cv.make
+%    cv.make('opencv_path',pathname) % Windows only
 %
 % Make builds mexopencv library. In Unix, this function invokes Makefile
 % in the project root. In Windows, the function takes an optional argument

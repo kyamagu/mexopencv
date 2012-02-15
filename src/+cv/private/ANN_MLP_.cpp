@@ -46,19 +46,19 @@ CvANN_MLP_TrainParams getParams(vector<MxArray>::iterator it,
 	for (;it<end;it+=2) {
 		string key((*it).toString());
 		MxArray& val = *(it+1);
-		if (key=="bp_dw_scale")
+		if (key=="BpDwScale")
 			params.bp_dw_scale = val.toDouble();
-		else if (key=="bp_moment_scale")
+		else if (key=="BpMomentScale")
 			params.bp_moment_scale = val.toDouble();
-		else if (key=="rp_dw0")
+		else if (key=="RpDw0")
 			params.rp_dw0 = val.toDouble();
-		else if (key=="rp_dw_plus")
+		else if (key=="RpDwPlus")
 			params.rp_dw_plus = val.toDouble();
-		else if (key=="rp_dw_minus")
+		else if (key=="RpDwMinus")
 			params.rp_dw_minus = val.toDouble();
-		else if (key=="rp_dw_min")
+		else if (key=="RpDwMin")
 			params.rp_dw_min = val.toDouble();
-		else if (key=="rp_dw_max")
+		else if (key=="RpDwMax")
 			params.rp_dw_max = val.toDouble();
 		else if (key=="TermCrit")
 			params.term_crit = val.toTermCriteria();

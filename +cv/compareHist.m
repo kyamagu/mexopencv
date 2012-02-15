@@ -3,17 +3,19 @@
 %    d = cv.compareHist(H1, H2)
 %    d = cv.compareHist(H1, H2, 'Method', method)
 %
-% Input:
-%   H1: First compared histogram.
-%   H2: Second compared histogram of the same size as H1.
-% Output:
-%   d: Output distance.
-% Options:
-%   'Method': Comparison method that could be one of the following:
-%     'Correl': Correlation
-%     'ChiSqr': Chi-Square
-%     'Intersect': Intersection
-%     'Bhattacharyya': Bhattacharyya distance
+% ## Input
+% * __H1__ First compared histogram.
+% * __H2__ Second compared histogram of the same size as H1.
+%
+% ## Output
+% * __d__ Output distance.
+%
+% ## Options
+% * __Method__ Comparison method that could be one of the following:
+% * __Correl__ Correlation
+% * __ChiSqr__ Chi-Square
+% * __Intersect__ Intersection
+% * __Bhattacharyya__ Bhattacharyya distance
 %
 % The functions compareHist compare two dense or two sparse histograms
 % using the specified method.

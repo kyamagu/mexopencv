@@ -1,15 +1,16 @@
 %GETRECTSUBPIX  Retrieves a pixel rectangle from an image with sub-pixel accuracy
 %
-%   dst = cv.getRectSubPix(src, siz, center)
+%    dst = cv.getRectSubPix(src, siz, center)
 %
-% Input:
-%     src: Source image.
-%     siz: Size of the extracted patch.
-%     center: Floating point coordinates of the center of the extracted
+% ## Input
+% * __src__ Source image.
+% * __siz__ Size of the extracted patch.
+% * __center__ Floating point coordinates of the center of the extracted
 %             rectangle within the source image. The center must be inside the
 %             image.
-% Output:
-%     dst: Extracted patch that has the size patchSize and the same number of
+%
+% ## Output
+% * __dst__ Extracted patch that has the size patchSize and the same number of
 %          channels as src.
 %
 % The function getRectSubPix extracts pixels from src:

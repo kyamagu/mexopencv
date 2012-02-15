@@ -1,24 +1,26 @@
 %FINDCHESSBOARDCORNERS  Finds the positions of internal corners of the chessboard
 %
-%   corners = cv.findChessboardCorners(im, patternSize)
-%   [...] = cv.findChessboardCorners(..., 'OptionName', optionValue, ...)
+%    corners = cv.findChessboardCorners(im, patternSize)
+%    [...] = cv.findChessboardCorners(..., 'OptionName', optionValue, ...)
 %
-% Input:
-%    im: Source chessboard view. It must be an 8-bit grayscale or color image.
-%    patternSize: Number of inner corners per a chessboard row and column
+% ## Input
+% * __im__ Source chessboard view. It must be an 8-bit grayscale or color image.
+% * __patternSize__ Number of inner corners per a chessboard row and column
 %        (patternSize = [points_per_row,points_per_colum] = [columns,rows]).
-% Output:
-%    corners: Output array of detected corners.
-% Options:
-%    'AdaptiveThresh': Use adaptive thresholding to convert the image to black
+%
+% ## Output
+% * __corners__ Output array of detected corners.
+%
+% ## Options
+% * __AdaptiveThresh__ Use adaptive thresholding to convert the image to black
 %        and white, rather than a fixed threshold level (computed from the
 %        average image brightness). default true.
-%    'NormalizeImage': Normalize the image gamma with cv.equalizeHist before
+% * __NormalizeImage__ Normalize the image gamma with cv.equalizeHist before
 %        applying fixed or adaptive thresholding. default true.
-%    'FilterQuads': Use additional criteria (like contour area, perimeter,
+% * __FilterQuads__ Use additional criteria (like contour area, perimeter,
 %        square-like shape) to filter out false quads extracted at the contour
 %        retrieval stage. default false.
-%    'FastCheck': Run a fast check on the image that looks for chessboard
+% * __FastCheck__ Run a fast check on the image that looks for chessboard
 %        corners, and shortcut the call if none is found. This can drastically
 %        speed up the call in the degenerate condition when no chessboard is
 %        observed. default false.
@@ -35,8 +37,7 @@
 % cv.cornerSubPix with different parameters if returned coordinates are not
 % accurate enough.
 %
-% Note:
-%
+% ## Note
 % The function requires white space (like a square-thick border, the wider the
 % better) around the board to make the detection more robust in various
 % environments. Otherwise, if there is no border and the background is dark,

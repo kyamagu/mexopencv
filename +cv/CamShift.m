@@ -2,14 +2,16 @@
 %
 %    window = cv.CamShift(probImage, window, 'OptionName', optionValue, ...)
 %
-% Input:
-%    probImage: Back projection of the object histogram. See
+% ## Input
+% * __probImage__ Back projection of the object histogram. See
 %        cv.calcBackProject.
-%    window: Initial window.
-% Output:
-%    window: Output rectangle with rotation.
-% Options:
-%    'Criteria': Stop criteria for the underlying meanShift. Accepts a
+% * __window__ Initial window.
+%
+% ## Output
+% * __window__ Output rectangle with rotation.
+%
+% ## Options
+% * __Criteria__ Stop criteria for the underlying meanShift. Accepts a
 %        struct with 'type', 'maxCount', and 'epsilon' fields.
 %
 % The function implements the CAMSHIFT object tracking algrorithm

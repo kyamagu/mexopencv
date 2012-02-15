@@ -43,11 +43,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	
 	// Big operation switch
 	if (method == "new") {
-		if (nrhs>4  && (nrhs%2)==0) {
-			int history = rhs[3].toInt();
-			float varThreshold = rhs[4].toDouble();
+		if (nrhs>3  && (nrhs%2)==0) {
+			int history = rhs[2].toInt();
+			float varThreshold = rhs[3].toDouble();
 			bool bShadowDetection=true;
-			for (int i=6;i<nrhs;i+=2) {
+			for (int i=4;i<nrhs;i+=2) {
 				string key(rhs[i].toString());
 				if (key=="BShadowDetection")
 					bShadowDetection = rhs[i+1].toBool();

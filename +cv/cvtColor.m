@@ -3,14 +3,16 @@
 %    dst = cv.cvtColor(src, code)
 %    dst = cv.cvtColor(src, code, 'DstCn', 1)
 %
-%  Input:
-%    src: Source image: 8-bit unsigned, 16-bit unsigned (CV_16UC...), or
+% ## Input
+% * __src__ Source image: 8-bit unsigned, 16-bit unsigned (CV_16UC...), or
 %		  single-precision floating-point.
-%    code: Color space conversion code string. e.g., 'RGB2GRAY'
-%  Output:
-%    dst: Destination image of the same size and depth as src.
-%  Options:
-%    'DstCn': Number of channels in the destination image. If the parameter is
+% * __code__ Color space conversion code string. e.g., 'RGB2GRAY'
+%
+% ## Output
+% * __dst__ Destination image of the same size and depth as src.
+%
+% ## Options
+% * __DstCn__ Number of channels in the destination image. If the parameter is
 %             0, the number of the channels is derived automatically from src
 %             and code.
 %

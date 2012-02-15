@@ -1,14 +1,15 @@
 %RODRIGUES  Converts a rotation matrix to a rotation vector or vice versa
 %
-%   dst = cv.Rodrigues(src)
-%   [dst,jacobian] = cv.Rodrigues(src)
+%    dst = cv.Rodrigues(src)
+%    [dst,jacobian] = cv.Rodrigues(src)
 %
-% Input:
-%    src: Input rotation vector (3x1 or 1x3) or rotation matrix (3x3).
-% Output:
-%    dst: Output rotation matrix (3x3) or rotation vector (3x1 or 1x3),
+% ## Input
+% * __src__ Input rotation vector (3x1 or 1x3) or rotation matrix (3x3).
+%
+% ## Output
+% * __dst__ Output rotation matrix (3x3) or rotation vector (3x1 or 1x3),
 %        respectively.
-%    jacobian: Optional output Jacobian matrix, 3x9 or 9x3, which is a
+% * __jacobian__ Optional output Jacobian matrix, 3x9 or 9x3, which is a
 %        matrix of partial derivatives of the output array components with
 %        respect to the input array components.
 %

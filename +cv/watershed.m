@@ -2,12 +2,13 @@
 %
 %    marker = cv.watershed(image, marker)
 %
-%  Input:
-%    image: Input 8-bit 3-channel image.
-%	 marker: Input 32-bit single-channel image (map) of markers. It should have
+% ## Input
+% * __image__ Input 8-bit 3-channel image.
+% * __marker__ Input 32-bit single-channel image (map) of markers. It should have
 %            the same size as image.
-%  Output:
-%	 marker: Output 32-bit single-channel image (map) of markers. It has the
+%
+% ## Output
+% * __marker__ Output 32-bit single-channel image (map) of markers. It has the
 %            same size as image.
 %
 % The function implements one of the variants of watershed, non-parametric
@@ -24,7 +25,8 @@
 % pixel in markers is set to a value of the “seed” components or to -1 at
 % boundaries between the regions.
 %
-% Note: Any two neighbor connected components are not necessarily separated by
+% ## Note
+% Any two neighbor connected components are not necessarily separated by
 % a watershed boundary (-1’s pixels); for example, they can touch each other in
 % the initial marker image passed to the function.
 %

@@ -36,12 +36,13 @@ classdef BackgroundSubtractorMOG < handle
             %    bs = cv.BackgroundSubtractorMOG()
             %    bs = cv.BackgroundSubtractorMOG(history, nmixtures, backgroundRatio, 'OptionName', optionValue, ...)
             %
-            % Input:
-            %    history: Length of the history.
-            %    nmixtures: Number of Gaussian mixtures.
-            %    backgroundRatio: Background ratio.
-            % Options:
-            %    'NoiseSigma': Noise strength.
+            % ## Input
+            % * __history__ Length of the history.
+            % * __nmixtures__ Number of Gaussian mixtures.
+            % * __backgroundRatio__ Background ratio.
+            %
+            % ## Options
+            % * __NoiseSigma__ Noise strength.
             %
             % Default constructor sets all parameters to default values.
             %
@@ -63,12 +64,14 @@ classdef BackgroundSubtractorMOG < handle
             %
             %    fgmask = bs.apply(im, 'OptionName', optionValue, ...)
             %
-            % Input:
-            %     im: Next video frame.
-            % Output:
-            %     results: The output foreground mask as an 8-bit binary image.
-            % Options:
-            %     'LearningRate': default 0.
+            % ## Input
+            % * __im__ Next video frame.
+            %
+            % ## Output
+            % * __results__ The output foreground mask as an 8-bit binary image.
+            %
+            % ## Options
+            % * __LearningRate__ default 0.
             %
             % See also cv.BackgroundSubtractorMOG
             %
@@ -80,8 +83,9 @@ classdef BackgroundSubtractorMOG < handle
             %
             %    im = bs.getBackgroundImage()
             %
-            % Output:
-            %     im: The output background image.
+            %
+            % ## Output
+            % * __im__ The output background image.
             %
             % See also cv.BackgroundSubtractorMOG
             %

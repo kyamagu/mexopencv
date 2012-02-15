@@ -91,14 +91,15 @@ classdef KNearest < handle
             %    classifier.train(trainData, responses)
             %    classifier.train(trainData, responses, 'OptionName', optionValue, ...)
             %
-            % Options:
-            %     'IsRegression': Type of the problem: true for regression and
+            %
+            % ## Options
+            % * __IsRegression__ Type of the problem: true for regression and
             %         false for classification.
-            %     'MaxK': Number of maximum neighbors that may be passed to the
+            % * __MaxK__ Number of maximum neighbors that may be passed to the
             %         method find_nearest.
-            %     'SampleIdx': Indicator samples of interest. Must have the
+            % * __SampleIdx__ Indicator samples of interest. Must have the
             %         the same size to responses.
-            %     'UpdateBase': Specifies whether the model is trained from
+            % * __UpdateBase__ Specifies whether the model is trained from
             %         scratch (update_base=false), or it is updated using the
             %         new training data (update_base=true). In the latter case,
             %         the parameter maxK must not be larger than the original

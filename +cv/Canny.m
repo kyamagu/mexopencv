@@ -1,15 +1,17 @@
 %CANNY  Finds edges in an image using the [Canny86] algorithm
 %
-%   edges = cv.Canny(image, thresh)
+%    edges = cv.Canny(image, thresh)
 %
-% Input:
-%     image: Single-channel 8-bit input image.
-%     thresh: Threshold for the hysteresis procedure. Scalar or 2-element vector.
-% Output:
-%     edges: Output edge map. It has the same size and type as image.
-% Options:
-%     'ApertureSize': Aperture size for the Sobel operator.
-%     'L2Gradient': Flag indicating whether a more accurate L2 norm  should be
+% ## Input
+% * __image__ Single-channel 8-bit input image.
+% * __thresh__ Threshold for the hysteresis procedure. Scalar or 2-element vector.
+%
+% ## Output
+% * __edges__ Output edge map. It has the same size and type as image.
+%
+% ## Options
+% * __ApertureSize__ Aperture size for the Sobel operator.
+% * __L2Gradient__ Flag indicating whether a more accurate L2 norm  should be
 %         used to compute the image gradient magnitude ( L2gradient=true ), or
 %         a faster default L1 norm is enough ( L2gradient=false ).
 %

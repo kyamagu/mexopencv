@@ -3,21 +3,23 @@
 %    dst = cv.filter2D(src, kernel)
 %    dst = cv.filter2D(src, kernel, 'Anchor', [0,1], ...)
 %
-% Input:
-%     img: Source image.
-%	  kernel: Convolution kernel (or rather a correlation kernel), a
+% ## Input
+% * __img__ Source image.
+% * __kernel__ Convolution kernel (or rather a correlation kernel), a
 %         single-channel floating point matrix. If you want to apply different kernels to
 %         different channels, split the image into separate color planes and
 %         process them individually.
-% Output:
-%     result: Destination image of the same size and the same number of
+%
+% ## Output
+% * __result__ Destination image of the same size and the same number of
 %         channels as src.
-% Options:
-%     'Anchor': Anchor of the kernel that indicates the relative position of
+%
+% ## Options
+% * __Anchor__ Anchor of the kernel that indicates the relative position of
 %         a filtered point within the kernel. The anchor should lie within
 %         the kernel. The special default value (-1,-1) means that the anchor
 %         is at the kernel center.
-%     'BorderType': Pixel extrapolation method. Default 'Default'
+% * __BorderType__ Pixel extrapolation method. Default 'Default'
 %
 % The function applies an arbitrary linear filter to an image. In-place
 % operation is supported. When the aperture is partially outside the image, the

@@ -1,18 +1,19 @@
 %DECOMPOSEPROJECTIONMATRIX  Decomposes a projection matrix into a rotation matrix and a camera matrix
 %
-%   S = cv.decomposeProjectionMatrix(projMatrix)
+%    S = cv.decomposeProjectionMatrix(projMatrix)
 %
-% Input:
-%    projMatrix: 3x4 input projection matrix P.
-% Output:
-%    S: Struct with the following fields
-%        cameraMatrix: 3x3 camera matrix K.
-%        rotMatrix: 3x3 external rotation matrix R.
-%        transVect: 4x1 translation vector T.
-%        rotMatrX: 3x3 rotation matrix around x-axis.
-%        rotMatrY: 3x3 rotation matrix around y-axis.
-%        rotMatrZ: 3x3 rotation matrix around z-axis.
-%        eulerAngles: three-element vector containing three Euler angles of
+% ## Input
+% * __projMatrix__ 3x4 input projection matrix P.
+%
+% ## Output
+% * __S__ Struct with the following fields
+% * __cameraMatrix__ 3x3 camera matrix K.
+% * __rotMatrix__ 3x3 external rotation matrix R.
+% * __transVect__ 4x1 translation vector T.
+% * __rotMatrX__ 3x3 rotation matrix around x-axis.
+% * __rotMatrY__ 3x3 rotation matrix around y-axis.
+% * __rotMatrZ__ 3x3 rotation matrix around z-axis.
+% * __eulerAngles__ three-element vector containing three Euler angles of
 %            rotation.
 %
 % The function computes a decomposition of a projection matrix into a

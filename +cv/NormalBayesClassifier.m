@@ -79,12 +79,13 @@ classdef NormalBayesClassifier < handle
             %    classifier.train(trainData, responses)
             %    classifier.train(trainData, responses, 'OptionName', optionValue, ...)
             %
-            % Options:
-            %     'VarIdx': Indicator variables (features) of interest.
+            %
+            % ## Options
+            % * __VarIdx__ Indicator variables (features) of interest.
             %         Must have the same size to responses.
-            %     'SampleIdx': Indicator samples of interest. Must have the
+            % * __SampleIdx__ Indicator samples of interest. Must have the
             %         the same size to responses.
-            %     'Update': Identifies whether the model should be trained
+            % * __Update__ Identifies whether the model should be trained
             %         from scratch (update=false) or should be updated using
             %         the new training data (update=true).
             %

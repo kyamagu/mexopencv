@@ -2,14 +2,16 @@
 %
 %    [kx, ky] = cv.getDerivKernels('OptionName', optionValue, ...)
 %
-% Output:
-%    kx: Output kernel for x axis.
-%    ky: Output kernel for y axis.
-% Options:
-%    'Dx': Derivative order in respect of x.
-%    'Dy': Derivative order in respect of y.
-%    'KSize': Aperture size. It can be 'Scharr', 1, 3, 5, or 7. default 3.
-%    'Normalize': Flag indicating whether to normalize (scale down) the
+%
+% ## Output
+% * __kx__ Output kernel for x axis.
+% * __ky__ Output kernel for y axis.
+%
+% ## Options
+% * __Dx__ Derivative order in respect of x.
+% * __Dy__ Derivative order in respect of y.
+% * __KSize__ Aperture size. It can be 'Scharr', 1, 3, 5, or 7. default 3.
+% * __Normalize__ Flag indicating whether to normalize (scale down) the
 %        filter coefficients or not. Theoretically, the coefficients should
 %        have the denominator = 2^(ksize*2-dx-dx-dy-2). If you are going to
 %        filter floating-point images, you are likely to use the normalized

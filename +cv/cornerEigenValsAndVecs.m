@@ -1,17 +1,19 @@
 %CORNEREIGENVALSANDVECS  Calculates eigenvalues and eigenvectors of image blocks for corner detection
 %
-%   dst = cv.cornerEigenValsAndVecs(src)
-%   dst = cv.cornerEigenValsAndVecs(src, 'KSize', [5,5], ...)
+%    dst = cv.cornerEigenValsAndVecs(src)
+%    dst = cv.cornerEigenValsAndVecs(src, 'KSize', [5,5], ...)
 %
-% Input:
-%     src: Input single-channel 8-bit or floating-point image.
-% Output:
-%     dst: Image to store the results. It has the same size as src and the
+% ## Input
+% * __src__ Input single-channel 8-bit or floating-point image.
+%
+% ## Output
+% * __dst__ Image to store the results. It has the same size as src and the
 %         single type.
-% Options:
-%     'BlockSize': Neighborhood size. default 5.
-%     'ApertureSize': Aperture parameter for the Sobel() operator. default 3.
-%     'BorderType': Border mode used to extrapolate pixels outside of the
+%
+% ## Options
+% * __BlockSize__ Neighborhood size. default 5.
+% * __ApertureSize__ Aperture parameter for the Sobel() operator. default 3.
+% * __BorderType__ Border mode used to extrapolate pixels outside of the
 %                   image. default 'Default'
 %
 % For every pixel p, the function cornerEigenValsAndVecs considers a blockSize x

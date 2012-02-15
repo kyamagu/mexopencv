@@ -3,12 +3,14 @@
 %    dst = cv.imread(filename)
 %    dst = cv.imread(filename, 'Flags', flags)
 %
-%  Input:
-%    filename: Name of a file to be loaded.
-%  Output:
-%    dst: Loaded image.
-%  Options:
-%    'Flags': Flags specifying the color type of a loaded image.
+% ## Input
+% * __filename__ Name of a file to be loaded.
+%
+% ## Output
+% * __dst__ Loaded image.
+%
+% ## Options
+% * __Flags__ Flags specifying the color type of a loaded image.
 %      >0: Return a 3-channel color image
 %      =0: Return a grayscale image
 %      <0: Return the loaded image as is. Note that in the current
@@ -29,8 +31,7 @@
 %     Sun rasters - *.sr, *.ras (always supported)
 %     TIFF files - *.tiff, *.tif (see the Notes section)
 %
-% Notes:
-%
+% ## Notes
 % The function determines the type of an image by the content, not by the file
 % extension.
 % 

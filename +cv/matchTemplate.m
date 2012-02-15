@@ -1,18 +1,20 @@
 %MATCHTEMPLATE  Compares a template against overlapped image regions
 %
-%   result = cv.matchTemplate(image, tmpl)
-%   result = cv.matchTemplate(image, tmpl, 'Method', methodValue)
+%    result = cv.matchTemplate(image, tmpl)
+%    result = cv.matchTemplate(image, tmpl, 'Method', methodValue)
 %
-% Input:
-%     image: Image where the search is running.
-%     tmpl: Searched template. It must be not greater than the source image and
+% ## Input
+% * __image__ Image where the search is running.
+% * __tmpl__ Searched template. It must be not greater than the source image and
 %         have the same data type.
-% Output:
-%     result: Map of comparison results. It is single-channel 32-bit
+%
+% ## Output
+% * __result__ Map of comparison results. It is single-channel 32-bit
 %         floating-point. If image is W x H and templ is w x h, then result is
 %         (W-w+1) x (H-h+1).
-% Options:
-%     'Method': Parameter specifying the comparison method. One of the following:
+%
+% ## Options
+% * __Method__ Parameter specifying the comparison method. One of the following:
 %         'SqDiff'        Squared difference
 %         'SqDiffNormed'  Normalized squared difference
 %         'CCorr'         Cross correlation

@@ -6,9 +6,9 @@ classdef CascadeClassifier < handle
     % 
     % The usage example is shown in the following:
     %
-    %   filename = 'haarcascades/haarcascade_frontalface_alt.xml';
-    %   cls = cv.CascadeClassifier(filename);
-    %   boxes = cls.detect(im);
+    %    filename = 'haarcascades/haarcascade_frontalface_alt.xml';
+    %    cls = cv.CascadeClassifier(filename);
+    %    boxes = cls.detect(im);
     %
     % See also cv.CascadeClassifier.CascadeClassifier
     % cv.CascadeClassifier.empty cv.CascadeClassifier.load
@@ -68,24 +68,26 @@ classdef CascadeClassifier < handle
         function boxes = detect(this, im, varargin)
             %DETECT Detects objects of different sizes in the input image.
             %
-            %   boxes = classifier.detect(im, 'Option', optionValue, ...)
+            %    boxes = classifier.detect(im, 'Option', optionValue, ...)
             %
             % The detected objects are returned as a cell array of rectangles.
             %
-            % Input:
-            %   im: Matrix of the type CV_8U containing an image where
+            % ## Input
+            % * __im__ Matrix of the type CV_8U containing an image where
             %       objects are detected.
-            % Output:
-            %   boxes: Cell array of rectangles where each rectangle
+            %
+            % ## Output
+            % * __boxes__ Cell array of rectangles where each rectangle
             %       contains the detected object.
-            % Options:
-            %   'ScaleFactor': Parameter specifying how much the image size
+            %
+            % ## Options
+            % * __ScaleFactor__ Parameter specifying how much the image size
             %       is reduced at each image scale.
-            %   'MinNeighbors': Parameter specifying how many neighbors
+            % * __MinNeighbors__ Parameter specifying how many neighbors
             %       each candiate rectangle should have to retain it.
-            %   'MinSize': Minimum possible object size. Objects smaller
+            % * __MinSize__ Minimum possible object size. Objects smaller
             %       than that are ignored.
-            %   'MaxSize': Maximum possible object size. Objects larger
+            % * __MaxSize__ Maximum possible object size. Objects larger
             %       than that are ignored.
             %
             % See also cv.CascadeClassifier

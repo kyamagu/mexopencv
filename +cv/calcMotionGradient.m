@@ -1,27 +1,29 @@
 %CALCMOTIONGRADIENT  Updates the motion history image by a moving silhouette
 %
-%   [mask,orientation] = cv.calcMotionGradient(mhi, delta1, delta2)
-%   [...] = cv.calcMotionGradient(mhi, delta1, delta2, 'OptionName', optionValue, ...)
+%    [mask,orientation] = cv.calcMotionGradient(mhi, delta1, delta2)
+%    [...] = cv.calcMotionGradient(mhi, delta1, delta2, 'OptionName', optionValue, ...)
 %
-% Input:
-%     mhi: Motion history single-channel floating-point image.
-%     delta1: Minimal (or maximal) allowed difference between mhi values within
-%          a pixel neighorhood.
-%     delta2: Maximal (or minimal) allowed difference between mhi values within
+% ## Input
+% * __mhi__ Motion history single-channel floating-point image.
+% * __delta1__ Minimal (or maximal) allowed difference between mhi values
+%     within a pixel neighorhood.
+% * __delta2__ Maximal (or minimal) allowed difference between mhi values within
 %          a pixel neighorhood. That is, the function finds the minimum
 %          ( m(x,y) ) and maximum ( M(x,y) ) mhi values over 3 x 3 neighborhood
 %          of each pixel and marks the motion orientation at (x,y) as valid only
 %          if
 %              min(delta1,delta2) <= M(x,y) - m(x,y) <= max(delta1,delta2)
-% Output:
-%     mask: Output mask image that has the type uint8 and the same size a
-%         mhi. Its non-zero elements mark pixels where the motion gradient data
-%         is correct.
-%     orientation: Output motion gradient orientation image that has the same
-%         type and the same size as mhi . Each pixel of the image is a motion
-%         orientation, from 0 to 360 degrees.
-% Options:
-%     'ApertureSize': Aperture size of the cv.Sobel operator.
+%
+% ## Output
+% * __mask__ Output mask image that has the type uint8 and the same size a
+%     mhi. Its non-zero elements mark pixels where the motion gradient data
+%     is correct.
+% * __orientation__ Output motion gradient orientation image that has the same
+%     type and the same size as mhi . Each pixel of the image is a motion
+%     orientation, from 0 to 360 degrees.
+%
+% ## Options
+% * __ApertureSize__ Aperture size of the cv.Sobel operator.
 %
 % The function calculates a gradient orientation at each pixel (x,y) as:
 %

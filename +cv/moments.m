@@ -1,13 +1,15 @@
 %MOMENTS  Calculates all of the moments up to the third order of a polygon or rasterized shape
 %
-%   m = cv.moments(array)
+%    m = cv.moments(array)
 %
-% Input:
-%     array: Raster image (single-channel, 8-bit or floating-point 2D array).
-% Output:
-%     m: Output moments.
-% Options:
-%     'BinaryImage': If it is true, all non-zero image pixels are treated as
+% ## Input
+% * __array__ Raster image (single-channel, 8-bit or floating-point 2D array).
+%
+% ## Output
+% * __m__ Output moments.
+%
+% ## Options
+% * __BinaryImage__ If it is true, all non-zero image pixels are treated as
 %         1’s. The parameter is used for images only.
 %
 % The function computes moments, up to the 3rd order, of a vector shape or a

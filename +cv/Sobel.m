@@ -3,21 +3,23 @@
 %    dst = cv.Sobel(src)
 %    dst = cv.Sobel(src, 'KSize', 5, ...)
 %
-%  Input:
-%    src: Source image.
-%  Output:
-%    dst: Destination image of the same size and the same number of channels as
+% ## Input
+% * __src__ Source image.
+%
+% ## Output
+% * __dst__ Destination image of the same size and the same number of channels as
 %         src.
-%  Options:
-%	 'KSize': Aperture size used to compute the second-derivative filters. The
+%
+% ## Options
+% * __KSize__ Aperture size used to compute the second-derivative filters. The
 %             size must be positive and odd.
-%    'XOrder': Order of the derivative x.
-%    'YOrder': Order of the derivative y.
-%	 'Scale': Optional scale factor for the computed Laplacian values. By
+% * __XOrder__ Order of the derivative x.
+% * __YOrder__ Order of the derivative y.
+% * __Scale__ Optional scale factor for the computed Laplacian values. By
 %             default, no scaling is applied.
-%	 'Delta': Optional delta value that is added to the results prior to
+% * __Delta__ Optional delta value that is added to the results prior to
 %             storing them in dst .
-%	 'BorderType': Pixel extrapolation method.
+% * __BorderType__ Pixel extrapolation method.
 %
 % In all cases except one, the KSize x KSize separable kernel is used to
 % calculate the derivative. When KSize=1, the 3 x 1 or 1 x 3 kernel is used

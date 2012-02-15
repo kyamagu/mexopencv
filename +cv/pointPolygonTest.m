@@ -1,15 +1,17 @@
 %POINTPOLYGONTEST  Performs a point-in-contour test
 %
-%   d = cv.pointPolygonTest(contour, pt)
+%    d = cv.pointPolygonTest(contour, pt)
 %
-% Input:
-%     contour: Input 2D point set, stored in a cell array of 2-element vectors or
+% ## Input
+% * __contour__ Input 2D point set, stored in a cell array of 2-element vectors or
 %         1-by-N-by-2 numeric array.
-%     pt: Point tested against the contour.
-% Output:
-%     rct: Output status value (See below).
-% Options:
-%     'MeasureDist': If true, the function estimates the signed distance from
+% * __pt__ Point tested against the contour.
+%
+% ## Output
+% * __rct__ Output status value (See below).
+%
+% ## Options
+% * __MeasureDist__ If true, the function estimates the signed distance from
 %          the point to the nearest contour edge. Otherwise, the function only
 %          checks if the point is inside a contour or not.
 %

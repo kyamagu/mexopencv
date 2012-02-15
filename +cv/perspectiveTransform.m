@@ -1,13 +1,14 @@
 %PERSPECTIVETRANSFORM  Performs the perspective matrix transformation of vectors
 %
-%   dst = cv.perspectiveTransform(src, mtx)
+%    dst = cv.perspectiveTransform(src, mtx)
 %
-% Input:
-%    src: Source two-channel or three-channel floating-point array. Each
+% ## Input
+% * __src__ Source two-channel or three-channel floating-point array. Each
 %        element is a 2D/3D vector to be transformed.
-%    mtx: 3x3 or 4x4 floating-point transformation matrix.
-% Output:
-%    dst: Destination array of the same size and type as src.
+% * __mtx__ 3x3 or 4x4 floating-point transformation matrix.
+%
+% ## Output
+% * __dst__ Destination array of the same size and type as src.
 %
 % The function perspectiveTransform transforms every element of src by
 % treating it as a 2D or 3D vector, in the following way:

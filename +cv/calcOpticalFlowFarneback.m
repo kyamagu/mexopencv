@@ -2,36 +2,38 @@
 %
 %    flow = cv.calcOpticalFlowFarneback(prevImg, nextImg)
 %
-% Input:
-%     prevImg: First 8-bit single-channel or 3-channel input image.
-%     nextImg: Second input image of the same size and the same type as prevImg.
-%     prevPts: Vector of 2D points for which the flow needs to be found. Cell
+% ## Input
+% * __prevImg__ First 8-bit single-channel or 3-channel input image.
+% * __nextImg__ Second input image of the same size and the same type as prevImg.
+% * __prevPts__ Vector of 2D points for which the flow needs to be found. Cell
 %         array of 2-element vectors is accepted.
-% Output:
-%     flow: Computed flow image that has the same size as prevImg and single
+%
+% ## Output
+% * __flow__ Computed flow image that has the same size as prevImg and single
 %         type.
-% Options:
-%   'InitialFlow': Initial flow approximation.
-%   'PyrScale': Parameter specifying the image scale (<1) to build pyramids for
+%
+% ## Options
+% * __InitialFlow__ Initial flow approximation.
+% * __PyrScale__ Parameter specifying the image scale (<1) to build pyramids for
 %         each image. pyrScale=0.5 means a classical pyramid, where each next
 %         layer is twice smaller than the previous one. default 0.5.
-%   'Levels': Number of pyramid layers including the initial image. levels=1
+% * __Levels__ Number of pyramid layers including the initial image. levels=1
 %         means that no extra layers are created and only the original images
 %         are used. default 1.
-%   'WinSize': Averaging window size. Larger values increase the algorithm
+% * __WinSize__ Averaging window size. Larger values increase the algorithm
 %         robustness to image noise and give more chances for fast motion
 %         detection, but yield more blurred motion field. default 3.
-%   'Iterations': Number of iterations the algorithm does at each pyramid level.
+% * __Iterations__ Number of iterations the algorithm does at each pyramid level.
 %         default 10.
-%   'PolyN': Size of the pixel neighborhood used to find polynomial expansion in
+% * __PolyN__ Size of the pixel neighborhood used to find polynomial expansion in
 %         each pixel. Larger values mean that the image will be approximated
 %         with smoother surfaces, yielding more robust algorithm and more
 %         blurred motion field. Typically, PolyN = 5 or 7. default 5.
-%   'PolySigma': Standard deviation of the Gaussian that is used to smooth
+% * __PolySigma__ Standard deviation of the Gaussian that is used to smooth
 %         derivatives used as a basis for the polynomial expansion. For PolyN =
 %         5 , you can set PolySigma=1.1. For PolyN = 7, a good value would be
 %         PolySigma = 1.5. default 1.1.
-%   'Gaussian': Use the Gaussian WinSize x WinSize filter instead of a box
+% * __Gaussian__ Use the Gaussian WinSize x WinSize filter instead of a box
 %         filter of the same size for optical flow estimation. Usually, this
 %         option gives z more accurate flow than with a box filter, at the cost
 %         of lower speed. Normally, winsize for a Gaussian window should be set

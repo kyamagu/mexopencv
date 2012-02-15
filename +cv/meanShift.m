@@ -2,14 +2,16 @@
 %
 %    window = cv.meanShift(probImage, window, 'OptionName', optionValue, ...)
 %
-% Input:
-%    probImage: Back projection of the object histogram. See
+% ## Input
+% * __probImage__ Back projection of the object histogram. See
 %        cv.calcBackProject.
-%    window: Initial window.
-% Output:
-%    window: Output window.
-% Options:
-%    'Criteria': Stop criteria for the underlying meanShift. Accepts a
+% * __window__ Initial window.
+%
+% ## Output
+% * __window__ Output window.
+%
+% ## Options
+% * __Criteria__ Stop criteria for the underlying meanShift. Accepts a
 %        struct with 'type', 'maxCount', and 'epsilon' fields.
 %
 % The function implements the iterative object search algorithm. It takes

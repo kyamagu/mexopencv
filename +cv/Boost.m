@@ -13,7 +13,7 @@ classdef Boost < handle
     % classifier is only required to be better than chance, and thus can be very
     % simple and computationally inexpensive. However, many of them smartly
     % combine results to a strong classifier that often outperforms most
-    % “monolithic” strong classifiers such as SVMs and Neural Networks.
+    % monolithic strong classifiers such as SVMs and Neural Networks.
     %
     % Decision trees are the most popular weak classifiers used in boosting
     % schemes. Often the simplest decision trees with only a single split node
@@ -29,8 +29,8 @@ classdef Boost < handle
     % similar in their overall structure.
     %
     % [FHT98] Friedman, J. H., Hastie, T. and Tibshirani, R. Additive Logistic
-    %     Regression: a Statistical View of Boosting. Technical Report, Dept. of
-    %     Statistics*, Stanford University, 1998.
+    % Regression: a Statistical View of Boosting. Technical Report, Dept. of
+    % Statistics, Stanford University, 1998.
     %
     % See also cv.Boost.Boost cv.Boost.train cv.Boost.predict
     %
@@ -111,20 +111,23 @@ classdef Boost < handle
             %    classifier.train(trainData, responses)
             %    classifier.train(..., 'OptionName', optionValue, ...)
             %
-            % Input:
-            %     trainData: Row vectors of feature.
-            %     responses: Output of the corresponding feature vectors.
-            % Options:
-            %     'VarIdx': Indicator variables (features) of interest.
+            % ## Input
+            % * __trainData__ Row vectors of feature.
+            % * __responses__ Output of the corresponding feature vectors.
+            %
+            % ## Options
+            % * __VarIdx__ Indicator variables (features) of interest.
             %         Must have the same size to responses.
-            %     'SampleIdx': Indicator samples of interest. Must have the
+            % * __SampleIdx__ Indicator samples of interest. Must have the
             %         the same size to responses.
-            %     'VarType': Solves classification problem when 'Categorical'.
+            % * __VarType__ Solves classification problem when 'Categorical'.
             %         Otherwise, the training is treated as a regression problem.
             %         default 'Categorical'
-			%     'MissingMask': Indicator mask for missing observation.
-			%     'BoostType': Type of the boosting algorithm. Possible values
-			%         are:
+			% * __MissingMask__ Indicator mask for missing observation.
+			% * __BoostType__ Type of the boosting algorithm. Possible values
+			%         are listed below. Gentle AdaBoost and Real AdaBoost are often the preferable
+			%         choices. default 'Real'.
+            %
 			%         'Discrete' Discrete AbaBoost.
 			%         'Real'     Real AbaBoost. It is a technique that utilizes
 			%                    confidence-rated predictions and works well
@@ -133,23 +136,22 @@ classdef Boost < handle
 			%         'Gentle'   Gentle AdaBoost. It puts less weight on outlier
 			%                    data points and for that reason is often good
 			%                    with regression data.
-			%         Gentle AdaBoost and Real AdaBoost are often the preferable
-			%         choices. default 'Real'.
-			%     'WeakCount': The number of weak classifiers. default 100.
-			%     'WeightTrimRate': A threshold between 0 and 1 used to save
+            %
+			% * __WeakCount__ The number of weak classifiers. default 100.
+			% * __WeightTrimRate__ A threshold between 0 and 1 used to save
 			%         computational time. Samples with summary weight <= 1 -
 			%         WeightTrimRate do not participate in the next iteration of
 			%         training. Set this parameter to 0 to turn off this
 			%         functionality. default 0.95.
-			%     'MaxDepth': The maximum possible depth of the tree. That is
+			% * __MaxDepth__ The maximum possible depth of the tree. That is
 			%         the training algorithms attempts to split a node while its
 			%         depth is less than max_depth. The actual depth may be
 			%         smaller if the other termination criteria are met, and/or
 			%         if the tree is pruned. default 1.
-			%     'UseSurrogates': If true then surrogate splits will be built.
+			% * __UseSurrogates__ If true then surrogate splits will be built.
 			%         These splits allow to work with missing data and compute
 			%         variable importance correctly. default true.
-			%     'Priors': The array of a priori class probabilities, sorted by
+			% * __Priors__ The array of a priori class probabilities, sorted by
 			%         the class label value. The parameter can be used to tune
 			%         the decision tree preferences toward a certain class. For
 			%         example, if you want to detect some rare anomaly
@@ -182,19 +184,21 @@ classdef Boost < handle
             %    results = classifier.predict(samples)
             %    [...] = classifier.predict(..., 'OptionName', optionValue, ...)
             %
-            % Input:
-            %     samples: Input row vectors
-            % Output:
-            %     results: Output labels or regression values
-            % Options:
-            %     'MissingMask': Optional mask of missing measurements. To
+            % ## Input
+            % * __samples__ Input row vectors
+            %
+            % ## Output
+            % * __results__ Output labels or regression values
+            %
+            % ## Options
+            % * __MissingMask__ Optional mask of missing measurements. To
             %         handle missing measurements, the weak classifiers must
             %         include surrogate splits.
-            %     'Slice': Continuous subset of the sequence of weak classifiers
+            % * __Slice__ Continuous subset of the sequence of weak classifiers
             %         to be used for prediction. 2-element vector or ':' (all)
             %         is accepted. default ':'.
-            %     'RawMode': Normally, it should be set to false.
-            %     'ReturnSum': If true then return sum of votes instead of the
+            % * __RawMode__ Normally, it should be set to false.
+            % * __ReturnSum__ If true then return sum of votes instead of the
             %         class label.
             %
             % The method runs the sample through the trees in the ensemble and

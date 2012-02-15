@@ -1,18 +1,20 @@
 %CORNERHARRIS  Harris edge detector
 %
-%   dst = cv.cornerHarris(src)
-%   dst = cv.cornerHarris(src, 'KSize', [5,5], ...)
+%    dst = cv.cornerHarris(src)
+%    dst = cv.cornerHarris(src, 'KSize', [5,5], ...)
 %
-% Input:
-%     src: Input single-channel 8-bit or floating-point image.
-% Output:
-%     dst: Image to store the results. It has the same size as src and the
+% ## Input
+% * __src__ Input single-channel 8-bit or floating-point image.
+%
+% ## Output
+% * __dst__ Image to store the results. It has the same size as src and the
 %         single type.
-% Options:
-%     'BlockSize': Neighborhood size. default 5.
-%     'ApertureSize': Aperture parameter for the Sobel() operator. default 3.
-%     'K': Harris detector free parameter.
-%     'BorderType': Border mode used to extrapolate pixels outside of the
+%
+% ## Options
+% * __BlockSize__ Neighborhood size. default 5.
+% * __ApertureSize__ Aperture parameter for the Sobel() operator. default 3.
+% * __K__ Harris detector free parameter.
+% * __BorderType__ Border mode used to extrapolate pixels outside of the
 %                   image. default 'Default'
 %
 % The function runs the Harris edge detector on the image. Similarly to

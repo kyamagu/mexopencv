@@ -1,19 +1,21 @@
 %REPROJECTIMAGETO3D  Reprojects a disparity image to 3D space
 %
-%   im3d = cv.reprojectImageTo3D(disparity, Q)
-%   [...] = cv.reprojectImageTo3D(..., 'OptionName', optionValue, ...)
+%    im3d = cv.reprojectImageTo3D(disparity, Q)
+%    [...] = cv.reprojectImageTo3D(..., 'OptionName', optionValue, ...)
 %
-% Input:
-%    disparity: Input single-channel 8-bit unsigned, 16-bit signed, 32-bit
+% ## Input
+% * __disparity__ Input single-channel 8-bit unsigned, 16-bit signed, 32-bit
 %        signed or 32-bit floating-point disparity image.
-%    Q: 4 x 4 perspective transformation matrix that can be obtained with
+% * __Q__ 4 x 4 perspective transformation matrix that can be obtained with
 %        cv.stereoRectify.
-% Output:
-%    im3d: Output 3-channel floating-point image of the same size as
+%
+% ## Output
+% * __im3d__ Output 3-channel floating-point image of the same size as
 %        disparity. Each element of im3d(x,y,ch) contains 3D coordinates
 %        of the point (x,y) computed from the disparity map.
-% Options:
-%    'HandleMissingValues': Indicates, whether the function should handle
+%
+% ## Options
+% * __HandleMissingValues__ Indicates, whether the function should handle
 %        missing values (i.e. points where the disparity was not computed).
 %        If handleMissingValues=true, then pixels with the minimal
 %        disparity that corresponds to the outliers (see cv.StereoBM) are

@@ -3,9 +3,9 @@ classdef VideoWriter < handle
 	%
 	% Video writer class. Here is how to write to a video file:
 	%
-	%   vid = cv.VideoWriter('myvideo.mpg', [640,480]);
-	%   vid.write(im);         % add a frame
-	%   clear vid;             % finish
+	%    vid = cv.VideoWriter('myvideo.mpg', [640,480]);
+	%    vid.write(im);         % add a frame
+	%    clear vid;             % finish
     %
     % See also cv.VideoWriter.VideoWriter cv.VideoWriter.write
     %
@@ -19,27 +19,29 @@ classdef VideoWriter < handle
         function this = VideoWriter(filename, siz, varargin)
             %VIDEOWRITER  VideoWriter constructors
             %
-            %  vid = cv.VideoWriter(filename, siz)
-            %  vid = cv.VideoWriter(filename, siz, 'option', option_value, ...)
+            %    vid = cv.VideoWriter(filename, siz)
+            %    vid = cv.VideoWriter(filename, siz, 'option', option_value, ...)
             %
-            % Input:
-            %   filename: Name of the video file
-            %   siz: Size of the video frame in [width, height] format
-            % Output:
-            %   vid: New instance of the VideoWriter
-            % Options:
-            %   'FourCC': 4-character code of codec used to compress the frames.
+            % ## Input
+            % * __filename__ Name of the video file
+            % * __siz__ Size of the video frame in [width, height] format
+            %
+            % ## Output
+            % * __vid__ New instance of the VideoWriter
+            %
+            % ## Options
+            % * __FourCC__ 4-character code of codec used to compress the frames.
             %      Examples are:
-            %       'PIM1': MPEG-1
-            %		'MJPG': Motion-JPEG
-            %		'MP42': MPEG-4.2
-            %		'DIV3': MPEG-4.3
-            %		'DIVX': MPEG-4
-            %		'U263': H263 (default)
-            %		'I263': H263I
-            %		'FLV1': FLV1
-            %	'FPS': Framerate of the created video stream. default 25.
-            %   'Color': If it is not zero, the encoder will expect and encode
+            %     * __PIM1__ MPEG-1
+            %     * __MJPG__ Motion-JPEG
+            %     * __MP42__ MPEG-4.2
+            %     * __DIV3__ MPEG-4.3
+            %     * __DIVX__ MPEG-4
+            %     * __U263__ H263 (default)
+            %     * __I263__ H263I
+            %     * __FLV1__ FLV1
+            % * __FPS__ Framerate of the created video stream. default 25.
+            % * __Color__ If it is not zero, the encoder will expect and encode
             %      color frames, otherwise it will work with grayscale frames
             %      (the flag is currently supported on Windows only). default
             %      true.
@@ -64,10 +66,10 @@ classdef VideoWriter < handle
         function write(this, frame)
             %WRITE  Writes the next video frame
             %
-            %   vid.write(frame)
+            %    vid.write(frame)
             %
-            % Input:
-            %   frame: The written frame
+            % ## Input
+            % * __frame__ The written frame
             %
             % The method writes a frame to the video. The size of the frame
             % must be the same to the parameter specified in the

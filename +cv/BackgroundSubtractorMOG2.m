@@ -49,15 +49,16 @@ classdef BackgroundSubtractorMOG2 < handle
             %    bs = cv.BackgroundSubtractorMOG2()
             %    bs = cv.BackgroundSubtractorMOG2(history, varThreshold, 'OptionName', optionValue, ...)
             %
-            % Input:
-            %    history: Length of the history.
-            %    varThreshold: Threshold on the squared Mahalanobis distance to
+            % ## Input
+            % * __history__ Length of the history.
+            % * __varThreshold__ Threshold on the squared Mahalanobis distance to
             %        decide whether it is well described by the background
             %        model. This parameter does not affect the background
             %        update. A typical value could be 4 sigma, that is,
             %        varThreshold=4*4=16.
-            % Options:
-            %    'BShadowDetection': Parameter defining whether shadow detection
+            %
+            % ## Options
+            % * __BShadowDetection__ Parameter defining whether shadow detection
             %        should be enabled (true or false).
             %
             % See also cv.BackgroundSubtractorMOG2
@@ -78,12 +79,14 @@ classdef BackgroundSubtractorMOG2 < handle
             %
             %    fgmask = bs.apply(im, 'OptionName', optionValue, ...)
             %
-            % Input:
-            %     im: Next video frame.
-            % Output:
-            %     results: The output foreground mask as an 8-bit binary image.
-            % Options:
-            %     'LearningRate': default 0.
+            % ## Input
+            % * __im__ Next video frame.
+            %
+            % ## Output
+            % * __results__ The output foreground mask as an 8-bit binary image.
+            %
+            % ## Options
+            % * __LearningRate__ default 0.
             %
             % See also cv.BackgroundSubtractorMOG2
             %
@@ -95,8 +98,9 @@ classdef BackgroundSubtractorMOG2 < handle
             %
             %    im = bs.getBackgroundImage()
             %
-            % Output:
-            %     im: The output background image.
+            %
+            % ## Output
+            % * __im__ The output background image.
             %
             % See also cv.BackgroundSubtractorMOG2
             %

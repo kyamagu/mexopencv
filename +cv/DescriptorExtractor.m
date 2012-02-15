@@ -3,8 +3,8 @@ classdef DescriptorExtractor < handle
 	%
 	% Descriptor extractor class. Here is how to use:
 	%
-	%   extractor = cv.DescriptorExtractor('SURF');
-	%   descriptors = extractor.compute(im, keypoints);
+	%    extractor = cv.DescriptorExtractor('SURF');
+	%    descriptors = extractor.compute(im, keypoints);
     %
     % See also cv.DescriptorExtractor.DescriptorExtractor
     % cv.DescriptorExtractor.compute
@@ -26,12 +26,13 @@ classdef DescriptorExtractor < handle
         function this = DescriptorExtractor(type)
             %DESCRIPTOREXTRACTOR  DescriptorExtractor constructors
             %
-            %  extractor = cv.DescriptorExtractor(type)
+            %    extractor = cv.DescriptorExtractor(type)
             %
-            % Input:
-            %   type: Type of the detector. see below. default 'FAST'
-            % Output:
-            %   extractor: New instance of the DescriptorExtractor
+            % ## Input
+            % * __type__ Type of the detector. see below. default 'FAST'
+            %
+            % ## Output
+            % * __extractor__ New instance of the DescriptorExtractor
             %
             % The following extractor types are supported:
             %
@@ -41,7 +42,7 @@ classdef DescriptorExtractor < handle
             %     'BRIEF'    BriefDescriptorExtractor
             %
             % Also a combined format with the following adaptor is
-            % supported:
+            % supported
             %
             %     'Opponent' OpponentColorDescriptorExtractor
             %
@@ -77,17 +78,18 @@ classdef DescriptorExtractor < handle
         function descriptors = compute(this, im, keypoints)
             %COMPUTE  Computes the descriptors for a set of keypoints detected in an image
             %
-            %   descroptors = extractor.compute(im, keypoints)
+            %    descroptors = extractor.compute(im, keypoints)
             %
-            % Input:
-            %   im: Image.
-            %   keypoints: Input collection of keypoints. Keypoints for
+            % ## Input
+            % * __im__ Image.
+            % * __keypoints__ Input collection of keypoints. Keypoints for
             %       which a descriptor cannot be computed are removed.
             %       Sometimes new keypoints can be added, for example:
             %       SIFT duplicates keypoint with several dominant
             %       orientations (for each orientation).
-            % Output:
-            %   descriptors: Computed descriptors.
+            %
+            % ## Output
+            % * __descriptors__ Computed descriptors.
             %
             % See also cv.DescriptorExtractor
             %
@@ -97,10 +99,10 @@ classdef DescriptorExtractor < handle
         function read(this, filename)
             %READ  Reads a descriptor extractor object from a file
             %
-            %   extractor.read(filename)
+            %    extractor.read(filename)
             %
-            % Input:
-            %   filename: name of the xml/yaml file
+            % ## Input
+            % * __filename__ name of the xml/yaml file
             %
             % See also cv.DescriptorExtractor
             %
@@ -110,10 +112,10 @@ classdef DescriptorExtractor < handle
         function write(this, filename)
             %WRITE  Writes a descriptor extractor object to a file
             %
-            %   extractor.write(filename)
+            %    extractor.write(filename)
             %
-            % Input:
-            %   filename: name of the xml/yaml file
+            % ## Input
+            % * __filename__ name of the xml/yaml file
             %
             % See also cv.DescriptorExtractor
             %

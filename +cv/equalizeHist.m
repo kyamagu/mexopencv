@@ -2,10 +2,11 @@
 %
 %    dst = cv.equalizeHist(src)
 %
-%  Input:
-%    src: Source 8-bit single channel image.
-%  Output:
-%    dst: Destination image of the same size and type as src.
+% ## Input
+% * __src__ Source 8-bit single channel image.
+%
+% ## Output
+% * __dst__ Destination image of the same size and type as src.
 %
 % The function equalizes the histogram of the input image using the
 % following algorithm:

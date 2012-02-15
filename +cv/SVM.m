@@ -100,15 +100,16 @@ classdef SVM < handle
             %    classifier.train(trainData, responses)
             %    classifier.train(trainData, responses, 'OptionName', optionValue, ...)
             %
-            % Input:
-            %     trainData: Row vectors of feature.
-            %     responses: Output of the corresponding feature vectors.
-            % Options:
-            %     'VarIdx': Indicator variables (features) of interest.
+            % ## Input
+            % * __trainData__ Row vectors of feature.
+            % * __responses__ Output of the corresponding feature vectors.
+            %
+            % ## Options
+            % * __VarIdx__ Indicator variables (features) of interest.
             %         Must have the same size to responses.
-            %     'SampleIdx': Indicator samples of interest. Must have the
+            % * __SampleIdx__ Indicator samples of interest. Must have the
             %         the same size to responses.
-            %     'SvmType': Type of a SVM formulation. Possible values are:
+            % * __SvmType__ Type of a SVM formulation. Possible values are:
 			%         'C_SVC'     C-Support Vector Classification. n-class
 			%                     classification (n  2), allows imperfect separation
 			%                     of classes with penalty multiplier C for outliers.
@@ -128,7 +129,7 @@ classdef SVM < handle
 			%                     penalty multiplier C is used.
 			%         'NU_SVR'    Nu-Support Vector Regression. Nu is used instead of p.
 			%         See [LibSVM] for details.
-			%     'KernelType': Type of a SVM kernel. Possible values are:
+			% * __KernelType__ Type of a SVM kernel. Possible values are:
 			%         'Linear'    Linear kernel. No mapping is done, linear discrimination
 			%                     (or regression) is done in the original feature space.
 			%                     It is the fastest option.
@@ -136,24 +137,24 @@ classdef SVM < handle
 			%         'RBF'       Radial basis function (RBF), a good choice in most cases.
 			%                     This is the default kernel.
 			%         'Sigmoid'   Sigmoid kernel.
-			%     'Degree': Parameter degree of a kernel function (POLY). default 0.
-			%     'Gamma': Parameter  of a kernel function (POLY / RBF / SIGMOID).
+			% * __Degree__ Parameter degree of a kernel function (POLY). default 0.
+			% * __Gamma__ Parameter  of a kernel function (POLY / RBF / SIGMOID).
 			%         The default is 1.
-			%     'Coef0': Parameter coef0 of a kernel function (POLY / SIGMOID).
+			% * __Coef0__ Parameter coef0 of a kernel function (POLY / SIGMOID).
 			%         The default is 0.
-			%     'C': Parameter C of a SVM optimiazation problem (C_SVC / EPS_SVR / NU_SVR).
+			% * __C__ Parameter C of a SVM optimiazation problem (C_SVC / EPS_SVR / NU_SVR).
 			%         The default is 1.
-			%     'Nu': Parameter nu of a SVM optimization problem (NU_SVC / ONE_CLASS / NU_SVR).
+			% * __Nu__ Parameter nu of a SVM optimization problem (NU_SVC / ONE_CLASS / NU_SVR).
 			%         The default is 0.
-			%     'P': Parameter p of a SVM optimization problem (EPS_SVR).
+			% * __P__ Parameter p of a SVM optimization problem (EPS_SVR).
 			%         The default is 0.
-			%     'ClassWeights': Optional weights in the C_SVC problem, assigned
+			% * __ClassWeights__ Optional weights in the C_SVC problem, assigned
 			%         to particular classes. They are multiplied by C so the parameter
 			%         C of class #i becomes . Thus these weights affect the
 			%         misclassification penalty for different classes. The larger
 			%         weight, the larger penalty on misclassification of data from
 			%         the corresponding class. Default none.
-			%     'TermCrit': Termination criteria of the iterative SVM training
+			% * __TermCrit__ Termination criteria of the iterative SVM training
 			%         procedure which solves a partial case of constrained quadratic
 			%         optimization problem. You can specify tolerance and/or the
 			%         maximum number of iterations. A struct with the
@@ -175,15 +176,17 @@ classdef SVM < handle
             %    classifier.train_auto(trainData, responses)
             %    classifier.train_auto(trainData, responses, 'OptionName', optionValue, ...)
             %
-            % Input:
-            %     trainData: Row vectors of feature.
-            %     responses: Output of the corresponding feature vectors.
-            % Options: All the options in cv.SVM.train are supported. In addition:
-            %     'KFold': Cross-validation parameter. The training set is divided
+            % ## Input
+            % * __trainData__ Row vectors of feature.
+            % * __responses__ Output of the corresponding feature vectors.
+            %
+            % ## Options
+            % All the options in cv.SVM.train are supported. In addition:
+            % * __KFold__ Cross-validation parameter. The training set is divided
             %         into KFold subsets. One subset is used to train the model,
             %         the others form the test set. So, the SVM algorithm is executed
             %         KFold times.
-            %     'Balanced': If true and the problem is 2-class classification then
+            % * __Balanced__ If true and the problem is 2-class classification then
             %         the method creates more balanced cross-validation subsets that
             %         is proportions between classes in subsets are close to such
             %         proportion in the whole train dataset.
@@ -203,8 +206,8 @@ classdef SVM < handle
             %
             %    results = classifier.predict(samples)
             %
-            % Options:
-            %     'ReturnDFVal' Specifies a type of the return value. If
+            % ## Options
+            % * __ReturnDFVal__ Specifies a type of the return value. If
             %         true and the problem is 2-class classification then
             %         the method returns the decision function value that
             %         is signed distance to the margin, else the function

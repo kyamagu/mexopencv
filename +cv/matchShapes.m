@@ -1,18 +1,20 @@
 %MATCHSHAPES  Compares two shapes
 %
-%   d = cv.matchShapes(object1, object2)
-%   d = cv.matchShapes(object1, object2, 'OptionName', optionValue, ...)
+%    d = cv.matchShapes(object1, object2)
+%    d = cv.matchShapes(object1, object2, 'OptionName', optionValue, ...)
 %
-% Input:
-%     object1: First contour or grayscale image. If it's contour, a cell array
+% ## Input
+% * __object1__ First contour or grayscale image. If it's contour, a cell array
 %         of 2-element vectors or 1-by-N-by-2 numeric array are accepted.
-%     object2: Second contour or grayscale image. If it's contour, a cell array
+% * __object2__ Second contour or grayscale image. If it's contour, a cell array
 %         of 2-element vectors or 1-by-N-by-2 numeric array are accepted.
-% Output:
-%     d: Output score.
-% Options:
-%     'Method': Comparison method. One of {'I1','I2','I3'}. default I1.
-%     'Parameter': Parameter value used in comparison.
+%
+% ## Output
+% * __d__ Output score.
+%
+% ## Options
+% * __Method__ Comparison method. One of {'I1','I2','I3'}. default I1.
+% * __Parameter__ Parameter value used in comparison.
 %
 % The function compares two shapes. All three implemented methods use the Hu
 % invariants (see HuMoments() ) as follows (A denotes object1,:math:B denotes

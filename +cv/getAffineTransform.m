@@ -2,13 +2,14 @@
 %
 %    T = cv.getAffineTransform(src, dst)
 %
-%  Input:
-%    src: 3-by-2 row vectors of coordinates of triangle vertices in the source
+% ## Input
+% * __src__ 3-by-2 row vectors of coordinates of triangle vertices in the source
 %         image.
-%	 dst: 3-by-2 row vectors of coordinates of the corresponding triangle
+% * __dst__ 3-by-2 row vectors of coordinates of the corresponding triangle
 %         vertices in the destination image.
-%  Output:
-%    T:   2-by-3 transformation matrix
+%
+% ## Output
+% * __T__ 2-by-3 transformation matrix
 %
 % The function calculates the 2 × 3 matrix of an affine transform so that
 % 

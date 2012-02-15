@@ -1,30 +1,32 @@
 %FINDFUNDAMENTALMAT  Calculates a fundamental matrix from the corresponding points in two images
 %
-%   F = cv.findFundamentalMat(points1, points2)
-%   [F, mask] = cv.findFundamentalMat(...)
-%   [...] = cv.findFundamentalMat(..., 'OptionName', optionValue, ...)
+%    F = cv.findFundamentalMat(points1, points2)
+%    [F, mask] = cv.findFundamentalMat(...)
+%    [...] = cv.findFundamentalMat(..., 'OptionName', optionValue, ...)
 %
-% Input:
-%    points1: Cell array of N points from the first image.
-%    points2: Cell array of the second image points of the same size as
+% ## Input
+% * __points1__ Cell array of N points from the first image.
+% * __points2__ Cell array of the second image points of the same size as
 %        points1.
-% Output:
-%    F: Fundamental matrix.
-%    mask: Mask array.
-% Options:
-%    'Method': Method for computing a fundamental matrix. One of the
-%        following:
-%        '7Point': 7-point algorithm. N = 7.
-%        '8Point': 8-point algorithm. N >= 8.
-%        'Ransac': RANSAC algorithm. N >= 8. (default)
-%        'LMedS': LMedS algorithm. N >= 8.
-%    'Param1': Parameter used for RANSAC. It is the maximum distance from a
+%
+% ## Output
+% * __F__ Fundamental matrix.
+% * __mask__ Mask array.
+%
+% ## Options
+% * __Method__ Method for computing a fundamental matrix. One of the
+%        following
+%     * __7Point__ 7-point algorithm. N = 7.
+%     * __8Point__ 8-point algorithm. N >= 8.
+%     * __Ransac__ RANSAC algorithm. N >= 8. (default)
+%     * __LMedS__ LMedS algorithm. N >= 8.
+% * __Param1__ Parameter used for RANSAC. It is the maximum distance from a
 %        point to an epipolar line in pixels, beyond which the point is
 %        considered an outlier and is not used for computing the final
 %        fundamental matrix. It can be set to something like 1-3, depending
 %        on the accuracy of the point localization, image resolution, and
 %        the image noise. default 3.0.
-%    'Param2': Parameter used for the RANSAC or LMedS methods only. It
+% * __Param2__ Parameter used for the RANSAC or LMedS methods only. It
 %        specifies a desirable level of confidence (probability) that the
 %        estimated matrix is correct. default 0.99.
 %

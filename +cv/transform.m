@@ -1,13 +1,14 @@
 %TRANSFORM  Performs the matrix transformation of every array element
 %
-%   dst = cv.transform(src, mtx)
+%    dst = cv.transform(src, mtx)
 %
-% Input:
-%    src: Source array that must have as many channels (1 to 4) as columns
+% ## Input
+% * __src__ Source array that must have as many channels (1 to 4) as columns
 %        of mtx or columns -1 of mtx
-%    mtx: floating-point transformation matrix.
-% Output:
-%    dst: Destination array of the same size and depth as src. It has as
+% * __mtx__ floating-point transformation matrix.
+%
+% ## Output
+% * __dst__ Destination array of the same size and depth as src. It has as
 %        many channels as rows of mtx
 %
 % The function transform performs the matrix transformation of every

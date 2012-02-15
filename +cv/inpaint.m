@@ -3,18 +3,20 @@
 %    dst = cv.inpaint(src, mask)
 %    dst = cv.inpaint(src, mask, 'Method', 'Telea', ...)
 %
-%  Input:
-%    src: Input 8-bit 1-channel or 3-channel image.
-%	 mask: Inpainting mask, 8-bit 1-channel image. Non-zero pixels indicate the
+% ## Input
+% * __src__ Input 8-bit 1-channel or 3-channel image.
+% * __mask__ Inpainting mask, 8-bit 1-channel image. Non-zero pixels indicate the
 %          area that needs to be inpainted.
-%  Output:
-%    dst: Output image with the same size and type as src.
-%  Options:
-%    'Radius': Radius of a circlular neighborhood of each point inpainted that
+%
+% ## Output
+% * __dst__ Output image with the same size and type as src.
+%
+% ## Options
+% * __Radius__ Radius of a circlular neighborhood of each point inpainted that
 %              is considered by the algorithm.
-%    'Method': Inpainting method that could be one of the following:
-%       'NS': Navier-Stokes based method.
-%       'Telea': Method by Alexandru Telea [Telea04].
+% * __Method__ Inpainting method that could be one of the following:
+% * __NS__ Navier-Stokes based method.
+% * __Telea__ Method by Alexandru Telea [Telea04].
 %
 % The function reconstructs the selected image area from the pixel near the
 % area boundary. The function may be used to remove dust and scratches from a

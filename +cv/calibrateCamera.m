@@ -1,11 +1,11 @@
 %CALIBRATECAMERA  Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern
 %
-%   cameraMatrix = cv.calibrateCamera(objectPoints, imagePts, imageSize)
-%   [cameraMatrix, distCoeffs, d, rvecs, tvecs] = cv.calibrateCamera(...)
-%   [...] = cv.calibrateCamera(..., 'OptionName', optionValue, ...)
+%    cameraMatrix = cv.calibrateCamera(objectPoints, imagePts, imageSize)
+%    [cameraMatrix, distCoeffs, d, rvecs, tvecs] = cv.calibrateCamera(...)
+%    [...] = cv.calibrateCamera(..., 'OptionName', optionValue, ...)
 %
-% Input:
-%    objectPoints: A cell array of cells of calibration pattern points in the
+% ## Input
+% * __objectPoints__ A cell array of cells of calibration pattern points in the
 %        calibration pattern coordinate space. The outer vector contains as many
 %        elements as the number of the pattern views. If the same calibration
 %        pattern is shown in each view and it is fully visible, all the vectors
@@ -15,55 +15,57 @@
 %        pattern coordinate system, then, if the rig is planar, it may make
 %        sense to put the model to a XY coordinate plane so that Z-coordinate of
 %        each input object point is 0.
-%    imagePoints: A cell array of cells of the projections of calibration
+% * __imagePoints__ A cell array of cells of the projections of calibration
 %        pattern points. size(imagePoints) and size(objectPoints) and
 %        size(imagePoints{i}) must be equal to size(objectPoints{i}) for each i.
-%    imageSize: Size of the image used only to initialize the intrinsic camera
+% * __imageSize__ Size of the image used only to initialize the intrinsic camera
 %        matrix. [w,h].
-% Output:
-%    cameraMatrix: Output 3x3 floating-point camera matrix A = [fx, 0, cx; 0, 
+%
+% ## Output
+% * __cameraMatrix__ Output 3x3 floating-point camera matrix A = [fx, 0, cx; 0, 
 %        fy, cy; 0, 0, 1]
-%    distCoeffs: Output vector of distortion coefficients [k1,k2,p1,p2,k3,k4,k5,
+% * __distCoeffs__ Output vector of distortion coefficients [k1,k2,p1,p2,k3,k4,k5,
 %        k6] of 4, 5, or 8 elements.
-%    d: Output final re-projection error.
-%    rvecs: Output vector of rotation vectors estimated for each pattern view.
+% * __d__ Output final re-projection error.
+% * __rvecs__ Output vector of rotation vectors estimated for each pattern view.
 %        That is, each k-th rotation vector together with the corresponding k-th
 %        translation vector (see the next output parameter description) brings
 %        the calibration pattern from the model coordinate space (in which
 %        object points are specified) to the world coordinate space, that is, a
 %        real position of the calibration pattern in the k-th pattern view
 %        (k=0 ... M-1).
-%    tvecs: Output vector of translation vectors estimated for each pattern
+% * __tvecs__ Output vector of translation vectors estimated for each pattern
 %        view.
-% Options:
-%    'CameraMatrix': Input 3x3 floating-point camera matrix. If
+%
+% ## Options
+% * __CameraMatrix__ Input 3x3 floating-point camera matrix. If
 %        'UseIntrinsicGuess' and/or 'FixAspectRatio' are specified, some or all
 %        of fx, fy, cx, cy must be initialized before calling the function.
-%    'DistCoeffs': Input 4, 5, or 8 elements vector used as an initial values of
+% * __DistCoeffs__ Input 4, 5, or 8 elements vector used as an initial values of
 %        distCoeffs.
-%    'UseIntrinsicGuess': Logical flag. When true, cameraMatrix contains valid
+% * __UseIntrinsicGuess__ Logical flag. When true, cameraMatrix contains valid
 %        initial values of fx, fy, cx, cy that are optimized further. Otherwise,
 %        (cx, cy) is initially set to the image center ( imageSize is used), and
 %        focal distances are computed in a least-squares fashion. Note, that if
 %        intrinsic parameters are known, there is no need to use this function
 %        just to estimate extrinsic parameters. Use solvePnP() instead. default
 %        false.
-%    'FixPrincipalPoint': Logical flag. The principal point is not changed
+% * __FixPrincipalPoint__ Logical flag. The principal point is not changed
 %        during the global optimization. It stays at the center or at a
 %        different location specified when 'UseIntrinsicGuess' is set too.
 %        default false.
-%    'FixAspectRatio': Logical flag. The functions considers only fy as a free
+% * __FixAspectRatio__ Logical flag. The functions considers only fy as a free
 %        parameter. The ratio fx/fy stays the same as in the input cameraMatrix.
 %        When 'UseIntrinsicGuess' is not set, the actual input values of fx and
 %        fy are ignored, only their ratio is computed and used further. default
 %        false.
-%    'ZeroTangentDist': Logical flag. Tangential distortion coefficients p1, p2
+% * __ZeroTangentDist__ Logical flag. Tangential distortion coefficients p1, p2
 %        are set to zeros and stay zero. default false.
 %    'FixK1', 'FixK2', ..., 'FixK6': Logical flag. The corresponding radial
 %        distortion coefficient is not changed during the optimization. If
 %        'UseIntrinsicGuess' is set, the coefficient from the supplied
 %        distCoeffs matrix is used. Otherwise, it is set to 0. default false.
-%    'RationalModel': Logical flag. Coefficients k4, k5, and k6 are enabled. To
+% * __RationalModel__ Logical flag. Coefficients k4, k5, and k6 are enabled. To
 %        provide the backward compatibility, this extra flag should be
 %        explicitly specified to make the calibration function use the rational
 %        model and return 8 coefficients. If the flag is not set, the function
@@ -96,8 +98,7 @@
 %      current estimates for camera parameters and the poses) object points
 %      objectPoints. See cv.projectPoints for details.
 % 
-% Note:
-%
+% ## Note
 % If you use a non-square (=non-NxN) grid and cv.findChessboardCorners for
 % calibration, and calibrateCamera returns bad values (zero distortion
 % coefficients, an image center very far from (w/2-0.5,h/2-0.5), and/or large

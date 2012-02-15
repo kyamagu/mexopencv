@@ -4,23 +4,25 @@
 %    dst = cv.resize(src, siz)
 %    dst = cv.resize(src, scale, 'Interpolation', interpolation)
 %
-%  Input:
-%    src: Source image.
-%    siz: Destination image size.
-%    scale: Scale factor along both x and y axis.
-%  Output:
-%    dst: Destination image. It has the size siz or the size computed from
+% ## Input
+% * __src__ Source image.
+% * __siz__ Destination image size.
+% * __scale__ Scale factor along both x and y axis.
+%
+% ## Output
+% * __dst__ Destination image. It has the size siz or the size computed from
 %        size(src) and scale. The type of dst is the same as of src.
-%  Options:
-%    'Interpolation': interpolation method. default: 'Linear'
-%      'Nearest':  a nearest-neighbor interpolation
-%      'Linear':   a bilinear interpolation (used by default)
-%      'Area':     resampling using pixel area relation. It may be a preferred
+%
+% ## Options
+% * __Interpolation__ interpolation method. default: 'Linear'
+% * __Nearest__ a nearest-neighbor interpolation
+% * __Linear__ a bilinear interpolation (used by default)
+% * __Area__ resampling using pixel area relation. It may be a preferred
 %                  method for image decimation, as it gives moire-free results.
 %                  But when the image is zoomed, it is similar to the 'Nearest'
 %                  method.
-%      'Cubic':    a bicubic interpolation over 4x4 pixel neighborhood
-%      'Lanczos4': a Lanczos interpolation over 8x8 pixel neighborhood
+% * __Cubic__ a bicubic interpolation over 4x4 pixel neighborhood
+% * __Lanczos4__ a Lanczos interpolation over 8x8 pixel neighborhood
 %
 % The function resize resizes the image src down to or up to the specified size.
 %

@@ -1,11 +1,12 @@
 %HUMOMENTS  Calculates seven Hu invariants
 %
-%   m = cv.HuMoments(mo)
+%    m = cv.HuMoments(mo)
 %
-% Input:
-%     mo: Input moments computed with cv.moments().
-% Output:
-%     hu: Output Hu invariants.
+% ## Input
+% * __mo__ Input moments computed with cv.moments().
+%
+% ## Output
+% * __hu__ Output Hu invariants.
 %
 % The function calculates seven Hu invariants (introduced in [Hu62]; see also
 % http://en.wikipedia.org/wiki/Image_moment).

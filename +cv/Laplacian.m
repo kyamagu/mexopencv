@@ -3,19 +3,21 @@
 %    dst = cv.Laplacian(src)
 %    dst = cv.Laplacian(src, 'KSize', 5, ...)
 %
-%  Input:
-%    src: Source image.
-%  Output:
-%    dst: Destination image of the same size and the same number of channels as
+% ## Input
+% * __src__ Source image.
+%
+% ## Output
+% * __dst__ Destination image of the same size and the same number of channels as
 %         src.
-%  Options:
-%	 'KSize': Aperture size used to compute the second-derivative filters. The
+%
+% ## Options
+% * __KSize__ Aperture size used to compute the second-derivative filters. The
 %             size must be positive and odd.
-%	 'Scale': Optional scale factor for the computed Laplacian values. By
+% * __Scale__ Optional scale factor for the computed Laplacian values. By
 %             default, no scaling is applied.
-%	 'Delta': Optional delta value that is added to the results prior to
+% * __Delta__ Optional delta value that is added to the results prior to
 %             storing them in dst .
-%	 'BorderType': Pixel extrapolation method.
+% * __BorderType__ Pixel extrapolation method.
 %
 % The function calculates the Laplacian of the source image by adding up the
 % second x and y derivatives calculated using the Sobel operator.

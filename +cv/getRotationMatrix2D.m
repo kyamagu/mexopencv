@@ -2,14 +2,15 @@
 %
 %    T = cv.getRotationMatrix2D(center, angle, scale)
 %
-%  Input:
-%    center: Center of the rotation in the source image.
-%    angle: Rotation angle in degrees. Positive values mean counter-clockwise
+% ## Input
+% * __center__ Center of the rotation in the source image.
+% * __angle__ Rotation angle in degrees. Positive values mean counter-clockwise
 %           rotation (the coordinate origin is assumed to be the top-left
 %           corner).
-%    scale: Isotropic scale factor.
-%  Output:
-%    T: The output affine transformation, 2x3 floating-point matrix.
+% * __scale__ Isotropic scale factor.
+%
+% ## Output
+% * __T__ The output affine transformation, 2x3 floating-point matrix.
 %
 % The function calculates the following matrix:
 % 

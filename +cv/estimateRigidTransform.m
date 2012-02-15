@@ -1,17 +1,19 @@
 %ESTIMATERIGIDTRANSFORM  Computes an optimal affine transformation between two 2D point sets
 %
-%   M = cv.estimateRigidTransform(src, dst)
-%   M = cv.estimateRigidTransform(src, dst, 'OptionName', optionValue)
+%    M = cv.estimateRigidTransform(src, dst)
+%    M = cv.estimateRigidTransform(src, dst, 'OptionName', optionValue)
 %
-% Input:
-%     src: First input 2D point set stored cell array of 2-element vectors, or
+% ## Input
+% * __src__ First input 2D point set stored cell array of 2-element vectors, or
 %         an image
-%     dst: Second input 2D point set of the same size and the same type as A, or
+% * __dst__ Second input 2D point set of the same size and the same type as A, or
 %         another image.
-% Output:
-%     d: Output matrix (see below).
-% Options:
-%     'FullAffine': If true, the function finds an optimal affine transformation
+%
+% ## Output
+% * __M__ Output matrix (see below).
+%
+% ## Options
+% * __FullAffine__ If true, the function finds an optimal affine transformation
 %         with no additional resrictions (6 degrees of freedom). Otherwise, the
 %         class of transformations to choose from is limited to combinations of
 %         translation, rotation, and uniform scaling (5 degrees of freedom).
