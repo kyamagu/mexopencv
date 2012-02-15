@@ -112,14 +112,21 @@ classdef MDoc < handle
         end
         
         function txt = markdown(this, txt)
-            %MARKDOWN
-            [splt,tok] = regexp(txt,'(<div class="helptext">\s*<pre>.*</pre>\s*</div>)','split','tokens');
+            %MARKDOWN add html tags
+            [splt,tok] = regexp(txt,...
+                '(<div class="helptext">\s*<pre>.*</pre>\s*</div>)','split','tokens');
             if ~isempty(tok)
                 tok = regexp(tok{1}{1},'<pre><!--helptext -->\s*(.*)</pre>','tokens');
                 if ~isempty(tok)
+                    % remove space inserted by matlab
                     tok = regexprep(tok{1}{1},'\n ','\n');
+                    % remove function name in the header
                     tok = regexprep(tok,'^[A-Z0-9_]+\s+(.*)$','$1');
+                    % markup
                     tok = MarkdownPapers(tok);
+                    % autolink cv functions
+                    tok = regexprep(tok,'cv\.([a-zA-Z0-9_]+)([:;,\.\(\s])',...
+                        '<a href="$1.html">cv.$1</a>$2');
                     txt = [splt;{sprintf('<div class="helpcontent">%s</div>',tok),''}];
                     txt = [txt{:}];
                 end
@@ -163,7 +170,8 @@ classdef MDoc < handle
         
         function txt = build_table(this, txt)
             %BUILD_TABLE
-            [splt,tok] = regexp(txt,'(<div class="helptext">\s*<pre>.*</pre>\s*</div>)','split','tokens');
+            [splt,tok] = regexp(txt,...
+                '(<div class="helptext">\s*<pre>.*</pre>\s*</div>)','split','tokens');
             if ~isempty(tok)
                 tok = regexp(tok{1}{1},'<pre><!--helptext -->\s*(.*)</pre>','tokens');
                 if ~isempty(tok)

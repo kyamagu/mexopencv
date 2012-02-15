@@ -138,18 +138,18 @@ classdef SVM < handle
 			%     * 'RBF'       Radial basis function (RBF), a good choice in most cases.
 			%                   This is the default kernel.
 			%     * 'Sigmoid'   Sigmoid kernel.
-			% * __Degree__ Parameter degree of a kernel function (POLY). default 0.
-			% * __Gamma__ Parameter  of a kernel function (POLY / RBF / SIGMOID).
+			% * __Degree__ Parameter degree of a kernel function (`POLY`). default 0.
+			% * __Gamma__ Parameter  of a kernel function (`POLY` / `RBF` / `SIGMOID`).
 			%         The default is 1.
-			% * __Coef0__ Parameter coef0 of a kernel function (POLY / SIGMOID).
+			% * __Coef0__ Parameter coef0 of a kernel function (`POLY` / `SIGMOID`).
 			%         The default is 0.
-			% * __C__ Parameter C of a SVM optimiazation problem (C_SVC / EPS_SVR / NU_SVR).
+			% * __C__ Parameter C of a SVM optimiazation problem (`C_SVC` / `EPS_SVR` / `NU_SVR`).
 			%         The default is 1.
-			% * __Nu__ Parameter nu of a SVM optimization problem (NU_SVC / ONE_CLASS / NU_SVR).
+			% * __Nu__ Parameter nu of a SVM optimization problem (`NU_SVC` / `ONE_CLASS` / `NU_SVR`).
 			%         The default is 0.
-			% * __P__ Parameter p of a SVM optimization problem (EPS_SVR).
+			% * __P__ Parameter p of a SVM optimization problem (`EPS_SVR`).
 			%         The default is 0.
-			% * __ClassWeights__ Optional weights in the C_SVC problem, assigned
+			% * __ClassWeights__ Optional weights in the `C_SVC` problem, assigned
 			%         to particular classes. They are multiplied by C so the parameter
 			%         C of class #i becomes . Thus these weights affect the
 			%         misclassification penalty for different classes. The larger
@@ -193,7 +193,7 @@ classdef SVM < handle
             %         proportion in the whole train dataset.
             % * __CGrid__, __GammaGrid__, __NuGrid__, __PGrid__, __CoeffGrid__, __DegreeGrid__
             %         Iteration grid for the corresponding SVM parameter. It accepts
-            %         a struct having {'min_val', 'max_val', 'log_step'} fields, or
+            %         a struct having {`min_val`, `max_val`, `log_step`} fields, or
             %         a 3-element vector in which each parameter is specified in
             %         the same order to the struct is supported.
             %

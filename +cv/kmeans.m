@@ -26,8 +26,8 @@
 %        yield the best compactness (see the last function parameter).
 %        default 10.
 % * __Initialization__ Method to initialize seeds. One of the followings:
-%        'Random'  Select random initial centers in each attempt. (default)
-%        'PP'      Use kmeans++ center initialization by Arthur and
+%     * 'Random'  Select random initial centers in each attempt. (default)
+%     * 'PP'      Use kmeans++ center initialization by Arthur and
 %                  Vassilvitskii [Arthur2007].
 % * __InitialLabels__ Integer array that stores the initial cluster indices
 %        for every sample.
@@ -45,6 +45,6 @@
 % corresponding labels and the compactness value are returned by the
 % function. Basically, you can use only the core of the function, set the
 % number of attempts to 1, initialize labels each time using a custom
-% algorithm, pass them with the ( flags = KMEANS_USE_INITIAL_LABELS ) flag,
-% and then choose the best (most-compact) clustering.
+% algorithm, pass them with the 'InitialLabels' option, and then choose the
+% best (most-compact) clustering.
 %

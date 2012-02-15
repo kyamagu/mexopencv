@@ -15,16 +15,16 @@ classdef KalmanFilter < handle
     end
     
     properties (Dependent)
-    	statePre            % predicted state (x'(k)): x(k)=A*x(k-1)+B*u(k)
-        statePost           % corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))
-        transitionMatrix    % state transition matrix (A)
-        controlMatrix       % control matrix (B) (not used if there is no control)
-        measurementMatrix   % measurement matrix (H)
-        processNoiseCov     % process noise covariance matrix (Q)
-        measurementNoiseCov % measurement noise covariance matrix (R)
-        errorCovPre         % priori error estimate covariance matrix (P'(k)): P'(k)=A*P(k-1)*At + Q)*/
-        gain                % Kalman gain matrix (K(k)): K(k)=P'(k)*Ht*inv(H*P'(k)*Ht+R)
-        errorCovPost        % posteriori error estimate covariance matrix (P(k)): P(k)=(I-K(k)*H)*P'(k)
+    	statePre            % predicted state `(x'(k)): x(k)=A*x(k-1)+B*u(k)`
+        statePost           % corrected state `(x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))`
+        transitionMatrix    % state transition matrix `(A)`
+        controlMatrix       % control matrix `(B)` (not used if there is no control)
+        measurementMatrix   % measurement matrix `(H)`
+        processNoiseCov     % process noise covariance matrix `(Q)`
+        measurementNoiseCov % measurement noise covariance matrix `(R)`
+        errorCovPre         % priori error estimate covariance matrix `(P'(k)): P'(k)=A*P(k-1)*At + Q`
+        gain                % Kalman gain matrix `(K(k)): K(k)=P'(k)*Ht*inv(H*P'(k)*Ht+R`)
+        errorCovPost        % posteriori error estimate covariance matrix `(P(k)): P(k)=(I-K(k)*H)*P'(k)`
     end
     
     methods

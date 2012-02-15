@@ -19,8 +19,8 @@ classdef Boost < handle
     % schemes. Often the simplest decision trees with only a single split node
     % per tree (called stumps ) are sufficient.
     %
-    % The boosted model is based on N training examples (x_i,y_i) with x_i IN
-    % R^k and y_i IN {-1,+1}. x_i is a K-component vector. Each component
+    % The boosted model is based on N training examples (xi,yi) with xi IN
+    % R^k and yi IN {-1,+1}. xi is a K-component vector. Each component
     % encodes a feature relevant to the learning task at hand. The desired
     % two-class output is encoded as -1 and +1.
     %

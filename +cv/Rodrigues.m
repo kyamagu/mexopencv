@@ -13,9 +13,11 @@
 %        matrix of partial derivatives of the output array components with
 %        respect to the input array components.
 %
+% The function transforms a rotation matrix in the following way:
+%
 %    theta <- norm(r)
 %    r <- r/theta
-%    R = cos(theta) * I + (1 - cos(theta))*r*r^T + sin(theta) * A
+%    R = cos(theta) * I + (1 - cos(theta)) * r * r^T + sin(theta) * A
 %    A = [0, -rz, ry; rz, 0, -rx; -ry, rx, 0]
 %
 % Inverse transformation can be also done easily, since

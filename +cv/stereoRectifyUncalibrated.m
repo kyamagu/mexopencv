@@ -17,16 +17,16 @@
 %
 % ## Options
 % * __Threshold__ Optional threshold used to filter out the outliers. If
-%        the parameter is greater than zero, all the point pairs that do
-%        not comply with the epipolar geometry (that is, the points for
-%        which points2{i}*F*points1{i}'>Threshold) are rejected prior to
-%        computing the homographies. Otherwise,all the points are
-%        considered inliers. default 5
+%     the parameter is greater than zero, all the point pairs that do
+%     not comply with the epipolar geometry (that is, the points for
+%     which `points2{i} * F * points1{i}' > Threshold`) are rejected
+%     prior to computing the homographies. Otherwise,all the points are
+%     considered inliers. default 5
 %
 % The function computes the rectification transformations without knowing
 % intrinsic parameters of the cameras and their relative position in the
 % space, which explains the suffix "uncalibrated". Another related
-% difference from cv.stereoRectify() is that the function outputs not the
+% difference from cv.stereoRectify is that the function outputs not the
 % rectification transformations in the object (3D) space, but the planar
 % perspective transformations encoded by the homography matrices H1 and H2.
 % The function implements the algorithm [Hartley99].

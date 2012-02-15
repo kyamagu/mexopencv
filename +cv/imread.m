@@ -46,7 +46,7 @@
 % OpenCV looks for codecs supplied with an OS image. Install the relevant
 % packages (do not forget the development files, for example, libjpeg-dev,
 % in Debian* and Ubuntu*) to get the codec support or turn on the
-% OPENCV_BUILD_3RDPARTY_LIBS flag in CMake.
+% `OPENCV_BUILD_3RDPARTY_LIBS` flag in CMake.
 %
 % See also cv.imwrite
 %

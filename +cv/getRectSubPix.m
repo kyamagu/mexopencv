@@ -15,7 +15,7 @@
 %
 % The function getRectSubPix extracts pixels from src:
 % 
-%   dst(x,y) = src(x+center.x-(dst.cols-1)*0.5, y+center.y-(dst.rows-1)*0.5))
+%    dst(x,y) = src(x+center.x-(dst.cols-1)*0.5, y+center.y-(dst.rows-1)*0.5))
 %
 % where the values of the pixels at non-integer coordinates are retrieved using
 % bilinear interpolation. Every channel of multi-channel images is processed

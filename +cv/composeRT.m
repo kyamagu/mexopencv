@@ -10,11 +10,12 @@
 %
 % ## Output
 % * __S__ Struct with the following fields
-% * __rvec3__ Rotation vector of the superposition.
-% * __tvec3__ Translation vector of the superposition.
-%        dr3dr1, dr3dt1, dr3dr2, dr3dt2, dt3dr1, dt3dt1, dt3dr2, dt3dt2: Output
-%            derivatives of rvec3 or tvec3 with regard to rvec1, rvec2, tvec1
-%            and tvec2, respectively.
+%     * __rvec3__ Rotation vector of the superposition.
+%     * __tvec3__ Translation vector of the superposition.
+%     * __dr3dr1__, __dr3dt1__, __dr3dr2__, __dr3dt2__, __dt3dr1__,
+%       __dt3dt1__, __dt3dr2__, __dt3dt2__
+%       Output derivatives of rvec3 or tvec3 with regard to rvec1, rvec2,
+%       tvec1 and tvec2, respectively.
 %
 % The functions compute:
 %

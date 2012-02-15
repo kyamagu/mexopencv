@@ -6,8 +6,8 @@
 % ## Input
 % * __im__ Grid view of source circles. It must be an 8-bit grayscale or
 %        color image.
-% * __patternSize__ Number of circles per a grid row and column (patternSize
-%        = [points_per_row, points_per_colum]).
+% * __patternSize__ Number of circles per a grid row and column
+%        (`patternSize = [points_per_row, points_per_colum]`).
 %
 % ## Output
 % * __centers__ Array of detected centers.

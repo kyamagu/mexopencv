@@ -6,7 +6,7 @@
 % ## Input
 % * __im__ Source chessboard view. It must be an 8-bit grayscale or color image.
 % * __patternSize__ Number of inner corners per a chessboard row and column
-%        (patternSize = [points_per_row,points_per_colum] = [columns,rows]).
+%        (`patternSize = [points_per_row,points_per_colum] = [columns,rows]`).
 %
 % ## Output
 % * __corners__ Output array of detected corners.

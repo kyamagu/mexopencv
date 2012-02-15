@@ -23,7 +23,7 @@ classdef StereoSGBM < handle
     % 
     % Some pre- and post- processing steps from K. Konolige algorithm
     % are included, for example: pre-filtering
-    % (CV_STEREO_BM_XSOBEL type) and post-filtering (uniqueness check,
+    % (CV\_STEREO\_BM\_XSOBEL type) and post-filtering (uniqueness check,
     % quadratic interpolation and speckle filtering).
     %
     % See also cv.StereoSGBM.StereoSGBM  cv.StereoSGBM.init cv.StereoSGBM.compute
@@ -89,11 +89,11 @@ classdef StereoSGBM < handle
             %        Normally, 16 or 32 is good enough. default 0
             % * __FullDP__ Set it to true to run the full-scale two-pass
             %        dynamic programming algorithm. It will consume
-            %        O(W*H*numDisparities) bytes, which is large for
+            %        O(W * H * numDisparities) bytes, which is large for
             %        640x480 stereo and huge for HD-size pictures. By
             %        default, it is set to false.
             %
-            % See also cv.StereoSGBM cv.StereoSGBM.init
+            % See also cv.StereoSGBM
             %
             this.id = StereoSGBM_(varargin{:});
         end
@@ -127,7 +127,7 @@ classdef StereoSGBM < handle
             % pair. See stereo_match.cpp OpenCV sample on how to prepare
             % images and call the method.
             %
-            % See also cv.StereoSGBM cv.StereoSGBM.init
+            % See also cv.StereoSGBM
             %
             disparity = StereoSGBM_(this.id, 'compute', left, right, varargin{:});
         end

@@ -17,11 +17,11 @@
 % 
 %   3. Compute the integral of the histogram:
 % 
-%      H_i' = \sum_{0 <= j < i} H(j)
+%      `H_i' = \sum_{0 <= j < i} H(j)`
 % 
 %   4. Transform the image using H' as a look-up table:
 % 
-%      dst(x,y) = H'(src(x,y))
+%      `dst(x,y) = H'(src(x,y))`
 % 
 % The algorithm normalizes the brightness and increases the contrast of
 % the image.

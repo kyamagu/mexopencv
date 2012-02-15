@@ -33,7 +33,7 @@
 % 
 % In case of linear transformations, the range does not matter. But in case of
 % a non-linear transformation, an input RGB image should be normalized to the
-% proper value range to get the correct results, for example, for RGB  L*u*v*
+% proper value range to get the correct results, for example, for RGB L\*u\*v\*
 % transformation. For example, if you have a 32-bit floating-point image
 % directly converted from an 8-bit image without any scaling, then it will have
 % the 0..255 value range instead of 0..1 assumed by the function. So, before

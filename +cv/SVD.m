@@ -78,7 +78,7 @@ classdef SVD
             % * __w__ Singular values
             % * __u__ Left singular vectors
             % * __vt__ Transposed matrix of right singular vectors
-            % * __src__ Right-hand side of a linear system (u*w*v')*dst = src
+            % * __src__ Right-hand side of a linear system `(u*w*v')*dst = src`
             %        to be solved, where A has been previously decomposed.
             %
             % ## Output
