@@ -25,6 +25,14 @@
 class MxArray {
 	public:
 		MxArray(const mxArray *arr);
+		/// Copy constructor
+		MxArray(const MxArray& arr) : p_(arr.p_) {}
+		/// Assignment operator
+		MxArray& operator= (const MxArray& rhs) {
+			if (this != &rhs)
+				this->p_ = rhs.p_;
+			return *this;
+		}
 		explicit MxArray(const int i);
 		explicit MxArray(const double d);
 		explicit MxArray(const bool b);
