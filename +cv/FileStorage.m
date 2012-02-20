@@ -8,7 +8,7 @@
 % * __fileName__ Name of the XML/YAML file. The file name should have either .xml
 %        or .yml extension.
 % * __S__ Scalar struct to be written to a file
-%    X1, X2, ...: objects to be written to a file
+% * __X1__, __X2__, __...__ objects to be written to a file
 %
 % ## Output
 % * __S__ Scalar struct read from a file
