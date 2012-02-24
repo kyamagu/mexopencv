@@ -1,6 +1,7 @@
 %HOUGHLINES  Finds lines in a binary image using the standard Hough transform
 %
 %    lines = cv.HoughLines(image)
+%    lines = cv.HoughLines(..., 'OptionName', optionValue, ...)
 %
 % ## Input
 % * __image__ 8-bit, single-channel, grayscale input image.

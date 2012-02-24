@@ -1,7 +1,6 @@
 %INTEGRAL  Calculates the integral of an image
 %
 %    s = cv.integral(src)
-%    [s, sqsum] = cv.integral(src)
 %    [s, sqsum, tilted] = cv.integral(src)
 %
 % ## Input

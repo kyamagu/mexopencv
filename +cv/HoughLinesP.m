@@ -1,6 +1,7 @@
 %HOUGHLINESP  Finds line segments in a binary image using the probabilistic Hough transform
 %
-%    lines = cv.HoughLines(image)
+%    lines = cv.HoughLinesP(image)
+%    lines = cv.HoughLinesP(..., 'OptionName', optionValue, ...)
 %
 % ## Input
 % * __image__ 8-bit, single-channel, grayscale input image.

@@ -6,6 +6,20 @@ classdef KalmanFilter < handle
     % modify transitionMatrix, controlMatrix, and measurementMatrix to get an
     % extended Kalman filter functionality.
     %
+    %    % initialization
+    %    kf = cv.KalmanFilter(4,2);
+    %    kf.statePre = [10;20;0;0]; % initial state prediction
+    %    kf.transitionMatrix = [1,0,1,0; 0,1,0,1; 0,0,1,0; 0,0,0,1];
+    %    kf.measurementMatrix([1,4]) = 1;
+    %    kf.processNoiseCov = eye(4) * 1e-4;
+    %    kf.measurementNoiseCov = eye(2) * 1e-1;
+    %    kf.errorCovPost = eye(4) * 0.1;
+    %    
+    %    % dynamics
+    %    p_pred = kf.predict;         % update internal state
+    %    measure = [11;21];           % measurement
+    %    p_est = kf.correct(measure); % correct
+    %
     % See also cv.KalmanFilter.KalmanFilter cv.KalmanFilter.predict
     % cv.KalmanFilter.correct
     %
@@ -32,8 +46,18 @@ classdef KalmanFilter < handle
             %KALMANFILTER  KalmanFilter constructor
             %
             %    kf = cv.KalmanFilter
+            %    kf = cv.KalmanFilter(dynamParams, measureParams)
+            %    kf = cv.KalmanFilter(..., 'OptionName', optionValue, ...)
             %
-            % See also cv.KalmanFilter
+            % ## Input
+            % * __dynamParams__ Dimensionality of the state.
+            % * __measureParams__ Dimensionality of the measurement.
+            %
+            % ## Options
+            % * __ControlParams__ Dimensionality of the control vector.
+            %
+            %
+            % See also cv.KalmanFilter cv.KalmanFilter.init
             %
             this.id = KalmanFilter_();
             if nargin>0, this.init(varargin{:}); end
@@ -68,7 +92,6 @@ classdef KalmanFilter < handle
             %PREDICT  Computes a predicted state
             %
             %    s = kf.predict('OptionName', optionValue, ...)
-            %
             %
             % ## Output
             % * __s__ Output predicted state.

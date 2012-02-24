@@ -3,7 +3,7 @@
 %
 %     dst = cv.distanceTransform(src)
 %     dst = cv.distanceTransform(src, 'DistanceType', distanceType, ...)
-%     [dst, labels] = distanceTransform(src, code, ...)
+%     [dst, labels] = cv.distanceTransform(...)
 %
 % ## Input
 % * __src__ 8-bit, single-channel (binary) source image.

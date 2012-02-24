@@ -8,6 +8,12 @@ classdef KNearest < handle
     % it looks for the feature vector with a known response that is closest to
     % the given vector.
     %
+    %    Xtrain = [randn(20,4)+1;randn(20,4)-1]; % training samples
+    %    Ytrain = [ones(20,1);zeros(20,1)];      % training labels
+    %    kn = cv.KNearest(Xtrain,Ytrain);
+    %    Xtest = randn(50,4);                    % testing samples
+    %    Ytest = kn.predict(Xtest);              % predictions
+    %
     % See also cv.KNearest.KNearest
     % cv.KNearest.train cv.KNearest.find_nearest
     %
@@ -33,8 +39,11 @@ classdef KNearest < handle
             %KNEAREST  K-Nearest Neighbors constructor
             %
             %    classifier = cv.KNearest
+            %    classifier = cv.KNearest(trainData, responses, 'OptionName', optionValue, ...)
             %
-            % See also cv.KNearest
+            % The constructor optionally takes the same argument to train method.
+            %
+            % See also cv.KNearest cv.KNearest.train
             %
             this.id = KNearest_();
             if nargin>0, this.train(varargin{:}); end
@@ -70,6 +79,9 @@ classdef KNearest < handle
             %
             %    classifier.save(filename)
             %
+            % ## Input
+            % * __filename__ name of the file.
+            %
             % See also cv.KNearest
             %
             KNearest_(this.id, 'save', filename);
@@ -79,6 +91,9 @@ classdef KNearest < handle
             %LOAD  Loads the model from a file
             %
             %    classifier.load(filename)
+            %
+            % ## Input
+            % * __filename__ name of the file.
             %
             % See also cv.KNearest
             %
@@ -91,6 +106,10 @@ classdef KNearest < handle
             %    classifier.train(trainData, responses)
             %    classifier.train(trainData, responses, 'OptionName', optionValue, ...)
             %
+            % ## Input
+            % * __trainData__ row vectors of training samples.
+            % * __responses__ vector of training labels in case of
+            %     classification or response values for regression.
             %
             % ## Options
             % * __IsRegression__ Type of the problem: true for regression and
@@ -119,6 +138,26 @@ classdef KNearest < handle
             %    results = classifier.find_nearest(samples)
             %    results = classifier.find_nearest(samples, 'OptionName', optionValue, ...)
             %    [results,neiResp,dists] = classifier.find_nearest(...)
+            %
+            % ## Input
+            % * __samples__ Input samples stored by rows. It is a single-
+            %     precision floating-point matrix of #samples x #dimension.
+            %
+            % ## Output
+            % * __results__ Vector with results of prediction (regression or
+            %     classification) for each input sample. It is a single-
+            %     precision floating-point vector with number_of_samples
+            %     elements.
+            % * __neiResp__ Optional output values for corresponding neighbors.
+            %     It is a single-precision floating-point matrix of #samples x
+            %     K.
+            % * __dists__ Optional output distances from the input vectors to
+            %     the corresponding neighbors. It is a single-precision
+            %     floating-point matrix of #samples x K.
+            %
+            % ## Options
+            % * __K__ Number of used nearest neighbors. It must be smaller than
+            %     or equal to the MaxK specified in the training.
             %
             % For each input vector (a row of the matrix samples), the method
             % finds the k nearest neighbors. In case of regression, the

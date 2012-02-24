@@ -1,7 +1,7 @@
 %SOLVEPNPRANSAC  Finds an object pose from 3D-2D point correspondences using the RANSAC scheme
 %
 %    [...] = cv.solvePnPRansac(objectPoints, imagePoints, cameraMatrix)
-%    [...] = cv.solvePnPRanssc(objectPoints, imagePoints, cameraMatrix, distCoeffs)
+%    [...] = cv.solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs)
 %    [...] = cv.solvePnPRansac(..., distCoeffs, 'OptionName', optionValue, ...)
 %    [rvec, tvec, inliers] = cv.solvePnPRansac(...)
 %
