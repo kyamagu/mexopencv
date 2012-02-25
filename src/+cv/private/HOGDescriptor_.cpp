@@ -8,6 +8,7 @@
 using namespace std;
 using namespace cv;
 
+#if CV_MINOR_VERSION >= 2
 namespace {
 /// Last object id to allocate
 int last_id = 0;
@@ -31,6 +32,7 @@ inline void nargchk(bool cond)
 }
 
 }
+#endif
 
 /**
  * Main entry called from Matlab
