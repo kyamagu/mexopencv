@@ -155,7 +155,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	plhs[0] = MxArray(m.reshape(0,m.total()/obj.getDescriptorSize()));
     }
     else if (method == "detect") {
-		nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
+		nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=2);
     	
     	Mat img(rhs[2].isUint8() ? rhs[2].toMat() : rhs[2].toMat(CV_32F));
 		double hitThreshold=0;
@@ -186,7 +186,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     		plhs[1] = MxArray(Mat(weights));
     }
     else if (method == "detectMultiScale") {
-		nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
+		nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=2);
     	
     	Mat img(rhs[2].isUint8() ? rhs[2].toMat() : rhs[2].toMat(CV_32F));
 		double hitThreshold=0;
@@ -223,7 +223,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     		plhs[1] = MxArray(Mat(weights));
     }
     else if (method == "computeGradient") {
-		nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
+		nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=2);
     	
     	Mat img(rhs[2].isUint8() ? rhs[2].toMat() : rhs[2].toMat(CV_32F));
 		Size paddingTL;

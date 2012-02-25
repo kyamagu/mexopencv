@@ -3,17 +3,24 @@ classdef HOGDescriptor < handle
     %
     % The descriptor of [Dalal2005].
     % 
-    % The usage example is shown in the following:
+    % The basic usage is the following:
     %
     %    hog = cv.HOGDescriptor();
     %    descriptors = hog.compute(im);
+    %
+    % If you need to compute descriptors for a set of certain keypoints, use
+    % 'Locations' option:
+    %
+    %    keypoints = cv.FAST(im);
+    %    descriptors = hog.compute(im, 'Locations', {keypoints.pt});
     %
     % The built-in people detector is accessible through:
     %
     %    hog.setSVMDetector('Default');
     %    boxes = hog.detectMultiScale(im);
     %
-    % See also cv.HOGDescriptor.HOGDescriptor
+    % See also cv.HOGDescriptor.HOGDescriptor cv.HOGDescriptor.compute
+    % cv.HOGDescriptor.detect cv.HOGDescriptor.detectMultiScale
     %
     
     properties (SetAccess = private)
@@ -37,7 +44,7 @@ classdef HOGDescriptor < handle
     
     methods
         function this = HOGDescriptor(varargin)
-            %CASCADECLASSIFIER Create or load a new HOG descriptor
+            %HOGDESCRIPTOR Create or load a new HOG descriptor
             %
             %    hog = cv.HOGDescriptor()
             %    hog = cv.HOGDescriptor(filename)
@@ -57,7 +64,7 @@ classdef HOGDescriptor < handle
         end
         
         function s = getDescriptorSize(this)
-            %GETDESCRIPTORSIZE
+            %GETDESCRIPTORSIZE Get length of the descriptor
             %
             %    s = hog.getDescriptorSize()
             %
@@ -69,7 +76,7 @@ classdef HOGDescriptor < handle
         end
         
         function s = checkDetectorSize(this)
-            %CHECKDETECTORSIZE
+            %CHECKDETECTORSIZE Get size of the detector
             %
             %    s = hog.checkDetectorSize()
             %
@@ -81,7 +88,7 @@ classdef HOGDescriptor < handle
         end
         
         function s = getWinSigma(this)
-            %GETWINSIGMA
+            %GETWINSIGMA Get window sigma
             %
             %    s = hog.getWinSigma()
             %
@@ -120,7 +127,7 @@ classdef HOGDescriptor < handle
         function save(this, filename)
             %SAVE  Saves a HOG descriptor config to a file
             %
-            %    hog.save(filename)
+            %     hog.save(filename)
             %
             % See also cv.HOGDescriptor
             %
@@ -150,7 +157,7 @@ classdef HOGDescriptor < handle
             descs = HOGDescriptor_(this.id, 'compute', im, varargin{:});
         end
         
-        function pts = detect(this, im, varargin)
+        function [pts, weights] = detect(this, im, varargin)
             %DETECT Detects objects using HOG descriptors
             %
             %    pts = hog.detect(im, 'Option', optionValue, ...)
@@ -176,10 +183,10 @@ classdef HOGDescriptor < handle
             %
             % See also cv.HOGDescriptor
             %
-            pts = HOGDescriptor_(this.id, 'detect', im, varargin{:});
+            [pts, weights] = HOGDescriptor_(this.id, 'detect', im, varargin{:});
         end
         
-        function boxes = detectMultiScale(this, im, varargin)
+        function [rcts, weights] = detectMultiScale(this, im, varargin)
             %DETECT Detects objects using HOG descriptors
             %
             %    rcts = hog.detect(im, 'Option', optionValue, ...)
@@ -207,7 +214,7 @@ classdef HOGDescriptor < handle
             %
             % See also cv.HOGDescriptor
             %
-            boxes = HOGDescriptor_(this.id, 'detectMultiScale', im, varargin{:});
+            [rcts, weights] = HOGDescriptor_(this.id, 'detectMultiScale', im, varargin{:});
         end
         
         function val = get.WinSize(this)

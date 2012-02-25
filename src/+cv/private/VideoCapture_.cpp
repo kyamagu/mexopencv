@@ -109,7 +109,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     		plhs[0] = MxArray(frame);
     	}
     	else
-    		plhs[0] = MxArray(Mat(1,1,CV_8UC1,Scalar(0)));
+    		plhs[0] = MxArray(mxCreateNumericMatrix(0,0,mxUINT8_CLASS,mxREAL));
     }
     else if (method == "read") {
     	if (nrhs!=2)
@@ -126,7 +126,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     		plhs[0] = MxArray(frame);
     	}
     	else
-    		plhs[0] = MxArray(Mat(1,1,CV_8UC1,Scalar(0)));
+    		plhs[0] = MxArray(mxCreateNumericMatrix(0,0,mxUINT8_CLASS,mxREAL));
     }
     else if (method == "get") {
     	if (nrhs!=3)
