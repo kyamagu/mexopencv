@@ -56,6 +56,9 @@ classdef MDoc < handle
         function txt = process(this, func)
             %PROCESS  process an entity
             txt = help2html(['cv.',func]);
+            txt = strrep(txt,'&amp;','&');
+            txt = strrep(txt,'&lt;','<');
+            txt = strrep(txt,'&gt;','>');
             filename = fullfile(MDoc.DIR,[func,'.html']);
             fprintf('%s\n',filename);
             
