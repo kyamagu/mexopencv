@@ -1,7 +1,7 @@
 %CIRCLE  Draws a circle
 %
-%    img = cv.cicle(img, center, radius)
-%    [...] = cv.cicle(..., 'OptionName', optionValue, ...)
+%    img = cv.circle(img, center, radius)
+%    [...] = cv.circle(..., 'OptionName', optionValue, ...)
 %
 % ## Input
 % * __img__ Image where the circle is drawn.
