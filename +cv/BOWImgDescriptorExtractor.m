@@ -14,7 +14,7 @@ classdef BOWImgDescriptorExtractor < handle
     % 
     % The basic usage is the following:
     %
-    %    trainer = cv.BOWImgDescriptorExtractor();
+    %    trainer = cv.BOWKMeansTrainer();
     %    dictionary = trainer.cluster(train_descs);
     %    extractor = cv.BOWImgDescriptorExtractor('SIFT','BruteForce');
     %    extractor.setVocabulary(dictionary);
