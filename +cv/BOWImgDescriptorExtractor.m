@@ -31,7 +31,7 @@ classdef BOWImgDescriptorExtractor < handle
     
     methods
         function this = BOWImgDescriptorExtractor(varargin)
-            %BOWKMEANSTRAINER Create or load a new HOG descriptor
+            %BOWIMGDESCRIPTOREXTRACTOR Create a new BOWImgDescriptorExtractor
             %
             %    extractor = cv.BOWImgDescriptorExtractor(dextractor)
             %    extractor = cv.BOWImgDescriptorExtractor(dextractor,dmatcher)
