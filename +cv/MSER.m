@@ -24,3 +24,5 @@
 % * __Mask__ Optional input mask that marks the regions where we should detect
 %        features
 %
+% See also cv.FeatureDetector cv.DescriptorExtractor
+%

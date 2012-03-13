@@ -21,7 +21,7 @@ classdef BOWImgDescriptorExtractor < handle
     %    descs = extractor.compute(im,keypoints);
     %
     % See also cv.BOWImgDescriptorExtractor.BOWImgDescriptorExtractor
-    % cv.BOWImgDescriptorExtractor.cluster cv.BOWKMeansTrainer
+    % cv.BOWKMeansTrainer
     %
     
     properties (SetAccess = private)

@@ -32,3 +32,5 @@
 % Extracts keypoints and computing descriptors using the Scale Invariant
 % Feature Transform (SIFT) approach.
 %
+% See also cv.FeatureDetector cv.DescriptorExtractor
+%

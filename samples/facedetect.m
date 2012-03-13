@@ -32,7 +32,7 @@ while true
 	% Draw results
     imshow(im);
     for i = 1:numel(boxes)
-        rectangle('Position',boxes{i},'EdgeColor','g');
+        rectangle('Position',boxes{i},'EdgeColor','g','LineWidth',2);
     end
     
     % Terminate if any user input

@@ -22,3 +22,5 @@
 %       to eliminate edges. The larger the 2nd threshold, the more points
 %       you get.
 %
+% See also cv.FeatureDetector
+%

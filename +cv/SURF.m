@@ -37,3 +37,5 @@
 %
 % Extracts Speeded Up Robust Features (SURF) from an image [Bay06].
 %
+% See also cv.FeatureDetector cv.DescriptorExtractor
+%

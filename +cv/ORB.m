@@ -24,3 +24,5 @@
 %
 % Extracts ORB features and descriptors from an image.
 %
+% See also cv.FeatureDetector cv.DescriptorExtractor
+%

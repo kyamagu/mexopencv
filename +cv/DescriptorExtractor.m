@@ -3,11 +3,28 @@ classdef DescriptorExtractor < handle
 	%
 	% Descriptor extractor class. Here is how to use:
 	%
+	%    detector = cv.FeatureDetector('SURF');
+	%    keypoints = detector.detect(im);
 	%    extractor = cv.DescriptorExtractor('SURF');
 	%    descriptors = extractor.compute(im, keypoints);
+	%
+	% The following extractor types are supported:
+	%
+	%     'SIFT'     SiftDescriptorExtractor
+	%     'SURF'     SurfDescriptorExtractor
+	%     'ORB'      OrbDescriptorExtractor
+	%     'BRIEF'    BriefDescriptorExtractor
+	%
+	% Also a combined format with the following adaptor is
+	% supported
+	%
+	%     'Opponent' OpponentColorDescriptorExtractor
+	%
+	% for example: 'OpponentSIFT'.
     %
     % See also cv.DescriptorExtractor.DescriptorExtractor
-    % cv.DescriptorExtractor.compute
+    % cv.DescriptorExtractor.compute cv.FeatureDetector
+    % cv.BOWImgDescriptorExtractor
     %
     
     properties (SetAccess = private)

@@ -9,8 +9,18 @@ classdef DescriptorMatcher < handle
     %    matcher.add(X);
     %    matcher.train(); % Optional for BruteForce matcher
 	%    matches = matcher.match(Y);
+	%
+	% The following matcher types are supported:
+	%
+	%     'BruteForce'             L2 distance
+	%     'BruteForce-L1'          L1 distance
+	%     'BruteForce-Hamming'     Hamming distance
+	%     'BruteForce-HammingLUT'  Hamming distance lookup table
+	%     'FlannBased'             Flann-based indexing
+	%
+	% See the constructor help for a detail of how to specify types.
     %
-    % See also cv.DescriptorMatcher.DescriptorMatcher
+    % See also cv.DescriptorMatcher.DescriptorMatcher cv.DescriptorExtractor
     %
     
     properties (SetAccess = private)
@@ -46,21 +56,19 @@ classdef DescriptorMatcher < handle
             %
             % The FlannBased matcher takes optional arguments
             %
-            % * __Index__ Type of indexer. One of the following:
-            %         'Linear'     Brute-force matching
-            %         'KDTree'     Randomized kd-trees
-            %         'KMeans'     Hierarchical k-means tree
-            %         'Composite'  Combination of KDTree and KMeans
-            %         'Autotuned'  Automatic tuning to one of the above
-            %         'Saved'      Load saved index from a file
-            %        Each index type takes optional arguments. You can
-            %        specify the indexer by a cell array that starts
-            %        from the type name followed by option arguments:
-            %        
-            %            {'Type', 'OptionName', optionValue,...}
-            %
+            % * __Index__ Type of indexer. One of the below. 
+            %     Each index type takes optional arguments. You can
+            %     specify the indexer by a cell array that starts
+            %     from the type name followed by option arguments:
+            %     `{'Type', 'OptionName', optionValue,...}`
+            %     * 'Linear'     Brute-force matching
+            %     * 'KDTree'     Randomized kd-trees
+            %     * 'KMeans'     Hierarchical k-means tree
+            %     * 'Composite'  Combination of KDTree and KMeans
+            %     * 'Autotuned'  Automatic tuning to one of the above
+            %     * 'Saved'      Load saved index from a file
             % * __Search__ Option in matching operation. Takes a cell
-            %         array of option pairs.
+            %     array of option pairs.
             %
             % For example, KDTree with tree size=4 is specified by:
             %

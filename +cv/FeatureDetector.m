@@ -5,15 +5,39 @@ classdef FeatureDetector < handle
 	%
 	%    detector = cv.FeatureDetector('SURF');
 	%    keypoints = detector.detect(im);
+	%
+	% The following detector types are supported:
+	%
+	%     'FAST'       FastFeatureDetector
+	%     'STAR'       StarFeatureDetector
+	%     'SIFT'       SiftFeatureDetector
+	%     'SURF'       SurfFeatureDetector
+	%     'ORB'        OrbFeatureDetector
+	%     'MSER'       MserFeatureDetector
+	%     'GFTT'       GoodFeaturesToTrackDetector
+	%     'HARRIS'     GoodFeaturesToTrackDetector with Harris detector enabled
+	%     'Dense'      DenseFeatureDetector
+	%     'SimpleBlob' SimpleBlobDetector
+	%
+	% Also a combined format with one of the following adaptor is
+	% supported
+	%
+	%     'Grid'       GridAdaptedFeatureDetector
+	%     'Pyramid'    PyramidAdaptedFeatureDetector
+	%
+	% for example: 'GridFAST', 'PyramidSTAR'.
     %
     % See also cv.FeatureDetector.FeatureDetector cv.FeatureDetector.write
+    % cv.DescriptorExtractor
     %
     
     properties (SetAccess = private)
+        % Object ID
     	id
     end
     
     properties (SetAccess = private, Dependent)
+        % Type of the detector
     	type
     end
     
