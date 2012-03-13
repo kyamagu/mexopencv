@@ -96,12 +96,15 @@ classdef DescriptorMatcher < handle
             %        default 11
             % * __CentersInit__ The algorithm to use for selecting the
             %        initial centers when performing a k-means clustering
-            %        step. The possible values are 'Random' (picks
-            %        the initial cluster centers randomly),
-            %        'Gonzales' (picks the initial centers using
-            %        Gonzales? algorithm) and 'KMeansPP' (picks the
-            %        initial centers using the algorithm suggested in
-            %        arthur kmeanspp 2007 ) default 'Random'
+            %        step. The possible values are:
+            %        `'Random'`    picks the initial cluster centers
+            %                      randomly
+            %        `'Gonzales'`  picks the initial centers using Gonzales
+            %                      algorithm
+            %        `'KMeansPP'`  picks the initial centers using the
+            %                      algorithm suggested in arthur kmeanspp
+            %                      2007
+            %        default `'Random'`
             % * __CBIndex__ This parameter (cluster boundary index)
             %        influences the way exploration is performed in the
             %        hierarchical kmeans tree. When CBIndex is zero the

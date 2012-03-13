@@ -145,6 +145,7 @@ classdef LatentSvmDetector < handle
             %     * __rect__ rectangle [x,y,w,h] of the object
             %     * __score__ score of the detection
             %     * __class__ name of the object class
+            %
             % ## Options
             % * __OverlapThreshold__ Parameter to specify the threshold.
             %     default 0
@@ -249,7 +250,7 @@ classdef LatentSvmDetector < handle
                 fprintf(f, '\t\t\t<NumPartFilters>%d</NumPartFilters>\n', numparts{c});
 
                 for j=1:numparts{c}
-                    fprintf(f, '\t\t\t<!-- Part filter ¹%d description -->\n', j);
+                    fprintf(f, '\t\t\t<!-- Part filter ï¿½%d description -->\n', j);
                     fprintf(f, '\t\t\t<PartFilter>\n');
                     partfilter = part{c,j};
                     anchor = model.defs{didx{c,j}}.anchor;

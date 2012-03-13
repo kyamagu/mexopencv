@@ -19,3 +19,5 @@
 % Detects corners using the FAST algorithm by E. Rosten (Machine Learning
 % for High-speed Corner Detection, 2006).
 %
+% See also cv.FeatureDetector cv.DescriptorExtractor
+%

@@ -48,5 +48,5 @@
 %
 % The function can be used to initialize a point-based tracker of an object.
 %
-% See also cv.cornerMinEigenVal cv.cornerHarris
+% See also cv.cornerMinEigenVal cv.cornerHarris cv.FeatureDetector
 %
