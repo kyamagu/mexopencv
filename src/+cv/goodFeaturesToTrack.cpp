@@ -35,7 +35,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		string key = rhs[i].toString();
 		if (key=="MaxCorners")
 			maxCorners = rhs[i+1].toInt();
-		else if (key=="QuarlityLevel")
+		else if (key=="QualityLevel")
 			qualityLevel = rhs[i+1].toDouble();
 		else if (key=="MinDistance")
 			minDistance = rhs[i+1].toDouble();
