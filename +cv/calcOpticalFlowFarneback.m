@@ -3,14 +3,12 @@
 %    flow = cv.calcOpticalFlowFarneback(prevImg, nextImg)
 %
 % ## Input
-% * __prevImg__ First 8-bit single-channel or 3-channel input image.
+% * __prevImg__ First 8-bit single-channel input image.
 % * __nextImg__ Second input image of the same size and the same type as prevImg.
-% * __prevPts__ Vector of 2D points for which the flow needs to be found. Cell
-%         array of 2-element vectors is accepted.
 %
 % ## Output
 % * __flow__ Computed flow image that has the same size as prevImg and single
-%         type.
+%         type. flow for (x,y) is stored in the third dimension.
 %
 % ## Options
 % * __InitialFlow__ Initial flow approximation.
