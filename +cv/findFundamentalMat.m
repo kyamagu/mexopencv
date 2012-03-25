@@ -48,5 +48,11 @@
 % to the specified points. It can also be passed to
 % cv.stereoRectifyUncalibrated to compute the rectification transformation.
 %
+% ## Usage
+% 
+%    points1 = {[1,1],[3,1],[5,1],...}
+%    points2 = {[2,3],[4,3],[6,3],...}
+%    [F, mask] = cv.findFundamentalMat(points1, points2);
+%
 % See also cv.computeCorrespondEpilines cv.stereoRectifyUncalibrated
 %

@@ -15,55 +15,53 @@
 %
 % ## Output
 % * __S__ struct having the following fields:
-% * __cameraMatrix1__ Input/output first camera matrix A = [fx, 0, cx; 0, 
+%     * __cameraMatrix1__ Input/output first camera matrix A = [fx, 0, cx; 0, 
 %            fy, cy; 0, 0, 1]. If any of 'UseIntrinsicGuess' ,
 %            'FixAspectRatio' , 'FixIntrinsic' (default) , or
 %            'FixFocalLength' are specified, some or all of the matrix
 %            components must be initialized.
-% * __distCoeffs1__ vector of distortion coefficients [k1,k2,p1,p2,k3,k4,
+%     * __distCoeffs1__ vector of distortion coefficients [k1,k2,p1,p2,k3,k4,
 %            k5,k6] of 4, 5, or 8 elements. The output vector length
 %            depends on the options.
-% * __cameraMatrix2__ second camera matrix. The parameter is similar to
+%     * __cameraMatrix2__ second camera matrix. The parameter is similar to
 %            cameraMatrix1
-% * __distCoeffs2__ lens distortion coefficients for the second camera.
+%     * __distCoeffs2__ lens distortion coefficients for the second camera.
 %            The parameter is similar to distCoeffs1.
-% * __R__ rotation matrix between the 1st and the 2nd camera coordinate
+%     * __R__ rotation matrix between the 1st and the 2nd camera coordinate
 %            systems.
-% * __T__ translation vector between the coordinate systems of the
+%     * __T__ translation vector between the coordinate systems of the
 %            cameras.
-% * __E__ essential matrix.
-% * __F__ fundamental matrix.
-% * __d__ Output final re-projection error.
+%     * __E__ essential matrix.
+%     * __F__ fundamental matrix.
+%     * __d__ Output final re-projection error.
 %
 % ## Options
-%    'CameraMatrix1', 'CameraMatrix2: Initial camera matrices.
-%    'DistCoeffs1', 'DistCoeffs2: Initial lens distortion coefficients.
+% * __CameraMatrix1__, __CameraMatrix2__: Initial camera matrices.
+% * __DistCoeffs1__, __DistCoeffs2__: Initial lens distortion coefficients.
 % * __TermCrit__ Termination criteria for the iterative optimization
-%        algorithm. struct with 'type', 'maxCount', 'epsilon' fields.
+%     algorithm. struct with 'type', 'maxCount', 'epsilon' fields.
 % * __FixIntrinsic__ Fix cameraMatrixN and distCoeffsN so that only R, T,
-%        E , and F matrices are estimated. default true.
+%     E , and F matrices are estimated. default true.
 % * __UseIntrinsicGuess__ Optimize some or all of the intrinsic parameters
-%        according to the specified flags. Initial values are provided by
-%        the user. default false.
+%     according to the specified flags. Initial values are provided by
+%     the user. default false.
 % * __FixPrincipalPoint__ Fix the principal points during the optimization.
-%        default false.
+%     default false.
 % * __FixFocalLength__ Fix fx and fy. default false
 % * __FixAspectRatio__ Optimize fy and fix the ratio fx/fy. default false.
 % * __SameFocalLength__ Enforce same fx and fy for two cameras. default
-%        false.
+%     false.
 % * __ZeroTangentDist__ Set tangential distortion coefficients for each
-%        camera to zeros and fix there. default false.
-%    'FixK1', 'FixK2', ..., 'FixK6': Do not change the corresponding radial
-%        distortion coefficient during the optimization. If
-%        'UseIntrinsicGuess' is set, the coefficient from the supplied
-%        distCoeffs matrix is used. Otherwise, it is set to 0. default
-%        false.
+%     camera to zeros and fix there. default false.
+% * __FixK1__, __FixK2__, ..., __FixK6__: Do not change the corresponding
+%     radial distortion coefficient during the optimization. If
+%     `UseIntrinsicGuess` is set, the coefficient from the supplied
+%     distCoeffs matrix is used. Otherwise, it is set to 0. default false.
 % * __RationalModel__ Enable coefficients k4, k5, and k6. To provide the
-%        backward compatibility, this extra flag should be explicitly
-%        specified to make the calibration function use the rational model
-%        and return 8 coefficients. If the flag is not set, the function
-%        computes and returns only 5 distortion coefficients. default
-%        false.
+%     backward compatibility, this extra flag should be explicitly
+%     specified to make the calibration function use the rational model
+%     and return 8 coefficients. If the flag is not set, the function
+%     computes and returns only 5 distortion coefficients. default false.
 %
 % The function estimates transformation between two cameras making a stereo
 % pair. If you have a stereo camera where the relative position and

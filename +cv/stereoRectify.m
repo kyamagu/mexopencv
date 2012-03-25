@@ -15,16 +15,16 @@
 %
 % ## Output
 % * __S__ struct having the following fields:
-% * __R1__ 3x3 rectification transform (rotation matrix) for the first camera.
-% * __R2__ 3x3 rectification transform (rotation matrix) for the second camera.
-% * __P1__ 3x4 projection matrix in the new (rectified) coordinate
-%            systems for the first camera.
-% * __P2__ 3x4 projection matrix in the new (rectified) coordinate
-%            systems for the second camera.
-% * __Q__ 4x4 disparity-to-depth mapping matrix (see cv.reprojectImageTo3D).
-%        roi1, roi2: rectangles inside the rectified images where all the
-%           pixels are valid. If alpha=0 , the ROIs cover the whole images.
-%           Otherwise, they are likely to be smaller.
+%     * __R1__ 3x3 rectification transform (rotation matrix) for the first camera.
+%     * __R2__ 3x3 rectification transform (rotation matrix) for the second camera.
+%     * __P1__ 3x4 projection matrix in the new (rectified) coordinate
+%         systems for the first camera.
+%     * __P2__ 3x4 projection matrix in the new (rectified) coordinate
+%         systems for the second camera.
+%     * __Q__ 4x4 disparity-to-depth mapping matrix (see cv.reprojectImageTo3D).
+%         roi1, roi2: rectangles inside the rectified images where all the
+%         pixels are valid. If alpha=0 , the ROIs cover the whole images.
+%         Otherwise, they are likely to be smaller.
 %
 % ## Options
 % * __Alpha__ Free scaling parameter. If it is -1 or absent, the function

@@ -14,17 +14,15 @@ const char* _fieldnames[] = {"R1", "R2", "P1", "P2", "Q", "roi1", "roi2"};
 mxArray* valueStruct(const Mat& R1, const Mat& R2, const Mat& P1, const Mat& P2,
 	const Mat& Q, const Rect& roi1, const Rect& roi2)
 {
-	mxArray* p = mxCreateStructMatrix(1,1,9,_fieldnames);
-	if (!p)
-		mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
-	mxSetField(p,0,"R1",MxArray(R1));
-	mxSetField(p,0,"R2",MxArray(R2));
-	mxSetField(p,0,"P1",MxArray(P1));
-	mxSetField(p,0,"P2",MxArray(P2));
-	mxSetField(p,0,"Q",MxArray(Q));
-	mxSetField(p,0,"roi1",MxArray(roi1));
-	mxSetField(p,0,"roi2",MxArray(roi2));
-	return p;
+	MxArray s = MxArray::Struct(_fieldnames,7);
+	s.set("R1",R1);
+	s.set("R2",R2);
+	s.set("P1",P1);
+	s.set("P2",P2);
+	s.set("Q",Q);
+	s.set("roi1",roi1);
+	s.set("roi2",roi2);
+	return s;
 }
 
 /**
@@ -44,10 +42,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	// Argument vector
 	vector<MxArray> rhs(prhs,prhs+nrhs);
 	
-	Mat cameraMatrix1(rhs[0].toMat(CV_32F)), distCoeffs1(rhs[2].toMat(CV_32F));
-	Mat cameraMatrix2(rhs[1].toMat(CV_32F)), distCoeffs2(rhs[3].toMat(CV_32F));
+	Mat cameraMatrix1(rhs[0].toMat()), distCoeffs1(rhs[2].toMat());
+	Mat cameraMatrix2(rhs[1].toMat()), distCoeffs2(rhs[3].toMat());
 	Size imageSize(rhs[4].toSize());
-	Mat R(rhs[5].toMat(CV_32F)), T(rhs[6].toMat(CV_32F));
+	Mat R(rhs[5].toMat()), T(rhs[6].toMat());
 	double alpha=-1;
 	Size newImageSize(0,0);
 	bool zeroDisparity=false;

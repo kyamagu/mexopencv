@@ -11,8 +11,8 @@ using namespace cv;
 /** Type specification
  */
 const ConstMap<std::string,int> M1Type = ConstMap<std::string,int>
-	("uint16",CV_16U)
-	("single",CV_32F);
+	("int16",  CV_16SC2)
+	("single", CV_32F);
 
 /**
  * Main entry called from Matlab
@@ -45,6 +45,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		else
 			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 	}
+	if (m1type != CV_16SC2)
+		m1type = (m1type==CV_32F && nlhs>1) ? CV_32FC2 : CV_32FC1;
 	
 	// Process
 	Mat map1, map2;
