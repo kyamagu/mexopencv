@@ -35,5 +35,12 @@
 % The function implements a sparse iterative version of the Lucas-Kanade optical
 % flow in pyramids. See [Bouguet00].
 %
-% See also cv.calcOpticalFlowFarneback
+% ## Example
+%
+%    prevIm = rgb2gray(imread('prev.jpg'));
+%    nextIm = rgb2gray(imread('next.jpg'));
+%    prevPts = cv.goodFeaturesToTrack(prevIm);
+%    nextPts = cv.calcOpticalFlowPyrLK(prevIm, nextIm, prevPts);
+%
+% See also cv.goodFeaturesToTrack cv.calcOpticalFlowFarneback
 %
