@@ -8,8 +8,7 @@
 using namespace std;
 using namespace cv;
 
-#if CV_MINOR_VERSION >= 2
-#if !(CV_MINOR_VERSION >= 3 && CV_SUBMINOR_VERSION >= 2)
+#if (CV_MINOR_VERSION >= 2 && (CV_MINOR_VERSION <= 3 && CV_SUBMINOR_VERSION <= 1))
 namespace cv {
 // The following code taken from OpenCV 2.3.2 for pre-2.3.2 releases
 /*
@@ -53,6 +52,7 @@ private:
 } // namespace cv
 #endif
 
+#if CV_MINOR_VERSION >= 2
 namespace {
 /// Last object id to allocate
 int last_id = 0;
@@ -163,7 +163,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 #endif
 }
 
-#if CV_MINOR_VERSION >= 2 && !(CV_MINOR_VERSION >= 3 && CV_SUBMINOR_VERSION >= 2)
+#if (CV_MINOR_VERSION >= 2 && (CV_MINOR_VERSION <= 3 && CV_SUBMINOR_VERSION <= 1))
 // The following code taken from OpenCV 2.3.2
 namespace cv
 {

@@ -5,6 +5,9 @@
  * @date 2011
  */
 #include "mexopencv.hpp"
+#if CV_MINOR_VERSION >= 4
+#include "opencv2/nonfree/nonfree.hpp"
+#endif
 using namespace std;
 using namespace cv;
 

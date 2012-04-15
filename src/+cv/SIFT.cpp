@@ -5,6 +5,10 @@
  * @date 2011
  */
 #include "mexopencv.hpp"
+#if CV_MINOR_VERSION >= 4
+#include "opencv2/nonfree/nonfree.hpp"
+#endif
+
 using namespace std;
 using namespace cv;
 
@@ -32,6 +36,34 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	}
 	
 	// Option processing
+	Mat mask;
+#if CV_MINOR_VERSION >= 4
+	int _nfeatures=0;
+	int _nOctaveLayers=3;
+    double _contrastThreshold=0.04;
+    double _edgeThreshold=10;
+	double _sigma=1.6;
+	for (int i=1; i<nrhs; i+=2) {
+		string key = rhs[i].toString();
+		if (key=="NFeatures")
+			_nfeatures = rhs[i+1].toInt();
+		else if (key=="NOctaveLayers")
+			_nOctaveLayers = rhs[i+1].toInt();
+		else if (key=="ConstrastThreshold")
+			_contrastThreshold = rhs[i+1].toDouble();
+		else if (key=="EdgeThreshold")
+			_edgeThreshold = rhs[i+1].toDouble();
+		else if (key=="Sigma")
+			_sigma = rhs[i+1].toDouble();
+		else if (key=="Mask")
+			mask = rhs[i+1].toMat(CV_8U);
+		else
+			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+	}
+	// Process
+	SIFT sift(_nfeatures,_nOctaveLayers,_contrastThreshold,_edgeThreshold,
+		_sigma);
+#else
 	int _nOctaves = SIFT::CommonParams::DEFAULT_NOCTAVES;
 	int _nOctaveLayers = SIFT::CommonParams::DEFAULT_NOCTAVE_LAYERS;
 	int _firstOctave = SIFT::CommonParams::DEFAULT_FIRST_OCTAVE;
@@ -41,7 +73,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	double _magnification = SIFT::DescriptorParams::GET_DEFAULT_MAGNIFICATION();
 	bool _isNormalize = SIFT::DescriptorParams::DEFAULT_IS_NORMALIZE;
 	bool _recalculateAngles = true;
-	Mat mask;
 	for (int i=1; i<nrhs; i+=2) {
 		string key = rhs[i].toString();
 		if (key=="NOctaves")
@@ -74,6 +105,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		SIFT::DetectorParams(_threshold,_edgeThreshold),
 		SIFT::DescriptorParams(_magnification,_isNormalize,_recalculateAngles)
 	);
+#endif
+
 	Mat image(rhs[0].toMat());
 	vector<KeyPoint> keypoints;
 	bool useProvidedKeypoints=false;
