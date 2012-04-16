@@ -65,7 +65,7 @@ function s = pkg_config(opencv_path)
         'UniformOutput', false);
     l_options = [l_options{:}];
     
-    s = sprintf('-I%s -L%s %s',I_path,L_path,l_options);
+    s = sprintf('-I"%s" -L"%s" %s',I_path,L_path,l_options);
 end
 
 function s = arch_str
