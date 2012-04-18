@@ -39,7 +39,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	vector<MxArray> rhs(prhs,prhs+nrhs);
 	int id = rhs[0].toInt();
 	string method(rhs[1].toString());
-	
+
 	// Constructor call
 	if (method == "new") {
 		nargchk(nrhs>=3 && nrhs<=4 && nlhs<=1);
@@ -52,7 +52,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 		plhs[0] = MxArray(last_id);
 		return;
 	}
-	
+
 	// Big operation switch
 	BOWImgDescriptorExtractor& obj = obj_.find(id)->second;
 	if (method == "delete") {
@@ -84,8 +84,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
     	Mat descriptors;
     	obj.compute(image,keypoints,imgDescriptor,&pointIdxsOfClusters,&descriptors);
     	plhs[0] = MxArray(imgDescriptor);
-    	if (nrhs>1)
-    		plhs[1] = MxArray(vector<Mat>(pointIdxsOfClusters.begin(),pointIdxsOfClusters.end()));
+    	if (nrhs>1) {
+    	    vector<Mat> vm;
+    	    vm.reserve(pointIdxsOfClusters.size());
+    	    for (vector<vector<int> >::iterator it=pointIdxsOfClusters.begin();it<pointIdxsOfClusters.end();++it)
+    	        vm.push_back(Mat(*it));
+    		plhs[1] = MxArray(vm);
+    	}
     	if (nrhs>2)
     		plhs[2] = MxArray(descriptors);
     }
