@@ -23,13 +23,20 @@ if ispc % Windows
 	mex_flags = ['-largeArrayDims -Iinclude ',pkg_config(opencv_path)];
 	
 	% Compile MxArray
-	cmd = sprintf('mex -c %s src\\MxArray.cpp -outdir lib',mex_flags);
-	disp(cmd);
-	eval(cmd);
-	if ~exist('lib\MxArray.obj','file')
-		error('cv:make','lib\MxArray.obj not found');
-	end
-	
+    force = false;
+    src = 'src\\MxArray.cpp'
+    dst = 'lib\\MxArray.obj'
+    if compile_needed(src, dst)
+        cmd = sprintf('mex -c %s %s -outdir lib',mex_flags, src);
+        disp(cmd);
+        eval(cmd);
+        force = true;
+    end
+    
+    if ~exist(dst,'file')
+        error('cv:make','lib\MxArray.obj not found');
+    end
+    
 	% Compile other files
 	srcs = dir('src\+cv\*.cpp');
 	srcs = cellfun(@(x) regexprep(x,'(.*)\.cpp','$1'), {srcs.name},...
@@ -39,10 +46,17 @@ if ispc % Windows
 		'UniformOutput', false);
     srcs = [srcs,psrcs];
 	for i = 1:numel(srcs)
-		cmd = sprintf('mex %s src\\+cv\\%s.cpp lib\\MxArray.obj -output +cv\\%s',...
-			mex_flags,srcs{i},srcs{i});
-		disp(cmd);
-		eval(cmd);
+        src = sprintf('src\\+cv\\%s.cpp', srcs{i});
+        dst = sprintf('+cv\\%s', srcs{i});
+        fulldst = [dst '.' mexext];
+        if compile_needed(src, fulldst) || force
+            cmd = sprintf('mex %s %s lib\\MxArray.obj -output %s',...
+                mex_flags,src, dst);
+            disp(cmd);
+            eval(cmd);
+        else
+            disp(sprintf('Skipped %s', src));
+        end
 	end
 else % Unix
 	system('make');
@@ -100,4 +114,14 @@ function l = lib_names(L_path)
     d = dir([L_path,'\opencv_*d.lib']);
     l = cellfun(@(x) regexprep(x,'(opencv_.+)d.lib','$1'),{d.name},...
         'UniformOutput',false);
+end
+
+function r = compile_needed(src, dst)
+if ~exist(dst, 'file')
+    r = true;
+else
+    d1 = dir(src);
+    d2 = dir(dst);
+    r = datenum(d1.date) >= datenum(d2.date);
+end
 end
