@@ -165,6 +165,13 @@ files for matlab. The following command creates a user documentation under
 
 Online documentation is available at http://www.cs.stonybrook.edu/~kyamagu/mexopencv
 
+You can test the functionality of the compiled files by `UnitTest` class
+located inside `test` directory.
+
+    addpath('test');
+    UnitTest;
+
+
 Developing a new mex function
 =============================
 
