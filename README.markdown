@@ -44,7 +44,7 @@ Unix
 ----
 
 First make sure you have OpenCV installed in the system. If not, install the
-package available in your package manager (e.g., libcv-dev in Debian/Ubuntu,
+package available in your package manager (e.g., libopencv-dev in Debian/Ubuntu,
 opencv-devel in Fedora, opencv in Macports), or install the source package from
 http://opencv.willowgarage.com/wiki/ . If you have all the prerequisite, going
 to the mexopencv directory and typing:
@@ -54,7 +54,7 @@ to the mexopencv directory and typing:
 will build all mex functions located inside `+cv/`.
 Specify your matlab directory if you install matlab other than /usr/local/matlab
 
-    $ make MATLABDIR=/path/to/matlab
+    $ make MATLABDIR=/Applications/MATLAB_R2012a.app
 
 Optionally you can test the library functionality
 
@@ -95,14 +95,14 @@ http://msinttypes.googlecode.com/svn/trunk/stdint.h
 
 Place this file under `include` directory in the mexopencv package.
 
-### When you see segfault
+### When you see segmentation fault
 
 The OpenCV windows package contains binary files compiled with `SECURE_SCL`
 flag, but mex command in Matlab does not use this option by default, which
 results in segmentation fault on execution. To fix the issue, remove
 `SECURE_SCL=0` flag from the default mex configuration. The default mex
 configuration is created with `mex -setup` command in matlab, and located in
-the following path.
+the following path in recent versions of Windows.
 
     C:\Users\(Username)\AppData\Roaming\MathWorks\MATLAB\(version)\mexopts.bat
 
@@ -132,7 +132,8 @@ call mex functions within matlab using package name `cv`.
     result = filter2D(img, kern);     % no need to specify 'cv' after imported
 
 Note that some functions such as `cv.imread` overload Matlab's builtin function
-when imported. Use the scoped name when you need to avoid name collision.
+when imported. Use the scoped name when you need to avoid name collision. It is
+also possible to import individual functions. Check `help import` in matlab.
 
 Check a list of functions available by `help` command in matlab.
 
@@ -163,9 +164,10 @@ files for matlab. The following command creates a user documentation under
     addpath('utils');
     MDoc;
 
-Online documentation is available at http://www.cs.stonybrook.edu/~kyamagu/mexopencv
+Online documentation is available at
+http://www.cs.stonybrook.edu/~kyamagu/mexopencv
 
-You can test the functionality of the compiled files by `UnitTest` class
+You can test the functionality of compiled files by `UnitTest` class
 located inside `test` directory.
 
     addpath('test');
@@ -231,7 +233,7 @@ mxArray.
     mxArray* plhs[0] = MxArray(sc);
     mxArray* plhs[0] = MxArray(sp); // Only 2D float to double
 
-Check `MxArraay.hpp` for the complete list of conversion API.
+Check `MxArraay.hpp` for a complete list of the conversion API.
 
 If you rather want to develop a matlab function that internally calls a mex
 function, make use of the `+cv/private` directory. Any function placed under
