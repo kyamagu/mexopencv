@@ -4,7 +4,7 @@ mexopencv
 Collection and a development kit of matlab mex functions for OpenCV library
 
 The package provides matlab mex functions that interface a hundred of
-OpenCV APIs. Also the package contains C++ class that converts between 
+OpenCV APIs. Also the package contains C++ class that converts between
 Matlab's native data type and OpenCV data types. The package is suitable for
 fast prototyping of OpenCV application in Matlab, use of OpenCV as an external
 toolbox in Matlab, and development of an original mex function.
@@ -36,14 +36,14 @@ Compile
 Prerequisite:
 
  * Unix: matlab, opencv (>=2.3.1), g++, make, pkg-config
- * Windows: matlab, opencv (>=2.3.1), Visual C++
+ * Windows: matlab, opencv (>=2.3.1), Visual C++ (2010 recommended)
 
 Note: opencv (>=2.1.0) is partially supported.
 
 Unix
 ----
 
-First make sure you have OpenCV installed in the system. If not, install the 
+First make sure you have OpenCV installed in the system. If not, install the
 package available in your package manager (e.g., libcv-dev in Debian/Ubuntu,
 opencv-devel in Fedora, opencv in Macports), or install the source package from
 http://opencv.willowgarage.com/wiki/ . If you have all the prerequisite, going
@@ -87,6 +87,38 @@ installed in C:\opencv. If this is different, specify the path as an argument.
 
     >> cv.make('opencv_path', 'c:\your\path\to\opencv')
 
+### Missing stdint.h in Visual Studio 2008
+
+Visual Studio 2008 or earlier does not comply C99 standard and lacks `stdint.h`
+header file. Luckily, the header file is available on the Web. For example,
+http://msinttypes.googlecode.com/svn/trunk/stdint.h
+
+Place this file under `include` directory in the mexopencv package.
+
+### When you see segfault
+
+The OpenCV binary package contains library files compiled without `SECURE_SCL`
+flag, but mex command in Matlab does not use this option by default and it
+results in segmentation fault on execution. To fix the issue, remove
+`SECURE_SCL=0` flag from the default mex configuration. The default mex
+configuration is created with `mex -setup` command in matlab, and located in
+the following path.
+
+    C:\Users\(Username)\AppData\Roaming\MathWorks\MATLAB\(version)\mexopts.bat
+
+Open this file and remove `SECURE_SCL=0` option. After this, compile all mex
+files.
+
+### Invalid MEX file error
+
+If you see `Invalid MEX file` error even after removing `SECURE_SCL=0` flag in
+the mex configuration, it indicates that the OpenCV binary distribution has
+still has a compatibility issue. To solve the problem, it is recommended to
+compile the OpenCV library from source in this case. Check the following page
+for how to compile OpenCV: http://opencv.willowgarage.com/wiki/InstallGuide
+
+Once you compile OpenCV, replace dll files in the binary package indicated in
+the `Path` system variable with your newly built dll files.
 
 Usage
 =====
@@ -105,18 +137,18 @@ when imported. Use the scoped name when you need to avoid name collision.
 Check a list of functions available by `help` command in matlab.
 
     >> help cv; % shows list of functions in package 'cv'
-    
+
     Contents of cv:
-    
+
     GaussianBlur                   - Smoothes an image using a Gaussian filter
     Laplacian                      - Calculates the Laplacian of an image
     VideoCapture                   - VideoCapture wrapper class
     ...
-    
+
     >> help cv.VideoCapture; % shows documentation of VideoCapture
-    
+
     VIDEOCAPTURE  VideoCapture wrapper class
-    
+
      Class for video capturing from video files or cameras. The class
      provides Matlab API for capturing video from cameras or for reading
      video files. Here is how the class can be used:
@@ -147,12 +179,12 @@ The minimum contents of the myfunc.cpp would look like this:
     	// Check arguments
         if (nlhs!=1 || nrhs!=1)
             mexErrMsgIdAndTxt("myfunc:invalidArgs","Wrong number of arguments");
-        
+
         // Convert MxArray to cv::Mat
         cv::Mat mat = MxArray(prhs[0]).toMat();
-        
+
         // Do whatever you want
-        
+
         // Convert cv::Mat back to mxArray*
         plhs[0] = MxArray(mat);
     }
@@ -225,7 +257,7 @@ resource file necessary for testing. An example of testing class is shown below:
                 dst = cv.myfunc(src);           % execute your function
                 assert(all(dst(:) == ref(:)));  % check the output
             end
-            
+
             function test_error_1
                 try
                     cv.myfunc('foo');           % myfunc should throw an error
