@@ -97,7 +97,7 @@ Place this file under `include` directory in the mexopencv package.
 
 ### When you see segfault
 
-The OpenCV windows package contains binary files compiled without `SECURE_SCL`
+The OpenCV windows package contains binary files compiled with `SECURE_SCL`
 flag, but mex command in Matlab does not use this option by default, which
 results in segmentation fault on execution. To fix the issue, remove
 `SECURE_SCL=0` flag from the default mex configuration. The default mex
