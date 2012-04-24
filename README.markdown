@@ -76,7 +76,7 @@ This will create html and latex files under `doc/`.
 Windows
 -------
 
-Make sure you have OpenCV installed in the system and correctly set up PATH
+Make sure you have OpenCV installed in the system and correctly set up `Path`
 system variable. (See http://opencv.willowgarage.com/wiki/ ) Then, in the matlab
 shell, type
 
@@ -97,8 +97,8 @@ Place this file under `include` directory in the mexopencv package.
 
 ### When you see segfault
 
-The OpenCV binary package contains library files compiled without `SECURE_SCL`
-flag, but mex command in Matlab does not use this option by default and it
+The OpenCV windows package contains binary files compiled without `SECURE_SCL`
+flag, but mex command in Matlab does not use this option by default, which
 results in segmentation fault on execution. To fix the issue, remove
 `SECURE_SCL=0` flag from the default mex configuration. The default mex
 configuration is created with `mex -setup` command in matlab, and located in
@@ -107,13 +107,13 @@ the following path.
     C:\Users\(Username)\AppData\Roaming\MathWorks\MATLAB\(version)\mexopts.bat
 
 Open this file and remove `SECURE_SCL=0` option. After this, compile all mex
-files.
+files again.
 
 ### Invalid MEX file error
 
 If you see `Invalid MEX file` error even after removing `SECURE_SCL=0` flag in
-the mex configuration, it indicates that the OpenCV binary distribution has
-still has a compatibility issue. To solve the problem, it is recommended to
+the mex configuration, it indicates that the OpenCV binary distribution
+still has some compatibility issue. To solve the problem, it is recommended to
 compile the OpenCV library from source in this case. Check the following page
 for how to compile OpenCV: http://opencv.willowgarage.com/wiki/InstallGuide
 
