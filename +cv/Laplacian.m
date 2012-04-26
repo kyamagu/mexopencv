@@ -7,12 +7,12 @@
 % * __src__ Source image.
 %
 %
-## Output
+% ## Output
 % * __dst__ Destination image of the same size and the same number of
 %     channels as src.
 %
 %
-## Options
+% ## Options
 % * __KSize__ Aperture size used to compute the second-derivative filters. The
 %             size must be positive and odd.
 % * __Scale__ Optional scale factor for the computed Laplacian values. By
