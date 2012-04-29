@@ -102,21 +102,21 @@ Place this file under `include` directory in the mexopencv package.
 
 ### When you see segmentation fault
 
-The OpenCV windows package contains binary files compiled with `SECURE_SCL`
+The OpenCV windows package contains binary files compiled with `_SECURE_SCL`
 flag, but mex command in Matlab does not use this option by default, which
 results in segmentation fault on execution. To fix the issue, remove
-`SECURE_SCL=0` flag from the default mex configuration. The default mex
+`_SECURE_SCL=0` flag from the default mex configuration. The default mex
 configuration is created with `mex -setup` command in matlab, and located in
 the following path in recent versions of Windows.
 
     C:\Users\(Username)\AppData\Roaming\MathWorks\MATLAB\(version)\mexopts.bat
 
-Open this file and remove `SECURE_SCL=0` option. After this, compile all mex
+Open this file and remove `_SECURE_SCL=0` option. After this, compile all mex
 files again.
 
 ### Error: Invalid MEX file
 
-If you see `Invalid MEX file` error even after removing `SECURE_SCL=0` flag in
+If you see `Invalid MEX file` error even after removing `_SECURE_SCL=0` flag in
 the mex configuration, it indicates that the OpenCV binary distribution
 still has some compatibility issue. To solve the problem, it is recommended to
 compile the OpenCV library from source in this case. Check the following page
