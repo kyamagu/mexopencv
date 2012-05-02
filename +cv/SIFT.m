@@ -21,7 +21,7 @@
 %       pyramid. It is set to 2 by default.
 % * __FirstOctave__ default -1
 % * __AngleMode__ 0 = FIRST\_ANGLE or 1 = AVERAGE\_ANGLE. default 0
-% * __Threshold__ default 0.04 / (NOctaveLayers * 2.0)
+% * __ConstrastThreshold__ default 0.04 / (NOctaveLayers * 2.0)
 % * __EdgeThreshold__ default 10.0
 % * __Magnification__ default 3.0
 % * __IsNormalize__ default true
