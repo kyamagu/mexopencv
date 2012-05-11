@@ -8,7 +8,8 @@ classdef TestBOWImgDescriptorExtractor
             im = imread(fullfile(fileparts(fileparts(...
                 mfilename('fullpath'))),'cat.jpg'));
             im = rgb2gray(im);
-            kpts = cv.FAST(im);
+            detector = cv.FeatureDetector('SIFT');
+            kpts = detector.detect(im);
             extractor = cv.DescriptorExtractor('SIFT');
             descs = extractor.compute(im,kpts);
             trainer = cv.BOWKMeansTrainer(100);
