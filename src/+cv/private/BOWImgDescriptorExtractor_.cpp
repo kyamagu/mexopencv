@@ -5,6 +5,9 @@
  * @date 2012
  */
 #include "mexopencv.hpp"
+#if CV_MINOR_VERSION >= 4
+#include "opencv2/nonfree/nonfree.hpp"
+#endif
 using namespace std;
 using namespace cv;
 
@@ -39,6 +42,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
 	vector<MxArray> rhs(prhs,prhs+nrhs);
 	int id = rhs[0].toInt();
 	string method(rhs[1].toString());
+
+	#if CV_MINOR_VERSION >= 4
+	if (last_id==0) initModule_nonfree();
+	#endif
 
 	// Constructor call
 	if (method == "new") {

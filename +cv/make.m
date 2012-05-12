@@ -13,6 +13,14 @@ cwd = pwd;
 cd(fileparts(fileparts(mfilename('fullpath'))));
 	
 if ispc % Windows
+    % Clean
+    if nargin>0 && strcmp(varargin{1},'clean')
+        cmd = sprintf('delete +cv\\*.%s +cv\\private\\*.%s',mexext,mexext);
+        disp(cmd);
+        eval(cmd);
+        return;
+    end
+    
     opencv_path = 'C:\opencv';
     for i = 1:2:nargin
         if strcmp(varargin{i},'opencv_path')
@@ -20,14 +28,15 @@ if ispc % Windows
         end
     end
     
-	mex_flags = ['-largeArrayDims -Iinclude ',pkg_config(opencv_path)];
+	mex_flags = sprintf('-largeArrayDims -D_SECURE_SCL=%d -Iinclude %s',...
+        true, pkg_config(opencv_path));
 	
 	% Compile MxArray
     force = false;
-    src = 'src\\MxArray.cpp'
-    dst = 'lib\\MxArray.obj'
+    src = 'src\\MxArray.cpp';
+    dst = 'lib\\MxArray.obj';
     if compile_needed(src, dst)
-        cmd = sprintf('mex -c %s %s -outdir lib',mex_flags, src);
+        cmd = sprintf('mex -c %s %s -outdir lib', mex_flags, src);
         disp(cmd);
         eval(cmd);
         force = true;
@@ -55,11 +64,12 @@ if ispc % Windows
             disp(cmd);
             eval(cmd);
         else
-            disp(sprintf('Skipped %s', src));
+            fprintf('Skipped %s\n', src);
         end
 	end
 else % Unix
-	system('make');
+	system(sprintf('make MATLABDIR=%s%s',matlabroot,...
+        sprintf(' %s',varargin{:})));
 end
 
 cd(cwd);
@@ -117,11 +127,12 @@ function l = lib_names(L_path)
 end
 
 function r = compile_needed(src, dst)
-if ~exist(dst, 'file')
-    r = true;
-else
-    d1 = dir(src);
-    d2 = dir(dst);
-    r = datenum(d1.date) >= datenum(d2.date);
-end
+    %COMPILE_NEEDED check timestamps
+    if ~exist(dst, 'file')
+        r = true;
+    else
+        d1 = dir(src);
+        d2 = dir(dst);
+        r = datenum(d1.date) >= datenum(d2.date);
+    end
 end
