@@ -92,6 +92,10 @@ work. You need to modify `+cv/make.m` to correctly link your mex files with
 the library. Or, you need to replace dll files in the OpenCV package with
 newly built files.
 
+To remove built binaries, use the following command.
+
+    >> cv.make('clean')
+
 ### Missing stdint.h in Visual Studio 2008
 
 Visual Studio 2008 or earlier does not comply C99 standard and lacks `stdint.h`
@@ -100,30 +104,28 @@ http://msinttypes.googlecode.com/svn/trunk/stdint.h
 
 Place this file under `include` directory in the mexopencv package.
 
-### When you see segmentation fault
+### Error: Invalid MEX file or Segmentation fault
 
-The OpenCV windows package contains binary files compiled with `_SECURE_SCL`
-flag, but mex command in Matlab does not use this option by default, which
-results in segmentation fault on execution. To fix the issue, remove
-`_SECURE_SCL=0` flag from the default mex configuration. The default mex
-configuration is created with `mex -setup` command in matlab, and located in
-the following path in recent versions of Windows.
+The OpenCV windows package contains c++ binary files compiled with
+`_SECURE_SCL=1` flag, but mex command in Matlab does not use this option by
+default, which results in `Invalid MEX file` or segmentation fault on execution.
+The current version of `cv.make` script adds `_SECURE_SCL=1` flag in the build
+command and should have no problem with the distributed binary package.
+
+If you see `Invalid MEX file` or segmentation fault with manually built OpenCV
+dll's, first make sure you compile OpenCV with the same `_SECURE_SCL` flag to
+the mex command. The default mex configuration, which is created with the
+`mex -setup` command in matlab, is located in the following path in recent
+versions of Windows.
 
     C:\Users\(Username)\AppData\Roaming\MathWorks\MATLAB\(version)\mexopts.bat
 
-Open this file and remove `_SECURE_SCL=0` option. After this, compile all mex
-files again.
+Open this file and edit `/D_SECURE_SCL` option.
 
-### Error: Invalid MEX file
+If you see `Invalid MEX file` error even when having the matched `_SECURE_SCL`
+flag, it probably indicates some other compatibility issues. Please file a bug
+report at http://github.com/kyamagu/mexopencv .
 
-If you see `Invalid MEX file` error even after removing `_SECURE_SCL=0` flag in
-the mex configuration, it indicates that the OpenCV binary distribution
-still has some compatibility issue. To solve the problem, it is recommended to
-compile the OpenCV library from source in this case. Check the following page
-for how to compile OpenCV: http://opencv.willowgarage.com/wiki/InstallGuide
-
-Once you compile OpenCV, replace dll files in the binary package indicated in
-the `Path` system variable with your newly built dll files.
 
 Usage
 =====
