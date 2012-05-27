@@ -10,7 +10,6 @@ pause(3);
 
 % Create a subtractor
 bs = cv.BackgroundSubtractorMOG(100,5,0.2,'NoiseSigma',7);
-bs.varThreshold = 3;
 
 % Set up display window
 window = figure('KeyPressFcn',@(obj,evt)setappdata(obj,'flag',true));
@@ -37,7 +36,7 @@ while true
     fg = cv.dilate(cv.erode(fg))>0;
     masked_im = bitand(im,repmat(im2uint8(fg),[1,1,3]));
     imshow(masked_im);
-    
+
     % Terminate if any user input
     flag = getappdata(window,'flag');
     if isempty(flag)||flag, break; end
