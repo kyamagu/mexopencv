@@ -14,7 +14,7 @@
 %
 % ## Options
 % * __Method__ Thresholding type (see the details below). default 'Trunc'
-% * __MaxVal__ Maximum value to use with the 'Binary' and 'BinaryInv' methods.
+% * __MaxValue__ Maximum value to use with the 'Binary' and 'BinaryInv' methods.
 %
 % The function applies fixed-level thresholding to a single-channel array. The
 % function is typically used to get a bi-level (binary) image out of a
