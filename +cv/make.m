@@ -133,6 +133,6 @@ function r = compile_needed(src, dst)
     else
         d1 = dir(src);
         d2 = dir(dst);
-        r = datenum(d1.date) >= datenum(d2.date);
+        r = (d1.datenum >= d2.datenum);
     end
 end
