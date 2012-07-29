@@ -4,7 +4,7 @@ classdef TestLatentSvmDetector
     end
     
     methods (Static)
-    	function test_1
+        function test_1
             p = fileparts(fileparts(mfilename('fullpath')));
             im = imread(fullfile(p,'cat.jpg'));
             detector = cv.LatentSvmDetector(fullfile(p,'cat.xml'));

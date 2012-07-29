@@ -7,8 +7,8 @@ classdef TestMatchTemplate
     
     methods (Static)
         function test_1
-        	im = rgb2gray(TestMatchTemplate.img);
-        	tmpl = im(120:150,180:210,:);
+            im = rgb2gray(TestMatchTemplate.img);
+            tmpl = im(120:150,180:210,:);
             result = cv.matchTemplate(im,tmpl);
         end
         

@@ -6,14 +6,14 @@ classdef TestWarpAffine
     end
     
     methods (Static)
-    	function test_1
-    		im = TestWarpAffine.img;
-    		x0 = [0,0;1,0;1,1];
+        function test_1
+            im = TestWarpAffine.img;
+            x0 = [0,0;1,0;1,1];
             M = cv.getAffineTransform(x0,x0); % identity transform
             dst = cv.warpAffine(im,M);
             assert(all(im(:)==dst(:)));
-    	end
-    	
+        end
+        
         function test_error_1
             try
                 cv.warpAffine();

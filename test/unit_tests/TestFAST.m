@@ -7,7 +7,7 @@ classdef TestFAST
     
     methods (Static)
         function test_1
-        	im = rgb2gray(TestFAST.img);
+            im = rgb2gray(TestFAST.img);
             result = cv.FAST(im);
         end
         

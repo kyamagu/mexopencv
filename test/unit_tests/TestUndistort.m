@@ -17,7 +17,7 @@ classdef TestUndistort
     
     methods (Static)
         function test_1
-        	im = TestUndistort.img;
+            im = TestUndistort.img;
             result = cv.undistort(im, eye(3), []);
             assert(all(result(:)==im(:)));
         end

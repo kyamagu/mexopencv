@@ -5,7 +5,7 @@ classdef TestCalibrationMatrixValues
     
     methods (Static)
         function test_1
-        	A = [1,0,.5; 0,1,.5; 0,0,1];
+            A = [1,0,.5; 0,1,.5; 0,0,1];
             S = cv.calibrationMatrixValues(A,[640,480],4,3);
         end
         

@@ -4,7 +4,7 @@ classdef TestHOGDescriptor
     end
     
     methods (Static)
-    	function test_1
+        function test_1
             p = fileparts(fileparts(mfilename('fullpath')));
             im = imread([p,filesep,'img001.jpg']);
             hog = cv.HOGDescriptor();

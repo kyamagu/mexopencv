@@ -6,14 +6,14 @@ classdef TestWatershed
     end
     
     methods (Static)
-    	function test_1
-    		im = TestWatershed.img;
+        function test_1
+            im = TestWatershed.img;
             bbox = [100,100,200,320]; % [x,y,w,h]
             marker = zeros(size(im,1),size(im,2),'int32');
             marker(bbox(2):(bbox(2)+bbox(4)-1),bbox(1):(bbox(1)+bbox(3)-1)) = 1;
             marker = cv.watershed(im,marker);
-    	end
-    	
+        end
+        
         function test_error_1
             try
                 cv.watershed();

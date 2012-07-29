@@ -18,27 +18,27 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-	// Check the number of arguments
-	if (nrhs!=1 || nlhs>2)
+    // Check the number of arguments
+    if (nrhs!=1 || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
-	// Argument vector
-	vector<MxArray> rhs(prhs,prhs+nrhs);
-	Point2f center;
-	float radius;
-	if (rhs[0].isNumeric()) {
-		Mat points(rhs[0].toMat(CV_32F));
-		minEnclosingCircle(points,center,radius);
-	}
+    // Argument vector
+    vector<MxArray> rhs(prhs,prhs+nrhs);
+    Point2f center;
+    float radius;
+    if (rhs[0].isNumeric()) {
+        Mat points(rhs[0].toMat(CV_32F));
+        minEnclosingCircle(points,center,radius);
+    }
 #if CV_MINOR_VERSION >= 2
-	else if (rhs[0].isCell()) {
-		vector<Point2f> points(rhs[0].toVector<Point2f>());
-		minEnclosingCircle(points,center,radius);
-	}
+    else if (rhs[0].isCell()) {
+        vector<Point2f> points(rhs[0].toVector<Point2f>());
+        minEnclosingCircle(points,center,radius);
+    }
 #endif
-	else
-		mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
-	plhs[0] = MxArray(center);
-	if (nlhs>1)
-		plhs[1] = MxArray(radius);
+    else
+        mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
+    plhs[0] = MxArray(center);
+    if (nlhs>1)
+        plhs[1] = MxArray(radius);
 }

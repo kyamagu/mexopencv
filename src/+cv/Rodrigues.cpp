@@ -18,22 +18,22 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-	// Check the number of arguments
-	if (nrhs!=1 || nlhs>2)
+    // Check the number of arguments
+    if (nrhs!=1 || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
-	// Argument vector
-	vector<MxArray> rhs(prhs,prhs+nrhs);
-	
-	// Process
-	Mat src(rhs[0].toMat(CV_32F)), dst;
+    // Argument vector
+    vector<MxArray> rhs(prhs,prhs+nrhs);
+    
+    // Process
+    Mat src(rhs[0].toMat(CV_32F)), dst;
 #if CV_MINOR_VERSION >= 2
-	Mat jacobian;
-	Rodrigues(src,dst,jacobian);
-	if (nlhs>1)
-		plhs[1] = MxArray(jacobian);
+    Mat jacobian;
+    Rodrigues(src,dst,jacobian);
+    if (nlhs>1)
+        plhs[1] = MxArray(jacobian);
 #else
-	Rodrigues(src,dst);
+    Rodrigues(src,dst);
 #endif
-	plhs[0] = MxArray(dst);
+    plhs[0] = MxArray(dst);
 }

@@ -18,31 +18,31 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-	// Check the number of arguments
-	if (nrhs!=1 || nlhs>5)
+    // Check the number of arguments
+    if (nrhs!=1 || nlhs>5)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
-	// Argument vector
-	vector<MxArray> rhs(prhs,prhs+nrhs);
-	
-	// Process
-	Mat M(rhs[0].toMat(CV_32F));
-	Mat R, Q;
-	Mat Qx, Qy, Qz;
+    // Argument vector
+    vector<MxArray> rhs(prhs,prhs+nrhs);
+    
+    // Process
+    Mat M(rhs[0].toMat(CV_32F));
+    Mat R, Q;
+    Mat Qx, Qy, Qz;
 #if CV_MINOR_VERSION >= 2
-	RQDecomp3x3(M, R, Q, Qx, Qy, Qz);
+    RQDecomp3x3(M, R, Q, Qx, Qy, Qz);
 #else
-	RQDecomp3x3(M, R, Q);
+    RQDecomp3x3(M, R, Q);
 #endif
-	plhs[0] = MxArray(R);
-	if (nlhs>1)
-		plhs[1] = MxArray(Q);
+    plhs[0] = MxArray(R);
+    if (nlhs>1)
+        plhs[1] = MxArray(Q);
 #if CV_MINOR_VERSION >= 2
-	if (nlhs>2)
-		plhs[2] = MxArray(Qx);
-	if (nlhs>3)
-		plhs[3] = MxArray(Qy);
-	if (nlhs>4)
-		plhs[4] = MxArray(Qz);
+    if (nlhs>2)
+        plhs[2] = MxArray(Qx);
+    if (nlhs>3)
+        plhs[3] = MxArray(Qy);
+    if (nlhs>4)
+        plhs[4] = MxArray(Qz);
 #endif
 }

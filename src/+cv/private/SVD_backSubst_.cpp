@@ -18,17 +18,17 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-	// Check the number of arguments
-	if (nrhs!=4 || nlhs>1)
+    // Check the number of arguments
+    if (nrhs!=4 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
-	// Argument vector
-	vector<MxArray> rhs(prhs,prhs+nrhs);
-	SVD svd;
-	svd.w = rhs[0].toMat();
-	svd.u = rhs[1].toMat();
-	svd.vt = rhs[2].toMat();
-	Mat	src(rhs[3].toMat()), dst;
-	svd.backSubst(src, dst);
-	plhs[0] = MxArray(dst);
+    // Argument vector
+    vector<MxArray> rhs(prhs,prhs+nrhs);
+    SVD svd;
+    svd.w = rhs[0].toMat();
+    svd.u = rhs[1].toMat();
+    svd.vt = rhs[2].toMat();
+    Mat    src(rhs[3].toMat()), dst;
+    svd.backSubst(src, dst);
+    plhs[0] = MxArray(dst);
 }

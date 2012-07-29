@@ -20,8 +20,8 @@ classdef TestCornerSubPix
     
     methods (Static)
         function test_1
-        	im = TestCornerSubPix.img;
-        	corners = {[3,3],[8,8]};
+            im = TestCornerSubPix.img;
+            corners = {[3,3],[8,8]};
             result = cv.cornerSubPix(im,corners);
         end
         

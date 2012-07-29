@@ -18,42 +18,42 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-	// Check the number of arguments
-	if (nrhs<1 || ((nrhs%2)!=1) || nlhs>1)
+    // Check the number of arguments
+    if (nrhs<1 || ((nrhs%2)!=1) || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
-	// Argument vector
-	vector<MxArray> rhs(prhs,prhs+nrhs);
-	bool clockwise=false;
-	bool returnPoints=true;
-	for (int i=1; i<nrhs; i+=2) {
-		string key = rhs[i].toString();
-		if (key=="Clockwise")
-			clockwise = rhs[i+1].toBool();
-		//else if (key=="ReturnPoints")
-		//	returnPoints = rhs[i+1].toBool();
-		else
-			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-	}
-	
-	// Process
+    // Argument vector
+    vector<MxArray> rhs(prhs,prhs+nrhs);
+    bool clockwise=false;
+    bool returnPoints=true;
+    for (int i=1; i<nrhs; i+=2) {
+        string key = rhs[i].toString();
+        if (key=="Clockwise")
+            clockwise = rhs[i+1].toBool();
+        //else if (key=="ReturnPoints")
+        //    returnPoints = rhs[i+1].toBool();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+    }
+    
+    // Process
 #if CV_MINOR_VERSION >= 2
-	if (rhs[0].isNumeric()) {
-		Mat points(rhs[0].toMat(CV_32S));
-		vector<Point> hull;
-		convexHull(points, hull, clockwise, returnPoints);
-		plhs[0] = MxArray(Mat(hull));
-	}
-	else if (rhs[0].isCell()) {
-		vector<Point> points(rhs[0].toVector<Point>());
-		vector<Point> hull;
-		convexHull(points, hull, clockwise, returnPoints);
-		plhs[0] = MxArray(hull);		
-	}
+    if (rhs[0].isNumeric()) {
+        Mat points(rhs[0].toMat(CV_32S));
+        vector<Point> hull;
+        convexHull(points, hull, clockwise, returnPoints);
+        plhs[0] = MxArray(Mat(hull));
+    }
+    else if (rhs[0].isCell()) {
+        vector<Point> points(rhs[0].toVector<Point>());
+        vector<Point> hull;
+        convexHull(points, hull, clockwise, returnPoints);
+        plhs[0] = MxArray(hull);        
+    }
 #else
-		Mat points(rhs[0].toMat(CV_32S));
-		vector<Point> hull;
-		convexHull(points, hull, clockwise);
-		plhs[0] = MxArray(Mat(hull));
+        Mat points(rhs[0].toMat(CV_32S));
+        vector<Point> hull;
+        convexHull(points, hull, clockwise);
+        plhs[0] = MxArray(Mat(hull));
 #endif
 }

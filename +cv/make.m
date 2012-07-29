@@ -11,7 +11,7 @@ function make(varargin)
 
 cwd = pwd;
 cd(fileparts(fileparts(mfilename('fullpath'))));
-	
+    
 if ispc % Windows
     % Clean
     if nargin>0 && strcmp(varargin{1},'clean')
@@ -28,10 +28,10 @@ if ispc % Windows
         end
     end
     
-	mex_flags = sprintf('-largeArrayDims -D_SECURE_SCL=%d -Iinclude %s',...
+    mex_flags = sprintf('-largeArrayDims -D_SECURE_SCL=%d -Iinclude %s',...
         true, pkg_config(opencv_path));
-	
-	% Compile MxArray
+    
+    % Compile MxArray
     force = false;
     src = 'src\\MxArray.cpp';
     dst = 'lib\\MxArray.obj';
@@ -46,15 +46,15 @@ if ispc % Windows
         error('cv:make','lib\MxArray.obj not found');
     end
     
-	% Compile other files
-	srcs = dir('src\+cv\*.cpp');
-	srcs = cellfun(@(x) regexprep(x,'(.*)\.cpp','$1'), {srcs.name},...
-		'UniformOutput', false);
-	psrcs = dir('src\+cv\private\*.cpp');
-	psrcs = cellfun(@(x) regexprep(x,'(.*)\.cpp','private\\$1'), {psrcs.name},...
-		'UniformOutput', false);
+    % Compile other files
+    srcs = dir('src\+cv\*.cpp');
+    srcs = cellfun(@(x) regexprep(x,'(.*)\.cpp','$1'), {srcs.name},...
+        'UniformOutput', false);
+    psrcs = dir('src\+cv\private\*.cpp');
+    psrcs = cellfun(@(x) regexprep(x,'(.*)\.cpp','private\\$1'), {psrcs.name},...
+        'UniformOutput', false);
     srcs = [srcs,psrcs];
-	for i = 1:numel(srcs)
+    for i = 1:numel(srcs)
         src = sprintf('src\\+cv\\%s.cpp', srcs{i});
         dst = sprintf('+cv\\%s', srcs{i});
         fulldst = [dst '.' mexext];
@@ -66,9 +66,9 @@ if ispc % Windows
         else
             fprintf('Skipped %s\n', src);
         end
-	end
+    end
 else % Unix
-	system(sprintf('make MATLABDIR=%s%s',matlabroot,...
+    system(sprintf('make MATLABDIR=%s%s',matlabroot,...
         sprintf(' %s',varargin{:})));
 end
 

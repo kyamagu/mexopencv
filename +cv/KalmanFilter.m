@@ -29,7 +29,7 @@ classdef KalmanFilter < handle
     end
     
     properties (Dependent)
-    	statePre            % predicted state `(x'(k)): x(k)=A*x(k-1)+B*u(k)`
+        statePre            % predicted state `(x'(k)): x(k)=A*x(k-1)+B*u(k)`
         statePost           % corrected state `(x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))`
         transitionMatrix    % state transition matrix `(A)`
         controlMatrix       % control matrix `(B)` (not used if there is no control)
@@ -121,83 +121,83 @@ classdef KalmanFilter < handle
         end
         
         function value = get.statePre(this)
-        	value = KalmanFilter_(this.id, 'statePre');
+            value = KalmanFilter_(this.id, 'statePre');
         end
         
         function set.statePre(this, value)
-        	KalmanFilter_(this.id, 'statePre', value);
+            KalmanFilter_(this.id, 'statePre', value);
         end
         
         function value = get.statePost(this)
-        	value = KalmanFilter_(this.id, 'statePost');
+            value = KalmanFilter_(this.id, 'statePost');
         end
         
         function set.statePost(this, value)
-        	KalmanFilter_(this.id, 'statePost', value);
+            KalmanFilter_(this.id, 'statePost', value);
         end
         
         function value = get.transitionMatrix(this)
-        	value = KalmanFilter_(this.id, 'transitionMatrix');
+            value = KalmanFilter_(this.id, 'transitionMatrix');
         end
         
         function set.transitionMatrix(this, value)
-        	KalmanFilter_(this.id, 'transitionMatrix', value);
+            KalmanFilter_(this.id, 'transitionMatrix', value);
         end
         
         function value = get.controlMatrix(this)
-        	value = KalmanFilter_(this.id, 'controlMatrix');
+            value = KalmanFilter_(this.id, 'controlMatrix');
         end
         
         function set.controlMatrix(this, value)
-        	KalmanFilter_(this.id, 'controlMatrix', value);
+            KalmanFilter_(this.id, 'controlMatrix', value);
         end
         
         function value = get.measurementMatrix(this)
-        	value = KalmanFilter_(this.id, 'measurementMatrix');
+            value = KalmanFilter_(this.id, 'measurementMatrix');
         end
         
         function set.measurementMatrix(this, value)
-        	KalmanFilter_(this.id, 'measurementMatrix', value);
+            KalmanFilter_(this.id, 'measurementMatrix', value);
         end
         
         function value = get.processNoiseCov(this)
-        	value = KalmanFilter_(this.id, 'processNoiseCov');
+            value = KalmanFilter_(this.id, 'processNoiseCov');
         end
         
         function set.processNoiseCov(this, value)
-        	KalmanFilter_(this.id, 'processNoiseCov', value);
+            KalmanFilter_(this.id, 'processNoiseCov', value);
         end
         
         function value = get.measurementNoiseCov(this)
-        	value = KalmanFilter_(this.id, 'measurementNoiseCov');
+            value = KalmanFilter_(this.id, 'measurementNoiseCov');
         end
         
         function set.measurementNoiseCov(this, value)
-        	KalmanFilter_(this.id, 'measurementNoiseCov', value);
+            KalmanFilter_(this.id, 'measurementNoiseCov', value);
         end
         
         function value = get.errorCovPre(this)
-        	value = KalmanFilter_(this.id, 'errorCovPre');
+            value = KalmanFilter_(this.id, 'errorCovPre');
         end
         
         function set.errorCovPre(this, value)
-        	KalmanFilter_(this.id, 'errorCovPre', value);
+            KalmanFilter_(this.id, 'errorCovPre', value);
         end
         
         function value = get.gain(this)
-        	value = KalmanFilter_(this.id, 'gain');
+            value = KalmanFilter_(this.id, 'gain');
         end
         
         function set.gain(this, value)
-        	KalmanFilter_(this.id, 'gain', value);
+            KalmanFilter_(this.id, 'gain', value);
         end
         
         function value = get.errorCovPost(this)
-        	value = KalmanFilter_(this.id, 'errorCovPost');
+            value = KalmanFilter_(this.id, 'errorCovPost');
         end
         
         function set.errorCovPost(this, value)
-        	KalmanFilter_(this.id, 'errorCovPost', value);
+            KalmanFilter_(this.id, 'errorCovPost', value);
         end
     end
     

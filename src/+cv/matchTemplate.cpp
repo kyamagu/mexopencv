@@ -30,31 +30,31 @@ const ConstMap<std::string,int> MatchMethod = ConstMap<std::string,int>
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-	// Check the number of arguments
-	if (nrhs<2 || ((nrhs%2)!=0) || nlhs>1)
+    // Check the number of arguments
+    if (nrhs<2 || ((nrhs%2)!=0) || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
-	// Argument vector
-	vector<MxArray> rhs(prhs,prhs+nrhs);
-	
-	// Option processing
-	int method = CV_TM_SQDIFF;
-	for (int i=2; i<nrhs; i+=2) {
-		string key = rhs[i].toString();
-		if (key=="Method") {
-			if (rhs[i+1].isChar())
-				method = MatchMethod[rhs[i+1].toString()];
-			else
-				method = rhs[i+1].toInt();
-		}
-		else
-			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-	}
-	
-	// Process
-	Mat image = (rhs[0].isUint8()) ? rhs[0].toMat(CV_8U) : rhs[0].toMat(CV_32F);
-	Mat tmpl = (rhs[1].isUint8()) ? rhs[1].toMat(CV_8U) : rhs[1].toMat(CV_32F);;
-	Mat result;
-	matchTemplate(image,tmpl,result,method);
-	plhs[0] = MxArray(result);
+    // Argument vector
+    vector<MxArray> rhs(prhs,prhs+nrhs);
+    
+    // Option processing
+    int method = CV_TM_SQDIFF;
+    for (int i=2; i<nrhs; i+=2) {
+        string key = rhs[i].toString();
+        if (key=="Method") {
+            if (rhs[i+1].isChar())
+                method = MatchMethod[rhs[i+1].toString()];
+            else
+                method = rhs[i+1].toInt();
+        }
+        else
+            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+    }
+    
+    // Process
+    Mat image = (rhs[0].isUint8()) ? rhs[0].toMat(CV_8U) : rhs[0].toMat(CV_32F);
+    Mat tmpl = (rhs[1].isUint8()) ? rhs[1].toMat(CV_8U) : rhs[1].toMat(CV_32F);;
+    Mat result;
+    matchTemplate(image,tmpl,result,method);
+    plhs[0] = MxArray(result);
 }

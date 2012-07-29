@@ -1,18 +1,18 @@
 classdef VideoWriter < handle
-	%VIDEOWRITER  VideoWriter wrapper class
-	%
-	% Video writer class. Here is how to write to a video file:
-	%
-	%    vid = cv.VideoWriter('myvideo.mpg', [640,480]);
-	%    vid.write(im);         % add a frame
-	%    clear vid;             % finish
+    %VIDEOWRITER  VideoWriter wrapper class
+    %
+    % Video writer class. Here is how to write to a video file:
+    %
+    %    vid = cv.VideoWriter('myvideo.mpg', [640,480]);
+    %    vid.write(im);         % add a frame
+    %    clear vid;             % finish
     %
     % See also cv.VideoWriter.VideoWriter cv.VideoWriter.write
     %
     
     properties (SetAccess = private)
         % Object ID
-    	id
+        id
     end
     
     methods

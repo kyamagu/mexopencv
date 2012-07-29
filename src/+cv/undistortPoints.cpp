@@ -18,31 +18,31 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-	// Check the number of arguments
-	if (nrhs<3 || ((nrhs%2)!=1) || nlhs>1)
+    // Check the number of arguments
+    if (nrhs<3 || ((nrhs%2)!=1) || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
-	// Argument vector
-	vector<MxArray> rhs(prhs,prhs+nrhs);
-	
-	Mat src(rhs[0].toMat());
-	Mat cameraMatrix(rhs[1].toMat());
-	Mat distCoeffs(rhs[2].toMat());
-	
-	// Option processing
-	Mat R, P;
-	for (int i=3; i<nrhs; i+=2) {
-		string key = rhs[i].toString();
-		if (key=="R")
-			R = rhs[i+1].toMat(CV_32F);
-		else if (key=="P")
-			P = rhs[i+1].toMat(CV_32F);
-		else
-			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-	}
-	
-	// Process
-	Mat dst;
-	undistortPoints(src, dst, cameraMatrix, distCoeffs, R, P);
-	plhs[0] = MxArray(dst);
+    // Argument vector
+    vector<MxArray> rhs(prhs,prhs+nrhs);
+    
+    Mat src(rhs[0].toMat());
+    Mat cameraMatrix(rhs[1].toMat());
+    Mat distCoeffs(rhs[2].toMat());
+    
+    // Option processing
+    Mat R, P;
+    for (int i=3; i<nrhs; i+=2) {
+        string key = rhs[i].toString();
+        if (key=="R")
+            R = rhs[i+1].toMat(CV_32F);
+        else if (key=="P")
+            P = rhs[i+1].toMat(CV_32F);
+        else
+            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+    }
+    
+    // Process
+    Mat dst;
+    undistortPoints(src, dst, cameraMatrix, distCoeffs, R, P);
+    plhs[0] = MxArray(dst);
 }

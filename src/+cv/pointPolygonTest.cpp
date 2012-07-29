@@ -18,25 +18,25 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-	// Check the number of arguments
-	if (nrhs<2 || nlhs>1)
+    // Check the number of arguments
+    if (nrhs<2 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
-	// Argument vector
-	vector<MxArray> rhs(prhs,prhs+nrhs);
+    // Argument vector
+    vector<MxArray> rhs(prhs,prhs+nrhs);
 #if CV_MINOR_VERSION >= 2
-	vector<Point2f> contour(rhs[0].toVector<Point2f>());
+    vector<Point2f> contour(rhs[0].toVector<Point2f>());
 #else
-	Mat contour(rhs[0].toMat(CV_32F));
+    Mat contour(rhs[0].toMat(CV_32F));
 #endif
-	Point2f pt(rhs[1].toPoint_<float>());
-	bool measureDist=false;
-	for (int i=2; i<nrhs; i+=2) {
-		string key(rhs[i].toString());
-		if (key=="MeasureDist")
-			measureDist = rhs[i+1].toBool();
-		else
-			mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-	}
-	plhs[0] = MxArray(pointPolygonTest(contour,pt,measureDist));
+    Point2f pt(rhs[1].toPoint_<float>());
+    bool measureDist=false;
+    for (int i=2; i<nrhs; i+=2) {
+        string key(rhs[i].toString());
+        if (key=="MeasureDist")
+            measureDist = rhs[i+1].toBool();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    }
+    plhs[0] = MxArray(pointPolygonTest(contour,pt,measureDist));
 }

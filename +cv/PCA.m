@@ -1,6 +1,6 @@
 classdef PCA < handle
-	%PCA  Principal Component Analysis class
-	%
+    %PCA  Principal Component Analysis class
+    %
     % The class is used to compute a special basis for a set of vectors.
     % The basis will consist of eigenvectors of the covariance matrix
     % computed from the input set of vectors. The class PCA can also
@@ -33,7 +33,7 @@ classdef PCA < handle
     
     properties (SetAccess = protected)
         % Object ID
-    	id
+        id
         % Eigenvectors
         eigenvectors
         % Eigenvalues

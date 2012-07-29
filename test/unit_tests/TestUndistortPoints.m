@@ -5,8 +5,8 @@ classdef TestUndistortPoints
     
     methods (Static)
         function test_1
-        	pts = [0,0; 0,1; 3,4; 5,6];
-        	pts = shiftdim(pts,-1);
+            pts = [0,0; 0,1; 3,4; 5,6];
+            pts = shiftdim(pts,-1);
             result = cv.undistortPoints(pts, eye(3), []);
             assert(all(result(:)==pts(:)));
         end

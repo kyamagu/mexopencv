@@ -18,25 +18,25 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-	// Check the number of arguments
-	if (nrhs!=2 || nlhs>1)
+    // Check the number of arguments
+    if (nrhs!=2 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
-	// Argument vector
-	vector<MxArray> rhs(prhs,prhs+nrhs);
-	if (!rhs[0].isNumeric() || rhs[0].rows()!=4 || rhs[0].cols()!=2 ||
-		!rhs[1].isNumeric() || rhs[1].rows()!=4 || rhs[1].cols()!=2)
-		mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
-	
-	// Process
-	Point2f src[] = {Point2f(rhs[0].at<float>(0),rhs[0].at<float>(4)),
-					 Point2f(rhs[0].at<float>(1),rhs[0].at<float>(5)),
-					 Point2f(rhs[0].at<float>(2),rhs[0].at<float>(6)),
-					 Point2f(rhs[0].at<float>(3),rhs[0].at<float>(7))};
-	Point2f dst[] = {Point2f(rhs[1].at<float>(0),rhs[1].at<float>(4)),
-					 Point2f(rhs[1].at<float>(1),rhs[1].at<float>(5)),
-					 Point2f(rhs[1].at<float>(2),rhs[1].at<float>(6)),
-					 Point2f(rhs[1].at<float>(3),rhs[1].at<float>(7))};
-	Mat t = getPerspectiveTransform(src, dst);
-	plhs[0] = MxArray(t);
+    // Argument vector
+    vector<MxArray> rhs(prhs,prhs+nrhs);
+    if (!rhs[0].isNumeric() || rhs[0].rows()!=4 || rhs[0].cols()!=2 ||
+        !rhs[1].isNumeric() || rhs[1].rows()!=4 || rhs[1].cols()!=2)
+        mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
+    
+    // Process
+    Point2f src[] = {Point2f(rhs[0].at<float>(0),rhs[0].at<float>(4)),
+                     Point2f(rhs[0].at<float>(1),rhs[0].at<float>(5)),
+                     Point2f(rhs[0].at<float>(2),rhs[0].at<float>(6)),
+                     Point2f(rhs[0].at<float>(3),rhs[0].at<float>(7))};
+    Point2f dst[] = {Point2f(rhs[1].at<float>(0),rhs[1].at<float>(4)),
+                     Point2f(rhs[1].at<float>(1),rhs[1].at<float>(5)),
+                     Point2f(rhs[1].at<float>(2),rhs[1].at<float>(6)),
+                     Point2f(rhs[1].at<float>(3),rhs[1].at<float>(7))};
+    Mat t = getPerspectiveTransform(src, dst);
+    plhs[0] = MxArray(t);
 }

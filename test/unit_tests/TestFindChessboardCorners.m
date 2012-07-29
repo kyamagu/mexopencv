@@ -6,7 +6,7 @@ classdef TestFindChessboardCorners
     
     methods (Static)
         function test_1
-        	im = TestFindChessboardCorners.img;
+            im = TestFindChessboardCorners.img;
             result = cv.findChessboardCorners(im, [9,6]);
         end
         

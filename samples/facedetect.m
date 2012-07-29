@@ -20,7 +20,7 @@ setappdata(window,'flag',false);
 
 % Start main loop
 while true
-	% Grab and preprocess an image
+    % Grab and preprocess an image
     im = camera.read;
     im = cv.resize(im,0.5);
     gr = cv.cvtColor(im,'RGB2GRAY');
@@ -29,7 +29,7 @@ while true
     boxes = classifier.detect(gr,'ScaleFactor',1.3,...
                                  'MinNeighbors',2,...
                                  'MinSize',[30,30]);
-	% Draw results
+    % Draw results
     imshow(im);
     for i = 1:numel(boxes)
         rectangle('Position',boxes{i},'EdgeColor','g','LineWidth',2);

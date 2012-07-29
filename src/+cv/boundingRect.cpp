@@ -18,25 +18,25 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-	// Check the number of arguments
-	if (nrhs!=1 || nlhs>1)
+    // Check the number of arguments
+    if (nrhs!=1 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
-	// Argument vector
-	vector<MxArray> rhs(prhs,prhs+nrhs);
-	
-	// Process
+    // Argument vector
+    vector<MxArray> rhs(prhs,prhs+nrhs);
+    
+    // Process
 #if CV_MINOR_VERSION >= 2
-	if (rhs[0].isNumeric()) {
-		Mat curve(rhs[0].toMat());
-		plhs[0] = MxArray(boundingRect(curve));
-	}
-	else if (rhs[0].isCell()) {
-		vector<Point> curve(rhs[0].toVector<Point>());
-		plhs[0] = MxArray(boundingRect(curve));		
-	}
+    if (rhs[0].isNumeric()) {
+        Mat curve(rhs[0].toMat());
+        plhs[0] = MxArray(boundingRect(curve));
+    }
+    else if (rhs[0].isCell()) {
+        vector<Point> curve(rhs[0].toVector<Point>());
+        plhs[0] = MxArray(boundingRect(curve));        
+    }
 #else
-		Mat curve(rhs[0].toMat());
-		plhs[0] = MxArray(boundingRect(curve));
+        Mat curve(rhs[0].toMat());
+        plhs[0] = MxArray(boundingRect(curve));
 #endif
 }

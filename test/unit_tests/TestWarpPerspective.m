@@ -6,13 +6,13 @@ classdef TestWarpPerspective
     end
     
     methods (Static)
-    	function test_1
-    		im = TestWarpPerspective.img;
+        function test_1
+            im = TestWarpPerspective.img;
             M = eye(3); % identity transform
             dst = cv.warpPerspective(im,M);
             assert(all(im(:)==dst(:)));
-    	end
-    	
+        end
+        
         function test_error_1
             try
                 cv.warpPerspective();

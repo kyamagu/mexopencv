@@ -1,6 +1,6 @@
 classdef SVD
-	%SVD  Class for computing Singular Value Decomposition of a floating-point matrix
-	%
+    %SVD  Class for computing Singular Value Decomposition of a floating-point matrix
+    %
     % Class for computing Singular Value Decomposition of a floating-point
     % matrix. The Singular Value Decomposition is used to solve
     % least-square problems, under-determined linear systems, invert

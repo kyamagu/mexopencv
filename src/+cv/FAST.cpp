@@ -19,32 +19,32 @@ void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
 #if CV_MINOR_VERSION >= 2
-	// Check the number of arguments
-	if (nrhs<1 || ((nrhs%2)!=1) || nlhs>1)
+    // Check the number of arguments
+    if (nrhs<1 || ((nrhs%2)!=1) || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
-	// Argument vector
-	vector<MxArray> rhs(prhs,prhs+nrhs);
-	
-	// Option processing
-	int threshold=20;
-	bool nonmaxSupression=true;
-	for (int i=1; i<nrhs; i+=2) {
-		string key = rhs[i].toString();
-		if (key=="Threshold")
-			threshold = rhs[i+1].toInt();
-		else if (key=="NonMaxSupression")
-			nonmaxSupression = rhs[i+1].toBool();
-		else
-			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-	}
-	
-	// Process
-	Mat image(rhs[0].toMat());
-	vector<KeyPoint> keypoints;
-	FAST(image, keypoints, threshold, nonmaxSupression);
-	plhs[0] = MxArray(keypoints);
+    // Argument vector
+    vector<MxArray> rhs(prhs,prhs+nrhs);
+    
+    // Option processing
+    int threshold=20;
+    bool nonmaxSupression=true;
+    for (int i=1; i<nrhs; i+=2) {
+        string key = rhs[i].toString();
+        if (key=="Threshold")
+            threshold = rhs[i+1].toInt();
+        else if (key=="NonMaxSupression")
+            nonmaxSupression = rhs[i+1].toBool();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+    }
+    
+    // Process
+    Mat image(rhs[0].toMat());
+    vector<KeyPoint> keypoints;
+    FAST(image, keypoints, threshold, nonmaxSupression);
+    plhs[0] = MxArray(keypoints);
 #else
-	mexErrMsgIdAndTxt("mexopencv:error","FAST not supported in this version");
+    mexErrMsgIdAndTxt("mexopencv:error","FAST not supported in this version");
 #endif
 }

@@ -111,55 +111,55 @@ classdef SVM < handle
             % * __SampleIdx__ Indicator samples of interest. Must have the
             %         the same size to responses.
             % * __SvmType__ Type of a SVM formulation. Possible values are:
-			%     * 'C_SVC'     C-Support Vector Classification. n-class
-			%                   classification (n  2), allows imperfect separation
-			%                   of classes with penalty multiplier C for outliers.
-			%                   This is the default.
-			%     * 'NU_SVC'    Nu-Support Vector Classification. n-class
-			%                   classification with possible imperfect separation.
-			%                   Parameter  (in the range 0..1, the larger the value,
-			%                   the smoother the decision boundary) is used instead
-			%                   of C.
-			%     * 'ONE_CLASS' Distribution Estimation (One-class SVM). All the
-			%                   training data are from the same class, SVM builds
-			%                   a boundary that separates the class from the rest
-			%                   of the feature space.
-			%     * 'EPS_SVR'   Support Vector Regression. The distance between
-			%                   feature vectors from the training set and the fitting
-			%                   hyper-plane must be less than p. For outliers the
-			%                   penalty multiplier C is used.
-			%     * 'NU_SVR'    Nu-Support Vector Regression. Nu is used instead of p.
-			%         See [LibSVM] for details.
-			% * __KernelType__ Type of a SVM kernel. Possible values are:
-			%     * 'Linear'    Linear kernel. No mapping is done, linear discrimination
-			%                   (or regression) is done in the original feature space.
-			%                   It is the fastest option.
-			%     * 'Poly'      Polynomial kernel.
-			%     * 'RBF'       Radial basis function (RBF), a good choice in most cases.
-			%                   This is the default kernel.
-			%     * 'Sigmoid'   Sigmoid kernel.
-			% * __Degree__ Parameter degree of a kernel function (`POLY`). default 0.
-			% * __Gamma__ Parameter  of a kernel function (`POLY` / `RBF` / `SIGMOID`).
-			%         The default is 1.
-			% * __Coef0__ Parameter coef0 of a kernel function (`POLY` / `SIGMOID`).
-			%         The default is 0.
-			% * __C__ Parameter C of a SVM optimiazation problem (`C_SVC` / `EPS_SVR` / `NU_SVR`).
-			%         The default is 1.
-			% * __Nu__ Parameter nu of a SVM optimization problem (`NU_SVC` / `ONE_CLASS` / `NU_SVR`).
-			%         The default is 0.
-			% * __P__ Parameter p of a SVM optimization problem (`EPS_SVR`).
-			%         The default is 0.
-			% * __ClassWeights__ Optional weights in the `C_SVC` problem, assigned
-			%         to particular classes. They are multiplied by C so the parameter
-			%         C of class #i becomes . Thus these weights affect the
-			%         misclassification penalty for different classes. The larger
-			%         weight, the larger penalty on misclassification of data from
-			%         the corresponding class. Default none.
-			% * __TermCrit__ Termination criteria of the iterative SVM training
-			%         procedure which solves a partial case of constrained quadratic
-			%         optimization problem. You can specify tolerance and/or the
-			%         maximum number of iterations. A struct with the
-			%         following fields are accepted:
+            %     * 'C_SVC'     C-Support Vector Classification. n-class
+            %                   classification (n  2), allows imperfect separation
+            %                   of classes with penalty multiplier C for outliers.
+            %                   This is the default.
+            %     * 'NU_SVC'    Nu-Support Vector Classification. n-class
+            %                   classification with possible imperfect separation.
+            %                   Parameter  (in the range 0..1, the larger the value,
+            %                   the smoother the decision boundary) is used instead
+            %                   of C.
+            %     * 'ONE_CLASS' Distribution Estimation (One-class SVM). All the
+            %                   training data are from the same class, SVM builds
+            %                   a boundary that separates the class from the rest
+            %                   of the feature space.
+            %     * 'EPS_SVR'   Support Vector Regression. The distance between
+            %                   feature vectors from the training set and the fitting
+            %                   hyper-plane must be less than p. For outliers the
+            %                   penalty multiplier C is used.
+            %     * 'NU_SVR'    Nu-Support Vector Regression. Nu is used instead of p.
+            %         See [LibSVM] for details.
+            % * __KernelType__ Type of a SVM kernel. Possible values are:
+            %     * 'Linear'    Linear kernel. No mapping is done, linear discrimination
+            %                   (or regression) is done in the original feature space.
+            %                   It is the fastest option.
+            %     * 'Poly'      Polynomial kernel.
+            %     * 'RBF'       Radial basis function (RBF), a good choice in most cases.
+            %                   This is the default kernel.
+            %     * 'Sigmoid'   Sigmoid kernel.
+            % * __Degree__ Parameter degree of a kernel function (`POLY`). default 0.
+            % * __Gamma__ Parameter  of a kernel function (`POLY` / `RBF` / `SIGMOID`).
+            %         The default is 1.
+            % * __Coef0__ Parameter coef0 of a kernel function (`POLY` / `SIGMOID`).
+            %         The default is 0.
+            % * __C__ Parameter C of a SVM optimiazation problem (`C_SVC` / `EPS_SVR` / `NU_SVR`).
+            %         The default is 1.
+            % * __Nu__ Parameter nu of a SVM optimization problem (`NU_SVC` / `ONE_CLASS` / `NU_SVR`).
+            %         The default is 0.
+            % * __P__ Parameter p of a SVM optimization problem (`EPS_SVR`).
+            %         The default is 0.
+            % * __ClassWeights__ Optional weights in the `C_SVC` problem, assigned
+            %         to particular classes. They are multiplied by C so the parameter
+            %         C of class #i becomes . Thus these weights affect the
+            %         misclassification penalty for different classes. The larger
+            %         weight, the larger penalty on misclassification of data from
+            %         the corresponding class. Default none.
+            % * __TermCrit__ Termination criteria of the iterative SVM training
+            %         procedure which solves a partial case of constrained quadratic
+            %         optimization problem. You can specify tolerance and/or the
+            %         maximum number of iterations. A struct with the
+            %         following fields are accepted:
             %     * 'type'      one of {'Count','EPS','Count+EPS'}
             %     * 'maxCount'  maximum number of iterations
             %     * 'epsilon'   tolerance value
@@ -225,18 +225,18 @@ classdef SVM < handle
         end
         
         function value = get.Params(this)
-        	%PARAMS
-        	value = SVM_(this.id, 'get_params');
+            %PARAMS
+            value = SVM_(this.id, 'get_params');
         end
         
         function value = get.VarCount(this)
-        	%VARCOUNT
-        	value = SVM_(this.id, 'get_var_count');
+            %VARCOUNT
+            value = SVM_(this.id, 'get_var_count');
         end
         
         function value = get.SupportVectorCount(this)
-        	%SUPPORTVECTORCOUNT
-        	value = SVM_(this.id, 'get_support_vector_count');
+            %SUPPORTVECTORCOUNT
+            value = SVM_(this.id, 'get_support_vector_count');
         end
     end
     

@@ -4,9 +4,9 @@ classdef TestBackgroundSubtractorMOG2
     end
     
     methods (Static)
-    	function test_1
-    		bs = cv.BackgroundSubtractorMOG2;
-    	end
+        function test_1
+            bs = cv.BackgroundSubtractorMOG2;
+        end
     end
     
 end

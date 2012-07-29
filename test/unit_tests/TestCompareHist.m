@@ -4,10 +4,10 @@ classdef TestCompareHist
     end
     
     methods (Static)
-    	function test_1
+        function test_1
             d = cv.compareHist(single(0:5),single(5:-1:0));
-    	end
-    	
+        end
+        
         function test_error_1
             try
                 cv.compareHist();

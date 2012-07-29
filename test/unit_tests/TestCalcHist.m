@@ -6,12 +6,12 @@ classdef TestCalcHist
     end
     
     methods (Static)
-    	function test_1
-    		im = TestCalcHist.img;
+        function test_1
+            im = TestCalcHist.img;
             edges = {linspace(0,256,32+1),linspace(0,256,32+1)};
             H = cv.calcHist(im(:,:,1:2),edges);
-    	end
-    	
+        end
+        
         function test_error_1
             try
                 cv.calcHist();

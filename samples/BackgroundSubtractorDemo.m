@@ -17,7 +17,7 @@ setappdata(window,'flag',false);
 
 % Learn initial background model for a while
 for t = 1:bs.history
-	% Get an image
+    % Get an image
     im = camera.read;
     im = cv.resize(im,0.5);
     bs.apply(im, 'LearningRate', -1);
@@ -29,7 +29,7 @@ fprintf('finished.\n');
 
 % Start main loop
 while true
-	% Get an image
+    % Get an image
     im = camera.read;
     im = cv.resize(im,0.5);
     fg = bs.apply(im, 'LearningRate', 0);

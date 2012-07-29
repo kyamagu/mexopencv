@@ -5,7 +5,7 @@
 %
 % ## Input
 % * __src__ Source image: 8-bit unsigned, 16-bit unsigned (CV_16UC...), or
-%		  single-precision floating-point.
+%          single-precision floating-point.
 % * __code__ Color space conversion code string. e.g., 'RGB2GRAY'
 %
 % ## Output

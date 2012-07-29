@@ -42,7 +42,7 @@ classdef Boost < handle
     
     properties (SetAccess = private, Dependent)
         % Object parameters
-    	Params
+        Params
     end
     
     methods
@@ -123,52 +123,52 @@ classdef Boost < handle
             % * __VarType__ Solves classification problem when 'Categorical'.
             %         Otherwise, the training is treated as a regression problem.
             %         default 'Categorical'
-			% * __MissingMask__ Indicator mask for missing observation.
-			% * __BoostType__ Type of the boosting algorithm. Possible values
-			%         are listed below. Gentle AdaBoost and Real AdaBoost are often the preferable
-			%         choices. default 'Real'.
-			%     * 'Discrete' Discrete AbaBoost.
-			%     * 'Real'     Real AbaBoost. It is a technique that utilizes
-			%                  confidence-rated predictions and works well
-			%                  with categorical data.
-			%     * 'Logit'    LogitBoost. It can produce good regression fits.
-			%     * 'Gentle'   Gentle AdaBoost. It puts less weight on outlier
-			%                  data points and for that reason is often good
-			%                  with regression data.
+            % * __MissingMask__ Indicator mask for missing observation.
+            % * __BoostType__ Type of the boosting algorithm. Possible values
+            %         are listed below. Gentle AdaBoost and Real AdaBoost are often the preferable
+            %         choices. default 'Real'.
+            %     * 'Discrete' Discrete AbaBoost.
+            %     * 'Real'     Real AbaBoost. It is a technique that utilizes
+            %                  confidence-rated predictions and works well
+            %                  with categorical data.
+            %     * 'Logit'    LogitBoost. It can produce good regression fits.
+            %     * 'Gentle'   Gentle AdaBoost. It puts less weight on outlier
+            %                  data points and for that reason is often good
+            %                  with regression data.
             %
-			% * __WeakCount__ The number of weak classifiers. default 100.
-			% * __WeightTrimRate__ A threshold between 0 and 1 used to save
-			%         computational time. Samples with summary weight <= 1 -
-			%         WeightTrimRate do not participate in the next iteration of
-			%         training. Set this parameter to 0 to turn off this
-			%         functionality. default 0.95.
-			% * __MaxDepth__ The maximum possible depth of the tree. That is
-			%         the training algorithms attempts to split a node while its
-			%         depth is less than max_depth. The actual depth may be
-			%         smaller if the other termination criteria are met, and/or
-			%         if the tree is pruned. default 1.
-			% * __UseSurrogates__ If true then surrogate splits will be built.
-			%         These splits allow to work with missing data and compute
-			%         variable importance correctly. default true.
-			% * __Priors__ The array of a priori class probabilities, sorted by
-			%         the class label value. The parameter can be used to tune
-			%         the decision tree preferences toward a certain class. For
-			%         example, if you want to detect some rare anomaly
-			%         occurrence, the training base will likely contain much
-			%         more normal cases than anomalies, so a very good
-			%         classification performance will be achieved just by
-			%         considering every case as normal. To avoid this, the
-			%         priors can be specified, where the anomaly probability is
-			%         artificially increased (up to 0.5 or even greater), so the
-			%         weight of the misclassified anomalies becomes much bigger,
-			%         and the tree is adjusted properly. You can also think
-			%         about this parameter as weights of prediction categories
-			%         which determine relative weights that you give to
-			%         misclassification. That is, if the weight of the first
-			%         category is 1 and the weight of the second category is 10,
-			%         then each mistake in predicting the second category is
-			%         equivalent to making 10 mistakes in predicting the first
-			%         category. default none.
+            % * __WeakCount__ The number of weak classifiers. default 100.
+            % * __WeightTrimRate__ A threshold between 0 and 1 used to save
+            %         computational time. Samples with summary weight <= 1 -
+            %         WeightTrimRate do not participate in the next iteration of
+            %         training. Set this parameter to 0 to turn off this
+            %         functionality. default 0.95.
+            % * __MaxDepth__ The maximum possible depth of the tree. That is
+            %         the training algorithms attempts to split a node while its
+            %         depth is less than max_depth. The actual depth may be
+            %         smaller if the other termination criteria are met, and/or
+            %         if the tree is pruned. default 1.
+            % * __UseSurrogates__ If true then surrogate splits will be built.
+            %         These splits allow to work with missing data and compute
+            %         variable importance correctly. default true.
+            % * __Priors__ The array of a priori class probabilities, sorted by
+            %         the class label value. The parameter can be used to tune
+            %         the decision tree preferences toward a certain class. For
+            %         example, if you want to detect some rare anomaly
+            %         occurrence, the training base will likely contain much
+            %         more normal cases than anomalies, so a very good
+            %         classification performance will be achieved just by
+            %         considering every case as normal. To avoid this, the
+            %         priors can be specified, where the anomaly probability is
+            %         artificially increased (up to 0.5 or even greater), so the
+            %         weight of the misclassified anomalies becomes much bigger,
+            %         and the tree is adjusted properly. You can also think
+            %         about this parameter as weights of prediction categories
+            %         which determine relative weights that you give to
+            %         misclassification. That is, if the weight of the first
+            %         category is 1 and the weight of the second category is 10,
+            %         then each mistake in predicting the second category is
+            %         equivalent to making 10 mistakes in predicting the first
+            %         category. default none.
             %
             % The method trains the Boost model.
             %
@@ -209,8 +209,8 @@ classdef Boost < handle
         end
         
         function value = get.Params(this)
-        	%PARAMS  Returns the parameter
-        	value = Boost_(this.id, 'get_params');
+            %PARAMS  Returns the parameter
+            value = Boost_(this.id, 'get_params');
         end
     end
     

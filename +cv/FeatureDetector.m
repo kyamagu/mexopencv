@@ -1,31 +1,31 @@
 classdef FeatureDetector < handle
-	%FEATUREDETECTOR  FeatureDetector class
-	%
-	% Feature detector class. Here is how to use:
-	%
-	%    detector = cv.FeatureDetector('SURF');
-	%    keypoints = detector.detect(im);
-	%
-	% The following detector types are supported:
-	%
-	%     'FAST'       FastFeatureDetector
-	%     'STAR'       StarFeatureDetector
-	%     'SIFT'       SiftFeatureDetector
-	%     'SURF'       SurfFeatureDetector
-	%     'ORB'        OrbFeatureDetector
-	%     'MSER'       MserFeatureDetector
-	%     'GFTT'       GoodFeaturesToTrackDetector
-	%     'HARRIS'     GoodFeaturesToTrackDetector with Harris detector enabled
-	%     'Dense'      DenseFeatureDetector
-	%     'SimpleBlob' SimpleBlobDetector
-	%
-	% Also a combined format with one of the following adaptor is
-	% supported
-	%
-	%     'Grid'       GridAdaptedFeatureDetector
-	%     'Pyramid'    PyramidAdaptedFeatureDetector
-	%
-	% for example: 'GridFAST', 'PyramidSTAR'.
+    %FEATUREDETECTOR  FeatureDetector class
+    %
+    % Feature detector class. Here is how to use:
+    %
+    %    detector = cv.FeatureDetector('SURF');
+    %    keypoints = detector.detect(im);
+    %
+    % The following detector types are supported:
+    %
+    %     'FAST'       FastFeatureDetector
+    %     'STAR'       StarFeatureDetector
+    %     'SIFT'       SiftFeatureDetector
+    %     'SURF'       SurfFeatureDetector
+    %     'ORB'        OrbFeatureDetector
+    %     'MSER'       MserFeatureDetector
+    %     'GFTT'       GoodFeaturesToTrackDetector
+    %     'HARRIS'     GoodFeaturesToTrackDetector with Harris detector enabled
+    %     'Dense'      DenseFeatureDetector
+    %     'SimpleBlob' SimpleBlobDetector
+    %
+    % Also a combined format with one of the following adaptor is
+    % supported
+    %
+    %     'Grid'       GridAdaptedFeatureDetector
+    %     'Pyramid'    PyramidAdaptedFeatureDetector
+    %
+    % for example: 'GridFAST', 'PyramidSTAR'.
     %
     % See also cv.FeatureDetector.FeatureDetector cv.FeatureDetector.write
     % cv.DescriptorExtractor
@@ -33,12 +33,12 @@ classdef FeatureDetector < handle
     
     properties (SetAccess = private)
         % Object ID
-    	id
+        id
     end
     
     properties (SetAccess = private, Dependent)
         % Type of the detector
-    	type
+        type
     end
     
     methods
@@ -92,8 +92,8 @@ classdef FeatureDetector < handle
         end
         
         function t = get.type(this)
-        	%TYPE  FeatureDetector type
-        	t = FeatureDetector_(this.id, 'type');
+            %TYPE  FeatureDetector type
+            t = FeatureDetector_(this.id, 'type');
         end
         
         function keypoints = detect(this, im)

@@ -187,23 +187,23 @@ classdef KNearest < handle
         end
         
         function value = get.MaxK(this)
-        	%MAXK
-        	value = KNearest_(this.id, 'get_max_k');
+            %MAXK
+            value = KNearest_(this.id, 'get_max_k');
         end
         
         function value = get.VarCount(this)
-        	%VARCOUNT
-        	value = KNearest_(this.id, 'get_var_count');
+            %VARCOUNT
+            value = KNearest_(this.id, 'get_var_count');
         end
         
         function value = get.SampleCount(this)
-        	%SAMPLECOUNT
-        	value = KNearest_(this.id, 'get_sample_count');
+            %SAMPLECOUNT
+            value = KNearest_(this.id, 'get_sample_count');
         end
         
         function value = get.IsRegression(this)
-        	%ISREGRESSION
-        	value = KNearest_(this.id, 'is_regression');
+            %ISREGRESSION
+            value = KNearest_(this.id, 'is_regression');
         end
     end
     

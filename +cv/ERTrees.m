@@ -110,71 +110,71 @@ classdef ERTrees < handle
             % * __VarType__ Solves classification problem when 'Categorical'.
             %         Otherwise, the training is treated as a regression problem.
             %         default 'Categorical'
-			% * __MissingMask__ Indicator mask for missing observation.
-			% * __MaxDepth__ The maximum possible depth of the tree. That is
-			%         the training algorithms attempts to split a node while its
-			%         depth is less than MaxDepth. The actual depth may be
-			%         smaller if the other termination criteria are met, and/or
-			%         if the tree is pruned. default 5.
-			% * __MinSampleCount__ If the number of samples in a node is less
-			%         than this parameter then the node will not be splitted.
-			%         default 10.
-			% * __RegressionAccuracy__ Termination criteria for regression
-			%         trees. If all absolute differences between an estimated
-			%         value in a node and values of train samples in this node
-			%         are less than this parameter then the node will not be
-			%         splitted. default 0.
-			% * __UseSurrogates__ If true then surrogate splits will be built.
-			%         These splits allow to work with missing data and compute
-			%         variable importance correctly. default false.
-			% * __MaxCategories__ Cluster possible values of a categorical
-			%         variable into K <= MaxCategories clusters to find a
-			%         suboptimal split. If a discrete variable, on which the
-			%         training procedure tries to make a split, takes more than
-			%         MaxCategories values, the precise best subset estimation
-			%         may take a very long time because the algorithm is
-			%         exponential. Instead, many decision trees engines
-			%         (including ML) try to find sub-optimal split in this case
-			%         by clustering all the samples into MaxCategories clusters
-			%         that is some categories are merged together. The
-			%         clustering is applied only in n>2-class classification
-			%         problems for categorical variables with N > MaxCategories
-			%         possible values. In case of regression and 2-class
-			%         classification the optimal split can be found efficiently
-			%         without employing clustering, thus the parameter is not
-			%         used in these cases. default 0.
-			% * __Priors__ The array of a priori class probabilities, sorted by
-			%         the class label value. The parameter can be used to tune
-			%         the decision tree preferences toward a certain class. For
-			%         example, if you want to detect some rare anomaly
-			%         occurrence, the training base will likely contain much
-			%         more normal cases than anomalies, so a very good
-			%         classification performance will be achieved just by
-			%         considering every case as normal. To avoid this, the
-			%         priors can be specified, where the anomaly probability is
-			%         artificially increased (up to 0.5 or even greater), so the
-			%         weight of the misclassified anomalies becomes much bigger,
-			%         and the tree is adjusted properly. You can also think
-			%         about this parameter as weights of prediction categories
-			%         which determine relative weights that you give to
-			%         misclassification. That is, if the weight of the first
-			%         category is 1 and the weight of the second category is 10,
-			%         then each mistake in predicting the second category is
-			%         equivalent to making 10 mistakes in predicting the first
-			%         category. default none.
-			% * __CalcVarImportance__ If true then variable importance will
-			%         be calculated and then it can be retrieved by
-			%         getVarImportance(). default false.
-			% * __NActiveVars__ The size of the randomly selected subset of
-			%         features at each tree node and that are used to find the
-			%         best split(s). If you set it to 0 then the size will be
-			%         set to the square root of the total number of features.
-			%         default 0.
-			% * __MaxNumOfTreesInTheForest__ The maximum number of trees in the
-			%         forest (suprise, suprise). default 50.
-			% * __ForestAccuracy__ Sufficient accuracy (OOB error). default 0.1
-			% * __TermCritType__ The type of the termination criteria. One of
-			%         'Iter', 'EPS', or 'Iter+EPS'. default 'Iter+EPS'
+            % * __MissingMask__ Indicator mask for missing observation.
+            % * __MaxDepth__ The maximum possible depth of the tree. That is
+            %         the training algorithms attempts to split a node while its
+            %         depth is less than MaxDepth. The actual depth may be
+            %         smaller if the other termination criteria are met, and/or
+            %         if the tree is pruned. default 5.
+            % * __MinSampleCount__ If the number of samples in a node is less
+            %         than this parameter then the node will not be splitted.
+            %         default 10.
+            % * __RegressionAccuracy__ Termination criteria for regression
+            %         trees. If all absolute differences between an estimated
+            %         value in a node and values of train samples in this node
+            %         are less than this parameter then the node will not be
+            %         splitted. default 0.
+            % * __UseSurrogates__ If true then surrogate splits will be built.
+            %         These splits allow to work with missing data and compute
+            %         variable importance correctly. default false.
+            % * __MaxCategories__ Cluster possible values of a categorical
+            %         variable into K <= MaxCategories clusters to find a
+            %         suboptimal split. If a discrete variable, on which the
+            %         training procedure tries to make a split, takes more than
+            %         MaxCategories values, the precise best subset estimation
+            %         may take a very long time because the algorithm is
+            %         exponential. Instead, many decision trees engines
+            %         (including ML) try to find sub-optimal split in this case
+            %         by clustering all the samples into MaxCategories clusters
+            %         that is some categories are merged together. The
+            %         clustering is applied only in n>2-class classification
+            %         problems for categorical variables with N > MaxCategories
+            %         possible values. In case of regression and 2-class
+            %         classification the optimal split can be found efficiently
+            %         without employing clustering, thus the parameter is not
+            %         used in these cases. default 0.
+            % * __Priors__ The array of a priori class probabilities, sorted by
+            %         the class label value. The parameter can be used to tune
+            %         the decision tree preferences toward a certain class. For
+            %         example, if you want to detect some rare anomaly
+            %         occurrence, the training base will likely contain much
+            %         more normal cases than anomalies, so a very good
+            %         classification performance will be achieved just by
+            %         considering every case as normal. To avoid this, the
+            %         priors can be specified, where the anomaly probability is
+            %         artificially increased (up to 0.5 or even greater), so the
+            %         weight of the misclassified anomalies becomes much bigger,
+            %         and the tree is adjusted properly. You can also think
+            %         about this parameter as weights of prediction categories
+            %         which determine relative weights that you give to
+            %         misclassification. That is, if the weight of the first
+            %         category is 1 and the weight of the second category is 10,
+            %         then each mistake in predicting the second category is
+            %         equivalent to making 10 mistakes in predicting the first
+            %         category. default none.
+            % * __CalcVarImportance__ If true then variable importance will
+            %         be calculated and then it can be retrieved by
+            %         getVarImportance(). default false.
+            % * __NActiveVars__ The size of the randomly selected subset of
+            %         features at each tree node and that are used to find the
+            %         best split(s). If you set it to 0 then the size will be
+            %         set to the square root of the total number of features.
+            %         default 0.
+            % * __MaxNumOfTreesInTheForest__ The maximum number of trees in the
+            %         forest (suprise, suprise). default 50.
+            % * __ForestAccuracy__ Sufficient accuracy (OOB error). default 0.1
+            % * __TermCritType__ The type of the termination criteria. One of
+            %         'Iter', 'EPS', or 'Iter+EPS'. default 'Iter+EPS'
             %
             % The method trains the ERTrees model.
             %
@@ -244,42 +244,42 @@ classdef ERTrees < handle
         end
         
         function value = getVarImportance(this)
-        	%GETVARIMPORTANCE  Returns the variable importance array
-        	value = ERTrees_(this.id, 'getVarImportance');
+            %GETVARIMPORTANCE  Returns the variable importance array
+            value = ERTrees_(this.id, 'getVarImportance');
         end
         
         function value = get_proximity(this, sample1, sample2, varargin)
-        	%GET_PROXIMITY  Returns the variable importance array
-        	%
-        	%    value = classifier.get_proximity(sample1, sample2)
-        	%    [...] = classifier.get_proximity(..., 'OptionName', optionValue, ...)
-        	%
+            %GET_PROXIMITY  Returns the variable importance array
+            %
+            %    value = classifier.get_proximity(sample1, sample2)
+            %    [...] = classifier.get_proximity(..., 'OptionName', optionValue, ...)
+            %
             %
             % ## Options
             % * __Missing1__ Missing values mask for sample1
             % * __Missing2__ Missing values mask for sample2
             %
-        	value = ERTrees_(this.id, 'get_proximity', sample1, sample2, varargin{:});
+            value = ERTrees_(this.id, 'get_proximity', sample1, sample2, varargin{:});
         end
         
         function value = get_train_error(this)
-        	%GET_TRAIN_ERROR  Returns the training error
-        	value = ERTrees_(this.id, 'get_train_error');
+            %GET_TRAIN_ERROR  Returns the training error
+            value = ERTrees_(this.id, 'get_train_error');
         end
         
         function value = get.Params(this)
-        	%PARAMS
-        	value = ERTrees_(this.id, 'params');
+            %PARAMS
+            value = ERTrees_(this.id, 'params');
         end
         
         function value = get.ActiveVarMask(this)
             %ACTIVEVARMASK
-        	value = ERTrees_(this.id, 'get_active_var_mask');
+            value = ERTrees_(this.id, 'get_active_var_mask');
         end
         
         function value = get.TreeCount(this)
-        	%TREECOUNT  Returns the number of trees in the constructed random forest
-        	value = ERTrees_(this.id, 'get_tree_count');
+            %TREECOUNT  Returns the number of trees in the constructed random forest
+            value = ERTrees_(this.id, 'get_tree_count');
         end
     end
     

@@ -18,28 +18,28 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-	// Check the number of arguments
-	if (nrhs<2 || ((nrhs%2)!=0) || nlhs>2)
+    // Check the number of arguments
+    if (nrhs<2 || ((nrhs%2)!=0) || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
-	// Argument vector
-	vector<MxArray> rhs(prhs,prhs+nrhs);
-	
-	// Option processing
-	Mat probImage(rhs[0].toMat());
-	Rect window(rhs[1].toRect());
-	TermCriteria criteria(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 10, 1);
-	for (int i=2; i<nrhs; i+=2) {
-		string key = rhs[i].toString();
-		if (key=="Criteria")
-			criteria = rhs[i+1].toTermCriteria();
-		else
-			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-	}
-	
-	// Process
-	int it = meanShift(probImage,window,criteria);
-	plhs[0] = MxArray(window);
-	if (nlhs>1)
-		plhs[1] = MxArray(it);
+    // Argument vector
+    vector<MxArray> rhs(prhs,prhs+nrhs);
+    
+    // Option processing
+    Mat probImage(rhs[0].toMat());
+    Rect window(rhs[1].toRect());
+    TermCriteria criteria(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 10, 1);
+    for (int i=2; i<nrhs; i+=2) {
+        string key = rhs[i].toString();
+        if (key=="Criteria")
+            criteria = rhs[i+1].toTermCriteria();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+    }
+    
+    // Process
+    int it = meanShift(probImage,window,criteria);
+    plhs[0] = MxArray(window);
+    if (nlhs>1)
+        plhs[1] = MxArray(it);
 }

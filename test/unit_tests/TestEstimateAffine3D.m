@@ -3,7 +3,7 @@ classdef TestEstimateAffine3D
     properties (Constant)
     end
     
-    methods (Static)    	
+    methods (Static)        
         function test_error_1
             try
                 cv.estimateAffine3D();

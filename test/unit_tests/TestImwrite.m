@@ -1,7 +1,7 @@
 classdef TestImwrite
     %TestImwrite
     properties (Constant)
-    	im = im2uint8(randn(32,32,3));
+        im = im2uint8(randn(32,32,3));
         path = fileparts(fileparts(mfilename('fullpath')))
         filename = [TestImwrite.path,filesep,'foo.jpg'];
     end
@@ -10,7 +10,7 @@ classdef TestImwrite
         function test_1
             cv.imwrite(TestImwrite.filename,TestImwrite.im);
             if exist(TestImwrite.filename,'file')
-            	delete(TestImwrite.filename);
+                delete(TestImwrite.filename);
             end
         end
         

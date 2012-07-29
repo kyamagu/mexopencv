@@ -5,12 +5,12 @@ classdef TestGetRotationMatrix2D
     
     methods (Static)
         function test_1
-        	center = [0,0];
-        	angle = 180;
-        	scale = 1.0;
-        	ref = [-1,0,0;0,-1,0];
-        	t = cv.getRotationMatrix2D(center, angle, scale);
-        	assert(all(abs(t(:)-ref(:))<1e-5));
+            center = [0,0];
+            angle = 180;
+            scale = 1.0;
+            ref = [-1,0,0;0,-1,0];
+            t = cv.getRotationMatrix2D(center, angle, scale);
+            assert(all(abs(t(:)-ref(:))<1e-5));
         end
         
         function test_error_1

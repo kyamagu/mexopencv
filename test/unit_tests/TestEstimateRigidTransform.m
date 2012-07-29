@@ -1,7 +1,7 @@
 classdef TestEstimateRigidTransform
     %TestEstimateRigidTransform
     properties (Constant)
-    	im = im2uint8([...
+        im = im2uint8([...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
@@ -17,8 +17,8 @@ classdef TestEstimateRigidTransform
     
     methods (Static)
         function test_1
-        	im1 = TestEstimateRigidTransform.im;
-        	im2 = [zeros(10,1,'uint8'),im1(:,1:end-1)];
+            im1 = TestEstimateRigidTransform.im;
+            im2 = [zeros(10,1,'uint8'),im1(:,1:end-1)];
             M = cv.estimateRigidTransform(im1,im2,'FullAffine',false);
         end
         

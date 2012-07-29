@@ -1,26 +1,26 @@
 classdef DescriptorExtractor < handle
-	%DESCRIPTOREXTRACTOR  DescriptorExtractor class
-	%
-	% Descriptor extractor class. Here is how to use:
-	%
-	%    detector = cv.FeatureDetector('SURF');
-	%    keypoints = detector.detect(im);
-	%    extractor = cv.DescriptorExtractor('SURF');
-	%    descriptors = extractor.compute(im, keypoints);
-	%
-	% The following extractor types are supported:
-	%
-	%     'SIFT'     SiftDescriptorExtractor
-	%     'SURF'     SurfDescriptorExtractor
-	%     'ORB'      OrbDescriptorExtractor
-	%     'BRIEF'    BriefDescriptorExtractor
-	%
-	% Also a combined format with the following adaptor is
-	% supported
-	%
-	%     'Opponent' OpponentColorDescriptorExtractor
-	%
-	% for example: 'OpponentSIFT'.
+    %DESCRIPTOREXTRACTOR  DescriptorExtractor class
+    %
+    % Descriptor extractor class. Here is how to use:
+    %
+    %    detector = cv.FeatureDetector('SURF');
+    %    keypoints = detector.detect(im);
+    %    extractor = cv.DescriptorExtractor('SURF');
+    %    descriptors = extractor.compute(im, keypoints);
+    %
+    % The following extractor types are supported:
+    %
+    %     'SIFT'     SiftDescriptorExtractor
+    %     'SURF'     SurfDescriptorExtractor
+    %     'ORB'      OrbDescriptorExtractor
+    %     'BRIEF'    BriefDescriptorExtractor
+    %
+    % Also a combined format with the following adaptor is
+    % supported
+    %
+    %     'Opponent' OpponentColorDescriptorExtractor
+    %
+    % for example: 'OpponentSIFT'.
     %
     % See also cv.DescriptorExtractor.DescriptorExtractor
     % cv.DescriptorExtractor.compute cv.FeatureDetector
@@ -29,14 +29,14 @@ classdef DescriptorExtractor < handle
     
     properties (SetAccess = private)
         % Object ID
-    	id
+        id
     end
     
     properties (SetAccess = private, Dependent)
         % Size of the DescriptorExtractor
         size
         % Type of the extractor
-    	type
+        type
     end
     
     methods
@@ -83,13 +83,13 @@ classdef DescriptorExtractor < handle
         end
         
         function s = get.size(this)
-        	%SIZE  DescriptorExtractor size
-        	s = DescriptorExtractor_(this.id, 'size');
+            %SIZE  DescriptorExtractor size
+            s = DescriptorExtractor_(this.id, 'size');
         end
         
         function t = get.type(this)
-        	%TYPE  DescriptorExtractor type
-        	t = DescriptorExtractor_(this.id, 'type');
+            %TYPE  DescriptorExtractor type
+            t = DescriptorExtractor_(this.id, 'type');
         end
         
         function descriptors = compute(this, im, keypoints)

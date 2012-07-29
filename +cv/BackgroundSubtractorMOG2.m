@@ -34,12 +34,12 @@ classdef BackgroundSubtractorMOG2 < handle
     end
 
     properties (Dependent)
-    	frameSize        % Size of the frame (not accessible >= 2.4.0)
-    	nframes          % Number of frames  (not accessible >= 2.4.0)
-    	history          % History
-    	nmixtures        % Number of mixture components (not accessible >= 2.4.0)
-    	varThreshold     % Threshold value
-    	backgroundRatio  % Ratio of the background (not accessible >= 2.4.0)
+        frameSize        % Size of the frame (not accessible >= 2.4.0)
+        nframes          % Number of frames  (not accessible >= 2.4.0)
+        history          % History
+        nmixtures        % Number of mixture components (not accessible >= 2.4.0)
+        varThreshold     % Threshold value
+        backgroundRatio  % Ratio of the background (not accessible >= 2.4.0)
     end
 
     methods
@@ -108,51 +108,51 @@ classdef BackgroundSubtractorMOG2 < handle
         end
 
         function value = get.frameSize(this)
-        	value = BackgroundSubtractorMOG2_(this.id, 'frameSize');
+            value = BackgroundSubtractorMOG2_(this.id, 'frameSize');
         end
 
         function set.frameSize(this, value)
-        	BackgroundSubtractorMOG2_(this.id, 'frameSize', value);
+            BackgroundSubtractorMOG2_(this.id, 'frameSize', value);
         end
 
         function value = get.nframes(this)
-        	value = BackgroundSubtractorMOG2_(this.id, 'nframes');
+            value = BackgroundSubtractorMOG2_(this.id, 'nframes');
         end
 
         function set.nframes(this, value)
-        	BackgroundSubtractorMOG2_(this.id, 'nframes', value);
+            BackgroundSubtractorMOG2_(this.id, 'nframes', value);
         end
 
         function value = get.history(this)
-        	value = BackgroundSubtractorMOG2_(this.id, 'history');
+            value = BackgroundSubtractorMOG2_(this.id, 'history');
         end
 
         function set.history(this, value)
-        	BackgroundSubtractorMOG2_(this.id, 'history', value);
+            BackgroundSubtractorMOG2_(this.id, 'history', value);
         end
 
         function value = get.nmixtures(this)
-        	value = BackgroundSubtractorMOG2_(this.id, 'nmixtures');
+            value = BackgroundSubtractorMOG2_(this.id, 'nmixtures');
         end
 
         function set.nmixtures(this, value)
-        	BackgroundSubtractorMOG2_(this.id, 'nmixtures', value);
+            BackgroundSubtractorMOG2_(this.id, 'nmixtures', value);
         end
 
         function value = get.varThreshold(this)
-        	value = BackgroundSubtractorMOG2_(this.id, 'varThreshold');
+            value = BackgroundSubtractorMOG2_(this.id, 'varThreshold');
         end
 
         function set.varThreshold(this, value)
-        	BackgroundSubtractorMOG2_(this.id, 'varThreshold', value);
+            BackgroundSubtractorMOG2_(this.id, 'varThreshold', value);
         end
 
         function value = get.backgroundRatio(this)
-        	value = BackgroundSubtractorMOG2_(this.id, 'backgroundRatio');
+            value = BackgroundSubtractorMOG2_(this.id, 'backgroundRatio');
         end
 
         function set.backgroundRatio(this, value)
-        	BackgroundSubtractorMOG2_(this.id, 'backgroundRatio', value);
+            BackgroundSubtractorMOG2_(this.id, 'backgroundRatio', value);
         end
     end
 

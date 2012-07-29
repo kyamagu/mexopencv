@@ -18,36 +18,36 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-	// Check the number of arguments
-	if (nrhs<1 || ((nrhs%2)!=1) || nlhs>1)
+    // Check the number of arguments
+    if (nrhs<1 || ((nrhs%2)!=1) || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
-	// Argument vector
-	vector<MxArray> rhs(prhs,prhs+nrhs);
-	bool oriented=false;
-	for (int i=1; i<nrhs; i+=2) {
-		string key = rhs[i].toString();
-		if (key=="Oriented")
-			oriented = rhs[i+1].toBool();
-		else
-			mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-	}
-	
-	// Process
+    // Argument vector
+    vector<MxArray> rhs(prhs,prhs+nrhs);
+    bool oriented=false;
+    for (int i=1; i<nrhs; i+=2) {
+        string key = rhs[i].toString();
+        if (key=="Oriented")
+            oriented = rhs[i+1].toBool();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+    }
+    
+    // Process
 #if CV_MINOR_VERSION >= 2
-	if (rhs[0].isNumeric()) {
-		Mat curve(rhs[0].toMat());
-		double a = contourArea(curve, oriented);
-		plhs[0] = MxArray(a);
-	}
-	else if (rhs[0].isCell()) {
-		vector<Point> curve(rhs[0].toVector<Point>());
-		double a = contourArea(curve, oriented);
-		plhs[0] = MxArray(a);		
-	}
+    if (rhs[0].isNumeric()) {
+        Mat curve(rhs[0].toMat());
+        double a = contourArea(curve, oriented);
+        plhs[0] = MxArray(a);
+    }
+    else if (rhs[0].isCell()) {
+        vector<Point> curve(rhs[0].toVector<Point>());
+        double a = contourArea(curve, oriented);
+        plhs[0] = MxArray(a);        
+    }
 #else
-		Mat curve(rhs[0].toMat());
-		double a = contourArea(curve, oriented);
-		plhs[0] = MxArray(a);
+        Mat curve(rhs[0].toMat());
+        double a = contourArea(curve, oriented);
+        plhs[0] = MxArray(a);
 #endif
 }

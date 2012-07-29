@@ -20,7 +20,7 @@ classdef TestGoodFeaturesToTrack
     
     methods (Static)
         function test_1
-        	im = TestGoodFeaturesToTrack.img;
+            im = TestGoodFeaturesToTrack.img;
             result = cv.goodFeaturesToTrack(im);
         end
         

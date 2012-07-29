@@ -99,29 +99,29 @@ classdef GBTrees < handle
             % * __VarType__ Solves classification problem when 'Categorical'.
             %         Otherwise, the training is treated as a regression problem.
             %         default 'Categorical'
-			% * __MissingMask__ Indicator mask for missing observation.
-			% * __LossFunctionType__ Type of the loss function used for
-			%         training. It must be one of the following types:
-			%         'Squared', 'Absolute', 'Huber', 'Deviance'. The first
-			%         three types are used for regression problems, and the last
-			%         one for classification. default 'Squared'.
-			% * __WeakCount__ Count of boosting algorithm iterations.
-			%         WeakCount*K is the total count of trees in the GBT model,
-			%         where K is the output classes count (equal to one in case
-			%         of a regression). default 200.
-			% * __Shrinkage__ Regularization parameter. default 0.8.
-			% * __SubsamplePortion__ Portion of the whole training set used for
-			%         each algorithm iteration. Subset is generated randomly.
-			%         For more information see
-			%         http://www.salfordsystems.com/doc/StochasticBoostingSS.pdf
-			% * __MaxDepth__ The maximum possible depth of the tree. That is
-			%         the training algorithms attempts to split a node while its
-			%         depth is less than MaxDepth. The actual depth may be
-			%         smaller if the other termination criteria are met, and/or
-			%         if the tree is pruned. default 1.
-			% * __UseSurrogates__ If true then surrogate splits will be built.
-			%         These splits allow to work with missing data and compute
-			%         variable importance correctly. default true.
+            % * __MissingMask__ Indicator mask for missing observation.
+            % * __LossFunctionType__ Type of the loss function used for
+            %         training. It must be one of the following types:
+            %         'Squared', 'Absolute', 'Huber', 'Deviance'. The first
+            %         three types are used for regression problems, and the last
+            %         one for classification. default 'Squared'.
+            % * __WeakCount__ Count of boosting algorithm iterations.
+            %         WeakCount*K is the total count of trees in the GBT model,
+            %         where K is the output classes count (equal to one in case
+            %         of a regression). default 200.
+            % * __Shrinkage__ Regularization parameter. default 0.8.
+            % * __SubsamplePortion__ Portion of the whole training set used for
+            %         each algorithm iteration. Subset is generated randomly.
+            %         For more information see
+            %         http://www.salfordsystems.com/doc/StochasticBoostingSS.pdf
+            % * __MaxDepth__ The maximum possible depth of the tree. That is
+            %         the training algorithms attempts to split a node while its
+            %         depth is less than MaxDepth. The actual depth may be
+            %         smaller if the other termination criteria are met, and/or
+            %         if the tree is pruned. default 1.
+            % * __UseSurrogates__ If true then surrogate splits will be built.
+            %         These splits allow to work with missing data and compute
+            %         variable importance correctly. default true.
             %
             % The method trains the GBTrees model.
             %

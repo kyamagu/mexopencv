@@ -1,7 +1,7 @@
 classdef TestCalcOpticalFlowPyrLK
     %TestCalcOpticalFlowPyrLK
     properties (Constant)
-    	im = im2uint8([...
+        im = im2uint8([...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
@@ -17,8 +17,8 @@ classdef TestCalcOpticalFlowPyrLK
     
     methods (Static)
         function test_1
-        	im1 = TestCalcOpticalFlowPyrLK.im;
-        	im2 = [zeros(10,1,'uint8'),im1(:,1:end-1)];
+            im1 = TestCalcOpticalFlowPyrLK.im;
+            im2 = [zeros(10,1,'uint8'),im1(:,1:end-1)];
             pts = cv.calcOpticalFlowPyrLK(im1,im2,{[3,3]});
         end
         

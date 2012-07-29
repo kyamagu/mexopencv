@@ -4,9 +4,9 @@ classdef TestDescriptorMatcher
     end
     
     methods (Static)
-    	function test_1
-    		X = randn(50,3);
-    		Y = randn(10,3);
+        function test_1
+            X = randn(50,3);
+            Y = randn(10,3);
             matchers = [...
                 cv.DescriptorMatcher('BruteForce'),...
                 cv.DescriptorMatcher('BruteForce-L1'),...
@@ -25,9 +25,9 @@ classdef TestDescriptorMatcher
             end
         end
         
-    	function test_2
-    		X = uint8(255*rand(50,3));
-    		Y = uint8(255*rand(10,3));
+        function test_2
+            X = uint8(255*rand(50,3));
+            Y = uint8(255*rand(10,3));
             matchers = [...
                 cv.DescriptorMatcher('BruteForce-Hamming'),...
                 cv.DescriptorMatcher('BruteForce-HammingLUT')...
@@ -39,7 +39,7 @@ classdef TestDescriptorMatcher
                 matchers(i).knnMatch(Y,3);
                 matchers(i).radiusMatch(Y,0.1);
             end
-    	end
+        end
     end
     
 end

@@ -1,36 +1,36 @@
 classdef DescriptorMatcher < handle
-	%DESCRIPTORMATCHER  DescriptorMatcher class
-	%
-	% Descriptor matcher class. Basic usage is the following:
-	%
+    %DESCRIPTORMATCHER  DescriptorMatcher class
+    %
+    % Descriptor matcher class. Basic usage is the following:
+    %
     %    X = rand(100,10);
     %    Y = rand(100,10);
-	%    matcher = cv.DescriptorMatcher('BruteForce');
+    %    matcher = cv.DescriptorMatcher('BruteForce');
     %    matcher.add(X);
     %    matcher.train(); % Optional for BruteForce matcher
-	%    matches = matcher.match(Y);
-	%
-	% The following matcher types are supported:
-	%
-	%     'BruteForce'             L2 distance
-	%     'BruteForce-L1'          L1 distance
-	%     'BruteForce-Hamming'     Hamming distance
-	%     'BruteForce-HammingLUT'  Hamming distance lookup table
-	%     'FlannBased'             Flann-based indexing
-	%
-	% See the constructor help for a detail of how to specify types.
+    %    matches = matcher.match(Y);
+    %
+    % The following matcher types are supported:
+    %
+    %     'BruteForce'             L2 distance
+    %     'BruteForce-L1'          L1 distance
+    %     'BruteForce-Hamming'     Hamming distance
+    %     'BruteForce-HammingLUT'  Hamming distance lookup table
+    %     'FlannBased'             Flann-based indexing
+    %
+    % See the constructor help for a detail of how to specify types.
     %
     % See also cv.DescriptorMatcher.DescriptorMatcher cv.DescriptorExtractor
     %
     
     properties (SetAccess = private)
         % Object ID
-    	id
+        id
     end
     
     properties (SetAccess = private, Dependent)
         % Type of the detector
-    	type
+        type
     end
     
     methods
@@ -172,67 +172,67 @@ classdef DescriptorMatcher < handle
         end
         
         function t = get.type(this)
-        	%TYPE  DescriptorMatcher type
-        	t = DescriptorMatcher_(this.id, 'type');
+            %TYPE  DescriptorMatcher type
+            t = DescriptorMatcher_(this.id, 'type');
         end
         
         function add(this, descriptors)
-        	%ADD  Adds descriptors to train a descriptor collection
+            %ADD  Adds descriptors to train a descriptor collection
             %
             %    matcher.add(descriptors)
-        	%
-        	% If the collection trainDescCollectionis is not empty, the new
-        	% descriptors are added to existing train descriptors.
-        	%
-        	DescriptorMatcher_(this.id, 'add', descriptors);
+            %
+            % If the collection trainDescCollectionis is not empty, the new
+            % descriptors are added to existing train descriptors.
+            %
+            DescriptorMatcher_(this.id, 'add', descriptors);
         end
         
         function descriptors = getTrainDescriptors(this)
-        	%GETTRAINDESCRIPTORS  Returns a constant link to the train descriptor collection trainDescCollection
-        	%
-        	descriptors = DescriptorMatcher_(this.id, 'getTrainDescriptors');
+            %GETTRAINDESCRIPTORS  Returns a constant link to the train descriptor collection trainDescCollection
+            %
+            descriptors = DescriptorMatcher_(this.id, 'getTrainDescriptors');
         end
         
         function clear(this)
-        	%CLEAR  Clears the train descriptor collection
-        	%
+            %CLEAR  Clears the train descriptor collection
+            %
             %    matcher.clear()
-        	%
-        	DescriptorMatcher_(this.id, 'clear');
+            %
+            DescriptorMatcher_(this.id, 'clear');
         end
         
         function status = empty(this)
-        	%EMPTY  Returns true if there are no train descriptors in the collection
+            %EMPTY  Returns true if there are no train descriptors in the collection
             %
             %    matcher.empty()
-        	%
-        	status = DescriptorMatcher_(this.id, 'empty');
+            %
+            status = DescriptorMatcher_(this.id, 'empty');
         end
         
         function status = isMaskSupported(this)
-        	%ISMASKSUPPORTED  Returns true if the descriptor matcher supports masking permissible matches
-        	%
-        	status = DescriptorMatcher_(this.id, 'isMaskSupported');
+            %ISMASKSUPPORTED  Returns true if the descriptor matcher supports masking permissible matches
+            %
+            status = DescriptorMatcher_(this.id, 'isMaskSupported');
         end
         
         function train(this)
-        	%TRAIN  Trains a descriptor matcher
-        	%
+            %TRAIN  Trains a descriptor matcher
+            %
             %    matcher.train()
-        	%
-        	% Trains a descriptor matcher (for example, the flann index). In all
-        	% methods to match, the method train() is run every time before
-        	% matching. Some descriptor matchers (for example,
-        	% BruteForceMatcher) have an empty implementation of this method.
-        	% Other matchers really train their inner structures (for example,
-        	% FlannBasedMatcher trains flann::Index).
-        	%
-        	DescriptorMatcher_(this.id, 'train');
+            %
+            % Trains a descriptor matcher (for example, the flann index). In all
+            % methods to match, the method train() is run every time before
+            % matching. Some descriptor matchers (for example,
+            % BruteForceMatcher) have an empty implementation of this method.
+            % Other matchers really train their inner structures (for example,
+            % FlannBasedMatcher trains flann::Index).
+            %
+            DescriptorMatcher_(this.id, 'train');
         end
         
         function matches = match(this, queryDescriptors, varargin)
-        	%MATCH  Finds the best match for each descriptor from a query set
-        	%
+            %MATCH  Finds the best match for each descriptor from a query set
+            %
             %    matches = matcher.match(queryDescriptors)
             %    matches = matcher.match(queryDescriptors, trainDescriptors)
             %    [...] = matcher.match(..., 'OptionName', optionValue, ...)
@@ -251,13 +251,13 @@ classdef DescriptorMatcher < handle
             % ## Options
             %   'Mask' Mask specifying permissible matches between an input
             %       query and train matrices of descriptors.
-        	%
-        	matches = DescriptorMatcher_(this.id, 'match', queryDescriptors, varargin{:});
+            %
+            matches = DescriptorMatcher_(this.id, 'match', queryDescriptors, varargin{:});
         end
         
         function matches = knnMatch(this, queryDescriptors, varargin)
-        	%KNNMATCH  Finds the k best matches for each descriptor from a query set
-        	%
+            %KNNMATCH  Finds the k best matches for each descriptor from a query set
+            %
             %    matches = matcher.knnMatch(queryDescriptors, k)
             %    matches = matcher.knnMatch(queryDescriptors, trainDescriptors, k)
             %    [...] = matcher.knnMatch(..., 'OptionName', optionValue, ...)
@@ -283,14 +283,14 @@ classdef DescriptorMatcher < handle
             %       same size as queryDescriptors rows. If compactResult is
             %       true, the matches vector does not contain matches for fully
             %       masked-out query descriptors.
-        	%
-        	matches = DescriptorMatcher_(this.id, 'knnMatch', ...
-        		queryDescriptors, varargin{:});
+            %
+            matches = DescriptorMatcher_(this.id, 'knnMatch', ...
+                queryDescriptors, varargin{:});
         end
         
         function matches = radiusMatch(this, queryDescriptors, varargin)
-        	%RADIUSMATCH  For each query descriptor, finds the training descriptors not farther than the specified distance
-        	%
+            %RADIUSMATCH  For each query descriptor, finds the training descriptors not farther than the specified distance
+            %
             %    matches = matcher.radiusMatch(queryDescriptors, k)
             %    matches = matcher.radiusMatch(queryDescriptors, trainDescriptors, k)
             %    [...] = matcher.radiusMatch(..., 'OptionName', optionValue, ...)
@@ -314,9 +314,9 @@ classdef DescriptorMatcher < handle
             %       same size as queryDescriptors rows. If compactResult is
             %       true, the matches vector does not contain matches for fully
             %       masked-out query descriptors.
-        	%
-        	matches = DescriptorMatcher_(this.id, 'radiusMatch',...
-        		queryDescriptors, varargin{:});
+            %
+            matches = DescriptorMatcher_(this.id, 'radiusMatch',...
+                queryDescriptors, varargin{:});
         end
         
         function read(this, filename)
