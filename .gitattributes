@@ -1,0 +1,4 @@
+*.m export-subst
+.gitignore export-ignore
+.gitattributes export-ignore
+.description export-ignore
