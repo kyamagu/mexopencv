@@ -1,6 +1,6 @@
 %CALCGLOBALORIENTATION  Calculates a global motion orientation in a selected region
 %
-%    o = cv.calcMotionGradient(orientation, mask, mhi, timestamp, duration)
+%    o = cv.calcGlobalOrientation(orientation, mask, mhi, timestamp, duration)
 %
 % ## Input
 % * __orientation__ Motion gradient orientation image calculated by the function

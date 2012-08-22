@@ -9,7 +9,6 @@ Matlab's native data type and OpenCV data types. The package is suitable for
 fast prototyping of OpenCV application in Matlab, use of OpenCV as an external
 toolbox in Matlab, and development of an original mex function.
 
-
 Contents
 ========
 
@@ -29,14 +28,13 @@ The project tree is organized as follows.
     test/           directory for test scripts and resources
     utils/          directory for utilities
 
-
 Compile
 =======
 
 Prerequisite:
 
  * Unix: matlab, opencv (>=2.3.1), g++, make, pkg-config
- * Windows: matlab, opencv (>=2.3.1), Visual C++ (2010 recommended)
+ * Windows: matlab, opencv (>=2.3.1), supported compiler
 
 Note: opencv (>=2.1.0) is partially supported.
 
@@ -60,11 +58,18 @@ Optionally you can test the library functionality
 
     $ make test
 
-If matlab says 'Library not loaded' in the test, it's likely the compatibility
-issue between a system library and matlab's internal library. You might be able
-to fix this issue by preloading the library file. On linux, set the correct
-library path in `LD_PRELOAD` environmental variable. On Mac OS X, this variable
-is named `DYLD_INSERT_LIBRARIES`.
+If matlab says 'Library not loaded' or any other error in the test, it's likely
+the compatibility issue between a system library and matlab's internal library.
+You might be able to fix this issue by preloading the library file. On linux,
+set the correct library path in `LD_PRELOAD` environmental variable. For
+example, if you see `GLIBCXX_3.4.15` error in mex, use the following to start
+matlab.
+
+    $ LD_PRELOAD=/usr/lib/libstdc++.so.6 matlab
+
+On Mac OS X, this variable is named `DYLD_INSERT_LIBRARIES`. You can check
+`ldd` command line tool to check the dependency of the mex file in linux. On
+mac, you can use `otool -L` command.
 
 Developer documentation can be generated with doxygen if installed
 
@@ -72,27 +77,33 @@ Developer documentation can be generated with doxygen if installed
 
 This will create html and latex files under `doc/`.
 
-
 Windows
 -------
 
 Make sure you have OpenCV installed in the system and correctly set up `Path`
-system variable. (See http://opencv.willowgarage.com/wiki/ ) Then, in the matlab
-shell, type
+system variable. e.g., `c:\opencv\build\x86\vc10\bin`. See
+http://opencv.willowgarage.com/wiki/ for the instruction.
+Also make sure you install a compiler supported by Matlab. See
+http://www.mathworks.com/support/sysreq/previous_releases.html for the list of
+supported compilers for different versions of Matlab. Windows 64-bit users need
+to install Windows SDK.
+
+Once you satisfy the above requirement, in the matlab shell, type
 
     >> cv.make
 
 to build all mex functions. By default, mexopencv assumes the OpenCV library is
-installed in `C:\opencv`. If this is different, specify the path as an argument.
+installed in `C:\opencv`. If this is not the case, specify the path as an
+argument.
 
     >> cv.make('opencv_path', 'c:\your\path\to\opencv')
 
 Note that if you build OpenCV from source, this path specification does not
-work. You need to modify `+cv/make.m` to correctly link your mex files with
-the library. Or, you need to replace dll files in the OpenCV package with
-newly built files.
+work. You need to replace dll files in the OpenCV package with newly built
+binaries. Or, you need to modify `+cv/make.m` to correctly link your mex files
+with the library.
 
-To remove built binaries, use the following command.
+To remove existing mexopencv binaries, use the following command.
 
     >> cv.make('clean')
 
@@ -125,7 +136,6 @@ Open this file and edit `/D_SECURE_SCL` option.
 If you see `Invalid MEX file` error even when having the matched `_SECURE_SCL`
 flag, it probably indicates some other compatibility issues. Please file a bug
 report at http://github.com/kyamagu/mexopencv .
-
 
 Usage
 =====
@@ -180,7 +190,6 @@ located inside `test` directory.
     addpath('test');
     UnitTest;
 
-
 Developing a new mex function
 =============================
 
@@ -194,7 +203,7 @@ The minimum contents of the myfunc.cpp would look like this:
     {
     	// Check arguments
         if (nlhs!=1 || nrhs!=1)
-            mexErrMsgIdAndTxt("myfunc:invalidArgs","Wrong number of arguments");
+            mexErrMsgIdAndTxt("myfunc:invalidArgs", "Wrong number of arguments");
 
         // Convert MxArray to cv::Mat
         cv::Mat mat = MxArray(prhs[0]).toMat();
@@ -249,7 +258,6 @@ when you want to design a matlab class that wraps the various behavior of the
 mex function, define your class at `+cv/MyClass.m` and develop a mex function
 dedicated for that class in `src/+cv/private/MyClass_.cpp`. Inside of
 `+cv/MyClass.m`, you can call `MyClass_()` without cv namescope.
-
 
 Testing
 -------
