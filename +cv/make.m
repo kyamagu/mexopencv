@@ -80,10 +80,10 @@ end
 %
 function s = pkg_config(opencv_path)
     %PKG_CONFIG  constructs OpenCV-related option flags for Windows
-    L_path = sprintf('%s\\build\\%s\\%s\\lib',
+    L_path = sprintf('%s\\build\\%s\\%s\\lib', ...
                      opencv_path, arch_str, compiler_str);
     I_path = sprintf('%s\\build\\include', opencv_path);
-    l_options = cellfun(@(x) ['-l', x, ' '], lib_names(L_path),...
+    l_options = cellfun(@(x) ['-l', x, ' '], lib_names(L_path), ...
                         'UniformOutput', false);
     l_options = [l_options{:}];
     s = sprintf('-I"%s" -L"%s" %s', I_path, L_path, l_options);
