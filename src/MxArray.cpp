@@ -177,7 +177,8 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
     std::swap(d[0], d[1]);
     if (classid == mxLOGICAL_CLASS) {
         // OpenCV's logical true is any nonzero while matlab's true is 1
-        threshold(input, input, 0, 1, cv::THRESH_BINARY);
+        cv::compare(input, 0, input, cv::CMP_NE);
+        input.setTo(1, input);
         p_ = mxCreateLogicalArray(d.size(), &d[0]);
     }
     else {
