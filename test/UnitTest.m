@@ -8,7 +8,7 @@ classdef UnitTest
         TESTDIR = [UnitTest.ROOT,filesep,'unit_tests']
         BINDIR = [fileparts(UnitTest.ROOT),filesep,'matlab']
     end
-    
+
     methods
         function obj = UnitTest()
             %UNITTEST execute all unit tests
@@ -22,7 +22,7 @@ classdef UnitTest
             end
         end
     end
-    
+
     methods (Static)
         function all(class_name)
             %ALL execute all test methods starting with 'test'
@@ -34,7 +34,7 @@ classdef UnitTest
             else
                 error('UnitTest:all','invalid arg');
             end
-            
+
             if isprop(mc,'MethodList')
                 mt = {mc.MethodList.Name};
             else
@@ -42,7 +42,7 @@ classdef UnitTest
             end
             mt = sort(mt(:))';
             for m = mt(strncmp('test',mt,length('test')))
-                fprintf('== %s ======\n',m{:});
+                fprintf('-- %s ------\n',m{:});
                 try
                     feval([class_name,'.',m{:}]);
                     disp('PASS');
@@ -53,6 +53,6 @@ classdef UnitTest
             end
         end
     end
-    
+
 end
 
