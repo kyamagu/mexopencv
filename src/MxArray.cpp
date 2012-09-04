@@ -161,7 +161,7 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
     cv::Mat input = (mat.dims == 2 && transpose) ? mat.t() : mat;
 #else
     cv::Mat input = (transpose) ? mat.t() : mat;
-#endif
+#endif // CV_MINOR_VERSION >= 2
     // Create a new mxArray
     const int nchannels = input.channels();
 #if CV_MINOR_VERSION >= 2
@@ -170,7 +170,7 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 #else
     const int dims_[] = {input.rows, input.cols};
     std::vector<mwSize> d(dims_, dims_ + 2);
-#endif
+#endif // CV_MINOR_VERSION >= 2
     d.push_back(nchannels);
     classid = (classid == mxUNKNOWN_CLASS)
         ? ClassIDOf[input.depth()] : classid;
@@ -200,7 +200,7 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
         cv::Mat m(input.dims, dims_, type, ptr);
 #else
         cv::Mat m(dims_[0], dims_[1], type, ptr);
-#endif
+#endif // CV_MINOR_VERSION >= 2
         channels[i].convertTo(m, type); // Write to mxArray through m
     }
 }
@@ -216,22 +216,25 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
  */
 MxArray::MxArray(const cv::MatND& mat, mxClassID classid)
 {
-    if (mat.datastart == mat.dataend) {
+    cv::MatND input = mat;
+    if (input.datastart == input.dataend) {
         p_ = mxCreateNumericArray(0, 0, mxDOUBLE_CLASS, mxREAL);
         if (!p_)
             mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
         return;
     }
     // Create a new mxArray
-    const int nchannels = mat.channels();
-    const int* dims_ = mat.size;
-    vector<mwSize> d(dims_, dims_ + mat.dims);
+    const int nchannels = input.channels();
+    const int* dims_ = input.size;
+    vector<mwSize> d(dims_, dims_ + input.dims);
     d.push_back(nchannels);
-    classid = (classid == mxUNKNOWN_CLASS) ? ClassIDOf[mat.depth()] : classid;
+    classid = (classid == mxUNKNOWN_CLASS)
+        ? ClassIDOf[input.depth()] : classid;
     std::swap(d[0], d[1]);
     if (classid == mxLOGICAL_CLASS) {
         // OpenCV's logical true is any nonzero while matlab's true is 1
-        threshold(mat, mat, 0, 1, THRESH_BINARY);
+        cv::compare(input, 0, input, cv::CMP_NE);
+        input.setTo(1, input);
         p_ = mxCreateLogicalArray(d.size(), &d[0]);
     }
     else {
@@ -241,7 +244,7 @@ MxArray::MxArray(const cv::MatND& mat, mxClassID classid)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
     // Copy
     int depth = CV_MAKETYPE(DepthOf[classid], 1);
-    cv::MatND m(mat.dims, mat.size, CV_MAKETYPE(depth, 1));
+    cv::MatND m(input.dims, input.size, CV_MAKETYPE(depth, 1));
     uchar* _data = m.data;
     uchar* _datastart = m.datastart;
     uchar* _dataend = m.dataend;
@@ -249,12 +252,12 @@ MxArray::MxArray(const cv::MatND& mat, mxClassID classid)
     m.dataend = reinterpret_cast<uchar*>(
         reinterpret_cast<size_t>(mxGetData(p_)) +
         mxGetElementSize(p_) * numel());
-    mat.convertTo(m,CV_MAKETYPE(depth, 1));
+    input.convertTo(m, CV_MAKETYPE(depth, 1));
     m.data = _data;
     m.datastart = _datastart;
     m.dataend = _dataend;
 }
-#endif
+#endif // CV_MINOR_VERSION < 2
 
 /**
  * Convert float cv::SparseMat to MxArray
@@ -390,7 +393,7 @@ MxArray::MxArray(const std::vector<cv::DMatch>& v) :
         set("distance", v[i].distance, i);
     }
 }
-#endif
+#endif // CV_MINOR_VERSION >= 2
 
 /** Convert cv::RotatedRect to MxArray
  * @param m cv::RotatedRect object
@@ -473,7 +476,7 @@ cv::Mat MxArray::toMat(int depth, bool transpose) const
     if (ndims()>3)
         mexErrMsgIdAndTxt("mexopencv:error",
             "N-D array not supported in this version of OpenCV + mexopencv");
-#endif
+#endif // CV_MINOR_VERSION < 2
     // Create cv::Mat object
     std::vector<int> d(dims(), dims()+ndims());
     int ndims = (d.size()>2) ? d.size()-1 : d.size();
@@ -484,7 +487,7 @@ cv::Mat MxArray::toMat(int depth, bool transpose) const
     cv::Mat mat(ndims, &d[0], CV_MAKETYPE(depth, nchannels));
 #else
     cv::Mat mat(d[0], d[1], CV_MAKETYPE(depth, nchannels));
-#endif
+#endif // CV_MINOR_VERSION >= 2
     
     // Copy each channel
     std::vector<cv::Mat> channels(nchannels);
@@ -499,7 +502,7 @@ cv::Mat MxArray::toMat(int depth, bool transpose) const
         cv::Mat m(ndims, &d[0], type, pd);
 #else
         cv::Mat m(d[0], d[1], type, pd);
-#endif
+#endif // CV_MINOR_VERSION >= 2
         // Read from mxArray through m
         m.convertTo(channels[i], CV_MAKETYPE(depth, 1));
     }
@@ -508,7 +511,7 @@ cv::Mat MxArray::toMat(int depth, bool transpose) const
     return (mat.dims==2 && transpose) ? cv::Mat(mat.t()) : mat;
 #else
     return (transpose) ? cv::Mat(mat.t()) : mat;
-#endif
+#endif // CV_MINOR_VERSION >= 2
 }
 
 /**
@@ -553,7 +556,7 @@ cv::MatND MxArray::toMatND(int depth, bool transpose) const
     m.dataend = reinterpret_cast<uchar*>(
         reinterpret_cast<size_t>(mxGetData(p_)) +
                                  mxGetElementSize(p_) * numel());
-#endif
+#endif // CV_MINOR_VERSION >= 2
     
     // Copy
     cv::MatND mat;
@@ -567,7 +570,7 @@ cv::MatND MxArray::toMatND(int depth, bool transpose) const
     m.datastart = _datastart;
     m.dataend = _dataend;
     return mat;
-#endif
+#endif // CV_MINOR_VERSION >= 2
 }
 
 /** Convert MxArray to int
@@ -690,7 +693,7 @@ cv::DMatch MxArray::toDMatch(mwIndex index) const
         (isField("distance")) ? at("distance", index).toDouble() : 0
     );
 }
-#endif
+#endif // CV_MINOR_VERSION >= 2
 
 /** Convert MxArray to cv::Range
  * @return cv::Range
@@ -985,4 +988,4 @@ std::vector<cv::DMatch> MxArray::toVector() const
                           "MxArray unable to convert to std::vector");
     return v;
 }
-#endif
+#endif // CV_MINOR_VERSION >= 2
