@@ -67,11 +67,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
     Mat R1, R2, P1, P2, Q;
     Rect roi1, roi2;
 #if CV_MINOR_VERSION >= 2
-    stereoRectify(cameraMatrix1, cameraMatrix2, distCoeffs1, distCoeffs2,
+    stereoRectify(cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2,
         imageSize, R, T, R1, R2, P1, P2, Q, flags, alpha, newImageSize,
         &roi1, &roi2);
 #else
-    stereoRectify(cameraMatrix1, cameraMatrix2, distCoeffs1, distCoeffs2,
+    stereoRectify(cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2,
         imageSize, R, T, R1, R2, P1, P2, Q, flags);
 #endif
     plhs[0] = valueStruct(R1, R2, P1, P2, Q, roi1, roi2);
