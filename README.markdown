@@ -44,12 +44,13 @@ Unix
 First make sure you have OpenCV installed in the system. If not, install the
 package available in your package manager (e.g., libopencv-dev in Debian/Ubuntu,
 opencv-devel in Fedora, opencv in Macports), or install the source package from
-http://opencv.willowgarage.com/wiki/ . If you have all the prerequisite, going
-to the mexopencv directory and typing:
+http://opencv.willowgarage.com/wiki/ . Make sure `pkg-config` command can
+identify opencv path. If you have all the prerequisite, go to the mexopencv
+directory and type:
 
     $ make
 
-will build and place all mex functions inside `+cv/`.
+This will build and place all mex functions inside `+cv/`.
 Specify your matlab directory if you install matlab other than /usr/local/matlab
 
     $ make MATLABDIR=/Applications/MATLAB_R2012a.app
@@ -66,6 +67,10 @@ example, if you see `GLIBCXX_3.4.15` error in mex, use the following to start
 matlab.
 
     $ LD_PRELOAD=/usr/lib/libstdc++.so.6 matlab
+
+Note that you need to find the correct path to the shared object. For example,
+`/usr/lib64/` instead of `/usr/lib/`. You can use `locate` command to find the
+location of the shared object.
 
 On Mac OS X, this variable is named `DYLD_INSERT_LIBRARIES`. You can check
 `ldd` command line tool to check the dependency of the mex file in linux. On
