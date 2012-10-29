@@ -34,16 +34,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     size_t n_features = 500;
     float scale_factor = 1.2f;
     int edge_threshold = 31;
-#if CV_MINOR_VERSION >= 4
-    unsigned int n_levels = 8;
-    unsigned int first_level = 0;
-    int WTA_K=2;
-    int score_type=0;
-    int patch_size=31;
-#else
     unsigned int n_levels = ORB::CommonParams::DEFAULT_N_LEVELS;
     unsigned int first_level = ORB::CommonParams::DEFAULT_FIRST_LEVEL;
-#endif
     Mat mask;
     for (int i=1; i<nrhs; i+=2) {
         string key = rhs[i].toString();
@@ -59,26 +51,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
             first_level = rhs[i+1].toInt();
         else if (key=="Mask")
             mask = rhs[i+1].toMat(CV_8U);
-#if CV_MINOR_VERSION >= 4
-        else if (key=="WTA_K")
-            WTA_K = rhs[i+1].toInt();
-        else if (key=="ScoreType")
-            score_type = rhs[i+1].toInt();
-        else if (key=="PatchSize")
-            patch_size = rhs[i+1].toInt();
-#endif
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
     
     // Process
-#if CV_MINOR_VERSION >= 4
-    ORB orb(n_features,scale_factor,n_levels,edge_threshold,
-            first_level,WTA_K,score_type,patch_size);
-#else
     ORB orb(n_features,
         ORB::CommonParams(scale_factor,n_levels,edge_threshold,first_level));
-#endif
     Mat image(rhs[0].toMat());
     vector<KeyPoint> keypoints;
     bool useProvidedKeypoints=false;

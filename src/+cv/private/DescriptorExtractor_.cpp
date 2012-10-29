@@ -5,9 +5,6 @@
  * @date 2012
  */
 #include "mexopencv.hpp"
-#if CV_MINOR_VERSION >= 4
-#include "opencv2/nonfree/nonfree.hpp"
-#endif
 using namespace std;
 using namespace cv;
 
@@ -30,10 +27,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
 {
     if (nrhs<1 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-
-    #if CV_MINOR_VERSION >= 4
-    if (last_id==0) initModule_nonfree();
-    #endif
     
     // Determine argument format between constructor or (id,method,...)
     vector<MxArray> rhs(prhs,prhs+nrhs);

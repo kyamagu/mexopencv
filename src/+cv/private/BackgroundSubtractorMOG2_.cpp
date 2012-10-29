@@ -92,7 +92,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
         obj.getBackgroundImage(im);
         plhs[0] = MxArray(im);
     }
-#if CV_MINOR_VERSION < 4
     else if (method == "frameSize") {
         if (nrhs==3 && nlhs==0)
             obj.frameSize = rhs[2].toSize();
@@ -141,24 +140,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     }
-#else
-    else if (method == "history") {
-        if (nrhs==3 && nlhs==0)
-            obj.set(method, rhs[2].toInt());
-        else if (nrhs==2 && nlhs==1)
-            plhs[0] = MxArray(obj.get<int>(method));
-        else
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    }
-    else if (method == "varThreshold") {
-        if (nrhs==3 && nlhs==0)
-            obj.set(method, rhs[2].toDouble());
-        else if (nrhs==2 && nlhs==1)
-            plhs[0] = MxArray(obj.get<double>(method));
-        else
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    }
-#endif
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
 }
