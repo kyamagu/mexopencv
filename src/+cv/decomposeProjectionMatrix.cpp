@@ -48,12 +48,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Process
     Mat projMatrix(rhs[0].toMat(CV_32F));
     Mat cameraMatrix, rotMatrix, transVect, rotMatrX, rotMatrY, rotMatrZ, eulerAngles;
-#if CV_MINOR_VERSION >= 2
     decomposeProjectionMatrix(projMatrix, cameraMatrix, rotMatrix, transVect,
         rotMatrX, rotMatrY, rotMatrZ, eulerAngles);
-#else
-    decomposeProjectionMatrix(projMatrix, cameraMatrix, rotMatrix, transVect);
-#endif
     plhs[0] = valueStruct(cameraMatrix, rotMatrix, transVect, rotMatrX,
         rotMatrY, rotMatrZ, eulerAngles);
 }

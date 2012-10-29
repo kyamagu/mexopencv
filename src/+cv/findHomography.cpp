@@ -45,7 +45,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     // Process
     Mat mask, H;
-#if CV_MINOR_VERSION >= 2
     if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
         Mat points1(rhs[0].toMat()), points2(rhs[1].toMat());
         H = findHomography(points1, points2, method, ransacReprojThreshold, mask);
@@ -57,11 +56,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
-#else
-    Mat points1(rhs[0].toMat()), points2(rhs[1].toMat());
-    vector<uchar> status(points1.cols*points1.rows,0);
-    H = findHomography(points1, points2, status, method, ransacReprojThreshold);
-#endif
     plhs[0] = MxArray(H);
     if (nlhs>1)
         plhs[1] = MxArray(mask);

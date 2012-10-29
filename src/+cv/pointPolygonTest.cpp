@@ -24,11 +24,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-#if CV_MINOR_VERSION >= 2
     vector<Point2f> contour(rhs[0].toVector<Point2f>());
-#else
-    Mat contour(rhs[0].toMat(CV_32F));
-#endif
     Point2f pt(rhs[1].toPoint_<float>());
     bool measureDist=false;
     for (int i=2; i<nrhs; i+=2) {

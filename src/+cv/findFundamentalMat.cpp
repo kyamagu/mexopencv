@@ -49,7 +49,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     // Process
     Mat mask, F;
-#if CV_MINOR_VERSION >= 2
     if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
         Mat points1(rhs[0].toMat()), points2(rhs[1].toMat());
         F = findFundamentalMat(points1, points2, method, param1, param2, mask);
@@ -61,11 +60,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
-#else
-    Mat points1(rhs[0].toMat()), points2(rhs[1].toMat());
-    vector<uchar> status(points1.cols*points1.rows,0);
-    F = findFundamentalMat(points1, points2, status, method, param1, param2);
-#endif
     plhs[0] = MxArray(F);
     if (nlhs>1)
         plhs[1] = MxArray(mask);

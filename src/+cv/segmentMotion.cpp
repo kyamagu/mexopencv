@@ -18,7 +18,6 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-#if CV_MINOR_VERSION >= 2
     // Check the number of arguments
     if (nrhs<3 || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
@@ -35,7 +34,4 @@ void mexFunction( int nlhs, mxArray *plhs[],
     plhs[0] = MxArray(segmask);
     if (nlhs>1)
         plhs[1] = MxArray(boundingRects);
-#else
-    mexErrMsgIdAndTxt("mexopencv:error","segmentMotion not supported in this version");
-#endif
 }

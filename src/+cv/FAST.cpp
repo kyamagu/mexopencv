@@ -18,7 +18,6 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-#if CV_MINOR_VERSION >= 2
     // Check the number of arguments
     if (nrhs<1 || ((nrhs%2)!=1) || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
@@ -44,7 +43,4 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<KeyPoint> keypoints;
     FAST(image, keypoints, threshold, nonmaxSupression);
     plhs[0] = MxArray(keypoints);
-#else
-    mexErrMsgIdAndTxt("mexopencv:error","FAST not supported in this version");
-#endif
 }

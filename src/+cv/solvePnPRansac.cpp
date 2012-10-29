@@ -43,7 +43,6 @@ vector<Point3_<T> > MxArrayToVecPt3(MxArray& arr)
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-#if CV_MINOR_VERSION >= 2
     // Check the number of arguments
     if (nrhs<3 || ((nrhs%2)!=0) || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
@@ -101,7 +100,4 @@ void mexFunction( int nlhs, mxArray *plhs[],
         plhs[1] = MxArray(tvec);
     if (nlhs>2)
         plhs[2] = MxArray(inliers);
-#else
-    mexErrMsgIdAndTxt("mexopencv:error","solvePnPRansac not supported in this version");
-#endif
 }

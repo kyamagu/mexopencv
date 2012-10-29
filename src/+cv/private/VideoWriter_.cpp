@@ -115,11 +115,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat frame(rhs[2].toMat());
         if (frame.type()==CV_8UC3)
             cvtColor(frame,frame,CV_RGB2BGR);
-#if CV_MINOR_VERSION >= 2
         obj.write(frame);
-#else
-        obj << frame;
-#endif
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");

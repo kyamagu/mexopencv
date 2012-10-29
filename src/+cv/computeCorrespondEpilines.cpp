@@ -44,22 +44,16 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat points(rhs[0].toMat(CV_32F));
         computeCorrespondEpilines(points, whichImage, F, lines);
     }
-#if CV_MINOR_VERSION >= 2
     else if (rhs[0].isCell()) {
         vector<Point2f> points(rhs[0].toVector<Point2f>());
         computeCorrespondEpilines(points, whichImage, F, lines);
     }
-#endif
     else
         mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
     vector<Mat> _lines;
     _lines.reserve(lines.size());
     for (vector<Vec3f>::iterator it=lines.begin(); it<lines.end(); ++it)
-#if CV_MINOR_VERSION >= 2
         _lines.push_back(Mat(*it));
-#else
-        _lines.push_back(Mat(1,3,CV_32FC1,&(*it)[0]));
-#endif
 
     plhs[0] = MxArray(_lines);
 }

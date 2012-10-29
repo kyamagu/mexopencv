@@ -11,7 +11,6 @@
 using namespace std;
 using namespace cv;
 
-#if CV_MINOR_VERSION >= 2
 namespace {
 /// Last object id to allocate
 int last_id = 0;
@@ -175,7 +174,6 @@ Ptr<DescriptorMatcher> createFlannBasedMatcher(const vector<MxArray>& rhs)
 }
 
 }
-#endif
 
 /**
  * Main entry called from Matlab
@@ -187,7 +185,6 @@ Ptr<DescriptorMatcher> createFlannBasedMatcher(const vector<MxArray>& rhs)
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-#if CV_MINOR_VERSION >= 2
     nargchk(nrhs>=2 && nlhs<=1);
     
     // Determine argument format between constructor or (id,method,...)
@@ -370,7 +367,4 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
-#else
-    mexErrMsgIdAndTxt("mexopencv:error","DescriptorMatcher not supported in this version");
-#endif
 }

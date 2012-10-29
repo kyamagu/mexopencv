@@ -18,7 +18,6 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-#if CV_MINOR_VERSION >= 2
     // Check the number of arguments
     if (nrhs<2 || ((nrhs%2)!=0) || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
@@ -53,7 +52,4 @@ void mexFunction( int nlhs, mxArray *plhs[],
     plhs[0] = MxArray(out);
     if (nlhs>1)
         plhs[1] = MxArray(inliers);
-#else
-    mexErrMsgIdAndTxt("mexopencv:error","estimateAffine3D not supported in this version");
-#endif
 }

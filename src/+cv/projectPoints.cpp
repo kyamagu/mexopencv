@@ -26,7 +26,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
     // Option processing
-#if CV_MINOR_VERSION >= 2
     double aspectRatio=0;
     for (int i=5; i<nrhs; i+=2) {
         string key = rhs[i].toString();
@@ -57,13 +56,4 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     if (nlhs>1)
         plhs[1] = MxArray(jacobian);
-#else
-    Mat rvec(rhs[1].toMat(CV_32F)), tvec(rhs[2].toMat(CV_32F));
-    Mat cameraMatrix(rhs[3].toMat(CV_32F));
-    Mat distCoeffs = (nrhs>4) ? rhs[4].toMat(CV_32F) : Mat();
-    Mat objectPoints(rhs[0].toMat(CV_32F));
-    vector<Point2f> imagePoints;
-    projectPoints(objectPoints, rvec, tvec, cameraMatrix, distCoeffs, imagePoints);
-    plhs[0] = MxArray(imagePoints);
-#endif
 }

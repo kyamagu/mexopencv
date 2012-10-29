@@ -8,12 +8,6 @@
 using namespace std;
 using namespace cv;
 
-#if CV_MINOR_VERSION < 2
-/** Alias to the old API
- */
-#define convertPointsFromHomogeneous convertPointsHomogeneous
-#endif
-
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments
@@ -32,19 +26,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
     // Process
-#if CV_MINOR_VERSION < 2
-    if (rhs[0].isNumeric()) {
-        Mat src(rhs[0].toMat(CV_32F));
-        int n = src.channels();
-        if (n==3) {
-            vector<Point2f> dst;
-            convertPointsFromHomogeneous(src, dst);
-            plhs[0] = MxArray(dst);
-        }
-        else
-            mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
-    }
-#else
     if (rhs[0].isNumeric()) {
         Mat src(rhs[0].toMat(CV_32F)), dst;
         convertPointsFromHomogeneous(src, dst);
@@ -74,7 +55,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
     }
-#endif
     else
         mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
     

@@ -34,12 +34,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat corners(rhs[2].toMat());
         drawChessboardCorners(image, patternSize, corners, patternWasFound);
     }
-#if CV_MINOR_VERSION >= 2
     else if (rhs[2].isCell()) {
         vector<Point2f> corners(rhs[2].toVector<Point2f>());
         drawChessboardCorners(image, patternSize, corners, patternWasFound);
     }
-#endif
     else
         mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
     plhs[0] = MxArray(image);

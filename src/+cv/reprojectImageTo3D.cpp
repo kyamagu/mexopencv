@@ -41,10 +41,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Process
     Mat disparity(rhs[0].toMat()), _3dImage;
     Mat Q(rhs[1].toMat(CV_32F));
-#if CV_MINOR_VERSION >= 2
     reprojectImageTo3D(disparity, _3dImage, Q, handleMissingValues, depth);
-#else
-    reprojectImageTo3D(disparity, _3dImage, Q, handleMissingValues);
-#endif
     plhs[0] = MxArray(_3dImage);
 }

@@ -34,7 +34,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     
     // Process
-#if CV_MINOR_VERSION >= 2
     if (rhs[0].isNumeric()) {
         Mat curve(rhs[0].toMat());
         double a = contourArea(curve, oriented);
@@ -45,9 +44,4 @@ void mexFunction( int nlhs, mxArray *plhs[],
         double a = contourArea(curve, oriented);
         plhs[0] = MxArray(a);        
     }
-#else
-        Mat curve(rhs[0].toMat());
-        double a = contourArea(curve, oriented);
-        plhs[0] = MxArray(a);
-#endif
 }

@@ -11,14 +11,12 @@
 using namespace std;
 using namespace cv;
 
-#if CV_MINOR_VERSION >= 2
 // Persistent objects
 
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
 map<int,Ptr<DescriptorExtractor> > obj_;
-#endif
 
 /**
  * Main entry called from Matlab
@@ -30,7 +28,6 @@ map<int,Ptr<DescriptorExtractor> > obj_;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-#if CV_MINOR_VERSION >= 2
     if (nrhs<1 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
 
@@ -95,7 +92,4 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
-#else
-    mexErrMsgIdAndTxt("mexopencv:error","DescriptorExtractor not supported in this version");
-#endif
 }

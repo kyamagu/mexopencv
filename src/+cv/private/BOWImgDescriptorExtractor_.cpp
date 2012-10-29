@@ -11,7 +11,6 @@
 using namespace std;
 using namespace cv;
 
-#if CV_MINOR_VERSION >= 2
 namespace {
 /// Last object id to allocate
 int last_id = 0;
@@ -25,7 +24,6 @@ inline void nargchk(bool cond)
 }
 
 }
-#endif
 
 /**
  * Main entry called from Matlab
@@ -37,7 +35,6 @@ inline void nargchk(bool cond)
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-#if CV_MINOR_VERSION >= 2
     nargchk(nrhs>=2 && nlhs<=3);
     vector<MxArray> rhs(prhs,prhs+nrhs);
     int id = rhs[0].toInt();
@@ -103,7 +100,4 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation %s", method.c_str());
-#else
-    mexErrMsgIdAndTxt("mexopencv:error","BOWImgDescriptorExtractor not supported");
-#endif
 }

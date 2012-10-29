@@ -50,12 +50,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
             thickness = rhs[i+1].toInt();
         else if (key=="LineType")
             lineType = rhs[i+1].toInt();
-#if CV_MINOR_VERSION >= 2
         else if (key=="Hierarchy") {
             vector<Mat> hm(rhs[i+1].toVector<Mat>());
             hierarchy = vector<Vec4i>(hm.begin(),hm.end());
         }
-#endif
         else if (key=="MaxLevel")
             maxLevel = rhs[i+1].toInt();
         else if (key=="Offset")

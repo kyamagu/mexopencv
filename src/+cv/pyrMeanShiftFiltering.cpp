@@ -18,7 +18,6 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-#if CV_MINOR_VERSION >= 2
     // Check the number of arguments
     if (nrhs<1 || (nrhs%2)!=1 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
@@ -46,8 +45,4 @@ void mexFunction( int nlhs, mxArray *plhs[],
     Mat src(rhs[0].toMat()), dst;
     pyrMeanShiftFiltering(src, dst, sp, sr, maxLevel);
     plhs[0] = MxArray(dst);
-#else
-    mexErrMsgIdAndTxt("mexopencv:error",
-      "pyrMeanShiftFiltering is not supported in this version of OpenCV");
-#endif
 }

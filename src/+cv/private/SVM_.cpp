@@ -263,17 +263,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 degreeGrid = getGrid(rhs[i+1]);
         }
         CvSVMParams params = getParams(rhs.begin()+4,rhs.end());
-#if CV_MINOR_VERSION >= 2
         bool b = obj.train_auto(trainData,responses,varIdx,sampleIdx,params,
             k_fold, Cgrid, gammaGrid, pGrid, nuGrid, coeffGrid, degreeGrid, balanced);
-#else
-        CvMat _trainData = trainData, _responses = responses, _varIdx = varIdx,
-            _sampleIdx = sampleIdx;
-        bool b = obj.train_auto(&_trainData,&_responses,
-            (varIdx.empty())? NULL : &_varIdx,
-            (sampleIdx.empty())? NULL : &_sampleIdx,params,
-            k_fold, Cgrid, gammaGrid, pGrid, nuGrid, coeffGrid, degreeGrid);
-#endif
         plhs[0] = MxArray(b);
     }
     else if (method == "get_var_count") {

@@ -30,10 +30,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat points(rhs[0].toMat());
         plhs[0] = MxArray(fitEllipse(points));
     }
-#if CV_MINOR_VERSION >= 2
     else if (rhs[0].isCell()) {
         vector<Point> points(rhs[0].toVector<Point>());
         plhs[0] = MxArray(fitEllipse(points));        
     }
-#endif
 }

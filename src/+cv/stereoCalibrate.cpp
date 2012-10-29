@@ -162,14 +162,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
         ((fixK1) ? CV_CALIB_FIX_K1 : 0) |
         ((fixK2) ? CV_CALIB_FIX_K2 : 0) |
         ((fixK3) ? CV_CALIB_FIX_K3 : 0) |
-#if CV_MINOR_VERSION >= 2
         ((fixK4) ? CV_CALIB_FIX_K4 : 0) |
         ((fixK5) ? CV_CALIB_FIX_K5 : 0) |
         ((fixK6) ? CV_CALIB_FIX_K6 : 0) |
         ((calibRationalModel) ? CV_CALIB_RATIONAL_MODEL : 0);
-#else
-        0;
-#endif
     
     // Process
     Mat R, T, E, F;

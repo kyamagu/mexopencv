@@ -8,7 +8,7 @@
 using namespace std;
 using namespace cv;
 
-#if (CV_MINOR_VERSION >= 2 && (CV_MINOR_VERSION <= 3 && CV_SUBMINOR_VERSION <= 1))
+#if CV_MAJOR_VERSION == 2 && CV_MINOR_VERSION == 3
 namespace cv {
 // The following code taken from OpenCV 2.3.2 for pre-2.3.2 releases
 /*
@@ -52,7 +52,6 @@ private:
 } // namespace cv
 #endif
 
-#if CV_MINOR_VERSION >= 2
 namespace {
 /// Last object id to allocate
 int last_id = 0;
@@ -83,7 +82,6 @@ mxArray* ObjectDetection2Struct(
     return m;
 }
 } // local scope
-#endif
 
 /**
  * Main entry called from Matlab
@@ -95,7 +93,6 @@ mxArray* ObjectDetection2Struct(
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-#if CV_MINOR_VERSION >= 2
     nargchk(nrhs>=2 && nlhs<=2);
     vector<MxArray> rhs(prhs,prhs+nrhs);
     int id = rhs[0].toInt();
@@ -158,12 +155,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation %s", method.c_str());
-#else
-    mexErrMsgIdAndTxt("mexopencv:error","LatentSvmDetector not supported");
-#endif
 }
 
-#if (CV_MINOR_VERSION >= 2 && (CV_MINOR_VERSION <= 3 && CV_SUBMINOR_VERSION <= 1))
+#if CV_MAJOR_VERSION == 2 && CV_MINOR_VERSION == 3
 // The following code taken from OpenCV 2.3.2
 namespace cv
 {

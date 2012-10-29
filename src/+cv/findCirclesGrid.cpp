@@ -18,7 +18,6 @@ using namespace cv;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-#if CV_MINOR_VERSION >= 2
     // Check the number of arguments
     if (nrhs<2 || (nrhs%2)!=0 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
@@ -48,7 +47,4 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<Point2f> centers;
     bool b = findCirclesGrid(image, patternSize, centers, flags);
     plhs[0] = MxArray((b) ? centers : Mat());
-#else
-    mexErrMsgIdAndTxt("mexopencv:error","findCirclesGrid not supported in this version");
-#endif
 }
