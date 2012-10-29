@@ -8,51 +8,8 @@
 using namespace std;
 using namespace cv;
 
-#if CV_MAJOR_VERSION == 2 && CV_MINOR_VERSION == 3
-namespace cv {
-// The following code taken from OpenCV 2.3.2 for pre-2.3.2 releases
-/*
- * This is a class wrapping up the structure CvLatentSvmDetector and functions working with it.
- * The class goals are:
- * 1) provide c++ interface;
- * 2) make it possible to load and detect more than one class (model) unlike CvLatentSvmDetector.
- */
-class CV_EXPORTS LatentSvmDetector
-{
-public:
-    struct CV_EXPORTS ObjectDetection
-    {
-        ObjectDetection();
-        ObjectDetection( const Rect& rect, float score, int classID=-1 );
-        Rect rect;
-        float score;
-        int classID;
-    };
-
-    LatentSvmDetector();
-    LatentSvmDetector( const vector<string>& filenames, const vector<string>& classNames=vector<string>() );
-    virtual ~LatentSvmDetector();
-
-    virtual void clear();
-    virtual bool empty() const;
-    bool load( const vector<string>& filenames, const vector<string>& classNames=vector<string>() );
-
-    virtual void detect( const Mat& image,
-                         vector<ObjectDetection>& objectDetections,
-                         float overlapThreshold=0.5f,
-                         int numThreads=-1 );
-
-    const vector<string>& getClassNames() const;
-    size_t getClassCount() const;
-
-private:
-    vector<CvLatentSvmDetector*> detectors;
-    vector<string> classNames;
-};
-} // namespace cv
-#endif
-
 namespace {
+
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
@@ -81,6 +38,7 @@ mxArray* ObjectDetection2Struct(
     }
     return m;
 }
+
 } // local scope
 
 /**
@@ -156,127 +114,3 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation %s", method.c_str());
 }
-
-#if CV_MAJOR_VERSION == 2 && CV_MINOR_VERSION == 3
-// The following code taken from OpenCV 2.3.2
-namespace cv
-{
-LatentSvmDetector::ObjectDetection::ObjectDetection() : score(0.f), classID(-1)
-{}
-
-LatentSvmDetector::ObjectDetection::ObjectDetection( const Rect& _rect, float _score, int _classID ) :
-    rect(_rect), score(_score), classID(_classID)
-{}
-
-LatentSvmDetector::LatentSvmDetector()
-{}
-
-LatentSvmDetector::LatentSvmDetector( const vector<string>& filenames, const vector<string>& _classNames )
-{
-    load( filenames, _classNames );
-}
-
-LatentSvmDetector::~LatentSvmDetector()
-{
-    clear(); // THIS GIVES SEGFAULT WHEN OBJECT IS COPIED! NEED REFCOUNT!
-}
-
-void LatentSvmDetector::clear()
-{
-    for( size_t i = 0; i < detectors.size(); i++ )
-        cvReleaseLatentSvmDetector( &detectors[i] );
-    detectors.clear();
-    
-    classNames.clear();
-}
-
-bool LatentSvmDetector::empty() const
-{
-    return detectors.empty();
-}
-
-const vector<string>& LatentSvmDetector::getClassNames() const
-{
-    return classNames;
-}
-
-size_t LatentSvmDetector::getClassCount() const
-{
-    return classNames.size();
-}
-
-string extractModelName( const string& filename )
-{
-    size_t startPos = filename.rfind('/');
-    if( startPos == string::npos )
-        startPos = filename.rfind('\\');
-
-    if( startPos == string::npos )
-        startPos = 0;
-    else
-        startPos++;
-
-    const int extentionSize = 4; //.xml
-
-    int substrLength = filename.size() - startPos - extentionSize;
-
-    return filename.substr(startPos, substrLength);
-}
-
-bool LatentSvmDetector::load( const vector<string>& filenames, const vector<string>& _classNames )
-{
-    clear();
-
-    CV_Assert( _classNames.empty() || _classNames.size() == filenames.size() );
-
-    for( size_t i = 0; i < filenames.size(); i++ )
-    {
-        const string filename = filenames[i];
-        if( filename.length() < 5 || filename.substr(filename.length()-4, 4) != ".xml" )
-            continue;
-
-        CvLatentSvmDetector* detector = cvLoadLatentSvmDetector( filename.c_str() );
-        if( detector )
-        {
-            detectors.push_back( detector );
-            if( _classNames.empty() )
-            {
-                classNames.push_back( extractModelName(filenames[i]) );
-            }
-            else
-                classNames.push_back( _classNames[i] );
-        }
-    }
-
-    return !empty();
-}
-
-void LatentSvmDetector::detect( const Mat& image,
-                                vector<ObjectDetection>& objectDetections,
-                                float overlapThreshold,
-                                int numThreads )
-{
-    objectDetections.clear();
-    if( numThreads <= 0 )
-        numThreads = 1;
-
-    for( size_t classID = 0; classID < detectors.size(); classID++ )
-    {
-        IplImage image_ipl = image;
-        CvMemStorage* storage = cvCreateMemStorage(0);
-        CvSeq* detections = cvLatentSvmDetectObjects( &image_ipl, detectors[classID], storage, overlapThreshold, numThreads );
-        
-        // convert results
-        objectDetections.reserve( objectDetections.size() + detections->total );
-        for( int detectionIdx = 0; detectionIdx < detections->total; detectionIdx++ )
-        {
-            CvObjectDetection detection = *(CvObjectDetection*)cvGetSeqElem( detections, detectionIdx );
-            objectDetections.push_back( ObjectDetection(Rect(detection.rect), detection.score, (int)classID) );
-        }
-
-        cvReleaseMemStorage( &storage );
-    }
-}
-
-} // namespace cv
-#endif

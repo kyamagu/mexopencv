@@ -5,12 +5,17 @@
  * @date 2011
  */
 #include "mexopencv.hpp"
-#if CV_MINOR_VERSION >= 4
 #include "opencv2/nonfree/nonfree.hpp"
-#endif
 
 using namespace std;
 using namespace cv;
+
+namespace {
+
+/// Initialization flag
+bool initialized = false;
+
+}
 
 /**
  * Main entry called from Matlab
@@ -26,6 +31,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
     if (nrhs<1 || ((nrhs%2)!=1) || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
+    if (!initialized) {
+        initModule_nonfree();
+        initialized = true;
+    }
+    
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
@@ -36,7 +46,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     // Option processing
     Mat mask;
-#if CV_MINOR_VERSION >= 4
     int _nfeatures=0;
     int _nOctaveLayers=3;
     double _contrastThreshold=0.04;
@@ -62,50 +71,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Process
     SIFT sift(_nfeatures,_nOctaveLayers,_contrastThreshold,_edgeThreshold,
         _sigma);
-#else
-    int _nOctaves = SIFT::CommonParams::DEFAULT_NOCTAVES;
-    int _nOctaveLayers = SIFT::CommonParams::DEFAULT_NOCTAVE_LAYERS;
-    int _firstOctave = SIFT::CommonParams::DEFAULT_FIRST_OCTAVE;
-    int _angleMode = SIFT::CommonParams::FIRST_ANGLE;
-    double _threshold = SIFT::DetectorParams::GET_DEFAULT_THRESHOLD();
-    double _edgeThreshold = SIFT::DetectorParams::GET_DEFAULT_EDGE_THRESHOLD();
-    double _magnification = SIFT::DescriptorParams::GET_DEFAULT_MAGNIFICATION();
-    bool _isNormalize = SIFT::DescriptorParams::DEFAULT_IS_NORMALIZE;
-    bool _recalculateAngles = true;
-    for (int i=1; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
-        if (key=="NOctaves")
-            _nOctaves = rhs[i+1].toInt();
-        else if (key=="NOctaveLayers")
-            _nOctaveLayers = rhs[i+1].toInt();
-        else if (key=="FirstOctave")
-            _firstOctave = rhs[i+1].toInt();
-        else if (key=="AngleMode")
-            _angleMode = rhs[i+1].toInt();
-        else if (key=="Threshold")
-            _threshold = rhs[i+1].toDouble();
-        else if (key=="EdgeThreshold")
-            _edgeThreshold = rhs[i+1].toDouble();
-        else if (key=="Magnification")
-            _magnification = rhs[i+1].toDouble();
-        else if (key=="IsNormalize")
-            _isNormalize = rhs[i+1].toBool();
-        else if (key=="RecalculateAngles")
-            _recalculateAngles = rhs[i+1].toBool();
-        else if (key=="Mask")
-            mask = rhs[i+1].toMat(CV_8U);
-        else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-    }
-    
-    // Process
-    SIFT sift(
-        SIFT::CommonParams(_nOctaves,_nOctaveLayers,_firstOctave,_angleMode),
-        SIFT::DetectorParams(_threshold,_edgeThreshold),
-        SIFT::DescriptorParams(_magnification,_isNormalize,_recalculateAngles)
-    );
-#endif
-
     Mat image(rhs[0].toMat());
     vector<KeyPoint> keypoints;
     bool useProvidedKeypoints=false;

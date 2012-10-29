@@ -92,56 +92,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
         obj.getBackgroundImage(im);
         plhs[0] = MxArray(im);
     }
-#if CV_MINOR_VERSION < 4
-    else if (method == "frameSize") {
-        if (nrhs==3 && nlhs==0)
-            obj.frameSize = rhs[2].toSize();
-        else if (nrhs==2 && nlhs==1)
-            plhs[0] = MxArray(obj.frameSize);
-        else
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    }
-    else if (method == "nframes") {
-        if (nrhs==3 && nlhs==0)
-            obj.nframes = rhs[2].toInt();
-        else if (nrhs==2 && nlhs==1)
-            plhs[0] = MxArray(obj.nframes);
-        else
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    }
-    else if (method == "history") {
-        if (nrhs==3 && nlhs==0)
-            obj.history = rhs[2].toInt();
-        else if (nrhs==2 && nlhs==1)
-            plhs[0] = MxArray(obj.history);
-        else
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    }
-    else if (method == "nmixtures") {
-        if (nrhs==3 && nlhs==0)
-            obj.nmixtures = rhs[2].toInt();
-        else if (nrhs==2 && nlhs==1)
-            plhs[0] = MxArray(obj.nmixtures);
-        else
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    }
-    else if (method == "varThreshold") {
-        if (nrhs==3 && nlhs==0)
-            obj.varThreshold = rhs[2].toDouble();
-        else if (nrhs==2 && nlhs==1)
-            plhs[0] = MxArray(obj.varThreshold);
-        else
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    }
-    else if (method == "backgroundRatio") {
-        if (nrhs==3 && nlhs==0)
-            obj.backgroundRatio = rhs[2].toDouble();
-        else if (nrhs==2 && nlhs==1)
-            plhs[0] = MxArray(obj.backgroundRatio);
-        else
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    }
-#else
     else if (method == "history") {
         if (nrhs==3 && nlhs==0)
             obj.set(method, rhs[2].toInt());
@@ -158,7 +108,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     }
-#endif
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
 }
