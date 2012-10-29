@@ -43,13 +43,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     // Process
     Rect validPixROI;
-#if CV_MINOR_VERSION >= 2
-    Mat m = getOptimalNewCameraMatrix(cameraMatrix, distCoeffs, imageSize,
-        alpha, newImageSize, &validPixROI, centerPrincipalPoint);
-#else
     Mat m = getOptimalNewCameraMatrix(cameraMatrix, distCoeffs, imageSize,
         alpha, newImageSize, &validPixROI);
-#endif
     plhs[0] = MxArray(m);
     if (nlhs>1)
         plhs[1] = MxArray(validPixROI);

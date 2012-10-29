@@ -61,12 +61,4 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Process
     findContours(image, contours, hierarchy, mode, method, offset);
     plhs[0] = MxArray(contours);
-#if CV_MINOR_VERSION >= 2
-    if (nlhs > 1) {
-        vector<Mat> vc(hierarchy.size());
-        for (int i=0;i<vc.size();++i)
-            vc[i] = Mat(1,4,CV_32SC1,&hierarchy[i][0]);
-        plhs[1] = MxArray(vc);
-    }
-#endif
 }

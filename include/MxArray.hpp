@@ -8,13 +8,9 @@
 #define __MXARRAY_HPP__
 
 #include "mex.h"
-#if CV_MINOR_VERSION >= 2
-#include "opencv2/opencv.hpp"
-#else
 #include "opencv/cv.h"
 #include "opencv/highgui.h"
 #include "opencv/ml.h"
-#endif
 #include <stdint.h>
 #include <map>
 #include <string>
@@ -40,17 +36,11 @@ class MxArray {
         explicit MxArray(const cv::Mat& mat,
                          mxClassID classid=mxUNKNOWN_CLASS,
                          bool transpose=true);
-#if CV_MINOR_VERSION < 2
         explicit MxArray(const cv::MatND& mat,
                          mxClassID classid=mxUNKNOWN_CLASS);
-#endif
         explicit MxArray(const cv::SparseMat& mat);
         explicit MxArray(const cv::KeyPoint& p);
         explicit MxArray(const std::vector<cv::KeyPoint>& p);
-#if CV_MINOR_VERSION >= 2
-        explicit MxArray(const cv::DMatch& m);
-        explicit MxArray(const std::vector<cv::DMatch>& m);
-#endif
         explicit MxArray(const cv::Moments& m);
         explicit MxArray(const cv::RotatedRect& m);
         explicit MxArray(const cv::TermCriteria& t);
@@ -101,9 +91,6 @@ class MxArray {
         cv::SparseMat toSparseMat() const;
         cv::Moments toMoments(mwIndex index=0) const;
         cv::KeyPoint toKeyPoint(mwIndex index=0) const;
-#if CV_MINOR_VERSION >= 2
-        cv::DMatch toDMatch(mwIndex index=0) const;
-#endif
         cv::Range toRange() const;
         cv::TermCriteria toTermCriteria(mwIndex index=0) const;
         template <typename T> cv::Point_<T> toPoint_() const;
@@ -668,8 +655,5 @@ template <> std::vector<cv::Point2f> MxArray::toVector() const;
 template <> std::vector<cv::Point3f> MxArray::toVector() const;
 template <> std::vector<MxArray> MxArray::toVector() const;
 template <> std::vector<cv::KeyPoint> MxArray::toVector() const;
-#if CV_MINOR_VERSION >= 2
-template <> std::vector<cv::DMatch> MxArray::toVector() const;
-#endif
 
 #endif

@@ -43,13 +43,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat points1(rhs[0].toMat(CV_32F)), points2(rhs[0].toMat(CV_32F));
         stereoRectifyUncalibrated(points1, points2, F, imgSize, H1, H2, threshold);
     }
-#if CV_MINOR_VERSION >= 2
-    else if (rhs[0].isCell() && rhs[1].isCell()) {
-        vector<Point2f> points1(rhs[0].toVector<Point2f>());
-        vector<Point2f> points2(rhs[1].toVector<Point2f>());
-        stereoRectifyUncalibrated(points1, points2, F, imgSize, H1, H2, threshold);
-    }
-#endif
     plhs[0] = MxArray(H1);
     if (nlhs>1)
         plhs[1] = MxArray(H2);

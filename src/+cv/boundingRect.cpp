@@ -26,17 +26,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
     // Process
-#if CV_MINOR_VERSION >= 2
-    if (rhs[0].isNumeric()) {
-        Mat curve(rhs[0].toMat());
-        plhs[0] = MxArray(boundingRect(curve));
-    }
-    else if (rhs[0].isCell()) {
-        vector<Point> curve(rhs[0].toVector<Point>());
-        plhs[0] = MxArray(boundingRect(curve));        
-    }
-#else
-        Mat curve(rhs[0].toMat());
-        plhs[0] = MxArray(boundingRect(curve));
-#endif
+    Mat curve(rhs[0].toMat());
+    plhs[0] = MxArray(boundingRect(curve));
 }

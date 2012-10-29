@@ -26,38 +26,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
     // Option processing
-#if CV_MINOR_VERSION >= 2
-    double aspectRatio=0;
-    for (int i=5; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
-        if (key=="AspectRatio")
-            aspectRatio = rhs[i+1].toDouble();
-        else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-    }
-
-    // Process
-    Mat rvec(rhs[1].toMat(CV_32F)), tvec(rhs[2].toMat(CV_32F));
-    Mat cameraMatrix(rhs[3].toMat(CV_32F));
-    Mat distCoeffs = (nrhs>4) ? rhs[4].toMat(CV_32F) : Mat();
-    Mat jacobian;
-    if (rhs[0].isNumeric()) {
-        Mat objectPoints(rhs[0].toMat(CV_32F)), imagePoints;
-        projectPoints(objectPoints, rvec, tvec, cameraMatrix, distCoeffs,
-            imagePoints, jacobian, aspectRatio);
-        plhs[0] = MxArray(imagePoints);
-    }
-    else if (rhs[0].isCell()) {
-        vector<Point3f> objectPoints(rhs[0].toVector<Point3f>());
-        vector<Point2f> imagePoints;
-        projectPoints(objectPoints, rvec, tvec, cameraMatrix, distCoeffs,
-            imagePoints, jacobian, aspectRatio);
-        plhs[0] = MxArray(imagePoints);
-    }
-    
-    if (nlhs>1)
-        plhs[1] = MxArray(jacobian);
-#else
     Mat rvec(rhs[1].toMat(CV_32F)), tvec(rhs[2].toMat(CV_32F));
     Mat cameraMatrix(rhs[3].toMat(CV_32F));
     Mat distCoeffs = (nrhs>4) ? rhs[4].toMat(CV_32F) : Mat();
@@ -65,5 +33,4 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<Point2f> imagePoints;
     projectPoints(objectPoints, rvec, tvec, cameraMatrix, distCoeffs, imagePoints);
     plhs[0] = MxArray(imagePoints);
-#endif
 }

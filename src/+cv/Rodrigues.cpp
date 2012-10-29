@@ -27,13 +27,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     // Process
     Mat src(rhs[0].toMat(CV_32F)), dst;
-#if CV_MINOR_VERSION >= 2
-    Mat jacobian;
-    Rodrigues(src,dst,jacobian);
-    if (nlhs>1)
-        plhs[1] = MxArray(jacobian);
-#else
     Rodrigues(src,dst);
-#endif
     plhs[0] = MxArray(dst);
 }

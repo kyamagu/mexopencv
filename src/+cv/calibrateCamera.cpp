@@ -94,16 +94,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
             flags |= CV_CALIB_FIX_K2;
         else if (key=="FixK3" && rhs[i+1].toBool())
             flags |= CV_CALIB_FIX_K3;
-#if CV_MINOR_VERSION >= 2
-        else if (key=="FixK4" && rhs[i+1].toBool())
-            flags |= CV_CALIB_FIX_K4;
-        else if (key=="FixK5" && rhs[i+1].toBool())
-            flags |= CV_CALIB_FIX_K5;
-        else if (key=="FixK6" && rhs[i+1].toBool())
-            flags |= CV_CALIB_FIX_K6;
-        else if (key=="RationalModel" && rhs[i+1].toBool())
-            flags |= CV_CALIB_RATIONAL_MODEL;
-#endif
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }

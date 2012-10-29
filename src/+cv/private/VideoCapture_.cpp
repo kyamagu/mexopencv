@@ -115,12 +115,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
         if (nrhs!=2)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         Mat frame;
-#if CV_MINOR_VERSION >= 2
-        if (obj.read(frame)) {
-#else
         obj.grab();
         if (obj.retrieve(frame)) {
-#endif
             if (frame.type()==CV_8UC3)
                 cvtColor(frame,frame,CV_BGR2RGB);
             plhs[0] = MxArray(frame);

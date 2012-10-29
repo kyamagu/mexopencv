@@ -37,23 +37,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     
     // Process
-#if CV_MINOR_VERSION >= 2
-    if (rhs[0].isNumeric()) {
-        Mat points(rhs[0].toMat(CV_32S));
-        vector<Point> hull;
-        convexHull(points, hull, clockwise, returnPoints);
-        plhs[0] = MxArray(Mat(hull));
-    }
-    else if (rhs[0].isCell()) {
-        vector<Point> points(rhs[0].toVector<Point>());
-        vector<Point> hull;
-        convexHull(points, hull, clockwise, returnPoints);
-        plhs[0] = MxArray(hull);        
-    }
-#else
-        Mat points(rhs[0].toMat(CV_32S));
-        vector<Point> hull;
-        convexHull(points, hull, clockwise);
-        plhs[0] = MxArray(Mat(hull));
-#endif
+    Mat points(rhs[0].toMat(CV_32S));
+    vector<Point> hull;
+    convexHull(points, hull, clockwise);
+    plhs[0] = MxArray(Mat(hull));
 }

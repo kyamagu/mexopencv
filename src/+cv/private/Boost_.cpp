@@ -194,14 +194,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 returnSum = rhs[i+1].toBool();
         }
         Mat results(samples.rows,1,CV_64F);
-#if CV_MINOR_VERSION >= 2
-        if (missing.empty())
-            for (int i=0; i<samples.rows; ++i)
-                results.at<double>(i,0) = obj.predict(samples.row(i),missing,slice,rawMode,returnSum);
-        else
-            for (int i=0; i<samples.rows; ++i)
-                results.at<double>(i,0) = obj.predict(samples.row(i),missing.row(i),slice,rawMode,returnSum);
-#else
         if (missing.empty())
             for (int i=0; i<samples.rows; ++i) {
                 CvMat _row = samples.row(i);
@@ -212,7 +204,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 CvMat _row = samples.row(i), _missing = missing.row(i);
                 results.at<double>(i,0) = obj.predict(&_row,&_missing,NULL,CV_WHOLE_SEQ,rawMode,returnSum);
             }
-#endif
         plhs[0] = MxArray(results);
     }
     else if (method == "get_params") {

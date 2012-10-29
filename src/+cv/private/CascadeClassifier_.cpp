@@ -93,11 +93,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         // Run
         Mat image(rhs[2].toMat());
         vector<Rect> objects;
-#if CV_MINOR_VERSION >= 2
-        obj.detectMultiScale(image, objects, scaleFactor, minNeighbors, flags, minSize, maxSize);
-#else
         obj.detectMultiScale(image, objects, scaleFactor, minNeighbors, flags, minSize);
-#endif
         plhs[0] = MxArray(objects);
     }
     else
