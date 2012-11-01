@@ -513,7 +513,8 @@ void MxArray::set(mwIndex index, const MxArray& value)
         mexErrMsgIdAndTxt("mexopencv:error", "Accessing invalid range");
     if (!isCell())
         mexErrMsgIdAndTxt("mexopencv:error", "Not cell array");
-    mxSetCell(const_cast<mxArray*>(p_), index, value);
+    mxSetCell(const_cast<mxArray*>(p_), index,
+              static_cast<mxArray*>(value));
 }
 
 template <>

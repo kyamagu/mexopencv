@@ -13,7 +13,7 @@
 #include "mex.h"
 #include "opencv2/opencv.hpp"
 
-/** mxArray object wrapper for conversion and manipulation.
+/** mxArray object wrapper for data conversion and manipulation.
  */
 class MxArray
 {
@@ -462,9 +462,6 @@ class MxArray
     {
         return mxIsLogicalScalarTrue(p_);
     }
-    /** Determine whether input is NaN (Not-a-Number).
-     */
-    static inline bool isNaN(double d) { return mxIsNaN(d); }
     /** Determine whether array is numeric.
      */
     inline bool isNumeric() const { return mxIsNumeric(p_); }
@@ -550,6 +547,9 @@ class MxArray
     template <typename T> void set(const std::string& fieldName,
                                    const T& value,
                                    mwIndex index=0);
+    /** Determine whether input is NaN (Not-a-Number).
+     */
+    static inline bool isNaN(double d) { return mxIsNaN(d); }
     /** Value of infinity.
      */
     static inline double Inf() { return mxGetInf(); }
@@ -888,7 +888,7 @@ void MxArray::set(const std::string& fieldName, const T& value, mwIndex index)
                               fieldName.c_str());
     }
     mxSetField(const_cast<mxArray*>(p_), index, fieldName.c_str(),
-               MxArray(value));
+               static_cast<mxArray*>(MxArray(value)));
 }
 
 /** Cell element accessor.
