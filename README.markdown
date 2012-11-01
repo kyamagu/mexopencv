@@ -33,10 +33,10 @@ Compile
 
 Prerequisite:
 
- * Unix: matlab, opencv (>=2.3.1), g++, make, pkg-config
- * Windows: matlab, opencv (>=2.3.1), supported compiler
+ * Unix: matlab, opencv, g++, make, pkg-config
+ * Windows: matlab, opencv, supported compiler
 
-Note: opencv (>=2.1.0) is partially supported.
+For opencv older than v2.3.1, check out the v2.x branch.
 
 Unix
 ----
