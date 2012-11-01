@@ -19,7 +19,7 @@ classdef TestGrabCut
             bbox = [100,100,200,320]; % [y x w h]
             mask = zeros(size(TestGrabCut.img,1),size(TestGrabCut.img,2),'uint8');
             mask(bbox(2):(bbox(2)+bbox(4)-1),bbox(1):(bbox(1)+bbox(3)-1)) = 3; % Set trimap
-            res = cv.grabCut(TestGrabCut.img,mask,'Init','Mask');
+            [res, bgdmodel, fgdmodel] = cv.grabCut(TestGrabCut.img,mask,'Init','Mask');
             % grabCut has random components... it's hard to verify
         end
         
