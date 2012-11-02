@@ -49,7 +49,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     // Process
     if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
-        Mat object1(rhs[0].toMat(CV_8U)), object2(rhs[0].toMat(CV_8U));
+        Mat object1(rhs[0].toMat(CV_8U)), object2(rhs[1].toMat(CV_8U));
         double d = matchShapes(object1,object2,method,parameter);
         plhs[0] = MxArray(d);
     }
