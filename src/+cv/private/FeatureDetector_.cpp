@@ -39,7 +39,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
     if (rhs[0].isChar() && nrhs==1) {
         // Constructor is called. Create a new object from argument
         string detectorType(rhs[0].toString());
-        obj_[++last_id] = FeatureDetector::create(detectorType);
+        // Temporary work-around of bug (#2585) in the OpenCV.
+        Ptr<FeatureDetector> obj = (detectorType == "SimpleBlob")
+            ? Ptr<FeatureDetector>(new SimpleBlobDetector) 
+            : FeatureDetector::create(detectorType);
+        if (obj.empty())
+            mexErrMsgIdAndTxt("mexopencv:error","FeatureDetector::create returned empty object");
+        obj_[++last_id] = obj;
         plhs[0] = MxArray(last_id);
         return;
     }

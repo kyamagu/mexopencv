@@ -30,17 +30,17 @@ classdef FeatureDetector < handle
     % See also cv.FeatureDetector.FeatureDetector cv.FeatureDetector.write
     % cv.DescriptorExtractor
     %
-    
+
     properties (SetAccess = private)
         % Object ID
         id
     end
-    
+
     properties (SetAccess = private, Dependent)
         % Type of the detector
         type
     end
-    
+
     methods
         function this = FeatureDetector(type)
             %FEATUREDETECTOR  FeatureDetector constructors
@@ -82,7 +82,7 @@ classdef FeatureDetector < handle
             end
             this.id = FeatureDetector_(type);
         end
-        
+
         function delete(this)
             %DELETE  FeatureDetector destructor
             %
@@ -90,12 +90,12 @@ classdef FeatureDetector < handle
             %
             FeatureDetector_(this.id, 'delete');
         end
-        
+
         function t = get.type(this)
             %TYPE  FeatureDetector type
             t = FeatureDetector_(this.id, 'type');
         end
-        
+
         function keypoints = detect(this, im)
             %DETECT  Detects keypoints in an image
             %
@@ -111,7 +111,7 @@ classdef FeatureDetector < handle
             %
             keypoints = FeatureDetector_(this.id, 'detect', im);
         end
-        
+
         function read(this, filename)
             %READ  Reads a feature detector object from a file
             %
@@ -122,9 +122,9 @@ classdef FeatureDetector < handle
             %
             % See also cv.FeatureDetector
             %
-            FeatureDetector_(this.id, 'write', filename);
+            FeatureDetector_(this.id, 'read', filename);
         end
-        
+
         function write(this, filename)
             %WRITE  Writes a feature detector object to a file
             %
@@ -138,5 +138,5 @@ classdef FeatureDetector < handle
             FeatureDetector_(this.id, 'write', filename);
         end
     end
-    
+
 end
