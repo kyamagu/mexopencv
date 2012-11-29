@@ -75,13 +75,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
             for(int i = 2; i < nrhs; i += 2) {
                 string key(rhs[i].toString());
-                if (key == "nclusters") {
+                if (key == "Nclusters") {
                     nclusters = rhs[i + 1].toInt();
-                } else if (key == "covMatType") {
+                } else if (key == "CovMatType") {
                     covMatType = CovMatType[rhs[i + 1].toString()];
-                } else if (key == "maxIters") {
+                } else if (key == "MaxIters") {
                     maxIter = rhs[i + 1].toInt();
-                } else if (key == "epsilon") {
+                } else if (key == "Epsilon") {
                     eps = rhs[i + 1].toDouble();
                 }
             }
@@ -104,35 +104,27 @@ void mexFunction( int nlhs, mxArray *plhs[],
     } else if (method == "train") {
         if (nrhs != 3)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        
         Mat samples = rhs[2].toMat();
-
         Mat log_likelihoods;
         Mat labels;
         Mat probs;
-
         obj.train(samples, log_likelihoods, labels, probs);
-
         assign_lhs(log_likelihoods, labels, probs);
-
     } else if (method == "trainE") {
         if (nrhs < 4 || (nrhs % 2) != 0)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-
         Mat samples = rhs[2].toMat();
         Mat means0  = rhs[3].toMat();
-        
         // transpose matrix for convenience
         if (means0.cols == obj.get<int>("nclusters") && means0.rows == samples.cols)
             means0 = means0.t();
-
         Mat covs0;
         Mat weights0;
         for(int i = 4; i < nrhs; i += 2) {
             string key = rhs[i].toString();
-            if (key == "covs0") {
+            if (key == "Covs0") {
                 covs0 = rhs[i + 1].toMat();
-            } else if (key == "weights0") {
+            } else if (key == "Weights0") {
                 weights0 = rhs[i + 1].toMat();
             }
         }
@@ -140,28 +132,21 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat log_likelihoods;
         Mat labels;
         Mat probs;
-
         obj.trainE(samples, means0, covs0, weights0, log_likelihoods, labels, probs);
-        
         assign_lhs(log_likelihoods, labels, probs);
-    
     } else if (method == "trainM") {
         if (nrhs < 4)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
 
         Mat samples = rhs[2].toMat();
         Mat probs0  = rhs[3].toMat();
-
         // transpose matrix for convenience
         if (probs0.rows == obj.get<int>("nclusters") && probs0.cols == samples.rows)
             probs0 = probs0.t();
-
         Mat log_likelihoods;
         Mat labels;
         Mat probs;
-
         obj.trainM(samples, probs0, log_likelihoods, labels, probs);
-
         assign_lhs(log_likelihoods, labels, probs);
     } else if (method == "nclusters") {
         if (nrhs == 3 && nlhs == 0)
@@ -205,6 +190,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
             plhs[0] = MxArray(obj.get<vector<Mat> >(method));
         else
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    } else if (method == "isTrained") {
+        if (nrhs == 3 && nlhs == 0)
+            mexErrMsgIdAndTxt("mexopencv:error","Attempt to set read-only property");
+        else if (nrhs == 2 && nlhs == 1)
+            plhs[0] = MxArray(obj.isTrained());
+        else
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     } else if (method == "save") {
         if (nrhs == 3 && nlhs == 0) {
             string filename = rhs[2].toString();
@@ -237,20 +229,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
     } else if (method == "predict") {
         if (nrhs != 3)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of input arguments");
-
         Mat sample = rhs[2].toMat();
-
         Mat probs;
         Vec2d result = obj.predict(sample, probs);
-
         assign_lhs(result[0], result[1], probs);
-
-    } else if (method == "isTrained") {
-        if (nrhs == 3 && nlhs == 0)
-            mexErrMsgIdAndTxt("mexopencv:error","Attempt to set read-only property");
-        else if (nrhs == 2 && nlhs == 1)
-            plhs[0] = MxArray(obj.isTrained());
-        else
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     }
 }
