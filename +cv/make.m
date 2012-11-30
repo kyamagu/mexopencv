@@ -15,7 +15,7 @@ cd(fileparts(fileparts(mfilename('fullpath'))));
 if ispc % Windows
     % Clean
     if nargin>0 && strcmp(varargin{1},'clean')
-        cmd = sprintf('delete +cv\\*.%s +cv\\private\\*.%s', mexext, mexext);
+        cmd = sprintf('delete +cv\\*.%s +cv\\private\\*.%s lib\\*', mexext, mexext);
         disp(cmd);
         eval(cmd);
         return;
