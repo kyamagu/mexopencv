@@ -12,11 +12,11 @@
 % * __contours__ Detected contours. Each contour is stored as a vector of points.
 % * __hierarchy__ Optional output vector containing information about the image
 %         topology. It has as many elements as the number of contours. For each
-%         contour contours[i], the elements hierarchy[i][0], hiearchy[i][1],
-%         hiearchy[i][2] , and hiearchy[i][3] are set to 0-based indices in
-%         contours of the next and previous contours at the same hierarchical
-% * __level__ the first child contour and the parent contour, respectively.
-%         If for a contour i there are no next, previous, parent, or nested
+%         i-th contour, contours[i], the elements hierarchy[i][0], hiearchy[i][1], 
+%         hiearchy[i][2], and hiearchy[i][3] are set to 0-based indices in contours 
+%         of the next and previous contours at the same hierarchical level, 
+%         the first child contour and the parent contour, respectively.
+%         If for the i-th contour there are no next, previous, parent, or nested
 %         contours, the corresponding elements of hierarchy[i] will be negative.
 %
 % ## Options
