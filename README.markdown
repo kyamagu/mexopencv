@@ -112,11 +112,16 @@ To remove existing mexopencv binaries, use the following command.
 
     >> cv.make('clean')
 
-### Missing stdint.h in Visual Studio 2008
+### Visual Studio 2008 compatibility issue
+ 
+Users report incompatibility with Visual Studio 2008. Try not to use Visual
+Studio 2008 with mexopencv. For this reason, mexopencv on Windows platform
+do not work with Matlab R2009b or earlier.
 
-Visual Studio 2008 or earlier does not comply C99 standard and lacks `stdint.h`
-header file. Luckily, the header file is available on the Web. For example,
-http://msinttypes.googlecode.com/svn/trunk/stdint.h
+Nevertheless, if you want to try using Visual Studio 2008, obtain `stdint.h` and
+use `cv.make` to compile the package. Visual Studio 2008 or earlier does not comply
+C99 standard and lacks `stdint.h` header file. Luckily, the header file is available
+on the Web. For example, http://msinttypes.googlecode.com/svn/trunk/stdint.h
 
 Place this file under `include` directory in the mexopencv package.
 
