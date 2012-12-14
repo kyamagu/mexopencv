@@ -258,7 +258,7 @@ classdef EM < handle
                     [log_likelihood(i), cluster(i), probs(i, :)] = EM_(this.id, 'predict', samples(i, :));
                 end
             else
-                [log_likelihood, cluster, probs] = EM_(this.id, 'predict', sample);
+                [log_likelihood, cluster, probs] = EM_(this.id, 'predict', samples);
             end
         end
     end     
