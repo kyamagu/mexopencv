@@ -80,5 +80,38 @@ classdef VideoWriter < handle
             VideoWriter_(this.id, 'write', frame);
         end
     end
-    
+
+    methods (Hidden = true)
+        function retval = open(this, filename, siz, varargin)
+            %OPEN  Initializes or reinitializes video writer.
+            %
+            % ## Input
+            % * __filename__ Name of the video file
+            % * __siz__ Size of the video frame in [width, height] format
+            %
+            % ## Output
+            % * __retval__ bool, indicates if video is successfully initialized
+            %
+            % The method opens video writer. Parameters are the same as
+            % in the constructor.
+            %
+            % See also cv.VideoWriter cv.VideoWriter.isOpened
+            %
+            retval = VideoWriter_(this.id, 'open', filename, siz, varargin{:});
+        end
+
+        function retval = isOpened(this)
+            %ISOPENED  Returns true if video writer has been successfully initialized.
+            %
+            % ## Output
+            % * __val__ bool, return value
+            %
+            % Returns true if video writer has been successfully initialized.
+            %
+            % See also cv.VideoWriter cv.VideoWriter.open
+            %
+            retval = VideoWriter_(this.id, 'isOpened');
+        end
+    end
+
 end
