@@ -4,6 +4,7 @@
  * @author Kota Yamaguchi
  * @date 2012
  */
+#include <typeinfo>
 #include "mexopencv.hpp"
 using namespace std;
 using namespace cv;
