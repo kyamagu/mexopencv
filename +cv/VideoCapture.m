@@ -128,5 +128,78 @@ classdef VideoCapture < handle
             VideoCapture_(this.id, 'set', key, value);
         end
     end
-    
+
+    methods (Hidden = true)
+        function successFlag = open(this, filename)
+            %OPEN  Open video file or a capturing device for video capturing
+            %
+            % ## Output
+            % * __retval__ bool, true if successful
+            %
+            % The methods release() to close the already opened file or camera.
+            % Parameters are the same as in the constructor.
+            %
+            % See also cv.VideoCapture.isOpened
+            %
+            if nargin < 1, filename = 0; end
+            successFlag = VideoCapture_(this.id, 'open', filename);
+        end
+
+        function flag = isOpened(this)
+            %ISOPENED  Returns true if video capturing has been initialized already.
+            %
+            % ## Output
+            % * __retval__ bool, return value
+            %
+            % If the previous call to constructor or open() succeeded, the method returns true.
+            %
+            % See also cv.VideoCapture.open
+            %
+            flag = VideoCapture_(this.id, 'isOpened');
+        end
+
+        function release(this)
+            %RELEASE  Closes video file or capturing device.
+            %
+            % The methods are automatically called by subsequent open() and by destructor.
+            %
+            % See also cv.VideoCapture.open
+            %
+            VideoCapture_(this.id, 'release');
+        end
+
+        function successFlag = grab(this)
+            %GRAB  Grabs the next frame from video file or capturing device.
+            %
+            % ## Output
+            % * __successFlag__ bool, success flag
+            %
+            % The function grabs the next frame from video file or camera and returns
+            % true (non-zero) in the case of success.
+            %
+            % The primary use of the function is in multi-camera environments, especially
+            % when the cameras do not have hardware synchronization. That is, you call
+            % grab() for each camera and after that call the slower method retrieve() to
+            % decode and get frame from each camera. This way the overhead on demosaicing
+            % or motion jpeg decompression etc. is eliminated and the retrieved frames
+            % from different cameras will be closer in time.
+            %
+            % See also cv.VideoCapture.read cv.VideoCapture.retrieve
+            %
+            successFlag = VideoCapture_(this.id, 'grab');
+        end
+
+        function frame = retrieve(this)
+            %RETRIEVE  Decodes and returns the grabbed video frame.
+            %
+            % The function decodes and returns the just grabbed frame. If no frames has
+            % been grabbed (camera has been disconnected, or there are no more frames
+            % in video file), the function returns an empty matrix.
+            %
+            % See also cv.VideoCapture.read cv.VideoCapture.grab
+            %
+            frame = VideoCapture_(this.id, 'retrieve');
+        end
+    end
+
 end
