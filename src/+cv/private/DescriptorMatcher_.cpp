@@ -4,6 +4,7 @@
  * @author Kota Yamaguchi
  * @date 2012
  */
+#include <typeinfo>
 #include "mexopencv.hpp"
 #include "opencv2/nonfree/nonfree.hpp"
 using namespace std;
