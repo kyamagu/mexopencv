@@ -6,12 +6,13 @@ classdef TestFileStorage
     methods (Static)
         function test_1
             S = struct('field1', magic(4), 'field2', 'this is the second field');
-            cv.FileStorage('.my.yml',S);
-            S2 = cv.FileStorage('.my.yml');
+            fname = [tempname '.yml'];
+            cv.FileStorage(fname,S);
+            S2 = cv.FileStorage(fname);
             assert(all(S.field1(:)==S2.field1(:)));
             assert(strcmp(S.field2,S2.field2));
-            if exist('.my.yml','file')
-                delete .my.yml;
+            if exist(fname,'file')
+                delete(fname);
             end
         end
         

@@ -14,11 +14,12 @@ classdef TestHOGDescriptor
         function test_2
             hog = cv.HOGDescriptor();
             hog.GammaCorrection = false;
-            hog.save('TestHOGDescriptor.xml');
-            hog2 = cv.HOGDescriptor('TestHOGDescriptor.xml');
+            fname = [tempname '.xml'];
+            hog.save(fname);
+            hog2 = cv.HOGDescriptor(fname);
             assert(hog.GammaCorrection == hog2.GammaCorrection);
-            if exist('TestHOGDescriptor.xml','file')
-                delete TestHOGDescriptor.xml;
+            if exist(fname,'file')
+                delete(fname);
             end
         end
     end
