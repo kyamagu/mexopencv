@@ -2,8 +2,8 @@ function calibration_demo
 %CALIBRATION_DEMO demonstration of stereo calibration
 
 % Prepare calibration patterns
-files_l = dir(fullfile('test','left*.jpg'));
-files_r = dir(fullfile('test','right*.jpg'));
+files_l = dir(fullfile(mexopencv.root(),'test','left*.jpg'));
+files_r = dir(fullfile(mexopencv.root(),'test','right*.jpg'));
 assert(numel(files_l) == numel(files_r));
 mesh_size = [9,6];
 [mesh_x,mesh_y] = ndgrid(1:mesh_size(1),1:mesh_size(2));
@@ -14,8 +14,8 @@ pts_o = cell(1,numel(files_l));
 pts_l = cell(1,numel(files_l));
 pts_r = cell(1,numel(files_r));
 for i = 1:numel(files_l)
-    im_l = imread(fullfile('test',files_l(i).name));
-    im_r = imread(fullfile('test',files_r(i).name));
+    im_l = imread(fullfile(mexopencv.root(),'test',files_l(i).name));
+    im_r = imread(fullfile(mexopencv.root(),'test',files_r(i).name));
     pts_l_ = cv.findChessboardCorners(im_l, mesh_size);
     pts_l{i} = cv.cornerSubPix(im_l,pts_l_);
     pts_r_ = cv.findChessboardCorners(im_r, mesh_size);
@@ -55,8 +55,8 @@ sf = (600/max(siz));
 [w,h] = deal(siz(1)*sf,siz(2)*sf);
 for i = 1:numel(files_l)
     fprintf(' % 3d / % 3d\n', i, numel(files_l));
-    im_l = imread(fullfile('test',files_l(i).name));
-    im_r = imread(fullfile('test',files_r(i).name));
+    im_l = imread(fullfile(mexopencv.root(),'test',files_l(i).name));
+    im_r = imread(fullfile(mexopencv.root(),'test',files_r(i).name));
     rim_l = cv.remap(im_l, RM(1).map1, RM(1).map2);
     rim_r = cv.remap(im_r, RM(2).map1, RM(2).map2);
     cim_l = cv.cvtColor(rim_l, 'GRAY2RGB');

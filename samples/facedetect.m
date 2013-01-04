@@ -6,8 +6,7 @@ function facedetect
 disp('Face detection demo. Press any key when done.');
 
 % Load cascade file
-root = fileparts(fileparts(mfilename('fullpath')));
-xml_file = fullfile(root,'test','haarcascade_frontalface_alt2.xml');
+xml_file = fullfile(mexopencv.root(),'test','haarcascade_frontalface_alt2.xml');
 classifier = cv.CascadeClassifier(xml_file);
 
 % Set up camera
