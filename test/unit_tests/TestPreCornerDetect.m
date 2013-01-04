@@ -1,8 +1,7 @@
 classdef TestPreCornerDetect
     %TestPreCornerDetect
     properties (Constant)
-        path = fileparts(fileparts(mfilename('fullpath')))
-        img = rgb2gray(imread([TestPreCornerDetect.path,filesep,'img001.jpg']))
+        img = rgb2gray(imread(fullfile(mexopencv.root(),'test','img001.jpg')));
     end
     
     methods (Static)

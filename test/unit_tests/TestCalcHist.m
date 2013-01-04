@@ -1,8 +1,7 @@
 classdef TestCalcHist
     %TestCalcHist
     properties (Constant)
-        path = fileparts(fileparts(mfilename('fullpath')))
-        img = imread([TestCalcHist.path,filesep,'img001.jpg'])
+        img = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
     end
     
     methods (Static)

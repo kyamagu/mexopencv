@@ -1,8 +1,7 @@
 classdef TestFAST
     %TestFAST
     properties (Constant)
-        path = fileparts(fileparts(mfilename('fullpath')))
-        img = imread([TestFAST.path,filesep,'img001.jpg'])
+        img = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
     end
     
     methods (Static)

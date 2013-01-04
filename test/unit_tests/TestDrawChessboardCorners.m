@@ -1,11 +1,12 @@
 classdef TestDrawChessboardCorners
     %TestDrawChessboardCorners
     properties (Constant)
+        img = imread(fullfile(mexopencv.root(),'test','left01.jpg'));
     end
     
     methods (Static)
         function test_1
-            im = TestFindChessboardCorners.img;
+            im = TestDrawChessboardCorners.img;
             result = cv.findChessboardCorners(im, [9,6]);
             im = cv.drawChessboardCorners(im, [9,6], result);
         end
