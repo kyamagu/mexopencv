@@ -4,8 +4,8 @@ function SURF_descriptor
 % Before start, addpath('/path/to/mexopencv');
 %
 
-root = fileparts(fileparts(mfilename('fullpath')));
-im1 = cv.cvtColor(imread(fullfile(root,'test','img001.jpg')),'RGB2GRAY');
+im1 = imread(fullfile(cv_root(),'test','img001.jpg'));
+im1 = cv.cvtColor(im1,'RGB2GRAY');
 im2 = fliplr(im1);
 
 detector = cv.FeatureDetector('SURF');
