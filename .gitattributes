@@ -1,2 +1,30 @@
-.gitignore export-ignore
+# dont add to archives when exporting
+.gitignore     export-ignore
 .gitattributes export-ignore
+
+# autodetect all text files to be EOL-normalized
+# (on checkin, set EOL to LF; on checkout, set EOL to OS native)
+*           text=auto
+
+# explicitly specify text files to be EOL-normalized
+*.m         text diff=matlab
+*.c         text diff=cpp
+*.cpp       text diff=cpp
+*.h         text diff=cpp
+*.hpp       text diff=cpp
+*.html      text diff=html
+*.xml       text
+*.dox       text
+*.markdown  text
+*.md        text
+*.txt       text
+
+# binary files (no EOL conversion whatsoever): checkin/checkout as is
+*.jpg       binary
+*.png       binary
+*.tiff      binary
+*.bmp       binary
+*.jar       binary
+
+# some XML models contain binary data
+test/*.xml  binary
