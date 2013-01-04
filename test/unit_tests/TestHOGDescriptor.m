@@ -5,8 +5,7 @@ classdef TestHOGDescriptor
     
     methods (Static)
         function test_1
-            p = fileparts(fileparts(mfilename('fullpath')));
-            im = imread([p,filesep,'img001.jpg']);
+            im = imread(fullfile(cv_root(),'test','img001.jpg'));
             hog = cv.HOGDescriptor();
             hog.compute(im);
             hog.detectMultiScale(im);

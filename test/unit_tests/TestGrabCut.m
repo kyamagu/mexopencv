@@ -1,8 +1,7 @@
 classdef TestGrabCut
     % Functional Tests for grabCut
     properties (Constant)
-        path = fileparts(fileparts(mfilename('fullpath')))
-        img = imread([TestGrabCut.path,filesep,'img001.jpg'])
+        img = imread(fullfile(cv_root(),'test','img001.jpg'));
     end
     
     methods (Static)

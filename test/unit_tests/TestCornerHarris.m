@@ -1,8 +1,7 @@
 classdef TestCornerHarris
     %TestCornerHarris
     properties (Constant)
-        path = fileparts(fileparts(mfilename('fullpath')))
-        img = rgb2gray(imread([TestCornerHarris.path,filesep,'img001.jpg']))
+        img = rgb2gray(imread(fullfile(cv_root(),'test','img001.jpg')));
     end
     
     methods (Static)

@@ -1,8 +1,7 @@
 classdef TestImread
     %TestImread
     properties (Constant)
-        path = fileparts(fileparts(mfilename('fullpath')))
-        filename = [TestImread.path,filesep,'img001.jpg'];
+        filename = fullfile(cv_root(),'test','img001.jpg');
     end
     
     methods (Static)
