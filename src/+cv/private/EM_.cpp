@@ -118,12 +118,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
         // transpose matrix for convenience
         if (means0.cols == obj.get<int>("nclusters") && means0.rows == samples.cols)
             means0 = means0.t();
-        Mat covs0;
+        vector<Mat> covs0;
         Mat weights0;
         for(int i = 4; i < nrhs; i += 2) {
             string key = rhs[i].toString();
             if (key == "Covs0") {
-                covs0 = rhs[i + 1].toMat();
+                covs0 = rhs[i + 1].toVector<Mat>();
             } else if (key == "Weights0") {
                 weights0 = rhs[i + 1].toMat();
             }
