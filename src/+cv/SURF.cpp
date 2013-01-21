@@ -65,7 +65,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else if (key=="UpRight")
             upright = rhs[i+1].toBool();
         else if (key=="Mask")
-            mask = rhs[i+1].toMat();
+            mask = rhs[i+1].toMat(CV_8U);
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
