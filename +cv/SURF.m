@@ -4,14 +4,30 @@
 %    keypoints = cv.SURF(im, 'OptionName', optionValue, ...)
 %    [keypoints, descriptors] = cv.SURF(...)
 %
+%    descriptorSize = cv.SURF('DescriptorSize')   % descriptor size (64,128)
+%
 % ## Input
 % * __im__ Input 8-bit grayscale image.
 %
 % ## Output
-% * __keypoints__ The output vector of keypoints.
+% * __keypoints__ The output vector of keypoints. A 1-by-N structure array.
+%       It has the following fields:
+%       * __pt__ coordinates of the keypoint [x,y]
+%       * __size__ diameter of the meaningful keypoint neighborhood
+%       * __angle__ computed orientation of the keypoint (-1 if not applicable).
+%             Its possible values are in a range [0,360) degrees. It is measured
+%             relative to image coordinate system (y-axis is directed downward),
+%             ie in clockwise.
+%       * __response__ the response by which the most strong keypoints have been
+%             selected. Can be used for further sorting or subsampling.
+%       * __octave__ octave (pyramid layer) from which the keypoint has been
+%             extracted.
+%       * **class_id** object id that can be used to clustered keypoints by an
+%             object they belong to.
 % * __descriptors__ The output concatenated vectors of descriptors. Each descriptor
-%       is 64- or 128-element vector, as returned by SURF::descriptorSize(). So
-%       the total size of descriptors will be keypoints.size()*descriptorSize().
+%       is 64- or 128-element vector, as returned by `SURF::descriptorSize()`. So
+%       the total size of descriptors will be `keypoints.size()*descriptorSize()`.
+%       A matrix of size N-by-(64/128) of class `single`, one row per keypoint.
 %
 % ## Options
 % * __Extended__ 0 means that the basic descriptors (64 elements each) shall be
@@ -35,7 +51,10 @@
 % * __Mask__ Optional input mask that marks the regions where we should detect
 %        features
 %
-% Extracts Speeded Up Robust Features (SURF) from an image [Bay06].
+% Extracts Speeded Up Robust Features (SURF) from an image:
+%
+% > Bay, H. and Tuytelaars, T. and Van Gool, L. "SURF: Speeded Up Robust Features",
+% > 9th European Conference on Computer Vision, 2006
 %
 % See also cv.FeatureDetector cv.DescriptorExtractor
 %

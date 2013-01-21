@@ -30,20 +30,21 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<1 || ((nrhs%2)!=1) || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     if (!initialized) {
         initModule_nonfree();
         initialized = true;
     }
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
+    // return the descriptor size (128)
     if (nrhs==1 && rhs[0].isChar() && rhs[0].toString()=="DescriptorSize") {
         plhs[0] = MxArray(SIFT().descriptorSize());
         return;
     }
-    
+
     // Option processing
     Mat mask;
     int _nfeatures=0;
@@ -68,6 +69,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
+
     // Process
     SIFT sift(_nfeatures,_nOctaveLayers,_contrastThreshold,_edgeThreshold,
         _sigma);

@@ -25,6 +25,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
+    // return the descriptor size
     if (nrhs==1 && rhs[0].isChar() && rhs[0].toString()=="DescriptorSize") {
         plhs[0] = MxArray(ORB().descriptorSize());
         return;
