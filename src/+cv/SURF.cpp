@@ -35,21 +35,21 @@ void mexFunction( int nlhs, mxArray *plhs[],
         initModule_nonfree();
         initialized = true;
     }
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // return the descriptor size (64/128)
     if (nrhs==1 && rhs[0].isChar() && rhs[0].toString()=="DescriptorSize") {
         plhs[0] = MxArray(SURF().descriptorSize());
         return;
     }
-    
+
     // Option processing
-    double hessianThreshold=400;
+    double hessianThreshold=100;
     int nOctaves=4;
     int nOctaveLayers=2;
-    bool extended=false;
+    bool extended=true;
     bool upright=false;
     Mat mask;
     for (int i=1; i<nrhs; i+=2) {
@@ -69,7 +69,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Process
     SURF surf(hessianThreshold,nOctaves,nOctaveLayers,extended,upright);
     Mat image(rhs[0].toMat());

@@ -12,15 +12,16 @@
 % ## Options
 % * __MaxSize__ maximum size of the features. The following values are
 %       supported: 4, 6, 8, 11, 12, 16, 22, 23, 32, 45, 46, 64, 90, 128.
-%       In the case of a different value the result is undefined.
+%       In the case of a different value the result is undefined. default 45
 % * __ResponseThreshold__ threshold for the approximated laplacian, used to
 %       eliminate weak features. The larger it is, the less features will
-%       be retrieved.
+%       be retrieved. default 30
 % * __LineThresholdProjected__ another threshold for the laplacian to
-%       eliminate edges
+%       eliminate edges. default 10
 % * __LineThresholdBinarized__ yet another threshold for the feature size
 %       to eliminate edges. The larger the 2nd threshold, the more points
-%       you get.
+%       you get. default 8
+% * __SuppressNonmaxSize__ default 5
 %
 % See also cv.FeatureDetector
 %

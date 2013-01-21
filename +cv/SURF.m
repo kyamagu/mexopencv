@@ -32,17 +32,17 @@
 % ## Options
 % * __Extended__ 0 means that the basic descriptors (64 elements each) shall be
 %       computed, 1 means that the extended descriptors (128 elements each)
-%       shall be computed.
+%       shall be computed. Default 1
 % * __UpRight__ 0 means that detector computes orientation of each feature.
 %       1 means that the orientation is not computed (which is much, much faster).
 %       For example, if you match images from a stereo pair, or do image stitching,
 %       the matched features likely have very similar angles, and you can speed up
-%       feature extraction by setting upright=1.
+%       feature extraction by setting upright=1. Default 0
 % * __HessianThreshold__ Threshold for the keypoint detector. Only features,
 %       whose hessian is larger than hessianThreshold are retained by the
 %       detector. Therefore, the larger the value, the less keypoints you will
 %       get. A good default value could be from 300 to 500, depending from the
-%       image contrast.
+%       image contrast. Default 100
 % * __NOctaves__ The number of a gaussian pyramid octaves that the detector uses.
 %       It is set to 4 by default. If you want to get very large features, use
 %       the larger value. If you want just small features, decrease it.

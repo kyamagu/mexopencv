@@ -21,25 +21,25 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<1 || ((nrhs%2)!=1) || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // return the descriptor size
     if (nrhs==1 && rhs[0].isChar() && rhs[0].toString()=="DescriptorSize") {
         plhs[0] = MxArray(ORB().descriptorSize());
         return;
     }
-    
+
     // Option processing
-    size_t n_features = 500;
+    int n_features = 500;
     float scale_factor = 1.2f;
     int edge_threshold = 31;
-    unsigned int n_levels = 8;
-    unsigned int first_level = 0;
-    int WTA_K=2;
-    int score_type=0;
-    int patch_size=31;
+    int n_levels = 8;
+    int first_level = 0;
+    int WTA_K = 2;
+    int score_type = ORB::HARRIS_SCORE;
+    int patch_size = 31;
     Mat mask;
     for (int i=1; i<nrhs; i+=2) {
         string key = rhs[i].toString();
@@ -64,7 +64,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Process
     ORB orb(n_features,scale_factor,n_levels,edge_threshold,
             first_level,WTA_K,score_type,patch_size);

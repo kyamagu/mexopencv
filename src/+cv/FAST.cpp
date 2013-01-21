@@ -26,8 +26,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
     // Option processing
-    int threshold=20;
-    bool nonmaxSupression=true;
+    int threshold = 10;
+    bool nonmaxSupression = true;
     for (int i=1; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="Threshold")
