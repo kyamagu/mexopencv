@@ -144,6 +144,25 @@ classdef FeatureDetector < handle
             FeatureDetector_(this.id, 'write', filename);
         end
 
+        function str = name(this)
+            %NAME  FeatureDetector name
+            %
+            %    str = detector.name()
+            %
+            % ## Output
+            % *__str__ name of the detector
+            %
+            % See also cv.FeatureDetector
+            %
+
+            % avoid segmentation violation in MEX-file
+            if strcmp(this.type_,'SimpleBlob') || strncmp(this.type_,'Pyramid',7)
+                error('mexopencv:error', 'Detector currently not supported (OpenCV bug)');
+            end
+
+            str = FeatureDetector_(this.id, 'name');
+        end
+
         function val = get(this, param)
             %GET  Get a feature detector parameter
             %

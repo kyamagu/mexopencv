@@ -171,6 +171,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
         FileStorage fs(rhs[2].toString(),FileStorage::WRITE);
         obj->write(fs);
     }
+    else if (method == "name") {
+        if (nrhs!=2) {
+            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        }
+        plhs[0] = MxArray(obj->name());
+    }
     else if (method == "get") {
         if (nrhs == 2) {
             // return a struct with all parameters and their values
