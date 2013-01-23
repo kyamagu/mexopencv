@@ -229,7 +229,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Size paddingBR;
         for (int i=3; i<nrhs; i+=2) {
             string key = rhs[i].toString();
-            if (key=="PaddingTR")
+            if (key=="PaddingTL")
                 paddingTL = rhs[i+1].toSize();
             else if (key=="PaddingBR")
                 paddingBR = rhs[i+1].toSize();
