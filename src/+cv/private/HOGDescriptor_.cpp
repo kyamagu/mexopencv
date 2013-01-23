@@ -178,7 +178,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         // Run
         vector<Point> foundLocations;
         vector<double> weights;
-        obj.detect(img, foundLocations, hitThreshold, winStride,
+        obj.detect(img, foundLocations, weights, hitThreshold, winStride,
             padding, searchLocations);
         plhs[0] = MxArray(foundLocations);
         if (nlhs>1)
