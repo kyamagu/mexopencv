@@ -294,6 +294,31 @@ classdef HOGDescriptor < handle
             HOGDescriptor_(this.id,'nlevels',val);
         end
     end
-    
+
+    methods (Hidden)
+        function [grad, angleOfs] = computeGradient(this, im, varargin)
+            %COMPUTEGRADIENT  Computes gradient
+            %
+            % ## Input
+            % * __im__ Matrix of the type uint8 containing an image where
+            %       objects are detected.
+            %
+            % ## Output
+            % * __grad__ gradient magnitudes
+            %       (2 channels matrix of same size as image + padding)
+            % * __angleOfs__ quantized gradient orientation
+            %       with integers in the range [0,NBins-1]
+            %       (2 channels matrix of same size as image + padding)
+            %
+            % ## Options
+            % * __paddingTL__
+            % * __paddingBR__
+            %
+            % See also cv.HOGDescriptor
+            %
+            [grad, angleOfs] = HOGDescriptor_(this.id, 'computeGradient', im, varargin{:});
+        end
+    end
+
 end
 
