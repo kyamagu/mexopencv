@@ -318,6 +318,17 @@ classdef HOGDescriptor < handle
             %
             [grad, angleOfs] = HOGDescriptor_(this.id, 'computeGradient', im, varargin{:});
         end
+
+        function readALTModel(this, modelfile)
+            %READALTMODEL  Read model from SVMlight format
+            %
+            % ## Input
+            % * __modelfile__ name of model file in SVMlight format
+            %
+            % See also cv.HOGDescriptor
+            %
+            HOGDescriptor_(this.id, 'readALTModel', modelfile);
+        end
     end
 
 end

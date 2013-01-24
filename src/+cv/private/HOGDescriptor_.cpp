@@ -46,7 +46,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<MxArray> rhs(prhs,prhs+nrhs);
     int id = rhs[0].toInt();
     string method(rhs[1].toString());
-    
+
     // Constructor call
     if (method == "new") {
         nargchk(nlhs<=1);
@@ -87,7 +87,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         plhs[0] = MxArray(last_id);
         return;
     }
-    
+
     // Big operation switch
     HOGDescriptor& obj = obj_[id];
     if (method == "delete") {
@@ -120,6 +120,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             obj.setSVMDetector(rhs[2].toVector<float>());
     }
+    else if (method == "readALTModel") {
+        nargchk(nrhs==3 && nlhs==0);
+        obj.readALTModel(rhs[2].toString());
+    }
     else if (method == "load") {
         nargchk(nrhs==3 && nlhs<=1);
         plhs[0] = MxArray(obj.load(rhs[2].toString()));
@@ -130,7 +134,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else if (method == "compute") {
         nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
-        
+
         Mat img(rhs[2].isUint8() ? rhs[2].toMat() : rhs[2].toMat(CV_32F));
         Size winStride;
         Size padding;
@@ -146,7 +150,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option %s", key.c_str());
         }
-        
+
         // Run
         vector<float> descriptors;
         obj.compute(img,descriptors,winStride,padding,locations);
@@ -155,9 +159,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else if (method == "detect") {
         nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=2);
-        
+
         Mat img(rhs[2].isUint8() ? rhs[2].toMat() : rhs[2].toMat(CV_32F));
-        double hitThreshold=0;
+        double hitThreshold = 0;
         Size winStride;
         Size padding;
         vector<Point> searchLocations;
@@ -174,7 +178,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option %s", key.c_str());
         }
-        
+
         // Run
         vector<Point> foundLocations;
         vector<double> weights;
@@ -186,13 +190,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else if (method == "detectMultiScale") {
         nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=2);
-        
+
         Mat img(rhs[2].isUint8() ? rhs[2].toMat() : rhs[2].toMat(CV_32F));
-        double hitThreshold=0;
+        double hitThreshold = 0;
         Size winStride;
         Size padding;
-        double scale=1.05;
-        double finalThreshold=2.0;
+        double scale = 1.05;
+        double finalThreshold = 2.0;
         bool useMeanshiftGrouping = false;
         for (int i=3; i<nrhs; i+=2) {
             string key = rhs[i].toString();
@@ -211,7 +215,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option %s", key.c_str());
         }
-        
+
         // Run
         vector<Rect> foundLocations;
         vector<double> weights;
@@ -223,7 +227,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else if (method == "computeGradient") {
         nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=2);
-        
+
         Mat img(rhs[2].isUint8() ? rhs[2].toMat() : rhs[2].toMat(CV_32F));
         Size paddingTL;
         Size paddingBR;
@@ -236,7 +240,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option %s", key.c_str());
         }
-        
+
         // Run
         Mat grad, angleOfs;
         obj.computeGradient(img,grad,angleOfs,paddingTL,paddingBR);
