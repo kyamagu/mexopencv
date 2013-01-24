@@ -336,6 +336,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             nargchk(false);
     }
+    else if (method == "svmDetector") {
+        nargchk(nrhs==2 && nlhs<=1);
+        plhs[0] = MxArray(Mat(obj.svmDetector));
+    }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation %s", method.c_str());
 }

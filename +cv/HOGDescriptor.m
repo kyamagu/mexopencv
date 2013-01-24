@@ -22,12 +22,12 @@ classdef HOGDescriptor < handle
     % See also cv.HOGDescriptor.HOGDescriptor cv.HOGDescriptor.compute
     % cv.HOGDescriptor.detect cv.HOGDescriptor.detectMultiScale
     %
-    
+
     properties (SetAccess = private)
         % Object ID
         id
     end
-    
+
     properties (Dependent)
         WinSize           % Window size
         BlockSize         % Block size
@@ -41,7 +41,11 @@ classdef HOGDescriptor < handle
         GammaCorrection   % Gamma correction
         NLevels           % Number of levels
     end
-    
+
+    properties (Dependent, Hidden, SetAccess = private)
+        SvmDetector       % Coefficients for the linear SVM classifier
+    end
+
     methods
         function this = HOGDescriptor(varargin)
             %HOGDESCRIPTOR Create or load a new HOG descriptor
@@ -54,7 +58,7 @@ classdef HOGDescriptor < handle
             %
             this.id = HOGDescriptor_(0, 'new', varargin{:});
         end
-        
+
         function delete(this)
             %DELETE  Destructor
             %
@@ -62,7 +66,7 @@ classdef HOGDescriptor < handle
             %
             HOGDescriptor_(this.id, 'delete');
         end
-        
+
         function s = getDescriptorSize(this)
             %GETDESCRIPTORSIZE Get length of the descriptor
             %
@@ -74,7 +78,7 @@ classdef HOGDescriptor < handle
             %
             s = HOGDescriptor_(this.id, 'getDescriptorSize');
         end
-        
+
         function s = checkDetectorSize(this)
             %CHECKDETECTORSIZE Get size of the detector
             %
@@ -86,7 +90,7 @@ classdef HOGDescriptor < handle
             %
             s = HOGDescriptor_(this.id, 'checkDetectorSize');
         end
-        
+
         function s = getWinSigma(this)
             %GETWINSIGMA Get window sigma
             %
@@ -98,7 +102,7 @@ classdef HOGDescriptor < handle
             %
             s = HOGDescriptor_(this.id, 'getWinSigma');
         end
-        
+
         function setSVMDetector(this, detector)
             %SETSVMDETECTOR Set an SVM detector
             %
@@ -111,7 +115,7 @@ classdef HOGDescriptor < handle
             %
             HOGDescriptor_(this.id, 'setSVMDetector', detector);
         end
-        
+
         function status = load(this, filename)
             %LOAD  Loads a HOG descriptor config from a file
             %
@@ -123,7 +127,7 @@ classdef HOGDescriptor < handle
             %
             status = HOGDescriptor_(this.id, 'load', filename);
         end
-        
+
         function save(this, filename)
             %SAVE  Saves a HOG descriptor config to a file
             %
@@ -133,7 +137,7 @@ classdef HOGDescriptor < handle
             %
             HOGDescriptor_(this.id, 'save', filename);
         end
-        
+
         function descs = compute(this, im, varargin)
             %COMPUTE Compute HOG descriptors
             %
@@ -156,7 +160,7 @@ classdef HOGDescriptor < handle
             %
             descs = HOGDescriptor_(this.id, 'compute', im, varargin{:});
         end
-        
+
         function [pts, weights] = detect(this, im, varargin)
             %DETECT Detects objects using HOG descriptors
             %
@@ -185,7 +189,7 @@ classdef HOGDescriptor < handle
             %
             [pts, weights] = HOGDescriptor_(this.id, 'detect', im, varargin{:});
         end
-        
+
         function [rcts, weights] = detectMultiScale(this, im, varargin)
             %DETECT Detects objects using HOG descriptors
             %
@@ -216,82 +220,86 @@ classdef HOGDescriptor < handle
             %
             [rcts, weights] = HOGDescriptor_(this.id, 'detectMultiScale', im, varargin{:});
         end
-        
+
         function val = get.WinSize(this)
             val = HOGDescriptor_(this.id,'winSize');
         end
         function set.WinSize(this,val)
             HOGDescriptor_(this.id,'winSize',val);
         end
-        
+
         function val = get.BlockSize(this)
             val = HOGDescriptor_(this.id,'blockSize');
         end
         function set.BlockSize(this,val)
             HOGDescriptor_(this.id,'blockSize',val);
         end
-        
+
         function val = get.BlockStride(this)
             val = HOGDescriptor_(this.id,'blockStride');
         end
         function set.BlockStride(this,val)
             HOGDescriptor_(this.id,'blockStride',val);
         end
-        
+
         function val = get.CellSize(this)
             val = HOGDescriptor_(this.id,'cellSize');
         end
         function set.CellSize(this,val)
             HOGDescriptor_(this.id,'cellSize',val);
         end
-        
+
         function val = get.NBins(this)
             val = HOGDescriptor_(this.id,'nbins');
         end
         function set.NBins(this,val)
             HOGDescriptor_(this.id,'nbins',val);
         end
-        
+
         function val = get.DerivAperture(this)
             val = HOGDescriptor_(this.id,'derivAperture');
         end
         function set.DerivAperture(this,val)
             HOGDescriptor_(this.id,'derivAperture',val);
         end
-        
+
         function val = get.WinSigma(this)
             val = HOGDescriptor_(this.id,'winSigma');
         end
         function set.WinSigma(this,val)
             HOGDescriptor_(this.id,'winSigma',val);
         end
-        
+
         function val = get.HistogramNormType(this)
             val = HOGDescriptor_(this.id,'histogramNormType');
         end
         function set.HistogramNormType(this,val)
             HOGDescriptor_(this.id,'histogramNormType',val);
         end
-        
+
         function val = get.L2HysThreshold(this)
             val = HOGDescriptor_(this.id,'L2HysThreshold');
         end
         function set.L2HysThreshold(this,val)
             HOGDescriptor_(this.id,'L2HysThreshold',val);
         end
-        
+
         function val = get.GammaCorrection(this)
             val = HOGDescriptor_(this.id,'gammaCorrection');
         end
         function set.GammaCorrection(this,val)
             HOGDescriptor_(this.id,'gammaCorrection',val);
         end
-        
+
         function val = get.NLevels(this)
             val = HOGDescriptor_(this.id,'nlevels');
         end
         function set.NLevels(this,val)
             HOGDescriptor_(this.id,'nlevels',val);
+        end
+
+        function val = get.SvmDetector(this)
+            val = HOGDescriptor_(this.id,'svmDetector');
         end
     end
 
