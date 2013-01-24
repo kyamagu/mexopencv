@@ -1,6 +1,6 @@
 %STEREORECTIFY  Computes rectification transforms for each head of a calibrated stereo camera
 %
-%    S = cv.stereoRectify(cameraMatrix1, cameraMatrix2, distCoeffs1, distCoeffs2, imageSize, R, T)
+%    S = cv.stereoRectify(cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, imageSize, R, T)
 %    [...] = cv.stereoRectify(..., 'OptionName', optionValue, ...)
 %
 % ## Input

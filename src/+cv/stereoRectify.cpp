@@ -42,8 +42,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
-    Mat cameraMatrix1(rhs[0].toMat()), distCoeffs1(rhs[2].toMat());
-    Mat cameraMatrix2(rhs[1].toMat()), distCoeffs2(rhs[3].toMat());
+    Mat cameraMatrix1(rhs[0].toMat()), distCoeffs1(rhs[1].toMat());
+    Mat cameraMatrix2(rhs[2].toMat()), distCoeffs2(rhs[3].toMat());
     Size imageSize(rhs[4].toSize());
     Mat R(rhs[5].toMat()), T(rhs[6].toMat());
     double alpha=-1;
