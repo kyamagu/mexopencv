@@ -1,8 +1,10 @@
 classdef HOGDescriptor < handle
     %HOGDESCRIPTOR Histogram of Oriented Gaussian descriptor
     %
-    % The descriptor of [Dalal2005].
-    % 
+    % The descriptor of:
+    % > Navneet Dalal and Bill Triggs. Histogram of oriented gradients for
+    % > human detection. 2005.
+    %
     % The basic usage is the following:
     %
     %    hog = cv.HOGDescriptor();
@@ -48,11 +50,35 @@ classdef HOGDescriptor < handle
 
     methods
         function this = HOGDescriptor(varargin)
-            %HOGDESCRIPTOR Create or load a new HOG descriptor
+            %HOGDESCRIPTOR  Create or load a new HOG descriptor object
             %
             %    hog = cv.HOGDescriptor()
             %    hog = cv.HOGDescriptor(filename)
             %    hog = cv.HOGDescriptor('PropertyName', propertyValue, ...)
+            %
+            % ## Input
+            % * __filename__ Filename of existing HOG descriptor config to load from
+            %
+            % ## Output
+            % * __hog_ HOG descriptor object
+            %
+            % ## Options
+            % * __WinSize__ Detection window size. Align to block size and block
+            %       stride. default [64,128]
+            % * __BlockSize__ Block size in pixels. Align to cell size.
+            %       default [16,16]
+            % * __BlockStride__ Block stride. It must be a multiple of cell
+            %       size. default [8,8]
+            % * __CellSize__ Cell size. default [8,8]
+            % * __NBins__ Number of bins. default 9
+            % * __DerivAperture__ default 1
+            % * __WinSigma__ Gaussian smoothing window parameter. default -1
+            %       (corresponds to `sum(BlockSize)/8`)
+            % * __HistogramNormType__ default 'L2Hys'
+            % * __L2HysThreshold__ L2-Hys normalization method shrinkage. default 0.2
+            % * __GammaCorrection__ Flag to specify whether the gamma correction
+            %       preprocessing is required or not. default true
+            % * __NLevels__ Maximum number of detection window increases. default 64
             %
             % See also cv.HOGDescriptor
             %
@@ -68,11 +94,12 @@ classdef HOGDescriptor < handle
         end
 
         function s = getDescriptorSize(this)
-            %GETDESCRIPTORSIZE Get length of the descriptor
+            %GETDESCRIPTORSIZE  Returns the number of coefficients required for the classification
             %
             %    s = hog.getDescriptorSize()
             %
-            % s is a numeric value
+            % ## Output
+            % * __s__ a numeric value, descriptor size
             %
             % See also cv.HOGDescriptor
             %
@@ -80,11 +107,12 @@ classdef HOGDescriptor < handle
         end
 
         function s = checkDetectorSize(this)
-            %CHECKDETECTORSIZE Get size of the detector
+            %CHECKDETECTORSIZE Checks the size of the detector is valid
             %
             %    s = hog.checkDetectorSize()
             %
-            % s is a numeric value
+            % ## Output
+            % * __s__ a logical value, validity of detector size
             %
             % See also cv.HOGDescriptor
             %
@@ -96,7 +124,8 @@ classdef HOGDescriptor < handle
             %
             %    s = hog.getWinSigma()
             %
-            % s is a numeric value
+            % ## Output
+            % * __s__ a numeric value, window sigma
             %
             % See also cv.HOGDescriptor
             %
@@ -104,12 +133,17 @@ classdef HOGDescriptor < handle
         end
 
         function setSVMDetector(this, detector)
-            %SETSVMDETECTOR Set an SVM detector
+            %SETSVMDETECTOR  Sets coefficients for the linear SVM classifier
             %
             %    hog.setSVMDetector(detector)
             %
-            % detector can be 'Default' or 'Daimler' for people detectors,
-            % or a numeric vector for other uses.
+            % ## Input
+            % * __detector__ can be 'Default' or 'Daimler' for classifiers trained
+            %       for people detection, or a numeric vector for other uses.
+            %       * __Default__ coefficients of the classifier trained for people
+            %             detection (for default window size).
+            %       * __Daimler__ 1981 SVM coeffs obtained from daimler's base. To
+            %             use these coeffs the detection window size should be (48,96)
             %
             % See also cv.HOGDescriptor
             %
@@ -121,7 +155,11 @@ classdef HOGDescriptor < handle
             %
             %    S = hog.load(filename)
             %
-            % S is a logical value indicating success of load when true
+            % ## Input
+            % * __filename__ HOG descriptor config filename
+            %
+            % ## Output
+            % * __S__ a logical value indicating success of load when true
             %
             % See also cv.HOGDescriptor
             %
@@ -132,6 +170,9 @@ classdef HOGDescriptor < handle
             %SAVE  Saves a HOG descriptor config to a file
             %
             %     hog.save(filename)
+            %
+            % ## Input
+            % * __filename__ HOG descriptor config filename
             %
             % See also cv.HOGDescriptor
             %
@@ -148,13 +189,14 @@ classdef HOGDescriptor < handle
             %       objects are detected.
             %
             % ## Output
-            % * __descs__ Row vectors of hog descriptors.
+            % * __descs__ Row vectors of hog descriptors, reshaped into a
+            %       matrix with `hog.getDescriptorSize()` columns
             %
             % ## Options
-            % * __WinStride__ 2-element array [x,y]
+            % * __WinStride__ 2-element array [x,y]. defaults to `CellSize`
             % * __Padding__ 2-element array [x,y]
-            % * __Locations__ cell array of 2-element arrays {[x,y],...} at
-            %     which descriptors are computed.
+            % * __Locations__ cell array of 2-element arrays `{[x,y],...}` at
+            %       which descriptors are computed.
             %
             % See also cv.HOGDescriptor
             %
@@ -162,12 +204,14 @@ classdef HOGDescriptor < handle
         end
 
         function [pts, weights] = detect(this, im, varargin)
-            %DETECT Detects objects using HOG descriptors
+            %DETECT  Performs object detection without a multi-scale window
             %
             %    pts = hog.detect(im, 'Option', optionValue, ...)
             %    [pts, weights] = hog.detect(...)
             %
-            % The detected objects are returned as a cell array of rectangles.
+            % The detected objects are returned as a cell array of points,
+            % with the left-top corner points of detected objects boundaries.
+            % Width and height of boundaries are specified by the `WinSize`.
             %
             % ## Input
             % * __im__ Matrix of the type uint8 containing an image where
@@ -175,15 +219,16 @@ classdef HOGDescriptor < handle
             %
             % ## Output
             % * __pts__ Cell array of points where objects are found.
-            % * __weights__ Associated weights.
+            %       Points of the form `{[x,y], ...}`
+            % * __weights__ Vector of associated weights.
             %
             % ## Options
-            % * __HitThreshold__ Parameter to specify the threshold.
-            %     default 0
-            % * __WinStride__ 2-element array [x,y]
+            % * __HitThreshold__ Threshold for the distance between features
+            %       and SVM classifying plane. default 0
+            % * __WinStride__ Window stride. 2-element array [x,y]
             % * __Padding__ 2-element array [x,y]
-            % * __Locations__ cell array of 2-element arrays {[x,y],...} at
-            %     which detector is executed.
+            % * __Locations__ cell array of 2-element arrays `{[x,y],...}` at
+            %       which detector is executed.
             %
             % See also cv.HOGDescriptor
             %
@@ -191,10 +236,10 @@ classdef HOGDescriptor < handle
         end
 
         function [rcts, weights] = detectMultiScale(this, im, varargin)
-            %DETECT Detects objects using HOG descriptors
+            %DETECT  Performs object detection with a multi-scale window
             %
-            %    rcts = hog.detect(im, 'Option', optionValue, ...)
-            %    [rcts, weights] = hog.detect(...)
+            %    rcts = hog.detectMultiScale(im, 'Option', optionValue, ...)
+            %    [rcts, weights] = hog.detectMultiScale(...)
             %
             % The detected objects are returned as a cell array of rectangles.
             %
@@ -204,17 +249,18 @@ classdef HOGDescriptor < handle
             %
             % ## Output
             % * __rcts__ Cell array of rectangles where objects are found.
-            % * __weights__ Associated weights.
+            %       Rectangles of the form `{[x,y,width,height], ...}`
+            % * __weights__ Vector of associated weights.
             %
             % ## Options
-            % * __HitThreshold__ Parameter to specify the threshold.
-            %     default 0
-            % * __WinStride__ 2-element array [x,y]
+            % * __HitThreshold__ Threshold for the distance between features
+            %       and SVM classifying plane. default 0
+            % * __WinStride__ Window stride. 2-element array [x,y]
             % * __Padding__ 2-element array [x,y]
             % * __Scale__ Step size of scales to search. default 1.05
             % * __FinalThreshold__ Final threshold value. default 2.0
             % * __UseMeanshiftGrouping__ Flag to use meanshift grouping.
-            %     default false
+            %       default false
             %
             % See also cv.HOGDescriptor
             %
@@ -307,6 +353,9 @@ classdef HOGDescriptor < handle
         function [grad, angleOfs] = computeGradient(this, im, varargin)
             %COMPUTEGRADIENT  Computes gradient
             %
+            %    grad = hog.computeGradient(im, 'Option', optionValue, ...)
+            %    [grad, angleOfs] = hog.computeGradient(...)
+            %
             % ## Input
             % * __im__ Matrix of the type uint8 containing an image where
             %       objects are detected.
@@ -330,6 +379,8 @@ classdef HOGDescriptor < handle
         function readALTModel(this, modelfile)
             %READALTMODEL  Read model from SVMlight format
             %
+            %    hog.readALTModel(modelfile)
+            %
             % ## Input
             % * __modelfile__ name of model file in SVMlight format
             %
@@ -340,4 +391,3 @@ classdef HOGDescriptor < handle
     end
 
 end
-
