@@ -12,6 +12,7 @@ function make(varargin)
 % * __opencv_path__ string specifying the path to OpenCV installation
 %       default 'C:\OpenCV'
 % * __clean__ clean all compiled MEX files. default false
+% * __test__ run all unit-tests. default false
 % * __dryrun__ dont actually run commands, just print them. default false
 % * __force__ Unconditionally build all files. default false
 % * __extra__ extra arguments passed to Unix make command. default ''
@@ -26,7 +27,7 @@ cwd = cd(MEXOPENCV_ROOT);
 cObj = onCleanup(@()cd(cwd));
 
 % parse options
-[opencv_path,clean_mode,dry_run,force,extra] = getargs(varargin{:});
+[opencv_path,clean_mode,test_mode,dry_run,force,extra] = getargs(varargin{:});
 
 if ispc % Windows
     % Clean
@@ -45,6 +46,13 @@ if ispc % Windows
         disp(cmd);
         if ~dry_run, delete(cmd); end
 
+        return;
+    end
+
+    % Unittests
+    if test_mode
+        cd(fullfile(MEXOPENCV_ROOT,'test'));
+        if ~dry_run, UnitTest(); end
         return;
     end
 
@@ -97,6 +105,7 @@ else % Unix
     if dry_run, opts = [opts '--dry-run']; end
     if force, opts = [opts '--always-make']; end
     if clean_mode, opts = [opts 'clean']; end
+    if test_mode, opts = [opts 'test']; end
     if ~isempty(extra), opts = [opts extra]; end
 
     cmd = sprintf('make MATLABDIR="%s" MEXEXT=%s %s', ...
@@ -171,12 +180,13 @@ end
 %
 % Helper function to parse options
 %
-function [opencv_path,clean_mode,dry_run,force,extra] = getargs(varargin)
+function [opencv_path,clean_mode,test_mode,dry_run,force,extra] = getargs(varargin)
     %GETARGS  Process parameter name/value pairs
 
     % default values
     opencv_path = 'C:\opencv';  % OpenCV location
     clean_mode = false;         % clean mode
+    test_mode = false;          % unittest mode
     dry_run = false;            % dry run mode
     force = false;              % force recompilation of all files
     extra = '';                 % extra options to be passed to MAKE (Unix only)
@@ -195,6 +205,8 @@ function [opencv_path,clean_mode,dry_run,force,extra] = getargs(varargin)
                 opencv_path = val;
             case 'clean'
                 clean_mode = val;
+            case 'test'
+                test_mode = val;
             case 'dryrun'
                 dry_run = val;
             case 'force'
