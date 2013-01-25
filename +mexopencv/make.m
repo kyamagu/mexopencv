@@ -8,6 +8,16 @@ function make(varargin)
 % in the project root. In Windows, the function takes an optional argument
 % to specify installed OpenCV path.
 %
+% ## Options
+% * __opencv_path__ string specifying the path to OpenCV installation
+%       default 'C:\OpenCV'
+% * __clean__ clean all compiled MEX files. default false
+% * __dryrun__ dont actually run commands, just print them. default false
+% * __force__ Unconditionally build all files. default false
+% * __extra__ extra arguments passed to Unix make command. default ''
+%
+% See also mex
+%
 
 MEXOPENCV_ROOT = mexopencv.root();
 
@@ -15,50 +25,48 @@ MEXOPENCV_ROOT = mexopencv.root();
 cwd = cd(MEXOPENCV_ROOT);
 cObj = onCleanup(@()cd(cwd));
 
+% parse options
+[opencv_path,clean_mode,dry_run,force,extra] = getargs(varargin{:});
+
 if ispc % Windows
     % Clean
-    if nargin>0 && strcmp(varargin{1},'clean')
+    if clean_mode
+        fprintf('Cleaning all generated files...\n');
+
         cmd = fullfile(MEXOPENCV_ROOT, '+cv', ['*.' mexext]);
         disp(cmd);
-        delete(cmd);
+        if ~dry_run, delete(cmd); end
 
         cmd = fullfile(MEXOPENCV_ROOT, '+cv', 'private', ['*.' mexext]);
         disp(cmd);
-        delete(cmd);
+        if ~dry_run, delete(cmd); end
 
         cmd = fullfile(MEXOPENCV_ROOT, 'lib', '*.obj');
         disp(cmd);
-        delete(cmd);
+        if ~dry_run, delete(cmd); end
 
         return;
     end
 
     % compile flags
-    opencv_path = 'C:\opencv';
-    for i = 1:2:nargin
-        if strcmp(varargin{i}, 'opencv_path')
-            opencv_path = varargin{i+1};
-        end
-    end
-    mex_flags = sprintf('-largeArrayDims -D_SECURE_SCL=%d -I"%s" %s',...
-        true, fullfile(MEXOPENCV_ROOT,'include'), pkg_config(opencv_path));
+    [cv_cflags,cv_libs] = pkg_config(opencv_path);
+    mex_flags = sprintf('-largeArrayDims -D_SECURE_SCL=%d -I"%s" %s %s',...
+        true, fullfile(MEXOPENCV_ROOT,'include'), cv_cflags, cv_libs);
 
     % Compile MxArray
-    force = false;
     src = fullfile(MEXOPENCV_ROOT,'src','MxArray.cpp');
     dst = fullfile(MEXOPENCV_ROOT,'lib','MxArray.obj');
-    if compile_needed(src, dst)
-        cmd = sprintf('mex -c %s "%s" -outdir "%s"', ...
+    if compile_needed(src, dst) || force
+        cmd = sprintf('mex %s -c "%s" -outdir "%s"', ...
             mex_flags, src, fileparts(dst));
         cmd = strrep(cmd, '"', '''');  % replace with escaped single quotes
         disp(cmd);
-        eval(cmd);
+        if ~dry_run, eval(cmd); end
         force = true;
     else
         fprintf('Skipped "%s"\n', src);
     end
-
-    if ~exist(dst, 'file')
+    if ~exist(dst, 'file') && ~dry_run
         error('mexopencv:make', '"%s" not found', dst);
     end
 
@@ -79,14 +87,20 @@ if ispc % Windows
                 mex_flags, src, obj, dst);
             cmd = strrep(cmd, '"', '''');  % replace with escaped single quotes
             disp(cmd);
-            eval(cmd);
+            if ~dry_run, eval(cmd); end
         else
             fprintf('Skipped "%s"\n', src);
         end
     end
 else % Unix
+    opts = { sprintf('OPENCV_DIR="%s"',opencv_path) };
+    if dry_run, opts = [opts '--dry-run']; end
+    if force, opts = [opts '--always-make']; end
+    if clean_mode, opts = [opts 'clean']; end
+    if ~isempty(extra), opts = [opts extra]; end
+
     cmd = sprintf('make MATLABDIR="%s" MEXEXT=%s %s', ...
-        matlabroot, mexext, sprintf(' %s', varargin{:}));
+        matlabroot, mexext, sprintf(' %s', opts{:}));
     disp(cmd);
     system(cmd);
 end
@@ -96,13 +110,15 @@ end
 %
 % Helper functions for windows
 %
-function s = pkg_config(opencv_path)
+function [cflags,libs] = pkg_config(opencv_path)
     %PKG_CONFIG  constructs OpenCV-related option flags for Windows
-    L_path = fullfile(opencv_path,'build',arch_str(),compiler_str(),'lib');
     I_path = fullfile(opencv_path,'build','include');
+    L_path = fullfile(opencv_path,'build',arch_str(),compiler_str(),'lib');
     l_options = strcat({' -l'}, lib_names(L_path));
     l_options = [l_options{:}];
-    s = sprintf('-I"%s" -L"%s" %s', I_path, L_path, l_options);
+
+    cflags = sprintf('-I"%s"', I_path);
+    libs = sprintf('-L"%s" %s', L_path, l_options);
 end
 
 function s = arch_str()
@@ -149,5 +165,44 @@ function r = compile_needed(src, dst)
         d1 = dir(src);
         d2 = dir(dst);
         r = (d1.datenum >= d2.datenum);
+    end
+end
+
+%
+% Helper function to parse options
+%
+function [opencv_path,clean_mode,dry_run,force,extra] = getargs(varargin)
+    %GETARGS  Process parameter name/value pairs
+
+    % default values
+    opencv_path = 'C:\opencv';  % OpenCV location
+    clean_mode = false;         % clean mode
+    dry_run = false;            % dry run mode
+    force = false;              % force recompilation of all files
+    extra = '';                 % extra options to be passed to MAKE (Unix only)
+
+    nargs = length(varargin);
+    if mod(nargs,2)~=0
+        error('mexopencv:make', 'Wrong number of arguments.');
+    end
+
+    % parse options
+    for i=1:2:nargs
+        pname = varargin{i};
+        val = varargin{i+1};
+        switch lower(pname)
+            case 'opencv_path'
+                opencv_path = val;
+            case 'clean'
+                clean_mode = val;
+            case 'dryrun'
+                dry_run = val;
+            case 'force'
+                force = val;
+            case 'extra'
+                extra = val;
+            otherwise
+                error('mexopencv:make', 'Invalid parameter name:  %s.', pname);
+        end
     end
 end
