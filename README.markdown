@@ -86,11 +86,17 @@ Windows
 -------
 
 Make sure you have OpenCV installed in the system and correctly set up `Path`
-system variable. e.g., `c:\opencv\build\x86\vc10\bin`. See
-http://opencv.willowgarage.com/wiki/ for the instruction.
+system variable. See http://opencv.willowgarage.com/wiki/WindowsSystemPath for
+the instruction. Your Path variable should contain an appropriate path to the
+dll files (e.g., `c:\opencv\build\x86\vc10\bin`). Be careful that the
+architecture (x86 or x64) should match your matlab architecture but not your
+OS. Also VC version (vc9 or vc10) should match the mex setup (and probably
+matlab's internal runtime). For example, if you're running Matlab 32-bit in
+Windows 7 64-bit with Visual Studio 2010 Express, you should use x86 and vc10.
+
 Also make sure you install a compiler supported by Matlab. See
 http://www.mathworks.com/support/sysreq/previous_releases.html for the list of
-supported compilers for different versions of Matlab. Windows 64-bit users need
+supported compilers for different versions of Matlab. Maltab 64-bit users need
 to install Windows SDK.
 
 Once you satisfy the above requirement, in the matlab shell, type
@@ -118,14 +124,19 @@ Users report incompatibility with Visual Studio 2008. Try not to use Visual
 Studio 2008 with mexopencv. For this reason, mexopencv on Windows platform
 do not work with Matlab R2009b or earlier.
 
-Nevertheless, if you want to try using Visual Studio 2008, obtain `stdint.h` and
-use `cv.make` to compile the package. Visual Studio 2008 or earlier does not comply
-C99 standard and lacks `stdint.h` header file. Luckily, the header file is available
-on the Web. For example, http://msinttypes.googlecode.com/svn/trunk/stdint.h
+Nevertheless, if you want to try using Visual Studio 2008, obtain `stdint.h`
+and use `cv.make` to compile the package. Visual Studio 2008 or earlier does
+not comply C99 standard and lacks `stdint.h` header file. Luckily, the header
+file is available on the Web. For example,
+http://msinttypes.googlecode.com/svn/trunk/stdint.h
 
 Place this file under `include` directory in the mexopencv package.
 
 ### Error: Invalid MEX file or Segmentation fault
+
+Make sure you set up System Path correctly. Also check you are using the
+supported compiler. In 64-bit environment, only Windows SDK compiler is
+supported.
 
 The OpenCV windows package contains c++ binary files compiled with
 `_SECURE_SCL=1` flag, but mex command in Matlab does not use this option by
