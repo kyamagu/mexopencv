@@ -150,12 +150,12 @@ classdef FeatureDetector < handle
             %    str = detector.name()
             %
             % ## Output
-            % *__str__ name of the detector
+            % * __str__ name of the detector
             %
             % See also cv.FeatureDetector
             %
 
-            % avoid segmentation violation in MEX-file
+            % TODO: avoid segmentation violation in MEX-file
             if strcmp(this.type_,'SimpleBlob') || strncmp(this.type_,'Pyramid',7)
                 error('mexopencv:error', 'Detector currently not supported (OpenCV bug)');
             end
@@ -166,16 +166,21 @@ classdef FeatureDetector < handle
         function val = get(this, param)
             %GET  Get a feature detector parameter
             %
-            %    val = detector.get('param_name')
+            %    val = detector.get(param)
             %    params = detector.get()
             %
             % ## Input
             % * __param__ parameter name as string
             %
+            % ## Output
+            % * __val__ parameter value
+            % * __params__ structure containing all parameters and
+            %       their values of the current detector
+            %
             % See also cv.FeatureDetector.set
             %
 
-            % avoid segmentation violation in MEX-file
+            % TODO: avoid segmentation violation in MEX-file
             if strcmp(this.type_,'SimpleBlob') || strncmp(this.type_,'Pyramid',7)
                 error('mexopencv:error', 'Detector currently not supported (OpenCV bug)');
             end
@@ -192,8 +197,8 @@ classdef FeatureDetector < handle
         function set(this, param, value)
             %SET  Set a feature detector parameter
             %
-            %    detector.set('param_name', value)
-            %    detector.set()
+            %    detector.set(param, value)
+            %    detector.set()    % display a list of all parameter names
             %
             % ## Input
             % * __param__ parameter name as string
@@ -202,7 +207,7 @@ classdef FeatureDetector < handle
             % See also cv.FeatureDetector.get
             %
 
-            % avoid segmentation violation in MEX-file
+            % TODO: avoid segmentation violation in MEX-file
             if strcmp(this.type_,'SimpleBlob') || strncmp(this.type_,'Pyramid',7)
                 error('mexopencv:error', 'Detector currently not supported (OpenCV bug)');
             end
