@@ -102,20 +102,39 @@ classdef FeatureDetector < handle
             t = FeatureDetector_(this.id, 'type');
         end
 
-        function keypoints = detect(this, im)
+        function keypoints = detect(this, im, varargin)
             %DETECT  Detects keypoints in an image
             %
             %    keypoints = detector.detect(im)
+            %    keypoints = detector.detect(im, 'Option', optionValue, ...)
             %
             % ## Input
             % * __im__ Image
             %
             % ## Output
-            % * __keypoints__ The detected keypoints
+            % * __keypoints__ The detected keypoints. A 1-by-N structure array.
+            %       It has the following fields:
+            %       * __pt__ coordinates of the keypoint [x,y]
+            %       * __size__ diameter of the meaningful keypoint neighborhood
+            %       * __angle__ computed orientation of the keypoint (-1 if not applicable).
+            %             Its possible values are in a range [0,360) degrees. It is measured
+            %             relative to image coordinate system (y-axis is directed downward),
+            %             ie in clockwise.
+            %       * __response__ the response by which the most strong keypoints have been
+            %             selected. Can be used for further sorting or subsampling.
+            %       * __octave__ octave (pyramid layer) from which the keypoint has been
+            %             extracted.
+            %       * **class_id** object id that can be used to clustered keypoints by an
+            %             object they belong to.
+            %
+            % ## Options
+            % * __Mask__ Optional mask specifying where to look for keypoints.
+            %       It must be a 8-bit integer matrix with non-zero values
+            %       in the region of interest.
             %
             % See also cv.FeatureDetector
             %
-            keypoints = FeatureDetector_(this.id, 'detect', im);
+            keypoints = FeatureDetector_(this.id, 'detect', im, varargin{:});
         end
 
         function read(this, filename)
