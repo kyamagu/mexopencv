@@ -1,21 +1,27 @@
 function make(varargin)
-%MAKE  compile mex functions
+%MAKE  Compile MEX-functions
 %
 %    mexopencv.make
-%    mexopencv.make('opencv_path', pathname) % Windows only
+%    mexopencv.make('OptionName', optionValue, ...)
 %
 % Make builds mexopencv library. In Unix, this function invokes Makefile
 % in the project root. In Windows, the function takes an optional argument
 % to specify installed OpenCV path.
 %
 % ## Options
-% * __opencv_path__ string specifying the path to OpenCV installation
-%       default 'C:\OpenCV'
-% * __clean__ clean all compiled MEX files. default false
-% * __test__ run all unit-tests. default false
-% * __dryrun__ dont actually run commands, just print them. default false
-% * __force__ Unconditionally build all files. default false
-% * __extra__ extra arguments passed to Unix make command. default ''
+% * **opencv_path** string specifying the path to OpenCV installation
+%       default `'C:\OpenCV'`
+% * __clean__ clean all compiled MEX files. default `false`
+% * __test__ run all unit-tests. default `false`
+% * __dryrun__ dont actually run commands, just print them. default `false`
+% * __force__ Unconditionally build all files. default `false`
+% * __extra__ extra arguments passed to Unix make command. default `''`
+%
+% ## Examples
+%    mexopencv.make('opencv_path', pathname)      % Windows only
+%    mexopencv.make('clean',true)                 % clean MEX files
+%    mexopencv.make('test',true)                  % run unittests
+%    mexopencv.make('dryrun',true, 'force',true)  % print commands used to build
 %
 % See also mex
 %
