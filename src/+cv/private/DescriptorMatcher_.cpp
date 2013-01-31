@@ -95,6 +95,23 @@ Ptr<flann::IndexParams> createIndexParams(const MxArray& m)
         p = new flann::CompositeIndexParams(trees,
             branching, iterations, centers_init, cb_index);
     }
+    else if (type == "LSH") {
+        unsigned int table_number = 20;
+        unsigned int key_size = 15;
+        unsigned int multi_probe_level = 0;
+        for (int i=1; i<rhs.size(); i+=2) {
+            string key(rhs[i].toString());
+            if (key == "TableNumber")
+                table_number = rhs[i+1].toInt();
+            else if (key == "KeySize")
+                key_size = rhs[i+1].toInt();
+            else if (key == "MultiProbeLevel")
+                multi_probe_level = rhs[i+1].toInt();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+        }
+        p = new flann::LshIndexParams(table_number, key_size, multi_probe_level);
+    }
     else if (type == "Autotuned") {
         float target_precision = 0.9;
         float build_weight = 0.01;

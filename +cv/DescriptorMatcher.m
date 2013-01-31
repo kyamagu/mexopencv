@@ -75,6 +75,7 @@ classdef DescriptorMatcher < handle
             %     * `'KDTree'`     Randomized kd-trees, parallel search
             %     * `'KMeans'`     Hierarchical k-means tree
             %     * `'Composite'`  Combination of KDTree and KMeans
+            %     * `'LSH'`        multi-probe LSH
             %     * `'Autotuned'`  Automatic tuning to one of the above
             %                      (Linear, KDTree, KMeans)
             %     * `'Saved'`      Load saved index from a file
@@ -123,6 +124,19 @@ classdef DescriptorMatcher < handle
             % > Arthur and S. Vassilvitskii *"k-means++: the advantages of careful seeding"*,
             % > Proceedings of the eighteenth annual ACM-SIAM symposium on Discrete
             % > algorithms, 2007
+            %
+            % ### LSH
+            % * __TableNumber__ The number of hash tables to use
+            %        (between 10 and 30 usually).
+            % * __KeySize__ The length of the key in the hash tables
+            %        (between 10 and 20 usually).
+            % * __MultiProbeLevel__ Number of levels to use in multi-probe
+            %        (0 is regular LSH, 2 is recommended).
+            %
+            % > *Multi-Probe LSH: Efficient Indexing for High-Dimensional Similarity Search*
+            % > by Qin Lv, William Josephson, Zhe Wang, Moses Charikar, Kai Li.,
+            % > Proceedings of the 33rd International Conference on Very Large Data Bases
+            % > (VLDB). Vienna, Austria. September 2007
             %
             % ### Autotuned
             % * __TargetPrecision__ Is a number between 0 and 1 specifying
