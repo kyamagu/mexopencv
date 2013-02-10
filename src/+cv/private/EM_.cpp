@@ -219,9 +219,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 const FileNode& fn = fs["StatModel.EM"];
                 obj.read(fn);
             } else {
-                ostringstream emsg;
-                emsg << "Could not open file " << filename << " for reading";
-                mexErrMsgIdAndTxt("mexopencv:error",emsg.str().c_str());
+                mexErrMsgIdAndTxt("mexopencv:error",
+                                  "Could not open file %s for reading.",
+                                  filename.c_str());
             }
         } else {
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
