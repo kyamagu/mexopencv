@@ -121,7 +121,7 @@ Ptr<flann::IndexParams> createIndexParams(const MxArray& m)
             mexErrMsgIdAndTxt("mexopencv:error","Missing filename");
         string filename(rhs[1].toString());
         p = new flann::SavedIndexParams(filename);
-        if (p==NULL)
+        if (p.empty())
             mexErrMsgIdAndTxt("mexopencv:error","Failed to load index");
     }
     else
@@ -165,9 +165,9 @@ Ptr<DescriptorMatcher> createFlannBasedMatcher(const vector<MxArray>& rhs)
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    if (indexParams==NULL)
+    if (indexParams.empty())
         indexParams = new flann::KDTreeIndexParams();
-    if (searchParams==NULL)
+    if (searchParams.empty())
         searchParams = new flann::SearchParams();
     return Ptr<DescriptorMatcher>(new FlannBasedMatcher(indexParams,searchParams));
 }
