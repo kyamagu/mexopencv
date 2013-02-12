@@ -41,6 +41,11 @@ classdef FeatureDetector < handle
         type
     end
 
+    properties (SetAccess = private, Hidden)
+        % Keep track of the type of the detector used in constructor
+        type_
+    end
+
     methods
         function this = FeatureDetector(type)
             %FEATUREDETECTOR  FeatureDetector constructors
@@ -81,6 +86,7 @@ classdef FeatureDetector < handle
                 error('DescriptorExtractor:error','Invalid type');
             end
             this.id = FeatureDetector_(type);
+            this.type_ = type;
         end
 
         function delete(this)
@@ -96,20 +102,39 @@ classdef FeatureDetector < handle
             t = FeatureDetector_(this.id, 'type');
         end
 
-        function keypoints = detect(this, im)
+        function keypoints = detect(this, im, varargin)
             %DETECT  Detects keypoints in an image
             %
             %    keypoints = detector.detect(im)
+            %    keypoints = detector.detect(im, 'Option', optionValue, ...)
             %
             % ## Input
             % * __im__ Image
             %
             % ## Output
-            % * __keypoints__ The detected keypoints
+            % * __keypoints__ The detected keypoints. A 1-by-N structure array.
+            %       It has the following fields:
+            %       * __pt__ coordinates of the keypoint [x,y]
+            %       * __size__ diameter of the meaningful keypoint neighborhood
+            %       * __angle__ computed orientation of the keypoint (-1 if not applicable).
+            %             Its possible values are in a range [0,360) degrees. It is measured
+            %             relative to image coordinate system (y-axis is directed downward),
+            %             ie in clockwise.
+            %       * __response__ the response by which the most strong keypoints have been
+            %             selected. Can be used for further sorting or subsampling.
+            %       * __octave__ octave (pyramid layer) from which the keypoint has been
+            %             extracted.
+            %       * **class_id** object id that can be used to clustered keypoints by an
+            %             object they belong to.
+            %
+            % ## Options
+            % * __Mask__ Optional mask specifying where to look for keypoints.
+            %       It must be a 8-bit integer matrix with non-zero values
+            %       in the region of interest.
             %
             % See also cv.FeatureDetector
             %
-            keypoints = FeatureDetector_(this.id, 'detect', im);
+            keypoints = FeatureDetector_(this.id, 'detect', im, varargin{:});
         end
 
         function read(this, filename)
@@ -136,6 +161,84 @@ classdef FeatureDetector < handle
             % See also cv.FeatureDetector
             %
             FeatureDetector_(this.id, 'write', filename);
+        end
+
+        function str = name(this)
+            %NAME  FeatureDetector name
+            %
+            %    str = detector.name()
+            %
+            % ## Output
+            % * __str__ name of the detector
+            %
+            % See also cv.FeatureDetector
+            %
+
+            % TODO: avoid segmentation violation in MEX-file
+            if strcmp(this.type_,'SimpleBlob') || strncmp(this.type_,'Pyramid',7)
+                error('mexopencv:error', 'Detector currently not supported (OpenCV bug)');
+            end
+
+            str = FeatureDetector_(this.id, 'name');
+        end
+
+        function val = get(this, param)
+            %GET  Get a feature detector parameter
+            %
+            %    val = detector.get(param)
+            %    params = detector.get()
+            %
+            % ## Input
+            % * __param__ parameter name as string
+            %
+            % ## Output
+            % * __val__ parameter value
+            % * __params__ structure containing all parameters and
+            %       their values of the current detector
+            %
+            % See also cv.FeatureDetector.set
+            %
+
+            % TODO: avoid segmentation violation in MEX-file
+            if strcmp(this.type_,'SimpleBlob') || strncmp(this.type_,'Pyramid',7)
+                error('mexopencv:error', 'Detector currently not supported (OpenCV bug)');
+            end
+
+            if nargin < 2
+                % return a struct of all params/values
+                val = FeatureDetector_(this.id, 'get');
+            else
+                % get paramter
+                val = FeatureDetector_(this.id, 'get', param);
+            end
+        end
+
+        function set(this, param, value)
+            %SET  Set a feature detector parameter
+            %
+            %    detector.set(param, value)
+            %    detector.set()    % display a list of all parameter names
+            %
+            % ## Input
+            % * __param__ parameter name as string
+            % * __value__ parameter value
+            %
+            % See also cv.FeatureDetector.get
+            %
+
+            % TODO: avoid segmentation violation in MEX-file
+            if strcmp(this.type_,'SimpleBlob') || strncmp(this.type_,'Pyramid',7)
+                error('mexopencv:error', 'Detector currently not supported (OpenCV bug)');
+            end
+
+            if nargin < 2
+                % show list of all parameter names
+                names = FeatureDetector_(this.id, 'set');
+                disp(names(:))
+            else
+                % set parameter
+                FeatureDetector_(this.id, 'set', param, value);
+            end
         end
     end
 
