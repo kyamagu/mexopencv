@@ -42,7 +42,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat srcpt(rhs[0].toMat()), dstpt(rhs[1].toMat());
         estimateAffine3D(srcpt, dstpt, out, inliers, ransacThreshold, confidence);
     }
-    else if (rhs[0].isNumeric() && rhs[1].isNumeric()) {        
+    else if (rhs[0].isCell() && rhs[1].isCell()) {        
         vector<Point3f> srcpt(rhs[0].toVector<Point3f>());
         vector<Point3f> dstpt(rhs[1].toVector<Point3f>());
         estimateAffine3D(srcpt, dstpt, out, inliers, ransacThreshold, confidence);
