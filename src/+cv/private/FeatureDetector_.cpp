@@ -33,7 +33,7 @@ const ConstMap<int,std::string> AlgParamTypes = ConstMap<int,std::string>
  */
 MxArray get_param(const cv::Ptr<cv::FeatureDetector> &obj, const std::string &param)
 {
-    MxArray val(NULL);
+    MxArray val(static_cast<const mxArray*>(NULL));
     int paramType = obj->paramType(param);
     if (paramType == cv::Param::STRING) {
         val = MxArray( obj->getString(param) );     // obj->get<string>(param)
