@@ -20,11 +20,11 @@ const ConstMap<int,std::string> AlgParamTypes = ConstMap<int,std::string>
     (cv::Param::STRING,       "string")
     (cv::Param::MAT,          "cv::Mat")
     (cv::Param::MAT_VECTOR,   "std::vector<cv::Mat>")
-    (cv::Param::ALGORITHM,    "Algorithm")
-    (cv::Param::FLOAT,        "float")
-    (cv::Param::UNSIGNED_INT, "unsigned")
-    (cv::Param::UINT64,       "uint64")
-    (cv::Param::SHORT,        "short");
+    (cv::Param::ALGORITHM,    "Algorithm");
+    //(cv::Param::FLOAT,        "float")
+    //(cv::Param::UNSIGNED_INT, "unsigned")
+    //(cv::Param::UINT64,       "uint64")
+    //(cv::Param::SHORT,        "short");
 
 /** Function to get algorithm parameter
  * @param obj FeatureDetector object
@@ -41,9 +41,7 @@ MxArray get_param(const cv::Ptr<cv::FeatureDetector> &obj, const std::string &pa
         val = MxArray( obj->getBool(param) );       // obj->get<bool>(param)
     } else if (paramType == cv::Param::REAL) {
         val = MxArray( obj->getDouble(param) );     // obj->get<double>(param)
-    } else if (paramType == cv::Param::FLOAT) {
-        val = MxArray( static_cast<double>(obj->get<float>(param)) );
-    } else if (paramType == cv::Param::INT || paramType == cv::Param::SHORT) {
+    } else if (paramType == cv::Param::INT ) {
         val = MxArray( obj->getInt(param) );        // obj->get<int>(param)
     } else if (paramType == cv::Param::MAT) {
         val = MxArray( obj->getMat(param) );        // obj->get<cv::Mat>(param)
@@ -68,9 +66,9 @@ void set_param(cv::Ptr<cv::FeatureDetector> &obj, const std::string &param, MxAr
         obj->setString(param, val.toString());
     } else if (paramType == cv::Param::BOOLEAN) {
         obj->setBool(param, val.toBool());
-    } else if (paramType == cv::Param::REAL || paramType == cv::Param::FLOAT) {
+    } else if (paramType == cv::Param::REAL) {
         obj->setDouble(param, val.toDouble());
-    } else if (paramType == cv::Param::INT || paramType == cv::Param::SHORT) {
+    } else if (paramType == cv::Param::INT) {
         obj->setInt(param, val.toInt());
     } else if (paramType == cv::Param::MAT) {
         obj->setMat(param, val.toMat());
