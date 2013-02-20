@@ -92,7 +92,7 @@ classdef DescriptorExtractor < handle
             t = DescriptorExtractor_(this.id, 'type');
         end
         
-        function descriptors = compute(this, im, keypoints)
+        function [descriptors, keypoints] = compute(this, im, keypoints)
             %COMPUTE  Computes the descriptors for a set of keypoints detected in an image
             %
             %    descroptors = extractor.compute(im, keypoints)
@@ -107,10 +107,11 @@ classdef DescriptorExtractor < handle
             %
             % ## Output
             % * __descriptors__ Computed descriptors.
+            % * __keypoints__ Keypoints for which descriptors have been computed.
             %
             % See also cv.DescriptorExtractor
             %
-            descriptors = DescriptorExtractor_(this.id, 'compute', im, keypoints);
+            [descriptors, keypoints] = DescriptorExtractor_(this.id, 'compute', im, keypoints);
         end
         
         function read(this, filename)

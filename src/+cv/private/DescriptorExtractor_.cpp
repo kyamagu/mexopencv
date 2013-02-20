@@ -26,7 +26,7 @@ map<int,Ptr<DescriptorExtractor> > obj_;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-    if (nrhs<1 || nlhs>1)
+    if (nrhs<1 || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
 
     if (last_id==0)
@@ -58,12 +58,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
         obj_.erase(id);
     }
     else if (method == "size") {
-        if (nrhs!=2)
+        if (nrhs!=2 || nlhs!=1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         plhs[0] = MxArray(obj->descriptorSize());
     }
     else if (method == "type") {
-        if (nrhs!=2)
+        if (nrhs!=2 || nlhs!=1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         plhs[0] = MxArray(obj->descriptorType());
     }
@@ -74,6 +74,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
         vector<KeyPoint> keypoints(rhs[3].toVector<KeyPoint>());
         obj->compute(image, keypoints, descriptors);
         plhs[0] = MxArray(descriptors);
+        if (nlhs>1)
+            plhs[1] = MxArray(keypoints);
     }
     else if (method == "read") {
         if (nrhs!=3 || nlhs!=0)
