@@ -58,12 +58,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
         obj_.erase(id);
     }
     else if (method == "size") {
-        if (nrhs!=2 || nlhs!=1)
+        if (nrhs!=2)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         plhs[0] = MxArray(obj->descriptorSize());
     }
     else if (method == "type") {
-        if (nrhs!=2 || nlhs!=1)
+        if (nrhs!=2)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         plhs[0] = MxArray(obj->descriptorType());
     }
