@@ -54,6 +54,16 @@ classdef DescriptorMatcher < handle
             %     'BruteForce-HammingLUT'  Hamming distance lookup table
             %     'FlannBased'             Flann-based indexing
             %
+            % L1 and L2 norms are preferable choices for SIFT and SURF descriptors,
+            % Hamming should be used with ORB and BRIEF, HammingLUT should be used
+            % with ORB when `WTA_K`==3 or 4 (see `cv.ORB` constructor description).
+            %
+            % Flann-based descriptor matcher trains on a train descriptor
+            % collection and calls its nearest search methods to find the best
+            % matches. So, this matcher may be faster when matching a large
+            % train collection than the brute force matcher. FlannBased matcher
+            % does not support masking permissible matches of descriptor sets.
+            %
             % The FlannBased matcher takes optional arguments
             %
             % * __Index__ Type of indexer. One of the below. 
@@ -61,12 +71,14 @@ classdef DescriptorMatcher < handle
             %     specify the indexer by a cell array that starts
             %     from the type name followed by option arguments:
             %     `{'Type', 'OptionName', optionValue,...}`
-            %     * 'Linear'     Brute-force matching
-            %     * 'KDTree'     Randomized kd-trees
-            %     * 'KMeans'     Hierarchical k-means tree
-            %     * 'Composite'  Combination of KDTree and KMeans
-            %     * 'Autotuned'  Automatic tuning to one of the above
-            %     * 'Saved'      Load saved index from a file
+            %     * `'Linear'`     Brute-force matching, linear search
+            %     * `'KDTree'`     Randomized kd-trees, parallel search
+            %     * `'KMeans'`     Hierarchical k-means tree
+            %     * `'Composite'`  Combination of KDTree and KMeans
+            %     * `'LSH'`        multi-probe LSH
+            %     * `'Autotuned'`  Automatic tuning to one of the above
+            %                      (Linear, KDTree, KMeans)
+            %     * `'Saved'`      Load saved index from a file
             % * __Search__ Option in matching operation. Takes a cell
             %     array of option pairs.
             %
@@ -76,7 +88,8 @@ classdef DescriptorMatcher < handle
             %        'Index',  {'KDTree', 'Trees', 4},...
             %        'Search', {'Sorted', true})
             %
-            % Options for FlannBased indexers are the following:
+            % Options for FLANN (Fast Library for Approximate Nearest Neighbors)
+            % indexers are the following:
             %
             % ### KDTree and Composite
             % * __Trees__ The number of parallel kd-trees to use. Good
@@ -88,30 +101,42 @@ classdef DescriptorMatcher < handle
             % * __Iterations__ The maximum number of iterations to use in
             %        the k-means clustering stage when building the k-means
             %        tree. A value of -1 used here means that the k-means
-            %        clustering should be iterated until convergenceThe
-            %        maximum number of iterations to use in the k-means
-            %        clustering stage when building the k-means tree. A
-            %        value of -1 used here means that the k-means
             %        clustering should be iterated until convergence.
             %        default 11
             % * __CentersInit__ The algorithm to use for selecting the
             %        initial centers when performing a k-means clustering
-            %        step. The possible values are:
-            %        `'Random'`    picks the initial cluster centers
-            %                      randomly
-            %        `'Gonzales'`  picks the initial centers using Gonzales
-            %                      algorithm
-            %        `'KMeansPP'`  picks the initial centers using the
-            %                      algorithm suggested in arthur kmeanspp
-            %                      2007
-            %        default `'Random'`
+            %        step. The possible values are (default `'Random'`):
+            %        * `'Random'`    picks the initial cluster centers
+            %                        randomly
+            %        * `'Gonzales'`  picks the initial centers using Gonzales
+            %                        algorithm
+            %        * `'KMeansPP'`  picks the initial centers using the
+            %                        algorithm suggested in [ArthurKmeansPP2007]
             % * __CBIndex__ This parameter (cluster boundary index)
             %        influences the way exploration is performed in the
-            %        hierarchical kmeans tree. When CBIndex is zero the
+            %        hierarchical kmeans tree. When `CBIndex` is zero the
             %        next kmeans domain to be explored is choosen to be the
             %        one with the closest center. A value greater then zero
             %        also takes into account the size of the domain.
             %        default 0.2
+            %
+            % [ArthurKmeansPP2007]:
+            % > Arthur and S. Vassilvitskii *"k-means++: the advantages of careful seeding"*,
+            % > Proceedings of the eighteenth annual ACM-SIAM symposium on Discrete
+            % > algorithms, 2007
+            %
+            % ### LSH
+            % * __TableNumber__ The number of hash tables to use
+            %        (between 10 and 30 usually).
+            % * __KeySize__ The length of the key in the hash tables
+            %        (between 10 and 20 usually).
+            % * __MultiProbeLevel__ Number of levels to use in multi-probe
+            %        (0 is regular LSH, 2 is recommended).
+            %
+            % > *Multi-Probe LSH: Efficient Indexing for High-Dimensional Similarity Search*
+            % > by Qin Lv, William Josephson, Zhe Wang, Moses Charikar, Kai Li.,
+            % > Proceedings of the 33rd International Conference on Very Large Data Bases
+            % > (VLDB). Vienna, Austria. September 2007
             %
             % ### Autotuned
             % * __TargetPrecision__ Is a number between 0 and 1 specifying
@@ -146,13 +171,20 @@ classdef DescriptorMatcher < handle
             % ### Saved
             % Saved index takes only one argument specifing filename:
             %    
-            %    cv.DescriptorMatcher('FlannBased',...
+            %    matcher = cv.DescriptorMatcher('FlannBased',...
             %        'Index', {'Saved', '/path/to/saved/index.xml')}
             %
             % ### Search
-            % * __Checks__ default 32
-            % * __EPS__ default 0
-            % * __Sorted__ default false
+            % * __Checks__ The number of times the tree(s) in the index should
+            %        be recursively traversed. A higher value for this parameter
+            %        would give better search precision, but also take more time.
+            %        If automatic configuration was used when the index was
+            %        created, the number of checks required to achieve the
+            %        specified precision was also computed, in which case this
+            %        parameter is ignored. -1 for unlimited. default 32
+            % * __EPS__ search for eps-approximate neighbours. default 0
+            % * __Sorted__ only for radius search, require neighbours sorted
+            %        by distance. default true
             %
             % See also cv.DescriptorMatcher
             %
@@ -184,11 +216,22 @@ classdef DescriptorMatcher < handle
             % If the collection trainDescCollectionis is not empty, the new
             % descriptors are added to existing train descriptors.
             %
+            % ## Input
+            % * __descriptors__ Descriptors to add. Each `descriptors{i}` is
+            %       a set of descriptors from the same train image.
+            %       Can be either a matrix or a cell array of matrices
+            %       (matrices of type `uint8` or `single`)
+            %
             DescriptorMatcher_(this.id, 'add', descriptors);
         end
         
         function descriptors = getTrainDescriptors(this)
-            %GETTRAINDESCRIPTORS  Returns a constant link to the train descriptor collection trainDescCollection
+            %GETTRAINDESCRIPTORS  Returns the train descriptor collection
+            %
+            %    descriptors = matcher.getTrainDescriptors();
+            %
+            % ## Outpt
+            % * __descriptors__ Set of train descriptors. A cell array of matrices.
             %
             descriptors = DescriptorMatcher_(this.id, 'getTrainDescriptors');
         end
@@ -204,13 +247,21 @@ classdef DescriptorMatcher < handle
         function status = empty(this)
             %EMPTY  Returns true if there are no train descriptors in the collection
             %
-            %    matcher.empty()
+            %    status = matcher.empty()
+            %
+            % ## Output
+            % * __status__ boolean status
             %
             status = DescriptorMatcher_(this.id, 'empty');
         end
         
         function status = isMaskSupported(this)
             %ISMASKSUPPORTED  Returns true if the descriptor matcher supports masking permissible matches
+            %
+            %    status = matcher.isMaskSupported()
+            %
+            % ## Output
+            % * __status__ boolean status
             %
             status = DescriptorMatcher_(this.id, 'isMaskSupported');
         end
@@ -221,11 +272,11 @@ classdef DescriptorMatcher < handle
             %    matcher.train()
             %
             % Trains a descriptor matcher (for example, the flann index). In all
-            % methods to match, the method train() is run every time before
+            % methods to match, the method `train()` is run every time before
             % matching. Some descriptor matchers (for example,
-            % BruteForceMatcher) have an empty implementation of this method.
+            % `BruteForceMatcher`) have an empty implementation of this method.
             % Other matchers really train their inner structures (for example,
-            % FlannBasedMatcher trains flann::Index).
+            % `FlannBasedMatcher` trains `flann::Index`).
             %
             DescriptorMatcher_(this.id, 'train');
         end
@@ -233,9 +284,16 @@ classdef DescriptorMatcher < handle
         function matches = match(this, queryDescriptors, varargin)
             %MATCH  Finds the best match for each descriptor from a query set
             %
-            %    matches = matcher.match(queryDescriptors)
             %    matches = matcher.match(queryDescriptors, trainDescriptors)
+            %    matches = matcher.match(queryDescriptors)
             %    [...] = matcher.match(..., 'OptionName', optionValue, ...)
+            %
+            % In the first variant of this method, the train descriptors are passed
+            % as an input argument. In the second variant of the method, train
+            % descriptors collection that was set by `DescriptorMatcher.add()` is used.
+            % Optional mask (or masks) can be passed to specify which query and
+            % training descriptors can be matched. Namely, `queryDescriptors(i,:)` can
+            % be matched with `trainDescriptors(j,:)` only if `mask(i,j)` is non-zero.
             %
             % ## Input
             % * __queryDescriptors__ Query set of descriptors.
@@ -244,13 +302,25 @@ classdef DescriptorMatcher < handle
             %       class object.
             %
             % ## Output
-            % * __matches__ Matches. If a query descriptor is masked out in mask,
-            %       no match is added for this descriptor. So, matches size may
+            % * __matches__ Matches. If a query descriptor is masked out in `Mask`,
+            %       no match is added for this descriptor. So, `matches` size may
             %       be smaller than the query descriptors count.
+            %       A 1-by-N structure array, it has the following fields:
+            %       * __queryIdx__ query descriptor index (zero-based index)
+            %       * __trainIdx__ train descriptor index (zero-based index)
+            %       * __imgIdx__ train image index (zero-based index)
+            %       * __distance__ distance between descriptors (scalar)
             %
             % ## Options
-            %   'Mask' Mask specifying permissible matches between an input
-            %       query and train matrices of descriptors.
+            % * __Mask__ default empty
+            %       * In the first form, mask specifying permissible matches
+            %       between an input query and train matrices of descriptors.
+            %       Matrix of size `[size(queryDescriptors,1),size(trainDescriptors,1)]`
+            %       * In the second form, set of masks. Each `masks{i}` specifies
+            %       permissible matches between the input query descriptors and
+            %       stored train descriptors from the i-th image `trainDescCollection{i}`.
+            %       Cell array of length `length(trainDescriptors)`, each a matrix
+            %       of size `[size(queryDescriptors,1),size(trainDescriptors{i},1)]`
             %
             matches = DescriptorMatcher_(this.id, 'match', queryDescriptors, varargin{:});
         end
@@ -258,9 +328,14 @@ classdef DescriptorMatcher < handle
         function matches = knnMatch(this, queryDescriptors, varargin)
             %KNNMATCH  Finds the k best matches for each descriptor from a query set
             %
-            %    matches = matcher.knnMatch(queryDescriptors, k)
             %    matches = matcher.knnMatch(queryDescriptors, trainDescriptors, k)
+            %    matches = matcher.knnMatch(queryDescriptors, k)
             %    [...] = matcher.knnMatch(..., 'OptionName', optionValue, ...)
+            %
+            % These extended variants of `DescriptorMatcher.match()` methods find
+            % several best matches for each query descriptor. The matches are
+            % returned in the distance increasing order. See `DescriptorMatcher.match()`
+            % for the details about query and train descriptors.
             %
             % ## Input
             % * __queryDescriptors__ Query set of descriptors.
@@ -272,17 +347,30 @@ classdef DescriptorMatcher < handle
             %       total
             %
             % ## Output
-            % * __matches__ Matches. Each matches{i} is k or less matches for the
-            %       same query descriptor.
+            % * __matches__ Matches. Each `matches{i}` is k or less matches for the
+            %       same query descriptor. A cell array of length
+            %       `size(queryDescriptors,1)`, each cell is a 1-by-(k or less)
+            %       structure array that has the following fields:
+            %       * __queryIdx__ query descriptor index (zero-based index)
+            %       * __trainIdx__ train descriptor index (zero-based index)
+            %       * __imgIdx__ train image index (zero-based index)
+            %       * __distance__ distance between descriptors (scalar)
             %
             % ## Options
-            % * __Mask__ Mask specifying permissible matches between an input
-            %       query and train matrices of descriptors.
+            % * __Mask__ default empty
+            %       * In the first form, mask specifying permissible matches
+            %       between an input query and train matrices of descriptors.
+            %       Matrix of size `[size(queryDescriptors,1),size(trainDescriptors,1)]`
+            %       * In the second form, set of masks. Each `masks{i}` specifies
+            %       permissible matches between the input query descriptors and
+            %       stored train descriptors from the i-th image `trainDescCollection{i}`.
+            %       Cell array of length `length(trainDescriptors)`, each a matrix
+            %       of size `[size(queryDescriptors,1),size(trainDescriptors{i},1)]`
             % * __CompactResult__ Parameter used when the mask (or masks) is not
-            %       empty. If compactResult is false, the matches vector has the
-            %       same size as queryDescriptors rows. If compactResult is
+            %       empty. If `compactResult` is false, the `matches` vector has the
+            %       same size as `queryDescriptors` rows. If `compactResult` is
             %       true, the matches vector does not contain matches for fully
-            %       masked-out query descriptors.
+            %       masked-out query descriptors. default false
             %
             matches = DescriptorMatcher_(this.id, 'knnMatch', ...
                 queryDescriptors, varargin{:});
@@ -291,9 +379,14 @@ classdef DescriptorMatcher < handle
         function matches = radiusMatch(this, queryDescriptors, varargin)
             %RADIUSMATCH  For each query descriptor, finds the training descriptors not farther than the specified distance
             %
-            %    matches = matcher.radiusMatch(queryDescriptors, k)
-            %    matches = matcher.radiusMatch(queryDescriptors, trainDescriptors, k)
+            %    matches = matcher.radiusMatch(queryDescriptors, trainDescriptors, maxDistance)
+            %    matches = matcher.radiusMatch(queryDescriptors, maxDistance)
             %    [...] = matcher.radiusMatch(..., 'OptionName', optionValue, ...)
+            %
+            % For each query descriptor, the methods find such training descriptors
+            % that the distance between the query descriptor and the training
+            % descriptor is equal or smaller than `maxDistance`. Found matches
+            % are returned in the distance increasing order.
             %
             % ## Input
             % * __queryDescriptors__ Query set of descriptors.
@@ -304,16 +397,29 @@ classdef DescriptorMatcher < handle
             %       descriptors.
             %
             % ## Output
-            % * __matches__ Found matches.
+            % * __matches__ Found matches. A cell array of length
+            %       `size(queryDescriptors,1)`, each cell is a structure array
+            %       that has the following fields:
+            %       * __queryIdx__ query descriptor index (zero-based index)
+            %       * __trainIdx__ train descriptor index (zero-based index)
+            %       * __imgIdx__ train image index (zero-based index)
+            %       * __distance__ distance between descriptors (scalar)
             %
             % ## Options
-            % * __Mask__ Mask specifying permissible matches between an input
-            %       query and train matrices of descriptors.
+            % * __Mask__ default empty
+            %       * In the first form, mask specifying permissible matches
+            %       between an input query and train matrices of descriptors.
+            %       Matrix of size `[size(queryDescriptors,1),size(trainDescriptors,1)]`
+            %       * In the second form, set of masks. Each `masks{i}` specifies
+            %       permissible matches between the input query descriptors and
+            %       stored train descriptors from the i-th image `trainDescCollection{i}`.
+            %       Cell array of length `length(trainDescriptors)`, each a matrix
+            %       of size `[size(queryDescriptors,1),size(trainDescriptors{i},1)]`
             % * __CompactResult__ Parameter used when the mask (or masks) is not
-            %       empty. If compactResult is false, the matches vector has the
-            %       same size as queryDescriptors rows. If compactResult is
+            %       empty. If `compactResult` is false, the `matches` vector has the
+            %       same size as `queryDescriptors` rows. If `compactResult` is
             %       true, the matches vector does not contain matches for fully
-            %       masked-out query descriptors.
+            %       masked-out query descriptors. default false
             %
             matches = DescriptorMatcher_(this.id, 'radiusMatch',...
                 queryDescriptors, varargin{:});

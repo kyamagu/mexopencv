@@ -95,6 +95,23 @@ Ptr<flann::IndexParams> createIndexParams(const MxArray& m)
         p = new flann::CompositeIndexParams(trees,
             branching, iterations, centers_init, cb_index);
     }
+    else if (type == "LSH") {
+        unsigned int table_number = 20;
+        unsigned int key_size = 15;
+        unsigned int multi_probe_level = 0;
+        for (int i=1; i<rhs.size(); i+=2) {
+            string key(rhs[i].toString());
+            if (key == "TableNumber")
+                table_number = rhs[i+1].toInt();
+            else if (key == "KeySize")
+                key_size = rhs[i+1].toInt();
+            else if (key == "MultiProbeLevel")
+                multi_probe_level = rhs[i+1].toInt();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+        }
+        p = new flann::LshIndexParams(table_number, key_size, multi_probe_level);
+    }
     else if (type == "Autotuned") {
         float target_precision = 0.9;
         float build_weight = 0.01;
@@ -277,7 +294,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         nargchk(nrhs>=4);
         Mat queryDescriptors((rhs[2].isUint8()) ? rhs[2].toMat() : rhs[2].toMat(CV_32F));
         vector<vector<DMatch> > matches;
-        if (nrhs>=5 && rhs[3].isNumeric()) { // First format
+        if (nrhs>=5 && rhs[3].isNumeric() && rhs[4].isNumeric()) { // First format
             nargchk((nrhs%2)==1);
             Mat trainDescriptors((rhs[3].isUint8()) ? rhs[3].toMat() : rhs[3].toMat(CV_32F));
             int k = rhs[4].toInt();
@@ -317,13 +334,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
         nargchk(nrhs>=4);
         Mat queryDescriptors((rhs[2].isUint8()) ? rhs[2].toMat() : rhs[2].toMat(CV_32F));
         vector<vector<DMatch> > matches;
-        if (nrhs>=5 && rhs[3].isNumeric()) { // First format
+        if (nrhs>=5 && rhs[3].isNumeric() && rhs[4].isNumeric()) { // First format
+            nargchk((nrhs%2)==1);
             Mat trainDescriptors((rhs[3].isUint8()) ? rhs[3].toMat() : rhs[3].toMat(CV_32F));
             float maxDistance = rhs[4].toDouble();
             Mat mask;
             bool compactResult=false;
             for (int i=5; i<nrhs; i+=2) {
-                nargchk((nrhs%2)==1);
                 string key(rhs[i].toString());
                 if (key=="Mask")
                     mask = rhs[i+1].toMat(CV_8U);

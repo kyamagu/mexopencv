@@ -8,6 +8,7 @@
 %
 % ## Output
 % * __chains__ The output vector of connected points.
+%       Cell array of cell array of points `{{[x,y],[x,y],..}, {[x,y],..}}`
 %
 % ## Options
 % * __Delta__ delta, in the code, it compares
@@ -23,6 +24,9 @@
 % * __EdgeBlurSize__ the aperture size for edge blur. default 5.
 % * __Mask__ Optional input mask that marks the regions where we should detect
 %        features
+%
+% The class encapsulates all the parameters of the MSER extraction algorithm
+% (see http://en.wikipedia.org/wiki/Maximally_stable_extremal_regions).
 %
 % See also cv.FeatureDetector cv.DescriptorExtractor
 %
