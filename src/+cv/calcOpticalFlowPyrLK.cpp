@@ -28,11 +28,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
     Mat prevImg(rhs[0].toMat(CV_8U)), nextImg(rhs[1].toMat(CV_8U));
     vector<Point2f> prevPts(rhs[2].toVector<Point2f>()), nextPts;
     
-    Size winSize=Size(15,15);
+    Size winSize=Size(21,21);
     int maxLevel=3;
     TermCriteria criteria(TermCriteria::COUNT+TermCriteria::EPS, 30, 0.01);
-    double derivLambda=0.5;
     int flags=0;
+    double minEigThreshold=1e-4;
     for (int i=3; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="InitialFlow") {
@@ -48,8 +48,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
             maxLevel = rhs[i+1].toInt();
         else if (key=="Criteria")
             criteria = rhs[i+1].toTermCriteria();
-        else if (key=="DerivLambda")
-            derivLambda = rhs[i+1].toDouble();
+        else if (key=="MinEigThreshold")
+            minEigThreshold = rhs[i+1].toDouble();
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
@@ -58,7 +58,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<uchar> status(prevPts.size());
     vector<float> err(prevPts.size());
     calcOpticalFlowPyrLK(prevImg, nextImg, prevPts, nextPts, status, err,
-        winSize, maxLevel, criteria, derivLambda, flags);
+        winSize, maxLevel, criteria, flags, minEigThreshold);
     plhs[0] = MxArray(nextPts);
     if (nlhs>1)
         plhs[1] = MxArray(Mat(status));
