@@ -49,7 +49,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else if (key=="Criteria")
             criteria = rhs[i+1].toTermCriteria();
         else if (key=="GetMinEigenvals")
-            flags |= (rhs[i+1].toBool()) ? OPTFLOW_LK_GET_MIN_EIGENVALS | 0;
+            flags |= (rhs[i+1].toBool()) ? OPTFLOW_LK_GET_MIN_EIGENVALS : 0;
         else if (key=="MinEigThreshold")
             minEigThreshold = rhs[i+1].toDouble();
         else

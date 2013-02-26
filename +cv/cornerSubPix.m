@@ -4,7 +4,7 @@
 %    corners = cv.cornerSubPix(im, corners, 'OptionName', optionValue, ...)
 %
 % ## Input
-% * __im__ Input image.
+% * __im__ Input single-channel image.
 % * __corners__ Initial coordinates of the input corners.
 %
 % ## Output
