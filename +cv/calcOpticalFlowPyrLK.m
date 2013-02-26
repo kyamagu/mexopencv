@@ -31,6 +31,16 @@
 %         criteria.epsilon. Struct with {'type','maxCount','epsilon'} fields is
 %         accepted. The type field should have one of 'Count', 'EPS', or
 %         'Count+EPS' to indicate which criteria to use.
+% * __GetMinEigenvals__ Use minimum eigen values as an error measure
+%         (see MinEigThreshold description); if the flag is not set, then L1
+%         distance between patches around the original and a moved point,
+%         divided by number of pixels in a window, is used as a error measure.
+% * __MinEigThreshold__ The algorithm calculates the minimum eigen value of a
+%         2x2 normal matrix of optical flow equations (this matrix is called a
+%         spatial gradient matrix in [Bouguet00]), divided by number of pixels
+%         in a window; if this value is less than minEigThreshold, then a
+%         corresponding feature is filtered out and its flow is not processed,
+%         so it allows to remove bad points and get a performance boost.
 %
 % The function implements a sparse iterative version of the Lucas-Kanade optical
 % flow in pyramids. See [Bouguet00].
