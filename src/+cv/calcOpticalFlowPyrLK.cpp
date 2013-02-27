@@ -37,7 +37,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         string key = rhs[i].toString();
         if (key=="InitialFlow") {
             nextPts = rhs[i+1].toVector<Point2f>();
-            flags = OPTFLOW_USE_INITIAL_FLOW;
+            flags |= OPTFLOW_USE_INITIAL_FLOW;
         }
         else if (key=="WinSize")
             winSize = rhs[i+1].toSize();
