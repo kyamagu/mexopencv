@@ -1,8 +1,8 @@
 function make(varargin)
 %MAKE  compile mex functions
 %
-%    cv.make
-%    cv.make('opencv_path',pathname) % Windows only
+%    mexopencv.make
+%    mexopencv.make('opencv_path', pathname) % Windows only
 %
 % Make builds mexopencv library. In Unix, this function invokes Makefile
 % in the project root. In Windows, the function takes an optional argument
@@ -42,7 +42,7 @@ if ispc % Windows
     end
 
     if ~exist(dst, 'file')
-        error('cv:make', 'lib\MxArray.obj not found');
+        error('mexopencv:make', 'lib\MxArray.obj not found');
     end
 
     % Compile other files
@@ -114,7 +114,7 @@ function s = compiler_str
     elseif ~isempty(strfind(c.Name, 'GNU'))
         s = 'mingw';
     else
-        error('cv:make', 'Unsupported compiler');
+        error('mexopencv:make', 'Unsupported compiler');
     end
 end
 

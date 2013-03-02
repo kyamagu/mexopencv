@@ -101,13 +101,13 @@ to install Windows SDK.
 
 Once you satisfy the above requirement, in the matlab shell, type
 
-    >> cv.make
+    >> mexopencv.make
 
 to build all mex functions. By default, mexopencv assumes the OpenCV library is
 installed in `C:\opencv`. If this is not the case, specify the path as an
 argument.
 
-    >> cv.make('opencv_path', 'c:\your\path\to\opencv')
+    >> mexopencv.make('opencv_path', 'c:\your\path\to\opencv')
 
 Note that if you build OpenCV from source, this path specification does not
 work. You need to replace dll files in the OpenCV package with newly built
@@ -116,7 +116,7 @@ with the library.
 
 To remove existing mexopencv binaries, use the following command.
 
-    >> cv.make('clean')
+    >> mexopencv.make('clean')
 
 ### Visual Studio 2008 compatibility issue
 
@@ -125,9 +125,9 @@ Studio 2008 with mexopencv. For this reason, mexopencv on Windows platform
 do not work with Matlab R2009b or earlier.
 
 Nevertheless, if you want to try using Visual Studio 2008, obtain `stdint.h`
-and use `cv.make` to compile the package. Visual Studio 2008 or earlier does
-not comply C99 standard and lacks `stdint.h` header file. Luckily, the header
-file is available on the Web. For example,
+and use `mexopencv.make` to compile the package. Visual Studio 2008 or earlier
+does not comply with C99 standard and lacks `stdint.h` header file. Luckily,
+the header file is available on the Web. For example,
 http://msinttypes.googlecode.com/svn/trunk/stdint.h
 
 Place this file under `include` directory in the mexopencv package.
@@ -141,8 +141,8 @@ supported.
 The OpenCV windows package contains c++ binary files compiled with
 `_SECURE_SCL=1` flag, but mex command in Matlab does not use this option by
 default, which results in `Invalid MEX file` or segmentation fault on execution.
-The current version of `cv.make` script adds `_SECURE_SCL=1` flag in the build
-command and should have no problem with the distributed binary package.
+The current version of `mexopencv.make` script adds `_SECURE_SCL=1` flag in the
+build command and should have no problem with the distributed binary package.
 
 If you see `Invalid MEX file` or segmentation fault with manually built OpenCV
 dll's, first make sure you compile OpenCV with the same `_SECURE_SCL` flag to
@@ -270,7 +270,7 @@ object. Mostly this class is used to convert between opencv data types and
     mxArray* plhs[0] = MxArray(sc);
     mxArray* plhs[0] = MxArray(sp); // Only 2D float to double
 
-Check `MxArraay.hpp` for a complete list of the conversion API.
+Check `MxAraay.hpp` for the complete list of the conversion API.
 
 If you rather want to develop a matlab function that internally calls a mex
 function, make use of the `+cv/private` directory. Any function placed under
