@@ -14,22 +14,23 @@ Contents
 
 The project tree is organized as follows.
 
-    +cv/            directory to put compiled mex files, wrappers, or help files
-    Doxyfile        config file for doxygen
-    Makefile        make script
-    README.markdown this file
-    doc/            directory for documentation
-    include/        header files
-    lib/            directory for compiled c++ library files
-    samples/        directory for sample application codes
-    src/            directory for c++ source files
-    src/+cv/        directory for mex source files
-    src/+cv/private directory for private mex source files
-    test/           directory for test scripts and resources
-    utils/          directory for utilities
+    +cv/             OpenCV or custom API directory
+    +mexopencv/      mexopencv utility API directory
+    Doxyfile         config file for doxygen
+    Makefile         make script
+    README.markdown  this file
+    doc/             directory for documentation
+    include/         header files
+    lib/             directory for compiled c++ library files
+    samples/         directory for sample application codes
+    src/             directory for c++ source files
+    src/+cv/         directory for mex source files
+    src/+cv/private/ directory for private mex source files
+    test/            directory for test scripts and resources
+    utils/           directory for utilities
 
-Compile
-=======
+Build
+=====
 
 Prerequisite:
 
@@ -51,13 +52,22 @@ directory and type:
     $ make
 
 This will build and place all mex functions inside `+cv/`.
-Specify your matlab directory if you install matlab other than /usr/local/matlab
+Specify your matlab directory if you install matlab other than
+`/usr/local/matlab`,
 
     $ make MATLABDIR=/Applications/MATLAB_R2012a.app
 
-Optionally you can test the library functionality
+Optionally you can test the library functionality.
 
     $ make test
+
+Developer documentation can be generated with doxygen if installed.
+
+    $ make doc
+
+This will create html and latex files under `doc/`.
+
+### Error: Invalid MEX file or Segmentation fault
 
 If matlab says 'Library not loaded' or any other error in the test, it's likely
 the compatibility issue between a system library and matlab's internal library.
@@ -70,17 +80,19 @@ matlab.
 
 Note that you need to find the correct path to the shared object. For example,
 `/usr/lib64/` instead of `/usr/lib/`. You can use `locate` command to find the
-location of the shared object.
+location of the shared object. On Mac OS X, this environmental variable is
+named `DYLD_INSERT_LIBRARIES`.
 
-On Mac OS X, this variable is named `DYLD_INSERT_LIBRARIES`. You can check
-`ldd` command line tool to check the dependency of the mex file in linux. On
-mac, you can use `otool -L` command.
+To find what library is incompatible, use `ldd` command both in the unix shell
+and within matlab to one of the compiled mex file. For example,
 
-Developer documentation can be generated with doxygen if installed
+    $ ldd +cv/imread.mexa64    # within UNIX shell
 
-    $ make doc
+    >> !ldd +cv/imread.mexa64  % within Matlab
 
-This will create html and latex files under `doc/`.
+If the output of the `ldd` command gives you different line, that library is
+likely to be incompatible. Try to preload such a library before launching
+matlab. On mac, you can use `otool -L` command instead.
 
 Windows
 -------
@@ -118,6 +130,42 @@ To remove existing mexopencv binaries, use the following command.
 
     >> mexopencv.make('clean')
 
+### Error: Invalid MEX file or Segmentation fault
+
+Test the following first.
+
+ 1. The system path is set up correctly. This is different from `addpath` in
+    Matlab. You must have the correct dll files visible in the system path,
+    such as `c:\opencv\build\x86\vc10\bin` or `c:\opencv\build\x64\vc10\bin`
+    depending on the Matlab architecture and the compiler. See
+    http://opencv.willowgarage.com/wiki/WindowsSystemPath
+    After change, you must restart Windows.
+ 2. The mex compiler is correct. In Windows 64-bit environment, only Windows
+    SDK compiler is supported. Check
+    http://www.mathworks.com/support/sysreq/previous_releases.html
+    If you build mex files with a wrong compiler, first clean up files with
+    `mexopencv.make('clean')` and build again.
+
+If you still see the `Invalid MEX file` and you are using the manually built
+OpenCV dll's, check if you use the consistent `_SECURE_SCL` flag. The current
+version of `mexopencv.make` script adds `_SECURE_SCL=1` flag in the build
+command and so that the built mex files are compatible with the OpenCV binary
+distribution. If you manually built OpenCV with different `_SECURE_SCL` flag,
+edit `mexopencv.make` file and change the flag to use the consistent value.
+
+Or, you can change the default value for the `_SECURE_SCL` flag in mex command.
+To change the default configuration, which is created with the `mex -setup`
+command in matlab, is located in the following path in recent versions of
+Windows.
+
+    C:\Users\(Username)\AppData\Roaming\MathWorks\MATLAB\(version)\mexopts.bat
+
+Open this file and edit `/D_SECURE_SCL` option.
+
+If you see `Invalid MEX file` error even when having the matched `_SECURE_SCL`
+flag, it probably indicates some other compatibility issues. Please file a bug
+report at http://github.com/kyamagu/mexopencv .
+
 ### Visual Studio 2008 compatibility issue
 
 Users report incompatibility with Visual Studio 2008. Try not to use Visual
@@ -131,32 +179,6 @@ the header file is available on the Web. For example,
 http://msinttypes.googlecode.com/svn/trunk/stdint.h
 
 Place this file under `include` directory in the mexopencv package.
-
-### Error: Invalid MEX file or Segmentation fault
-
-Make sure you set up System Path correctly. Also check you are using the
-supported compiler. In 64-bit environment, only Windows SDK compiler is
-supported.
-
-The OpenCV windows package contains c++ binary files compiled with
-`_SECURE_SCL=1` flag, but mex command in Matlab does not use this option by
-default, which results in `Invalid MEX file` or segmentation fault on execution.
-The current version of `mexopencv.make` script adds `_SECURE_SCL=1` flag in the
-build command and should have no problem with the distributed binary package.
-
-If you see `Invalid MEX file` or segmentation fault with manually built OpenCV
-dll's, first make sure you compile OpenCV with the same `_SECURE_SCL` flag to
-the mex command. The default mex configuration, which is created with the
-`mex -setup` command in matlab, is located in the following path in recent
-versions of Windows.
-
-    C:\Users\(Username)\AppData\Roaming\MathWorks\MATLAB\(version)\mexopts.bat
-
-Open this file and edit `/D_SECURE_SCL` option.
-
-If you see `Invalid MEX file` error even when having the matched `_SECURE_SCL`
-flag, it probably indicates some other compatibility issues. Please file a bug
-report at http://github.com/kyamagu/mexopencv .
 
 Usage
 =====
@@ -258,22 +280,22 @@ object. Mostly this class is used to convert between opencv data types and
     cv::Scalar sc    = MxArray(prhs[0]).toScalar();
     cv::SparseMat sp = MxArray(prhs[0]).toSparseMat(); // Only double to float
 
-    mxArray* plhs[0] = MxArray(i);
-    mxArray* plhs[0] = MxArray(d);
-    mxArray* plhs[0] = MxArray(b);
-    mxArray* plhs[0] = MxArray(s);
-    mxArray* plhs[0] = MxArray(mat);
-    mxArray* plhs[0] = MxArray(ndmat);
-    mxArray* plhs[0] = MxArray(pt);
-    mxArray* plhs[0] = MxArray(siz);
-    mxArray* plhs[0] = MxArray(rct);
-    mxArray* plhs[0] = MxArray(sc);
-    mxArray* plhs[0] = MxArray(sp); // Only 2D float to double
+    plhs[0] = MxArray(i);
+    plhs[0] = MxArray(d);
+    plhs[0] = MxArray(b);
+    plhs[0] = MxArray(s);
+    plhs[0] = MxArray(mat);
+    plhs[0] = MxArray(ndmat);
+    plhs[0] = MxArray(pt);
+    plhs[0] = MxArray(siz);
+    plhs[0] = MxArray(rct);
+    plhs[0] = MxArray(sc);
+    plhs[0] = MxArray(sp); // Only 2D float to double
 
 Check `MxAraay.hpp` for the complete list of the conversion API.
 
 If you rather want to develop a matlab function that internally calls a mex
-function, make use of the `+cv/private` directory. Any function placed under
+function, make use of the `+cv/private/` directory. Any function placed under
 private directory is only accessible from `+cv/` directory. So, for example,
 when you want to design a matlab class that wraps the various behavior of the
 mex function, define your class at `+cv/MyClass.m` and develop a mex function
