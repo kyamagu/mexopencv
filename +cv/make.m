@@ -10,7 +10,7 @@ function make(varargin)
 %
 
 cwd = pwd;
-cd(fileparts(fileparts(mfilename('fullpath'))));
+cd(cv_root());
 
 if ispc % Windows
     % Clean

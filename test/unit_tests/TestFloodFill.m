@@ -1,8 +1,7 @@
 classdef TestFloodFill
     %TestFloodFill
     properties (Constant)
-        path = fileparts(fileparts(mfilename('fullpath')))
-        img = imread([TestFloodFill.path,filesep,'img001.jpg'])
+        img = imread(fullfile(cv_root(),'test','img001.jpg'));
     end
     
     methods (Static)

@@ -1,8 +1,7 @@
 classdef TestSURF
     %TestSURF
     properties (Constant)
-        path = fileparts(fileparts(mfilename('fullpath')))
-        img = rgb2gray(imread([TestSURF.path,filesep,'img001.jpg']))
+        img = rgb2gray(imread(fullfile(cv_root(),'test','img001.jpg')));
     end
     
     methods (Static)

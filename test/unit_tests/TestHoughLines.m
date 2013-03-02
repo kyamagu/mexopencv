@@ -1,8 +1,7 @@
 classdef TestHoughLines
     %TestHoughLines
     properties (Constant)
-        path = fileparts(fileparts(mfilename('fullpath')))
-        img = rgb2gray(imread([TestHoughLines.path,filesep,'img001.jpg']))
+        img = rgb2gray(imread(fullfile(cv_root(),'test','img001.jpg')));
     end
     
     methods (Static)

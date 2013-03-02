@@ -14,7 +14,7 @@ classdef MDoc < handle
     
     properties (Constant)
         % Directory to place documentation
-        DIR = fullfile('doc','matlab')
+        DIR = fullfile(cv_root(),'doc','matlab')
         % Default CSS file
         CSS = fullfile(matlabroot,'toolbox','matlab','helptools',...
             'private','helpwin.css')
@@ -43,7 +43,7 @@ classdef MDoc < handle
             this.process_index();
             
             % Get a list of functions
-            list = dir('+cv/*.m');
+            list = dir(fullfile(cv_root(),'+cv','*.m'));
             this.yet = strrep({list.name},'.m','');
             while ~isempty(this.yet)
                 fname = this.yet{1};

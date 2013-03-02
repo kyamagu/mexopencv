@@ -1,9 +1,8 @@
 classdef TestImwrite
     %TestImwrite
     properties (Constant)
-        im = im2uint8(randn(32,32,3));
-        path = fileparts(fileparts(mfilename('fullpath')))
-        filename = [TestImwrite.path,filesep,'foo.jpg'];
+        im = imread(fullfile(cv_root(),'test','img001.jpg'));
+        filename = [tempname '.jpg'];
     end
     
     methods (Static)
