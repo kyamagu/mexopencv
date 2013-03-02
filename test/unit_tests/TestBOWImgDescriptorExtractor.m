@@ -5,8 +5,7 @@ classdef TestBOWImgDescriptorExtractor
     
     methods (Static)
         function test_1
-            im = imread(fullfile(fileparts(fileparts(...
-                mfilename('fullpath'))),'cat.jpg'));
+            im = imread(fullfile(mexopencv.root(),'test','cat.jpg'));
             im = rgb2gray(im);
             detector = cv.FeatureDetector('SIFT');
             kpts = detector.detect(im);

@@ -5,8 +5,7 @@ classdef TestHOGDescriptor
     
     methods (Static)
         function test_1
-            p = fileparts(fileparts(mfilename('fullpath')));
-            im = imread([p,filesep,'img001.jpg']);
+            im = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
             hog = cv.HOGDescriptor();
             hog.compute(im);
             hog.detectMultiScale(im);
@@ -15,11 +14,12 @@ classdef TestHOGDescriptor
         function test_2
             hog = cv.HOGDescriptor();
             hog.GammaCorrection = false;
-            hog.save('TestHOGDescriptor.xml');
-            hog2 = cv.HOGDescriptor('TestHOGDescriptor.xml');
+            fname = [tempname '.xml'];
+            hog.save(fname);
+            hog2 = cv.HOGDescriptor(fname);
             assert(hog.GammaCorrection == hog2.GammaCorrection);
-            if exist('TestHOGDescriptor.xml','file')
-                delete TestHOGDescriptor.xml;
+            if exist(fname,'file')
+                delete(fname);
             end
         end
     end

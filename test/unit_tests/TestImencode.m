@@ -1,7 +1,7 @@
 classdef TestImencode
     %TestImencode
     properties (Constant)
-        im = im2uint8(randn(32,32,3));
+        im = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
     end
     
     methods (Static)

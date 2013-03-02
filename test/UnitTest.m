@@ -4,17 +4,14 @@ classdef UnitTest
     %   cd test;
     %   UnitTest;
     properties (Constant)
-        ROOT = fileparts(mfilename('fullpath'))
-        TESTDIR = [UnitTest.ROOT,filesep,'unit_tests']
-        BINDIR = [fileparts(UnitTest.ROOT),filesep,'matlab']
+        TESTDIR = fullfile(mexopencv.root(),'test','unit_tests');
     end
 
     methods
         function obj = UnitTest()
             %UNITTEST execute all unit tests
             addpath(UnitTest.TESTDIR);
-            addpath(fileparts(UnitTest.ROOT));
-            d = dir([UnitTest.TESTDIR,filesep,'*.m']);
+            d = dir(fullfile(UnitTest.TESTDIR,'*.m'));
             for i = 1:numel(d)
                 class_name = strrep(d(i).name,'.m','');
                 fprintf('== %s ======\n',class_name);
