@@ -132,6 +132,13 @@ function [cflags,libs] = pkg_config(opencv_path)
     l_options = strcat({' -l'}, lib_names(L_path));
     l_options = [l_options{:}];
 
+    if ~exist(I_path,'dir')
+        error('mexopencv:make', 'OpenCV include path not found: %s', I_path);
+    end
+    if ~exist(L_path,'dir')
+        error('mexopencv:make', 'OpenCV library path not found: %s', L_path);
+    end
+
     cflags = sprintf('-I"%s"', I_path);
     libs = sprintf('-L"%s" %s', L_path, l_options);
 end
