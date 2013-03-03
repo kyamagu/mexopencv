@@ -143,13 +143,14 @@ Test the following first.
  2. The mex compiler is correct. In Windows 64-bit environment, only Windows
     SDK compiler is supported. Check
     http://www.mathworks.com/support/sysreq/previous_releases.html
+    Choose the supported compiler with `mex -setup` command within Matlab.
     If you build mex files with a wrong compiler, first clean up files with
     `mexopencv.make('clean')` and build again.
 
 If you still see the `Invalid MEX file` and you are using the manually built
 OpenCV dll's, check if you use the consistent `_SECURE_SCL` flag. The current
 version of `mexopencv.make` script adds `_SECURE_SCL=1` flag in the build
-command and so that the built mex files are compatible with the OpenCV binary
+command so that the built mex files are compatible with the OpenCV binary
 distribution. If you manually built OpenCV with different `_SECURE_SCL` flag,
 edit `mexopencv.make` file and change the flag to use the consistent value.
 
@@ -215,9 +216,9 @@ Check a list of functions available by `help` command in matlab.
      video files. Here is how the class can be used:
     ...
 
-Look at the `samples/` directory for an example of an application.
+Look at the `samples/` directory for examples.
 
-Also mexopencv includes a simple documentation utility that generates HTML help
+The mexopencv includes a simple documentation utility that generates HTML help
 files for matlab. The following command creates a user documentation under
 `doc/matlab/` directory.
 
@@ -241,8 +242,8 @@ want to add a mex function called myfunc, create `src/+cv/myfunc.cpp`.
 The minimum contents of the myfunc.cpp would look like this:
 
     #include "mexopencv.hpp"
-    void mexFunction( int nlhs, mxArray *plhs[],
-                      int nrhs, const mxArray *prhs[] )
+    void mexFunction(int nlhs, mxArray *plhs[],
+                     int nrhs, const mxArray *prhs[])
     {
     	// Check arguments
         if (nlhs!=1 || nrhs!=1)
