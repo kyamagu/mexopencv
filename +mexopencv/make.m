@@ -33,54 +33,54 @@ cwd = cd(MEXOPENCV_ROOT);
 cObj = onCleanup(@()cd(cwd));
 
 % parse options
-[opencv_path,clean_mode,test_mode,dry_run,force,extra] = getargs(varargin{:});
+opts = getargs(varargin{:});
 
 if ispc % Windows
     % Clean
-    if clean_mode
+    if opts.clean
         fprintf('Cleaning all generated files...\n');
 
         cmd = fullfile(MEXOPENCV_ROOT, '+cv', ['*.' mexext]);
         disp(cmd);
-        if ~dry_run, delete(cmd); end
+        if ~opts.dryrun, delete(cmd); end
 
         cmd = fullfile(MEXOPENCV_ROOT, '+cv', 'private', ['*.' mexext]);
         disp(cmd);
-        if ~dry_run, delete(cmd); end
+        if ~opts.dryrun, delete(cmd); end
 
         cmd = fullfile(MEXOPENCV_ROOT, 'lib', '*.obj');
         disp(cmd);
-        if ~dry_run, delete(cmd); end
+        if ~opts.dryrun, delete(cmd); end
 
         return;
     end
 
     % Unittests
-    if test_mode
+    if opts.test
         cd(fullfile(MEXOPENCV_ROOT,'test'));
-        if ~dry_run, UnitTest(); end
+        if ~opts.dryrun, UnitTest(); end
         return;
     end
 
     % compile flags
-    [cv_cflags,cv_libs] = pkg_config(opencv_path);
+    [cv_cflags,cv_libs] = pkg_config(opts.opencv_path);
     mex_flags = sprintf('-largeArrayDims -D_SECURE_SCL=%d -I"%s" %s %s',...
         true, fullfile(MEXOPENCV_ROOT,'include'), cv_cflags, cv_libs);
 
     % Compile MxArray
     src = fullfile(MEXOPENCV_ROOT,'src','MxArray.cpp');
     dst = fullfile(MEXOPENCV_ROOT,'lib','MxArray.obj');
-    if compile_needed(src, dst) || force
+    if compile_needed(src, dst) || opts.force
         cmd = sprintf('mex %s -c "%s" -outdir "%s"', ...
             mex_flags, src, fileparts(dst));
         cmd = strrep(cmd, '"', '''');  % replace with escaped single quotes
         disp(cmd);
-        if ~dry_run, eval(cmd); end
-        force = true;
+        if ~opts.dryrun, eval(cmd); end
+        opts.force = true;
     else
         fprintf('Skipped "%s"\n', src);
     end
-    if ~exist(dst, 'file') && ~dry_run
+    if ~exist(dst, 'file') && ~opts.dryrun
         error('mexopencv:make', '"%s" not found', dst);
     end
 
@@ -96,26 +96,26 @@ if ispc % Windows
         src = fullfile(MEXOPENCV_ROOT,'src','+cv',[srcs{i} '.cpp']);
         dst = fullfile(MEXOPENCV_ROOT,'+cv',srcs{i});
         fulldst = [dst, '.', mexext];
-        if compile_needed(src, fulldst) || force
+        if compile_needed(src, fulldst) || opts.force
             cmd = sprintf('mex %s "%s" "%s" -output "%s"',...
                 mex_flags, src, obj, dst);
             cmd = strrep(cmd, '"', '''');  % replace with escaped single quotes
             disp(cmd);
-            if ~dry_run, eval(cmd); end
+            if ~opts.dryrun, eval(cmd); end
         else
             fprintf('Skipped "%s"\n', src);
         end
     end
 else % Unix
-    opts = { sprintf('OPENCV_DIR="%s"',opencv_path) };
-    if dry_run, opts = [opts '--dry-run']; end
-    if force, opts = [opts '--always-make']; end
-    if clean_mode, opts = [opts 'clean']; end
-    if test_mode, opts = [opts 'test']; end
-    if ~isempty(extra), opts = [opts extra]; end
+    options = { sprintf('OPENCV_DIR="%s"',opts.opencv_path) };
+    if opts.dryrun         , options = [options '--dry-run']; end
+    if opts.force          , options = [options '--always-make']; end
+    if opts.clean          , options = [options 'clean']; end
+    if opts.test           , options = [options 'test']; end
+    if ~isempty(opts.extra), options = [options opts.extra]; end
 
     cmd = sprintf('make MATLABDIR="%s" MEXEXT=%s %s', ...
-        matlabroot, mexext, sprintf(' %s', opts{:}));
+        matlabroot, mexext, sprintf(' %s', options{:}));
     disp(cmd);
     system(cmd);
 end
@@ -195,16 +195,16 @@ end
 %
 % Helper function to parse options
 %
-function [opencv_path,clean_mode,test_mode,dry_run,force,extra] = getargs(varargin)
+function opts = getargs(varargin)
     %GETARGS  Process parameter name/value pairs
 
     % default values
-    opencv_path = 'C:\opencv';  % OpenCV location
-    clean_mode = false;         % clean mode
-    test_mode = false;          % unittest mode
-    dry_run = false;            % dry run mode
-    force = false;              % force recompilation of all files
-    extra = '';                 % extra options to be passed to MAKE (Unix only)
+    opts.opencv_path = 'C:\opencv';  % OpenCV location
+    opts.clean = false;              % clean mode
+    opts.test = false;               % unittest mode
+    opts.dryrun = false;             % dry run mode
+    opts.force = false;              % force recompilation of all files
+    opts.extra = '';                 % extra options to be passed to MAKE (Unix only)
 
     nargs = length(varargin);
     if mod(nargs,2)~=0
@@ -217,17 +217,17 @@ function [opencv_path,clean_mode,test_mode,dry_run,force,extra] = getargs(vararg
         val = varargin{i+1};
         switch lower(pname)
             case 'opencv_path'
-                opencv_path = val;
+                opts.opencv_path = char(val);
             case 'clean'
-                clean_mode = val;
+                opts.clean = logical(val);
             case 'test'
-                test_mode = val;
+                opts.test = logical(val);
             case 'dryrun'
-                dry_run = val;
+                opts.dryrun = logical(val);
             case 'force'
-                force = val;
+                opts.force = logical(val);
             case 'extra'
-                extra = val;
+                opts.extra = char(val);
             otherwise
                 error('mexopencv:make', 'Invalid parameter name:  %s.', pname);
         end
