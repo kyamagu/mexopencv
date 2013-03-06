@@ -31,7 +31,7 @@ $(LIBDIR)/libMxArray.a: $(SRCDIR)/MxArray.cpp $(INCLUDEDIR)/MxArray.hpp
 	$(MEX) $(C_FLAGS) $< -lMxArray $(LD_FLAGS) -o $@
 
 clean:
-	$(RM) -rf $(LIBDIR)/*.a $(TARGETDIR)/*.$(MEXEXT)
+	$(RM) -rf $(LIBDIR)/*.a $(TARGETDIR)/*.$(MEXEXT) $(TARGETDIR)/private/*.$(MEXEXT)
 
 doc:
 	$(DOXYGEN) Doxyfile
