@@ -5,3 +5,7 @@
 *.autosave
 *.asv
 *.bak
+
+# MS Visual Studio
+*.obj
+*.pdb
