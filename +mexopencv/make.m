@@ -15,6 +15,8 @@ function make(varargin)
 % * __test__ run all unit-tests. default `false`
 % * __dryrun__ dont actually run commands, just print them. default `false`
 % * __force__ Unconditionally build all files. default `false`
+% * __progress__ show a progress bar GUI during compilation (Windows only).
+%       default `true`
 % * __extra__ extra arguments passed to Unix make command. default `''`
 %
 % ## Examples
@@ -22,6 +24,7 @@ function make(varargin)
 %    mexopencv.make('clean',true)                 % clean MEX files
 %    mexopencv.make('test',true)                  % run unittests
 %    mexopencv.make('dryrun',true, 'force',true)  % print commands used to build
+%    mexopencv.make(..., 'progress',true)         % show progress bar
 %
 % See also mex
 %
@@ -92,7 +95,13 @@ if ispc % Windows
     [~,psrcs] = cellfun(@fileparts, {psrcs.name}, 'UniformOutput',false);
     psrcs = strcat('private', filesep, psrcs);
     srcs = [srcs,psrcs];
+    if opts.progressbar
+        hWait = waitbar(0, 'Compiling MEX files...');
+    end
     for i = 1:numel(srcs)
+        if opts.progressbar
+            waitbar(i/numel(srcs), hWait);
+        end
         src = fullfile(MEXOPENCV_ROOT,'src','+cv',[srcs{i} '.cpp']);
         dst = fullfile(MEXOPENCV_ROOT,'+cv',srcs{i});
         fulldst = [dst, '.', mexext];
@@ -106,6 +115,10 @@ if ispc % Windows
             fprintf('Skipped "%s"\n', src);
         end
     end
+    if opts.progressbar
+        close(hWait);
+    end
+
 else % Unix
     options = { sprintf('OPENCV_DIR="%s"',opts.opencv_path) };
     if opts.dryrun         , options = [options '--dry-run']; end
@@ -204,6 +217,7 @@ function opts = getargs(varargin)
     opts.test = false;               % unittest mode
     opts.dryrun = false;             % dry run mode
     opts.force = false;              % force recompilation of all files
+    opts.progressbar = true;         % show a progress bar GUI during compilation
     opts.extra = '';                 % extra options to be passed to MAKE (Unix only)
 
     nargs = length(varargin);
@@ -226,6 +240,8 @@ function opts = getargs(varargin)
                 opts.dryrun = logical(val);
             case 'force'
                 opts.force = logical(val);
+            case 'progress'
+                opts.progressbar = logical(val);
             case 'extra'
                 opts.extra = char(val);
             otherwise
