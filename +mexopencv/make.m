@@ -120,7 +120,7 @@ if ispc % Windows
     end
 
 else % Unix
-    options = { sprintf('OPENCV_DIR="%s"',opts.opencv_path) };
+    options = {};
     if opts.dryrun         , options = [options '--dry-run']; end
     if opts.force          , options = [options '--always-make']; end
     if opts.clean          , options = [options 'clean']; end
