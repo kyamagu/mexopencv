@@ -15,6 +15,12 @@ function make(varargin)
 % * __test__ run all unit-tests. default `false`
 % * __dryrun__ dont actually run commands, just print them. default `false`
 % * __force__ Unconditionally build all files. default `false`
+% * __verbose__ output verbosity. The higher the number, the more output
+%       is shown. default 1
+%  * __0__ no output at all
+%  * __1__ echo commands and information messages only
+%  * __2__ verbose output from mex
+%  * __3__ show all compile/link warnings and errors
 % * __progress__ show a progress bar GUI during compilation (Windows only).
 %       default `true`
 % * __extra__ extra arguments passed to Unix make command. default `''`
@@ -24,6 +30,7 @@ function make(varargin)
 %    mexopencv.make('clean',true)                 % clean MEX files
 %    mexopencv.make('test',true)                  % run unittests
 %    mexopencv.make('dryrun',true, 'force',true)  % print commands used to build
+%    mexopencv.make('verbose',2)                  % verbose compiler output
 %    mexopencv.make(..., 'progress',true)         % show progress bar
 %
 % See also mex
@@ -41,18 +48,20 @@ opts = getargs(varargin{:});
 if ispc % Windows
     % Clean
     if opts.clean
-        fprintf('Cleaning all generated files...\n');
+        if opts.verbose > 0
+            fprintf('Cleaning all generated files...\n');
+        end
 
         cmd = fullfile(MEXOPENCV_ROOT, '+cv', ['*.' mexext]);
-        disp(cmd);
+        if opts.verbose > 0, disp(cmd); end
         if ~opts.dryrun, delete(cmd); end
 
         cmd = fullfile(MEXOPENCV_ROOT, '+cv', 'private', ['*.' mexext]);
-        disp(cmd);
+        if opts.verbose > 0, disp(cmd); end
         if ~opts.dryrun, delete(cmd); end
 
         cmd = fullfile(MEXOPENCV_ROOT, 'lib', '*.obj');
-        disp(cmd);
+        if opts.verbose > 0, disp(cmd); end
         if ~opts.dryrun, delete(cmd); end
 
         return;
@@ -60,6 +69,10 @@ if ispc % Windows
 
     % Unittests
     if opts.test
+        if opts.verbose > 0
+            fprintf('Running unittests...\n');
+        end
+
         cd(fullfile(MEXOPENCV_ROOT,'test'));
         if ~opts.dryrun, UnitTest(); end
         return;
@@ -78,11 +91,13 @@ if ispc % Windows
     if compile_needed(src, dst) || opts.force
         cmd = sprintf('mex %s -c ''%s'' -outdir ''%s''', ...
             mex_flags, src, fileparts(dst));
-        disp(cmd);
+        if opts.verbose > 0, disp(cmd); end
         if ~opts.dryrun, eval(cmd); end
         opts.force = true;
     else
-        fprintf('Skipped "%s"\n', src);
+        if opts.verbose > 0
+            fprintf('Skipped "%s"\n', src);
+        end
     end
     if ~exist(dst, 'file') && ~opts.dryrun
         error('mexopencv:make', '"%s" not found', dst);
@@ -109,10 +124,12 @@ if ispc % Windows
         if compile_needed(src, fulldst) || opts.force
             cmd = sprintf('mex %s ''%s'' ''%s'' -output ''%s''',...
                 mex_flags, src, obj, dst);
-            disp(cmd);
+            if opts.verbose > 0, disp(cmd); end
             if ~opts.dryrun, eval(cmd); end
         else
-            fprintf('Skipped "%s"\n', src);
+            if opts.verbose > 0
+                fprintf('Skipped "%s"\n', src);
+            end
         end
     end
     if opts.progressbar
@@ -129,7 +146,7 @@ else % Unix
 
     cmd = sprintf('make MATLABDIR="%s" MEXEXT=%s %s', ...
         matlabroot, mexext, sprintf(' %s', options{:}));
-    disp(cmd);
+    if opts.verbose > 0, disp(cmd); end
     system(cmd);
 end
 
@@ -202,6 +219,12 @@ function [comp_flags,link_flags] = compilation_flags(opts)
         comp_flags{end+1} = '/D_SECURE_SCL=1';
     end
 
+    % show all compiler warning and verbose output from linking
+    if opts.verbose > 2
+        comp_flags{end+1} = '-Wall';
+        link_flags{end+1} = '/VERBOSE';
+    end
+
     % create flag strings
     comp_flags = strtrim(sprintf(' %s',comp_flags{:}));
     link_flags = strtrim(sprintf(' %s',link_flags{:}));
@@ -210,6 +233,11 @@ function [comp_flags,link_flags] = compilation_flags(opts)
     end
     if ~isempty(link_flags)
         link_flags = ['LINKFLAGS="$LINKFLAGS ' link_flags '"'];
+    end
+
+    % verbose mex output
+    if opts.verbose > 1
+        comp_flags = ['-v ' comp_flags];
     end
 end
 
@@ -243,6 +271,7 @@ function opts = getargs(varargin)
     opts.test = false;               % unittest mode
     opts.dryrun = false;             % dry run mode
     opts.force = false;              % force recompilation of all files
+    opts.verbose = 1;                % output verbosity
     opts.progressbar = true;         % show a progress bar GUI during compilation
     opts.extra = '';                 % extra options to be passed to MAKE (Unix only)
 
@@ -266,6 +295,8 @@ function opts = getargs(varargin)
                 opts.dryrun = logical(val);
             case 'force'
                 opts.force = logical(val);
+            case 'verbose'
+                opts.verbose = double(val);
             case 'progress'
                 opts.progressbar = logical(val);
             case 'extra'
