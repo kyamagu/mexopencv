@@ -66,17 +66,18 @@ if ispc % Windows
     end
 
     % compile flags
-    [cv_cflags,cv_libs] = pkg_config(opts.opencv_path);
-    mex_flags = sprintf('-largeArrayDims -D_SECURE_SCL=%d -I"%s" %s %s',...
-        true, fullfile(MEXOPENCV_ROOT,'include'), cv_cflags, cv_libs);
+    [cv_cflags,cv_libs] = pkg_config(opts);
+    [comp_flags,link_flags] = compilation_flags(opts);
+    mex_flags = sprintf('-largeArrayDims %s %s -I''%s'' %s %s',...
+        comp_flags, link_flags, fullfile(MEXOPENCV_ROOT,'include'), ...
+        cv_cflags, cv_libs);
 
     % Compile MxArray
     src = fullfile(MEXOPENCV_ROOT,'src','MxArray.cpp');
     dst = fullfile(MEXOPENCV_ROOT,'lib','MxArray.obj');
     if compile_needed(src, dst) || opts.force
-        cmd = sprintf('mex %s -c "%s" -outdir "%s"', ...
+        cmd = sprintf('mex %s -c ''%s'' -outdir ''%s''', ...
             mex_flags, src, fileparts(dst));
-        cmd = strrep(cmd, '"', '''');  % replace with escaped single quotes
         disp(cmd);
         if ~opts.dryrun, eval(cmd); end
         opts.force = true;
@@ -106,9 +107,8 @@ if ispc % Windows
         dst = fullfile(MEXOPENCV_ROOT,'+cv',srcs{i});
         fulldst = [dst, '.', mexext];
         if compile_needed(src, fulldst) || opts.force
-            cmd = sprintf('mex %s "%s" "%s" -output "%s"',...
+            cmd = sprintf('mex %s ''%s'' ''%s'' -output ''%s''',...
                 mex_flags, src, obj, dst);
-            cmd = strrep(cmd, '"', '''');  % replace with escaped single quotes
             disp(cmd);
             if ~opts.dryrun, eval(cmd); end
         else
@@ -138,10 +138,10 @@ end
 %
 % Helper functions for windows
 %
-function [cflags,libs] = pkg_config(opencv_path)
+function [cflags,libs] = pkg_config(opts)
     %PKG_CONFIG  constructs OpenCV-related option flags for Windows
-    I_path = fullfile(opencv_path,'build','include');
-    L_path = fullfile(opencv_path,'build',arch_str(),compiler_str(),'lib');
+    I_path = fullfile(opts.opencv_path,'build','include');
+    L_path = fullfile(opts.opencv_path,'build',arch_str(),compiler_str(),'lib');
     l_options = strcat({' -l'}, lib_names(L_path));
     l_options = [l_options{:}];
 
@@ -152,8 +152,8 @@ function [cflags,libs] = pkg_config(opencv_path)
         error('mexopencv:make', 'OpenCV library path not found: %s', L_path);
     end
 
-    cflags = sprintf('-I"%s"', I_path);
-    libs = sprintf('-L"%s" %s', L_path, l_options);
+    cflags = sprintf('-I''%s''', I_path);
+    libs = sprintf('-L''%s'' %s', L_path, l_options);
 end
 
 function s = arch_str()
@@ -184,6 +184,32 @@ function s = compiler_str()
         s = 'mingw';
     else
         error('mexopencv:make', 'Unsupported compiler: %s', c.Name);
+    end
+end
+
+function [comp_flags,link_flags] = compilation_flags(opts)
+    %COMPILATION_FLAGS  return compiler/linker flags passed directly to compiler
+
+    % additional flags. default empty
+    comp_flags = {};
+    link_flags = {};
+
+    % override _SECURE_SCL for VS versions prior to VS2010
+    c = mex.getCompilerConfigurations();
+    isVS = strcmp(c.Manufacturer,'Microsoft') && ~isempty(strfind(c.Name,'Visual'));
+    if isVS && str2double(c.Version) < 10
+        % necessary for VS2005, VS2008
+        comp_flags{end+1} = '/D_SECURE_SCL=1';
+    end
+
+    % create flag strings
+    comp_flags = strtrim(sprintf(' %s',comp_flags{:}));
+    link_flags = strtrim(sprintf(' %s',link_flags{:}));
+    if ~isempty(comp_flags)
+        comp_flags = ['COMPFLAGS="$COMPFLAGS ' comp_flags '"'];
+    end
+    if ~isempty(link_flags)
+        link_flags = ['LINKFLAGS="$LINKFLAGS ' link_flags '"'];
     end
 end
 

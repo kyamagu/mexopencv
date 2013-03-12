@@ -1,13 +1,13 @@
 mexopencv
 =========
 
-Collection and a development kit of matlab mex functions for OpenCV library
+Collection and a development kit of MATLAB MEX functions for OpenCV library
 
-The package provides matlab mex functions that interface a hundred of
+The package provides MATLAB MEX functions that interface a hundred of
 OpenCV APIs. Also the package contains C++ class that converts between
-Matlab's native data type and OpenCV data types. The package is suitable for
-fast prototyping of OpenCV application in Matlab, use of OpenCV as an external
-toolbox in Matlab, and development of a custom mex function.
+MATLAB's native data type and OpenCV data types. The package is suitable for
+fast prototyping of OpenCV application in MATLAB, use of OpenCV as an external
+toolbox in MATLAB, and development of a custom MEX function.
 
 Contents
 ========
@@ -21,11 +21,11 @@ The project tree is organized as follows.
     README.markdown  this file
     doc/             directory for documentation
     include/         header files
-    lib/             directory for compiled c++ library files
+    lib/             directory for compiled C++ library files
     samples/         directory for sample application codes
-    src/             directory for c++ source files
-    src/+cv/         directory for mex source files
-    src/+cv/private/ directory for private mex source files
+    src/             directory for C++ source files
+    src/+cv/         directory for MEX source files
+    src/+cv/private/ directory for private MEX source files
     test/            directory for test scripts and resources
     utils/           directory for utilities
 
@@ -34,10 +34,10 @@ Build
 
 Prerequisite:
 
- * Unix: matlab, opencv (>=2.4.0), g++, make, pkg-config
- * Windows: matlab, opencv (>=2.4.0), supported compiler
+ * Unix: MATLAB, OpenCV (>=2.4.0), g++, make, pkg-config
+ * Windows: MATLAB, OpenCV (>=2.4.0), supported compiler
 
-For opencv older than v2.4.0, check out the corresponding v2.x branch.
+For OpenCV older than v2.4.0, check out the corresponding v2.x branch.
 
 Unix
 ----
@@ -46,13 +46,13 @@ First make sure you have OpenCV installed in the system. If not, install the
 package available in your package manager (e.g., libopencv-dev in Debian/Ubuntu,
 opencv-devel in Fedora, opencv in Macports), or install the source package from
 http://opencv.willowgarage.com/wiki/ . Make sure `pkg-config` command can
-identify opencv path. If you have all the prerequisite, go to the mexopencv
+identify OpenCV path. If you have all the prerequisite, go to the mexopencv
 directory and type:
 
     $ make
 
-This will build and place all mex functions inside `+cv/`.
-Specify your matlab directory if you install matlab other than
+This will build and place all MEX functions inside `+cv/`.
+Specify your MATLAB directory if you install MATLAB other than
 `/usr/local/matlab`,
 
     $ make MATLABDIR=/Applications/MATLAB_R2012a.app
@@ -65,16 +65,16 @@ Developer documentation can be generated with doxygen if installed.
 
     $ make doc
 
-This will create html and latex files under `doc/`.
+This will create HTML and LaTeX files under `doc/`.
 
 ### Error: Invalid MEX file or Segmentation fault
 
-If matlab says 'Library not loaded' or any other error in the test, it's likely
-the compatibility issue between a system library and matlab's internal library.
-You might be able to fix this issue by preloading the library file. On linux,
+If MATLAB says 'Library not loaded' or any other error in the test, it's likely
+the compatibility issue between a system library and MATLAB's internal library.
+You might be able to fix this issue by preloading the library file. On Linux,
 set the correct library path in `LD_PRELOAD` environmental variable. For
 example, if you see `GLIBCXX_3.4.15` error in mex, use the following to start
-matlab.
+MATLAB.
 
     $ LD_PRELOAD=/usr/lib/libstdc++.so.6 matlab
 
@@ -83,39 +83,39 @@ Note that you need to find the correct path to the shared object. For example,
 location of the shared object. On Mac OS X, this environmental variable is
 named `DYLD_INSERT_LIBRARIES`.
 
-To find what library is incompatible, use `ldd` command both in the unix shell
-and within matlab to one of the compiled mex file. For example,
+To find what library is incompatible, use `ldd` command both in the Unix shell
+and within MATLAB to one of the compiled MEX-files. For example,
 
     $ ldd +cv/imread.mexa64    # within UNIX shell
 
-    >> !ldd +cv/imread.mexa64  % within Matlab
+    >> !ldd +cv/imread.mexa64  % within MATLAB
 
 If the output of the `ldd` command gives you different line, that library is
 likely to be incompatible. Try to preload such a library before launching
-matlab. On mac, you can use `otool -L` command instead.
+MATLAB. On Mac, you can use `otool -L` command instead.
 
 Windows
 -------
 
-Make sure you have OpenCV installed in the system and correctly set up `Path`
+Make sure you have OpenCV installed in the system and correctly set up `PATH`
 system variable. See http://opencv.willowgarage.com/wiki/WindowsSystemPath for
-the instruction. Your Path variable should contain an appropriate path to the
+the instruction. Your PATH variable should contain an appropriate path to the
 dll files (e.g., `c:\opencv\build\x86\vc10\bin`). Be careful that the
-architecture (x86 or x64) should match your matlab architecture but not your
+architecture (x86 or x64) should match your MATLAB architecture but not your
 OS. Also VC version (vc9 or vc10) should match the mex setup (and probably
-matlab's internal runtime). For example, if you're running Matlab 32-bit in
+MATLAB's internal runtime). For example, if you're running MATLAB 32-bit in
 Windows 7 64-bit with Visual Studio 2010 Express, you should use x86 and vc10.
 
-Also make sure you install a compiler supported by Matlab. See
+Also make sure you install a compiler supported by MATLAB. See
 http://www.mathworks.com/support/sysreq/previous_releases.html for the list of
-supported compilers for different versions of Matlab. Maltab 64-bit users need
+supported compilers for different versions of MATLAB. Maltab 64-bit users need
 to install Windows SDK.
 
-Once you satisfy the above requirement, in the matlab shell, type
+Once you satisfy the above requirement, in the MATLAB shell, type
 
     >> mexopencv.make
 
-to build all mex functions. By default, mexopencv assumes the OpenCV library is
+to build all MEX functions. By default, mexopencv assumes the OpenCV library is
 installed in `C:\opencv`. If this is not the case, specify the path as an
 argument.
 
@@ -123,47 +123,58 @@ argument.
 
 Note that if you build OpenCV from source, this path specification does not
 work. You need to replace dll files in the OpenCV package with newly built
-binaries. Or, you need to modify `+cv/make.m` to correctly link your mex files
-with the library.
+binaries. Or, you need to modify `+mexopencv/make.m` to correctly link your
+MEX-files with the library.
 
 To remove existing mexopencv binaries, use the following command.
 
     >> mexopencv.make('clean', true)
 
-### Error: Invalid MEX file or Segmentation fault
+### Error: Invalid MEX-file or Segmentation fault
 
 Test the following first.
 
- 1. The system path is set up correctly. This is different from `addpath` in
-    Matlab. You must have the correct dll files visible in the system path,
+ 1. The system PATH is set up correctly. This is different from `addpath` in
+    MATLAB. You must have the correct dll files visible in the system path,
     such as `c:\opencv\build\x86\vc10\bin` or `c:\opencv\build\x64\vc10\bin`
-    depending on the Matlab architecture and the compiler. See
+    depending on the MATLAB architecture and the compiler. See
     http://opencv.willowgarage.com/wiki/WindowsSystemPath
     After change, you must restart Windows.
  2. The mex compiler is correct. In Windows 64-bit environment, only Windows
     SDK compiler is supported. Check
     http://www.mathworks.com/support/sysreq/previous_releases.html
-    Choose the supported compiler with `mex -setup` command within Matlab.
-    If you build mex files with a wrong compiler, first clean up files with
+    Choose the supported compiler with `mex -setup` command within MATLAB.
+    If you build MEX-files with a wrong compiler, first clean up files with
     `mexopencv.make('clean', true)` and build again.
 
-If you still see the `Invalid MEX file` and you are using the manually built
+If you still see the `Invalid MEX-file` and you are using the manually built
 OpenCV dll's, check if you use the consistent `_SECURE_SCL` flag. The current
-version of `mexopencv.make` script adds `_SECURE_SCL=1` flag in the build
-command so that the built mex files are compatible with the OpenCV binary
+version of `mexopencv.make` script explicitly adds `_SECURE_SCL=1` flag in the
+build command for Visual Studio compilers older than 2010,
+so that the built MEX-files are compatible with the OpenCV binary
 distribution. If you manually built OpenCV with different `_SECURE_SCL` flag,
-edit `mexopencv.make` file and change the flag to use the consistent value.
+edit `mexopencv.make` file and change the flag to use a consistent value.
 
-Or, you can change the default value for the `_SECURE_SCL` flag in mex command.
+When unspecified, the default value of the `_SECURE_SCL` flag depend on the
+version of the Visual Studio compiler, and whether building is in "Debug"
+or "Release" mode:
+
+ - VS2010 and newer: In debug mode, the default value for `_SECURE_SCL` is 1.
+   In release mode, the default value for `_SECURE_SCL` is 0.
+ - VS2008 and older: The default value for `_SECURE_SCL` is 1.
+
+Alternatively, you can change the default value for the `_SECURE_SCL` flag in
+mex command.
 To change the default configuration, which is created with the `mex -setup`
 command in matlab, is located in the following path in recent versions of
 Windows.
 
     C:\Users\(Username)\AppData\Roaming\MathWorks\MATLAB\(version)\mexopts.bat
 
-Open this file and edit `/D_SECURE_SCL` option.
+Open this file and edit `/D_SECURE_SCL` option. Note that this is usually only
+necessary for VS2008 and older.
 
-If you see `Invalid MEX file` error even when having the matched `_SECURE_SCL`
+If you see `Invalid MEX-file` error even when having the matched `_SECURE_SCL`
 flag, it probably indicates some other compatibility issues. Please file a bug
 report at http://github.com/kyamagu/mexopencv .
 
@@ -171,7 +182,7 @@ report at http://github.com/kyamagu/mexopencv .
 
 Users report incompatibility with Visual Studio 2008. Try not to use Visual
 Studio 2008 with mexopencv. For this reason, mexopencv on Windows platform
-do not work with Matlab R2009b or earlier.
+do not work with MATLAB R2009b or earlier.
 
 Nevertheless, if you want to try using Visual Studio 2008, obtain `stdint.h`
 and use `mexopencv.make` to compile the package. Visual Studio 2008 or earlier
@@ -184,19 +195,19 @@ Place this file under `include` directory in the mexopencv package.
 Usage
 =====
 
-Once mex functions are compiled, you can add path to the project directory and
-call mex functions within matlab using package name `cv`.
+Once MEX functions are compiled, you can add path to the project directory and
+call MEX functions within MATLAB using package name `cv`.
 
     addpath('/path/to/mexopencv');
     result = cv.filter2D(img, kern);  % with package name 'cv'
     import cv.*;
     result = filter2D(img, kern);     % no need to specify 'cv' after imported
 
-Note that some functions such as `cv.imread` overload Matlab's builtin function
+Note that some functions such as `cv.imread` overload MATLAB's builtin function
 when imported. Use the scoped name when you need to avoid name collision. It is
-also possible to import individual functions. Check `help import` in matlab.
+also possible to import individual functions. Check `help import` in MATLAB.
 
-Check a list of functions available by `help` command in matlab.
+Check a list of functions available by `help` command in MATLAB.
 
     >> help cv; % shows list of functions in package 'cv'
 
@@ -212,14 +223,14 @@ Check a list of functions available by `help` command in matlab.
     VIDEOCAPTURE  VideoCapture wrapper class
 
      Class for video capturing from video files or cameras. The class
-     provides Matlab API for capturing video from cameras or for reading
+     provides MATLAB API for capturing video from cameras or for reading
      video files. Here is how the class can be used:
     ...
 
 Look at the `samples/` directory for examples.
 
 The mexopencv includes a simple documentation utility that generates HTML help
-files for matlab. The following command creates a user documentation under
+files for MATLAB. The following command creates a user documentation under
 `doc/matlab/` directory.
 
     addpath('utils');
@@ -234,18 +245,18 @@ located inside `test` directory.
     addpath('test');
     UnitTest;
 
-Developing a new mex function
+Developing a new MEX function
 =============================
 
-All you need to do is to add your mex source file in `src/+cv/`. If you
-want to add a mex function called myfunc, create `src/+cv/myfunc.cpp`.
-The minimum contents of the myfunc.cpp would look like this:
+All you need to do is to add your MEX source file in `src/+cv/`. If you
+want to add a MEX function called `myfunc`, create `src/+cv/myfunc.cpp`.
+The minimum contents of the `myfunc.cpp` would look like this:
 
     #include "mexopencv.hpp"
     void mexFunction(int nlhs, mxArray *plhs[],
                      int nrhs, const mxArray *prhs[])
     {
-    	// Check arguments
+        // Check arguments
         if (nlhs!=1 || nrhs!=1)
             mexErrMsgIdAndTxt("myfunc:invalidArgs", "Wrong number of arguments");
 
@@ -260,13 +271,13 @@ The minimum contents of the myfunc.cpp would look like this:
 
 This example simply copies an input to `cv::Mat` object and then copies again to
 the output. Notice how the `MxArray` class provided by mexopencv converts
-mxArray to `cv::Mat` object. Of course you would want to do something more with
-the object. Once you create a file, type `make` to build your new function. The
-compiled mex function will be located inside `+cv/` and accessible through
-`cv.myfunc` within matlab.
+`mxArray` to `cv::Mat` object. Of course you would want to do something more with
+the object. Once you create a file, type `mexopencv.make` to build your new function.
+The compiled MEX function will be located inside `+cv/` and accessible through
+`cv.myfunc` within MATLAB.
 
 The `mexopencv.hpp` header includes a class `MxArray` to manipulate `mxArray`
-object. Mostly this class is used to convert between opencv data types and
+object. Mostly this class is used to convert between OpenCV data types and
 `mxArray`.
 
     int i            = MxArray(prhs[0]).toInt();
@@ -295,11 +306,11 @@ object. Mostly this class is used to convert between opencv data types and
 
 Check `MxAraay.hpp` for the complete list of the conversion API.
 
-If you rather want to develop a matlab function that internally calls a mex
+If you rather want to develop a MATLAB function that internally calls a MEX
 function, make use of the `+cv/private/` directory. Any function placed under
 private directory is only accessible from `+cv/` directory. So, for example,
-when you want to design a matlab class that wraps the various behavior of the
-mex function, define your class at `+cv/MyClass.m` and develop a mex function
+when you want to design a MATLAB class that wraps the various behavior of the
+MEX function, define your class at `+cv/MyClass.m` and develop a MEX function
 dedicated for that class in `src/+cv/private/MyClass_.cpp`. Inside of
 `+cv/MyClass.m`, you can call `MyClass_()` without cv namescope.
 
@@ -308,8 +319,8 @@ Testing
 
 You can optionally add a testing script for your new function. The testing
 convention in mexopencv is that testing scripts are all written as a static
-function in a matlab class. For example, `test/unit_tests/TestFilter2D.m` is
-a class that describes test cases for filter2d function. Inside of the class,
+function in a MATLAB class. For example, `test/unit_tests/TestFilter2D.m` is
+a class that describes test cases for `filter2d` function. Inside of the class,
 a couple of test cases are written as a static function whose name starts with
 'test'.
 
@@ -320,7 +331,7 @@ resource file necessary for testing. An example of testing class is shown below:
     classdef TestMyFunc
         methods (Static)
             function test_1
-                src = imread('/path/to/myimg');
+                src = imread(fullfile(mexopencv.root(),'test','myimg.png'));
                 ref = [1,2,3];                  % reference output
                 dst = cv.myfunc(src);           % execute your function
                 assert(all(dst(:) == ref(:)));  % check the output
@@ -343,9 +354,9 @@ the test routines.
 Documenting
 -----------
 
-You can create a Matlab help documentation for mex function by having the same
+You can create a MATLAB help documentation for MEX function by having the same
 file with '.m' extension. For example, a help file for `filter2D.mex*` would be
-`filter2D.m`. Inside the help file should be only matlab comments. An example
+`filter2D.m`. Inside the help file should be only MATLAB comments. An example
 is shown below:
 
     %MYFUNC  brief description about myfunc
