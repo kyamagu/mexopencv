@@ -128,7 +128,7 @@ with the library.
 
 To remove existing mexopencv binaries, use the following command.
 
-    >> mexopencv.make('clean')
+    >> mexopencv.make('clean', true)
 
 ### Error: Invalid MEX file or Segmentation fault
 
@@ -145,7 +145,7 @@ Test the following first.
     http://www.mathworks.com/support/sysreq/previous_releases.html
     Choose the supported compiler with `mex -setup` command within Matlab.
     If you build mex files with a wrong compiler, first clean up files with
-    `mexopencv.make('clean')` and build again.
+    `mexopencv.make('clean', true)` and build again.
 
 If you still see the `Invalid MEX file` and you are using the manually built
 OpenCV dll's, check if you use the consistent `_SECURE_SCL` flag. The current
