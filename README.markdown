@@ -155,9 +155,10 @@ so that the built MEX-files are compatible with the OpenCV binary
 distribution. If you manually built OpenCV with different `_SECURE_SCL` flag,
 edit `mexopencv.make` file and change the flag to use a consistent value.
 
-When unspecified, the default value of the `_SECURE_SCL` flag depend on the
-version of the Visual Studio compiler, and whether building is in "Debug"
-or "Release" mode:
+When unspecified, the default value of the
+[`_SECURE_SCL` flag](http://msdn.microsoft.com/en-us/library/aa985896.aspx)
+depend on the version of the Visual Studio compiler, and whether building is
+in "Debug" or "Release" mode:
 
  - VS2010 and newer: In debug mode, the default value for `_SECURE_SCL` is 1.
    In release mode, the default value for `_SECURE_SCL` is 0.
