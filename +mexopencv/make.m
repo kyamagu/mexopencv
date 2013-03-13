@@ -23,6 +23,8 @@ function make(varargin)
 %  * __3__ show all compile/link warnings and errors
 % * __progress__ show a progress bar GUI during compilation (Windows only).
 %       default `true`
+% * __debug__ Produce binaries with debugging information, linked against
+%       the debug version of OpenCV libraries. default false
 % * __extra__ extra arguments passed to Unix make command. default `''`
 %
 % ## Examples
@@ -32,6 +34,9 @@ function make(varargin)
 %    mexopencv.make('dryrun',true, 'force',true)  % print commands used to build
 %    mexopencv.make('verbose',2)                  % verbose compiler output
 %    mexopencv.make(..., 'progress',true)         % show progress bar
+%    mexopencv.make('debug',true)                 % enalbe debugging symbols
+%    mexopencv.make('extra','--jobs=2')           % instruct Make to execute N
+%                                                 %  jobs in parallel (Unix only)
 %
 % See also mex
 %
@@ -84,6 +89,12 @@ if ispc % Windows
     mex_flags = sprintf('-largeArrayDims %s %s -I''%s'' %s %s',...
         comp_flags, link_flags, fullfile(MEXOPENCV_ROOT,'include'), ...
         cv_cflags, cv_libs);
+    if opts.verbose > 1
+        mex_flags = ['-v ' mex_flags];    % verbose mex output
+    end
+    if opts.debug
+        mex_flags = ['-g ' mex_flags];    % debug vs. optimized builds
+    end
 
     % Compile MxArray
     src = fullfile(MEXOPENCV_ROOT,'src','MxArray.cpp');
@@ -160,6 +171,9 @@ function [cflags,libs] = pkg_config(opts)
     I_path = fullfile(opts.opencv_path,'build','include');
     L_path = fullfile(opts.opencv_path,'build',arch_str(),compiler_str(),'lib');
     l_options = strcat({' -l'}, lib_names(L_path));
+    if opts.debug
+        l_options = strcat(l_options,'d');    % link against debug binaries
+    end
     l_options = [l_options{:}];
 
     if ~exist(I_path,'dir')
@@ -205,27 +219,27 @@ function s = compiler_str()
 end
 
 function [comp_flags,link_flags] = compilation_flags(opts)
-    %COMPILATION_FLAGS  return compiler/linker flags passed directly to compiler
+    %COMPILATION_FLAGS  return compiler/linker flags passed directly to them
 
-    % additional flags. default empty
+    % additional flags. default none
     comp_flags = {};
     link_flags = {};
 
-    % override _SECURE_SCL for VS versions prior to VS2010
+    % override _SECURE_SCL for VS versions prior to VS2010,
+    % or when linking against debug OpenCV binaries
     c = mex.getCompilerConfigurations();
     isVS = strcmp(c.Manufacturer,'Microsoft') && ~isempty(strfind(c.Name,'Visual'));
-    if isVS && str2double(c.Version) < 10
-        % necessary for VS2005, VS2008
+    if isVS && (str2double(c.Version) < 10 || opts.debug)
         comp_flags{end+1} = '/D_SECURE_SCL=1';
     end
 
-    % show all compiler warning and verbose output from linking
+    % show all compiler warnings, and verbose output from linker
     if opts.verbose > 2
         comp_flags{end+1} = '-Wall';
         link_flags{end+1} = '/VERBOSE';
     end
 
-    % create flag strings
+    % construct the output strings
     comp_flags = strtrim(sprintf(' %s',comp_flags{:}));
     link_flags = strtrim(sprintf(' %s',link_flags{:}));
     if ~isempty(comp_flags)
@@ -233,11 +247,6 @@ function [comp_flags,link_flags] = compilation_flags(opts)
     end
     if ~isempty(link_flags)
         link_flags = ['LINKFLAGS="$LINKFLAGS ' link_flags '"'];
-    end
-
-    % verbose mex output
-    if opts.verbose > 1
-        comp_flags = ['-v ' comp_flags];
     end
 end
 
@@ -273,6 +282,7 @@ function opts = getargs(varargin)
     opts.force = false;              % force recompilation of all files
     opts.verbose = 1;                % output verbosity
     opts.progressbar = true;         % show a progress bar GUI during compilation
+    opts.debug = false;              % enable debug symbols in MEX-files
     opts.extra = '';                 % extra options to be passed to MAKE (Unix only)
 
     nargs = length(varargin);
@@ -301,6 +311,8 @@ function opts = getargs(varargin)
                 opts.progressbar = logical(val);
             case 'extra'
                 opts.extra = char(val);
+            case 'debug'
+                opts.debug = logical(val);
             otherwise
                 error('mexopencv:make', 'Invalid parameter name:  %s.', pname);
         end
