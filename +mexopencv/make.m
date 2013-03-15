@@ -147,6 +147,10 @@ if ispc % Windows
         close(hWait);
     end
 
+    % check both OpenCV/mexopencv folders are on the appropriate paths
+    check_path_opencv(opts);
+    check_path_mexopencv(opts);
+
 else % Unix
     options = {};
     if opts.dryrun         , options = [options '--dry-run']; end
@@ -265,6 +269,47 @@ function r = compile_needed(src, dst)
         d1 = dir(src);
         d2 = dir(dst);
         r = (d1.datenum >= d2.datenum);
+    end
+end
+
+function check_path_opencv(opts)
+    %CHECK_PATH_OPENCV  check OpenCV bin folder is on the system PATH env. var.
+
+    % check system PATH environment variable
+    cv_folder = fullfile(opts.opencv_path,'build',arch_str(),compiler_str(),'bin');
+    p = getenv('PATH');
+    C = textscan(p, '%s', 'Delimiter',pathsep());
+    if ~any(strcmpi(cv_folder,C{1}))
+        % reminder
+        if opts.verbose > 0
+            disp('To finish the setup, add OpenCV bin folder to the system');
+            disp('PATH, then restart MATLAB for changes to take effect.');
+            fprintf(' set PATH=%%PATH%%;%s\n', cv_folder);
+        end
+
+        % append opencv to PATH temporarily for this session
+        if ~opts.dryrun
+            setenv('PATH', [p pathsep() cv_folder]);
+        end
+    end
+end
+
+function check_path_mexopencv(opts)
+    %CHECK_PATH_MEXOPENCV  check mexopencv is on MATLAB search path
+
+    % check MATLAB search path
+    cv_folder = mexopencv.root();
+    C = textscan(path(), '%s', 'Delimiter',pathsep());
+    if ~any(strcmpi(cv_folder,C{1}))
+        % reminder
+        if opts.verbose > 0
+            disp('To use mexopencv, add its root folder to MATLAB search path.');
+        end
+
+        % add mexopencv to path temporarily for this session
+        if ~opts.dryrun
+            addpath(cv_folder, '-end');
+        end
     end
 end
 
