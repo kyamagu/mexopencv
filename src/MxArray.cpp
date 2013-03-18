@@ -60,9 +60,9 @@ struct CompareSparseMatNode {
     bool operator () (const cv::SparseMat::Node* rhs,
                       const cv::SparseMat::Node* lhs)
     {
-        if (rhs->idx[1] < lhs->idx[1]) // column index
+        if (rhs->idx[1] < lhs->idx[1])
             return true;
-        if (rhs->idx[0] < lhs->idx[0]) // row index
+        if (rhs->idx[1] == lhs->idx[1] && rhs->idx[0] < lhs->idx[0])
             return true;
         return false;
     }
