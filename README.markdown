@@ -97,59 +97,110 @@ MATLAB. On Mac, you can use `otool -L` command instead.
 Windows
 -------
 
-Make sure you have OpenCV installed in the system and correctly set up `PATH`
-system variable. See http://opencv.willowgarage.com/wiki/WindowsSystemPath for
-the instruction. Your PATH variable should contain an appropriate path to the
-dll files (e.g., `c:\opencv\build\x86\vc10\bin`). Be careful that the
-architecture (x86 or x64) should match your MATLAB architecture but not your
-OS. Also VC version (vc9 or vc10) should match the mex setup (and probably
-MATLAB's internal runtime). For example, if you're running MATLAB 32-bit in
-Windows 7 64-bit with Visual Studio 2010 Express, you should use x86 and vc10.
+### 1) Configure a C/C++ compiler for MEX-files in MATLAB
 
-Also make sure you install a compiler supported by MATLAB. See
-http://www.mathworks.com/support/sysreq/previous_releases.html for the list of
-supported compilers for different versions of MATLAB. Maltab 64-bit users need
-to install Windows SDK.
+To build mexopencv MEX-files, you need a standard-compliant C++ compiler
+supported by MATLAB. For an up-to-date list of supported compilers for
+different versions of MATLAB, see
+[this page](http://www.mathworks.com/support/sysreq/previous_releases.html).
 
-Once you satisfy the above requirement, in the MATLAB shell, type
+At the time of writing, Visual Studio 2010 is the recommended version to build
+mexopencv on Windows platforms. If you are building for a 64-bit target, you
+have two options:
+- use Visual Studio Professional edition (make sure "X64 Compilers and Tools"
+  component is chosen during installation)
+- use Visual C++ Express edition along with latest Windows SDK, both available
+  to download for free.
+
+To select a compiler configuration in MATLAB, type the following command, and
+follow the instructions (this should be done only once):
+
+    >> mex -setup
+
+### 2) Install OpenCV library
+
+1. Download the latest pre-built OpenCV binaries from
+   http://opencv.org/downloads.html
+2. Extract/unpack the archive into a destination of your choosing.
+   For example `C:\OpenCV`
+3. Add the `bin` folder containing the DLL files to the system PATH environment
+   variable (see [here](http://opencv.willowgarage.com/wiki/WindowsSystemPath)
+   for instructions).
+   You should choose the correct binaries depending on your platform
+   and compiler. Example `C:\OpenCV\build\x86\vc10\bin`. Be careful that the
+   architecture (x86 or x64) should match your MATLAB architecture but not your
+   OS. Also VC version (vc9 or vc10) should match the mex setup (and probably
+   MATLAB's internal runtime). For example, if you're running MATLAB 32-bit in
+   Windows 7 64-bit with Visual Studio 2010 Express, you should use x86 and vc10.
+   You might need to reboot for changes to take effect.
+
+Alternatively, you can build OpenCV from the sources. Follow
+[this tutorial](http://docs.opencv.org/doc/tutorials/introduction/windows_install/windows_install.html#cpptutwindowsmakeown)
+in the OpenCV documentation for detailed instructions. Just make sure to
+organize the output in the same directory layout described before, with a
+structure similar to:
+
+    OpenCV
+    |
+    +- build
+        |-- $ARCH (x86, x64)
+        |    |-- $COMPILER (vc9, vc10, ..)
+        |          |-- bin
+        |          |    |-- opencv_core244.dll
+        |          |    |-- opencv_core244d.dll
+        |          |    +-- ...
+        |          +-- lib
+        |               |-- opencv_core244.lib
+        |               |-- opencv_core244d.lib
+        |               +-- ...
+        +-- include
+             |-- opencv
+             |    |-- cv.h
+             |    +-- ...
+             +-- opencv2
+                  |-- opencv.hpp
+                  +-- ...
+
+### 3) Build mexopencv
+
+Once you satisfy the above requirements, you can proceed to build all MEX
+functions. Browse to mexopencv root folder, and type the following in the
+MATLAB command window:
 
     >> mexopencv.make
 
-to build all MEX functions. By default, mexopencv assumes the OpenCV library is
+By default, mexopencv assumes the OpenCV library is
 installed in `C:\opencv`. If this is not the case, specify the path as an
-argument.
+argument:
 
     >> mexopencv.make('opencv_path', 'c:\your\path\to\opencv')
 
-Note that if you build OpenCV from source, this path specification does not
-work. You need to replace dll files in the OpenCV package with newly built
-binaries. Or, you need to modify `+mexopencv/make.m` to correctly link your
-MEX-files with the library.
+Note that if you build OpenCV from source, this path specification might not
+work out of the box. You need to replace dll files in the OpenCV package with
+newly built binaries. Or, you need to modify `+mexopencv/make.m` to correctly
+link your MEX-files with the library.
 
 To remove existing mexopencv binaries, use the following command.
 
     >> mexopencv.make('clean', true)
 
-### Error: Invalid MEX-file or Segmentation fault
+### Troubleshooting: Invalid MEX-file or Segmentation fault
 
-Test the following first.
+Check the following common issues first:
 
- 1. The system PATH is set up correctly. This is different from `addpath` in
-    MATLAB. You must have the correct dll files visible in the system path,
-    such as `c:\opencv\build\x86\vc10\bin` or `c:\opencv\build\x64\vc10\bin`
-    depending on the MATLAB architecture and the compiler. See
-    http://opencv.willowgarage.com/wiki/WindowsSystemPath
-    After change, you must restart Windows.
- 2. The mex compiler is correct. In Windows 64-bit environment, only Windows
-    SDK compiler is supported. Check
-    http://www.mathworks.com/support/sysreq/previous_releases.html
-    Choose the supported compiler with `mex -setup` command within MATLAB.
-    If you build MEX-files with a wrong compiler, first clean up files with
-    `mexopencv.make('clean', true)` and build again.
+- Make sure the system PATH is set up correctly. This is different from
+  `addpath()` in MATLAB. You must have the correct dll files visible in the
+  system path, depending on the MATLAB architecture and the compiler.
+- A supported MEX compiler is setup correctly, In Windows 64-bit environment,
+  Windows SDK compiler is needed for Visual C++ Express editions. Note that if
+  you change the compiler configuration, you should clean any previously
+  compiled MEX-files `mexopencv.make('clean',true)` and build again from
+  scratch.
 
-If you still see the `Invalid MEX-file` and you are using the manually built
-OpenCV dll's, check if you use the consistent `_SECURE_SCL` flag. The current
-version of `mexopencv.make` script explicitly adds `_SECURE_SCL=1` flag in the
+If you still see the `"Invalid MEX-file"` error message, and you are using
+OpenCV dll's manually built from sources, check that a consistent value
+of `_SECURE_SCL` flag was used during compilation. The current version
+of `mexopencv.make` script explicitly adds `_SECURE_SCL=1` flag in the
 build command for Visual Studio compilers older than 2010,
 so that the built MEX-files are compatible with the OpenCV binary
 distribution. If you manually built OpenCV with different `_SECURE_SCL` flag,
@@ -160,9 +211,9 @@ When unspecified, the default value of the
 depend on the version of the Visual Studio compiler, and whether building is
 in "Debug" or "Release" mode:
 
- - VS2010 and newer: In debug mode, the default value for `_SECURE_SCL` is 1.
-   In release mode, the default value for `_SECURE_SCL` is 0.
- - VS2008 and older: The default value for `_SECURE_SCL` is 1.
+- VS2010 and newer: In debug mode, the default value for `_SECURE_SCL` is 1.
+  In release mode, the default value for `_SECURE_SCL` is 0.
+- VS2008 and older: The default value for `_SECURE_SCL` is 1.
 
 Alternatively, you can change the default value for the `_SECURE_SCL` flag in
 mex command.
@@ -175,15 +226,17 @@ Windows.
 Open this file and edit `/D_SECURE_SCL` option. Note that this is usually only
 necessary for VS2008 and older.
 
-If you see `Invalid MEX-file` error even when having the matched `_SECURE_SCL`
+If you see `"Invalid MEX-file"` error even when having matched `_SECURE_SCL`
 flag, it probably indicates some other compatibility issues. Please file a bug
 report at http://github.com/kyamagu/mexopencv .
+Specify your OS and compiler, MATLAB and OpenCV versions, along with any error
+messages and/or crash reports.
 
-### Visual Studio 2008 compatibility issue
+### Troubleshooting: Visual Studio 2008 compatibility issue
 
-Users report incompatibility with Visual Studio 2008. Try not to use Visual
-Studio 2008 with mexopencv. For this reason, mexopencv on Windows platform
-do not work with MATLAB R2009b or earlier.
+Some users reported incompatibility with Visual Studio 2008. The current
+recommended version to build mexopencv is VS2010. For this reason, mexopencv
+on Windows platform does not work with MATLAB R2009b or earlier.
 
 Nevertheless, if you want to try using Visual Studio 2008, obtain `stdint.h`
 and use `mexopencv.make` to compile the package. Visual Studio 2008 or earlier
@@ -313,7 +366,7 @@ private directory is only accessible from `+cv/` directory. So, for example,
 when you want to design a MATLAB class that wraps the various behavior of the
 MEX function, define your class at `+cv/MyClass.m` and develop a MEX function
 dedicated for that class in `src/+cv/private/MyClass_.cpp`. Inside of
-`+cv/MyClass.m`, you can call `MyClass_()` without cv namescope.
+`+cv/MyClass.m`, you can call `MyClass_()` without the `cv` namespace.
 
 Testing
 -------
