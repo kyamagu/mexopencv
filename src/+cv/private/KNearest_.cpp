@@ -83,7 +83,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else if (key=="IsRegression")
                 isRegression = rhs[i+1].toBool();
             else if (key=="MaxK")
-                maxK = rhs[i].toInt();
+                maxK = rhs[i+1].toInt();
             else if (key=="Update"||key=="UpdateBase")
                 updateBase = rhs[i+1].toBool();
             else
