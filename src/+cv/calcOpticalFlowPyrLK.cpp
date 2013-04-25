@@ -56,8 +56,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Process
     vector<uchar> status(prevPts.size());
     vector<float> err(prevPts.size());
-    calcOpticalFlowPyrLK(prevImg, nextImg, prevPts, nextPts, status, err,
+
+    if (prevPts.size()>0) {
+        calcOpticalFlowPyrLK(prevImg, nextImg, prevPts, nextPts, status, err,
         winSize, maxLevel, criteria, flags, minEigThreshold);
+    }
+
     plhs[0] = MxArray(nextPts);
     if (nlhs>1)
         plhs[1] = MxArray(Mat(status));
