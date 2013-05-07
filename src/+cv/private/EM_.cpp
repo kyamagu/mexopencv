@@ -201,13 +201,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
         if (nrhs == 3 && nlhs == 0) {
             string filename = rhs[2].toString();
             FileStorage fs(filename, FileStorage::WRITE);
-            if (fs.isOpened()) {
+            if (fs.isOpened())
                 obj.write(fs);
-            } else {
-                ostringstream emsg;
-                emsg << "Could not open file " << filename << " for writing";
-                mexErrMsgIdAndTxt("mexopencv:error",emsg.str().c_str());
-            }
+            else
+                mexErrMsgIdAndTxt("mexopencv:error",
+                                  "Could not open file %s for writing",
+                                  filename.c_str());
         } else {
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         }
