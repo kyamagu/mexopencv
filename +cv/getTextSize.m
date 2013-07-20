@@ -7,24 +7,27 @@
 % * __text__ Text string.
 %
 % ## Output
-% * __siz__ Size of the text.
+% * __siz__ Size of of a box that contains the specified text
+%        (`[width,height]`).
 % * __baseLine__ y-coordinate of the baseline relative to the bottom-most
 %        text point.
 %
 % ## Options
 % * __FontFace__ Font to use. One of the following:
-%        'HersheySimplex' (default)
-%        'HersheyPlain'
-%        'HersheyDuplex'
-%        'HersheyComplex'
-%        'HersheyTriplex'
-%        'HersheyComplexSmall'
-%        'HersheyScriptSimplex'
-%        'HersheyScriptComplex'
+%     * `'HersheySimplex'` (default)
+%     * `'HersheyPlain'`
+%     * `'HersheyDuplex'`
+%     * `'HersheyComplex'`
+%     * `'HersheyTriplex'`
+%     * `'HersheyComplexSmall'`
+%     * `'HersheyScriptSimplex'`
+%     * `'HersheyScriptComplex'`
 % * __FontStyle__ Font style. One of 'Regular' (default) or 'Italic'
+% * __FontScale__ Font scale factor that is multiplied by the
+%        font-specific base size. default 1.0
 % * __Thickness__ Thickness of lines used to render the text. default 1
 %
-% The function getTextSize calculates and returns the size of a box that
+% The function cv.getTextSize calculates and returns the size of a box that
 % contains the specified text.
 %
 % See also cv.putText
