@@ -20,17 +20,17 @@ void mexFunction( int nlhs, mxArray *plhs[],
 {
     // Check the number of arguments
     if (nrhs<1 || (nrhs%2)!=1 || nlhs>2)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
 
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
     const string text(rhs[0].toString());
-    int fontFace=FONT_HERSHEY_SIMPLEX;
-    double fontScale=1.0;
-    int thickness=1;
-    int fontStyle=0;
+    int fontFace = cv::FONT_HERSHEY_SIMPLEX;
+    double fontScale = 1.0;
+    int thickness = 1;
+    int fontStyle = 0;
     for (int i=1; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="FontFace")
@@ -42,13 +42,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else if (key=="FontStyle")
             fontStyle = FontStyle[rhs[i+1].toString()];
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option");
     }
-    
+
     // Execute function
-    vector<int> baseLine;
+    int baseLine = 0;
     Size s = getTextSize(text, fontFace | fontStyle, fontScale, thickness,
-        &baseLine[0]);
+        &baseLine);
     plhs[0] = MxArray(s);
     if (nlhs>1)
         plhs[1] = MxArray(baseLine);

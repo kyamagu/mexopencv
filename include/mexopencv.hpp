@@ -71,18 +71,18 @@ const ConstMap<std::string,int> LineType = ConstMap<std::string,int>
 /** Font faces for drawing
  */
 const ConstMap<std::string,int> FontFace = ConstMap<std::string,int>
-    ("HersheySimplex",       CV_FONT_HERSHEY_SIMPLEX)
-    ("HersheyPlain",         CV_FONT_HERSHEY_PLAIN)
-    ("HersheyDuplex",        CV_FONT_HERSHEY_DUPLEX)
-    ("HersheyComplex",       CV_FONT_HERSHEY_COMPLEX)
-    ("HersheyTriplex",       CV_FONT_HERSHEY_TRIPLEX)
-    ("HersheyComplexSmall",  CV_FONT_HERSHEY_COMPLEX_SMALL)
-    ("HersheyScriptSimplex", CV_FONT_HERSHEY_SCRIPT_SIMPLEX)
-    ("HersheyScriptComplex", CV_FONT_HERSHEY_SCRIPT_COMPLEX);
+    ("HersheySimplex",       cv::FONT_HERSHEY_SIMPLEX)
+    ("HersheyPlain",         cv::FONT_HERSHEY_PLAIN)
+    ("HersheyDuplex",        cv::FONT_HERSHEY_DUPLEX)
+    ("HersheyComplex",       cv::FONT_HERSHEY_COMPLEX)
+    ("HersheyTriplex",       cv::FONT_HERSHEY_TRIPLEX)
+    ("HersheyComplexSmall",  cv::FONT_HERSHEY_COMPLEX_SMALL)
+    ("HersheyScriptSimplex", cv::FONT_HERSHEY_SCRIPT_SIMPLEX)
+    ("HersheyScriptComplex", cv::FONT_HERSHEY_SCRIPT_COMPLEX);
 
 /** Font styles for drawing
  */
 const ConstMap<std::string,int> FontStyle = ConstMap<std::string,int>
     ("Regular", 0)
-    ("Italic",  CV_FONT_ITALIC);
+    ("Italic",  cv::FONT_ITALIC);
 #endif
