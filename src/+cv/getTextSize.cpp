@@ -46,9 +46,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     
     // Execute function
-    vector<int> baseLine;
+    int baseLine = 0;
     Size s = getTextSize(text, fontFace | fontStyle, fontScale, thickness,
-        &baseLine[0]);
+        &baseLine);
     plhs[0] = MxArray(s);
     if (nlhs>1)
         plhs[1] = MxArray(baseLine);
