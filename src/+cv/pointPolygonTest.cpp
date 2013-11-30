@@ -24,15 +24,28 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    vector<Point2f> contour(rhs[0].toVector<Point2f>());
+   
     Point2f pt(rhs[1].toPoint_<float>());
     bool measureDist=false;
-    for (int i=2; i<nrhs; i+=2) {
+    
+    for (int i=2; i<nrhs; i+=2) 
+    {
         string key(rhs[i].toString());
         if (key=="MeasureDist")
             measureDist = rhs[i+1].toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     }
-    plhs[0] = MxArray(pointPolygonTest(contour,pt,measureDist));
+        
+    if (rhs[0].isNumeric()) 
+    {
+        Mat contour(rhs[0].toMat(CV_32F)); 
+        plhs[0] = MxArray(pointPolygonTest(contour,pt,measureDist));
+    }
+    else if (rhs[0].isCell()) { 
+        
+        vector<Point2f> contour(rhs[0].toVector<Point2f>());
+        plhs[0] = MxArray(pointPolygonTest(contour,pt,measureDist));
+    }
+      
 }
