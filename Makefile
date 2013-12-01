@@ -37,4 +37,4 @@ doc:
 	$(DOXYGEN) Doxyfile
 
 test:
-	$(MATLAB) -nodisplay -r "cd test;try,UnitTest;catch e,disp(e.getReport);end;exit;"
+	$(MATLAB) -nodisplay -r "addpath(pwd);cd test;try,UnitTest;catch e,disp(e.getReport);end;exit;"
