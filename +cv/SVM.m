@@ -110,7 +110,7 @@ classdef SVM < handle
             %         Must have the same size to responses.
             % * __SampleIdx__ Indicator samples of interest. Must have the
             %         the same size to responses.
-            % * __SvmType__ Type of a SVM formulation. Possible values are:
+            % * __SVMType__ Type of a SVM formulation. Possible values are:
             %     * 'C_SVC'     C-Support Vector Classification. n-class
             %                   classification (n  2), allows imperfect separation
             %                   of classes with penalty multiplier C for outliers.
@@ -239,17 +239,17 @@ classdef SVM < handle
             value = SVM_(this.id, 'get_support_vector_count');
         end
         
-        function value = getSupportVector(this, index)
-            %SUPPORTVECTOR
+        function sv = getSupportVector(this, index)
+            %GETSUPPORTVECTOR
             %
-            %    value = classifier.getSupportVector(index)
+            %    sv = classifier.getSupportVector(index)
             %
             % ## Input
             % * __index__ 0-based scalar index of support vector. The index
             %         must be between 0 and classifier.SupportVectorCount - 1.
             %
-            assert(isscalar(this));
-            value = SVM_(this.id, 'get_support_vector', index);
+            assert(isscalar(index) && isnumeric(index));
+            sv = SVM_(this.id, 'get_support_vector', index);
         end
     end
     

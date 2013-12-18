@@ -17,15 +17,15 @@ map<int,Ptr<SVM> > obj_;
 
 /// Option values for SVM types
 const ConstMap<std::string,int> SVMType = ConstMap<std::string,int>
-    ("C_SVC",      cv::SVM::C_SVC)
-    ("NU_SVC",      cv::SVM::NU_SVC)
+    ("C_SVC",     cv::SVM::C_SVC)
+    ("NU_SVC",    cv::SVM::NU_SVC)
     ("ONE_CLASS", cv::SVM::ONE_CLASS)
     ("EPS_SVR",   cv::SVM::EPS_SVR)
     ("NU_SVR",    cv::SVM::NU_SVR);
 
 /// Option values for SVM types
 const ConstMap<std::string,int> SVMKernelType = ConstMap<std::string,int>
-    ("Linear",      cv::SVM::LINEAR)
+    ("Linear",    cv::SVM::LINEAR)
     ("Poly",      cv::SVM::POLY)
     ("RBF",       cv::SVM::RBF)
     ("Sigmoid",   cv::SVM::SIGMOID);
@@ -56,7 +56,7 @@ CvSVMParams getParams(vector<MxArray>::iterator it,
     CvSVMParams params;
     for (;it<end;it+=2) {
         string key((*it).toString());
-        MxArray& val = *(it+1);
+        const MxArray& val = *(it+1);
         if (key=="SVMType")
             params.svm_type = SVMType[val.toString()];
         else if (key=="KernelType")
@@ -238,14 +238,14 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat varIdx, sampleIdx;
         CvSVMParams params = getParams(rhs.begin()+4,rhs.end());
         Mat class_weights;
-        int k_fold=10;
-        CvParamGrid CGrid=CvSVM::get_default_grid(CvSVM::C);
-        CvParamGrid gammaGrid=CvSVM::get_default_grid(CvSVM::GAMMA);
-        CvParamGrid pGrid=CvSVM::get_default_grid(CvSVM::P);
-        CvParamGrid nuGrid=CvSVM::get_default_grid(CvSVM::NU);
-        CvParamGrid coeffGrid=CvSVM::get_default_grid(CvSVM::COEF);
-        CvParamGrid degreeGrid=CvSVM::get_default_grid(CvSVM::DEGREE);
-        bool balanced=false;
+        int k_fold = 10;
+        CvParamGrid CGrid      = SVM::get_default_grid(SVM::C);
+        CvParamGrid gammaGrid  = SVM::get_default_grid(SVM::GAMMA);
+        CvParamGrid pGrid      = SVM::get_default_grid(SVM::P);
+        CvParamGrid nuGrid     = SVM::get_default_grid(SVM::NU);
+        CvParamGrid coeffGrid  = SVM::get_default_grid(SVM::COEF);
+        CvParamGrid degreeGrid = SVM::get_default_grid(SVM::DEGREE);
+        bool balanced = false;
         for (int i=4; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key=="VarIdx")
