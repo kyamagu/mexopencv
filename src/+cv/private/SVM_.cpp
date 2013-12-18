@@ -259,7 +259,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else if (key=="KFold")
                 k_fold = rhs[i+1].toInt();
             else if (key=="Balanced")
-                balanced = rhs[i+1].toInt();
+                balanced = rhs[i+1].toBool();
             else if (key=="CGrid")
                 CGrid = getGrid(rhs[i+1]);
             else if (key=="GammaGrid")
