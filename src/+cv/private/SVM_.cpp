@@ -197,9 +197,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
         for (int i=4; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key=="VarIdx")
-                varIdx = rhs[i+1].toMat(CV_32S);
+                varIdx = rhs[i+1].toMat(
+                    (rhs[i+1].isUint8() || rhs[i+1].isLogical()) ? CV_8U : CV_32S);
             else if (key=="SampleIdx")
-                sampleIdx = rhs[i+1].toMat(CV_32S);
+                sampleIdx = rhs[i+1].toMat(
+                    (rhs[i+1].isUint8() || rhs[i+1].isLogical()) ? CV_8U : CV_32S);
             else if (key=="ClassWeights") {
                 // Note that this is parsed here instead of in getParams()
                 // (we dont want the cv::Mat to go out of scope before the cvMat)
@@ -247,9 +249,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
         for (int i=4; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key=="VarIdx")
-                varIdx = rhs[i+1].toMat(CV_32S);
+                varIdx = rhs[i+1].toMat(
+                    (rhs[i+1].isUint8() || rhs[i+1].isLogical()) ? CV_8U : CV_32S);
             else if (key=="SampleIdx")
-                sampleIdx = rhs[i+1].toMat(CV_32S);
+                sampleIdx = rhs[i+1].toMat(
+                    (rhs[i+1].isUint8() || rhs[i+1].isLogical()) ? CV_8U : CV_32S);
             else if (key=="ClassWeights") {
                 // see comments in "train" method
                 class_weights = rhs[i+1].toMat();
