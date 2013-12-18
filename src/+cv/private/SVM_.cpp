@@ -101,7 +101,7 @@ mxArray* cvSVMParamsToMxArray(const cv::SVMParams& params)
     mxSetField(p, 0, "C",             MxArray(params.C));
     mxSetField(p, 0, "nu",            MxArray(params.nu));
     mxSetField(p, 0, "p",             MxArray(params.p));
-    mxSetField(p, 0, "class_weights", MxArray(params.class_weights));
+    mxSetField(p, 0, "class_weights", MxArray(Mat(params.class_weights)));
     mxSetField(p, 0, "term_crit",     MxArray(params.term_crit));
     return p;
 }
