@@ -241,6 +241,13 @@ classdef SVM < handle
         
         function value = getSupportVector(this, index)
             %SUPPORTVECTOR
+            %
+            %    value = classifier.getSupportVector(index)
+            %
+            % ## Input
+            % * __index__ 0-based scalar index of support vector. The index
+            %         must be between 0 and classifier.SupportVectorCount - 1.
+            %
             assert(isscalar(this));
             value = SVM_(this.id, 'get_support_vector', index);
         end

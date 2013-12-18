@@ -164,7 +164,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
     
     // Big operation switch
-    Ptr<SVM>& obj = obj_[id];
+    Ptr<SVM> obj = obj_[id];
     if (method == "delete") {
         if (nrhs!=2 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
@@ -286,9 +286,14 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "get_support_vector") {
         if (nrhs!=3 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        const float *sv = obj->get_support_vector(rhs[2].toInt());
-        vector<float> svv(sv,sv+obj->get_var_count());
-        plhs[0] = MxArray(Mat(svv));
+        int index = rhs[2].toInt();
+        if (index < 0 || index >= obj->get_support_vector_count())
+            plhs[0] = mxCreateNumericMatrix(0,0,mxSINGLE_CLASS,mxREAL);
+        else {
+            const float *sv = obj->get_support_vector(index);
+            vector<float> svv(sv,sv+obj->get_var_count());
+            plhs[0] = MxArray(Mat(svv));
+        }
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
