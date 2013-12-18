@@ -230,6 +230,14 @@ void mexFunction( int nlhs, mxArray *plhs[],
             results.at<float>(i,0) = obj->predict(samples.row(i), returnDFVal);
         plhs[0] = MxArray(results);
     }
+    else if (method == "predict_all") {
+        if (nrhs!=3 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        Mat samples(rhs[2].toMat(CV_32F));
+        Mat results;
+        obj->predict(samples, results);
+        plhs[0] = MxArray(results);
+    }
     else if (method == "train_auto") {
         if (nrhs<4 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");

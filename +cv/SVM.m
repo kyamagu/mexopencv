@@ -219,9 +219,21 @@ classdef SVM < handle
             % Input vectors (one or more) are stored as rows of the matrix
             % samples.
             %
-            % See also cv.SVM
+            % See also cv.SVM cv.SVM.predict_all
             %
             results = SVM_(this.id, 'predict', samples, varargin{:});
+        end
+        
+        function results = predict_all(this, samples)
+            %PREDICT_ALL  Predicts the response for input samples.
+            %
+            %    results = classifier.predict_all(samples)
+            %
+            % The function is parallelized with the TBB library.
+            %
+            % See also cv.SVM cv.SVM.predict
+            %
+            results = SVM_(this.id, 'predict_all', samples);
         end
         
         function value = get.Params(this)
