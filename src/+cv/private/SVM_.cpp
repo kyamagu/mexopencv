@@ -13,7 +13,7 @@ namespace {
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,SVM> obj_;
+map<int,Ptr<SVM> > obj_;
 
 /// Option values for SVM types
 const ConstMap<std::string,int> SVMType = ConstMap<std::string,int>
@@ -50,8 +50,8 @@ const ConstMap<int,std::string> InvSVMKernelType = ConstMap<int,std::string>
  * @param end iterator at the end of the argument vector
  * @return CvSVMParams objects
  */
-CvSVMParams getParams(    vector<MxArray>::iterator it,
-                        vector<MxArray>::iterator end)
+CvSVMParams getParams(vector<MxArray>::iterator it,
+                      vector<MxArray>::iterator end)
 {
     CvSVMParams params;
     for (;it<end;it+=2) {
@@ -152,7 +152,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     string method;
     if (nrhs==0) {
         // Constructor is called. Create a new object from argument
-        obj_[++last_id] = SVM();
+        obj_[++last_id] = Ptr<SVM>(new SVM());
         plhs[0] = MxArray(last_id);
         return;
     }
@@ -164,7 +164,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
     
     // Big operation switch
-    SVM& obj = obj_[id];
+    Ptr<SVM>& obj = obj_[id];
     if (method == "delete") {
         if (nrhs!=2 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
@@ -173,17 +173,17 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "clear") {
         if (nrhs!=2 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        obj.clear();
+        obj->clear();
     }
     else if (method == "load") {
         if (nrhs!=3 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        obj.load(rhs[2].toString().c_str());
+        obj->load(rhs[2].toString().c_str());
     }
     else if (method == "save") {
         if (nrhs!=3 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        obj.save(rhs[2].toString().c_str());
+        obj->save(rhs[2].toString().c_str());
     }
     else if (method == "train") {
         if (nrhs<4 || nlhs>1)
@@ -205,7 +205,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 params.class_weights = &_m;
             }
         }
-        bool b = obj.train(trainData,responses,varIdx,sampleIdx,params);
+        bool b = obj->train(trainData,responses,varIdx,sampleIdx,params);
         plhs[0] = MxArray(b);
     }
     else if (method == "predict") {
@@ -222,7 +222,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
         for (int i=0; i<samples.rows; ++i)
-            results.at<float>(i,0) = obj.predict(samples.row(i));
+            results.at<float>(i,0) = obj->predict(samples.row(i));
         plhs[0] = MxArray(results);
     }
     else if (method == "train_auto") {
@@ -232,7 +232,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat responses(rhs[3].toMat(CV_32F));
         Mat varIdx, sampleIdx;
         int k_fold=10;
-        CvParamGrid Cgrid=CvSVM::get_default_grid(CvSVM::C);
+        CvParamGrid CGrid=CvSVM::get_default_grid(CvSVM::C);
         CvParamGrid gammaGrid=CvSVM::get_default_grid(CvSVM::GAMMA);
         CvParamGrid pGrid=CvSVM::get_default_grid(CvSVM::P);
         CvParamGrid nuGrid=CvSVM::get_default_grid(CvSVM::NU);
@@ -250,7 +250,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else if (key=="Balanced")
                 balanced = rhs[i+1].toInt();
             else if (key=="CGrid")
-                Cgrid = getGrid(rhs[i+1]);
+                CGrid = getGrid(rhs[i+1]);
             else if (key=="GammaGrid")
                 gammaGrid = getGrid(rhs[i+1]);
             else if (key=="PGrid")
@@ -263,31 +263,31 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 degreeGrid = getGrid(rhs[i+1]);
         }
         CvSVMParams params = getParams(rhs.begin()+4,rhs.end());
-        bool b = obj.train_auto(trainData,responses,varIdx,sampleIdx,params,
-            k_fold, Cgrid, gammaGrid, pGrid, nuGrid, coeffGrid, degreeGrid, balanced);
+        bool b = obj->train_auto(trainData,responses,varIdx,sampleIdx,params,
+            k_fold, CGrid, gammaGrid, pGrid, nuGrid, coeffGrid, degreeGrid, balanced);
         plhs[0] = MxArray(b);
     }
     else if (method == "get_var_count") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        plhs[0] = MxArray(obj.get_var_count());
+        plhs[0] = MxArray(obj->get_var_count());
     }
     else if (method == "get_params") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        CvSVMParams params = obj.get_params();
+        CvSVMParams params = obj->get_params();
         plhs[0] = MxArray(cvSVMParamsToMxArray(params));
     }
     else if (method == "get_support_vector_count") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        plhs[0] = MxArray(obj.get_support_vector_count());
+        plhs[0] = MxArray(obj->get_support_vector_count());
     }
     else if (method == "get_support_vector") {
         if (nrhs!=3 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        const float *sv = obj.get_support_vector(rhs[2].toInt());
-        vector<float> svv(sv,sv+obj.get_var_count());
+        const float *sv = obj->get_support_vector(rhs[2].toInt());
+        vector<float> svv(sv,sv+obj->get_var_count());
         plhs[0] = MxArray(Mat(svv));
     }
     else

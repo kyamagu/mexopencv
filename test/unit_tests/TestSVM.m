@@ -11,6 +11,10 @@ classdef TestSVM
             classifier = cv.SVM;
             classifier.train(X,Y);
             Yhat = classifier.predict(X);
+            assert(isscalar(classifier.VarCount));
+            assert(isstruct(classifier.Params));
+            assert(isscalar(classifier.SupportVectorCount));
+            assert(isvector(classifier.getSupportVector(0)));
         end
         
         function test_2

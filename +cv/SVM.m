@@ -238,6 +238,12 @@ classdef SVM < handle
             %SUPPORTVECTORCOUNT
             value = SVM_(this.id, 'get_support_vector_count');
         end
+        
+        function value = getSupportVector(this, index)
+            %SUPPORTVECTOR
+            assert(isscalar(this));
+            value = SVM_(this.id, 'get_support_vector', index);
+        end
     end
     
 end
