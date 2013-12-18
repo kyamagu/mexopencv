@@ -73,6 +73,7 @@ CvSVMParams getParams(vector<MxArray>::iterator it,
             params.nu = val.toDouble();
         else if (key=="P")
             params.p = val.toDouble();
+        //else if (key=="ClassWeights")
         else if (key=="TermCrit") {
             params.term_crit = val.toTermCriteria();
         }
@@ -200,8 +201,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else if (key=="SampleIdx")
                 sampleIdx = rhs[i+1].toMat(CV_32S);
             else if (key=="ClassWeights") {
+                // Note that this is parsed here instead of in getParams()
+                // (we dont want the cv::Mat to go out of scope before the cvMat)
                 class_weights = rhs[i+1].toMat();
-                CvMat _m = class_weights;
+                CvMat _m = class_weights;  // only creates header without copying underlying data
                 params.class_weights = &_m;
             }
         }
@@ -231,6 +234,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat trainData(rhs[2].toMat(CV_32F));
         Mat responses(rhs[3].toMat(CV_32F));
         Mat varIdx, sampleIdx;
+        CvSVMParams params = getParams(rhs.begin()+4,rhs.end());
+        Mat class_weights;
         int k_fold=10;
         CvParamGrid CGrid=CvSVM::get_default_grid(CvSVM::C);
         CvParamGrid gammaGrid=CvSVM::get_default_grid(CvSVM::GAMMA);
@@ -245,6 +250,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 varIdx = rhs[i+1].toMat(CV_32S);
             else if (key=="SampleIdx")
                 sampleIdx = rhs[i+1].toMat(CV_32S);
+            else if (key=="ClassWeights") {
+                // see comments in "train" method
+                class_weights = rhs[i+1].toMat();
+                CvMat _m = class_weights;
+                params.class_weights = &_m;
+            }
             else if (key=="KFold")
                 k_fold = rhs[i+1].toInt();
             else if (key=="Balanced")
@@ -262,7 +273,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else if (key=="DegreeGrid")
                 degreeGrid = getGrid(rhs[i+1]);
         }
-        CvSVMParams params = getParams(rhs.begin()+4,rhs.end());
         bool b = obj->train_auto(trainData,responses,varIdx,sampleIdx,params,
             k_fold, CGrid, gammaGrid, pGrid, nuGrid, coeffGrid, degreeGrid, balanced);
         plhs[0] = MxArray(b);
