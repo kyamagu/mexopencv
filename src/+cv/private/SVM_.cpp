@@ -218,7 +218,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         Mat samples(rhs[2].toMat(CV_32F));
         Mat results(samples.rows,1,CV_32FC1);
-        bool returnDFVal=false;
+        bool returnDFVal = false;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key=="ReturnDFVal")
@@ -227,7 +227,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
         for (int i=0; i<samples.rows; ++i)
-            results.at<float>(i,0) = obj->predict(samples.row(i));
+            results.at<float>(i,0) = obj->predict(samples.row(i), returnDFVal);
         plhs[0] = MxArray(results);
     }
     else if (method == "train_auto") {

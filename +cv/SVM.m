@@ -202,7 +202,7 @@ classdef SVM < handle
             status = SVM_(this.id, 'train_auto', trainData, responses, varargin{:});
         end
         
-        function results = predict(this, samples)
+        function results = predict(this, samples, varargin)
             %PREDICT  Predicts the response for input samples.
             %
             %    results = classifier.predict(samples)
@@ -221,7 +221,7 @@ classdef SVM < handle
             %
             % See also cv.SVM
             %
-            results = SVM_(this.id, 'predict', samples);
+            results = SVM_(this.id, 'predict', samples, varargin{:});
         end
         
         function value = get.Params(this)
