@@ -93,16 +93,16 @@ mxArray* cvSVMParamsToMxArray(const cv::SVMParams& params)
     mxArray *p = mxCreateStructMatrix(1,1,10,cv_svm_params_fields);
     if (!p)
         mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
-    mxSetField(const_cast<mxArray*>(p),0,"svm_type",      MxArray(InvSVMType[params.svm_type]));
-    mxSetField(const_cast<mxArray*>(p),0,"kernel_type",   MxArray(InvSVMKernelType[params.kernel_type]));
-    mxSetField(const_cast<mxArray*>(p),0,"degree",        MxArray(params.degree));
-    mxSetField(const_cast<mxArray*>(p),0,"gamma",         MxArray(params.gamma));
-    mxSetField(const_cast<mxArray*>(p),0,"coef0",         MxArray(params.coef0));
-    mxSetField(const_cast<mxArray*>(p),0,"C",             MxArray(params.C));
-    mxSetField(const_cast<mxArray*>(p),0,"nu",            MxArray(params.nu));
-    mxSetField(const_cast<mxArray*>(p),0,"p",             MxArray(params.p));
-    mxSetField(const_cast<mxArray*>(p),0,"class_weights", MxArray(params.class_weights));
-    mxSetField(const_cast<mxArray*>(p),0,"term_crit",     MxArray(params.term_crit));
+    mxSetField(p, 0, "svm_type",      MxArray(InvSVMType[params.svm_type]));
+    mxSetField(p, 0, "kernel_type",   MxArray(InvSVMKernelType[params.kernel_type]));
+    mxSetField(p, 0, "degree",        MxArray(params.degree));
+    mxSetField(p, 0, "gamma",         MxArray(params.gamma));
+    mxSetField(p, 0, "coef0",         MxArray(params.coef0));
+    mxSetField(p, 0, "C",             MxArray(params.C));
+    mxSetField(p, 0, "nu",            MxArray(params.nu));
+    mxSetField(p, 0, "p",             MxArray(params.p));
+    mxSetField(p, 0, "class_weights", MxArray(params.class_weights));
+    mxSetField(p, 0, "term_crit",     MxArray(params.term_crit));
     return p;
 }
 
