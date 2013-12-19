@@ -17,15 +17,15 @@ map<int,Ptr<SVM> > obj_;
 
 /// Option values for SVM types
 const ConstMap<std::string,int> SVMType = ConstMap<std::string,int>
-    ("C_SVC",      cv::SVM::C_SVC)
-    ("NU_SVC",      cv::SVM::NU_SVC)
+    ("C_SVC",     cv::SVM::C_SVC)
+    ("NU_SVC",    cv::SVM::NU_SVC)
     ("ONE_CLASS", cv::SVM::ONE_CLASS)
     ("EPS_SVR",   cv::SVM::EPS_SVR)
     ("NU_SVR",    cv::SVM::NU_SVR);
 
 /// Option values for SVM types
 const ConstMap<std::string,int> SVMKernelType = ConstMap<std::string,int>
-    ("Linear",      cv::SVM::LINEAR)
+    ("Linear",    cv::SVM::LINEAR)
     ("Poly",      cv::SVM::POLY)
     ("RBF",       cv::SVM::RBF)
     ("Sigmoid",   cv::SVM::SIGMOID);
@@ -56,7 +56,7 @@ CvSVMParams getParams(vector<MxArray>::iterator it,
     CvSVMParams params;
     for (;it<end;it+=2) {
         string key((*it).toString());
-        MxArray& val = *(it+1);
+        const MxArray& val = *(it+1);
         if (key=="SVMType")
             params.svm_type = SVMType[val.toString()];
         else if (key=="KernelType")
@@ -73,6 +73,7 @@ CvSVMParams getParams(vector<MxArray>::iterator it,
             params.nu = val.toDouble();
         else if (key=="P")
             params.p = val.toDouble();
+        //else if (key=="ClassWeights")
         else if (key=="TermCrit") {
             params.term_crit = val.toTermCriteria();
         }
@@ -93,16 +94,16 @@ mxArray* cvSVMParamsToMxArray(const cv::SVMParams& params)
     mxArray *p = mxCreateStructMatrix(1,1,10,cv_svm_params_fields);
     if (!p)
         mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
-    mxSetField(const_cast<mxArray*>(p),0,"svm_type",      MxArray(InvSVMType[params.svm_type]));
-    mxSetField(const_cast<mxArray*>(p),0,"kernel_type",   MxArray(InvSVMKernelType[params.kernel_type]));
-    mxSetField(const_cast<mxArray*>(p),0,"degree",        MxArray(params.degree));
-    mxSetField(const_cast<mxArray*>(p),0,"gamma",         MxArray(params.gamma));
-    mxSetField(const_cast<mxArray*>(p),0,"coef0",         MxArray(params.coef0));
-    mxSetField(const_cast<mxArray*>(p),0,"C",             MxArray(params.C));
-    mxSetField(const_cast<mxArray*>(p),0,"nu",            MxArray(params.nu));
-    mxSetField(const_cast<mxArray*>(p),0,"p",             MxArray(params.p));
-    mxSetField(const_cast<mxArray*>(p),0,"class_weights", MxArray(params.class_weights));
-    mxSetField(const_cast<mxArray*>(p),0,"term_crit",     MxArray(params.term_crit));
+    mxSetField(p, 0, "svm_type",      MxArray(InvSVMType[params.svm_type]));
+    mxSetField(p, 0, "kernel_type",   MxArray(InvSVMKernelType[params.kernel_type]));
+    mxSetField(p, 0, "degree",        MxArray(params.degree));
+    mxSetField(p, 0, "gamma",         MxArray(params.gamma));
+    mxSetField(p, 0, "coef0",         MxArray(params.coef0));
+    mxSetField(p, 0, "C",             MxArray(params.C));
+    mxSetField(p, 0, "nu",            MxArray(params.nu));
+    mxSetField(p, 0, "p",             MxArray(params.p));
+    mxSetField(p, 0, "class_weights", MxArray(Mat(params.class_weights)));
+    mxSetField(p, 0, "term_crit",     MxArray(params.term_crit));
     return p;
 }
 
@@ -112,24 +113,26 @@ mxArray* cvSVMParamsToMxArray(const cv::SVMParams& params)
  */
 CvParamGrid getGrid(MxArray& m)
 {
+    CvParamGrid g;
     if (m.isNumeric() && m.numel()==3) {
-        CvParamGrid g(m.at<double>(0),m.at<double>(1),m.at<double>(2));
-        if (!g.check())
-            mexErrMsgIdAndTxt("mexopencv:error","Invalid argument to grid parameter");
-        return g;
-    }
-    else if (m.isStruct() && m.numel()==1) {
+        g.min_val = m.at<double>(0);
+        g.max_val = m.at<double>(1);
+        g.step = m.at<double>(2);
+    } else if (m.isStruct() && m.numel()==1) {
         mxArray* pm;
-        double min_val = (pm=mxGetField(m,0,"min_val")) ? MxArray(pm).toDouble() : 0;
-        double max_val = (pm=mxGetField(m,0,"max_val")) ? MxArray(pm).toDouble() : 0;
-        double log_step = (pm=mxGetField(m,0,"log_step")) ? MxArray(pm).toDouble() : 0;
-        CvParamGrid g(min_val, max_val, log_step);
-        if (!g.check())
-            mexErrMsgIdAndTxt("mexopencv:error","Invalid argument to grid parameter");
-        return g;
-    }
-    else
+        if (pm=mxGetField(m,0,"min_val")) g.min_val = MxArray(pm).toDouble();
+        if (pm=mxGetField(m,0,"max_val")) g.max_val = MxArray(pm).toDouble();
+        if (pm=mxGetField(m,0,"log_step")) g.step = MxArray(pm).toDouble();
+    } else {
         mexErrMsgIdAndTxt("mexopencv:error","Invalid argument to grid parameter");
+    }
+    
+    // CvSVM::train_auto permits setting step<=1 if we want to disable optimizing
+    // a certain paramter, in which case the value is taken from params.
+    // Besides the check is done by the function itself, so its not needed here.
+    //if (!g.check())
+    //    mexErrMsgIdAndTxt("mexopencv:error","Invalid argument to grid parameter");
+    return g;
 }
 }
 
@@ -196,12 +199,16 @@ void mexFunction( int nlhs, mxArray *plhs[],
         for (int i=4; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key=="VarIdx")
-                varIdx = rhs[i+1].toMat(CV_32S);
+                varIdx = rhs[i+1].toMat(
+                    (rhs[i+1].isUint8() || rhs[i+1].isLogical()) ? CV_8U : CV_32S);
             else if (key=="SampleIdx")
-                sampleIdx = rhs[i+1].toMat(CV_32S);
+                sampleIdx = rhs[i+1].toMat(
+                    (rhs[i+1].isUint8() || rhs[i+1].isLogical()) ? CV_8U : CV_32S);
             else if (key=="ClassWeights") {
+                // Note that this is parsed here instead of in getParams()
+                // (we dont want the cv::Mat to go out of scope before the cvMat)
                 class_weights = rhs[i+1].toMat();
-                CvMat _m = class_weights;
+                CvMat _m = class_weights;  // only creates header without copying underlying data
                 params.class_weights = &_m;
             }
         }
@@ -213,7 +220,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         Mat samples(rhs[2].toMat(CV_32F));
         Mat results(samples.rows,1,CV_32FC1);
-        bool returnDFVal=false;
+        bool returnDFVal = false;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key=="ReturnDFVal")
@@ -222,7 +229,15 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
         for (int i=0; i<samples.rows; ++i)
-            results.at<float>(i,0) = obj->predict(samples.row(i));
+            results.at<float>(i,0) = obj->predict(samples.row(i), returnDFVal);
+        plhs[0] = MxArray(results);
+    }
+    else if (method == "predict_all") {
+        if (nrhs!=3 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        Mat samples(rhs[2].toMat(CV_32F));
+        Mat results;
+        obj->predict(samples, results);
         plhs[0] = MxArray(results);
     }
     else if (method == "train_auto") {
@@ -231,24 +246,34 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat trainData(rhs[2].toMat(CV_32F));
         Mat responses(rhs[3].toMat(CV_32F));
         Mat varIdx, sampleIdx;
-        int k_fold=10;
-        CvParamGrid CGrid=CvSVM::get_default_grid(CvSVM::C);
-        CvParamGrid gammaGrid=CvSVM::get_default_grid(CvSVM::GAMMA);
-        CvParamGrid pGrid=CvSVM::get_default_grid(CvSVM::P);
-        CvParamGrid nuGrid=CvSVM::get_default_grid(CvSVM::NU);
-        CvParamGrid coeffGrid=CvSVM::get_default_grid(CvSVM::COEF);
-        CvParamGrid degreeGrid=CvSVM::get_default_grid(CvSVM::DEGREE);
-        bool balanced=false;
+        CvSVMParams params = getParams(rhs.begin()+4,rhs.end());
+        Mat class_weights;
+        int k_fold = 10;
+        CvParamGrid CGrid      = SVM::get_default_grid(SVM::C);
+        CvParamGrid gammaGrid  = SVM::get_default_grid(SVM::GAMMA);
+        CvParamGrid pGrid      = SVM::get_default_grid(SVM::P);
+        CvParamGrid nuGrid     = SVM::get_default_grid(SVM::NU);
+        CvParamGrid coeffGrid  = SVM::get_default_grid(SVM::COEF);
+        CvParamGrid degreeGrid = SVM::get_default_grid(SVM::DEGREE);
+        bool balanced = false;
         for (int i=4; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key=="VarIdx")
-                varIdx = rhs[i+1].toMat(CV_32S);
+                varIdx = rhs[i+1].toMat(
+                    (rhs[i+1].isUint8() || rhs[i+1].isLogical()) ? CV_8U : CV_32S);
             else if (key=="SampleIdx")
-                sampleIdx = rhs[i+1].toMat(CV_32S);
+                sampleIdx = rhs[i+1].toMat(
+                    (rhs[i+1].isUint8() || rhs[i+1].isLogical()) ? CV_8U : CV_32S);
+            else if (key=="ClassWeights") {
+                // see comments in "train" method
+                class_weights = rhs[i+1].toMat();
+                CvMat _m = class_weights;
+                params.class_weights = &_m;
+            }
             else if (key=="KFold")
                 k_fold = rhs[i+1].toInt();
             else if (key=="Balanced")
-                balanced = rhs[i+1].toInt();
+                balanced = rhs[i+1].toBool();
             else if (key=="CGrid")
                 CGrid = getGrid(rhs[i+1]);
             else if (key=="GammaGrid")
@@ -262,7 +287,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else if (key=="DegreeGrid")
                 degreeGrid = getGrid(rhs[i+1]);
         }
-        CvSVMParams params = getParams(rhs.begin()+4,rhs.end());
         bool b = obj->train_auto(trainData,responses,varIdx,sampleIdx,params,
             k_fold, CGrid, gammaGrid, pGrid, nuGrid, coeffGrid, degreeGrid, balanced);
         plhs[0] = MxArray(b);
