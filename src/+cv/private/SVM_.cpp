@@ -113,24 +113,26 @@ mxArray* cvSVMParamsToMxArray(const cv::SVMParams& params)
  */
 CvParamGrid getGrid(MxArray& m)
 {
+    CvParamGrid g;
     if (m.isNumeric() && m.numel()==3) {
-        CvParamGrid g(m.at<double>(0),m.at<double>(1),m.at<double>(2));
-        if (!g.check())
-            mexErrMsgIdAndTxt("mexopencv:error","Invalid argument to grid parameter");
-        return g;
-    }
-    else if (m.isStruct() && m.numel()==1) {
+        g.min_val = m.at<double>(0);
+        g.max_val = m.at<double>(1);
+        g.step = m.at<double>(2);
+    } else if (m.isStruct() && m.numel()==1) {
         mxArray* pm;
-        double min_val = (pm=mxGetField(m,0,"min_val")) ? MxArray(pm).toDouble() : 0;
-        double max_val = (pm=mxGetField(m,0,"max_val")) ? MxArray(pm).toDouble() : 0;
-        double log_step = (pm=mxGetField(m,0,"log_step")) ? MxArray(pm).toDouble() : 0;
-        CvParamGrid g(min_val, max_val, log_step);
-        if (!g.check())
-            mexErrMsgIdAndTxt("mexopencv:error","Invalid argument to grid parameter");
-        return g;
-    }
-    else
+        if (pm=mxGetField(m,0,"min_val")) g.min_val = MxArray(pm).toDouble();
+        if (pm=mxGetField(m,0,"max_val")) g.max_val = MxArray(pm).toDouble();
+        if (pm=mxGetField(m,0,"log_step")) g.step = MxArray(pm).toDouble();
+    } else {
         mexErrMsgIdAndTxt("mexopencv:error","Invalid argument to grid parameter");
+    }
+    
+    // CvSVM::train_auto permits setting step<=1 if we want to disable optimizing
+    // a certain paramter, in which case the value is taken from params.
+    // Besides the check is done by the function itself, so its not needed here.
+    //if (!g.check())
+    //    mexErrMsgIdAndTxt("mexopencv:error","Invalid argument to grid parameter");
+    return g;
 }
 }
 
