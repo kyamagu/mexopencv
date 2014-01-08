@@ -8,31 +8,6 @@
 using namespace std;
 using namespace cv;
 
-/// Conversion to vector<Point_<T> >
-template <typename T>
-vector<Point_<T> > MxArrayToVecPt(MxArray& arr)
-{
-    vector<MxArray> va = arr.toVector<MxArray>();
-    vector<Point_<T> > vp;
-    vp.reserve(va.size());
-    for (vector<MxArray>::iterator it=va.begin(); it<va.end(); ++it)
-        vp.push_back((*it).toPoint_<T>());
-    return vp;
-}
-
-/// Conversion to vector<Point_<T> >
-template <typename T>
-vector<Point3_<T> > MxArrayToVecPt3(MxArray& arr)
-{
-    vector<MxArray> va = arr.toVector<MxArray>();
-    vector<Point3_<T> > vp;
-    vp.reserve(va.size());
-    for (vector<MxArray>::iterator it=va.begin(); it<va.end(); ++it)
-        vp.push_back((*it).toPoint3_<T>());
-    return vp;
-}
-
-
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments
