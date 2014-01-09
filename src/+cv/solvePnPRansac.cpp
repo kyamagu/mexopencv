@@ -8,30 +8,14 @@
 using namespace std;
 using namespace cv;
 
-/// Conversion to vector<Point_<T> >
-template <typename T>
-vector<Point_<T> > MxArrayToVecPt(MxArray& arr)
-{
-    vector<MxArray> va = arr.toVector<MxArray>();
-    vector<Point_<T> > vp;
-    vp.reserve(va.size());
-    for (vector<MxArray>::iterator it=va.begin(); it<va.end(); ++it)
-        vp.push_back((*it).toPoint_<T>());
-    return vp;
+namespace {
+/** Method used for solving the pose estimation problem.
+ */
+const ConstMap<std::string,int> PnPMethod = ConstMap<std::string,int>
+    ("Iterative", cv::ITERATIVE)
+    ("P3P",       cv::P3P)
+    ("EPnP",      cv::EPNP);
 }
-
-/// Conversion to vector<Point_<T> >
-template <typename T>
-vector<Point3_<T> > MxArrayToVecPt3(MxArray& arr)
-{
-    vector<MxArray> va = arr.toVector<MxArray>();
-    vector<Point3_<T> > vp;
-    vp.reserve(va.size());
-    for (vector<MxArray>::iterator it=va.begin(); it<va.end(); ++it)
-        vp.push_back((*it).toPoint3_<T>());
-    return vp;
-}
-
 
 /**
  * Main entry called from Matlab
@@ -44,7 +28,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
     // Check the number of arguments
-    if (nrhs<3 || ((nrhs%2)!=0) || nlhs>2)
+    if (nrhs<3 || (nrhs>3 && ((nrhs%2)!=0)) || nlhs>3)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
     // Argument vector
@@ -59,6 +43,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     float reprojectionError=8.0;
     int minInliersCount=100;
     Mat rvec, tvec;
+    int flags = cv::ITERATIVE;
     for (int i=4; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="UseExtrinsicGuess")
@@ -73,6 +58,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
             rvec = rhs[i+1].toMat(CV_32F);
         else if (key=="Tvec")
             tvec = rhs[i+1].toMat(CV_32F);
+        else if (key=="Flags")
+            flags = PnPMethod[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
@@ -80,17 +67,18 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Process
     Mat inliers;
     if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
-        Mat objectPoints(rhs[0].toMat(CV_32F)), imagePoints(rhs[1].toMat(CV_32F));
-        solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs, rvec,
-            tvec, useExtrinsicGuess, iterationsCount, reprojectionError,
-            minInliersCount, inliers);
+        Mat objectPoints(rhs[0].toMat(CV_32F)),
+            imagePoints(rhs[1].toMat(CV_32F));
+        solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs,
+            rvec, tvec, useExtrinsicGuess, iterationsCount, reprojectionError,
+            minInliersCount, inliers, flags);
     }
     else if (rhs[0].isCell() && rhs[1].isCell()) {
         vector<Point3f> objectPoints(rhs[0].toVector<Point3f>());
         vector<Point2f> imagePoints(rhs[1].toVector<Point2f>());
-        solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs, rvec,
-            tvec, useExtrinsicGuess, iterationsCount, reprojectionError,
-            minInliersCount, inliers);
+        solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs,
+            rvec, tvec, useExtrinsicGuess, iterationsCount, reprojectionError,
+            minInliersCount, inliers, flags);
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
