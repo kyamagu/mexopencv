@@ -3,7 +3,7 @@ classdef StereoBM < handle
     %
     % # Usage
     %
-    %    bm = cv.StereoBM('Preset', 'Basic', 'NDisparity', 0);
+    %    bm = cv.StereoBM('Preset', 'Basic', 'NDisparities', 0);
     %    disparity = bm.compute(left, right);
     %
     % See also cv.StereoBM.StereoBM  cv.StereoBM.init cv.StereoBM.compute
