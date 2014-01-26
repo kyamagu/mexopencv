@@ -4,11 +4,12 @@
 %    [...] = cv.stereoRectifyUncalibrated(..., 'OptionName', optionValue, ...)
 %
 % ## Input
-% * __points1__ Cell array of feature points in the first image.
-% * __points2__ The corresponding points in the second image. The same
-%        formats as in cv.findFundamentalMat are supported.
+% * __points1__ The feature points in the first image as an nx1 vector in 
+%               the form (x_1, y_1, x_2, y_2 ... x_n, y_n)
+% * __points2__ The corresponding points in the second image as an nx1
+%               vector in the form (x_1, y_1, x_2, y_2 ... x_n, y_n) 
 % * __F__ Input fundamental matrix. It can be computed from the same set of
-%        point pairs using cv.findFundamentalMat.
+%         point pairs using cv.findFundamentalMat.
 % * __imageSize__ Size of the image.
 %
 % ## Output
