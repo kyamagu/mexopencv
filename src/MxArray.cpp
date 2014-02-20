@@ -228,6 +228,7 @@ MxArray::MxArray(const cv::KeyPoint& p) :
     set("class_id", p.class_id);
 }
 
+template <>
 MxArray::MxArray(const std::vector<cv::KeyPoint>& v) :
     p_(mxCreateStructMatrix(1, v.size(), 6, cv_keypoint_fields))
 {
@@ -255,6 +256,7 @@ MxArray::MxArray(const cv::DMatch& m) :
     set("distance", m.distance);
 }
 
+template <>
 MxArray::MxArray(const std::vector<cv::DMatch>& v) :
     p_(mxCreateStructMatrix(1, v.size(), 4, cv_dmatch_fields))
 {
