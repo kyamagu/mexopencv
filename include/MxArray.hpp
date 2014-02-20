@@ -696,26 +696,20 @@ MxArray::MxArray(const std::vector<T>& v)
     switch (MxTypes<T>::type) {
         case mxUNKNOWN_CLASS:
             p_ = mxCreateCellMatrix(1, v.size());
+            if (!p_)
+                mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
             for (int i = 0; i < v.size(); ++i)
                 mxSetCell(const_cast<mxArray*>(p_), i, MxArray(v[i]));
             break;
-        case mxCHAR_CLASS: {
-            mwSize size[] = {1, v.size()};
-            p_ = mxCreateCharArray(2, size);
-            if (!p_)
-                mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-            std::copy(v.begin(),
-                      v.end(),
-                      reinterpret_cast<T*>(mxGetData(p_)));
-            break;
-        }
+        // We can't use traits for char to mxChar here since it is 2-byte...
+        // Be careful that we're totally abusing reinterpret_cast here.
         case mxLOGICAL_CLASS:
             p_ = mxCreateLogicalMatrix(1, v.size());
             if (!p_)
                 mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
             std::copy(v.begin(),
                       v.end(),
-                      reinterpret_cast<T*>(mxGetData(p_)));
+                      reinterpret_cast<T*>(mxGetLogicals(p_)));
             break;
         default:
         	p_ = mxCreateNumericMatrix(1, v.size(), MxTypes<T>::type, mxREAL);
