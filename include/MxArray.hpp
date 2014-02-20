@@ -13,6 +13,32 @@
 #include "mex.h"
 #include "opencv2/opencv.hpp"
 
+//Template definition
+//"const maps" for C types to Matlab
+template < typename T1>
+struct mextypes{static const mxClassID  type=mxUNKNOWN_CLASS;};
+template<> struct mextypes<unsigned char>
+{static const mxClassID type = mxUINT8_CLASS;};
+template<> struct mextypes<unsigned short>
+{static const mxClassID type = mxUINT16_CLASS;};
+template<> struct mextypes<long>
+{static const mxClassID type = mxINT32_CLASS;};
+template<> struct mextypes<long long>
+{static const mxClassID type = mxINT64_CLASS;};
+template<> struct mextypes<short>
+{static const mxClassID type = mxINT16_CLASS;};
+template<> struct mextypes<float>
+{static const mxClassID type = mxSINGLE_CLASS;};
+template<> struct mextypes<double>
+{static const mxClassID type = mxDOUBLE_CLASS;};
+#if defined(_LP64) || defined(_WIN64)
+template<> struct mextypes<int>
+{static const mxClassID type = mxINT64_CLASS;};
+#else
+template<> struct mextypes<int>
+{static const mxClassID type = mxINT32_CLASS;};
+#endif
+
 /** mxArray object wrapper for data conversion and manipulation.
  */
 class MxArray
@@ -608,12 +634,14 @@ class ConstMap
 };
 
 template <typename T>
-MxArray::MxArray(const std::vector<T>& v) : p_(mxCreateCellMatrix(1, v.size()))
+MxArray::MxArray(const std::vector<T>& v)
 {
+	mwSize tmpsz = v.size();
+	p_ = mxCreateNumericArray(1,&tmpsz,mextypes<T>::type,mxREAL);
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-    for (int i = 0; i < v.size(); ++i)
-        mxSetCell(const_cast<mxArray*>(p_), i, MxArray(v[i]));
+	T* start_of_pr = reinterpret_cast<T*>(mxGetPr(p_));
+    memcpy(start_of_pr, &v[0], sizeof(T)*v.size());
 }
 
 template <typename T>
@@ -996,5 +1024,34 @@ template <> std::vector<cv::KeyPoint> MxArray::toVector() const;
  * @endcode
  */
 template <> std::vector<cv::DMatch> MxArray::toVector() const;
+
+/** Translates data type definition used in OpenCV to that of Matlab.
+ * @param classid data type of matlab's mxArray. e.g., mxDOUBLE_CLASS.
+ * @return opencv's data type. e.g., CV_8U.
+ */
+const ConstMap<mxClassID, int> DepthOf = ConstMap<mxClassID, int>
+    (mxDOUBLE_CLASS,   CV_64F)
+    (mxSINGLE_CLASS,   CV_32F)
+    (mxINT8_CLASS,     CV_8S)
+    (mxUINT8_CLASS,    CV_8U)
+    (mxINT16_CLASS,    CV_16S)
+    (mxUINT16_CLASS,   CV_16U)
+    (mxINT32_CLASS,    CV_32S)
+    (mxUINT32_CLASS,   CV_32S)
+    (mxLOGICAL_CLASS,  CV_8U);
+
+
+/** Translates data type definition used in Matlab to that of OpenCV.
+ * @param depth data depth of opencv's Mat class. e.g., CV_32F.
+ * @return data type of matlab's mxArray. e.g., mxDOUBLE_CLASS.
+ */
+const ConstMap<int,mxClassID> ClassIDOf = ConstMap<int,mxClassID>
+    (CV_64F,    mxDOUBLE_CLASS)
+    (CV_32F,    mxSINGLE_CLASS)
+    (CV_8S,     mxINT8_CLASS)
+    (CV_8U,     mxUINT8_CLASS)
+    (CV_16S,    mxINT16_CLASS)
+    (CV_16U,    mxUINT16_CLASS)
+    (CV_32S,    mxINT32_CLASS);
 
 #endif // __MXARRAY_HPP__
