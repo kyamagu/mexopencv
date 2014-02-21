@@ -494,7 +494,7 @@ std::vector<std::string> MxArray::fieldnames() const
 
 mwIndex MxArray::subs(mwIndex i, mwIndex j) const
 {
-    if (i < 0 || i >= rows() || j < 0 || j >= cols())
+    if (i >= rows() || j >= cols())
         mexErrMsgIdAndTxt("mexopencv:error", "Subscript out of range");
     mwIndex s[] = {i, j};
     return mxCalcSingleSubscript(p_, 2, s);
@@ -509,7 +509,7 @@ MxArray MxArray::at(const std::string& fieldName, mwIndex index) const
 {
     if (!isStruct())
         mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not struct");
-    if (index < 0 || numel() <= index)
+    if (numel() <= index)
         mexErrMsgIdAndTxt("mexopencv:error", "Out of range in struct array");
     mxArray* pm = mxGetField(p_, index, fieldName.c_str());
     if (!pm)
@@ -530,7 +530,7 @@ MxArray MxArray::at(mwIndex index) const
 template <>
 void MxArray::set(mwIndex index, const MxArray& value)
 {
-    if (index < 0 || numel() <= index)
+    if (numel() <= index)
         mexErrMsgIdAndTxt("mexopencv:error", "Accessing invalid range");
     if (!isCell())
         mexErrMsgIdAndTxt("mexopencv:error", "Not cell array");

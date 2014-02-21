@@ -821,6 +821,7 @@ cv::Scalar_<T> MxArray::toScalar_() const
         case 3: return cv::Scalar_<T>(at<T>(0), at<T>(1), at<T>(2));
         case 4: return cv::Scalar_<T>(at<T>(0), at<T>(1), at<T>(2), at<T>(3));
     }
+    return cv::Scalar_<T>();
 }
 
 template <typename T>
@@ -914,7 +915,7 @@ T MxArray::at(const std::vector<mwIndex>& si) const
 template <typename T>
 void MxArray::set(mwIndex index, const T& value)
 {
-    if (index < 0 || numel() <= index)
+    if (numel() <= index)
         mexErrMsgIdAndTxt("mexopencv:error", "Accessing invalid range");
     switch (classID())
     {
