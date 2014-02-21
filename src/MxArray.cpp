@@ -228,6 +228,25 @@ MxArray::MxArray(const cv::KeyPoint& p) :
     set("class_id", p.class_id);
 }
 
+template<>
+void MxArray::fromVector(const std::vector<char>& v, MxTypes<char> type)
+{
+    mwSize size[] = {1, v.size()};
+    p_ = mxCreateCharArray(2, size);
+    if (!p_)
+        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+    std::copy(v.begin(), v.end(), mxGetChars(p_));
+}
+
+template<>
+void MxArray::fromVector(const std::vector<bool>& v, MxTypes<bool> type)
+{
+    p_ = mxCreateLogicalMatrix(1, v.size());
+    if (!p_)
+        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+    std::copy(v.begin(), v.end(), mxGetLogicals(p_));
+}
+
 template <>
 MxArray::MxArray(const std::vector<cv::KeyPoint>& v) :
     p_(mxCreateStructMatrix(1, v.size(), 6, cv_keypoint_fields))

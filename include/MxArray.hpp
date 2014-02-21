@@ -196,7 +196,9 @@ class MxArray
     /** MxArray constructor from vector<T>. Make a numeric or cell array.
      * @param v vector of type T.
      */
-    template <typename T> explicit MxArray(const std::vector<T>& v);
+    template <typename T> explicit MxArray(const std::vector<T>& v) {
+        fromVector<T>(v, MxTypes<T>());
+    }
     /** MxArray constructor from cv::Point_<T>.
      * @param p cv::Point_<T> object.
      * @return two-element numeric MxArray.
@@ -643,6 +645,10 @@ class MxArray
      */
     static inline double Eps() { return mxGetEps(); }
   private:
+    /** Internal std::vector converter.
+     */
+    template <typename T>
+    void fromVector(const std::vector<T>& v, MxTypes<T>);
     /** mxArray c object.
      */
     const mxArray* p_;
@@ -691,34 +697,19 @@ class ConstMap
 };
 
 template <typename T>
-MxArray::MxArray(const std::vector<T>& v)
+void MxArray::fromVector(const std::vector<T>& v, MxTypes<T> type)
 {
-    switch (MxTypes<T>::type) {
-        case mxUNKNOWN_CLASS:
-            p_ = mxCreateCellMatrix(1, v.size());
-            if (!p_)
-                mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-            for (int i = 0; i < v.size(); ++i)
-                mxSetCell(const_cast<mxArray*>(p_), i, MxArray(v[i]));
-            break;
-        // We can't use traits for char to mxChar here since it is 2-byte...
-        // Be careful that we're totally abusing reinterpret_cast here.
-        case mxLOGICAL_CLASS:
-            p_ = mxCreateLogicalMatrix(1, v.size());
-            if (!p_)
-                mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-            std::copy(v.begin(),
-                      v.end(),
-                      reinterpret_cast<T*>(mxGetLogicals(p_)));
-            break;
-        default:
-        	p_ = mxCreateNumericMatrix(1, v.size(), MxTypes<T>::type, mxREAL);
-            if (!p_)
-                mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-            std::copy(v.begin(),
-                      v.end(),
-                      reinterpret_cast<T*>(mxGetData(p_)));
-            break;
+    if (MxTypes<T>::type == mxUNKNOWN_CLASS) {
+        p_ = mxCreateCellMatrix(1, v.size());
+        if (!p_)
+            mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+        for (int i = 0; i < v.size(); ++i)
+            mxSetCell(const_cast<mxArray*>(p_), i, MxArray(v[i]));
+    } else {
+        p_ = mxCreateNumericMatrix(1, v.size(), MxTypes<T>::type, mxREAL);
+        if (!p_)
+            mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+        std::copy(v.begin(), v.end(), reinterpret_cast<T*>(mxGetData(p_)));
     }
 }
 
@@ -997,6 +988,15 @@ void MxArray::set(const std::string& fieldName, const T& value, mwIndex index)
                static_cast<mxArray*>(MxArray(value)));
 }
 
+/** Specialization for vector<char> construction.
+ */
+template<>
+void MxArray::fromVector(const std::vector<char>& v, MxTypes<char> type);
+
+/** Specialization for vector<bool> construction.
+ */
+template<>
+void MxArray::fromVector(const std::vector<bool>& v, MxTypes<bool> type);
 
 /** MxArray constructor from vector<DMatch>. Make a cell array.
  * @param v vector of type DMatch.
