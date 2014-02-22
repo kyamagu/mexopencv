@@ -10,13 +10,18 @@
 #include <map>
 #include <stdint.h>
 #include <string>
+#include <type_traits>
 #include "mex.h"
 #include "opencv2/opencv.hpp"
+
+typedef struct mxCell_tag {} mxCell;
+typedef struct mxNumeric_tag {} mxNumeric;
 
 /** Type traits for mxArray.
  */
 template <typename T>
 struct MxTypes {
+    typedef mxCell category;
     static const mxClassID type = mxUNKNOWN_CLASS;
 };
 
@@ -24,6 +29,7 @@ struct MxTypes {
  */
 template<> struct MxTypes<int8_t>
 {
+    typedef mxNumeric category;
     static const mxClassID type = mxINT8_CLASS;
 };
 
@@ -31,6 +37,7 @@ template<> struct MxTypes<int8_t>
  */
 template<> struct MxTypes<uint8_t>
 {
+    typedef mxNumeric category;
     static const mxClassID type = mxUINT8_CLASS;
 };
 
@@ -38,6 +45,7 @@ template<> struct MxTypes<uint8_t>
  */
 template<> struct MxTypes<int16_t>
 {
+    typedef mxNumeric category;
     static const mxClassID type = mxINT16_CLASS;
 };
 
@@ -45,6 +53,7 @@ template<> struct MxTypes<int16_t>
  */
 template<> struct MxTypes<uint16_t>
 {
+    typedef mxNumeric category;
     static const mxClassID type = mxUINT16_CLASS;
 };
 
@@ -52,6 +61,7 @@ template<> struct MxTypes<uint16_t>
  */
 template<> struct MxTypes<int32_t>
 {
+    typedef mxNumeric category;
     static const mxClassID type = mxINT32_CLASS;
 };
 
@@ -59,6 +69,7 @@ template<> struct MxTypes<int32_t>
  */
 template<> struct MxTypes<uint32_t>
 {
+    typedef mxNumeric category;
     static const mxClassID type = mxUINT32_CLASS;
 };
 
@@ -66,6 +77,7 @@ template<> struct MxTypes<uint32_t>
  */
 template<> struct MxTypes<int64_t>
 {
+    typedef mxNumeric category;
     static const mxClassID type = mxINT64_CLASS;
 };
 
@@ -73,6 +85,7 @@ template<> struct MxTypes<int64_t>
  */
 template<> struct MxTypes<uint64_t>
 {
+    typedef mxNumeric category;
     static const mxClassID type = mxUINT64_CLASS;
 };
 
@@ -80,6 +93,7 @@ template<> struct MxTypes<uint64_t>
  */
 template<> struct MxTypes<float>
 {
+    typedef mxNumeric category;
     static const mxClassID type = mxSINGLE_CLASS;
 };
 
@@ -87,6 +101,7 @@ template<> struct MxTypes<float>
  */
 template<> struct MxTypes<double>
 {
+    typedef mxNumeric category;
     static const mxClassID type = mxDOUBLE_CLASS;
 };
 
@@ -94,6 +109,7 @@ template<> struct MxTypes<double>
  */
 template<> struct MxTypes<char>
 {
+    typedef mxNumeric category;
     static const mxClassID type = mxCHAR_CLASS;
 };
 
@@ -101,6 +117,7 @@ template<> struct MxTypes<char>
  */
 template<> struct MxTypes<bool>
 {
+    typedef mxNumeric category;
     static const mxClassID type = mxLOGICAL_CLASS;
 };
 
@@ -647,8 +664,26 @@ class MxArray
   private:
     /** Internal std::vector converter.
      */
-    template <typename T>
+    template <typename T, typename R>
+    using IsCompatible = typename std::enable_if<
+        std::is_same<typename MxTypes<T>::category, R>::value, T>::type;
+    /** Internal std::vector converter to a cell array.
+     */
+    template <typename T, typename = IsCompatible<T, mxCell> >
     void fromVector(const std::vector<T>& v);
+    /** Internal std::vector converter to a numeric array.
+     */
+    template <typename T, IsCompatible<T, mxNumeric> >
+    void fromVector(const std::vector<T>& v);
+    /** Internal std::vector converter to a logical array.
+     */
+    template <typename T, IsCompatible<T, mxLogical> >
+    void fromVector(const std::vector<T>& v);
+    /** Internal std::vector converter to a char array.
+     */
+    template <typename T, IsCompatible<T, mxChar> >
+    void fromVector(const std::vector<T>& v);
+
     /** mxArray c object.
      */
     const mxArray* p_;
@@ -695,23 +730,6 @@ class ConstMap
   private:
     std::map<T, U> m_;
 };
-
-template <typename T>
-void MxArray::fromVector(const std::vector<T>& v)
-{
-    if (MxTypes<T>::type == mxUNKNOWN_CLASS) {
-        p_ = mxCreateCellMatrix(1, v.size());
-        if (!p_)
-            mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-        for (int i = 0; i < v.size(); ++i)
-            mxSetCell(const_cast<mxArray*>(p_), i, MxArray(v[i]));
-    } else {
-        p_ = mxCreateNumericMatrix(1, v.size(), MxTypes<T>::type, mxREAL);
-        if (!p_)
-            mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-        std::copy(v.begin(), v.end(), reinterpret_cast<T*>(mxGetData(p_)));
-    }
-}
 
 template <typename T>
 MxArray::MxArray(const cv::Point_<T>& p) :
@@ -989,15 +1007,39 @@ void MxArray::set(const std::string& fieldName, const T& value, mwIndex index)
                static_cast<mxArray*>(MxArray(value)));
 }
 
-/** Specialization for vector<char> construction.
- */
-template<>
-void MxArray::fromVector(const std::vector<char>& v);
+template <typename T, typename>
+void MxArray::fromVector(const std::vector<T>& v) {
+    p_ = mxCreateCellMatrix(1, v.size());
+    if (!p_)
+        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+    for (int i = 0; i < v.size(); ++i)
+        mxSetCell(const_cast<mxArray*>(p_), i, MxArray(v[i]));
+}
 
-/** Specialization for vector<bool> construction.
- */
-template<>
-void MxArray::fromVector(const std::vector<bool>& v);
+template <typename T, MxArray::IsCompatible<T, mxNumeric> >
+void MxArray::fromVector(const std::vector<T>& v) {
+    p_ = mxCreateNumericMatrix(1, v.size(), MxTypes<T>::type, mxREAL);
+    if (!p_)
+        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+    std::copy(v.begin(), v.end(), reinterpret_cast<T*>(mxGetData(p_)));
+}
+
+template <typename T, MxArray::IsCompatible<T, mxLogical> >
+void MxArray::fromVector(const std::vector<T>& v) {
+    p_ = mxCreateLogicalMatrix(1, v.size());
+    if (!p_)
+        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+    std::copy(v.begin(), v.end(), mxGetLogicals(p_));
+}
+
+template <typename T, MxArray::IsCompatible<T, mxChar> >
+void MxArray::fromVector(const std::vector<T>& v) {
+    mwSize size[] = {1, v.size()};
+    p_ = mxCreateCharArray(2, size);
+    if (!p_)
+        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+    std::copy(v.begin(), v.end(), mxGetChars(p_));
+}
 
 /** MxArray constructor from vector<DMatch>. Make a cell array.
  * @param v vector of type DMatch.
