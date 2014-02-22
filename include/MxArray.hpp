@@ -197,7 +197,7 @@ class MxArray
      * @param v vector of type T.
      */
     template <typename T> explicit MxArray(const std::vector<T>& v) {
-        fromVector<T>(v, MxTypes<T>());
+        fromVector<T>(v);
     }
     /** MxArray constructor from cv::Point_<T>.
      * @param p cv::Point_<T> object.
@@ -648,7 +648,7 @@ class MxArray
     /** Internal std::vector converter.
      */
     template <typename T>
-    void fromVector(const std::vector<T>& v, MxTypes<T>);
+    void fromVector(const std::vector<T>& v);
     /** mxArray c object.
      */
     const mxArray* p_;
@@ -697,7 +697,7 @@ class ConstMap
 };
 
 template <typename T>
-void MxArray::fromVector(const std::vector<T>& v, MxTypes<T> type)
+void MxArray::fromVector(const std::vector<T>& v)
 {
     if (MxTypes<T>::type == mxUNKNOWN_CLASS) {
         p_ = mxCreateCellMatrix(1, v.size());
@@ -992,12 +992,12 @@ void MxArray::set(const std::string& fieldName, const T& value, mwIndex index)
 /** Specialization for vector<char> construction.
  */
 template<>
-void MxArray::fromVector(const std::vector<char>& v, MxTypes<char> type);
+void MxArray::fromVector(const std::vector<char>& v);
 
 /** Specialization for vector<bool> construction.
  */
 template<>
-void MxArray::fromVector(const std::vector<bool>& v, MxTypes<bool> type);
+void MxArray::fromVector(const std::vector<bool>& v);
 
 /** MxArray constructor from vector<DMatch>. Make a cell array.
  * @param v vector of type DMatch.
