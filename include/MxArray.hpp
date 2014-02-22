@@ -665,23 +665,25 @@ class MxArray
     /** Internal std::vector converter.
      */
     template <typename T, typename R>
-    using IsCompatible = typename std::enable_if<
-        std::is_same<typename MxTypes<T>::category, R>::value, T>::type;
+    struct IsCompatible {
+        typedef typename std::enable_if<
+        std::is_same<typename MxTypes<T>::category, R>::value, T>::type type;
+    };
     /** Internal std::vector converter to a cell array.
      */
-    template <typename T, typename = IsCompatible<T, mxCell> >
+    template <typename T, typename = typename IsCompatible<T, mxCell>::type>
     void fromVector(const std::vector<T>& v);
     /** Internal std::vector converter to a numeric array.
      */
-    template <typename T, IsCompatible<T, mxNumeric> >
+    template <typename T, typename IsCompatible<T, mxNumeric>::type>
     void fromVector(const std::vector<T>& v);
     /** Internal std::vector converter to a logical array.
      */
-    template <typename T, IsCompatible<T, mxLogical> >
+    template <typename T, typename IsCompatible<T, mxLogical>::type>
     void fromVector(const std::vector<T>& v);
     /** Internal std::vector converter to a char array.
      */
-    template <typename T, IsCompatible<T, mxChar> >
+    template <typename T, typename IsCompatible<T, mxChar>::type>
     void fromVector(const std::vector<T>& v);
 
     /** mxArray c object.
@@ -1016,7 +1018,7 @@ void MxArray::fromVector(const std::vector<T>& v) {
         mxSetCell(const_cast<mxArray*>(p_), i, MxArray(v[i]));
 }
 
-template <typename T, MxArray::IsCompatible<T, mxNumeric> >
+template <typename T, typename MxArray::IsCompatible<T, mxNumeric>::type>
 void MxArray::fromVector(const std::vector<T>& v) {
     p_ = mxCreateNumericMatrix(1, v.size(), MxTypes<T>::type, mxREAL);
     if (!p_)
@@ -1024,7 +1026,7 @@ void MxArray::fromVector(const std::vector<T>& v) {
     std::copy(v.begin(), v.end(), reinterpret_cast<T*>(mxGetData(p_)));
 }
 
-template <typename T, MxArray::IsCompatible<T, mxLogical> >
+template <typename T, typename MxArray::IsCompatible<T, mxLogical>::type>
 void MxArray::fromVector(const std::vector<T>& v) {
     p_ = mxCreateLogicalMatrix(1, v.size());
     if (!p_)
@@ -1032,7 +1034,7 @@ void MxArray::fromVector(const std::vector<T>& v) {
     std::copy(v.begin(), v.end(), mxGetLogicals(p_));
 }
 
-template <typename T, MxArray::IsCompatible<T, mxChar> >
+template <typename T, typename MxArray::IsCompatible<T, mxChar>::type>
 void MxArray::fromVector(const std::vector<T>& v) {
     mwSize size[] = {1, v.size()};
     p_ = mxCreateCharArray(2, size);
