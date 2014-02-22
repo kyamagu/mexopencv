@@ -229,7 +229,7 @@ MxArray::MxArray(const cv::KeyPoint& p) :
 }
 
 template<>
-void MxArray::fromVector(const std::vector<char>& v, MxTypes<char> type)
+void MxArray::fromVector(const std::vector<char>& v)
 {
     mwSize size[] = {1, v.size()};
     p_ = mxCreateCharArray(2, size);
@@ -239,7 +239,7 @@ void MxArray::fromVector(const std::vector<char>& v, MxTypes<char> type)
 }
 
 template<>
-void MxArray::fromVector(const std::vector<bool>& v, MxTypes<bool> type)
+void MxArray::fromVector(const std::vector<bool>& v)
 {
     p_ = mxCreateLogicalMatrix(1, v.size());
     if (!p_)
