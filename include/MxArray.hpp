@@ -21,7 +21,7 @@ typedef struct mxNumeric_tag {} mxNumeric;
  */
 template <typename T>
 struct MxTypes {
-    typedef mxCell category;
+    typedef mxCell array_type;
     static const mxClassID type = mxUNKNOWN_CLASS;
 };
 
@@ -29,7 +29,7 @@ struct MxTypes {
  */
 template<> struct MxTypes<int8_t>
 {
-    typedef mxNumeric category;
+    typedef mxNumeric array_type;
     static const mxClassID type = mxINT8_CLASS;
 };
 
@@ -37,7 +37,7 @@ template<> struct MxTypes<int8_t>
  */
 template<> struct MxTypes<uint8_t>
 {
-    typedef mxNumeric category;
+    typedef mxNumeric array_type;
     static const mxClassID type = mxUINT8_CLASS;
 };
 
@@ -45,7 +45,7 @@ template<> struct MxTypes<uint8_t>
  */
 template<> struct MxTypes<int16_t>
 {
-    typedef mxNumeric category;
+    typedef mxNumeric array_type;
     static const mxClassID type = mxINT16_CLASS;
 };
 
@@ -53,7 +53,7 @@ template<> struct MxTypes<int16_t>
  */
 template<> struct MxTypes<uint16_t>
 {
-    typedef mxNumeric category;
+    typedef mxNumeric array_type;
     static const mxClassID type = mxUINT16_CLASS;
 };
 
@@ -61,7 +61,7 @@ template<> struct MxTypes<uint16_t>
  */
 template<> struct MxTypes<int32_t>
 {
-    typedef mxNumeric category;
+    typedef mxNumeric array_type;
     static const mxClassID type = mxINT32_CLASS;
 };
 
@@ -69,7 +69,7 @@ template<> struct MxTypes<int32_t>
  */
 template<> struct MxTypes<uint32_t>
 {
-    typedef mxNumeric category;
+    typedef mxNumeric array_type;
     static const mxClassID type = mxUINT32_CLASS;
 };
 
@@ -77,7 +77,7 @@ template<> struct MxTypes<uint32_t>
  */
 template<> struct MxTypes<int64_t>
 {
-    typedef mxNumeric category;
+    typedef mxNumeric array_type;
     static const mxClassID type = mxINT64_CLASS;
 };
 
@@ -85,7 +85,7 @@ template<> struct MxTypes<int64_t>
  */
 template<> struct MxTypes<uint64_t>
 {
-    typedef mxNumeric category;
+    typedef mxNumeric array_type;
     static const mxClassID type = mxUINT64_CLASS;
 };
 
@@ -93,7 +93,7 @@ template<> struct MxTypes<uint64_t>
  */
 template<> struct MxTypes<float>
 {
-    typedef mxNumeric category;
+    typedef mxNumeric array_type;
     static const mxClassID type = mxSINGLE_CLASS;
 };
 
@@ -101,7 +101,7 @@ template<> struct MxTypes<float>
  */
 template<> struct MxTypes<double>
 {
-    typedef mxNumeric category;
+    typedef mxNumeric array_type;
     static const mxClassID type = mxDOUBLE_CLASS;
 };
 
@@ -109,7 +109,7 @@ template<> struct MxTypes<double>
  */
 template<> struct MxTypes<char>
 {
-    typedef mxNumeric category;
+    typedef mxChar array_type;
     static const mxClassID type = mxCHAR_CLASS;
 };
 
@@ -117,9 +117,15 @@ template<> struct MxTypes<char>
  */
 template<> struct MxTypes<bool>
 {
-    typedef mxNumeric category;
+    typedef mxLogical array_type;
     static const mxClassID type = mxLOGICAL_CLASS;
 };
+
+/** Macro to map template parameter T to mxArray type.
+ */
+#define ENABLE_IF_ARRAY(T, R) typename \
+    std::enable_if<std::is_same<typename MxTypes<T>::array_type, R>::value, \
+                   T>::type*
 
 /** mxArray object wrapper for data conversion and manipulation.
  */
@@ -662,29 +668,26 @@ class MxArray
      */
     static inline double Eps() { return mxGetEps(); }
   private:
-    /** Internal std::vector converter.
-     */
-    template <typename T, typename R>
-    struct IsCompatible {
-        typedef typename std::enable_if<
-        std::is_same<typename MxTypes<T>::category, R>::value, T>::type type;
-    };
     /** Internal std::vector converter to a cell array.
      */
-    template <typename T, typename = typename IsCompatible<T, mxCell>::type>
-    void fromVector(const std::vector<T>& v);
+    template <typename T>
+    void fromVector(const std::vector<T>& v,
+                    ENABLE_IF_ARRAY(T, mxCell) = NULL);
     /** Internal std::vector converter to a numeric array.
      */
-    template <typename T, typename IsCompatible<T, mxNumeric>::type>
-    void fromVector(const std::vector<T>& v);
+    template <typename T>
+    void fromVector(const std::vector<T>& v,
+                    ENABLE_IF_ARRAY(T, mxNumeric) = NULL);
     /** Internal std::vector converter to a logical array.
      */
-    template <typename T, typename IsCompatible<T, mxLogical>::type>
-    void fromVector(const std::vector<T>& v);
+    template <typename T>
+    void fromVector(const std::vector<T>& v,
+                    ENABLE_IF_ARRAY(T, mxLogical) = NULL);
     /** Internal std::vector converter to a char array.
      */
-    template <typename T, typename IsCompatible<T, mxChar>::type>
-    void fromVector(const std::vector<T>& v);
+    template <typename T>
+    void fromVector(const std::vector<T>& v,
+                    ENABLE_IF_ARRAY(T, mxChar) = NULL);
 
     /** mxArray c object.
      */
@@ -1009,8 +1012,9 @@ void MxArray::set(const std::string& fieldName, const T& value, mwIndex index)
                static_cast<mxArray*>(MxArray(value)));
 }
 
-template <typename T, typename>
-void MxArray::fromVector(const std::vector<T>& v) {
+template <typename T>
+void MxArray::fromVector(const std::vector<T>& v,
+                         ENABLE_IF_ARRAY(T, mxCell)) {
     p_ = mxCreateCellMatrix(1, v.size());
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
@@ -1018,24 +1022,27 @@ void MxArray::fromVector(const std::vector<T>& v) {
         mxSetCell(const_cast<mxArray*>(p_), i, MxArray(v[i]));
 }
 
-template <typename T, typename MxArray::IsCompatible<T, mxNumeric>::type>
-void MxArray::fromVector(const std::vector<T>& v) {
+template <typename T>
+void MxArray::fromVector(const std::vector<T>& v,
+                         ENABLE_IF_ARRAY(T, mxNumeric)) {
     p_ = mxCreateNumericMatrix(1, v.size(), MxTypes<T>::type, mxREAL);
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
     std::copy(v.begin(), v.end(), reinterpret_cast<T*>(mxGetData(p_)));
 }
 
-template <typename T, typename MxArray::IsCompatible<T, mxLogical>::type>
-void MxArray::fromVector(const std::vector<T>& v) {
+template <typename T>
+void MxArray::fromVector(const std::vector<T>& v,
+                         ENABLE_IF_ARRAY(T, mxLogical)) {
     p_ = mxCreateLogicalMatrix(1, v.size());
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
     std::copy(v.begin(), v.end(), mxGetLogicals(p_));
 }
 
-template <typename T, typename MxArray::IsCompatible<T, mxChar>::type>
-void MxArray::fromVector(const std::vector<T>& v) {
+template <typename T>
+void MxArray::fromVector(const std::vector<T>& v,
+                         ENABLE_IF_ARRAY(T, mxChar)) {
     mwSize size[] = {1, v.size()};
     p_ = mxCreateCharArray(2, size);
     if (!p_)
