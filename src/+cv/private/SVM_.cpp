@@ -120,9 +120,9 @@ CvParamGrid getGrid(MxArray& m)
         g.step = m.at<double>(2);
     } else if (m.isStruct() && m.numel()==1) {
         mxArray* pm;
-        if (pm=mxGetField(m,0,"min_val")) g.min_val = MxArray(pm).toDouble();
-        if (pm=mxGetField(m,0,"max_val")) g.max_val = MxArray(pm).toDouble();
-        if (pm=mxGetField(m,0,"log_step")) g.step = MxArray(pm).toDouble();
+        if ((pm = mxGetField(m,0,"min_val"))) g.min_val = MxArray(pm).toDouble();
+        if ((pm = mxGetField(m,0,"max_val"))) g.max_val = MxArray(pm).toDouble();
+        if ((pm = mxGetField(m,0,"log_step"))) g.step = MxArray(pm).toDouble();
     } else {
         mexErrMsgIdAndTxt("mexopencv:error","Invalid argument to grid parameter");
     }

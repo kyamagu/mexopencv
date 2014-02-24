@@ -13,6 +13,97 @@
 #include "mex.h"
 #include "opencv2/opencv.hpp"
 
+/** Type traits for mxArray.
+ */
+template <typename T>
+struct MxTypes {
+    static const mxClassID type = mxUNKNOWN_CLASS;
+};
+
+/** int8_t traits.
+ */
+template<> struct MxTypes<int8_t>
+{
+    static const mxClassID type = mxINT8_CLASS;
+};
+
+/** uint8_t traits.
+ */
+template<> struct MxTypes<uint8_t>
+{
+    static const mxClassID type = mxUINT8_CLASS;
+};
+
+/** int16_t traits.
+ */
+template<> struct MxTypes<int16_t>
+{
+    static const mxClassID type = mxINT16_CLASS;
+};
+
+/** uint16_t traits.
+ */
+template<> struct MxTypes<uint16_t>
+{
+    static const mxClassID type = mxUINT16_CLASS;
+};
+
+/** int32_t traits.
+ */
+template<> struct MxTypes<int32_t>
+{
+    static const mxClassID type = mxINT32_CLASS;
+};
+
+/** uint32_t traits.
+ */
+template<> struct MxTypes<uint32_t>
+{
+    static const mxClassID type = mxUINT32_CLASS;
+};
+
+/** int64_t traits.
+ */
+template<> struct MxTypes<int64_t>
+{
+    static const mxClassID type = mxINT64_CLASS;
+};
+
+/** uint64_t traits.
+ */
+template<> struct MxTypes<uint64_t>
+{
+    static const mxClassID type = mxUINT64_CLASS;
+};
+
+/** float traits.
+ */
+template<> struct MxTypes<float>
+{
+    static const mxClassID type = mxSINGLE_CLASS;
+};
+
+/** double traits.
+ */
+template<> struct MxTypes<double>
+{
+    static const mxClassID type = mxDOUBLE_CLASS;
+};
+
+/** char traits.
+ */
+template<> struct MxTypes<char>
+{
+    static const mxClassID type = mxCHAR_CLASS;
+};
+
+/** bool traits.
+ */
+template<> struct MxTypes<bool>
+{
+    static const mxClassID type = mxLOGICAL_CLASS;
+};
+
 /** mxArray object wrapper for data conversion and manipulation.
  */
 class MxArray
@@ -87,19 +178,11 @@ class MxArray
      * @return MxArray object.
      */
     explicit MxArray(const cv::KeyPoint& p);
-    /** MxArray constructor from vector<KeyPoint>. Make a cell array.
-     * @param v vector of KeyPoint.
-     */
-    explicit MxArray(const std::vector<cv::KeyPoint>& v);
     /** Convert cv::DMatch to MxArray.
      * @param m cv::DMatch object.
      * @return MxArray object.
      */
     explicit MxArray(const cv::DMatch& m);
-    /** MxArray constructor from vector<T>. Make a cell array.
-     * @param v vector of type T.
-     */
-    explicit MxArray(const std::vector<cv::DMatch>& v);
     /** Convert cv::RotatedRect to MxArray.
      * @param m cv::RotatedRect object.
      * @return MxArray object.
@@ -110,10 +193,12 @@ class MxArray
      * @return MxArray object.
      */
     explicit MxArray(const cv::TermCriteria& t);
-    /** MxArray constructor from vector<T>. Make a cell array.
+    /** MxArray constructor from vector<T>. Make a numeric or cell array.
      * @param v vector of type T.
      */
-    template <typename T> explicit MxArray(const std::vector<T>& v);
+    template <typename T> explicit MxArray(const std::vector<T>& v) {
+        fromVector<T>(v);
+    }
     /** MxArray constructor from cv::Point_<T>.
      * @param p cv::Point_<T> object.
      * @return two-element numeric MxArray.
@@ -560,6 +645,10 @@ class MxArray
      */
     static inline double Eps() { return mxGetEps(); }
   private:
+    /** Internal std::vector converter.
+     */
+    template <typename T>
+    void fromVector(const std::vector<T>& v);
     /** mxArray c object.
      */
     const mxArray* p_;
@@ -608,12 +697,20 @@ class ConstMap
 };
 
 template <typename T>
-MxArray::MxArray(const std::vector<T>& v) : p_(mxCreateCellMatrix(1, v.size()))
+void MxArray::fromVector(const std::vector<T>& v)
 {
-    if (!p_)
-        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-    for (int i = 0; i < v.size(); ++i)
-        mxSetCell(const_cast<mxArray*>(p_), i, MxArray(v[i]));
+    if (MxTypes<T>::type == mxUNKNOWN_CLASS) {
+        p_ = mxCreateCellMatrix(1, v.size());
+        if (!p_)
+            mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+        for (int i = 0; i < v.size(); ++i)
+            mxSetCell(const_cast<mxArray*>(p_), i, MxArray(v[i]));
+    } else {
+        p_ = mxCreateNumericMatrix(1, v.size(), MxTypes<T>::type, mxREAL);
+        if (!p_)
+            mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+        std::copy(v.begin(), v.end(), reinterpret_cast<T*>(mxGetData(p_)));
+    }
 }
 
 template <typename T>
@@ -724,6 +821,7 @@ cv::Scalar_<T> MxArray::toScalar_() const
         case 3: return cv::Scalar_<T>(at<T>(0), at<T>(1), at<T>(2));
         case 4: return cv::Scalar_<T>(at<T>(0), at<T>(1), at<T>(2), at<T>(3));
     }
+    return cv::Scalar_<T>();
 }
 
 template <typename T>
@@ -817,7 +915,7 @@ T MxArray::at(const std::vector<mwIndex>& si) const
 template <typename T>
 void MxArray::set(mwIndex index, const T& value)
 {
-    if (index < 0 || numel() <= index)
+    if (numel() <= index)
         mexErrMsgIdAndTxt("mexopencv:error", "Accessing invalid range");
     switch (classID())
     {
@@ -890,6 +988,26 @@ void MxArray::set(const std::string& fieldName, const T& value, mwIndex index)
     mxSetField(const_cast<mxArray*>(p_), index, fieldName.c_str(),
                static_cast<mxArray*>(MxArray(value)));
 }
+
+/** Specialization for vector<char> construction.
+ */
+template<>
+void MxArray::fromVector(const std::vector<char>& v);
+
+/** Specialization for vector<bool> construction.
+ */
+template<>
+void MxArray::fromVector(const std::vector<bool>& v);
+
+/** MxArray constructor from vector<DMatch>. Make a cell array.
+ * @param v vector of type DMatch.
+ */
+template <> MxArray::MxArray(const std::vector<cv::DMatch>& v);
+
+/** MxArray constructor from vector<KeyPoint>. Make a cell array.
+ * @param v vector of KeyPoint.
+ */
+template <> MxArray::MxArray(const std::vector<cv::KeyPoint>& v);
 
 /** Cell element accessor.
  * @param index index of the cell array.

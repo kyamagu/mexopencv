@@ -228,6 +228,26 @@ MxArray::MxArray(const cv::KeyPoint& p) :
     set("class_id", p.class_id);
 }
 
+template<>
+void MxArray::fromVector(const std::vector<char>& v)
+{
+    mwSize size[] = {1, v.size()};
+    p_ = mxCreateCharArray(2, size);
+    if (!p_)
+        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+    std::copy(v.begin(), v.end(), mxGetChars(p_));
+}
+
+template<>
+void MxArray::fromVector(const std::vector<bool>& v)
+{
+    p_ = mxCreateLogicalMatrix(1, v.size());
+    if (!p_)
+        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+    std::copy(v.begin(), v.end(), mxGetLogicals(p_));
+}
+
+template <>
 MxArray::MxArray(const std::vector<cv::KeyPoint>& v) :
     p_(mxCreateStructMatrix(1, v.size(), 6, cv_keypoint_fields))
 {
@@ -255,6 +275,7 @@ MxArray::MxArray(const cv::DMatch& m) :
     set("distance", m.distance);
 }
 
+template <>
 MxArray::MxArray(const std::vector<cv::DMatch>& v) :
     p_(mxCreateStructMatrix(1, v.size(), 4, cv_dmatch_fields))
 {
@@ -473,7 +494,7 @@ std::vector<std::string> MxArray::fieldnames() const
 
 mwIndex MxArray::subs(mwIndex i, mwIndex j) const
 {
-    if (i < 0 || i >= rows() || j < 0 || j >= cols())
+    if (i >= rows() || j >= cols())
         mexErrMsgIdAndTxt("mexopencv:error", "Subscript out of range");
     mwIndex s[] = {i, j};
     return mxCalcSingleSubscript(p_, 2, s);
@@ -488,7 +509,7 @@ MxArray MxArray::at(const std::string& fieldName, mwIndex index) const
 {
     if (!isStruct())
         mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not struct");
-    if (index < 0 || numel() <= index)
+    if (numel() <= index)
         mexErrMsgIdAndTxt("mexopencv:error", "Out of range in struct array");
     mxArray* pm = mxGetField(p_, index, fieldName.c_str());
     if (!pm)
@@ -509,7 +530,7 @@ MxArray MxArray::at(mwIndex index) const
 template <>
 void MxArray::set(mwIndex index, const MxArray& value)
 {
-    if (index < 0 || numel() <= index)
+    if (numel() <= index)
         mexErrMsgIdAndTxt("mexopencv:error", "Accessing invalid range");
     if (!isCell())
         mexErrMsgIdAndTxt("mexopencv:error", "Not cell array");
