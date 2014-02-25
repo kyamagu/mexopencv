@@ -143,7 +143,7 @@ struct STLtransfer<mxArray,T>
 {
 	static mxArray* fromVector (const std::vector<T>& v)
 	{
-        mxArray* p_ = mxCreateNumericMatrix(v.size(),v[0].size() , MxTypes<MxTypes<T>::elemtype>::type , mxREAL );//pixel are save in rows
+        mxArray* p_ = mxCreateNumericMatrix(v[0].size()  ,  v.size()  , MxTypes<MxTypes<T>::elemtype>::type , mxREAL );//pixel are save in rows
         //std::copy(&v[0][0]  ,   &v[v.size()-1][v[0].size()]  ,  reinterpret_cast<MxTypes<T>::elemtype*>(mxGetData(p_)));
 		memcpy(reinterpret_cast<MxTypes<T>::elemtype*>(mxGetData(p_))  ,  reinterpret_cast<void*>(const_cast<MxTypes<T>::elemtype*>(&v[0][0]))   ,  sizeof(MxTypes<T>::elemtype) * v.size() * v[0].size()  );
 		return p_;
