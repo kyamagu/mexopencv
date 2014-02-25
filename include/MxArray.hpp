@@ -10,122 +10,9 @@
 #include <map>
 #include <stdint.h>
 #include <string>
-#include <type_traits>
 #include "mex.h"
 #include "opencv2/opencv.hpp"
-
-typedef struct mxCell_tag {} mxCell;
-typedef struct mxNumeric_tag {} mxNumeric;
-
-/** Type traits for mxArray.
- */
-template <typename T>
-struct MxTypes {
-    typedef mxCell array_type;
-    static const mxClassID type = mxUNKNOWN_CLASS;
-};
-
-/** int8_t traits.
- */
-template<> struct MxTypes<int8_t>
-{
-    typedef mxNumeric array_type;
-    static const mxClassID type = mxINT8_CLASS;
-};
-
-/** uint8_t traits.
- */
-template<> struct MxTypes<uint8_t>
-{
-    typedef mxNumeric array_type;
-    static const mxClassID type = mxUINT8_CLASS;
-};
-
-/** int16_t traits.
- */
-template<> struct MxTypes<int16_t>
-{
-    typedef mxNumeric array_type;
-    static const mxClassID type = mxINT16_CLASS;
-};
-
-/** uint16_t traits.
- */
-template<> struct MxTypes<uint16_t>
-{
-    typedef mxNumeric array_type;
-    static const mxClassID type = mxUINT16_CLASS;
-};
-
-/** int32_t traits.
- */
-template<> struct MxTypes<int32_t>
-{
-    typedef mxNumeric array_type;
-    static const mxClassID type = mxINT32_CLASS;
-};
-
-/** uint32_t traits.
- */
-template<> struct MxTypes<uint32_t>
-{
-    typedef mxNumeric array_type;
-    static const mxClassID type = mxUINT32_CLASS;
-};
-
-/** int64_t traits.
- */
-template<> struct MxTypes<int64_t>
-{
-    typedef mxNumeric array_type;
-    static const mxClassID type = mxINT64_CLASS;
-};
-
-/** uint64_t traits.
- */
-template<> struct MxTypes<uint64_t>
-{
-    typedef mxNumeric array_type;
-    static const mxClassID type = mxUINT64_CLASS;
-};
-
-/** float traits.
- */
-template<> struct MxTypes<float>
-{
-    typedef mxNumeric array_type;
-    static const mxClassID type = mxSINGLE_CLASS;
-};
-
-/** double traits.
- */
-template<> struct MxTypes<double>
-{
-    typedef mxNumeric array_type;
-    static const mxClassID type = mxDOUBLE_CLASS;
-};
-
-/** char traits.
- */
-template<> struct MxTypes<char>
-{
-    typedef mxChar array_type;
-    static const mxClassID type = mxCHAR_CLASS;
-};
-
-/** bool traits.
- */
-template<> struct MxTypes<bool>
-{
-    typedef mxLogical array_type;
-    static const mxClassID type = mxLOGICAL_CLASS;
-};
-
-/** Macro to map template parameter T to mxArray type.
- */
-#define ENABLE_IF_ARRAY(T, R) typename \
-    std::enable_if<std::is_same<typename MxTypes<T>::array_type, R>::value, \
-                   T>::type*
+#include "stlMatlab.h"
 
 /** mxArray object wrapper for data conversion and manipulation.
  */
@@ -220,7 +107,7 @@ class MxArray
      * @param v vector of type T.
      */
     template <typename T> explicit MxArray(const std::vector<T>& v) {
-        fromVector<T>(v);
+        p_ = STLtransfer<MxTypes<T>::array_type, T>::fromVector(v);
     }
     /** MxArray constructor from cv::Point_<T>.
      * @param p cv::Point_<T> object.
@@ -668,26 +555,6 @@ class MxArray
      */
     static inline double Eps() { return mxGetEps(); }
   private:
-    /** Internal std::vector converter to a cell array.
-     */
-    template <typename T>
-    void fromVector(const std::vector<T>& v,
-                    ENABLE_IF_ARRAY(T, mxCell) = NULL);
-    /** Internal std::vector converter to a numeric array.
-     */
-    template <typename T>
-    void fromVector(const std::vector<T>& v,
-                    ENABLE_IF_ARRAY(T, mxNumeric) = NULL);
-    /** Internal std::vector converter to a logical array.
-     */
-    template <typename T>
-    void fromVector(const std::vector<T>& v,
-                    ENABLE_IF_ARRAY(T, mxLogical) = NULL);
-    /** Internal std::vector converter to a char array.
-     */
-    template <typename T>
-    void fromVector(const std::vector<T>& v,
-                    ENABLE_IF_ARRAY(T, mxChar) = NULL);
 
     /** mxArray c object.
      */
@@ -735,6 +602,8 @@ class ConstMap
   private:
     std::map<T, U> m_;
 };
+
+
 
 template <typename T>
 MxArray::MxArray(const cv::Point_<T>& p) :
@@ -1012,43 +881,7 @@ void MxArray::set(const std::string& fieldName, const T& value, mwIndex index)
                static_cast<mxArray*>(MxArray(value)));
 }
 
-template <typename T>
-void MxArray::fromVector(const std::vector<T>& v,
-                         ENABLE_IF_ARRAY(T, mxCell)) {
-    p_ = mxCreateCellMatrix(1, v.size());
-    if (!p_)
-        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-    for (int i = 0; i < v.size(); ++i)
-        mxSetCell(const_cast<mxArray*>(p_), i, MxArray(v[i]));
-}
 
-template <typename T>
-void MxArray::fromVector(const std::vector<T>& v,
-                         ENABLE_IF_ARRAY(T, mxNumeric)) {
-    p_ = mxCreateNumericMatrix(1, v.size(), MxTypes<T>::type, mxREAL);
-    if (!p_)
-        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-    std::copy(v.begin(), v.end(), reinterpret_cast<T*>(mxGetData(p_)));
-}
-
-template <typename T>
-void MxArray::fromVector(const std::vector<T>& v,
-                         ENABLE_IF_ARRAY(T, mxLogical)) {
-    p_ = mxCreateLogicalMatrix(1, v.size());
-    if (!p_)
-        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-    std::copy(v.begin(), v.end(), mxGetLogicals(p_));
-}
-
-template <typename T>
-void MxArray::fromVector(const std::vector<T>& v,
-                         ENABLE_IF_ARRAY(T, mxChar)) {
-    mwSize size[] = {1, v.size()};
-    p_ = mxCreateCharArray(2, size);
-    if (!p_)
-        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-    std::copy(v.begin(), v.end(), mxGetChars(p_));
-}
 
 /** MxArray constructor from vector<DMatch>. Make a cell array.
  * @param v vector of type DMatch.
