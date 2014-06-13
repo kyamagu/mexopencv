@@ -204,7 +204,9 @@ function s = compiler_str()
     %COMPILER_STR  return compiler shortname
     c = mex.getCompilerConfigurations('C++','Selected');
     if ~isempty(strfind(c.Name, 'Visual'))
-        if ~isempty(strfind(c.Version, '11.0'))       % vc2012
+        if ~isempty(strfind(c.Version, '12.0'))       % vc2013
+            s = 'vc12';
+        elseif ~isempty(strfind(c.Version, '11.0'))   % vc2012
             s = 'vc11';
         elseif ~isempty(strfind(c.Version, '10.0'))   % vc2010
             s = 'vc10';
