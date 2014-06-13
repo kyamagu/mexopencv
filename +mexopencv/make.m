@@ -172,8 +172,8 @@ end
 %
 function [cflags,libs] = pkg_config(opts)
     %PKG_CONFIG  constructs OpenCV-related option flags for Windows
-    I_path = fullfile(opts.opencv_path,'build','include');
-    L_path = fullfile(opts.opencv_path,'build',arch_str(),compiler_str(),'lib');
+    I_path = fullfile(opts.opencv_path,'include');
+    L_path = fullfile(opts.opencv_path,arch_str(),compiler_str(),'lib');
     l_options = strcat({' -l'}, lib_names(L_path));
     if opts.debug
         l_options = strcat(l_options,'d');    % link against debug binaries
@@ -278,7 +278,7 @@ function check_path_opencv(opts)
     %CHECK_PATH_OPENCV  check OpenCV bin folder is on the system PATH env. var.
 
     % check system PATH environment variable
-    cv_folder = fullfile(opts.opencv_path,'build',arch_str(),compiler_str(),'bin');
+    cv_folder = fullfile(opts.opencv_path,arch_str(),compiler_str(),'bin');
     p = getenv('PATH');
     C = textscan(p, '%s', 'Delimiter',pathsep());
     if ~any(strcmpi(cv_folder,C{1}))
