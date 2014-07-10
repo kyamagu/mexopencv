@@ -45,7 +45,7 @@ Unix
 First make sure you have OpenCV installed in the system. If not, install the
 package available in your package manager (e.g., libopencv-dev in Debian/Ubuntu,
 opencv-devel in Fedora, opencv in Macports), or install the source package from
-http://opencv.willowgarage.com/wiki/ . Make sure `pkg-config` command can
+http://opencv.org/ . Make sure `pkg-config` command can
 identify OpenCV path. If you have all the prerequisite, go to the mexopencv
 directory and type:
 
@@ -124,8 +124,7 @@ follow the instructions (this should be done only once):
 2. Extract/unpack the archive into a destination of your choosing.
    For example `C:\OpenCV`
 3. Add the `bin` folder containing the DLL files to the system PATH environment
-   variable (see [here](http://opencv.willowgarage.com/wiki/WindowsSystemPath)
-   for instructions).
+   variable.
    You should choose the correct binaries depending on your platform
    and compiler. Example `C:\OpenCV\build\x86\vc10\bin`. Be careful that the
    architecture (x86 or x64) should match your MATLAB architecture but not your
@@ -291,7 +290,7 @@ files for MATLAB. The following command creates a user documentation under
     MDoc;
 
 Online documentation is available at
-http://www.cs.stonybrook.edu/~kyamagu/mexopencv
+http://vision.is.tohoku.ac.jp/~kyamagu/mexopencv
 
 You can test the functionality of compiled files by `UnitTest` class
 located inside `test` directory.
