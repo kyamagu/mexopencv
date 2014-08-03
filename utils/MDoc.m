@@ -11,7 +11,7 @@ classdef MDoc < handle
     % Once you run this command, you can find html documentation under
     % MDoc.DIR directory.
     %
-    
+
     properties (Constant)
         % Directory to place documentation
         DIR = fullfile(mexopencv.root(),'doc','matlab')
@@ -19,29 +19,29 @@ classdef MDoc < handle
         CSS = fullfile(matlabroot,'toolbox','matlab','helptools',...
             'private','helpwin.css')
     end
-    
+
     properties (SetAccess = private)
         % Internal use
         yet = {};
         % Internal use
         processed = {};
     end
-    
+
     methods
         function this = MDoc
             %MDOC  execute MDoc
             if ~exist(MDoc.DIR,'dir'), mkdir(MDoc.DIR); end
-            
+
             % Copy CSS file
             txt = fileread(MDoc.CSS);
             txt = this.process_css(txt);
             fid = fopen(fullfile(MDoc.DIR,'helpwin.css'),'w');
             fprintf(fid,'%s',txt);
             fclose(fid);
-            
+
             % Make contents index
             this.process_index();
-            
+
             % Get a list of functions
             list = dir(fullfile(mexopencv.root(),'+cv','*.m'));
             this.yet = strrep({list.name},'.m','');
@@ -52,7 +52,7 @@ classdef MDoc < handle
                 this.processed = union(this.processed,fname);
             end
         end
-        
+
         function txt = process(this, func)
             %PROCESS  process an entity
             txt = help2html(['cv.',func]);
@@ -61,17 +61,17 @@ classdef MDoc < handle
             txt = strrep(txt,'&gt;','>');
             filename = fullfile(MDoc.DIR,[func,'.html']);
             fprintf('%s\n',filename);
-            
+
             % Filter
             txt = this.filter_text(txt);
             txt = this.markdown(txt);
-            
+
             % Write
             fid = fopen(filename,'w');
             fprintf(fid,'%s',txt);
             fclose(fid);
         end
-        
+
         function txt = filter_text(this, txt)
             %FILTER_TEXT  Filter anchor tags
             txt = strrep(txt,sprintf('file:///%s',MDoc.CSS),'helpwin.css');
@@ -83,22 +83,22 @@ classdef MDoc < handle
             txt = [splt;[tokens,{''}]];
             txt = [txt{:}];
         end
-        
+
         function txt = make_link(this, href, txt)
             %MAKE_LINK  Rewrite hyperlinks
             A = '<a href="%s">%s</a>';
-            
+
             % Link to raw codes: do nothing
             tok = regexp(href,'open (.*)', 'tokens', 'once');
             if ~isempty(tok)
                 txt = '';
             end
-            
+
             % Link to index
             if strcmp(href,'helpwin')
                 txt = sprintf(A, 'index.html', 'Index');
             end
-            
+
             % Link to another function
             tok = regexp(href,'helpwin cv\.(.*)', 'tokens', 'once');
             if isempty(tok)
@@ -113,7 +113,7 @@ classdef MDoc < handle
                 end
             end
         end
-        
+
         function txt = markdown(this, txt)
             %MARKDOWN add html tags
             [splt,tok] = regexp(txt,...
@@ -135,7 +135,7 @@ classdef MDoc < handle
                 end
             end
         end
-        
+
         function txt = process_css(this, txt)
             %PROCESS_CSS
             txt = strrep(txt,'font-size: 12px;','font-size: 14px;');
@@ -148,29 +148,29 @@ classdef MDoc < handle
                 '    color:#990000;'...
                 '}'],txt);
         end
-        
+
         function txt = process_index(this)
             %PROCESS_INDEX
             txt = help2html('cv');
             filename = fullfile(MDoc.DIR,'index.html');
-            
+
             % Filter
             description = ['<p>Collection and a development kit of matlab '...
                 'mex functions for OpenCV library</p>'...
-                '<p><a href="http://www.cs.stonybrook.edu/~kyamagu/mexopencv/">'...
-                'http://www.cs.stonybrook.edu/~kyamagu/mexopencv/</a></p>'];
+                '<p><a href="http://github.com/kyamagu/mexopencv">'...
+                'http://github.com/kyamagu/mexopencv</a></p>'];
             txt = strrep(txt,'<div class="title">cv</div>',...
                 sprintf('<div class="title">mexopencv</div>%s',description));
             txt = regexprep(txt,'Contents of \w+:\s*','');
             txt = this.filter_text(txt);
             txt = this.build_table(txt);
-            
+
             % Write
             fid = fopen(filename,'w');
             fprintf(fid,'%s',txt);
             fclose(fid);
         end
-        
+
         function txt = build_table(this, txt)
             %BUILD_TABLE
             [splt,tok] = regexp(txt,...
@@ -189,7 +189,7 @@ classdef MDoc < handle
             end
         end
     end
-    
+
     methods (Static)
         function open
             %OPEN  Opens documentation
@@ -199,5 +199,5 @@ classdef MDoc < handle
             web(fullfile(MDoc.DIR,'index.html'));
         end
     end
-    
+
 end

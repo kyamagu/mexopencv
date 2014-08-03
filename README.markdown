@@ -290,7 +290,7 @@ files for MATLAB. The following command creates a user documentation under
     MDoc;
 
 Online documentation is available at
-http://vision.is.tohoku.ac.jp/~kyamagu/mexopencv
+http://kyamagu.github.io/mexopencv/
 
 You can test the functionality of compiled files by `UnitTest` class
 located inside `test` directory.
