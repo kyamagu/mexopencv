@@ -1,12 +1,236 @@
+<!DOCTYPE html>
 <html>
-<head>
-  <title>mexopencv</title>
-</head>
-<body>
-  <h1>mexopencv documentation</h1>
-  <ul>
-    <li><a href="matlab/">User documentation</a></li>
-    <li><a href="html/">Developer documentation</a></li>
-  </ul>
-</body>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="mexopencv : Collection and a development kit of matlab mex functions for OpenCV library">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>mexopencv</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/kyamagu/mexopencv">View on GitHub</a>
+
+          <h1 id="project_title">mexopencv</h1>
+          <h2 id="project_tagline">Collection and a development kit of matlab mex functions for OpenCV library</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/kyamagu/mexopencv/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/kyamagu/mexopencv/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="mexopencv" class="anchor" href="#mexopencv"><span class="octicon octicon-link"></span></a>mexopencv</h1>
+
+<p>This software package provides matlab mex functions that interface a hundred of OpenCV APIs. Also the package contains a C++ class that converts between Matlab's native data types and OpenCV data types. The package is suitable for fast prototyping of OpenCV application in Matlab, use of OpenCV as an external toolbox in Matlab, and the development of a custom mex function.</p>
+
+<p>Note: The OpenCV development branch implemented the official Matlab API. Check the matlab module. (Oct 3, 2013)</p>
+
+<p><a href="https://github.com/Itseez/opencv">https://github.com/Itseez/opencv</a></p>
+
+<p>There is <a href="https://www.youtube.com/playlist?list=PLmcMMZCV897pofUfG1yH-8fcjpUTFUSaJ">a user-contributed video tutorial</a> for mexopencv (Thanks, Surya).</p>
+
+<h2>
+<a name="download" class="anchor" href="#download"><span class="octicon octicon-link"></span></a>Download</h2>
+
+<p><a href="http://github.com/kyamagu/mexopencv">Github</a></p>
+
+<p>Please refer the above link for how to compile the source code. Usually it is as easy as typing mexopencv.make in matlab.</p>
+
+<p>If you're using git,</p>
+
+<pre><code>git clone git://github.com/kyamagu/mexopencv.git
+</code></pre>
+
+<h2>
+<a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h2>
+
+<ul>
+<li><a href="matlab/">User documentation</a></li>
+<li><a href="html/">Developer documentation</a></li>
+</ul><h2>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting started</h2>
+
+<p>Here is an example of how simple it is to use an OpenCV function from matlab:</p>
+
+<div class="highlight highlight-matlab"><pre><span class="c">% Load a face detector and an image</span>
+<span class="n">detector</span> <span class="p">=</span> <span class="n">cv</span><span class="p">.</span><span class="n">CascadeClassifier</span><span class="p">(</span><span class="s">'haarcascade_frontalface_alt.xml'</span><span class="p">);</span>
+<span class="n">im</span> <span class="p">=</span> <span class="n">imread</span><span class="p">(</span><span class="s">'myface.jpg'</span><span class="p">);</span>
+<span class="c">% Preprocess</span>
+<span class="n">gr</span> <span class="p">=</span> <span class="n">cv</span><span class="p">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="s">'RGB2GRAY'</span><span class="p">);</span>
+<span class="n">gr</span> <span class="p">=</span> <span class="n">cv</span><span class="p">.</span><span class="n">equalizeHist</span><span class="p">(</span><span class="n">gr</span><span class="p">);</span>
+<span class="c">% Detect</span>
+<span class="n">boxes</span> <span class="p">=</span> <span class="n">detector</span><span class="p">.</span><span class="n">detect</span><span class="p">(</span><span class="n">gr</span><span class="p">,</span> <span class="s">'ScaleFactor'</span><span class="p">,</span>  <span class="mf">1.3</span><span class="p">,</span> <span class="c">...</span>
+                            <span class="s">'MinNeighbors'</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="c">...</span>
+                            <span class="s">'MinSize'</span><span class="p">,</span>      <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">]);</span>
+<span class="c">% Draw results</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">im</span><span class="p">);</span>
+<span class="k">for</span> <span class="nb">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">numel</span><span class="p">(</span><span class="n">boxes</span><span class="p">)</span>
+    <span class="n">rectangle</span><span class="p">(</span><span class="s">'Position'</span><span class="p">,</span>  <span class="n">boxes</span><span class="p">{</span><span class="nb">i</span><span class="p">},</span> <span class="c">...</span>
+              <span class="s">'EdgeColor'</span><span class="p">,</span> <span class="s">'g'</span><span class="p">);</span>
+<span class="k">end</span>
+</pre></div>
+
+<p>Would you like to use a camera input? No problem.</p>
+
+<div class="highlight highlight-matlab"><pre><span class="c">% Connect to a camera</span>
+<span class="n">camera</span> <span class="p">=</span> <span class="n">cv</span><span class="p">.</span><span class="n">VideoCapture</span><span class="p">();</span>
+<span class="n">pause</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="k">for</span> <span class="nb">i</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">50</span>
+    <span class="c">% Capture and show frame</span>
+    <span class="n">frame</span> <span class="p">=</span> <span class="n">camera</span><span class="p">.</span><span class="n">read</span><span class="p">;</span>
+    <span class="n">imshow</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+    <span class="n">pause</span><span class="p">(</span><span class="mf">0.3</span><span class="p">);</span>
+<span class="k">end</span>
+</pre></div>
+
+<p>The package already contains more than 150 OpenCV functions/classes. You can check a list of supported functions in the <a href="matlab/">online documentation</a>. If there isn't your favorite one, you can easily add a new mex function through MxArray class. MxArray is a data conversion utility for Matlab's native array and OpenCV data types. With this class, your mex function is as simple as the following:</p>
+
+<div class="highlight highlight-c++"><pre><span class="cp">#include "mexopencv.hpp"</span>
+<span class="kt">void</span> <span class="nf">mexFunction</span><span class="p">(</span> <span class="kt">int</span> <span class="n">nlhs</span><span class="p">,</span> <span class="n">mxArray</span> <span class="o">*</span><span class="n">plhs</span><span class="p">[],</span>
+                  <span class="kt">int</span> <span class="n">nrhs</span><span class="p">,</span> <span class="k">const</span> <span class="n">mxArray</span> <span class="o">*</span><span class="n">prhs</span><span class="p">[]</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Check arguments</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">nrhs</span><span class="o">!=</span><span class="mi">2</span> <span class="o">||</span> <span class="n">nlhs</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">mexErrMsgIdAndTxt</span><span class="p">(</span><span class="s">"myfunc:invalidArgs"</span><span class="p">,</span> <span class="s">"Wrong number of arguments"</span><span class="p">);</span>
+
+    <span class="c1">// Convert MxArray to cv::Mat and cv::Size</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">src</span> <span class="o">=</span> <span class="n">MxArray</span><span class="p">(</span><span class="n">prhs</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="n">toMat</span><span class="p">(),</span> <span class="n">dst</span><span class="p">;</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">Size</span> <span class="n">ksize</span> <span class="o">=</span> <span class="n">MxArray</span><span class="p">(</span><span class="n">prhs</span><span class="p">[</span><span class="mi">1</span><span class="p">]).</span><span class="n">toSize</span><span class="p">();</span>
+
+    <span class="c1">// Use your favorite OpenCV function</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">blur</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">ksize</span><span class="p">);</span>
+
+    <span class="c1">// Convert cv::Mat back to mxArray*</span>
+    <span class="n">plhs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">MxArray</span><span class="p">(</span><span class="n">dst</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Check the README file and the <a href="html/">developer documentation</a> for detail.</p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>The code may be redistributed under The BSD 3-Clause License.</p>
+
+<h2>
+<a name="faq" class="anchor" href="#faq"><span class="octicon octicon-link"></span></a>FAQ</h2>
+
+<h3>
+<a name="windows" class="anchor" href="#windows"><span class="octicon octicon-link"></span></a>Windows</h3>
+
+<p><em>Compile error / Invalid MEX file</em></p>
+
+<p>There could be a various possible reasons.</p>
+
+<p>First make sure you have correctly configured the system path to use OpenCV. Your Path variable should contain an appropriate path to the dll files (e.g., <code>c:\opencv\build\x86\vc10\bin</code>). Be careful that the architecture (x86 or x64) should match your matlab architecture but not your OS. Also VC version (vc9 or vc10) should match the mex setup (and probably matlab's internal runtime). For example, if you're running Matlab 32-bit in Windows 7 64-bit with Visual Studio 2010 Express, you would use x86 and vc10. If you're running Matlab 64-bit in Windows 7 64-bit with Visual Studio 2010 Express and Windows SDK compiler, you would use x64 and vc10.</p>
+
+<p>Next, make sure you are using the supported version of VC compiler (<a href="http://www.mathworks.com/support/compilers/">Supported compilers</a>). Note that Windows 64-bit users need to use Windows SDK compiler. Using VC2010 compiler in Windows 64-bit leads to Matlab crash. Use mex -setup command in matlab to change the compiler.</p>
+
+<p>Whenever you change the compiler setting, first clear all the previously built binaries with mexopencv.make('clean') command. After that, use mexopencv.make again to compile the source.</p>
+
+<h3>
+<a name="linux" class="anchor" href="#linux"><span class="octicon octicon-link"></span></a>Linux</h3>
+
+<p><em>Invalid MEX file</em></p>
+
+<p>In most of cases, mexopencv gives an error due to conflicting internal dynamic libraries. You will need to find out which library is causing the conflict. Following is the steps to locate such libraries using ldd tool.</p>
+
+<p>Use <code>ldd</code> in unix shell.</p>
+
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>ldd /path/to/mexopencv/+cv/private/imread.mexa64
+</pre></div>
+
+<p>Use <code>ldd</code> in matlab shell.</p>
+
+<pre><code>&gt;&gt; !ldd /path/to/mexopencv/+cv/private/imread.mexa64
+</code></pre>
+
+<p>Find any difference in the loaded libraries. (Hint: use diff tool.) Usually such libraries are causing error. If you find any, such as libstdc++ or libgcc_s, put the one found in unix shell in the LD_PRELOAD variable before launching matlab. For example,</p>
+
+<div class="highlight highlight-bash"><pre><span class="nv">LD_PRELOAD</span><span class="o">=</span>/usr/lib/x86_64-linux-gnu/libstdc++.so.6:/lib/x86_64-linux-gnu/libgcc_s.so.1 matlab
+</pre></div>
+
+<p>It is probably handy to use bash alias to specify the above long command after you find the erroneous library. Put the following in your .bashrc, for example.</p>
+
+<div class="highlight highlight-bash"><pre><span class="nb">alias </span><span class="nv">matlab</span><span class="o">=</span><span class="s1">'LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6:/lib/x86_64-linux-gnu/libgcc_s.so.1 matlab'</span>
+</pre></div>
+
+<p>Note that if you have the computer vision toolbox from Mathworks, you almost always see this error, because that toolbox internally loads its own version of opencv. In that case, use LD_PRELOAD to force loading your opencv installation.</p>
+
+<h3>
+<a name="mac-os-x" class="anchor" href="#mac-os-x"><span class="octicon octicon-link"></span></a>Mac OS X</h3>
+
+<p><em>Compile error</em></p>
+
+<p>In Mac OS X, Matlab may require additional setup to use mex depending on the OS version. See <a href="http://www.mathworks.com/support/solutions/en/data/1-FR6LXJ/">Mathworks support</a> for more information.</p>
+
+<p><em>OS X 10.9 and XCode 5</em></p>
+
+<p>Due to the change in the default C++ runtime in OS X 10.9, you probably need to tweak a few configurations in mexopts.sh to avoid compile issues. If you haven't run mex -setup in Matlab, please do so first and edit mexopts.sh and change a few variables. Following shows an example.</p>
+
+<div class="highlight highlight-bash"><pre><span class="nv">CC</span><span class="o">=</span><span class="s1">'clang'</span>
+<span class="nv">CXX</span><span class="o">=</span><span class="s1">'clang++'</span>
+<span class="nv">SDKROOT</span><span class="o">=</span><span class="s1">'/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/'</span>
+<span class="nv">MACOSX_DEPLOYMENT_TARGET</span><span class="o">=</span><span class="s1">'10.9'</span>
+<span class="nv">CLIBS</span><span class="o">=</span><span class="s2">"$CLIBS -lc++"</span>
+<span class="nv">CXXFLAGS</span><span class="o">=</span><span class="s2">"-fno-common -no-cpp-precomp -fexceptions -arch $ARCHS -isysroot $SDKROOT -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET -std=c++11 -stdlib=libc++ -DCHAR16_T"</span>
+<span class="nv">CXXLIBS</span><span class="o">=</span><span class="s2">"$MLIBS -lc++"</span>
+</pre></div>
+
+<p><em>Invalid MEX file</em></p>
+
+<p>In OS X environment, runtime error can happen when the version of your system library conflicts with matlab's internal library. Try setting the DYLD_INSERT_LIBRARIES variable to force matlab to use the system's library. For example,</p>
+
+<div class="highlight highlight-bash"><pre><span class="nv">DYLD_INSERT_LIBRARIES</span><span class="o">=</span>/opt/local/lib/libtiff.3.dylib /Applications/MATLAB_R2012a.app/bin/matlab
+</pre></div>
+
+<p>To find which library is causing an error, use <code>otool -L</code> command. See the Invalid MEX file instruction in the Linux section above.</p>
+
+<h3>
+<a name="general-usage" class="anchor" href="#general-usage"><span class="octicon octicon-link"></span></a>General usage</h3>
+
+<p><em>0-based index vs 1-based index</em></p>
+
+<p>OpenCV uses 0-based index while matlab uses 1-based index. That is, the top left pixel is <code>(0,0)</code> in OpenCV whereas matlab treats it as <code>(1,1)</code>. mexopencv does NOT convert image coordinates. Be careful when accessing a function that deals with image coordinates.</p>
+
+<p><em>Channeled array</em></p>
+
+<p>OpenCV often uses channels as dimensions of coordinate representation, as seen in perspectiveTransform. In matlab, you can make these channeled array by creating 1-by-N-by-d array for an N element array of d-dimensional vectors. Hint: use shiftdim function to convert from/to N-by-d numeric array in matlab.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">mexopencv maintained by <a href="https://github.com/kyamagu">kyamagu</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-19721864-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
 </html>
