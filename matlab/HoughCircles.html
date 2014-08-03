@@ -1,0 +1,62 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.HoughCircles</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.HoughCircles</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.HoughCircles</div>
+      <div class="helpcontent"><p>Finds circles in a grayscale image using the Hough transform</p>
+
+<pre><code>circles = <a href="HoughCircles.html">cv.HoughCircles</a>(image)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>image</strong> 8-bit, single-channel, grayscale input image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>circles</strong> Output vector of found circles. Each vector is encoded as a
+3-element floating-point vector (x, y, radius).</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>DP</strong> Inverse ratio of the accumulator resolution to the image resolution.
+For example, if dp=1 , the accumulator has the same resolution as the
+input image. If dp=2 , the accumulator has half as big width and
+height. default 1.</li>
+<li><strong>MinDist</strong> Minimum distance between the centers of the detected circles.
+If the parameter is too small, multiple neighbor circles may be
+falsely detected in addition to a true one. If it is too large, some
+circles may be missed. default image.rows/8.</li>
+<li><strong>Param1</strong> First method-specific parameter. It is the higher threshold of
+the two passed to the Canny() edge detector (the lower one is twice
+smaller). default 100.</li>
+<li><strong>Param2</strong> Second method-specific parameter. It is the accumulator
+threshold for the circle centers at the detection stage. The smaller
+it is, the more false circles may be detected. Circles, corresponding
+to the larger accumulator values, will be returned first. default 100.</li>
+<li><strong>MinRadius</strong> Minimum circle radius. default 0.</li>
+<li><strong>MaxRadius</strong> Maximum circle radius. default 0.</li>
+</ul>
+
+<p>The function finds circles in a grayscale image using a modification of the
+Hough transform</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="fitEllipse.html">cv.fitEllipse</a>, <a href="minEnclosingCircle.html">cv.minEnclosingCircle</a></div>
+   </body>
+</html>

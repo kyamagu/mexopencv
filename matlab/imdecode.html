@@ -1,0 +1,57 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.imdecode</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.imdecode</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.imdecode</div>
+      <div class="helpcontent"><p>Reads an image from a buffer in memory</p>
+
+<pre><code>img = <a href="imdecode.html">cv.imdecode</a>(buf)
+img = <a href="imdecode.html">cv.imdecode</a>(buf, 'Flags', flags)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>buf</strong> Input array of an encoded image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>img</strong> Decoded image.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Flags</strong> Flags specifying the color type of a loaded image.</li>
+</ul>
+
+<pre><code>  &gt;0: Return a 3-channel color image
+  =0: Return a grayscale image
+  &lt;0: Return the loaded image as is. Note that in the current
+      implementation the alpha channel, if any, is stripped from the output
+      image. For example, a 4-channel RGBA image is loaded as RGB if
+      flags &gt;= 0.
+</code></pre>
+
+<p>The function reads an image from the specified buffer in the memory. If
+the buffer is too short or contains invalid data, the empty matrix/image
+is returned.</p>
+
+<p>See <a href="imread.html">cv.imread</a> for the list of supported formats and flags description.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="imdecode.html">cv.imdecode</a> <a href="imread.html">cv.imread</a> <a href="imwrite.html">cv.imwrite</a></div>
+   </body>
+</html>

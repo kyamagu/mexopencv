@@ -1,0 +1,70 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.invert</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.invert</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.invert</div>
+      <div class="helpcontent"><p>Finds the inverse or pseudo-inverse of a matrix</p>
+
+<pre><code>dst = <a href="invert.html">cv.invert</a>(src)
+[dst,d] = <a href="invert.html">cv.invert</a>(...)
+[...] = <a href="invert.html">cv.invert</a>(...,'OptionName',optionValue,...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Source floating-point M x N matrix.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Destination matrix of N x M size and the same type as src.</li>
+<li><strong>d</strong> Output value depending on the method. See below.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Method</strong> Inversion method. One of the following:<ul>
+<li><strong>LU</strong> Gaussian elimination with the optimal pivot element chosen.</li>
+<li><strong>SVD</strong> Singular value decomposition (SVD) method.</li>
+<li><strong>Cholesky</strong> Cholesky decomposion. The matrix must be symmetrical
+and positively defined.</li>
+</ul>
+</li>
+</ul>
+
+<p>The function invert inverts the matrix src and stores the result in dst.
+When the matrix src is singular or non-square, the function computes the
+pseudo-inverse matrix (the dst matrix) so that <code>norm(src*dst - I)</code> is
+minimal, where I is an identity matrix.</p>
+
+<p>In case of the <code>'LU'</code> method, the function returns the src determinant (
+src must be square). If it is 0, the matrix is not inverted and dst is
+filled with zeros.</p>
+
+<p>In case of the <code>'SVD'</code> method, the function returns the inverse condition
+number of src (the ratio of the smallest singular value to the largest
+singular value) and 0 if src is singular. The SVD method calculates a
+pseudo-inverse matrix if src is singular.</p>
+
+<p>Similarly to <code>'LU'</code>, the method <code>'Cholesky'</code> works only with
+non-singular square matrices that should also be symmetrical and
+positively defined. In this case, the function stores the inverted matrix
+in dst and returns non-zero. Otherwise, it returns 0.</p>
+</div><!--after help -->
+   </body>
+</html>

@@ -1,0 +1,65 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.calcMotionGradient</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.calcMotionGradient</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.calcMotionGradient</div>
+      <div class="helpcontent"><p>Updates the motion history image by a moving silhouette</p>
+
+<pre><code>[mask,orientation] = <a href="calcMotionGradient.html">cv.calcMotionGradient</a>(mhi, delta1, delta2)
+[...] = <a href="calcMotionGradient.html">cv.calcMotionGradient</a>(mhi, delta1, delta2, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>mhi</strong> Motion history single-channel floating-point image.</li>
+<li><strong>delta1</strong> Minimal (or maximal) allowed difference between mhi values
+within a pixel neighorhood.</li>
+<li><strong>delta2</strong> Maximal (or minimal) allowed difference between mhi values within
+a pixel neighorhood. That is, the function finds the minimum
+( m(x,y) ) and maximum ( M(x,y) ) mhi values over 3 x 3 neighborhood
+of each pixel and marks the motion orientation at (x,y) as valid only
+if
+min(delta1,delta2) &lt;= M(x,y) - m(x,y) &lt;= max(delta1,delta2)</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>mask</strong> Output mask image that has the type uint8 and the same size a
+mhi. Its non-zero elements mark pixels where the motion gradient data
+is correct.</li>
+<li><strong>orientation</strong> Output motion gradient orientation image that has the same
+type and the same size as mhi . Each pixel of the image is a motion
+orientation, from 0 to 360 degrees.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>ApertureSize</strong> Aperture size of the <a href="Sobel.html">cv.Sobel</a> operator.</li>
+</ul>
+
+<p>The function calculates a gradient orientation at each pixel (x,y) as:</p>
+
+<pre><code> orientation(x,y) = arctan (dmhi / dy) / (dmhi / dx)
+</code></pre>
+
+<p>In fact, fastAtan2() and phase() are used so that the computed angle is
+measured in degrees and covers the full range 0..360. Also, the mask is filled
+to indicate pixels where the computed angle is valid.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="updateMotionHistory.html">cv.updateMotionHistory</a> <a href="calcGlobalOrientation.html">cv.calcGlobalOrientation</a></div>
+   </body>
+</html>

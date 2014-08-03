@@ -1,0 +1,53 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.Scharr</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.Scharr</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.Scharr</div>
+      <div class="helpcontent"><p>Calculates the first x- or y- image derivative using Scharr operator</p>
+
+<pre><code>dst = <a href="Scharr.html">cv.Scharr</a>(src)
+dst = <a href="Scharr.html">cv.Scharr</a>(src, 'KSize', 5, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Source image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Destination image of the same size and the same number of channels as
+src.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>XOrder</strong> Order of the derivative x.</li>
+<li><strong>YOrder</strong> Order of the derivative y.</li>
+<li><strong>Scale</strong> Optional scale factor for the computed Laplacian values. By
+default, no scaling is applied.</li>
+<li><strong>Delta</strong> Optional delta value that is added to the results prior to
+storing them in dst .</li>
+<li><strong>BorderType</strong> Pixel extrapolation method.</li>
+</ul>
+
+<p>The function computes the first x- or y- spatial image derivative using the
+Scharr operator.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Sobel.html">cv.Sobel</a></div>
+   </body>
+</html>

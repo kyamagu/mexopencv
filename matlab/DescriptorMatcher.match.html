@@ -1,0 +1,89 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.DescriptorMatcher/match</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.DescriptorMatcher/match</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.DescriptorMatcher/match</div>
+      <div class="helpcontent"><p>Finds the best match for each descriptor from a query set</p>
+
+<pre><code>matches = matcher.match(queryDescriptors, trainDescriptors)
+matches = matcher.match(queryDescriptors)
+[...] = matcher.match(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<p>In the first variant of this method, the train descriptors are passed
+as an input argument. In the second variant of the method, train
+descriptors collection that was set by <code>DescriptorMatcher.add()</code> is used.
+Optional mask (or masks) can be passed to specify which query and
+training descriptors can be matched. Namely, <code>queryDescriptors(i,:)</code> can
+be matched with <code>trainDescriptors(j,:)</code> only if <code>mask(i,j)</code> is non-zero.</p>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>queryDescriptors</strong> Query set of descriptors.</li>
+<li><strong>trainDescriptors</strong> Train set of descriptors. This set is not
+added to the train descriptors collection stored in the
+class object.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>matches</strong> Matches. If a query descriptor is masked out in <code>Mask</code>,
+no match is added for this descriptor. So, <code>matches</code> size may
+be smaller than the query descriptors count.
+A 1-by-N structure array, it has the following fields:<ul>
+<li><strong>queryIdx</strong> query descriptor index (zero-based index)</li>
+<li><strong>trainIdx</strong> train descriptor index (zero-based index)</li>
+<li><strong>imgIdx</strong> train image index (zero-based index)</li>
+<li><strong>distance</strong> distance between descriptors (scalar)</li>
+</ul>
+</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Mask</strong> default empty<ul>
+<li>In the first form, mask specifying permissible matches
+between an input query and train matrices of descriptors.
+Matrix of size <code>[size(queryDescriptors,1),size(trainDescriptors,1)]</code></li>
+<li>In the second form, set of masks. Each <code>masks{i}</code> specifies
+permissible matches between the input query descriptors and
+stored train descriptors from the i-th image <code>trainDescCollection{i}</code>.
+Cell array of length <code>length(trainDescriptors)</code>, each a matrix
+of size <code>[size(queryDescriptors,1),size(trainDescriptors{i},1)]</code></li>
+</ul>
+</li>
+</ul>
+</div><!--after help -->
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

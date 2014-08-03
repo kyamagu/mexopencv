@@ -1,0 +1,58 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.updateMotionHistory</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.updateMotionHistory</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.updateMotionHistory</div>
+      <div class="helpcontent"><p>Updates the motion history image by a moving silhouette</p>
+
+<pre><code>mhi = <a href="updateMotionHistory.html">cv.updateMotionHistory</a>(silhouette, mhi, timestamp, duration)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>silhouette</strong> Silhouette mask that has non-zero pixels where the motion
+occurs.</li>
+<li><strong>mhi</strong> Motion history image to be updated by the function (single-channel,
+32-bit floating-point).</li>
+<li><strong>timestamp</strong> Current time in milliseconds or other units.</li>
+<li><strong>duration</strong> Maximal duration of the motion track in the same units as
+timestamp.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>mhi</strong> Motion history image that is updated by the function (single-channel,
+32-bit floating-point).</li>
+</ul>
+
+<p>The function updates the motion history image as follows:</p>
+
+<pre><code>            | timestamp  if silhouette(x,y) != 0
+ mhi(x,y) = | 0          if silhouette(x,y) == 0 and mhi &lt; (timestamp &lt; duration)
+            | mhi(x,y)   otherwise
+</code></pre>
+
+<p>That is, MHI pixels where the motion occurs are set to the current timestamp,
+while the pixels where the motion happened last time a long time ago are
+cleared.</p>
+
+<p>The function, together with <a href="calcMotionGradient.html">cv.calcMotionGradient</a> and
+<a href="calcGlobalOrientation.html">cv.calcGlobalOrientation</a>, implements a motion templates technique described in
+[Davis97] and [Bradski00].</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calcMotionGradient.html">cv.calcMotionGradient</a> <a href="calcGlobalOrientation.html">cv.calcGlobalOrientation</a></div>
+   </body>
+</html>

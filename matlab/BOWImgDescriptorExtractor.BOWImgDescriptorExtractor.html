@@ -1,0 +1,47 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.BOWImgDescriptorExtractor/BOWImgDescriptorExtractor</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.BOWImgDescriptorExtractor/BOWImgDescriptorExtractor</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.BOWImgDescriptorExtractor/BOWImgDescriptorExtractor</div>
+      <div class="helpcontent"><p>Create a new BOWImgDescriptorExtractor</p>
+
+<pre><code>extractor = <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a>(dextractor)
+extractor = <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a>(dextractor,dmatcher)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>dextractor</strong> Descriptor extractor that is used to compute
+descriptors for an input image and its keypoints. It can
+be spacified by a string specifying the type of
+descriptor extractor, such as 'SIFT' or 'SURF'. See
+<a href="DescriptorExtractor.html">cv.DescriptorExtractor</a> for a possible type.</li>
+<li><strong>dmatcher</strong> Descriptor matcher that is used to find the
+nearest word of the trained vocabulary for each keypoint
+descriptor of the image. It can be spacified by a string
+specifying the type of descriptor extractor, such as
+'BruteForce' or 'BruteForce-L1'. See <a href="DescriptorMatcher.html">cv.DescriptorMatcher</a>
+for a possible type. default 'BruteForce'</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>extractor</strong> Created BOWImgDescriptorExtractor object</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a></div>
+   </body>
+</html>

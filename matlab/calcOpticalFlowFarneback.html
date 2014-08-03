@@ -1,0 +1,72 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.calcOpticalFlowFarneback</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.calcOpticalFlowFarneback</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.calcOpticalFlowFarneback</div>
+      <div class="helpcontent"><p>Computes a dense optical flow using the Gunnar Farneback's algorithm</p>
+
+<pre><code>flow = <a href="calcOpticalFlowFarneback.html">cv.calcOpticalFlowFarneback</a>(prevImg, nextImg)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>prevImg</strong> First 8-bit single-channel input image.</li>
+<li><strong>nextImg</strong> Second input image of the same size and the same type as prevImg.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>flow</strong> Computed flow image that has the same size as prevImg and single
+type. flow for (x,y) is stored in the third dimension.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>InitialFlow</strong> Initial flow approximation.</li>
+<li><strong>PyrScale</strong> Parameter specifying the image scale (&lt;1) to build pyramids for
+each image. pyrScale=0.5 means a classical pyramid, where each next
+layer is twice smaller than the previous one. default 0.5.</li>
+<li><strong>Levels</strong> Number of pyramid layers including the initial image. levels=1
+means that no extra layers are created and only the original images
+are used. default 1.</li>
+<li><strong>WinSize</strong> Averaging window size. Larger values increase the algorithm
+robustness to image noise and give more chances for fast motion
+detection, but yield more blurred motion field. default 3.</li>
+<li><strong>Iterations</strong> Number of iterations the algorithm does at each pyramid level.
+default 10.</li>
+<li><strong>PolyN</strong> Size of the pixel neighborhood used to find polynomial expansion in
+each pixel. Larger values mean that the image will be approximated
+with smoother surfaces, yielding more robust algorithm and more
+blurred motion field. Typically, PolyN = 5 or 7. default 5.</li>
+<li><strong>PolySigma</strong> Standard deviation of the Gaussian that is used to smooth
+derivatives used as a basis for the polynomial expansion. For PolyN =
+5 , you can set PolySigma=1.1. For PolyN = 7, a good value would be
+PolySigma = 1.5. default 1.1.</li>
+<li><strong>Gaussian</strong> Use the Gaussian WinSize x WinSize filter instead of a box
+filter of the same size for optical flow estimation. Usually, this
+option gives z more accurate flow than with a box filter, at the cost
+of lower speed. Normally, winsize for a Gaussian window should be set
+to a larger value to achieve the same level of robustness. default
+false.</li>
+</ul>
+
+<p>The function finds an optical flow for each prevImg pixel using the
+[Farneback2003] alorithm.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calcOpticalFlowPyrLK.html">cv.calcOpticalFlowPyrLK</a></div>
+   </body>
+</html>

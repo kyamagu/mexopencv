@@ -1,0 +1,71 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.DTree/predict</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.DTree/predict</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.DTree/predict</div>
+      <div class="helpcontent"><p>Predicts the response for input samples.</p>
+
+<pre><code>results = classifier.predict(samples)
+[...] = classifier.predict(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>samples</strong> Input row vectors</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>results</strong> Output labels or regression values</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>MissingMask</strong> Optional input missing measurement mask.</li>
+<li><strong>PreprocessedInput</strong> This parameter is normally set to false,
+implying a regular input. If it is true, the method
+assumes that all the values of the discrete input
+variables have been already normalized to 0 to #categories
+ranges since the decision tree uses such normalized
+representation internally. It is useful for faster
+prediction with tree ensembles. For ordered input
+variables, the flag is not used.</li>
+</ul>
+
+<p>The method estimates the most probable classes for input vectors.
+Input vectors (one or more) are stored as rows of the matrix
+samples.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DTree.html">cv.DTree</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

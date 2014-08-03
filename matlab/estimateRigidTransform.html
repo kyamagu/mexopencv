@@ -1,0 +1,74 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.estimateRigidTransform</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.estimateRigidTransform</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.estimateRigidTransform</div>
+      <div class="helpcontent"><p>Computes an optimal affine transformation between two 2D point sets</p>
+
+<pre><code>M = <a href="estimateRigidTransform.html">cv.estimateRigidTransform</a>(src, dst)
+M = <a href="estimateRigidTransform.html">cv.estimateRigidTransform</a>(src, dst, 'OptionName', optionValue)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> First input 2D point set stored cell array of 2-element vectors, or
+an image</li>
+<li><strong>dst</strong> Second input 2D point set of the same size and the same type as A, or
+another image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>M</strong> Output matrix (see below).</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>FullAffine</strong> If true, the function finds an optimal affine transformation
+with no additional resrictions (6 degrees of freedom). Otherwise, the
+class of transformations to choose from is limited to combinations of
+translation, rotation, and uniform scaling (5 degrees of freedom).</li>
+</ul>
+
+<p>The function finds an optimal affine transform [A|b] (a 2 x 3 floating-point
+matrix) that approximates best the affine transformation between:</p>
+
+<ul>
+<li>Two point sets</li>
+<li>Two raster images. In this case, the function first finds some features in
+the src image and finds the corresponding features in dst image. After
+that, the problem is reduced to the first case.</li>
+</ul>
+
+<p>In case of point sets, the problem is formulated as follows: you need to find
+a 2x2 matrix A and 2x1 vector b so that:</p>
+
+<pre><code> [A*|b*] = argmin_{[A|b]} \sum_i || dst[i] - Asrc[i]^T - b ||^2
+</code></pre>
+
+<p>where src[i] and dst[i] are the i-th points in src and dst, respectively.
+[A|b] can be either arbitrary (when fullAffine=true) or have a form of</p>
+
+<pre><code> [ a11, a12, b1;...
+  -a12, a22, b2 ]
+</code></pre>
+
+<p>when fullAffine=false.</p>
+</div><!--after help -->
+   </body>
+</html>

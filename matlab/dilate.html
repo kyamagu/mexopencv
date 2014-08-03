@@ -1,0 +1,57 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.dilate</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.dilate</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.dilate</div>
+      <div class="helpcontent"><p>Dilates an image by using a specific structuring element</p>
+
+<pre><code>dst = <a href="dilate.html">cv.dilate</a>(src)
+dst = <a href="dilate.html">cv.dilate</a>(src, 'Element', [0,1,0;1,1,1;0,1,0], ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Source image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Destination image of the same size and type as src.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Element</strong> Structuring element used for dilation. By default, a 3 x 3
+rectangular structuring element is used</li>
+<li><strong>Anchor</strong> Position of the anchor within the element. The default value
+[-1, -1] means that the anchor is at the element center.</li>
+<li><strong>Iterations</strong> Number of times dilation is applied.</li>
+<li><strong>BorderType</strong> Border mode used to extrapolate pixels outside of the
+image. default 'Constant'</li>
+<li><strong>BorderValue</strong> Border value in case of a constant border. The default
+value has a special meaning.</li>
+</ul>
+
+<p>The function dilates the source image using the specified structuring element
+that determines the shape of a pixel neighborhood over which the maximum is
+taken. The function supports the in-place mode. Dilation can be applied
+several ( iterations ) times. In case of multi-channel images, each channel
+is processed independently.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="erode.html">cv.erode</a></div>
+   </body>
+</html>

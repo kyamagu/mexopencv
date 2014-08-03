@@ -1,0 +1,53 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.convexHull</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.convexHull</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.convexHull</div>
+      <div class="helpcontent"><p>Finds the convex hull of a point set</p>
+
+<pre><code>hull = <a href="convexHull.html">cv.convexHull</a>(points)
+hull = <a href="convexHull.html">cv.convexHull</a>(points, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>points</strong> Input vector of a 2D point stored in an 1-by-N-by-2 numeric array
+or a cell array of 2-element vectors.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>hull</strong> Output convex hull. The type is the same to the input.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Clockwise</strong> Orientation flag. If it is true, the output convex hull is
+oriented clockwise. Otherwise, it is oriented counter-clockwise. The
+usual screen coordinate system is assumed so that the origin is at the
+top-left corner, x axis is oriented to the right, and y axis is
+oriented downwards.</li>
+</ul>
+
+<p>The functions find the convex hull of a 2D point set using the Sklansky's
+algorithm [Sklansky82] that has O(N logN) complexity in the current
+implementation. See the OpenCV sample convexhull.cpp that demonstrates the
+usage of different function variants.</p>
+</div><!--after help -->
+   </body>
+</html>

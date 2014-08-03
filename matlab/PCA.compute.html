@@ -1,0 +1,69 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.PCA/compute</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.PCA/compute</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.PCA/compute</div>
+      <div class="helpcontent"><p>Performs Principal Component Analysis of the supplied dataset</p>
+
+<pre><code>pca.compute(X)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>X</strong> Vectors to be analyzed</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>DataAs</strong> Data layout option. One of 'row' or 'col'.
+default 'row'.</li>
+<li><strong>MaxComponents</strong> Maximum number of components that PCA
+should retain. By default, all the components are
+retained.</li>
+<li><strong>Mean</strong> Optional mean value. By default, the mean is
+computed from the data.</li>
+</ul>
+
+<p>The method performs PCA of the supplied dataset. It is safe
+to reuse the same PCA structure for multiple datasets. That
+is, if the structure has been previously used with another
+dataset, the existing internal data is reclaimed and the new
+eigenvalues, eigenvectors, and mean are allocated and
+computed.</p>
+
+<p>The computed eigenvalues are sorted from the largest to the
+smallest and the corresponding eigenvectors are stored as
+pca.eigenvectors rows.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="PCA.html">cv.PCA</a> <a href="PCA.project.html">cv.PCA/project</a> <a href="PCA.backProject.html">cv.PCA/backProject</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

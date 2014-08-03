@@ -1,0 +1,321 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.ANN_MLP</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.ANN_MLP</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.ANN_MLP</div>
+      <div class="helpcontent"><p>Neural Networks</p>
+
+<p>ML implements feed-forward artificial neural networks or, more
+particularly, multi-layer perceptrons (MLP), the most commonly used type
+of neural networks. MLP consists of the input layer, output layer, and one
+or more hidden layers. Each layer of MLP includes one or more neurons
+directionally linked with the neurons from the previous and the next layer.</p>
+
+<p>All the neurons in MLP are similar. Each of them has several input links
+(it takes the output values from several neurons in the previous layer as
+input) and several output links (it passes the response to several neurons
+in the next layer). The values retrieved from the previous layer are
+summed up with certain weights, individual for each neuron, plus the bias
+term. The sum is transformed using the activation function  that may be
+also different for different neurons.</p>
+
+<p>In other words, given the outputs <code>x_j</code> of the layer <code>n</code>, the outputs <code>y_i</code> of
+the layer <code>n+1</code> are computed as:</p>
+
+<pre><code>u_i = \sum_j (w_{i,j}^{n+1} * x_j) + w_{i,bias}^{n+1}
+y_i = f(u_i)
+</code></pre>
+
+<p>Different activation functions may be used. OpenCV implements three
+standard functions:</p>
+
+<ul>
+<li><p>Identity:</p>
+<p>        f(x) = y</p>
+</li>
+<li><p>Symmetrical sigmoid: (default)</p>
+<p>        f(x) = \beta * (1-\exp{- \alpha * x}) / (1+\exp{- \alpha * x})</p>
+</li>
+<li><p>Gaussian function:</p>
+<p>        f(x) = \beta * \exp{- \alpha * x * x}</p>
+</li>
+</ul>
+
+<p>In OpenCV, all the neurons have the same activation functions, with the
+same free parameters (\alpha,\beta) that are specified by user and are
+not altered by the training algorithms.</p>
+
+<p>So, the whole trained network works as follows:</p>
+
+<ol>
+<li> Take the feature vector as input. The vector size is equal to the
+size of the input layer.</li>
+<li> Pass values as input to the first hidden layer.</li>
+<li> Compute outputs of the hidden layer using the weights and the
+activation functions.</li>
+<li> Pass outputs further downstream until you compute the output layer.</li>
+</ol>
+
+<p>So, to compute the network, you need to know all the weights <code>w_{i,j}^{n+1}</code>.
+The weights are computed by the training algorithm. The algorithm takes a
+training set, multiple input vectors with the corresponding output vectors,
+and iteratively adjusts the weights to enable the network to give the
+desired response to the provided input vectors.</p>
+
+<p>The larger the network size (the number of hidden layers and their sizes)
+is, the more the potential network flexibility is. The error on the
+training set could be made arbitrarily small. But at the same time the
+learned network also learn the noise present in the training set, so
+the error on the test set usually starts increasing after the network size
+reaches a limit. Besides, the larger networks are trained much longer than
+the smaller ones, so it is reasonable to pre-process the data, using PCA
+or similar technique, and train a smaller network on only essential
+features.</p>
+
+<p>Another MPL feature is an inability to handle categorical data as is.
+However, there is a workaround. If a certain feature in the input or
+output (in case of n-class classifier for n&gt;2) layer is categorical and
+can take M&gt;2 different values, it makes sense to represent it as a binary
+tuple of M elements, where the i-th element is 1 if and only if the
+feature is equal to the i-th value out of M possible. It increases the
+size of the input/output layer but speeds up the training algorithm
+convergence and at the same time enables fuzzy values of such variables,
+that is, a tuple of probabilities instead of a fixed value.</p>
+
+<p>OpenCV implements two algorithms for training MLP's.The first algorithm
+is a classical random sequential back-propagation algorithm. The second
+(default) one is a batch RPROP algorithm.</p>
+
+<ul>
+<li>[BackPropWikipedia] <a href="http://en.wikipedia.org/wiki/Backpropagation">http://en.wikipedia.org/wiki/Backpropagation</a>.
+Wikipedia article about the back-propagation algorithm.</li>
+<li>[LeCun98] LeCun, L. Bottou, G.B. Orr and K.-R. Muller, Efficient backprop,
+in Neural Networks Tricks of the Trade, Springer Lecture Notes in
+Computer Sciences 1524, pp.5-50, 1998.</li>
+<li>[RPROP93] M. Riedmiller and H. Braun, A Direct Adaptive Method for Faster
+Backpropagation Learning: The RPROP Algorithm, Proc. ICNN, San
+Francisco (1993).</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="ANN_MLP.ANN_MLP.html">cv.ANN_MLP/ANN_MLP</a> <a href="ANN_MLP.create.html">cv.ANN_MLP/create</a> <a href="ANN_MLP.train.html">cv.ANN_MLP/train</a>
+  <a href="ANN_MLP.predict.html">cv.ANN_MLP/predict</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="ANN_MLP.ANN_MLP.html">ANN_MLP</a></td>
+            <td class="m-help">Constructs MLP model&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="ANN_MLP.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.clear.html">clear</a></td>
+            <td class="m-help">Deallocates memory and resets the model state&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.create.html">create</a></td>
+            <td class="m-help">Constructs MLP with the specified topology&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.get_layer_count.html">get_layer_count</a></td>
+            <td class="m-help">Returns the number of layers in the MLP&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.get_layer_sizes.html">get_layer_sizes</a></td>
+            <td class="m-help">Returns numbers of neurons in each layer of the MLP&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.get_weights.html">get_weights</a></td>
+            <td class="m-help">Returns neurons weights of the particular layer&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.load.html">load</a></td>
+            <td class="m-help">Loads the model from a file&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.predict.html">predict</a></td>
+            <td class="m-help">Predicts the response for input samples.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.save.html">save</a></td>
+            <td class="m-help">Saves the model to a file&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.train.html">train</a></td>
+            <td class="m-help">Trains the model&nbsp;</td>
+         </tr>
+      </table>
+   </body>
+</html>

@@ -1,0 +1,59 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.HOGDescriptor/HOGDescriptor</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.HOGDescriptor/HOGDescriptor</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.HOGDescriptor/HOGDescriptor</div>
+      <div class="helpcontent"><p>Create or load a new HOG descriptor object</p>
+
+<pre><code>hog = <a href="HOGDescriptor.html">cv.HOGDescriptor</a>()
+hog = <a href="HOGDescriptor.html">cv.HOGDescriptor</a>(filename)
+hog = <a href="HOGDescriptor.html">cv.HOGDescriptor</a>('PropertyName', propertyValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>filename</strong> Filename of existing HOG descriptor config to load from</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>hog</strong> HOG descriptor object</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>WinSize</strong> Detection window size. Align to block size and block
+stride. default [64,128]</li>
+<li><strong>BlockSize</strong> Block size in pixels. Align to cell size.
+default [16,16]</li>
+<li><strong>BlockStride</strong> Block stride. It must be a multiple of cell
+size. default [8,8]</li>
+<li><strong>CellSize</strong> Cell size. default [8,8]</li>
+<li><strong>NBins</strong> Number of bins. default 9</li>
+<li><strong>DerivAperture</strong> default 1</li>
+<li><strong>WinSigma</strong> Gaussian smoothing window parameter. default -1
+(corresponds to <code>sum(BlockSize)/8</code>)</li>
+<li><strong>HistogramNormType</strong> default 'L2Hys'</li>
+<li><strong>L2HysThreshold</strong> L2-Hys normalization method shrinkage. default 0.2</li>
+<li><strong>GammaCorrection</strong> Flag to specify whether the gamma correction
+preprocessing is required or not. default true</li>
+<li><strong>NLevels</strong> Maximum number of detection window increases. default 64</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.html">cv.HOGDescriptor</a></div>
+   </body>
+</html>

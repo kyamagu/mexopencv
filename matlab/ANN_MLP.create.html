@@ -1,0 +1,64 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.ANN_MLP/create</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.ANN_MLP/create</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.ANN_MLP/create</div>
+      <div class="helpcontent"><p>Constructs MLP with the specified topology</p>
+
+<pre><code>classifier.create(layerSizes)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>layerSizes</strong>: Integer vector specifying the number of neurons in
+each layer including the input and output layers. The first
+element must be the size of the inputs (feature dimensions)
+and the last element must be the size of outputs (regression
+dimensions). For example, [N,1] means two-layer network that
+takes an N-dimensional vector as an input and output scalar.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>ActivateFunc</strong>: Parameter specifying the activation function
+for each neuron: one of 'Identity', 'Sigmoid', 'Gaussian'.
+default 'Sigmoid'.</li>
+<li><strong>FParam1</strong>, <strong>FParam2</strong>: Free parameters of the activation
+function, alpha and beta, respectively. See the formulas.</li>
+</ul>
+
+<p>The method creates an MLP network with the specified topology and
+assigns the same activation function to all the neurons.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="ANN_MLP.html">cv.ANN_MLP</a> <a href="ANN_MLP.train.html">cv.ANN_MLP/train</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

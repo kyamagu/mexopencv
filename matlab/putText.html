@@ -1,0 +1,69 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.putText</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.putText</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.putText</div>
+      <div class="helpcontent"><p>Draws a text string</p>
+
+<pre><code>img = <a href="putText.html">cv.putText</a>(img, txt, org)
+[...] = <a href="putText.html">cv.putText</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>img</strong> Image.</li>
+<li><strong>txt</strong> Text string to be drawn.</li>
+<li><strong>org</strong> Bottom-left corner of the text string in the image. <code>[x,y]</code></li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>img</strong> Output image.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>FontFace</strong> Font to use. One of the following:<ul>
+<li><code>'HersheySimplex'</code> (default)</li>
+<li><code>'HersheyPlain'</code></li>
+<li><code>'HersheyDuplex'</code></li>
+<li><code>'HersheyComplex'</code></li>
+<li><code>'HersheyTriplex'</code></li>
+<li><code>'HersheyComplexSmall'</code></li>
+<li><code>'HersheyScriptSimplex'</code></li>
+<li><code>'HersheyScriptComplex'</code></li>
+</ul>
+</li>
+<li><strong>FontStyle</strong> Font style. One of 'Regular' (default) or 'Italic'</li>
+<li><strong>FontScale</strong> Font scale factor that is multiplied by the
+font-specific base size. default 1.0</li>
+<li><strong>Color</strong> 3-element floating point vector specifying text color.</li>
+<li><strong>Thickness</strong> Thickness of the lines used to draw a text. default 1.</li>
+<li><strong>LineType</strong> Type of the line boundary. One of 8,4,'AA' (Anti-aliased
+line). default 8.</li>
+<li><strong>BottomLeftOrigin</strong> When true, the image data origin is at the
+bottom-left corner. Otherwise, it is at the top-left corner.
+default false.</li>
+</ul>
+
+<p>The function <code>putText</code> renders the specified text string in the image.
+Symbols that cannot be rendered using the specified font are replaced by
+question marks.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="getTextSize.html">cv.getTextSize</a></div>
+   </body>
+</html>

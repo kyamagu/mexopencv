@@ -1,0 +1,102 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.calcOpticalFlowPyrLK</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.calcOpticalFlowPyrLK</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.calcOpticalFlowPyrLK</div>
+      <div class="helpcontent"><p>Calculates an optical flow for a sparse feature set using the iterative Lucas-Kanade method with pyramids</p>
+
+<pre><code>nextPts = <a href="calcOpticalFlowPyrLK.html">cv.calcOpticalFlowPyrLK</a>(prevImg, nextImg, prevPts)
+[nextPts, status, err] = <a href="calcOpticalFlowPyrLK.html">cv.calcOpticalFlowPyrLK</a>(...)
+[...] = <a href="calcOpticalFlowPyrLK.html">cv.calcOpticalFlowPyrLK</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>prevImg</strong> First 8-bit single-channel or 3-channel input image.</li>
+<li><strong>nextImg</strong> Second input image of the same size and the same type as <code>prevImg</code>.</li>
+<li><strong>prevPts</strong> Vector of 2D points for which the flow needs to be found. Cell
+array of 2-element vectors is accepted: <code>{[x,y], ...}</code></li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>nextPts</strong> Output vector of 2D points (with single-precision floating-point
+coordinates) containing the calculated new positions of input features
+in the second image. A cell array of 2-elements vectors of the same
+size as <code>prevPts</code>.</li>
+<li><strong>status</strong> Output status vector. Each element of the vector is set to 1 if
+the flow for the corresponding features has been found. Otherwise, it
+is set to 0.</li>
+<li><strong>err</strong> Output vector of errors; each element of the vector is set to an
+error for the corresponding feature, type of the error measure is
+determined by <code>GetMinEigenvals</code> option; if the flow wasn't found then
+the error is not defined (use <code>status</code> to find such cases).</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>InitialFlow</strong> Vector of 2D points to be used for the initial estimate of
+<code>nextPts</code>. If not specified, <code>prevPts</code> will be used as an initial value.
+The vector must have the same size as in the input.</li>
+<li><strong>WinSize</strong> Size of the search window at each pyramid level. Default to
+[21, 21].</li>
+<li><strong>MaxLevel</strong> 0-based maximal pyramid level number. If set to 0, pyramids are
+not used (single level). If set to 1, two levels are used, and so on.
+Default to 3.</li>
+<li><strong>Criteria</strong> Parameter specifying the termination criteria of the iterative
+search algorithm (after the specified maximum number of iterations
+<code>criteria.maxCount</code> or when the search window moves by less than
+<code>criteria.epsilon</code>. Struct with <code>{'type','maxCount','epsilon'}</code> fields is
+accepted. The type field should have one of 'Count', 'EPS', or
+'Count+EPS' to indicate which criteria to use. Default to
+<code>struct('type', 'Count+EPS', 'maxCount', 30, 'epsilon', 0.01)</code>.</li>
+<li><strong>GetMinEigenvals</strong> Use minimum eigen values as an error measure
+(see <code>MinEigThreshold</code> description); if the flag is not set, then L1
+distance between patches around the original and a moved point,
+divided by number of pixels in a window, is used as a error measure.
+Default to false.</li>
+<li><strong>MinEigThreshold</strong> The algorithm calculates the minimum eigen value of a
+2x2 normal matrix of optical flow equations (this matrix is called a
+spatial gradient matrix in [Bouguet00]), divided by number of pixels
+in a window; if this value is less than <code>MinEigThreshold</code>, then a
+corresponding feature is filtered out and its flow is not processed,
+so it allows to remove bad points and get a performance boost.
+Default to 1e-4.</li>
+</ul>
+
+<p>The function implements a sparse iterative version of the Lucas-Kanade optical
+flow in pyramids. See [Bouguet00].</p>
+
+<h2> References</h2>
+
+<p>[Bouguet00]:</p>
+
+<blockquote>
+<p>Jean-Yves Bouguet. &quot;Pyramidal Implementation of the Lucas Kanade Feature
+Tracker&quot;, 2000</p>
+</blockquote>
+
+<h2> Example</h2>
+
+<pre><code>prevIm = rgb2gray(imread('prev.jpg'));
+nextIm = rgb2gray(imread('next.jpg'));
+prevPts = <a href="goodFeaturesToTrack.html">cv.goodFeaturesToTrack</a>(prevIm);
+nextPts = <a href="calcOpticalFlowPyrLK.html">cv.calcOpticalFlowPyrLK</a>(prevIm, nextIm, prevPts);</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="goodFeaturesToTrack.html">cv.goodFeaturesToTrack</a> <a href="calcOpticalFlowFarneback.html">cv.calcOpticalFlowFarneback</a></div>
+   </body>
+</html>

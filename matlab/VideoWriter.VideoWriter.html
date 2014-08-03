@@ -1,0 +1,63 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.VideoWriter/VideoWriter</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.VideoWriter/VideoWriter</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.VideoWriter/VideoWriter</div>
+      <div class="helpcontent"><p>VideoWriter constructors</p>
+
+<pre><code>vid = <a href="VideoWriter.html">cv.VideoWriter</a>(filename, siz)
+vid = <a href="VideoWriter.html">cv.VideoWriter</a>(filename, siz, 'option', option_value, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>filename</strong> Name of the video file</li>
+<li><strong>siz</strong> Size of the video frame in [width, height] format</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>vid</strong> New instance of the VideoWriter</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>FourCC</strong> 4-character code of codec used to compress the frames.
+Examples are:<ul>
+<li><strong>PIM1</strong> MPEG-1</li>
+<li><strong>MJPG</strong> Motion-JPEG</li>
+<li><strong>MP42</strong> MPEG-4.2</li>
+<li><strong>DIV3</strong> MPEG-4.3</li>
+<li><strong>DIVX</strong> MPEG-4</li>
+<li><strong>U263</strong> H263 (default)</li>
+<li><strong>I263</strong> H263I</li>
+<li><strong>FLV1</strong> FLV1</li>
+</ul>
+</li>
+<li><strong>FPS</strong> Framerate of the created video stream. default 25.</li>
+<li><strong>Color</strong> If it is not zero, the encoder will expect and encode
+color frames, otherwise it will work with grayscale frames
+(the flag is currently supported on Windows only). default
+true.</li>
+</ul>
+
+<p>VideoWriter create a video file. Use <a href="VideoWriter.html">cv.VideoWriter</a>.write to add
+video frames.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="VideoWriter.html">cv.VideoWriter</a> <a href="VideoWriter.write.html">cv.VideoWriter/write</a></div>
+   </body>
+</html>

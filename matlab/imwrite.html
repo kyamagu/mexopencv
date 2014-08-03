@@ -1,0 +1,60 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.imwrite</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.imwrite</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.imwrite</div>
+      <div class="helpcontent"><p>Saves an image to a specified file</p>
+
+<pre><code><a href="imwrite.html">cv.imwrite</a>(filename, src)
+<a href="imwrite.html">cv.imwrite</a>(filename, src, 'OptionName', optionValue, ...)
+status = <a href="imwrite.html">cv.imwrite</a>(...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>filename</strong> Name of the file.</li>
+<li><strong>src</strong> Image to be saved.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>status</strong> Logical value indicating success when true.</li>
+</ul>
+
+<h2> Options</h2>
+
+<p>Format-specific save parameters. The following parameters are currently
+supported</p>
+
+<ul>
+<li><strong>JpegQuality</strong> For JPEG, it can be a quality from 0 to 100 (the higher
+is the better). Default value is 95.</li>
+<li><strong>PngCompression</strong> For PNG, it can be the compression level from 0 to 9.
+A higher value means a smaller size and longer compression time.
+Default value is 3.</li>
+<li><strong>PxmBinary</strong> For PPM, PGM, or PBM, it can be a binary format flag, 0 or
+1 . Default value is 1.</li>
+</ul>
+
+<p>The function imwrite saves the image to the specified file. The image format
+is chosen based on the filename extension (see <a href="imread.html">cv.imread</a> for the list of
+extensions). Only 8-bit (or 16-bit in case of PNG, JPEG 2000, and TIFF)
+single-channel or 3-channel (with RGB channel order) images can be saved
+using this function.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="imread.html">cv.imread</a></div>
+   </body>
+</html>

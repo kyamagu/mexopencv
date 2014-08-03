@@ -1,0 +1,83 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.EMD</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.EMD</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.EMD</div>
+      <div class="helpcontent"><p>Computes the 'minimal' work distance between two weighted point configurations</p>
+
+<pre><code>d = <a href="EMD.html">cv.EMD</a>(signature1, signature2)
+d = <a href="EMD.html">cv.EMD</a>(signature1, signature2, 'OptionName', optionValue, ...)
+[d, lowerBound, flow] = <a href="EMD.html">cv.EMD</a>(...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>signature1</strong> First signature, a size1 x dims + 1 floating-point matrix.
+Each row stores the point weight followed by the point coordinates.
+The matrix is allowed to have a single column (weights only) if the
+user-defined cost matrix is used.</li>
+<li><strong>signature2</strong> Second signature of the same format as signature1, though
+the number of rows may be different. The total weights may be
+different. In this case an extra ?dummy? point is added to either
+signature1 or signature2.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>d</strong> Output distance value.</li>
+<li><strong>lowerBound</strong> lower boundary of a distance between the two signatures.
+See 'LowerBound' in options.</li>
+<li><strong>flow</strong> Resultant size1 x size2 flow matrix: flow(i,j) is a flow from
+i-th point of signature1 to j-th point of signature2</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>DistType</strong> Used metric.'L1', 'L2', and 'C' stand for one of the
+standard metrics. 'User' means that a pre-calculated cost matrix
+cost is used. default 'L2'.</li>
+<li><strong>Cost</strong> User-defined  size1 x size2 cost matrix. Also, if a cost matrix
+is used, lower boundary lowerBound cannot be calculated because it
+needs a metric function.</li>
+<li><strong>LowerBound</strong> Optional input/output parameter: lower boundary of a
+distance between the two signatures that is a distance between
+mass centers. The lower boundary may not be calculated if the
+user-defined cost matrix is used, the total weights of point
+configurations are not equal, or if the signatures consist of
+weights only (the signature matrices have a single column). If the
+calculated distance between mass centers is greater or equal to
+lowerBound (it means that the signatures are far enough), the
+function does not calculate EMD. In any case lowerBound is set to
+the calculated distance between mass centers on return. Thus, if
+you want to calculate both distance between mass centers and EMD,
+lowerBound should be set to 0. default 0.</li>
+</ul>
+
+<p>The function computes the earth mover distance and/or a lower boundary
+of the distance between the two weighted point configurations. One of
+the applications described in [RubnerSept98] is multi-dimensional
+histogram comparison for image retrieval. EMD is a transportation
+problem that is solved using some modification of a simplex algorithm,
+thus the complexity is exponential in the worst case, though, on average
+it is much faster. In the case of a real metric the lower boundary can
+be calculated even faster (using linear-time algorithm) and it can be
+used to determine roughly whether the two signatures are far enough so
+that they cannot relate to the same object.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calcHist.html">cv.calcHist</a> <a href="compareHist.html">cv.compareHist</a></div>
+   </body>
+</html>

@@ -1,0 +1,82 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.GBTrees/predict</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.GBTrees/predict</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.GBTrees/predict</div>
+      <div class="helpcontent"><p>Predicts a response for an input sample</p>
+
+<pre><code>results = classifier.predict(samples)
+[...] = classifier.predict(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>samples</strong> Input row vectors</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>results</strong> Output labels or regression values</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>MissingMask</strong> Missing values mask, which is a
+dimentional matrix of the same size as sample having the
+uint8 type. 1 corresponds to the missing value in the same
+position in the sample vector. If there are no missing
+values in the feature vector, an empty matrix can be
+passed instead of the missing mask. default none.</li>
+<li><strong>Slice</strong> Parameter defining the part of the ensemble used for
+prediction. If slice = Range::all(), all trees are used.
+Use this parameter to get predictions of the GBT models
+with different ensemble sizes learning only one model.
+2-element vector or ':' (all) is accepted. default ':'.</li>
+<li><strong>K</strong> Number of tree ensembles built in case of the
+classification problem. Use this parameter to change the
+ouput to sum of the trees predictions in the k-th
+ensemble only. To get the total GBT model prediction, k
+value must be -1. For regression problems, k is also equal
+to -1. default -1.</li>
+</ul>
+
+<p>The method predicts the response corresponding to the given
+sample. The result is either the class label or the estimated
+function value. The method enables using the parallel version of
+the GBT model prediction if the OpenCV is built with the TBB
+library. In this case, predictions of single trees are computed in
+a parallel fashion.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="GBTrees.html">cv.GBTrees</a> <a href="GBTrees.train.html">cv.GBTrees/train</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

@@ -1,0 +1,65 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.reprojectImageTo3D</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.reprojectImageTo3D</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.reprojectImageTo3D</div>
+      <div class="helpcontent"><p>Reprojects a disparity image to 3D space</p>
+
+<pre><code>im3d = <a href="reprojectImageTo3D.html">cv.reprojectImageTo3D</a>(disparity, Q)
+[...] = <a href="reprojectImageTo3D.html">cv.reprojectImageTo3D</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>disparity</strong> Input single-channel 8-bit unsigned, 16-bit signed, 32-bit
+signed or 32-bit floating-point disparity image.</li>
+<li><strong>Q</strong> 4 x 4 perspective transformation matrix that can be obtained with
+<a href="stereoRectify.html">cv.stereoRectify</a>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>im3d</strong> Output 3-channel floating-point image of the same size as
+disparity. Each element of im3d(x,y,ch) contains 3D coordinates
+of the point (x,y) computed from the disparity map.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>HandleMissingValues</strong> Indicates, whether the function should handle
+missing values (i.e. points where the disparity was not computed).
+If handleMissingValues=true, then pixels with the minimal
+disparity that corresponds to the outliers (see cv.StereoBM) are
+transformed to 3D points with a very large Z value (currently set
+to 10000). default false.</li>
+</ul>
+
+<p>The function transforms a single-channel disparity map to a 3-channel
+image representing a 3D surface. That is, for each pixel (x,y) and the
+corresponding disparity d=disparity(x,y), it computes:</p>
+
+<pre><code>[X,Y,Z,W]^T = Q * [x,y,disparity(x,y),1]^T
+im3d(x,y,:) = [X/W,Y/W,Z/W]
+</code></pre>
+
+<p>The matrix Q can be an arbitrary  matrix (for example, the one computed
+by cv.stereoRectify). To reproject a sparse set of points {(x,y,d),...}
+to 3D space, use <a href="perspectiveTransform.html">cv.perspectiveTransform</a>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="StereoBM.html">cv.StereoBM</a> <a href="stereoRectify.html">cv.stereoRectify</a> <a href="perspectiveTransform.html">cv.perspectiveTransform</a></div>
+   </body>
+</html>

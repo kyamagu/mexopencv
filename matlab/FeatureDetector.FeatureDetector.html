@@ -1,0 +1,59 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.FeatureDetector/FeatureDetector</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.FeatureDetector/FeatureDetector</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.FeatureDetector/FeatureDetector</div>
+      <div class="helpcontent"><p>FeatureDetector constructors</p>
+
+<pre><code>detector = <a href="FeatureDetector.html">cv.FeatureDetector</a>(type)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>type</strong> Type of the detector. see below. default 'FAST'</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>detector</strong> New instance of the FeatureDetector</li>
+</ul>
+
+<p>The following detector types are supported:</p>
+
+<pre><code> 'FAST'       FastFeatureDetector
+ 'STAR'       StarFeatureDetector
+ 'SIFT'       SiftFeatureDetector
+ 'SURF'       SurfFeatureDetector
+ 'ORB'        OrbFeatureDetector
+ 'MSER'       MserFeatureDetector
+ 'GFTT'       GoodFeaturesToTrackDetector
+ 'HARRIS'     GoodFeaturesToTrackDetector with Harris detector enabled
+ 'Dense'      DenseFeatureDetector
+ 'SimpleBlob' SimpleBlobDetector
+</code></pre>
+
+<p>Also a combined format with one of the following adaptor is
+supported</p>
+
+<pre><code> 'Grid'       GridAdaptedFeatureDetector
+ 'Pyramid'    PyramidAdaptedFeatureDetector
+</code></pre>
+
+<p>for example: 'GridFAST', 'PyramidSTAR'.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.html">cv.FeatureDetector</a> <a href="FeatureDetector.write.html">cv.FeatureDetector/write</a></div>
+   </body>
+</html>

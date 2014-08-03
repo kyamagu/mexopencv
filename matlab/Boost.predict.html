@@ -1,0 +1,70 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.Boost/predict</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.Boost/predict</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.Boost/predict</div>
+      <div class="helpcontent"><p>Predicts responses for input samples</p>
+
+<pre><code>results = classifier.predict(samples)
+[...] = classifier.predict(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>samples</strong> Input row vectors</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>results</strong> Output labels or regression values</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>MissingMask</strong> Optional mask of missing measurements. To
+handle missing measurements, the weak classifiers must
+include surrogate splits.</li>
+<li><strong>Slice</strong> Continuous subset of the sequence of weak classifiers
+to be used for prediction. 2-element vector or ':' (all)
+is accepted. default ':'.</li>
+<li><strong>RawMode</strong> Normally, it should be set to false.</li>
+<li><strong>ReturnSum</strong> If true then return sum of votes instead of the
+class label.</li>
+</ul>
+
+<p>The method runs the sample through the trees in the ensemble and
+returns the output class label based on the weighted voting.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Boost.html">cv.Boost</a> <a href="Boost.train.html">cv.Boost/train</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

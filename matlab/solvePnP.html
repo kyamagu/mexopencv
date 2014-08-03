@@ -1,0 +1,93 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.solvePnP</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.solvePnP</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.solvePnP</div>
+      <div class="helpcontent"><p>Finds an object pose from 3D-2D point correspondences</p>
+
+<pre><code>[rvec, tvec] = <a href="solvePnP.html">cv.solvePnP</a>(objectPoints, imagePoints, cameraMatrix)
+[rvec, tvec] = <a href="solvePnP.html">cv.solvePnP</a>(objectPoints, imagePoints, cameraMatrix, distCoeffs)
+[...] = <a href="solvePnP.html">cv.solvePnP</a>(..., distCoeffs, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>objectPoints</strong> Array of object points in the object coordinate space,
+1xNx3/Nx1x3 or 3xN/Nx3 array, where N is the number of points, or
+cell array of 3-element vectors can be also passed here.</li>
+<li><strong>imagePoints</strong> Array of corresponding image points, 1xNx2/Nx1x2 or
+2xN/Nx2 array, where N is the number of points, or cell array of
+2-element vectors can be also passed here.</li>
+<li><strong>cameraMatrix</strong> Input camera matrix <code>A = [fx,0,cx; 0,fy,cy; 0,0,1]</code>.</li>
+<li><strong>distCoeffs</strong> Input vector of distortion coefficients [k1,k2,p1,p2,k3,
+        k4,k5,k6] of 4, 5, or 8 elements. If the vector is empty, the
+zero distortion coefficients are assumed.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>rvec</strong> Output rotation vector (see cv.Rodrigues) that, together with
+<code>tvec</code>, brings points from the model coordinate system to the
+camera coordinate system.</li>
+<li><strong>tvec</strong> Output translation vector.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Rvec</strong> Initial <code>rvec</code>. default empty.</li>
+<li><strong>Tvec</strong> Initial <code>tvec</code>. default empty.</li>
+<li><strong>UseExtrinsicGuess</strong> If true, the function uses the provided <code>rvec</code>
+and <code>tvec</code> values as initial approximations of the rotation and
+translation vectors, respectively, and further optimizes them.
+default false.</li>
+<li><strong>Flags</strong> Method for solving the PnP problem. One of the following:<ul>
+<li><strong>Iterative</strong> Iterative method is based on Levenberg-Marquardt
+optimization. In this case the function finds such a pose that
+minimizes reprojection error, that is the sum of squared distances
+between the observed projections <code>imagePoints</code> and the projected
+(using cv.projectPoints) <code>objectPoints</code>. This is the default.</li>
+<li><strong>P3P</strong> Method is based on the paper [1]. In this case the
+function requires exactly four object and image points.</li>
+<li><strong>EPnP</strong> Method has been introduced in the paper [2].</li>
+</ul>
+</li>
+</ul>
+
+<h2> References</h2>
+
+<p>[1]:</p>
+
+<blockquote>
+<p>X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang; &quot;Complete Solution
+Classification for the Perspective-Three-Point Problem&quot;,
+IEEE Trans. on PAMI, vol. 25, No. 8, August 2003.</p>
+</blockquote>
+
+<p>[2]:</p>
+
+<blockquote>
+<p>F.Moreno-Noguer, V.Lepetit and P.Fua;
+&quot;EPnP: Efficient Perspective-n-Point Camera Pose Estimation&quot;.</p>
+</blockquote>
+
+<p>The function estimates the object pose given a set of object points,
+their corresponding image projections, as well as the camera matrix and
+the distortion coefficients.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="solvePnPRansac.html">cv.solvePnPRansac</a></div>
+   </body>
+</html>

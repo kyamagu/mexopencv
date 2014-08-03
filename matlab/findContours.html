@@ -1,0 +1,85 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.findContours</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.findContours</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.findContours</div>
+      <div class="helpcontent"><p>Finds contours in a binary image</p>
+
+<pre><code>contours = <a href="findContours.html">cv.findContours</a>(image)
+contours = <a href="findContours.html">cv.findContours</a>(image, 'OptionName', optionValue, ...)
+[contours,hierarchy] = <a href="findContours.html">cv.findContours</a>(...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>image</strong> Source, an 8-bit single-channel image. Non-zero pixels are treated
+as 1's. Zero pixels remain 0's, so the image is treated as binary.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>contours</strong> Detected contours. Each contour is stored as a vector of points.</li>
+<li><strong>hierarchy</strong> Optional output vector containing information about the image
+topology. It has as many elements as the number of contours. For each
+i-th contour, contours[i], the elements hierarchy[i][0], hiearchy[i][1], 
+hiearchy[i][2], and hiearchy[i][3] are set to 0-based indices in contours 
+of the next and previous contours at the same hierarchical level, 
+the first child contour and the parent contour, respectively.
+If for the i-th contour there are no next, previous, parent, or nested
+contours, the corresponding elements of hierarchy[i] will be negative.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Mode</strong> Contour retrieval mode.<ul>
+<li><code>'External'</code> retrieves only the extreme outer contours. It sets
+hierarchy[i][2]=hierarchy[i][3]=-1 for all the contours.</li>
+<li><code>'List'</code> retrieves all of the contours without establishing any
+hierarchical relationships.   </li>
+<li><code>'CComp'</code> retrieves all of the contours and organizes them into a
+two-level hierarchy. At the top level, there are external
+boundaries of the components. At the second level, there are
+boundaries of the holes. If there is another contour inside a
+hole of a connected component, it is still put at the top level.</li>
+<li><code>'Tree'</code> retrieves all of the contours and reconstructs a full
+hierarchy of nested contours</li>
+</ul>
+</li>
+<li><strong>Method</strong> Contour approximation method.<ul>
+<li><code>'None'</code> stores absolutely all the contour points. That is, any 2
+subsequent points (x1,y1) and (x2,y2) of the contour will be
+either horizontal, vertical or diagonal neighbors, that is,
+max(abs(x1-x2),abs(y2-y1))==1.</li>
+<li><code>'Simple'</code> compresses horizontal, vertical, and diagonal segments and
+leaves only their end points. For example, an up-right
+rectangular contour is encoded with 4 points.</li>
+<li><code>'TC89_L1'</code>, <code>'TC89_KCOS'</code> applies one of the flavors of the Teh-Chin
+chain approximation algorithm. See [TehChin89] for details.</li>
+</ul>
+</li>
+<li><strong>Offset</strong> Optional offset by which every contour point is shifted. This
+is useful if the contours are extracted from the image ROI and then
+they should be analyzed in the whole image context.</li>
+</ul>
+
+<p>The function retrieves contours from the binary image using the algorithm
+[Suzuki85]. The contours are a useful tool for shape analysis and object
+detection and recognition.</p>
+</div><!--after help -->
+   </body>
+</html>

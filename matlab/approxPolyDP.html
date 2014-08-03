@@ -1,0 +1,53 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.approxPolyDP</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.approxPolyDP</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.approxPolyDP</div>
+      <div class="helpcontent"><p>Approximates a polygonal curve(s) with the specified precision</p>
+
+<pre><code>approxCurve = <a href="approxPolyDP.html">cv.approxPolyDP</a>(curve)
+approxCurve = <a href="approxPolyDP.html">cv.approxPolyDP</a>(curve, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>curve</strong> Input vector of a 2D point stored in numeric array or cell array.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>approxCurve</strong> Result of the approximation. The type should match the type
+of the input curve.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Epsilon</strong> Parameter specifying the approximation accuracy. This is the
+maximum distance between the original curve and its approximation.
+default 2.0</li>
+<li><strong>Closed</strong> If true, the approximated curve is closed (its first and last
+vertices are connected). Otherwise, it is not closed.</li>
+</ul>
+
+<p>The functions approxPolyDP approximate a curve or a polygon with another
+curve/polygon with less vertices so that the distance between them is less
+or equal to the specified precision. It uses the Douglas-Peucker algorithm
+<a href="http://en.wikipedia.org/wiki/Ramer-Douglas-Peucker_algorithm">http://en.wikipedia.org/wiki/Ramer-Douglas-Peucker_algorithm</a>.</p>
+</div><!--after help -->
+   </body>
+</html>

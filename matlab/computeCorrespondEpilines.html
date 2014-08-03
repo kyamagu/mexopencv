@@ -1,0 +1,67 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.computeCorrespondEpilines</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.computeCorrespondEpilines</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.computeCorrespondEpilines</div>
+      <div class="helpcontent"><p>For points in an image of a stereo pair, computes the corresponding epilines in the other image</p>
+
+<pre><code>lines = <a href="computeCorrespondEpilines.html">cv.computeCorrespondEpilines</a>(points, F)
+[...] = <a href="computeCorrespondEpilines.html">cv.computeCorrespondEpilines</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>points</strong> Input points. Nx1x2 or 1xNx2 array, or cell array of 2 element
+vectors.</li>
+<li><strong>F</strong> Fundamental matrix that can be estimated using
+<a href="findFundamentalMat.html">cv.findFundamentalMat</a> or <a href="stereoRectify.html">cv.stereoRectify</a>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>lines</strong> Output vector of the epipolar lines corresponding to the points
+in the other image. Each line ax+by+c=0 is encoded by 3 numbers
+(a,b,c).</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>WhichImage</strong> Index of the image (1 or 2) that contains the points.
+default 1.</li>
+</ul>
+
+<p>For every point in one of the two images of a stereo pair, the function
+finds the equation of the corresponding epipolar line in the other image.</p>
+
+<p>From the fundamental matrix definition (see cv.findFundamentalMat), line
+l_i^(2) in the second image for the point p_i^(1) in the first image
+(when whichImage=1) is computed as:</p>
+
+<pre><code>l_i^(2) = F * p_i^(1)
+</code></pre>
+
+<p>And vice versa, when whichImage=2, l_i^(1) is computed from p_i^(2) as:</p>
+
+<pre><code>l_i^(2) = F^T * p_i^(1)
+</code></pre>
+
+<p>Line coefficients are defined up to a scale. They are normalized so that
+a^2+b^2=1.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findFundamentalMat.html">cv.findFundamentalMat</a> <a href="stereoRectify.html">cv.stereoRectify</a></div>
+   </body>
+</html>

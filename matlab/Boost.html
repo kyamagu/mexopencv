@@ -1,0 +1,231 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.Boost</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.Boost</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.Boost</div>
+      <div class="helpcontent"><p>Boosting</p>
+
+<p>A common machine learning task is supervised learning. In supervised
+learning, the goal is to learn the functional relationship F: y = F(x)
+between the input x and the output y. Predicting the qualitative output is
+called classification, while predicting the quantitative output is called
+regression.</p>
+
+<p>Boosting is a powerful learning concept that provides a solution to the
+supervised classification learning task. It combines the performance of
+many weak classifiers to produce a powerful committee [HTF01]. A weak
+classifier is only required to be better than chance, and thus can be very
+simple and computationally inexpensive. However, many of them smartly
+combine results to a strong classifier that often outperforms most
+monolithic strong classifiers such as SVMs and Neural Networks.</p>
+
+<p>Decision trees are the most popular weak classifiers used in boosting
+schemes. Often the simplest decision trees with only a single split node
+per tree (called stumps ) are sufficient.</p>
+
+<p>The boosted model is based on N training examples (xi,yi) with xi IN
+R^k and yi IN {-1,+1}. xi is a K-component vector. Each component
+encodes a feature relevant to the learning task at hand. The desired
+two-class output is encoded as -1 and +1.</p>
+
+<p>Different variants of boosting are known as Discrete Adaboost, Real
+AdaBoost, LogitBoost, and Gentle AdaBoost [FHT98]. All of them are very
+similar in their overall structure.</p>
+
+<p>[FHT98] Friedman, J. H., Hastie, T. and Tibshirani, R. Additive Logistic
+Regression: a Statistical View of Boosting. Technical Report, Dept. of
+Statistics, Stanford University, 1998.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Boost.Boost.html">cv.Boost/Boost</a> <a href="Boost.train.html">cv.Boost/train</a> <a href="Boost.predict.html">cv.Boost/predict</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="Boost.Boost.html">Boost</a></td>
+            <td class="m-help">Boosted tree classifier&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="Boost.Params.html">Params</a></td>
+            <td class="m-help">Object parameters&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="Boost.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.clear.html">clear</a></td>
+            <td class="m-help">Deallocates memory and resets the model state&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.load.html">load</a></td>
+            <td class="m-help">Loads the model from a file&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.predict.html">predict</a></td>
+            <td class="m-help">Predicts responses for input samples&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.save.html">save</a></td>
+            <td class="m-help">Saves the model to a file&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.train.html">train</a></td>
+            <td class="m-help">Trains a boosted tree classifier&nbsp;</td>
+         </tr>
+      </table>
+   </body>
+</html>

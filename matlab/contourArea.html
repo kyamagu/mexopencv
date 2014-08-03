@@ -1,0 +1,52 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.contourArea</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.contourArea</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.contourArea</div>
+      <div class="helpcontent"><p>Calculates a contour area</p>
+
+<pre><code>a = <a href="contourArea.html">cv.contourArea</a>(curve)
+a = <a href="contourArea.html">cv.contourArea</a>(curve, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>curve</strong> Input vector of a 2D point stored in numeric array or cell array.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>a</strong> Output area.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Oriented</strong> Oriented area flag. If it is true, the function returns a
+signed area value, depending on the contour orientation (clockwise or
+counter-clockwise). Using this feature you can determine orientation
+of a contour by taking the sign of an area. By default, the parameter
+is false, which means that the absolute value is returned.</li>
+</ul>
+
+<p>The function computes a contour area. Similarly to <a href="moments.html">cv.moments</a> , the area is
+computed using the Green formula. Thus, the returned area and the number of
+non-zero pixels, if you draw the contour using <a href="drawContours.html">cv.drawContours</a> or <a href="fillPoly.html">cv.fillPoly</a>,
+can be different.</p>
+</div><!--after help -->
+   </body>
+</html>

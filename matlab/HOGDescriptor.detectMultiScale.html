@@ -1,0 +1,71 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.HOGDescriptor/detectMultiScale</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.HOGDescriptor/detectMultiScale</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.HOGDescriptor/detectMultiScale</div>
+      <div class="helpcontent"><p>Performs object detection with a multi-scale window</p>
+
+<pre><code>rcts = hog.detectMultiScale(im, 'Option', optionValue, ...)
+[rcts, weights] = hog.detectMultiScale(...)
+</code></pre>
+
+<p>The detected objects are returned as a cell array of rectangles.</p>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>im</strong> Matrix of the type uint8 containing an image where
+objects are detected.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>rcts</strong> Cell array of rectangles where objects are found.
+Rectangles of the form <code>{[x,y,width,height], ...}</code></li>
+<li><strong>weights</strong> Vector of associated weights.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>HitThreshold</strong> Threshold for the distance between features
+and SVM classifying plane. default 0</li>
+<li><strong>WinStride</strong> Window stride. 2-element array [x,y]</li>
+<li><strong>Padding</strong> 2-element array [x,y]</li>
+<li><strong>Scale</strong> Step size of scales to search. default 1.05</li>
+<li><strong>FinalThreshold</strong> Final threshold value. default 2.0</li>
+<li><strong>UseMeanshiftGrouping</strong> Flag to use meanshift grouping.
+default false</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.html">cv.HOGDescriptor</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

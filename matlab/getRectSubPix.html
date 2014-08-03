@@ -1,0 +1,52 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.getRectSubPix</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.getRectSubPix</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.getRectSubPix</div>
+      <div class="helpcontent"><p>Retrieves a pixel rectangle from an image with sub-pixel accuracy</p>
+
+<pre><code>dst = <a href="getRectSubPix.html">cv.getRectSubPix</a>(src, siz, center)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Source image.</li>
+<li><strong>siz</strong> Size of the extracted patch.</li>
+<li><strong>center</strong> Floating point coordinates of the center of the extracted
+rectangle within the source image. The center must be inside the
+image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Extracted patch that has the size patchSize and the same number of
+channels as src.</li>
+</ul>
+
+<p>The function getRectSubPix extracts pixels from src:</p>
+
+<pre><code>dst(x,y) = src(x+center.x-(dst.cols-1)*0.5, y+center.y-(dst.rows-1)*0.5))
+</code></pre>
+
+<p>where the values of the pixels at non-integer coordinates are retrieved using
+bilinear interpolation. Every channel of multi-channel images is processed
+independently. While the center of the rectangle must be inside the image,
+parts of the rectangle may be outside. In this case, the replication border
+mode is used to extrapolate the pixel values outside of the image.</p>
+</div><!--after help -->
+   </body>
+</html>

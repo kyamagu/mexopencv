@@ -1,0 +1,67 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.KNearest/train</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.KNearest/train</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.KNearest/train</div>
+      <div class="helpcontent"><p>Trains the model</p>
+
+<pre><code>classifier.train(trainData, responses)
+classifier.train(trainData, responses, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>trainData</strong> row vectors of training samples.</li>
+<li><strong>responses</strong> vector of training labels in case of
+classification or response values for regression.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>IsRegression</strong> Type of the problem: true for regression and
+false for classification.</li>
+<li><strong>MaxK</strong> Number of maximum neighbors that may be passed to the
+method find_nearest.</li>
+<li><strong>SampleIdx</strong> Indicator samples of interest. Must have the
+the same size to responses.</li>
+<li><strong>UpdateBase</strong> Specifies whether the model is trained from
+scratch (UpdateBase=false), or it is updated using the
+new training data (UpdateBase=true). In the latter case,
+the parameter maxK must not be larger than the original
+value.</li>
+</ul>
+
+<p>The method trains the K-Nearest model.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KNearest.html">cv.KNearest</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

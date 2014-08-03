@@ -1,0 +1,210 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.BackgroundSubtractorMOG</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.BackgroundSubtractorMOG</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.BackgroundSubtractorMOG</div>
+      <div class="helpcontent"><p>Gaussian Mixture-based Backbround/Foreground Segmentation Algorithm</p>
+
+<p>The class implements the algorithm described in:</p>
+
+<p>P. KadewTraKuPong and R. Bowden,
+An improved adaptive background mixture model for real-time tracking with
+shadow detection, Proc. 2nd European Workshp on Advanced Video-Based
+Surveillance Systems, 2001.</p>
+
+<a href="http://personal.ee.surrey.ac.uk/Personal/R.Bowden/publications/avbs01/avbs01.pdf">http://personal.ee.surrey.ac.uk/Personal/R.Bowden/publications/avbs01/avbs01.pdf</a></div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BackgroundSubtractorMOG.BackgroundSubtractorMOG.html">cv.BackgroundSubtractorMOG/BackgroundSubtractorMOG</a>
+  <a href="BackgroundSubtractorMOG.apply.html">cv.BackgroundSubtractorMOG/apply</a>
+  <a href="BackgroundSubtractorMOG.getBackgroundImage.html">cv.BackgroundSubtractorMOG/getBackgroundImage</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG.BackgroundSubtractorMOG.html">BackgroundSubtractorMOG</a></td>
+            <td class="m-help">BackgroundSubtractorMOG constructor&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG.backgroundRatio.html">backgroundRatio</a></td>
+            <td class="m-help">Ratio of the background&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG.frameSize.html">frameSize</a></td>
+            <td class="m-help">Size of the frame (not accessible >= 2.4.0)&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG.history.html">history</a></td>
+            <td class="m-help">History&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG.nframes.html">nframes</a></td>
+            <td class="m-help">Number of frames (not accessible >= 2.4.0)&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG.nmixtures.html">nmixtures</a></td>
+            <td class="m-help">Number of mixture components&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG.noiseSigma.html">noiseSigma</a></td>
+            <td class="m-help">Sigma of noise&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG.varThreshold.html">varThreshold</a></td>
+            <td class="m-help">Threshold value (not accessible >= 2.4.0)&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorMOG.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorMOG.apply.html">apply</a></td>
+            <td class="m-help">Computes a foreground mask&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorMOG.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorMOG.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorMOG.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorMOG.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorMOG.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorMOG.getBackgroundImage.html">getBackgroundImage</a></td>
+            <td class="m-help">Computes a foreground mask&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorMOG.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorMOG.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorMOG.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorMOG.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorMOG.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorMOG.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+      </table>
+   </body>
+</html>

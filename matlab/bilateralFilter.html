@@ -1,0 +1,67 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.bilateralFilter</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.bilateralFilter</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.bilateralFilter</div>
+      <div class="helpcontent"><p>Applies the bilateral filter to an image</p>
+
+<pre><code>result = <a href="bilateralFilter.html">cv.bilateralFilter</a>(img)
+result = <a href="bilateralFilter.html">cv.bilateralFilter</a>(img, 'Diameter', -1, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>img</strong> Source 8-bit or floating-point, 1-channel or 3-channel image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>result</strong> Destination image of the same size and type as src.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Diameter</strong> Diameter of each pixel neighborhood that is used during filtering.
+If it is non-positive, it is computed from SigmaSpace. Default: 7</li>
+<li><strong>SigmaColor</strong> Filter sigma in the color space. A larger value of the parameter
+means that farther colors within the pixel neighborhood (see 
+SigmaSpace ) will be mixed together, resulting in larger areas of
+semi-equal color. Default: 50.0</li>
+<li><strong>SigmaSpace</strong> Filter sigma in the coordinate space. A larger value of the
+parameter means that farther pixels will influence each other as
+long as their colors are close enough (see SigmaColor ). When d&gt;0,
+it specifies the neighborhood size regardless of SigmaSpace.
+Otherwise, d is proportional to SigmaSpace.</li>
+</ul>
+
+<p>The function applies bilateral filtering to the input image, as described in
+<a href="http://www.dai.ed.ac.uk/CVonline/LOCAL_COPIES/MANDUCHI1/Bilateral_Filtering.html">http://www.dai.ed.ac.uk/CVonline/LOCAL_COPIES/MANDUCHI1/Bilateral_Filtering.html</a>
+bilateralFilter can reduce unwanted noise very well while keeping edges
+fairly sharp. However, it is very slow compared to most filters.</p>
+
+<p>Sigma values: For simplicity, you can set the 2 sigma values to be the
+same. If they are small (&lt; 10), the filter will not have much effect,
+whereas if they are large (&gt; 150), they will have a very strong effect,
+making the image look ?cartoonish?.</p>
+
+<p>Filter size: Large filters (d &gt; 5) are very slow, so it is recommended
+to use d=5 for real-time applications, and perhaps d=9 for offline
+applications that need heavy noise filtering.</p>
+</div><!--after help -->
+   </body>
+</html>

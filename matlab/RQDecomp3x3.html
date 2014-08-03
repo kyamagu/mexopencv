@@ -1,0 +1,48 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.RQDecomp3x3</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.RQDecomp3x3</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.RQDecomp3x3</div>
+      <div class="helpcontent"><p>Computes an RQ decomposition of 3x3 matrices</p>
+
+<pre><code>[R,Q] = <a href="RQDecomp3x3.html">cv.RQDecomp3x3</a>(M)
+[R,Q,Qx,Qy,Qz] = <a href="RQDecomp3x3.html">cv.RQDecomp3x3</a>(M)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>M</strong> 3x3 input matrix.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>R</strong> 3x3 upper-triangular matrix.</li>
+<li><strong>Q</strong> 3x3 orthogonal matrix.</li>
+<li><strong>Qx</strong> 3x3 rotation matrix around x-axis.</li>
+<li><strong>Qy</strong> 3x3 rotation matrix around y-axis</li>
+<li><strong>Qz</strong> 3x3 rotation matrix around z-axis</li>
+</ul>
+
+<p>The function computes a RQ decomposition using the given rotations. This
+function is used in <a href="decomposeProjectionMatrix.html">cv.decomposeProjectionMatrix</a> to decompose the left
+3x3 submatrix of a projection matrix into a camera and a rotation matrix.</p>
+
+<p>It optionally returns three rotation matrices, one for each axis, and the
+three Euler angles (as the return value) that could be used in OpenGL.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="decomposeProjectionMatrix.html">cv.decomposeProjectionMatrix</a></div>
+   </body>
+</html>

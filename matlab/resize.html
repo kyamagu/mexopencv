@@ -1,0 +1,61 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.resize</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.resize</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.resize</div>
+      <div class="helpcontent"><p>Resizes an image</p>
+
+<pre><code>dst = <a href="resize.html">cv.resize</a>(src, scale)
+dst = <a href="resize.html">cv.resize</a>(src, siz)
+dst = <a href="resize.html">cv.resize</a>(src, scale, 'Interpolation', interpolation)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Source image.</li>
+<li><strong>siz</strong> Destination image size.</li>
+<li><strong>scale</strong> Scale factor along both x and y axis.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Destination image. It has the size siz or the size computed from
+size(src) and scale. The type of dst is the same as of src.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Interpolation</strong> interpolation method. default: 'Linear'</li>
+<li><strong>Nearest</strong> a nearest-neighbor interpolation</li>
+<li><strong>Linear</strong> a bilinear interpolation (used by default)</li>
+<li><strong>Area</strong> resampling using pixel area relation. It may be a preferred
+method for image decimation, as it gives moire-free results.
+But when the image is zoomed, it is similar to the 'Nearest'
+method.</li>
+<li><strong>Cubic</strong> a bicubic interpolation over 4x4 pixel neighborhood</li>
+<li><strong>Lanczos4</strong> a Lanczos interpolation over 8x8 pixel neighborhood</li>
+</ul>
+
+<p>The function resize resizes the image src down to or up to the specified size.</p>
+
+<p>To shrink an image, it will generally look best with 'Area' interpolation,
+whereas to enlarge an image, it will generally look best with 'Cubic' (slow)
+or 'Linear' (faster but still looks OK).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="warpAffine.html">cv.warpAffine</a> <a href="warpPerspective.html">cv.warpPerspective</a></div>
+   </body>
+</html>

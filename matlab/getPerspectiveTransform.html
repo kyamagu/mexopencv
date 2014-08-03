@@ -1,0 +1,48 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.getPerspectiveTransform</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.getPerspectiveTransform</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.getPerspectiveTransform</div>
+      <div class="helpcontent"><p>Calculates a perspective transform from four pairs of the corresponding points</p>
+
+<pre><code>T = <a href="getPerspectiveTransform.html">cv.getPerspectiveTransform</a>(src, dst)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> 4-by-2 row vectors of coordinates of quadrangle vertices in the
+source image.</li>
+<li><strong>dst</strong> 4-by-2 row vectors of the corresponding quadrangle vertices in
+the destination image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>T</strong> 3-by-3 transformation matrix</li>
+</ul>
+
+<p>The function calculates the 3 x 3 matrix of a perspective transform so that</p>
+
+<pre><code> t_i * [X_i; X_i; 1] = T * [x_i; y_i; 1];
+</code></pre>
+
+<p>where</p>
+
+<pre><code> dst(i,:) = [X_i, Y_i], src(i,:) = [x_i, y_i]</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="perspectiveTransform.html">cv.perspectiveTransform</a></div>
+   </body>
+</html>

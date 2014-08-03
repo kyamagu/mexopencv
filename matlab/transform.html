@@ -1,0 +1,62 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.transform</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.transform</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.transform</div>
+      <div class="helpcontent"><p>Performs the matrix transformation of every array element</p>
+
+<pre><code>dst = <a href="transform.html">cv.transform</a>(src, mtx)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Source array that must have as many channels (1 to 4) as columns
+of mtx or columns -1 of mtx</li>
+<li><strong>mtx</strong> floating-point transformation matrix.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Destination array of the same size and depth as src. It has as
+many channels as rows of mtx</li>
+</ul>
+
+<p>The function transform performs the matrix transformation of every
+element of the array src and stores the results in dst:</p>
+
+<pre><code>dst(I) = mtx * src(I)
+</code></pre>
+
+<p>when columns of mtx = src channels, or</p>
+
+<pre><code>dst(I) = mtx * [src(I); 1]
+</code></pre>
+
+<p>when columns of mtx = src channels +1.</p>
+
+<p>Every element of the N -channel array src is interpreted as N -element
+vector that is transformed using the M x N or M x (N+1) matrix mtx to
+M-element vector - the corresponding element of the destination array
+dst.</p>
+
+<p>The function may be used for geometrical transformation of N -dimensional
+points, arbitrary linear color space transformation (such as various
+kinds of RGB to YUV transforms), shuffling the image channels, and so
+forth.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="warpAffine.html">cv.warpAffine</a> <a href="warpPerspective.html">cv.warpPerspective</a> <a href="perspectiveTransform.html">cv.perspectiveTransform</a></div>
+   </body>
+</html>

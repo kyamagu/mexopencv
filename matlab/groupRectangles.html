@@ -1,0 +1,58 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.groupRectangles</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.groupRectangles</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.groupRectangles</div>
+      <div class="helpcontent"><p>Groups the object candidate rectangles</p>
+
+<pre><code>rects = <a href="groupRectangles.html">cv.groupRectangles</a>(rects, thresh)
+[...] = <a href="groupRectangles.html">cv.groupRectangles</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>rects</strong> Cell array of rectangles, where each rectangle is represented
+as a 4-element vector [x,y,w,h].</li>
+<li><strong>thresh</strong> Minimum possible number of rectangles minus 1. The threshold
+is used in a group of rectangles to retain it.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>rects</strong> Cell array of grouped rectangles. the same format to the
+input.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>EPS</strong> Relative difference between sides of the rectangles to merge
+them into a group.</li>
+</ul>
+
+<p>The function clusters all the input rectangles using the rectangle
+equivalence criteria that combines rectangles with similar sizes and
+similar locations. The similarity is defined by eps. When <code>eps=0</code>, no
+clustering is done at all. If <code>eps-&gt;+inf</code>, all the rectangles are put in
+one cluster. Then, the small clusters containing less than or equal to
+<code>thresh</code> rectangles are rejected. In each other cluster, the
+average rectangle is computed and put into the output rectangle list.</p>
+
+<p>The function is useful for non-max suppression of object detections.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="CascadeClassifier.html">cv.CascadeClassifier</a></div>
+   </body>
+</html>

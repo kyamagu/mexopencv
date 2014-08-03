@@ -1,0 +1,77 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SVD.backSubst</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SVD.backSubst</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SVD.backSubst</div>
+      <div class="helpcontent"><p>Performs a singular value back substitution</p>
+
+<pre><code>dst = <a href="SVD.html">cv.SVD</a>.backSubst(w, u, vt, src)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>w</strong> Singular values</li>
+<li><strong>u</strong> Left singular vectors</li>
+<li><strong>vt</strong> Transposed matrix of right singular vectors</li>
+<li><strong>src</strong> Right-hand side of a linear system <code>(u*w*v')*dst = src</code>
+to be solved, where A has been previously decomposed.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Found solution of the system.</li>
+</ul>
+
+<p>The method computes a back substitution for the specified
+right-hand side:</p>
+
+<pre><code>x = vt^T * diag(w)^-1 * u^T * src
+  ~ A^-1* src
+</code></pre>
+
+<p>Using this technique you can either get a very accurate
+solution of the convenient linear system, or the best (in the
+least-squares terms) pseudo-solution of an overdetermined
+linear system.</p>
+
+<h2> Note</h2>
+
+<p>Explicit SVD with the further back substitution only
+makes sense if you need to solve many linear systems with the
+same left-hand side (for example, src ). If all you need is
+to solve a single system (possibly with multiple rhs
+immediately available), simply call solve() add pass
+DECOMP_SVD there. It does absolutely the same thing.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SVD.compute.html">cv.SVD.compute</a> <a href="SVD.solveZ.html">cv.SVD.solveZ</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>true</td>
+         </tr>
+      </table>
+   </body>
+</html>

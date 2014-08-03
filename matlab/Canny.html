@@ -1,0 +1,53 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.Canny</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.Canny</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.Canny</div>
+      <div class="helpcontent"><p>Finds edges in an image using the [Canny86] algorithm</p>
+
+<pre><code>edges = <a href="Canny.html">cv.Canny</a>(image, thresh)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>image</strong> Single-channel 8-bit input image.</li>
+<li><strong>thresh</strong> Threshold for the hysteresis procedure. Scalar or 2-element vector.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>edges</strong> Output edge map. It has the same size and type as image.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>ApertureSize</strong> Aperture size for the Sobel operator.</li>
+<li><strong>L2Gradient</strong> Flag indicating whether a more accurate L2 norm  should be
+used to compute the image gradient magnitude ( L2gradient=true ), or
+a faster default L1 norm is enough ( L2gradient=false ).</li>
+</ul>
+
+<p>The function finds edges in the input image image and marks them in the output
+map edges using the Canny algorithm. When thresh is 2-element vector, the
+smallest value between them is used for edge linking. The largest value is
+used to find initial segments of strong edges. When thresh is a scalar, it is
+treated as a higher threshold value and 0.4*thresh is used for the lower
+threshold. See <a href="http://en.wikipedia.org/wiki/Canny_edge_detector">http://en.wikipedia.org/wiki/Canny_edge_detector</a></p>
+</div><!--after help -->
+   </body>
+</html>

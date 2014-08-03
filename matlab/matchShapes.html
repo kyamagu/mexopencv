@@ -1,0 +1,64 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.matchShapes</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.matchShapes</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.matchShapes</div>
+      <div class="helpcontent"><p>Compares two shapes</p>
+
+<pre><code>d = <a href="matchShapes.html">cv.matchShapes</a>(object1, object2)
+d = <a href="matchShapes.html">cv.matchShapes</a>(object1, object2, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>object1</strong> First contour or grayscale image. If it's contour, a cell array
+of 2-element vectors or 1-by-N-by-2 numeric array are accepted.</li>
+<li><strong>object2</strong> Second contour or grayscale image. If it's contour, a cell array
+of 2-element vectors or 1-by-N-by-2 numeric array are accepted.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>d</strong> Output score.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Method</strong> Comparison method. One of {'I1','I2','I3'}. default I1.</li>
+<li><strong>Parameter</strong> Parameter value used in comparison.</li>
+</ul>
+
+<p>The function compares two shapes. All three implemented methods use the Hu
+invariants (see HuMoments() ) as follows (<code>A</code> denotes object1,<code>B</code> denotes
+object2):</p>
+
+<pre><code>'I1'    I_1(A,B) = \sum_{i=1,...,7} | 1/m_i^A - 1/m_i^B |
+'I2'    I_2(A,B) = \sum_{i=1,...,7} | m_i^A - m_i^B |
+'I3'    I_3(A,B) = \sum_{i=1,...,7} | m_i^A - m_i^B | / | m_i^A |
+</code></pre>
+
+<p>where</p>
+
+<pre><code>       m_i^A = sign(h_i^A) log h_i^A
+       m_i^B = sign(h_i^B) log h_i^B
+</code></pre>
+
+<p>and <code>h_i^A</code>, <code>h_i^B</code> are the Hu moments of <code>A</code> and <code>B</code>, respectively.</p>
+</div><!--after help -->
+   </body>
+</html>

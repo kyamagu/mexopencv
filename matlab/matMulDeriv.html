@@ -1,0 +1,46 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.matMulDeriv</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.matMulDeriv</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.matMulDeriv</div>
+      <div class="helpcontent"><p>Computes partial derivatives of the matrix product for each multiplied matrix</p>
+
+<pre><code>[dABdA, dABdB] = <a href="matMulDeriv.html">cv.matMulDeriv</a>(A, B)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>A</strong> First multiplied matrix.</li>
+<li><strong>B</strong> Second multiplied matrix.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dABdA</strong> First output derivative matrix d(A*B)/dA of size A.rows *
+B.cols x A.rows * A.cols.</li>
+<li><strong>dABdB</strong> Second output derivative matrix d(A*B)/dB of size A.rows * 
+B.cols x B.rows * B.cols.</li>
+</ul>
+
+<p>The function computes partial derivatives of the elements of the matrix
+product A*B with regard to the elements of each of the two input
+matrices. The function is used to compute the Jacobian matrices in
+<a href="stereoCalibrate.html">cv.stereoCalibrate</a> but can also be used in any other similar optimization
+function.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="stereoCalibrate.html">cv.stereoCalibrate</a></div>
+   </body>
+</html>

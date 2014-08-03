@@ -1,0 +1,77 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.stereoRectifyUncalibrated</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.stereoRectifyUncalibrated</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.stereoRectifyUncalibrated</div>
+      <div class="helpcontent"><p>Computes a rectification transform for an uncalibrated stereo camera</p>
+
+<pre><code>[H1,H2] = <a href="stereoRectifyUncalibrated.html">cv.stereoRectifyUncalibrated</a>(points1, points2, F, imgSize)
+[...] = <a href="stereoRectifyUncalibrated.html">cv.stereoRectifyUncalibrated</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>points1</strong> The feature points in the first image as a cell array of
+two-element vectors: {[x1, y1], [x2, y2], ...} or an
+1-by-N-by-2 numeric array.</li>
+<li><strong>points2</strong> The corresponding points in the second image as a cell array
+of two-element vectors: {[x1, y1], [x2, y2], ...} or an
+1-by-N-by-2 numeric array.</li>
+<li><strong>F</strong> Input fundamental matrix. It can be computed from the same set of
+point pairs using <a href="findFundamentalMat.html">cv.findFundamentalMat</a>.</li>
+<li><strong>imageSize</strong> Size of the image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>H1</strong> 3x3 rectification homography matrix for the first image.</li>
+<li><strong>H2</strong> 3x3 rectification homography matrix for the second image.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Threshold</strong> Optional threshold used to filter out the outliers. If
+the parameter is greater than zero, all the point pairs that do
+not comply with the epipolar geometry (that is, the points for
+which <code>points2{i} * F * points1{i}' &gt; Threshold</code>) are rejected
+prior to computing the homographies. Otherwise,all the points are
+considered inliers. default 5</li>
+</ul>
+
+<p>The function computes the rectification transformations without knowing
+intrinsic parameters of the cameras and their relative position in the
+space, which explains the suffix &quot;uncalibrated&quot;. Another related
+difference from <a href="stereoRectify.html">cv.stereoRectify</a> is that the function outputs not the
+rectification transformations in the object (3D) space, but the planar
+perspective transformations encoded by the homography matrices H1 and H2.
+The function implements the algorithm [Hartley99].</p>
+
+<h2> Note</h2>
+
+<p>While the algorithm does not need to know the intrinsic parameters
+of the cameras, it heavily depends on the epipolar geometry. Therefore,
+if the camera lenses have a significant distortion, it would be better to
+correct it before computing the fundamental matrix and calling this
+function. For example, distortion coefficients can be estimated for each
+head of stereo camera separately by using <a href="calibrateCamera.html">cv.calibrateCamera</a>. Then, the
+images can be corrected using <a href="undistort.html">cv.undistort</a>, or just the point coordinates
+can be corrected with <a href="undistortPoints.html">cv.undistortPoints</a>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="stereoCalibrate.html">cv.stereoCalibrate</a> <a href="stereoRectify.html">cv.stereoRectify</a> <a href="calibrateCamera.html">cv.calibrateCamera</a>
+  <a href="undistort.html">cv.undistort</a> <a href="undistortPoints.html">cv.undistortPoints</a></div>
+   </body>
+</html>

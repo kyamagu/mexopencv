@@ -1,0 +1,60 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.cornerEigenValsAndVecs</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.cornerEigenValsAndVecs</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.cornerEigenValsAndVecs</div>
+      <div class="helpcontent"><p>Calculates eigenvalues and eigenvectors of image blocks for corner detection</p>
+
+<pre><code>dst = <a href="cornerEigenValsAndVecs.html">cv.cornerEigenValsAndVecs</a>(src)
+dst = <a href="cornerEigenValsAndVecs.html">cv.cornerEigenValsAndVecs</a>(src, 'KSize', [5,5], ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Input single-channel 8-bit or floating-point image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Image to store the results. It has the same size as src and the
+single type.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>BlockSize</strong> Neighborhood size. default 5.</li>
+<li><strong>ApertureSize</strong> Aperture parameter for the Sobel() operator. default 3.</li>
+<li><strong>BorderType</strong> Border mode used to extrapolate pixels outside of the
+image. default 'Default'</li>
+</ul>
+
+<p>For every pixel p, the function cornerEigenValsAndVecs considers a blockSize x
+blockSize neigborhood S(p). It calculates the covariation matrix of
+derivatives over the neighborhood.</p>
+
+<p>After that, it finds eigenvectors and eigenvalues of M and stores them in the
+destination image as where (\lambda_1, \lambda_2, x_1, y_1, x_2, y_2) where</p>
+
+<pre><code> \lambda_N are the non-sorted eigenvalues of M
+ x_N are the eigenvectors corresponding to \lambda_N
+</code></pre>
+
+<p>The output of the function can be used for robust edge or corner detection.</p>
+</div><!--after help -->
+   </body>
+</html>

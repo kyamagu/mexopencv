@@ -1,0 +1,112 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.ORB</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.ORB</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.ORB</div>
+      <div class="helpcontent"><p>Detects keypoints and computes ORB descriptors for them</p>
+
+<pre><code>keypoints = <a href="ORB.html">cv.ORB</a>(im)
+keypoints = <a href="ORB.html">cv.ORB</a>(im, 'OptionName', optionValue, ...)
+[keypoints, descriptors] = <a href="ORB.html">cv.ORB</a>(...)
+
+descriptorSize = <a href="ORB.html">cv.ORB</a>('DescriptorSize')   % descriptor size (32)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>im</strong> Input 8-bit grayscale image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>keypoints</strong> The output vector of keypoints. A 1-by-N structure array.
+It has the following fields:<ul>
+<li><strong>pt</strong> coordinates of the keypoint [x,y]</li>
+<li><strong>size</strong> diameter of the meaningful keypoint neighborhood</li>
+<li><strong>angle</strong> computed orientation of the keypoint (-1 if not applicable).
+Its possible values are in a range [0,360) degrees. It is measured
+relative to image coordinate system (y-axis is directed downward),
+ie in clockwise.</li>
+<li><strong>response</strong> the response by which the most strong keypoints have been
+selected. Can be used for further sorting or subsampling.</li>
+<li><strong>octave</strong> octave (pyramid layer) from which the keypoint has been
+extracted.</li>
+<li><strong>class_id</strong> object id that can be used to clustered keypoints by an
+object they belong to.</li>
+</ul>
+</li>
+<li><strong>descriptors</strong> The output concatenated vectors of descriptors. Each descriptor
+is a 32-element vector, as returned by <code>ORB::descriptorSize()</code>. So
+the total size of descriptors will be <code>keypoints.size()*descriptorSize()</code>.
+A matrix of size N-by-32 of class <code>uint8</code>, one row per keypoint.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>NFeatures</strong> The maximum number of features to retain. default 500</li>
+<li><strong>ScaleFactor</strong> Pyramid decimation ratio, greater than 1. scaleFactor==2 means
+the classical pyramid, where each next level has 4x less pixels than the
+previous, but such a big scale factor will degrade feature matching scores
+dramatically. On the other hand, too close to 1 scale factor will mean that
+to cover certain scale range you will need more pyramid levels and so the
+speed will suffer. default 1.2</li>
+<li><strong>NLevels</strong> The number of pyramid levels. The smallest level will have linear
+size equal to <code>input_image_linear_size/pow(scaleFactor, nlevels)</code>. default 3</li>
+<li><strong>EdgeThreshold</strong> This is size of the border where the features are not
+detected. It should roughly match the patchSize parameter. default 31</li>
+<li><strong>FirstLevel</strong> It should be 0 in the current implementation. default 0</li>
+<li><strong>WTA_K</strong> The number of points that produce each element of the oriented
+BRIEF descriptor. The default value 2 means the BRIEF where we take a
+random point pair and compare their brightnesses, so we get 0/1 response.
+Other possible values are 3 and 4. For example, 3 means that we take 3
+random points (of course, those point coordinates are random, but they
+are generated from the pre-defined seed, so each element of BRIEF descriptor
+is computed deterministically from the pixel rectangle), find point of
+maximum brightness and output index of the winner (0, 1 or 2). Such output
+will occupy 2 bits, and therefore it will need a special variant of Hamming
+distance, denoted as <code>NORM_HAMMING2</code> (2 bits per bin). When <code>WTA_K</code>=4, we take
+4 random points to compute each bin (that will also occupy 2 bits with
+possible values 0, 1, 2 or 3).</li>
+<li><strong>ScoreType</strong> The default <code>HARRIS_SCORE</code> (0) means that Harris algorithm is used to rank
+features (the score is written to <code>KeyPoint::score</code> and is used to retain best
+<code>nfeatures</code> features); <code>FAST_SCORE</code> (1) is alternative value of the parameter that
+produces slightly less stable keypoints, but it is a little faster to compute.
+default 0</li>
+<li><strong>PatchSize</strong> size of the patch used by the oriented BRIEF descriptor.
+Of course, on smaller pyramid layers the perceived image area covered
+by a feature will be larger. default 31</li>
+<li><strong>Mask</strong> Optional input mask that marks the regions where we should detect
+features</li>
+</ul>
+
+<p>Implements the ORB (oriented BRIEF) keypoint detector and descriptor extractor,
+described in:</p>
+
+<blockquote>
+<p>Ethan Rublee, Vincent Rabaud, Kurt Konolige, Gary R. Bradski:
+ORB: An efficient alternative to SIFT or SURF. ICCV 2011: 2564-2571.</p>
+</blockquote>
+
+<p>The algorithm uses FAST in pyramids to detect stable
+keypoints, selects the strongest features using FAST or Harris response, finds
+their orientation using first-order moments and computes the descriptors using
+BRIEF (where the coordinates of random point pairs (or k-tuples) are rotated
+according to the measured orientation).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.html">cv.FeatureDetector</a> <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a></div>
+   </body>
+</html>

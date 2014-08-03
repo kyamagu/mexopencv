@@ -1,0 +1,97 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SVM/train_auto</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SVM/train_auto</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SVM/train_auto</div>
+      <div class="helpcontent"><p>Trains an SVM with optimal parameters</p>
+
+<pre><code>classifier.train_auto(trainData, responses)
+classifier.train_auto(trainData, responses, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>trainData</strong> Row vectors of feature.</li>
+<li><strong>responses</strong> Output of the corresponding feature vectors.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>status</strong> Success flag.</li>
+</ul>
+
+<h2> Options</h2>
+
+<p>All the options in <code><a href="SVM.html">cv.SVM</a>.train</code> are supported. In addition:</p>
+
+<ul>
+<li><strong>KFold</strong> Cross-validation parameter. The training set is divided
+into <code>KFold</code> subsets. One subset is used to train the model,
+the others form the test set. So, the SVM algorithm is executed
+<code>KFold</code> times. default 10</li>
+<li><strong>Balanced</strong> If true and the problem is 2-class classification then
+the method creates more balanced cross-validation subsets that
+is proportions between classes in subsets are close to such
+proportion in the whole train dataset. default false</li>
+<li><strong>CGrid</strong>, <strong>GammaGrid</strong>, <strong>NuGrid</strong>, <strong>PGrid</strong>, <strong>CoeffGrid</strong>, <strong>DegreeGrid</strong>
+Iteration grid for the corresponding SVM parameter. It accepts
+a struct having <code>{'min_val', 'max_val', 'log_step'}</code> fields, or
+a 3-element vector in which each parameter is specified in
+the same order to the struct is supported. Defaults are:<ul>
+<li>'CGrid'     : <code>struct('min_val',0.1,  'max_val',500, 'log_step',5 )</code></li>
+<li>'GammaGrid' : <code>struct('min_val',1e-5, 'max_val',0.6, 'log_step',15)</code></li>
+<li>'PGrid'     : <code>struct('min_val',0.01, 'max_val',100, 'log_step',7 )</code></li>
+<li>'NuGrid'    : <code>struct('min_val',0.01, 'max_val',0.2, 'log_step',3 )</code></li>
+<li>'CoeffGrid' : <code>struct('min_val',0.1,  'max_val',300, 'log_step',14)</code></li>
+<li>'DegreeGrid': <code>struct('min_val',0.01, 'max_val',4,   'log_step',7 )</code></li>
+</ul>
+</li>
+</ul>
+
+<p>The method trains the SVM model automatically by choosing the optimal parameters
+<code>C</code>, <code>Gamma</code>, <code>P</code>, <code>Nu</code>, <code>Coef0</code>, <code>Degree</code> of an SVM model. Parameters are
+considered optimal when the cross-validation estimate of the test set error
+is minimal.</p>
+
+<p>If there is no need to optimize a parameter, the corresponding grid step
+should be set to any value less than or equal to 1. For example, to avoid
+optimization in gamma, set <code>log_step = 0</code> in <code>GammaGrid</code>, and <code>min_val</code>,
+<code>max_val</code> as arbitrary numbers. In this case, the value of the parameter
+<code>Gamma</code> is taken for gamma.</p>
+
+<p>This function works for the classification (<code>C_SVC</code> or <code>NU_SVC</code>) as well as
+for the regression (<code>EPS_SVR</code> or <code>NU_SVR</code>). For <code>ONE_CLASS</code>, no optimization
+is made and the usual SVM with the specified parameters is executed.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SVM.html">cv.SVM</a> <a href="SVM.train.html">cv.SVM/train</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

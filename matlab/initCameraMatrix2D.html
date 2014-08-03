@@ -1,0 +1,56 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.initCameraMatrix2D</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.initCameraMatrix2D</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.initCameraMatrix2D</div>
+      <div class="helpcontent"><p>Finds an initial camera matrix from 3D-2D point correspondences</p>
+
+<pre><code>cameraMatrix = <a href="initCameraMatrix2D.html">cv.initCameraMatrix2D</a>(objectPoints, imagePoints, imageSize)
+[...] = <a href="initCameraMatrix2D.html">cv.initCameraMatrix2D</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>objectPoints</strong> Vector of vectors of the calibration pattern points in
+the calibration pattern coordinate space. Cell array of cell array
+of 3-element vectors are accepted.</li>
+<li><strong>imagePoints</strong> Vector of vectors of the projections of the calibration
+pattern points. Cell array of cell array of 2-element vectors are
+accepted.</li>
+<li><strong>imageSize</strong> Image size in pixels used to initialize the principal
+point.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>cameraMatrix</strong> Camera matrix.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>AspectRatio</strong> If it is zero or negative, both fx and fy are estimated
+independently. Otherwise, fx = fy * AspectRatio.</li>
+</ul>
+
+<p>The function estimates and returns an initial camera matrix for the
+camera calibration process. Currently, the function only supports planar
+calibration patterns, which are patterns where each object point has
+z-coordinate=0.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calibrateCamera.html">cv.calibrateCamera</a></div>
+   </body>
+</html>

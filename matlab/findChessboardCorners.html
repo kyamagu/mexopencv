@@ -1,0 +1,76 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.findChessboardCorners</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.findChessboardCorners</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.findChessboardCorners</div>
+      <div class="helpcontent"><p>Finds the positions of internal corners of the chessboard</p>
+
+<pre><code>corners = <a href="findChessboardCorners.html">cv.findChessboardCorners</a>(im, patternSize)
+[...] = <a href="findChessboardCorners.html">cv.findChessboardCorners</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>im</strong> Source chessboard view. It must be an 8-bit grayscale or color image.</li>
+<li><strong>patternSize</strong> Number of inner corners per a chessboard row and column
+(<code>patternSize = [points_per_row,points_per_colum] = [columns,rows]</code>).</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>corners</strong> Output array of detected corners.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>AdaptiveThresh</strong> Use adaptive thresholding to convert the image to black
+and white, rather than a fixed threshold level (computed from the
+average image brightness). default true.</li>
+<li><strong>NormalizeImage</strong> Normalize the image gamma with <a href="equalizeHist.html">cv.equalizeHist</a> before
+applying fixed or adaptive thresholding. default true.</li>
+<li><strong>FilterQuads</strong> Use additional criteria (like contour area, perimeter,
+square-like shape) to filter out false quads extracted at the contour
+retrieval stage. default false.</li>
+<li><strong>FastCheck</strong> Run a fast check on the image that looks for chessboard
+corners, and shortcut the call if none is found. This can drastically
+speed up the call in the degenerate condition when no chessboard is
+observed. default false.</li>
+</ul>
+
+<p>The function attempts to determine whether the input image is a view of the
+chessboard pattern and locate the internal chessboard corners. The function
+returns a non-zero value if all of the corners are found and they are placed
+in a certain order (row by row, left to right in every row). Otherwise, if the
+function fails to find all the corners or reorder them, it returns 0. For
+example, a regular chessboard has 8 x 8 squares and 7 x 7 internal corners,
+that is, points where the black squares touch each other. The detected
+coordinates are approximate, and to determine their positions more accurately,
+the function calls <a href="cornerSubPix.html">cv.cornerSubPix</a>. You also may use the function
+<a href="cornerSubPix.html">cv.cornerSubPix</a> with different parameters if returned coordinates are not
+accurate enough.</p>
+
+<h2> Note</h2>
+
+<p>The function requires white space (like a square-thick border, the wider the
+better) around the board to make the detection more robust in various
+environments. Otherwise, if there is no border and the background is dark,
+the outer black squares cannot be segmented properly and so the square
+grouping and ordering algorithm fails.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="drawChessboardCorners.html">cv.drawChessboardCorners</a> <a href="calibrateCamera.html">cv.calibrateCamera</a></div>
+   </body>
+</html>

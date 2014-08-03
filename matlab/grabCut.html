@@ -1,0 +1,60 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.grabCut</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.grabCut</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.grabCut</div>
+      <div class="helpcontent"><p>Runs the GrabCut algorithm</p>
+
+<pre><code>[ trimap ] = <a href="grabCut.html">cv.grabCut</a>(img, bbox);
+[ trimap ] = <a href="grabCut.html">cv.grabCut</a>(img, trimap);
+[ trimap ] = <a href="grabCut.html">cv.grabCut</a>(img, trimap, 'OptionName', optionValue, ...);
+[ trimap, bgdmodel, fgdmodel ] = <a href="grabCut.html">cv.grabCut</a>(...);
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>img</strong> uint8 type H-by-W-by-3 RGB array</li>
+<li><strong>bbox</strong> 1-by-4 double array [x y w h]
+It will automatically create a trimap initialized with
+label 0 for background and label 3 for foreground (see trimap)</li>
+<li><strong>trimap</strong> uint8 H-by-W array of labels
+{0:bg, 1:fg, 2:probably-bg, 3:probably-fg}</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>trimap</strong> uint8 H-by-W array with
+{0:bg, 1:fg, 2:probably-bg, 3:probably-fg}</li>
+<li><strong>bgdmodel</strong> background model to be used for next iteration.</li>
+<li><strong>fgdmodel</strong> foreground model to be used for next iteration.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>BgdModel</strong> Initial background model from the output.</li>
+<li><strong>FgdModel</strong> Initial foreground model from the output.</li>
+<li><strong>Init</strong> Initialization method. One of the following. Default is
+automatically determined from the second argument.
+<strong>'Rect'</strong> Second argument is treated as a rectangle to start.
+<strong>'Mask'</strong> Second argument is treated as an initial trimap.
+<strong>'Eval'</strong> GrabCut algorithm should just resume.</li>
+<li><strong>MaxIter</strong> Specifies maximum number of iteration.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="watershed.html">cv.watershed</a></div>
+   </body>
+</html>

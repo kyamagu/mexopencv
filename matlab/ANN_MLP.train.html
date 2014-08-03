@@ -1,0 +1,113 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.ANN_MLP/train</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.ANN_MLP/train</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.ANN_MLP/train</div>
+      <div class="helpcontent"><p>Trains the model</p>
+
+<pre><code>classifier.train(trainData, responses)
+classifier.train(trainData, responses, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>trainData</strong> Row vectors of feature.</li>
+<li><strong>responses</strong>  Output of the corresponding feature vectors.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>TrainMethod</strong> Training method of the MLP. Possible values
+are shown below. default 'RProp'.<ul>
+<li>'BackProp' The back-propagation algorithm</li>
+<li>'RProp'    The RPROP algorithm</li>
+</ul>
+</li>
+<li><strong>SampleWeights</strong> (RProp only) Optional floating-point vector
+of weights for each sample. Some samples may be more
+important than others for training. You may want to raise
+the weight of certain classes to find the right balance
+between hit-rate and false-alarm rate, and so on.</li>
+<li><strong>SampleIdx</strong> Indicator samples of interest. Must have the
+the same size to responses.</li>
+<li><strong>UpdateWeights</strong> Algorithm updates the network weights, rather
+than computes them from scratch. In the latter case the
+weights are initialized using the Nguyen-Widrow algorithm.
+default false.</li>
+<li><strong>NoInputScale</strong> Algorithm does not normalize the input vectors.
+If this flag is not set, the training algorithm normalizes
+each input feature independently, shifting its mean value
+to 0 and making the standard deviation equal to 1. If the
+network is assumed to be updated frequently, the new
+training data could be much different from original one.
+In this case, you should take care of proper normalization.
+default false.</li>
+<li><strong>NoOutputScale</strong> Algorithm does not normalize the output
+vectors. If the flag is not set, the training algorithm
+normalizes each output feature independently, by
+transforming it to the certain range depending on the used
+activation function. default false.</li>
+<li><strong>TermCrit</strong> Termination criteria of the training algorithm.
+You can specify the maximum number of iterations
+(max_iter) and/or how much the error could change between
+the iterations to make the algorithm continue (epsilon).
+A struct with the following fields are accepted:<ul>
+<li>'type'      one of {'Count','EPS','Count+EPS'}</li>
+<li>'maxCount'  maximum number of iterations</li>
+<li>'epsilon'   tolerance value</li>
+</ul>
+</li>
+<li><strong>BpDwScale</strong> (BackProp only) Strength of the weight gradient
+term. The recommended value is about 0.1 (default)</li>
+<li><strong>BpMomentScale</strong> (BackProp only) Strength of the momentum
+term (the difference between weights on the 2 previous
+iterations). This parameter provides some inertia to
+smooth the random fluctuations of the weights. It can
+vary from 0 (the feature is disabled) to 1 and beyond.
+The value 0.1 (default) or so is good enough.</li>
+<li><strong>RpDw0</strong> Initial value Delta0 of update-values Delta_ij.
+default 0.1.</li>
+<li><strong>RpDwPlus</strong> Increase factor eta^+. It must be &gt;1. default 1.2</li>
+<li><strong>RpDwMinus</strong> Decrease factor eta^-. It must be &lt;1. default 0.5</li>
+<li><strong>RpDwMin</strong> Update-values lower limit Delta_min. It must be
+positive. default FLT_EPSILON</li>
+<li><strong>RpDwMax</strong> Update-values upper limit Delta_max. It must be</li>
+</ul>
+
+<pre><code> &gt;1. default 50
+</code></pre>
+
+<p>The method trains the ANN_MLP model.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="ANN_MLP.html">cv.ANN_MLP</a> <a href="ANN_MLP.predict.html">cv.ANN_MLP/predict</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

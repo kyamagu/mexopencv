@@ -1,0 +1,58 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.StereoBM/init</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.StereoBM/init</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.StereoBM/init</div>
+      <div class="helpcontent"><p>bm.init('OptionName', optionValue, ...)</p>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Preset</strong> specifies the whole set of algorithm parameters,
+one of: 'Basic', 'FishEye', 'Narrow'. After
+constructing the class, you can override any
+parameters set by the preset.</li>
+<li><strong>NDisparities</strong> the disparity search range. For each pixel
+algorithm will find the best disparity from 0 (default
+minimum disparity) to ndisparities. The search range
+can then be shifted by changing the minimum disparity.
+default 0.</li>
+<li><strong>SADWindowSize</strong> the linear size of the blocks compared by
+the algorithm. The size should be odd (as the block is
+centered at the current pixel). Larger block size
+implies smoother, though less accurate disparity map.
+Smaller block size gives more detailed disparity map,
+but there is higher chance for algorithm to find a
+wrong correspondence. default 21.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="StereoBM.html">cv.StereoBM</a> <a href="StereoBM.compute.html">cv.StereoBM/compute</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

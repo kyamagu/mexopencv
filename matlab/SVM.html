@@ -1,0 +1,268 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SVM</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SVM</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SVM</div>
+      <div class="helpcontent"><p>Support Vector Machines</p>
+
+<p>Originally, support vector machines (SVM) was a technique for building an
+optimal binary (2-class) classifier. Later the technique was extended to
+regression and clustering problems. SVM is a partial case of kernel-based
+methods. It maps feature vectors into a higher-dimensional space using a
+kernel function and builds an optimal linear discriminating function in
+this space or an optimal hyper-plane that fits into the training data. In
+case of SVM, the kernel is not defined explicitly. Instead, a distance
+between any 2 points in the hyper-space needs to be defined.</p>
+
+<p>The solution is optimal, which means that the margin between the
+separating hyper-plane and the nearest feature vectors from both classes
+(in case of 2-class classifier) is maximal. The feature vectors that are
+the closest to the hyper-plane are called support vectors, which means
+that the position of other vectors does not affect the hyper-plane (the
+decision function).</p>
+
+<p>SVM implementation in OpenCV is based on [LibSVM].</p>
+
+<h2> References</h2>
+
+<p>[LibSVM]:</p>
+
+<blockquote>
+<p>C.-C. Chang and C.-J. Lin. &quot;LIBSVM: a library for support vector machines&quot;,
+ACM Transactions on Intelligent Systems and Technology, 2:27:1-27:27, 2011.
+(<a href="http://www.csie.ntu.edu.tw/~cjlin/papers/libsvm.pdf">http://www.csie.ntu.edu.tw/~cjlin/papers/libsvm.pdf</a>)</p>
+</blockquote>
+
+<p>[Burges98]:</p>
+
+<blockquote>
+<p>C. Burges. &quot;A tutorial on support vector machines for pattern recognition&quot;,
+Knowledge Discovery and Data Mining 2(2), 1998
+(<a href="http://citeseer.ist.psu.edu/burges98tutorial.html">http://citeseer.ist.psu.edu/burges98tutorial.html</a>)</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SVM.SVM.html">cv.SVM/SVM</a> <a href="SVM.train.html">cv.SVM/train</a> <a href="SVM.predict.html">cv.SVM/predict</a> <a href="SVM.train_auto.html">cv.SVM/train_auto</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="SVM.SVM.html">SVM</a></td>
+            <td class="m-help">Creates/trains a new SVM instance&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="SVM.Params.html">Params</a></td>
+            <td class="m-help">SVM training parameters&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="SVM.SupportVectorCount.html">SupportVectorCount</a></td>
+            <td class="m-help">Number of support vectors&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="SVM.VarCount.html">VarCount</a></td>
+            <td class="m-help">Number of used features (variables count)&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="SVM.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.clear.html">clear</a></td>
+            <td class="m-help">Deallocates memory and resets the model state&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.getSupportVector.html">getSupportVector</a></td>
+            <td class="m-help">Retrieve a particular support vector.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.load.html">load</a></td>
+            <td class="m-help">Loads the model from a file&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.predict.html">predict</a></td>
+            <td class="m-help">Predicts the response for input samples.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.predict_all.html">predict_all</a></td>
+            <td class="m-help">Predicts the response for input samples.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.save.html">save</a></td>
+            <td class="m-help">Saves the model to a file&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.train.html">train</a></td>
+            <td class="m-help">Trains an SVM model&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.train_auto.html">train_auto</a></td>
+            <td class="m-help">Trains an SVM with optimal parameters&nbsp;</td>
+         </tr>
+      </table>
+   </body>
+</html>

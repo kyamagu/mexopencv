@@ -1,0 +1,66 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.filter2D</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.filter2D</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.filter2D</div>
+      <div class="helpcontent"><p>Convolves an image with the kernel</p>
+
+<pre><code>dst = <a href="filter2D.html">cv.filter2D</a>(src, kernel)
+dst = <a href="filter2D.html">cv.filter2D</a>(src, kernel, 'Anchor', [0,1], ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>img</strong> Source image.</li>
+<li><strong>kernel</strong> Convolution kernel (or rather a correlation kernel), a
+single-channel floating point matrix. If you want to apply different kernels to
+different channels, split the image into separate color planes and
+process them individually.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>result</strong> Destination image of the same size and the same number of
+channels as src.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Anchor</strong> Anchor of the kernel that indicates the relative position of
+a filtered point within the kernel. The anchor should lie within
+the kernel. The special default value (-1,-1) means that the anchor
+is at the kernel center.</li>
+<li><strong>BorderType</strong> Pixel extrapolation method. Default 'Default'</li>
+</ul>
+
+<p>The function applies an arbitrary linear filter to an image. In-place
+operation is supported. When the aperture is partially outside the image, the
+function interpolates outlier pixel values according to the specified border
+mode.</p>
+
+<p>The function does actually compute correlation, not the convolution. That is,
+the kernel is not mirrored around the anchor point. If you need a real
+convolution, flip the kernel using flip() and set the new anchor to
+(kernel.cols - anchor.x - 1, kernel.rows - anchor.y - 1).</p>
+
+<p>The function uses the DFT-based algorithm in case of sufficiently large
+kernels (~<code>11 x 11</code> or larger) and the direct algorithm (that uses the
+engine retrieved by createLinearFilter() ) for small kernels.</p>
+</div><!--after help -->
+   </body>
+</html>

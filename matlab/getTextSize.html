@@ -1,0 +1,96 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.getTextSize</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.getTextSize</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.getTextSize</div>
+      <div class="helpcontent"><p>Calculates the width and height of a text string</p>
+
+<pre><code>[siz, baseLine] = <a href="getTextSize.html">cv.getTextSize</a>(text)
+[...] = <a href="getTextSize.html">cv.getTextSize</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>text</strong> Text string.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>siz</strong> Size of of a box that contains the specified text
+(<code>[width,height]</code>).</li>
+<li><strong>baseLine</strong> y-coordinate of the baseline relative to the bottom-most
+text point.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>FontFace</strong> Font to use. One of the following:<ul>
+<li><code>'HersheySimplex'</code> (default)</li>
+<li><code>'HersheyPlain'</code></li>
+<li><code>'HersheyDuplex'</code></li>
+<li><code>'HersheyComplex'</code></li>
+<li><code>'HersheyTriplex'</code></li>
+<li><code>'HersheyComplexSmall'</code></li>
+<li><code>'HersheyScriptSimplex'</code></li>
+<li><code>'HersheyScriptComplex'</code></li>
+</ul>
+</li>
+<li><strong>FontStyle</strong> Font style. One of 'Regular' (default) or 'Italic'</li>
+<li><strong>FontScale</strong> Font scale factor that is multiplied by the
+font-specific base size. default 1.0</li>
+<li><strong>Thickness</strong> Thickness of lines used to render the text. default 1</li>
+</ul>
+
+<p>The function <a href="getTextSize.html">cv.getTextSize</a> calculates and returns the size of a box that
+contains the specified text.</p>
+
+<h2> Example</h2>
+
+<p>The following code renders some text, the tight box surrounding it, and
+the baseline:</p>
+
+<pre><code>txt = 'Funny text inside the box';
+fontFace = 'HersheyScriptSimplex';
+fontScale = 2;
+thickness = 3;
+
+img = zeros(300,800,3, 'uint8');
+
+[textSize,baseline] = <a href="getTextSize.html">cv.getTextSize</a>(txt, 'FontFace',fontFace, ...
+    'FontScale',fontScale, 'Thickness',thickness);
+baseline = baseline + thickness;
+
+% center the text
+textOrg = [size(img,2) - textSize(1), size(img,1) + textSize(2)] ./ 2;
+
+% draw the box
+img = <a href="rectangle.html">cv.rectangle</a>(img, textOrg + [0, baseline], ...
+    textOrg + [textSize(1), -textSize(2)], 'Color',[0,0,255]);
+
+% ... and the baseline first
+img = <a href="line.html">cv.line</a>(img, textOrg + [0, thickness], ...
+    textOrg + [textSize(1), thickness], 'Color',[0,255,0]);
+
+% then put the text itself
+img = <a href="putText.html">cv.putText</a>(img, txt, textOrg, 'Color',[255,255,255], ...
+    'Thickness',thickness, 'FontFace',fontFace, 'FontScale',fontScale);
+
+imshow(img, 'InitialMagnification',100, 'Border','tight')</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="putText.html">cv.putText</a></div>
+   </body>
+</html>

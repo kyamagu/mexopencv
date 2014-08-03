@@ -1,0 +1,82 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.kmeans</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.kmeans</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.kmeans</div>
+      <div class="helpcontent"><p>Finds centers of clusters and groups input samples around the clusters</p>
+
+<pre><code>labels = <a href="kmeans.html">cv.kmeans</a>(samples, k)
+[labels, centers, compactness] = <a href="kmeans.html">cv.kmeans</a>(...)
+[...] = <a href="kmeans.html">cv.kmeans</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>samples</strong> Floating-point matrix of input samples, one row per sample.</li>
+<li><strong>k</strong> Number of clusters to split the set by.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>labels</strong> Integer array that stores the cluster indices for every
+sample.</li>
+<li><strong>centers</strong> Output matrix of the cluster centers, one row per each
+cluster center.</li>
+<li><strong>comactness</strong> Measure of compactness. See below.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Criteria</strong> The algorithm termination criteria, that is, the maximum
+number of iterations and/or the desired accuracy. The accuracy is
+specified as criteria.epsilon. As soon as each of the cluster
+centers moves by less than criteria.epsilon on some iteration, the
+algorithm stops.</li>
+<li><strong>Attempts</strong> The number of times the algorithm is executed using
+different initial labelings. The algorithm returns the labels that
+yield the best compactness (see the last function parameter).
+default 10.</li>
+<li><strong>Initialization</strong> Method to initialize seeds. One of the followings:<ul>
+<li>'Random'  Select random initial centers in each attempt. (default)</li>
+<li>'PP'      Use kmeans++ center initialization by Arthur and
+Vassilvitskii [Arthur2007].</li>
+</ul>
+</li>
+<li><strong>InitialLabels</strong> Integer array that stores the initial cluster indices
+for every sample.</li>
+</ul>
+
+<p>The function kmeans implements a k-means algorithm that finds the centers
+of clusterCount clusters and groups the input samples around the
+clusters. As an output,  contains a 0-based cluster index for the sample
+stored in the  row of the samples matrix.</p>
+
+<p>The function returns the compactness measure that is computed as</p>
+
+<pre><code>\sum_i || samples_i - centers_{labels_i} ||^2
+</code></pre>
+
+<p>after every attempt. The best (minimum) value is chosen and the
+corresponding labels and the compactness value are returned by the
+function. Basically, you can use only the core of the function, set the
+number of attempts to 1, initialize labels each time using a custom
+algorithm, pass them with the 'InitialLabels' option, and then choose the
+best (most-compact) clustering.</p>
+</div><!--after help -->
+   </body>
+</html>

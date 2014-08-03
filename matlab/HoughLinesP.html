@@ -1,0 +1,55 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.HoughLinesP</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.HoughLinesP</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.HoughLinesP</div>
+      <div class="helpcontent"><p>Finds line segments in a binary image using the probabilistic Hough transform</p>
+
+<pre><code>lines = <a href="HoughLinesP.html">cv.HoughLinesP</a>(image)
+lines = <a href="HoughLinesP.html">cv.HoughLinesP</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>image</strong> 8-bit, single-channel, grayscale input image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>lines</strong> Output vector of lines. Each line is represented by a 4-element
+vector (x1,y1,x2,y2), where (x1,y1) and (x2,y2) are the ending points
+of each detected line segment</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Rho</strong> Distance resolution of the accumulator in pixels. default 1.</li>
+<li><strong>Theta</strong> Angle resolution of the accumulator in radians. default PI/180.</li>
+<li><strong>Threshold</strong> Accumulator threshold parameter. Only those lines are
+returned that get enough votes (&gt;threshold). default 80.</li>
+<li><strong>MinLineLength</strong> Minimum line length. Line segments shorter than that are
+rejected. default 0.</li>
+<li><strong>MaxLineGap</strong> Maximum allowed gap between points on the same line to link
+them. default 0.</li>
+</ul>
+
+<p>The function implements the probabilistic Hough transform algorithm for line
+detection, described in [Matas00].</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HoughLines.html">cv.HoughLines</a></div>
+   </body>
+</html>

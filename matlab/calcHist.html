@@ -1,0 +1,60 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.calcHist</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.calcHist</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.calcHist</div>
+      <div class="helpcontent"><p>Calculates a histogram of a set of arrays</p>
+
+<pre><code>H = <a href="calcHist.html">cv.calcHist</a>(X, edges)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>X</strong> Source pixel arrays. A numeric array, or cell array of numeric
+arrays are accepted. They all should have the same class and the
+same size.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>H</strong> Output histogram, which is a dense or a sparse array.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Mask</strong> Optional mask. If the matrix is not empty, it must be an array
+of the same size as arrays. The non-zero mask elements mark the
+array elements counted in the histogram.</li>
+<li><strong>Uniform</strong> Logical flag indicating whether the histogram is uniform
+or not. default false.</li>
+<li><strong>Sparse</strong> Logical flag indicating whether the output should be sparse.</li>
+<li><strong>HistSize</strong> Array of histogram sizes in each dimension. Use together
+with the 'Uniform' flag.</li>
+</ul>
+
+<p>The functions calcHist calculate the histogram of one or more arrays.
+The elements of a tuple used to increment a histogram bin are taken from
+the corresponding input arrays at the same location. The sample below
+shows how to compute a 2D Hue-Saturation histogram for a color image.</p>
+
+<pre><code>im = <a href="cvtColor.html">cv.cvtColor</a>(im,'RGB2HSV');
+edges = {linspace(0,180,30+1),linspace(0,256,32+1)};
+h = <a href="calcHist.html">cv.calcHist</a>(im(:,:,1:2), edges);</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calcBackProject.html">cv.calcBackProject</a> <a href="compareHist.html">cv.compareHist</a> <a href="EMD.html">cv.EMD</a></div>
+   </body>
+</html>

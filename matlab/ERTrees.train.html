@@ -1,0 +1,127 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.ERTrees/train</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.ERTrees/train</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.ERTrees/train</div>
+      <div class="helpcontent"><p>Trains the Extremely Random Trees model</p>
+
+<pre><code>classifier.train(trainData, responses)
+classifier.train(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>trainData</strong> Row vectors of feature.</li>
+<li><strong>responses</strong> Output of the corresponding feature vectors.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>VarIdx</strong> Indicator variables (features) of interest.
+Must have the same size to responses.</li>
+<li><strong>SampleIdx</strong> Indicator samples of interest. Must have the
+the same size to responses.</li>
+<li><strong>VarType</strong> Solves classification problem when 'Categorical'.
+Otherwise, the training is treated as a regression problem.
+default 'Categorical'</li>
+<li><strong>MissingMask</strong> Indicator mask for missing observation.</li>
+<li><strong>MaxDepth</strong> The maximum possible depth of the tree. That is
+the training algorithms attempts to split a node while its
+depth is less than MaxDepth. The actual depth may be
+smaller if the other termination criteria are met, and/or
+if the tree is pruned. default 5.</li>
+<li><strong>MinSampleCount</strong> If the number of samples in a node is less
+than this parameter then the node will not be splitted.
+default 10.</li>
+<li><strong>RegressionAccuracy</strong> Termination criteria for regression
+trees. If all absolute differences between an estimated
+value in a node and values of train samples in this node
+are less than this parameter then the node will not be
+splitted. default 0.</li>
+<li><strong>UseSurrogates</strong> If true then surrogate splits will be built.
+These splits allow to work with missing data and compute
+variable importance correctly. default false.</li>
+<li><strong>MaxCategories</strong> Cluster possible values of a categorical
+variable into K &lt;= MaxCategories clusters to find a
+suboptimal split. If a discrete variable, on which the
+training procedure tries to make a split, takes more than
+MaxCategories values, the precise best subset estimation
+may take a very long time because the algorithm is
+exponential. Instead, many decision trees engines
+(including ML) try to find sub-optimal split in this case
+by clustering all the samples into MaxCategories clusters
+that is some categories are merged together. The
+clustering is applied only in n&gt;2-class classification
+problems for categorical variables with N &gt; MaxCategories
+possible values. In case of regression and 2-class
+classification the optimal split can be found efficiently
+without employing clustering, thus the parameter is not
+used in these cases. default 0.</li>
+<li><strong>Priors</strong> The array of a priori class probabilities, sorted by
+the class label value. The parameter can be used to tune
+the decision tree preferences toward a certain class. For
+example, if you want to detect some rare anomaly
+occurrence, the training base will likely contain much
+more normal cases than anomalies, so a very good
+classification performance will be achieved just by
+considering every case as normal. To avoid this, the
+priors can be specified, where the anomaly probability is
+artificially increased (up to 0.5 or even greater), so the
+weight of the misclassified anomalies becomes much bigger,
+and the tree is adjusted properly. You can also think
+about this parameter as weights of prediction categories
+which determine relative weights that you give to
+misclassification. That is, if the weight of the first
+category is 1 and the weight of the second category is 10,
+then each mistake in predicting the second category is
+equivalent to making 10 mistakes in predicting the first
+category. default none.</li>
+<li><strong>CalcVarImportance</strong> If true then variable importance will
+be calculated and then it can be retrieved by
+getVarImportance(). default false.</li>
+<li><strong>NActiveVars</strong> The size of the randomly selected subset of
+features at each tree node and that are used to find the
+best split(s). If you set it to 0 then the size will be
+set to the square root of the total number of features.
+default 0.</li>
+<li><strong>MaxNumOfTreesInTheForest</strong> The maximum number of trees in the
+forest (suprise, suprise). default 50.</li>
+<li><strong>ForestAccuracy</strong> Sufficient accuracy (OOB error). default 0.1</li>
+<li><strong>TermCritType</strong> The type of the termination criteria. One of
+'Iter', 'EPS', or 'Iter+EPS'. default 'Iter+EPS'</li>
+</ul>
+
+<p>The method trains the ERTrees model.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="ERTrees.html">cv.ERTrees</a> <a href="ERTrees.predict.html">cv.ERTrees/predict</a> <a href="ERTrees.predict_prob.html">cv.ERTrees/predict_prob</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

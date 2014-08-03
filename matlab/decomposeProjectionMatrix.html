@@ -1,0 +1,52 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.decomposeProjectionMatrix</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.decomposeProjectionMatrix</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.decomposeProjectionMatrix</div>
+      <div class="helpcontent"><p>Decomposes a projection matrix into a rotation matrix and a camera matrix</p>
+
+<pre><code>S = <a href="decomposeProjectionMatrix.html">cv.decomposeProjectionMatrix</a>(projMatrix)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>projMatrix</strong> 3x4 input projection matrix P.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>S</strong> Struct with the following fields</li>
+<li><strong>cameraMatrix</strong> 3x3 camera matrix K.</li>
+<li><strong>rotMatrix</strong> 3x3 external rotation matrix R.</li>
+<li><strong>transVect</strong> 4x1 translation vector T.</li>
+<li><strong>rotMatrX</strong> 3x3 rotation matrix around x-axis.</li>
+<li><strong>rotMatrY</strong> 3x3 rotation matrix around y-axis.</li>
+<li><strong>rotMatrZ</strong> 3x3 rotation matrix around z-axis.</li>
+<li><strong>eulerAngles</strong> three-element vector containing three Euler angles of
+rotation.</li>
+</ul>
+
+<p>The function computes a decomposition of a projection matrix into a
+calibration and a rotation matrix and the position of a camera.</p>
+
+<p>It optionally returns three rotation matrices, one for each axis, and
+three Euler angles that could be used in OpenGL.</p>
+
+<p>The function is based on cv.RQDecomp3x3</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="RQDecomp3x3.html">cv.RQDecomp3x3</a></div>
+   </body>
+</html>

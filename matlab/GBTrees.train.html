@@ -1,0 +1,85 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.GBTrees/train</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.GBTrees/train</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.GBTrees/train</div>
+      <div class="helpcontent"><p>Trains a Gradient boosted tree model</p>
+
+<pre><code>classifier.train(trainData, responses)
+classifier.train(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>trainData</strong> Row vectors of feature.</li>
+<li><strong>responses</strong> Output of the corresponding feature vectors.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>VarIdx</strong> Indicator variables (features) of interest.
+Must have the same size to responses.</li>
+<li><strong>SampleIdx</strong> Indicator samples of interest. Must have the
+the same size to responses.</li>
+<li><strong>VarType</strong> Solves classification problem when 'Categorical'.
+Otherwise, the training is treated as a regression problem.
+default 'Categorical'</li>
+<li><strong>MissingMask</strong> Indicator mask for missing observation.</li>
+<li><strong>LossFunctionType</strong> Type of the loss function used for
+training. It must be one of the following types:
+'Squared', 'Absolute', 'Huber', 'Deviance'. The first
+three types are used for regression problems, and the last
+one for classification. default 'Squared'.</li>
+<li><strong>WeakCount</strong> Count of boosting algorithm iterations.
+WeakCount*K is the total count of trees in the GBT model,
+where K is the output classes count (equal to one in case
+of a regression). default 200.</li>
+<li><strong>Shrinkage</strong> Regularization parameter. default 0.8.</li>
+<li><strong>SubsamplePortion</strong> Portion of the whole training set used for
+each algorithm iteration. Subset is generated randomly.
+For more information see
+<a href="http://www.salfordsystems.com/doc/StochasticBoostingSS.pdf">http://www.salfordsystems.com/doc/StochasticBoostingSS.pdf</a></li>
+<li><strong>MaxDepth</strong> The maximum possible depth of the tree. That is
+the training algorithms attempts to split a node while its
+depth is less than MaxDepth. The actual depth may be
+smaller if the other termination criteria are met, and/or
+if the tree is pruned. default 1.</li>
+<li><strong>UseSurrogates</strong> If true then surrogate splits will be built.
+These splits allow to work with missing data and compute
+variable importance correctly. default true.</li>
+</ul>
+
+<p>The method trains the GBTrees model.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="GBTrees.html">cv.GBTrees</a> <a href="GBTrees.predict.html">cv.GBTrees/predict</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

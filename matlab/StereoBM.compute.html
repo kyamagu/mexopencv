@@ -1,0 +1,62 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.StereoBM/compute</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.StereoBM/compute</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.StereoBM/compute</div>
+      <div class="helpcontent"><p>disparity = bm.compute(left, right)</p>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>left</strong> Left 8-bit single-channel or 3-channel image.</li>
+<li><strong>right</strong> Right image of the same size and the same type as
+the left one.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>disparity</strong> Output disparity map. It has the same size as
+the input images. When disptype==CV_16S, the map is a
+16-bit signed single-channel image, containing
+disparity values scaled by 16. To get the true
+disparity values from such fixed-point representation,
+you will need to divide each disp element by 16.</li>
+</ul>
+
+<p>The method executes the BM algorithm on a rectified stereo
+pair. See the stereo_match.cpp OpenCV sample on how to
+prepare images and call the method. Note that the method is
+not constant, thus you should not use the same <a href="StereoBM.html">cv.StereoBM</a>
+instance from within different threads simultaneously.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="StereoBM.html">cv.StereoBM</a> <a href="StereoBM.init.html">cv.StereoBM/init</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

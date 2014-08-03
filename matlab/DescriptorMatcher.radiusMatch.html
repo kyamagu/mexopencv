@@ -1,0 +1,93 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.DescriptorMatcher/radiusMatch</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.DescriptorMatcher/radiusMatch</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.DescriptorMatcher/radiusMatch</div>
+      <div class="helpcontent"><p>For each query descriptor, finds the training descriptors not farther than the specified distance</p>
+
+<pre><code>matches = matcher.radiusMatch(queryDescriptors, trainDescriptors, maxDistance)
+matches = matcher.radiusMatch(queryDescriptors, maxDistance)
+[...] = matcher.radiusMatch(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<p>For each query descriptor, the methods find such training descriptors
+that the distance between the query descriptor and the training
+descriptor is equal or smaller than <code>maxDistance</code>. Found matches
+are returned in the distance increasing order.</p>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>queryDescriptors</strong> Query set of descriptors.</li>
+<li><strong>trainDescriptors</strong> Train set of descriptors. This set is not
+added to the train descriptors collection stored in the
+class object.</li>
+<li><strong>maxDistance</strong> Threshold for the distance between matched
+descriptors.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>matches</strong> Found matches. A cell array of length
+<code>size(queryDescriptors,1)</code>, each cell is a structure array
+that has the following fields:<ul>
+<li><strong>queryIdx</strong> query descriptor index (zero-based index)</li>
+<li><strong>trainIdx</strong> train descriptor index (zero-based index)</li>
+<li><strong>imgIdx</strong> train image index (zero-based index)</li>
+<li><strong>distance</strong> distance between descriptors (scalar)</li>
+</ul>
+</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Mask</strong> default empty<ul>
+<li>In the first form, mask specifying permissible matches
+between an input query and train matrices of descriptors.
+Matrix of size <code>[size(queryDescriptors,1),size(trainDescriptors,1)]</code></li>
+<li>In the second form, set of masks. Each <code>masks{i}</code> specifies
+permissible matches between the input query descriptors and
+stored train descriptors from the i-th image <code>trainDescCollection{i}</code>.
+Cell array of length <code>length(trainDescriptors)</code>, each a matrix
+of size <code>[size(queryDescriptors,1),size(trainDescriptors{i},1)]</code></li>
+</ul>
+</li>
+<li><strong>CompactResult</strong> Parameter used when the mask (or masks) is not
+empty. If <code>compactResult</code> is false, the <code>matches</code> vector has the
+same size as <code>queryDescriptors</code> rows. If <code>compactResult</code> is
+true, the matches vector does not contain matches for fully
+masked-out query descriptors. default false</li>
+</ul>
+</div><!--after help -->
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

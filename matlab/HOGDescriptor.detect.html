@@ -1,0 +1,71 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.HOGDescriptor/detect</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.HOGDescriptor/detect</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.HOGDescriptor/detect</div>
+      <div class="helpcontent"><p>Performs object detection without a multi-scale window</p>
+
+<pre><code>pts = hog.detect(im, 'Option', optionValue, ...)
+[pts, weights] = hog.detect(...)
+</code></pre>
+
+<p>The detected objects are returned as a cell array of points,
+with the left-top corner points of detected objects boundaries.
+Width and height of boundaries are specified by the <code>WinSize</code>.</p>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>im</strong> Matrix of the type uint8 containing an image where
+objects are detected.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>pts</strong> Cell array of points where objects are found.
+Points of the form <code>{[x,y], ...}</code></li>
+<li><strong>weights</strong> Vector of associated weights.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>HitThreshold</strong> Threshold for the distance between features
+and SVM classifying plane. default 0</li>
+<li><strong>WinStride</strong> Window stride. 2-element array [x,y]</li>
+<li><strong>Padding</strong> 2-element array [x,y]</li>
+<li><strong>Locations</strong> cell array of 2-element arrays <code>{[x,y],...}</code> at
+which detector is executed.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.html">cv.HOGDescriptor</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

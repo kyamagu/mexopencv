@@ -1,0 +1,70 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.ERTrees/predict_prob</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.ERTrees/predict_prob</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.ERTrees/predict_prob</div>
+      <div class="helpcontent"><p>Returns a fuzzy-predicted class label</p>
+
+<pre><code>results = classifier.predict_prob(samples)
+[...] = classifier.predict_prob(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>samples</strong> Input row vectors</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>results</strong> Output labels or regression values</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>MissingMask</strong> Missing values mask, which is a
+dimentional matrix of the same size as sample having the
+uint8 type. 1 corresponds to the missing value in the same
+position in the sample vector. If there are no missing
+values in the feature vector, an empty matrix can be
+passed instead of the missing mask. default none.</li>
+</ul>
+
+<p>The function works for binary classification problems only. It
+returns the number between 0 and 1. This number represents
+probability or confidence of the sample belonging to the second
+class. It is calculated as the proportion of decision trees that
+classified the sample to the second class.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="ERTrees.html">cv.ERTrees</a> <a href="ERTrees.train.html">cv.ERTrees/train</a> <a href="ERTrees.predict.html">cv.ERTrees/predict</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

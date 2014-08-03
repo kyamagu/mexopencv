@@ -1,0 +1,64 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.fitLine</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.fitLine</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.fitLine</div>
+      <div class="helpcontent"><p>Fits a line to a 2D point set</p>
+
+<pre><code>lin = <a href="fitLine.html">cv.fitLine</a>(points)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>points</strong> Input 2D point set, stored in a cell array of 2-element vectors or
+1-by-N-by-2 numeric array.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>lin</strong> Output line parameters. It should be a vector of 4 elements -
+<code>(vx, vy, x0, y0)</code>, where <code>(vx, vy)</code> is a normalized vector collinear to
+the line and <code>(x0, y0)</code> is a point on the line.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>DistType</strong> Distance used by the M-estimator.<ul>
+<li>'L2'     (default)</li>
+<li>'L1'</li>
+<li>'L12'</li>
+<li>'Fair'</li>
+<li>'Welsch'</li>
+<li>'Huber'</li>
+</ul>
+</li>
+<li><strong>Param</strong> Numerical parameter (<code>C</code>) for some types of distances. If it is
+0, an optimal value is chosen. default 0.</li>
+<li><strong>REps</strong> Sufficient accuracy for the radius (distance between the
+coordinate origin and the line).</li>
+<li><strong>AEps</strong> Sufficient accuracy for the angle. 0.01 would be a good default
+value for REps and AEps.</li>
+</ul>
+
+<p>The algorithm is based on the M-estimator (
+<a href="http://en.wikipedia.org/wiki/M-estimator">http://en.wikipedia.org/wiki/M-estimator</a> ) technique that iteratively fits
+the line using the weighted least-squares algorithm. After each iteration the
+weights <code>wi</code> are adjusted to be inversely proportional to <code>rho(ri)</code>.</p>
+</div><!--after help -->
+   </body>
+</html>

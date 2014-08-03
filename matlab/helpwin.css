@@ -1,0 +1,155 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+a {
+    color:#000099;
+}
+
+a:visited {
+    color:#840084;
+}
+
+a:active {
+    color:#000099;
+}
+
+a:hover {
+    color:#000033;
+}
+
+hr {
+    border-style: solid;
+    border-width: 1px 0px 0px 0px;
+    height: 1px;
+    width: 100%;
+    color: #000000;
+}
+
+p {
+    margin-left: 5px;
+}
+
+td {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+.title {
+    color:#990000;
+    font-size:24px;
+    padding:2px 0px 2px 0px;
+    margin:10px 0px 0px 5px;
+    vertical-align: middle;
+}
+
+.sectiontitle {
+    color:#990000;
+    font-size:16px;
+    font-weight: bold;
+    width:100%;
+    padding:2px 0px 2px 5px;
+    margin: 15px 0px 0px 0px;
+}
+
+.headertitle {
+    font-weight:bold;
+    padding: 3px 5px 3px 5px;
+}
+
+.helptopic {
+    font-weight:bold;
+    color:#990000;
+}
+
+.helptext {
+    margin-left: 5px;
+    font-family: monospace; 
+    white-space: pre;
+    font-size: 13px;
+}
+
+.subheader {
+    background-color: #E7EBF7;
+    width: 100%;
+}
+
+.subheader-left {
+    padding: 3px 5px 3px 5px;
+}
+
+.subheader-right {
+    text-align: right;
+    padding: 3px 5px 3px 5px;
+}
+
+.footerlinktitle {
+    margin: 15px 0px 0px 5px;
+    color:#990000;
+    font-size: 16px;
+}
+
+.footerlink {
+    padding: 3px 5px 3px 15px;
+}
+
+.topiclinks {
+    margin: 5px 0px 0px 5px;
+}
+
+a.topiclink {
+    padding-right: 10px;
+}
+
+.class-details {
+    border-width: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 5px;
+}
+
+.class-detail-label {
+    font-weight: bold;
+    padding: 0px 10px 0px 0px;
+    spacing: 0px 0px 0px 0px;
+}
+
+.summary-list .m-help {
+    white-space: nowrap;
+}
+
+.summary-list {
+    margin: 0px 15px 0px 15px;
+}
+
+.summary-list .summary-item .name  {
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    border-color:#E7EBF7;
+    padding: 2px 15px 2px 5px;
+}
+
+.summary-list .summary-item .m-help {
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    border-color:#E7EBF7;
+    padding: 2px 5px 2px 5px;
+    width: 95%;
+    white-space: normal;
+}
+
+.summary-list .summary-item .attributes {
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    border-color:#E7EBF7;
+    padding: 2px 15px 2px 5px;
+    white-space: nowrap;
+}
+
+pre {
+    margin: 0em 2em;
+    padding: .5em 1em;
+    background-color: #E7EBF7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color:#990000;}

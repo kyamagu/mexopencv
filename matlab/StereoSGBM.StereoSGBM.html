@@ -1,0 +1,80 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.StereoSGBM/StereoSGBM</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.StereoSGBM/StereoSGBM</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.StereoSGBM/StereoSGBM</div>
+      <div class="helpcontent"><p>Constructs StereoSGBM</p>
+
+<pre><code>bm = <a href="StereoSGBM.html">cv.StereoSGBM</a>
+bm = <a href="StereoSGBM.html">cv.StereoSGBM</a>('OptionName', optionValue, ...)
+
+</code></pre>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>MinDisparity</strong> Minimum possible disparity value.
+Normally, it is zero but sometimes rectification
+algorithms can shift images, so this parameter needs
+to be adjusted accordingly. default 0</li>
+<li><strong>NumDisparities</strong> Maximum disparity minus minimum
+disparity. The value is always greater than zero. In
+the current implementation, this parameter must be
+divisible by 16. default 64</li>
+<li><strong>SADWindowSize</strong> Matched block size. It must be an odd
+number &gt;=1 . Normally, it should be somewhere in the
+3..11 range. default 7</li>
+<li><strong>P1</strong> The first parameter controlling the disparity
+smoothness. See P2. default 0.</li>
+<li><strong>P2</strong> The second parameter controlling the disparity
+smoothness. The larger the values are, the smoother
+the disparity is. P1 is the penalty on the disparity
+change by plus or minus 1 between neighbor pixels. P2
+is the penalty on the disparity change by more than 1
+between neighbor pixels. The algorithm requires P2 &gt;
+P1. default 0.</li>
+<li><strong>Disp12MaxDiff</strong> Maximum allowed difference (in integer
+pixel units) in the left-right disparity check. Set
+it to a non-positive value to disable the check.
+default 0</li>
+<li><strong>PreFilterCap</strong> Truncation value for the prefiltered image
+pixels. The algorithm first computes x-derivative at
+each pixel and clips its value by [-preFilterCap,
+        preFilterCap] interval. The result values are passed
+to the Birchfield-Tomasi pixel cost function. default
+0</li>
+<li><strong>UniquenessRatio</strong> Margin in percentage by which the best
+(minimum) computed cost function value should &quot;win&quot;
+the second best value to consider the found match
+correct. Normally, a value within the 5-15 range is
+good enough. default 0</li>
+<li><strong>SpeckleWindowSize</strong> Maximum size of smooth disparity
+regions to consider their noise speckles and
+invalidate. Set it to 0 to disable speckle filtering.
+Otherwise, set it somewhere in the 50-200 range.
+default 0</li>
+<li><strong>SpeckleRange</strong> Maximum disparity variation within each
+connected component. If you do speckle filtering, set
+the parameter to a positive value, multiple of 16.
+Normally, 16 or 32 is good enough. default 0</li>
+<li><strong>FullDP</strong> Set it to true to run the full-scale two-pass
+dynamic programming algorithm. It will consume
+O(W * H * numDisparities) bytes, which is large for
+640x480 stereo and huge for HD-size pictures. By
+default, it is set to false.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="StereoSGBM.html">cv.StereoSGBM</a></div>
+   </body>
+</html>

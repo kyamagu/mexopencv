@@ -1,0 +1,56 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.inpaint</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.inpaint</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.inpaint</div>
+      <div class="helpcontent"><p>Restores the selected region in an image using the region neighborhood</p>
+
+<pre><code>dst = <a href="inpaint.html">cv.inpaint</a>(src, mask)
+dst = <a href="inpaint.html">cv.inpaint</a>(src, mask, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Input 8-bit 1-channel or 3-channel image.</li>
+<li><strong>mask</strong> Inpainting mask, 8-bit 1-channel image. Non-zero pixels indicate
+the area that needs to be inpainted.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Output image with the same size and type as src.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Radius</strong> Radius of a circlular neighborhood of each point inpainted that
+is considered by the algorithm.</li>
+<li><strong>Method</strong> Inpainting method that could be one of the following:<ul>
+<li><strong>NS</strong> Navier-Stokes based method.</li>
+<li><strong>Telea</strong> Method by Alexandru Telea [Telea04].</li>
+</ul>
+</li>
+</ul>
+
+<p>The function reconstructs the selected image area from the pixel near the
+area boundary. The function may be used to remove dust and scratches from a
+scanned photo, or to remove undesirable objects from still images or video.
+See <a href="http://en.wikipedia.org/wiki/Inpainting">http://en.wikipedia.org/wiki/Inpainting</a> for more details.</p>
+</div><!--after help -->
+   </body>
+</html>

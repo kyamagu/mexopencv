@@ -1,0 +1,131 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SVM/train</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SVM/train</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SVM/train</div>
+      <div class="helpcontent"><p>Trains an SVM model</p>
+
+<pre><code>classifier.train(trainData, responses)
+classifier.train(trainData, responses, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>trainData</strong> Row vectors of feature.</li>
+<li><strong>responses</strong> Output of the corresponding feature vectors.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>status</strong> Success flag.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>VarIdx</strong> Indicator variables (features) of interest. default none.</li>
+<li><strong>SampleIdx</strong> Indicator samples of interest. default none.</li>
+<li><strong>SVMType</strong> Type of a SVM formulation. See [LibSVM] for details.
+Possible values are:<ul>
+<li>'C_SVC'     C-Support Vector Classification. n-class
+classification (n&gt;=2), allows imperfect separation
+of classes with penalty multiplier <code>C</code> for outliers.
+This is the default.</li>
+<li>'NU_SVC'    Nu-Support Vector Classification. n-class
+classification with possible imperfect separation.
+Parameter <code>Nu</code> (in the range 0..1, the larger the value,
+the smoother the decision boundary) is used instead
+of <code>C</code>.</li>
+<li>'ONE_CLASS' Distribution Estimation (One-class SVM). All the
+training data are from the same class, SVM builds
+a boundary that separates the class from the rest
+of the feature space.</li>
+<li>'EPS_SVR'   P-Support Vector Regression. The distance between
+feature vectors from the training set and the fitting
+hyper-plane must be less than <code>p</code>. For outliers the
+penalty multiplier <code>C</code> is used.</li>
+<li>'NU_SVR'    Nu-Support Vector Regression. <code>Nu</code> is used instead of <code>p</code>.</li>
+</ul>
+</li>
+<li><strong>KernelType</strong> Type of a SVM kernel. Possible values are:<ul>
+<li>'Linear'    Linear kernel. No mapping is done, linear discrimination
+(or regression) is done in the original feature space.
+It is the fastest option.</li>
+<li>'Poly'      Polynomial kernel.</li>
+<li>'RBF'       Radial basis function (RBF), a good choice in most cases.
+This is the default kernel.</li>
+<li>'Sigmoid'   Sigmoid kernel.</li>
+</ul>
+</li>
+<li><strong>Degree</strong> Parameter <code>degree</code> of a kernel function (<code>POLY</code>). default 0.</li>
+<li><strong>Gamma</strong> Parameter <code>gamma</code> of a kernel function (<code>POLY</code>, <code>RBF</code>, <code>SIGMOID</code>).
+The default is 1.</li>
+<li><strong>Coef0</strong> Parameter <code>coef0</code> of a kernel function (<code>POLY</code>, <code>SIGMOID</code>).
+The default is 0.</li>
+<li><strong>C</strong> Parameter <code>C</code> of a SVM optimiazation problem (<code>C_SVC</code>, <code>EPS_SVR</code>, <code>NU_SVR</code>).
+The default is 1.</li>
+<li><strong>Nu</strong> Parameter <code>nu</code> of a SVM optimization problem (<code>NU_SVC</code>, <code>ONE_CLASS</code>, <code>NU_SVR</code>).
+The default is 0.</li>
+<li><strong>P</strong> Parameter <code>p</code> of a SVM optimization problem (<code>EPS_SVR</code>).
+The default is 0.</li>
+<li><strong>ClassWeights</strong> Optional weights in the <code>C_SVC</code> problem, assigned
+to particular classes. They are multiplied by <code>C</code> so the parameter
+<code>C</code> of class <code>#i</code> becomes <code>ClassWeight(i) * C</code>. Thus these weights affect the
+misclassification penalty for different classes. The larger
+weight, the larger penalty on misclassification of data from
+the corresponding class. Default none.</li>
+<li><strong>TermCrit</strong> Termination criteria of the iterative SVM training
+procedure which solves a partial case of constrained quadratic
+optimization problem. You can specify tolerance and/or the
+maximum number of iterations. A struct with the
+following fields are accepted:<ul>
+<li>'type'      one of {'Count','EPS','Count+EPS'}. default 'Count+EPS'</li>
+<li>'maxCount'  maximum number of iterations. default 1000</li>
+<li>'epsilon'   tolerance value. default <code>eps('single')</code></li>
+</ul>
+</li>
+</ul>
+
+<p>The method trains the SVM model.</p>
+
+<p>SVM models may be trained on a selected feature subset, and/or on a selected
+sample subset of the training set. To make it easier for you, the train
+methods include the <code>VarIdx</code> and <code>SampleIdx</code> parameters. The former parameter
+identifies variables (features) of interest, and the latter one identifies
+samples of interest. Both vectors are either integer vectors (lists of
+0-based indices) or logical masks of active variables/samples. You may pass
+empty input instead of either of the arguments, meaning that all of the
+variables/samples are used for training.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SVM.html">cv.SVM</a> <a href="SVM.train_auto.html">cv.SVM/train_auto</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

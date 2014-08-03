@@ -1,0 +1,63 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.composeRT</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.composeRT</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.composeRT</div>
+      <div class="helpcontent"><p>Combines two rotation-and-shift transformations</p>
+
+<pre><code>S = <a href="composeRT.html">cv.composeRT</a>(rvec1, tvec1, rvec2, tvec2)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>rvec1</strong> First rotation vector.</li>
+<li><strong>tvec1</strong> First translation vector.</li>
+<li><strong>rvec2</strong> Second rotation vector.</li>
+<li><strong>tvec2</strong> Second translation vector.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>S</strong> Struct with the following fields<ul>
+<li><strong>rvec3</strong> Rotation vector of the superposition.</li>
+<li><strong>tvec3</strong> Translation vector of the superposition.</li>
+<li><strong>dr3dr1</strong>, <strong>dr3dt1</strong>, <strong>dr3dr2</strong>, <strong>dr3dt2</strong>, <strong>dt3dr1</strong>,
+<strong>dt3dt1</strong>, <strong>dt3dr2</strong>, <strong>dt3dt2</strong>
+Output derivatives of rvec3 or tvec3 with regard to rvec1, rvec2,
+tvec1 and tvec2, respectively.</li>
+</ul>
+</li>
+</ul>
+
+<p>The functions compute:</p>
+
+<pre><code>rvec3 = rodrigues^-1( rodorigues(rvec2) * rodrigues(rvec1) )
+tvec3 = rodrigues(rvec2) * tvec1 + tvec2
+</code></pre>
+
+<p>where rodrigues denotes a rotation vector to a rotation matrix transformation,
+and rodrigues^-1 denotes the inverse transformation. See <a href="Rodrigues.html">cv.Rodrigues</a> for
+details</p>
+
+<p>Also, the functions can compute the derivatives of the output vectors with
+regards to the input vectors (see cv.matMulDeriv). The functions are used
+inside <a href="stereoCalibrate.html">cv.stereoCalibrate</a> but can also be used in your own code where
+Levenberg-Marquardt or another gradient-based solver is used to optimize a
+function that contains a matrix multiplication.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Rodrigues.html">cv.Rodrigues</a> <a href="matMulDeriv.html">cv.matMulDeriv</a> <a href="stereoCalibrate.html">cv.stereoCalibrate</a></div>
+   </body>
+</html>

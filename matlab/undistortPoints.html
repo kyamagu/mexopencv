@@ -1,0 +1,79 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.undistortPoints</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.undistortPoints</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.undistortPoints</div>
+      <div class="helpcontent"><p>Computes the ideal point coordinates from the observed point coordinates</p>
+
+<pre><code>dst = <a href="undistortPoints.html">cv.undistortPoints</a>(src, cameraMatrix, distCoeffs)
+dst = <a href="undistortPoints.html">cv.undistortPoints</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Observed point coordinates, 1xNx2 or 1xNx2.</li>
+<li><strong>cameraMatrix</strong> Input camera matrix A = [fx,0,cx;0,fy,cy;0,0,1].</li>
+<li><strong>distCoeffs</strong> Input vector of distortion coefficients [k1,k2,p1,p2,k3,k4,k5,
+        k6] of 4, 5, or 8 elements. If the vector is empty, the zero distortion
+coefficients are assumed.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Output ideal point coordinates after undistortion and reverse
+perspective transformation.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>R</strong> Rectification transformation in the object space (3x3 matrix). R1 or
+R2 computed by <a href="stereoRectify.html">cv.stereoRectify</a> can be passed here. If the matrix is
+empty, the identity transformation is used.</li>
+<li><strong>P</strong> New camera matrix (3x3) or new projection matrix (3x4). P1 or P2
+computed by <a href="stereoRectify.html">cv.stereoRectify</a> can be passed here. If the matrix is
+empty, the identity new camera matrix is used.</li>
+</ul>
+
+<p>The function is similar to <a href="undistort.html">cv.undistort</a> and <a href="initUndistortRectifyMap.html">cv.initUndistortRectifyMap</a> but it
+operates on a sparse set of points instead of a raster image. Also the
+function performs a reverse transformation to <a href="projectPoints.html">cv.projectPoints</a>. In case of a
+3D object, it does not reconstruct its 3D coordinates, but for a planar
+object, it does, up to a translation vector, if the proper R is specified.</p>
+
+<pre><code>% (u,v) is the input point, (u', v') is the output point
+% camera_matrix=[fx 0 cx; 0 fy cy; 0 0 1]
+% P=[fx' 0 cx' tx; 0 fy' cy' ty; 0 0 1 tz]
+x&quot; = (u - cx)/fx
+y&quot; = (v - cy)/fy
+(x',y') = <a href="undistort.html">cv.undistort</a>(x&quot;,y&quot;,dist_coeffs)
+[X,Y,W]T = R*[x' y' 1]T
+x = X/W, y = Y/W
+u' = x*fx' + cx'
+v' = y*fy' + cy',
+</code></pre>
+
+<p>where <a href="undistort.html">cv.undistort</a> is an approximate iterative algorithm that estimates the
+normalized original point coordinates out of the normalized distorted point
+coordinates (&quot;normalized&quot; means that the coordinates do not depend on the
+camera matrix).</p>
+
+<p>The function can be used for both a stereo camera head or a monocular camera
+(when R is empty).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="undistortPoints.html">cv.undistortPoints</a> <a href="calibrateCamera.html">cv.calibrateCamera</a></div>
+   </body>
+</html>

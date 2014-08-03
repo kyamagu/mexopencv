@@ -1,0 +1,40 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.convertPointsToHomogeneous</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.convertPointsToHomogeneous</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.convertPointsToHomogeneous</div>
+      <div class="helpcontent"><p>Converts points from Euclidean to homogeneous space</p>
+
+<pre><code>dst = <a href="convertPointsToHomogeneous.html">cv.convertPointsToHomogeneous</a>(src)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Input vector of N-dimensional points.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Output vector of N+1-dimensional points.</li>
+</ul>
+
+<p>The function converts points from Euclidean to homogeneous space by
+appending 1?s to the tuple of point coordinates. That is, each point (x1,
+x2, ..., xn) is converted to (x1, x2, ..., xn, 1).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="convertPointsFromHomogeneous.html">cv.convertPointsFromHomogeneous</a></div>
+   </body>
+</html>

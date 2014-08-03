@@ -1,0 +1,62 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.integral</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.integral</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.integral</div>
+      <div class="helpcontent"><p>Calculates the integral of an image</p>
+
+<pre><code>s = <a href="integral.html">cv.integral</a>(src)
+[s, sqsum, tilted] = <a href="integral.html">cv.integral</a>(src)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Source image as W x H, 8-bit or floating-point (32f or 64f).</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>s</strong> Integral image as (W+1) x (H+1), 32-bit integer or floating-point (32f
+or 64f).</li>
+<li><strong>sqsum</strong> Integral image for squared pixel values. It is (W+1) x (H+1),
+double-precision floating-point (64f) array.</li>
+<li><strong>tilted</strong> Integral for the image rotated by 45 degrees. It is (W+1) x (H+1)
+array with the same data type as sum.</li>
+</ul>
+
+<p>The functions calculate one or more integral images for the source image as
+follows:</p>
+
+<pre><code> s(X,Y) = \sum_{x&lt;X,y&lt;Y} src(x,y)
+ sqsum(X,Y) = \sum_{x&lt;X,y&lt;Y} src(x,y)^2
+ tilted(X,Y) = \sum_{y&lt;Y,\abs(x-X+1) \leq Y-y-1} src(x,y)
+</code></pre>
+
+<p>Using these integral images, you can calculate sa um, mean, and standard
+deviation over a specific up-right or rotated rectangular region of the image
+in a constant time, for example:</p>
+
+<pre><code> \sum_{x_1 \leq x &lt; x_2, y_1 \leq y &lt; y_2} src(x,y)
+ = s(x_2, y_2) - s(x_1, y_2) - s(x_2, y_1) + s(x_1, y_1)
+</code></pre>
+
+<p>It makes possible to do a fast blurring or fast block correlation with a
+variable window size, for example. In case of multi-channel images, sums for
+each channel are accumulated independently.</p>
+</div><!--after help -->
+   </body>
+</html>

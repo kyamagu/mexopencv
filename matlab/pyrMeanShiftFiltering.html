@@ -1,0 +1,82 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.pyrMeanShiftFiltering</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.pyrMeanShiftFiltering</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.pyrMeanShiftFiltering</div>
+      <div class="helpcontent"><p>Performs initial step of meanshift segmentation of an image</p>
+
+<pre><code>dst = <a href="pyrMeanShiftFiltering.html">cv.pyrMeanShiftFiltering</a>(src)
+dst = <a href="pyrMeanShiftFiltering.html">cv.pyrMeanShiftFiltering</a>(src, 'SP', 5, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> The source 8-bit, 3-channel image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> The destination image of the same format and the same size as the
+source.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>SP</strong> The spatial window radius. default 5</li>
+<li><strong>SR</strong> The color window radius. default 10</li>
+<li><strong>MaxLevel</strong> Maximum level of the pyramid for the segmentation</li>
+</ul>
+
+<p>The function implements the filtering stage of meanshift segmentation, that
+is, the output of the function is the filtered posterized image with color
+gradients and fine-grain texture flattened. At every pixel (X,Y) of the input
+image (or down-sized input image, see below) the function executes meanshift
+iterations, that is, the pixel (X,Y) neighborhood in the joint space-color
+hyperspace is considered:</p>
+
+<pre><code>(x,y): X-sp &lt;= x &lt;= X+sp, Y-sp &lt;= y &lt;= Y+sp, ||(R,G,B) - (r,g,b)|| &lt;= sr
+</code></pre>
+
+<p>where (R,G,B) and (r,g,b) are the vectors of color components at (X,Y) and
+(x,y), respectively (though, the algorithm does not depend on the color space
+used, so any 3-component color space can be used instead). Over the
+neighborhood the average spatial value (X',Y') and average color vector
+(R',G',B') are found and they act as the neighborhood center on the next
+iteration</p>
+
+<pre><code>(X,Y) (X',Y'), (R,G,B) (R',G',B').
+</code></pre>
+
+<p>After the iterations over, the color components of the initial pixel (that
+is, the pixel from where the iterations started) are set to the final value
+(average color at the last iteration):</p>
+
+<pre><code>I(X,Y) &lt; -(R*,G*,B*)
+</code></pre>
+
+<p>When maxLevel &gt; 0, the gaussian pyramid of maxLevel+1 levels is built, and
+the above procedure is run on the smallest layer first. After that, the
+results are propagated to the larger layer and the iterations are run again
+only on those pixels where the layer colors differ by more than sr from the
+lower-resolution layer of the pyramid. That makes boundaries of color regions
+sharper. Note that the results will be actually different from the ones
+obtained by running the meanshift procedure on the whole original image (i.e.
+when maxLevel = 0)</p>
+</div><!--after help -->
+   </body>
+</html>

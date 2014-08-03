@@ -1,0 +1,57 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.estimateAffine3D</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.estimateAffine3D</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.estimateAffine3D</div>
+      <div class="helpcontent"><p>Computes an optimal affine transformation between two 3D point sets</p>
+
+<pre><code>M = <a href="estimateAffine3D.html">cv.estimateAffine3D</a>(srcpt, points2)
+[M, inliers] = <a href="estimateAffine3D.html">cv.estimateAffine3D</a>(...)
+[...] = <a href="estimateAffine3D.html">cv.estimateAffine3D</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>srcpt</strong> First input 3D point set. Cell array of 3-element vectors or
+1-by-N-by-3 numeric array.</li>
+<li><strong>dstpt</strong> Second input 3D point set. Cell array of 3-element vectors or
+1-by-N-by-3 numeric array.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>M</strong> 3D affine transformation matrix</li>
+<li><strong>inliers</strong> Output vector indicating which points are inliers.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>RansacThreshold</strong> Maximum reprojection error in the RANSAC algorithm
+to consider a point as an inlier. default 3.0.</li>
+<li><strong>Param2</strong> Confidence level, between 0 and 1, for the estimated
+transformation. Anything between 0.95 and 0.99 is usually good
+enough. Values too close to 1 can slow down the estimation
+significantly. Values lower than 0.8-0.9 can result in an
+incorrectly estimated transformation. default 0.99.</li>
+</ul>
+
+<p>The function estimates an optimal 3D affine transformation between two 3D
+point sets using the RANSAC algorithm.</p>
+</div><!--after help -->
+   </body>
+</html>

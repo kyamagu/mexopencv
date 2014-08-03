@@ -1,0 +1,62 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.findCirclesGrid</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.findCirclesGrid</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.findCirclesGrid</div>
+      <div class="helpcontent"><p>Finds the centers in the grid of circles</p>
+
+<pre><code>centers = <a href="findCirclesGrid.html">cv.findCirclesGrid</a>(im, patternSize)
+[...] = <a href="findCirclesGrid.html">cv.findCirclesGrid</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>im</strong> Grid view of source circles. It must be an 8-bit grayscale or
+color image.</li>
+<li><strong>patternSize</strong> Number of circles per a grid row and column
+(<code>patternSize = [points_per_row, points_per_colum]</code>).</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>centers</strong> Array of detected centers.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>SymmetricGrid</strong> Use symmetric pattern of circles. default true.</li>
+<li><strong>Clustering</strong> Use a special algorithm for grid detection. It is more
+robust to perspective distortions but much more sensitive to
+background clutter. default false.</li>
+</ul>
+
+<p>The function attempts to determine whether the input image contains a
+grid of circles. If it is, the function locates centers of the circles.
+The function returns a non-empty value if all of the centers have been
+found and they have been placed in a certain order (row by row, left to
+right in every row). Otherwise, if the function fails to find all the
+corners or reorder them, it returns empty array.</p>
+
+<h2> Note</h2>
+
+<p>The function requires white space (like a square-thick border,
+the wider the better) around the board to make the detection more robust
+in various environments.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findChessboardCorners.html">cv.findChessboardCorners</a></div>
+   </body>
+</html>

@@ -1,0 +1,48 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.calibrationMatrixValues</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.calibrationMatrixValues</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.calibrationMatrixValues</div>
+      <div class="helpcontent"><p>Computes useful camera characteristics from the camera matrix</p>
+
+<pre><code>S = <a href="calibrationMatrixValues.html">cv.calibrationMatrixValues</a>(cameraMatrix, imageSize, apertureWidth, apertureHeight)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>cameraMatrix</strong> Input camera matrix that can be estimated by
+<a href="calibrateCamera.html">cv.calibrateCamera</a> or <a href="stereoCalibrate.html">cv.stereoCalibrate</a>.</li>
+<li><strong>imageSize</strong> Input image size [w,h] in pixels.</li>
+<li><strong>apertureWidth</strong> Physical width of the sensor.</li>
+<li><strong>apertureHeight</strong> Physical height of the sensor.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>S</strong> Struct with the following fields</li>
+<li><strong>fovx</strong> Output field of view in degrees along the horizontal sensor axis.</li>
+<li><strong>fovy</strong> Output field of view in degrees along the vertical sensor axis.</li>
+<li><strong>focalLength</strong> Focal length of the lens in mm.</li>
+<li><strong>principalPoint</strong> Principal point in pixels.</li>
+<li><strong>aspectRatio</strong> fy/fx.</li>
+</ul>
+
+<p>The function computes various useful camera characteristics from the
+previously estimated camera matrix.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calibrateCamera.html">cv.calibrateCamera</a> <a href="stereoCalibrate.html">cv.stereoCalibrate</a></div>
+   </body>
+</html>

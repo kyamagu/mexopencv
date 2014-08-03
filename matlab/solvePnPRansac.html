@@ -1,0 +1,80 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.solvePnPRansac</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.solvePnPRansac</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.solvePnPRansac</div>
+      <div class="helpcontent"><p>Finds an object pose from 3D-2D point correspondences using the RANSAC scheme</p>
+
+<pre><code>[...] = <a href="solvePnPRansac.html">cv.solvePnPRansac</a>(objectPoints, imagePoints, cameraMatrix)
+[...] = <a href="solvePnPRansac.html">cv.solvePnPRansac</a>(objectPoints, imagePoints, cameraMatrix, distCoeffs)
+[...] = <a href="solvePnPRansac.html">cv.solvePnPRansac</a>(..., distCoeffs, 'OptionName', optionValue, ...)
+[rvec, tvec, inliers] = <a href="solvePnPRansac.html">cv.solvePnPRansac</a>(...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>objectPoints</strong> Array of object points in the object coordinate space,
+1xNx3/Nx1x3 or 3xN/Nx3 array, where N is the number of points, or
+cell array of 3-element vectors can be also passed here.</li>
+<li><strong>imagePoints</strong> Array of corresponding image points, 1xNx2/Nx1x2 or
+2xN/Nx2 array, where N is the number of points, or cell array of
+2-element vectors can be also passed here.</li>
+<li><strong>cameraMatrix</strong> Input camera matrix <code>A = [fx,0,cx; 0,fy,cy; 0,0,1]</code>.</li>
+<li><strong>distCoeffs</strong> Input vector of distortion coefficients [k1,k2,p1,p2,k3,
+        k4,k5,k6] of 4, 5, or 8 elements. If the vector is empty, the
+zero distortion coefficients are assumed.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>rvec</strong> Output rotation vector (see cv.Rodrigues) that, together with
+<code>tvec</code>, brings points from the model coordinate system to the
+camera coordinate system.</li>
+<li><strong>tvec</strong> Output translation vector.</li>
+<li><strong>inliers</strong> vector that contains indices of inliers in <code>objectPoints</code> and
+<code>imagePoints</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Rvec</strong> Initial rvec. default empty.</li>
+<li><strong>Tvec</strong> Initial tvec. default empty.</li>
+<li><strong>UseExtrinsicGuess</strong> If true, the function uses the provided <code>rvec</code>
+and <code>tvec</code> values as initial approximations of the rotation and
+translation vectors, respectively, and further optimizes them.
+default false.</li>
+<li><strong>IterationsCount</strong> Number of iterations. default 100.</li>
+<li><strong>ReprojectionError</strong> Inlier threshold value used by the RANSAC
+procedure. The parameter value is the maximum allowed distance
+between the observed and computed point projections to consider
+it an inlier. default 8.0.</li>
+<li><strong>MinInliersCount</strong> Number of inliers. If the algorithm at some stage
+finds more inliers than <code>minInliersCount</code>, it finishes. default 100.</li>
+<li><strong>Flags</strong> Method for solving a PnP problem. See <a href="solvePnP.html">cv.solvePnP</a>.</li>
+</ul>
+
+<p>The function estimates an object pose given a set of object points, their
+corresponding image projections, as well as the camera matrix and the
+distortion coefficients. This function finds such a pose that minimizes
+reprojection error, that is, the sum of squared distances between the
+observed projections <code>imagePoints</code> and the projected (using
+cv.projectPoints) <code>objectPoints</code>. The use of RANSAC makes the function
+resistant to outliers.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="solvePnP.html">cv.solvePnP</a></div>
+   </body>
+</html>

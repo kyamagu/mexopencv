@@ -1,0 +1,60 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.compareHist</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.compareHist</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.compareHist</div>
+      <div class="helpcontent"><p>Compares two histograms</p>
+
+<pre><code>d = <a href="compareHist.html">cv.compareHist</a>(H1, H2)
+d = <a href="compareHist.html">cv.compareHist</a>(H1, H2, 'Method', method)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>H1</strong> First compared histogram.</li>
+<li><strong>H2</strong> Second compared histogram of the same size as H1.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>d</strong> Output distance.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Method</strong> Comparison method that could be one of the following:<ul>
+<li><strong>'Correl'</strong> Correlation</li>
+<li><strong>'ChiSqr'</strong> Chi-Square</li>
+<li><strong>'Intersect'</strong> Intersection</li>
+<li><strong>'Bhattacharyya'</strong> Bhattacharyya distance</li>
+</ul>
+</li>
+</ul>
+
+<p>The functions compareHist compare two dense or two sparse histograms
+using the specified method.</p>
+
+<p>While the function works well with 1-, 2-, 3-dimensional dense
+histograms, it may not be suitable for high-dimensional sparse
+histograms. In such histograms, because of aliasing and sampling
+problems, the coordinates of non-zero histogram bins can slightly shift.
+To compare such histograms or more general sparse configurations of
+weighted points, consider using the EMD() function.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calcHist.html">cv.calcHist</a> <a href="EMD.html">cv.EMD</a></div>
+   </body>
+</html>

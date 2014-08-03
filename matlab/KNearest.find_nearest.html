@@ -1,0 +1,80 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.KNearest/find_nearest</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.KNearest/find_nearest</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.KNearest/find_nearest</div>
+      <div class="helpcontent"><p>Finds the neighbors and predicts responses for input vectors</p>
+
+<pre><code>results = classifier.find_nearest(samples)
+results = classifier.find_nearest(samples, 'OptionName', optionValue, ...)
+[results,neiResp,dists] = classifier.find_nearest(...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>samples</strong> Input samples stored by rows. It is a single-
+precision floating-point matrix of #samples x #dimension.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>results</strong> Vector with results of prediction (regression or
+classification) for each input sample. It is a single-
+precision floating-point vector with number<em>of</em>samples
+elements.</li>
+<li><strong>neiResp</strong> Optional output values for corresponding neighbors.
+It is a single-precision floating-point matrix of #samples x
+K.</li>
+<li><strong>dists</strong> Optional output distances from the input vectors to
+the corresponding neighbors. It is a single-precision
+floating-point matrix of #samples x K.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>K</strong> Number of used nearest neighbors. It must be smaller than
+or equal to the MaxK specified in the training.</li>
+</ul>
+
+<p>For each input vector (a row of the matrix samples), the method
+finds the k nearest neighbors. In case of regression, the
+predicted result is a mean value of the particular vector's
+neighbor responses. In case of classification, the class is
+determined by voting.</p>
+
+<p>For each input vector, the neighbors are sorted by their distances
+to the vector.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KNearest.html">cv.KNearest</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

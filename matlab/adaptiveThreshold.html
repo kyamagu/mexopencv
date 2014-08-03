@@ -1,0 +1,52 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.adaptiveThreshold</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.adaptiveThreshold</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.adaptiveThreshold</div>
+      <div class="helpcontent"><p>Applies an adaptive threshold to an array</p>
+
+<pre><code>dst = <a href="adaptiveThreshold.html">cv.adaptiveThreshold</a>(src, maxVal)
+dst = <a href="adaptiveThreshold.html">cv.adaptiveThreshold</a>(src, maxVal, 'AdaptiveMethod', 'Mean', ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Source 8-bit single-channel image.</li>
+<li><strong>maxVal</strong> Non-zero value assigned to the pixels for which the condition
+is satisfied.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Destination image of the same size and the same type as src.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>AdaptiveMethod</strong> Adaptive thresholding algorithm to use, either
+'Mean' or 'Gaussian'.</li>
+<li><strong>ThresholdType</strong> Thresholding type that must be either 'Binary' or
+'BinaryInv'.</li>
+<li><strong>BlockSize</strong> Size of a pixel neighborhood that is used to calculate a
+threshold value for the pixel: 3, 5, 7, and so on.</li>
+<li><strong>C</strong> Constant subtracted from the mean or weighted mean. Normally, it
+is positive but may be zero or negative as well.</li>
+</ul>
+</div><!--after help -->
+   </body>
+</html>

@@ -1,0 +1,41 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.fitEllipse</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.fitEllipse</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.fitEllipse</div>
+      <div class="helpcontent"><p>Fits an ellipse around a set of 2D points</p>
+
+<pre><code>rct = <a href="fitEllipse.html">cv.fitEllipse</a>(points)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>points</strong> Input 2D point set, stored in a cell array of 2-element vectors or
+1-by-N-by-2 numeric array.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>rct</strong> Output rotated rectangle struct.</li>
+</ul>
+
+<p>The function calculates the ellipse that fits (in a least-squares sense) a
+set of 2D points best of all. It returns the rotated rectangle in which the
+ellipse is inscribed. The algorithm [Fitzgibbon95] is used.</p>
+</div><!--after help -->
+   </body>
+</html>

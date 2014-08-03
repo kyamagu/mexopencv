@@ -1,0 +1,63 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.drawContours</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.drawContours</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.drawContours</div>
+      <div class="helpcontent"><p>Draws contours outlines or filled contours</p>
+
+<pre><code>im = <a href="drawContours.html">cv.drawContours</a>(im, contours)
+im = <a href="drawContours.html">cv.drawContours</a>(im, contours, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>im</strong> Image to be drawn contours.</li>
+<li><strong>contours</strong> All the input contours. Each contour is stored as a point vector.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>im</strong> Destination image.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>ContourIdx</strong> Parameter indicating a contour to draw. If it is negative,
+all the contours are drawn.</li>
+<li><strong>Color</strong> Color of the contours.</li>
+<li><strong>Thickness</strong> Thickness of lines the contours are drawn with. If it is
+negative (for example, thickness=CV_FILLED ), the contour interiors
+are drawn.</li>
+<li><strong>LineType</strong> Line connectivity.</li>
+<li><strong>Hierarchy</strong> Optional information about hierarchy. It is only needed if
+you want to draw only some of the contours (see MaxLevel).</li>
+<li><strong>MaxLevel</strong> Maximal level for drawn contours. If it is 0, only the
+specified contour is drawn. If it is 1, the function draws the
+contour(s) and all the nested contours. If it is 2, the function draws
+the contours, all the nested contours, all the nested-to-nested
+contours, and so on. This parameter is only taken into account when
+there is hierarchy available.</li>
+<li><strong>Offset</strong> Optional contour shift parameter. Shift all the drawn contours
+by the specified offset (dx,dy).</li>
+</ul>
+
+<p>The function draws contour outlines in the image if thickness &gt;= 0 or or fills
+the area bounded by the contours if thickness &lt; 0.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findContours.html">cv.findContours</a></div>
+   </body>
+</html>

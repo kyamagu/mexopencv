@@ -1,0 +1,64 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.EM/predict</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.EM/predict</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.EM/predict</div>
+      <div class="helpcontent"><p>Returns a likelihood logarithm value and an index 
+of the most probable mixture component for the given 
+sample.</p>
+
+<pre><code>[log_likelihood, cluster, probs] = em.predict(sample)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>samples</strong> Samples for classification. It should be a
+matrix with each row representing separate
+sample.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><p><strong>log</strong>likelihood__ Likelihood logarithm values</p>
+</li>
+<li><p><strong>cluster</strong>        Indices of the most probable mixture
+components for each sample</p>
+</li>
+<li><p><strong>probs</strong>          Matrix pf posterior probabilities of each
+component given the sample. 
+It has nsamples x nclusters size.</p>
+</li>
+</ul>
+</div><!--after help -->
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

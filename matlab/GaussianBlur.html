@@ -1,0 +1,56 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.GaussianBlur</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.GaussianBlur</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.GaussianBlur</div>
+      <div class="helpcontent"><p>Smoothes an image using a Gaussian filter</p>
+
+<pre><code>dst = <a href="GaussianBlur.html">cv.GaussianBlur</a>(src)
+dst = <a href="GaussianBlur.html">cv.GaussianBlur</a>(src, 'KSize', [5,5], ...)
+</code></pre>
+
+<p>The function convolves the source image with the specified Gaussian kernel.</p>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Source image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Destination image of the same size and type as src.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>KSize</strong> Gaussian kernel size. ksize.width and ksize.height can differ
+but they both must be positive and odd. Or, they can be zeros.
+and then they are computed from sigma*. default [5,5]</li>
+<li><strong>SigmaX</strong> Gaussian kernel standard deviation in X direction. default 0</li>
+<li><strong>SigmaY</strong> Gaussian kernel standard deviation in Y direction. If sigmaY is
+zero, it is set to be equal to sigmaX . If both sigmas are
+zeros, they are computed from ksize.width and ksize.height,
+respectively. See getGaussianKernel() for details. To fully
+control the result regardless of possible future modifications
+of all this semantics, it is recommended to specify all of
+ksize, sigmaX, and sigmaY. default 0</li>
+<li><strong>BorderType</strong> Pixel extrapolation method. default 'Default'</li>
+</ul>
+</div><!--after help -->
+   </body>
+</html>

@@ -1,0 +1,55 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.EM/trainM</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.EM/trainM</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.EM/trainM</div>
+      <div class="helpcontent"><p>Trains the GMM, starting from the Maximization step</p>
+
+<pre><code>[ log_likelihoods labels probs ] = em.trainM(samples, probs0)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><p><strong>samples</strong> Samples from which the Gaussian mixture model will be estimated. 
+It should be a one-channel matrix, each row of which is a sample. </p>
+</li>
+<li><p><strong>probs0</strong>  Initial probabilities p_i;k of sample i to belong to mixture component k. It is a
+one-channel floating-point matrix of nsamples x nclusters size</p>
+</li>
+</ul>
+
+<h2> Output</h2>
+
+<p>see EM.train</p>
+</div><!--after help -->
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

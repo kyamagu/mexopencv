@@ -1,0 +1,83 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.imread</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.imread</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.imread</div>
+      <div class="helpcontent"><p>Loads an image from a file</p>
+
+<pre><code>dst = <a href="imread.html">cv.imread</a>(filename)
+dst = <a href="imread.html">cv.imread</a>(filename, 'Flags', flags)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>filename</strong> Name of a file to be loaded.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Loaded image.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Flags</strong> Flags specifying the color type of a loaded image.</li>
+</ul>
+
+<pre><code>  &gt;0: Return a 3-channel color image
+  =0: Return a grayscale image
+  &lt;0: Return the loaded image as is. Note that in the current
+      implementation the alpha channel, if any, is stripped from the output
+      image. For example, a 4-channel RGBA image is loaded as RGB if
+      flags &gt;= 0.
+</code></pre>
+
+<p>The function imread loads an image from the specified file and returns it. If
+the image cannot be read (because of missing file, improper permissions,
+unsupported or invalid format), the function returns an empty matrix.
+Currently, the following file formats are supported:</p>
+
+<pre><code> Windows bitmaps - *.bmp, *.dib (always supported)
+ JPEG files - *.jpeg, *.jpg, *.jpe (see the Notes section)
+ JPEG 2000 files - *.jp2 (see the Notes section)
+ Portable Network Graphics - *.png (see the Notes section)
+ Portable image format - *.pbm, *.pgm, *.ppm (always supported)
+ Sun rasters - *.sr, *.ras (always supported)
+ TIFF files - *.tiff, *.tif (see the Notes section)
+</code></pre>
+
+<h2> Notes</h2>
+
+<p>The function determines the type of an image by the content, not by the file
+extension.</p>
+
+<p>On Microsoft Windows* OS and MacOSX*, the codecs shipped with an OpenCV image
+(libjpeg, libpng, libtiff, and libjasper) are used by default. So, OpenCV can
+always read JPEGs, PNGs, and TIFFs. On MacOSX, there is also an option to use
+native MacOSX image readers. But beware that currently these native image
+loaders give images with different pixel values because of the color
+management embedded into MacOSX.</p>
+
+<p>On Linux*, BSD flavors and other Unix-like open-source operating systems,
+OpenCV looks for codecs supplied with an OS image. Install the relevant
+packages (do not forget the development files, for example, libjpeg-dev,
+in Debian* and Ubuntu*) to get the codec support or turn on the
+<code>OPENCV_BUILD_3RDPARTY_LIBS</code> flag in CMake.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="imwrite.html">cv.imwrite</a></div>
+   </body>
+</html>

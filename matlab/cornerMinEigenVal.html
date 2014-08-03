@@ -1,0 +1,52 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.cornerMinEigenVal</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.cornerMinEigenVal</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.cornerMinEigenVal</div>
+      <div class="helpcontent"><p>Calculates the minimal eigenvalue of gradient matrices for corner detection</p>
+
+<pre><code>dst = <a href="cornerMinEigenVal.html">cv.cornerMinEigenVal</a>(src)
+dst = <a href="cornerMinEigenVal.html">cv.cornerMinEigenVal</a>(src, 'KSize', [5,5], ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Input single-channel 8-bit or floating-point image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Image to store the results. It has the same size as src and the
+single type.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>BlockSize</strong> Neighborhood size. default 5.</li>
+<li><strong>ApertureSize</strong> Aperture parameter for the Sobel() operator. default 3.</li>
+<li><strong>BorderType</strong> Border mode used to extrapolate pixels outside of the
+image. default 'Default'</li>
+</ul>
+
+<p>The function is similar to <a href="cornerEigenValsAndVecs.html">cv.cornerEigenValsAndVecs</a> but it calculates and
+stores only the minimal eigenvalue of the covariance matrix of derivatives,
+that is,  in terms of the formulae in the <a href="cornerEigenValsAndVecs.html">cv.cornerEigenValsAndVecs</a>
+description.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="cornerEigenValsAndVecs.html">cv.cornerEigenValsAndVecs</a></div>
+   </body>
+</html>

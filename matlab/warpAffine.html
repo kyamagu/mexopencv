@@ -1,0 +1,62 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.warpAffine</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.warpAffine</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.warpAffine</div>
+      <div class="helpcontent"><p>Applies an affine transformation to an image</p>
+
+<pre><code>dst = <a href="warpAffine.html">cv.warpAffine</a>(src, M)
+dst = <a href="warpAffine.html">cv.warpAffine</a>(src, M, 'DSize', dsize, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Source image.</li>
+<li><strong>M</strong> 2 x 3 transformation matrix.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Destination image that has the size dsize and the same type as src.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>DSize</strong> Size of the destination image</li>
+<li><strong>Interpolation</strong> interpolation method. default: 'Linear'</li>
+<li><strong>WarpInverse</strong> Logical flag to apply inverse affine transform, meaning
+that M is the inverse transformation (dst -&gt; src)</li>
+<li><strong>BorderType</strong> Pixel extrapolation method. When 'Transparent', it means
+that the pixels in the destination image corresponding to
+the outliers in the source image are not modified by the
+function. default: 'Constant'</li>
+<li><strong>BorderValue</strong> Value used in case of a constant border. default: 0</li>
+</ul>
+
+<p>The function warpAffine transforms the source image using the specified
+matrix</p>
+
+<pre><code> dst(x,y) = src(M_11*x+M_12*y+M_13, M_21*x+M_22*y+M_23)
+</code></pre>
+
+<p>when the 'WarpInverse' option is true. Otherwise, the transformation is first
+inverted with <a href="invertAffineTransform.html">cv.invertAffineTransform</a> and then put in the formula above
+instead of M.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="warpPerspective.html">cv.warpPerspective</a> <a href="resize.html">cv.resize</a> <a href="getRectSubPix.html">cv.getRectSubPix</a></div>
+   </body>
+</html>

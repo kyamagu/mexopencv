@@ -1,0 +1,44 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.convertMaps</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.convertMaps</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.convertMaps</div>
+      <div class="helpcontent"><p>Converts image transformation maps from one representation to another</p>
+
+<pre><code>[map1, map2] = <a href="convertMaps.html">cv.convertMaps</a>(X, Y)
+[map1, map2] = <a href="convertMaps.html">cv.convertMaps</a>(XY)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Source image.</li>
+<li><strong>X</strong> x values of the transformation, M-by-N-by-1 array</li>
+<li><strong>Y</strong> y values of the transformation, M-by-N-by-1 array</li>
+<li><strong>XY</strong> (x,y) values of the transformation, M-by-N-by-2 array</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>map1</strong> The first map of the fixed-point representation, int16 type</li>
+<li><strong>map2</strong> The second map of the fixed-point representation, uint16 type</li>
+</ul>
+
+<p>The function converts a pair of maps for <a href="remap.html">cv.remap</a> from one representation to
+another</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="remap.html">cv.remap</a></div>
+   </body>
+</html>

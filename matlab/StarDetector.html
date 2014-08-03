@@ -1,0 +1,54 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.StarDetector</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.StarDetector</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.StarDetector</div>
+      <div class="helpcontent"><p>Finds keypoints in an image</p>
+
+<pre><code>keypoints = <a href="StarDetector.html">cv.StarDetector</a>(im)
+keypoints = <a href="StarDetector.html">cv.StarDetector</a>(im, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>im</strong> The input 8-bit grayscale image</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>keypoints</strong> The output vector of keypoints.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>MaxSize</strong> maximum size of the features. The following values are
+supported: 4, 6, 8, 11, 12, 16, 22, 23, 32, 45, 46, 64, 90, 128.
+In the case of a different value the result is undefined. default 45</li>
+<li><strong>ResponseThreshold</strong> threshold for the approximated laplacian, used to
+eliminate weak features. The larger it is, the less features will
+be retrieved. default 30</li>
+<li><strong>LineThresholdProjected</strong> another threshold for the laplacian to
+eliminate edges. default 10</li>
+<li><strong>LineThresholdBinarized</strong> yet another threshold for the feature size
+to eliminate edges. The larger the 2nd threshold, the more points
+you get. default 8</li>
+<li><strong>SuppressNonmaxSize</strong> default 5</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.html">cv.FeatureDetector</a></div>
+   </body>
+</html>

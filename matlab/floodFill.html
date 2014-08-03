@@ -1,0 +1,70 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.floodFill</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.floodFill</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.floodFill</div>
+      <div class="helpcontent"><p>Fills a connected component with the given color</p>
+
+<pre><code>dst = <a href="floodFill.html">cv.floodFill</a>(src, seed, newVal)
+dst = <a href="floodFill.html">cv.floodFill</a>(src, seed, newVal, 'Mask', mask, ...)
+[dst, rect, area] = <a href="floodFill.html">cv.floodFill</a>(src, seed, newVal, ...)
+[dst, mask, rect, area] = <a href="floodFill.html">cv.floodFill</a>(src, seed, newVal, 'Mask', mask, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Input/output 1- or 3-channel, 8-bit, or floating-point image. It is
+modified by the function unless the 'MaskOnly' flag is set in the
+option</li>
+<li><strong>seed</strong> Starting point.</li>
+<li><strong>newVal</strong> New value of the repainted domain pixels.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Destination image of the same size and the same type as src.</li>
+<li><strong>rect</strong> Optional output parameter set by the function to the minimum
+bounding rectangle of the repainted domain.</li>
+<li><strong>area</strong> Optional output parameter set by the function to the number of
+filled pixels</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>LoDiff</strong> Maximal lower brightness/color difference between the currently
+observed pixel and one of its neighbors belonging to the
+component, or a seed pixel being added to the component.</li>
+<li><strong>UpDiff</strong> Maximal upper brightness/color difference between the currently
+observed pixel and one of its neighbors belonging to the
+component, or a seed pixel being added to the component.</li>
+<li><strong>Connectivity</strong> 4 or 8</li>
+<li><strong>FixedRange</strong> If set, the difference between the current pixel and
+seed pixel is considered. Otherwise, the difference between
+neighbor pixels is considered (that is, the range is
+floating).</li>
+<li><strong>MaskOnly</strong> If set, the function does not change the image ( newVal
+is ignored), but fills the mask. The flag can be used for
+the second variant only.</li>
+</ul>
+
+<p>The functions floodFill fill a connected component starting from the
+seed point with the specified color. The connectivity is determined by
+the color/brightness closeness of the neighbor pixels.</p>
+</div><!--after help -->
+   </body>
+</html>

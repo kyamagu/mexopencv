@@ -1,0 +1,60 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SVD.solveZ</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SVD.solveZ</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SVD.solveZ</div>
+      <div class="helpcontent"><p>Solves an under-determined singular linear system</p>
+
+<pre><code>dst = <a href="SVD.html">cv.SVD</a>.solveZ(src)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Left-hand-side matrix.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Found solution.</li>
+</ul>
+
+<p>The method finds a unit-length solution x of a singular
+linear system A*x = 0. Depending on the rank of A, there can
+be no solutions, a single solution or an infinite number of
+solutions. In general, the algorithm solves the following
+problem</p>
+
+<pre><code>dst = argmin_{x:||x||=1} || src * x ||</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SVD.compute.html">cv.SVD.compute</a> <a href="SVD.backSubst.html">cv.SVD.backSubst</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>true</td>
+         </tr>
+      </table>
+   </body>
+</html>

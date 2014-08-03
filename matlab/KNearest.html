@@ -1,0 +1,234 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.KNearest</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.KNearest</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.KNearest</div>
+      <div class="helpcontent"><p>KNearest  The class implements K-Nearest Neighbors model</p>
+
+<p>The algorithm caches all training samples and predicts the response for a
+new sample by analyzing a certain number (K) of the nearest neighbors of
+the sample using voting, calculating weighted sum, and so on. The method
+is sometimes referred to as &quot;learning by example&quot; because for prediction
+it looks for the feature vector with a known response that is closest to
+the given vector.</p>
+
+<pre><code>Xtrain = [randn(20,4)+1;randn(20,4)-1]; % training samples
+Ytrain = [ones(20,1);zeros(20,1)];      % training labels
+kn = <a href="KNearest.html">cv.KNearest</a>(Xtrain,Ytrain);
+Xtest = randn(50,4);                    % testing samples
+Ytest = kn.predict(Xtest);              % predictions</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KNearest.KNearest.html">cv.KNearest/KNearest</a>
+  <a href="KNearest.train.html">cv.KNearest/train</a> <a href="KNearest.find_nearest.html">cv.KNearest/find_nearest</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="KNearest.KNearest.html">KNearest</a></td>
+            <td class="m-help">K-Nearest Neighbors constructor&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="KNearest.IsRegression.html">IsRegression</a></td>
+            <td class="m-help">Logical flag to indicate regression problem&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="KNearest.MaxK.html">MaxK</a></td>
+            <td class="m-help">Maximum number of K&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="KNearest.SampleCount.html">SampleCount</a></td>
+            <td class="m-help">Sample count&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="KNearest.VarCount.html">VarCount</a></td>
+            <td class="m-help">Variable count&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="KNearest.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.clear.html">clear</a></td>
+            <td class="m-help">Deallocates memory and resets the model state&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.find_nearest.html">find_nearest</a></td>
+            <td class="m-help">Finds the neighbors and predicts responses for input vectors&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.load.html">load</a></td>
+            <td class="m-help">Loads the model from a file&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.predict.html">predict</a></td>
+            <td class="m-help">Predicts the response for a sample&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.save.html">save</a></td>
+            <td class="m-help">Saves the model to a file&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.train.html">train</a></td>
+            <td class="m-help">Trains the model&nbsp;</td>
+         </tr>
+      </table>
+   </body>
+</html>

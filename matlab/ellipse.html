@@ -1,0 +1,63 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.ellipse</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.ellipse</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.ellipse</div>
+      <div class="helpcontent"><p>Draws a simple or thick elliptic arc or fills an ellipse sector</p>
+
+<pre><code>img = <a href="ellipse.html">cv.ellipse</a>(img, center, axes)
+[...] = <a href="ellipse.html">cv.ellipse</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>img</strong> Image where the ellipse is drawn.</li>
+<li><strong>center</strong> Center of the ellipse [x,y].</li>
+<li><strong>axes</strong> Length of the ellipse axes [a,b].</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>img</strong> Output image.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Angle</strong> Ellipse rotation angle in degrees. default 0.</li>
+<li><strong>StartAngle</strong> Starting angle of the elliptic arc in degrees. default 0</li>
+<li><strong>EndAngle</strong> Ending angle of the elliptic arc in degrees. default 360</li>
+<li><strong>Color</strong> 3-element floating point vector specifying ellipse color.</li>
+<li><strong>Thickness</strong> Thickness of the ellipse arc outline, if positive.
+Otherwise, this indicates that a filled ellipse sector is to be
+drawn. default 1.</li>
+<li><strong>LineType</strong> Type of the ellipse boundary. One of 8,4,'AA'
+(Anti-aliased line). default 8.</li>
+<li><strong>Shift</strong> Number of fractional bits in the coordinates of the center
+and values of axes. default 0.</li>
+</ul>
+
+<p>The functions ellipse with less parameters draw an ellipse outline, a
+filled ellipse, an elliptic arc, or a filled ellipse sector. A piecewise-
+linear curve is used to approximate the elliptic arc boundary. If you
+need more control of the ellipse rendering, you can retrieve the curve
+using <a href="ellipse2Poly.html">cv.ellipse2Poly</a> and then render it with polylines or fill it with
+<a href="fillPoly.html">cv.fillPoly</a>. If you use the first variant of the function and want to
+draw the whole ellipse, not an arc, pass startAngle=0 and endAngle=360.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="line.html">cv.line</a> <a href="circle.html">cv.circle</a> <a href="rectangle.html">cv.rectangle</a></div>
+   </body>
+</html>

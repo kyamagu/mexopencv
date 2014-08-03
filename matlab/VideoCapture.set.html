@@ -1,0 +1,62 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.VideoCapture/set</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.VideoCapture/set</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.VideoCapture/set</div>
+      <div class="helpcontent"><p>Sets a property in the VideoCapture.</p>
+
+<pre><code>cap.set(PropertyName, value)
+</code></pre>
+
+<p>The method set a Property value of VideoCapture.
+PropertyName can be one of the followings:</p>
+
+<pre><code>'PosMsec'       Current position of the video file in milliseconds or video capture timestamp.
+'PosFrames'     0-based index of the frame to be decoded/captured next.
+'AVIRatio'      Relative position of the video file: 0 - start of the film, 1 - end of the film.
+'FrameWidth'    Width of the frames in the video stream.
+'FrameHeight'   Height of the frames in the video stream.
+'FPS'           Frame rate.
+'FourCC'        4-character code of codec.
+'FrameCount'    Number of frames in the video file.
+'Format'        Format of the Mat objects returned by retrieve() .
+'Mode'          Backend-specific value indicating the current capture mode.
+'Brightness'    Brightness of the image (only for cameras).
+'Contrast'      Contrast of the image (only for cameras).
+'Saturation'    Saturation of the image (only for cameras).
+'Hue'           Hue of the image (only for cameras).
+'Gain'          Gain of the image (only for cameras).
+'Exposure'      Exposure (only for cameras).
+'ConvertRGB'    Boolean flags indicating whether images should be converted to RGB.
+'Rectification' Rectification flag for stereo cameras (note: only supported by DC1394 v 2.x backend currently)</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="VideoCapture.html">cv.VideoCapture</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

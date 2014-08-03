@@ -1,0 +1,47 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.clipLine</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.clipLine</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.clipLine</div>
+      <div class="helpcontent"><p>Clips the line against the image rectangle</p>
+
+<pre><code>[B,pt1,pt2] = <a href="clipLine.html">cv.clipLine</a>(imgSize, pt1, pt2)
+[B,pt1,pt2] = <a href="clipLine.html">cv.clipLine</a>(imgRect, pt1, pt2)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>imgSize</strong> Image size. The image rectangle is Rect(0, 0, imgSize.width,
+imgSize.height).</li>
+<li><strong>imgRect</strong> Image rectangle.</li>
+<li><strong>pt1</strong> First line point.</li>
+<li><strong>pt2</strong> Second line point.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>B</strong> Logical value. See below.</li>
+<li><strong>pt1</strong> First line point.</li>
+<li><strong>pt2</strong> Second line point.</li>
+</ul>
+
+<p>The functions clipLine calculate a part of the line segment that is
+entirely within the specified rectangle. They return false if the line
+segment is completely outside the rectangle. Otherwise, they return true.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="line.html">cv.line</a></div>
+   </body>
+</html>

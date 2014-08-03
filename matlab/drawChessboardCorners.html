@@ -1,0 +1,44 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.drawChessboardCorners</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.drawChessboardCorners</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.drawChessboardCorners</div>
+      <div class="helpcontent"><p>Finds the positions of internal corners of the chessboard</p>
+
+<pre><code>im = <a href="drawChessboardCorners.html">cv.drawChessboardCorners</a>(im, patternSize, corners)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>im</strong> Source image. It must be an 8-bit color image.</li>
+<li><strong>patternSize</strong> Number of inner corners per a chessboard row and column
+(<code>patternSize = [points_per_row, points_per_column]</code>).</li>
+<li><strong>corners</strong> Array of detected corners, the output of
+<a href="findChessboardCorners.html">cv.findChessboardCorners</a>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>im</strong> Destination image.</li>
+</ul>
+
+<p>The function draws individual chessboard corners detected either as red
+circles if the board was not found, or as colored corners connected with
+lines if the board was found.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findChessboardCorners.html">cv.findChessboardCorners</a></div>
+   </body>
+</html>

@@ -1,0 +1,124 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.DTree/train</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.DTree/train</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.DTree/train</div>
+      <div class="helpcontent"><p>Trains a decision tree</p>
+
+<pre><code>classifier.train(trainData, responses)
+classifier.train(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>trainData</strong> Row vectors of feature.</li>
+<li><strong>responses</strong> Output of the corresponding feature vectors.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>VarIdx</strong> Indicator variables (features) of interest.
+Must have the same size to responses.</li>
+<li><strong>SampleIdx</strong> Indicator samples of interest. Must have the
+the same size to responses.</li>
+<li><strong>VarType</strong> Solves classification problem when 'Categorical'.
+Otherwise, the training is treated as a regression problem.
+default 'Categorical'</li>
+<li><strong>MissingMask</strong> Indicator mask for missing observation.</li>
+<li><strong>MaxDepth</strong> The maximum possible depth of the tree. That is
+the training algorithms attempts to split a node while its
+depth is less than MaxDepth. The actual depth may be
+smaller if the other termination criteria are met, and/or
+if the tree is pruned. default INT_MAX.</li>
+<li><strong>MinSampleCount</strong> If the number of samples in a node is less
+than this parameter then the node will not be splitted.
+default 10.</li>
+<li><strong>RegressionAccuracy</strong> Termination criteria for regression
+trees. If all absolute differences between an estimated
+value in a node and values of train samples in this node
+are less than this parameter then the node will not be
+splitted. default 0.01.</li>
+<li><strong>UseSurrogates</strong> If true then surrogate splits will be built.
+These splits allow to work with missing data and compute
+variable importance correctly. default true.</li>
+<li><strong>MaxCategories</strong> Cluster possible values of a categorical
+variable into K &lt;= MaxCategories clusters to find a
+suboptimal split. If a discrete variable, on which the
+training procedure tries to make a split, takes more than
+MaxCategories values, the precise best subset estimation
+may take a very long time because the algorithm is
+exponential. Instead, many decision trees engines
+(including ML) try to find sub-optimal split in this case
+by clustering all the samples into MaxCategories clusters
+that is some categories are merged together. The
+clustering is applied only in n&gt;2-class classification
+problems for categorical variables with N &gt; MaxCategories
+possible values. In case of regression and 2-class
+classification the optimal split can be found efficiently
+without employing clustering, thus the parameter is not
+used in these cases. default 10.</li>
+<li><strong>CVFolds</strong> If CVFolds &gt; 1 then prune a tree with K-fold
+cross-validation where K is equal to CVFolds. default 10.</li>
+<li><strong>Use1seRule</strong> If true then a pruning will be harsher. This
+will make a tree more compact and more resistant to the
+training data noise but a bit less accurate. default true.</li>
+<li><strong>TruncatePrunedTree</strong> If true then pruned branches are
+physically removed from the tree. Otherwise they are
+retained and it is possible to get results from the
+original unpruned (or pruned less aggressively) tree by
+decreasing PrunedTreeIdx parameter. default true.</li>
+<li><strong>Priors</strong> The array of a priori class probabilities, sorted by
+the class label value. The parameter can be used to tune
+the decision tree preferences toward a certain class. For
+example, if you want to detect some rare anomaly
+occurrence, the training base will likely contain much
+more normal cases than anomalies, so a very good
+classification performance will be achieved just by
+considering every case as normal. To avoid this, the
+priors can be specified, where the anomaly probability is
+artificially increased (up to 0.5 or even greater), so the
+weight of the misclassified anomalies becomes much bigger,
+and the tree is adjusted properly. You can also think
+about this parameter as weights of prediction categories
+which determine relative weights that you give to
+misclassification. That is, if the weight of the first
+category is 1 and the weight of the second category is 10,
+then each mistake in predicting the second category is
+equivalent to making 10 mistakes in predicting the first
+category. default none.</li>
+</ul>
+
+<p>The method trains the DTree model.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DTree.html">cv.DTree</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

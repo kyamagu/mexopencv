@@ -1,0 +1,56 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.BOWKMeansTrainer/BOWKMeansTrainer</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.BOWKMeansTrainer/BOWKMeansTrainer</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.BOWKMeansTrainer/BOWKMeansTrainer</div>
+      <div class="helpcontent"><p>Create a new BOWKMeansTrainer</p>
+
+<pre><code>trainer = <a href="BOWKMeansTrainer.html">cv.BOWKMeansTrainer</a>(dictionarySize)
+[...] = <a href="BOWKMeansTrainer.html">cv.BOWKMeansTrainer</a>(...,'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>dictionarySize</strong> Number of clusters.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>trainer</strong> Created BOWKMeansTrainer object</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Criteria</strong> The algorithm termination criteria, that is, the maximum
+number of iterations and/or the desired accuracy. The accuracy is
+specified as criteria.epsilon. As soon as each of the cluster
+centers moves by less than criteria.epsilon on some iteration, the
+algorithm stops.</li>
+<li><strong>Attempts</strong> The number of times the algorithm is executed using
+different initial labelings. The algorithm returns the labels that
+yield the best compactness. default 3.</li>
+<li><strong>Initialization</strong> Method to initialize seeds. One of the followings:<ul>
+<li>'Random'  Select random initial centers in each attempt. (default)</li>
+<li>'PP'      Use kmeans++ center initialization by Arthur and
+Vassilvitskii [Arthur2007].</li>
+</ul>
+</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BOWKMeansTrainer.html">cv.BOWKMeansTrainer</a> <a href="kmeans.html">cv.kmeans</a></div>
+   </body>
+</html>

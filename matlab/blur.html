@@ -1,0 +1,51 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.blur</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.blur</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.blur</div>
+      <div class="helpcontent"><p>Smoothes an image using the normalized box filter</p>
+
+<pre><code>dst = <a href="blur.html">cv.blur</a>(src)
+dst = <a href="blur.html">cv.blur</a>(src, 'KSize', [5,5], ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Source image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Destination image of the same size and type as src.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>KSize</strong> Smoothing kernel size. default [5,5]</li>
+<li><strong>Anchor</strong> Anchor point. The default value Point(-1,-1) means that
+the anchor is at the kernel center.</li>
+<li><strong>BorderType</strong> Border mode used to extrapolate pixels outside of the
+image. default 'Default'</li>
+</ul>
+
+<p>The function smoothes an image using the kernel:</p>
+
+<pre><code>K = ones(KSize) / prod(KSize)</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="medianBlur.html">cv.medianBlur</a> <a href="GaussianBlur.html">cv.GaussianBlur</a></div>
+   </body>
+</html>

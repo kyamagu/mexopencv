@@ -1,0 +1,53 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.pointPolygonTest</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.pointPolygonTest</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.pointPolygonTest</div>
+      <div class="helpcontent"><p>Performs a point-in-contour test</p>
+
+<pre><code>d = <a href="pointPolygonTest.html">cv.pointPolygonTest</a>(contour, pt)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>contour</strong> Input 2D point set, stored in a cell array of 2-element vectors or
+1-by-N-by-2 numeric array.</li>
+<li><strong>pt</strong> Point tested against the contour.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>rct</strong> Output status value (See below).</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>MeasureDist</strong> If true, the function estimates the signed distance from
+the point to the nearest contour edge. Otherwise, the function only
+checks if the point is inside a contour or not.</li>
+</ul>
+
+<p>The function determines whether the point is inside a contour, outside, or
+lies on an edge (or coincides with a vertex). It returns positive (inside),
+negative (outside), or zero (on an edge) value, correspondingly. When
+measureDist=false , the return value is +1, -1, and 0, respectively.
+Otherwise, the return value is a signed distance between the point and the
+nearest contour edge.</p>
+</div><!--after help -->
+   </body>
+</html>

@@ -1,0 +1,64 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.cornerSubPix</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.cornerSubPix</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.cornerSubPix</div>
+      <div class="helpcontent"><p>Refines the corner locations</p>
+
+<pre><code>corners = <a href="cornerSubPix.html">cv.cornerSubPix</a>(im, corners)
+corners = <a href="cornerSubPix.html">cv.cornerSubPix</a>(im, corners, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>im</strong> Input single-channel image.</li>
+<li><strong>corners</strong> Initial coordinates of the input corners. Cell array of
+2-element arrays <code>{[x,y], ...}</code></li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>corners</strong> Output refined coordinates. Cell array of the same size as
+the input <code>corners</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>WinSize</strong> Half of the side length of the search window. For example, if
+<code>WinSize=[3,3]</code>, then a <code>(3 * 2 + 1) x (3 * 2 + 1) = 7 x 7</code> search
+window is used. default [3, 3].</li>
+<li><strong>ZeroZone</strong> Half of the size of the dead region in the middle of the
+search zone over which the summation in the formula below is not done.
+It is used sometimes to avoid possible singularities of the
+autocorrelation matrix. The value of [-1,-1] indicates that there is
+no such a size. default [-1,-1].</li>
+<li><strong>Criteria</strong> Criteria for termination of the iterative process of corner
+refinement. That is, the process of corner position refinement stops
+either after <code>criteria.maxCount</code> iterations or when the corner position
+moves by less than <code>criteria.epsilon</code> on some iteration.
+Struct with <code>{'type','maxCount','epsilon'}</code> fields is accepted. The
+type field should have one of 'Count', 'EPS', or 'Count+EPS' to
+indicate which criteria to use. Default to
+<code>struct('type','Count+EPS', 'maxCount',50, 'epsilon',0.001)</code>.</li>
+</ul>
+
+<p>The function iterates to find the sub-pixel accurate location of corners or
+radial saddle points.</p>
+</div><!--after help -->
+   </body>
+</html>

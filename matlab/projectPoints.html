@@ -1,0 +1,73 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.projectPoints</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.projectPoints</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.projectPoints</div>
+      <div class="helpcontent"><p>Projects 3D points to an image plane</p>
+
+<pre><code>imagePoints = <a href="projectPoints.html">cv.projectPoints</a>(objectPoints, rvec, tvec, cameraMatrix, distCoeffs)
+[imagePoints, jacobian] = <a href="projectPoints.html">cv.projectPoints</a>(...)
+[...] = <a href="projectPoints.html">cv.projectPoints</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>objectPoints</strong> Array of object points, Nx1x3/1xNx3 array or cell array
+of 3-element vectors, where N is the number of points in the view.</li>
+<li><strong>rvec</strong> Rotation vector. See <a href="Rodrigues.html">cv.Rodrigues</a> for details.</li>
+<li><strong>tvec</strong> Translation vector.</li>
+<li><strong>cameraMatrix</strong> Camera matrix A = [fx,0,cx;0,fy,cy;0,0,1].</li>
+<li><strong>distCoeffs</strong> Input vector of distortion coefficients [k1,k2,p1,p2,k3,
+        k4,k5,k6] of 4, 5, or 8 elements. If the vector is NULL/empty, the
+zero distortion coefficients are assumed.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>imagePoints</strong> Output array of image points, Nx1x2/1xNx2 array or cell
+array of 2-element vectors</li>
+<li><strong>jacobian</strong> Optional output 2Nx(10+<numDistCoeffs>) jacobian matrix of
+        derivatives of image points with respect to components of the
+        rotation vector, translation vector, focal lengths, coordinates of
+        the principal point and the distortion coefficients.
+
+ ## Options
+ * __AspectRatio__ Optional &quot;fixed aspect ratio&quot; parameter. If the
+        parameter is not 0, the function assumes that the aspect ratio
+        (fx/fy) is fixed and correspondingly adjusts the jacobian matrix.
+        default 0.
+
+ The function computes projections of 3D points to the image plane given
+ intrinsic and extrinsic camera parameters. Optionally, the function
+ computes Jacobians - matrices of partial derivatives of image points
+ coordinates (as functions of all the input parameters) with respect to
+ the particular parameters, intrinsic and/or extrinsic. The Jacobians are
+ used during the global optimization in <a href="calibrateCamera.html">cv.calibrateCamera</a>, <a href="solvePnP.html">cv.solvePnP</a>,
+ and <a href="stereoCalibrate.html">cv.stereoCalibrate</a>. The function itself can also be used to compute a
+ re-projection error given the current intrinsic and extrinsic parameters.
+
+ ## Note
+ By setting rvec=tvec=(0,0,0) or by setting cameraMatrix to a 3x3
+ identity matrix, or by passing zero distortion coefficients, you can get
+ various useful partial cases of the function. This means that you can
+ compute the distorted coordinates for a sparse set of points or apply a
+ perspective transformation (and also compute the derivatives) in the
+ ideal zero-distortion setup.</numDistCoeffs></li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calibrateCamera.html">cv.calibrateCamera</a> <a href="solvePnP.html">cv.solvePnP</a> <a href="Rodrigues.html">cv.Rodrigues</a> <a href="stereoCalibrate.html">cv.stereoCalibrate</a></div>
+   </body>
+</html>

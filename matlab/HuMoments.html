@@ -1,0 +1,45 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.HuMoments</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.HuMoments</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.HuMoments</div>
+      <div class="helpcontent"><p>Calculates seven Hu invariants</p>
+
+<pre><code>m = <a href="HuMoments.html">cv.HuMoments</a>(mo)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>mo</strong> Input moments computed with <a href="moments.html">cv.moments</a>().</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>hu</strong> Output Hu invariants.</li>
+</ul>
+
+<p>The function calculates seven Hu invariants (introduced in [Hu62]; see also
+<a href="http://en.wikipedia.org/wiki/Image_moment">http://en.wikipedia.org/wiki/Image_moment</a>).</p>
+
+<p>These values are proved to be invariants to the image scale, rotation, and
+reflection except the seventh one, whose sign is changed by reflection. This
+invariance is proved with the assumption of infinite image resolution. In
+case of raster images, the computed Hu invariants for the original and
+transformed images are a bit different.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="moments.html">cv.moments</a></div>
+   </body>
+</html>

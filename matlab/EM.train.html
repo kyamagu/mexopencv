@@ -1,0 +1,64 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.EM/train</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.EM/train</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.EM/train</div>
+      <div class="helpcontent"><p>Trains the GMM</p>
+
+<pre><code>[ log_likelihoods labels probs ] = em.train(samples)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>samples</strong> Samples from which the Gaussian mixture model will be estimated. 
+It should be a one-channel matrix, each row of which is a sample. </li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><p><strong>log</strong>likelihoods__ The optional output matrix that contains a likelihood logarithm 
+value for each sample. It has nsamples x 1 size.</p>
+</li>
+<li><p><strong>labels</strong>          The optional output &quot;class label&quot; for each sample
+(indices of the most probable mixture component for each sample):
+labels<em>i = arg max k(p</em>i; k); i = 1::N 
+It has nsamples x 1 size.</p>
+</li>
+<li><p><strong>probs</strong>           The optional output matrix that contains posterior probabilities 
+of each Gaussian mixture component given the each sample. 
+It has nsamples x nclusters size.</p>
+</li>
+</ul>
+</div><!--after help -->
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

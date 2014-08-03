@@ -1,0 +1,59 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.watershed</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.watershed</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.watershed</div>
+      <div class="helpcontent"><p>Performs a marker-based image segmentation using the watershed algrorithm</p>
+
+<pre><code>marker = <a href="watershed.html">cv.watershed</a>(image, marker)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>image</strong> Input 8-bit 3-channel image.</li>
+<li><strong>marker</strong> Input 32-bit single-channel image (map) of markers. It
+should have the same size as image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>marker</strong> Output 32-bit single-channel image (map) of markers. It has
+the same size as image.</li>
+</ul>
+
+<p>The function implements one of the variants of watershed, non-parametric
+marker-based segmentation algorithm, described in [Meyer92].</p>
+
+<p>Before passing the image to the function, you have to roughly outline the
+desired regions in the image markers with positive (&gt;0) indices. So, every
+region is represented as one or more connected components with the pixel
+values 1, 2, 3, and so on. Such markers can be retrieved from a binary mask
+using findContours() and drawContours() (see the watershed.cpp demo). The
+markers are seeds of the future image regions. All the other pixels in
+markers , whose relation to the outlined regions is not known and should be
+defined by the algorithm, should be set to 0's. In the function output, each
+pixel in markers is set to a value of the seed components or to -1 at
+boundaries between the regions.</p>
+
+<h2> Note</h2>
+
+<p>Any two neighbor connected components are not necessarily separated by
+a watershed boundary (-1's pixels); for example, they can touch each other in
+the initial marker image passed to the function.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="grabCut.html">cv.grabCut</a></div>
+   </body>
+</html>

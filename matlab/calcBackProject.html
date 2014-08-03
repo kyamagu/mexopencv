@@ -1,0 +1,75 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.calcBackProject</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.calcBackProject</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.calcBackProject</div>
+      <div class="helpcontent"><p>Calculates the back projection of a histogram</p>
+
+<pre><code>Y = <a href="calcBackProject.html">cv.calcBackProject</a>(X, H, edges)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>X</strong> Source pixel arrays. A numeric array, or cell array of numeric
+arrays are accepted. They all should have the same class and the
+same size.</li>
+<li><strong>H</strong> Input histogram that can be dense or sparse.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>Y</strong> Destination back projection array that is a single-channel array of
+the same size as X or the first element of X if X is a cell array.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Uniform</strong> Logical flag indicating whether the histogram is uniform
+or not. default false.</li>
+<li><strong>Scale</strong> Optional scale factor for the output back projection. default
+1.</li>
+</ul>
+
+<p>The functions calcBackProject calculate the back project of the
+histogram. That is, similarly to calcHist , at each location (x, y) the
+function collects the values from the selected channels in the input
+images and finds the corresponding histogram bin. But instead of
+incrementing it, the function reads the bin value, scales it by scale,
+and stores in backProject(x,y) . In terms of statistics, the function
+computes probability of each element value in respect with the empirical
+probability distribution represented by the histogram. See how, for
+example, you can find and track a bright-colored object in a scene:</p>
+
+<ol>
+<li>Before tracking, show the object to the camera so that it covers
+almost the whole frame. Calculate a hue histogram. The histogram may
+have strong maximums, corresponding to the dominant colors in the
+object.</li>
+<li>When tracking, calculate a back projection of a hue plane of each
+input video frame using that pre-computed histogram. Threshold the
+back projection to suppress weak colors. It may also make sense to
+suppress pixels with non-sufficient color saturation and too dark or
+too bright pixels.</li>
+<li>Find connected components in the resulting picture and choose, for
+example, the largest component.</li>
+</ol>
+
+<p>This is an approximate algorithm of the CamShift() color object tracker.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calcHist.html">cv.calcHist</a></div>
+   </body>
+</html>

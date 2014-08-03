@@ -1,0 +1,59 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.MSER</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.MSER</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.MSER</div>
+      <div class="helpcontent"><p>Maximally stable extremal region extractor</p>
+
+<pre><code>chains = <a href="MSER.html">cv.MSER</a>(im)
+chains = <a href="MSER.html">cv.MSER</a>(im, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>im</strong> Input 8-bit grayscale image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>chains</strong> The output vector of connected points.
+Cell array of cell array of points <code>{{[x,y],[x,y],..}, {[x,y],..}}</code></li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Delta</strong> delta, in the code, it compares
+<code>(size_{i}-size_{i-delta})/size_{i-delta}</code>. default 5.</li>
+<li><strong>MinArea</strong> prune the area which smaller than minArea. default 60.</li>
+<li><strong>MaxArea</strong> prune the area which bigger than maxArea. default 14400.</li>
+<li><strong>MaxVariation</strong> prune the area have simliar size to its children. default 0.25</li>
+<li><strong>MinDiversity</strong> trace back to cut off mser with diversity &lt; min_diversity.
+default 0.2.</li>
+<li><strong>MaxEvolution</strong> for color image, the evolution steps. default 200.</li>
+<li><strong>AreaThreshold</strong> the area threshold to cause re-initialize. default 1.01.</li>
+<li><strong>MinMargin</strong> ignore too small margin. default 0.003.</li>
+<li><strong>EdgeBlurSize</strong> the aperture size for edge blur. default 5.</li>
+<li><strong>Mask</strong> Optional input mask that marks the regions where we should detect
+features</li>
+</ul>
+
+<p>The class encapsulates all the parameters of the MSER extraction algorithm
+(see <a href="http://en.wikipedia.org/wiki/Maximally_stable_extremal_regions">http://en.wikipedia.org/wiki/Maximally_stable_extremal_regions</a>).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.html">cv.FeatureDetector</a> <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a></div>
+   </body>
+</html>

@@ -1,0 +1,61 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.HoughLines</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.HoughLines</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.HoughLines</div>
+      <div class="helpcontent"><p>Finds lines in a binary image using the standard Hough transform</p>
+
+<pre><code>lines = <a href="HoughLines.html">cv.HoughLines</a>(image)
+lines = <a href="HoughLines.html">cv.HoughLines</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>image</strong> 8-bit, single-channel, grayscale input image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>lines</strong> Output vector of lines. Each line is represented by a two-element
+vector (rho,theta). rho is the distance from the coordinate origin
+(0,0) (top-left corner of the image). theta is the line rotation angle
+in radians (0 ~ vertical line, PI/2 ~ horizontal line).</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Rho</strong> Distance resolution of the accumulator in pixels. default 1.</li>
+<li><strong>Theta</strong> Angle resolution of the accumulator in radians. default PI/180.</li>
+<li><strong>Threshold</strong> Accumulator threshold parameter. Only those lines are
+returned that get enough votes (&gt;threshold). default 80.</li>
+<li><strong>SRN</strong> For the multi-scale Hough transform, it is a divisor for the
+distance resolution rho . The coarse accumulator distance resolution
+is rho and the accurate accumulator resolution is rho/srn . If both
+srn=0 and stn=0, the classical Hough transform is used. Otherwise,
+both these parameters should be positive. default 0.</li>
+<li><strong>STN</strong> For the multi-scale Hough transform, it is a divisor for the
+distance resolution theta. default 0.</li>
+</ul>
+
+<p>The function implements the standard or standard multi-scale Hough transform
+algorithm for line detection. See
+<a href="http://homepages.inf.ed.ac.uk/rbf/HIPR2/hough.htm">http://homepages.inf.ed.ac.uk/rbf/HIPR2/hough.htm</a> for a good explanation of
+Hough transform.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HoughLinesP.html">cv.HoughLinesP</a></div>
+   </body>
+</html>

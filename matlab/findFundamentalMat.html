@@ -1,0 +1,88 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.findFundamentalMat</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.findFundamentalMat</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.findFundamentalMat</div>
+      <div class="helpcontent"><p>Calculates a fundamental matrix from the corresponding points in two images</p>
+
+<pre><code>F = <a href="findFundamentalMat.html">cv.findFundamentalMat</a>(points1, points2)
+[F, mask] = <a href="findFundamentalMat.html">cv.findFundamentalMat</a>(...)
+[...] = <a href="findFundamentalMat.html">cv.findFundamentalMat</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>points1</strong> Cell array of N points from the first image.</li>
+<li><strong>points2</strong> Cell array of the second image points of the same size as
+points1.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>F</strong> Fundamental matrix.</li>
+<li><strong>mask</strong> Mask array.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Method</strong> Method for computing a fundamental matrix. One of the
+following<ul>
+<li><strong>7Point</strong> 7-point algorithm. N = 7.</li>
+<li><strong>8Point</strong> 8-point algorithm. N &gt;= 8.</li>
+<li><strong>Ransac</strong> RANSAC algorithm. N &gt;= 8. (default)</li>
+<li><strong>LMedS</strong> LMedS algorithm. N &gt;= 8.</li>
+</ul>
+</li>
+<li><strong>Param1</strong> Parameter used for RANSAC. It is the maximum distance from a
+point to an epipolar line in pixels, beyond which the point is
+considered an outlier and is not used for computing the final
+fundamental matrix. It can be set to something like 1-3, depending
+on the accuracy of the point localization, image resolution, and
+the image noise. default 3.0.</li>
+<li><strong>Param2</strong> Parameter used for the RANSAC or LMedS methods only. It
+specifies a desirable level of confidence (probability) that the
+estimated matrix is correct. default 0.99.</li>
+</ul>
+
+<p>The epipolar geometry is described by the following equation:</p>
+
+<pre><code>[p2;1]^T * F * [p1;1] = 0
+</code></pre>
+
+<p>where F is a fundamental matrix, p1 and p2 are corresponding points in
+the first and the second images, respectively.</p>
+
+<p>The function calculates the fundamental matrix using one of four methods
+listed above and returns the found fundamental matrix. Normally just one
+matrix is found. But in case of the 7-point algorithm, the function may
+return up to 3 solutions (9 x 3 matrix that stores all 3 matrices
+sequentially).</p>
+
+<p>The calculated fundamental matrix may be passed further to
+<a href="computeCorrespondEpilines.html">cv.computeCorrespondEpilines</a> that finds the epipolar lines corresponding
+to the specified points. It can also be passed to
+<a href="stereoRectifyUncalibrated.html">cv.stereoRectifyUncalibrated</a> to compute the rectification transformation.</p>
+
+<h2> Usage</h2>
+
+<pre><code>points1 = {[1,1],[3,1],[5,1],...}
+points2 = {[2,3],[4,3],[6,3],...}
+[F, mask] = <a href="findFundamentalMat.html">cv.findFundamentalMat</a>(points1, points2);</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="computeCorrespondEpilines.html">cv.computeCorrespondEpilines</a> <a href="stereoRectifyUncalibrated.html">cv.stereoRectifyUncalibrated</a></div>
+   </body>
+</html>

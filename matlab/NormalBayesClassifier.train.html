@@ -1,0 +1,64 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.NormalBayesClassifier/train</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.NormalBayesClassifier/train</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.NormalBayesClassifier/train</div>
+      <div class="helpcontent"><p>Trains the model</p>
+
+<pre><code>classifier.train(trainData, responses)
+classifier.train(trainData, responses, 'OptionName', optionValue, ...)
+
+</code></pre>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>VarIdx</strong> Indicator variables (features) of interest.
+Must have the same size to responses.</li>
+<li><strong>SampleIdx</strong> Indicator samples of interest. Must have the
+the same size to responses.</li>
+<li><strong>Update</strong> Identifies whether the model should be trained
+from scratch (update=false) or should be updated using
+the new training data (update=true).</li>
+</ul>
+
+<p>The method trains the statistical model using a set of input
+feature vectors and the corresponding output values (responses).
+Both input and output vectors/values are passed as matrices.
+The input feature vectors are stored as trainData rows, that
+is, all the components (features) of a training vector are
+stored continuously.</p>
+
+<p>Responses are usually stored in a 1D vector (a row or a column)
+of integers.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="NormalBayesClassifier.html">cv.NormalBayesClassifier</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

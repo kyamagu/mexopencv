@@ -1,0 +1,60 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.Rodrigues</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.Rodrigues</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.Rodrigues</div>
+      <div class="helpcontent"><p>Converts a rotation matrix to a rotation vector or vice versa</p>
+
+<pre><code>dst = <a href="Rodrigues.html">cv.Rodrigues</a>(src)
+[dst,jacobian] = <a href="Rodrigues.html">cv.Rodrigues</a>(src)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Input rotation vector (3x1 or 1x3) or rotation matrix (3x3).</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Output rotation matrix (3x3) or rotation vector (3x1 or 1x3),
+respectively.</li>
+<li><strong>jacobian</strong> Optional output Jacobian matrix, 3x9 or 9x3, which is a
+matrix of partial derivatives of the output array components with
+respect to the input array components.</li>
+</ul>
+
+<p>The function transforms a rotation matrix in the following way:</p>
+
+<pre><code>theta &lt;- norm(r)
+r &lt;- r/theta
+R = cos(theta) * I + (1 - cos(theta)) * r * r^T + sin(theta) * A
+A = [0, -rz, ry; rz, 0, -rx; -ry, rx, 0]
+</code></pre>
+
+<p>Inverse transformation can be also done easily, since</p>
+
+<pre><code>sin(theta) * A = (R - R^T) / 2
+</code></pre>
+
+<p>A rotation vector is a convenient and most compact representation of a
+rotation matrix (since any rotation matrix has just 3 degrees of
+freedom). The representation is used in the global 3D geometry
+optimization procedures like <a href="calibrateCamera.html">cv.calibrateCamera</a>, <a href="stereoCalibrate.html">cv.stereoCalibrate</a>, or
+<a href="solvePnP.html">cv.solvePnP</a>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calibrateCamera.html">cv.calibrateCamera</a> <a href="stereoCalibrate.html">cv.stereoCalibrate</a> <a href="solvePnP.html">cv.solvePnP</a></div>
+   </body>
+</html>

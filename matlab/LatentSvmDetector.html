@@ -1,0 +1,252 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.LatentSvmDetector</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.LatentSvmDetector</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.LatentSvmDetector</div>
+      <div class="helpcontent"><p>Latent SVM detector</p>
+
+<p>The object detector described below has been initially proposed by
+P.F. Felzenszwalb in [Felzenszwalb2010]. It is based on a
+Dalal-Triggs detector that uses a single filter on histogram of
+oriented gradients (HOG) features to represent an object category.
+This detector uses a sliding window approach, where a filter is
+applied at all positions and scales of an image. The first innovation
+is enriching the Dalal-Triggs model using a star-structured
+part-based model defined by a &quot;root&quot; filter (analogous to the
+Dalal-Triggs filter) plus a set of parts filters and associated
+deformation models. The score of one of star models at a particular
+position and scale within an image is the score of the root filter at
+the given location plus the sum over parts of the maximum, over
+placements of that part, of the part filter score on its location
+minus a deformation cost easuring the deviation of the part from its
+ideal location relative to the root. Both root and part filter scores
+are defined by the dot product between a filter (a set of weights)
+and a subwindow of a feature pyramid computed from the input image.
+Another improvement is a representation of the class of models by a
+mixture of star models. The score of a mixture model at a particular
+position and scale is the maximum over components, of the score of
+that component model at the given location.</p>
+
+<p>The basic usage is the following:</p>
+
+<pre><code>im = imread('/path/to/cat.jpg');
+detector = <a href="LatentSvmDetector.html">cv.LatentSvmDetector</a>('/path/to/cat.xml');
+detections = detector.detect(im);
+</code></pre>
+
+<p>The detector can also accept multiple models by cell array:</p>
+
+<pre><code>detector = <a href="LatentSvmDetector.html">cv.LatentSvmDetector</a>({'cat.xml','car.xml'});
+</code></pre>
+
+<p>The xml file must be a format compatible to OpenCV's Latent SVM
+detector, but you can convert models from the original implementation
+in [Felzenszwalb2010] using mat2xml method. Check the latest models
+in <a href="http://www.cs.brown.edu/~pff/latent/">http://www.cs.brown.edu/~pff/latent/</a></p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="LatentSvmDetector.LatentSvmDetector.html">cv.LatentSvmDetector/LatentSvmDetector</a>
+  <a href="LatentSvmDetector.detect.html">cv.LatentSvmDetector/detect</a> <a href="LatentSvmDetector.mat2xml.html">cv.LatentSvmDetector.mat2xml</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="LatentSvmDetector.LatentSvmDetector.html">LatentSvmDetector</a></td>
+            <td class="m-help">Create or load a new detector&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="LatentSvmDetector.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.clear.html">clear</a></td>
+            <td class="m-help">Clear the detector&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.detect.html">detect</a></td>
+            <td class="m-help">Detects objects&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.empty.html">empty</a></td>
+            <td class="m-help">Check if the detector is empty&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.getClassCount.html">getClassCount</a></td>
+            <td class="m-help">Get size of the detector&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.getClassNames.html">getClassNames</a></td>
+            <td class="m-help">Get names of the object classes&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.load.html">load</a></td>
+            <td class="m-help">Loads a model from files&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Static 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.mat2xml.html">mat2xml</a></td>
+            <td class="m-help">Convert [Felzenszwalb2010] model files to xml&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="LatentSvmDetector.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+      </table>
+   </body>
+</html>

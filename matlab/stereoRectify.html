@@ -1,0 +1,109 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.stereoRectify</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.stereoRectify</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.stereoRectify</div>
+      <div class="helpcontent"><p>Computes rectification transforms for each head of a calibrated stereo camera</p>
+
+<pre><code>S = <a href="stereoRectify.html">cv.stereoRectify</a>(cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, imageSize, R, T)
+[...] = <a href="stereoRectify.html">cv.stereoRectify</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>cameraMatrix1</strong> First camera matrix.</li>
+<li><strong>cameraMatrix2</strong> Second camera matrix.</li>
+<li><strong>distCoeffs1</strong> First camera distortion parameters.</li>
+<li><strong>distCoeffs2</strong> Second camera distortion parameters.</li>
+<li><strong>imageSize</strong> Size of the image used for stereo calibration.</li>
+<li><strong>R</strong> Rotation matrix between the coordinate systems of the first and the
+second cameras.</li>
+<li><strong>T</strong> Translation vector between coordinate systems of the cameras.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>S</strong> struct having the following fields:<ul>
+<li><strong>R1</strong> 3x3 rectification transform (rotation matrix) for the first camera.</li>
+<li><strong>R2</strong> 3x3 rectification transform (rotation matrix) for the second camera.</li>
+<li><strong>P1</strong> 3x4 projection matrix in the new (rectified) coordinate
+systems for the first camera.</li>
+<li><strong>P2</strong> 3x4 projection matrix in the new (rectified) coordinate
+systems for the second camera.</li>
+<li><strong>Q</strong> 4x4 disparity-to-depth mapping matrix (see cv.reprojectImageTo3D).
+roi1, roi2: rectangles inside the rectified images where all the
+pixels are valid. If alpha=0 , the ROIs cover the whole images.
+Otherwise, they are likely to be smaller.</li>
+</ul>
+</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Alpha</strong> Free scaling parameter. If it is -1 or absent, the function
+performs the default scaling. Otherwise, the parameter should be
+between 0 and 1. alpha=0 means that the rectified images are
+zoomed and shifted so that only valid pixels are visible (no black
+areas after rectification). alpha=1 means that the rectified image
+is decimated and shifted so that all the pixels from the original
+images from the cameras are retained in the rectified images (no
+source image pixels are lost). Obviously, any intermediate value
+yields an intermediate result between those two extreme cases.
+default -1</li>
+<li><strong>NewImageSize</strong> New image resolution after rectification. The same
+size should be passed to <a href="initUndistortRectifyMap.html">cv.initUndistortRectifyMap</a>. When (0,0) is
+passed (default), it is set to the original imageSize . Setting it
+to larger value can help you preserve details in the original
+image, especially when there is a big radial distortion..</li>
+<li><strong>ZeroDisparity</strong> If the flag is set, the function makes the principal
+points of each camera have the same pixel coordinates in the
+rectified views. And if the flag is not set, the function may
+still shift the images in the horizontal or vertical direction
+(depending on the orientation of epipolar lines) to maximize the
+useful image area. default false.</li>
+</ul>
+
+<p>The function computes the rotation matrices for each camera that
+(virtually) make both camera image planes the same plane. Consequently,
+this makes all the epipolar lines parallel and thus simplifies the dense
+stereo correspondence problem. The function takes the matrices computed
+by <a href="stereoCalibrate.html">cv.stereoCalibrate</a> as input. As output, it provides two rotation
+matrices and also two projection matrices in the new coordinates. The
+function distinguishes the following two cases:</p>
+
+<ol>
+<li><p>Horizontal stereo: the first and the second camera views are shifted
+relative to each other mainly along the x axis (with possible small
+vertical shift). In the rectified images, the corresponding epipolar
+lines in the left and right cameras are horizontal and have the same
+y-coordinate.</p>
+</li>
+<li><p>Vertical stereo: the first and the second camera views are shifted
+relative to each other mainly in vertical direction (and probably a bit
+in the horizontal direction too). The epipolar lines in the rectified
+images are vertical and have the same x-coordinate.</p>
+</li>
+</ol>
+
+<p>As you can see, the first three columns of P1 and P2 will effectively be
+the new &quot;rectified&quot; camera matrices. The matrices, together with R1 and
+R2 , can then be passed to <a href="initUndistortRectifyMap.html">cv.initUndistortRectifyMap</a> to initialize the
+rectification map for each camera.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="stereoCalibrate.html">cv.stereoCalibrate</a> <a href="stereoRectifyUncalibrated.html">cv.stereoRectifyUncalibrated</a></div>
+   </body>
+</html>

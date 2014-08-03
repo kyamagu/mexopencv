@@ -1,0 +1,81 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.goodFeaturesToTrack</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.goodFeaturesToTrack</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.goodFeaturesToTrack</div>
+      <div class="helpcontent"><p>Determines strong corners on an image</p>
+
+<pre><code>corners = <a href="goodFeaturesToTrack.html">cv.goodFeaturesToTrack</a>(image)
+corners = <a href="goodFeaturesToTrack.html">cv.goodFeaturesToTrack</a>(image, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>image</strong> Input single-channel 8-bit or floating-point image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>corners</strong> Output vector of detected corners.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>MaxCorners</strong> Maximum number of corners to return. If there are more
+corners than are found, the strongest of them is returned. default 1000.</li>
+<li><strong>QualityLevel</strong> Parameter characterizing the minimal accepted quality of
+image corners. The parameter value is multiplied by the best corner
+quality measure, which is the minimal eigenvalue (see
+<a href="cornerMinEigenVal.html">cv.cornerMinEigenVal</a> ) or the Harris function response (see
+<a href="cornerHarris.html">cv.cornerHarris</a> ). The corners with the quality measure less than the
+product are rejected. For example, if the best corner has the quality
+measure = 1500, and the qualityLevel=0.01 , then all the corners with
+the quality measure less than 15 are rejected.</li>
+<li><strong>MinDistance</strong> Minimum possible Euclidean distance between the returned
+corners.</li>
+<li><strong>Mask</strong> Optional region of interest. If the image is not empty (it needs
+to have the type CV_8UC1 and the same size as image ), it specifies
+the region in which the corners are detected.</li>
+<li><strong>BlockSize</strong> Size of an average block for computing a derivative
+covariation matrix over each pixel neighborhood. See
+<a href="cornerEigenValsAndVecs.html">cv.cornerEigenValsAndVecs</a>.</li>
+<li><strong>UseHarrisDetector</strong> Parameter indicating whether to use a Harris detector
+(see <a href="cornerHarris.html">cv.cornerHarris</a> ) or cv.cornerMinEigenVal</li>
+<li><strong>K</strong> Harris detector free parameter.</li>
+</ul>
+
+<p>The function finds the most prominent corners in the image or in the specified
+image region, as described in [Shi94]:</p>
+
+<ol>
+<li>Function calculates the corner quality measure at every source image pixel
+using the cornerMinEigenVal() or cornerHarris().</li>
+<li>Function performs a non-maximum suppression (the local maximums in 3 x 3
+neighborhood are retained).</li>
+<li>The corners with the minimal eigenvalue less than QualityLevel * max_{x,y}
+(qualityMeasureMap(x,y)) are rejected.</li>
+<li>The remaining corners are sorted by the quality measure in the descending
+order.</li>
+<li>Function throws away each corner for which there is a stronger corner at
+a distance less than maxDistance.</li>
+</ol>
+
+<p>The function can be used to initialize a point-based tracker of an object.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="cornerMinEigenVal.html">cv.cornerMinEigenVal</a> <a href="cornerHarris.html">cv.cornerHarris</a> <a href="FeatureDetector.html">cv.FeatureDetector</a></div>
+   </body>
+</html>

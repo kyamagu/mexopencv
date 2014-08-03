@@ -1,0 +1,61 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.FileStorage</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.FileStorage</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.FileStorage</div>
+      <div class="helpcontent"><p>Reading from or writing to a XML/YAML file storage</p>
+
+<pre><code>S = <a href="FileStorage.html">cv.FileStorage</a>(fileName)
+<a href="FileStorage.html">cv.FileStorage</a>(fileName, S)
+<a href="FileStorage.html">cv.FileStorage</a>(fileName, X1, X2, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>fileName</strong> Name of the XML/YAML file. The file name should have either .xml
+or .yml extension.</li>
+<li><strong>S</strong> Scalar struct to be written to a file</li>
+<li><strong>X1</strong>, <strong>X2</strong>, <strong>...</strong> objects to be written to a file</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>S</strong> Scalar struct read from a file</li>
+</ul>
+
+<p>The function reads or writes a Matlab object from/to a XML/YAML file. The file
+is compatible to OpenCV formats. When input argument is not a scalar
+struct, the function creates a scalar struct with default field name and
+stores the objects in that struct.</p>
+
+<p>A quick usage example is shown below:</p>
+
+<p>Writing to a file</p>
+
+<pre><code>S = struct('field1', randn(2,3), 'field2', 'this is the second field');
+<a href="FileStorage.html">cv.FileStorage</a>('my.yml',S);
+</code></pre>
+
+<p>Reading from a file</p>
+
+<pre><code>S = <a href="FileStorage.html">cv.FileStorage</a>('my.yml');
+</code></pre>
+
+<p>Replace '.yml' to '.xml' to use XML format.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> load save</div>
+   </body>
+</html>
