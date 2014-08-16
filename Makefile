@@ -28,7 +28,7 @@ $(LIBDIR)/libMxArray.a: $(SRCDIR)/MxArray.cpp $(INCLUDEDIR)/MxArray.hpp
 	$(RM) -f $(LIBDIR)/*.o
 
 %.$(MEXEXT): %.cpp $(LIBDIR)/libMxArray.a $(INCLUDEDIR)/mexopencv.hpp
-	$(MEX) $(C_FLAGS) $< -lMxArray $(LD_FLAGS) -o $@
+	$(MEX) $(C_FLAGS) $< -lMxArray $(LD_FLAGS) -output $@
 
 clean:
 	$(RM) -rf $(LIBDIR)/*.a $(TARGETDIR)/*.$(MEXEXT) $(TARGETDIR)/private/*.$(MEXEXT)
