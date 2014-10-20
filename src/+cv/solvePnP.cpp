@@ -46,9 +46,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
         if (key=="UseExtrinsicGuess")
             useExtrinsicGuess = rhs[i+1].toBool();
         else if (key=="Rvec")
-            rvec = rhs[i+1].toMat(CV_32F);
+            rvec = rhs[i+1].toMat(CV_64F);
         else if (key=="Tvec")
-            tvec = rhs[i+1].toMat(CV_32F);
+            tvec = rhs[i+1].toMat(CV_64F);
         else if (key=="Flags")
             flags = PnPMethod[rhs[i+1].toString()];
         else
