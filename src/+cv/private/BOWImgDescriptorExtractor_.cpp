@@ -62,7 +62,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else if (method == "setVocabulary") {
         nargchk(nrhs==3 && nlhs==0);
-        obj.setVocabulary(rhs[2].toMat(CV_32F));
+        obj.setVocabulary(rhs[2].isUint8() ? rhs[2].toMat() : rhs[2].toMat(CV_32F));
     }
     else if (method == "getVocabulary") {
         nargchk(nrhs==2 && nlhs<=1);

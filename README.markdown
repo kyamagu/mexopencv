@@ -67,6 +67,13 @@ Developer documentation can be generated with doxygen if installed.
 
 This will create HTML and LaTeX files under `doc/`.
 
+__Ubuntu 14.04__
+
+Before running `make`, run the attached script once to remove the dependency to
+the nonfree module.
+
+    $ sh utils/remove_nonfree.sh
+
 ### Error: Invalid MEX file or Segmentation fault
 
 If MATLAB says 'Library not loaded' or any other error in the test, it's likely
