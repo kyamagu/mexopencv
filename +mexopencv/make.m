@@ -238,6 +238,9 @@ function [comp_flags,link_flags] = compilation_flags(opts)
     if isVS && (str2double(c.Version) < 10 || opts.debug)
         comp_flags{end+1} = '/D_SECURE_SCL=1';
     end
+    if isVS && opts.debug
+        comp_flags{end+1} = '/MDd';   % link against debug CRT
+    end
 
     % show all compiler warnings, and verbose output from linker
     if opts.verbose > 2
