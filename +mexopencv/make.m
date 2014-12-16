@@ -65,6 +65,14 @@ if ispc % Windows
         if opts.verbose > 0, disp(cmd); end
         if ~opts.dryrun, delete(cmd); end
 
+        cmd = fullfile(MEXOPENCV_ROOT, '+cv', '*.pdb');
+        if opts.verbose > 0, disp(cmd); end
+        if ~opts.dryrun, delete(cmd); end
+
+        cmd = fullfile(MEXOPENCV_ROOT, '+cv', 'private', '*.pdb');
+        if opts.verbose > 0, disp(cmd); end
+        if ~opts.dryrun, delete(cmd); end
+
         cmd = fullfile(MEXOPENCV_ROOT, 'lib', '*.obj');
         if opts.verbose > 0, disp(cmd); end
         if ~opts.dryrun, delete(cmd); end
