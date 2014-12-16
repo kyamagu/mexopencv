@@ -99,6 +99,8 @@ if ispc % Windows
         cv_cflags, cv_libs);
     if opts.verbose > 1
         mex_flags = ['-v ' mex_flags];    % verbose mex output
+    elseif opts.verbose == 0 && ~verLessThan('matlab', '8.3')
+        mex_flags = ['-silent ' mex_flags];  % R2014a
     end
     if opts.debug
         mex_flags = ['-g ' mex_flags];    % debug vs. optimized builds
