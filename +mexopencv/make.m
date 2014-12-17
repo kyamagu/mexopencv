@@ -65,6 +65,14 @@ if ispc % Windows
         if opts.verbose > 0, disp(cmd); end
         if ~opts.dryrun, delete(cmd); end
 
+        cmd = fullfile(MEXOPENCV_ROOT, '+cv', '*.pdb');
+        if opts.verbose > 0, disp(cmd); end
+        if ~opts.dryrun, delete(cmd); end
+
+        cmd = fullfile(MEXOPENCV_ROOT, '+cv', 'private', '*.pdb');
+        if opts.verbose > 0, disp(cmd); end
+        if ~opts.dryrun, delete(cmd); end
+
         cmd = fullfile(MEXOPENCV_ROOT, 'lib', '*.obj');
         if opts.verbose > 0, disp(cmd); end
         if ~opts.dryrun, delete(cmd); end
@@ -91,6 +99,8 @@ if ispc % Windows
         cv_cflags, cv_libs);
     if opts.verbose > 1
         mex_flags = ['-v ' mex_flags];    % verbose mex output
+    elseif opts.verbose == 0 && ~verLessThan('matlab', '8.3')
+        mex_flags = ['-silent ' mex_flags];  % R2014a
     end
     if opts.debug
         mex_flags = ['-g ' mex_flags];    % debug vs. optimized builds
@@ -237,6 +247,9 @@ function [comp_flags,link_flags] = compilation_flags(opts)
     isVS = strcmp(c.Manufacturer,'Microsoft') && ~isempty(strfind(c.Name,'Visual'));
     if isVS && (str2double(c.Version) < 10 || opts.debug)
         comp_flags{end+1} = '/D_SECURE_SCL=1';
+    end
+    if isVS && opts.debug
+        comp_flags{end+1} = '/MDd';   % link against debug CRT
     end
 
     % show all compiler warnings, and verbose output from linker
