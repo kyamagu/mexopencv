@@ -1,11 +1,8 @@
 MATLABDIR   ?= /usr/local/matlab
 MEX         ?= $(MATLABDIR)/bin/mex
-MV          ?= mv
-AR          ?= ar
-RM          ?= rm
-DOXYGEN     ?= doxygen
-MEXEXT      ?= $(shell $(MATLABDIR)/bin/mexext)
 MATLAB      ?= $(MATLABDIR)/bin/matlab
+MEXEXT      ?= $(shell $(MATLABDIR)/bin/mexext)
+DOXYGEN     ?= doxygen
 TARGETDIR   := +cv
 INCLUDEDIR  := include
 LIBDIR      := lib
@@ -33,13 +30,13 @@ all: $(TARGETS)
 $(LIBDIR)/libMxArray.a: $(SRCDIR)/MxArray.cpp $(INCLUDEDIR)/MxArray.hpp
 	$(MEX) -c $(C_FLAGS) $< -outdir $(LIBDIR)
 	$(AR) -cq $@ $(LIBDIR)/*.o
-	$(RM) -f $(LIBDIR)/*.o
+	$(RM) $(LIBDIR)/*.o
 
 %.$(MEXEXT): %.cpp $(LIBDIR)/libMxArray.a $(INCLUDEDIR)/mexopencv.hpp
 	$(MEX) $(C_FLAGS) $< -lMxArray $(LD_FLAGS) -output ${@:.$(MEXEXT)=}
 
 clean:
-	$(RM) -rf $(LIBDIR)/*.a $(TARGETDIR)/*.$(MEXEXT) $(TARGETDIR)/private/*.$(MEXEXT)
+	$(RM) -r $(LIBDIR)/*.a $(TARGETDIR)/*.$(MEXEXT) $(TARGETDIR)/private/*.$(MEXEXT)
 
 doc:
 	$(DOXYGEN) Doxyfile
