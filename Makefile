@@ -14,7 +14,15 @@ MEXDIR	    := $(SRCDIR)/$(TARGETDIR)
 SRCS        := $(wildcard $(MEXDIR)/*.cpp) $(wildcard $(MEXDIR)/private/*.cpp)
 TARGETS     := $(subst $(MEXDIR), $(TARGETDIR), $(SRCS:.cpp=.$(MEXEXT)))
 C_FLAGS     := -cxx -largeArrayDims -I$(INCLUDEDIR) $(shell pkg-config --cflags opencv)
-LD_FLAGS    := -L$(LIBDIR) $(shell pkg-config --libs opencv | sed -E "s|(/[^/ ]+)+/lib|-l|g" | sed -E "s|\.[^ ]+||g")
+LD_FLAGS    := -L$(LIBDIR)
+
+# append OpenCV linking flags
+LIB_SUFFIX  := %.so %.dylib %.a %.la %.dll.a %.dll
+CV_LDFLAGS  := $(shell pkg-config --libs opencv)
+CV_LDFLAGS  := $(filter-out $(LIB_SUFFIX),$(CV_LDFLAGS)) \
+               $(patsubst libopencv_%, -lopencv_%, \
+               $(basename $(notdir $(filter $(LIB_SUFFIX),$(CV_LDFLAGS)))))
+LD_FLAGS    += $(CV_LDFLAGS)
 
 VPATH       = $(TARGETDIR):$(SRCDIR):$(MEXDIR):$(TARGETDIR)/private:$(SRCDIR)/private
 
