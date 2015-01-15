@@ -32,11 +32,11 @@ all: $(TARGETS)
 
 $(LIBDIR)/libMxArray.a: $(SRCDIR)/MxArray.cpp $(INCLUDEDIR)/MxArray.hpp
 	$(MEX) -c $(C_FLAGS) $< -outdir $(LIBDIR)
-	$(AR) -cq $(LIBDIR)/libMxArray.a $(LIBDIR)/*.o
+	$(AR) -cq $@ $(LIBDIR)/*.o
 	$(RM) -f $(LIBDIR)/*.o
 
 %.$(MEXEXT): %.cpp $(LIBDIR)/libMxArray.a $(INCLUDEDIR)/mexopencv.hpp
-	$(MEX) $(C_FLAGS) $< -lMxArray $(LD_FLAGS) -output $@
+	$(MEX) $(C_FLAGS) $< -lMxArray $(LD_FLAGS) -output ${@:.$(MEXEXT)=}
 
 clean:
 	$(RM) -rf $(LIBDIR)/*.a $(TARGETDIR)/*.$(MEXEXT) $(TARGETDIR)/private/*.$(MEXEXT)
