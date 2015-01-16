@@ -17,6 +17,7 @@ LD_FLAGS    := -L$(LIBDIR)
 LIB_SUFFIX  := %.so %.dylib %.a %.la %.dll.a %.dll
 CV_LDFLAGS  := $(shell pkg-config --libs opencv)
 CV_LDFLAGS  := $(filter-out $(LIB_SUFFIX),$(CV_LDFLAGS)) \
+               $(addprefix -L, $(sort $(dir $(filter $(LIB_SUFFIX),$(CV_LDFLAGS))))) \
                $(patsubst libopencv_%, -lopencv_%, \
                $(basename $(notdir $(filter $(LIB_SUFFIX),$(CV_LDFLAGS)))))
 LD_FLAGS    += $(CV_LDFLAGS)
