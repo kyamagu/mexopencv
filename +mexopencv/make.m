@@ -212,25 +212,43 @@ end
 
 function s = compiler_str()
     %COMPILER_STR  return compiler shortname
-    c = mex.getCompilerConfigurations('C++','Selected');
-    if ~isempty(strfind(c.Name, 'Visual'))
-        if ~isempty(strfind(c.Version, '12.0'))       % vc2013
-            s = 'vc12';
-        elseif ~isempty(strfind(c.Version, '11.0'))   % vc2012
-            s = 'vc11';
-        elseif ~isempty(strfind(c.Version, '10.0'))   % vc2010
-            s = 'vc10';
-        elseif ~isempty(strfind(c.Version, '9.0'))    % vc2008
-            s = 'vc9';
-        else
-            error('mexopencv:make', 'Unsupported compiler');
+    s = '';
+    cc = mex.getCompilerConfigurations('C++', 'Selected');
+    if strcmp(cc.Manufacturer, 'Microsoft')
+        if ~isempty(strfind(cc.Name, 'Visual'))  % Visual Studio
+            switch cc.Version
+                case '12.0'
+                    s = 'vc12';    % VS2013
+                case '11.0'
+                    s = 'vc11';    % VS2012
+                case '10.0'
+                    s = 'vc10';    % VS2010
+                case '9.0'
+                    s = 'vc9';     % VS2008
+                case '8.0'
+                    s = 'vc8';     % VS2005
+            end
+        elseif ~isempty(strfind(cc.Name, 'SDK'))  % Windows SDK
+            switch cc.Version
+                case '8.1'
+                    s = 'vc12';    % VS2013
+                case '8.0'
+                    s = 'vc11';    % VS2012
+                case '7.1'
+                    s = 'vc10';    % VS2010
+                case {'7.0', '6.1'}
+                    s = 'vc9';     % VS2008
+                case '6.0'
+                    s = 'vc8';     % VS2005
+            end
         end
-    elseif ~isempty(strfind(c.Name, 'Microsoft SDK')) % win64
-        s = 'vc10';
-    elseif ~isempty(strfind(c.Name, 'GNU'))
+    elseif strcmp(cc.Manufacturer, 'Intel')  % Intel C++ Composer
+        % TODO: check versions 11.0, 12.0, 13.0, 14.0, 15.0
+    elseif ~isempty(strfind(cc.Name, 'GNU'))  % MinGW (GNU GCC)
         s = 'mingw';
-    else
-        error('mexopencv:make', 'Unsupported compiler: %s', c.Name);
+    end
+    if isempty(s)
+        error('mexopencv:make', 'Unsupported compiler: %s', cc.Name);
     end
 end
 
