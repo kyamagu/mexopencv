@@ -5,17 +5,8 @@
  * @date 2011
  */
 #include "mexopencv.hpp"
-#include "opencv2/nonfree/nonfree.hpp"
-
 using namespace std;
 using namespace cv;
-
-namespace {
-
-/// Initialization flag
-bool initialized = false;
-
-}
 
 /**
  * Main entry called from Matlab
@@ -30,11 +21,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<1 || ((nrhs%2)!=1) || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-
-    if (!initialized) {
-        initModule_nonfree();
-        initialized = true;
-    }
 
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
