@@ -171,7 +171,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     Mat R, T, E, F;
     double d = stereoCalibrate(objectPoints, imagePoints1, imagePoints2,
         cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2,
-        imageSize, R, T, E, F, termCrit, flags);
+        imageSize, R, T, E, F, flags, termCrit);
     plhs[0] = valueStruct(cameraMatrix1, distCoeffs1, cameraMatrix2,
         distCoeffs2, R, T, E, F, d);
 }
