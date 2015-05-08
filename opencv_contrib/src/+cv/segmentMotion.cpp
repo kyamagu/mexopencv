@@ -5,8 +5,10 @@
  * @date 2012
  */
 #include "mexopencv.hpp"
+#include "opencv2/optflow.hpp"
 using namespace std;
 using namespace cv;
+using namespace cv::motempl;
 
 /**
  * Main entry called from Matlab
