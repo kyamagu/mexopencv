@@ -63,10 +63,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
 
     // Process
-    MSER mser(_delta, _min_area, _max_area, _max_variation, _min_diversity,
+    Ptr<MSER> mser = MSER::create(_delta, _min_area, _max_area, _max_variation, _min_diversity,
               _max_evolution, _area_threshold, _min_margin, _edge_blur_size);
     Mat image(rhs[0].toMat());
     vector<vector<Point> > msers;
-    mser(image, msers, mask);
+    vector<Rect> bboxes;
+    mser->detectRegions(image, msers, bboxes);
     plhs[0] = MxArray(msers);
+    if (nlhs>1)
+        plhs[1] = MxArray(bboxes);
 }

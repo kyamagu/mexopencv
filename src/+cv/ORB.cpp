@@ -27,7 +27,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // return the descriptor size
     if (nrhs==1 && rhs[0].isChar() && rhs[0].toString()=="DescriptorSize") {
-        plhs[0] = MxArray(ORB().descriptorSize());
+        plhs[0] = MxArray((ORB::create())->descriptorSize());
         return;
     }
 
@@ -66,17 +66,17 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
 
     // Process
-    ORB orb(n_features,scale_factor,n_levels,edge_threshold,
+    Ptr<ORB> orb = ORB::create(n_features,scale_factor,n_levels,edge_threshold,
             first_level,WTA_K,score_type,patch_size);
     Mat image(rhs[0].toMat());
     vector<KeyPoint> keypoints;
     bool useProvidedKeypoints=false;
     if (nlhs>1) {
         Mat descriptors;
-        orb(image, mask, keypoints, descriptors, useProvidedKeypoints);
+        orb->detectAndCompute(image, mask, keypoints, descriptors, useProvidedKeypoints);
         plhs[1] = MxArray(descriptors);
     }
     else
-        orb(image, mask, keypoints);
+        orb->detect(image, keypoints, mask);
     plhs[0] = MxArray(keypoints);
 }
