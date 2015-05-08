@@ -5,8 +5,10 @@
  * @date 2011
  */
 #include "mexopencv.hpp"
+#include "opencv2/xfeatures2d.hpp"
 using namespace std;
 using namespace cv;
+using namespace cv::xfeatures2d;
 
 /**
  * Main entry called from Matlab
@@ -27,7 +29,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // return the descriptor size (64/128)
     if (nrhs==1 && rhs[0].isChar() && rhs[0].toString()=="DescriptorSize") {
-        plhs[0] = MxArray(SURF().descriptorSize());
+        plhs[0] = MxArray((SURF::create())->descriptorSize());
         return;
     }
 
@@ -57,17 +59,17 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
 
     // Process
-    SURF surf(hessianThreshold,nOctaves,nOctaveLayers,extended,upright);
+    Ptr<SURF> surf = SURF::create(hessianThreshold,nOctaves,nOctaveLayers,extended,upright);
     Mat image(rhs[0].toMat());
     vector<KeyPoint> keypoints;
     bool useProvidedKeypoints=false;
     if (nlhs>1) {
         vector<float> descriptors;
-        surf(image, mask, keypoints, descriptors, useProvidedKeypoints);
+        surf->detectAndCompute(image, mask, keypoints, descriptors, useProvidedKeypoints);
         Mat m(descriptors);
         plhs[1] = MxArray(m.reshape(0, keypoints.size()));
     }
     else
-        surf(image, mask, keypoints);
+        surf->detect(image, keypoints, mask);
     plhs[0] = MxArray(keypoints);
 }

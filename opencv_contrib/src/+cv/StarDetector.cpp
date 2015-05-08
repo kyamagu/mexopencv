@@ -5,8 +5,10 @@
  * @date 2011
  */
 #include "mexopencv.hpp"
+#include "opencv2/xfeatures2d.hpp"
 using namespace std;
 using namespace cv;
+using namespace cv::xfeatures2d;
 
 /**
  * Main entry called from Matlab
@@ -48,10 +50,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     
     // Process
-    StarDetector star_detector(maxSize, responseThreshold,
+    Ptr<StarDetector> star_detector = StarDetector::create(maxSize, responseThreshold,
         lineThresholdProjected, lineThresholdBinarized, suppressNonmaxSize);
     Mat image(rhs[0].toMat());
     vector<KeyPoint> keypoints;
-    star_detector(image, keypoints);
+    star_detector->detect(image, keypoints);
     plhs[0] = MxArray(keypoints);
 }

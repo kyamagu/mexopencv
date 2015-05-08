@@ -5,8 +5,10 @@
  * @date 2011
  */
 #include "mexopencv.hpp"
+#include "opencv2/xfeatures2d.hpp"
 using namespace std;
 using namespace cv;
+using namespace cv::xfeatures2d;
 
 /**
  * Main entry called from Matlab
@@ -27,7 +29,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // return the descriptor size (128)
     if (nrhs==1 && rhs[0].isChar() && rhs[0].toString()=="DescriptorSize") {
-        plhs[0] = MxArray(SIFT().descriptorSize());
+        plhs[0] = MxArray((SIFT::create())->descriptorSize());
         return;
     }
 
@@ -57,17 +59,17 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
 
     // Process
-    SIFT sift(_nfeatures,_nOctaveLayers,_contrastThreshold,_edgeThreshold,
+    Ptr<SIFT> sift = SIFT::create(_nfeatures,_nOctaveLayers,_contrastThreshold,_edgeThreshold,
         _sigma);
     Mat image(rhs[0].toMat());
     vector<KeyPoint> keypoints;
     bool useProvidedKeypoints=false;
     if (nlhs>1) {
         Mat descriptors;
-        sift(image, mask, keypoints, descriptors, useProvidedKeypoints);
+        sift->detectAndCompute(image, mask, keypoints, descriptors, useProvidedKeypoints);
         plhs[1] = MxArray(descriptors);
     }
     else
-        sift(image, mask, keypoints);
+        sift->detect(image, keypoints, mask);
     plhs[0] = MxArray(keypoints);
 }
