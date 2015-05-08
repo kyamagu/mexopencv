@@ -29,7 +29,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     Mat element;
     Point anchor(-1,-1);
     int iterations = 1;
-    int borderType = BORDER_CONSTANT;
+    int borderType = cv::BORDER_CONSTANT;
     Scalar borderValue = morphologyDefaultBorderValue();
     for (int i=1; i<nrhs; i+=2) {
         string key = rhs[i].toString();

@@ -81,27 +81,27 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else if (key=="DistCoeffs")
             distCoeffs = rhs[i+1].toMat(CV_32F);
         else if (key=="UseIntrinsicGuess" && rhs[i+1].toBool())
-            flags |= CV_CALIB_USE_INTRINSIC_GUESS;
+            flags |= cv::CALIB_USE_INTRINSIC_GUESS;
         else if (key=="FixPrincipalPoint" && rhs[i+1].toBool())
-            flags |= CV_CALIB_FIX_PRINCIPAL_POINT;
+            flags |= cv::CALIB_FIX_PRINCIPAL_POINT;
         else if (key=="FixAspectRatio" && rhs[i+1].toBool())
-            flags |= CV_CALIB_FIX_ASPECT_RATIO;
+            flags |= cv::CALIB_FIX_ASPECT_RATIO;
         else if (key=="ZeroTangentDist" && rhs[i+1].toBool())
-            flags |= CV_CALIB_ZERO_TANGENT_DIST;
+            flags |= cv::CALIB_ZERO_TANGENT_DIST;
         else if (key=="FixK1" && rhs[i+1].toBool())
-            flags |= CV_CALIB_FIX_K1;
+            flags |= cv::CALIB_FIX_K1;
         else if (key=="FixK2" && rhs[i+1].toBool())
-            flags |= CV_CALIB_FIX_K2;
+            flags |= cv::CALIB_FIX_K2;
         else if (key=="FixK3" && rhs[i+1].toBool())
-            flags |= CV_CALIB_FIX_K3;
+            flags |= cv::CALIB_FIX_K3;
         else if (key=="FixK4" && rhs[i+1].toBool())
-            flags |= CV_CALIB_FIX_K4;
+            flags |= cv::CALIB_FIX_K4;
         else if (key=="FixK5" && rhs[i+1].toBool())
-            flags |= CV_CALIB_FIX_K5;
+            flags |= cv::CALIB_FIX_K5;
         else if (key=="FixK6" && rhs[i+1].toBool())
-            flags |= CV_CALIB_FIX_K6;
+            flags |= cv::CALIB_FIX_K6;
         else if (key=="RationalModel" && rhs[i+1].toBool())
-            flags |= CV_CALIB_RATIONAL_MODEL;
+            flags |= cv::CALIB_RATIONAL_MODEL;
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }

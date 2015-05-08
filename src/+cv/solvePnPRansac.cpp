@@ -12,9 +12,9 @@ namespace {
 /** Method used for solving the pose estimation problem.
  */
 const ConstMap<std::string,int> PnPMethod = ConstMap<std::string,int>
-    ("Iterative", cv::ITERATIVE)
-    ("P3P",       cv::P3P)
-    ("EPnP",      cv::EPNP);
+    ("Iterative", cv::SOLVEPNP_ITERATIVE)
+    ("P3P",       cv::SOLVEPNP_P3P)
+    ("EPnP",      cv::SOLVEPNP_EPNP);
 }
 
 /**
@@ -43,7 +43,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     float reprojectionError=8.0;
     int minInliersCount=100;
     Mat rvec, tvec;
-    int flags = cv::ITERATIVE;
+    int flags = cv::SOLVEPNP_ITERATIVE;
     for (int i=4; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="UseExtrinsicGuess")

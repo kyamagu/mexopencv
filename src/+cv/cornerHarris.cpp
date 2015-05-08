@@ -29,7 +29,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     int blockSize=5;
     int apertureSize=3;
     double k;
-    int borderType = BORDER_DEFAULT;
+    int borderType = cv::BORDER_DEFAULT;
     for (int i=1; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="BlockSize")

@@ -46,10 +46,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    int flags = ((adaptiveThresh) ? CV_CALIB_CB_ADAPTIVE_THRESH : 0) |
-        ((normalizeImage) ? CV_CALIB_CB_NORMALIZE_IMAGE : 0) |
-        ((filterQuads) ? CV_CALIB_CB_FILTER_QUADS : 0) |
-        ((fastCheck) ? CALIB_CB_FAST_CHECK : 0);
+    int flags = ((adaptiveThresh) ? cv::CALIB_CB_ADAPTIVE_THRESH : 0) |
+        ((normalizeImage) ? cv::CALIB_CB_NORMALIZE_IMAGE : 0) |
+        ((filterQuads) ? cv::CALIB_CB_FILTER_QUADS : 0) |
+        ((fastCheck) ? cv::CALIB_CB_FAST_CHECK : 0);
     // Process
     vector<Point2f> corners;
     bool b = findChessboardCorners(image, patternSize, corners, flags);

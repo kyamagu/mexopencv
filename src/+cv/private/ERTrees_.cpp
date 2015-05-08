@@ -49,11 +49,11 @@ CvRTParams getParams(vector<MxArray>::iterator it,
             if (val.isChar()) {
                 string s(val.toString());
                 if (s=="Iter")
-                    params.term_crit.type = CV_TERMCRIT_ITER;
+                    params.term_crit.type = TermCriteria::COUNT;
                 else if (s=="EPS")
-                    params.term_crit.type = CV_TERMCRIT_EPS;
+                    params.term_crit.type = TermCriteria::EPS;
                 else if (s=="Iter+EPS")
-                    params.term_crit.type = CV_TERMCRIT_ITER|CV_TERMCRIT_EPS;
+                    params.term_crit.type = TermCriteria::COUNT+TermCriteria::EPS;
                 else
                     mexErrMsgIdAndTxt("mexopencv:error","Unrecognized TermCritType");
             }
@@ -144,8 +144,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat trainData(rhs[2].toMat(CV_32F));
         Mat responses(rhs[3].toMat(CV_32F));
         Mat varIdx, sampleIdx, missingMask;
-        Mat varType(1,trainData.cols+1,CV_8U,Scalar(CV_VAR_ORDERED));
-        varType.at<uchar>(0,trainData.cols) = CV_VAR_CATEGORICAL;
+        Mat varType(1,trainData.cols+1,CV_8U,Scalar(cv::VAR_ORDERED));
+        varType.at<uchar>(0,trainData.cols) = cv::VAR_CATEGORICAL;
         CvRTParams params = getParams(rhs.begin()+4,rhs.end());
         vector<float> priors;
         for (int i=4; i<nrhs; i+=2) {
@@ -158,7 +158,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 if (rhs[i+1].isChar())
                     varType.at<uchar>(0,trainData.cols) = 
                         (rhs[i+1].toString()=="Categorical") ? 
-                        CV_VAR_CATEGORICAL : CV_VAR_ORDERED;
+                        cv::VAR_CATEGORICAL : cv::VAR_ORDERED;
                 else if (rhs[i+1].isNumeric())
                     varType = rhs[i+1].toMat(CV_8U);
             }
@@ -172,7 +172,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 params.priors = &priors[0];
             }
         }
-        bool b = obj.train(trainData, CV_ROW_SAMPLE, responses, varIdx,
+        bool b = obj.train(trainData, cv::ROW_SAMPLE, responses, varIdx,
             sampleIdx, varType, missingMask, params);
         plhs[0] = MxArray(b);
     }

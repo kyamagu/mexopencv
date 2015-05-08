@@ -65,8 +65,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     Scalar newVal = rhs[2].toScalar();
     Rect rect;
     int flags = connectivity |
-        ((fixedRange) ? FLOODFILL_FIXED_RANGE : 0) |
-        ((maskOnly)   ? FLOODFILL_MASK_ONLY   : 0);
+        ((fixedRange) ? cv::FLOODFILL_FIXED_RANGE : 0) |
+        ((maskOnly)   ? cv::FLOODFILL_MASK_ONLY   : 0);
     int area = 0;
     if (useMask) {
         area = floodFill(img, mask, seed, newVal, &rect, loDiff, upDiff, flags);

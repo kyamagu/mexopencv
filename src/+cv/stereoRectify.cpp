@@ -61,7 +61,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    int flags = ((zeroDisparity) ? CV_CALIB_ZERO_DISPARITY : 0);
+    int flags = ((zeroDisparity) ? cv::CALIB_ZERO_DISPARITY : 0);
     
     // Process
     Mat R1, R2, P1, P2, Q;

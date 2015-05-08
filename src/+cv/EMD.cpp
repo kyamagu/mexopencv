@@ -26,7 +26,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
     // Option processing
-    int distType = CV_DIST_L2;
+    int distType = cv::DIST_L2;
     Mat cost;
     float lowerBound = 0;
     for (int i=2; i<nrhs; i+=2) {
@@ -41,7 +41,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    if (distType==CV_DIST_USER && cost.empty())
+    if (distType==cv::DIST_USER && cost.empty())
         mexErrMsgIdAndTxt("mexopencv:error","Cost matrix empty");
     
     // Process

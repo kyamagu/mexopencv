@@ -11,9 +11,9 @@ using namespace cv;
 /** GrabCut algorithm types for option processing
  */
 const ConstMap<std::string,int> GrabCutType = ConstMap<std::string,int>
-    ("Rect",cv::GC_INIT_WITH_RECT)
-    ("Mask",cv::GC_INIT_WITH_MASK)
-    ("Eval",cv::GC_EVAL);
+    ("Rect", cv::GC_INIT_WITH_RECT)
+    ("Mask", cv::GC_INIT_WITH_MASK)
+    ("Eval", cv::GC_EVAL);
 
 /**
  * Main entry called from Matlab
@@ -42,7 +42,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     Mat bgdModel, fgdModel;
     int iterCount = 10;
     int mode = (rhs[1].isDouble() && rhs[1].numel()==4) ?
-                GC_INIT_WITH_RECT : GC_INIT_WITH_MASK; // Automatic determination
+        cv::GC_INIT_WITH_RECT : cv::GC_INIT_WITH_MASK; // Automatic determination
     if (nrhs>2) {
         for (int i=2; i<nrhs; i+=2) {
             string key = rhs[i].toString();
@@ -62,7 +62,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Initialize mask and rect
     Mat mask;
     Rect rect;
-    if (mode == GC_INIT_WITH_MASK)
+    if (mode == cv::GC_INIT_WITH_MASK)
         mask = rhs[1].toMat(CV_8U);
     else
         rect = rhs[1].toRect();

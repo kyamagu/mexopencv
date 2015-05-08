@@ -11,10 +11,10 @@ using namespace cv;
 /** Method for option processing
  */
 const ConstMap<std::string,int> FMMethod = ConstMap<std::string,int>
-    ("7Point",    CV_FM_7POINT)
-    ("8Point",    CV_FM_8POINT)
-    ("Ransac",    CV_FM_RANSAC)
-    ("LMedS",    CV_FM_LMEDS);
+    ("7Point", cv::FM_7POINT)
+    ("8Point", cv::FM_8POINT)
+    ("Ransac", cv::FM_RANSAC)
+    ("LMedS",  cv::FM_LMEDS);
 
 /**
  * Main entry called from Matlab
@@ -32,7 +32,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    int method=FM_RANSAC;
+    int method=cv::FM_RANSAC;
     double param1=3.;
     double param2=0.99;
     for (int i=2; i<nrhs; i+=2) {

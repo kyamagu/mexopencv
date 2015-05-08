@@ -17,7 +17,7 @@ map<int,Ptr<DescriptorMatcher> > obj_;
 /// Initialization methods for flann::Index
 const ConstMap<std::string,cvflann::flann_centers_init_t> CentersInit =
     ConstMap<std::string,cvflann::flann_centers_init_t>
-    ("Random", cvflann::FLANN_CENTERS_RANDOM)
+    ("Random",   cvflann::FLANN_CENTERS_RANDOM)
     ("Gonzales", cvflann::FLANN_CENTERS_GONZALES)
     ("KMeansPP", cvflann::FLANN_CENTERS_KMEANSPP);
 

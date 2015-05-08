@@ -17,8 +17,8 @@ map<int,BOWKMeansTrainer> obj_;
 /** KMeans initalization types
  */
 const ConstMap<std::string,int> Initialization = ConstMap<std::string,int>
-    ("Random",KMEANS_RANDOM_CENTERS)
-    ("PP",KMEANS_PP_CENTERS);
+    ("Random", cv::KMEANS_RANDOM_CENTERS)
+    ("PP",     cv::KMEANS_PP_CENTERS);
 
 /// Alias for argument number check
 inline void nargchk(bool cond)
@@ -50,7 +50,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         int clusterCount = rhs[2].toInt();
         TermCriteria criteria;
         int attempts=3;
-        int flags=KMEANS_PP_CENTERS;
+        int flags=cv::KMEANS_PP_CENTERS;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key=="Criteria")

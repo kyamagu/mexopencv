@@ -114,7 +114,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         Mat frame(rhs[2].toMat());
         if (frame.type()==CV_8UC3)
-            cvtColor(frame,frame,CV_RGB2BGR);
+            cvtColor(frame,frame,cv::COLOR_RGB2BGR);
         obj.write(frame);
     }
     else

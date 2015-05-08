@@ -12,12 +12,12 @@ using namespace cv;
  */
 const ConstMap<std::string,int> MorphType = ConstMap<std::string,int>
     ("Erode",    cv::MORPH_ERODE)
-    ("Dilate",    cv::MORPH_DILATE)
-    ("Open",    cv::MORPH_OPEN)
+    ("Dilate",   cv::MORPH_DILATE)
+    ("Open",     cv::MORPH_OPEN)
     ("Close",    cv::MORPH_CLOSE)
-    ("Gradient",cv::MORPH_GRADIENT)
-    ("Tophat",    cv::MORPH_TOPHAT)
-    ("Blackhat",cv::MORPH_BLACKHAT);
+    ("Gradient", cv::MORPH_GRADIENT)
+    ("Tophat",   cv::MORPH_TOPHAT)
+    ("Blackhat", cv::MORPH_BLACKHAT);
 
 /**
  * Main entry called from Matlab
@@ -40,7 +40,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     Mat element;
     Point anchor(-1,-1);
     int iterations = 1;
-    int borderType = BORDER_CONSTANT;
+    int borderType = cv::BORDER_CONSTANT;
     Scalar borderValue = morphologyDefaultBorderValue();
     for (int i=2; i<nrhs; i+=2) {
         string key = rhs[i].toString();

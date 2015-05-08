@@ -52,14 +52,14 @@ const ConstMap<std::string,int> ThreshType = ConstMap<std::string,int>
 /** Distance types for Distance Transform and M-estimators
  */
 const ConstMap<std::string,int> DistType = ConstMap<std::string,int>
-    ("User",   CV_DIST_USER)
-    ("L1",     CV_DIST_L1)
-    ("L2",     CV_DIST_L2)
-    ("C",      CV_DIST_C)
-    ("L12",    CV_DIST_L12)
-    ("Fair",   CV_DIST_FAIR)
-    ("Welsch", CV_DIST_WELSCH)
-    ("Huber",  CV_DIST_HUBER);
+    ("User",   cv::DIST_USER)
+    ("L1",     cv::DIST_L1)
+    ("L2",     cv::DIST_L2)
+    ("C",      cv::DIST_C)
+    ("L12",    cv::DIST_L12)
+    ("Fair",   cv::DIST_FAIR)
+    ("Welsch", cv::DIST_WELSCH)
+    ("Huber",  cv::DIST_HUBER);
 
 /** Line type for drawing
  */

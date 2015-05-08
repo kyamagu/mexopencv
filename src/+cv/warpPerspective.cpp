@@ -28,9 +28,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Option processing
     Mat src(rhs[0].toMat());
     Size dsize = src.size();
-    int interpolation=INTER_LINEAR;
+    int interpolation=cv::INTER_LINEAR;
     bool warp_inverse=false;
-    int borderType=BORDER_CONSTANT;
+    int borderType=cv::BORDER_CONSTANT;
     Scalar borderValue;
     for (int i=2; i<nrhs; i+=2) {
         string key = rhs[i].toString();

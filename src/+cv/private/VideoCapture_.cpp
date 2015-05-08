@@ -18,25 +18,25 @@ map<int,VideoCapture> obj_;
 /** Capture Property map for option processing
  */
 const ConstMap<std::string,int> CapProp = ConstMap<std::string,int>
-    ("PosMsec",CV_CAP_PROP_POS_MSEC)  // Current position of the video file in milliseconds or video capture timestamp.
-    ("PosFrames",CV_CAP_PROP_POS_FRAMES)  // 0-based index of the frame to be decoded/captured next.
-    ("AVIRatio",CV_CAP_PROP_POS_AVI_RATIO)  // Relative position of the video file: 0 - start of the film, 1 - end of the film.
-    ("FrameWidth",CV_CAP_PROP_FRAME_WIDTH)  // Width of the frames in the video stream.
-    ("FrameHeight",CV_CAP_PROP_FRAME_HEIGHT)  // Height of the frames in the video stream.
-    ("FPS",CV_CAP_PROP_FPS)  // Frame rate.
-    ("FourCC",CV_CAP_PROP_FOURCC)  // 4-character code of codec.
-    ("FrameCount",CV_CAP_PROP_FRAME_COUNT)  // Number of frames in the video file.
-    ("Format",CV_CAP_PROP_FORMAT)  // Format of the Mat objects returned by retrieve() .
-    ("Mode",CV_CAP_PROP_MODE)  // Backend-specific value indicating the current capture mode.
-    ("Brightness",CV_CAP_PROP_BRIGHTNESS)  // Brightness of the image (only for cameras).
-    ("Contrast",CV_CAP_PROP_CONTRAST)  // Contrast of the image (only for cameras).
-    ("Saturation",CV_CAP_PROP_SATURATION)  // Saturation of the image (only for cameras).
-    ("Hue",CV_CAP_PROP_HUE)  // Hue of the image (only for cameras).
-    ("Gain",CV_CAP_PROP_GAIN)  // Gain of the image (only for cameras).
-    ("Exposure",CV_CAP_PROP_EXPOSURE)  // Exposure (only for cameras).
-    ("ConvertRGB",CV_CAP_PROP_CONVERT_RGB)  // Boolean flags indicating whether images should be converted to RGB.
-    //("WhiteBalance",CV_CAP_PROP_WHITE_BALANCE)  // Currently not supported
-    ("Rectification",CV_CAP_PROP_RECTIFICATION)  // Rectification flag for stereo cameras (note: only supported by DC1394 v 2.x backend currently)
+    ("PosMsec",       cv::CAP_PROP_POS_MSEC)       //!< Current position of the video file in milliseconds or video capture timestamp.
+    ("PosFrames",     cv::CAP_PROP_POS_FRAMES)     //!< 0-based index of the frame to be decoded/captured next.
+    ("AVIRatio",      cv::CAP_PROP_POS_AVI_RATIO)  //!< Relative position of the video file: 0 - start of the film, 1 - end of the film.
+    ("FrameWidth",    cv::CAP_PROP_FRAME_WIDTH)    //!< Width of the frames in the video stream.
+    ("FrameHeight",   cv::CAP_PROP_FRAME_HEIGHT)   //!< Height of the frames in the video stream.
+    ("FPS",           cv::CAP_PROP_FPS)            //!< Frame rate.
+    ("FourCC",        cv::CAP_PROP_FOURCC)         //!< 4-character code of codec.
+    ("FrameCount",    cv::CAP_PROP_FRAME_COUNT)    //!< Number of frames in the video file.
+    ("Format",        cv::CAP_PROP_FORMAT)         //!< Format of the Mat objects returned by retrieve() .
+    ("Mode",          cv::CAP_PROP_MODE)           //!< Backend-specific value indicating the current capture mode.
+    ("Brightness",    cv::CAP_PROP_BRIGHTNESS)     //!< Brightness of the image (only for cameras).
+    ("Contrast",      cv::CAP_PROP_CONTRAST)       //!< Contrast of the image (only for cameras).
+    ("Saturation",    cv::CAP_PROP_SATURATION)     //!< Saturation of the image (only for cameras).
+    ("Hue",           cv::CAP_PROP_HUE)            //!< Hue of the image (only for cameras).
+    ("Gain",          cv::CAP_PROP_GAIN)           //!< Gain of the image (only for cameras).
+    ("Exposure",      cv::CAP_PROP_EXPOSURE)       //!< Exposure (only for cameras).
+    ("ConvertRGB",    cv::CAP_PROP_CONVERT_RGB)    //!< Boolean flags indicating whether images should be converted to RGB.
+    //("WhiteBalance",cv::CAP_PROP_WHITE_BALANCE)  //!< Currently not supported
+    ("Rectification", cv::CAP_PROP_RECTIFICATION)  //!< Rectification flag for stereo cameras (note: only supported by DC1394 v 2.x backend currently)
 ;
 
 /**
@@ -105,7 +105,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat frame;
         if (obj.retrieve(frame)) {
             if (frame.type()==CV_8UC3)
-                cvtColor(frame,frame,CV_BGR2RGB);
+                cvtColor(frame,frame,cv::COLOR_BGR2RGB);
             plhs[0] = MxArray(frame);
         }
         else
@@ -117,7 +117,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat frame;
         if (obj.read(frame)) {
             if (frame.type()==CV_8UC3)
-                cvtColor(frame,frame,CV_BGR2RGB);
+                cvtColor(frame,frame,cv::COLOR_BGR2RGB);
             plhs[0] = MxArray(frame);
         }
         else

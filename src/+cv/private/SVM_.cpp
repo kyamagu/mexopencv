@@ -17,33 +17,33 @@ map<int,Ptr<SVM> > obj_;
 
 /// Option values for SVM types
 const ConstMap<std::string,int> SVMType = ConstMap<std::string,int>
-    ("C_SVC",     cv::SVM::C_SVC)
-    ("NU_SVC",    cv::SVM::NU_SVC)
-    ("ONE_CLASS", cv::SVM::ONE_CLASS)
-    ("EPS_SVR",   cv::SVM::EPS_SVR)
-    ("NU_SVR",    cv::SVM::NU_SVR);
+    ("C_SVC",     SVM::C_SVC)
+    ("NU_SVC",    SVM::NU_SVC)
+    ("ONE_CLASS", SVM::ONE_CLASS)
+    ("EPS_SVR",   SVM::EPS_SVR)
+    ("NU_SVR",    SVM::NU_SVR);
 
 /// Option values for SVM types
 const ConstMap<std::string,int> SVMKernelType = ConstMap<std::string,int>
-    ("Linear",    cv::SVM::LINEAR)
-    ("Poly",      cv::SVM::POLY)
-    ("RBF",       cv::SVM::RBF)
-    ("Sigmoid",   cv::SVM::SIGMOID);
+    ("Linear",    SVM::LINEAR)
+    ("Poly",      SVM::POLY)
+    ("RBF",       SVM::RBF)
+    ("Sigmoid",   SVM::SIGMOID);
 
 /// Option values for SVM types
 const ConstMap<int,std::string> InvSVMType = ConstMap<int,std::string>
-    (cv::SVM::C_SVC,    "C_SVC")
-    (cv::SVM::NU_SVC,   "NU_SVC")
-    (cv::SVM::ONE_CLASS,"ONE_CLASS")
-    (cv::SVM::EPS_SVR,  "EPS_SVR")
-    (cv::SVM::NU_SVR,   "NU_SVR");
+    (SVM::C_SVC,    "C_SVC")
+    (SVM::NU_SVC,   "NU_SVC")
+    (SVM::ONE_CLASS,"ONE_CLASS")
+    (SVM::EPS_SVR,  "EPS_SVR")
+    (SVM::NU_SVR,   "NU_SVR");
 
 /// Option values for SVM types
 const ConstMap<int,std::string> InvSVMKernelType = ConstMap<int,std::string>
-    (cv::SVM::LINEAR,   "Linear")
-    (cv::SVM::POLY,     "Poly")
-    (cv::SVM::RBF,      "RBF")
-    (cv::SVM::SIGMOID,  "Sigmoid");
+    (SVM::LINEAR,   "Linear")
+    (SVM::POLY,     "Poly")
+    (SVM::RBF,      "RBF")
+    (SVM::SIGMOID,  "Sigmoid");
 
 /** Obtain CvSVMParams object from input arguments
  * @param it iterator at the beginning of the argument vector

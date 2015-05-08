@@ -141,8 +141,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat trainData(rhs[2].toMat(CV_32F));
         Mat responses(rhs[3].toMat(CV_32F));
         Mat varIdx, sampleIdx, missingMask;
-        Mat varType(1,trainData.cols+1,CV_8U,Scalar(CV_VAR_ORDERED));
-        varType.at<uchar>(0,trainData.cols) = CV_VAR_CATEGORICAL;
+        Mat varType(1,trainData.cols+1,CV_8U,Scalar(cv::VAR_ORDERED));
+        varType.at<uchar>(0,trainData.cols) = cv::VAR_CATEGORICAL;
         CvBoostParams params = getParams(rhs.begin()+4,rhs.end());
         vector<float> priors;
         bool update=false;
@@ -156,7 +156,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 if (rhs[i+1].isChar())
                     varType.at<uchar>(0,trainData.cols) = 
                         (rhs[i+1].toString()=="Categorical") ? 
-                        CV_VAR_CATEGORICAL : CV_VAR_ORDERED;
+                        cv::VAR_CATEGORICAL : cv::VAR_ORDERED;
                 else if (rhs[i+1].isNumeric())
                     varType = rhs[i+1].toMat(CV_8U);
             }
@@ -172,7 +172,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else if (key=="Update")
                 update = rhs[i+1].toBool();
         }
-        bool b = obj.train(trainData, CV_ROW_SAMPLE, responses, varIdx,
+        bool b = obj.train(trainData, cv::ROW_SAMPLE, responses, varIdx,
             sampleIdx, varType, missingMask, params, update);
         plhs[0] = MxArray(b);
     }

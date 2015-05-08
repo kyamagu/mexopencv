@@ -11,9 +11,9 @@ using namespace cv;
 /** Methods for option processing
  */
 const ConstMap<std::string,int> Preset = ConstMap<std::string,int>
-    ("Basic",    StereoBM::BASIC_PRESET)
-    ("FishEye",    StereoBM::FISH_EYE_PRESET)
-    ("Narrow",    StereoBM::NARROW_PRESET);
+    ("Basic",   StereoBM::BASIC_PRESET)
+    ("FishEye", StereoBM::FISH_EYE_PRESET)
+    ("Narrow",  StereoBM::NARROW_PRESET);
 
 // Persistent objects
 

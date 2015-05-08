@@ -35,7 +35,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     int d = 7;
     double sigmaColor = 50.0;
     double sigmaSpace = 50.0;
-    int borderType = BORDER_DEFAULT;
+    int borderType = cv::BORDER_DEFAULT;
     for (int i=1; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="Diameter")

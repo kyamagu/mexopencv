@@ -12,8 +12,8 @@ using namespace cv;
  */
 const ConstMap<std::string,int> MorphShape = ConstMap<std::string,int>
     ("Rect",    cv::MORPH_RECT)
-    ("Cross",    cv::MORPH_CROSS)
-    ("Ellipse",    cv::MORPH_ELLIPSE);
+    ("Cross",   cv::MORPH_CROSS)
+    ("Ellipse", cv::MORPH_ELLIPSE);
 
 /**
  * Main entry called from Matlab
@@ -33,7 +33,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
     // Option processing
-    int shape=MORPH_RECT;
+    int shape=cv::MORPH_RECT;
     Size ksize(3,3);
     Point anchor=Point(-1,-1);
     for (int i=0; i<nrhs; i+=2) {
