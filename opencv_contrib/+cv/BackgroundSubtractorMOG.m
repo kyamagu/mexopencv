@@ -31,15 +31,15 @@ classdef BackgroundSubtractorMOG < handle
             %BACKGROUNDSUBTRACTORMOG  BackgroundSubtractorMOG constructor
             %
             %    bs = cv.BackgroundSubtractorMOG()
-            %    bs = cv.BackgroundSubtractorMOG(history, nmixtures, backgroundRatio, 'OptionName', optionValue, ...)
-            %
-            % ## Input
-            % * __history__ Length of the history.
-            % * __nmixtures__ Number of Gaussian mixtures.
-            % * __backgroundRatio__ Background ratio.
+            %    bs = cv.BackgroundSubtractorMOG('OptionName', optionValue, ...)
             %
             % ## Options
-            % * __NoiseSigma__ Noise strength.
+            % * __History__ Length of the history. default 200
+            % * __NMixtures__ Number of Gaussian mixtures. default 5
+            % * __BackgroundRatio__ Background ratio. default 0.7
+            % * __NoiseSigma__ Noise strength (standard deviation of the
+            %         brightness or each color channel). `0` means some
+            %         automatic value. default 0
             %
             % Default constructor sets all parameters to default values.
             %
