@@ -1,19 +1,28 @@
 /**
  * @file StereoSGBM_.cpp
  * @brief mex interface for StereoSGBM_
- * @author Kota Yamaguchi
- * @date 2012
+ * @author Kota Yamaguchi, Amro
+ * @date 2012, 2015
  */
 #include "mexopencv.hpp"
 using namespace std;
 using namespace cv;
 
 // Persistent objects
-
+namespace {
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,StereoSGBM> obj_;
+map<int,Ptr<StereoSGBM> > obj_;
+
+/// Option values for StereoSGBM mode
+const ConstMap<std::string, int> SGBMModeMap = ConstMap<std::string, int>
+    ("SGGBM", StereoSGBM::MODE_SGBM)
+    ("HH",    StereoSGBM::MODE_HH);
+const ConstMap<int, std::string> InvSGBMModeMap = ConstMap<int, std::string>
+    (StereoSGBM::MODE_SGBM, "SGBM")
+    (StereoSGBM::MODE_HH,   "HH");
+}
 
 /**
  * Main entry called from Matlab
@@ -25,42 +34,36 @@ map<int,StereoSGBM> obj_;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-    if (nlhs>1)
+    if (nrhs<2 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
-    // Determine argument format between constructor or (id,method,...)
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    int id = 0;
-    string method;
-    if (nrhs==0) {
-        // Constructor is called. Create a new object from argument
-        obj_[++last_id] = StereoSGBM();
-        plhs[0] = MxArray(last_id);
-        return;
-    }
-    else if (rhs[0].isChar() ) {
-        // Constructor is called. Create a new object from argument
-        if ((nrhs%2)!=0)
+    int id = rhs[0].toInt();
+    string method(rhs[1].toString());
+
+    // Constructor is called. Create a new object from argument
+    if (method == "new") {
+        if ((nrhs%2)!=0 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        int minDisparity=0;
-        int numDisparities=64;
-        int SADWindowSize=7;
-        int P1=0;
-        int P2=0;
-        int disp12MaxDiff=0;
-        int preFilterCap=0;
-        int uniquenessRatio=0;
-        int speckleWindowSize=0;
-        int speckleRange=0;
-        bool fullDP=false;
-        for (int i=0; i<nrhs; i+=2) {
+        int minDisparity = 0;
+        int numDisparities = 64;
+        int blockSize = 7;
+        int P1 = 0;
+        int P2 = 0;
+        int disp12MaxDiff = 0;
+        int preFilterCap = 0;
+        int uniquenessRatio = 0;
+        int speckleWindowSize = 0;
+        int speckleRange = 0;
+        int mode = StereoSGBM::MODE_SGBM;
+        for (int i=2; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key=="MinDisparity")
                 minDisparity = rhs[i+1].toInt();
             else if (key=="NumDisparities")
                 numDisparities = rhs[i+1].toInt();
-            else if (key=="SADWindowSize")
-                SADWindowSize = rhs[i+1].toInt();
+            else if (key=="BlockSize")
+                blockSize = rhs[i+1].toInt();
             else if (key=="P1")
                 P1 = rhs[i+1].toInt();
             else if (key=="P2")
@@ -75,38 +78,144 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 speckleWindowSize = rhs[i+1].toInt();
             else if (key=="SpeckleRange")
                 speckleRange = rhs[i+1].toInt();
-            else if (key=="FullDP")
-                fullDP = rhs[i+1].toBool();
+            else if (key=="Mode")
+                mode = SGBMModeMap[rhs[i+1].toString()];
             else
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
-        obj_[++last_id] = StereoSGBM(minDisparity, numDisparities,
-            SADWindowSize, P1, P2, disp12MaxDiff, preFilterCap, uniquenessRatio,
-            speckleWindowSize, speckleRange, fullDP);
+        obj_[++last_id] = StereoSGBM::create(minDisparity, numDisparities,
+            blockSize, P1, P2, disp12MaxDiff, preFilterCap, uniquenessRatio,
+            speckleWindowSize, speckleRange, mode);
         plhs[0] = MxArray(last_id);
         return;
     }
-    else if (rhs[0].isNumeric() && rhs[0].numel()==1 && nrhs>1) {
-        id = rhs[0].toInt();
-        method = rhs[1].toString();
-    }
-    else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
-    
+
     // Big operation switch
-    StereoSGBM& obj = obj_[id];
+    Ptr<StereoSGBM> obj = obj_[id];
     if (method == "delete") {
         if (nrhs!=2 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
         obj_.erase(id);
     }
+    else if (method == "clear") {
+        if (nrhs!=2 || nlhs!=0)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        obj->clear();
+    }
+    else if (method == "save") {
+        if (nrhs!=3 || nlhs!=0)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        obj->save(rhs[2].toString());
+    }
+    else if (method == "load") {
+        if (nrhs<3 || nlhs!=0)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        string objname;
+        bool loadFromString = false;
+        for (int i=3; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key=="ObjName")
+                objname = rhs[i+1].toString();
+            else if (key=="FromString")
+                loadFromString = rhs[i+1].toBool();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+        }
+        string s(rhs[2].toString());
+        Ptr<StereoSGBM> obj2;
+        /*
+        if (loadFromString)
+            obj2 = Algorithm::loadFromString<StereoSGBM>(s, objname);
+        else
+            obj2 = Algorithm::load<StereoSGBM>(s, objname);
+        */
+        ///*
+        // HACK: workaround because StereoSGBM::create() doesnt accept zero arguments
+        FileStorage fs(s, FileStorage::READ + (loadFromString ? FileStorage::MEMORY : 0));
+        FileNode fn = objname.empty() ? fs.getFirstTopLevelNode() : fs[objname];
+        obj2 = StereoSGBM::create(0, 64, 7);
+        obj2->read(fn);
+        //*/
+        if (obj2.empty())
+            mexErrMsgIdAndTxt("mexopencv:error","Failed to load algorithm");
+        else
+            obj = obj2;
+    }
+    else if (method == "empty") {
+        if (nrhs!=2 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        plhs[0] = MxArray(obj->empty());
+    }
+    else if (method == "getDefaultName") {
+        if (nrhs!=2 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        plhs[0] = MxArray(obj->getDefaultName());
+    }
     else if (method == "compute") {
-        if (nrhs<4 || (nrhs%2)!=0 || nlhs>1)
+        if (nrhs!=4 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         Mat left(rhs[2].toMat(CV_8U)), right(rhs[3].toMat(CV_8U));
         Mat disparity;
-        obj(left,right,disparity);
+        obj->compute(left, right, disparity);
         plhs[0] = MxArray(disparity);
+    }
+    else if (method == "get") {
+        if (nrhs!=3 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        string prop(rhs[2].toString());
+        if (prop == "Mode")
+            plhs[0] = MxArray(InvSGBMModeMap[obj->getMode()]);
+        else if (prop == "P1")
+            plhs[0] = MxArray(obj->getP1());
+        else if (prop == "P2")
+            plhs[0] = MxArray(obj->getP2());
+        else if (prop == "PreFilterCap")
+            plhs[0] = MxArray(obj->getPreFilterCap());
+        else if (prop == "UniquenessRatio")
+            plhs[0] = MxArray(obj->getUniquenessRatio());
+        else if (prop == "BlockSize")
+            plhs[0] = MxArray(obj->getBlockSize());
+        else if (prop == "Disp12MaxDiff")
+            plhs[0] = MxArray(obj->getDisp12MaxDiff());
+        else if (prop == "MinDisparity")
+            plhs[0] = MxArray(obj->getMinDisparity());
+        else if (prop == "NumDisparities")
+            plhs[0] = MxArray(obj->getNumDisparities());
+        else if (prop == "SpeckleRange")
+            plhs[0] = MxArray(obj->getSpeckleRange());
+        else if (prop == "SpeckleWindowSize")
+            plhs[0] = MxArray(obj->getSpeckleWindowSize());
+        else
+            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property");
+    }
+    else if (method == "set") {
+        if (nrhs!=4 || nlhs!=0)
+            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        string prop(rhs[2].toString());
+        if (prop == "Mode")
+            obj->setMode(SGBMModeMap[rhs[3].toString()]);
+        else if (prop == "P1")
+            obj->setP1(rhs[3].toInt());
+        else if (prop == "P2")
+            obj->setP2(rhs[3].toInt());
+        else if (prop == "PreFilterCap")
+            obj->setPreFilterCap(rhs[3].toInt());
+        else if (prop == "UniquenessRatio")
+            obj->setUniquenessRatio(rhs[3].toInt());
+        else if (prop == "BlockSize")
+            obj->setBlockSize(rhs[3].toInt());
+        else if (prop == "Disp12MaxDiff")
+            obj->setDisp12MaxDiff(rhs[3].toInt());
+        else if (prop == "MinDisparity")
+            obj->setMinDisparity(rhs[3].toInt());
+        else if (prop == "NumDisparities")
+            obj->setNumDisparities(rhs[3].toInt());
+        else if (prop == "SpeckleRange")
+            obj->setSpeckleRange(rhs[3].toInt());
+        else if (prop == "SpeckleWindowSize")
+            obj->setSpeckleWindowSize(rhs[3].toInt());
+        else
+            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property");
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
