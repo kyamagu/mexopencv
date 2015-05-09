@@ -91,10 +91,19 @@ void mexFunction( int nlhs, mxArray *plhs[],
         }
         string s(rhs[2].toString());
         Ptr<BackgroundSubtractorMOG2> obj2;
+        /*
         if (loadFromString)
             obj2 = Algorithm::loadFromString<BackgroundSubtractorMOG2>(s, objname);
         else
             obj2 = Algorithm::load<BackgroundSubtractorMOG2>(s, objname);
+        */
+        ///*
+        // HACK: workaround for missing BackgroundSubtractorMOG2::create()
+        FileStorage fs(s, FileStorage::READ + (loadFromString ? FileStorage::MEMORY : 0));
+        FileNode fn = objname.empty() ? fs.getFirstTopLevelNode() : fs[objname];
+        obj2 = createBackgroundSubtractorMOG2();
+        obj2->read(fn);
+        //*/
         if (obj2.empty())
             mexErrMsgIdAndTxt("mexopencv:error","Failed to load algorithm");
         else
