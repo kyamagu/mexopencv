@@ -16,9 +16,9 @@ classdef TestBOWKMeansTrainer
             trainer.add(train_desc);
             centers = trainer.cluster();
             trainer.getDescriptors();
-            assert(size(train_desc,1) == trainer.descriptorsCount);
+            assert(size(train_desc,1) == trainer.descriptorsCount());
             trainer.clear();
-            assert(0 == trainer.descriptorsCount);
+            assert(0 == trainer.descriptorsCount());
         end
     end
     
