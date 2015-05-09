@@ -5,16 +5,18 @@
  * @date 2012
  */
 #include "mexopencv.hpp"
-#include "opencv2/video/background_segm.hpp"
+#include "opencv2/bgsegm.hpp"
 using namespace std;
 using namespace cv;
+using namespace cv::bgsegm;
 
 // Persistent objects
-
+namespace {
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,BackgroundSubtractorMOG> obj_;
+map<int,Ptr<BackgroundSubtractorMOG> > obj_;
+}
 
 /**
  * Main entry called from Matlab
@@ -54,18 +56,18 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 else
                     mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
             }
-            obj_[++last_id] = BackgroundSubtractorMOG(
+            obj_[++last_id] = createBackgroundSubtractorMOG(
                 history,nmixtures,backgroundRatio,noiseSigma);
         }
         else if (nrhs==2)
-            obj_[++last_id] = BackgroundSubtractorMOG();
+            obj_[++last_id] = createBackgroundSubtractorMOG();
         else
             mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
         plhs[0] = MxArray(last_id);
         return;
     }
 
-    BackgroundSubtractorMOG& obj = obj_[id];
+    Ptr<BackgroundSubtractorMOG> obj = obj_[id];
     if (method == "delete") {
         if (nrhs!=2 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
@@ -83,29 +85,29 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
         Mat image(rhs[2].toMat()), fgmask;
-        obj(image, fgmask, learningRate);
+        obj->apply(image, fgmask, learningRate);
         plhs[0] = MxArray(fgmask,mxLOGICAL_CLASS);
     }
     else if (method == "getBackgroundImage") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         Mat im;
-        obj.getBackgroundImage(im);
+        obj->getBackgroundImage(im);
         plhs[0] = MxArray(im);
     }
     else if (method == "history" || method == "nmixtures") {
         if (nrhs==3 && nlhs==0)
-            obj.set(method, rhs[2].toInt());
+            obj->setHistory(rhs[2].toInt());
         else if (nrhs==2 && nlhs==1)
-            plhs[0] = MxArray(obj.get<int>(method));
+            plhs[0] = MxArray(obj->getHistory());
         else
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     }
     else if (method == "backgroundRatio" || method == "noiseSigma") {
         if (nrhs==3 && nlhs==0)
-            obj.set(method, rhs[2].toDouble());
+            obj->setBackgroundRatio(rhs[2].toDouble());
         else if (nrhs==2 && nlhs==1)
-            plhs[0] = MxArray(obj.get<double>(method));
+            plhs[0] = MxArray(obj->getBackgroundRatio());
         else
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     }
