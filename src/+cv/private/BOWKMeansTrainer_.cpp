@@ -85,8 +85,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else if (method == "descriptorsCount") {
         nargchk(nrhs==2 && nlhs<=1);
-        // plhs[0] = MxArray(obj.descripotorsCount());
-        plhs[0] = MxArray(obj.descripotorsCount()); // OpenCV has typo...
+        plhs[0] = MxArray(obj.descriptorsCount());
     }
     else if (method == "clear") {
         nargchk(nrhs==2 && nlhs==0);
