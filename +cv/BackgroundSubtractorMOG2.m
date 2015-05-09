@@ -53,19 +53,18 @@ classdef BackgroundSubtractorMOG2 < handle
             %BACKGROUNDSUBTRACTORMOG  BackgroundSubtractorMOG2 constructor
             %
             %    bs = cv.BackgroundSubtractorMOG2()
-            %    bs = cv.BackgroundSubtractorMOG2(history, varThreshold, 'OptionName', optionValue, ...)
+            %    bs = cv.BackgroundSubtractorMOG2('OptionName', optionValue, ...)
             %
-            % ## Input
-            % * __history__ Length of the history.
-            % * __varThreshold__ Threshold on the squared Mahalanobis distance to
+            % ## Options
+            % * __History__ Length of the history. default 500
+            % * __VarThreshold__ Threshold on the squared Mahalanobis distance to
             %        decide whether it is well described by the background
             %        model. This parameter does not affect the background
             %        update. A typical value could be 4 sigma, that is,
-            %        varThreshold=4*4=16.
-            %
-            % ## Options
-            % * __BShadowDetection__ Parameter defining whether shadow detection
-            %        should be enabled (true or false).
+            %        varThreshold=4*4=16. default 16
+            % * __DetectShadows__ If true, the algorithm will detect shadows and
+            %        mark them. It decreases the speed a bit, so if you do not
+            %        need this feature, set the parameter to false. default true
             %
             % See also cv.BackgroundSubtractorMOG2
             %
