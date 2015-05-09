@@ -3,7 +3,7 @@
 \author Kota Yamaguchi
 \date   March 2012
 
-http://www.cs.stonybrook.edu/~kyamagu/mexopencv/
+http://kyamagu.github.io/mexopencv/
 
 \section development Developing a new mex function
 
@@ -19,12 +19,12 @@ The minimum contents of the myfunc.cpp would look like this:
     	// Check arguments
         if (nlhs!=1 || nrhs!=1)
             mexErrMsgIdAndTxt("myfunc:invalidArgs","Wrong number of arguments");
-        
+
         // Convert MxArray to cv::Mat
         cv::Mat mat = MxArray(prhs[0]).toMat();
-        
+
         // Do whatever you want
-        
+
         // Convert cv::Mat back to mxArray*
         plhs[0] = MxArray(mat);
     }
@@ -101,7 +101,7 @@ resource file necessary for testing. An example of testing class is shown below:
                 dst = cv.myfunc(src);           % execute your function
                 assert(all(dst(:) == ref(:)));  % check the output
             end
-            
+
             function test_error_1
                 try
                     cv.myfunc('foo');           % myfunc should throw an error
