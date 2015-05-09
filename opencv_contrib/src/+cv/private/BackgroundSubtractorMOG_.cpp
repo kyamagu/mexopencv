@@ -1,8 +1,8 @@
 /**
  * @file BackgroundSubtractorMOG_.cpp
  * @brief mex interface for BackgroundSubtractorMOG_
- * @author Kota Yamaguchi
- * @date 2012
+ * @author Kota Yamaguchi, Amro
+ * @date 2015
  */
 #include "mexopencv.hpp"
 #include "opencv2/bgsegm.hpp"
@@ -31,52 +31,102 @@ void mexFunction( int nlhs, mxArray *plhs[],
     if (nrhs<2 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
 
-    // Determine argument format between constructor or (id,method,...)
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    int id = 0;
-    string method;
-    if (nrhs>1 && rhs[0].isNumeric() && rhs[1].isChar()) {
-        id = rhs[0].toInt();
-        method = rhs[1].toString();
-    }
-    else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
+    int id = rhs[0].toInt();
+    string method(rhs[1].toString());
 
-    // Big operation switch
+    // constructor call
     if (method == "new") {
-        if (nrhs>4 && (nrhs%2)==1) {
-            int history = rhs[2].toInt();
-            int nmixtures = rhs[3].toInt();
-            double backgroundRatio = rhs[4].toDouble();
-            double noiseSigma=0;
-            for (int i=5;i<nrhs;i+=2) {
-                string key(rhs[i].toString());
-                if (key=="NoiseSigma")
-                    noiseSigma = rhs[i+1].toDouble();
-                else
-                    mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-            }
-            obj_[++last_id] = createBackgroundSubtractorMOG(
-                history,nmixtures,backgroundRatio,noiseSigma);
+        if ((nrhs%2)!=0 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        int history = 200;
+        int nmixtures = 5;
+        double backgroundRatio = 0.7;
+        double noiseSigma = 0;
+        for (int i=2; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key=="History")
+                history = rhs[i+1].toInt();
+            else if (key=="NMixtures")
+                nmixtures = rhs[i+1].toInt();
+            else if (key=="BackgroundRatio")
+                backgroundRatio = rhs[i+1].toDouble();
+            else if (key=="NoiseSigma")
+                noiseSigma = rhs[i+1].toDouble();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
-        else if (nrhs==2)
-            obj_[++last_id] = createBackgroundSubtractorMOG();
-        else
-            mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
+        obj_[++last_id] = createBackgroundSubtractorMOG(
+            history, nmixtures, backgroundRatio, noiseSigma);
         plhs[0] = MxArray(last_id);
         return;
     }
 
+    // Big operation switch
     Ptr<BackgroundSubtractorMOG> obj = obj_[id];
     if (method == "delete") {
         if (nrhs!=2 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
         obj_.erase(id);
     }
+    else if (method == "clear") {
+        if (nrhs!=2 || nlhs!=0)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        obj->clear();
+    }
+    else if (method == "save") {
+        if (nrhs!=3 || nlhs!=0)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        obj->save(rhs[2].toString());
+    }
+    else if (method == "load") {
+        if (nrhs<3 || nlhs!=0)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        string objname;
+        bool loadFromString = false;
+        for (int i=3; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key=="ObjName")
+                objname = rhs[i+1].toString();
+            else if (key=="FromString")
+                loadFromString = rhs[i+1].toBool();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+        }
+        string s(rhs[2].toString());
+        Ptr<BackgroundSubtractorMOG> obj2;
+        /*
+        if (loadFromString)
+            obj2 = Algorithm::loadFromString<BackgroundSubtractorMOG>(s, objname);
+        else
+            obj2 = Algorithm::load<BackgroundSubtractorMOG>(s, objname);
+        */
+        ///*
+        // HACK: workaround for missing BackgroundSubtractorMOG::create()
+        FileStorage fs(s, FileStorage::READ + (loadFromString ? FileStorage::MEMORY : 0));
+        FileNode fn = objname.empty() ? fs.getFirstTopLevelNode() : fs[objname];
+        obj2 = createBackgroundSubtractorMOG();
+        obj2->read(fn);
+        //*/
+        if (obj2.empty())
+            mexErrMsgIdAndTxt("mexopencv:error","Failed to load algorithm");
+        else
+            obj = obj2;
+    }
+    else if (method == "empty") {
+        if (nrhs!=2 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        plhs[0] = MxArray(obj->empty());
+    }
+    else if (method == "getDefaultName") {
+        if (nrhs!=2 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        plhs[0] = MxArray(obj->getDefaultName());
+    }
     else if (method == "apply") {
         if (nrhs<3 || (nrhs%2)!=1 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        double learningRate=0;
+        double learningRate = -1;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key=="LearningRate")
@@ -91,25 +141,39 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "getBackgroundImage") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        Mat im;
-        obj->getBackgroundImage(im);
-        plhs[0] = MxArray(im);
+        Mat backgroundImage;
+        obj->getBackgroundImage(backgroundImage);
+        plhs[0] = MxArray(backgroundImage);
     }
-    else if (method == "history" || method == "nmixtures") {
-        if (nrhs==3 && nlhs==0)
-            obj->setHistory(rhs[2].toInt());
-        else if (nrhs==2 && nlhs==1)
-            plhs[0] = MxArray(obj->getHistory());
-        else
+    else if (method == "get") {
+        if (nrhs!=3 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    }
-    else if (method == "backgroundRatio" || method == "noiseSigma") {
-        if (nrhs==3 && nlhs==0)
-            obj->setBackgroundRatio(rhs[2].toDouble());
-        else if (nrhs==2 && nlhs==1)
+        string prop(rhs[2].toString());
+        if (prop == "BackgroundRatio")
             plhs[0] = MxArray(obj->getBackgroundRatio());
+        else if (prop == "History")
+            plhs[0] = MxArray(obj->getHistory());
+        else if (prop == "NMixtures")
+            plhs[0] = MxArray(obj->getNMixtures());
+        else if (prop == "NoiseSigma")
+            plhs[0] = MxArray(obj->getNoiseSigma());
         else
+            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized property");
+    }
+    else if (method == "set") {
+        if (nrhs!=4 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        string prop(rhs[2].toString());
+        if (prop == "BackgroundRatio")
+            obj->setBackgroundRatio(rhs[3].toDouble());
+        else if (prop == "History")
+            obj->setHistory(rhs[3].toInt());
+        else if (prop == "NMixtures")
+            obj->setNMixtures(rhs[3].toInt());
+        else if (prop == "NoiseSigma")
+            obj->setNoiseSigma(rhs[3].toDouble());
+        else
+            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized property");
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
