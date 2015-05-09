@@ -1,8 +1,10 @@
-classdef LatentSvmDetector < handle
-    %LATENTSVMDETECTOR Latent SVM detector
+classdef LSVMDetector < handle
+    %LSVMDETECTOR Latent SVM detector
+    %
+    % Discriminatively Trained Part Based Models for Object Detection
     %
     % The object detector described below has been initially proposed by
-    % P.F. Felzenszwalb in [Felzenszwalb2010]. It is based on a
+    % P.F. Felzenszwalb in [Felzenszwalb2010a]. It is based on a
     % Dalal-Triggs detector that uses a single filter on histogram of
     % oriented gradients (HOG) features to represent an object category.
     % This detector uses a sliding window approach, where a filter is
@@ -23,23 +25,34 @@ classdef LatentSvmDetector < handle
     % position and scale is the maximum over components, of the score of
     % that component model at the given location.
     %
+    % The detector was dramatically speeded-up with cascade algorithm proposed
+    % by P.F. Felzenszwalb in [Felzenszwalb2010b]. The algorithm prunes
+    % partial hypotheses using thresholds on their scores. The basic idea of
+    % the algorithm is to use a hierarchy of models defined by an ordering of
+    % the original model's parts. For a model with (n+1) parts, including the
+    % root, a sequence of (n+1) models is obtained. The i-th model in this
+    % sequence is defined by the first i parts from the original model. Using
+    % this hierarchy, low scoring hypotheses can be pruned after looking at
+    % the best configuration of a subset of the parts. Hypotheses that score
+    % high under a weak model are evaluated further using a richer model.
+    %
     % The basic usage is the following:
     %
     %    im = imread('/path/to/cat.jpg');
-    %    detector = cv.LatentSvmDetector('/path/to/cat.xml');
+    %    detector = cv.LSVMDetector('/path/to/cat.xml');
     %    detections = detector.detect(im);
     %
     % The detector can also accept multiple models by cell array:
     %
-    %    detector = cv.LatentSvmDetector({'cat.xml','car.xml'});
+    %    detector = cv.LSVMDetector({'cat.xml','car.xml'});
     %
     % The xml file must be a format compatible to OpenCV's Latent SVM
     % detector, but you can convert models from the original implementation
-    % in [Felzenszwalb2010] using mat2xml method. Check the latest models
+    % in [Felzenszwalb2010a] using mat2xml method. Check the latest models
     % in http://www.cs.brown.edu/~pff/latent/
     %
-    % See also cv.LatentSvmDetector.LatentSvmDetector
-    % cv.LatentSvmDetector.detect cv.LatentSvmDetector.mat2xml
+    % See also cv.LSVMDetector.LSVMDetector cv.LSVMDetector.detect
+    %          cv.LSVMDetector.mat2xml
     %
     
     properties (SetAccess = private)
@@ -48,44 +61,53 @@ classdef LatentSvmDetector < handle
     end
     
     methods
-        function this = LatentSvmDetector(varargin)
-            %LATENTSVMDETECTOR Create or load a new detector
+        function this = LSVMDetector(filenames, varargin)
+            %LSVMDETECTOR Load and create a new detector
             %
-            %    detector = cv.LatentSvmDetector()
-            %    detector = cv.LatentSvmDetector(filenames)
-            %    detector = cv.LatentSvmDetector(filenames, classnames)
+            %    detector = cv.LSVMDetector(filenames)
+            %    detector = cv.LSVMDetector(filenames, classnames)
             %
-            % The constructor optionally takes the same argument to load
-            % method.
+            % Load the trained models from given .xml files and return a new
+            % LSVMDetector detector.
             %
-            % See also cv.LatentSvmDetector cv.LatentSvmDetector.load
+            % ## Input
+            % * __filenames__ A set of filenames storing the trained detectors
+            %       (models). Each file contains one model. See examples of such
+            %       files here https://github.com/Itseez/opencv_extra/testdata/cv/LSVMDetector/models_VOC2007/
             %
-            this.id = LatentSvmDetector_(0, 'new');
-            if nargin > 0, LatentSvmDetector_(this.id, 'load', varargin{:}); end
+            %  * __classnames__ A set of trained models names. If it's empty
+            %        then the name of each model will be constructed from the
+            %        name of file containing the model. E.g. the model stored in
+            %        "/home/user/cat.xml" will get the name "cat".
+            %
+            % ## Output
+            % * __detector__ LSVMDetector detector instance.
+            %
+            % `filenames` is a string or a cell array of strings specifying
+            % the location of model files. Optionally the method takes class
+            % names as a cell array of strings that has the same size to
+            % filenames. By default, `classnames` are set to the name of the
+            % file without xml extension.
+            %
+            % See also cv.LSVMDetector.detect
+            %
+            this.id = LSVMDetector_(0, 'new', filenames, varargin{:});
         end
         
         function delete(this)
             %DELETE Destructor
             %
-            % See also cv.LatentSvmDetector
+            % See also cv.LSVMDetector
             %
-            LatentSvmDetector_(this.id, 'delete');
+            LSVMDetector_(this.id, 'delete');
         end
         
-        function clear(this)
-            %CLEAR Clear the detector
+        function status = isEmpty(this)
+            %ISEMPTY Check if the detector is empty
             %
-            % See also cv.LatentSvmDetector
+            % See also cv.LSVMDetector
             %
-            LatentSvmDetector_(this.id, 'clear');
-        end
-        
-        function status = empty(this)
-            %EMPTY Check if the detector is empty
-            %
-            % See also cv.LatentSvmDetector
-            %
-            status = LatentSvmDetector_(this.id, 'empty');
+            status = LSVMDetector_(this.id, 'isEmpty');
         end
         
         function names = getClassNames(this)
@@ -93,11 +115,15 @@ classdef LatentSvmDetector < handle
             %
             %    names = detector.getClassNames()
             %
-            % names is a cell array of strings
+            % Return the class (model) `names` that were passed in constructor
+            % or extracted from models filenames in those methods.
             %
-            % See also cv.LatentSvmDetector
+            % ## Output
+            % * __names__ a cell array of strings
             %
-            names = LatentSvmDetector_(this.id, 'getClassNames');
+            % See also cv.LSVMDetector
+            %
+            names = LSVMDetector_(this.id, 'getClassNames');
         end
         
         function s = getClassCount(this)
@@ -105,65 +131,51 @@ classdef LatentSvmDetector < handle
             %
             %    s = detector.getClassCount()
             %
-            % s is a numeric value
-            %
-            % See also cv.LatentSvmDetector
-            %
-            s = LatentSvmDetector_(this.id, 'getClassCount');
-        end
-        
-        function status = load(this, filenames)
-            %LOAD Loads a model from files
-            %
-            %    status = detector.load(filenames)
-            %    status = detector.load(filenames, classnames)
-            %
-            % filenames is a string or a cell array of strings specifying
-            % the location of model files. Optionally the method takes class
-            % names as a cell array of strings that has the same size to
-            % filenames. By default, class names are set to the name of the
-            % file without xml extension. S is a logical value indicating
-            % success of load when true.
-            %
-            % See also cv.LatentSvmDetector
-            %
-            status = LatentSvmDetector_(this.id, 'load', filenames);
-        end
-        
-        function detections = detect(this, im, varargin)
-            %DETECT Detects objects
-            %
-            %    detections = detector.detect(im, 'Option', optionValue, ...)
-            %
-            % ## Input
-            % * __im__ Matrix of the type uint8 containing an image where
-            %       objects are detected.
+            % Return a count of loaded models (classes).
             %
             % ## Output
-            % * __detections__ Struct array of detected objects. It has the
+            % * __s__ a numeric value
+            %
+            % See also cv.LSVMDetector
+            %
+            s = LSVMDetector_(this.id, 'getClassCount');
+        end
+
+        function objects = detect(this, im, varargin)
+            %DETECT Detects objects
+            %
+            %    objects = detector.detect(im, 'Option', optionValue, ...)
+            %
+            % Find rectangular regions in the given image that are likely to
+            % contain objects of loaded classes (models) and corresponding
+            % confidence levels.
+            %
+            % ## Input
+            % * __im__ Matrix of the type `uint8` of an image where objects
+            %       are to be detected.
+            %
+            % ## Output
+            % * __objects__ Struct array of detected objects. It has the
             %     following fields:
-            %     * __rect__ rectangle [x,y,w,h] of the object
+            %     * __rect__ rectangle `[x,y,w,h]` of the object
             %     * __score__ score of the detection
             %     * __class__ name of the object class
             %
             % ## Options
-            % * __OverlapThreshold__ Parameter to specify the threshold.
-            %     default 0
-            % * __NumThreads__ Number of parallel threads when OpenCV is
-            %     built with TBB option. default -1
+            % * __OverlapThreshold__ Threshold for the non-maximum suppression
+            %     algorithm. default 0.5
             %
-            % See also cv.LatentSvmDetector
+            % See also cv.LSVMDetector
             %
-            detections = LatentSvmDetector_(this.id, 'detect', im, varargin{:});
+            objects = LSVMDetector_(this.id, 'detect', im, varargin{:});
         end
-        
     end
     
     methods (Static)
         function mat2xml(matpath, xmlpath)
             %MAT2XML Convert [Felzenszwalb2010] model files to xml
             %
-            %    cv.LatentSvmDetector.mat2xml(matpath, xmlpath)
+            %    cv.LSVMDetector.mat2xml(matpath, xmlpath)
             %
             % ## Input
             % * __matpath__ path to the model mat file
@@ -175,7 +187,7 @@ classdef LatentSvmDetector < handle
             %
             %    matpath = 'VOC2009/cat_final.mat';
             %    xmlpath = 'cat.xml';
-            %    cv.LatentSvmDetector.mat2xml(matpath, xmlpath);
+            %    cv.LSVMDetector.mat2xml(matpath, xmlpath);
             %
             % Check the latest models in
             % http://www.cs.brown.edu/~pff/latent/
@@ -184,7 +196,7 @@ classdef LatentSvmDetector < handle
             % opencv_extra/testdata/cv/latentsvmdetector/mat2xml.m
             % in the opencv development branch.
             %
-            % See also cv.LatentSvmDetector
+            % See also cv.LSVMDetector
             %
             load(matpath);
             num_feat = 31;
