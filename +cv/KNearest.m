@@ -45,7 +45,7 @@ classdef KNearest < handle
             %
             % See also cv.KNearest cv.KNearest.train
             %
-            this.id = KNearest_();
+            this.id = KNearest_(0, 'new');
             if nargin>0, this.train(varargin{:}); end
         end
         

@@ -7,13 +7,15 @@
 #include "mexopencv.hpp"
 using namespace std;
 using namespace cv;
+using namespace cv::ml;
 
 // Persistent objects
-
+namespace {
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,NormalBayesClassifier> obj_;
+map<int,Ptr<NormalBayesClassifier> > obj_;
+}
 
 /**
  * Main entry called from Matlab
@@ -25,28 +27,25 @@ map<int,NormalBayesClassifier> obj_;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-    if (nlhs>1)
+    if (nrhs<2 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Determine argument format between constructor or (id,method,...)
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    int id = 0;
-    string method;
-    if (nrhs==0) {
-        // Constructor is called. Create a new object from argument
-        obj_[++last_id] = NormalBayesClassifier();
+    int id = rhs[0].toInt();
+    string method(rhs[1].toString());
+
+    // Constructor is called. Create a new object from argument
+    if (method == "new") {
+        if (nrhs!=2 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        obj_[++last_id] = NormalBayesClassifier::create();
         plhs[0] = MxArray(last_id);
         return;
     }
-    else if (rhs[0].isNumeric() && rhs[0].numel()==1 && nrhs>1) {
-        id = rhs[0].toInt();
-        method = rhs[1].toString();
-    }
-    else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
-    
+
     // Big operation switch
-    NormalBayesClassifier& obj = obj_[id];
+    Ptr<NormalBayesClassifier> obj = obj_[id];
     if (method == "delete") {
         if (nrhs!=2 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
@@ -55,45 +54,31 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "clear") {
         if (nrhs!=2 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        obj.clear();
+        obj->clear();
     }
     else if (method == "load") {
         if (nrhs!=3 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        obj.load(rhs[2].toString().c_str());
+        obj = Algorithm::load<NormalBayesClassifier>(rhs[2].toString());
     }
     else if (method == "save") {
         if (nrhs!=3 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        obj.save(rhs[2].toString().c_str());
+        obj->save(rhs[2].toString());
     }
     else if (method == "train") {
-        if (nrhs<4 || nlhs>1)
+        if (nrhs!=4 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        Mat trainData(rhs[2].toMat(CV_32F));
+        Mat samples(rhs[2].toMat(CV_32F));
         Mat responses(rhs[3].toMat(CV_32F));
-        Mat varIdx;
-        Mat sampleIdx;
-        bool update=false;
-        for (int i=4; i<nrhs; i+=2) {
-            string key(rhs[i].toString());
-            if (key=="VarIdx")
-                varIdx = rhs[i+1].toMat(CV_32S);
-            else if (key=="SampleIdx")
-                sampleIdx = rhs[i+1].toMat(CV_32S);
-            else if (key=="Update")
-                update = rhs[i+1].toBool();
-            else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-        }
-        bool b = obj.train(trainData,responses,varIdx,sampleIdx,update);
+        bool b = obj->train(samples, ROW_SAMPLE, responses);
         plhs[0] = MxArray(b);
     }
     else if (method == "predict") {
-        if (nrhs<3 || nlhs>1)
+        if (nrhs!=3 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        Mat samples(rhs[2].toMat(CV_32F)),results;
-        obj.predict(samples,&results);
+        Mat samples(rhs[2].toMat(CV_32F)), results;
+        obj->predict(samples, results);
         plhs[0] = MxArray(results);
     }
     else

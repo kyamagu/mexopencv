@@ -79,7 +79,7 @@ classdef RTrees < handle
             %
             % See also cv.RTrees cv.RTrees.train
             %
-            this.id = RTrees_();
+            this.id = RTrees_(0, 'new');
             if nargin>0, this.train(varargin{:}); end
         end
         

@@ -24,7 +24,7 @@ classdef NormalBayesClassifier < handle
             %
             % See also cv.NormalBayesClassifier
             %
-            this.id = NormalBayesClassifier_();
+            this.id = NormalBayesClassifier_(0, 'new');
             if nargin>0, this.train(varargin{:}); end
         end
         

@@ -32,7 +32,7 @@ classdef GBTrees < handle
             %
             % See also cv.GBTrees cv.GBTrees.train
             %
-            this.id = GBTrees_();
+            this.id = GBTrees_(0, 'new');
             if nargin>0, this.train(varargin{:}); end
         end
         

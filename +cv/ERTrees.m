@@ -43,7 +43,7 @@ classdef ERTrees < handle
             %
             % See also cv.ERTrees cv.ERTrees.train
             %
-            this.id = ERTrees_();
+            this.id = ERTrees_(0, 'new');
             if nargin>0, this.train(varargin{:}); end
         end
         

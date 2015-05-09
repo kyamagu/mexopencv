@@ -38,7 +38,7 @@ classdef DTree < handle
             %
             % See also cv.DTree cv.DTree.train
             %
-            this.id = DTree_();
+            this.id = DTree_(0, 'new');
             if nargin>0, this.train(varargin{:}); end
         end
         

@@ -56,7 +56,7 @@ classdef Boost < handle
             %
             % See also cv.Boost cv.Boost.train
             %
-            this.id = Boost_();
+            this.id = Boost_(0, 'new');
             if nargin>0, this.train(varargin{:}); end
         end
         
@@ -206,11 +206,6 @@ classdef Boost < handle
             % See also cv.Boost cv.Boost.train
             %
             results = Boost_(this.id, 'predict', samples, varargin{:});
-        end
-        
-        function value = get.Params(this)
-            %PARAMS  Returns the parameter
-            value = Boost_(this.id, 'get_params');
         end
     end
     
