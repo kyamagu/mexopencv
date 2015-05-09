@@ -20,13 +20,10 @@ classdef BackgroundSubtractorMOG < handle
     end
 
     properties (Dependent)
-        frameSize       % Size of the frame (not accessible >= 2.4.0)
-        nframes         % Number of frames (not accessible >= 2.4.0)
-        history         % History
-        nmixtures       % Number of mixture components
-        varThreshold    % Threshold value (not accessible >= 2.4.0)
-        backgroundRatio % Ratio of the background
-        noiseSigma      % Sigma of noise
+        History         % History
+        NMixtures       % Number of mixture components
+        BackgroundRatio % Ratio of the background
+        NoiseSigma      % Sigma of noise
     end
 
     methods
@@ -71,7 +68,7 @@ classdef BackgroundSubtractorMOG < handle
             % * __results__ The output foreground mask as an 8-bit binary image.
             %
             % ## Options
-            % * __LearningRate__ default 0.
+            % * __LearningRate__ default -1.
             %
             % See also cv.BackgroundSubtractorMOG
             %
@@ -92,60 +89,36 @@ classdef BackgroundSubtractorMOG < handle
             im = BackgroundSubtractorMOG_(this.id, 'getBackgroundImage');
         end
 
-        function value = get.frameSize(this)
-            value = BackgroundSubtractorMOG_(this.id, 'frameSize');
+        function value = get.History(this)
+            value = BackgroundSubtractorMOG_(this.id, 'get', 'History');
         end
 
-        function set.frameSize(this, value)
-            BackgroundSubtractorMOG_(this.id, 'frameSize', value);
+        function set.History(this, value)
+            BackgroundSubtractorMOG_(this.id, 'set', 'History', value);
         end
 
-        function value = get.nframes(this)
-            value = BackgroundSubtractorMOG_(this.id, 'nframes');
+        function value = get.NMixtures(this)
+            value = BackgroundSubtractorMOG_(this.id, 'get', 'NMixtures');
         end
 
-        function set.nframes(this, value)
-            BackgroundSubtractorMOG_(this.id, 'nframes', value);
+        function set.NMixtures(this, value)
+            BackgroundSubtractorMOG_(this.id, 'set', 'NMixtures', value);
         end
 
-        function value = get.history(this)
-            value = BackgroundSubtractorMOG_(this.id, 'history');
+        function value = get.BackgroundRatio(this)
+            value = BackgroundSubtractorMOG_(this.id, 'get', 'BackgroundRatio');
         end
 
-        function set.history(this, value)
-            BackgroundSubtractorMOG_(this.id, 'history', value);
+        function set.BackgroundRatio(this, value)
+            BackgroundSubtractorMOG_(this.id, 'set', 'BackgroundRatio', value);
         end
 
-        function value = get.nmixtures(this)
-            value = BackgroundSubtractorMOG_(this.id, 'nmixtures');
+        function value = get.NoiseSigma(this)
+            value = BackgroundSubtractorMOG_(this.id, 'get', 'NoiseSigma');
         end
 
-        function set.nmixtures(this, value)
-            BackgroundSubtractorMOG_(this.id, 'nmixtures', value);
-        end
-
-        function value = get.varThreshold(this)
-            value = BackgroundSubtractorMOG_(this.id, 'varThreshold');
-        end
-
-        function set.varThreshold(this, value)
-            BackgroundSubtractorMOG_(this.id, 'varThreshold', value);
-        end
-
-        function value = get.backgroundRatio(this)
-            value = BackgroundSubtractorMOG_(this.id, 'backgroundRatio');
-        end
-
-        function set.backgroundRatio(this, value)
-            BackgroundSubtractorMOG_(this.id, 'backgroundRatio', value);
-        end
-
-        function value = get.noiseSigma(this)
-            value = BackgroundSubtractorMOG_(this.id, 'noiseSigma');
-        end
-
-        function set.noiseSigma(this, value)
-            BackgroundSubtractorMOG_(this.id, 'noiseSigma', value);
+        function set.NoiseSigma(this, value)
+            BackgroundSubtractorMOG_(this.id, 'set', 'NoiseSigma', value);
         end
     end
 

@@ -9,14 +9,15 @@ camera = cv.VideoCapture;
 pause(3);
 
 % Create a subtractor
-bs = cv.BackgroundSubtractorMOG(100,5,0.2,'NoiseSigma',7);
+bs = cv.BackgroundSubtractorMOG(
+    'History',100, 'NMixtures',5, 'BackgroundRatio',0.2, 'NoiseSigma',7);
 
 % Set up display window
 window = figure('KeyPressFcn',@(obj,evt)setappdata(obj,'flag',true));
 setappdata(window,'flag',false);
 
 % Learn initial background model for a while
-for t = 1:bs.history
+for t = 1:bs.History
     % Get an image
     im = camera.read;
     im = cv.resize(im,0.5);
