@@ -9,7 +9,7 @@ classdef TestKNearest
             Y = [ones(50,1);-ones(50,1)];
             classifier = cv.KNearest;
             classifier.train(X,Y);
-            [Yhat,neiResp,dists] = classifier.find_nearest(X,'K',5);
+            [Yhat,neiResp,dists] = classifier.findNearest(X,5);
         end
     end
     

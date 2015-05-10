@@ -39,12 +39,22 @@ classdef Boost < handle
         % Object ID
         id
     end
-    
-    properties (SetAccess = private, Dependent)
-        % Object parameters
-        Params
+
+    properties (Dependent)
+        CVFolds
+        MaxCategories
+        MaxDepth
+        MinSampleCount
+        Priors
+        RegressionAccuracy
+        TruncatePrunedTree
+        Use1SERule
+        UseSurrogates
+        BoostType
+        WeakCount
+        WeightTrimRate
     end
-    
+
     methods
         function this = Boost(varargin)
             %BOOST  Boosted tree classifier
@@ -105,7 +115,7 @@ classdef Boost < handle
             Boost_(this.id, 'load', filename);
         end
         
-        function status = train(this, trainData, responses, varargin)
+        function status = train(this, samples, responses, varargin)
             %TRAIN  Trains a boosted tree classifier
             %
             %    classifier.train(trainData, responses)
@@ -174,10 +184,10 @@ classdef Boost < handle
             %
             % See also cv.Boost cv.Boost.predict
             %
-            status = Boost_(this.id, 'train', trainData, responses, varargin{:});
+            status = Boost_(this.id, 'train_', samples, responses, varargin{:});
         end
         
-        function results = predict(this, samples, varargin)
+        function [results,f] = predict(this, samples, varargin)
             %PREDICT  Predicts responses for input samples
             %
             %    results = classifier.predict(samples)
@@ -205,8 +215,94 @@ classdef Boost < handle
             %
             % See also cv.Boost cv.Boost.train
             %
-            results = Boost_(this.id, 'predict', samples, varargin{:});
+            [results,f] = Boost_(this.id, 'predict', samples, varargin{:});
         end
     end
-    
+
+    methods
+        function value = get.CVFolds(this)
+            value = Boost_(this.id, 'get', 'CVFolds');
+        end
+        function set.CVFolds(this, value)
+            Boost_(this.id, 'set', 'CVFolds', value);
+        end
+
+        function value = get.MaxCategories(this)
+            value = Boost_(this.id, 'get', 'MaxCategories');
+        end
+        function set.MaxCategories(this, value)
+            Boost_(this.id, 'set', 'MaxCategories', value);
+        end
+
+        function value = get.MaxDepth(this)
+            value = Boost_(this.id, 'get', 'MaxDepth');
+        end
+        function set.MaxDepth(this, value)
+            Boost_(this.id, 'set', 'MaxDepth', value);
+        end
+
+        function value = get.MinSampleCount(this)
+            value = Boost_(this.id, 'get', 'MinSampleCount');
+        end
+        function set.MinSampleCount(this, value)
+            Boost_(this.id, 'set', 'MinSampleCount', value);
+        end
+
+        function value = get.Priors(this)
+            value = Boost_(this.id, 'get', 'Priors');
+        end
+        function set.Priors(this, value)
+            Boost_(this.id, 'set', 'Priors', value);
+        end
+
+        function value = get.RegressionAccuracy(this)
+            value = Boost_(this.id, 'get', 'RegressionAccuracy');
+        end
+        function set.RegressionAccuracy(this, value)
+            Boost_(this.id, 'set', 'RegressionAccuracy', value);
+        end
+
+        function value = get.TruncatePrunedTree(this)
+            value = Boost_(this.id, 'get', 'TruncatePrunedTree');
+        end
+        function set.TruncatePrunedTree(this, value)
+            Boost_(this.id, 'set', 'TruncatePrunedTree', value);
+        end
+
+        function value = get.Use1SERule(this)
+            value = Boost_(this.id, 'get', 'Use1SERule');
+        end
+        function set.Use1SERule(this, value)
+            Boost_(this.id, 'set', 'Use1SERule', value);
+        end
+
+        function value = get.UseSurrogates(this)
+            value = Boost_(this.id, 'get', 'UseSurrogates');
+        end
+        function set.UseSurrogates(this, value)
+            Boost_(this.id, 'set', 'UseSurrogates', value);
+        end
+
+        function value = get.BoostType(this)
+            value = Boost_(this.id, 'get', 'BoostType');
+        end
+        function set.BoostType(this, value)
+            Boost_(this.id, 'set', 'BoostType', value);
+        end
+
+        function value = get.WeakCount(this)
+            value = Boost_(this.id, 'get', 'WeakCount');
+        end
+        function set.WeakCount(this, value)
+            Boost_(this.id, 'set', 'WeakCount', value);
+        end
+
+        function value = get.WeightTrimRate(this)
+            value = Boost_(this.id, 'get', 'WeightTrimRate');
+        end
+        function set.WeightTrimRate(this, value)
+            Boost_(this.id, 'set', 'WeightTrimRate', value);
+        end
+    end
+
 end

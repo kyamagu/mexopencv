@@ -21,12 +21,19 @@ classdef DTree < handle
         % Object ID
         id
     end
-    
-    properties (SetAccess = private, Dependent)
-        % Object parameters
-        Params
+
+    properties (Dependent)
+        CVFolds
+        MaxCategories
+        MaxDepth
+        MinSampleCount
+        Priors
+        RegressionAccuracy
+        TruncatePrunedTree
+        Use1SERule
+        UseSurrogates
     end
-    
+
     methods
         function this = DTree(varargin)
             %DTREE  Create a new instance of DTree
@@ -87,7 +94,7 @@ classdef DTree < handle
             DTree_(this.id, 'load', filename);
         end
         
-        function status = train(this, trainData, responses, varargin)
+        function status = train(this, samples, responses, varargin)
             %TRAIN  Trains a decision tree
             %
             %    classifier.train(trainData, responses)
@@ -172,10 +179,10 @@ classdef DTree < handle
             %
             % See also cv.DTree
             %
-            status = DTree_(this.id, 'train', trainData, responses, varargin{:});
+            status = DTree_(this.id, 'train_', samples, responses, varargin{:});
         end
         
-        function results = predict(this, samples, varargin)
+        function [results,f] = predict(this, samples, varargin)
             %PREDICT  Predicts the response for input samples.
             %
             %    results = classifier.predict(samples)
@@ -204,17 +211,72 @@ classdef DTree < handle
             %
             % See also cv.DTree
             %
-            results = DTree_(this.id, 'predict', samples, varargin{:});
+            [results,f] = DTree_(this.id, 'predict', samples, varargin{:});
         end
-        
-        function value = getVarImportance(this)
-            %GETVARIMPORTANCE  Returns the variable importance array
-            value = DTree_(this.id, 'getVarImportance');
+    end
+
+    methods
+        function value = get.CVFolds(this)
+            value = DTree_(this.id, 'get', 'CVFolds');
         end
-        
-        function value = get.Params(this)
-            %PARAMS
-            value = DTree_(this.id, 'params');
+        function set.CVFolds(this, value)
+            DTree_(this.id, 'set', 'CVFolds', value);
+        end
+
+        function value = get.MaxCategories(this)
+            value = DTree_(this.id, 'get', 'MaxCategories');
+        end
+        function set.MaxCategories(this, value)
+            DTree_(this.id, 'set', 'MaxCategories', value);
+        end
+
+        function value = get.MaxDepth(this)
+            value = DTree_(this.id, 'get', 'MaxDepth');
+        end
+        function set.MaxDepth(this, value)
+            DTree_(this.id, 'set', 'MaxDepth', value);
+        end
+
+        function value = get.MinSampleCount(this)
+            value = DTree_(this.id, 'get', 'MinSampleCount');
+        end
+        function set.MinSampleCount(this, value)
+            DTree_(this.id, 'set', 'MinSampleCount', value);
+        end
+
+        function value = get.Priors(this)
+            value = DTree_(this.id, 'get', 'Priors');
+        end
+        function set.Priors(this, value)
+            DTree_(this.id, 'set', 'Priors', value);
+        end
+
+        function value = get.RegressionAccuracy(this)
+            value = DTree_(this.id, 'get', 'RegressionAccuracy');
+        end
+        function set.RegressionAccuracy(this, value)
+            DTree_(this.id, 'set', 'RegressionAccuracy', value);
+        end
+
+        function value = get.TruncatePrunedTree(this)
+            value = DTree_(this.id, 'get', 'TruncatePrunedTree');
+        end
+        function set.TruncatePrunedTree(this, value)
+            DTree_(this.id, 'set', 'TruncatePrunedTree', value);
+        end
+
+        function value = get.Use1SERule(this)
+            value = DTree_(this.id, 'get', 'Use1SERule');
+        end
+        function set.Use1SERule(this, value)
+            DTree_(this.id, 'set', 'Use1SERule', value);
+        end
+
+        function value = get.UseSurrogates(this)
+            value = DTree_(this.id, 'get', 'UseSurrogates');
+        end
+        function set.UseSurrogates(this, value)
+            DTree_(this.id, 'set', 'UseSurrogates', value);
         end
     end
     

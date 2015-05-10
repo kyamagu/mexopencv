@@ -15,25 +15,21 @@ classdef KNearest < handle
     %    Ytest = kn.predict(Xtest);              % predictions
     %
     % See also cv.KNearest.KNearest
-    % cv.KNearest.train cv.KNearest.find_nearest
+    % cv.KNearest.train cv.KNearest.findNearest
     %
     
     properties (SetAccess = private)
         % Object ID
         id
     end
-    
-    properties (SetAccess = private, Dependent)
-        % Maximum number of K
-        MaxK
-        % Variable count
-        VarCount
-        % Sample count
-        SampleCount
-        % Logical flag to indicate regression problem
-        IsRegression
+
+    properties (Dependent)
+        AlgorithmType
+        DefaultK
+        Emax
+        IsClassifier
     end
-    
+
     methods
         function this = KNearest(varargin)
             %KNEAREST  K-Nearest Neighbors constructor
@@ -100,7 +96,7 @@ classdef KNearest < handle
             KNearest_(this.id, 'load', filename);
         end
         
-        function status = train(this, trainData, responses, varargin)
+        function status = train(this, samples, responses, varargin)
             %TRAIN  Trains the model
             %
             %    classifier.train(trainData, responses)
@@ -128,11 +124,10 @@ classdef KNearest < handle
             %
             % See also cv.KNearest
             %
-            status = KNearest_(this.id, 'train', trainData,...
-                responses, varargin{:});
+            status = KNearest_(this.id, 'train_', samples, responses, varargin{:});
         end
         
-        function [results,neiResp,dists] = find_nearest(this, samples, varargin)
+        function [results,neiResp,dist,f] = findNearest(this, samples, k)
             %FIND_NEAREST  Finds the neighbors and predicts responses for input vectors
             %
             %    results = classifier.find_nearest(samples)
@@ -170,41 +165,51 @@ classdef KNearest < handle
             %
             % See also cv.KNearest
             %
-            [results,neiResp,dists] = KNearest_(this.id, 'find_nearest', samples, varargin{:});
+            [results,neiResp,dist,f] = KNearest_(this.id, 'findNearest', samples, k);
         end
         
-        function [results,neiResp,dists] = predict(this, varargin)
+        function [results,f] = predict(this, samples, varargin)
             %PREDICT  Predicts the response for a sample
             %
             %    results = classifier.predict(samples)
             %    results = classifier.predict(samples, 'OptionName', optionValue, ...)
             %
-            % The method is an alias for find_nearest
+            % The method is an alias for findNearest
             %
-            % See also cv.KNearest.find_nearest
+            % See also cv.KNearest.findNearest
             %
-            [results,neiResp,dists] = this.find_nearest(varargin{:});
-        end
-        
-        function value = get.MaxK(this)
-            %MAXK
-            value = KNearest_(this.id, 'get_max_k');
-        end
-        
-        function value = get.VarCount(this)
-            %VARCOUNT
-            value = KNearest_(this.id, 'get_var_count');
-        end
-        
-        function value = get.SampleCount(this)
-            %SAMPLECOUNT
-            value = KNearest_(this.id, 'get_sample_count');
-        end
-        
-        function value = get.IsRegression(this)
-            %ISREGRESSION
-            value = KNearest_(this.id, 'is_regression');
+            [results,f] = KNearest_(this.id, 'predict', samples, varargin{:});
         end
     end
-    
+
+    methods
+        function value = get.AlgorithmType(this)
+            value = KNearest_(this.id, 'get', 'AlgorithmType');
+        end
+        function set.AlgorithmType(this, value)
+            KNearest_(this.id, 'set', 'AlgorithmType', value);
+        end
+
+        function value = get.DefaultK(this)
+            value = KNearest_(this.id, 'get', 'DefaultK');
+        end
+        function set.DefaultK(this, value)
+            KNearest_(this.id, 'set', 'DefaultK', value);
+        end
+
+        function value = get.Emax(this)
+            value = KNearest_(this.id, 'get', 'Emax');
+        end
+        function set.Emax(this, value)
+            KNearest_(this.id, 'set', 'Emax', value);
+        end
+
+        function value = get.IsClassifier(this)
+            value = KNearest_(this.id, 'get', 'IsClassifier');
+        end
+        function set.IsClassifier(this, value)
+            KNearest_(this.id, 'set', 'IsClassifier', value);
+        end
+    end
+
 end
