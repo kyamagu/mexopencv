@@ -52,7 +52,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             iterations = rhs[i+1].toInt();
         else if (key=="BorderType")
             borderType = BorderType[rhs[i+1].toString()];
-        else if (key=="BorderType")
+        else if (key=="BorderValue")
             borderValue = rhs[i+1].toScalar();
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
