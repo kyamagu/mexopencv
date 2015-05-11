@@ -8,13 +8,14 @@
 #include "opencv2/ml/ml.hpp"
 using namespace std;
 using namespace cv;
+using namespace cv::ml;
 
 // Persistent objects
-
+namespace {
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,EM> obj_;
+map<int,Ptr<EM> > obj_;
 
 /// CovMatType map for option processing
 const ConstMap<string, int> CovMatType = ConstMap<string, int>
@@ -27,6 +28,7 @@ const ConstMap<int, string> CovMatTypeInv = ConstMap<int, string>
     (EM::COV_MAT_SPHERICAL, "Spherical")
     (EM::COV_MAT_DIAGONAL,  "Diagonal")
     (EM::COV_MAT_GENERIC,   "Generic");
+}
 
 // convenience macro to return results
 #define assign_lhs(ll, label, prob)  do { \
@@ -53,50 +55,17 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
-    // Determine argument format between constructor or (id,method,...)
-    int id = 0;
-    string method;
-    if (nrhs > 1 && rhs[0].isNumeric() && rhs[1].isChar()) {
-        id = rhs[0].toInt();
-        method = rhs[1].toString();
-    } else {
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
-    }
+    int id = rhs[0].toInt();
+    string method(rhs[1].toString());
 
     // Big operation switch
     if (method == "new") {
-        if (nrhs > 3  && (nrhs % 2)==0) {
-
-            int nclusters = EM::DEFAULT_NCLUSTERS;
-            int covMatType = EM::COV_MAT_DIAGONAL;
-            int maxIter = EM::DEFAULT_MAX_ITERS;
-            double eps = FLT_EPSILON;
-
-            for(int i = 2; i < nrhs; i += 2) {
-                string key(rhs[i].toString());
-                if (key == "Nclusters") {
-                    nclusters = rhs[i + 1].toInt();
-                } else if (key == "CovMatType") {
-                    covMatType = CovMatType[rhs[i + 1].toString()];
-                } else if (key == "MaxIters") {
-                    maxIter = rhs[i + 1].toInt();
-                } else if (key == "Epsilon") {
-                    eps = rhs[i + 1].toDouble();
-                }
-            }
-
-            obj_[++last_id] = EM(nclusters, covMatType, TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, maxIter, eps));
-        } else if (nrhs == 2)
-            obj_[++last_id] = EM();
-        else 
-            mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
-        
+        obj_[++last_id] = EM::create();
         plhs[0] = MxArray(last_id);
         return;
     }
 
-    EM& obj = obj_[id];
+    Ptr<EM> obj = obj_[id];
     if (method == "delete") {
         if (nrhs != 2 || nlhs != 0)
             mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
@@ -108,7 +77,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat log_likelihoods;
         Mat labels;
         Mat probs;
-        obj.train(samples, log_likelihoods, labels, probs);
+        obj->trainEM(samples, log_likelihoods, labels, probs);
         assign_lhs(log_likelihoods, labels, probs);
     } else if (method == "trainE") {
         if (nrhs < 4 || (nrhs % 2) != 0)
@@ -116,7 +85,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat samples = rhs[2].toMat();
         Mat means0  = rhs[3].toMat();
         // transpose matrix for convenience
-        if (means0.cols == obj.get<int>("nclusters") && means0.rows == samples.cols)
+        if (means0.cols == obj->getClustersNumber() && means0.rows == samples.cols)
             means0 = means0.t();
         vector<Mat> covs0;
         Mat weights0;
@@ -132,7 +101,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat log_likelihoods;
         Mat labels;
         Mat probs;
-        obj.trainE(samples, means0, covs0, weights0, log_likelihoods, labels, probs);
+        obj->trainE(samples, means0, covs0, weights0, log_likelihoods, labels, probs);
         assign_lhs(log_likelihoods, labels, probs);
     } else if (method == "trainM") {
         if (nrhs < 4)
@@ -141,60 +110,63 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat samples = rhs[2].toMat();
         Mat probs0  = rhs[3].toMat();
         // transpose matrix for convenience
-        if (probs0.rows == obj.get<int>("nclusters") && probs0.cols == samples.rows)
+        if (probs0.rows == obj->getClustersNumber() && probs0.cols == samples.rows)
             probs0 = probs0.t();
         Mat log_likelihoods;
         Mat labels;
         Mat probs;
-        obj.trainM(samples, probs0, log_likelihoods, labels, probs);
+        obj->trainM(samples, probs0, log_likelihoods, labels, probs);
         assign_lhs(log_likelihoods, labels, probs);
-    } else if (method == "nclusters") {
+    } else if (method == "ClustersNumber") {
         if (nrhs == 3 && nlhs == 0)
-            obj.set(method, rhs[2].toInt());
+            obj->setClustersNumber(rhs[2].toInt());
         else if (nrhs == 2 && nlhs == 1)
-            plhs[0] = MxArray(obj.get<int>(method));
+            plhs[0] = MxArray(obj->getClustersNumber());
         else
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    } else if (method == "covMatType") {
+    } else if (method == "CovarianceMatrixType") {
         if (nrhs == 3 && nlhs == 0)
-            obj.set(method, CovMatType[rhs[2].toString()]);
+            obj->setCovarianceMatrixType(CovMatType[rhs[2].toString()]);
         else if (nrhs == 2 && nlhs == 1)
-            plhs[0] = MxArray(CovMatTypeInv[obj.get<int>(method)]);
+            plhs[0] = MxArray(CovMatTypeInv[obj->getCovarianceMatrixType()]);
         else
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    } else if (method == "maxIters") {
+    } else if (method == "TermCriteria") {
         if (nrhs == 3 && nlhs == 0)
-            obj.set(method, rhs[2].toInt());
+            obj->setTermCriteria(rhs[2].toTermCriteria());
         else if (nrhs == 2 && nlhs == 1)
-            plhs[0] = MxArray(obj.get<int>(method));
+            plhs[0] = MxArray(obj->getTermCriteria());
         else
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    } else if (method == "epsilon") {
-        if (nrhs == 3 && nlhs == 0)
-            obj.set(method, rhs[2].toDouble());
-        else if (nrhs == 2 && nlhs == 1)
-            plhs[0] = MxArray(obj.get<double>(method));
-        else
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    } else if (method == "weights" || method == "means") {
+    } else if (method == "Weights") {
         if (nrhs == 3 && nlhs == 0)
             mexErrMsgIdAndTxt("mexopencv:error","Attempt to set read-only property");
         else if (nrhs == 2 && nlhs == 1)
-            plhs[0] = MxArray(obj.get<Mat>(method));
+            plhs[0] = MxArray(obj->getWeights());
         else
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    } else if (method == "covs") {
+    } else if (method == "Means") {
         if (nrhs == 3 && nlhs == 0)
             mexErrMsgIdAndTxt("mexopencv:error","Attempt to set read-only property");
         else if (nrhs == 2 && nlhs == 1)
-            plhs[0] = MxArray(obj.get<vector<Mat> >(method));
+            plhs[0] = MxArray(obj->getMeans());
+        else
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    } else if (method == "Covs") {
+        if (nrhs == 3 && nlhs == 0)
+            mexErrMsgIdAndTxt("mexopencv:error","Attempt to set read-only property");
+        else if (nrhs == 2 && nlhs == 1) {
+            vector<Mat> covs;
+            obj->getCovs(covs);
+            plhs[0] = MxArray(covs);
+        }
         else
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     } else if (method == "isTrained") {
         if (nrhs == 3 && nlhs == 0)
             mexErrMsgIdAndTxt("mexopencv:error","Attempt to set read-only property");
         else if (nrhs == 2 && nlhs == 1)
-            plhs[0] = MxArray(obj.isTrained());
+            plhs[0] = MxArray(obj->isTrained());
         else
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     } else if (method == "save") {
@@ -202,7 +174,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             string filename = rhs[2].toString();
             FileStorage fs(filename, FileStorage::WRITE);
             if (fs.isOpened())
-                obj.write(fs);
+                obj->write(fs);
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
                                   "Could not open file %s for writing",
@@ -216,7 +188,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             const FileStorage fs(filename, FileStorage::READ);
             if (fs.isOpened()) {
                 const FileNode& fn = fs["StatModel.EM"];
-                obj.read(fn);
+                obj->read(fn);
             } else {
                 mexErrMsgIdAndTxt("mexopencv:error",
                                   "Could not open file %s for reading.",
@@ -230,7 +202,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of input arguments");
         Mat sample = rhs[2].toMat();
         Mat probs;
-        Vec2d result = obj.predict(sample, probs);
+        Vec2d result = obj->predict(sample, probs);
         assign_lhs(result[0], result[1], probs);
     }
 }
