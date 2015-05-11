@@ -36,8 +36,8 @@
 %        procedure. The parameter value is the maximum allowed distance
 %        between the observed and computed point projections to consider
 %        it an inlier. default 8.0.
-% * __MinInliersCount__ Number of inliers. If the algorithm at some stage
-%        finds more inliers than `minInliersCount`, it finishes. default 100.
+% * __Confidence__ The probability that the algorithm produces a useful
+%        result. default 0.99
 % * __Flags__ Method for solving a PnP problem. See cv.solvePnP.
 %
 % The function estimates an object pose given a set of object points, their

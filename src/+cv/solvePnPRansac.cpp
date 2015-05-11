@@ -41,7 +41,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     bool useExtrinsicGuess = false;
     int iterationsCount = 100;
     float reprojectionError = 8.0;
-    int minInliersCount = 100;
+    double confidence  = 0.99;
     Mat rvec, tvec;
     int flags = cv::SOLVEPNP_ITERATIVE;
     for (int i=3; i<nrhs; i+=2) {
@@ -54,8 +54,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
             iterationsCount = rhs[i+1].toInt();
         else if (key=="ReprojectionError")
             reprojectionError = rhs[i+1].toDouble();
-        else if (key=="MinInliersCount")
-            minInliersCount = rhs[i+1].toInt();
+        else if (key=="Confidence")
+            confidence = rhs[i+1].toDouble();
         else if (key=="Rvec")
             rvec = rhs[i+1].toMat(CV_64F);
         else if (key=="Tvec")
@@ -73,14 +73,14 @@ void mexFunction( int nlhs, mxArray *plhs[],
             imagePoints(rhs[1].toMat(CV_32F));
         solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs,
             rvec, tvec, useExtrinsicGuess, iterationsCount, reprojectionError,
-            minInliersCount, inliers, flags);
+            confidence, inliers, flags);
     }
     else if (rhs[0].isCell() && rhs[1].isCell()) {
         vector<Point3f> objectPoints(rhs[0].toVector<Point3f>());
         vector<Point2f> imagePoints(rhs[1].toVector<Point2f>());
         solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs,
             rvec, tvec, useExtrinsicGuess, iterationsCount, reprojectionError,
-            minInliersCount, inliers, flags);
+            confidence, inliers, flags);
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
