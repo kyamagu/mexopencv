@@ -28,22 +28,24 @@ void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
     // Check the number of arguments
-    if (nrhs<3 || (nrhs>3 && ((nrhs%2)!=0)) || nlhs>2)
+    if (nrhs<3 || (nrhs%2)!=1 || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
     Mat cameraMatrix(rhs[2].toMat(CV_32F));
-    Mat distCoeffs((nrhs>3) ? rhs[3].toMat(CV_32F) : Mat());
     
     // Option processing
+    Mat distCoeffs;
     Mat rvec, tvec;
-    bool useExtrinsicGuess=false;
+    bool useExtrinsicGuess = false;
     int flags = cv::SOLVEPNP_ITERATIVE;
-    for (int i=4; i<nrhs; i+=2) {
+    for (int i=3; i<nrhs; i+=2) {
         string key = rhs[i].toString();
-        if (key=="UseExtrinsicGuess")
+        if (key=="DistCoeffs")
+            distCoeffs = rhs[i+1].toMat(CV_32F);
+        else if (key=="UseExtrinsicGuess")
             useExtrinsicGuess = rhs[i+1].toBool();
         else if (key=="Rvec")
             rvec = rhs[i+1].toMat(CV_64F);

@@ -1,8 +1,7 @@
 %SOLVEPNP  Finds an object pose from 3D-2D point correspondences
 %
 %    [rvec, tvec] = cv.solvePnP(objectPoints, imagePoints, cameraMatrix)
-%    [rvec, tvec] = cv.solvePnP(objectPoints, imagePoints, cameraMatrix, distCoeffs)
-%    [...] = cv.solvePnP(..., distCoeffs, 'OptionName', optionValue, ...)
+%    [...] = cv.solvePnP(..., 'OptionName', optionValue, ...)
 %
 % ## Input
 % * __objectPoints__ Array of object points in the object coordinate space,
@@ -12,9 +11,6 @@
 %        2xN/Nx2 array, where N is the number of points, or cell array of
 %        2-element vectors can be also passed here.
 % * __cameraMatrix__ Input camera matrix `A = [fx,0,cx; 0,fy,cy; 0,0,1]`.
-% * __distCoeffs__ Input vector of distortion coefficients [k1,k2,p1,p2,k3,
-%        k4,k5,k6] of 4, 5, or 8 elements. If the vector is empty, the
-%        zero distortion coefficients are assumed.
 %
 % ## Output
 % * __rvec__ Output rotation vector (see cv.Rodrigues) that, together with
@@ -23,6 +19,9 @@
 % * __tvec__ Output translation vector.
 %
 % ## Options
+% * __DistCoeffs__ Input vector of distortion coefficients [k1,k2,p1,p2,k3,
+%        k4,k5,k6] of 4, 5, or 8 elements. If the vector is empty, the
+%        zero distortion coefficients are assumed.
 % * __Rvec__ Initial `rvec`. default empty.
 % * __Tvec__ Initial `tvec`. default empty.
 % * __UseExtrinsicGuess__ If true, the function uses the provided `rvec`

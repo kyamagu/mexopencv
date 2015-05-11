@@ -9,7 +9,8 @@ classdef TestSolvePnP
             imgPoints = rand(10,2);
             camMatrix = eye(3);
             distCoeffs = zeros(5,1);
-            [rvec,tvec] = cv.solvePnP(objPoints, imgPoints, camMatrix, distCoeffs);
+            [rvec,tvec] = cv.solvePnP(objPoints, imgPoints, camMatrix, ...
+                'DistCoeffs',distCoeffs);
         end
 
         function test_error_1
