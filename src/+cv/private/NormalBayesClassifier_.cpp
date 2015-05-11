@@ -139,7 +139,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
         }
         Mat samples(rhs[2].toMat(CV_32F));
-        Mat responses(rhs[3].toMat(rhs[3].isInt32() ? CV_32S : CV_32F));
+        Mat responses(rhs[3].toMat(CV_32S));
         bool b = obj->train(samples, layout, responses);
         plhs[0] = MxArray(b);
     }
@@ -185,7 +185,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
         }
         Mat samples(rhs[2].toMat(CV_32F));
-        Mat responses(rhs[3].toMat(rhs[3].isInt32() ? CV_32S : CV_32F));
+        Mat responses(rhs[3].toMat(CV_32S));
         Ptr<TrainData> trainData = TrainData::create(samples, layout, responses,
             varIdx, sampleIdx, sampleWeights, varType);
         bool b = obj->train(trainData, flags);
