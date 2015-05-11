@@ -233,6 +233,40 @@ void mexFunction( int nlhs, mxArray *plhs[],
             plhs[1] = MxArray(resp);
     }
     else if (method == "predict") {
+        if (nrhs<3 || (nrhs%2)==0 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        int flags = 0;
+        for (int i=3; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key=="Flags")
+                flags = rhs[i+1].toInt();
+            else if (key=="UpdateModel")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::UPDATE_MODEL);
+            else if (key=="RawOuput")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::RAW_OUTPUT);
+            else if (key=="CompressedInput")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::COMPRESSED_INPUT);
+            else if (key=="PreprocessedInput")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::PREPROCESSED_INPUT);
+            else
+                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+        }
+        Mat samples(rhs[2].toMat(CV_32F));
+        ///*
+        // HACK: we must do this one sample at-a-time!
+        Mat results(samples.rows, 1, CV_32S);
+        for (size_t i=0; i<samples.rows; ++i)
+            obj->predict(samples.row(i), results.row(i), flags);
+        //*/
+        /*
+        Mat results;
+        float f = obj->predict(samples, results, flags);
+        if (nlhs>1)
+            plhs[1] = MxArray(f);
+        */
+        plhs[0] = MxArray(results);
+    }
+    else if (method == "predictProb") {
         if (nrhs<3 || (nrhs%2)==0 || nlhs>2)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         int flags = 0;
@@ -251,38 +285,31 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else
                 mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
         }
-        Mat samples(rhs[2].toMat(CV_32F)), results;
-        float f = obj->predict(samples, results, flags);
-        plhs[0] = MxArray(results);
-        if (nlhs>1)
-            plhs[1] = MxArray(f);
-    }
-    else if (method == "predictProb") {
-        if (nrhs<3 || (nrhs%2)==0 || nlhs>3)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        int flags = 0;
-        for (int i=3; i<nrhs; i+=2) {
-            string key(rhs[i].toString());
-            if (key=="Flags")
-                flags = rhs[i+1].toInt();
-            else if (key=="UpdateModel")
-                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::UPDATE_MODEL);
-            else if (key=="RawOuput")
-                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::RAW_OUTPUT);
-            else if (key=="CompressedInput")
-                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::COMPRESSED_INPUT);
-            else if (key=="PreprocessedInput")
-                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::PREPROCESSED_INPUT);
-            else
-                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+        Mat inputs(rhs[2].toMat(CV_32F));
+        ///*
+        // HACK: we must do this one sample at-a-time!
+        // first we need to determine the number of classes
+        int nclasses = 1;
+        if (!inputs.empty()) {
+            Mat tmp;
+            obj->predictProb(inputs.row(0), noArray(), tmp, flags);
+            nclasses = tmp.cols;
         }
-        Mat inputs(rhs[2].toMat(CV_32F)), outputs, outputProbs;
+        // next we create output matrices and fill them
+        Mat outputs(inputs.rows, 1, CV_32S),
+            outputProbs(inputs.rows, nclasses, CV_32F);
+        for (size_t i=0; i<inputs.rows; ++i)
+            obj->predictProb(inputs.row(i), outputs.row(i), outputProbs.row(i), flags);
+        //*/
+        /*
+        Mat outputs, outputProbs;
         float f = obj->predictProb(inputs, outputs, outputProbs, flags);
+        if (nlhs>2)
+            plhs[2] = MxArray(f);
+        */
         plhs[0] = MxArray(outputs);
         if (nlhs>1)
             plhs[1] = MxArray(outputProbs);
-        if (nlhs>2)
-            plhs[2] = MxArray(f);
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");

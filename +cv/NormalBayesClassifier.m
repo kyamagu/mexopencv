@@ -104,7 +104,7 @@ classdef NormalBayesClassifier < handle
             status = NormalBayesClassifier_(this.id, 'train_', samples, responses, varargin{:});
         end
         
-        function [results,f] = predict(this, samples, varargin)
+        function results = predict(this, samples, varargin)
             %PREDICT  Predicts the response for a sample
             %
             %    results = classifier.predict(samples)
@@ -115,12 +115,12 @@ classdef NormalBayesClassifier < handle
             %
             % See also cv.NormalBayesClassifier
             %
-            [results,f] = NormalBayesClassifier_(this.id, 'predict', samples, varargin{:});
+            results = NormalBayesClassifier_(this.id, 'predict', samples, varargin{:});
         end
 
-        function [outputs,outputProbs,f] = predictProb(this, inputs, varargin)
+        function [outputs,outputProbs] = predictProb(this, inputs, varargin)
             %PREDICTPROB
-            [outputs,outputProbs,f] = NormalBayesClassifier_(this.id, 'predictProb', inputs, varargin{:});
+            [outputs,outputProbs] = NormalBayesClassifier_(this.id, 'predictProb', inputs, varargin{:});
         end
     end
     
