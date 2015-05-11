@@ -28,26 +28,24 @@ void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
     // Check the number of arguments
-    if (nrhs<3 || (nrhs%2)!=1 || nlhs>3)
+    if (nrhs<3 || (nrhs%2)!=1 || nlhs>4)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
-    Mat cameraMatrix(rhs[2].toMat(CV_32F));
-    
     // Option processing
-    Mat distCoeffs;
+    Mat distCoeffs(4, 1, CV_64F);
+    Mat rvec(3, 1, CV_64F), tvec(3, 1, CV_64F);
     bool useExtrinsicGuess = false;
     int iterationsCount = 100;
-    float reprojectionError = 8.0;
+    float reprojectionError = 8.0f;
     double confidence  = 0.99;
-    Mat rvec, tvec;
     int flags = cv::SOLVEPNP_ITERATIVE;
     for (int i=3; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="DistCoeffs")
-            distCoeffs = rhs[i+1].toMat(CV_32F);
+            distCoeffs = rhs[i+1].toMat(CV_64F);
         else if (key=="UseExtrinsicGuess")
             useExtrinsicGuess = rhs[i+1].toBool();
         else if (key=="IterationsCount")
@@ -56,29 +54,35 @@ void mexFunction( int nlhs, mxArray *plhs[],
             reprojectionError = rhs[i+1].toDouble();
         else if (key=="Confidence")
             confidence = rhs[i+1].toDouble();
-        else if (key=="Rvec")
+        else if (key=="Rvec") {
             rvec = rhs[i+1].toMat(CV_64F);
-        else if (key=="Tvec")
+            useExtrinsicGuess = true;
+        }
+        else if (key=="Tvec") {
             tvec = rhs[i+1].toMat(CV_64F);
+            useExtrinsicGuess = true;
+        }
         else if (key=="Flags")
             flags = PnPMethod[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Process
     Mat inliers;
+    bool success;
+    Mat cameraMatrix(rhs[2].toMat(CV_64F));
     if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
         Mat objectPoints(rhs[0].toMat(CV_32F)),
             imagePoints(rhs[1].toMat(CV_32F));
-        solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs,
+        success = solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs,
             rvec, tvec, useExtrinsicGuess, iterationsCount, reprojectionError,
             confidence, inliers, flags);
     }
     else if (rhs[0].isCell() && rhs[1].isCell()) {
         vector<Point3f> objectPoints(rhs[0].toVector<Point3f>());
         vector<Point2f> imagePoints(rhs[1].toVector<Point2f>());
-        solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs,
+        success = solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs,
             rvec, tvec, useExtrinsicGuess, iterationsCount, reprojectionError,
             confidence, inliers, flags);
     }
@@ -90,4 +94,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
         plhs[1] = MxArray(tvec);
     if (nlhs>2)
         plhs[2] = MxArray(inliers);
+    if (nlhs>3)
+        plhs[3] = MxArray(success);
 }
