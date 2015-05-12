@@ -102,10 +102,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else
                 mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
         }
-        if (loadFromString)
-            obj = Algorithm::loadFromString<KNearest>(rhs[2].toString(), objname);
-        else
-            obj = Algorithm::load<KNearest>(rhs[2].toString(), objname);
+        obj_[id] = (loadFromString ?
+            Algorithm::loadFromString<KNearest>(rhs[2].toString(), objname) :
+            Algorithm::load<KNearest>(rhs[2].toString(), objname));
     }
     else if (method == "save") {
         if (nrhs!=3 || nlhs!=0)

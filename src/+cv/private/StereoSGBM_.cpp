@@ -121,25 +121,19 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
-        string s(rhs[2].toString());
-        Ptr<StereoSGBM> obj2;
         /*
-        if (loadFromString)
-            obj2 = Algorithm::loadFromString<StereoSGBM>(s, objname);
-        else
-            obj2 = Algorithm::load<StereoSGBM>(s, objname);
+        obj_[id] = (loadFromString ?
+            Algorithm::loadFromString<StereoSGBM>(rhs[2].toString(), objname) :
+            Algorithm::load<StereoSGBM>(rhs[2].toString(), objname));
         */
         ///*
         // HACK: workaround because StereoSGBM::create() doesnt accept zero arguments
-        FileStorage fs(s, FileStorage::READ + (loadFromString ? FileStorage::MEMORY : 0));
-        FileNode fn = objname.empty() ? fs.getFirstTopLevelNode() : fs[objname];
-        obj2 = StereoSGBM::create(0, 64, 7);
-        obj2->read(fn);
+        FileStorage fs(rhs[2].toString(), FileStorage::READ +
+            (loadFromString ? FileStorage::MEMORY : 0));
+        obj->read(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
+        if (obj.empty())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to load algorithm");
         //*/
-        if (obj2.empty())
-            mexErrMsgIdAndTxt("mexopencv:error","Failed to load algorithm");
-        else
-            obj = obj2;
     }
     else if (method == "empty") {
         if (nrhs!=2 || nlhs>1)

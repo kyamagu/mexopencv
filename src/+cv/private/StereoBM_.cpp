@@ -92,16 +92,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
-        string s(rhs[2].toString());
-        Ptr<StereoBM> obj2;
-        if (loadFromString)
-            obj2 = Algorithm::loadFromString<StereoBM>(s, objname);
-        else
-            obj2 = Algorithm::load<StereoBM>(s, objname);
-        if (obj2.empty())
-            mexErrMsgIdAndTxt("mexopencv:error","Failed to load algorithm");
-        else
-            obj = obj2;
+        obj_[id] = (loadFromString ?
+            Algorithm::loadFromString<StereoBM>(rhs[2].toString(), objname) :
+            Algorithm::load<StereoBM>(rhs[2].toString(), objname));
     }
     else if (method == "empty") {
         if (nrhs!=2 || nlhs>1)

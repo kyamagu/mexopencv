@@ -89,25 +89,19 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
-        string s(rhs[2].toString());
-        Ptr<BackgroundSubtractorMOG2> obj2;
         /*
-        if (loadFromString)
-            obj2 = Algorithm::loadFromString<BackgroundSubtractorMOG2>(s, objname);
-        else
-            obj2 = Algorithm::load<BackgroundSubtractorMOG2>(s, objname);
+        obj_[id] = (loadFromString ?
+            Algorithm::loadFromString<BackgroundSubtractorMOG2>(rhs[2].toString(), objname) :
+            Algorithm::load<BackgroundSubtractorMOG2>(rhs[2].toString(), objname));
         */
         ///*
         // HACK: workaround for missing BackgroundSubtractorMOG2::create()
-        FileStorage fs(s, FileStorage::READ + (loadFromString ? FileStorage::MEMORY : 0));
-        FileNode fn = objname.empty() ? fs.getFirstTopLevelNode() : fs[objname];
-        obj2 = createBackgroundSubtractorMOG2();
-        obj2->read(fn);
+        FileStorage fs(rhs[2].toString(), FileStorage::READ +
+            (loadFromString ? FileStorage::MEMORY : 0));
+        obj->read(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
+        if (obj.empty())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to load algorithm");
         //*/
-        if (obj2.empty())
-            mexErrMsgIdAndTxt("mexopencv:error","Failed to load algorithm");
-        else
-            obj = obj2;
     }
     else if (method == "empty") {
         if (nrhs!=2 || nlhs>1)
