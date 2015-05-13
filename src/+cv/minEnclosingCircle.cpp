@@ -25,7 +25,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     Point2f center;
-    float radius;
+    float radius = 0;
     if (rhs[0].isNumeric()) {
         Mat points(rhs[0].toMat(CV_32F));
         minEnclosingCircle(points,center,radius);

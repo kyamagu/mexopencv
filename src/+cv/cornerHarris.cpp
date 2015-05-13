@@ -26,9 +26,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
     // Option processing
-    int blockSize=5;
-    int apertureSize=3;
-    double k;
+    int blockSize = 5;
+    int apertureSize = 3;
+    double k = 0.04;
     int borderType = cv::BORDER_DEFAULT;
     for (int i=1; i<nrhs; i+=2) {
         string key = rhs[i].toString();

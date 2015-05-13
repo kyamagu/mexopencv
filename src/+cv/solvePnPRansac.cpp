@@ -70,7 +70,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Process
     Mat inliers;
-    bool success;
+    bool success = false;
     Mat cameraMatrix(rhs[2].toMat(CV_64F));
     if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
         Mat objectPoints(rhs[0].toMat(CV_32F)),
