@@ -17,10 +17,23 @@ classdef GBTrees < handle
         % Object ID
         id
     end
-    
-    properties (SetAccess = private, Dependent)
+
+    properties (Dependent)
+        CVFolds
+        MaxCategories
+        MaxDepth
+        MinSampleCount
+        Priors
+        RegressionAccuracy
+        TruncatePrunedTree
+        Use1SERule
+        UseSurrogates
+        WeakCount
+        LossFunctionType
+        SubsamplePortion
+        Shrinkage
     end
-    
+
     methods
         function this = GBTrees(varargin)
             %GBTREES  GBTrees classifier
@@ -32,7 +45,7 @@ classdef GBTrees < handle
             %
             % See also cv.GBTrees cv.GBTrees.train
             %
-            this.id = GBTrees_();
+            this.id = GBTrees_(0, 'new');
             if nargin>0, this.train(varargin{:}); end
         end
         
@@ -81,7 +94,7 @@ classdef GBTrees < handle
             GBTrees_(this.id, 'load', filename);
         end
         
-        function status = train(this, trainData, responses, varargin)
+        function status = train(this, samples, responses, varargin)
             %TRAIN  Trains a Gradient boosted tree model
             %
             %    classifier.train(trainData, responses)
@@ -127,10 +140,10 @@ classdef GBTrees < handle
             %
             % See also cv.GBTrees cv.GBTrees.predict
             %
-            status = GBTrees_(this.id, 'train', trainData, responses, varargin{:});
+            status = GBTrees_(this.id, 'train_', samples, responses, varargin{:});
         end
         
-        function results = predict(this, samples, varargin)
+        function [results,f] = predict(this, samples, varargin)
             %PREDICT  Predicts a response for an input sample
             %
             %    results = classifier.predict(samples)
@@ -170,8 +183,101 @@ classdef GBTrees < handle
             %
             % See also cv.GBTrees cv.GBTrees.train
             %
-            results = GBTrees_(this.id, 'predict', samples, varargin{:});
+            [results,f] = GBTrees_(this.id, 'predict', samples, varargin{:});
         end
     end
-    
+
+    methods
+        function value = get.CVFolds(this)
+            value = GBTrees_(this.id, 'get', 'CVFolds');
+        end
+        function set.CVFolds(this, value)
+            GBTrees_(this.id, 'set', 'CVFolds', value);
+        end
+
+        function value = get.MaxCategories(this)
+            value = GBTrees_(this.id, 'get', 'MaxCategories');
+        end
+        function set.MaxCategories(this, value)
+            GBTrees_(this.id, 'set', 'MaxCategories', value);
+        end
+
+        function value = get.MaxDepth(this)
+            value = GBTrees_(this.id, 'get', 'MaxDepth');
+        end
+        function set.MaxDepth(this, value)
+            GBTrees_(this.id, 'set', 'MaxDepth', value);
+        end
+
+        function value = get.MinSampleCount(this)
+            value = GBTrees_(this.id, 'get', 'MinSampleCount');
+        end
+        function set.MinSampleCount(this, value)
+            GBTrees_(this.id, 'set', 'MinSampleCount', value);
+        end
+
+        function value = get.Priors(this)
+            value = GBTrees_(this.id, 'get', 'Priors');
+        end
+        function set.Priors(this, value)
+            GBTrees_(this.id, 'set', 'Priors', value);
+        end
+
+        function value = get.RegressionAccuracy(this)
+            value = GBTrees_(this.id, 'get', 'RegressionAccuracy');
+        end
+        function set.RegressionAccuracy(this, value)
+            GBTrees_(this.id, 'set', 'RegressionAccuracy', value);
+        end
+
+        function value = get.TruncatePrunedTree(this)
+            value = GBTrees_(this.id, 'get', 'TruncatePrunedTree');
+        end
+        function set.TruncatePrunedTree(this, value)
+            GBTrees_(this.id, 'set', 'TruncatePrunedTree', value);
+        end
+
+        function value = get.Use1SERule(this)
+            value = GBTrees_(this.id, 'get', 'Use1SERule');
+        end
+        function set.Use1SERule(this, value)
+            GBTrees_(this.id, 'set', 'Use1SERule', value);
+        end
+
+        function value = get.UseSurrogates(this)
+            value = GBTrees_(this.id, 'get', 'UseSurrogates');
+        end
+        function set.UseSurrogates(this, value)
+            GBTrees_(this.id, 'set', 'UseSurrogates', value);
+        end
+
+        function value = get.WeakCount(this)
+            value = GBTrees_(this.id, 'get', 'WeakCount');
+        end
+        function set.WeakCount(this, value)
+            GBTrees_(this.id, 'set', 'WeakCount', value);
+        end
+
+        function value = get.LossFunctionType(this)
+            value = GBTrees_(this.id, 'get', 'LossFunctionType');
+        end
+        function set.LossFunctionType(this, value)
+            GBTrees_(this.id, 'set', 'LossFunctionType', value);
+        end
+
+        function value = get.SubsamplePortion(this)
+            value = GBTrees_(this.id, 'get', 'SubsamplePortion');
+        end
+        function set.SubsamplePortion(this, value)
+            GBTrees_(this.id, 'set', 'SubsamplePortion', value);
+        end
+
+        function value = get.Shrinkage(this)
+            value = GBTrees_(this.id, 'get', 'Shrinkage');
+        end
+        function set.Shrinkage(this, value)
+            GBTrees_(this.id, 'set', 'Shrinkage', value);
+        end
+    end
+
 end

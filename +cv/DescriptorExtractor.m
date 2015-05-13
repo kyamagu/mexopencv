@@ -67,7 +67,7 @@ classdef DescriptorExtractor < handle
             %
             % See also cv.DescriptorExtractor cv.DescriptorExtractor.write
             %
-            if nargin < 1, type = 'SIFT'; end
+            if nargin < 1, type = 'ORB'; end
             if ~ischar(type)
                 error('DescriptorExtractor:error','Invalid type');
             end

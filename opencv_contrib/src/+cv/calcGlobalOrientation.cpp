@@ -1,12 +1,14 @@
 /**
- * @file updateMotionHistory.cpp
- * @brief mex interface for updateMotionHistory
+ * @file calcGlobalOrientation.cpp
+ * @brief mex interface for calcGlobalOrientation
  * @author Kota Yamaguchi
  * @date 2012
  */
 #include "mexopencv.hpp"
+#include "opencv2/optflow.hpp"
 using namespace std;
 using namespace cv;
+using namespace cv::motempl;
 
 /**
  * Main entry called from Matlab
@@ -19,15 +21,18 @@ void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
     // Check the number of arguments
-    if (nrhs<4 || nlhs>1)
+    if (nrhs<5 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
     // Process
-    Mat silhouette(rhs[0].toMat(CV_8U)), mhi(rhs[1].toMat(CV_32F));
-    double timestamp = rhs[2].toDouble(), duration = rhs[3].toDouble();
-    updateMotionHistory(silhouette,mhi,timestamp,duration);
-    plhs[0] = MxArray(mhi);
+    Mat orientation(rhs[0].toMat());
+    Mat mask(rhs[1].toMat());
+    Mat mhi(rhs[2].toMat(CV_32F));
+    double timestamp = rhs[3].toDouble();
+    double duration = rhs[4].toDouble();
+    double d = calcGlobalOrientation(orientation,mask,mhi,timestamp,duration);
+    plhs[0] = MxArray(d);
 }

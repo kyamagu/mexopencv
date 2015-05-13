@@ -11,8 +11,8 @@ using namespace cv;
 /** Adaptive thresholding type map for option processing
  */
 const ConstMap<std::string,int> AdaptiveMethod = ConstMap<std::string,int>
-    ("Mean",    cv::ADAPTIVE_THRESH_MEAN_C)
-    ("Gaussian",cv::ADAPTIVE_THRESH_GAUSSIAN_C);
+    ("Mean",     cv::ADAPTIVE_THRESH_MEAN_C)
+    ("Gaussian", cv::ADAPTIVE_THRESH_GAUSSIAN_C);
 
 /**
  * Main entry called from Matlab
@@ -34,8 +34,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
     // Option processing
-    int adaptiveMethod = ADAPTIVE_THRESH_MEAN_C;
-    int thresholdType = THRESH_BINARY;
+    int adaptiveMethod = cv::ADAPTIVE_THRESH_MEAN_C;
+    int thresholdType = cv::THRESH_BINARY;
     int blockSize = 3;
     double C = 5;
     for (int i=2; i<nrhs; i+=2) {
@@ -44,7 +44,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             adaptiveMethod = AdaptiveMethod[rhs[i+1].toString()];
         else if (key=="ThresholdType") {
             thresholdType = ThreshType[rhs[i+1].toString()];
-            if (!(thresholdType==THRESH_BINARY||thresholdType==THRESH_BINARY_INV))
+            if (!(thresholdType==cv::THRESH_BINARY || thresholdType==cv::THRESH_BINARY_INV))
                 mexErrMsgIdAndTxt("mexopencv:error","Invalid threshold type");
         }
         else if (key=="BlockSize") {

@@ -16,9 +16,8 @@ namespace {
  */
 bool isa(const FileNode& _node, const string& _type_name)
 {
-    const CvFileNode* node = reinterpret_cast<const CvFileNode*>(*_node);
-    if (node->info && node->info->type_name)
-        return string(node->info->type_name)==_type_name;
+    if (_node.node->info && _node.node->info->type_name)
+        return string(_node.node->info->type_name) == _type_name;
     return false;
 }
 

@@ -1,86 +1,96 @@
 /**
  * @file Boost_.cpp
  * @brief mex interface for Boost
- * @author Kota Yamaguchi
- * @date 2012
+ * @author Kota Yamaguchi, Amro
+ * @date 2012, 2015
  */
 #include "mexopencv.hpp"
 using namespace std;
 using namespace cv;
+using namespace cv::ml;
 
 // Persistent objects
 namespace {
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,CvBoost> obj_;
+map<int,Ptr<Boost> > obj_;
+
+/// set or clear a bit in flag depending on bool value
+/* (uses non-standard MSVC directive to silence while(0) C4127 warning!) */
+#define UPDATE_FLAG(NUM, TF, BIT)       \
+    do {                                \
+        if ((TF)) { (NUM) |=  (BIT); }  \
+        else      { (NUM) &= ~(BIT); }  \
+__pragma(warning(suppress:4127))        \
+    } while(0)
+
+/// Option values for SampleTypes
+const ConstMap<std::string, int> SampleTypesMap = ConstMap<std::string, int>
+    ("Row", cv::ml::ROW_SAMPLE)   //!< each training sample is a row of samples
+    ("Col", cv::ml::COL_SAMPLE);  //!< each training sample occupies a column of samples
+
+/// Option values for TrainData VariableTypes
+const ConstMap<std::string, int> VariableTypeMap = ConstMap<std::string, int>
+    ("Numerical",   cv::ml::VAR_NUMERICAL)     //!< same as VAR_ORDERED
+    ("Ordered",     cv::ml::VAR_ORDERED)       //!< ordered variables
+    ("Categorical", cv::ml::VAR_CATEGORICAL)   //!< categorical variables
+    ("N",           cv::ml::VAR_NUMERICAL)     //!< shorthand for (N)umerical
+    ("O",           cv::ml::VAR_ORDERED)       //!< shorthand for (O)rdered
+    ("C",           cv::ml::VAR_CATEGORICAL);  //!< shorthand for (C)ategorical
 
 /// Option values for Boost types
 const ConstMap<std::string,int> BoostType = ConstMap<std::string,int>
-    ("Discrete", CvBoost::DISCRETE)
-    ("Real",     CvBoost::REAL)
-    ("Logit",    CvBoost::LOGIT)
-    ("Gentle",   CvBoost::GENTLE);
+    ("Discrete", Boost::DISCRETE)
+    ("Real",     Boost::REAL)
+    ("Logit",    Boost::LOGIT)
+    ("Gentle",   Boost::GENTLE);
 
 /// Option values for Inverse boost types
 const ConstMap<int,std::string> InvBoostType = ConstMap<int,std::string>
-    (CvBoost::DISCRETE, "Discrete")
-    (CvBoost::REAL,     "Real")
-    (CvBoost::LOGIT,    "Logit")
-    (CvBoost::GENTLE,   "Gentle");
+    (Boost::DISCRETE, "Discrete")
+    (Boost::REAL,     "Real")
+    (Boost::LOGIT,    "Logit")
+    (Boost::GENTLE,   "Gentle");
 
-/** Obtain CvBoostParams object from input arguments
- * @param it iterator at the beginning of the argument vector
- * @param end iterator at the end of the argument vector
- * @return CvBoostParams objects
+/** Convert tree nodes to struct array
+ * @param nodes vector of tree nodes
+ * @return struct-array MxArray object
  */
-CvBoostParams getParams(vector<MxArray>::iterator it,
-                        vector<MxArray>::iterator end)
+MxArray VecDTreesNodeToMxArray(const std::vector<DTrees::Node>& nodes)
 {
-    CvBoostParams params;
-    for (;it<end;it+=2) {
-        string key((*it).toString());
-        MxArray& val = *(it+1);
-        if (key=="BoostType")
-            params.boost_type = BoostType[val.toString()];
-        else if (key=="WeakCount")
-            params.weak_count = val.toInt();
-        else if (key=="WeightTrimRate")
-            params.weight_trim_rate = val.toDouble();
-        else if (key=="MaxDepth")
-            params.max_depth = val.toInt();
-        else if (key=="UseSurrogates")
-            params.use_surrogates = val.toBool();
-        //else
-        //    mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+    const char* fields[] = {"classIdx", "defaultDir", "left", "parent", "right", "split", "value"};
+    MxArray s = MxArray::Struct(fields, 7, 1, nodes.size());
+    for (size_t i=0; i<nodes.size(); ++i) {
+        s.set("classIdx", nodes[i].classIdx, i);
+        s.set("defaultDir", nodes[i].defaultDir, i);
+        s.set("left", nodes[i].left, i);
+        s.set("parent", nodes[i].parent, i);
+        s.set("right", nodes[i].right, i);
+        s.set("split", nodes[i].split, i);
+        s.set("value", nodes[i].value, i);
     }
-    return params;
+    return s;
 }
 
-/** Create a new mxArray* from CvBoostParams
- * @param params CvBoostParams object
- * @return MxArray objects
+/** Convert tree splits to struct array
+ * @param nodes vector of tree splits
+ * @return struct-array MxArray object
  */
-MxArray paramsToMxArray(const CvBoostParams& params)
+MxArray VecDTreesSplitToMxArray(const std::vector<DTrees::Split>& splits)
 {
-    const char* fields[] = {"BoostType", "WeakCount", "WeightTrimRate",
-        "MaxDepth", "UseSurrogates", "MaxCategories", "MinSampleCount",
-        "CVFolds", "Use1seRule", "TruncatePrunedTree", "RegressionAccuracy"};
-    MxArray m(fields,11);
-    m.set("BoostType",InvBoostType[params.boost_type]);
-    m.set("WeakCount",params.weak_count);
-    m.set("WeightTrimRate",params.weight_trim_rate);
-    m.set("MaxDepth",params.max_depth);
-    m.set("UseSurrogates",params.use_surrogates);
-    m.set("MaxCategories",params.max_categories);
-    m.set("MinSampleCount",params.min_sample_count);
-    m.set("CVFolds",params.cv_folds);
-    m.set("Use1seRule",params.use_1se_rule);
-    m.set("TruncatePrunedTree",params.truncate_pruned_tree);
-    m.set("RegressionAccuracy",params.regression_accuracy);
-    return m;
+    const char* fields[] = {"c", "inversed", "next", "quality", "subsetOfs", "varIdx"};
+    MxArray s = MxArray::Struct(fields, 6, 1, splits.size());
+    for (size_t i=0; i<splits.size(); ++i) {
+        s.set("c", splits[i].c, i);
+        s.set("inversed", splits[i].inversed, i);
+        s.set("next", splits[i].next, i);
+        s.set("quality", splits[i].quality, i);
+        s.set("subsetOfs", splits[i].subsetOfs, i);
+        s.set("varIdx", splits[i].varIdx, i);
+    }
+    return s;
 }
-
 }
 
 /**
@@ -93,28 +103,24 @@ MxArray paramsToMxArray(const CvBoostParams& params)
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-    if (nlhs>1)
+    if (nrhs<2 || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
-    // Determine argument format between constructor or (id,method,...)
+
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    int id = 0;
-    string method;
-    if (nrhs==0) {
-        // Constructor is called. Create a new object from argument
-        obj_[++last_id] = CvBoost();
+    int id = rhs[0].toInt();
+    string method(rhs[1].toString());
+
+    // Constructor is called. Create a new object from argument
+    if (method == "new") {
+        if (nrhs!=2 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        obj_[++last_id] = Boost::create();
         plhs[0] = MxArray(last_id);
         return;
     }
-    else if (rhs[0].isNumeric() && rhs[0].numel()==1 && nrhs>1) {
-        id = rhs[0].toInt();
-        method = rhs[1].toString();
-    }
-    else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
-    
+
     // Big operation switch
-    CvBoost& obj = obj_[id];
+    Ptr<Boost> obj = obj_[id];
     if (method == "delete") {
         if (nrhs!=2 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
@@ -123,89 +129,279 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "clear") {
         if (nrhs!=2 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        obj.clear();
+        obj->clear();
     }
     else if (method == "load") {
-        if (nrhs!=3 || nlhs!=0)
+        if (nrhs<3 || (nrhs%2)==0 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        obj.load(rhs[2].toString().c_str());
+        string objname;
+        bool loadFromString = false;
+        for (int i=3; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key=="ObjName")
+                objname = rhs[i+1].toString();
+            else if (key=="FromString")
+                loadFromString = rhs[i+1].toBool();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+        }
+        obj_[id] = (loadFromString ?
+            Algorithm::loadFromString<Boost>(rhs[2].toString(), objname) :
+            Algorithm::load<Boost>(rhs[2].toString(), objname));
     }
     else if (method == "save") {
         if (nrhs!=3 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        obj.save(rhs[2].toString().c_str());
+        obj->save(rhs[2].toString());
+    }
+    else if (method == "empty") {
+        if (nrhs!=2 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        plhs[0] = MxArray(obj->empty());
+    }
+    else if (method == "getDefaultName") {
+        if (nrhs!=2 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        plhs[0] = MxArray(obj->getDefaultName());
+    }
+    else if (method == "getVarCount") {
+        if (nrhs!=2 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        plhs[0] = MxArray(obj->getVarCount());
+    }
+    else if (method == "isClassifier") {
+        if (nrhs!=2 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        plhs[0] = MxArray(obj->isClassifier());
+    }
+    else if (method == "isTrained") {
+        if (nrhs!=2 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        plhs[0] = MxArray(obj->isTrained());
     }
     else if (method == "train") {
-        if (nrhs<4 || nlhs>1)
+        if (nrhs<4 || (nrhs%2)==1 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        Mat trainData(rhs[2].toMat(CV_32F));
-        Mat responses(rhs[3].toMat(CV_32F));
-        Mat varIdx, sampleIdx, missingMask;
-        Mat varType(1,trainData.cols+1,CV_8U,Scalar(CV_VAR_ORDERED));
-        varType.at<uchar>(0,trainData.cols) = CV_VAR_CATEGORICAL;
-        CvBoostParams params = getParams(rhs.begin()+4,rhs.end());
-        vector<float> priors;
-        bool update=false;
+        int layout = cv::ml::ROW_SAMPLE;
         for (int i=4; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="VarIdx")
-                varIdx = rhs[i+1].toMat(CV_32S);
-            else if (key=="SampleIdx")
-                sampleIdx = rhs[i+1].toMat(CV_32S);
-            else if (key=="VarType") {
-                if (rhs[i+1].isChar())
-                    varType.at<uchar>(0,trainData.cols) = 
-                        (rhs[i+1].toString()=="Categorical") ? 
-                        CV_VAR_CATEGORICAL : CV_VAR_ORDERED;
-                else if (rhs[i+1].isNumeric())
-                    varType = rhs[i+1].toMat(CV_8U);
-            }
-            else if (key=="MissingMask")
-                missingMask = rhs[i+1].toMat(CV_8U);
-            else if (key=="Priors") {
-                MxArray& m = rhs[i+1];
-                priors.reserve(m.numel());
-                for (int j=0; j<m.numel(); ++j)
-                    priors.push_back(m.at<float>(j));
-                params.priors = &priors[0];
-            }
-            else if (key=="Update")
-                update = rhs[i+1].toBool();
+            if (key=="Layout")
+                layout = SampleTypesMap[rhs[i+1].toString()];
+            else
+                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
         }
-        bool b = obj.train(trainData, CV_ROW_SAMPLE, responses, varIdx,
-            sampleIdx, varType, missingMask, params, update);
+        Mat samples(rhs[2].toMat(CV_32F));
+        Mat responses(rhs[3].toMat(rhs[3].isInt32() ? CV_32S : CV_32F));
+        bool b = obj->train(samples, layout, responses);
         plhs[0] = MxArray(b);
     }
-    else if (method == "predict") {
-        if (nrhs<3 || nlhs>1)
+    else if (method == "train_") {
+        if (nrhs<4 || (nrhs%2)==1 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        Mat samples(rhs[2].toMat(CV_32F)), missing;
-        Range slice = Range::all();
-        bool rawMode=false, returnSum=false;
+        int flags = 0;
+        int layout = cv::ml::ROW_SAMPLE;
+        Mat varIdx, sampleIdx, sampleWeights, varType;
+        for (int i=4; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key=="Flags")
+                flags = rhs[i+1].toInt();
+            else if (key=="UpdateModel")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::UPDATE_MODEL);
+            else if (key=="RawOuput")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::RAW_OUTPUT);
+            else if (key=="CompressedInput")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::COMPRESSED_INPUT);
+            else if (key=="PreprocessedInput")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::PREPROCESSED_INPUT);
+            else if (key=="PredictAuto")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), DTrees::PREDICT_AUTO);
+            else if (key=="PredictSum")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), DTrees::PREDICT_SUM);
+            else if (key=="PredictMaxVote")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), DTrees::PREDICT_MAX_VOTE);
+            else if (key=="Layout")
+                layout = SampleTypesMap[rhs[i+1].toString()];
+            else if (key=="VarIdx")
+                varIdx = rhs[i+1].toMat((rhs[i+1].isUint8() || rhs[i+1].isLogical()) ? CV_8U : CV_32S);
+            else if (key=="SampleIdx")
+                sampleIdx = rhs[i+1].toMat((rhs[i+1].isUint8() || rhs[i+1].isLogical()) ? CV_8U : CV_32S);
+            else if (key=="SampleWeights")
+                sampleWeights = rhs[i+1].toMat(CV_32F);
+            else if (key=="VarType") {
+                if (rhs[i+1].isCell()) {
+                    vector<string> vtypes(rhs[i+1].toVector<string>());
+                    varType.create(1, vtypes.size(), CV_8U);
+                    for (size_t idx = 0; idx < vtypes.size(); idx++)
+                        varType.at<uchar>(idx) = VariableTypeMap[vtypes[idx]];
+                }
+                else if (rhs[i+1].isNumeric())
+                    varType = rhs[i+1].toMat(CV_8U);
+                else
+                    mexErrMsgIdAndTxt("mexopencv:error", "Invalid VarType value");
+            }
+            else
+                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+        }
+        Mat samples(rhs[2].toMat(CV_32F));
+        Mat responses(rhs[3].toMat(rhs[3].isInt32() ? CV_32S : CV_32F));
+        Ptr<TrainData> trainData = TrainData::create(samples, layout, responses,
+            varIdx, sampleIdx, sampleWeights, varType);
+        bool b = obj->train(trainData, flags);
+        plhs[0] = MxArray(b);
+    }
+    else if (method == "calcError") {
+        if (nrhs<5 || (nrhs%2)==0 || nlhs>2)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        int layout = cv::ml::ROW_SAMPLE;
+		Mat varIdx, sampleIdx, sampleWeights, varType;
+        for (int i=5; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key=="Layout")
+                layout = SampleTypesMap[rhs[i+1].toString()];
+            else if (key=="VarIdx")
+                varIdx = rhs[i+1].toMat((rhs[i+1].isUint8() || rhs[i+1].isLogical()) ? CV_8U : CV_32S);
+            else if (key=="SampleIdx")
+                sampleIdx = rhs[i+1].toMat((rhs[i+1].isUint8() || rhs[i+1].isLogical()) ? CV_8U : CV_32S);
+            else if (key=="SampleWeights")
+                sampleWeights = rhs[i+1].toMat(CV_32F);
+            else if (key=="VarType") {
+                if (rhs[i+1].isCell()) {
+                    vector<string> vtypes(rhs[i+1].toVector<string>());
+                    varType.create(1, vtypes.size(), CV_8U);
+                    for (size_t idx = 0; idx < vtypes.size(); idx++)
+                        varType.at<uchar>(idx) = VariableTypeMap[vtypes[idx]];
+                }
+                else if (rhs[i+1].isNumeric())
+                    varType = rhs[i+1].toMat(CV_8U);
+                else
+                    mexErrMsgIdAndTxt("mexopencv:error", "Invalid VarType value");
+            }
+            else
+                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+        }
+        Mat samples(rhs[2].toMat(CV_32F));
+        Mat responses(rhs[3].toMat(rhs[3].isInt32() ? CV_32S : CV_32F));
+        bool test = rhs[4].toBool();
+        Ptr<TrainData> data = TrainData::create(samples, layout, responses,
+            varIdx, sampleIdx, sampleWeights, varType);
+        Mat resp;
+        float err = obj->calcError(data, test, resp);
+        plhs[0] = MxArray(err);
+        if (nlhs>1)
+            plhs[1] = MxArray(resp);
+    }
+    else if (method == "predict") {
+        if (nrhs<3 || (nrhs%2)==0 || nlhs>2)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        int flags = 0;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="MissingMask")
-                missing = rhs[i+1].toMat(CV_8U);
-            else if (key=="Slice")
-                slice = rhs[i+1].toRange();
-            else if (key=="RawMode")
-                rawMode = rhs[i+1].toBool();
-            else if (key=="ReturnSum")
-                returnSum = rhs[i+1].toBool();
+            if (key=="Flags")
+                flags = rhs[i+1].toInt();
+            else if (key=="UpdateModel")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::UPDATE_MODEL);
+            else if (key=="RawOuput")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::RAW_OUTPUT);
+            else if (key=="CompressedInput")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::COMPRESSED_INPUT);
+            else if (key=="PreprocessedInput")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::PREPROCESSED_INPUT);
+            else if (key=="PredictAuto")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), DTrees::PREDICT_AUTO);
+            else if (key=="PredictSum")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), DTrees::PREDICT_SUM);
+            else if (key=="PredictMaxVote")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), DTrees::PREDICT_MAX_VOTE);
+            else
+                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
         }
-        Mat results(samples.rows,1,CV_64F);
-        if (missing.empty())
-            for (int i=0; i<samples.rows; ++i)
-                results.at<double>(i,0) = obj.predict(samples.row(i),missing,slice,rawMode,returnSum);
-        else
-            for (int i=0; i<samples.rows; ++i)
-                results.at<double>(i,0) = obj.predict(samples.row(i),missing.row(i),slice,rawMode,returnSum);
+        Mat samples(rhs[2].toMat(CV_32F)), results;
+        float f = obj->predict(samples, results, flags);
         plhs[0] = MxArray(results);
+        if (nlhs>1)
+            plhs[1] = MxArray(f);
     }
-    else if (method == "get_params") {
+    else if (method == "getNodes") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        plhs[0] = paramsToMxArray(obj.get_params());
+        plhs[0] = VecDTreesNodeToMxArray(obj->getNodes());
+    }
+    else if (method == "getRoots") {
+        if (nrhs!=2 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        plhs[0] = MxArray(obj->getRoots());
+    }
+    else if (method == "getSplits") {
+        if (nrhs!=2 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        plhs[0] = VecDTreesSplitToMxArray(obj->getSplits());
+    }
+    else if (method == "getSubsets") {
+        if (nrhs!=2 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        plhs[0] = MxArray(obj->getSubsets());
+    }
+    else if (method == "get") {
+        if (nrhs!=3 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        string prop(rhs[2].toString());
+        if (prop == "CVFolds")
+            plhs[0] = MxArray(obj->getCVFolds());
+        else if (prop == "MaxCategories")
+            plhs[0] = MxArray(obj->getMaxCategories());
+        else if (prop == "MaxDepth")
+            plhs[0] = MxArray(obj->getMaxDepth());
+        else if (prop == "MinSampleCount")
+            plhs[0] = MxArray(obj->getMinSampleCount());
+        else if (prop == "Priors")
+            plhs[0] = MxArray(obj->getPriors());
+        else if (prop == "RegressionAccuracy")
+            plhs[0] = MxArray(obj->getRegressionAccuracy());
+        else if (prop == "TruncatePrunedTree")
+            plhs[0] = MxArray(obj->getTruncatePrunedTree());
+        else if (prop == "Use1SERule")
+            plhs[0] = MxArray(obj->getUse1SERule());
+        else if (prop == "UseSurrogates")
+            plhs[0] = MxArray(obj->getUseSurrogates());
+        else if (prop == "BoostType")
+            plhs[0] = MxArray(InvBoostType[obj->getBoostType()]);
+        else if (prop == "WeakCount")
+            plhs[0] = MxArray(obj->getWeakCount());
+        else if (prop == "WeightTrimRate")
+            plhs[0] = MxArray(obj->getWeightTrimRate());
+        else
+            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property %s", prop.c_str());
+    }
+    else if (method == "set") {
+        if (nrhs!=4 || nlhs!=0)
+            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        string prop(rhs[2].toString());
+        if (prop == "CVFolds")
+            obj->setCVFolds(rhs[3].toInt());
+        else if (prop == "MaxCategories")
+            obj->setMaxCategories(rhs[3].toInt());
+        else if (prop == "MaxDepth")
+            obj->setMaxDepth(rhs[3].toInt());
+        else if (prop == "MinSampleCount")
+            obj->setMinSampleCount(rhs[3].toInt());
+        else if (prop == "Priors")
+            obj->setPriors(rhs[3].toMat());
+        else if (prop == "RegressionAccuracy")
+            obj->setRegressionAccuracy(rhs[3].toDouble());
+        else if (prop == "TruncatePrunedTree")
+            obj->setTruncatePrunedTree(rhs[3].toBool());
+        else if (prop == "Use1SERule")
+            obj->setUse1SERule(rhs[3].toBool());
+        else if (prop == "UseSurrogates")
+            obj->setUseSurrogates(rhs[3].toBool());
+        else if (prop == "BoostType")
+            obj->setBoostType(BoostType[rhs[3].toString()]);
+        else if (prop == "WeakCount")
+            obj->setWeakCount(rhs[3].toInt());
+        else if (prop == "WeightTrimRate")
+            obj->setWeightTrimRate(rhs[3].toDouble());
+        else
+            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property %s", prop.c_str());
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");

@@ -50,8 +50,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
         ranges_ptr[i] = ranges[i].ptr<float>(0);
     
     // Option processing
-    bool scale=1;
-    bool uniform=false;
+    double scale = 1;
+    bool uniform = false;
     for (int i=3; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="Uniform")

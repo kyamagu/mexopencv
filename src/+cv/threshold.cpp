@@ -28,7 +28,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Option processing
     double thresh = 0.5;
     double maxVal = 1.0;
-    int thresholdType = THRESH_TRUNC;
+    int thresholdType = cv::THRESH_TRUNC;
     for (int i=2; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="MaxValue")
@@ -43,7 +43,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     if (rhs[1].isNumeric())
         thresh = rhs[1].toDouble();
     else if (rhs[1].isChar())
-        thresholdType |= THRESH_OTSU;
+        thresholdType |= cv::THRESH_OTSU;
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
 

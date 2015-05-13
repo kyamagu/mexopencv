@@ -12,12 +12,12 @@ namespace {
 /** Distance types for Distance Transform and M-estimators
  */
 const ConstMap<std::string,int> MatchMethod = ConstMap<std::string,int>
-    ("SqDiff", CV_TM_SQDIFF)
-    ("SqDiffNormed", CV_TM_SQDIFF_NORMED)
-    ("CCorr", CV_TM_CCORR)
-    ("CCorrNormed", CV_TM_CCORR_NORMED)
-    ("CCoeff", CV_TM_CCOEFF)
-    ("CCoeffNormed", CV_TM_CCOEFF_NORMED);
+    ("SqDiff",       cv::TM_SQDIFF)
+    ("SqDiffNormed", cv::TM_SQDIFF_NORMED)
+    ("CCorr",        cv::TM_CCORR)
+    ("CCorrNormed",  cv::TM_CCORR_NORMED)
+    ("CCoeff",       cv::TM_CCOEFF)
+    ("CCoeffNormed", cv::TM_CCOEFF_NORMED);
 }
 
 /**
@@ -38,7 +38,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
     // Option processing
-    int method = CV_TM_SQDIFF;
+    int method = cv::TM_SQDIFF;
     for (int i=2; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="Method") {

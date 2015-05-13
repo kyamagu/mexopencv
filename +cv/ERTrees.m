@@ -22,16 +22,22 @@ classdef ERTrees < handle
         % Object ID
         id
     end
-    
-    properties (SetAccess = private, Dependent)
-        % Mask of active variables
-        ActiveVarMask
-        % Number of trees
-        TreeCount
-        % Object parameters
-        Params
+
+    properties (Dependent)
+        CVFolds
+        MaxCategories
+        MaxDepth
+        MinSampleCount
+        Priors
+        RegressionAccuracy
+        TruncatePrunedTree
+        Use1SERule
+        UseSurrogates
+        ActiveVarCount
+        CalculateVarImportance
+        TermCriteria
     end
-    
+
     methods
         function this = ERTrees(varargin)
             %ERTREES  Random Trees classifier
@@ -43,7 +49,7 @@ classdef ERTrees < handle
             %
             % See also cv.ERTrees cv.ERTrees.train
             %
-            this.id = ERTrees_();
+            this.id = ERTrees_(0, 'new');
             if nargin>0, this.train(varargin{:}); end
         end
         
@@ -92,7 +98,7 @@ classdef ERTrees < handle
             ERTrees_(this.id, 'load', filename);
         end
         
-        function status = train(this, trainData, responses, varargin)
+        function status = train(this, samples, responses, varargin)
             %TRAIN  Trains the Extremely Random Trees model
             %
             %    classifier.train(trainData, responses)
@@ -180,10 +186,10 @@ classdef ERTrees < handle
             %
             % See also cv.ERTrees cv.ERTrees.predict cv.ERTrees.predict_prob
             %
-            status = ERTrees_(this.id, 'train', trainData, responses, varargin{:});
+            status = ERTrees_(this.id, 'train_', samples, responses, varargin{:});
         end
         
-        function results = predict(this, samples, varargin)
+        function [results,f] = predict(this, samples, varargin)
             %PREDICT  Predicts a response for an input sample
             %
             %    results = classifier.predict(samples)
@@ -209,78 +215,94 @@ classdef ERTrees < handle
             %
             % See also cv.ERTrees cv.ERTrees.train cv.ERTrees.predict_prob
             %
-            results = ERTrees_(this.id, 'predict', samples, varargin{:});
-        end
-        
-        function results = predict_prob(this, samples, varargin)
-            %PREDICT_PROB  Returns a fuzzy-predicted class label
-            %
-            %    results = classifier.predict_prob(samples)
-            %    [...] = classifier.predict_prob(..., 'OptionName', optionValue, ...)
-            %
-            % ## Input
-            % * __samples__ Input row vectors
-            %
-            % ## Output
-            % * __results__ Output labels or regression values
-            %
-            % ## Options
-            % * __MissingMask__ Missing values mask, which is a
-            %         dimentional matrix of the same size as sample having the
-            %         uint8 type. 1 corresponds to the missing value in the same
-            %         position in the sample vector. If there are no missing
-            %         values in the feature vector, an empty matrix can be
-            %         passed instead of the missing mask. default none.
-            %
-            % The function works for binary classification problems only. It
-            % returns the number between 0 and 1. This number represents
-            % probability or confidence of the sample belonging to the second
-            % class. It is calculated as the proportion of decision trees that
-            % classified the sample to the second class.
-            %
-            % See also cv.ERTrees cv.ERTrees.train cv.ERTrees.predict
-            %
-            results = ERTrees_(this.id, 'predict_prob', samples, varargin{:});
-        end
-        
-        function value = getVarImportance(this)
-            %GETVARIMPORTANCE  Returns the variable importance array
-            value = ERTrees_(this.id, 'getVarImportance');
-        end
-        
-        function value = get_proximity(this, sample1, sample2, varargin)
-            %GET_PROXIMITY  Returns the variable importance array
-            %
-            %    value = classifier.get_proximity(sample1, sample2)
-            %    [...] = classifier.get_proximity(..., 'OptionName', optionValue, ...)
-            %
-            %
-            % ## Options
-            % * __Missing1__ Missing values mask for sample1
-            % * __Missing2__ Missing values mask for sample2
-            %
-            value = ERTrees_(this.id, 'get_proximity', sample1, sample2, varargin{:});
-        end
-        
-        function value = get_train_error(this)
-            %GET_TRAIN_ERROR  Returns the training error
-            value = ERTrees_(this.id, 'get_train_error');
-        end
-        
-        function value = get.Params(this)
-            %PARAMS
-            value = ERTrees_(this.id, 'params');
-        end
-        
-        function value = get.ActiveVarMask(this)
-            %ACTIVEVARMASK
-            value = ERTrees_(this.id, 'get_active_var_mask');
-        end
-        
-        function value = get.TreeCount(this)
-            %TREECOUNT  Returns the number of trees in the constructed random forest
-            value = ERTrees_(this.id, 'get_tree_count');
+            [results,f] = ERTrees_(this.id, 'predict', samples, varargin{:});
         end
     end
-    
+
+    methods
+        function value = get.CVFolds(this)
+            value = ERTrees_(this.id, 'get', 'CVFolds');
+        end
+        function set.CVFolds(this, value)
+            ERTrees_(this.id, 'set', 'CVFolds', value);
+        end
+
+        function value = get.MaxCategories(this)
+            value = ERTrees_(this.id, 'get', 'MaxCategories');
+        end
+        function set.MaxCategories(this, value)
+            ERTrees_(this.id, 'set', 'MaxCategories', value);
+        end
+
+        function value = get.MaxDepth(this)
+            value = ERTrees_(this.id, 'get', 'MaxDepth');
+        end
+        function set.MaxDepth(this, value)
+            ERTrees_(this.id, 'set', 'MaxDepth', value);
+        end
+
+        function value = get.MinSampleCount(this)
+            value = ERTrees_(this.id, 'get', 'MinSampleCount');
+        end
+        function set.MinSampleCount(this, value)
+            ERTrees_(this.id, 'set', 'MinSampleCount', value);
+        end
+
+        function value = get.Priors(this)
+            value = ERTrees_(this.id, 'get', 'Priors');
+        end
+        function set.Priors(this, value)
+            ERTrees_(this.id, 'set', 'Priors', value);
+        end
+
+        function value = get.RegressionAccuracy(this)
+            value = ERTrees_(this.id, 'get', 'RegressionAccuracy');
+        end
+        function set.RegressionAccuracy(this, value)
+            ERTrees_(this.id, 'set', 'RegressionAccuracy', value);
+        end
+
+        function value = get.TruncatePrunedTree(this)
+            value = ERTrees_(this.id, 'get', 'TruncatePrunedTree');
+        end
+        function set.TruncatePrunedTree(this, value)
+            ERTrees_(this.id, 'set', 'TruncatePrunedTree', value);
+        end
+
+        function value = get.Use1SERule(this)
+            value = ERTrees_(this.id, 'get', 'Use1SERule');
+        end
+        function set.Use1SERule(this, value)
+            ERTrees_(this.id, 'set', 'Use1SERule', value);
+        end
+
+        function value = get.UseSurrogates(this)
+            value = ERTrees_(this.id, 'get', 'UseSurrogates');
+        end
+        function set.UseSurrogates(this, value)
+            ERTrees_(this.id, 'set', 'UseSurrogates', value);
+        end
+
+        function value = get.ActiveVarCount(this)
+            value = ERTrees_(this.id, 'get', 'ActiveVarCount');
+        end
+        function set.ActiveVarCount(this, value)
+            ERTrees_(this.id, 'set', 'ActiveVarCount', value);
+        end
+
+        function value = get.CalculateVarImportance(this)
+            value = ERTrees_(this.id, 'get', 'CalculateVarImportance');
+        end
+        function set.CalculateVarImportance(this, value)
+            ERTrees_(this.id, 'set', 'CalculateVarImportance', value);
+        end
+
+        function value = get.TermCriteria(this)
+            value = ERTrees_(this.id, 'get', 'TermCriteria');
+        end
+        function set.TermCriteria(this, value)
+            ERTrees_(this.id, 'set', 'TermCriteria', value);
+        end
+    end
+
 end

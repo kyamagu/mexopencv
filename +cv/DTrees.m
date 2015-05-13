@@ -1,5 +1,5 @@
-classdef DTree < handle
-    %DTREE  Decision Trees
+classdef DTrees < handle
+    %DTREES  Decision Trees
     %
     % The ML classes discussed in this section implement Classification and
     % Regression Tree algorithms described in [Breiman84].
@@ -14,40 +14,47 @@ classdef DTree < handle
     % assigned to each tree leaf, so the approximation function is piecewise
     % constant.
     %
-    % See also cv.DTree.DTree cv.DTree.train cv.DTree.predict
+    % See also cv.DTrees.DTrees cv.DTrees.train cv.DTrees.predict
     %
     
     properties (SetAccess = private)
         % Object ID
         id
     end
-    
-    properties (SetAccess = private, Dependent)
-        % Object parameters
-        Params
+
+    properties (Dependent)
+        CVFolds
+        MaxCategories
+        MaxDepth
+        MinSampleCount
+        Priors
+        RegressionAccuracy
+        TruncatePrunedTree
+        Use1SERule
+        UseSurrogates
     end
-    
+
     methods
-        function this = DTree(varargin)
-            %DTREE  Create a new instance of DTree
+        function this = DTrees(varargin)
+            %DTREES  Create a new instance of DTrees
             %
-            %    classifier = cv.DTree
-            %    classifier = cv.DTree(...)
+            %    classifier = cv.DTrees
+            %    classifier = cv.DTrees(...)
             %
             % The constructor takes the same parameter to the train method.
             %
-            % See also cv.DTree cv.DTree.train
+            % See also cv.DTrees cv.DTrees.train
             %
-            this.id = DTree_();
+            this.id = DTrees_(0, 'new');
             if nargin>0, this.train(varargin{:}); end
         end
         
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.DTree
+            % See also cv.DTrees
             %
-            DTree_(this.id, 'delete');
+            DTrees_(this.id, 'delete');
         end
         
         function clear(this)
@@ -62,9 +69,9 @@ classdef DTree < handle
             % train() methods of the derived classes, from the methods
             % load(), or even explicitly by the user.
             %
-            % See also cv.DTree
+            % See also cv.DTrees
             %
-            DTree_(this.id, 'clear');
+            DTrees_(this.id, 'clear');
         end
         
         function save(this, filename)
@@ -72,9 +79,9 @@ classdef DTree < handle
             %
             %    classifier.save(filename)
             %
-            % See also cv.DTree
+            % See also cv.DTrees
             %
-            DTree_(this.id, 'save', filename);
+            DTrees_(this.id, 'save', filename);
         end
         
         function load(this, filename)
@@ -82,12 +89,12 @@ classdef DTree < handle
             %
             %    classifier.load(filename)
             %
-            % See also cv.DTree
+            % See also cv.DTrees
             %
-            DTree_(this.id, 'load', filename);
+            DTrees_(this.id, 'load', filename);
         end
         
-        function status = train(this, trainData, responses, varargin)
+        function status = train(this, samples, responses, varargin)
             %TRAIN  Trains a decision tree
             %
             %    classifier.train(trainData, responses)
@@ -168,14 +175,14 @@ classdef DTree < handle
             %         equivalent to making 10 mistakes in predicting the first
             %         category. default none.
             %
-            % The method trains the DTree model.
+            % The method trains the DTrees model.
             %
-            % See also cv.DTree
+            % See also cv.DTrees
             %
-            status = DTree_(this.id, 'train', trainData, responses, varargin{:});
+            status = DTrees_(this.id, 'train_', samples, responses, varargin{:});
         end
         
-        function results = predict(this, samples, varargin)
+        function [results,f] = predict(this, samples, varargin)
             %PREDICT  Predicts the response for input samples.
             %
             %    results = classifier.predict(samples)
@@ -202,19 +209,74 @@ classdef DTree < handle
             % Input vectors (one or more) are stored as rows of the matrix
             % samples.
             %
-            % See also cv.DTree
+            % See also cv.DTrees
             %
-            results = DTree_(this.id, 'predict', samples, varargin{:});
+            [results,f] = DTrees_(this.id, 'predict', samples, varargin{:});
         end
-        
-        function value = getVarImportance(this)
-            %GETVARIMPORTANCE  Returns the variable importance array
-            value = DTree_(this.id, 'getVarImportance');
+    end
+
+    methods
+        function value = get.CVFolds(this)
+            value = DTrees_(this.id, 'get', 'CVFolds');
         end
-        
-        function value = get.Params(this)
-            %PARAMS
-            value = DTree_(this.id, 'params');
+        function set.CVFolds(this, value)
+            DTrees_(this.id, 'set', 'CVFolds', value);
+        end
+
+        function value = get.MaxCategories(this)
+            value = DTrees_(this.id, 'get', 'MaxCategories');
+        end
+        function set.MaxCategories(this, value)
+            DTrees_(this.id, 'set', 'MaxCategories', value);
+        end
+
+        function value = get.MaxDepth(this)
+            value = DTrees_(this.id, 'get', 'MaxDepth');
+        end
+        function set.MaxDepth(this, value)
+            DTrees_(this.id, 'set', 'MaxDepth', value);
+        end
+
+        function value = get.MinSampleCount(this)
+            value = DTrees_(this.id, 'get', 'MinSampleCount');
+        end
+        function set.MinSampleCount(this, value)
+            DTrees_(this.id, 'set', 'MinSampleCount', value);
+        end
+
+        function value = get.Priors(this)
+            value = DTrees_(this.id, 'get', 'Priors');
+        end
+        function set.Priors(this, value)
+            DTrees_(this.id, 'set', 'Priors', value);
+        end
+
+        function value = get.RegressionAccuracy(this)
+            value = DTrees_(this.id, 'get', 'RegressionAccuracy');
+        end
+        function set.RegressionAccuracy(this, value)
+            DTrees_(this.id, 'set', 'RegressionAccuracy', value);
+        end
+
+        function value = get.TruncatePrunedTree(this)
+            value = DTrees_(this.id, 'get', 'TruncatePrunedTree');
+        end
+        function set.TruncatePrunedTree(this, value)
+            DTrees_(this.id, 'set', 'TruncatePrunedTree', value);
+        end
+
+        function value = get.Use1SERule(this)
+            value = DTrees_(this.id, 'get', 'Use1SERule');
+        end
+        function set.Use1SERule(this, value)
+            DTrees_(this.id, 'set', 'Use1SERule', value);
+        end
+
+        function value = get.UseSurrogates(this)
+            value = DTrees_(this.id, 'get', 'UseSurrogates');
+        end
+        function set.UseSurrogates(this, value)
+            DTrees_(this.id, 'set', 'UseSurrogates', value);
         end
     end
     

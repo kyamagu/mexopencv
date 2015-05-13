@@ -1,14 +1,14 @@
-classdef TestLatentSvmDetector
-    %TestLatentSvmDetector
+classdef TestLSVMDetector
+    %TestLSVMDetector
     properties (Constant)
     end
     
     methods (Static)
         function test_1
             im = imread(fullfile(mexopencv.root(),'test','cat.jpg'));
-            detector = cv.LatentSvmDetector(fullfile(mexopencv.root(),'test','cat.xml'));
+            detector = cv.LSVMDetector(fullfile(mexopencv.root(),'test','cat.xml'));
             d = detector.detect(im);
-            assert(numel(d)>0);
+            assert(~isempty(d));
         end
     end
     

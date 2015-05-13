@@ -39,9 +39,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    int flags = (modifyA) ? SVD::MODIFY_A : 0|
-                (noUV) ?    SVD::NO_UV :    0|
-                (fullUV) ?  SVD::FULL_UV :  0;
+    int flags = ((modifyA) ? SVD::MODIFY_A : 0)|
+                ((noUV)    ? SVD::NO_UV    : 0)|
+                ((fullUV)  ? SVD::FULL_UV  : 0);
     SVD svd(A, flags);
     plhs[0] = MxArray(svd.w);
     if (nlhs>1)

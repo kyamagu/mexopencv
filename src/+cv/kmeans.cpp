@@ -11,8 +11,8 @@ using namespace cv;
 /** KMeans initalization types for option processing
  */
 const ConstMap<std::string,int> Initialization = ConstMap<std::string,int>
-    ("Random",KMEANS_RANDOM_CENTERS)
-    ("PP",KMEANS_PP_CENTERS);
+    ("Random", cv::KMEANS_RANDOM_CENTERS)
+    ("PP",     cv::KMEANS_PP_CENTERS);
 
 /**
  * Main entry called from Matlab
@@ -35,7 +35,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     Mat labels;
     TermCriteria criteria;
     int attempts=10;
-    int flags = KMEANS_RANDOM_CENTERS;
+    int flags = cv::KMEANS_RANDOM_CENTERS;
     Mat centers;
     for (int i=2; i<nrhs; i+=2) {
         string key = rhs[i].toString();
@@ -50,7 +50,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    flags |= (labels.empty()) ? 0 : KMEANS_USE_INITIAL_LABELS;
+    flags |= (labels.empty()) ? 0 : cv::KMEANS_USE_INITIAL_LABELS;
     
     // Process
     double d = kmeans(samples, clusterCount, labels, criteria, attempts, flags,

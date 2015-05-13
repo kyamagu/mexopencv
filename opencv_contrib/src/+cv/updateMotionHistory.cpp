@@ -1,12 +1,14 @@
 /**
- * @file segmentMotion.cpp
- * @brief mex interface for segmentMotion
+ * @file updateMotionHistory.cpp
+ * @brief mex interface for updateMotionHistory
  * @author Kota Yamaguchi
  * @date 2012
  */
 #include "mexopencv.hpp"
+#include "opencv2/optflow.hpp"
 using namespace std;
 using namespace cv;
+using namespace cv::motempl;
 
 /**
  * Main entry called from Matlab
@@ -19,19 +21,15 @@ void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
     // Check the number of arguments
-    if (nrhs<3 || nlhs>2)
+    if (nrhs<4 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
     // Process
-    Mat mhi(rhs[0].toMat(CV_32F)), segmask;
-    vector<Rect> boundingRects;
-    double timestamp = rhs[1].toDouble();
-    double segThresh = rhs[2].toDouble();
-    segmentMotion(mhi,segmask,boundingRects,timestamp,segThresh);
-    plhs[0] = MxArray(segmask);
-    if (nlhs>1)
-        plhs[1] = MxArray(boundingRects);
+    Mat silhouette(rhs[0].toMat(CV_8U)), mhi(rhs[1].toMat(CV_32F));
+    double timestamp = rhs[2].toDouble(), duration = rhs[3].toDouble();
+    updateMotionHistory(silhouette,mhi,timestamp,duration);
+    plhs[0] = MxArray(mhi);
 }

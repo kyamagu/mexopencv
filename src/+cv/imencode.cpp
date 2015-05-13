@@ -33,21 +33,21 @@ void mexFunction( int nlhs, mxArray *plhs[],
             int val = rhs[i+1].toInt();
             if (val < 0 || 100 < val)
                 mexErrMsgIdAndTxt("mexopencv:error","Invalid parameter");
-            params.push_back(CV_IMWRITE_JPEG_QUALITY);
+            params.push_back(cv::IMWRITE_JPEG_QUALITY);
             params.push_back(val);
         }
         else if (key == "PngCompression") {
             int val = rhs[i+1].toInt();
             if (val < 0 || 9 < val)
                 mexErrMsgIdAndTxt("mexopencv:error","Invalid parameter");
-            params.push_back(CV_IMWRITE_PNG_COMPRESSION);
+            params.push_back(cv::IMWRITE_PNG_COMPRESSION);
             params.push_back(val);
         }
         else if (key == "PxmBinary") {
             int val = rhs[i+1].toInt();
             if (val < 0 || 1 < val)
                 mexErrMsgIdAndTxt("mexopencv:error","Invalid parameter");
-            params.push_back(CV_IMWRITE_PXM_BINARY);
+            params.push_back(cv::IMWRITE_PXM_BINARY);
             params.push_back(val);
         }
         else
@@ -59,7 +59,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     Mat m(rhs[1].toMat(CV_8U));
     // OpenCV's default is BGR while Matlab's is RGB
     if (m.type()==CV_8UC3)
-        cvtColor(m,m,CV_RGB2BGR);
+        cvtColor(m,m,cv::COLOR_RGB2BGR);
     vector<uchar> buf;
     if (!imencode(ext, m, buf, params))
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");

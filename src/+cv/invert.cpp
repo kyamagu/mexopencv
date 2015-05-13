@@ -12,9 +12,9 @@ namespace {
 /** Methods
  */
 const ConstMap<std::string,int> Methods = ConstMap<std::string,int>
-    ("LU",DECOMP_LU)
-    ("SVD",DECOMP_SVD)
-    ("Cholesky",DECOMP_CHOLESKY);
+    ("LU",       cv::DECOMP_LU)
+    ("SVD",      cv::DECOMP_SVD)
+    ("Cholesky", cv::DECOMP_CHOLESKY);
 }
 
 /**
@@ -36,7 +36,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     // Execute function
     Mat src(rhs[0].toMat()), dst;
-    int method = DECOMP_LU;
+    int method = cv::DECOMP_LU;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key=="Method")

@@ -29,7 +29,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     Mat img = rhs[0].toMat();
     string text(rhs[1].toString());
     Point org(rhs[2].toPoint());
-    int fontFace=FONT_HERSHEY_SIMPLEX;
+    int fontFace=cv::FONT_HERSHEY_SIMPLEX;
     double fontScale=1.0;
     Scalar color;
     int thickness=1;

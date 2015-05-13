@@ -1,12 +1,14 @@
 /**
- * @file calcGlobalOrientation.cpp
- * @brief mex interface for calcGlobalOrientation
+ * @file segmentMotion.cpp
+ * @brief mex interface for segmentMotion
  * @author Kota Yamaguchi
  * @date 2012
  */
 #include "mexopencv.hpp"
+#include "opencv2/optflow.hpp"
 using namespace std;
 using namespace cv;
+using namespace cv::motempl;
 
 /**
  * Main entry called from Matlab
@@ -19,18 +21,19 @@ void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
     // Check the number of arguments
-    if (nrhs<5 || nlhs>1)
+    if (nrhs<3 || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
     // Process
-    Mat orientation(rhs[0].toMat());
-    Mat mask(rhs[1].toMat());
-    Mat mhi(rhs[2].toMat(CV_32F));
-    double timestamp = rhs[3].toDouble();
-    double duration = rhs[4].toDouble();
-    double d = calcGlobalOrientation(orientation,mask,mhi,timestamp,duration);
-    plhs[0] = MxArray(d);
+    Mat mhi(rhs[0].toMat(CV_32F)), segmask;
+    vector<Rect> boundingRects;
+    double timestamp = rhs[1].toDouble();
+    double segThresh = rhs[2].toDouble();
+    segmentMotion(mhi,segmask,boundingRects,timestamp,segThresh);
+    plhs[0] = MxArray(segmask);
+    if (nlhs>1)
+        plhs[1] = MxArray(boundingRects);
 }

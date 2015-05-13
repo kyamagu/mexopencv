@@ -28,7 +28,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Option processing
     Size ksize(5,5);
     Point anchor(-1,-1);
-    int borderType = BORDER_DEFAULT;
+    int borderType = cv::BORDER_DEFAULT;
     for (int i=1; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="KSize")

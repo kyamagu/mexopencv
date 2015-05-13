@@ -29,7 +29,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     Point anchor(-1,-1);
     int ddepth = -1;
     int delta = 0;
-    int borderType = BORDER_DEFAULT;
+    int borderType = cv::BORDER_DEFAULT;
     for (int i=3; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="Anchor")

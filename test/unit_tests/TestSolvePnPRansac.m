@@ -10,7 +10,7 @@ classdef TestSolvePnPRansac
             camMatrix = eye(3);
             distCoeffs = zeros(5,1);
             [rvec,tvec,inliers] = cv.solvePnPRansac(objPoints, imgPoints, ...
-                camMatrix, distCoeffs);
+                camMatrix, 'DistCoeffs',distCoeffs);
         end
 
         function test_error_1

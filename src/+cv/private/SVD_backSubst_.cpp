@@ -24,11 +24,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    SVD svd;
-    svd.w = rhs[0].toMat();
-    svd.u = rhs[1].toMat();
-    svd.vt = rhs[2].toMat();
-    Mat    src(rhs[3].toMat()), dst;
-    svd.backSubst(src, dst);
+    Mat w(rhs[0].toMat()),
+        u(rhs[1].toMat()),
+        vt(rhs[2].toMat()),
+        src(rhs[3].toMat()),
+        dst;
+    SVD::backSubst(w, u, vt, src, dst);
     plhs[0] = MxArray(dst);
 }

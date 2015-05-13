@@ -17,8 +17,8 @@ map<int,PCA> obj_;
 /** Data arrangement options
  */
 const ConstMap<std::string,int> DataAs = ConstMap<std::string,int>
-    ("row",CV_PCA_DATA_AS_ROW)
-    ("col",CV_PCA_DATA_AS_COL);
+    ("Row", PCA::DATA_AS_ROW)
+    ("Col", PCA::DATA_AS_COL);
 }
 
 /**
@@ -63,7 +63,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         Mat data(rhs[2].toMat());
         Mat mean;
-        int flags=CV_PCA_DATA_AS_ROW;
+        int flags=PCA::DATA_AS_ROW;
         int maxComponents=0;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());

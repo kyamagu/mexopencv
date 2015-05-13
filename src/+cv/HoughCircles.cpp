@@ -8,6 +8,13 @@
 using namespace std;
 using namespace cv;
 
+/// Method for option processing
+const ConstMap<std::string,int> HoughModesMap = ConstMap<std::string,int>
+    ("Standard",      cv::HOUGH_STANDARD)
+    ("Probabilistic", cv::HOUGH_PROBABILISTIC)
+    ("MultiScale",    cv::HOUGH_MULTI_SCALE)
+    ("Gradient",      cv::HOUGH_GRADIENT);
+
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments
@@ -26,7 +33,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<MxArray> rhs(prhs,prhs+nrhs);
     Mat image(rhs[0].toMat(CV_8U));
     vector<Vec3f> circles;
-    int method=CV_HOUGH_GRADIENT;
+    int method=cv::HOUGH_GRADIENT;
     double dp=1;
     double minDist=image.rows/8;
     double param1=100;
@@ -36,7 +43,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     for (int i=1; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="Method")
-            method = rhs[i+1].toInt();
+            method = HoughModesMap[rhs[i+1].toString()];
         else if (key=="DP")
             dp = rhs[i+1].toDouble();
         else if (key=="MinDist")

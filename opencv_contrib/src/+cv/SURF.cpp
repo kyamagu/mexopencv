@@ -1,21 +1,14 @@
 /**
- * @file SIFT.cpp
- * @brief mex interface for SIFT
+ * @file SURF.cpp
+ * @brief mex interface for SURF
  * @author Kota Yamaguchi
  * @date 2011
  */
 #include "mexopencv.hpp"
-#include "opencv2/nonfree/nonfree.hpp"
-
+#include "opencv2/xfeatures2d.hpp"
 using namespace std;
 using namespace cv;
-
-namespace {
-
-/// Initialization flag
-bool initialized = false;
-
-}
+using namespace cv::xfeatures2d;
 
 /**
  * Main entry called from Matlab
@@ -31,39 +24,34 @@ void mexFunction( int nlhs, mxArray *plhs[],
     if (nrhs<1 || ((nrhs%2)!=1) || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
 
-    if (!initialized) {
-        initModule_nonfree();
-        initialized = true;
-    }
-
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
 
-    // return the descriptor size (128)
+    // return the descriptor size (64/128)
     if (nrhs==1 && rhs[0].isChar() && rhs[0].toString()=="DescriptorSize") {
-        plhs[0] = MxArray(SIFT().descriptorSize());
+        plhs[0] = MxArray((SURF::create())->descriptorSize());
         return;
     }
 
     // Option processing
+    double hessianThreshold=100;
+    int nOctaves=4;
+    int nOctaveLayers=2;
+    bool extended=true;
+    bool upright=false;
     Mat mask;
-    int _nfeatures=0;
-    int _nOctaveLayers=3;
-    double _contrastThreshold=0.04;
-    double _edgeThreshold=10;
-    double _sigma=1.6;
     for (int i=1; i<nrhs; i+=2) {
         string key = rhs[i].toString();
-        if (key=="NFeatures")
-            _nfeatures = rhs[i+1].toInt();
+        if (key=="HessianThreshold")
+            hessianThreshold = rhs[i+1].toDouble();
+        else if (key=="NOctaves")
+            nOctaves = rhs[i+1].toInt();
         else if (key=="NOctaveLayers")
-            _nOctaveLayers = rhs[i+1].toInt();
-        else if (key=="ConstrastThreshold")
-            _contrastThreshold = rhs[i+1].toDouble();
-        else if (key=="EdgeThreshold")
-            _edgeThreshold = rhs[i+1].toDouble();
-        else if (key=="Sigma")
-            _sigma = rhs[i+1].toDouble();
+            nOctaveLayers = rhs[i+1].toInt();
+        else if (key=="Extended")
+            extended = rhs[i+1].toBool();
+        else if (key=="UpRight")
+            upright = rhs[i+1].toBool();
         else if (key=="Mask")
             mask = rhs[i+1].toMat(CV_8U);
         else
@@ -71,17 +59,17 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
 
     // Process
-    SIFT sift(_nfeatures,_nOctaveLayers,_contrastThreshold,_edgeThreshold,
-        _sigma);
+    Ptr<SURF> surf = SURF::create(hessianThreshold,nOctaves,nOctaveLayers,extended,upright);
     Mat image(rhs[0].toMat());
     vector<KeyPoint> keypoints;
     bool useProvidedKeypoints=false;
     if (nlhs>1) {
-        Mat descriptors;
-        sift(image, mask, keypoints, descriptors, useProvidedKeypoints);
-        plhs[1] = MxArray(descriptors);
+        vector<float> descriptors;
+        surf->detectAndCompute(image, mask, keypoints, descriptors, useProvidedKeypoints);
+        Mat m(descriptors);
+        plhs[1] = MxArray(m.reshape(0, keypoints.size()));
     }
     else
-        sift(image, mask, keypoints);
+        surf->detect(image, keypoints, mask);
     plhs[0] = MxArray(keypoints);
 }

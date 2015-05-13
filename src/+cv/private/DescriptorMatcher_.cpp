@@ -6,7 +6,6 @@
  */
 #include <typeinfo>
 #include "mexopencv.hpp"
-#include "opencv2/nonfree/nonfree.hpp"
 using namespace std;
 using namespace cv;
 
@@ -18,7 +17,7 @@ map<int,Ptr<DescriptorMatcher> > obj_;
 /// Initialization methods for flann::Index
 const ConstMap<std::string,cvflann::flann_centers_init_t> CentersInit =
     ConstMap<std::string,cvflann::flann_centers_init_t>
-    ("Random", cvflann::FLANN_CENTERS_RANDOM)
+    ("Random",   cvflann::FLANN_CENTERS_RANDOM)
     ("Gonzales", cvflann::FLANN_CENTERS_GONZALES)
     ("KMeansPP", cvflann::FLANN_CENTERS_KMEANSPP);
 
@@ -208,9 +207,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     int id = rhs[0].toInt();
     string method = rhs[1].toString();
 
-    if (last_id==0)
-        initModule_nonfree();
-    
     // Big operation switch
     if (method == "new") {
         nargchk(nrhs>=3);

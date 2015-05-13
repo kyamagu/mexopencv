@@ -152,26 +152,26 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    int flags = ((fixIntrinsic) ? CV_CALIB_FIX_INTRINSIC : 0) |
-        ((useIntrinsicGuess) ? CV_CALIB_USE_INTRINSIC_GUESS : 0) |
-        ((fixPrincipalPoint) ? CV_CALIB_FIX_PRINCIPAL_POINT : 0) |
-        ((fixFocalLength) ? CV_CALIB_FIX_FOCAL_LENGTH : 0) |
-        ((fixAspectRatio) ? CV_CALIB_FIX_ASPECT_RATIO : 0) |
-        ((sameFocalLength) ? CV_CALIB_SAME_FOCAL_LENGTH : 0) |
-        ((zeroTangentDist) ? CV_CALIB_ZERO_TANGENT_DIST : 0) |
-        ((fixK1) ? CV_CALIB_FIX_K1 : 0) |
-        ((fixK2) ? CV_CALIB_FIX_K2 : 0) |
-        ((fixK3) ? CV_CALIB_FIX_K3 : 0) |
-        ((fixK4) ? CV_CALIB_FIX_K4 : 0) |
-        ((fixK5) ? CV_CALIB_FIX_K5 : 0) |
-        ((fixK6) ? CV_CALIB_FIX_K6 : 0) |
-        ((calibRationalModel) ? CV_CALIB_RATIONAL_MODEL : 0);
+    int flags = ((fixIntrinsic) ? cv::CALIB_FIX_INTRINSIC : 0) |
+        ((useIntrinsicGuess) ? cv::CALIB_USE_INTRINSIC_GUESS : 0) |
+        ((fixPrincipalPoint) ? cv::CALIB_FIX_PRINCIPAL_POINT : 0) |
+        ((fixFocalLength) ? cv::CALIB_FIX_FOCAL_LENGTH : 0) |
+        ((fixAspectRatio) ? cv::CALIB_FIX_ASPECT_RATIO : 0) |
+        ((sameFocalLength) ? cv::CALIB_SAME_FOCAL_LENGTH : 0) |
+        ((zeroTangentDist) ? cv::CALIB_ZERO_TANGENT_DIST : 0) |
+        ((fixK1) ? cv::CALIB_FIX_K1 : 0) |
+        ((fixK2) ? cv::CALIB_FIX_K2 : 0) |
+        ((fixK3) ? cv::CALIB_FIX_K3 : 0) |
+        ((fixK4) ? cv::CALIB_FIX_K4 : 0) |
+        ((fixK5) ? cv::CALIB_FIX_K5 : 0) |
+        ((fixK6) ? cv::CALIB_FIX_K6 : 0) |
+        ((calibRationalModel) ? cv::CALIB_RATIONAL_MODEL : 0);
     
     // Process
     Mat R, T, E, F;
     double d = stereoCalibrate(objectPoints, imagePoints1, imagePoints2,
         cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2,
-        imageSize, R, T, E, F, termCrit, flags);
+        imageSize, R, T, E, F, flags, termCrit);
     plhs[0] = valueStruct(cameraMatrix1, distCoeffs1, cameraMatrix2,
         distCoeffs2, R, T, E, F, d);
 }

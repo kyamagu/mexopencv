@@ -32,7 +32,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     int ksize = 1;
     double scale = 1;
     double delta=0;
-    int borderType=BORDER_DEFAULT;
+    int borderType=cv::BORDER_DEFAULT;
     for (int i=1; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="DDepth")

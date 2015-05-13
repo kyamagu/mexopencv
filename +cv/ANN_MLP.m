@@ -88,7 +88,7 @@ classdef ANN_MLP < handle
 %   Backpropagation Learning: The RPROP Algorithm, Proc. ICNN, San
 %   Francisco (1993).
 %
-% See also cv.ANN_MLP.ANN_MLP cv.ANN_MLP.create cv.ANN_MLP.train
+% See also cv.ANN_MLP.ANN_MLP cv.ANN_MLP.train
 % cv.ANN_MLP.predict
 %
 
@@ -97,21 +97,31 @@ properties (SetAccess = private)
 end
 
 properties (SetAccess = private, Dependent)
+    ActivationFunction
+end
+
+properties (Dependent)
+    BackpropMomentumScale
+    BackpropWeightScale
+    LayerSizes
+    RpropDW0
+    RpropDWMax
+    RpropDWMin
+    RpropDWMinus
+    RpropDWPlus
+    TermCriteria
+    TrainMethod
 end
 
 methods
-    function this = ANN_MLP(varargin)
+    function this = ANN_MLP()
         %ANN_MLP  Constructs MLP model
         %
         %    classifier = cv.ANN_MLP
-        %    classifier = cv.ANN_MLP(...)
         %
-        % The constructor optionally takes the argument of create method.
+        % See also cv.ANN_MLP
         %
-        % See also cv.ANN_MLP  cv.ANN_MLP.create
-        %
-        this.id = ANN_MLP_();
-        if nargin>0, this.create(varargin{:}); end
+        this.id = ANN_MLP_(0, 'new');
     end
 
     function delete(this)
@@ -159,35 +169,7 @@ methods
         ANN_MLP_(this.id, 'load', filename);
     end
 
-    function create(this, layerSizes)
-        %CREATE  Constructs MLP with the specified topology
-        %
-        %    classifier.create(layerSizes)
-        %
-        % ## Input
-        % * __layerSizes__: Integer vector specifying the number of neurons in
-        %     each layer including the input and output layers. The first
-        %     element must be the size of the inputs (feature dimensions)
-        %     and the last element must be the size of outputs (regression
-        %     dimensions). For example, [N,1] means two-layer network that
-        %     takes an N-dimensional vector as an input and output scalar.
-        %
-        % ## Options
-        % * __ActivateFunc__: Parameter specifying the activation function
-        %     for each neuron: one of 'Identity', 'Sigmoid', 'Gaussian'.
-        %     default 'Sigmoid'.
-        % * __FParam1__, __FParam2__: Free parameters of the activation
-        %     function, alpha and beta, respectively. See the formulas.
-        %
-        % The method creates an MLP network with the specified topology and
-        % assigns the same activation function to all the neurons.
-        %
-        % See also cv.ANN_MLP cv.ANN_MLP.train
-        %
-        ANN_MLP_(this.id, 'create', layerSizes);
-    end
-
-    function status = train(this, trainData, responses, varargin)
+    function status = train(this, samples, responses, varargin)
         %TRAIN  Trains the model
         %
         %    classifier.train(trainData, responses)
@@ -255,10 +237,10 @@ methods
         %
         % See also cv.ANN_MLP cv.ANN_MLP.predict
         %
-        status = ANN_MLP_(this.id, 'train', trainData, responses, varargin{:});
+        status = ANN_MLP_(this.id, 'train_', samples, responses, varargin{:});
     end
 
-    function results = predict(this, samples)
+    function [results,f] = predict(this, samples, varargin)
         %PREDICT  Predicts the response for input samples.
         %
         %    results = classifier.predict(samples)
@@ -269,29 +251,116 @@ methods
         %
         % See also cv.ANN_MLP cv.ANN_MLP.train
         %
-        results = ANN_MLP_(this.id, 'predict', samples);
+        [results,f] = ANN_MLP_(this.id, 'predict', samples, varargin{:});
     end
 
-    function value = get_layer_count(this)
-        %GET_LAYER_COUNT  Returns the number of layers in the MLP
+    function value = getWeights(this, layerIdx)
+        %GETWEIGHTS  Returns neurons weights of the particular layer
         %
-        value = ANN_MLP_(this.id, 'get_layer_count');
+        value = ANN_MLP_(this.id, 'getWeights', layerIdx);
+    end
+end
+
+methods
+    function value = get.BackpropMomentumScale(this)
+        value = ANN_MLP_(this.id, 'get', 'BackpropMomentumScale');
+    end
+    function set.BackpropMomentumScale(this, value)
+        ANN_MLP_(this.id, 'set', 'BackpropMomentumScale', value);
     end
 
-    function value = get_layer_sizes(this)
-        %GET_LAYER_SIZES  Returns numbers of neurons in each layer of the MLP
-        %
-        % The method returns the integer vector specifying the number of
-        % neurons in each layer including the input and output layers of the
-        % MLP.
-        %
-        value = ANN_MLP_(this.id, 'get_layer_sizes');
+    function value = get.BackpropWeightScale(this)
+        value = ANN_MLP_(this.id, 'get', 'BackpropWeightScale');
+    end
+    function set.BackpropWeightScale(this, value)
+        ANN_MLP_(this.id, 'set', 'BackpropWeightScale', value);
     end
 
-    function value = get_weights(this, layer)
-        %GET_WEIGHTS  Returns neurons weights of the particular layer
+    function value = get.LayerSizes(this)
+        %LAYERSIZES  Returns numbers of neurons in each layer of the MLP
         %
-        value = ANN_MLP_(this.id, 'get_weights', layer);
+        % This returns the integer vector specifying the number of neurons
+        % in each layer including the input and output layers of the MLP.
+        %
+        value = ANN_MLP_(this.id, 'get', 'LayerSizes');
+    end
+    function set.LayerSizes(this, value)
+        %LAYERSIZES
+        %
+        % Integer vector specifying the number of neurons in
+        % each layer including the input and output layers. The first
+        % element must be the size of the inputs (feature dimensions)
+        % and the last element must be the size of outputs (regression
+        % dimensions). For example, [N,1] means two-layer network that
+        % takes an N-dimensional vector as an input and output scalar.
+        %
+        ANN_MLP_(this.id, 'set', 'LayerSizes', value);
+    end
+
+    function value = get.RpropDW0(this)
+        value = ANN_MLP_(this.id, 'get', 'RpropDW0');
+    end
+    function set.RpropDW0(this, value)
+        ANN_MLP_(this.id, 'set', 'RpropDW0', value);
+    end
+
+    function value = get.RpropDWMax(this)
+        value = ANN_MLP_(this.id, 'get', 'RpropDWMax');
+    end
+    function set.RpropDWMax(this, value)
+        ANN_MLP_(this.id, 'set', 'RpropDWMax', value);
+    end
+
+    function value = get.RpropDWMin(this)
+        value = ANN_MLP_(this.id, 'get', 'RpropDWMin');
+    end
+    function set.RpropDWMin(this, value)
+        ANN_MLP_(this.id, 'set', 'RpropDWMin', value);
+    end
+
+    function value = get.RpropDWMinus(this)
+        value = ANN_MLP_(this.id, 'get', 'RpropDWMinus');
+    end
+    function set.RpropDWMinus(this, value)
+        ANN_MLP_(this.id, 'set', 'RpropDWMinus', value);
+    end
+
+    function value = get.RpropDWPlus(this)
+        value = ANN_MLP_(this.id, 'get', 'RpropDWPlus');
+    end
+    function set.RpropDWPlus(this, value)
+        ANN_MLP_(this.id, 'set', 'RpropDWPlus', value);
+    end
+
+    function value = get.TermCriteria(this)
+        value = ANN_MLP_(this.id, 'get', 'TermCriteria');
+    end
+    function set.TermCriteria(this, value)
+        ANN_MLP_(this.id, 'set', 'TermCriteria', value);
+    end
+
+    function value = get.TrainMethod(this)
+        value = ANN_MLP_(this.id, 'get', 'TrainMethod');
+    end
+    function set.TrainMethod(this, value, varargin)
+        ANN_MLP_(this.id, 'setTrainMethod', value, varargin{:});
+    end
+
+    function set.ActivationFunction(this, value, varargin)
+        %ACTIVATIONFUNCTION
+        %
+        % ## Input
+        % * __ActivateFunc__: Parameter specifying the activation function
+        %     for each neuron: one of 'Identity', 'Sigmoid', 'Gaussian'.
+        %     default 'Sigmoid'.
+        %
+        % ## Options
+        % * __Param1__, __Param2__: Free parameters of the activation
+        %     function, alpha and beta, respectively. See the formulas.
+        %
+        % This assigns the same activation function to all the neurons.
+        %
+        ANN_MLP_(this.id, 'setActivationFunction', value, varargin{:});
     end
 end
 
