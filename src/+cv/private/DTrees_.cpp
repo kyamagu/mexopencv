@@ -1,6 +1,6 @@
 /**
- * @file DTree_.cpp
- * @brief mex interface for DTree
+ * @file DTrees_.cpp
+ * @brief mex interface for DTrees
  * @author Kota Yamaguchi, Amro
  * @date 2012, 2015
  */
