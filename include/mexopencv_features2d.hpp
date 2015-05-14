@@ -269,5 +269,54 @@ cv::Ptr<cv::DescriptorExtractor> createDescriptorExtractor(std::string type,
 
 // ==================== Descriptor Matching ====================
 
+/** Convert MxArray to FLANN index parameters
+ * @param m MxArray object of a cell array of the form
+ *    {'type', 'OptionName', optionValue, ...}
+ * @return smart pointer to an instance of cv::flann::IndexParams.
+ */
+cv::Ptr<cv::flann::IndexParams> toIndexParams(const MxArray& m);
+
+/** Convert MxArray to FLANN search parameters
+ * @param m MxArray object of a cell array of the form
+ *    {'OptionName', optionValue, ...}
+ * @return smart pointer to an instance of cv::flann::SearchParams.
+ */
+cv::Ptr<cv::flann::SearchParams> toSearchParams(const MxArray& m);
+
+/** Create an instance of FlannBasedMatcher using options in arguments
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to an instance cv::FlannBasedMatcher
+ */
+cv::Ptr<cv::FlannBasedMatcher> createFlannBasedMatcher(
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
+
+/** Create an instance of BFMatcher using options in arguments
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to an instance cv::BFMatcher
+ */
+cv::Ptr<cv::BFMatcher> createBFMatcher(
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
+
+/** Factory function for DescriptorMatcher creation
+ * @param type descriptor matcher type, one of:
+ *    - "BruteForce"
+ *    - "BruteForce-L1"
+ *    - "BruteForce-SL2"
+ *    - "BruteForce-Hamming" or "BruteForce-HammingLUT"
+ *    - "BruteForce-Hamming(2)"
+ *    - "FlannBased"
+ *    - "FlannBasedMatcher"
+ *    - "BFMatcher"
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to an instance cv::DescriptorMatcher
+ */
+cv::Ptr<cv::DescriptorMatcher> createDescriptorMatcher(std::string type,
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
 
 #endif

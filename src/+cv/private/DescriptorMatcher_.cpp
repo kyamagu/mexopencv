@@ -6,6 +6,7 @@
  */
 #include <typeinfo>
 #include "mexopencv.hpp"
+#include "mexopencv_features2d.hpp"
 using namespace std;
 using namespace cv;
 
@@ -14,12 +15,6 @@ namespace {
 int last_id = 0;
 /// Object container
 map<int,Ptr<DescriptorMatcher> > obj_;
-/// Initialization methods for flann::Index
-const ConstMap<std::string,cvflann::flann_centers_init_t> CentersInit =
-    ConstMap<std::string,cvflann::flann_centers_init_t>
-    ("Random",   cvflann::FLANN_CENTERS_RANDOM)
-    ("Gonzales", cvflann::FLANN_CENTERS_GONZALES)
-    ("KMeansPP", cvflann::FLANN_CENTERS_KMEANSPP);
 
 /// Check number of arguments
 void nargchk(bool cond)
@@ -27,167 +22,6 @@ void nargchk(bool cond)
     if (!cond)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
 }
-
-/// Create a new index parameters
-Ptr<flann::IndexParams> createIndexParams(const MxArray& m)
-{
-    Ptr<flann::IndexParams> p(NULL);
-    vector<MxArray> rhs(m.toVector<MxArray>());
-    if (rhs.empty() || (rhs.size()%2)==0)
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
-    string type(rhs[0].toString());
-    if (type == "Linear")
-        p = new flann::LinearIndexParams();
-    else if (type == "KDTree") {
-        int trees = 4;
-        for (int i=1; i<rhs.size(); i+=2) {
-            string key(rhs[i].toString());
-            if (key == "Trees")
-                trees = rhs[i+1].toInt();
-            else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-        }
-        p = new flann::KDTreeIndexParams(trees);
-    }
-    else if (type == "KMeans") {
-        int branching = 32;
-        int iterations = 11;
-        cvflann::flann_centers_init_t centers_init = cvflann::CENTERS_RANDOM;
-        float cb_index = 0.2;
-        for (int i=1; i<rhs.size(); i+=2) {
-            string key(rhs[i].toString());
-            if (key == "Branching")
-                branching = rhs[i+1].toInt();
-            else if (key == "Iterations")
-                iterations = rhs[i+1].toInt();
-            else if (key == "CentersInit")
-                centers_init = CentersInit[rhs[i+1].toString()];
-            else if (key == "CBIndex")
-                cb_index = rhs[i+1].toDouble();
-            else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-        }
-        p = new flann::KMeansIndexParams(
-            branching, iterations, centers_init, cb_index);
-    }
-    else if (type == "Composite") {
-        int trees = 4;
-        int branching = 32;
-        int iterations = 11;
-        cvflann::flann_centers_init_t centers_init = cvflann::CENTERS_RANDOM;
-        float cb_index = 0.2;
-        for (int i=1; i<rhs.size(); i+=2) {
-            string key(rhs[i].toString());
-            if (key == "Trees")
-                trees = rhs[i+1].toInt();
-            else if (key == "Branching")
-                branching = rhs[i+1].toInt();
-            else if (key == "Iterations")
-                iterations = rhs[i+1].toInt();
-            else if (key == "CentersInit")
-                centers_init = CentersInit[rhs[i+1].toString()];
-            else if (key == "CBIndex")
-                cb_index = rhs[i+1].toDouble();
-            else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-        }
-        p = new flann::CompositeIndexParams(trees,
-            branching, iterations, centers_init, cb_index);
-    }
-    else if (type == "LSH") {
-        unsigned int table_number = 20;
-        unsigned int key_size = 15;
-        unsigned int multi_probe_level = 0;
-        for (int i=1; i<rhs.size(); i+=2) {
-            string key(rhs[i].toString());
-            if (key == "TableNumber")
-                table_number = rhs[i+1].toInt();
-            else if (key == "KeySize")
-                key_size = rhs[i+1].toInt();
-            else if (key == "MultiProbeLevel")
-                multi_probe_level = rhs[i+1].toInt();
-            else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-        }
-        p = new flann::LshIndexParams(table_number, key_size, multi_probe_level);
-    }
-    else if (type == "Autotuned") {
-        float target_precision = 0.9;
-        float build_weight = 0.01;
-        float memory_weight = 0;
-        float sample_fraction = 0.1;
-        for (int i=1; i<rhs.size(); i+=2) {
-            string key(rhs[i].toString());
-            if (key == "TargetPrecision")
-                target_precision = rhs[i+1].toDouble();
-            else if (key == "BuildWeight")
-                build_weight = rhs[i+1].toDouble();
-            else if (key == "MemoryWeight")
-                memory_weight = rhs[i+1].toDouble();
-            else if (key == "SampleFraction")
-                sample_fraction = rhs[i+1].toDouble();
-            else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-        }
-        p = new flann::AutotunedIndexParams(target_precision,
-            build_weight, memory_weight, sample_fraction);
-    }
-    else if (type == "Saved") {
-        if (rhs.size()!=2)
-            mexErrMsgIdAndTxt("mexopencv:error","Missing filename");
-        string filename(rhs[1].toString());
-        p = new flann::SavedIndexParams(filename);
-        if (p.empty())
-            mexErrMsgIdAndTxt("mexopencv:error","Failed to load index");
-    }
-    else
-        mexErrMsgIdAndTxt("mexopencv:error","Unrecognized index type");
-    return p;
-}
-
-/// Create a new search parameters
-Ptr<flann::SearchParams> createSearchParams(const MxArray& m)
-{
-    vector<MxArray> rhs(m.toVector<MxArray>());
-    nargchk((rhs.size()%2)==0);
-    int checks = 32;
-    float eps = 0;
-    bool sorted = true;
-    for (int i=0; i<rhs.size(); i+=2) {
-        string key(rhs[i].toString());
-        if (key == "Checks")
-            checks = rhs[i+1].toInt();
-        else if (key == "EPS")
-            eps = rhs[i+1].toDouble();
-        else if (key == "Sorted")
-            sorted = rhs[i+1].toBool();
-        else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-    }
-    return Ptr<flann::SearchParams>(new flann::SearchParams(checks,eps,sorted));
-}
-
-/// Create a new FlannBasedMatcher
-Ptr<DescriptorMatcher> createFlannBasedMatcher(const vector<MxArray>& rhs)
-{
-    Ptr<flann::IndexParams> indexParams(NULL);
-    Ptr<flann::SearchParams> searchParams(NULL);
-    for (int i=0; i<rhs.size(); i+=2) {
-        string key(rhs[i].toString());
-        if (key == "Index")
-            indexParams = createIndexParams(rhs[i+1]);
-        else if (key == "Search")
-            searchParams = createSearchParams(rhs[i+1]);
-        else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-    }
-    if (indexParams.empty())
-        indexParams = new flann::KDTreeIndexParams();
-    if (searchParams.empty())
-        searchParams = new flann::SearchParams();
-    return Ptr<DescriptorMatcher>(new FlannBasedMatcher(indexParams,searchParams));
-}
-
 }
 
 /**
@@ -211,9 +45,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     if (method == "new") {
         nargchk(nrhs>=3);
         string descriptorMatcherType(rhs[2].toString());
-        obj_[++last_id] = (nrhs>=4 && descriptorMatcherType=="FlannBased") ?
-            createFlannBasedMatcher(vector<MxArray>(prhs+3, prhs+nrhs)) :
-            DescriptorMatcher::create(descriptorMatcherType);
+        obj_[++last_id] = createDescriptorMatcher(descriptorMatcherType,
+            rhs.begin() + 3, rhs.end());
         plhs[0] = MxArray(last_id);
         return;
     }
