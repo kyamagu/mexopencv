@@ -40,7 +40,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     if (method == "new") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        obj_[++last_id] = FastFeatureDetector::create();  //TODO
+        obj_[++last_id] = createFastFeatureDetector(rhs.begin() + 2, rhs.end());
         plhs[0] = MxArray(last_id);
         return;
     }
