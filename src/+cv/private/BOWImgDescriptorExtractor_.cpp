@@ -5,6 +5,7 @@
  * @date 2012
  */
 #include "mexopencv.hpp"
+#include "mexopencv_features2d.hpp"
 using namespace std;
 using namespace cv;
 
@@ -12,7 +13,7 @@ namespace {
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,BOWImgDescriptorExtractor> obj_;
+map<int,Ptr<BOWImgDescriptorExtractor> > obj_;
 /// Alias for argument number check
 inline void nargchk(bool cond)
 {
@@ -39,38 +40,37 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Constructor call
     if (method == "new") {
-        nargchk(nrhs>=3 && nrhs<=4 && nlhs<=1);
-        string dmatcher = (nrhs==4) ? rhs[3].toString() : string("BruteForce");
-        obj_.insert(pair<int,BOWImgDescriptorExtractor>(++last_id,
-            BOWImgDescriptorExtractor(
-                DescriptorExtractor::create(rhs[2].toString()),
-                DescriptorMatcher::create(dmatcher)
-            )));
+        nargchk(nrhs==4 && nlhs<=1);
+        Ptr<DescriptorExtractor> extractor = createDescriptorExtractor(
+            rhs[2].toString(), rhs.end(), rhs.end());
+        Ptr<DescriptorMatcher> matcher = createDescriptorMatcher(
+            rhs[3].toString(), rhs.end(), rhs.end());
+        obj_[++last_id] = makePtr<BOWImgDescriptorExtractor>(extractor, matcher);
         plhs[0] = MxArray(last_id);
         return;
     }
 
     // Big operation switch
-    BOWImgDescriptorExtractor& obj = obj_.find(id)->second;
+    Ptr<BOWImgDescriptorExtractor> obj = obj_[id];
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
     }
     else if (method == "setVocabulary") {
         nargchk(nrhs==3 && nlhs==0);
-        obj.setVocabulary(rhs[2].isUint8() ? rhs[2].toMat() : rhs[2].toMat(CV_32F));
+        obj->setVocabulary(rhs[2].isUint8() ? rhs[2].toMat() : rhs[2].toMat(CV_32F));
     }
     else if (method == "getVocabulary") {
         nargchk(nrhs==2 && nlhs<=1);
-        plhs[0] = MxArray(obj.getVocabulary());
+        plhs[0] = MxArray(obj->getVocabulary());
     }
     else if (method == "descriptorSize") {
         nargchk(nrhs==2 && nlhs<=1);
-        plhs[0] = MxArray(obj.descriptorSize());
+        plhs[0] = MxArray(obj->descriptorSize());
     }
     else if (method == "descriptorType") {
         nargchk(nrhs==2 && nlhs<=1);
-        plhs[0] = MxArray(obj.descriptorType());
+        plhs[0] = MxArray(obj->descriptorType());
     }
     else if (method == "compute") {
         nargchk(nrhs==4 && nlhs<=3);
@@ -79,7 +79,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         Mat imgDescriptor;
         vector<vector<int> > pointIdxsOfClusters;
         Mat descriptors;
-        obj.compute(image,keypoints,imgDescriptor,&pointIdxsOfClusters,&descriptors);
+        obj->compute(image,keypoints,imgDescriptor,&pointIdxsOfClusters,&descriptors);
         plhs[0] = MxArray(imgDescriptor);
         if (nrhs>1) {
             vector<Mat> vm;
