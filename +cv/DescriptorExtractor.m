@@ -26,21 +26,19 @@ classdef DescriptorExtractor < handle
     % cv.DescriptorExtractor.compute cv.FeatureDetector
     % cv.BOWImgDescriptorExtractor
     %
-    
+
     properties (SetAccess = private)
         % Object ID
         id
     end
-    
+
     properties (SetAccess = private, Dependent)
-        % Size of the DescriptorExtractor
-        size
         % Type of the extractor
-        type
+        Type
     end
-    
+
     methods
-        function this = DescriptorExtractor(type)
+        function this = DescriptorExtractor(extractorType, varargin)
             %DESCRIPTOREXTRACTOR  DescriptorExtractor constructors
             %
             %    extractor = cv.DescriptorExtractor(type)
@@ -67,11 +65,8 @@ classdef DescriptorExtractor < handle
             %
             % See also cv.DescriptorExtractor cv.DescriptorExtractor.write
             %
-            if nargin < 1, type = 'ORB'; end
-            if ~ischar(type)
-                error('DescriptorExtractor:error','Invalid type');
-            end
-            this.id = DescriptorExtractor_(type);
+            if nargin < 1, extractorType = 'ORB'; end
+            this.id = DescriptorExtractor_(0, 'new', extractorType, varargin{:});
         end
         
         function delete(this)
@@ -81,17 +76,37 @@ classdef DescriptorExtractor < handle
             %
             DescriptorExtractor_(this.id, 'delete');
         end
-        
-        function s = get.size(this)
-            %SIZE  DescriptorExtractor size
-            s = DescriptorExtractor_(this.id, 'size');
+
+        function clear(this)
+            %CLEAR
+            DescriptorExtractor_(this.id, 'clear');
+        end
+
+        function empty(this)
+            %EMPTY
+            DescriptorExtractor_(this.id, 'empty');
+        end
+
+        function def_name = getDefaultName(this)
+            %GETDEFAULTNAME
+            def_name = DescriptorExtractor_(this.id, 'getDefaultName');
+        end
+
+        function def_norm = defaultNorm(this)
+            %DEFAULTNORM
+            def_norm = DescriptorExtractor_(this.id, 'defaultNorm');
+        end
+
+        function s = descriptorSize(this)
+            %DESCRIPTORSIZE
+            s = DescriptorExtractor_(this.id, 'descriptorSize');
         end
         
-        function t = get.type(this)
-            %TYPE  DescriptorExtractor type
-            t = DescriptorExtractor_(this.id, 'type');
+        function t = descriptorType(this)
+            %DESCRIPTORTYPE
+            t = DescriptorExtractor_(this.id, 'descriptorType');
         end
-        
+
         function [descriptors, keypoints] = compute(this, im, keypoints)
             %COMPUTE  Computes the descriptors for a set of keypoints detected in an image
             %
@@ -127,7 +142,7 @@ classdef DescriptorExtractor < handle
             [descriptors, keypoints] = DescriptorExtractor_(this.id, 'compute', im, keypoints);
         end
         
-        function read(this, filename)
+        function load(this, filename, varargin)
             %READ  Reads a descriptor extractor object from a file
             %
             %    extractor.read(filename)
@@ -137,10 +152,10 @@ classdef DescriptorExtractor < handle
             %
             % See also cv.DescriptorExtractor
             %
-            DescriptorExtractor_(this.id, 'write', filename);
+            DescriptorExtractor_(this.id, 'load', filename, varargin{:});
         end
         
-        function write(this, filename)
+        function save(this, filename)
             %WRITE  Writes a descriptor extractor object to a file
             %
             %    extractor.write(filename)
@@ -150,8 +165,15 @@ classdef DescriptorExtractor < handle
             %
             % See also cv.DescriptorExtractor
             %
-            DescriptorExtractor_(this.id, 'write', filename);
+            DescriptorExtractor_(this.id, 'save', filename);
         end
     end
-    
+
+    methods
+        function t = get.Type(this)
+            %TYPE  DescriptorExtractor type
+            t = DescriptorExtractor_(this.id, 'type');
+        end
+    end
+
 end

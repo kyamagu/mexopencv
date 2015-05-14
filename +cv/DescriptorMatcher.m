@@ -29,12 +29,12 @@ classdef DescriptorMatcher < handle
     end
     
     properties (SetAccess = private, Dependent)
-        % Type of the detector
-        type
+        % Type of the matcher
+        Type
     end
     
     methods
-        function this = DescriptorMatcher(type, varargin)
+        function this = DescriptorMatcher(matcherType, varargin)
             %DESCRIPTORMATCHER  DescriptorMatcher constructors
             %
             %    matcher = cv.DescriptorMatcher(type)
@@ -188,11 +188,8 @@ classdef DescriptorMatcher < handle
             %
             % See also cv.DescriptorMatcher
             %
-            if nargin < 1, type = 'BruteForce'; end
-            if ~ischar(type)
-                error('DescriptorMatcher:error','Invalid type');
-            end
-            this.id = DescriptorMatcher_(0,'new',type,varargin{:});
+            if nargin < 1, matcherType = 'BruteForce'; end
+            this.id = DescriptorMatcher_(0, 'new', matcherType, varargin{:});
         end
         
         function delete(this)
@@ -202,12 +199,7 @@ classdef DescriptorMatcher < handle
             %
             DescriptorMatcher_(this.id, 'delete');
         end
-        
-        function t = get.type(this)
-            %TYPE  DescriptorMatcher type
-            t = DescriptorMatcher_(this.id, 'type');
-        end
-        
+
         function add(this, descriptors)
             %ADD  Adds descriptors to train a descriptor collection
             %
@@ -254,7 +246,12 @@ classdef DescriptorMatcher < handle
             %
             status = DescriptorMatcher_(this.id, 'empty');
         end
-        
+
+        function def_name = getDefaultName(this)
+            %GETDEFAULTNAME
+            def_name = DescriptorMatcher_(this.id, 'getDefaultName');
+        end
+
         function status = isMaskSupported(this)
             %ISMASKSUPPORTED  Returns true if the descriptor matcher supports masking permissible matches
             %
@@ -425,7 +422,7 @@ classdef DescriptorMatcher < handle
                 queryDescriptors, varargin{:});
         end
         
-        function read(this, filename)
+        function load(this, filename, varargin)
             %READ  Reads a descriptor matcher object from a file
             %
             %    matcher.read(filename)
@@ -435,10 +432,10 @@ classdef DescriptorMatcher < handle
             %
             % See also cv.DescriptorMatcher
             %
-            DescriptorMatcher_(this.id, 'write', filename);
+            DescriptorMatcher_(this.id, 'load', filename, varargin{:});
         end
         
-        function write(this, filename)
+        function save(this, filename)
             %WRITE  Writes a descriptor matcher object to a file
             %
             %    matcher.write(filename)
@@ -448,8 +445,15 @@ classdef DescriptorMatcher < handle
             %
             % See also cv.DescriptorMatcher
             %
-            DescriptorMatcher_(this.id, 'write', filename);
+            DescriptorMatcher_(this.id, 'save', filename);
         end
     end
-    
+
+    methods
+        function t = get.Type(this)
+            %TYPE  DescriptorMatcher type
+            t = DescriptorMatcher_(this.id, 'type');
+        end
+    end
+
 end

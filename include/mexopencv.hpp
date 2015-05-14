@@ -85,4 +85,15 @@ const ConstMap<std::string,int> FontFace = ConstMap<std::string,int>
 const ConstMap<std::string,int> FontStyle = ConstMap<std::string,int>
     ("Regular", 0)
     ("Italic",  cv::FONT_ITALIC);
+
+/** Norm type map for option processing
+*/
+const ConstMap<std::string,int> NormType = ConstMap<std::string,int>
+    ("Inf",      cv::NORM_INF)
+    ("L1",       cv::NORM_L1)
+    ("L2",       cv::NORM_L2)
+    ("L2Sqr",    cv::NORM_L2SQR)
+    ("Hamming",  cv::NORM_HAMMING)
+    ("Hamming2", cv::NORM_HAMMING2);
+
 #endif
