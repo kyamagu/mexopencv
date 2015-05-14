@@ -15,7 +15,7 @@ classdef TestBOWImgDescriptorExtractor
             vocab = trainer.cluster(descs);
 
             bowextractor = cv.BOWImgDescriptorExtractor('BRIEF');
-            bowextractor.setVocabulary(uint8(vocab));
+            bowextractor.Vocabulary = uint8(vocab);
 
             [bow,idx] = bowextractor.compute(im,kpts);
         end

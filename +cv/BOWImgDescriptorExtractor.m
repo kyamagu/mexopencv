@@ -28,9 +28,14 @@ classdef BOWImgDescriptorExtractor < handle
         % Object ID
         id
     end
-    
+
+    properties (Dependent)
+        % Visual vocabulary
+        Vocabulary
+    end
+
     methods
-        function this = BOWImgDescriptorExtractor(varargin)
+        function this = BOWImgDescriptorExtractor(dextractor, dmatcher)
             %BOWIMGDESCRIPTOREXTRACTOR Create a new BOWImgDescriptorExtractor
             %
             %    extractor = cv.BOWImgDescriptorExtractor(dextractor)
@@ -54,7 +59,8 @@ classdef BOWImgDescriptorExtractor < handle
             %
             % See also cv.BOWImgDescriptorExtractor
             %
-            this.id = BOWImgDescriptorExtractor_(0, 'new', varargin{:});
+            if nargin < 2, dmatcher = 'BruteForce'; end
+            this.id = BOWImgDescriptorExtractor_(0, 'new', dextractor, dmatcher);
         end
         
         function delete(this)
@@ -64,34 +70,7 @@ classdef BOWImgDescriptorExtractor < handle
             %
             BOWImgDescriptorExtractor_(this.id, 'delete');
         end
-        
-        function setVocabulary(this, descs)
-            %SETVOCABULARY Sets a visual vocabulary
-            %
-            %    extractor.setVocabulary(descs)
-            %
-            % ## Input
-            % * __descs__ Vocabulary (can be trained using
-            %     cv.BOWKMeansTrainer ). Each row of the vocabulary is a
-            %     visual word (cluster center).
-            %
-            % See also cv.BOWImgDescriptorExtractor
-            %
-            BOWImgDescriptorExtractor_(this.id, 'setVocabulary', descs);
-        end
-        
-        function s = getVocabulary(this)
-            %GETVOCABULARY Returns the set vocabulary
-            %
-            %    s = extractor.getVocabulary()
-            %
-            % s is row vectors
-            %
-            % See also cv.BOWImgDescriptorExtractor
-            %
-            s = BOWImgDescriptorExtractor_(this.id, 'getVocabulary');
-        end
-        
+
         function s = descriptorSize(this)
             %DESCRIPTORSIZE Returns an image discriptor size if the vocabulary is set
             %
@@ -139,6 +118,43 @@ classdef BOWImgDescriptorExtractor < handle
             % cv.BOWImgDescriptorExtractor.setVocabulary
             %
             [bow,idx,descs] = BOWImgDescriptorExtractor_(this.id, 'compute', im, keypoints);
+        end
+
+        function [bow,idx] = compute_(this, keypointDescriptors)
+            [bow,idx] = BOWImgDescriptorExtractor_(this.id, 'compute', keypointDescriptors);
+        end
+
+        function bow = compute2(this, im, keypoints)
+            bow = BOWImgDescriptorExtractor_(this.id, 'compute', im, keypoints);
+        end
+    end
+
+    methods
+        function set.Vocabulary(this, descs)
+            %SET.VOCABULARY Sets a visual vocabulary
+            %
+            %    extractor.Vocabulary = descs;
+            %
+            % ## Input
+            % * __descs__ Vocabulary (can be trained using
+            %     cv.BOWKMeansTrainer ). Each row of the vocabulary is a
+            %     visual word (cluster center).
+            %
+            % See also cv.BOWImgDescriptorExtractor
+            %
+            BOWImgDescriptorExtractor_(this.id, 'set', 'Vocabulary', descs);
+        end
+        
+        function s = get.Vocabulary(this)
+            %GET.VOCABULARY Returns the set vocabulary
+            %
+            %    s = extractor.Vocabulary;
+            %
+            % s is row vectors
+            %
+            % See also cv.BOWImgDescriptorExtractor
+            %
+            s = BOWImgDescriptorExtractor_(this.id, 'get', 'Vocabulary');
         end
     end
     
