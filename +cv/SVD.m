@@ -1,5 +1,5 @@
-classdef SVD
-    %SVD  Class for computing Singular Value Decomposition of a floating-point matrix
+classdef SVD < handle
+    %SVD  Singular Value Decomposition
     %
     % Class for computing Singular Value Decomposition of a floating-point
     % matrix. The Singular Value Decomposition is used to solve
@@ -7,15 +7,123 @@ classdef SVD
     % matrices, compute condition numbers, and so on.
     %
     % If you want to compute a condition number of a matrix or an absolute
-    % value of its determinant, you do not need u and vt. You can pass
+    % value of its determinant, you do not need `u` and `vt`. You can pass
     % 'NoUV' flag. Another flag 'FullUV' indicates that full-size
-    % u and vt must be computed, which is not necessary most of the time.
+    % `u` and `vt` must be computed, which is not necessary most of the time.
     %
-    % See also cv.SVD.compute
+    % See also: cv.SVD.compute
     %
-    
+
+    properties (SetAccess = protected)
+        id    % Object ID
+    end
+
+    properties (Dependent)
+        u
+        vt
+        w
+    end
+
+    methods
+        function this = SVD()
+            %SVD  the default constructor
+            %
+            %    svd = cv.SVD()
+            %
+            % initializes an empty SVD structure.
+            %
+            this.id = SVD_(0, 'new');
+        end
+
+        function delete(this)
+            %DELETE  Destructor
+            %
+            SVD_(this.id, 'delete');
+        end
+
+        function compute(this, src, varargin)
+            %COMPUTE  the operator that performs SVD
+            %
+            %    svd.compute(src)
+            %    svd.compute(src, 'OptionName', optionValue, ...)
+            %
+            % ## Input
+            % * __src__
+            %
+            % ## Options
+            % * __Flags__
+            % * __ModifyA__
+            % * __NoUV__
+            % * __FullUV__
+            %
+            % The previously allocated `u`, `w` and `vt` are released.
+            %
+            % The operator performs the singular value decomposition of the
+            % supplied matrix. The `u`, `vt`, and the vector of singular
+            % values `w` are stored in the structure. The same SVD structure
+            % can be reused many times with different matrices. Each time, if
+            % needed, the previous `u`, `vt`, and `w` are reclaimed and the
+            % new matrices are created.
+            %
+            SVD_(this.id, 'compute', src, varargin{:});
+        end
+
+        function dst = backSubst(this, src)
+            %BACKSUBST  performs a singular value back substitution
+            %
+            %    dst = svd.backSubst(src)
+            %
+            % ## Input
+            % * __src__ right-hand side of a linear system `(u*w*v')*dst = rhs`
+            %       to be solved, where `A` has been previously decomposed.
+            %
+            % ## Output
+            % * __dst__ found solution of the system.
+            %
+            % The method calculates a back substitution for the specified
+            % right-hand side.
+            %
+            % Using this technique you can either get a very accurate solution
+            % of the convenient linear system, or the best (in the
+            % least-squares terms) pseudo-solution of an overdetermined linear
+            % system.
+            %
+            % **NOTE:** Explicit SVD with the further back substitution only
+            % makes sense if you need to solve many linear systems with the
+            % same left-hand side (for example, `src`). If all you need is to
+            % solve a single system (possibly with multiple rhs immediately
+            % available), simply call `solve` add pass DECOMP_SVD there. It
+            % does absolutely the same thing.
+            %
+            dst = SVD_(this.id, 'backSubst', src);
+        end
+    end
+
+    methods
+        function value = get.u(this)
+            value = SVD_(this.id, 'get', 'u');
+        end
+        function set.u(this, value)
+            SVD_(this.id, 'set', 'u', value);
+        end
+
+        function value = get.vt(this)
+            value = SVD_(this.id, 'get', 'vt');
+        end
+        function set.vt(this, value)
+            SVD_(this.id, 'set', 'vt', value);
+        end
+
+        function value = get.w(this)
+            value = SVD_(this.id, 'get', 'w');
+        end
+        function set.w(this, value)
+            SVD_(this.id, 'set', 'w', value);
+        end
+    end
+
     methods (Static)
-        function [w, u, vt] = compute(A)
+        function [w, u, vt] = Compute(A, varargin)
             %COMPUTE  Performs SVD of a matrix
             %
             %    [w, u, vt] = cv.SVD.compute(A)
@@ -42,10 +150,10 @@ classdef SVD
             %
             % See also cv.SVD.solveZ cv.SVD.backSubst
             %
-            [w, u, vt] = SVD_compute_(A);
+            [w, u, vt] = SVD_(0, 'compute_static', A, varargin{:});
         end
-        
-        function dst = solveZ(src)
+
+        function dst = SolveZ(src)
             %SOLVEZ  Solves an under-determined singular linear system
             %
             %    dst = cv.SVD.solveZ(src)
@@ -66,10 +174,10 @@ classdef SVD
             %
             % See also cv.SVD.compute cv.SVD.backSubst
             %
-            dst = SVD_solveZ_(src);
+            dst = SVD_(0, 'solveZ_static', src);
         end
-        
-        function dst = backSubst(w, u, vt, src)
+
+        function dst = BackSubst(w, u, vt, src)
             %BACKSUBST  Performs a singular value back substitution
             %
             %    dst = cv.SVD.backSubst(w, u, vt, src)
@@ -105,8 +213,8 @@ classdef SVD
             %
             % See also cv.SVD.compute cv.SVD.solveZ
             %
-            dst = SVD_backSubst_(w, u, vt, src);
+            dst = SVD_(0, 'backSubst_static', w, u, vt, src);
         end
     end
-    
+
 end
