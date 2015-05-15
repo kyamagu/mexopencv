@@ -30,7 +30,7 @@ classdef PCA < handle
     %
     % See also cv.PCA.PCA
     %
-    
+
     properties (SetAccess = protected)
         % Object ID
         id
@@ -41,7 +41,7 @@ classdef PCA < handle
         % Sample mean
         mean
     end
-    
+
     methods
         function this = PCA(varargin)
             %PCA  PCA constructors
@@ -73,18 +73,20 @@ classdef PCA < handle
             % See also cv.PCA cv.PCA.compute
             %
             this.id = PCA_(0,'new');
-            if nargin==1 && isscalar(varargin{1}) && isstruct(varargin{1})
-                s = varargin{1};
-                props = intersect(fieldnames(s),properties(this));
-                props = setdiff(props,'id');
-                for i = 1:numel(props)
-                    this.(props{i}) = s.(props{i});
+            if nargin > 0
+                if nargin==1 && isscalar(varargin{1}) && isstruct(varargin{1})
+                    s = varargin{1};
+                    props = intersect(fieldnames(s),properties(this));
+                    props = setdiff(props,'id');
+                    for i = 1:numel(props)
+                        this.(props{i}) = s.(props{i});
+                    end
+                else
+                    this.compute(varargin{:});
                 end
-            else
-                this.compute(varargin{:});
             end
         end
-        
+
         function delete(this)
             %DELETE  PCA destructor
             %
@@ -92,7 +94,17 @@ classdef PCA < handle
             %
             PCA_(this.id, 'delete');
         end
-        
+
+        function read(this, filename, varargin)
+            %READ
+            PCA_(this.id, 'read', filename, varargin{:});
+        end
+
+        function write(this, filename)
+            %WRITE
+            PCA_(this.id, 'write', filename);
+        end
+
         function S = struct(this)
             %STRUCT  Converts to a struct array
             %
@@ -109,7 +121,7 @@ classdef PCA < handle
                        'eigenvalues', {this.eigenvalues},...
                        'mean',        {this.mean});
         end
-        
+
         function obj = saveobj(this)
             %SAVEOBJ  Serialization before save
             %
@@ -117,7 +129,7 @@ classdef PCA < handle
             %
             obj = this.struct;
         end
-        
+
         function compute(this, X, varargin)
             %COMPUTE  Performs Principal Component Analysis of the supplied dataset
             %
@@ -153,7 +165,7 @@ classdef PCA < handle
             this.eigenvalues = [];
             this.mean = [];
         end
-        
+
         function Y = project(this, X)
             %PROJECT  Projects vector(s) to the principal component subspace
             %
@@ -177,7 +189,7 @@ classdef PCA < handle
             %
             Y = PCA_(this.id, 'project', X);
         end
-        
+
         function X = backProject(this, Y)
             %BACKPROJECT  Reconstructs vectors from their PC projections
             %
@@ -202,32 +214,32 @@ classdef PCA < handle
             %
             X = PCA_(this.id, 'backProject', Y);
         end
-        
+
         function value = get.eigenvectors(this)
             %GET.EIGENVECTORS
             if isempty(this.eigenvectors)
-                this.eigenvectors = PCA_(this.id, 'eigenvectors');
+                this.eigenvectors = PCA_(this.id, 'get', 'eigenvectors');
             end
             value = this.eigenvectors;
         end
-        
+
         function value = get.eigenvalues(this)
             %GET.EIGENVALUES
             if isempty(this.eigenvalues)
-                this.eigenvalues = PCA_(this.id, 'eigenvalues');
+                this.eigenvalues = PCA_(this.id, 'get', 'eigenvalues');
             end
             value = this.eigenvalues;
         end
-        
+
         function value = get.mean(this)
             %GET.MEAN
             if isempty(this.mean)
-                this.mean = PCA_(this.id, 'mean');
+                this.mean = PCA_(this.id, 'get', 'mean');
             end
             value = this.mean;
         end
     end
-    
+
     methods (Static)
         function this = loadobj(obj)
             %LOADOBJ  Deserialization after load
@@ -237,5 +249,5 @@ classdef PCA < handle
             this = cv.PCA(obj);
         end
     end
-    
+
 end
