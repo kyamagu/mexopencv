@@ -4,11 +4,10 @@
 %    [...] = cv.getTextSize(..., 'OptionName', optionValue, ...)
 %
 % ## Input
-% * __text__ Text string.
+% * __text__ Input text string.
 %
 % ## Output
-% * __siz__ Size of of a box that contains the specified text
-%        (`[width,height]`).
+% * __siz__ Size of a box that contains the specified text `[w,h]`.
 % * __baseLine__ y-coordinate of the baseline relative to the bottom-most
 %        text point.
 %
@@ -63,5 +62,5 @@
 %    imshow(img, 'InitialMagnification',100, 'Border','tight')
 %
 %
-% See also cv.putText
+% See also: cv.putText
 %

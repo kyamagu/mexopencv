@@ -461,6 +461,15 @@ cv::Range MxArray::toRange() const
     return r;
 }
 
+cv::RotatedRect MxArray::toRotatedRect(mwIndex index) const
+{
+    cv::RotatedRect rr;
+    if (isField("center")) rr.center = at("center", index).toPoint_<float>();
+    if (isField("size"))   rr.size   = at("size",   index).toSize_<float>();
+    if (isField("angle"))  rr.angle  = at("angle",  index).toDouble();
+    return rr;
+}
+
 cv::TermCriteria MxArray::toTermCriteria(mwIndex index) const
 {
     MxArray _type(at("type", index));

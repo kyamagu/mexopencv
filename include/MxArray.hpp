@@ -369,6 +369,11 @@ class MxArray
      * @return cv::Range.
      */
     cv::Range toRange() const;
+    /** Convert MxArray to cv::RotatedRect.
+     * @param index index of the struct array.
+     * @return cv::RotatedRect.
+     */
+    cv::RotatedRect toRotatedRect(mwIndex index=0) const;
     /** Convert MxArray to cv::TermCriteria.
      * @param index index of the struct array.
      * @return cv::TermCriteria.

@@ -64,9 +64,14 @@ const ConstMap<std::string,int> DistType = ConstMap<std::string,int>
 /** Line type for drawing
  */
 const ConstMap<std::string,int> LineType = ConstMap<std::string,int>
-    ("8",  8)
-    ("4",  4)
-    ("AA", CV_AA);
+    ("4",  cv::LINE_4)
+    ("8",  cv::LINE_8)
+    ("AA", cv::LINE_AA);
+
+/** Thickness type for drawing
+ */
+const ConstMap<std::string,int> ThicknessType = ConstMap<std::string,int>
+    ("Filled", cv::FILLED);
 
 /** Font faces for drawing
  */

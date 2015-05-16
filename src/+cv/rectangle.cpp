@@ -24,20 +24,25 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    bool _arg_format = (nrhs%2)==0;
-    
+
+    // cv::rectangle has two overloaded variants
+    bool rect_variant = (rhs[1].numel() == 4);
+    bool cond = (rect_variant ? ((nrhs%2)==0) : (nrhs>=3 && (nrhs%2)==1));
+    if (!cond)
+        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+
     // Option processing
-    Mat img = rhs[0].toMat();
     Scalar color;
-    int thickness=1;
-    int lineType=8;
-    int shift=0;
-    for (int i=(_arg_format)?2:3; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
+    int thickness = 1;
+    int lineType = cv::LINE_8;
+    int shift = 0;
+    for (int i=(rect_variant ? 2 : 3); i<nrhs; i+=2) {
+        string key(rhs[i].toString());
         if (key=="Color")
             color = rhs[i+1].toScalar();
         else if (key=="Thickness")
-            thickness = rhs[i+1].toInt();
+            thickness = (rhs[i+1].isChar()) ?
+                ThicknessType[rhs[i+1].toString()] : rhs[i+1].toInt();
         else if (key=="LineType")
             lineType = (rhs[i+1].isChar()) ?
                 LineType[rhs[i+1].toString()] : rhs[i+1].toInt();
@@ -46,9 +51,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
-    // Execute function
-    if (!_arg_format) {
+
+    // Process
+    Mat img(rhs[0].toMat());
+    if (!rect_variant) {
         Point pt1(rhs[1].toPoint()), pt2(rhs[2].toPoint());
         rectangle(img, pt1, pt2, color, thickness, lineType, shift);
     }

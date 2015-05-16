@@ -41,7 +41,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             matchColor = rhs[i+1].toScalar();
         else if (key=="SinglePointColor")
             singlePointColor = rhs[i+1].toScalar();
-        else if (key=="MachesMask") {
+        else if (key=="MatchesMask") {
             string s(rhs[i+1].toString());
             matchesMask = vector<char>(s.begin(),s.end());
         }
