@@ -18,14 +18,14 @@
 /** BorderType map for option processing
  */
 const ConstMap<std::string,int> BorderType = ConstMap<std::string,int>
-    ("Replicate",   cv::BORDER_REPLICATE)
-    ("Constant",    cv::BORDER_CONSTANT)
-    ("Reflect",     cv::BORDER_REFLECT)
-    ("Wrap",        cv::BORDER_WRAP)
-    ("Reflect101",  cv::BORDER_REFLECT_101)
-    ("Transparent", cv::BORDER_TRANSPARENT)
-    ("Default",     cv::BORDER_DEFAULT)
-    ("Isolated",    cv::BORDER_ISOLATED);
+    ("Constant",    cv::BORDER_CONSTANT)    //!< iiiiii|abcdefgh|iiiiiii for some i
+    ("Replicate",   cv::BORDER_REPLICATE)   //!< aaaaaa|abcdefgh|hhhhhhh
+    ("Reflect",     cv::BORDER_REFLECT)     //!< fedcba|abcdefgh|hgfedcb
+    ("Wrap",        cv::BORDER_WRAP)        //!< cdefgh|abcdefgh|abcdefg
+    ("Reflect101",  cv::BORDER_REFLECT_101) //!< gfedcb|abcdefgh|gfedcba
+    ("Transparent", cv::BORDER_TRANSPARENT) //!< uvwxyz|absdefgh|ijklmno
+    ("Default",     cv::BORDER_DEFAULT)     //!< same as "Reflect101"
+    ("Isolated",    cv::BORDER_ISOLATED);   //!< do not look outside of ROI
 
 /** Interpolation type map for option processing
  */
