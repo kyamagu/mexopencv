@@ -27,20 +27,21 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<2 || ((nrhs%2)!=0) || nlhs>3)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    Mat samples(rhs[0].toMat(CV_32F));
-    int clusterCount = rhs[1].toInt();
-    Mat labels;
+
+    // Option processing
+    Mat bestLabels;
     TermCriteria criteria;
-    int attempts=10;
+    int attempts = 10;
     int flags = cv::KMEANS_RANDOM_CENTERS;
-    Mat centers;
     for (int i=2; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
-        if (key=="InitialLabels")
-            labels = rhs[i+1].toMat(CV_32S);
+        string key(rhs[i].toString());
+        if (key=="InitialLabels") {
+            bestLabels = rhs[i+1].toMat(CV_32S);
+            flags |= cv::KMEANS_USE_INITIAL_LABELS;
+        }
         else if (key=="Criteria")
             criteria = rhs[i+1].toTermCriteria();
         else if (key=="Attempts")
@@ -48,16 +49,18 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else if (key=="Initialization")
             flags = Initialization[rhs[i+1].toString()];
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
-    flags |= (labels.empty()) ? 0 : cv::KMEANS_USE_INITIAL_LABELS;
-    
+
     // Process
-    double d = kmeans(samples, clusterCount, labels, criteria, attempts, flags,
-        centers);
-    plhs[0] = MxArray(labels);
+    Mat data(rhs[0].toMat(CV_32F)), centers;
+    int K = rhs[1].toInt();
+    double compactness = kmeans(data, K, bestLabels, criteria, attempts,
+        flags, (nlhs>1 ? centers : noArray()));
+    plhs[0] = MxArray(bestLabels);
     if (nlhs>1)
         plhs[1] = MxArray(centers);
     if (nlhs>2)
-        plhs[2] = MxArray(d);
+        plhs[2] = MxArray(compactness);
 }
