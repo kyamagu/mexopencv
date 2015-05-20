@@ -21,29 +21,28 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<1 || ((nrhs%2)!=1) || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
-    int blockSize=5;
-    int apertureSize=3;
+    int blockSize = 5;
+    int ksize = 3;
     int borderType = cv::BORDER_DEFAULT;
     for (int i=1; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
+        string key(rhs[i].toString());
         if (key=="BlockSize")
             blockSize = rhs[i+1].toInt();
-        else if (key=="ApertureSize")
-            apertureSize = rhs[i+1].toInt();
+        else if (key=="KSize")
+            ksize = rhs[i+1].toInt();
         else if (key=="BorderType")
             borderType = BorderType[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Process
-    Mat src = (rhs[0].isUint8()) ? rhs[0].toMat(CV_8U) : rhs[0].toMat(CV_32F);
-    Mat dst;
-    cornerEigenValsAndVecs(src, dst, blockSize, apertureSize, borderType);
+    Mat src(rhs[0].toMat(rhs[0].isUint8() ? CV_8U : CV_32F)), dst;
+    cornerEigenValsAndVecs(src, dst, blockSize, ksize, borderType);
     plhs[0] = MxArray(dst);
 }

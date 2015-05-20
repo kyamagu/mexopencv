@@ -17,14 +17,14 @@ classdef TestCornerSubPix
             0 0 0 0 0 0 0 0 0 0 0 0 0;...
             ]);
     end
-    
+
     methods (Static)
         function test_1
             im = TestCornerSubPix.img;
             corners = {[3,3],[8,8]};
             result = cv.cornerSubPix(im,corners);
         end
-        
+
         function test_error_1
             try
                 cv.cornerSubPix();
@@ -34,6 +34,5 @@ classdef TestCornerSubPix
             end
         end
     end
-    
-end
 
+end

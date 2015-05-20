@@ -3,12 +3,12 @@ classdef TestHoughLines
     properties (Constant)
         img = rgb2gray(imread(fullfile(mexopencv.root(),'test','img001.jpg')));
     end
-    
+
     methods (Static)
         function test_1
             result = cv.HoughLines(TestHoughLines.img);
         end
-        
+
         function test_error_1
             try
                 cv.HoughLines();
@@ -18,6 +18,5 @@ classdef TestHoughLines
             end
         end
     end
-    
-end
 
+end

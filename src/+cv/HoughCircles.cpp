@@ -8,12 +8,14 @@
 using namespace std;
 using namespace cv;
 
-/// Method for option processing
+namespace {
+/// Hough transform modes for option processing
 const ConstMap<std::string,int> HoughModesMap = ConstMap<std::string,int>
     ("Standard",      cv::HOUGH_STANDARD)
     ("Probabilistic", cv::HOUGH_PROBABILISTIC)
     ("MultiScale",    cv::HOUGH_MULTI_SCALE)
     ("Gradient",      cv::HOUGH_GRADIENT);
+}
 
 /**
  * Main entry called from Matlab
@@ -28,20 +30,22 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<1 || ((nrhs%2)!=1) || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
+
     Mat image(rhs[0].toMat(CV_8U));
-    vector<Vec3f> circles;
-    int method=cv::HOUGH_GRADIENT;
-    double dp=1;
-    double minDist=image.rows/8;
-    double param1=100;
-    double param2=100;
-    int minRadius=0;
-    int maxRadius=0;
+
+    // Option processing
+    int method = cv::HOUGH_GRADIENT;
+    double dp = 1;
+    double minDist = image.rows/8;
+    double param1 = 100;
+    double param2 = 100;
+    int minRadius = 0;
+    int maxRadius = 0;
     for (int i=1; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
+        string key(rhs[i].toString());
         if (key=="Method")
             method = HoughModesMap[rhs[i+1].toString()];
         else if (key=="DP")
@@ -59,11 +63,14 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Process
-    HoughCircles(image, circles, method, dp, minDist, param1, param2, minRadius, maxRadius);
-    vector<Mat> vc(circles.size());
-    for (int i=0;i<vc.size();++i)
-        vc[i] = Mat(1,3,CV_32FC1,&circles[i][0]);
+    vector<Vec3f> circles;
+    HoughCircles(image, circles, method, dp, minDist,
+        param1, param2, minRadius, maxRadius);
+    vector<Mat> vc;
+    vc.reserve(circles.size());
+    for (vector<Vec3f>::const_iterator it = circles.begin(); it != circles.end(); ++it)
+        vc.push_back(Mat(*it, false));
     plhs[0] = MxArray(vc);
 }
