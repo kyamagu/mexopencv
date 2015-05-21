@@ -779,8 +779,8 @@ Ptr<FlannBasedMatcher> createFlannBasedMatcher(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-	if (((last-first) % 2) != 0)
-		mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    if (((last-first) % 2) != 0)
+        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
     Ptr<flann::IndexParams> indexParams;
     Ptr<flann::SearchParams> searchParams;
     for (; first != last; first += 2) {
@@ -804,8 +804,8 @@ Ptr<BFMatcher> createBFMatcher(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-	if (((last-first) % 2) != 0)
-		mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    if (((last-first) % 2) != 0)
+        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
     int normType = cv::NORM_L2;
     bool crossCheck = false;
     for (; first != last; first += 2) {

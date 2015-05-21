@@ -216,7 +216,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         if (nrhs<5 || (nrhs%2)==0 || nlhs>2)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         int layout = cv::ml::ROW_SAMPLE;
-		Mat varIdx, sampleIdx, sampleWeights, varType;
+        Mat varIdx, sampleIdx, sampleWeights, varType;
         for (int i=5; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key=="Layout")
