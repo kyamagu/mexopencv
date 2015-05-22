@@ -1098,6 +1098,17 @@ template <> std::vector<cv::Point2f> MxArray::toVector() const;
  */
 template <> std::vector<cv::Point3f> MxArray::toVector() const;
 
+/** Convert MxArray to std::vector<Rect>.
+ * @return std::vector<Rect> value.
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Rect> v = cellArray.toVector<Rect>();
+ * @endcode
+ */
+template <> std::vector<cv::Rect> MxArray::toVector() const;
+
 /** Convert MxArray to std::vector<cv::KeyPoint>.
  * @return std::vector<cv::KeyPoint> value.
  *

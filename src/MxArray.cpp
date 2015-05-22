@@ -603,6 +603,13 @@ std::vector<cv::Point3f> MxArray::toVector() const
 }
 
 template <>
+std::vector<cv::Rect> MxArray::toVector() const
+{
+    return toVector(
+        std::const_mem_fun_ref_t<cv::Rect, MxArray>(&MxArray::toRect));
+}
+
+template <>
 std::vector<cv::KeyPoint> MxArray::toVector() const
 {
     int n = numel();
