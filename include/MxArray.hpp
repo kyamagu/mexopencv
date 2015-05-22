@@ -1109,6 +1109,17 @@ template <> std::vector<cv::Point3f> MxArray::toVector() const;
  */
 template <> std::vector<cv::Rect> MxArray::toVector() const;
 
+/** Convert MxArray to std::vector<cv::RotatedRect>.
+ * @return std::vector<cv::RotatedRect> value.
+ *
+ * Example:
+ * @code
+ * MxArray structArray(prhs[0]);
+ * vector<RotatedRect> v = structArray.toVector<RotatedRect>();
+ * @endcode
+ */
+template <> std::vector<cv::RotatedRect> MxArray::toVector() const;
+
 /** Convert MxArray to std::vector<cv::KeyPoint>.
  * @return std::vector<cv::KeyPoint> value.
  *

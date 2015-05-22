@@ -610,6 +610,24 @@ std::vector<cv::Rect> MxArray::toVector() const
 }
 
 template <>
+std::vector<cv::RotatedRect> MxArray::toVector() const
+{
+    int n = numel();
+    std::vector<cv::RotatedRect> v;
+    v.reserve(n);
+    if (isCell())
+        for (int i = 0; i < n; ++i)
+            v.push_back(at<MxArray>(i).toRotatedRect());
+    else if (isStruct())
+        for (int i = 0; i < n; ++i)
+            v.push_back(toRotatedRect(i));
+    else
+        mexErrMsgIdAndTxt("mexopencv:error",
+                          "MxArray unable to convert to std::vector");
+    return v;
+}
+
+template <>
 std::vector<cv::KeyPoint> MxArray::toVector() const
 {
     int n = numel();
