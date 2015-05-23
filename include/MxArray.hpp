@@ -258,7 +258,7 @@ class MxArray
      * m.set("field2", "field2 value");
      * @endcode
      */
-    MxArray(const char**fields, int nfields, int m = 1, int n = 1);
+    MxArray(const char**fields, int nfields, mwSize m = 1, mwSize n = 1);
     /** Destructor. This does not free the underlying mxArray*.
      */
     virtual ~MxArray() {}
@@ -274,7 +274,7 @@ class MxArray
      * c.set(1, MxArray(std::string("some value")));
      * @endcode
      */
-    static inline MxArray Cell(int m = 1, int n = 1)
+    static inline MxArray Cell(mwSize m = 1, mwSize n = 1)
     {
         mxArray *pm = mxCreateCellMatrix(m,n);
         if (!pm)
@@ -297,7 +297,7 @@ class MxArray
      * @endcode
      */
     static inline MxArray Struct(const char** fields = NULL,
-        int nfields = 0, int m = 1, int n = 1)
+        int nfields = 0, mwSize m = 1, mwSize n = 1)
     {
         mxArray *pm = mxCreateStructMatrix(m, n, nfields, fields);
         if (!pm)
@@ -307,7 +307,7 @@ class MxArray
     /** Clone mxArray. This allocates new mxArray*.
      * @return MxArray object, a deep-copy clone.
      */
-    MxArray clone()
+    MxArray clone() const
     {
         mxArray *pm = mxDuplicateArray(p_);
         if (!pm)
@@ -896,9 +896,9 @@ class ConstMap
         return *this;
     }
     /// Implicit converter to std::map
-    operator std::map<T,U>() { return m_; }
+    operator std::map<T,U>() const { return m_; }
     /// Lookup operator; fail if not found
-    U operator[] (const T& key) const
+    const U& operator[] (const T& key) const
     {
         typename std::map<T,U>::const_iterator it = m_.find(key);
         if (it==m_.end())
@@ -917,7 +917,7 @@ void MxArray::fromVector(const std::vector<T>& v)
         p_ = mxCreateCellMatrix(1, v.size());
         if (!p_)
             mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-        for (int i = 0; i < v.size(); ++i)
+        for (mwIndex i = 0; i < v.size(); ++i)
             mxSetCell(const_cast<mxArray*>(p_), i, MxArray(v[i]));
     } else {
         p_ = mxCreateNumericMatrix(1, v.size(), MxTypes<T>::type, mxREAL);
@@ -1022,7 +1022,7 @@ cv::Rect_<T> MxArray::toRect_() const
 template <typename T>
 cv::Scalar_<T> MxArray::toScalar_() const
 {
-    int n = numel();
+    const mwSize n = numel();
     if (!isNumeric() || n < 1 || 4 < n)
         mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a cv::Scalar");
     switch (n) {
@@ -1037,14 +1037,14 @@ cv::Scalar_<T> MxArray::toScalar_() const
 template <typename T>
 std::vector<T> MxArray::toVector() const
 {
-    int n = numel();
+    const mwSize n = numel();
     std::vector<T> vt;
     vt.reserve(n);
     if (isNumeric())
-        for (int i = 0; i < n; ++i)
+        for (mwIndex i = 0; i < n; ++i)
             vt.push_back(at<T>(i));
     else if (isCell())
-        for (int i = 0; i < n; ++i)
+        for (mwIndex i = 0; i < n; ++i)
             //vt.push_back(at<MxArray>(i).at<T>(0));
             vt.push_back(MxArray(mxGetCell(p_, i)).at<T>(0));
     else
@@ -1055,10 +1055,10 @@ std::vector<T> MxArray::toVector() const
 template <typename T>
 std::vector<T> MxArray::toVector(std::const_mem_fun_ref_t<T,MxArray> f) const
 {
-    std::vector<MxArray> v(toVector<MxArray>());
+    const std::vector<MxArray> v(toVector<MxArray>());
     std::vector<T> vt;
     vt.reserve(v.size());
-    for (std::vector<MxArray>::iterator it=v.begin(); it!=v.end(); ++it)
+    for (std::vector<MxArray>::const_iterator it=v.begin(); it!=v.end(); ++it)
         vt.push_back(f(*it));
     return vt;
 }
