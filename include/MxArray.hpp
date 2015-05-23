@@ -17,90 +17,91 @@
  */
 template <typename T>
 struct MxTypes {
+    /// maps general template parameter to unkown MATLAB type.
     static const mxClassID type = mxUNKNOWN_CLASS;
 };
 
 /** int8_t traits.
  */
-template<> struct MxTypes<int8_t>
-{
+template<> struct MxTypes<int8_t> {
+    /// maps \c int8_t to \c int8 MATLAB type.
     static const mxClassID type = mxINT8_CLASS;
 };
 
 /** uint8_t traits.
  */
-template<> struct MxTypes<uint8_t>
-{
+template<> struct MxTypes<uint8_t> {
+    /// maps \c uint8_t to \c uint8 MATLAB type.
     static const mxClassID type = mxUINT8_CLASS;
 };
 
 /** int16_t traits.
  */
-template<> struct MxTypes<int16_t>
-{
+template<> struct MxTypes<int16_t> {
+    /// maps \c int16_t to \c int16 MATLAB type.
     static const mxClassID type = mxINT16_CLASS;
 };
 
 /** uint16_t traits.
  */
-template<> struct MxTypes<uint16_t>
-{
+template<> struct MxTypes<uint16_t> {
+    /// maps \c uint16_t to \c uint16 MATLAB type.
     static const mxClassID type = mxUINT16_CLASS;
 };
 
 /** int32_t traits.
  */
-template<> struct MxTypes<int32_t>
-{
+template<> struct MxTypes<int32_t> {
+    /// maps \c int32_t to \c int32 MATLAB type.
     static const mxClassID type = mxINT32_CLASS;
 };
 
 /** uint32_t traits.
  */
-template<> struct MxTypes<uint32_t>
-{
+template<> struct MxTypes<uint32_t> {
+    /// maps \c uint32_t to \c uint32 MATLAB type.
     static const mxClassID type = mxUINT32_CLASS;
 };
 
 /** int64_t traits.
  */
-template<> struct MxTypes<int64_t>
-{
+template<> struct MxTypes<int64_t> {
+    /// maps \c int64_t to \c int64 MATLAB type.
     static const mxClassID type = mxINT64_CLASS;
 };
 
 /** uint64_t traits.
  */
-template<> struct MxTypes<uint64_t>
-{
+template<> struct MxTypes<uint64_t> {
+    /// maps \c uint64_t to \c uint64 MATLAB type.
     static const mxClassID type = mxUINT64_CLASS;
 };
 
 /** float traits.
  */
-template<> struct MxTypes<float>
-{
+template<> struct MxTypes<float> {
+    /// maps \c float to \c single MATLAB type.
     static const mxClassID type = mxSINGLE_CLASS;
 };
 
 /** double traits.
  */
-template<> struct MxTypes<double>
-{
+template<> struct MxTypes<double> {
+    /// maps \c double to \c double MATLAB type.
     static const mxClassID type = mxDOUBLE_CLASS;
 };
 
 /** char traits.
  */
-template<> struct MxTypes<char>
-{
+template<> struct MxTypes<char> {
+    /// maps \c char to \c mxChar MATLAB type.
     static const mxClassID type = mxCHAR_CLASS;
 };
 
 /** bool traits.
  */
-template<> struct MxTypes<bool>
-{
+template<> struct MxTypes<bool> {
+    /// maps \c bool to \c mxLogical MATLAB type.
     static const mxClassID type = mxLOGICAL_CLASS;
 };
 
@@ -118,41 +119,47 @@ class MxArray
      */
     MxArray(const MxArray& arr) : p_(arr.p_) {}
     /** Assignment operator.
+     * @param rhs Reference to another MxArray.
+     * @return reference to current MxArray object (for chained calls).
      */
     MxArray& operator=(const MxArray& rhs);
     /** MxArray constructor from int.
      * @param i int value.
+     * @return MxArray object, a scalar double array.
      */
     explicit MxArray(const int i);
     /** MxArray constructor from double.
      * @param d double value.
+     * @return MxArray object, a scalar double array.
      */
     explicit MxArray(const double d);
     /** MxArray constructor from bool.
      * @param b bool value.
+     * @return MxArray object, a scalar logical array.
      */
     explicit MxArray(const bool b);
     /** MxArray constructor from std::string.
      * @param s reference to a string value.
+     * @return MxArray object.
      */
     explicit MxArray(const std::string& s);
     /** Convert cv::Mat to MxArray.
      * @param mat cv::Mat object.
-     * @param classid classid of mxArray. e.g., mxDOUBLE_CLASS. When
-     *                mxUNKNOWN_CLASS is specified, classid will be
-     *                automatically determined from the type of cv::Mat.
-     *                default: mxUNKNOWN_CLASS.
-     * @param transpose Optional transposition to the return value so that rows
-     *                  and columns of the 2D Mat are mapped to the 2nd and 1st
-     *                  dimensions in MxArray, respectively. This does not
-     *                  apply the N-D array conversion. default true.
+     * @param classid classid of mxArray. e.g., \c mxDOUBLE_CLASS. When
+     *    \c mxUNKNOWN_CLASS is specified, classid will be automatically
+     *    determined from the type of cv::Mat. default: \c mxUNKNOWN_CLASS.
+     * @param transpose Optional transposition to the return value so that
+     *    rows and columns of the 2D Mat are mapped to the 2nd and 1st
+     *    dimensions in MxArray, respectively. This does not apply the N-D
+     *    array conversion. default true.
      * @return MxArray object.
      *
      * Convert cv::Mat object to an MxArray. When the cv::Mat object is 2D, the
      * width, height, and channels are mapped to the first, second, and third
-     * dimensions of the MxArray unless transpose flag is set to false. When
-     * the cv::Mat object is N-D, (dim 1, dim 2,...dim N, channels) are mapped
-     * to (dim 2, dim 1, ..., dim N, dim N+1), respectively.
+     * dimensions of the MxArray unless \p transpose flag is set to false. When
+     * the cv::Mat object is N-D, <tt>(dim 1, dim 2,...dim N, channels)</tt>
+     * are mapped to <tt>(dim 2, dim 1, ..., dim N, dim N+1)</tt>,
+     * respectively.
      *
      * Example:
      * @code
@@ -165,60 +172,76 @@ class MxArray
                      bool transpose=true);
     /** Convert float cv::SparseMat to MxArray.
      * @param mat cv::SparseMat object.
-     * @return MxArray object.
+     * @return MxArray object, a 2D sparse array.
      */
     explicit MxArray(const cv::SparseMat& mat);
     /** Convert cv::Moments to MxArray.
      * @param m cv::Moments object.
-     * @return MxArray object.
+     * @return MxArray object, a scalar struct array.
      */
     explicit MxArray(const cv::Moments& m);
     /** Convert cv::KeyPoint to MxArray.
      * @param p cv::KeyPoint object.
-     * @return MxArray object.
+     * @return MxArray object, a scalar struct array.
      */
     explicit MxArray(const cv::KeyPoint& p);
     /** Convert cv::DMatch to MxArray.
      * @param m cv::DMatch object.
-     * @return MxArray object.
+     * @return MxArray object, a scalar struct array.
      */
     explicit MxArray(const cv::DMatch& m);
     /** Convert cv::RotatedRect to MxArray.
-     * @param m cv::RotatedRect object.
-     * @return MxArray object.
+     * @param r cv::RotatedRect object.
+     * @return MxArray object, a scalar struct array.
      */
-    explicit MxArray(const cv::RotatedRect& m);
+    explicit MxArray(const cv::RotatedRect& r);
     /** Convert cv::TermCriteria to MxArray.
      * @param t cv::TermCriteria object.
-     * @return MxArray object.
+     * @return MxArray object, a scalar struct array.
      */
     explicit MxArray(const cv::TermCriteria& t);
-    /** MxArray constructor from vector<T>. Make a numeric or cell array.
+    /** MxArray constructor from vector<T>.
      * @param v vector of type T.
+     * @return MxArray object, a numeric or a cell array.
+     *
+     * The constructor forwards the call to an appropriate overloaded method
+     * according to the paramter type (tag dispatching by instance).
+     * In the general case, vectors of primitive types are converted to
+     * numeric arrays of the equivalent MATLAB type, while other types are
+     * converted to cell arrays.
+     *
+     * Example:
+     * @code
+     * std::vector<double> v(10, 1.0);
+     * mxArray* plhs[0] = MxArray(v);
+     * @endcode
      */
     template <typename T> explicit MxArray(const std::vector<T>& v) {
         fromVector<T>(v);
     }
     /** MxArray constructor from cv::Point_<T>.
      * @param p cv::Point_<T> object.
-     * @return two-element numeric MxArray.
+     * @return two-element numeric MxArray <tt>[x, y]</tt>.
      */
     template <typename T> explicit MxArray(const cv::Point_<T>& p);
     /** MxArray constructor from cv::Point3_<T>.
      * @param p cv::Point3_<T> object.
-     * @return three-element numeric MxArray.
+     * @return three-element numeric MxArray <tt>[x, y, z]</tt>.
      */
     template <typename T> explicit MxArray(const cv::Point3_<T>& p);
     /** MxArray constructor from cv::Size_<T>.
+     * @param s cv::Size_<T> object.
      * @return two-element numeric MxArray.
      */
     template <typename T> explicit MxArray(const cv::Size_<T>& s);
     /** MxArray constructor from cv::Rect_<T>.
-     * @return four-element numeric MxArray [x, y, width, height].
+     * @param r cv::Rect_<T> object.
+     * @return four-element numeric MxArray <tt>[x, y, width, height]</tt>.
      */
     template <typename T> explicit MxArray(const cv::Rect_<T>& r);
     /** MxArray constructor from cv::Scalar_<T>.
-     * @return four-element numeric MxArray.
+     * @param s cv::Scalar_<T> object.
+     * @return four-element numeric MxArray <tt>[v0, v1, v2, v3]</tt>.
      */
     template <typename T> explicit MxArray(const cv::Scalar_<T>& s);
     /** Generic constructor for a struct array.
@@ -242,6 +265,14 @@ class MxArray
     /** Create a new cell array.
      * @param m Number of rows.
      * @param n Number of cols.
+     * @return MxArray object, a 2D cell array with uninitialized cells.
+     *
+     * Example:
+     * @code
+     * MxArray c = MxArray::Cell(2,1);
+     * c.set(0, MxArray(1));
+     * c.set(1, MxArray(std::string("some value")));
+     * @endcode
      */
     static inline MxArray Cell(int m=1, int n=1)
     {
@@ -250,8 +281,17 @@ class MxArray
     /** Create a new struct array.
      * @param fields Field names.
      * @param nfields Number of fields.
-     * @param m Number of rows.
-     * @param n Number of cols.
+     * @param m Number of rows (size of the first dimension).
+     * @param n Number of cols (size of the second dimension).
+     * @return MxArray object, a 2D struct array with uninitialized fields.
+     *
+     * Example:
+     * @code
+     * const char* fields[] = {"field1", "field2"};
+     * MxArray s = MxArray::Struct(fields, 2);
+     * s.set("field1", 1);
+     * s.set("field2", "field2 value");
+     * @endcode
      */
     static inline MxArray Struct(const char**fields=NULL,
                                  int nfields=0,
@@ -261,21 +301,23 @@ class MxArray
         return MxArray(mxCreateStructMatrix(m, n, nfields, fields));
     }
     /** Clone mxArray. This allocates new mxArray*.
-     * @return MxArray object.
+     * @return MxArray object, a deep-copy clone.
      */
     MxArray clone() { return MxArray(mxDuplicateArray(p_)); }
-    /** Destroy allocated mxArray. Use this to destroy a temporary mxArray not
-     *  to be used in matlab.
-     * @return newly allocated MxArray object.
+    /** Deallocate memory occupied by mxArray.
+     *
+     * Use this to destroy a temporary mxArray. Do not call this on arrays
+     * you are returning to MATLAB as left-hand side.
      */
     void destroy() { mxDestroyArray(const_cast<mxArray*>(p_)); }
     /** Implicit conversion to const mxArray*.
      * @return const mxArray* pointer.
      */
     operator const mxArray*() const { return p_; };
-    /** Implicit conversion to mxArray*. Be careful that this internally cast
-     *  away mxArray* constness.
+    /** Implicit conversion to mxArray*.
      * @return mxArray* pointer.
+     *
+     * Be careful that this internally casts away mxArray* constness.
      */
     operator mxArray*() const { return const_cast<mxArray*>(p_); };
     /** Convert MxArray to int.
@@ -295,24 +337,25 @@ class MxArray
      */
     std::string toString() const;
     /** Convert MxArray to cv::Mat.
-     * @param depth depth of cv::Mat. e.g., CV_8U, CV_32F.  When CV_USERTYPE1
-     *                is specified, depth will be automatically determined from
-     *                the classid of the MxArray. default: CV_USERTYPE1.
-     * @param transpose Optional transposition to the return value so that rows
-     *                  and columns of the 2D Mat are mapped to the 2nd and 1st
-     *                  dimensions in MxArray, respectively. This does not
-     *                  apply the N-D array conversion. default true.
+     * @param depth depth of cv::Mat. e.g., \c CV_8U, \c CV_32F. When
+     *    \c CV_USERTYPE1 is specified, depth will be automatically determined
+     *    from the classid of the MxArray. default: \c CV_USERTYPE1.
+     * @param transpose Optional transposition to the return value so that
+     *     rows and columns of the 2D Mat are mapped to the 2nd and 1st
+     *     dimensions in MxArray, respectively. This does not apply the N-D
+     *     array conversion. default true.
      * @return cv::Mat object.
      *
-     * Convert a MxArray object to a cv::Mat object. When the dimensionality of
-     * the MxArray is more than 2, the last dimension will be mapped to the
+     * Convert a MxArray object to a cv::Mat object. When the dimensionality
+     * of the MxArray is more than 2, the last dimension will be mapped to the
      * channels of the cv::Mat. Also, if the resulting cv::Mat is 2D, the 1st
      * and 2nd dimensions of the MxArray are mapped to rows and columns of the
-     * cv::Mat unless transpose flag is false. That is, when MxArray is 3D,
-     * (dim 1, dim 2, dim 3) are mapped to (cols, rows, channels) of the
-     * cv::Mat by default, whereas if MxArray is more than 4D, (dim 1, dim 2,
-     * ..., dim N-1, dim N) are mapped to (dim 2, dim 1, ..., dim N-1,
-     * channels) of the cv::Mat, respectively.
+     * cv::Mat unless \p transpose flag is false. That is, when MxArray is 3D,
+     * <tt>(dim 1, dim 2, dim 3)</tt> are mapped to
+     * <tt>(cols, rows, channels)</tt> of the cv::Mat by default, whereas if
+     * MxArray is more than 4D, <tt>(dim 1, dim 2, ..., dim N-1, dim N)</tt>
+     * are mapped to <tt>(dim 2, dim 1, ..., dim N-1, channels)</tt> of the
+     * cv::Mat, respectively.
      *
      * Example:
      * @code
@@ -321,23 +364,24 @@ class MxArray
      */
     cv::Mat toMat(int depth=CV_USRTYPE1, bool transpose=true) const;
     /** Convert MxArray to a single-channel cv::Mat.
-     * @param depth depth of cv::Mat. e.g., CV_8U, CV_32F.  When CV_USERTYPE1
-     *              is specified, depth will be automatically determined from
-     *              the the classid of the MxArray. default: CV_USERTYPE1.
-     * @param transpose Optional transposition to the return value so that rows
-     *                  and columns of the 2D Mat are mapped to the 2nd and 1st
-     *                  dimensions in MxArray, respectively. This does not
-     *                  apply the N-D array conversion. default true.
+     * @param depth depth of cv::Mat. e.g., \c CV_8U, \c CV_32F. When
+     *    \c CV_USERTYPE1 is specified, depth will be automatically determined
+     *    from the the classid of the MxArray. default: \c CV_USERTYPE1.
+     * @param transpose Optional transposition to the return value so that
+     *    rows and columns of the 2D Mat are mapped to the 2nd and 1st
+     *    dimensions in MxArray, respectively. This does not apply the N-D
+     *    array conversion. default true.
      * @return const cv::Mat object.
      *
      * Convert a MxArray object to a single-channel cv::Mat object. If the
      * MxArray is 2D, the 1st and 2nd dimensions of the MxArray are mapped to
-     * rows and columns of the cv::Mat unless transpose flag is false. If the
-     * MxArray is more than 3D, the 1st and 2nd dimensions of the MxArray are
-     * mapped to 2nd and 1st dimensions of the cv::Mat. That is, when MxArray
-     * is 2D, (dim 1, dim 2) are mapped to (cols, rows) of the cv::Mat by
-     * default, whereas if MxArray is more than 3D, (dim 1, dim 2, dim 3, ...,
-     * dim N) are mapped to (dim 2, dim 1, dim 3, ..., dim N) of the cv::Mat,
+     * rows and columns of the cv::Mat unless \p transpose flag is false. If
+     * the MxArray is more than 3D, the 1st and 2nd dimensions of the MxArray
+     * are mapped to 2nd and 1st dimensions of the cv::Mat. That is, when
+     * MxArray is 2D, <tt>(dim 1, dim 2)</tt> are mapped to
+     * <tt>(cols, rows)</tt> of the cv::Mat by default, whereas if MxArray is
+     * more than 3D, <tt>(dim 1, dim 2, dim 3, ..., dim N)</tt> are mapped to
+     * <tt>(dim 2, dim 1, dim 3, ..., dim N)</tt> of the cv::Mat,
      * respectively.
      *
      * Example:
@@ -351,32 +395,32 @@ class MxArray
      */
     cv::SparseMat toSparseMat() const;
     /** Convert MxArray to cv::Moments.
-     * @param index index of the struct array.
-     * @return cv::Moments.
+     * @param index linear index of the struct array element.
+     * @return cv::Moments object.
      */
     cv::Moments toMoments(mwIndex index=0) const;
     /** Convert MxArray to cv::KeyPoint.
-     * @param index index of the struct array.
-     * @return cv::KeyPoint.
+     * @param index linear index of the struct array element.
+     * @return cv::KeyPoint object.
      */
     cv::KeyPoint toKeyPoint(mwIndex index=0) const;
     /** Convert MxArray to cv::DMatch.
-     * @param index index of the struct array.
-     * @return cv::DMatch.
+     * @param index linear index of the struct array element.
+     * @return cv::DMatch object.
      */
     cv::DMatch toDMatch(mwIndex index=0) const;
     /** Convert MxArray to cv::Range.
-     * @return cv::Range.
+     * @return cv::Range object.
      */
     cv::Range toRange() const;
     /** Convert MxArray to cv::RotatedRect.
-     * @param index index of the struct array.
-     * @return cv::RotatedRect.
+     * @param index linear index of the struct array element.
+     * @return cv::RotatedRect object.
      */
     cv::RotatedRect toRotatedRect(mwIndex index=0) const;
     /** Convert MxArray to cv::TermCriteria.
-     * @param index index of the struct array.
-     * @return cv::TermCriteria.
+     * @param index linear index of the struct array element.
+     * @return cv::TermCriteria object.
      */
     cv::TermCriteria toTermCriteria(mwIndex index=0) const;
     /** Convert MxArray to Point_<T>.
@@ -399,7 +443,7 @@ class MxArray
      * @return cv::Scalar_<T> value.
      */
     template <typename T> cv::Scalar_<T> toScalar_() const;
-    /** Convert MxArray to std::vector<T> for a primitive type.
+    /** Convert MxArray to std::vector<T> of primitive types.
      * @return std::vector<T> value.
      *
      * The method is intended for conversion to a raw numeric vector such
@@ -416,165 +460,229 @@ class MxArray
      *          &MxArray::toInt).
      * @return std::vector<T> value.
      *
-     * The method constructs std::vector<T> by applying conversion method f to
-     * each cell array element. This is similar to std::transform function. An
-     * example usage is shown below:
+     * The method constructs std::vector<T> by applying conversion method \p f
+     * to each cell array element. This is similar to std::transform function.
+     * An example usage is shown below:
      *
      * @code
      * MxArray cellArray(prhs[0]);
-     * const_mem_fun_ref_t<Point3i,MxArray> converter(&MxArray::toPoint3_<int>);
-     * vector<Point3i> v = cellArray.toVector(converter);
+     * const_mem_fun_ref_t<Point3i,MxArray> convert(&MxArray::toPoint3_<int>);
+     * vector<Point3i> v = cellArray.toVector(convert);
      * @endcode
      */
     template <typename T>
     std::vector<T> toVector(std::const_mem_fun_ref_t<T, MxArray> f) const;
     /** Alias to toPoint_<int>.
+     * @return cv::Point object.
      */
     inline cv::Point toPoint() const { return toPoint_<int>(); }
     /** Alias to toPoint_<float>.
+     * @return cv::Point2f object.
      */
     inline cv::Point2f toPoint2f() const { return toPoint_<float>(); }
     /** Alias to toPoint3_<float>.
+     * @return cv::Point3f object.
      */
     inline cv::Point3f toPoint3f() const { return toPoint3_<float>(); }
     /** Alias to toSize_<int>.
+     * @return cv::Size object.
      */
     inline cv::Size toSize() const { return toSize_<int>(); }
     /** Alias to toRect_<int>.
+     * @return cv::Rect object.
      */
     inline cv::Rect toRect() const { return toRect_<int>(); }
     /** Alias to toScalar_<double>
+     * @return cv::Scalar object.
      */
     inline cv::Scalar toScalar() const { return toScalar_<double>(); }   
 
     /** Class ID of mxArray.
+     * @return identifier of the array class, enum value of type mxClassID.
      */
     inline mxClassID classID() const { return mxGetClassID(p_); }
     /** Class name of mxArray.
+     * @return class name of the array, as a string.
      */
     inline const std::string className() const
     {
         return std::string(mxGetClassName(p_));
     }
     /** Number of elements in an array.
+     * @return number of elements in the array
      */
     inline mwSize numel() const { return mxGetNumberOfElements(p_); }
     /** Number of dimensions.
+     * @return number of dimension in the array, always >= 2.
      */
     inline mwSize ndims() const { return mxGetNumberOfDimensions(p_); }
     /** Array of each dimension.
+     * @return array of dimensions, number of elements in each dimension.
      */
     inline const mwSize* dims() const { return mxGetDimensions(p_); };
     /** Number of rows in an array.
+     * @return number of rows in the array (first dimension).
      */
     inline mwSize rows() const { return mxGetM(p_); }
     /** Number of columns in an array.
+     * @return number of cols in the array.
+     *
+     * If the array is N-dimensional, this returns the product of dimensions
+     * 2 through N.
      */
     inline mwSize cols() const { return mxGetN(p_); }
     /** Number of fields in a struct array.
+     * @return number of fields in the structure array.
      */
     inline int nfields() const { return mxGetNumberOfFields(p_); }
-    /** Get field name of a struct array.
-     * @param index index of the struct array.
-     * @return std::string.
+    /** Get specified field name from a struct array.
+     * @param fieldnumber position of the desired field.
+     * @return std::string name of n-th field.
      */
-    std::string fieldname(int index=0) const;
+    std::string fieldname(int fieldnumber) const;
     /** Get field names of a struct array.
-     * @return std::string.
+     * @return std::vector<std::string> vector of all field names.
      */
     std::vector<std::string> fieldnames() const;
-    /** Number of elements in IR, PR, and PI arrays.
+    /** Number of elements in \c IR, \c PR, and \c PI arrays.
+     * @return number of elements allocated to hold nonzero entries
+     *         in the sparse array.
      */
     inline mwSize nzmax() const { return mxGetNzmax(p_); }
     /** Offset from first element to desired element.
      * @param i index of the first dimension of the array.
      * @param j index of the second dimension of the array.
      * @return linear offset of the specified subscript index.
+     *
+     * Return the offset (in number of elements) from the beginning of
+     * the array to the specified <tt>(i,j)</tt> subscript.
      */
     mwIndex subs(mwIndex i, mwIndex j=0) const;
     /** Offset from first element to desired element.
-     * @param si subscript index of the array.
-     * @return linear offset of the specified subscript index.
+     * @param si vector of subscripts for each dimension of the array.
+     * @return linear offset of the specified subscripts.
+     *
+     * Return the offset (in number of elements) from the beginning of
+     * the array to the specified subscript
+     * <tt>(si[0], si[1], ..., si[n])</tt>.
      */
     mwIndex subs(const std::vector<mwIndex>& si) const;
     /** Determine whether input is cell array.
+     * @return true if array is of type \c mxCELL_CLASS, false otherwise.
      */
     inline bool isCell() const { return mxIsCell(p_); }
     /** Determine whether input is string array.
+     * @return true if array is of type \c mxCHAR_CLASS, false otherwise.
      */
     inline bool isChar() const { return mxIsChar(p_); }
     /** Determine whether array is member of specified class.
+     * @param s class name as a string
+     * @return true if array is of specified class, false otherwise.
+     *
+     * Example:
+     * @code
+     * bool b = MxArray(prhs[0]).isClass("uint8");
+     * @endcode
      */
     inline bool isClass(std::string s) const
     {
         return mxIsClass(p_, s.c_str());
     }
     /** Determine whether data is complex.
+     * @return true if array is numeric containing complex data,
+     *         false otherwise
      */
     inline bool isComplex() const { return mxIsComplex(p_); }
     /** Determine whether mxArray represents data as double-precision,
      * floating-point numbers.
+     * @return true if array is of type \c mxDOUBLE_CLASS, false otherwise.
      */
     inline bool isDouble() const { return mxIsDouble(p_); }
     /** Determine whether array is empty.
+     * @return true if array is empty, false otherwise.
+     *
+     * An array is empty if the size of any of its dimensions is 0.
      */
     inline bool isEmpty() const { return mxIsEmpty(p_); }
     /** Determine whether input is finite.
+     * @param d double-precision floating-point number
+     * @return true if value is finite, false otherwise.
      */
     static inline bool isFinite(double d) { return mxIsFinite(d); }
     /** Determine whether array was copied from MATLAB global workspace.
+     * @return true if the array was copied out of the global workspace,
+     *         false otherwise.
      */
     inline bool isFromGlobalWS() const { return mxIsFromGlobalWS(p_); };
     /** Determine whether input is infinite.
+     * @param d double-precision floating-point number
+     * @return true if value is infinity, false otherwise.
      */
     static inline bool isInf(double d) { return mxIsInf(d); }
     /** Determine whether array represents data as signed 8-bit integers.
+     * @return true if array is of type \c mxINT8_CLASS, false otherwise.
      */
     inline bool isInt8() const { return mxIsInt8(p_); }
     /** Determine whether array represents data as signed 16-bit integers.
+     * @return true if array is of type \c mxINT16_CLASS, false otherwise.
      */
     inline bool isInt16() const { return mxIsInt16(p_); }
     /** Determine whether array represents data as signed 32-bit integers.
+     * @return true if array is of type \c mxINT32_CLASS, false otherwise.
      */
     inline bool isInt32() const { return mxIsInt32(p_); }
     /** Determine whether array represents data as signed 64-bit integers.
+     * @return true if array is of type \c mxINT64_CLASS, false otherwise.
      */
     inline bool isInt64() const { return mxIsInt64(p_); }
     /** Determine whether array is of type mxLogical.
+     * @return true if array is of type \c mxLOGICAL_CLASS, false otherwise.
      */
     inline bool isLogical() const { return mxIsLogical(p_); }
     /** Determine whether scalar array is of type mxLogical.
+     * @return true if array is 1-by-1 of type \c mxLOGICAL_CLASS,
+     *         false otherwise.
      */
     inline bool isLogicalScalar() const { return mxIsLogicalScalar(p_); }
-    /** Determine whether scalar array of type mxLogical is true.
+    /** Determine whether scalar array of type \c mxLogical is true.
+     * @return true if array is 1-by-1 of type \c mxLOGICAL_CLASS
+     *         containing a value of true, returns false otherwise.
      */
     inline bool isLogicalScalarTrue() const
     {
         return mxIsLogicalScalarTrue(p_);
     }
     /** Determine whether array is numeric.
+     * @return true if array is numeric, false otherwise.
      */
     inline bool isNumeric() const { return mxIsNumeric(p_); }
     /** Determine whether array represents data as single-precision,
      * floating-point numbers.
+     * @return true if array is of type \c mxSINGLE_CLASS, false otherwise.
      */
     inline bool isSingle() const { return mxIsSingle(p_); }
     /** Determine whether input is sparse array.
+     * @return true if array is numeric sparse array, false otherwise.
      */
     inline bool isSparse() const { return mxIsSparse(p_); }
     /** Determine whether input is structure array.
+     * @return true if array is of type \c mxSTRUCT_CLASS, false otherwise.
      */
     inline bool isStruct() const { return mxIsStruct(p_); }
     /** Determine whether array represents data as unsigned 8-bit integers.
+     * @return true if array is of type \c mxUINT8_CLASS, false otherwise.
      */
     inline bool isUint8() const { return mxIsUint8(p_); }
     /** Determine whether array represents data as unsigned 16-bit integers.
+     * @return true if array is of type \c mxUINT16_CLASS, false otherwise.
      */
     inline bool isUint16() const { return mxIsUint16(p_); }
     /** Determine whether array represents data as unsigned 32-bit integers.
+     * @return true if array is of type \c mxUINT32_CLASS, false otherwise.
      */
     inline bool isUint32() const { return mxIsUint32(p_); }
     /** Determine whether array represents data as unsigned 64-bit integers.
+     * @return true if array is of type \c mxUINT64_CLASS, false otherwise.
      */
     inline bool isUint64() const { return mxIsUint64(p_); }
     /** Determine whether a struct array has a specified field.
@@ -584,9 +692,18 @@ class MxArray
         return isStruct() &&
                mxGetField(p_, index, fieldName.c_str()) != NULL;
     }
-    /** Template for element accessor.
-     * @param index index of the array element.
-     * @return value of the element at index.
+    /** Template for numeric array element accessor.
+     * @param index linear index of the array element.
+     * @return value of the element at specified index.
+     *
+     * This getter method is intended for accessing elements of primitive
+     * types of a numeric array. Use an appropriate specialized/overloaded
+     * method version for accessing elements of struct or cell arrays.
+     *
+     * In MATLAB, this is equivalent to getting:
+     * @code
+     * value = arr(index)
+     * @endcode
      *
      * Example:
      * @code
@@ -595,79 +712,162 @@ class MxArray
      * @endcode
      */
     template <typename T> T at(mwIndex index) const;
-    /** Template for element accessor.
+    /** Template for numeric array element accessor.
      * @param i index of the first dimension.
      * @param j index of the second dimension.
-     * @return value of the element at (i,j).
+     * @return value of the element at (i,j) subscript.
+     *
+     * This getter method is intended for accessing elements of primitive
+     * types of a numeric array.
+     *
+     * In MATLAB, this is equivalent to getting:
+     * @code
+     * value = arr(i,j)
+     * @endcode
      */
     template <typename T> T at(mwIndex i, mwIndex j) const;
-    /** Template for element accessor.
-     * @param si subscript index of the element.
+    /** Template for numeric array element accessor.
+     * @param si vector of subscripts for each dimension of the array.
      * @return value of the element at subscript index.
+     *
+     * This getter method is intended for accessing elements of primitive
+     * types of a numeric array.
+     *
+     * In MATLAB, this is equivalent to getting:
+     * @code
+     * value = arr(dim1Sub, dim2Sub, ,dim3Sub, ...)
+     * @endcode
      */
     template <typename T> T at(const std::vector<mwIndex>& si) const;
-    /** Struct element accessor.
-     * @param fieldName field name of the struct array.
-     * @param index index of the struct array.
-     * @return value of the element at the specified field.
+    /** Struct array element accessor.
+     * @param fieldName name of field in the structure.
+     * @param index linear index of the struct array element.
+     * @return MxArray of the field at the specified index.
+     *
+     * In MATLAB, this is equivalent to getting:
+     * @code
+     * value = st(index).fieldname
+     * @endcode
+     *
+     * Example:
+     * @code
+     * MxArray structArray(prhs[0]);
+     * MxArray x = structArray.at<MxArray>("some_field");
+     * @endcode
      */
     MxArray at(const std::string& fieldName, mwIndex index=0) const;
-    /** Template for element write accessor.
-     * @param index offset of the array element.
-     * @param value value of the field.
+    /** Template for numeric array element write accessor.
+     * @param index linear index of the array element.
+     * @param value value to assign to the element at the specified index.
+     *
+     * (If the array is a cell array, \p value type must be convertible to
+     * MxArray using an existing constructor.)
+     *
+     * In MATLAB, this is equivalent to setting:
+     * @code
+     * arr(index) = value
+     * @endcode
+     *
+     * Example:
+     * @code
+     * MxArray arr(prhs[0]);
+     * arr.set<double>(0, 3.14);
+     * @endcode
      */
     template <typename T> void set(mwIndex index, const T& value);
-    /** Template for element write accessor.
+    /** Template for numeric array element write accessor.
      * @param i index of the first dimension of the array element.
      * @param j index of the first dimension of the array element.
-     * @param value value of the field.
+     * @param value value to assign to the element at the specified index.
+     *
+     * In MATLAB, this is equivalent to setting:
+     * @code
+     * arr(i,j) = value
+     * @endcode
      */
     template <typename T> void set(mwIndex i, mwIndex j, const T& value);
-    /** Template for element write accessor.
-     * @param si subscript index of the element.
-     * @param value value of the field.
+    /** Template for numeric array element write accessor.
+     * @param si vector of subscripts for each dimension of the array.
+     * @param value value to assign to the element at the specified subscript.
+     *
+     * In MATLAB, this is equivalent to setting:
+     * @code
+     * arr(dim1Sub, dim2Sub, ,dim3Sub, ...) = value
+     * @endcode
      */
     template <typename T> void set(const std::vector<mwIndex>& si,
                                    const T& value);
-    /** Template for struct element write accessor.
-     * @param fieldName field name of the struct array.
-     * @param value value of the field.
+    /** Template for struct array element write accessor.
+     * @param fieldName name of field in the structure.
+     * @param value value to assign to the field.
      * @param index linear index of the struct array element.
+     *
+     * The value type must be convertible to MxArray using an existing
+     * constructor.
+     *
+     * In MATLAB, this is equivalent to setting:
+     * @code
+     * st(index).fieldname = value
+     * @endcode
+     *
+     * Example:
+     * @code
+     * MxArray structArray = MxArray::Struct();
+     * structArray.set<double>("some_field", 3.14);
+     * @endcode
      */
     template <typename T> void set(const std::string& fieldName,
                                    const T& value,
                                    mwIndex index=0);
     /** Determine whether input is NaN (Not-a-Number).
+     * @param d double-precision floating-point number
+     * @return true if value is \c NaN, false otherwise.
      */
     static inline bool isNaN(double d) { return mxIsNaN(d); }
     /** Value of infinity.
+     * @return double-precision value representing infinity.
      */
     static inline double Inf() { return mxGetInf(); }
-    /** Value of NaN (Not-a-Number).
+    /** Value of \c NaN (Not-a-Number).
+     * @return double-precision value representing \c NaN.
      */
     static inline double NaN() { return mxGetNaN(); }
-    /** Value of EPS.
+    /** Value of \c EPS.
+     * @return double-precision value representing MATLAB \c eps.
+     *
+     * This variable holds the distance from 1.0 to the next largest
+     * floating-point number. As such, it is a measure of floating-point
+     * accuracy.
      */
     static inline double Eps() { return mxGetEps(); }
   private:
-    /** Internal std::vector converter.
+    /** Internal converter from std::vector to MxArray.
+     * @param v vector of type \c T.
+     * @return MxArray object, representing a numeric or a cell array.
+     *
+     * Vectors of primitive types are converted to numeric arrays of the
+     * equivalent MATLAB type, while other types are converted to cell arrays
+     * (assuming an appropriate constructor exists that converts each element
+     * of type \c T to MxArray).
      */
     template <typename T>
     void fromVector(const std::vector<T>& v);
-    /** mxArray c object.
+    /** const pointer to the mxArray opaque object.
      */
     const mxArray* p_;
 };
 
 /** std::map wrapper with one-line initialization and lookup method.
- * Initialization
+ *
+ * Initialization:
  * @code
  * const ConstMap<std::string,int> BorderType = ConstMap<std::string,int>
  *     ("Replicate",  cv::BORDER_REPLICATE)
  *     ("Constant",   cv::BORDER_CONSTANT)
  *     ("Reflect",    cv::BORDER_REFLECT);
  * @endcode
- * Lookup
+ *
+ * Lookup:
  * @code
  * BorderType["Constant"] // => cv::BORDER_CONSTANT
  * @endcode
@@ -698,6 +898,7 @@ class ConstMap
         return (*it).second;
     }
   private:
+    //// private map object
     std::map<T, U> m_;
 };
 
@@ -994,29 +1195,35 @@ void MxArray::set(const std::string& fieldName, const T& value, mwIndex index)
                static_cast<mxArray*>(MxArray(value)));
 }
 
-/** Specialization for vector<char> construction.
+/** MxArray specialized constructor from vector<char>.
+ * @param v vector of type char.
+ * @return a char array MxArray object.
  */
 template<>
 void MxArray::fromVector(const std::vector<char>& v);
 
-/** Specialization for vector<bool> construction.
+/** MxArray specialized constructor from vector<bool>.
+ * @param v vector of type bool.
+ * @return a logical array MxArray object.
  */
 template<>
 void MxArray::fromVector(const std::vector<bool>& v);
 
-/** MxArray constructor from vector<DMatch>. Make a cell array.
+/** MxArray specialized constructor from vector<DMatch>.
  * @param v vector of type DMatch.
+ * @return a struct array MxArray object.
  */
 template <> MxArray::MxArray(const std::vector<cv::DMatch>& v);
 
-/** MxArray constructor from vector<KeyPoint>. Make a cell array.
- * @param v vector of KeyPoint.
+/** MxArray specialized constructor from vector<KeyPoint>.
+ * @param v vector of type KeyPoint.
+ * @return a struct array MxArray object.
  */
 template <> MxArray::MxArray(const std::vector<cv::KeyPoint>& v);
 
-/** Cell element accessor.
- * @param index index of the cell array.
- * @return MxArray of the element at index.
+/** Cell array element accessor.
+ * @param index linear index of the cell array element.
+ * @return MxArray of the element at the specified index.
  *
  * Example:
  * @code
@@ -1026,9 +1233,16 @@ template <> MxArray::MxArray(const std::vector<cv::KeyPoint>& v);
  */
 template <> MxArray MxArray::at(mwIndex index) const;
 
-/** Template for element write accessor.
- * @param index offset of the array element.
- * @param value value of the field.
+/** Cell array element write accessor.
+ * @param index linear index of the cell array element.
+ * @param value MxArray to assign to the element at the specified index.
+ *
+ * Example:
+ * @code
+ * MxArray cellArray = MxArray::Cell(1,2);
+ * cellArray.set<MxArray>(0, MxArray(3.14));
+ * cellArray.set<MxArray>(1, MxArray(std::string("hello")));
+ * @endcode
  */
 template <> void MxArray::set(mwIndex index, const MxArray& value);
 

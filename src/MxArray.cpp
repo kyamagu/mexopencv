@@ -1,4 +1,4 @@
-/** Implemenation of MxArray.
+/** Implementation of MxArray.
  * @file MxArray.cpp
  * @author Kota Yamaguchi
  * @date 2012
@@ -7,28 +7,23 @@
 
 namespace { // namespace
 
-/** Field names for cv::Moments.
- */
+/// Field names for cv::Moments.
 const char *cv_moments_fields[10] = {"m00", "m10", "m01", "m20", "m11", "m02",
                                      "m30", "m21", "m12", "m03"};
-/** Field names for cv::RotatedRect.
- */
+/// Field names for cv::RotatedRect.
 const char *cv_rotated_rect_fields[3] = {"center", "size", "angle"};
-/** Field names for cv::TermCriteria.
- */
+/// Field names for cv::TermCriteria.
 const char *cv_term_criteria_fields[3] = {"type", "maxCount", "epsilon"};
-/** Field names for cv::Keypoint.
- */
+/// Field names for cv::Keypoint.
 const char *cv_keypoint_fields[6] = {"pt", "size", "angle", "response",
                                      "octave", "class_id"};
-/** Field names for cv::DMatch.
- */
+/// Field names for cv::DMatch.
 const char *cv_dmatch_fields[4] = {"queryIdx", "trainIdx", "imgIdx",
                                    "distance"};
 
-/** Translates data type definition used in OpenCV to that of Matlab.
- * @param classid data type of matlab's mxArray. e.g., mxDOUBLE_CLASS.
- * @return opencv's data type. e.g., CV_8U.
+/** Translates data type definition used in MATLAB to that of OpenCV.
+ * @param classid data type of MATLAB's mxArray. e.g., \c mxDOUBLE_CLASS.
+ * @return OpenCV's data type. e.g., \c CV_8U.
  */
 const ConstMap<mxClassID, int> DepthOf = ConstMap<mxClassID, int>
     (mxDOUBLE_CLASS,   CV_64F)
@@ -41,9 +36,9 @@ const ConstMap<mxClassID, int> DepthOf = ConstMap<mxClassID, int>
     (mxUINT32_CLASS,   CV_32S)
     (mxLOGICAL_CLASS,  CV_8U);
 
-/** Translates data type definition used in Matlab to that of OpenCV.
- * @param depth data depth of opencv's Mat class. e.g., CV_32F.
- * @return data type of matlab's mxArray. e.g., mxDOUBLE_CLASS.
+/** Translates data type definition used in OpenCV to that of MATLAB.
+ * @param depth data depth of OpenCV's Mat class. e.g., \c CV_32F.
+ * @return data type of MATLAB's mxArray. e.g., \c mxDOUBLE_CLASS.
  */
 const ConstMap<int,mxClassID> ClassIDOf = ConstMap<int,mxClassID>
     (CV_64F,    mxDOUBLE_CLASS)
@@ -57,6 +52,7 @@ const ConstMap<int,mxClassID> ClassIDOf = ConstMap<int,mxClassID>
 /** Comparison operator for sparse matrix elements.
  */
 struct CompareSparseMatNode {
+    /// Comparison functor
     bool operator () (const cv::SparseMat::Node* rhs,
                       const cv::SparseMat::Node* lhs)
     {
@@ -68,15 +64,13 @@ struct CompareSparseMatNode {
     }
 };
 
-/** InvTermCritType map for option processing.
- */
+/// Inverse TermCriteria type map for option processing.
 const ConstMap<int, std::string> InvTermCritType = ConstMap<int, std::string>
     (cv::TermCriteria::COUNT, "Count")
     (cv::TermCriteria::EPS,   "EPS")
     (cv::TermCriteria::COUNT+cv::TermCriteria::EPS, "Count+EPS");
 
-/** TermCritType map for option processing.
- */
+/// TermCriteria type map for option processing.
 const ConstMap<std::string, int> TermCritType = ConstMap<std::string, int>
     ("Count",     cv::TermCriteria::COUNT)
     ("EPS",       cv::TermCriteria::EPS)
@@ -290,14 +284,14 @@ MxArray::MxArray(const std::vector<cv::DMatch>& v) :
     }
 }
 
-MxArray::MxArray(const cv::RotatedRect& m) :
+MxArray::MxArray(const cv::RotatedRect& r) :
     p_(mxCreateStructMatrix(1, 1, 3, cv_rotated_rect_fields))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-    set("center", m.center);
-    set("size",   m.size);
-    set("angle",  m.angle);
+    set("center", r.center);
+    set("size",   r.size);
+    set("angle",  r.angle);
 }
 
 MxArray::MxArray(const cv::TermCriteria& t) :
@@ -480,12 +474,12 @@ cv::TermCriteria MxArray::toTermCriteria(mwIndex index) const
     );
 }
 
-std::string MxArray::fieldname(int index) const
+std::string MxArray::fieldname(int fieldnumber) const
 {
-    const char *f = mxGetFieldNameByNumber(p_, index);
+    const char *f = mxGetFieldNameByNumber(p_, fieldnumber);
     if (!f)
         mexErrMsgIdAndTxt("mexopencv:error",
-                          "Failed to get field name at %d\n", index);
+                          "Failed to get field name at %d\n", fieldnumber);
     return std::string(f);
 }
 

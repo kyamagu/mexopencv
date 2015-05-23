@@ -1,4 +1,4 @@
-/**
+/** Implementation of mexopencv_features2d.
  * @file mexopencv_features2d.cpp
  * @author Amro
  * @date 2015
