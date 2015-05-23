@@ -324,6 +324,13 @@ double MxArray::toDouble() const
     return at<double>(0);
 }
 
+float MxArray::toFloat() const
+{
+    if (numel() != 1)
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a scalar");
+    return at<float>(0);
+}
+
 bool MxArray::toBool() const
 {
     if (numel() != 1)
@@ -432,9 +439,9 @@ cv::KeyPoint MxArray::toKeyPoint(mwIndex index) const
 {
     return cv::KeyPoint(
         at("pt",   index).toPoint2f(),
-        at("size", index).toDouble(),
-        (isField("angle"))    ? at("angle",    index).toDouble() : -1,
-        (isField("response")) ? at("response", index).toDouble() :  0,
+        at("size", index).toFloat(),
+        (isField("angle"))    ? at("angle",    index).toFloat()  : -1,
+        (isField("response")) ? at("response", index).toFloat()  :  0,
         (isField("octave"))   ? at("octave",   index).toInt()    :  0,
         (isField("class_id")) ? at("class_id", index).toInt()    : -1
     );
@@ -446,7 +453,7 @@ cv::DMatch MxArray::toDMatch(mwIndex index) const
         (isField("queryIdx")) ? at("queryIdx", index).toInt()    : 0,
         (isField("trainIdx")) ? at("trainIdx", index).toInt()    : 0,
         (isField("imgIdx"))   ? at("imgIdx",   index).toInt()    : 0,
-        (isField("distance")) ? at("distance", index).toDouble() : 0
+        (isField("distance")) ? at("distance", index).toFloat()  : 0
     );
 }
 
@@ -467,7 +474,7 @@ cv::RotatedRect MxArray::toRotatedRect(mwIndex index) const
     cv::RotatedRect rr;
     if (isField("center")) rr.center = at("center", index).toPoint_<float>();
     if (isField("size"))   rr.size   = at("size",   index).toSize_<float>();
-    if (isField("angle"))  rr.angle  = at("angle",  index).toDouble();
+    if (isField("angle"))  rr.angle  = at("angle",  index).toFloat();
     return rr;
 }
 

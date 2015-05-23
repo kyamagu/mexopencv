@@ -34,9 +34,9 @@ Ptr<BRISK> createBRISK(
             string key((*first).toString());
             const MxArray& val = *(first + 1);
             if (key == "DMax")
-                dMax = val.toDouble();
+                dMax = val.toFloat();
             else if (key == "DMin")
-                dMin = val.toDouble();
+                dMin = val.toFloat();
             else if (key == "IndexChange")
                 indexChange = val.toVector<int>();
             else
@@ -58,7 +58,7 @@ Ptr<BRISK> createBRISK(
             else if (key == "Octaves")
                 octaves = val.toInt();
             else if (key == "PatternScale")
-                patternScale = val.toDouble();
+                patternScale = val.toFloat();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
@@ -88,7 +88,7 @@ Ptr<ORB> createORB(
         if (key == "NFeatures")
             nfeatures = val.toInt();
         else if (key == "ScaleFactor")
-            scaleFactor = val.toDouble();
+            scaleFactor = val.toFloat();
         else if (key == "NLevels")
             nlevels = val.toInt();
         else if (key == "EdgeThreshold")
@@ -227,43 +227,43 @@ Ptr<SimpleBlobDetector> createSimpleBlobDetector(
         string key((*first).toString());
         const MxArray& val = *(first + 1);
         if (key == "ThresholdStep")
-            parameters.thresholdStep = val.toDouble();
+            parameters.thresholdStep = val.toFloat();
         else if (key == "MinThreshold")
-            parameters.minThreshold = val.toDouble();
+            parameters.minThreshold = val.toFloat();
         else if (key == "MaxThreshold")
-            parameters.maxThreshold = val.toDouble();
+            parameters.maxThreshold = val.toFloat();
         else if (key == "MinRepeatability")
             parameters.minRepeatability = val.toInt();
         else if (key == "MinDistBetweenBlobs")
-            parameters.minDistBetweenBlobs = val.toDouble();
+            parameters.minDistBetweenBlobs = val.toFloat();
         else if (key == "FilterByColor")
             parameters.filterByColor = val.toBool();
         else if (key == "BlobColor")
-            parameters.blobColor = val.toInt();
+            parameters.blobColor = static_cast<uchar>(val.toInt());
         else if (key == "FilterByArea")
             parameters.filterByArea = val.toBool();
         else if (key == "MinArea")
-            parameters.minArea = val.toDouble();
+            parameters.minArea = val.toFloat();
         else if (key == "MaxArea")
-            parameters.maxArea = val.toDouble();
+            parameters.maxArea = val.toFloat();
         else if (key == "FilterByCircularity")
             parameters.filterByCircularity = val.toBool();
         else if (key == "MinCircularity")
-            parameters.minCircularity = val.toDouble();
+            parameters.minCircularity = val.toFloat();
         else if (key == "MaxCircularity")
-            parameters.maxCircularity = val.toDouble();
+            parameters.maxCircularity = val.toFloat();
         else if (key == "FilterByInertia")
             parameters.filterByInertia = val.toBool();
         else if (key == "MinInertiaRatio")
-            parameters.minInertiaRatio = val.toDouble();
+            parameters.minInertiaRatio = val.toFloat();
         else if (key == "MaxInertiaRatio")
-            parameters.maxInertiaRatio = val.toDouble();
+            parameters.maxInertiaRatio = val.toFloat();
         else if (key == "FilterByConvexity")
             parameters.filterByConvexity = val.toBool();
         else if (key == "MinConvexity")
-            parameters.minConvexity = val.toDouble();
+            parameters.minConvexity = val.toFloat();
         else if (key == "MaxConvexity")
-            parameters.maxConvexity = val.toDouble();
+            parameters.maxConvexity = val.toFloat();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
@@ -291,7 +291,7 @@ Ptr<KAZE> createKAZE(
         else if (key == "Upright")
             upright = val.toBool();
         else if (key == "Threshold")
-            threshold = val.toDouble();
+            threshold = val.toFloat();
         else if (key == "NOctaves")
             nOctaves = val.toInt();
         else if (key == "NOctaveLayers")
@@ -329,7 +329,7 @@ Ptr<AKAZE> createAKAZE(
         else if (key == "DescriptorChannels")
             descriptor_channels = val.toInt();
         else if (key == "Threshold")
-            threshold = val.toDouble();
+            threshold = val.toFloat();
         else if (key == "NOctaves")
             nOctaves = val.toInt();
         else if (key == "NOctaveLayers")
@@ -428,7 +428,7 @@ Ptr<FREAK> createFREAK(
         else if (key == "ScaleNormalized")
             scaleNormalized = val.toBool();
         else if (key == "PatternScale")
-            patternScale = val.toDouble();
+            patternScale = val.toFloat();
         else if (key == "NOctaves")
             nOctaves = val.toInt();
         else if (key == "SelectedPairs")
@@ -669,7 +669,7 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
             else if (key == "CentersInit")
                 centers_init = CentersInit[rhs[i+1].toString()];
             else if (key == "CBIndex")
-                cb_index = rhs[i+1].toDouble();
+                cb_index = rhs[i+1].toFloat();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
@@ -696,7 +696,7 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
             else if (key == "CentersInit")
                 centers_init = CentersInit[rhs[i+1].toString()];
             else if (key == "CBIndex")
-                cb_index = rhs[i+1].toDouble();
+                cb_index = rhs[i+1].toFloat();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
@@ -735,13 +735,13 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
         for (size_t i = 1; i<rhs.size(); i += 2) {
             string key(rhs[i].toString());
             if (key == "TargetPrecision")
-                target_precision = rhs[i+1].toDouble();
+                target_precision = rhs[i+1].toFloat();
             else if (key == "BuildWeight")
-                build_weight = rhs[i+1].toDouble();
+                build_weight = rhs[i+1].toFloat();
             else if (key == "MemoryWeight")
-                memory_weight = rhs[i+1].toDouble();
+                memory_weight = rhs[i+1].toFloat();
             else if (key == "SampleFraction")
-                sample_fraction = rhs[i+1].toDouble();
+                sample_fraction = rhs[i+1].toFloat();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
@@ -798,7 +798,7 @@ Ptr<flann::SearchParams> toSearchParams(const MxArray& m)
         if (key == "Checks")
             checks = rhs[i+1].toInt();
         else if (key == "EPS")
-            eps = rhs[i+1].toDouble();
+            eps = rhs[i+1].toFloat();
         else if (key == "Sorted")
             sorted = rhs[i+1].toBool();
         else

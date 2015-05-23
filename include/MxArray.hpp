@@ -338,6 +338,10 @@ class MxArray
      * @return double value.
      */
     double toDouble() const;
+    /** Convert MxArray to float.
+     * @return float value.
+     */
+    float toFloat() const;
     /** Convert MxArray to bool.
      * @return bool value.
      */
