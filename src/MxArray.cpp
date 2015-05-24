@@ -594,29 +594,69 @@ std::vector<cv::Mat> MxArray::toVector() const
 template <>
 std::vector<cv::Point> MxArray::toVector() const
 {
-    return toVector(
-        std::const_mem_fun_ref_t<cv::Point, MxArray>(&MxArray::toPoint));
+    if (isNumeric()) {
+        std::vector<cv::Point> vp;
+        if (numel() == 2)
+            vp.push_back(toPoint());
+        else
+            toMat(CV_32S).reshape(2, 0).copyTo(vp);
+        return vp;
+    }
+    else {
+        return toVector(
+            std::const_mem_fun_ref_t<cv::Point, MxArray>(&MxArray::toPoint));
+    }
 }
 
 template <>
 std::vector<cv::Point2f> MxArray::toVector() const
 {
-    return toVector(
-        std::const_mem_fun_ref_t<cv::Point2f, MxArray>(&MxArray::toPoint2f));
+    if (isNumeric()) {
+        std::vector<cv::Point2f> vp;
+        if (numel() == 2)
+            vp.push_back(toPoint2f());
+        else
+            toMat(CV_32F).reshape(2, 0).copyTo(vp);
+        return vp;
+    }
+    else {
+        return toVector(
+            std::const_mem_fun_ref_t<cv::Point2f, MxArray>(&MxArray::toPoint2f));
+    }
 }
 
 template <>
 std::vector<cv::Point3f> MxArray::toVector() const
 {
-    return toVector(
-        std::const_mem_fun_ref_t<cv::Point3f, MxArray>(&MxArray::toPoint3f));
+    if (isNumeric()) {
+        std::vector<cv::Point3f> vp;
+        if (numel() == 3)
+            vp.push_back(toPoint3f());
+        else
+            toMat(CV_32F).reshape(3, 0).copyTo(vp);
+        return vp;
+    }
+    else {
+        return toVector(
+            std::const_mem_fun_ref_t<cv::Point3f, MxArray>(&MxArray::toPoint3f));
+    }
 }
 
 template <>
 std::vector<cv::Rect> MxArray::toVector() const
 {
-    return toVector(
-        std::const_mem_fun_ref_t<cv::Rect, MxArray>(&MxArray::toRect));
+    if (isNumeric()) {
+        std::vector<cv::Rect> vr;
+        if (numel() == 4)
+            vr.push_back(toRect());
+        else
+            toMat(CV_32S).reshape(4, 0).copyTo(vr);
+        return vr;
+    }
+    else {
+        return toVector(
+            std::const_mem_fun_ref_t<cv::Rect, MxArray>(&MxArray::toRect));
+    }
 }
 
 template <>

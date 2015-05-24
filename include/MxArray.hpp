@@ -1295,6 +1295,9 @@ std::vector<MxArray> MxArray::toVector() const;
 /** Convert MxArray to std::vector<std::string>.
  * @return std::vector<std::string> value.
  *
+ * The input MxArray is expected to be a cell-array of strings, e.g:
+ * <tt>{'str1', 'str2', ...}</tt>, or a single string <tt>'str'</tt>.
+ *
  * Example:
  * @code
  * MxArray cellArray(prhs[0]);
@@ -1306,6 +1309,12 @@ std::vector<std::string> MxArray::toVector() const;
 
 /** Convert MxArray to std::vector<cv::Mat>.
  * @return std::vector<cv::Mat> value.
+ *
+ * The input MxArray can be either:
+ * - a cell-array of matrices of length \c N, e.g: <tt>{m1, m2, ...}</tt>
+ * - a single numeric matrix (hence \c N=1)
+ * .
+ * where \c N will be the output vector size.
  *
  * Example:
  * @code
@@ -1319,6 +1328,14 @@ std::vector<cv::Mat> MxArray::toVector() const;
 /** Convert MxArray to std::vector<Point>.
  * @return std::vector<Point> value.
  *
+ * The input MxArray can be either:
+ * - a cell-array of 2D integer points (2-element vectors) of length \c N,
+ *   e.g: <tt>{[x,y], [x,y], ...}</tt>
+ * - a numeric matrix of size \c Nx2, \c Nx1x2, or \c 1xNx2 in the form:
+ *   <tt>[x,y; x,y; ...]</tt> or <tt>cat(3, [x,y], [x,y], ...)</tt>
+ * .
+ * where \c N will be the output vector size.
+ *
  * Example:
  * @code
  * MxArray cellArray(prhs[0]);
@@ -1330,6 +1347,14 @@ std::vector<cv::Point> MxArray::toVector() const;
 
 /** Convert MxArray to std::vector<Point2f>.
  * @return std::vector<Point2f> value.
+ *
+ * The input MxArray can be either:
+ * - a cell-array of 2D float points (2-element vectors) of length \c N, e.g:
+ *   <tt>{[x,y], [x,y], ...}</tt>
+ * - a numeric matrix of size \c Nx2, \c Nx1x2, or \c 1xNx2 in the form:
+ *   <tt>[x,y; x,y; ...]</tt> or <tt>cat(3, [x,y], [x,y], ...)</tt>
+ * .
+ * where \c N will be the output vector size.
  *
  * Example:
  * @code
@@ -1343,6 +1368,14 @@ std::vector<cv::Point2f> MxArray::toVector() const;
 /** Convert MxArray to std::vector<Point3f>.
  * @return std::vector<Point3f> value.
  *
+ * The input MxArray can be either:
+ * - a cell-array of 3D float points (3-element vectors) of length \c N, e.g:
+ *   <tt>{[x,y,z], [x,y,z], ...}</tt>
+ * - a numeric matrix of size \c Nx3, \c Nx1x3, or \c 1xNx3 in the form:
+ *   <tt>[x,y,z; x,y,z; ...]</tt> or <tt>cat(3, [x,y,z], [x,y,z], ...)</tt>
+ * .
+ * where \c N will be the output vector size.
+ *
  * Example:
  * @code
  * MxArray cellArray(prhs[0]);
@@ -1354,6 +1387,15 @@ std::vector<cv::Point3f> MxArray::toVector() const;
 
 /** Convert MxArray to std::vector<Rect>.
  * @return std::vector<Rect> value.
+ *
+ * The input MxArray can be either:
+ * - a cell-array of rectangles (4-element vectors) of length \c N, e.g:
+ *   <tt>{[x,y,w,h], [x,y,w,h], ...}</tt>
+ * - a numeric matrix of size \c Nx4, \c Nx1x4, or \c 1xNx4 in the form:
+ *   <tt>[x,y,w,h; x,y,w,h; ...]</tt> or
+ *   <tt>cat(3, [x,y,w,h], [x,y,w,h], ...)</tt>
+ * .
+ * where \c N will be the output vector size.
  *
  * Example:
  * @code
@@ -1367,6 +1409,14 @@ std::vector<cv::Rect> MxArray::toVector() const;
 /** Convert MxArray to std::vector<cv::RotatedRect>.
  * @return std::vector<cv::RotatedRect> value.
  *
+ * The input MxArray can be either:
+ * - a cell-array of rotated rectangles (scalar structs) of length \c N, e.g:
+ *   <tt>{struct('center',[x,y], 'size',[a,b], 'angle',t), ...}</tt>
+ * - a structure-array of length \c N, in the form:
+ *   <tt>struct('center',{[x,y],...}, 'size',{[a,b],...}, 'angle',{t,...})</tt>
+ * .
+ * where \c N will be the output vector size.
+ *
  * Example:
  * @code
  * MxArray structArray(prhs[0]);
@@ -1379,6 +1429,14 @@ std::vector<cv::RotatedRect> MxArray::toVector() const;
 /** Convert MxArray to std::vector<cv::KeyPoint>.
  * @return std::vector<cv::KeyPoint> value.
  *
+ * The input MxArray can be either:
+ * - a cell-array of keypoints (scalar structs) of length \c N, e.g:
+ *   <tt>{struct('pt',[x,y], 'size',[a,b], 'angle',t), ...}</tt>
+ * - a structure-array of length \c N, in the form:
+ *   <tt>struct('pt',{[x,y],...}, 'size',{[a,b],...}, 'angle',{t,...})</tt>
+ * .
+ * where \c N will be the output vector size.
+ *
  * Example:
  * @code
  * MxArray structArray(prhs[0]);
@@ -1390,6 +1448,14 @@ std::vector<cv::KeyPoint> MxArray::toVector() const;
 
 /** Convert MxArray to std::vector<cv::DMatch>.
  * @return std::vector<cv::DMatch> value.
+ *
+ * The input MxArray can be either:
+ * - a cell-array of dmatches (scalar structs) of length \c N, e.g:
+ *   <tt>{struct('queryIdx',i, 'trainIdx',j, 'distance',d), ...}</tt>
+ * - a structure-array of length \c N, in the form:
+ *   <tt>struct('queryIdx',{i,...}, 'trainIdx',{j,...}, 'distance',{d,...})</tt>
+ * .
+ * where \c N will be the output vector size.
  *
  * Example:
  * @code
