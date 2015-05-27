@@ -49,12 +49,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
 
-    typedef vector<Point> VecP;
-    const_mem_fun_ref_t<VecP,MxArray> f(&MxArray::toVector<Point>);
-    vector<VecP> pts(rhs[1].toVector(f));
-
     // Process
     Mat img(rhs[0].toMat());
+    vector<vector<Point> > pts(MxArrayToVectorVectorPoint<int>(rhs[1]));
     polylines(img, pts, isClosed, color, thickness, lineType, shift);
     plhs[0] = MxArray(img);
 }

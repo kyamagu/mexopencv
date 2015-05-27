@@ -39,44 +39,6 @@ MxArray valueStruct(const Mat& cameraMatrix1, const Mat& distCoeffs1,
     s.set("d", d);
     return s;
 }
-
-/// Conversion to vector<vector<Point_<T> > >
-template <typename T>
-vector<vector<Point_<T> > > MxArrayToVecVecPt(MxArray& arr)
-{
-    vector<MxArray> va = arr.toVector<MxArray>();
-    vector<vector<Point_<T> > > vvp;
-    vvp.reserve(va.size());
-    for (vector<MxArray>::iterator it=va.begin(); it<va.end(); ++it)
-    {
-        vector<MxArray> v = (*it).toVector<MxArray>();
-        vector<Point_<T> > vp;
-        vp.reserve(v.size());
-        for (vector<MxArray>::iterator jt=v.begin(); jt<v.end(); ++jt)
-            vp.push_back((*jt).toPoint_<T>());
-        vvp.push_back(vp);
-    }
-    return vvp;
-}
-
-/// Conversion to vector<vector<Point3_<T> > >
-template <typename T>
-vector<vector<Point3_<T> > > MxArrayToVecVecPt3(MxArray& arr)
-{
-    vector<MxArray> va = arr.toVector<MxArray>();
-    vector<vector<Point3_<T> > > vvp;
-    vvp.reserve(va.size());
-    for (vector<MxArray>::iterator it=va.begin(); it<va.end(); ++it)
-    {
-        vector<MxArray> v = (*it).toVector<MxArray>();
-        vector<Point3_<T> > vp;
-        vp.reserve(v.size());
-        for (vector<MxArray>::iterator jt=v.begin(); jt<v.end(); ++jt)
-            vp.push_back((*jt).toPoint3_<T>());
-        vvp.push_back(vp);
-    }
-    return vvp;
-}
 }
 
 /**
@@ -97,10 +59,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<MxArray> rhs(prhs,prhs+nrhs);
 
     // Option processing
-    vector<vector<Point3f> > objectPoints = MxArrayToVecVecPt3<float>(rhs[0]);
-    vector<vector<Point2f> > imagePoints1 = MxArrayToVecVecPt<float>(rhs[1]);
-    vector<vector<Point2f> > imagePoints2 = MxArrayToVecVecPt<float>(rhs[2]);
-    Size imageSize(rhs[3].toSize());
     Mat cameraMatrix1(Mat::eye(3,3,CV_32FC1)), distCoeffs1;
     Mat cameraMatrix2(Mat::eye(3,3,CV_32FC1)), distCoeffs2;
     TermCriteria termCrit(TermCriteria::COUNT+TermCriteria::EPS, 30, 1e-6);
@@ -173,6 +131,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 (calibRationalModel ? cv::CALIB_RATIONAL_MODEL      : 0);
 
     // Process
+    vector<vector<Point3f> > objectPoints(MxArrayToVectorVectorPoint3<float>(rhs[0]));
+    vector<vector<Point2f> > imagePoints1(MxArrayToVectorVectorPoint<float>(rhs[1]));
+    vector<vector<Point2f> > imagePoints2(MxArrayToVectorVectorPoint<float>(rhs[2]));
+    Size imageSize(rhs[3].toSize());
     Mat R, T, E, F;
     double d = stereoCalibrate(objectPoints, imagePoints1, imagePoints2,
         cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2,

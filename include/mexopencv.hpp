@@ -106,4 +106,68 @@ inline void nargchk(bool cond)
     }
 }
 
+/**************************************************************\
+*      Conversion Functions: MxArray to vector of vectors      *
+\**************************************************************/
+
+/** Convert an MxArray to std::vector<std::vector<cv::Point_<T>>>
+ *
+ * @param arr MxArray object, in the form of
+ *   a cell-array of cell-arrays of 2D points (2-element vectors),
+ *   e.g: <tt>{{[x,y], [x,y], ..}, {[x,y], [x,y], ..}, ...}</tt>
+ * @return vector of vectors of 2D points
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<vector<Point2d>> vvp = MxArrayToVectorVectorPoint<double>(cellArray);
+ * @endcode
+ */
+template <typename T>
+std::vector<std::vector<cv::Point_<T> > > MxArrayToVectorVectorPoint(const MxArray& arr)
+{
+    std::vector<MxArray> vva(arr.toVector<MxArray>());
+    std::vector<std::vector<cv::Point_<T> > > vvp;
+    vvp.reserve(vva.size());
+    for (std::vector<MxArray>::const_iterator it = vva.begin(); it != vva.end(); ++it) {
+        std::vector<MxArray> va(it->toVector<MxArray());
+        std::vector<cv::Point_<T> > vp;
+        for (std::vector<MxArray>::const_iterator jt = va.begin(); jt != va.end(); ++jt) {
+            vp.push_back(jt->toPoint_<T>());
+        }
+        vvp.push_back(vp);
+    }
+    return vvp;
+}
+
+/** Convert an MxArray to std::vector<std::vector<cv::Point3_<T>>>
+ *
+ * @param arr MxArray object, in the form of
+ *   a cell-array of cell-arrays of 3D points (3-element vectors),
+ *   e.g: <tt>{{[x,y,z], [x,y,z], ..}, {[x,y,z], [x,y,z], ..}, ...}</tt>
+ * @return vector of vectors of 3D points
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<vector<Point3d>> vvp = MxArrayToVectorVectorPoint3<double>(cellArray);
+ * @endcode
+ */
+template <typename T>
+std::vector<std::vector<cv::Point3_<T> > > MxArrayToVectorVectorPoint3(const MxArray& arr)
+{
+    std::vector<MxArray> vva(arr.toVector<MxArray>());
+    std::vector<std::vector<cv::Point3_<T> > > vvp;
+    vvp.reserve(vva.size());
+    for (std::vector<MxArray>::const_iterator it = vva.begin(); it != vva.end(); ++it) {
+        std::vector<MxArray> va(it->toVector<MxArray());
+        std::vector<cv::Point3_<T> > vp;
+        for (std::vector<MxArray>::const_iterator jt = va.begin(); jt != va.end(); ++jt) {
+            vp.push_back(jt->toPoint3_<T>());
+        }
+        vvp.push_back(vp);
+    }
+    return vvp;
+}
+
 #endif

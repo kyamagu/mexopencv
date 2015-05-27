@@ -57,12 +57,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
 
-    typedef vector<Point> VecP;
-    const_mem_fun_ref_t<VecP,MxArray> f(&MxArray::toVector<Point>);
-    vector<VecP> contours(rhs[1].toVector(f));
-
     // Process
     Mat image(rhs[0].toMat());
+    vector<vector<Point> > contours(MxArrayToVectorVectorPoint<int>(rhs[1]));
     drawContours(image, contours, contourIdx, color, thickness, lineType,
         hierarchy, maxLevel, offset);
     plhs[0] = MxArray(image);
