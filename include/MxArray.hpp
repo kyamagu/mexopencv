@@ -1137,6 +1137,8 @@ void MxArray::set(mwIndex index, const T& value)
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Null pointer error");
+    if (!isNumeric() && !isLogical() && !isChar())
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not primitive");
     if (numel() <= index)
         mexErrMsgIdAndTxt("mexopencv:error", "Index out of range");
     switch (classID()) {
@@ -1185,15 +1187,8 @@ void MxArray::set(mwIndex index, const T& value)
         case mxLOGICAL_CLASS:
             *(mxGetLogicals(p_) + index) = static_cast<mxLogical>(value);
             break;
-        case mxCELL_CLASS:
-            mxSetCell(const_cast<mxArray*>(p_), index,
-                static_cast<mxArray*>(MxArray(value)));
-            break;
-        case mxSTRUCT_CLASS:
-        case mxFUNCTION_CLASS:
         default:
-            mexErrMsgIdAndTxt("mexopencv:error", "MxArray type is not valid");
-            break;
+            break;    // should never reach this case
     }
 }
 
