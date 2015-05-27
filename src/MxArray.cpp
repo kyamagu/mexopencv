@@ -115,9 +115,10 @@ MxArray::MxArray(const std::string& s)
 
 MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 {
-    // handle special case of empty input Mat by creating: double([])
+    // handle special case of empty input Mat by creating an empty array
+    classid = (classid == mxUNKNOWN_CLASS) ? ClassIDOf[mat.depth()] : classid;
     if (mat.empty()) {
-        p_ = mxCreateNumericArray(0, 0, mxDOUBLE_CLASS, mxREAL);
+        p_ = mxCreateNumericArray(0, 0, classid, mxREAL);
         if (!p_)
             mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
         return;
@@ -131,7 +132,6 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
     const int* dims_ = input.size;
     std::vector<mwSize> d(dims_, dims_ + input.dims);
     d.push_back(nchannels);
-    classid = (classid == mxUNKNOWN_CLASS) ? ClassIDOf[input.depth()] : classid;
     std::swap(d[0], d[1]);
     if (classid == mxLOGICAL_CLASS) {
         // OpenCV's logical true is any nonzero, while MATLAB's true is 1.
