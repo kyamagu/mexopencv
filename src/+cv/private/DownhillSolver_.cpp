@@ -49,8 +49,8 @@ public:
     MxArray toStruct() const
     {
         MxArray s(MxArray::Struct());
-        s.set("dims",    dims);
-        s.set("fun",     fun_name);
+        s.set("dims", dims);
+        s.set("fun",  fun_name);
         return s;
     }
 

@@ -26,19 +26,21 @@ inline void nargchk(bool cond)
 
 /** Convert object detections to struct array
  * @param vo vector of detections
+ * @param classNames mapping of class IDs to class names
+ * @return struct-array MxArray object
  */
-mxArray* ObjectDetection2Struct(
+MxArray ObjectDetection2Struct(
     const vector<LSVMDetector::ObjectDetection>& vo,
     const vector<string>& classNames)
 {
     const char* fields[] = {"rect", "score", "class"};
-    MxArray m(fields, 3, 1, vo.size());
+    MxArray s = MxArray::Struct(fields, 3, 1, vo.size());
     for (size_t i=0; i<vo.size(); ++i) {
-        m.set("rect", vo[i].rect, i);
-        m.set("score", vo[i].score, i);
-        m.set("class", classNames[vo[i].classID], i);
+        s.set("rect",  vo[i].rect,                i);
+        s.set("score", vo[i].score,               i);
+        s.set("class", classNames[vo[i].classID], i);
     }
-    return m;
+    return s;
 }
 
 } // local scope

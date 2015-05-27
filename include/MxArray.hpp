@@ -244,21 +244,6 @@ class MxArray
      * @return four-element numeric MxArray <tt>[v0, v1, v2, v3]</tt>.
      */
     template <typename T> explicit MxArray(const cv::Scalar_<T>& s);
-    /** Generic constructor for a struct array.
-     * @param fields field names.
-     * @param nfields number of field names.
-     * @param m size of the first dimension.
-     * @param n size of the second dimension.
-     *
-     * Example:
-     * @code
-     * const char* fields[] = {"field1", "field2"};
-     * MxArray m(fields, 2);
-     * m.set("field1", 1);
-     * m.set("field2", "field2 value");
-     * @endcode
-     */
-    MxArray(const char**fields, int nfields, mwSize m = 1, mwSize n = 1);
     /** Destructor. This does not free the underlying mxArray*.
      */
     virtual ~MxArray() {}

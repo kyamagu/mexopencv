@@ -8,22 +8,28 @@
 using namespace std;
 using namespace cv;
 
-/// Field names for struct
-const char* _fieldnames[] = {"fovx","fovy","focalLength",
-    "principalPoint","aspectRatio"};
-/// Create a struct
-mxArray* valueStruct(double& fovx, double& fovy, double& focalLength,
-    Point2d& principalPoint, double& aspectRatio)
+namespace {
+/** Create a new MxArray from characteristics of camera matrix.
+ * @param fovx Field of view along the horizontal sensor axis.
+ * @param fovy Field of view along the vertical sensor axis.
+ * @param focalLength Focal length of the lens.
+ * @param principalPoint Principal point.
+ * @param aspectRatio Aspect ratio <tt>fy/fx</tt>.
+ * @return output MxArray struct object.
+ */
+MxArray valueStruct(double fovx, double fovy, double focalLength,
+    const Point2d& principalPoint, double aspectRatio)
 {
-    mxArray* p = mxCreateStructMatrix(1,1,5,_fieldnames);
-    if (!p)
-        mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
-    mxSetField(p,0,"fovx",MxArray(fovx));
-    mxSetField(p,0,"fovy",MxArray(fovy));
-    mxSetField(p,0,"focalLength",MxArray(focalLength));
-    mxSetField(p,0,"principalPoint",MxArray(principalPoint));
-    mxSetField(p,0,"aspectRatio",MxArray(aspectRatio));
-    return p;
+    const char* fieldnames[] = {
+        "fovx", "fovy", "focalLength", "principalPoint", "aspectRatio"};
+    MxArray s = MxArray::Struct(fieldnames, 5);
+    s.set("fovx",           fovx);
+    s.set("fovy",           fovy);
+    s.set("focalLength",    focalLength);
+    s.set("principalPoint", principalPoint);
+    s.set("aspectRatio",    aspectRatio);
+    return s;
+}
 }
 
 /**
@@ -39,22 +45,20 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs!=4 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
+    // Process
     Mat cameraMatrix(rhs[0].toMat(CV_32F));
     Size imageSize(rhs[1].toSize());
-    double apertureWidth = rhs[2].toDouble();
-    double apertureHeight = rhs[3].toDouble();
-    double fovx, fovy, focalLength;
+    double apertureWidth = rhs[2].toDouble(),
+           apertureHeight = rhs[3].toDouble();
+    double fovx, fovy, focalLength, aspectRatio;
     Point2d principalPoint;
-    double aspectRatio;
-    
-    // Process
     calibrationMatrixValues(cameraMatrix, imageSize,
         apertureWidth, apertureHeight, fovx, fovy, focalLength,
         principalPoint, aspectRatio);
-
-    plhs[0] = valueStruct(fovx,fovy,focalLength,principalPoint,aspectRatio);
+    plhs[0] = valueStruct(fovx, fovy, focalLength,
+        principalPoint, aspectRatio);
 }

@@ -305,13 +305,6 @@ MxArray::MxArray(const cv::TermCriteria& t)
     set("epsilon",  t.epsilon);
 }
 
-MxArray::MxArray(const char** fields, int nfields, mwSize m, mwSize n)
-    : p_(mxCreateStructMatrix(m, n, nfields, fields))
-{
-    if (!p_)
-        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-}
-
 int MxArray::toInt() const
 {
     if (numel() != 1)
