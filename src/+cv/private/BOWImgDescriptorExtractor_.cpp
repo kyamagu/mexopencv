@@ -16,13 +16,6 @@ namespace {
 int last_id = 0;
 /// Object container
 map<int,Ptr<BOWImgDescriptorExtractor> > obj_;
-
-/// Alias for argument number check
-inline void nargchk(bool cond)
-{
-    if (!cond)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-}
 }
 
 /**

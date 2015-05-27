@@ -13,7 +13,9 @@
 
 #include "MxArray.hpp"
 
-// Global constants
+/**************************************************************\
+*                       Global constants                       *
+\**************************************************************/
 
 /// Border type map for option processing
 const ConstMap<std::string,int> BorderType = ConstMap<std::string,int>
@@ -91,5 +93,17 @@ const ConstMap<std::string,int> NormType = ConstMap<std::string,int>
     ("L2Sqr",    cv::NORM_L2SQR)
     ("Hamming",  cv::NORM_HAMMING)
     ("Hamming2", cv::NORM_HAMMING2);
+
+/**************************************************************\
+*                       Helper Functions                       *
+\**************************************************************/
+
+/// Alias for input/ouput arguments number check
+inline void nargchk(bool cond)
+{
+    if (!cond) {
+        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    }
+}
 
 #endif

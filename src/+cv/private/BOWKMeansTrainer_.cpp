@@ -19,14 +19,6 @@ map<int,Ptr<BOWKMeansTrainer> > obj_;
 const ConstMap<std::string,int> Initialization = ConstMap<std::string,int>
     ("Random", cv::KMEANS_RANDOM_CENTERS)
     ("PP",     cv::KMEANS_PP_CENTERS);
-
-/// Alias for argument number check
-inline void nargchk(bool cond)
-{
-    if (!cond)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-}
-
 }
 
 /**
