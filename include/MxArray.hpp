@@ -217,7 +217,11 @@ class MxArray
      */
     template <typename T> explicit MxArray(const std::vector<T>& v)
     {
-        fromVector<T>(v);
+        // we do this: fromVector(v) as opposed to: fromVector<T>(v),
+        // that way the call gets resolved to overloaded or
+        // template-specialized version appropriately.
+        // (although we dont currently have an overloaded version)
+        fromVector(v);
     }
     /** MxArray constructor from cv::Point_<T>.
      * @param p cv::Point_<T> object.
