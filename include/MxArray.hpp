@@ -1237,6 +1237,13 @@ MxArray::MxArray(const std::vector<cv::DMatch>& v);
 template <>
 MxArray::MxArray(const std::vector<cv::KeyPoint>& v);
 
+/** MxArray specialized constructor from vector<RotatedRect>.
+ * @param v vector of type RotatedRect.
+ * @return a struct array MxArray object.
+ */
+template <>
+MxArray::MxArray(const std::vector<cv::RotatedRect>& v);
+
 /** Cell array element accessor.
  * @param index linear index of the cell array element.
  * @return MxArray of the element at the specified index.

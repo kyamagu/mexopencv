@@ -295,6 +295,19 @@ MxArray::MxArray(const cv::RotatedRect& r)
     set("angle",  r.angle);
 }
 
+template <>
+MxArray::MxArray(const std::vector<cv::RotatedRect>& v)
+    : p_(mxCreateStructMatrix(1, v.size(), 3, cv_rotated_rect_fields))
+{
+    if (!p_)
+        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+    for (mwIndex i = 0; i < v.size(); ++i) {
+        set("center", v[i].center, i);
+        set("size",   v[i].size,   i);
+        set("angle",  v[i].angle,  i);
+    }
+}
+
 MxArray::MxArray(const cv::TermCriteria& t)
     : p_(mxCreateStructMatrix(1, 1, 3, cv_term_criteria_fields))
 {
