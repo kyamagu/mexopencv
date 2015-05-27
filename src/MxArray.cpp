@@ -616,7 +616,8 @@ std::vector<cv::Point> MxArray::toVector() const
     }
     else {
         return toVector(
-            std::const_mem_fun_ref_t<cv::Point, MxArray>(&MxArray::toPoint));
+            std::const_mem_fun_ref_t<cv::Point, MxArray>(
+                &MxArray::toPoint_<int>));
     }
 }
 
@@ -633,7 +634,44 @@ std::vector<cv::Point2f> MxArray::toVector() const
     }
     else {
         return toVector(
-            std::const_mem_fun_ref_t<cv::Point2f, MxArray>(&MxArray::toPoint2f));
+            std::const_mem_fun_ref_t<cv::Point2f, MxArray>(
+                &MxArray::toPoint_<float>));
+    }
+}
+
+template <>
+std::vector<cv::Point2d> MxArray::toVector() const
+{
+    if (isNumeric()) {
+        std::vector<cv::Point2d> vp;
+        if (numel() == 2)
+            vp.push_back(toPoint_<double>());
+        else
+            toMat(CV_64F).reshape(2, 0).copyTo(vp);
+        return vp;
+    }
+    else {
+        return toVector(
+            std::const_mem_fun_ref_t<cv::Point2d, MxArray>(
+                &MxArray::toPoint_<double>));
+    }
+}
+
+template <>
+std::vector<cv::Point3i> MxArray::toVector() const
+{
+    if (isNumeric()) {
+        std::vector<cv::Point3i> vp;
+        if (numel() == 3)
+            vp.push_back(toPoint3_<int>());
+        else
+            toMat(CV_32S).reshape(3, 0).copyTo(vp);
+        return vp;
+    }
+    else {
+        return toVector(
+            std::const_mem_fun_ref_t<cv::Point3i, MxArray>(
+                &MxArray::toPoint3_<int>));
     }
 }
 
@@ -650,7 +688,26 @@ std::vector<cv::Point3f> MxArray::toVector() const
     }
     else {
         return toVector(
-            std::const_mem_fun_ref_t<cv::Point3f, MxArray>(&MxArray::toPoint3f));
+            std::const_mem_fun_ref_t<cv::Point3f, MxArray>(
+                &MxArray::toPoint3_<float>));
+    }
+}
+
+template <>
+std::vector<cv::Point3d> MxArray::toVector() const
+{
+    if (isNumeric()) {
+        std::vector<cv::Point3d> vp;
+        if (numel() == 3)
+            vp.push_back(toPoint3_<double>());
+        else
+            toMat(CV_64F).reshape(3, 0).copyTo(vp);
+        return vp;
+    }
+    else {
+        return toVector(
+            std::const_mem_fun_ref_t<cv::Point3d, MxArray>(
+                &MxArray::toPoint3_<double>));
     }
 }
 

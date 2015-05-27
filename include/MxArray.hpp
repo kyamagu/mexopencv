@@ -1356,6 +1356,46 @@ std::vector<cv::Point> MxArray::toVector() const;
 template <>
 std::vector<cv::Point2f> MxArray::toVector() const;
 
+/** Convert MxArray to std::vector<Point2d>.
+ * @return std::vector<Point2d> value.
+ *
+ * The input MxArray can be either:
+ * - a cell-array of 2D double points (2-element vectors) of length \c N, e.g:
+ *   <tt>{[x,y], [x,y], ...}</tt>
+ * - a numeric matrix of size \c Nx2, \c Nx1x2, or \c 1xNx2 in the form:
+ *   <tt>[x,y; x,y; ...]</tt> or <tt>cat(3, [x,y], [x,y], ...)</tt>
+ * .
+ * where \c N will be the output vector size.
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Point2d> v = cellArray.toVector<Point2d>();
+ * @endcode
+ */
+template <>
+std::vector<cv::Point2d> MxArray::toVector() const;
+
+/** Convert MxArray to std::vector<Point3i>.
+ * @return std::vector<Point3i> value.
+ *
+ * The input MxArray can be either:
+ * - a cell-array of 3D integer points (3-element vectors) of length \c N, e.g:
+ *   <tt>{[x,y,z], [x,y,z], ...}</tt>
+ * - a numeric matrix of size \c Nx3, \c Nx1x3, or \c 1xNx3 in the form:
+ *   <tt>[x,y,z; x,y,z; ...]</tt> or <tt>cat(3, [x,y,z], [x,y,z], ...)</tt>
+ * .
+ * where \c N will be the output vector size.
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Point3i> v = cellArray.toVector<Point3i>();
+ * @endcode
+ */
+template <>
+std::vector<cv::Point3i> MxArray::toVector() const;
+
 /** Convert MxArray to std::vector<Point3f>.
  * @return std::vector<Point3f> value.
  *
@@ -1375,6 +1415,26 @@ std::vector<cv::Point2f> MxArray::toVector() const;
  */
 template <>
 std::vector<cv::Point3f> MxArray::toVector() const;
+
+/** Convert MxArray to std::vector<Point3d>.
+ * @return std::vector<Point3d> value.
+ *
+ * The input MxArray can be either:
+ * - a cell-array of 3D double points (3-element vectors) of length \c N, e.g:
+ *   <tt>{[x,y,z], [x,y,z], ...}</tt>
+ * - a numeric matrix of size \c Nx3, \c Nx1x3, or \c 1xNx3 in the form:
+ *   <tt>[x,y,z; x,y,z; ...]</tt> or <tt>cat(3, [x,y,z], [x,y,z], ...)</tt>
+ * .
+ * where \c N will be the output vector size.
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Point3d> v = cellArray.toVector<Point3d>();
+ * @endcode
+ */
+template <>
+std::vector<cv::Point3d> MxArray::toVector() const;
 
 /** Convert MxArray to std::vector<Rect>.
  * @return std::vector<Rect> value.
