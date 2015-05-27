@@ -123,7 +123,9 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
         return;
     }
     // transpose cv::Mat if needed
-    cv::Mat input = (mat.dims == 2 && transpose) ? mat.t() : mat;
+    cv::Mat input(mat);
+    if (input.dims == 2 && transpose)
+        input = input.t();
     // Create a new mxArray (of the specified classID) equivalent to cv::Mat
     const mwSize nchannels = input.channels();
     const int* dims_ = input.size;
@@ -376,7 +378,9 @@ cv::Mat MxArray::toMat(int depth, bool transpose) const
     // Merge channels back into one cv::Mat array
     cv::merge(channels, mat);
     // transpose cv::Mat if needed
-    return ((mat.dims==2 && transpose) ? cv::Mat(mat.t()) : mat);
+    if (mat.dims==2 && transpose)
+        mat = mat.t();
+    return mat;
 }
 
 cv::MatND MxArray::toMatND(int depth, bool transpose) const
@@ -392,7 +396,9 @@ cv::MatND MxArray::toMatND(int depth, bool transpose) const
     // Read from mxArray through m, writing into mat
     m.convertTo(mat, CV_MAKETYPE(depth, 1));
     // transpose cv::MatND if needed
-    return ((mat.dims==2 && transpose) ? cv::Mat(mat.t()) : mat);
+    if (mat.dims==2 && transpose)
+        mat = mat.t();
+    return mat;
 }
 
 cv::SparseMat MxArray::toSparseMat() const
