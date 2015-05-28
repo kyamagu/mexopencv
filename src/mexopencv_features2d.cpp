@@ -14,7 +14,9 @@ using namespace cv::xfeatures2d;
 #endif
 
 
-// ==================== Feature Detection and Description ====================
+/**************************************************************\
+*              Feature Detection and Description               *
+\**************************************************************/
 
 Ptr<BRISK> createBRISK(
     vector<MxArray>::const_iterator first,
@@ -38,7 +40,8 @@ Ptr<BRISK> createBRISK(
             else if (key == "IndexChange")
                 indexChange = val.toVector<int>();
             else
-                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         return BRISK::create(radiusList, numberList, dMax, dMin, indexChange);
     }
@@ -57,7 +60,8 @@ Ptr<BRISK> createBRISK(
             else if (key == "PatternScale")
                 patternScale = val.toDouble();
             else
-                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         return BRISK::create(thresh, octaves, patternScale);
     }
@@ -100,7 +104,8 @@ Ptr<ORB> createORB(
         else if (key == "FastThreshold")
             fastThreshold = val.toInt();
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     return ORB::create(nfeatures, scaleFactor, nlevels, edgeThreshold,
         firstLevel, WTA_K, scoreType, patchSize, fastThreshold);
@@ -143,7 +148,8 @@ Ptr<MSER> createMSER(
         else if (key == "EdgeBlurSize")
             _edge_blur_size = val.toInt();
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     return MSER::create(_delta, _min_area, _max_area, _max_variation,
         _min_diversity, _max_evolution, _area_threshold, _min_margin,
@@ -169,7 +175,8 @@ Ptr<FastFeatureDetector> createFastFeatureDetector(
         else if (key == "Type")
             type = FASTTypeMap[val.toString()];
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     return FastFeatureDetector::create(threshold, nonmaxSuppression, type);
 }
@@ -202,7 +209,8 @@ Ptr<GFTTDetector> createGFTTDetector(
         else if(key == "K")
             k = val.toDouble();
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     return GFTTDetector::create(maxCorners, qualityLevel, minDistance,
         blockSize, useHarrisDetector, k);
@@ -257,7 +265,8 @@ Ptr<SimpleBlobDetector> createSimpleBlobDetector(
         else if (key == "MaxConvexity")
             parameters.maxConvexity = val.toDouble();
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     return SimpleBlobDetector::create(parameters);
 }
@@ -290,7 +299,8 @@ Ptr<KAZE> createKAZE(
         else if(key == "Diffusivity")
             diffusivity = KAZEDiffusivityType[val.toString()];
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     return KAZE::create(extended, upright, threshold,
         nOctaves, nOctaveLayers, diffusivity);
@@ -327,7 +337,8 @@ Ptr<AKAZE> createAKAZE(
         else if (key == "Diffusivity")
             diffusivity = KAZEDiffusivityType[val.toString()];
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     return AKAZE::create(descriptor_type, descriptor_size, descriptor_channels,
         threshold, nOctaves, nOctaveLayers, diffusivity);
@@ -359,7 +370,8 @@ Ptr<SIFT> createSIFT(
         else if (key == "Sigma")
             sigma = val.toDouble();
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     return SIFT::create(nfeatures, nOctaveLayers, contrastThreshold,
         edgeThreshold, sigma);
@@ -390,9 +402,11 @@ Ptr<SURF> createSURF(
         else if (key == "UpRight")
             upright = val.toBool();
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
-    return SURF::create(hessianThreshold, nOctaves, nOctaveLayers, extended, upright);
+    return SURF::create(hessianThreshold, nOctaves, nOctaveLayers,
+        extended, upright);
 }
 
 Ptr<FREAK> createFREAK(
@@ -420,7 +434,8 @@ Ptr<FREAK> createFREAK(
         else if (key == "SelectedPairs")
             selectedPairs = val.toVector<int>();
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     return FREAK::create(orientationNormalized, scaleNormalized, patternScale,
         nOctaves, selectedPairs);
@@ -451,7 +466,8 @@ Ptr<StarDetector> createStarDetector(
         else if (key == "SuppressNonmaxSize")
             suppressNonmaxSize = val.toInt();
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     return StarDetector::create(maxSize, responseThreshold,
         lineThresholdProjected, lineThresholdBinarized, suppressNonmaxSize);
@@ -470,7 +486,8 @@ Ptr<BriefDescriptorExtractor> createBriefDescriptorExtractor(
         if (key == "Bytes")
             bytes = val.toInt();
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     return BriefDescriptorExtractor::create(bytes);
 }
@@ -494,7 +511,8 @@ Ptr<AgastFeatureDetector> createAgastFeatureDetector(
         else if (key == "Type")
             type = AgastTypeMap[val.toString()];
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     return AgastFeatureDetector::create(threshold, nonmaxSuppression, type);
 }
@@ -515,7 +533,8 @@ Ptr<LUCID> createLUCID(
         else if (key == "BlurKernel")
             blur_kernel = val.toInt();
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     return LUCID::create(lucid_kernel, blur_kernel);
 }
@@ -553,7 +572,8 @@ Ptr<FeatureDetector> createFeatureDetector(string type,
         p = createAgastFeatureDetector(first, last);
 #endif
     else
-        mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized detector %s", type.c_str());
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unrecognized detector %s", type.c_str());
     if (p.empty())
         mexErrMsgIdAndTxt("mexopencv:error", "Failed to create FeatureDetector");
     return p;
@@ -585,14 +605,17 @@ Ptr<DescriptorExtractor> createDescriptorExtractor(string type,
         p = createLUCID(first, last);
 #endif
     else
-        mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized extractor %s", type.c_str());
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unrecognized extractor %s", type.c_str());
     if (p.empty())
         mexErrMsgIdAndTxt("mexopencv:error", "Failed to create DescriptorExtractor");
     return p;
 }
 
 
-// ==================== Descriptor Matching ====================
+/**************************************************************\
+*                     Descriptor Matching                      *
+\**************************************************************/
 
 /// IndexParams centers initialization methods
 const ConstMap<string, cvflann::flann_centers_init_t> CentersInit =
@@ -623,7 +646,8 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
             if (key == "Trees")
                 trees = rhs[i+1].toInt();
             else
-                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         p = makePtr<flann::KDTreeIndexParams>(trees);
     }
@@ -645,7 +669,8 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
             else if (key == "CBIndex")
                 cb_index = rhs[i+1].toDouble();
             else
-                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         p = makePtr<flann::KMeansIndexParams>(
             branching, iterations, centers_init, cb_index);
@@ -671,7 +696,8 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
             else if (key == "CBIndex")
                 cb_index = rhs[i+1].toDouble();
             else
-                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         p = makePtr<flann::CompositeIndexParams>(
             trees, branching, iterations, centers_init, cb_index);
@@ -691,7 +717,8 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
             else if (key == "MultiProbeLevel")
                 multi_probe_level = rhs[i+1].toInt();
             else
-                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         p = makePtr<flann::LshIndexParams>(
             table_number, key_size, multi_probe_level);
@@ -714,7 +741,8 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
             else if (key == "SampleFraction")
                 sample_fraction = rhs[i+1].toDouble();
             else
-                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         p = makePtr<flann::AutotunedIndexParams>(
             target_precision, build_weight, memory_weight, sample_fraction);
@@ -743,13 +771,15 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
             else if (key == "LeafSize")
                 leaf_size = rhs[i+1].toInt();
             else
-                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         p = makePtr<flann::HierarchicalClusteringIndexParams>(
             branching, centers_init, trees, leaf_size);
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized IndexParams type: %s", type.c_str());
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unrecognized IndexParams type: %s", type.c_str());
     return p;
 }
 
@@ -770,7 +800,8 @@ Ptr<flann::SearchParams> toSearchParams(const MxArray& m)
         else if (key == "Sorted")
             sorted = rhs[i+1].toBool();
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     return makePtr<flann::SearchParams>(checks, eps, sorted);
 }
@@ -791,7 +822,8 @@ Ptr<FlannBasedMatcher> createFlannBasedMatcher(
         else if (key == "Search")
             searchParams = toSearchParams(val);
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     if (indexParams.empty())
         indexParams = makePtr<flann::KDTreeIndexParams>();
@@ -816,7 +848,8 @@ Ptr<BFMatcher> createBFMatcher(
         else if (key == "CrossCheck")
             crossCheck = val.toBool();
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     return makePtr<BFMatcher>(normType, crossCheck);
 }
@@ -832,7 +865,8 @@ Ptr<DescriptorMatcher> createDescriptorMatcher(string type,
         else if (type == "BFMatcher")
             p = createBFMatcher(first, last);
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized matcher %s", type.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized matcher %s", type.c_str());
     }
     else
         p = DescriptorMatcher::create(type);

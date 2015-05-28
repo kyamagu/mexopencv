@@ -168,8 +168,7 @@ class MxArray
      * @endcode
      */
     explicit MxArray(const cv::Mat& mat,
-                     mxClassID classid=mxUNKNOWN_CLASS,
-                     bool transpose=true);
+        mxClassID classid = mxUNKNOWN_CLASS, bool transpose = true);
     /** Convert float cv::SparseMat to MxArray.
      * @param mat cv::SparseMat object.
      * @return MxArray object, a 2D sparse array.
@@ -216,7 +215,8 @@ class MxArray
      * mxArray* plhs[0] = MxArray(v);
      * @endcode
      */
-    template <typename T> explicit MxArray(const std::vector<T>& v) {
+    template <typename T> explicit MxArray(const std::vector<T>& v)
+    {
         fromVector<T>(v);
     }
     /** MxArray constructor from cv::Point_<T>.
@@ -258,7 +258,7 @@ class MxArray
      * m.set("field2", "field2 value");
      * @endcode
      */
-    MxArray(const char**fields, int nfields, int m=1, int n=1);
+    MxArray(const char**fields, int nfields, int m = 1, int n = 1);
     /** Destructor. This does not free the underlying mxArray*.
      */
     virtual ~MxArray() {}
@@ -274,7 +274,7 @@ class MxArray
      * c.set(1, MxArray(std::string("some value")));
      * @endcode
      */
-    static inline MxArray Cell(int m=1, int n=1)
+    static inline MxArray Cell(int m = 1, int n = 1)
     {
         return MxArray(mxCreateCellMatrix(m,n));
     }
@@ -293,10 +293,8 @@ class MxArray
      * s.set("field2", "field2 value");
      * @endcode
      */
-    static inline MxArray Struct(const char**fields=NULL,
-                                 int nfields=0,
-                                 int m=1,
-                                 int n=1)
+    static inline MxArray Struct(const char** fields = NULL,
+        int nfields = 0, int m = 1, int n = 1)
     {
         return MxArray(mxCreateStructMatrix(m, n, nfields, fields));
     }
@@ -362,7 +360,7 @@ class MxArray
      * cv::Mat x(MxArray(prhs[0]).toMat());
      * @endcode
      */
-    cv::Mat toMat(int depth=CV_USRTYPE1, bool transpose=true) const;
+    cv::Mat toMat(int depth = CV_USRTYPE1, bool transpose = true) const;
     /** Convert MxArray to a single-channel cv::Mat.
      * @param depth depth of cv::Mat. e.g., \c CV_8U, \c CV_32F. When
      *    \c CV_USERTYPE1 is specified, depth will be automatically determined
@@ -389,7 +387,7 @@ class MxArray
      * cv::Mat x(MxArray(prhs[0]).toMatND());
      * @endcode
      */
-    cv::MatND toMatND(int depth=CV_USRTYPE1, bool transpose=true) const;
+    cv::MatND toMatND(int depth = CV_USRTYPE1, bool transpose = true) const;
     /** Convert double sparse MxArray to float cv::SparseMat.
      * @return cv::SparseMat object.
      */
@@ -398,17 +396,17 @@ class MxArray
      * @param index linear index of the struct array element.
      * @return cv::Moments object.
      */
-    cv::Moments toMoments(mwIndex index=0) const;
+    cv::Moments toMoments(mwIndex index = 0) const;
     /** Convert MxArray to cv::KeyPoint.
      * @param index linear index of the struct array element.
      * @return cv::KeyPoint object.
      */
-    cv::KeyPoint toKeyPoint(mwIndex index=0) const;
+    cv::KeyPoint toKeyPoint(mwIndex index = 0) const;
     /** Convert MxArray to cv::DMatch.
      * @param index linear index of the struct array element.
      * @return cv::DMatch object.
      */
-    cv::DMatch toDMatch(mwIndex index=0) const;
+    cv::DMatch toDMatch(mwIndex index = 0) const;
     /** Convert MxArray to cv::Range.
      * @return cv::Range object.
      */
@@ -417,12 +415,12 @@ class MxArray
      * @param index linear index of the struct array element.
      * @return cv::RotatedRect object.
      */
-    cv::RotatedRect toRotatedRect(mwIndex index=0) const;
+    cv::RotatedRect toRotatedRect(mwIndex index = 0) const;
     /** Convert MxArray to cv::TermCriteria.
      * @param index linear index of the struct array element.
      * @return cv::TermCriteria object.
      */
-    cv::TermCriteria toTermCriteria(mwIndex index=0) const;
+    cv::TermCriteria toTermCriteria(mwIndex index = 0) const;
     /** Convert MxArray to Point_<T>.
      * @return cv::Point_<T> value.
      */
@@ -495,8 +493,7 @@ class MxArray
     /** Alias to toScalar_<double>
      * @return cv::Scalar object.
      */
-    inline cv::Scalar toScalar() const { return toScalar_<double>(); }   
-
+    inline cv::Scalar toScalar() const { return toScalar_<double>(); }
     /** Class ID of mxArray.
      * @return identifier of the array class, enum value of type mxClassID.
      */
@@ -557,7 +554,7 @@ class MxArray
      * Return the offset (in number of elements) from the beginning of
      * the array to the specified <tt>(i,j)</tt> subscript.
      */
-    mwIndex subs(mwIndex i, mwIndex j=0) const;
+    mwIndex subs(mwIndex i, mwIndex j = 0) const;
     /** Offset from first element to desired element.
      * @param si vector of subscripts for each dimension of the array.
      * @return linear offset of the specified subscripts.
@@ -755,7 +752,7 @@ class MxArray
      * MxArray x = structArray.at<MxArray>("some_field");
      * @endcode
      */
-    MxArray at(const std::string& fieldName, mwIndex index=0) const;
+    MxArray at(const std::string& fieldName, mwIndex index = 0) const;
     /** Template for numeric array element write accessor.
      * @param index linear index of the array element.
      * @param value value to assign to the element at the specified index.
@@ -796,7 +793,7 @@ class MxArray
      * @endcode
      */
     template <typename T> void set(const std::vector<mwIndex>& si,
-                                   const T& value);
+        const T& value);
     /** Template for struct array element write accessor.
      * @param fieldName name of field in the structure.
      * @param value value to assign to the field.
@@ -817,8 +814,7 @@ class MxArray
      * @endcode
      */
     template <typename T> void set(const std::string& fieldName,
-                                   const T& value,
-                                   mwIndex index=0);
+        const T& value, mwIndex index = 0);
     /** Determine whether input is NaN (Not-a-Number).
      * @param d double-precision floating-point number
      * @return true if value is \c NaN, false otherwise.
@@ -840,6 +836,7 @@ class MxArray
      * accuracy.
      */
     static inline double Eps() { return mxGetEps(); }
+
   private:
     /** Internal converter from std::vector to MxArray.
      * @param v vector of type \c T.
@@ -850,8 +847,7 @@ class MxArray
      * (assuming an appropriate constructor exists that converts each element
      * of type \c T to MxArray).
      */
-    template <typename T>
-    void fromVector(const std::vector<T>& v);
+    template <typename T> void fromVector(const std::vector<T>& v);
     /** const pointer to the mxArray opaque object.
      */
     const mxArray* p_;
@@ -882,15 +878,15 @@ class ConstMap
         m_[key] = val;
     }
     /// Consecutive insertion operator
-    ConstMap<T, U>& operator()(const T& key, const U& val)
+    ConstMap<T,U>& operator() (const T& key, const U& val)
     {
         m_[key] = val;
         return *this;
     }
     /// Implicit converter to std::map
-    operator std::map<T, U>() { return m_; }
+    operator std::map<T,U>() { return m_; }
     /// Lookup operator; fail if not found
-    U operator [](const T& key) const
+    U operator[] (const T& key) const
     {
         typename std::map<T,U>::const_iterator it = m_.find(key);
         if (it==m_.end())
@@ -899,7 +895,7 @@ class ConstMap
     }
   private:
     //// private map object
-    std::map<T, U> m_;
+    std::map<T,U> m_;
 };
 
 template <typename T>
@@ -920,8 +916,8 @@ void MxArray::fromVector(const std::vector<T>& v)
 }
 
 template <typename T>
-MxArray::MxArray(const cv::Point_<T>& p) :
-    p_(mxCreateNumericMatrix(1, 2, mxDOUBLE_CLASS,mxREAL))
+MxArray::MxArray(const cv::Point_<T>& p)
+    : p_(mxCreateNumericMatrix(1, 2, mxDOUBLE_CLASS, mxREAL))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
@@ -931,8 +927,8 @@ MxArray::MxArray(const cv::Point_<T>& p) :
 }
 
 template <typename T>
-MxArray::MxArray(const cv::Point3_<T>& p) :
-    p_(mxCreateNumericMatrix(1, 3, mxDOUBLE_CLASS,mxREAL))
+MxArray::MxArray(const cv::Point3_<T>& p)
+    : p_(mxCreateNumericMatrix(1, 3, mxDOUBLE_CLASS, mxREAL))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
@@ -943,8 +939,8 @@ MxArray::MxArray(const cv::Point3_<T>& p) :
 }
 
 template <typename T>
-MxArray::MxArray(const cv::Size_<T>& s) :
-    p_(mxCreateNumericMatrix(1, 2, mxDOUBLE_CLASS, mxREAL))
+MxArray::MxArray(const cv::Size_<T>& s)
+    : p_(mxCreateNumericMatrix(1, 2, mxDOUBLE_CLASS, mxREAL))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
@@ -954,8 +950,8 @@ MxArray::MxArray(const cv::Size_<T>& s) :
 }
 
 template <typename T>
-MxArray::MxArray(const cv::Rect_<T>& r) :
-    p_(mxCreateNumericMatrix(1, 4, mxDOUBLE_CLASS,mxREAL))
+MxArray::MxArray(const cv::Rect_<T>& r)
+    : p_(mxCreateNumericMatrix(1, 4, mxDOUBLE_CLASS, mxREAL))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
@@ -967,8 +963,8 @@ MxArray::MxArray(const cv::Rect_<T>& r) :
 }
 
 template <typename T>
-MxArray::MxArray(const cv::Scalar_<T>& s) :
-    p_(mxCreateNumericMatrix(1, 4, mxDOUBLE_CLASS,mxREAL))
+MxArray::MxArray(const cv::Scalar_<T>& s)
+    : p_(mxCreateNumericMatrix(1, 4, mxDOUBLE_CLASS, mxREAL))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
@@ -982,7 +978,7 @@ MxArray::MxArray(const cv::Scalar_<T>& s) :
 template <typename T>
 cv::Point_<T> MxArray::toPoint_() const
 {
-    if (!isNumeric() || numel()!=2)
+    if (!isNumeric() || numel() != 2)
         mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a Point");
     return cv::Point_<T>(at<T>(0), at<T>(1));
 }
@@ -990,7 +986,7 @@ cv::Point_<T> MxArray::toPoint_() const
 template <typename T>
 cv::Point3_<T> MxArray::toPoint3_() const
 {
-    if (!isNumeric() || numel()!=3)
+    if (!isNumeric() || numel() != 3)
         mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a Point");
     return cv::Point3_<T>(at<T>(0), at<T>(1), at<T>(2));
 }
@@ -998,7 +994,7 @@ cv::Point3_<T> MxArray::toPoint3_() const
 template <typename T>
 cv::Size_<T> MxArray::toSize_() const
 {
-    if (!isNumeric() || numel()!=2)
+    if (!isNumeric() || numel() != 2)
         mexErrMsgIdAndTxt("mexopencv:error",
                           "MxArray is incompatible to cv::Size");
     return cv::Size_<T>(at<T>(0), at<T>(1));
@@ -1007,7 +1003,7 @@ cv::Size_<T> MxArray::toSize_() const
 template <typename T>
 cv::Rect_<T> MxArray::toRect_() const
 {
-    if (!isNumeric() || numel()!=4)
+    if (!isNumeric() || numel() != 4)
         mexErrMsgIdAndTxt("mexopencv:error",
                           "MxArray is incompatible to cv::Rect");
     return cv::Rect_<T>(at<T>(0), at<T>(1), at<T>(2), at<T>(3));
@@ -1020,8 +1016,7 @@ cv::Scalar_<T> MxArray::toScalar_() const
     if (!isNumeric() || n < 1 || 4 < n)
         mexErrMsgIdAndTxt("mexopencv:error",
                           "MxArray is incompatible to cv::Scalar");
-    switch (n)
-    {
+    switch (n) {
         case 1: return cv::Scalar_<T>(at<T>(0));
         case 2: return cv::Scalar_<T>(at<T>(0), at<T>(1));
         case 3: return cv::Scalar_<T>(at<T>(0), at<T>(1), at<T>(2));
@@ -1062,41 +1057,40 @@ T MxArray::at(mwIndex index) const
 {
     if (!p_ || numel() <= index)
         mexErrMsgIdAndTxt("mexopencv:error", "Accessing invalid range");
-    switch (classID())
-    {
+    switch (classID()) {
         case mxCHAR_CLASS:
-            return static_cast<T>(*(mxGetChars(p_)+index));
+            return static_cast<T>(*(mxGetChars(p_) + index));
         case mxDOUBLE_CLASS:
-            return static_cast<T>(*(mxGetPr(p_)+index));
+            return static_cast<T>(*(mxGetPr(p_) + index));
         case mxINT8_CLASS:
             return static_cast<T>(
-                *(reinterpret_cast<int8_t*>(mxGetData(p_))+index));
+                *(reinterpret_cast<int8_t*>(mxGetData(p_)) + index));
         case mxUINT8_CLASS:
             return static_cast<T>(
-                *(reinterpret_cast<uint8_t*>(mxGetData(p_))+index));
+                *(reinterpret_cast<uint8_t*>(mxGetData(p_)) + index));
         case mxINT16_CLASS:
             return static_cast<T>(
-                *(reinterpret_cast<int16_t*>(mxGetData(p_))+index));
+                *(reinterpret_cast<int16_t*>(mxGetData(p_)) + index));
         case mxUINT16_CLASS:
             return static_cast<T>(
-                *(reinterpret_cast<uint16_t*>(mxGetData(p_))+index));
+                *(reinterpret_cast<uint16_t*>(mxGetData(p_)) + index));
         case mxINT32_CLASS:
             return static_cast<T>(
-                *(reinterpret_cast<int32_t*>(mxGetData(p_))+index));
+                *(reinterpret_cast<int32_t*>(mxGetData(p_)) + index));
         case mxUINT32_CLASS:
             return static_cast<T>(
-                *(reinterpret_cast<uint32_t*>(mxGetData(p_))+index));
+                *(reinterpret_cast<uint32_t*>(mxGetData(p_)) + index));
         case mxINT64_CLASS:
             return static_cast<T>(
-                *(reinterpret_cast<int64_t*>(mxGetData(p_))+index));
+                *(reinterpret_cast<int64_t*>(mxGetData(p_)) + index));
         case mxUINT64_CLASS:
             return static_cast<T>(
-                *(reinterpret_cast<uint64_t*>(mxGetData(p_))+index));
+                *(reinterpret_cast<uint64_t*>(mxGetData(p_)) + index));
         case mxSINGLE_CLASS:
             return static_cast<T>(
-                *(reinterpret_cast<float*>(mxGetData(p_))+index));
+                *(reinterpret_cast<float*>(mxGetData(p_)) + index));
         case mxLOGICAL_CLASS:
-            return static_cast<T>(*(mxGetLogicals(p_)+index));
+            return static_cast<T>(*(mxGetLogicals(p_) + index));
         case mxCELL_CLASS:
         case mxSTRUCT_CLASS:
         case mxFUNCTION_CLASS:
@@ -1123,60 +1117,74 @@ void MxArray::set(mwIndex index, const T& value)
 {
     if (numel() <= index)
         mexErrMsgIdAndTxt("mexopencv:error", "Accessing invalid range");
-    switch (classID())
-    {
+    switch (classID()) {
         case mxCHAR_CLASS:
-            *(mxGetChars(p_)+index) = static_cast<mxChar>(value); break;
+            *(mxGetChars(p_) + index) = static_cast<mxChar>(value);
+            break;
         case mxDOUBLE_CLASS:
-            *(mxGetPr(p_)+index) = static_cast<double>(value); break;
+            *(mxGetPr(p_) + index) = static_cast<double>(value);
+            break;
         case mxINT8_CLASS:
-            *(reinterpret_cast<int8_t*>(mxGetData(p_))+index) =
-                static_cast<int8_t>(value); break;
+            *(reinterpret_cast<int8_t*>(mxGetData(p_)) + index) =
+                static_cast<int8_t>(value);
+            break;
         case mxUINT8_CLASS:
-            *(reinterpret_cast<uint8_t*>(mxGetData(p_))+index) =
-                static_cast<uint8_t>(value); break;
+            *(reinterpret_cast<uint8_t*>(mxGetData(p_)) + index) =
+                static_cast<uint8_t>(value);
+            break;
         case mxINT16_CLASS:
-            *(reinterpret_cast<int16_t*>(mxGetData(p_))+index) =
-                static_cast<int16_t>(value); break;
+            *(reinterpret_cast<int16_t*>(mxGetData(p_)) + index) =
+                static_cast<int16_t>(value);
+            break;
         case mxUINT16_CLASS:
-            *(reinterpret_cast<uint16_t*>(mxGetData(p_))+index) =
-                static_cast<uint16_t>(value); break;
+            *(reinterpret_cast<uint16_t*>(mxGetData(p_)) + index) =
+                static_cast<uint16_t>(value);
+            break;
         case mxINT32_CLASS:
-            *(reinterpret_cast<int32_t*>(mxGetData(p_))+index) =
-                static_cast<int32_t>(value); break;
+            *(reinterpret_cast<int32_t*>(mxGetData(p_)) + index) =
+                static_cast<int32_t>(value);
+            break;
         case mxUINT32_CLASS:
-            *(reinterpret_cast<uint32_t*>(mxGetData(p_))+index) =
-                static_cast<uint32_t>(value); break;
+            *(reinterpret_cast<uint32_t*>(mxGetData(p_)) + index) =
+                static_cast<uint32_t>(value);
+            break;
         case mxINT64_CLASS:
-            *(reinterpret_cast<int64_t*>(mxGetData(p_))+index) =
-                static_cast<int64_t>(value); break;
+            *(reinterpret_cast<int64_t*>(mxGetData(p_)) + index) =
+                static_cast<int64_t>(value);
+            break;
         case mxUINT64_CLASS:
-            *(reinterpret_cast<uint64_t*>(mxGetData(p_))+index) =
-                static_cast<uint64_t>(value); break;
+            *(reinterpret_cast<uint64_t*>(mxGetData(p_)) + index) =
+                static_cast<uint64_t>(value);
+            break;
         case mxSINGLE_CLASS:
-            *(reinterpret_cast<float*>(mxGetData(p_))+index) =
-                static_cast<float>(value); break;
+            *(reinterpret_cast<float*>(mxGetData(p_)) + index) =
+                static_cast<float>(value);
+            break;
         case mxLOGICAL_CLASS:
-            *(mxGetLogicals(p_)+index) = static_cast<mxLogical>(value); break;
+            *(mxGetLogicals(p_) + index) = static_cast<mxLogical>(value);
+            break;
         case mxCELL_CLASS:
-            mxSetCell(const_cast<mxArray*>(p_), index, MxArray(value)); break;
+            mxSetCell(const_cast<mxArray*>(p_), index,
+                static_cast<mxArray*>(MxArray(value)));
+            break;
         case mxSTRUCT_CLASS:
         case mxFUNCTION_CLASS:
         default:
             mexErrMsgIdAndTxt("mexopencv:error", "MxArray type is not valid");
+            break;
     }
 }
 
 template <typename T>
 void MxArray::set(mwIndex i, mwIndex j, const T& value)
 {
-    set<T>(subs(i,j),value);
+    set<T>(subs(i,j), value);
 }
 
 template <typename T>
 void MxArray::set(const std::vector<mwIndex>& si, const T& value)
 {
-    set<T>(subs(si),value);
+    set<T>(subs(si), value);
 }
 
 template <typename T>
@@ -1184,15 +1192,13 @@ void MxArray::set(const std::string& fieldName, const T& value, mwIndex index)
 {
     if (!isStruct())
         mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not struct");
-    if (!isField(fieldName))
-    {
-        if (mxAddField(const_cast<mxArray*>(p_), fieldName.c_str())<0)
+    if (!isField(fieldName)) {
+        if (mxAddField(const_cast<mxArray*>(p_), fieldName.c_str()) < 0)
             mexErrMsgIdAndTxt("mexopencv:error",
-                              "Failed to create a field '%s'",
-                              fieldName.c_str());
+                "Failed to create a field '%s'", fieldName.c_str());
     }
     mxSetField(const_cast<mxArray*>(p_), index, fieldName.c_str(),
-               static_cast<mxArray*>(MxArray(value)));
+        static_cast<mxArray*>(MxArray(value)));
 }
 
 /** MxArray specialized constructor from vector<char>.
@@ -1213,13 +1219,15 @@ void MxArray::fromVector(const std::vector<bool>& v);
  * @param v vector of type DMatch.
  * @return a struct array MxArray object.
  */
-template <> MxArray::MxArray(const std::vector<cv::DMatch>& v);
+template <>
+MxArray::MxArray(const std::vector<cv::DMatch>& v);
 
 /** MxArray specialized constructor from vector<KeyPoint>.
  * @param v vector of type KeyPoint.
  * @return a struct array MxArray object.
  */
-template <> MxArray::MxArray(const std::vector<cv::KeyPoint>& v);
+template <>
+MxArray::MxArray(const std::vector<cv::KeyPoint>& v);
 
 /** Cell array element accessor.
  * @param index linear index of the cell array element.
@@ -1231,7 +1239,8 @@ template <> MxArray::MxArray(const std::vector<cv::KeyPoint>& v);
  * MxArray m = cellArray.at<MxArray>(0);
  * @endcode
  */
-template <> MxArray MxArray::at(mwIndex index) const;
+template <>
+MxArray MxArray::at(mwIndex index) const;
 
 /** Cell array element write accessor.
  * @param index linear index of the cell array element.
@@ -1244,7 +1253,8 @@ template <> MxArray MxArray::at(mwIndex index) const;
  * cellArray.set<MxArray>(1, MxArray(std::string("hello")));
  * @endcode
  */
-template <> void MxArray::set(mwIndex index, const MxArray& value);
+template <>
+void MxArray::set(mwIndex index, const MxArray& value);
 
 /** Convert MxArray to std::vector<MxArray>.
  * @return std::vector<MxArray> value.
@@ -1255,7 +1265,8 @@ template <> void MxArray::set(mwIndex index, const MxArray& value);
  * vector<MxArray> v = cellArray.toVector<MxArray>();
  * @endcode
  */
-template <> std::vector<MxArray> MxArray::toVector() const;
+template <>
+std::vector<MxArray> MxArray::toVector() const;
 
 /** Convert MxArray to std::vector<std::string>.
  * @return std::vector<std::string> value.
@@ -1266,7 +1277,8 @@ template <> std::vector<MxArray> MxArray::toVector() const;
  * vector<string> v = cellArray.toVector<string>();
  * @endcode
  */
-template <> std::vector<std::string> MxArray::toVector() const;
+template <>
+std::vector<std::string> MxArray::toVector() const;
 
 /** Convert MxArray to std::vector<cv::Mat>.
  * @return std::vector<cv::Mat> value.
@@ -1277,7 +1289,8 @@ template <> std::vector<std::string> MxArray::toVector() const;
  * vector<Mat> v = cellArray.toVector<Mat>();
  * @endcode
  */
-template <> std::vector<cv::Mat> MxArray::toVector() const;
+template <>
+std::vector<cv::Mat> MxArray::toVector() const;
 
 /** Convert MxArray to std::vector<Point>.
  * @return std::vector<Point> value.
@@ -1288,7 +1301,8 @@ template <> std::vector<cv::Mat> MxArray::toVector() const;
  * vector<Point> v = cellArray.toVector<Point>();
  * @endcode
  */
-template <> std::vector<cv::Point> MxArray::toVector() const;
+template <>
+std::vector<cv::Point> MxArray::toVector() const;
 
 /** Convert MxArray to std::vector<Point2f>.
  * @return std::vector<Point2f> value.
@@ -1299,7 +1313,8 @@ template <> std::vector<cv::Point> MxArray::toVector() const;
  * vector<Point2f> v = cellArray.toVector<Point2f>();
  * @endcode
  */
-template <> std::vector<cv::Point2f> MxArray::toVector() const;
+template <>
+std::vector<cv::Point2f> MxArray::toVector() const;
 
 /** Convert MxArray to std::vector<Point3f>.
  * @return std::vector<Point3f> value.
@@ -1310,7 +1325,8 @@ template <> std::vector<cv::Point2f> MxArray::toVector() const;
  * vector<Point3f> v = cellArray.toVector<Point3f>();
  * @endcode
  */
-template <> std::vector<cv::Point3f> MxArray::toVector() const;
+template <>
+std::vector<cv::Point3f> MxArray::toVector() const;
 
 /** Convert MxArray to std::vector<Rect>.
  * @return std::vector<Rect> value.
@@ -1321,7 +1337,8 @@ template <> std::vector<cv::Point3f> MxArray::toVector() const;
  * vector<Rect> v = cellArray.toVector<Rect>();
  * @endcode
  */
-template <> std::vector<cv::Rect> MxArray::toVector() const;
+template <>
+std::vector<cv::Rect> MxArray::toVector() const;
 
 /** Convert MxArray to std::vector<cv::RotatedRect>.
  * @return std::vector<cv::RotatedRect> value.
@@ -1332,7 +1349,8 @@ template <> std::vector<cv::Rect> MxArray::toVector() const;
  * vector<RotatedRect> v = structArray.toVector<RotatedRect>();
  * @endcode
  */
-template <> std::vector<cv::RotatedRect> MxArray::toVector() const;
+template <>
+std::vector<cv::RotatedRect> MxArray::toVector() const;
 
 /** Convert MxArray to std::vector<cv::KeyPoint>.
  * @return std::vector<cv::KeyPoint> value.
@@ -1343,7 +1361,8 @@ template <> std::vector<cv::RotatedRect> MxArray::toVector() const;
  * vector<KeyPoint> v = structArray.toVector<KeyPoint>();
  * @endcode
  */
-template <> std::vector<cv::KeyPoint> MxArray::toVector() const;
+template <>
+std::vector<cv::KeyPoint> MxArray::toVector() const;
 
 /** Convert MxArray to std::vector<cv::DMatch>.
  * @return std::vector<cv::DMatch> value.
@@ -1354,6 +1373,7 @@ template <> std::vector<cv::KeyPoint> MxArray::toVector() const;
  * vector<DMatch> v = structArray.toVector<DMatch>();
  * @endcode
  */
-template <> std::vector<cv::DMatch> MxArray::toVector() const;
+template <>
+std::vector<cv::DMatch> MxArray::toVector() const;
 
 #endif // __MXARRAY_HPP__

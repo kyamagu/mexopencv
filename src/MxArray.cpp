@@ -5,7 +5,7 @@
  */
 #include "MxArray.hpp"
 
-namespace { // namespace
+namespace {
 
 /// Field names for cv::Moments.
 const char *cv_moments_fields[10] = {"m00", "m10", "m01", "m20", "m11", "m02",
@@ -66,8 +66,8 @@ struct CompareSparseMatNode {
 
 /// Inverse TermCriteria type map for option processing.
 const ConstMap<int, std::string> InvTermCritType = ConstMap<int, std::string>
-    (cv::TermCriteria::COUNT, "Count")
-    (cv::TermCriteria::EPS,   "EPS")
+    (cv::TermCriteria::COUNT,                       "Count")
+    (cv::TermCriteria::EPS,                         "EPS")
     (cv::TermCriteria::COUNT+cv::TermCriteria::EPS, "Count+EPS");
 
 /// TermCriteria type map for option processing.
@@ -76,7 +76,7 @@ const ConstMap<std::string, int> TermCritType = ConstMap<std::string, int>
     ("EPS",       cv::TermCriteria::EPS)
     ("Count+EPS", cv::TermCriteria::COUNT+cv::TermCriteria::EPS);
 
-}  // namespace
+}  // anonymous namespace
 
 MxArray& MxArray::operator=(const MxArray& rhs)
 {
@@ -92,19 +92,22 @@ MxArray::MxArray(const int i)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
 }
 
-MxArray::MxArray(const double d) : p_(mxCreateDoubleScalar(d))
+MxArray::MxArray(const double d)
+    : p_(mxCreateDoubleScalar(d))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
 }
 
-MxArray::MxArray(const bool b) : p_(mxCreateLogicalScalar(b))
+MxArray::MxArray(const bool b)
+    : p_(mxCreateLogicalScalar(b))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
 }
 
-MxArray::MxArray(const std::string& s) : p_(mxCreateString(s.c_str()))
+MxArray::MxArray(const std::string& s)
+    : p_(mxCreateString(s.c_str()))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
@@ -112,47 +115,46 @@ MxArray::MxArray(const std::string& s) : p_(mxCreateString(s.c_str()))
 
 MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 {
-    if (mat.empty())
-    {
+    // handle special case of empty input Mat by creating: double([])
+    if (mat.empty()) {
         p_ = mxCreateNumericArray(0, 0, mxDOUBLE_CLASS, mxREAL);
         if (!p_)
             mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
         return;
     }
+    // transpose cv::Mat if needed
     cv::Mat input = (mat.dims == 2 && transpose) ? mat.t() : mat;
-    // Create a new mxArray.
+    // Create a new mxArray (of the specified classID) equivalent to cv::Mat
     const int nchannels = input.channels();
     const int* dims_ = input.size;
     std::vector<mwSize> d(dims_, dims_ + input.dims);
     d.push_back(nchannels);
-    classid = (classid == mxUNKNOWN_CLASS)
-        ? ClassIDOf[input.depth()] : classid;
+    classid = (classid == mxUNKNOWN_CLASS) ? ClassIDOf[input.depth()] : classid;
     std::swap(d[0], d[1]);
-    if (classid == mxLOGICAL_CLASS)
-    {
-        // OpenCV's logical true is any nonzero while matlab's true is 1.
+    if (classid == mxLOGICAL_CLASS) {
+        // OpenCV's logical true is any nonzero, while MATLAB's true is 1.
         cv::compare(input, 0, input, cv::CMP_NE);
         input.setTo(1, input);
         p_ = mxCreateLogicalArray(d.size(), &d[0]);
     }
-    else {
+    else
         p_ = mxCreateNumericArray(d.size(), &d[0], classid, mxREAL);
-    }
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-    // Copy each channel.
+    // split input cv::Mat into several single-channel arrays
     std::vector<cv::Mat> channels;
     split(input, channels);
-    std::vector<mwSize> si(d.size(), 0); // subscript index.
-    int type = CV_MAKETYPE(DepthOf[classid], 1); // destination type.
-    for (int i = 0; i < nchannels; ++i)
-    {
-        si[si.size() - 1] = i; // last dim is a channel index.
+    // Copy each channel from Mat to mxArray (converting to specified classid),
+    // as in: p_(:,:,i) <- cast_to_classid_type(channels[i])
+    std::vector<mwSize> si(d.size(), 0);         // subscript index
+    int type = CV_MAKETYPE(DepthOf[classid], 1); // destination type
+    for (int i = 0; i < nchannels; ++i) {
+        si[si.size() - 1] = i;                   // last dim is a channel index
         void *ptr = reinterpret_cast<void*>(
-                reinterpret_cast<size_t>(mxGetData(p_)) +
-                mxGetElementSize(p_) * subs(si));
-        cv::Mat m(input.dims, dims_, type, ptr);
-        channels[i].convertTo(m, type); // Write to mxArray through m.
+            reinterpret_cast<size_t>(mxGetData(p_)) +
+            mxGetElementSize(p_) * subs(si));    // ptr to i-th channel data
+        cv::Mat m(input.dims, dims_, type, ptr); // only creates Mat header
+        channels[i].convertTo(m, type);          // Write to mxArray through m
     }
 }
 
@@ -192,8 +194,8 @@ MxArray::MxArray(const cv::SparseMat& mat)
     }
 }
 
-MxArray::MxArray(const cv::Moments& m) :
-    p_(mxCreateStructMatrix(1, 1, 10, cv_moments_fields))
+MxArray::MxArray(const cv::Moments& m)
+    : p_(mxCreateStructMatrix(1, 1, 10, cv_moments_fields))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
@@ -209,8 +211,8 @@ MxArray::MxArray(const cv::Moments& m) :
     set("m03", m.m03);
 }
 
-MxArray::MxArray(const cv::KeyPoint& p) :
-    p_(mxCreateStructMatrix(1, 1, 6, cv_keypoint_fields))
+MxArray::MxArray(const cv::KeyPoint& p)
+    : p_(mxCreateStructMatrix(1, 1, 6, cv_keypoint_fields))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
@@ -242,13 +244,12 @@ void MxArray::fromVector(const std::vector<bool>& v)
 }
 
 template <>
-MxArray::MxArray(const std::vector<cv::KeyPoint>& v) :
-    p_(mxCreateStructMatrix(1, v.size(), 6, cv_keypoint_fields))
+MxArray::MxArray(const std::vector<cv::KeyPoint>& v)
+    : p_(mxCreateStructMatrix(1, v.size(), 6, cv_keypoint_fields))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-    for (size_t i = 0; i < v.size(); ++i)
-    {
+    for (size_t i = 0; i < v.size(); ++i) {
         set("pt",       v[i].pt,       i);
         set("size",     v[i].size,     i);
         set("angle",    v[i].angle,    i);
@@ -258,8 +259,8 @@ MxArray::MxArray(const std::vector<cv::KeyPoint>& v) :
     }
 }
 
-MxArray::MxArray(const cv::DMatch& m) :
-    p_(mxCreateStructMatrix(1, 1, 4, cv_keypoint_fields))
+MxArray::MxArray(const cv::DMatch& m)
+    : p_(mxCreateStructMatrix(1, 1, 4, cv_keypoint_fields))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
@@ -270,13 +271,12 @@ MxArray::MxArray(const cv::DMatch& m) :
 }
 
 template <>
-MxArray::MxArray(const std::vector<cv::DMatch>& v) :
-    p_(mxCreateStructMatrix(1, v.size(), 4, cv_dmatch_fields))
+MxArray::MxArray(const std::vector<cv::DMatch>& v)
+    : p_(mxCreateStructMatrix(1, v.size(), 4, cv_dmatch_fields))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-    for (size_t i = 0; i < v.size(); ++i)
-    {
+    for (size_t i = 0; i < v.size(); ++i) {
         set("queryIdx", v[i].queryIdx, i);
         set("trainIdx", v[i].trainIdx, i);
         set("imgIdx",   v[i].imgIdx,   i);
@@ -284,8 +284,8 @@ MxArray::MxArray(const std::vector<cv::DMatch>& v) :
     }
 }
 
-MxArray::MxArray(const cv::RotatedRect& r) :
-    p_(mxCreateStructMatrix(1, 1, 3, cv_rotated_rect_fields))
+MxArray::MxArray(const cv::RotatedRect& r)
+    : p_(mxCreateStructMatrix(1, 1, 3, cv_rotated_rect_fields))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
@@ -294,8 +294,8 @@ MxArray::MxArray(const cv::RotatedRect& r) :
     set("angle",  r.angle);
 }
 
-MxArray::MxArray(const cv::TermCriteria& t) :
-    p_(mxCreateStructMatrix(1, 1, 3, cv_term_criteria_fields))
+MxArray::MxArray(const cv::TermCriteria& t)
+    : p_(mxCreateStructMatrix(1, 1, 3, cv_term_criteria_fields))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
@@ -304,26 +304,29 @@ MxArray::MxArray(const cv::TermCriteria& t) :
     set("epsilon",  t.epsilon);
 }
 
-MxArray::MxArray(const char** fields, int nfields, int m, int n) :
-    p_(mxCreateStructMatrix(m, n, nfields, fields))
+MxArray::MxArray(const char** fields, int nfields, int m, int n)
+    : p_(mxCreateStructMatrix(m, n, nfields, fields))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
 }
 
-int MxArray::toInt() const {
+int MxArray::toInt() const
+{
     if (numel() != 1)
         mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a scalar");
     return at<int>(0);
 }
 
-double MxArray::toDouble() const {
+double MxArray::toDouble() const
+{
     if (numel() != 1)
         mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a scalar");
     return at<double>(0);
 }
 
-bool MxArray::toBool() const {
+bool MxArray::toBool() const
+{
     if (numel() != 1)
         mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a scalar");
     return at<bool>(0);
@@ -341,50 +344,54 @@ std::string MxArray::toString() const
 
 cv::Mat MxArray::toMat(int depth, bool transpose) const
 {
-    // Create cv::Mat object.
+    // Create cv::Mat object (of the specified depth), equivalent to mxArray
     std::vector<int> d(dims(), dims()+ndims());
     int ndims = (d.size()>2) ? d.size()-1 : d.size();
     int nchannels = (d.size()>2) ? *(d.end()-1) : 1;
-    depth = (depth==CV_USRTYPE1) ? DepthOf[classID()] : depth;
+    depth = (depth == CV_USRTYPE1) ? DepthOf[classID()] : depth;
     std::swap(d[0], d[1]);
     cv::Mat mat(ndims, &d[0], CV_MAKETYPE(depth, nchannels));
-    // Copy each channel.
+    // Copy each channel from mxArray to Mat (converting to specified depth),
+    // as in: channels[i] <- cast_to_mat_depth(p_(:,:,i))
     std::vector<cv::Mat> channels(nchannels);
-    std::vector<mwSize> si(d.size(), 0); // subscript index
+    std::vector<mwSize> si(d.size(), 0);           // subscript index
     int type = CV_MAKETYPE(DepthOf[classID()], 1); // Source type
-    for (int i = 0; i<nchannels; ++i)
-    {
-        si[d.size()-1] = i;
+    for (int i = 0; i<nchannels; ++i) {
+        si[d.size() - 1] = i;                    // last dim is a channel index
         void *pd = reinterpret_cast<void*>(
-                reinterpret_cast<size_t>(mxGetData(p_))+
-                mxGetElementSize(p_)*subs(si));
-        cv::Mat m(ndims, &d[0], type, pd);
-        // Read from mxArray through m
+            reinterpret_cast<size_t>(mxGetData(p_)) +
+            mxGetElementSize(p_)*subs(si));        // ptr to i-th channel data
+        cv::Mat m(ndims, &d[0], type, pd);         // only creates Mat headers
+        // Read from mxArray through m, writing into channels[i]
         m.convertTo(channels[i], CV_MAKETYPE(depth, 1));
     }
+    // Merge channels back into one cv::Mat array
     cv::merge(channels, mat);
-    return (mat.dims==2 && transpose) ? cv::Mat(mat.t()) : mat;
+    // transpose cv::Mat if needed
+    return ((mat.dims==2 && transpose) ? cv::Mat(mat.t()) : mat);
 }
 
 cv::MatND MxArray::toMatND(int depth, bool transpose) const
 {
-    // Create cv::Mat object.
+    // Create cv::MatND object (of the specified depth), equivalent to mxArray
     std::vector<int> d(dims(), dims()+ndims());
     std::swap(d[0], d[1]);
     cv::MatND m(ndims(), &d[0], CV_MAKETYPE(DepthOf[classID()], 1),
-                mxGetData(p_));
-    // Copy.
+        mxGetData(p_));
+    // Copy from mxArray to cv::MatND (converting to specified depth)
     cv::MatND mat;
     depth = (depth==CV_USRTYPE1) ? CV_MAKETYPE(DepthOf[classID()], 1) : depth;
+    // Read from mxArray through m, writing into mat
     m.convertTo(mat, CV_MAKETYPE(depth, 1));
-    return (mat.dims==2 && transpose) ? cv::Mat(mat.t()) : mat;
+    // transpose cv::MatND if needed
+    return ((mat.dims==2 && transpose) ? cv::Mat(mat.t()) : mat);
 }
 
 cv::SparseMat MxArray::toSparseMat() const
 {
     // Check if it's sparse.
     if (!isSparse() || !isDouble())
-        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not sparse");        
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not sparse");
     mwIndex *ir = mxGetIr(p_);
     mwIndex *jc = mxGetJc(p_);
     if (ir == NULL || jc == NULL)
@@ -395,8 +402,7 @@ cv::SparseMat MxArray::toSparseMat() const
     cv::SparseMat mat(2, dims, CV_32F);
     // Copy data.
     double *pr = mxGetPr(p_);
-    for (int j=0; j<n; ++j)
-    {
+    for (int j=0; j<n; ++j) {
         mwIndex start = jc[j], end = jc[j + 1] - 1;
         // (row,col) <= val.
         for (mwIndex i = start; i <= end; ++i)
@@ -476,11 +482,11 @@ cv::TermCriteria MxArray::toTermCriteria(mwIndex index) const
 
 std::string MxArray::fieldname(int fieldnumber) const
 {
-    const char *f = mxGetFieldNameByNumber(p_, fieldnumber);
-    if (!f)
+    const char *fname = mxGetFieldNameByNumber(p_, fieldnumber);
+    if (!fname)
         mexErrMsgIdAndTxt("mexopencv:error",
-                          "Failed to get field name at %d\n", fieldnumber);
-    return std::string(f);
+            "Failed to get field name at %d\n", fieldnumber);
+    return std::string(fname);
 }
 
 std::vector<std::string> MxArray::fieldnames() const
@@ -499,8 +505,8 @@ mwIndex MxArray::subs(mwIndex i, mwIndex j) const
 {
     if (i >= rows() || j >= cols())
         mexErrMsgIdAndTxt("mexopencv:error", "Subscript out of range");
-    mwIndex s[] = {i, j};
-    return mxCalcSingleSubscript(p_, 2, s);
+    mwIndex si[] = {i, j};
+    return mxCalcSingleSubscript(p_, 2, si);
 }
 
 mwIndex MxArray::subs(const std::vector<mwIndex>& si) const
@@ -517,8 +523,7 @@ MxArray MxArray::at(const std::string& fieldName, mwIndex index) const
     mxArray* pm = mxGetField(p_, index, fieldName.c_str());
     if (!pm)
         mexErrMsgIdAndTxt("mexopencv:error",
-                          "Field '%s' doesn't exist",
-                          fieldName.c_str());
+            "Field '%s' doesn't exist", fieldName.c_str());
     return MxArray(pm);
 }
 
@@ -537,15 +542,13 @@ void MxArray::set(mwIndex index, const MxArray& value)
         mexErrMsgIdAndTxt("mexopencv:error", "Accessing invalid range");
     if (!isCell())
         mexErrMsgIdAndTxt("mexopencv:error", "Not cell array");
-    mxSetCell(const_cast<mxArray*>(p_), index,
-              static_cast<mxArray*>(value));
+    mxSetCell(const_cast<mxArray*>(p_), index, static_cast<mxArray*>(value));
 }
 
 template <>
 std::vector<MxArray> MxArray::toVector() const
 {
-    if (isCell())
-    {
+    if (isCell()) {
         int n = numel();
         std::vector<MxArray> v;
         v.reserve(n);
