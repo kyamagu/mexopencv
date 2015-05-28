@@ -1032,13 +1032,83 @@ std::vector<T> MxArray::toVector() const
     const mwSize n = numel();
     std::vector<T> vt;
     vt.reserve(n);
-    if (isNumeric())
+    if (isNumeric() || isLogical() || isChar()) {
+        /*
+        // shorter but slower implementation
         for (mwIndex i = 0; i < n; ++i)
             vt.push_back(at<T>(i));
-    else if (isCell())
+        */
+        switch (classID()) {
+            case mxDOUBLE_CLASS: {
+                const double *data = mxGetPr(p_);
+                //std::copy(data, data + n, vt.begin());
+                vt.assign(data, data + n);
+                break;
+            }
+            case mxSINGLE_CLASS: {
+                const float *data = reinterpret_cast<float*>(mxGetData(p_));
+                vt.assign(data, data + n);
+                break;
+            }
+            case mxUINT8_CLASS: {
+                const uint8_t *data = reinterpret_cast<uint8_t*>(mxGetData(p_));
+                vt.assign(data, data + n);
+                break;
+            }
+            case mxINT8_CLASS: {
+                const int8_t *data = reinterpret_cast<int8_t*>(mxGetData(p_));
+                vt.assign(data, data + n);
+                break;
+            }
+            case mxUINT16_CLASS: {
+                const uint16_t *data = reinterpret_cast<uint16_t*>(mxGetData(p_));
+                vt.assign(data, data + n);
+                break;
+            }
+            case mxINT16_CLASS: {
+                const int16_t *data = reinterpret_cast<int16_t*>(mxGetData(p_));
+                vt.assign(data, data + n);
+                break;
+            }
+            case mxUINT32_CLASS: {
+                const uint32_t *data = reinterpret_cast<uint32_t*>(mxGetData(p_));
+                vt.assign(data, data + n);
+                break;
+            }
+            case mxINT32_CLASS: {
+                const int32_t *data = reinterpret_cast<int32_t*>(mxGetData(p_));
+                vt.assign(data, data + n);
+                break;
+            }
+            case mxUINT64_CLASS: {
+                const uint64_t *data = reinterpret_cast<uint64_t*>(mxGetData(p_));
+                vt.assign(data, data + n);
+                break;
+            }
+            case mxINT64_CLASS: {
+                const int64_t *data = reinterpret_cast<int64_t*>(mxGetData(p_));
+                vt.assign(data, data + n);
+                break;
+            }
+            case mxCHAR_CLASS: {
+                const mxChar *data = mxGetChars(p_);
+                vt.assign(data, data + n);
+                break;
+            }
+            case mxLOGICAL_CLASS: {
+                const mxLogical *data = mxGetLogicals(p_);
+                vt.assign(data, data + n);
+                break;
+            }
+            default:
+                break;    // should never reach this case
+        }
+    }
+    else if (isCell()) {
         for (mwIndex i = 0; i < n; ++i)
             //vt.push_back(at<MxArray>(i).at<T>(0));
             vt.push_back(MxArray(mxGetCell(p_, i)).at<T>(0));
+    }
     else
         mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a std::vector");
     return vt;
