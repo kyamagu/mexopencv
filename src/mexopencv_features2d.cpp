@@ -575,7 +575,8 @@ Ptr<FeatureDetector> createFeatureDetector(string type,
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized detector %s", type.c_str());
     if (p.empty())
-        mexErrMsgIdAndTxt("mexopencv:error", "Failed to create FeatureDetector");
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Failed to create FeatureDetector of type %s", type.c_str());
     return p;
 }
 
@@ -608,7 +609,8 @@ Ptr<DescriptorExtractor> createDescriptorExtractor(string type,
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized extractor %s", type.c_str());
     if (p.empty())
-        mexErrMsgIdAndTxt("mexopencv:error", "Failed to create DescriptorExtractor");
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Failed to create DescriptorExtractor of type %s", type.c_str());
     return p;
 }
 
@@ -871,7 +873,8 @@ Ptr<DescriptorMatcher> createDescriptorMatcher(string type,
     else
         p = DescriptorMatcher::create(type);
     if (p.empty())
-        mexErrMsgIdAndTxt("mexopencv:error", "Failed to create DescriptorMatcher");
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Failed to create DescriptorMatcher of type %s", type.c_str());
     return p;
 }
 

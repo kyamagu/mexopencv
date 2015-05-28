@@ -160,19 +160,13 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 
 MxArray::MxArray(const cv::SparseMat& mat)
 {
-    if (mat.dims() != 2)
-        mexErrMsgIdAndTxt("mexopencv:error", "cv::Mat is not 2D");
-    if (mat.type() != CV_32FC1)
-        mexErrMsgIdAndTxt("mexopencv:error", "cv::Mat is not float");
+    if (mat.dims() != 2 || mat.type() != CV_32FC1)
+        mexErrMsgIdAndTxt("mexopencv:error", "Not a 2D float sparse matrix");
     // Create a sparse array.
     int m = mat.size(0), n = mat.size(1), nnz = mat.nzcount();
     p_ = mxCreateSparse(m, n, nnz, mxREAL);
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-    mwIndex *ir = mxGetIr(p_);
-    mwIndex *jc = mxGetJc(p_);
-    if (ir == NULL || jc == NULL)
-        mexErrMsgIdAndTxt("mexopencv:error", "Unknown error");
     // Sort nodes before we put elems into mxArray.
     std::vector<const cv::SparseMat::Node*> nodes;
     nodes.reserve(nnz);
@@ -180,7 +174,11 @@ MxArray::MxArray(const cv::SparseMat& mat)
         nodes.push_back(it.node());
     std::sort(nodes.begin(), nodes.end(), CompareSparseMatNode());
     // Copy data.
+    mwIndex *ir = mxGetIr(p_);
+    mwIndex *jc = mxGetJc(p_);
     double *pr = mxGetPr(p_);
+    if (!ir || !jc || !pr)
+        mexErrMsgIdAndTxt("mexopencv:error", "Null pointer error");
     int i = 0;
     jc[0] = 0;
     for (std::vector<const cv::SparseMat::Node*>::const_iterator
@@ -337,6 +335,8 @@ std::string MxArray::toString() const
     if (!isChar())
         mexErrMsgIdAndTxt("mexopencv:error", "MxArray not of type char");
     char *pc = mxArrayToString(p_);
+    if (!pc)
+        mexErrMsgIdAndTxt("mexopencv:error", "Null pointer error");
     std::string s(pc);
     mxFree(pc);
     return s;
@@ -392,16 +392,16 @@ cv::SparseMat MxArray::toSparseMat() const
     // Check if it's sparse.
     if (!isSparse() || !isDouble())
         mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not sparse");
-    mwIndex *ir = mxGetIr(p_);
-    mwIndex *jc = mxGetJc(p_);
-    if (ir == NULL || jc == NULL)
-        mexErrMsgIdAndTxt("mexopencv:error", "Unknown error");
     // Create cv::SparseMat.
     int m = mxGetM(p_), n = mxGetN(p_);
     int dims[] = {m, n};
     cv::SparseMat mat(2, dims, CV_32F);
     // Copy data.
+    mwIndex *ir = mxGetIr(p_);
+    mwIndex *jc = mxGetJc(p_);
     double *pr = mxGetPr(p_);
+    if (!ir || !jc || !pr)
+         mexErrMsgIdAndTxt("mexopencv:error", "Null pointer error");
     for (int j=0; j<n; ++j) {
         mwIndex start = jc[j], end = jc[j + 1] - 1;
         // (row,col) <= val.
@@ -482,6 +482,8 @@ cv::TermCriteria MxArray::toTermCriteria(mwIndex index) const
 
 std::string MxArray::fieldname(int fieldnumber) const
 {
+    if (!isStruct())
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not struct");
     const char *fname = mxGetFieldNameByNumber(p_, fieldnumber);
     if (!fname)
         mexErrMsgIdAndTxt("mexopencv:error",
@@ -511,7 +513,7 @@ mwIndex MxArray::subs(mwIndex i, mwIndex j) const
 
 mwIndex MxArray::subs(const std::vector<mwIndex>& si) const
 {
-    return mxCalcSingleSubscript(p_, si.size(), &si[0]);
+    return mxCalcSingleSubscript(p_, si.size(), (!si.empty() ? &si[0] : NULL));
 }
 
 MxArray MxArray::at(const std::string& fieldName, mwIndex index) const
@@ -519,7 +521,7 @@ MxArray MxArray::at(const std::string& fieldName, mwIndex index) const
     if (!isStruct())
         mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not struct");
     if (numel() <= index)
-        mexErrMsgIdAndTxt("mexopencv:error", "Out of range in struct array");
+        mexErrMsgIdAndTxt("mexopencv:error", "Index out of range");
     mxArray* pm = mxGetField(p_, index, fieldName.c_str());
     if (!pm)
         mexErrMsgIdAndTxt("mexopencv:error",
@@ -532,16 +534,18 @@ MxArray MxArray::at(mwIndex index) const
 {
     if (!isCell())
         mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not cell");
+    if (numel() <= index)
+        mexErrMsgIdAndTxt("mexopencv:error", "Index out of range");
     return MxArray(mxGetCell(p_, index));
 }
 
 template <>
 void MxArray::set(mwIndex index, const MxArray& value)
 {
-    if (numel() <= index)
-        mexErrMsgIdAndTxt("mexopencv:error", "Accessing invalid range");
     if (!isCell())
-        mexErrMsgIdAndTxt("mexopencv:error", "Not cell array");
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not cell");
+    if (numel() <= index)
+        mexErrMsgIdAndTxt("mexopencv:error", "Index out of range");
     mxSetCell(const_cast<mxArray*>(p_), index, static_cast<mxArray*>(value));
 }
 
@@ -620,7 +624,7 @@ std::vector<cv::RotatedRect> MxArray::toVector() const
             v.push_back(toRotatedRect(i));
     else
         mexErrMsgIdAndTxt("mexopencv:error",
-                          "MxArray unable to convert to std::vector");
+            "MxArray unable to convert to std::vector<cv::RotatedRect>");
     return v;
 }
 
@@ -638,7 +642,7 @@ std::vector<cv::KeyPoint> MxArray::toVector() const
             v.push_back(toKeyPoint(i));
     else
         mexErrMsgIdAndTxt("mexopencv:error",
-                          "MxArray unable to convert to std::vector");
+            "MxArray unable to convert to std::vector<cv::KeyPoint>");
     return v;
 }
 
@@ -656,6 +660,6 @@ std::vector<cv::DMatch> MxArray::toVector() const
             v.push_back(toDMatch(i));
     else
         mexErrMsgIdAndTxt("mexopencv:error",
-                          "MxArray unable to convert to std::vector");
+            "MxArray unable to convert to std::vector<cv::DMatch>");
     return v;
 }

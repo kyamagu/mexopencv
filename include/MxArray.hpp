@@ -276,7 +276,10 @@ class MxArray
      */
     static inline MxArray Cell(int m = 1, int n = 1)
     {
-        return MxArray(mxCreateCellMatrix(m,n));
+        mxArray *pm = mxCreateCellMatrix(m,n);
+        if (!pm)
+            mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+        return MxArray(pm);
     }
     /** Create a new struct array.
      * @param fields Field names.
@@ -296,12 +299,21 @@ class MxArray
     static inline MxArray Struct(const char** fields = NULL,
         int nfields = 0, int m = 1, int n = 1)
     {
-        return MxArray(mxCreateStructMatrix(m, n, nfields, fields));
+        mxArray *pm = mxCreateStructMatrix(m, n, nfields, fields);
+        if (!pm)
+            mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+        return MxArray(pm);
     }
     /** Clone mxArray. This allocates new mxArray*.
      * @return MxArray object, a deep-copy clone.
      */
-    MxArray clone() { return MxArray(mxDuplicateArray(p_)); }
+    MxArray clone()
+    {
+        mxArray *pm = mxDuplicateArray(p_);
+        if (!pm)
+            mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+        return MxArray(pm);
+    }
     /** Deallocate memory occupied by mxArray.
      *
      * Use this to destroy a temporary mxArray. Do not call this on arrays
@@ -890,7 +902,7 @@ class ConstMap
     {
         typename std::map<T,U>::const_iterator it = m_.find(key);
         if (it==m_.end())
-            mexErrMsgIdAndTxt("mexopencv:error", "Value not found");
+            mexErrMsgIdAndTxt("mexopencv:error", "ConstMap: Value not found");
         return (*it).second;
     }
   private:
@@ -979,7 +991,7 @@ template <typename T>
 cv::Point_<T> MxArray::toPoint_() const
 {
     if (!isNumeric() || numel() != 2)
-        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a Point");
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a cv::Point");
     return cv::Point_<T>(at<T>(0), at<T>(1));
 }
 
@@ -987,7 +999,7 @@ template <typename T>
 cv::Point3_<T> MxArray::toPoint3_() const
 {
     if (!isNumeric() || numel() != 3)
-        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a Point");
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a cv::Point3");
     return cv::Point3_<T>(at<T>(0), at<T>(1), at<T>(2));
 }
 
@@ -995,8 +1007,7 @@ template <typename T>
 cv::Size_<T> MxArray::toSize_() const
 {
     if (!isNumeric() || numel() != 2)
-        mexErrMsgIdAndTxt("mexopencv:error",
-                          "MxArray is incompatible to cv::Size");
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a cv::Size");
     return cv::Size_<T>(at<T>(0), at<T>(1));
 }
 
@@ -1004,8 +1015,7 @@ template <typename T>
 cv::Rect_<T> MxArray::toRect_() const
 {
     if (!isNumeric() || numel() != 4)
-        mexErrMsgIdAndTxt("mexopencv:error",
-                          "MxArray is incompatible to cv::Rect");
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a cv::Rect");
     return cv::Rect_<T>(at<T>(0), at<T>(1), at<T>(2), at<T>(3));
 }
 
@@ -1014,8 +1024,7 @@ cv::Scalar_<T> MxArray::toScalar_() const
 {
     int n = numel();
     if (!isNumeric() || n < 1 || 4 < n)
-        mexErrMsgIdAndTxt("mexopencv:error",
-                          "MxArray is incompatible to cv::Scalar");
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a cv::Scalar");
     switch (n) {
         case 1: return cv::Scalar_<T>(at<T>(0));
         case 2: return cv::Scalar_<T>(at<T>(0), at<T>(1));
@@ -1037,7 +1046,7 @@ std::vector<T> MxArray::toVector() const
         for (int i = 0; i < n; ++i)
             vt[i] = MxArray(mxGetCell(p_, i)).at<T>(0);
     else
-        mexErrMsgIdAndTxt("mexopencv:error", "Cannot convert to std::vector");
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a std::vector");
     return vt;
 }
 
@@ -1055,8 +1064,12 @@ std::vector<T> MxArray::toVector(std::const_mem_fun_ref_t<T,MxArray> f) const
 template <typename T>
 T MxArray::at(mwIndex index) const
 {
-    if (!p_ || numel() <= index)
-        mexErrMsgIdAndTxt("mexopencv:error", "Accessing invalid range");
+    if (!p_)
+        mexErrMsgIdAndTxt("mexopencv:error", "Null pointer error");
+    if (!isNumeric() && !isLogical() && !isChar())
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not primitive");
+    if (numel() <= index)
+        mexErrMsgIdAndTxt("mexopencv:error", "Index out of range");
     switch (classID()) {
         case mxCHAR_CLASS:
             return static_cast<T>(*(mxGetChars(p_) + index));
@@ -1091,12 +1104,8 @@ T MxArray::at(mwIndex index) const
                 *(reinterpret_cast<float*>(mxGetData(p_)) + index));
         case mxLOGICAL_CLASS:
             return static_cast<T>(*(mxGetLogicals(p_) + index));
-        case mxCELL_CLASS:
-        case mxSTRUCT_CLASS:
-        case mxFUNCTION_CLASS:
         default:
-            mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not primitive");
-            return static_cast<T>(0);
+            return static_cast<T>(0);    // should never reach this case
     }
 }
 
@@ -1115,8 +1124,10 @@ T MxArray::at(const std::vector<mwIndex>& si) const
 template <typename T>
 void MxArray::set(mwIndex index, const T& value)
 {
+    if (!p_)
+        mexErrMsgIdAndTxt("mexopencv:error", "Null pointer error");
     if (numel() <= index)
-        mexErrMsgIdAndTxt("mexopencv:error", "Accessing invalid range");
+        mexErrMsgIdAndTxt("mexopencv:error", "Index out of range");
     switch (classID()) {
         case mxCHAR_CLASS:
             *(mxGetChars(p_) + index) = static_cast<mxChar>(value);
@@ -1192,6 +1203,8 @@ void MxArray::set(const std::string& fieldName, const T& value, mwIndex index)
 {
     if (!isStruct())
         mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not struct");
+    if (numel() <= index)
+        mexErrMsgIdAndTxt("mexopencv:error", "Index out of range");
     if (!isField(fieldName)) {
         if (mxAddField(const_cast<mxArray*>(p_), fieldName.c_str()) < 0)
             mexErrMsgIdAndTxt("mexopencv:error",
