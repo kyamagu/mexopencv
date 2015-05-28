@@ -296,13 +296,7 @@ class MxArray
     /** Clone mxArray. This allocates new mxArray*.
      * @return MxArray object, a deep-copy clone.
      */
-    MxArray clone() const
-    {
-        mxArray *pm = mxDuplicateArray(p_);
-        if (!pm)
-            mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-        return MxArray(pm);
-    }
+    MxArray clone() const;
     /** Deallocate memory occupied by mxArray.
      *
      * Use this to destroy a temporary mxArray. Do not call this on arrays

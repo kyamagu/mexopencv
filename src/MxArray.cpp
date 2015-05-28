@@ -318,6 +318,14 @@ MxArray::MxArray(const cv::TermCriteria& t)
     set("epsilon",  t.epsilon);
 }
 
+MxArray MxArray::clone() const
+{
+    mxArray *pm = mxDuplicateArray(p_);
+    if (!pm)
+        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+    return MxArray(pm);
+}
+
 int MxArray::toInt() const
 {
     if (numel() != 1)
