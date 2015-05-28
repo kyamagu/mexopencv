@@ -576,6 +576,11 @@ class MxArray
      * <tt>(si[0], si[1], ..., si[n])</tt>.
      */
     mwIndex subs(const std::vector<mwIndex>& si) const;
+    /** Determine whether the array is initialized or not.
+     * @return true if the internal mxArray pointer is \c NULL, false
+     *         otherwise.
+     */
+    inline bool isNull() const { return (p_ == NULL); }
     /** Determine whether input is cell array.
      * @return true if array is of type \c mxCELL_CLASS, false otherwise.
      */
