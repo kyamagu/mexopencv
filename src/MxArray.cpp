@@ -143,7 +143,8 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
     // split input cv::Mat into several single-channel arrays
     std::vector<cv::Mat> channels;
-    split(input, channels);
+    channels.reserve(nchannels);
+    cv::split(input, channels);
     // Copy each channel from Mat to mxArray (converting to specified classid),
     // as in: p_(:,:,i) <- cast_to_classid_type(channels[i])
     std::vector<mwSize> si(d.size(), 0);         // subscript index
@@ -347,7 +348,7 @@ cv::Mat MxArray::toMat(int depth, bool transpose) const
     // Create cv::Mat object (of the specified depth), equivalent to mxArray
     std::vector<int> d(dims(), dims()+ndims());
     int ndims = (d.size()>2) ? d.size()-1 : d.size();
-    int nchannels = (d.size()>2) ? *(d.end()-1) : 1;
+    int nchannels = (d.size()>2) ? d.back() : 1;
     depth = (depth == CV_USRTYPE1) ? DepthOf[classID()] : depth;
     std::swap(d[0], d[1]);
     cv::Mat mat(ndims, &d[0], CV_MAKETYPE(depth, nchannels));
@@ -357,7 +358,7 @@ cv::Mat MxArray::toMat(int depth, bool transpose) const
     std::vector<mwSize> si(d.size(), 0);           // subscript index
     int type = CV_MAKETYPE(DepthOf[classID()], 1); // Source type
     for (int i = 0; i<nchannels; ++i) {
-        si[d.size() - 1] = i;                    // last dim is a channel index
+        si[si.size() - 1] = i;                     // last dim is a channel idx
         void *pd = reinterpret_cast<void*>(
             reinterpret_cast<size_t>(mxGetData(p_)) +
             mxGetElementSize(p_)*subs(si));        // ptr to i-th channel data
@@ -376,11 +377,11 @@ cv::MatND MxArray::toMatND(int depth, bool transpose) const
     // Create cv::MatND object (of the specified depth), equivalent to mxArray
     std::vector<int> d(dims(), dims()+ndims());
     std::swap(d[0], d[1]);
-    cv::MatND m(ndims(), &d[0], CV_MAKETYPE(DepthOf[classID()], 1),
-        mxGetData(p_));
+    depth = (depth == CV_USRTYPE1) ? DepthOf[classID()] : depth;
+    cv::MatND mat(d.size(), &d[0], CV_MAKETYPE(depth, 1));
     // Copy from mxArray to cv::MatND (converting to specified depth)
-    cv::MatND mat;
-    depth = (depth==CV_USRTYPE1) ? CV_MAKETYPE(DepthOf[classID()], 1) : depth;
+    int type = CV_MAKETYPE(DepthOf[classID()], 1);     // source type
+    cv::MatND m(d.size(), &d[0], type, mxGetData(p_)); // only Mat header
     // Read from mxArray through m, writing into mat
     m.convertTo(mat, CV_MAKETYPE(depth, 1));
     // transpose cv::MatND if needed
@@ -552,16 +553,17 @@ void MxArray::set(mwIndex index, const MxArray& value)
 template <>
 std::vector<MxArray> MxArray::toVector() const
 {
+    std::vector<MxArray> v;
     if (isCell()) {
         int n = numel();
-        std::vector<MxArray> v;
         v.reserve(n);
         for (int i = 0; i < n; ++i)
+            //v.push_back(at<MxArray>(i));
             v.push_back(MxArray(mxGetCell(p_, i)));
-        return v;
     }
     else
-        return std::vector<MxArray>(1, *this);
+        v.push_back(*this);
+    return v;
 }
 
 template <>
@@ -577,7 +579,7 @@ std::vector<cv::Mat> MxArray::toVector() const
     std::vector<MxArray> v(toVector<MxArray>());
     std::vector<cv::Mat> vm;
     vm.reserve(v.size());
-    for (std::vector<MxArray>::iterator it = v.begin(); it < v.end(); ++it)
+    for (std::vector<MxArray>::iterator it = v.begin(); it != v.end(); ++it)
         vm.push_back((*it).toMat());
     return vm;
 }

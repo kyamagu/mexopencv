@@ -934,8 +934,8 @@ MxArray::MxArray(const cv::Point_<T>& p)
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
     double *x = mxGetPr(p_);
-    x[0] = p.x;
-    x[1] = p.y;
+    x[0] = static_cast<double>(p.x);
+    x[1] = static_cast<double>(p.y);
 }
 
 template <typename T>
@@ -945,9 +945,9 @@ MxArray::MxArray(const cv::Point3_<T>& p)
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
     double *x = mxGetPr(p_);
-    x[0] = p.x;
-    x[1] = p.y;
-    x[2] = p.z;
+    x[0] = static_cast<double>(p.x);
+    x[1] = static_cast<double>(p.y);
+    x[2] = static_cast<double>(p.z);
 }
 
 template <typename T>
@@ -957,8 +957,8 @@ MxArray::MxArray(const cv::Size_<T>& s)
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
     double *x = mxGetPr(p_);
-    x[0] = s.width;
-    x[1] = s.height;
+    x[0] = static_cast<double>(s.width);
+    x[1] = static_cast<double>(s.height);
 }
 
 template <typename T>
@@ -968,10 +968,10 @@ MxArray::MxArray(const cv::Rect_<T>& r)
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
     double *x = mxGetPr(p_);
-    x[0] = r.x;
-    x[1] = r.y;
-    x[2] = r.width;
-    x[3] = r.height;
+    x[0] = static_cast<double>(r.x);
+    x[1] = static_cast<double>(r.y);
+    x[2] = static_cast<double>(r.width);
+    x[3] = static_cast<double>(r.height);
 }
 
 template <typename T>
@@ -981,10 +981,10 @@ MxArray::MxArray(const cv::Scalar_<T>& s)
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
     double *x = mxGetPr(p_);
-    x[0] = s[0];
-    x[1] = s[1];
-    x[2] = s[2];
-    x[3] = s[3];
+    x[0] = static_cast<double>(s[0]);
+    x[1] = static_cast<double>(s[1]);
+    x[2] = static_cast<double>(s[2]);
+    x[3] = static_cast<double>(s[3]);
 }
 
 template <typename T>
@@ -1030,21 +1030,23 @@ cv::Scalar_<T> MxArray::toScalar_() const
         case 2: return cv::Scalar_<T>(at<T>(0), at<T>(1));
         case 3: return cv::Scalar_<T>(at<T>(0), at<T>(1), at<T>(2));
         case 4: return cv::Scalar_<T>(at<T>(0), at<T>(1), at<T>(2), at<T>(3));
+        default: return cv::Scalar_<T>();
     }
-    return cv::Scalar_<T>();
 }
 
 template <typename T>
 std::vector<T> MxArray::toVector() const
 {
     int n = numel();
-    std::vector<T> vt(n);
+    std::vector<T> vt;
+    vt.reserve(n);
     if (isNumeric())
         for (int i = 0; i < n; ++i)
-            vt[i] = at<T>(i);
+            vt.push_back(at<T>(i));
     else if (isCell())
         for (int i = 0; i < n; ++i)
-            vt[i] = MxArray(mxGetCell(p_, i)).at<T>(0);
+            //vt.push_back(at<MxArray>(i).at<T>(0));
+            vt.push_back(MxArray(mxGetCell(p_, i)).at<T>(0));
     else
         mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a std::vector");
     return vt;
@@ -1053,10 +1055,10 @@ std::vector<T> MxArray::toVector() const
 template <typename T>
 std::vector<T> MxArray::toVector(std::const_mem_fun_ref_t<T,MxArray> f) const
 {
-    std::vector<MxArray> v = toVector<MxArray>();
+    std::vector<MxArray> v(toVector<MxArray>());
     std::vector<T> vt;
     vt.reserve(v.size());
-    for (std::vector<MxArray>::iterator it=v.begin(); it<v.end(); ++it)
+    for (std::vector<MxArray>::iterator it=v.begin(); it!=v.end(); ++it)
         vt.push_back(f(*it));
     return vt;
 }
