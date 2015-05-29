@@ -107,14 +107,105 @@ inline void nargchk(bool cond)
 }
 
 /**************************************************************\
+*           Conversion Functions: MxArray to vector            *
+\**************************************************************/
+
+/** Convert an MxArray to std::vector<cv::Point_<T>>
+ *
+ * @param arr MxArray object. In one of the following forms:
+ * - a cell-array of 2D points (2-element vectors) of length \c N,
+ *   e.g: <tt>{[x,y], [x,y], ...}</tt>
+ * - a numeric matrix of size \c Nx2, \c Nx1x2, or \c 1xNx2 in the form:
+ *   <tt>[x,y; x,y; ...]</tt> or <tt>cat(3, [x,y], [x,y], ...)</tt>
+ * @return vector of 2D points of size \c N
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Point2d> vp = MxArrayToVectorPoint<double>(cellArray);
+ * @endcode
+ */
+template <typename T>
+std::vector<cv::Point_<T> > MxArrayToVectorPoint(const MxArray& arr)
+{
+    std::vector<cv::Point_<T> > vp;
+    if (arr.isNumeric()) {
+        if (arr.numel() == 2)
+            vp.push_back(arr.toPoint_<T>());
+        else
+            arr.toMat(cv::DataType<T>::depth).reshape(2, 0).copyTo(vp);
+    }
+    else if (arr.isCell()) {
+        /*
+        std::vector<MxArray> va(arr.toVector<MxArray>());
+        vp.reserve(va.size());
+        for (std::vector<MxArray>::const_iterator it = va.begin(); it != va.end(); ++it)
+            vp.push_back(it->toPoint_<T>());
+        */
+        vp = arr.toVector(
+            std::const_mem_fun_ref_t<cv::Point_<T>, MxArray>(
+                &MxArray::toPoint_<T>));
+    }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unable to convert MxArray to std::vector<cv::Point_<T>>");
+    return vp;
+}
+
+/** Convert an MxArray to std::vector<cv::Point3_<T>>
+ *
+ * @param arr MxArray object. In one of the following forms:
+ * - a cell-array of 3D points (3-element vectors) of length \c N,
+ *   e.g: <tt>{[x,y,z], [x,y,z], ...}</tt>
+ * - a numeric matrix of size \c Nx3, \c Nx1x3, or \c 1xNx3 in the form:
+ *   <tt>[x,y,z; x,y,z; ...]</tt> or <tt>cat(3, [x,y,z], [x,y,z], ...)</tt>
+ * @return vector of 3D points of size \c N
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Point3f> vp = MxArrayToVectorPoint3<float>(cellArray);
+ * @endcode
+ */
+template <typename T>
+std::vector<cv::Point3_<T> > MxArrayToVectorPoint3(const MxArray& arr)
+{
+    std::vector<cv::Point3_<T> > vp;
+    if (arr.isNumeric()) {
+        if (arr.numel() == 3)
+            vp.push_back(arr.toPoint3_<T>());
+        else
+            arr.toMat(cv::DataType<T>::depth).reshape(3, 0).copyTo(vp);
+    }
+    else if (arr.isCell()) {
+        /*
+        std::vector<MxArray> va(arr.toVector<MxArray>());
+        vp.reserve(va.size());
+        for (std::vector<MxArray>::const_iterator it = va.begin(); it != va.end(); ++it)
+            vp.push_back(it->toPoint3_<T>());
+        */
+        vp = arr.toVector(
+            std::const_mem_fun_ref_t<cv::Point3_<T>, MxArray>(
+                &MxArray::toPoint3_<T>));
+    }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unable to convert MxArray to std::vector<cv::Point3_<T>>");
+    return vp;
+}
+
+/**************************************************************\
 *      Conversion Functions: MxArray to vector of vectors      *
 \**************************************************************/
 
 /** Convert an MxArray to std::vector<std::vector<cv::Point_<T>>>
  *
- * @param arr MxArray object, in the form of
- *   a cell-array of cell-arrays of 2D points (2-element vectors),
+ * @param arr MxArray object. In one of the following forms:
+ * - a cell-array of cell-arrays of 2D points (2-element vectors),
  *   e.g: <tt>{{[x,y], [x,y], ..}, {[x,y], [x,y], ..}, ...}</tt>
+ * - a cell-array of numeric matrices of size \c Mx2, \c Mx1x2, or \c 1xMx2,
+ *   e.g: <tt>{[x,y; x,y; ...], [x,y; x,y; ...], ...}</tt> or
+ *   <tt>{cat(3, [x,y], [x,y], ...), cat(3, [x,y], [x,y], ...), ...}</tt>
  * @return vector of vectors of 2D points
  *
  * Example:
@@ -130,21 +221,27 @@ std::vector<std::vector<cv::Point_<T> > > MxArrayToVectorVectorPoint(const MxArr
     std::vector<std::vector<cv::Point_<T> > > vvp;
     vvp.reserve(vva.size());
     for (std::vector<MxArray>::const_iterator it = vva.begin(); it != vva.end(); ++it) {
+        /*
         std::vector<MxArray> va(it->toVector<MxArray());
         std::vector<cv::Point_<T> > vp;
         for (std::vector<MxArray>::const_iterator jt = va.begin(); jt != va.end(); ++jt) {
             vp.push_back(jt->toPoint_<T>());
         }
         vvp.push_back(vp);
+        */
+        vvp.push_back(MxArrayToVectorPoint<T>(*it));
     }
     return vvp;
 }
 
 /** Convert an MxArray to std::vector<std::vector<cv::Point3_<T>>>
  *
- * @param arr MxArray object, in the form of
- *   a cell-array of cell-arrays of 3D points (3-element vectors),
+ * @param arr MxArray object. In one of the following forms:
+ * - a cell-array of cell-arrays of 3D points (3-element vectors),
  *   e.g: <tt>{{[x,y,z], [x,y,z], ..}, {[x,y,z], [x,y,z], ..}, ...}</tt>
+ * - a cell-array of numeric matrices of size \c Mx3, \c Mx1x3, or \c 1xMx3,
+ *   e.g: <tt>{[x,y,z; x,y,z; ...], [x,y,z; x,y,z; ...], ...}</tt> or
+ *   <tt>{cat(3, [x,y,z], [x,y,z], ...), cat(3, [x,y,z], [x,y,z], ...), ...}</tt>
  * @return vector of vectors of 3D points
  *
  * Example:
@@ -160,12 +257,15 @@ std::vector<std::vector<cv::Point3_<T> > > MxArrayToVectorVectorPoint3(const MxA
     std::vector<std::vector<cv::Point3_<T> > > vvp;
     vvp.reserve(vva.size());
     for (std::vector<MxArray>::const_iterator it = vva.begin(); it != vva.end(); ++it) {
+        /*
         std::vector<MxArray> va(it->toVector<MxArray());
         std::vector<cv::Point3_<T> > vp;
         for (std::vector<MxArray>::const_iterator jt = va.begin(); jt != va.end(); ++jt) {
             vp.push_back(jt->toPoint3_<T>());
         }
         vvp.push_back(vp);
+        */
+        vvp.push_back(MxArrayToVectorPoint3<T>(*it));
     }
     return vvp;
 }
