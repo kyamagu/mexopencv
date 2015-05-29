@@ -194,6 +194,49 @@ std::vector<cv::Point3_<T> > MxArrayToVectorPoint3(const MxArray& arr)
     return vp;
 }
 
+/** Convert an MxArray to std::vector<cv::Rect_<T>>
+ *
+ * @param arr MxArray object. In one of the following forms:
+ * - a cell-array of rectangles (4-element vectors) of length \c N,
+ *   e.g: <tt>{[x,y,w,h], [x,y,w,h], ...}</tt>
+ * - a numeric matrix of size \c Nx4, \c Nx1x4, or \c 1xNx4 in the form:
+ *   <tt>[x,y,w,h; x,y,w,h; ...]</tt> or
+ *   <tt>cat(3, [x,y,w,h], [x,y,w,h], ...)</tt>
+ * @return vector of rectangles of size \c N
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Rect2f> vr = MxArrayToVectorRect<float>(cellArray);
+ * @endcode
+ */
+template <typename T>
+std::vector<cv::Rect_<T> > MxArrayToVectorRect(const MxArray& arr)
+{
+    std::vector<cv::Rect_<T> > vr;
+    if (arr.isNumeric()) {
+        if (arr.numel() == 4)
+            vr.push_back(arr.toRect_<T>());
+        else
+            arr.toMat(cv::DataType<T>::depth).reshape(4, 0).copyTo(vr);
+    }
+    else if (arr.isCell()) {
+        /*
+        std::vector<MxArray> va(arr.toVector<MxArray>());
+        vr.reserve(va.size());
+        for (std::vector<MxArray>::const_iterator it = va.begin(); it != va.end(); ++it)
+            vr.push_back(it->toRect_<T>());
+        */
+        vr = arr.toVector(
+            std::const_mem_fun_ref_t<cv::Rect_<T>, MxArray>(
+                &MxArray::toRect_<T>));
+    }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unable to convert MxArray to std::vector<cv::Rect_<T>>");
+    return vr;
+}
+
 /**************************************************************\
 *      Conversion Functions: MxArray to vector of vectors      *
 \**************************************************************/
