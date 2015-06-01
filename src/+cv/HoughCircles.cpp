@@ -68,9 +68,5 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<Vec3f> circles;
     HoughCircles(image, circles, method, dp, minDist,
         param1, param2, minRadius, maxRadius);
-    vector<Mat> vc;
-    vc.reserve(circles.size());
-    for (vector<Vec3f>::const_iterator it = circles.begin(); it != circles.end(); ++it)
-        vc.push_back(Mat(*it, false));
-    plhs[0] = MxArray(vc);
+    plhs[0] = MxArray(circles);
 }

@@ -58,9 +58,5 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<Vec2f> lines;
     HoughLines(image, lines, rho, theta, threshold, srn, stn,
         min_theta, max_theta);
-    vector<Mat> vl;
-    vl.reserve(lines.size());
-    for (vector<Vec2f>::const_iterator it = lines.begin(); it != lines.end(); ++it)
-        vl.push_back(Mat(*it, false));
-    plhs[0] = MxArray(vl);
+    plhs[0] = MxArray(lines);
 }

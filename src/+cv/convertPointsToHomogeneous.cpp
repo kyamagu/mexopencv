@@ -45,11 +45,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             vector<Point3f> src(rhs[0].toVector<Point3f>());
             vector<Vec4f> dst;
             convertPointsToHomogeneous(src, dst);
-            vector<Mat> _dst;
-            _dst.reserve(dst.size());
-            for (vector<Vec4f>::iterator it=dst.begin(); it<dst.end(); ++it)
-                _dst.push_back(Mat(*it));
-            plhs[0] = MxArray(_dst);
+            plhs[0] = MxArray(dst);
         }
         else
             mexErrMsgIdAndTxt("mexopencv:error","Invalid input");

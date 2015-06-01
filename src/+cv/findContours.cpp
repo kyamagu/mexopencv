@@ -40,9 +40,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    Mat image(rhs[0].toMat(CV_8U));
-    vector<vector<Point> > contours;
-    vector<Vec4i> hierarchy;
+
+    // Option processing
     int mode = cv::RETR_EXTERNAL;
     int method = cv::CHAIN_APPROX_NONE;
     Point offset;
@@ -59,12 +58,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     
     // Process
+    Mat image(rhs[0].toMat(CV_8U));
+    vector<vector<Point> > contours;
+    vector<Vec4i> hierarchy;
     findContours(image, contours, hierarchy, mode, method, offset);
     plhs[0] = MxArray(contours);
-    if (nlhs > 1) {
-        vector<Mat> vc(hierarchy.size());
-        for (int i=0;i<vc.size();++i)
-            vc[i] = Mat(1,4,CV_32SC1,&hierarchy[i][0]);
-        plhs[1] = MxArray(vc);
-    }
+    if (nlhs > 1)
+        plhs[1] = MxArray(hierarchy);
 }
