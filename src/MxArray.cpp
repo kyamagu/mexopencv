@@ -737,6 +737,114 @@ std::vector<cv::Rect> MxArray::toVector() const
 }
 
 template <>
+std::vector<cv::Vec2i> MxArray::toVector() const
+{
+    if (isNumeric()) {
+        std::vector<cv::Vec2i> vv;
+        if (numel() == 2)
+            vv.push_back(toVec<int,2>());
+        else
+            toMat(CV_32S).reshape(2, 0).copyTo(vv);
+        return vv;
+    }
+    else {
+        return toVector(
+            std::const_mem_fun_ref_t<cv::Vec2i, MxArray>(
+                &MxArray::toVec<int,2>));
+    }
+}
+
+template <>
+std::vector<cv::Vec2f> MxArray::toVector() const
+{
+    if (isNumeric()) {
+        std::vector<cv::Vec2f> vv;
+        if (numel() == 2)
+            vv.push_back(toVec<float,2>());
+        else
+            toMat(CV_32F).reshape(2, 0).copyTo(vv);
+        return vv;
+    }
+    else {
+        return toVector(
+            std::const_mem_fun_ref_t<cv::Vec2f, MxArray>(
+                &MxArray::toVec<float,2>));
+    }
+}
+
+template <>
+std::vector<cv::Vec3i> MxArray::toVector() const
+{
+    if (isNumeric()) {
+        std::vector<cv::Vec3i> vv;
+        if (numel() == 3)
+            vv.push_back(toVec<int,3>());
+        else
+            toMat(CV_32S).reshape(3, 0).copyTo(vv);
+        return vv;
+    }
+    else {
+        return toVector(
+            std::const_mem_fun_ref_t<cv::Vec3i, MxArray>(
+                &MxArray::toVec<int,3>));
+    }
+}
+
+template <>
+std::vector<cv::Vec3f> MxArray::toVector() const
+{
+    if (isNumeric()) {
+        std::vector<cv::Vec3f> vv;
+        if (numel() == 3)
+            vv.push_back(toVec<float,3>());
+        else
+            toMat(CV_32F).reshape(3, 0).copyTo(vv);
+        return vv;
+    }
+    else {
+        return toVector(
+            std::const_mem_fun_ref_t<cv::Vec3f, MxArray>(
+                &MxArray::toVec<float,3>));
+    }
+}
+
+template <>
+std::vector<cv::Vec4i> MxArray::toVector() const
+{
+    if (isNumeric()) {
+        std::vector<cv::Vec4i> vv;
+        if (numel() == 4)
+            vv.push_back(toVec<int,4>());
+        else
+            toMat(CV_32S).reshape(4, 0).copyTo(vv);
+        return vv;
+    }
+    else {
+        return toVector(
+            std::const_mem_fun_ref_t<cv::Vec4i, MxArray>(
+                &MxArray::toVec<int,4>));
+    }
+}
+
+template <>
+std::vector<cv::Vec4f> MxArray::toVector() const
+{
+    if (isNumeric()) {
+        std::vector<cv::Vec4f> vv;
+        if (numel() == 4)
+            vv.push_back(toVec<float,4>());
+        else
+            toMat(CV_32F).reshape(4, 0).copyTo(vv);
+        return vv;
+    }
+    else {
+        return toVector(
+            std::const_mem_fun_ref_t<cv::Vec4f, MxArray>(
+                &MxArray::toVec<float,4>));
+    }
+}
+
+template <>
 std::vector<cv::RotatedRect> MxArray::toVector() const
 {
     const mwSize n = numel();

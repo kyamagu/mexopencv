@@ -451,6 +451,14 @@ class MxArray
      * @return cv::Scalar_<T> value.
      */
     template <typename T> cv::Scalar_<T> toScalar_() const;
+    /** Convert MxArray to Vec<T,cn>.
+     * @return cv::Vec<T,cn> value.
+     */
+    template <typename T, int cn> cv::Vec<T,cn> toVec() const;
+    /** Convert MxArray to Matx<T,m,n>.
+     * @return cv::Matx<T,m,n> value.
+     */
+    template <typename T, int m, int n> cv::Matx<T,m,n> toMatx() const;
     /** Convert MxArray to std::vector<T> of primitive types.
      * @return std::vector<T> value.
      *
@@ -1070,6 +1078,41 @@ cv::Scalar_<T> MxArray::toScalar_() const
     }
 }
 
+template <typename T, int cn>
+cv::Vec<T,cn> MxArray::toVec() const
+{
+    if (!isNumeric() || numel() != cn)
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a cv::Vec");
+    /*
+    std::vector<T> v(toVector<T>());
+    return (!v.empty() && v.size() == cn) ?
+        cv::Vec<T,cn>(&v[0]) : cv::Vec<T,cn>();
+    */
+    cv::Vec<T,cn> vec;
+    for (mwIndex i = 0; i < cn; i++)
+        vec[i] = at<T>(i);
+    return vec;
+}
+
+template <typename T, int m, int n>
+cv::Matx<T,m,n> MxArray::toMatx() const
+{
+    if (!isNumeric() || numel() != m*n || rows() != m || cols() != n)
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a cv::Matx");
+    /*
+    // C is row-major, MATLAB is column-major order
+    std::vector<T> v(toVector<T>());
+    return (!v.empty() && v.size() == m*n) ?
+        cv::Matx<T,n,m>(&v[0]).t() : cv::Matx<T,m,n>();
+    */
+    cv::Matx<T,m,n> mat;
+    for (mwIndex j = 0; j<n; j++)
+        for (mwIndex i = 0; i<m; i++)
+            //mat(i,j) = at<T>(j*m+i);
+            mat(i,j) = at<T>(i,j);
+    return mat;
+}
+
 template <typename T>
 std::vector<T> MxArray::toVector() const
 {
@@ -1564,6 +1607,130 @@ std::vector<cv::Point3d> MxArray::toVector() const;
  */
 template <>
 std::vector<cv::Rect> MxArray::toVector() const;
+
+/** Convert MxArray to std::vector<Vec2i>.
+ * @return std::vector<Vec2i> value.
+ *
+ * The input MxArray can be either:
+ * - a cell-array of 2-element vectors of length \c N, e.g:
+ *   <tt>{[v1,v2], [v1,v2], ...}</tt>
+ * - a numeric matrix of size \c Nx2, \c Nx1x2, or \c 1xNx2 in the form:
+ *   <tt>[v1,v2; v1,v2; ...]</tt> or <tt>cat(3, [v1,v2], [v1,v2], ...)</tt>
+ * .
+ * where \c N will be the output vector size.
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Vec2i> v = cellArray.toVector<Vec2i>();
+ * @endcode
+ */
+template <>
+std::vector<cv::Vec2i> MxArray::toVector() const;
+
+/** Convert MxArray to std::vector<Vec2f>.
+ * @return std::vector<Vec2f> value.
+ *
+ * The input MxArray can be either:
+ * - a cell-array of 2-element vectors of length \c N, e.g:
+ *   <tt>{[v1,v2], [v1,v2], ...}</tt>
+ * - a numeric matrix of size \c Nx2, \c Nx1x2, or \c 1xNx2 in the form:
+ *   <tt>[v1,v2; v1,v2; ...]</tt> or <tt>cat(3, [v1,v2], [v1,v2], ...)</tt>
+ * .
+ * where \c N will be the output vector size.
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Vec2f> v = cellArray.toVector<Vec2f>();
+ * @endcode
+ */
+template <>
+std::vector<cv::Vec2f> MxArray::toVector() const;
+
+/** Convert MxArray to std::vector<Vec3i>.
+ * @return std::vector<Vec3i> value.
+ *
+ * The input MxArray can be either:
+ * - a cell-array of 3-element vectors of length \c N, e.g:
+ *   <tt>{[v1,v2,v3], [v1,v2,v3], ...}</tt>
+ * - a numeric matrix of size \c Nx3, \c Nx1x3, or \c 1xNx3 in the form:
+ *   <tt>[v1,v2,v3; v1,v2,v3; ...]</tt> or
+ *   <tt>cat(3, [v1,v2,v3], [v1,v2,v3], ...)</tt>
+ * .
+ * where \c N will be the output vector size.
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Vec3i> v = cellArray.toVector<Vec3i>();
+ * @endcode
+ */
+template <>
+std::vector<cv::Vec3i> MxArray::toVector() const;
+
+/** Convert MxArray to std::vector<Vec3f>.
+ * @return std::vector<Vec3f> value.
+ *
+ * The input MxArray can be either:
+ * - a cell-array of 3-element vectors of length \c N, e.g:
+ *   <tt>{[v1,v2,v3], [v1,v2,v3], ...}</tt>
+ * - a numeric matrix of size \c Nx3, \c Nx1x3, or \c 1xNx3 in the form:
+ *   <tt>[v1,v2,v3; v1,v2,v3; ...]</tt> or
+ *   <tt>cat(3, [v1,v2,v3], [v1,v2,v3], ...)</tt>
+ * .
+ * where \c N will be the output vector size.
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Vec3f> v = cellArray.toVector<Vec3f>();
+ * @endcode
+ */
+template <>
+std::vector<cv::Vec3f> MxArray::toVector() const;
+
+/** Convert MxArray to std::vector<Vec4i>.
+ * @return std::vector<Vec4i> value.
+ *
+ * The input MxArray can be either:
+ * - a cell-array of 4-element vectors of length \c N, e.g:
+ *   <tt>{[v1,v2,v3,v4], [v1,v2,v3,v4], ...}</tt>
+ * - a numeric matrix of size \c Nx4, \c Nx1x4, or \c 1xNx4 in the form:
+ *   <tt>[v1,v2,v3,v4; v1,v2,v3,v4; ...]</tt> or
+ *   <tt>cat(3, [v1,v2,v3,v4], [v1,v2,v3,v4], ...)</tt>
+ * .
+ * where \c N will be the output vector size.
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Vec4i> v = cellArray.toVector<Vec4i>();
+ * @endcode
+ */
+template <>
+std::vector<cv::Vec4i> MxArray::toVector() const;
+
+/** Convert MxArray to std::vector<Vec4f>.
+ * @return std::vector<Vec4f> value.
+ *
+ * The input MxArray can be either:
+ * - a cell-array of 4-element vectors of length \c N, e.g:
+ *   <tt>{[v1,v2,v3,v4], [v1,v2,v3,v4], ...}</tt>
+ * - a numeric matrix of size \c Nx4, \c Nx1x4, or \c 1xNx4 in the form:
+ *   <tt>[v1,v2,v3,v4; v1,v2,v3,v4; ...]</tt> or
+ *   <tt>cat(3, [v1,v2,v3,v4], [v1,v2,v3,v4], ...)</tt>
+ * .
+ * where \c N will be the output vector size.
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Vec4f> v = cellArray.toVector<Vec4f>();
+ * @endcode
+ */
+template <>
+std::vector<cv::Vec4f> MxArray::toVector() const;
 
 /** Convert MxArray to std::vector<cv::RotatedRect>.
  * @return std::vector<cv::RotatedRect> value.
