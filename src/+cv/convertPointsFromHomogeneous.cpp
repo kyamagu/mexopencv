@@ -43,6 +43,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             plhs[0] = MxArray(dst);
         }
         else if (n==4) {
+            //vector<Vec4f> src(MxArrayToVectorVec<float,4>(rhs[0]));
             vector<Vec4f> src(rhs[0].toVector<Vec4f>());
             vector<Point3f> dst;
             convertPointsFromHomogeneous(src, dst);

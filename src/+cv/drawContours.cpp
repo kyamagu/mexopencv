@@ -46,6 +46,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             lineType = (rhs[i+1].isChar()) ?
                 LineType[rhs[i+1].toString()] : rhs[i+1].toInt();
         else if (key=="Hierarchy")
+            //hierarchy = MxArrayToVectorVec<int,4>(rhs[i+1]);
             hierarchy = rhs[i+1].toVector<Vec4i>();
         else if (key=="MaxLevel")
             maxLevel = rhs[i+1].toInt();

@@ -237,6 +237,88 @@ std::vector<cv::Rect_<T> > MxArrayToVectorRect(const MxArray& arr)
     return vr;
 }
 
+/** Convert an MxArray to std::vector<cv::Vec<T,cn>>
+ *
+ * @param arr MxArray object. In one of the following forms:
+ * - a cell-array of vecs (\c cn -element vectors) of length \c N,
+ *   e.g: <tt>{[v_1,v_2,...,v_cn], [v_1,v_2,...,v_cn], ...}</tt>
+ * - a numeric matrix of size \c Nxcn, \c Nx1xcn, or \c 1xNxcn in the form:
+ *   <tt>[v_1,v_2,...,v_cn; v_1,v_2,...,v_cn; ...]</tt> or
+ *   <tt>cat(3, [v_1,v_2,...,v_cn], [v_1,v_2,...,v_cn], ...)</tt>
+ * @return vector of vecs of size \c N
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Vec4i> vv = MxArrayToVectorVec<int,4>(cellArray);
+ * @endcode
+ */
+template <typename T, int cn>
+std::vector<cv::Vec<T,cn> > MxArrayToVectorVec(const MxArray& arr)
+{
+    std::vector<cv::Vec<T,cn> > vv;
+    if (arr.isNumeric()) {
+        if (arr.numel() == cn)
+            vv.push_back(arr.toVec<T,cn>());
+        else
+            arr.toMat(cv::Vec<T,cn>::depth).reshape(cn, 0).copyTo(vv);
+    }
+    else if (arr.isCell()) {
+        /*
+        std::vector<MxArray> va(arr.toVector<MxArray>());
+        vv.reserve(va.size());
+        for (std::vector<MxArray>::const_iterator it = va.begin(); it != va.end(); ++it)
+            vv.push_back(it->toVec<T,cn>());
+        */
+        vv = arr.toVector(
+            std::const_mem_fun_ref_t<cv::Vec<T,cn>, MxArray>(
+                &MxArray::toVec<T,cn>));
+    }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unable to convert MxArray to std::vector<cv::Vec<T,cn>>");
+    return vv;
+}
+
+/** Convert an MxArray to std::vector<cv::Matx<T,m,n>>
+ *
+ * @param arr MxArray object. In one of the following forms:
+ * - a cell-array of mats (\c mxn matrices) of length \c N,
+ *   e.g: <tt>{[mat_11, ..., mat_1n; ....; mat_m1, ..., mat_mn], ...}</tt>
+ * - a sole numeric matrix (\c N=1) of size \c mxn in the form:
+ *   <tt>[mat_11, ..., mat_1n; ....; mat_m1, ..., mat_mn]</tt>
+ * @return vector of mats of size \c N
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Matx32f> vx = MxArrayToVectorMatx<float,3,2>(cellArray);
+ * @endcode
+ */
+template <typename T, int m, int n>
+std::vector<cv::Matx<T,m,n> > MxArrayToVectorMatx(const MxArray& arr)
+{
+    std::vector<cv::Matx<T,m,n> > vx;
+    if (arr.isNumeric()) {
+        vx.push_back(arr.toMatx<T,m,n>());
+    }
+    else if (arr.isCell()) {
+        /*
+        std::vector<MxArray> va(arr.toVector<MxArray>());
+        vx.reserve(va.size());
+        for (std::vector<MxArray>::const_iterator it = va.begin(); it != va.end(); ++it)
+            vx.push_back(it->toMatx<T,m,n>());
+        */
+        vx = arr.toVector(
+            std::const_mem_fun_ref_t<cv::Matx<T,m,n>, MxArray>(
+                &MxArray::toMatx<T,m,n>));
+    }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unable to convert MxArray to std::vector<cv::Matx<T,m,n>>");
+    return vx;
+}
+
 /**************************************************************\
 *      Conversion Functions: MxArray to vector of vectors      *
 \**************************************************************/
