@@ -248,6 +248,17 @@ class MxArray
      * @return four-element numeric MxArray <tt>[v0, v1, v2, v3]</tt>.
      */
     template <typename T> explicit MxArray(const cv::Scalar_<T>& s);
+    /** MxArray constructor from cv::Vec<T,cn>.
+     * @param vec cv::Vec<T,cn> object.
+     * @return \c cn -element numeric MxArray <tt>[v0, v1, ...]</tt>.
+     */
+    template <typename T, int cn> explicit MxArray(const cv::Vec<T,cn>& vec);
+    /** MxArray constructor from cv::Matx<T,m,n>.
+     * @param mat cv::Mat<T,m,n> object.
+     * @return \c m-by-n numeric MxArray matrix
+     *    <tt>[mat_11, ..., mat_1n; ....; mat_m1, ..., mat_mn]</tt>.
+     */
+    template <typename T, int m, int n> explicit MxArray(const cv::Matx<T,m,n>& mat);
     /** Destructor. This does not free the underlying mxArray*.
      */
     virtual ~MxArray() {}
@@ -977,6 +988,39 @@ MxArray::MxArray(const cv::Scalar_<T>& s)
     x[1] = static_cast<double>(s[1]);
     x[2] = static_cast<double>(s[2]);
     x[3] = static_cast<double>(s[3]);
+}
+
+template <typename T, int cn>
+MxArray::MxArray(const cv::Vec<T,cn>& vec)
+    : p_(mxCreateNumericMatrix(1, cn, mxDOUBLE_CLASS, mxREAL))
+{
+    if (!p_)
+        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+    /*
+    double *x = mxGetPr(p_);
+    for (mwIndex i=0; i<cn; i++)
+        //set<double>(i, static_cast<double>(vec[i]));
+        x[i] = static_cast<double>(vec[i]);
+    */
+    std::copy(vec.val, vec.val + cn, mxGetPr(p_));
+}
+
+template <typename T, int m, int n>
+MxArray::MxArray(const cv::Matx<T,m,n>& mat)
+    : p_(mxCreateNumericMatrix(m, n, mxDOUBLE_CLASS, mxREAL))
+{
+    if (!p_)
+        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+    /*
+    double *x = mxGetPr(p_);
+    for (mwIndex j=0; j<n; j++)
+       for (mwIndex i=0; i<m; i++)
+           //set<double>(i, j, static_cast<double>(mat(i,j)));
+           x[j*m+i] = static_cast<double>(mat(i,j));
+    */
+    // Note: C is row-major, MATLAB uses column-major order
+    const cv::Matx<T, n, m> mat_t = mat.t();
+    std::copy(mat_t.val, mat_t.val + m*n, mxGetPr(p_));
 }
 
 template <typename T>
