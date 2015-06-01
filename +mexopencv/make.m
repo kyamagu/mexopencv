@@ -310,12 +310,11 @@ end
 function l = lib_names(L_path)
     %LIB_NAMES  return library names
     %
-    d = dir( fullfile(L_path,'opencv_*d.lib') );
-    if isempty(d)
+    d = dir( fullfile(L_path,'opencv_*.lib') );
+    l = unique(regexprep({d.name}, 'd?\.lib$', ''));
+    if isempty(l)
         error('mexopencv:make', 'Failed to find OpenCV libraries')
     end
-    l = regexp({d.name}, '(opencv_.+)d\.lib', 'tokens', 'once');
-    l = [l{:}];
 end
 
 function r = compile_needed(src, dst)
