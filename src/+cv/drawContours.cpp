@@ -45,10 +45,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else if (key=="LineType")
             lineType = (rhs[i+1].isChar()) ?
                 LineType[rhs[i+1].toString()] : rhs[i+1].toInt();
-        else if (key=="Hierarchy") {
-            vector<Mat> hm(rhs[i+1].toVector<Mat>());
-            hierarchy = vector<Vec4i>(hm.begin(),hm.end());
-        }
+        else if (key=="Hierarchy")
+            hierarchy = rhs[i+1].toVector<Vec4i>();
         else if (key=="MaxLevel")
             maxLevel = rhs[i+1].toInt();
         else if (key=="Offset")
