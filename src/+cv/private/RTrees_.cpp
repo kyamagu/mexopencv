@@ -60,7 +60,7 @@ MxArray VecDTreesNodeToMxArray(const std::vector<DTrees::Node>& nodes)
 }
 
 /** Convert tree splits to struct array
- * @param nodes vector of tree splits
+ * @param splits vector of tree splits
  * @return struct-array MxArray object
  */
 MxArray VecDTreesSplitToMxArray(const std::vector<DTrees::Split>& splits)
