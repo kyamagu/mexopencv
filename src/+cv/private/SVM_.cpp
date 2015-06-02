@@ -104,6 +104,88 @@ ParamGrid toParamGrid(const MxArray& m)
     //    mexErrMsgIdAndTxt("mexopencv:error","Invalid argument to grid parameter");
     return g;
 }
+
+/** Represents custom kernel implemented as a MATLAB function.
+ */
+class MatlabFunction : public cv::ml::SVM::Kernel
+{
+public:
+    MatlabFunction(const string &func)
+    : fun_name(func)
+    {}
+
+    /** Evaluates MATLAB kernel function
+     * @param vcount number of samples
+     * @param n length of each sample
+     * @param vecs input array of length \c n*vcount
+     * @param another input array of length \p n
+     * @param results output array of length \p vcount
+     *
+     * Calculates <tt>results(i) = K(another, vecs(:,i))</tt>,
+     * for <tt>i=1:vcount</tt>
+     * (where each sample is of size \p n).
+     *
+     * Example:
+     * @code
+     * % the following MATLAB function implements a simple linear kernel
+     * function results = my_kernel(vecs, another)
+     *     [n,vcount] = size(vecs);
+     *     results = zeros(1, vcount, 'single');
+     *     for i=1:vcount
+     *         results(i) = dot(another, vecs(:,i));
+     *     end
+     *
+     *     % or computed in a vectorized manner as
+     *     %results = sum(bsxfun(@times, another, vecs));
+     *
+     *     % or simply written as
+     *     %results = another.' * vecs;
+     * end
+     * @endcode
+     */
+    void calc(int vcount, int n, const float* vecs,
+        const float* another, float* results)
+    {
+        // create input to evaluate kernel function
+        mxArray *lhs, *rhs[3];
+        rhs[0] = MxArray(fun_name);
+        rhs[1] = MxArray(Mat(n, vcount, CV_32F, const_cast<float*>(vecs)));
+        rhs[2] = MxArray(Mat(n, 1, CV_32F, const_cast<float*>(another)));
+
+        // evaluate specified function in MATLAB as:
+        // results = feval("fun_name", vecs, another)
+        if (mexCallMATLAB(1, &lhs, 3, rhs, "feval") == 0) {
+            MxArray res(lhs);
+            CV_Assert(res.isSingle() && !res.isComplex() && res.ndims() == 2);
+            vector<float> v(res.toVector<float>());
+            CV_Assert(v.size() == vcount);
+            std::copy(v.begin(), v.end(), results);
+        }
+        else {
+            //TODO: error
+            std::fill(results, results + vcount, 0);
+        }
+
+        // cleanup
+        mxDestroyArray(lhs);
+        mxDestroyArray(rhs[0]);
+        mxDestroyArray(rhs[1]);
+        mxDestroyArray(rhs[2]);
+    }
+
+    int getType() const
+    {
+        return SVM::CUSTOM;
+    }
+
+    static Ptr<MatlabFunction> create(const string &func)
+    {
+        return makePtr<MatlabFunction>(func);
+    }
+
+private:
+    string fun_name;
+};
 }
 
 /**
@@ -403,8 +485,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         plhs[0] = MxArray(obj->getSupportVectors());
     }
-    //else if (method == "setCustomKernel") {
-    //}
+    else if (method == "setCustomKernel") {
+        if (nrhs!=3 || nlhs!=0)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        obj->setCustomKernel(MatlabFunction::create(rhs[2].toString()));
+    }
     else if (method == "get") {
         if (nrhs!=3 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");

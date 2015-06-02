@@ -2,7 +2,7 @@ classdef TestSVM
     %TestSVM
     properties (Constant)
         X = [randn(50,3)+1;randn(50,3)-1];
-        Y = [ones(50,1);-ones(50,1)];
+        Y = int32([ones(50,1);-ones(50,1)]);
         YReg = [ones(50,1);-ones(50,1)]+randn(100,1)*0.5;
     end
     
@@ -10,65 +10,63 @@ classdef TestSVM
         function test_1
             % classification
             classifier = cv.SVM;
+            classifier.Type = 'C_SVC';
+            classifier.KernelType = 'RBF';
+            classifier.C = 1;
+            classifier.Gamma = 1;
             classifier.train(TestSVM.X, TestSVM.Y);
             Yhat = classifier.predict(TestSVM.X);
-            assert(isscalar(classifier.VarCount));
-            assert(isstruct(classifier.Params));
-            assert(isscalar(classifier.SupportVectorCount));
-            assert(isvector(classifier.getSupportVector(0)));
+            assert(classifier.isClassifier());
+            assert(classifier.isTrained())
+            assert(ismatrix(classifier.getSupportVectors()));
+            assert(isscalar(classifier.getVarCount));
+            [alpha,svidx,rho] = classifier.getDecisionFunction(0);
         end
         
         function test_2
             % regression
             regressor = cv.SVM;
-            regressor.train(TestSVM.X, TestSVM.YReg, ...
-                'SVMType','EPS_SVR', 'P',0.001);
+            regressor.Type = 'EPS_SVR';
+            regressor.P = 0.001;
+            regressor.train(TestSVM.X, TestSVM.YReg);
             Yhat = regressor.predict(TestSVM.X);
+            assert(~regressor.isClassifier());
         end
         
         function test_3
             % train auto
             classifier = cv.SVM;
-            classifier.train_auto(TestSVM.X, TestSVM.Y, 'KFold',2);
+            classifier.trainAuto(TestSVM.X, TestSVM.Y, 'KFold',2);
             Yhat = classifier.predict(TestSVM.X);
         end
-        
-        function test_4
-            % predict_all
-            classifier = cv.SVM;
-            classifier.train(TestSVM.X, TestSVM.Y);
-            Yhat1 = classifier.predict(TestSVM.X);
-            Yhat2 = classifier.predict_all(TestSVM.X);
-            assert(isequal(Yhat1,Yhat2));
-        end
-        
+
         function test_5
             % VarIdx/SampleIdx
             [n,d] = size(TestSVM.X);
             classifier = cv.SVM;
             
-            classifier.train(TestSVM.X, TestSVM.Y, ...
+            classifier.train_(TestSVM.X, TestSVM.Y, ...
                 'VarIdx',[], 'SampleIdx',[]);
             Yhat = classifier.predict(TestSVM.X);
             
-            classifier.train(TestSVM.X, TestSVM.Y, ...
+            classifier.train_(TestSVM.X, TestSVM.Y, ...
                 'VarIdx',(1:d)-1, 'SampleIdx',(1:n)-1);
             Yhat = classifier.predict(TestSVM.X);
             
-            classifier.train(TestSVM.X, TestSVM.Y, ...
+            classifier.train_(TestSVM.X, TestSVM.Y, ...
                 'VarIdx',true(1,d), 'SampleIdx',true(1,n));
             Yhat = classifier.predict(TestSVM.X);
             
-            classifier.train(TestSVM.X, TestSVM.Y, 'VarIdx',[0,2]);
+            classifier.train_(TestSVM.X, TestSVM.Y, 'VarIdx',[0,2]);
+            Yhat = classifier.predict(TestSVM.X(:,[0 2]+1));
+            
+            classifier.train_(TestSVM.X, TestSVM.Y, 'VarIdx',[true,false,true]);
+            Yhat = classifier.predict(TestSVM.X(:,[true,false,true]));
+            
+            classifier.train_(TestSVM.X, TestSVM.Y, 'SampleIdx',[1:20 51:70]-1);
             Yhat = classifier.predict(TestSVM.X);
             
-            classifier.train(TestSVM.X, TestSVM.Y, 'VarIdx',[true,false,true]);
-            Yhat = classifier.predict(TestSVM.X);
-            
-            classifier.train(TestSVM.X, TestSVM.Y, 'SampleIdx',0:n/2);
-            Yhat = classifier.predict(TestSVM.X);
-            
-            classifier.train(TestSVM.X, TestSVM.Y, 'SampleIdx',rand(n,1)>0.5);
+            classifier.train_(TestSVM.X, TestSVM.Y, 'SampleIdx',rand(n,1)>0.5);
             Yhat = classifier.predict(TestSVM.X);
         end
         
@@ -92,7 +90,26 @@ classdef TestSVM
             c1.clear();
             c2.clear();
         end
+
+        function test_7
+            % custom kernel
+            if (false)
+                model = cv.SVM();
+                model.setCustomKernel('my_kernel');
+                model.train(TestSVM.X, TestSVM.Y);
+                Yhat = model.predict(TestSVM.X);
+            end
+        end
     end
     
 end
 
+% custom kernel
+function results = my_kernel(vecs, another)
+    [n,vcount] = size(vecs);
+    results = zeros(1, vcount, 'single');
+    for i=1:vcount
+        results(i) = dot(another, vecs(:,i));
+    end
+    %results = another.' * vecs;
+end
