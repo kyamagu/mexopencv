@@ -72,21 +72,19 @@ const ConstMap<int, std::string> AKAZEDescriptorTypeInv = ConstMap <int, std::st
     (cv::AKAZE::DESCRIPTOR_MLDB_UPRIGHT, "MLDBUpright")
     (cv::AKAZE::DESCRIPTOR_MLDB,         "MLDB");
 
-#ifdef HAVE_OPENCV_XFEATURES2D
-/// AgastFeatureDetector types
+/// AGAST neighborhood types
 const ConstMap<std::string, int> AgastTypeMap = ConstMap<std::string, int>
-    ("AGAST_5_8",   cv::xfeatures2d::AgastFeatureDetector::AGAST_5_8)
-    ("AGAST_7_12d", cv::xfeatures2d::AgastFeatureDetector::AGAST_7_12d)
-    ("AGAST_7_12s", cv::xfeatures2d::AgastFeatureDetector::AGAST_7_12s)
-    ("OAST_9_16",   cv::xfeatures2d::AgastFeatureDetector::OAST_9_16);
+    ("AGAST_5_8",   cv::AgastFeatureDetector::AGAST_5_8)
+    ("AGAST_7_12d", cv::AgastFeatureDetector::AGAST_7_12d)
+    ("AGAST_7_12s", cv::AgastFeatureDetector::AGAST_7_12s)
+    ("OAST_9_16",   cv::AgastFeatureDetector::OAST_9_16);
 
-/// inverse AgastFeatureDetector types
+/// inverse AGAST neighborhood types
 const ConstMap<int, std::string> AgastTypeInvMap = ConstMap<int, std::string>
-    (cv::xfeatures2d::AgastFeatureDetector::AGAST_5_8,   "AGAST_5_8")
-    (cv::xfeatures2d::AgastFeatureDetector::AGAST_7_12d, "AGAST_7_12d")
-    (cv::xfeatures2d::AgastFeatureDetector::AGAST_7_12s, "AGAST_7_12s")
-    (cv::xfeatures2d::AgastFeatureDetector::OAST_9_16,   "OAST_9_16");
-#endif
+    (cv::AgastFeatureDetector::AGAST_5_8,   "AGAST_5_8")
+    (cv::AgastFeatureDetector::AGAST_7_12d, "AGAST_7_12d")
+    (cv::AgastFeatureDetector::AGAST_7_12s, "AGAST_7_12s")
+    (cv::AgastFeatureDetector::OAST_9_16,   "OAST_9_16");
 
 /** Create an instance of BRISK using options in arguments
  * @param first iterator at the beginning of the vector range
@@ -160,6 +158,15 @@ cv::Ptr<cv::AKAZE> createAKAZE(
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 
+/** Create an instance of AgastFeatureDetector using options in arguments
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to an instance cv::AgastFeatureDetector
+ */
+cv::Ptr<cv::AgastFeatureDetector> createAgastFeatureDetector(
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
+
 #ifdef HAVE_OPENCV_XFEATURES2D
 /** Create an instance of SIFT using options in arguments
  * @param first iterator at the beginning of the vector range
@@ -206,15 +213,6 @@ cv::Ptr<cv::xfeatures2d::BriefDescriptorExtractor> createBriefDescriptorExtracto
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 
-/** Create an instance of AgastFeatureDetector using options in arguments
- * @param first iterator at the beginning of the vector range
- * @param last iterator at the end of the vector range
- * @return smart pointer to an instance cv::xfeatures2d::AgastFeatureDetector
- */
-cv::Ptr<cv::xfeatures2d::AgastFeatureDetector> createAgastFeatureDetector(
-    std::vector<MxArray>::const_iterator first,
-    std::vector<MxArray>::const_iterator last);
-
 /** Create an instance of LUCID using options in arguments
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
@@ -235,10 +233,10 @@ cv::Ptr<cv::xfeatures2d::LUCID> createLUCID(
  *    - "SimpleBlobDetector"
  *    - "KAZE"
  *    - "AKAZE"
+ *    - "AgastFeatureDetector"
  *    - "SIFT" (requires `xfeatures2d` module)
  *    - "SURF" (requires `xfeatures2d` module)
  *    - "StarDetector" (requires `xfeatures2d` module)
- *    - "AgastFeatureDetector" (requires `xfeatures2d` module)
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
  * @return smart pointer to an instance cv::FeatureDetector

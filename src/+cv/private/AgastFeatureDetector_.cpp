@@ -9,7 +9,6 @@
 #include "mexopencv_features2d.hpp"
 using namespace std;
 using namespace cv;
-using namespace cv::xfeatures2d;
 
 // Persistent objects
 namespace {

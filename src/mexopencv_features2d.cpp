@@ -344,6 +344,31 @@ Ptr<AKAZE> createAKAZE(
         threshold, nOctaves, nOctaveLayers, diffusivity);
 }
 
+Ptr<AgastFeatureDetector> createAgastFeatureDetector(
+    vector<MxArray>::const_iterator first,
+    vector<MxArray>::const_iterator last)
+{
+    if (((last-first) % 2) != 0)
+        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    int threshold = 10;
+    bool nonmaxSuppression = true;
+    int type = AgastFeatureDetector::OAST_9_16;
+    for (; first != last; first += 2) {
+        string key((*first).toString());
+        const MxArray& val = *(first + 1);
+        if (key == "Threshold")
+            threshold = val.toInt();
+        else if (key == "NonmaxSuppression")
+            nonmaxSuppression = val.toBool();
+        else if (key == "Type")
+            type = AgastTypeMap[val.toString()];
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
+    return AgastFeatureDetector::create(threshold, nonmaxSuppression, type);
+}
+
 #ifdef HAVE_OPENCV_XFEATURES2D
 Ptr<SIFT> createSIFT(
     vector<MxArray>::const_iterator first,
@@ -492,31 +517,6 @@ Ptr<BriefDescriptorExtractor> createBriefDescriptorExtractor(
     return BriefDescriptorExtractor::create(bytes);
 }
 
-Ptr<AgastFeatureDetector> createAgastFeatureDetector(
-    vector<MxArray>::const_iterator first,
-    vector<MxArray>::const_iterator last)
-{
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
-    int threshold = 10;
-    bool nonmaxSuppression = true;
-    int type = AgastFeatureDetector::OAST_9_16;
-    for (; first != last; first += 2) {
-        string key((*first).toString());
-        const MxArray& val = *(first + 1);
-        if (key == "Threshold")
-            threshold = val.toInt();
-        else if (key == "NonmaxSuppression")
-            nonmaxSuppression = val.toBool();
-        else if (key == "Type")
-            type = AgastTypeMap[val.toString()];
-        else
-            mexErrMsgIdAndTxt("mexopencv:error",
-                "Unrecognized option %s", key.c_str());
-    }
-    return AgastFeatureDetector::create(threshold, nonmaxSuppression, type);
-}
-
 Ptr<LUCID> createLUCID(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
@@ -561,6 +561,8 @@ Ptr<FeatureDetector> createFeatureDetector(string type,
         p = createKAZE(first, last);
     else if (type == "AKAZE")
         p = createAKAZE(first, last);
+    else if (type == "AgastFeatureDetector")
+        p = createAgastFeatureDetector(first, last);
 #ifdef HAVE_OPENCV_XFEATURES2D
     else if (type == "SIFT")
         p = createSIFT(first, last);
@@ -568,8 +570,6 @@ Ptr<FeatureDetector> createFeatureDetector(string type,
         p = createSURF(first, last);
     else if (type == "StarDetector")
         p = createStarDetector(first, last);
-    else if (type == "AgastFeatureDetector")
-        p = createAgastFeatureDetector(first, last);
 #endif
     else
         mexErrMsgIdAndTxt("mexopencv:error",
