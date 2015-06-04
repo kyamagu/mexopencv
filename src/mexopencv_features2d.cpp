@@ -505,16 +505,19 @@ Ptr<BriefDescriptorExtractor> createBriefDescriptorExtractor(
     if (((last-first) % 2) != 0)
         mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
     int bytes = 32;
+    bool use_orientation = false;
     for (; first != last; first += 2) {
         string key((*first).toString());
         const MxArray& val = *(first + 1);
         if (key == "Bytes")
             bytes = val.toInt();
+        else if (key == "UseOrientation")
+            use_orientation = val.toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
     }
-    return BriefDescriptorExtractor::create(bytes);
+    return BriefDescriptorExtractor::create(bytes, use_orientation);
 }
 
 Ptr<LUCID> createLUCID(
