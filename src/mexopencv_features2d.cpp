@@ -541,6 +541,72 @@ Ptr<LUCID> createLUCID(
     }
     return LUCID::create(lucid_kernel, blur_kernel);
 }
+
+Ptr<LATCH> createLATCH(
+    vector<MxArray>::const_iterator first,
+    vector<MxArray>::const_iterator last)
+{
+    if (((last-first) % 2) != 0)
+        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    int bytes = 32;
+    bool rotationInvariance = true;
+    int half_ssd_size = 3;
+    for (; first != last; first += 2) {
+        string key(first->toString());
+        const MxArray& val = *(first + 1);
+        if (key == "Bytes")
+            bytes = val.toInt();
+        else if (key == "RotationInvariance")
+            rotationInvariance = val.toBool();
+        else if (key == "HalfSize")
+            half_ssd_size = val.toInt();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
+    return LATCH::create(bytes, rotationInvariance, half_ssd_size);
+}
+
+Ptr<DAISY> createDAISY(
+    vector<MxArray>::const_iterator first,
+    vector<MxArray>::const_iterator last)
+{
+    if (((last-first) % 2) != 0)
+        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    float radius = 15;
+    int q_radius = 3;
+    int q_theta = 8;
+    int q_hist = 8;
+    int norm = DAISY::NRM_NONE;
+    Mat H;
+    bool interpolation = true;
+    bool use_orientation = false;
+    for (; first != last; first += 2) {
+        string key(first->toString());
+        const MxArray& val = *(first + 1);
+        if (key == "Radius")
+            radius = val.toFloat();
+        else if (key == "RadiusQuant")
+            q_radius = val.toInt();
+        else if (key == "AngleQuant")
+            q_theta = val.toInt();
+        else if (key == "GradOrientationsQuant")
+            q_hist = val.toInt();
+        else if (key == "Normalization")
+            norm = DAISYNormType[val.toString()];
+        else if (key == "H")
+            H = val.toMat();
+        else if (key == "Interpolation")
+            interpolation = val.toBool();
+        else if (key == "UseOrientation")
+            use_orientation = val.toBool();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
+    return DAISY::create(radius, q_radius, q_theta, q_hist,
+        norm, H, interpolation, use_orientation);
+}
 #endif
 
 Ptr<FeatureDetector> createFeatureDetector(string type,
@@ -607,6 +673,10 @@ Ptr<DescriptorExtractor> createDescriptorExtractor(string type,
         p = createBriefDescriptorExtractor(first, last);
     else if (type == "LUCID")
         p = createLUCID(first, last);
+    else if (type == "LATCH")
+        p = createLATCH(first, last);
+    else if (type == "DAISY")
+        p = createDAISY(first, last);
 #endif
     else
         mexErrMsgIdAndTxt("mexopencv:error",

@@ -86,6 +86,22 @@ const ConstMap<int, std::string> AgastTypeInvMap = ConstMap<int, std::string>
     (cv::AgastFeatureDetector::AGAST_7_12s, "AGAST_7_12s")
     (cv::AgastFeatureDetector::OAST_9_16,   "OAST_9_16");
 
+#ifdef HAVE_OPENCV_XFEATURES2D
+/// DAISY normalization types
+const ConstMap<std::string, int> DAISYNormType = ConstMap<std::string, int>
+    ("None",    cv::xfeatures2d::DAISY::NRM_NONE)
+    ("Partial", cv::xfeatures2d::DAISY::NRM_PARTIAL)
+    ("Full",    cv::xfeatures2d::DAISY::NRM_FULL)
+    ("SIFT",    cv::xfeatures2d::DAISY::NRM_SIFT);
+
+/// inverse DAISY normalization types
+const ConstMap<int, std::string> DAISYNormTypeInv = ConstMap<int, std::string>
+    (cv::xfeatures2d::DAISY::NRM_NONE,    "None")
+    (cv::xfeatures2d::DAISY::NRM_PARTIAL, "Partial")
+    (cv::xfeatures2d::DAISY::NRM_FULL,    "Full")
+    (cv::xfeatures2d::DAISY::NRM_SIFT,    "SIFT");
+#endif
+
 /** Create an instance of BRISK using options in arguments
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
@@ -221,6 +237,24 @@ cv::Ptr<cv::xfeatures2d::BriefDescriptorExtractor> createBriefDescriptorExtracto
 cv::Ptr<cv::xfeatures2d::LUCID> createLUCID(
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
+
+/** Create an instance of LATCH using options in arguments
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to an instance cv::xfeatures2d::LATCH
+ */
+cv::Ptr<cv::xfeatures2d::LATCH> createLATCH(
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
+
+/** Create an instance of DAISY using options in arguments
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to an instance cv::xfeatures2d::DAISY
+ */
+cv::Ptr<cv::xfeatures2d::DAISY> createDAISY(
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
 #endif
 
 /** Factory function for FeatureDetector creation
@@ -256,6 +290,8 @@ cv::Ptr<cv::FeatureDetector> createFeatureDetector(std::string type,
  *    - "FREAK" (requires `xfeatures2d` module)
  *    - "BriefDescriptorExtractor" (requires `xfeatures2d` module)
  *    - "LUCID" (requires `xfeatures2d` module)
+ *    - "LATCH" (requires `xfeatures2d` module)
+ *    - "DAISY" (requires `xfeatures2d` module)
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
  * @return smart pointer to an instance cv::DescriptorExtractor
