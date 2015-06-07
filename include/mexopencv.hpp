@@ -17,6 +17,37 @@
 *                       Global constants                       *
 \**************************************************************/
 
+/** Translates class name used in MATLAB to equivalent OpenCV depth.
+ * @param classname numeric MATLAB data type, e.g. \c uint8.
+ * @return equivalent OpenCV data type, e.g. \c CV_8U.
+ *
+ * Note: 64-bit integer types are not supported by OpenCV.
+ *       Also, OpenCV only has signed 32-bit integer type.
+ */
+const ConstMap<std::string,int> ClassNameMap = ConstMap<std::string,int>
+    ("uint8",   CV_8U)
+    ("int8",    CV_8S)
+    ("uint16",  CV_16U)
+    ("int16",   CV_16S)
+  //("uint32",  CV_32S)
+    ("int32",   CV_32S)
+    ("single",  CV_32F)
+    ("double",  CV_64F)
+    ("logical", CV_8U);
+
+/** Translates data type definition used in OpenCV to that of MATLAB.
+ * @param depth OpenCV cv::Mat data depth, e.g. \c CV_8U.
+ * @return equivalent MATLAB class name, e.g. \c uint8.
+ */
+const ConstMap<int,std::string> ClassNameInvMap = ConstMap<int,std::string>
+    (CV_8U,  "uint8")
+    (CV_8S,  "int8")
+    (CV_16U, "uint16")
+    (CV_16S, "int16")
+    (CV_32S, "int32")
+    (CV_32F, "single")
+    (CV_64F, "double");
+
 /// Border type map for option processing
 const ConstMap<std::string,int> BorderType = ConstMap<std::string,int>
     ("Constant",    cv::BORDER_CONSTANT)    // iiiiii|abcdefgh|iiiiiii for some i
