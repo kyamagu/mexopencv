@@ -163,7 +163,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
         }
         else if (rhs[2].isCell()) { // second variant that accepts an image set
             vector<Mat> images(rhs[2].toVector<Mat>()), descriptors;
-            vector<vector<KeyPoint> > keypoints(rhs[3].toVector<vector<KeyPoint> >());
+            vector<vector<KeyPoint> > keypoints(rhs[3].toVector(
+                const_mem_fun_ref_t<vector<KeyPoint>, MxArray>(
+                &MxArray::toVector<KeyPoint>)));
             obj->compute(images, keypoints, descriptors);
             plhs[0] = MxArray(descriptors);
             if (nlhs > 1)
