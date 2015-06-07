@@ -16,7 +16,7 @@ map<int,Ptr<BOWKMeansTrainer> > obj_;
 
 /** KMeans initalization types
  */
-const ConstMap<std::string,int> Initialization = ConstMap<std::string,int>
+const ConstMap<std::string,int> KmeansInitMap = ConstMap<std::string,int>
     ("Random", cv::KMEANS_RANDOM_CENTERS)
     ("PP",     cv::KMEANS_PP_CENTERS);
 }
@@ -51,7 +51,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else if (key=="Attempts")
                 attempts = rhs[i+1].toInt();
             else if (key=="Initialization")
-                flags = Initialization[rhs[i+1].toString()];
+                flags = KmeansInitMap[rhs[i+1].toString()];
             else
                 mexErrMsgIdAndTxt("mexopencv:error","Unknown option %s",key.c_str());
         }

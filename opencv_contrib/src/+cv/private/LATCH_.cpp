@@ -40,7 +40,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Constructor is called. Create a new object from argument
     if (method == "new") {
-        if (nrhs!=2 || nlhs>1)
+        if (nrhs<2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         obj_[++last_id] = createLATCH(rhs.begin() + 2, rhs.end());
         plhs[0] = MxArray(last_id);
@@ -54,7 +54,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
         obj_.erase(id);
     }
-    else if (method == "type") {
+    else if (method == "typeid") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
         plhs[0] = MxArray(string(typeid(*obj).name()));
@@ -100,7 +100,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "defaultNorm") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
-        plhs[0] = MxArray(obj->defaultNorm());
+        plhs[0] = MxArray(NormTypeInv[obj->defaultNorm()]);
     }
     else if (method == "descriptorSize") {
         if (nrhs!=2 || nlhs>1)
@@ -110,7 +110,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "descriptorType") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
-        plhs[0] = MxArray(obj->descriptorType());
+        plhs[0] = MxArray(ClassNameInvMap[obj->descriptorType()]);
     }
     else if (method == "compute") {
         if (nrhs!=4 || nlhs>2)

@@ -25,7 +25,7 @@ Ptr<BRISK> createBRISK(
     if (((last-first) % 2) != 0)
         mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
     // second variant for custom patterns
-    if ((last-first) >= 2 && first->isCell() && (first+1)->isCell() ) {
+    if ((last-first) >= 2 && !first->isChar()) {
         vector<float> radiusList(first->toVector<float>()); first++;
         vector<int> numberList(first->toVector<int>()); first++;
         float dMax = 5.85f, dMin = 8.2f;
@@ -117,43 +117,43 @@ Ptr<MSER> createMSER(
 {
     if (((last-first) % 2) != 0)
         mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
-    int _delta = 5;
-    int _min_area = 60;
-    int _max_area = 14400;
-    double _max_variation = 0.25;
-    double _min_diversity = 0.2;
-    int _max_evolution = 200;
-    double _area_threshold = 1.01;
-    double _min_margin = 0.003;
-    int _edge_blur_size = 5;
+    int delta = 5;
+    int min_area = 60;
+    int max_area = 14400;
+    double max_variation = 0.25;
+    double min_diversity = 0.2;
+    int max_evolution = 200;
+    double area_threshold = 1.01;
+    double min_margin = 0.003;
+    int edge_blur_size = 5;
     for (; first != last; first += 2) {
         string key((*first).toString());
         const MxArray& val = *(first + 1);
         if (key == "Delta")
-            _delta = val.toInt();
+            delta = val.toInt();
         else if (key == "MinArea")
-            _min_area = val.toInt();
+            min_area = val.toInt();
         else if (key == "MaxArea")
-            _max_area = val.toInt();
+            max_area = val.toInt();
         else if (key == "MaxVariation")
-            _max_variation = val.toDouble();
+            max_variation = val.toDouble();
         else if (key == "MinDiversity")
-            _min_diversity = val.toDouble();
+            min_diversity = val.toDouble();
         else if (key == "MaxEvolution")
-            _max_evolution = val.toInt();
+            max_evolution = val.toInt();
         else if (key == "AreaThreshold")
-            _area_threshold = val.toDouble();
+            area_threshold = val.toDouble();
         else if (key == "MinMargin")
-            _min_margin = val.toDouble();
+            min_margin = val.toDouble();
         else if (key == "EdgeBlurSize")
-            _edge_blur_size = val.toInt();
+            edge_blur_size = val.toInt();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
     }
-    return MSER::create(_delta, _min_area, _max_area, _max_variation,
-        _min_diversity, _max_evolution, _area_threshold, _min_margin,
-        _edge_blur_size);
+    return MSER::create(delta, min_area, max_area, max_variation,
+        min_diversity, max_evolution, area_threshold, min_margin,
+        edge_blur_size);
 }
 
 Ptr<FastFeatureDetector> createFastFeatureDetector(
@@ -935,7 +935,7 @@ Ptr<DescriptorMatcher> createDescriptorMatcher(string type,
 {
     Ptr<DescriptorMatcher> p;
     if ((last-first) > 0) {
-        if (type == "FlannBased")
+        if (type == "FlannBasedMatcher")
             p = createFlannBasedMatcher(first, last);
         else if (type == "BFMatcher")
             p = createBFMatcher(first, last);

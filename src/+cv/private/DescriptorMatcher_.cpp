@@ -52,7 +52,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
     }
-    else if (method == "type") {
+    else if (method == "typeid") {
         nargchk(nrhs==2 && nlhs<=1);
         plhs[0] = MxArray(string(typeid(*obj).name()));
     }
@@ -101,10 +101,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else if (method == "add") {
         nargchk(nrhs==3 && nlhs==0);
-        vector<MxArray> v(rhs[2].toVector<MxArray>());
+        vector<MxArray> va(rhs[2].toVector<MxArray>());
         vector<Mat> descriptors;
-        descriptors.reserve(v.size());
-        for (vector<MxArray>::const_iterator it=v.begin(); it!=v.end(); ++it)
+        descriptors.reserve(va.size());
+        for (vector<MxArray>::const_iterator it=va.begin(); it!=va.end(); ++it)
             descriptors.push_back(it->toMat(it->isUint8() ? CV_8U : CV_32F));
         obj->add(descriptors);
     }
@@ -136,12 +136,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 string key(rhs[i].toString());
                 if (key == "Mask") {
                     //masks = rhs[i+1].toVector<Mat>();
-                    vector<MxArray> arr(rhs[i+1].toVector<MxArray>());
+                    vector<MxArray> va(rhs[i+1].toVector<MxArray>());
                     masks.clear();
-                    masks.reserve(arr.size());
-                    for (vector<MxArray>::const_iterator iter = arr.begin(); iter != arr.end(); iter++) {
+                    masks.reserve(va.size());
+                    for (vector<MxArray>::const_iterator iter = va.begin(); iter != va.end(); iter++)
                         masks.push_back(iter->toMat(CV_8U));
-                    }
                 }
                 else
                     mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
@@ -181,12 +180,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 string key(rhs[i].toString());
                 if (key == "Mask") {
                     //masks = rhs[i+1].toVector<Mat>();
-                    vector<MxArray> arr(rhs[i+1].toVector<MxArray>());
+                    vector<MxArray> va(rhs[i+1].toVector<MxArray>());
                     masks.clear();
-                    masks.reserve(arr.size());
-                    for (vector<MxArray>::const_iterator iter = arr.begin(); iter != arr.end(); iter++) {
+                    masks.reserve(va.size());
+                    for (vector<MxArray>::const_iterator iter = va.begin(); iter != va.end(); iter++)
                         masks.push_back(iter->toMat(CV_8U));
-                    }
                 }
                 else if (key=="CompactResult")
                     compactResult = rhs[i+1].toBool();
@@ -221,19 +219,18 @@ void mexFunction( int nlhs, mxArray *plhs[],
         }
         else {  // second variant
             nargchk((nrhs%2)==0);
-            float maxDistance = rhs[3].toDouble();
+            float maxDistance = rhs[3].toFloat();
             vector<Mat> masks;
             bool compactResult = false;
             for (int i=4; i<nrhs; i+=2) {
                 string key(rhs[i].toString());
                 if (key == "Mask") {
                     //masks = rhs[i+1].toVector<Mat>();
-                    vector<MxArray> arr(rhs[i+1].toVector<MxArray>());
+                    vector<MxArray> va(rhs[i+1].toVector<MxArray>());
                     masks.clear();
-                    masks.reserve(arr.size());
-                    for (vector<MxArray>::const_iterator iter = arr.begin(); iter != arr.end(); iter++) {
+                    masks.reserve(va.size());
+                    for (vector<MxArray>::const_iterator iter = va.begin(); iter != va.end(); iter++)
                         masks.push_back(iter->toMat(CV_8U));
-                    }
                 }
                 else if (key=="CompactResult")
                     compactResult = rhs[i+1].toBool();
