@@ -125,6 +125,15 @@ const ConstMap<std::string,int> NormType = ConstMap<std::string,int>
     ("Hamming",  cv::NORM_HAMMING)
     ("Hamming2", cv::NORM_HAMMING2);
 
+/// Inverse norm type map for option processing
+const ConstMap<int,std::string> NormTypeInv = ConstMap<int,std::string>
+    (cv::NORM_INF,      "Inf")
+    (cv::NORM_L1,       "L1")
+    (cv::NORM_L2,       "L2")
+    (cv::NORM_L2SQR,    "L2Sqr")
+    (cv::NORM_HAMMING,  "Hamming")
+    (cv::NORM_HAMMING2, "Hamming2");
+
 /**************************************************************\
 *                       Helper Functions                       *
 \**************************************************************/
