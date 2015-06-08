@@ -314,8 +314,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
             obj->setActivationFunction(type, param1, param2);
         }
         else {
-            int method = ANN_MLPTrain[rhs[2].toString()];
-            obj->setTrainMethod(method, param1, param2);
+            int tmethod = ANN_MLPTrain[rhs[2].toString()];
+            obj->setTrainMethod(tmethod, param1, param2);
         }
     }
     else if (method == "get") {
@@ -342,6 +342,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
             plhs[0] = MxArray(obj->getTermCriteria());
         else if (prop == "TrainMethod")
             plhs[0] = MxArray(InvANN_MLPTrain[obj->getTrainMethod()]);
+        //else if (prop == "ActivationFunction")
+        //    plhs[0] = MxArray(InvActivateFunc[obj->getActivationFunction()]);
         else
             mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property %s", prop.c_str());
     }
@@ -367,6 +369,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
             obj->setRpropDWPlus(rhs[3].toDouble());
         else if (prop == "TermCriteria")
             obj->setTermCriteria(rhs[3].toTermCriteria());
+        else if (prop == "TrainMethod")
+            obj->setTrainMethod(ANN_MLPTrain[rhs[3].toString()]);
+        else if (prop == "ActivationFunction")
+            obj->setActivationFunction(ActivateFunc[rhs[3].toString()]);
         else
             mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property %s", prop.c_str());
     }
