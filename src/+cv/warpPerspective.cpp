@@ -37,7 +37,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         if (key=="DSize")
             dsize = rhs[i+1].toSize();
         else if (key=="Interpolation")
-            interpolation = InterType[rhs[i+1].toString()];
+            interpolation = InterpType[rhs[i+1].toString()];
         else if (key=="WarpInverse")
             warp_inverse = rhs[i+1].toBool();
         else if (key=="BorderType")

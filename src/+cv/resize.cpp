@@ -30,7 +30,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     for (int i=2; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="Interpolation")
-            interpolation = InterType[rhs[i+1].toString()];
+            interpolation = InterpType[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }

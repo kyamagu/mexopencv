@@ -60,7 +60,7 @@ const ConstMap<std::string,int> BorderType = ConstMap<std::string,int>
     ("Isolated",    cv::BORDER_ISOLATED);   // do not look outside of ROI
 
 /// Interpolation type map for option processing
-const ConstMap<std::string,int> InterType = ConstMap<std::string,int>
+const ConstMap<std::string,int> InterpType = ConstMap<std::string,int>
     ("Nearest",  cv::INTER_NEAREST)  // nearest neighbor interpolation
     ("Linear",   cv::INTER_LINEAR)   // bilinear interpolation
     ("Cubic",    cv::INTER_CUBIC)    // bicubic interpolation
