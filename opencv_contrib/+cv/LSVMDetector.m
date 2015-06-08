@@ -262,7 +262,7 @@ classdef LSVMDetector < handle
                 fprintf(f, '\t\t\t<NumPartFilters>%d</NumPartFilters>\n', numparts{c});
 
                 for j=1:numparts{c}
-                    fprintf(f, '\t\t\t<!-- Part filter �%d description -->\n', j);
+                    fprintf(f, '\t\t\t<!-- Part filter %d description -->\n', j);
                     fprintf(f, '\t\t\t<PartFilter>\n');
                     partfilter = part{c,j};
                     anchor = model.defs{didx{c,j}}.anchor;
