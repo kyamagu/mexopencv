@@ -126,7 +126,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
         if (nrhs!=4 || nlhs>2)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
         if (rhs[2].isNumeric()) {  // first variant that accepts an image
-            Mat image(rhs[2].toMat()), descriptors;
+            Mat image(rhs[2].toMat(CV_8U)), descriptors;
+            if (image.channels() == 1)
+                cvtColor(image, image, cv::COLOR_GRAY2BGR);
             vector<KeyPoint> keypoints(rhs[3].toVector<KeyPoint>());
             obj->compute(image, keypoints, descriptors);
             plhs[0] = MxArray(descriptors);
@@ -134,7 +136,17 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 plhs[1] = MxArray(keypoints);
         }
         else if (rhs[2].isCell()) { // second variant that accepts an image set
-            vector<Mat> images(rhs[2].toVector<Mat>()), descriptors;
+            //vector<Mat> images(rhs[2].toVector<Mat>());
+            vector<Mat> images, descriptors;
+            vector<MxArray> va(rhs[2].toVector<MxArray>());
+            images.reserve(va.size());
+            for (vector<MxArray>::const_iterator it = va.begin(); it != va.end(); it++) {
+                // LUCID requires CV_8UC3
+                Mat img(it->toMat(CV_8U));
+                if (img.channels() == 1)
+                    cvtColor(img, img, cv::COLOR_GRAY2BGR);
+                images.push_back(img);
+            }
             vector<vector<KeyPoint> > keypoints(rhs[3].toVector(
                 const_mem_fun_ref_t<vector<KeyPoint>, MxArray>(
                 &MxArray::toVector<KeyPoint>)));
