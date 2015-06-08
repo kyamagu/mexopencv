@@ -1,71 +1,76 @@
-classdef FeatureDetector < handle
-    %FEATUREDETECTOR  Common interface of 2D image Feature Detectors.
+classdef GFTTDetector < handle
+    %GFTTDETECTOR  Wrapping class for feature detection using the goodFeaturesToTrack function.
     %
-    % Class for detecting keypoints in images.
+    % ## References:
+    % [Shi94]:
+    % > Jianbo Shi and Carlo Tomasi. "Good features to track".
+    % > In Computer Vision and Pattern Recognition, 1994. Proceedings CVPR'94.,
+    % > 1994 IEEE Computer Society Conference on, pages 593-600. IEEE, 1994.
     %
-    % Feature detectors in OpenCV have wrappers with a common interface that
-    % enables you to easily switch between different algorithms solving the
-    % same problem. All objects that implement keypoint detectors inherit the
-    % FeatureDetector interface.
-    %
-    % ## Example
-    %
-    %    detector = cv.FeatureDetector('SURF');
-    %    keypoints = detector.detect(img);
-    %
-    % See also: cv.DescriptorExtractor
+    % See also: cv.goodFeaturesToTrack
     %
 
     properties (SetAccess = private)
         id    % Object ID
-        Type  % Type of the detector
+    end
+
+    properties (Dependent)
+        % Maximum number of corners to return. If there are more corners than
+        % are found, the strongest of them is returned.
+        MaxFeatures
+        % Parameter characterizing the minimal accepted quality of image
+        % corners. The parameter value is multiplied by the best corner
+        % quality measure, which is the minimal eigenvalue (see
+        % cv.cornerMinEigenVal) or the Harris function response (see
+        % cv.cornerHarris). The corners with the quality measure less than the
+        % product are rejected. For example, if the best corner has the
+        % quality measure = 1500, and the `QualityLevel=0.01`, then all the
+        % corners with the quality measure less than 15 are rejected.
+        QualityLevel
+        % Minimum possible Euclidean distance between the returned corners.
+        MinDistance
+        % Size of an average block for computing a derivative covariation
+        % matrix over each pixel neighborhood. See cv.cornerEigenValsAndVecs.
+        BlockSize
+        % Parameter indicating whether to use a Harris detector
+        % (see cv.cornerHarris) or cv.cornerMinEigenVal
+        HarrisDetector
+        % Free parameter of the Harris detector.
+        K
     end
 
     methods
-        function this = FeatureDetector(detectorType, varargin)
-            %FEATUREDETECTOR  Creates a feature detector by name.
+        function this = GFTTDetector(varargin)
+            %GFTTDETECTOR  Constructor
             %
-            %    detector = cv.FeatureDetector(type)
-            %    detector = cv.FeatureDetector(type, 'OptionName',optionValue, ...)
-            %
-            % ## Input
-            % * __type__ The following detector types are supported:
-            %       * 'BRISK' cv.BRISK
-            %       * 'ORB' cv.ORB
-            %       * 'MSER' cv.MSER
-            %       * 'FastFeatureDetector' cv.FastFeatureDetector (default)
-            %       * 'GFTTDetector' cv.GFTTDetector
-            %       * 'SimpleBlobDetector' cv.SimpleBlobDetector
-            %       * 'KAZE' cv.KAZE
-            %       * 'AKAZE' cv.AKAZE
-            %       * 'AgastFeatureDetector' cv.AgastFeatureDetector
-            %       * 'SIFT' cv.SIFT (requires `xfeatures2d` module)
-            %       * 'SURF' cv.SURF (requires `xfeatures2d` module)
-            %       * 'StarDetector' cv.StarDetector (requires `xfeatures2d` module)
+            %    obj = cv.GFTTDetector()
+            %    obj = cv.GFTTDetector(..., 'OptionName',optionValue, ...)
             %
             % ## Options
-            % Refer to the constructors of each feature detector for a
-            % list of supported options.
+            % * __MaxCorners__ default 1000
+            % * __QualityLevel__ default 0.01
+            % * __MinDistance__ default 1
+            % * __BlockSize__ default 3
+            % * __UseHarrisDetector__ default false
+            % * __K__ default 0.04
             %
-            % See also cv.FeatureDetector.detect
+            % See also: cv.GFTTDetector.detect
             %
-            if nargin < 1, detectorType = 'FastFeatureDetector'; end
-            this.Type = detectorType;
-            this.id = FeatureDetector_(0, 'new', detectorType, varargin{:});
+            this.id = GFTTDetector_(0, 'new', varargin{:});
         end
 
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.FeatureDetector
+            % See also: cv.GFTTDetector
             %
-            FeatureDetector_(this.id, 'delete');
+            GFTTDetector_(this.id, 'delete');
         end
 
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
-            typename = FeatureDetector_(this.id, 'typeid');
+            typename = GFTTDetector_(this.id, 'typeid');
         end
     end
 
@@ -76,9 +81,9 @@ classdef FeatureDetector < handle
             %
             %    obj.clear()
             %
-            % See also: cv.FeatureDetector.empty
+            % See also: cv.GFTTDetector.empty
             %
-            FeatureDetector_(this.id, 'clear');
+            GFTTDetector_(this.id, 'clear');
         end
 
         function name = getDefaultName(this)
@@ -90,9 +95,9 @@ classdef FeatureDetector < handle
             % * __name__ This string is used as top level XML/YML node tag
             %       when the object is saved to a file or string.
             %
-            % See also: cv.FeatureDetector.save, cv.FeatureDetector.load
+            % See also: cv.GFTTDetector.save, cv.GFTTDetector.load
             %
-            name = FeatureDetector_(this.id, 'getDefaultName');
+            name = GFTTDetector_(this.id, 'getDefaultName');
         end
 
         function save(this, filename)
@@ -105,9 +110,9 @@ classdef FeatureDetector < handle
             %
             % This method stores the algorithm parameters in a file storage.
             %
-            % See also: cv.FeatureDetector.load
+            % See also: cv.GFTTDetector.load
             %
-            FeatureDetector_(this.id, 'save', filename);
+            GFTTDetector_(this.id, 'save', filename);
         end
 
         function load(this, fname_or_str, varargin)
@@ -132,9 +137,9 @@ classdef FeatureDetector < handle
             % This method reads algorithm parameters from a file storage.
             % The previous model state is discarded.
             %
-            % See also: cv.FeatureDetector.save
+            % See also: cv.GFTTDetector.save
             %
-            FeatureDetector_(this.id, 'load', fname_or_str, varargin{:});
+            GFTTDetector_(this.id, 'load', fname_or_str, varargin{:});
         end
     end
 
@@ -149,9 +154,9 @@ classdef FeatureDetector < handle
             % * __b__ Returns true if the detector object is empty
             %       (e.g. in the very beginning or after unsuccessful read).
             %
-            % See also: cv.FeatureDetector.clear
+            % See also: cv.GFTTDetector.clear
             %
-            b = FeatureDetector_(this.id, 'empty');
+            b = GFTTDetector_(this.id, 'empty');
         end
 
         function n = defaultNorm(this)
@@ -168,7 +173,7 @@ classdef FeatureDetector < handle
             %       * __Hamming__
             %       * __Hamming2__
             %
-            n = FeatureDetector_(this.id, 'defaultNorm');
+            n = GFTTDetector_(this.id, 'defaultNorm');
         end
 
         function sz = descriptorSize(this)
@@ -179,7 +184,7 @@ classdef FeatureDetector < handle
             % ## Output
             % * __sz__ Descriptor size
             %
-            sz = FeatureDetector_(this.id, 'descriptorSize');
+            sz = GFTTDetector_(this.id, 'descriptorSize');
         end
 
         function dtype = descriptorType(this)
@@ -190,7 +195,7 @@ classdef FeatureDetector < handle
             % ## Output
             % * __dtype__ Descriptor type, one of numeric MATLAB class names.
             %
-            dtype = FeatureDetector_(this.id, 'descriptorType');
+            dtype = GFTTDetector_(this.id, 'descriptorType');
         end
 
         function keypoints = detect(this, image, varargin)
@@ -201,7 +206,8 @@ classdef FeatureDetector < handle
             %    [...] = obj.detect(..., 'OptionName',optionValue, ...)
             %
             % ## Inputs
-            % * __image__ Image.
+            % * __image__ Image, input 8-bit integer or 32-bit floating-point,
+            %       single-channel image.
             % * __images__ Image set.
             %
             % ## Outputs
@@ -222,7 +228,7 @@ classdef FeatureDetector < handle
             %       * **class_id** object id that can be used to clustered
             %             keypoints by an object they belong to.
             %
-            %       In the second variant of the method `keypoints{i}` is a
+            %       In the second variant of the method `keypoints(i)` is a
             %       set of keypoints detected in `images{i}`.
             %
             % ## Options
@@ -235,9 +241,54 @@ classdef FeatureDetector < handle
             %       `masks{i}` is a mask for `images{i}`.
             %       default none
             %
-            % See also: cv.FeatureDetector
+            % See also: cv.GFTTDetector.GFTTDetector
             %
-            keypoints = FeatureDetector_(this.id, 'detect', image, varargin{:});
+            keypoints = GFTTDetector_(this.id, 'detect', image, varargin{:});
+        end
+    end
+
+    %% Getters/Setters
+    methods
+        function value = get.MaxFeatures(this)
+            value = GFTTDetector_(this.id, 'get', 'MaxFeatures');
+        end
+        function set.MaxFeatures(this, value)
+            GFTTDetector_(this.id, 'set', 'MaxFeatures', value);
+        end
+
+        function value = get.QualityLevel(this)
+            value = GFTTDetector_(this.id, 'get', 'QualityLevel');
+        end
+        function set.QualityLevel(this, value)
+            GFTTDetector_(this.id, 'set', 'QualityLevel', value);
+        end
+
+        function value = get.MinDistance(this)
+            value = GFTTDetector_(this.id, 'get', 'MinDistance');
+        end
+        function set.MinDistance(this, value)
+            GFTTDetector_(this.id, 'set', 'MinDistance', value);
+        end
+
+        function value = get.BlockSize(this)
+            value = GFTTDetector_(this.id, 'get', 'BlockSize');
+        end
+        function set.BlockSize(this, value)
+            GFTTDetector_(this.id, 'set', 'BlockSize', value);
+        end
+
+        function value = get.HarrisDetector(this)
+            value = GFTTDetector_(this.id, 'get', 'HarrisDetector');
+        end
+        function set.HarrisDetector(this, value)
+            GFTTDetector_(this.id, 'set', 'HarrisDetector', value);
+        end
+
+        function value = get.K(this)
+            value = GFTTDetector_(this.id, 'get', 'K');
+        end
+        function set.K(this, value)
+            GFTTDetector_(this.id, 'set', 'K', value);
         end
     end
 

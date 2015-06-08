@@ -1,71 +1,67 @@
-classdef FeatureDetector < handle
-    %FEATUREDETECTOR  Common interface of 2D image Feature Detectors.
+classdef AgastFeatureDetector < handle
+    %AGASTFEATUREDETECTOR  Wrapping class for feature detection using the AGAST method.
     %
-    % Class for detecting keypoints in images.
+    % Detects corners using the AGAST algorithm by [mair2010].
     %
-    % Feature detectors in OpenCV have wrappers with a common interface that
-    % enables you to easily switch between different algorithms solving the
-    % same problem. All objects that implement keypoint detectors inherit the
-    % FeatureDetector interface.
+    % ## References:
+    % [mair2010]:
+    % > E. Mair, G. D. Hager, D. Burschka, M. Suppa, and G. Hirzinger.
+    % > "Adaptive and generic corner detection based on the accelerated segment test".
+    % > In "European Conference on Computer Vision (ECCV'10)", Sept 2010.
+    % > (http://www6.in.tum.de/Main/ResearchAgast)
     %
-    % ## Example
-    %
-    %    detector = cv.FeatureDetector('SURF');
-    %    keypoints = detector.detect(img);
-    %
-    % See also: cv.DescriptorExtractor
+    % See also: cv.FastFeatureDetector, cv.FeatureDetector
     %
 
     properties (SetAccess = private)
         id    % Object ID
-        Type  % Type of the detector
+    end
+
+    properties (Dependent)
+        % Threshold on difference between intensity of the central pixel
+        % and pixels of a circle around this pixel.
+        Threshold
+        % If true, non-maximum suppression is applied to detected corners
+        % (keypoints).
+        NonmaxSuppression
+        % One of the four neighborhoods as defined in the paper:
+        %
+        % * __AGAST_5_8__
+        % * __AGAST_7_12d__
+        % * __AGAST_7_12s__
+        % * __OAST_9_16__
+        Type
     end
 
     methods
-        function this = FeatureDetector(detectorType, varargin)
-            %FEATUREDETECTOR  Creates a feature detector by name.
+        function this = AgastFeatureDetector(varargin)
+            %AGASTFEATUREDETECTOR  Constructor
             %
-            %    detector = cv.FeatureDetector(type)
-            %    detector = cv.FeatureDetector(type, 'OptionName',optionValue, ...)
-            %
-            % ## Input
-            % * __type__ The following detector types are supported:
-            %       * 'BRISK' cv.BRISK
-            %       * 'ORB' cv.ORB
-            %       * 'MSER' cv.MSER
-            %       * 'FastFeatureDetector' cv.FastFeatureDetector (default)
-            %       * 'GFTTDetector' cv.GFTTDetector
-            %       * 'SimpleBlobDetector' cv.SimpleBlobDetector
-            %       * 'KAZE' cv.KAZE
-            %       * 'AKAZE' cv.AKAZE
-            %       * 'AgastFeatureDetector' cv.AgastFeatureDetector
-            %       * 'SIFT' cv.SIFT (requires `xfeatures2d` module)
-            %       * 'SURF' cv.SURF (requires `xfeatures2d` module)
-            %       * 'StarDetector' cv.StarDetector (requires `xfeatures2d` module)
+            %    obj = cv.AgastFeatureDetector()
+            %    obj = cv.AgastFeatureDetector(..., 'OptionName',optionValue, ...)
             %
             % ## Options
-            % Refer to the constructors of each feature detector for a
-            % list of supported options.
+            % * __Threshold__  default 10
+            % * __NonmaxSuppression__ default true
+            % * __Type__ default 'OAST_9_16'
             %
-            % See also cv.FeatureDetector.detect
+            % See also: cv.AgastFeatureDetector.detect
             %
-            if nargin < 1, detectorType = 'FastFeatureDetector'; end
-            this.Type = detectorType;
-            this.id = FeatureDetector_(0, 'new', detectorType, varargin{:});
+            this.id = AgastFeatureDetector_(0, 'new', varargin{:});
         end
 
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.FeatureDetector
+            % See also: cv.AgastFeatureDetector
             %
-            FeatureDetector_(this.id, 'delete');
+            AgastFeatureDetector_(this.id, 'delete');
         end
 
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
-            typename = FeatureDetector_(this.id, 'typeid');
+            typename = AgastFeatureDetector_(this.id, 'typeid');
         end
     end
 
@@ -76,9 +72,9 @@ classdef FeatureDetector < handle
             %
             %    obj.clear()
             %
-            % See also: cv.FeatureDetector.empty
+            % See also: cv.AgastFeatureDetector.empty
             %
-            FeatureDetector_(this.id, 'clear');
+            AgastFeatureDetector_(this.id, 'clear');
         end
 
         function name = getDefaultName(this)
@@ -90,9 +86,9 @@ classdef FeatureDetector < handle
             % * __name__ This string is used as top level XML/YML node tag
             %       when the object is saved to a file or string.
             %
-            % See also: cv.FeatureDetector.save, cv.FeatureDetector.load
+            % See also: cv.AgastFeatureDetector.save, cv.AgastFeatureDetector.load
             %
-            name = FeatureDetector_(this.id, 'getDefaultName');
+            name = AgastFeatureDetector_(this.id, 'getDefaultName');
         end
 
         function save(this, filename)
@@ -105,9 +101,9 @@ classdef FeatureDetector < handle
             %
             % This method stores the algorithm parameters in a file storage.
             %
-            % See also: cv.FeatureDetector.load
+            % See also: cv.AgastFeatureDetector.load
             %
-            FeatureDetector_(this.id, 'save', filename);
+            AgastFeatureDetector_(this.id, 'save', filename);
         end
 
         function load(this, fname_or_str, varargin)
@@ -132,9 +128,9 @@ classdef FeatureDetector < handle
             % This method reads algorithm parameters from a file storage.
             % The previous model state is discarded.
             %
-            % See also: cv.FeatureDetector.save
+            % See also: cv.AgastFeatureDetector.save
             %
-            FeatureDetector_(this.id, 'load', fname_or_str, varargin{:});
+            AgastFeatureDetector_(this.id, 'load', fname_or_str, varargin{:});
         end
     end
 
@@ -149,9 +145,9 @@ classdef FeatureDetector < handle
             % * __b__ Returns true if the detector object is empty
             %       (e.g. in the very beginning or after unsuccessful read).
             %
-            % See also: cv.FeatureDetector.clear
+            % See also: cv.AgastFeatureDetector.clear
             %
-            b = FeatureDetector_(this.id, 'empty');
+            b = AgastFeatureDetector_(this.id, 'empty');
         end
 
         function n = defaultNorm(this)
@@ -168,7 +164,7 @@ classdef FeatureDetector < handle
             %       * __Hamming__
             %       * __Hamming2__
             %
-            n = FeatureDetector_(this.id, 'defaultNorm');
+            n = AgastFeatureDetector_(this.id, 'defaultNorm');
         end
 
         function sz = descriptorSize(this)
@@ -179,7 +175,7 @@ classdef FeatureDetector < handle
             % ## Output
             % * __sz__ Descriptor size
             %
-            sz = FeatureDetector_(this.id, 'descriptorSize');
+            sz = AgastFeatureDetector_(this.id, 'descriptorSize');
         end
 
         function dtype = descriptorType(this)
@@ -190,7 +186,7 @@ classdef FeatureDetector < handle
             % ## Output
             % * __dtype__ Descriptor type, one of numeric MATLAB class names.
             %
-            dtype = FeatureDetector_(this.id, 'descriptorType');
+            dtype = AgastFeatureDetector_(this.id, 'descriptorType');
         end
 
         function keypoints = detect(this, image, varargin)
@@ -201,7 +197,8 @@ classdef FeatureDetector < handle
             %    [...] = obj.detect(..., 'OptionName',optionValue, ...)
             %
             % ## Inputs
-            % * __image__ Image.
+            % * __image__ Image, grayscale image where keypoints (corners)
+            %       are detected.
             % * __images__ Image set.
             %
             % ## Outputs
@@ -222,7 +219,7 @@ classdef FeatureDetector < handle
             %       * **class_id** object id that can be used to clustered
             %             keypoints by an object they belong to.
             %
-            %       In the second variant of the method `keypoints{i}` is a
+            %       In the second variant of the method `keypoints(i)` is a
             %       set of keypoints detected in `images{i}`.
             %
             % ## Options
@@ -235,9 +232,33 @@ classdef FeatureDetector < handle
             %       `masks{i}` is a mask for `images{i}`.
             %       default none
             %
-            % See also: cv.FeatureDetector
+            % See also: cv.AgastFeatureDetector.AgastFeatureDetector
             %
-            keypoints = FeatureDetector_(this.id, 'detect', image, varargin{:});
+            keypoints = AgastFeatureDetector_(this.id, 'detect', image, varargin{:});
+        end
+    end
+
+    %% Getters/Setters
+    methods
+        function value = get.Threshold(this)
+            value = AgastFeatureDetector_(this.id, 'get', 'Threshold');
+        end
+        function set.Threshold(this, value)
+            AgastFeatureDetector_(this.id, 'set', 'Threshold', value);
+        end
+
+        function value = get.NonmaxSuppression(this)
+            value = AgastFeatureDetector_(this.id, 'get', 'NonmaxSuppression');
+        end
+        function set.NonmaxSuppression(this, value)
+            AgastFeatureDetector_(this.id, 'set', 'NonmaxSuppression', value);
+        end
+
+        function value = get.Type(this)
+            value = AgastFeatureDetector_(this.id, 'get', 'Type');
+        end
+        function set.Type(this, value)
+            AgastFeatureDetector_(this.id, 'set', 'Type', value);
         end
     end
 

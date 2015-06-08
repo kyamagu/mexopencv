@@ -1,71 +1,68 @@
-classdef FeatureDetector < handle
-    %FEATUREDETECTOR  Common interface of 2D image Feature Detectors.
+classdef BRISK < handle
+    %BRISK  Class implementing the BRISK keypoint detector and descriptor extractor
     %
-    % Class for detecting keypoints in images.
+    % ## References:
+    % [LCS11]:
+    % > Stefan Leutenegger, Margarita Chli, and Roland Yves Siegwart.
+    % > "Brisk: Binary robust invariant scalable keypoints".
+    % > In IEEE International Conference on Computer Vision (ICCV) 2011,
+    % > pages 2548-2555. IEEE, 2011.
     %
-    % Feature detectors in OpenCV have wrappers with a common interface that
-    % enables you to easily switch between different algorithms solving the
-    % same problem. All objects that implement keypoint detectors inherit the
-    % FeatureDetector interface.
-    %
-    % ## Example
-    %
-    %    detector = cv.FeatureDetector('SURF');
-    %    keypoints = detector.detect(img);
-    %
-    % See also: cv.DescriptorExtractor
+    % See also: cv.BRISK.BRISK
     %
 
     properties (SetAccess = private)
         id    % Object ID
-        Type  % Type of the detector
     end
 
     methods
-        function this = FeatureDetector(detectorType, varargin)
-            %FEATUREDETECTOR  Creates a feature detector by name.
+        function this = BRISK(varargin)
+            %BRISK  The BRISK constructor.
             %
-            %    detector = cv.FeatureDetector(type)
-            %    detector = cv.FeatureDetector(type, 'OptionName',optionValue, ...)
+            %    obj = cv.BRISK()
+            %    obj = cv.BRISK(radiusList, numberList)
+            %    obj = cv.BRISK(..., 'OptionName',optionValue, ...)
             %
             % ## Input
-            % * __type__ The following detector types are supported:
-            %       * 'BRISK' cv.BRISK
-            %       * 'ORB' cv.ORB
-            %       * 'MSER' cv.MSER
-            %       * 'FastFeatureDetector' cv.FastFeatureDetector (default)
-            %       * 'GFTTDetector' cv.GFTTDetector
-            %       * 'SimpleBlobDetector' cv.SimpleBlobDetector
-            %       * 'KAZE' cv.KAZE
-            %       * 'AKAZE' cv.AKAZE
-            %       * 'AgastFeatureDetector' cv.AgastFeatureDetector
-            %       * 'SIFT' cv.SIFT (requires `xfeatures2d` module)
-            %       * 'SURF' cv.SURF (requires `xfeatures2d` module)
-            %       * 'StarDetector' cv.StarDetector (requires `xfeatures2d` module)
+            % * __radiusList__ defines the radii (in pixels) where the samples
+            %       around a keypoint are taken (for keypoint scale 1).
+            % * __numberList__ defines the number of sampling points on the
+            %       sampling circle. Must be the same size as `radiusList`.
             %
             % ## Options
-            % Refer to the constructors of each feature detector for a
-            % list of supported options.
+            % Options accepted by first variant:
+            % * __Threshold__ FAST/AGAST detection threshold score. default 30
+            % * __Octaves__ detection octaves. Use 0 to do single scale.
+            %       default 3
+            % * __PatternScale__ apply this scale to the pattern used for
+            %       sampling the neighbourhood of a keypoint. default 1.0
             %
-            % See also cv.FeatureDetector.detect
+            % ## Options
+            % Options accepted by second variant for a custom pattern:
+            % * __DMax__ threshold for the short pairings used for descriptor
+            %       formation (in pixels for keypoint scale 1). default 5.85
+            % * __DMin__ threshold for the long pairings used for orientation
+            %       determination (in pixels for keypoint scale 1). default 8.2
+            % * __IndexChange__ index remapping of the bits.
+            %       default empty vector.
             %
-            if nargin < 1, detectorType = 'FastFeatureDetector'; end
-            this.Type = detectorType;
-            this.id = FeatureDetector_(0, 'new', detectorType, varargin{:});
+            % See also: cv.BRISK.detectAndCompute
+            %
+            this.id = BRISK_(0, 'new', varargin{:});
         end
 
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.FeatureDetector
+            % See also: cv.BRISK
             %
-            FeatureDetector_(this.id, 'delete');
+            BRISK_(this.id, 'delete');
         end
 
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
-            typename = FeatureDetector_(this.id, 'typeid');
+            typename = BRISK_(this.id, 'typeid');
         end
     end
 
@@ -76,9 +73,9 @@ classdef FeatureDetector < handle
             %
             %    obj.clear()
             %
-            % See also: cv.FeatureDetector.empty
+            % See also: cv.BRISK.empty
             %
-            FeatureDetector_(this.id, 'clear');
+            BRISK_(this.id, 'clear');
         end
 
         function name = getDefaultName(this)
@@ -90,9 +87,9 @@ classdef FeatureDetector < handle
             % * __name__ This string is used as top level XML/YML node tag
             %       when the object is saved to a file or string.
             %
-            % See also: cv.FeatureDetector.save, cv.FeatureDetector.load
+            % See also: cv.BRISK.save, cv.BRISK.load
             %
-            name = FeatureDetector_(this.id, 'getDefaultName');
+            name = BRISK_(this.id, 'getDefaultName');
         end
 
         function save(this, filename)
@@ -105,9 +102,9 @@ classdef FeatureDetector < handle
             %
             % This method stores the algorithm parameters in a file storage.
             %
-            % See also: cv.FeatureDetector.load
+            % See also: cv.BRISK.load
             %
-            FeatureDetector_(this.id, 'save', filename);
+            BRISK_(this.id, 'save', filename);
         end
 
         function load(this, fname_or_str, varargin)
@@ -132,9 +129,9 @@ classdef FeatureDetector < handle
             % This method reads algorithm parameters from a file storage.
             % The previous model state is discarded.
             %
-            % See also: cv.FeatureDetector.save
+            % See also: cv.BRISK.save
             %
-            FeatureDetector_(this.id, 'load', fname_or_str, varargin{:});
+            BRISK_(this.id, 'load', fname_or_str, varargin{:});
         end
     end
 
@@ -149,9 +146,9 @@ classdef FeatureDetector < handle
             % * __b__ Returns true if the detector object is empty
             %       (e.g. in the very beginning or after unsuccessful read).
             %
-            % See also: cv.FeatureDetector.clear
+            % See also: cv.BRISK.clear
             %
-            b = FeatureDetector_(this.id, 'empty');
+            b = BRISK_(this.id, 'empty');
         end
 
         function n = defaultNorm(this)
@@ -168,7 +165,7 @@ classdef FeatureDetector < handle
             %       * __Hamming__
             %       * __Hamming2__
             %
-            n = FeatureDetector_(this.id, 'defaultNorm');
+            n = BRISK_(this.id, 'defaultNorm');
         end
 
         function sz = descriptorSize(this)
@@ -179,7 +176,7 @@ classdef FeatureDetector < handle
             % ## Output
             % * __sz__ Descriptor size
             %
-            sz = FeatureDetector_(this.id, 'descriptorSize');
+            sz = BRISK_(this.id, 'descriptorSize');
         end
 
         function dtype = descriptorType(this)
@@ -190,7 +187,7 @@ classdef FeatureDetector < handle
             % ## Output
             % * __dtype__ Descriptor type, one of numeric MATLAB class names.
             %
-            dtype = FeatureDetector_(this.id, 'descriptorType');
+            dtype = BRISK_(this.id, 'descriptorType');
         end
 
         function keypoints = detect(this, image, varargin)
@@ -222,7 +219,7 @@ classdef FeatureDetector < handle
             %       * **class_id** object id that can be used to clustered
             %             keypoints by an object they belong to.
             %
-            %       In the second variant of the method `keypoints{i}` is a
+            %       In the second variant of the method `keypoints(i)` is a
             %       set of keypoints detected in `images{i}`.
             %
             % ## Options
@@ -235,9 +232,60 @@ classdef FeatureDetector < handle
             %       `masks{i}` is a mask for `images{i}`.
             %       default none
             %
-            % See also: cv.FeatureDetector
+            % See also: cv.BRISK.compute, cv.BRISK.detectAndCompute
             %
-            keypoints = FeatureDetector_(this.id, 'detect', image, varargin{:});
+            keypoints = BRISK_(this.id, 'detect', image, varargin{:});
+        end
+
+        function [descriptors, keypoints] = compute(this, image, keypoints)
+            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set.
+            %
+            %    [descriptors, keypoints] = obj.compute(image, keypoints)
+            %    [descriptors, keypoints] = obj.compute(images, keypoints)
+            %
+            % ## Inputs
+            % * __image__ Image.
+            % * __images__ Image set.
+            % * __keypoints__ Input collection of keypoints. Keypoints for
+            %       which a descriptor cannot be computed are removed.
+            %       Sometimes new keypoints can be added, for example: cv.SIFT
+            %       duplicates keypoint with several dominant orientations
+            %       (for each orientation).
+            %
+            % ## Outputs
+            % * __descriptors__ Computed descriptors. In the second variant of
+            %       the method `descriptors{i}` are descriptors computed for a
+            %       `keypoints(i)`. Row `j` in `descriptors` (or
+            %       `descriptors{i}`) is the descriptor for `j`-th keypoint.
+            % * __keypoints__ Optional output with possibly updated keypoints.
+            %
+            % See also: cv.BRISK.detect, cv.BRISK.detectAndCompute
+            %
+            [descriptors, keypoints] = BRISK_(this.id, 'compute', image, keypoints);
+        end
+
+        function [keypoints, descriptors] = detectAndCompute(this, image, varargin)
+            %DETECTANDCOMPUTE  Detects keypoints and computes the descriptors
+            %
+            %    [keypoints, descriptors] = obj.detectAndCompute(image)
+            %    [...] = obj.detectAndCompute(..., 'OptionName',optionValue, ...)
+            %
+            % ## Input
+            % * __image__ Image.
+            %
+            % ## Output
+            % * __keypoints__ The detected keypoints.
+            % * __descriptors__ Computed descriptors.
+            %
+            % ## Options
+            % * __Mask__ optional mask specifying where to look for keypoints.
+            %       default none
+            % * __Keypoints__ If passed, then the method will use the provided
+            %       vector of keypoints instead of detecting them.
+            %
+            % See also: cv.BRISK.detect, cv.BRISK.compute
+            %
+            [keypoints, descriptors] = BRISK_(this.id, 'detectAndCompute', image, varargin{:});
         end
     end
 

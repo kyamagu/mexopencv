@@ -1,64 +1,71 @@
-classdef SIFT < handle
-    %SIFT  Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform (SIFT) algorithm by D. Lowe.
+classdef KAZE < handle
+    %KAZE  Class implementing the KAZE keypoint detector and descriptor extractor.
     %
     % ## References:
-    % [Lowe04]:
-    % > David G Lowe.
-    % > "Distinctive Image Features from Scale-Invariant Keypoints".
-    % > International Journal of Computer Vision, 60(2):91-110, 2004.
+    % [ABD12]:
+    % > Pablo Fernandez Alcantarilla, Adrien Bartoli, and Andrew J Davison.
+    % > "Kaze features". In European Conference on Computer Vision (ECCV),
+    % > Fiorenze, Italy, Oct 2012.
     %
-    % See also: cv.FeatureDetector, cv.DescriptorExtractor
+    % See also: cv.AKAZE
     %
 
     properties (SetAccess = private)
         id    % Object ID
     end
 
+    properties (Dependent)
+        % Set to enable extraction of extended (128-byte) descriptor.
+        Extended
+        % Set to enable use of upright descriptors (non rotation-invariant).
+        Upright
+        % Detector response threshold to accept point
+        Threshold
+        % Maximum octave evolution of the image
+        NOctaves
+        % Default number of sublevels per scale level
+        NOctaveLayers
+        % Diffusivity type. One of:
+        %
+        % * __PM_G1__
+        % * __PM_G2__
+        % * __WEICKERT__
+        % * __CHARBONNIER__
+        Diffusivity
+    end
+
     methods
-        function this = SIFT(varargin)
-            %SIFT  Constructor
+        function this = KAZE(varargin)
+            %KAZE  The KAZE constructor.
             %
-            %    obj = cv.SIFT()
-            %    obj = cv.SIFT(..., 'OptionName',optionValue, ...)
+            %    obj = cv.KAZE()
+            %    obj = cv.KAZE(..., 'OptionName',optionValue, ...)
             %
             % ## Options
-            % * __NFeatures__ The number of best features to retain. The
-            %       features are ranked by their scores (measured in SIFT
-            %       algorithm as the local contrast). default 0
-            % * __NOctaveLayers__ The number of layers in each octave. 3 is
-            %       the value used in D. Lowe paper. The number of octaves is
-            %       computed automatically from the image resolution. default 3
-            % * __ConstrastThreshold__ The contrast threshold used to filter
-            %       out weak features in semi-uniform (low-contrast) regions.
-            %       The larger the threshold, the less features are produced
-            %       by the detector. default 0.04
-            % * __EdgeThreshold__ The threshold used to filter out edge-like
-            %       features. Note that the its meaning is different from the
-            %       `ContrastThreshold`, i.e. the larger the `EdgeThreshold`,
-            %       the less features are filtered out (more features are
-            %       retained). default 10
-            % * __Sigma__ The sigma of the Gaussian applied to the input image
-            %       at the octave #0. If your image is captured with a weak
-            %       camera with soft lenses, you might want to reduce the
-            %       number. default 1.6
+            % * __Extended__ default false
+            % * __Upright__ default false
+            % * __Threshold__ default 0.001
+            % * __NOctaves__ default 4
+            % * __NOctaveLayers__ default 4
+            % * __Diffusivity__ default 'PM_G2'
             %
-            % See also: cv.SIFT.detectAndCompute
+            % See also: cv.KAZE.detectAndCompute
             %
-            this.id = SIFT_(0, 'new', varargin{:});
+            this.id = KAZE_(0, 'new', varargin{:});
         end
 
         function delete(this)
             %DELETE  Destructor
             %
-            % See also: cv.SIFT
+            % See also: cv.KAZE
             %
-            SIFT_(this.id, 'delete');
+            KAZE_(this.id, 'delete');
         end
 
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
-            typename = SIFT_(this.id, 'typeid');
+            typename = KAZE_(this.id, 'typeid');
         end
     end
 
@@ -69,9 +76,9 @@ classdef SIFT < handle
             %
             %    obj.clear()
             %
-            % See also: cv.SIFT.empty
+            % See also: cv.KAZE.empty
             %
-            SIFT_(this.id, 'clear');
+            KAZE_(this.id, 'clear');
         end
 
         function name = getDefaultName(this)
@@ -83,9 +90,9 @@ classdef SIFT < handle
             % * __name__ This string is used as top level XML/YML node tag
             %       when the object is saved to a file or string.
             %
-            % See also: cv.SIFT.save, cv.SIFT.load
+            % See also: cv.KAZE.save, cv.KAZE.load
             %
-            name = SIFT_(this.id, 'getDefaultName');
+            name = KAZE_(this.id, 'getDefaultName');
         end
 
         function save(this, filename)
@@ -98,9 +105,9 @@ classdef SIFT < handle
             %
             % This method stores the algorithm parameters in a file storage.
             %
-            % See also: cv.SIFT.load
+            % See also: cv.KAZE.load
             %
-            SIFT_(this.id, 'save', filename);
+            KAZE_(this.id, 'save', filename);
         end
 
         function load(this, fname_or_str, varargin)
@@ -125,9 +132,9 @@ classdef SIFT < handle
             % This method reads algorithm parameters from a file storage.
             % The previous model state is discarded.
             %
-            % See also: cv.SIFT.save
+            % See also: cv.KAZE.save
             %
-            SIFT_(this.id, 'load', fname_or_str, varargin{:});
+            KAZE_(this.id, 'load', fname_or_str, varargin{:});
         end
     end
 
@@ -142,9 +149,9 @@ classdef SIFT < handle
             % * __b__ Returns true if the detector object is empty
             %       (e.g. in the very beginning or after unsuccessful read).
             %
-            % See also: cv.SIFT.clear
+            % See also: cv.KAZE.clear
             %
-            b = SIFT_(this.id, 'empty');
+            b = KAZE_(this.id, 'empty');
         end
 
         function n = defaultNorm(this)
@@ -161,7 +168,7 @@ classdef SIFT < handle
             %       * __Hamming__
             %       * __Hamming2__
             %
-            n = SIFT_(this.id, 'defaultNorm');
+            n = KAZE_(this.id, 'defaultNorm');
         end
 
         function sz = descriptorSize(this)
@@ -172,7 +179,7 @@ classdef SIFT < handle
             % ## Output
             % * __sz__ Descriptor size
             %
-            sz = SIFT_(this.id, 'descriptorSize');
+            sz = KAZE_(this.id, 'descriptorSize');
         end
 
         function dtype = descriptorType(this)
@@ -183,7 +190,7 @@ classdef SIFT < handle
             % ## Output
             % * __dtype__ Descriptor type, one of numeric MATLAB class names.
             %
-            dtype = SIFT_(this.id, 'descriptorType');
+            dtype = KAZE_(this.id, 'descriptorType');
         end
 
         function keypoints = detect(this, image, varargin)
@@ -228,9 +235,9 @@ classdef SIFT < handle
             %       `masks{i}` is a mask for `images{i}`.
             %       default none
             %
-            % See also: cv.SIFT.compute, cv.SIFT.detectAndCompute
+            % See also: cv.KAZE.compute, cv.KAZE.detectAndCompute
             %
-            keypoints = SIFT_(this.id, 'detect', image, varargin{:});
+            keypoints = KAZE_(this.id, 'detect', image, varargin{:});
         end
 
         function [descriptors, keypoints] = compute(this, image, keypoints)
@@ -255,9 +262,9 @@ classdef SIFT < handle
             %       `descriptors{i}`) is the descriptor for `j`-th keypoint.
             % * __keypoints__ Optional output with possibly updated keypoints.
             %
-            % See also: cv.SIFT.detect, cv.SIFT.detectAndCompute
+            % See also: cv.KAZE.detect, cv.KAZE.detectAndCompute
             %
-            [descriptors, keypoints] = SIFT_(this.id, 'compute', image, keypoints);
+            [descriptors, keypoints] = KAZE_(this.id, 'compute', image, keypoints);
         end
 
         function [keypoints, descriptors] = detectAndCompute(this, image, varargin)
@@ -267,17 +274,11 @@ classdef SIFT < handle
             %    [...] = obj.detectAndCompute(..., 'OptionName',optionValue, ...)
             %
             % ## Input
-            % * __image__ Image, input 8-bit grayscale image.
+            % * __image__ Image.
             %
             % ## Output
             % * __keypoints__ The detected keypoints.
             % * __descriptors__ Computed descriptors.
-            % * __descriptors__ The output concatenated vectors of descriptors.
-            %       Each descriptor is a 128-element vector, as returned by
-            %       `cv.SIFT.descriptorSize()`. So the total size of
-            %       descriptors will be
-            %       `numel(keypoints)*cv.SIFT.descriptorSize()`. A matrix of
-            %       size N-by-128 of class `single`, one row per keypoint.
             %
             % ## Options
             % * __Mask__ optional mask specifying where to look for keypoints.
@@ -285,9 +286,54 @@ classdef SIFT < handle
             % * __Keypoints__ If passed, then the method will use the provided
             %       vector of keypoints instead of detecting them.
             %
-            % See also: cv.SIFT.detect, cv.SIFT.compute
+            % See also: cv.KAZE.detect, cv.KAZE.compute
             %
-            [keypoints, descriptors] = SIFT_(this.id, 'detectAndCompute', image, varargin{:});
+            [keypoints, descriptors] = KAZE_(this.id, 'detectAndCompute', image, varargin{:});
+        end
+    end
+
+    %% Getters/Setters
+    methods
+        function value = get.Extended(this)
+            value = KAZE_(this.id, 'get', 'Extended');
+        end
+        function set.Extended(this, value)
+            KAZE_(this.id, 'set', 'Extended', value);
+        end
+
+        function value = get.Upright(this)
+            value = KAZE_(this.id, 'get', 'Upright');
+        end
+        function set.Upright(this, value)
+            KAZE_(this.id, 'set', 'Upright', value);
+        end
+
+        function value = get.Threshold(this)
+            value = KAZE_(this.id, 'get', 'Threshold');
+        end
+        function set.Threshold(this, value)
+            KAZE_(this.id, 'set', 'Threshold', value);
+        end
+
+        function value = get.NOctaves(this)
+            value = KAZE_(this.id, 'get', 'NOctaves');
+        end
+        function set.NOctaves(this, value)
+            KAZE_(this.id, 'set', 'NOctaves', value);
+        end
+
+        function value = get.NOctaveLayers(this)
+            value = KAZE_(this.id, 'get', 'NOctaveLayers');
+        end
+        function set.NOctaveLayers(this, value)
+            KAZE_(this.id, 'set', 'NOctaveLayers', value);
+        end
+
+        function value = get.Diffusivity(this)
+            value = KAZE_(this.id, 'get', 'Diffusivity');
+        end
+        function set.Diffusivity(this, value)
+            KAZE_(this.id, 'set', 'Diffusivity', value);
         end
     end
 

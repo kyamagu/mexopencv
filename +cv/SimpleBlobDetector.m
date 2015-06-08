@@ -1,71 +1,93 @@
-classdef FeatureDetector < handle
-    %FEATUREDETECTOR  Common interface of 2D image Feature Detectors.
+classdef SimpleBlobDetector < handle
+    %SIMPLEBLOBDETECTOR  Class for extracting blobs from an image.
     %
-    % Class for detecting keypoints in images.
+    % The class implements a simple algorithm for extracting blobs from an
+    % image:
     %
-    % Feature detectors in OpenCV have wrappers with a common interface that
-    % enables you to easily switch between different algorithms solving the
-    % same problem. All objects that implement keypoint detectors inherit the
-    % FeatureDetector interface.
+    % 1. Convert the source image to binary images by applying thresholding
+    %    with several thresholds from `MinThreshold` (inclusive) to
+    %    `MaxThreshold` (exclusive) with distance `ThresholdStep` between
+    %    neighboring thresholds.
+    % 2. Extract connected components from every binary image by
+    %    cv.findContours and calculate their centers.
+    % 3. Group centers from several binary images by their coordinates. Close
+    %    centers form one group that corresponds to one blob, which is
+    %    controlled by the `MinDistBetweenBlobs` parameter.
+    % 4. From the groups, estimate final centers of blobs and their radiuses
+    %    and return as locations and sizes of keypoints.
     %
-    % ## Example
+    % This class performs several filtrations of returned blobs. You should
+    % set `FilterBy*` to true/false to turn on/off corresponding filtration.
+    % Available filtrations:
     %
-    %    detector = cv.FeatureDetector('SURF');
-    %    keypoints = detector.detect(img);
+    % * **By color**. This filter compares the intensity of a binary image at
+    %   the center of a blob to `BlobColor`. If they differ, the blob is
+    %   filtered out. Use `BlobColor = 0` to extract dark blobs and
+    %   `BlobColor = 255` to extract light blobs.
+    % * **By area**. Extracted blobs have an area between `MinArea` (inclusive)
+    %   and `MaxArea` (exclusive).
+    % * **By circularity**. Extracted blobs have circularity
+    %   (`(4*pi*area)/(perimeter*perimeter)`) between `MinCircularity`
+    %   (inclusive) and `MaxCircularity` (exclusive).
+    % * **By ratio** of the minimum inertia to maximum inertia. Extracted
+    %   blobs have this ratio between `MinInertiaRatio` (inclusive) and
+    %   `MaxInertiaRatio` (exclusive).
+    % * **By convexity**. Extracted blobs have convexity
+    %   (area / area of blob convex hull) between `MinConvexity` (inclusive)
+    %   and `MaxConvexity` (exclusive).
     %
-    % See also: cv.DescriptorExtractor
+    % Default values of parameters are tuned to extract dark circular blobs.
     %
 
     properties (SetAccess = private)
         id    % Object ID
-        Type  % Type of the detector
     end
 
     methods
-        function this = FeatureDetector(detectorType, varargin)
-            %FEATUREDETECTOR  Creates a feature detector by name.
+        function this = SimpleBlobDetector(varargin)
+            %SIMPLEBLOBDETECTOR  Constructor
             %
-            %    detector = cv.FeatureDetector(type)
-            %    detector = cv.FeatureDetector(type, 'OptionName',optionValue, ...)
-            %
-            % ## Input
-            % * __type__ The following detector types are supported:
-            %       * 'BRISK' cv.BRISK
-            %       * 'ORB' cv.ORB
-            %       * 'MSER' cv.MSER
-            %       * 'FastFeatureDetector' cv.FastFeatureDetector (default)
-            %       * 'GFTTDetector' cv.GFTTDetector
-            %       * 'SimpleBlobDetector' cv.SimpleBlobDetector
-            %       * 'KAZE' cv.KAZE
-            %       * 'AKAZE' cv.AKAZE
-            %       * 'AgastFeatureDetector' cv.AgastFeatureDetector
-            %       * 'SIFT' cv.SIFT (requires `xfeatures2d` module)
-            %       * 'SURF' cv.SURF (requires `xfeatures2d` module)
-            %       * 'StarDetector' cv.StarDetector (requires `xfeatures2d` module)
+            %    obj = cv.SimpleBlobDetector()
+            %    obj = cv.SimpleBlobDetector(..., 'OptionName',optionValue, ...)
             %
             % ## Options
-            % Refer to the constructors of each feature detector for a
-            % list of supported options.
+            % * __ThresholdStep__ default 10
+            % * __MinThreshold__ default 50
+            % * __MaxThreshold__ default 220
+            % * __MinRepeatability__ default 2
+            % * __MinDistBetweenBlobs__ default 10
+            % * __FilterByColor__ default true
+            % * __BlobColor__ default 0
+            % * __FilterByArea__ default true
+            % * __MinArea__ default 25
+            % * __MaxArea__ default 5000
+            % * __FilterByCircularity__ default false
+            % * __MinCircularity__ default 0.8
+            % * __MaxCircularity__ default `realmax('single')`
+            % * __FilterByInertia__ default true
+            % * __MinInertiaRatio__ default 0.1
+            % * __MaxInertiaRatio__ default `realmax('single')`
+            % * __FilterByConvexity__ default true
+            % * __MinConvexity__ default 0.95
+            % * __MaxConvexity__ default `realmax('single')`
             %
-            % See also cv.FeatureDetector.detect
+            % See also: cv.SimpleBlobDetector.detect
             %
-            if nargin < 1, detectorType = 'FastFeatureDetector'; end
-            this.Type = detectorType;
-            this.id = FeatureDetector_(0, 'new', detectorType, varargin{:});
+            this.id = SimpleBlobDetector_(0, 'new', varargin{:});
         end
 
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.FeatureDetector
+            % See also: cv.SimpleBlobDetector
             %
-            FeatureDetector_(this.id, 'delete');
+            SimpleBlobDetector_(this.id, 'delete');
         end
 
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
-            typename = FeatureDetector_(this.id, 'typeid');
+            typename = SimpleBlobDetector_(this.id, 'typeid');
         end
     end
 
@@ -76,9 +98,9 @@ classdef FeatureDetector < handle
             %
             %    obj.clear()
             %
-            % See also: cv.FeatureDetector.empty
+            % See also: cv.SimpleBlobDetector.empty
             %
-            FeatureDetector_(this.id, 'clear');
+            SimpleBlobDetector_(this.id, 'clear');
         end
 
         function name = getDefaultName(this)
@@ -90,9 +112,9 @@ classdef FeatureDetector < handle
             % * __name__ This string is used as top level XML/YML node tag
             %       when the object is saved to a file or string.
             %
-            % See also: cv.FeatureDetector.save, cv.FeatureDetector.load
+            % See also: cv.SimpleBlobDetector.save, cv.SimpleBlobDetector.load
             %
-            name = FeatureDetector_(this.id, 'getDefaultName');
+            name = SimpleBlobDetector_(this.id, 'getDefaultName');
         end
 
         function save(this, filename)
@@ -105,9 +127,9 @@ classdef FeatureDetector < handle
             %
             % This method stores the algorithm parameters in a file storage.
             %
-            % See also: cv.FeatureDetector.load
+            % See also: cv.SimpleBlobDetector.load
             %
-            FeatureDetector_(this.id, 'save', filename);
+            SimpleBlobDetector_(this.id, 'save', filename);
         end
 
         function load(this, fname_or_str, varargin)
@@ -132,9 +154,9 @@ classdef FeatureDetector < handle
             % This method reads algorithm parameters from a file storage.
             % The previous model state is discarded.
             %
-            % See also: cv.FeatureDetector.save
+            % See also: cv.SimpleBlobDetector.save
             %
-            FeatureDetector_(this.id, 'load', fname_or_str, varargin{:});
+            SimpleBlobDetector_(this.id, 'load', fname_or_str, varargin{:});
         end
     end
 
@@ -149,9 +171,9 @@ classdef FeatureDetector < handle
             % * __b__ Returns true if the detector object is empty
             %       (e.g. in the very beginning or after unsuccessful read).
             %
-            % See also: cv.FeatureDetector.clear
+            % See also: cv.SimpleBlobDetector.clear
             %
-            b = FeatureDetector_(this.id, 'empty');
+            b = SimpleBlobDetector_(this.id, 'empty');
         end
 
         function n = defaultNorm(this)
@@ -168,7 +190,7 @@ classdef FeatureDetector < handle
             %       * __Hamming__
             %       * __Hamming2__
             %
-            n = FeatureDetector_(this.id, 'defaultNorm');
+            n = SimpleBlobDetector_(this.id, 'defaultNorm');
         end
 
         function sz = descriptorSize(this)
@@ -179,7 +201,7 @@ classdef FeatureDetector < handle
             % ## Output
             % * __sz__ Descriptor size
             %
-            sz = FeatureDetector_(this.id, 'descriptorSize');
+            sz = SimpleBlobDetector_(this.id, 'descriptorSize');
         end
 
         function dtype = descriptorType(this)
@@ -190,7 +212,7 @@ classdef FeatureDetector < handle
             % ## Output
             % * __dtype__ Descriptor type, one of numeric MATLAB class names.
             %
-            dtype = FeatureDetector_(this.id, 'descriptorType');
+            dtype = SimpleBlobDetector_(this.id, 'descriptorType');
         end
 
         function keypoints = detect(this, image, varargin)
@@ -222,7 +244,7 @@ classdef FeatureDetector < handle
             %       * **class_id** object id that can be used to clustered
             %             keypoints by an object they belong to.
             %
-            %       In the second variant of the method `keypoints{i}` is a
+            %       In the second variant of the method `keypoints(i)` is a
             %       set of keypoints detected in `images{i}`.
             %
             % ## Options
@@ -235,9 +257,9 @@ classdef FeatureDetector < handle
             %       `masks{i}` is a mask for `images{i}`.
             %       default none
             %
-            % See also: cv.FeatureDetector
+            % See also: cv.SimpleBlobDetector.SimpleBlobDetector
             %
-            keypoints = FeatureDetector_(this.id, 'detect', image, varargin{:});
+            keypoints = SimpleBlobDetector_(this.id, 'detect', image, varargin{:});
         end
     end
 
