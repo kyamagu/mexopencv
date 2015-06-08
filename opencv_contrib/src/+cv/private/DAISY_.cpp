@@ -113,10 +113,42 @@ void mexFunction( int nlhs, mxArray *plhs[],
         plhs[0] = MxArray(ClassNameInvMap[obj->descriptorType()]);
     }
     else if (method == "GetDescriptor") {
-        //TODO
-    }
-    else if (method == "GetUnnormalizedDescriptor") {
-        //TODO
+        if (nrhs<5 || (nrhs%2)==0 || nlhs>2)
+            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        double y = rhs[2].toDouble(), x = rhs[3].toDouble();
+        int orientation = rhs[4].toInt();
+        bool unnormalized = false;
+        bool useHomography = false;
+        Matx33d H;
+        for (int i=5; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key=="Unnormalized")
+                unnormalized = rhs[i+1].toBool();
+            else if (key=="H") {
+                H = rhs[i+1].toMatx<double,3,3>();
+                useHomography = true;
+            }
+            else
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
+        }
+        vector<float> descriptor(obj->descriptorSize());
+        bool ret = true;
+        if (unnormalized) {
+            if (useHomography)
+                ret = obj->GetUnnormalizedDescriptor(y, x, orientation, &descriptor[0], H.val);
+            else
+                obj->GetUnnormalizedDescriptor(y, x, orientation, &descriptor[0]);
+        }
+        else {
+            if (useHomography)
+                ret = obj->GetDescriptor(y, x, orientation, &descriptor[0], H.val);
+            else
+                obj->GetDescriptor(y, x, orientation, &descriptor[0]);
+        }
+        plhs[0] = MxArray(descriptor);
+        if (nlhs>1)
+            plhs[1] = MxArray(ret);
     }
     else if (method == "compute") {
         if (nrhs!=4 || nlhs>2)

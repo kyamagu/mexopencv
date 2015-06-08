@@ -68,6 +68,31 @@ classdef DAISY < handle
             %
             typename = DAISY_(this.id, 'typeid');
         end
+
+        function descriptor = GetDescriptor(this, y, x, orientation, varargin)
+            %GETDESCRIPTOR  Compute descriptor for the specified position.
+            %
+            %    descriptor = obj.GetDescriptor(y, x, orientation)
+            %    [...] = obj.GetDescriptor(..., 'OptionName',optionValue, ...)
+            %
+            % ## Input
+            % * __y__ position y on image.
+            % * __x__ position x on image.
+            % * __orientation__ orientation on image (0->360).
+            %
+            % ## Output
+            % * __descriptor__ Output descriptor array computed at pixel.
+            %
+            % ## Options
+            % * __H__ optional 3x3 homography matrix for warped grid.
+            %       Not set by default
+            % * __Unnormalized__ set to return the unnormalized descriptor.
+            %       default false
+            %
+            % See also: cv.DAISY.compute
+            %
+            descriptor = DAISY_(this.id, 'GetDescriptor', y, x, orientation, varargin{:});
+        end
     end
 
     %% Algorithm
