@@ -137,8 +137,15 @@ const ConstMap<int,std::string> NormTypeInv = ConstMap<int,std::string>
     (cv::NORM_MINMAX,   "MinMax");
 
 /**************************************************************\
-*                       Helper Functions                       *
+*                  Helper Macros & Functions                   *
 \**************************************************************/
+
+/// set or clear a bit in flag depending on bool value
+#define UPDATE_FLAG(NUM, TF, BIT)       \
+    do {                                \
+        if ((TF)) { (NUM) |=  (BIT); }  \
+        else      { (NUM) &= ~(BIT); }  \
+    } while(0)
 
 /// Alias for input/ouput arguments number check
 inline void nargchk(bool cond)

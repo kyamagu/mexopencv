@@ -24,16 +24,6 @@ map<int,Ptr<EM> > obj_;
             plhs[1] = MxArray(label); \
         if (nlhs > 2)                 \
             plhs[2] = MxArray(prob);  \
-__pragma(warning(suppress:4127))      \
-    } while(0)
-
-/// set or clear a bit in flag depending on bool value
-/* (uses non-standard MSVC directive to silence while(0) C4127 warning!) */
-#define UPDATE_FLAG(NUM, TF, BIT)       \
-    do {                                \
-        if ((TF)) { (NUM) |=  (BIT); }  \
-        else      { (NUM) &= ~(BIT); }  \
-__pragma(warning(suppress:4127))        \
     } while(0)
 
 /// Option values for SampleTypes
