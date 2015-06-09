@@ -13,7 +13,7 @@ namespace {
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,LDA> obj_;
+map<int,Ptr<LDA> > obj_;
 }
 
 /**
@@ -38,20 +38,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if (nrhs<2 || (nrhs%2)!=0 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         int num_components = 0;
-        for (int i=3; i<nrhs; i+=2) {
+        for (int i=2; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key=="NumComponents")
                 num_components = rhs[i+1].toInt();
             else
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
-        obj_[++last_id] = LDA(num_components);
+        obj_[++last_id] = makePtr<LDA>(num_components);
         plhs[0] = MxArray(last_id);
         return;
     }
 
     // Big operation switch
-    LDA& obj = obj_[id];
+    Ptr<LDA> obj = obj_[id];
     if (method == "delete") {
         if (nrhs!=2 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
@@ -60,22 +60,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "load") {
         if (nrhs!=3 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        obj.load(rhs[2].toString());
+        obj->load(rhs[2].toString());
     }
     else if (method == "save") {
         if (nrhs!=3 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        obj.save(rhs[2].toString());
-    }
-    else if (method == "eigenvalues") {
-        if (nrhs!=2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        plhs[0] = MxArray(obj.eigenvalues());
-    }
-    else if (method == "eigenvectors") {
-        if (nrhs!=2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        plhs[0] = MxArray(obj.eigenvectors());
+        obj->save(rhs[2].toString());
     }
     else if (method == "compute") {
         if (nrhs!=4 || nlhs!=0)
@@ -83,24 +73,35 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         Mat labels(rhs[3].toMat());
         if (rhs[2].isCell()) {
             vector<Mat> src(rhs[2].toVector<Mat>());
-            obj.compute(src, labels);
+            obj->compute(src, labels);
         }
         else {
             Mat src(rhs[2].toMat());
-            obj.compute(src, labels);
+            obj->compute(src, labels);
         }
     }
     else if (method == "project") {
         if (nrhs!=3 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         Mat src(rhs[2].toMat());
-        plhs[0] = MxArray(obj.project(src));
+        plhs[0] = MxArray(obj->project(src));
     }
     else if (method == "reconstruct") {
         if (nrhs!=3 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         Mat src(rhs[2].toMat());
-        plhs[0] = MxArray(obj.reconstruct(src));
+        plhs[0] = MxArray(obj->reconstruct(src));
+    }
+    else if (method == "get") {
+        if (nrhs!=3 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        string prop(rhs[2].toString());
+        if (prop == "eigenvalues")
+            plhs[0] = MxArray(obj->eigenvalues());
+        else if (prop == "eigenvectors")
+            plhs[0] = MxArray(obj->eigenvectors());
+        else
+            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
