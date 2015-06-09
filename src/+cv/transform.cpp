@@ -21,12 +21,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs!=2 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Process
-    Mat src(rhs[0].toMat()), dst, mtx(rhs[1].toMat());
-    transform(src,dst,mtx);
+    Mat src(rhs[0].toMat(rhs[0].isSingle() ? CV_32F : CV_64F)), dst;
+    Mat mtx(rhs[1].toMat(CV_64F));
+    transform(src, dst, mtx);
     plhs[0] = MxArray(dst);
 }
