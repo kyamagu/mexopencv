@@ -7,17 +7,23 @@ classdef TestBatchDistance
         function test_1
             X = rand(100,4,'single');
             D = cv.batchDistance(X, X);
+            assert(isequal(size(D), [100 100]));
         end
 
         function test_2
             X = rand(100,4);
-            D = cv.batchDistance(X, X, 'NormType','L1');
+            Y = rand(50,4);
+            [D,nidx] = cv.batchDistance(X, Y, 'NormType','L1');
+            assert(isequal(size(D), [100 50]));
+            assert(isempty(nidx))
         end
 
         function test_3
             X = rand(100,4);
-            Y = rand(100,4);
+            Y = rand(50,4);
             [D,nidx] = cv.batchDistance(X, Y, 'K',2);
+            assert(isequal(size(D), size(nidx), [100 2]));
+            assert(isinteger(nidx));
         end
 
         function test_error_1

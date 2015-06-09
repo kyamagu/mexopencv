@@ -13,7 +13,7 @@
 %       Only computed if `K>0`, otherwise an empty matrix is returned.
 %
 % ## Options
-% * __DType__
+% * __DType__ default -1
 % * __NormType__ Distance metric used. Default 'L2'
 % * __K__ Number of nearest neighbors in to find. If `K=0` (the default),
 %       the full pairwaise distance matrix is computed (of size N1-by-N2),

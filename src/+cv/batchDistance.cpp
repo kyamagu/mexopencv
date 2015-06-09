@@ -34,7 +34,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key=="DType")
-            dtype = rhs[i+1].toInt();
+            dtype = (rhs[i+1].isChar()) ?
+                ClassNameMap[rhs[i+1].toString()] : rhs[i+1].toInt();
         else if (key=="NormType")
             normType = NormType[rhs[i+1].toString()];
         else if (key=="K")
@@ -53,12 +54,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Mat src1(rhs[0].toMat(rhs[0].isUint8() ? CV_8U : CV_32F)),
         src2(rhs[1].toMat(rhs[1].isUint8() ? CV_8U : CV_32F));
     Mat dst, nidx;
-    if (K > 0)
-        batchDistance(src1, src2, dst, dtype, nidx,
-            normType, K, mask, update, crosscheck);
-    else
-        batchDistance(src1, src2, dst, dtype, noArray(),
-            normType, K, mask, update, crosscheck);
+    batchDistance(src1, src2, dst, dtype, (K>0 ? nidx : noArray()),
+        normType, K, mask, update, crosscheck);
     plhs[0] = MxArray(dst);
     if (nlhs>1)
         plhs[1] = MxArray(nidx);
