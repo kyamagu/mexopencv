@@ -13,7 +13,7 @@ namespace {
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,SVD> obj_;
+map<int,Ptr<SVD> > obj_;
 
 /// set or clear a bit in flag depending on bool value
 /* (uses non-standard MSVC directive to silence while(0) C4127 warning!) */
@@ -46,7 +46,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     if (method == "new") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        obj_[++last_id] = SVD();
+        obj_[++last_id] = makePtr<SVD>();
         plhs[0] = MxArray(last_id);
         return;
     }
@@ -98,7 +98,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Big operation switch
-    SVD& obj = obj_[id];
+    Ptr<SVD> obj = obj_[id];
     if (method == "delete") {
         if (nrhs!=2 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
@@ -122,13 +122,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
         Mat src(rhs[2].toMat());
-        obj(src, flags);
+        obj->operator()(src, flags);
     }
     else if (method == "backSubst") {
         if (nrhs!=3 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         Mat src(rhs[2].toMat()), dst;
-        obj.backSubst(src, dst);
+        obj->backSubst(src, dst);
         plhs[0] = MxArray(dst);
     }
     else if (method == "get") {
@@ -136,11 +136,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         string prop(rhs[2].toString());
         if (prop == "u")
-            plhs[0] = MxArray(obj.u);
+            plhs[0] = MxArray(obj->u);
         else if (prop == "vt")
-            plhs[0] = MxArray(obj.vt);
+            plhs[0] = MxArray(obj->vt);
         else if (prop == "w")
-            plhs[0] = MxArray(obj.w);
+            plhs[0] = MxArray(obj->w);
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
@@ -149,11 +149,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         string prop(rhs[2].toString());
         if (prop == "u")
-            obj.u = rhs[3].toMat();
+            obj->u = rhs[3].toMat();
         else if (prop == "vt")
-            obj.vt = rhs[3].toMat();
+            obj->vt = rhs[3].toMat();
         else if (prop == "w")
-            obj.w = rhs[3].toMat();
+            obj->w = rhs[3].toMat();
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
