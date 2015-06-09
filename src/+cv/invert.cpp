@@ -9,11 +9,11 @@ using namespace std;
 using namespace cv;
 
 namespace {
-/** Methods
- */
-const ConstMap<std::string,int> Methods = ConstMap<std::string,int>
+/// Inversion Methods
+const ConstMap<std::string,int> InvMethods = ConstMap<std::string,int>
     ("LU",       cv::DECOMP_LU)
     ("SVD",      cv::DECOMP_SVD)
+    ("EIG",      cv::DECOMP_EIG)
     ("Cholesky", cv::DECOMP_CHOLESKY);
 }
 
@@ -33,19 +33,21 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
-    // Execute function
-    Mat src(rhs[0].toMat()), dst;
+
+    // Option processing
     int method = cv::DECOMP_LU;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key=="Method")
-            method = Methods[rhs[i+1].toString()];
+            method = InvMethods[rhs[i+1].toString()];
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option %s",key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
-    
-    double d = invert(src,dst,method);
+
+    // Process
+    Mat src(rhs[0].toMat(rhs[0].isSingle() ? CV_32F : CV_64F)), dst;
+    double d = invert(src, dst, method);
     plhs[0] = MxArray(dst);
     if (nlhs>1)
         plhs[1] = MxArray(d);
