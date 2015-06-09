@@ -13,7 +13,7 @@ namespace {
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,PCA> obj_;
+map<int,Ptr<PCA> > obj_;
 
 /** Data arrangement options
  */
@@ -44,13 +44,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
     if (method == "new") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        obj_[++last_id] = PCA();
+        obj_[++last_id] = makePtr<PCA>();
         plhs[0] = MxArray(last_id);
         return;
     }
 
     // Big operation switch
-    PCA& obj = obj_[id];
+    Ptr<PCA> obj = obj_[id];
     if (method == "delete") {
         if (nrhs!=2 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
@@ -71,13 +71,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
             (loadFromString ? FileStorage::MEMORY : 0));
         if (!fs.isOpened())
             mexErrMsgIdAndTxt("mexopencv:error","Failed to open file");
-        obj.read(fs.root());
+        obj->read(fs.root());
     }
     else if (method == "write") {
         if (nrhs!=3 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         FileStorage fs(rhs[2].toString(), FileStorage::WRITE);
-        obj.write(fs);
+        obj->write(fs);
     }
     else if (method == "compute") {
         if (nrhs<3 || (nrhs%2)!=1 || nlhs!=0)
@@ -104,30 +104,30 @@ void mexFunction( int nlhs, mxArray *plhs[],
         }
         Mat data(rhs[2].toMat());
         if (use_second_variant)
-            obj(data, mean, flags, retainedVariance);
+            obj->operator()(data, mean, flags, retainedVariance);
         else
-            obj(data, mean, flags, maxComponents);
+            obj->operator()(data, mean, flags, maxComponents);
     }
     else if (method == "project") {
         if (nrhs!=3 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        plhs[0] = MxArray(obj.project(rhs[2].toMat()));
+        plhs[0] = MxArray(obj->project(rhs[2].toMat()));
     }
     else if (method == "backProject") {
         if (nrhs!=3 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        plhs[0] = MxArray(obj.backProject(rhs[2].toMat()));
+        plhs[0] = MxArray(obj->backProject(rhs[2].toMat()));
     }
     else if (method == "get") {
         if (nrhs!=3 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         string prop(rhs[2].toString());
         if (prop == "eigenvectors")
-            plhs[0] = MxArray(obj.eigenvectors);
+            plhs[0] = MxArray(obj->eigenvectors);
         else if (prop == "eigenvalues")
-            plhs[0] = MxArray(obj.eigenvalues);
+            plhs[0] = MxArray(obj->eigenvalues);
         else if (prop == "mean")
-            plhs[0] = MxArray(obj.mean);
+            plhs[0] = MxArray(obj->mean);
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
@@ -136,11 +136,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         string prop(rhs[2].toString());
         if (prop == "eigenvectors")
-            obj.eigenvectors = rhs[3].toMat();
+            obj->eigenvectors = rhs[3].toMat();
         else if (prop == "eigenvalues")
-            obj.eigenvalues = rhs[3].toMat();
+            obj->eigenvalues = rhs[3].toMat();
         else if (prop == "mean")
-            obj.mean = rhs[3].toMat();
+            obj->mean = rhs[3].toMat();
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
