@@ -123,7 +123,8 @@ const ConstMap<std::string,int> NormType = ConstMap<std::string,int>
     ("L2",       cv::NORM_L2)
     ("L2Sqr",    cv::NORM_L2SQR)
     ("Hamming",  cv::NORM_HAMMING)
-    ("Hamming2", cv::NORM_HAMMING2);
+    ("Hamming2", cv::NORM_HAMMING2)
+    ("MinMax",   cv::NORM_MINMAX);
 
 /// Inverse norm type map for option processing
 const ConstMap<int,std::string> NormTypeInv = ConstMap<int,std::string>
@@ -132,7 +133,8 @@ const ConstMap<int,std::string> NormTypeInv = ConstMap<int,std::string>
     (cv::NORM_L2,       "L2")
     (cv::NORM_L2SQR,    "L2Sqr")
     (cv::NORM_HAMMING,  "Hamming")
-    (cv::NORM_HAMMING2, "Hamming2");
+    (cv::NORM_HAMMING2, "Hamming2")
+    (cv::NORM_MINMAX,   "MinMax");
 
 /**************************************************************\
 *                       Helper Functions                       *
