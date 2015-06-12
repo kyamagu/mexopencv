@@ -15,27 +15,53 @@ int last_id = 0;
 /// Object container
 map<int,Ptr<DownhillSolver> > obj_;
 
-/** Represents function being optimized.
- */
+/// Represents objective function being optimized, implemented as a MATLAB file.
 class MatlabFunction : public cv::MinProblemSolver::Function
 {
 public:
+    /** Constructor
+     * @param num_dims number of variables of the objective function
+     * @param func name of an M-file that computes the objective function
+     */
     MatlabFunction(int num_dims, const string &func)
     : dims(num_dims), fun_name(func)
     {}
 
+    /** Evaluates MATLAB objective function
+     * @param[in] x input array of length \c dims
+     * @return objective function evaluated at \p x (scalar value)
+     *
+     * Calculates <tt>y = F(x)</tt>, for the scalar-valued multivariate
+     * objective function evaluated at the \c dims -dimensional point \c x
+     *
+     * Example:
+     * @code
+     * % the following MATLAB function implements the Rosenbrock function.
+     * function f = rosenbrock(x)
+     *     dims = numel(x);  % dims == 2
+     *     f = (x(1) - 1)^2 + 100*(x(2) - x(1)^2)^2;
+     * end
+     * @endcode
+     */
     double calc(const double *x) const
     {
         // create input to evaluate objective function
         mxArray *lhs, *rhs[2];
-        rhs[0] = mxCreateString(fun_name.c_str());
-        rhs[1] = mxCreateDoubleMatrix(1, dims, mxREAL);
-        memcpy(mxGetPr(rhs[1]), x, sizeof(double)*dims);
+        rhs[0] = MxArray(fun_name);
+        rhs[1] = MxArray(vector<double>(x, x + dims));
 
-        // evaluate specified function: val = feval("fun_name", x)
-        double val = 0;
-        if (mexCallMATLAB(1, &lhs, 2, rhs, "feval") == 0)
-            val = mxGetScalar(lhs);
+        // evaluate specified function in MATLAB as:
+        // val = feval("fun_name", x)
+        double val;
+        if (mexCallMATLAB(1, &lhs, 2, rhs, "feval") == 0) {
+            MxArray res(lhs);
+            CV_Assert(res.isDouble() && !res.isComplex() && res.numel() == 1);
+            val = res.at<double>(0);
+        }
+        else {
+            //TODO: error
+            val = 0;
+        }
 
         // cleanup
         mxDestroyArray(lhs);
@@ -46,6 +72,17 @@ public:
         return val;
     }
 
+    /** Return number of dimensions.
+     * @return dimensionality of the objective function domain
+     */
+    int getDims() const
+    {
+        return dims;
+    }
+
+    /** Convert object to MxArray
+     * @return output MxArray structure
+     */
     MxArray toStruct() const
     {
         MxArray s(MxArray::Struct());
@@ -54,17 +91,24 @@ public:
         return s;
     }
 
+    /** Factory function
+     * @param s input MxArray structure with the following fields:
+     *    - dims
+     *    - fun
+     * @return smart pointer to newly created instance
+     */
     static Ptr<MatlabFunction> create(const MxArray &s)
     {
         if (!s.isStruct() || s.numel()!=1)
             mexErrMsgIdAndTxt("mexopencv:error", "Invalid objective function");
         return makePtr<MatlabFunction>(
-            s.at("dims").toInt(), s.at("fun").toString());
+            s.at("dims").toInt(),
+            s.at("fun").toString());
     }
 
 private:
-    int dims;
-    string fun_name;
+    int dims;         ///<! number of dimensions
+    string fun_name;  ///<! name of M-file (objective function)
 };
 }
 
@@ -87,7 +131,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Constructor is called. Create a new object from argument
     if (method == "new") {
-        if (nrhs<2 || nlhs>1)
+        if (nrhs<2 || (nrhs%2)!=0 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         Ptr<MinProblemSolver::Function> f;
         Mat initStep(Mat_<double>(1, 1, 0.0));
@@ -101,7 +145,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             else if (key=="TermCriteria")
                 termcrit = rhs[i+1].toTermCriteria();
             else
-                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         obj_[++last_id] = DownhillSolver::create(f, initStep, termcrit);
         plhs[0] = MxArray(last_id);
@@ -139,7 +184,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "minimize") {
         if (nrhs!=3 || nlhs>2)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
-        Mat x(rhs[2].toMat());
+        Mat x(rhs[2].toMat(CV_64F));
         double fx = obj->minimize(x);
         plhs[0] = MxArray(x);
         if (nlhs>1)

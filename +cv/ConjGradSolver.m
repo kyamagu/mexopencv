@@ -43,8 +43,14 @@ classdef ConjGradSolver < handle
     end
 
     properties (Dependent)
-        % The optimized function is represented by a structure, containing the
-        % name of M-file that evaluate the objective function.
+        % The optimized function represented by a structure with the
+        % following fields:
+        %
+        % * __dims__ dimensinoality of the objective function.
+        % * __fun__ name of M-file that evaluates the objective function.
+        % * __gradfun__ name of M-file that evaluates the gradient. default ''
+        % * __gradeps__ used by finite difference method, in case `gradfun`
+        %       was not supplied. default 1e-3
         %
         % It should be set before the call to cv.ConjGradSolver.minimize,
         % as default value is not usable.
@@ -71,7 +77,8 @@ classdef ConjGradSolver < handle
             %
             % ## Options
             % * __Function__ Objective function that will be minimized,
-            %       specified as a structure with the following fields:
+            %       specified as a structure with the following fields
+            %       (`gradfun` and `gradeps` are optional fields):
             %       * __dims__ Number of dimensions
             %       * __fun__ string, name of M-file that implements the
             %             `calc()` method. It should receive a vector of the
@@ -79,7 +86,13 @@ classdef ConjGradSolver < handle
             %             the objective function evaluated at that point.
             %       * __gradfun__ string, name of M-file that implements the
             %             `getGradient()` method. It should receive an `ndims`
-            %              vector, and return a vector of partial derivatives.
+            %             vector, and return a vector of partial derivatives.
+            %             If an empty string is specified (default), the
+            %             gradient is approximated using finite difference
+            %             method as: `F'(x) = (F(x+h) - F(x-h)) / 2*h` (at the
+            %             cost of exta function evaluations and less accuracy).
+            %       * __gradeps__ gradient step `h` used in finite difference
+            %             method. default 1e-3
             % * __TermCriteria__ Terminal criteria to the algorithm. default
             %       `struct('type','Count+EPS', 'maxCount',5000, 'epsilon',1e-6)`
             %
@@ -131,6 +144,18 @@ classdef ConjGradSolver < handle
             % object is saved to a file or string.
             %
             name = ConjGradSolver_(this.id, 'getDefaultName');
+        end
+
+        function save(this, filename)
+            %SAVE
+            %
+            ConjGradSolver_(this.id, 'save', filename);
+        end
+
+        function load(this, filename)
+            %LOAD
+            %
+            ConjGradSolver_(this.id, 'load', filename);
         end
 
         function [x,fx] = minimize(this, x0)

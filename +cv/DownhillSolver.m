@@ -36,8 +36,11 @@ classdef DownhillSolver < handle
     end
 
     properties (Dependent)
-        % The optimized function is represented by a structure, containing the
-        % name of M-file that evaluate the objective function.
+        % The optimized function represented by a structure with the
+        % following fields:
+        %
+        % * __dims__ dimensinoality of the objective function.
+        % * __fun__ name of M-file that evaluates the objective function.
         %
         % It should be set before the call to cv.DownhillSolver.minimize,
         % as default value is not usable.
@@ -140,6 +143,18 @@ classdef DownhillSolver < handle
             % object is saved to a file or string.
             %
             name = DownhillSolver_(this.id, 'getDefaultName');
+        end
+
+        function save(this, filename)
+            %SAVE
+            %
+            DownhillSolver_(this.id, 'save', filename);
+        end
+
+        function load(this, filename)
+            %LOAD
+            %
+            DownhillSolver_(this.id, 'load', filename);
         end
 
         function [x,fx] = minimize(this, x0)
