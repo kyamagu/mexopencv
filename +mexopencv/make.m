@@ -41,10 +41,7 @@ function make(varargin)
 % See also mex
 %
 
-global octave;
-octave = logical(exist('OCTAVE_VERSION', 'builtin'));
-
-if octave
+if isOctave
     setenv('CFLAGS', '-fpermissive');
     setenv('CXXFLAGS', '-fpermissive');
 end
@@ -102,7 +99,7 @@ if ispc % Windows
     % compile flags
     [cv_cflags,cv_libs] = pkg_config(opts);
     [comp_flags,link_flags] = compilation_flags(opts);
-    if octave
+    if isOctave
         mex_flags = sprintf('%s %s -I''%s'' %s %s',...
             comp_flags, link_flags, fullfile(MEXOPENCV_ROOT,'include'), ...
             cv_cflags, cv_libs);
@@ -124,7 +121,7 @@ if ispc % Windows
     src = fullfile(MEXOPENCV_ROOT,'src','MxArray.cpp');
     dst = fullfile(MEXOPENCV_ROOT,'lib','MxArray.obj');
     if compile_needed(src, dst) || opts.force
-        if octave
+        if isOctave
             cmd = sprintf('mex %s -c ''%s'' -o ''%s''', ...
                 mex_flags, src, dst);
         else
@@ -162,7 +159,7 @@ if ispc % Windows
         dst = fullfile(MEXOPENCV_ROOT,'+cv',srcs{i});
         fulldst = [dst, '.', mexext];
         if compile_needed(src, fulldst) || opts.force
-            if octave
+            if isOctave
                 cmd = sprintf('mex %s ''%s'' ''%s'' -o ''%s''',...
                     mex_flags, src, obj, dst);
             else
@@ -205,10 +202,9 @@ end
 % Helper functions for windows
 %
 function [cflags,libs] = pkg_config(opts)
-    global octave;
     %PKG_CONFIG  constructs OpenCV-related option flags for Windows
     I_path = fullfile(opts.opencv_path,'include');
-    if octave
+    if isOctave
         L_path = fullfile(opts.opencv_path,arch_str(),compiler_str(),'bin');
     else
         L_path = fullfile(opts.opencv_path,arch_str(),compiler_str(),'lib');
@@ -231,9 +227,8 @@ function [cflags,libs] = pkg_config(opts)
 end
 
 function s = arch_str()
-    global octave;
     %ARCH_STR  return architecture used in mex
-    if xor(isempty(strfind(mexext, '64')), octave && ~isempty(strfind(computer, 'x86_64')))
+    if xor(isempty(strfind(mexext, '64')), isOctave && ~isempty(strfind(computer, 'x86_64')))
         s = 'x86';
     else
         s = 'x64';
@@ -241,9 +236,8 @@ function s = arch_str()
 end
 
 function s = compiler_str()
-    global octave;
     %COMPILER_STR  return compiler shortname
-    if octave
+    if isOctave
         s = 'mingw';
     else
         s = '';
@@ -288,7 +282,6 @@ function s = compiler_str()
 end
 
 function [comp_flags,link_flags] = compilation_flags(opts)
-    global octave;
     %COMPILATION_FLAGS  return compiler/linker flags passed directly to them
 
     % additional flags. default none
@@ -297,7 +290,7 @@ function [comp_flags,link_flags] = compilation_flags(opts)
 
     % override _SECURE_SCL for VS versions prior to VS2010,
     % or when linking against debug OpenCV binaries
-    if octave
+    if isOctave
       isVS = false;
     else
       c = mex.getCompilerConfigurations('C++','Selected');
@@ -328,9 +321,8 @@ function [comp_flags,link_flags] = compilation_flags(opts)
 end
 
 function l = lib_names(L_path)
-    global octave;
     %LIB_NAMES  return library names
-    if octave
+    if isOctave
         d = dir( fullfile(L_path,'*opencv_*.dll') );
         l = regexp({d.name}, '(opencv_.+)\.dll', 'tokens', 'once');
     else
@@ -441,4 +433,17 @@ function opts = getargs(varargin)
                 error('mexopencv:make', 'Invalid parameter name:  %s.', pname);
         end
     end
+end
+
+%%
+%% Return: true if the environment is Octave.
+%%
+function retval = isOctave
+    persistent cacheval;  % speeds up repeated calls
+
+    if isempty (cacheval)
+        cacheval = (exist ("OCTAVE_VERSION", "builtin") > 0);
+    end
+
+    retval = cacheval;
 end
