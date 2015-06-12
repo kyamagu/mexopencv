@@ -41,6 +41,7 @@ function make(varargin)
 % See also mex
 %
 
+global octave;
 octave = logical(exist('OCTAVE_VERSION', 'builtin'));
 
 if octave
@@ -204,6 +205,7 @@ end
 % Helper functions for windows
 %
 function [cflags,libs] = pkg_config(opts)
+    global octave;
     %PKG_CONFIG  constructs OpenCV-related option flags for Windows
     I_path = fullfile(opts.opencv_path,'include');
     if octave
@@ -229,6 +231,7 @@ function [cflags,libs] = pkg_config(opts)
 end
 
 function s = arch_str()
+    global octave;
     %ARCH_STR  return architecture used in mex
     if xor(isempty(strfind(mexext, '64')), octave && ~isempty(strfind(computer, 'x86_64')))
         s = 'x86';
@@ -238,6 +241,7 @@ function s = arch_str()
 end
 
 function s = compiler_str()
+    global octave;
     %COMPILER_STR  return compiler shortname
     if octave
         s = 'mingw';
@@ -284,6 +288,7 @@ function s = compiler_str()
 end
 
 function [comp_flags,link_flags] = compilation_flags(opts)
+    global octave;
     %COMPILATION_FLAGS  return compiler/linker flags passed directly to them
 
     % additional flags. default none
@@ -323,6 +328,7 @@ function [comp_flags,link_flags] = compilation_flags(opts)
 end
 
 function l = lib_names(L_path)
+    global octave;
     %LIB_NAMES  return library names
     if octave
         d = dir( fullfile(L_path,'*opencv_*.dll') );
