@@ -12,7 +12,7 @@
 % * __img__ Output image.
 %
 % ## Options
-% * __FontFace__ Font to use. One of the following:
+% * __FontFace__ Font type to use. One of the following:
 %     * `'HersheySimplex'` (default)
 %     * `'HersheyPlain'`
 %     * `'HersheyDuplex'`
@@ -26,15 +26,14 @@
 %        font-specific base size. default 1.0
 % * __Color__ 3-element floating point vector specifying text color.
 % * __Thickness__ Thickness of the lines used to draw a text. default 1.
-% * __LineType__ Type of the line boundary. One of 8,4,'AA' (Anti-aliased
-%        line). default 8.
+% * __LineType__ Line type. One of 8,4,'AA' (Anti-aliased line). default 8.
 % * __BottomLeftOrigin__ When true, the image data origin is at the
 %        bottom-left corner. Otherwise, it is at the top-left corner.
 %        default false.
 %
-% The function `putText` renders the specified text string in the image.
+% The function cv.putText renders the specified text string in the image.
 % Symbols that cannot be rendered using the specified font are replaced by
-% question marks.
+% question marks. See cv.getTextSize for a text rendering code example.
 %
-% See also cv.getTextSize
+% See also: cv.getTextSize
 %

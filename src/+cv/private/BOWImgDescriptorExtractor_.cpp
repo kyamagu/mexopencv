@@ -16,13 +16,6 @@ namespace {
 int last_id = 0;
 /// Object container
 map<int,Ptr<BOWImgDescriptorExtractor> > obj_;
-
-/// Alias for argument number check
-inline void nargchk(bool cond)
-{
-    if (!cond)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-}
 }
 
 /**
@@ -86,7 +79,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else if (method == "descriptorType") {
         nargchk(nrhs==2 && nlhs<=1);
-        plhs[0] = MxArray(obj->descriptorType());
+        plhs[0] = MxArray(ClassNameInvMap[obj->descriptorType()]);
     }
     else if (method == "compute") {
         Mat imgDescriptor;
@@ -111,7 +104,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             vm.reserve(pointIdxsOfClusters.size());
             for (vector<vector<int> >::const_iterator it = pointIdxsOfClusters.begin();
                  it != pointIdxsOfClusters.end(); ++it)
-                vm.push_back(Mat(*it));
+                vm.push_back(Mat(*it,false));
             plhs[1] = MxArray(vm);
         }
     }

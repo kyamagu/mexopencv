@@ -13,7 +13,8 @@ namespace {
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,PCA> obj_;
+map<int,Ptr<PCA> > obj_;
+
 /** Data arrangement options
  */
 const ConstMap<std::string,int> DataAs = ConstMap<std::string,int>
@@ -33,38 +34,59 @@ void mexFunction( int nlhs, mxArray *plhs[],
 {
     if (nrhs<2 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
-    // Determine argument format between constructor or (id,method,...)
+
+    // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    int id = 0;
-    string method;
-    if (nrhs>1 && rhs[0].isNumeric() && rhs[1].isChar()) {
-        id = rhs[0].toInt();
-        method = rhs[1].toString();
-    }
-    else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
-    
-    // Big operation switch
+    int id = rhs[0].toInt();
+    string method(rhs[1].toString());
+
+    // Constructor call
     if (method == "new") {
-        obj_[++last_id] = PCA();
+        if (nrhs!=2 || nlhs>1)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        obj_[++last_id] = makePtr<PCA>();
         plhs[0] = MxArray(last_id);
         return;
     }
-    
-    PCA& obj = obj_[id];
+
+    // Big operation switch
+    Ptr<PCA> obj = obj_[id];
     if (method == "delete") {
         if (nrhs!=2 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
         obj_.erase(id);
     }
+    else if (method == "read") {
+        if (nrhs<3 || (nrhs%2)==0 || nlhs!=0)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        bool loadFromString = false;
+        for (int i=3; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key=="FromString")
+                loadFromString = rhs[i+1].toBool();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+        }
+        FileStorage fs(rhs[2].toString(), FileStorage::READ +
+            (loadFromString ? FileStorage::MEMORY : 0));
+        if (!fs.isOpened())
+            mexErrMsgIdAndTxt("mexopencv:error","Failed to open file");
+        obj->read(fs.root());
+    }
+    else if (method == "write") {
+        if (nrhs!=3 || nlhs!=0)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        FileStorage fs(rhs[2].toString(), FileStorage::WRITE);
+        obj->write(fs);
+    }
     else if (method == "compute") {
         if (nrhs<3 || (nrhs%2)!=1 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        Mat data(rhs[2].toMat());
         Mat mean;
-        int flags=PCA::DATA_AS_ROW;
-        int maxComponents=0;
+        int flags = PCA::DATA_AS_ROW;
+        int maxComponents = 0;
+        double retainedVariance = 1.0;
+        bool use_second_variant = false;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key=="Mean")
@@ -73,44 +95,54 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 flags = DataAs[rhs[i+1].toString()];
             else if (key=="MaxComponents")
                 maxComponents = rhs[i+1].toInt();
+            else if (key=="RetainedVariance") {
+                retainedVariance = rhs[i+1].toDouble();
+                use_second_variant = true;
+            }
             else
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
-        obj(data, mean, flags, maxComponents);
+        Mat data(rhs[2].toMat());
+        if (use_second_variant)
+            obj->operator()(data, mean, flags, retainedVariance);
+        else
+            obj->operator()(data, mean, flags, maxComponents);
     }
     else if (method == "project") {
         if (nrhs!=3 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        plhs[0] = MxArray(obj.project(rhs[2].toMat()));
+        plhs[0] = MxArray(obj->project(rhs[2].toMat()));
     }
     else if (method == "backProject") {
         if (nrhs!=3 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        plhs[0] = MxArray(obj.backProject(rhs[2].toMat()));
+        plhs[0] = MxArray(obj->backProject(rhs[2].toMat()));
     }
-    else if (method == "eigenvectors") {
-        if (nrhs==3 && nlhs==0)
-            obj.eigenvectors = rhs[2].toMat();
-        else if (nrhs==2 && nlhs==1)
-            plhs[0] = MxArray(obj.eigenvectors);
-        else
+    else if (method == "get") {
+        if (nrhs!=3 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        string prop(rhs[2].toString());
+        if (prop == "eigenvectors")
+            plhs[0] = MxArray(obj->eigenvectors);
+        else if (prop == "eigenvalues")
+            plhs[0] = MxArray(obj->eigenvalues);
+        else if (prop == "mean")
+            plhs[0] = MxArray(obj->mean);
+        else
+            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    else if (method == "eigenvalues") {
-        if (nrhs==3 && nlhs==0)
-            obj.eigenvalues = rhs[2].toMat();
-        else if (nrhs==2 && nlhs==1)
-            plhs[0] = MxArray(obj.eigenvalues);
-        else
+    else if (method == "set") {
+        if (nrhs!=4 || nlhs!=0)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    }
-    else if (method == "mean") {
-        if (nrhs==3 && nlhs==0)
-            obj.mean = rhs[2].toMat();
-        else if (nrhs==2 && nlhs==1)
-            plhs[0] = MxArray(obj.mean);
+        string prop(rhs[2].toString());
+        if (prop == "eigenvectors")
+            obj->eigenvectors = rhs[3].toMat();
+        else if (prop == "eigenvalues")
+            obj->eigenvalues = rhs[3].toMat();
+        else if (prop == "mean")
+            obj->mean = rhs[3].toMat();
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");

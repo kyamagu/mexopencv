@@ -41,7 +41,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     for (int i=opts; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="Interpolation") {
-            interpolation = InterType[rhs[i+1].toString()];
+            interpolation = InterpType[rhs[i+1].toString()];
             if (interpolation==cv::INTER_AREA)
                 mexErrMsgIdAndTxt("mexopencv:error","'Area' is not supported");
         }

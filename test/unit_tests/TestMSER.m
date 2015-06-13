@@ -6,12 +6,13 @@ classdef TestMSER
     
     methods (Static)
         function test_1
-            chains = cv.MSER(TestMSER.img);
+            obj = cv.MSER();
+            chains = obj.detectRegions(TestMSER.img);
         end
         
         function test_error_1
             try
-                cv.MSER();
+                cv.MSER('foo');
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

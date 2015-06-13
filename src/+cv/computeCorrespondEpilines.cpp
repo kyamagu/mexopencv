@@ -50,10 +50,5 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
-    vector<Mat> _lines;
-    _lines.reserve(lines.size());
-    for (vector<Vec3f>::iterator it=lines.begin(); it<lines.end(); ++it)
-        _lines.push_back(Mat(*it));
-
-    plhs[0] = MxArray(_lines);
+    plhs[0] = MxArray(lines);
 }

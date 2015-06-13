@@ -21,18 +21,18 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<1 || ((nrhs%2)!=1) || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    Mat image(rhs[0].toMat(CV_8U));
-    vector<Vec4i> lines;
-    double rho=1;
-    double theta=CV_PI/180;
-    int threshold=80;
-    double minLineLength=0;
-    double maxLineGap=0;
+
+    // Option processing
+    double rho = 1;
+    double theta = CV_PI/180;
+    int threshold = 80;
+    double minLineLength = 0;
+    double maxLineGap = 0;
     for (int i=1; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
+        string key(rhs[i].toString());
         if (key=="Rho")
             rho = rhs[i+1].toDouble();
         else if (key=="Theta")
@@ -46,11 +46,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Process
+    Mat image(rhs[0].toMat(CV_8U));
+    vector<Vec4i> lines;
     HoughLinesP(image, lines, rho, theta, threshold, minLineLength, maxLineGap);
-    vector<Mat> vl(lines.size());
-    for (int i=0;i<vl.size();++i)
-        vl[i] = Mat(1,4,CV_32SC1,&lines[i][0]);
-    plhs[0] = MxArray(vl);
+    plhs[0] = MxArray(lines);
 }

@@ -16,15 +16,6 @@ int last_id = 0;
 /// Object container
 map<int,Ptr<ANN_MLP> > obj_;
 
-/// set or clear a bit in flag depending on bool value
-/* (uses non-standard MSVC directive to silence while(0) C4127 warning!) */
-#define UPDATE_FLAG(NUM, TF, BIT)       \
-    do {                                \
-        if ((TF)) { (NUM) |=  (BIT); }  \
-        else      { (NUM) &= ~(BIT); }  \
-__pragma(warning(suppress:4127))        \
-    } while(0)
-
 /// Option values for SampleTypes
 const ConstMap<std::string, int> SampleTypesMap = ConstMap<std::string, int>
     ("Row", cv::ml::ROW_SAMPLE)   //!< each training sample is a row of samples
@@ -222,7 +213,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         if (nrhs<5 || (nrhs%2)==0 || nlhs>2)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         int layout = cv::ml::ROW_SAMPLE;
-		Mat varIdx, sampleIdx, sampleWeights, varType;
+        Mat varIdx, sampleIdx, sampleWeights, varType;
         for (int i=5; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key=="Layout")
@@ -314,8 +305,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
             obj->setActivationFunction(type, param1, param2);
         }
         else {
-            int method = ANN_MLPTrain[rhs[2].toString()];
-            obj->setTrainMethod(method, param1, param2);
+            int tmethod = ANN_MLPTrain[rhs[2].toString()];
+            obj->setTrainMethod(tmethod, param1, param2);
         }
     }
     else if (method == "get") {
@@ -342,6 +333,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
             plhs[0] = MxArray(obj->getTermCriteria());
         else if (prop == "TrainMethod")
             plhs[0] = MxArray(InvANN_MLPTrain[obj->getTrainMethod()]);
+        //else if (prop == "ActivationFunction")
+        //    plhs[0] = MxArray(InvActivateFunc[obj->getActivationFunction()]);
         else
             mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property %s", prop.c_str());
     }
@@ -367,6 +360,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
             obj->setRpropDWPlus(rhs[3].toDouble());
         else if (prop == "TermCriteria")
             obj->setTermCriteria(rhs[3].toTermCriteria());
+        else if (prop == "TrainMethod")
+            obj->setTrainMethod(ANN_MLPTrain[rhs[3].toString()]);
+        else if (prop == "ActivationFunction")
+            obj->setActivationFunction(ActivateFunc[rhs[3].toString()]);
         else
             mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property %s", prop.c_str());
     }

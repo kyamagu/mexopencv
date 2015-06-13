@@ -2,16 +2,20 @@ classdef TestPutText
     %TestPutText
     properties (Constant)
     end
-    
+
     methods (Static)
-        function test_1
+        function test_simple
             im = 255*ones(128,128,3,'uint8');
-            a = cv.putText(im, 'foo', [5,30], 'FontFace','HersheySimplex',...
-                                              'FontStyle','Regular',...
-                                              'Thickness', 2,...
-                                              'LineType', 'AA');
+            im = cv.putText(im, 'foo', [5,30]);
         end
-        
+
+        function test_options
+            im = zeros([128,128,3],'uint8');
+            im = cv.putText(im, 'foo', [40,70], ...
+                'FontFace','HersheyComplex', 'FontStyle','Italic',...
+                'Color',[255 0 0], 'Thickness',2, 'LineType','AA');
+        end
+
         function test_error_1
             try
                 cv.putText();
@@ -21,6 +25,5 @@ classdef TestPutText
             end
         end
     end
-    
-end
 
+end

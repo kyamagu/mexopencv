@@ -21,16 +21,16 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<2 || ((nrhs%2)!=0) || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
     Size winSize(3,3);
     Size zeroZone(-1,-1);
-    TermCriteria criteria(TermCriteria::COUNT+TermCriteria::EPS,50,0.001);
+    TermCriteria criteria(TermCriteria::COUNT+TermCriteria::EPS, 50, 0.001);
     for (int i=2; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
+        string key(rhs[i].toString());
         if (key=="WinSize")
             winSize = rhs[i+1].toSize();
         else if (key=="ZeroZone")
@@ -40,10 +40,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Process
-    Mat src = (rhs[0].isUint8()) ? rhs[0].toMat(CV_8U) : rhs[0].toMat(CV_32F);
+    Mat image(rhs[0].toMat(rhs[0].isUint8() ? CV_8U : CV_32F));
     vector<Point2f> corners(rhs[1].toVector<Point2f>());
-    cornerSubPix(src, corners, winSize, zeroZone, criteria);
+    cornerSubPix(image, corners, winSize, zeroZone, criteria);
     plhs[0] = MxArray(corners);
 }

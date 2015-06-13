@@ -72,20 +72,34 @@ const ConstMap<int, std::string> AKAZEDescriptorTypeInv = ConstMap <int, std::st
     (cv::AKAZE::DESCRIPTOR_MLDB_UPRIGHT, "MLDBUpright")
     (cv::AKAZE::DESCRIPTOR_MLDB,         "MLDB");
 
-#ifdef HAVE_OPENCV_XFEATURES2D
-/// AgastFeatureDetector types
+/// AGAST neighborhood types
 const ConstMap<std::string, int> AgastTypeMap = ConstMap<std::string, int>
-    ("AGAST_5_8",   cv::xfeatures2d::AgastFeatureDetector::AGAST_5_8)
-    ("AGAST_7_12d", cv::xfeatures2d::AgastFeatureDetector::AGAST_7_12d)
-    ("AGAST_7_12s", cv::xfeatures2d::AgastFeatureDetector::AGAST_7_12s)
-    ("OAST_9_16",   cv::xfeatures2d::AgastFeatureDetector::OAST_9_16);
+    ("AGAST_5_8",   cv::AgastFeatureDetector::AGAST_5_8)
+    ("AGAST_7_12d", cv::AgastFeatureDetector::AGAST_7_12d)
+    ("AGAST_7_12s", cv::AgastFeatureDetector::AGAST_7_12s)
+    ("OAST_9_16",   cv::AgastFeatureDetector::OAST_9_16);
 
-/// inverse AgastFeatureDetector types
+/// inverse AGAST neighborhood types
 const ConstMap<int, std::string> AgastTypeInvMap = ConstMap<int, std::string>
-    (cv::xfeatures2d::AgastFeatureDetector::AGAST_5_8,   "AGAST_5_8")
-    (cv::xfeatures2d::AgastFeatureDetector::AGAST_7_12d, "AGAST_7_12d")
-    (cv::xfeatures2d::AgastFeatureDetector::AGAST_7_12s, "AGAST_7_12s")
-    (cv::xfeatures2d::AgastFeatureDetector::OAST_9_16,   "OAST_9_16");
+    (cv::AgastFeatureDetector::AGAST_5_8,   "AGAST_5_8")
+    (cv::AgastFeatureDetector::AGAST_7_12d, "AGAST_7_12d")
+    (cv::AgastFeatureDetector::AGAST_7_12s, "AGAST_7_12s")
+    (cv::AgastFeatureDetector::OAST_9_16,   "OAST_9_16");
+
+#ifdef HAVE_OPENCV_XFEATURES2D
+/// DAISY normalization types
+const ConstMap<std::string, int> DAISYNormType = ConstMap<std::string, int>
+    ("None",    cv::xfeatures2d::DAISY::NRM_NONE)
+    ("Partial", cv::xfeatures2d::DAISY::NRM_PARTIAL)
+    ("Full",    cv::xfeatures2d::DAISY::NRM_FULL)
+    ("SIFT",    cv::xfeatures2d::DAISY::NRM_SIFT);
+
+/// inverse DAISY normalization types
+const ConstMap<int, std::string> DAISYNormTypeInv = ConstMap<int, std::string>
+    (cv::xfeatures2d::DAISY::NRM_NONE,    "None")
+    (cv::xfeatures2d::DAISY::NRM_PARTIAL, "Partial")
+    (cv::xfeatures2d::DAISY::NRM_FULL,    "Full")
+    (cv::xfeatures2d::DAISY::NRM_SIFT,    "SIFT");
 #endif
 
 /** Create an instance of BRISK using options in arguments
@@ -160,6 +174,15 @@ cv::Ptr<cv::AKAZE> createAKAZE(
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 
+/** Create an instance of AgastFeatureDetector using options in arguments
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to an instance cv::AgastFeatureDetector
+ */
+cv::Ptr<cv::AgastFeatureDetector> createAgastFeatureDetector(
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
+
 #ifdef HAVE_OPENCV_XFEATURES2D
 /** Create an instance of SIFT using options in arguments
  * @param first iterator at the beginning of the vector range
@@ -206,21 +229,30 @@ cv::Ptr<cv::xfeatures2d::BriefDescriptorExtractor> createBriefDescriptorExtracto
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 
-/** Create an instance of AgastFeatureDetector using options in arguments
- * @param first iterator at the beginning of the vector range
- * @param last iterator at the end of the vector range
- * @return smart pointer to an instance cv::xfeatures2d::AgastFeatureDetector
- */
-cv::Ptr<cv::xfeatures2d::AgastFeatureDetector> createAgastFeatureDetector(
-    std::vector<MxArray>::const_iterator first,
-    std::vector<MxArray>::const_iterator last);
-
 /** Create an instance of LUCID using options in arguments
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
  * @return smart pointer to an instance cv::xfeatures2d::LUCID
  */
 cv::Ptr<cv::xfeatures2d::LUCID> createLUCID(
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
+
+/** Create an instance of LATCH using options in arguments
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to an instance cv::xfeatures2d::LATCH
+ */
+cv::Ptr<cv::xfeatures2d::LATCH> createLATCH(
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
+
+/** Create an instance of DAISY using options in arguments
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to an instance cv::xfeatures2d::DAISY
+ */
+cv::Ptr<cv::xfeatures2d::DAISY> createDAISY(
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 #endif
@@ -235,10 +267,10 @@ cv::Ptr<cv::xfeatures2d::LUCID> createLUCID(
  *    - "SimpleBlobDetector"
  *    - "KAZE"
  *    - "AKAZE"
+ *    - "AgastFeatureDetector"
  *    - "SIFT" (requires `xfeatures2d` module)
  *    - "SURF" (requires `xfeatures2d` module)
  *    - "StarDetector" (requires `xfeatures2d` module)
- *    - "AgastFeatureDetector" (requires `xfeatures2d` module)
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
  * @return smart pointer to an instance cv::FeatureDetector
@@ -258,6 +290,8 @@ cv::Ptr<cv::FeatureDetector> createFeatureDetector(std::string type,
  *    - "FREAK" (requires `xfeatures2d` module)
  *    - "BriefDescriptorExtractor" (requires `xfeatures2d` module)
  *    - "LUCID" (requires `xfeatures2d` module)
+ *    - "LATCH" (requires `xfeatures2d` module)
+ *    - "DAISY" (requires `xfeatures2d` module)
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
  * @return smart pointer to an instance cv::DescriptorExtractor
@@ -309,8 +343,13 @@ cv::Ptr<cv::BFMatcher> createBFMatcher(
  *    - "BruteForce-Hamming" or "BruteForce-HammingLUT"
  *    - "BruteForce-Hamming(2)"
  *    - "FlannBased"
+ *    .
+ *    Or:
  *    - "FlannBasedMatcher"
  *    - "BFMatcher"
+ *    .
+ *    The last two matcher types are the ones that accept extra arguments
+ *    passed to the corresponding create functions.
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
  * @return smart pointer to an instance cv::DescriptorMatcher

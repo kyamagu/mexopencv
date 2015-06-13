@@ -54,7 +54,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
         obj_.erase(id);
     }
-    else if (method == "type") {
+    else if (method == "typeid") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
         plhs[0] = MxArray(string(typeid(*obj).name()));
@@ -102,7 +102,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "defaultNorm") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
-        plhs[0] = MxArray(obj->defaultNorm());
+        plhs[0] = MxArray(NormTypeInv[obj->defaultNorm()]);
     }
     else if (method == "descriptorSize") {
         if (nrhs!=2 || nlhs>1)
@@ -112,7 +112,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "descriptorType") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
-        plhs[0] = MxArray(obj->descriptorType());
+        plhs[0] = MxArray(ClassNameInvMap[obj->descriptorType()]);
     }
     else if (method == "detect") {
         if (nrhs<3 || (nrhs%2)!=1 || nlhs>1)
@@ -135,14 +135,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
             vector<Mat> masks;
             for (int i=3; i<nrhs; i+=2) {
                 string key(rhs[i].toString());
-                if (key == "Masks") {
+                if (key == "Mask") {
                     //masks = rhs[i+1].toVector<Mat>();
                     vector<MxArray> arr(rhs[i+1].toVector<MxArray>());
                     masks.clear();
                     masks.reserve(arr.size());
-                    for (vector<MxArray>::const_iterator iter = arr.begin(); iter != arr.end(); iter++) {
+                    for (vector<MxArray>::const_iterator iter = arr.begin(); iter != arr.end(); iter++)
                         masks.push_back(iter->toMat(CV_8U));
-                    }
                 }
                 else
                     mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());

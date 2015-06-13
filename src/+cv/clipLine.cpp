@@ -24,15 +24,17 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
-    // Execute function
+
+    // Process
     Point pt1(rhs[1].toPoint()), pt2(rhs[2].toPoint());
+    bool inside = false;
     if (rhs[0].numel()==2)
-        plhs[0] = MxArray(clipLine(rhs[0].toSize(), pt1, pt2));
+        inside = clipLine(rhs[0].toSize(), pt1, pt2);
     else if (rhs[0].numel()==4)
-        plhs[0] = MxArray(clipLine(rhs[0].toRect(), pt1, pt2));
+        inside = clipLine(rhs[0].toRect(), pt1, pt2);
     else
         mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
+    plhs[0] = MxArray(inside);
     if (nlhs>1)
         plhs[1] = MxArray(pt1);
     if (nlhs>2)

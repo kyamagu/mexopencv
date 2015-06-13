@@ -16,15 +16,6 @@ int last_id = 0;
 /// Object container
 map<int,Ptr<SVM> > obj_;
 
-/// set or clear a bit in flag depending on bool value
-/* (uses non-standard MSVC directive to silence while(0) C4127 warning!) */
-#define UPDATE_FLAG(NUM, TF, BIT)       \
-    do {                                \
-        if ((TF)) { (NUM) |=  (BIT); }  \
-        else      { (NUM) &= ~(BIT); }  \
-__pragma(warning(suppress:4127))        \
-    } while(0)
-
 /// Option values for SampleTypes
 const ConstMap<std::string, int> SampleTypesMap = ConstMap<std::string, int>
     ("Row", cv::ml::ROW_SAMPLE)   //!< each training sample is a row of samples
@@ -104,6 +95,88 @@ ParamGrid toParamGrid(const MxArray& m)
     //    mexErrMsgIdAndTxt("mexopencv:error","Invalid argument to grid parameter");
     return g;
 }
+
+/** Represents custom kernel implemented as a MATLAB function.
+ */
+class MatlabFunction : public cv::ml::SVM::Kernel
+{
+public:
+    MatlabFunction(const string &func)
+    : fun_name(func)
+    {}
+
+    /** Evaluates MATLAB kernel function
+     * @param vcount number of samples
+     * @param n length of each sample
+     * @param vecs input array of length \c n*vcount
+     * @param another input array of length \p n
+     * @param results output array of length \p vcount
+     *
+     * Calculates <tt>results(i) = K(another, vecs(:,i))</tt>,
+     * for <tt>i=1:vcount</tt>
+     * (where each sample is of size \p n).
+     *
+     * Example:
+     * @code
+     * % the following MATLAB function implements a simple linear kernel
+     * function results = my_kernel(vecs, another)
+     *     [n,vcount] = size(vecs);
+     *     results = zeros(1, vcount, 'single');
+     *     for i=1:vcount
+     *         results(i) = dot(another, vecs(:,i));
+     *     end
+     *
+     *     % or computed in a vectorized manner as
+     *     %results = sum(bsxfun(@times, another, vecs));
+     *
+     *     % or simply written as
+     *     %results = another.' * vecs;
+     * end
+     * @endcode
+     */
+    void calc(int vcount, int n, const float* vecs,
+        const float* another, float* results)
+    {
+        // create input to evaluate kernel function
+        mxArray *lhs, *rhs[3];
+        rhs[0] = MxArray(fun_name);
+        rhs[1] = MxArray(Mat(n, vcount, CV_32F, const_cast<float*>(vecs)));
+        rhs[2] = MxArray(Mat(n, 1, CV_32F, const_cast<float*>(another)));
+
+        // evaluate specified function in MATLAB as:
+        // results = feval("fun_name", vecs, another)
+        if (mexCallMATLAB(1, &lhs, 3, rhs, "feval") == 0) {
+            MxArray res(lhs);
+            CV_Assert(res.isSingle() && !res.isComplex() && res.ndims() == 2);
+            vector<float> v(res.toVector<float>());
+            CV_Assert(v.size() == vcount);
+            std::copy(v.begin(), v.end(), results);
+        }
+        else {
+            //TODO: error
+            std::fill(results, results + vcount, 0);
+        }
+
+        // cleanup
+        mxDestroyArray(lhs);
+        mxDestroyArray(rhs[0]);
+        mxDestroyArray(rhs[1]);
+        mxDestroyArray(rhs[2]);
+    }
+
+    int getType() const
+    {
+        return SVM::CUSTOM;
+    }
+
+    static Ptr<MatlabFunction> create(const string &func)
+    {
+        return makePtr<MatlabFunction>(func);
+    }
+
+private:
+    string fun_name;
+};
 }
 
 /**
@@ -260,7 +333,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         if (nrhs<5 || (nrhs%2)==0 || nlhs>2)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         int layout = cv::ml::ROW_SAMPLE;
-		Mat varIdx, sampleIdx, sampleWeights, varType;
+        Mat varIdx, sampleIdx, sampleWeights, varType;
         for (int i=5; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key=="Layout")
@@ -312,7 +385,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
                   degreeGrid = SVM::getDefaultGrid(SVM::DEGREE);
         for (int i=4; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-			if (key=="Layout")
+            if (key=="Layout")
                 layout = SampleTypesMap[rhs[i+1].toString()];
             else if (key=="VarIdx")
                 varIdx = rhs[i+1].toMat(
@@ -403,8 +476,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         plhs[0] = MxArray(obj->getSupportVectors());
     }
-    //else if (method == "setCustomKernel") {
-    //}
+    else if (method == "setCustomKernel") {
+        if (nrhs!=3 || nlhs!=0)
+            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        obj->setCustomKernel(MatlabFunction::create(rhs[2].toString()));
+    }
     else if (method == "get") {
         if (nrhs!=3 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");

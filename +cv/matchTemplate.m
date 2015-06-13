@@ -1,30 +1,32 @@
 %MATCHTEMPLATE  Compares a template against overlapped image regions
 %
 %    result = cv.matchTemplate(image, tmpl)
-%    result = cv.matchTemplate(image, tmpl, 'Method', methodValue)
+%    result = cv.matchTemplate(image, tmpl, 'OptionName', optionValue, ...)
 %
 % ## Input
 % * __image__ Image where the search is running.
-% * __tmpl__ Searched template. It must be not greater than the source image and
-%         have the same data type.
+% * __tmpl__ Searched template. It must be not greater than the source `image`
+%         and have the same data type.
 %
 % ## Output
 % * __result__ Map of comparison results. It is single-channel 32-bit
-%         floating-point. If image is W x H and templ is w x h, then result is
-%         (W-w+1) x (H-h+1).
+%         floating-point. If `image` is `W x H` and `templ` is `w x h`, then
+%         result is `(W-w+1) x (H-h+1)`.
 %
 % ## Options
 % * __Method__ Parameter specifying the comparison method. One of the following:
-%         'SqDiff'        Squared difference
-%         'SqDiffNormed'  Normalized squared difference
-%         'CCorr'         Cross correlation
-%         'CCorrNormed'   Normalized cross correlation
-%         'CCoeff'        Cosine efficient
-%         'CCoeffNormed'  Normalized cosine efficient
+%       * 'SqDiff'        Squared difference
+%       * 'SqDiffNormed'  Normalized squared difference
+%       * 'CCorr'         Cross correlation
+%       * 'CCorrNormed'   Normalized cross correlation
+%       * 'CCoeff'        Cosine efficient
+%       * 'CCoeffNormed'  Normalized cosine efficient
+% * __Mask__ Mask of searched template. It must have the same datatype and
+%         size with `templ`. It is not set by default.
 %
-% The function slides through image, compares the overlapped patches of size w
-% x h against templ using the specified method and stores the comparison results
-% in result.
+% The function slides through `image`, compares the overlapped patches of size
+% `w x h` against `templ` using the specified method and stores the comparison
+% results in `result`.
 %
 % After the function finishes the comparison, the best matches can be found as
 % global minimums (when 'SqDiff' was used) or maximums (when 'CCorr' or 'CCoeff'

@@ -16,15 +16,6 @@ int last_id = 0;
 /// Object container
 map<int,Ptr<RTrees> > obj_;
 
-/// set or clear a bit in flag depending on bool value
-/* (uses non-standard MSVC directive to silence while(0) C4127 warning!) */
-#define UPDATE_FLAG(NUM, TF, BIT)       \
-    do {                                \
-        if ((TF)) { (NUM) |=  (BIT); }  \
-        else      { (NUM) &= ~(BIT); }  \
-__pragma(warning(suppress:4127))        \
-    } while(0)
-
 /// Option values for SampleTypes
 const ConstMap<std::string, int> SampleTypesMap = ConstMap<std::string, int>
     ("Row", cv::ml::ROW_SAMPLE)   //!< each training sample is a row of samples
@@ -60,7 +51,7 @@ MxArray VecDTreesNodeToMxArray(const std::vector<DTrees::Node>& nodes)
 }
 
 /** Convert tree splits to struct array
- * @param nodes vector of tree splits
+ * @param splits vector of tree splits
  * @return struct-array MxArray object
  */
 MxArray VecDTreesSplitToMxArray(const std::vector<DTrees::Split>& splits)
@@ -239,7 +230,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         if (nrhs<5 || (nrhs%2)==0 || nlhs>2)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         int layout = cv::ml::ROW_SAMPLE;
-		Mat varIdx, sampleIdx, sampleWeights, varType;
+        Mat varIdx, sampleIdx, sampleWeights, varType;
         for (int i=5; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key=="Layout")

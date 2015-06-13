@@ -1,6 +1,7 @@
-%DRAWCHESSBOARDCORNERS  Finds the positions of internal corners of the chessboard
+%DRAWCHESSBOARDCORNERS  Renders the detected chessboard corners
 %
 %    im = cv.drawChessboardCorners(im, patternSize, corners)
+%    im = cv.drawChessboardCorners(..., 'OptionName', optionValue, ...)
 %
 % ## Input
 % * __im__ Source image. It must be an 8-bit color image.
@@ -11,6 +12,11 @@
 %
 % ## Output
 % * __im__ Destination image.
+%
+% ## Options
+% * __PatternWasFound__ Parameter indicating whether the complete board was
+%       found or not. The return value of cv.findChessboardCorners should be
+%       passed here.
 %
 % The function draws individual chessboard corners detected either as red
 % circles if the board was not found, or as colored corners connected with

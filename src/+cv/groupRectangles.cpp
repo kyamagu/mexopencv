@@ -8,24 +8,6 @@
 using namespace std;
 using namespace cv;
 
-template <>
-vector<Rect> MxArray::toVector<Rect>() const
-{
-    vector<Rect> vr;
-    if (isNumeric())
-        vr.push_back(toRect());
-    else if (isCell()) {
-        int n = numel();
-        vector<MxArray> vm(toVector<MxArray>());
-        vr.reserve(n);
-        for (int i=0; i<n; ++i)
-            vr.push_back(vm[i].toRect());
-    }
-    else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
-    return vr;
-}
-
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments

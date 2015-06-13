@@ -14,22 +14,46 @@
 %
 % ## Options
 % * __WinSize__ Half of the side length of the search window. For example, if
-%         `WinSize=[3,3]`, then a `(3 * 2 + 1) x (3 * 2 + 1) = 7 x 7` search
-%         window is used. default [3, 3].
+%       `WinSize=[5,5]`, then a `(5 * 2 + 1) x (5 * 2 + 1) = 11 x 11` search
+%       window is used. default [3, 3].
 % * __ZeroZone__ Half of the size of the dead region in the middle of the
-%         search zone over which the summation in the formula below is not done.
-%         It is used sometimes to avoid possible singularities of the
-%         autocorrelation matrix. The value of [-1,-1] indicates that there is
-%         no such a size. default [-1,-1].
+%       search zone over which the summation in the formula below is not done.
+%       It is used sometimes to avoid possible singularities of the
+%       autocorrelation matrix. The value of `[-1,-1]` indicates that there
+%       is no such a size. default [-1,-1].
 % * __Criteria__ Criteria for termination of the iterative process of corner
-%         refinement. That is, the process of corner position refinement stops
-%         either after `criteria.maxCount` iterations or when the corner position
-%         moves by less than `criteria.epsilon` on some iteration.
-%         Struct with `{'type','maxCount','epsilon'}` fields is accepted. The
-%         type field should have one of 'Count', 'EPS', or 'Count+EPS' to
-%         indicate which criteria to use. Default to
-%         `struct('type','Count+EPS', 'maxCount',50, 'epsilon',0.001)`.
+%       refinement. That is, the process of corner position refinement stops
+%       either after `criteria.maxCount` iterations or when the corner position
+%       moves by less than `criteria.epsilon` on some iteration. Default to
+%       `struct('type','Count+EPS', 'maxCount',50, 'epsilon',0.001)`.
+%       Struct with the following fields is accepted:
+%       * __type__ one of 'Count', 'EPS', or 'Count+EPS' to indicate which
+%         criteria to use.
+%       * __maxCount__
+%       * __epsilon__
 %
 % The function iterates to find the sub-pixel accurate location of corners or
 % radial saddle points.
+%
+% Sub-pixel accurate corner locator is based on the observation that every
+% vector from the center `q` to a point `p` located within a neighborhood of
+% `q` is orthogonal to the image gradient at `p` subject to image and
+% measurement noise. Consider the expression:
+%
+%    epsilon_i = DI_p_i' * (q - p_i)
+%
+% where `DI_p_i` is an image gradient at one of the points `p_i` in a
+% neighborhood of `q`. The value of `q` is to be found so that `epsilon_i` is
+% minimized. A system of equations may be set up with `epsilon_i` set to zero:
+%
+%    Sigma_i(DI_p_i * DI_p_i') - Sigma_i(DI_p_i * DI_p_i' * p_i)
+%
+% where the gradients are summed within a neighborhood ("search window") of
+% `q`. Calling the first gradient term `G` and the second gradient term `b`
+% gives:
+%
+%    q = inv(G) * b
+%
+% The algorithm sets the center of the neighborhood window at this new center
+% `q` and then iterates until the center stays within a set threshold.
 %

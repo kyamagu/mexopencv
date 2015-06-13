@@ -28,7 +28,7 @@ map<int,Ptr<MSER> > obj_;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-    if (nrhs<2 || nlhs>1)
+    if (nrhs<2 || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
 
     // Argument vector
@@ -38,7 +38,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Constructor is called. Create a new object from argument
     if (method == "new") {
-        if (nrhs!=2 || nlhs>1)
+        if (nrhs<2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         obj_[++last_id] = createMSER(rhs.begin() + 2, rhs.end());
         plhs[0] = MxArray(last_id);
@@ -52,7 +52,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
         obj_.erase(id);
     }
-    else if (method == "type") {
+    else if (method == "typeid") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
         plhs[0] = MxArray(string(typeid(*obj).name()));
@@ -98,7 +98,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "defaultNorm") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
-        plhs[0] = MxArray(obj->defaultNorm());
+        plhs[0] = MxArray(NormTypeInv[obj->defaultNorm()]);
     }
     else if (method == "descriptorSize") {
         if (nrhs!=2 || nlhs>1)
@@ -108,7 +108,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "descriptorType") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
-        plhs[0] = MxArray(obj->descriptorType());
+        plhs[0] = MxArray(ClassNameInvMap[obj->descriptorType()]);
     }
     else if (method == "detect") {
         if (nrhs<3 || (nrhs%2)!=1 || nlhs>1)
@@ -131,7 +131,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             vector<Mat> masks;
             for (int i=3; i<nrhs; i+=2) {
                 string key(rhs[i].toString());
-                if (key == "Masks") {
+                if (key == "Mask") {
                     //masks = rhs[i+1].toVector<Mat>();
                     vector<MxArray> arr(rhs[i+1].toVector<MxArray>());
                     masks.clear();
@@ -151,7 +151,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error", "Invalid arguments");
     }
     else if (method == "detectRegions") {
-        if (nrhs != 3 || nlhs>2)
+        if (nrhs!=3 || nlhs>2)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
         Mat image(rhs[2].toMat());
         vector<vector<Point> > msers;

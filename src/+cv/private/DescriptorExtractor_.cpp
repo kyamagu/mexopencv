@@ -54,7 +54,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
         obj_.erase(id);
     }
-    else if (method == "type") {
+    else if (method == "typeid") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
         plhs[0] = MxArray(string(typeid(*obj).name()));
@@ -102,7 +102,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "defaultNorm") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
-        plhs[0] = MxArray(obj->defaultNorm());
+        plhs[0] = MxArray(NormTypeInv[obj->defaultNorm()]);
     }
     else if (method == "descriptorSize") {
         if (nrhs!=2 || nlhs>1)
@@ -112,7 +112,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "descriptorType") {
         if (nrhs!=2 || nlhs>1)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
-        plhs[0] = MxArray(obj->descriptorType());
+        plhs[0] = MxArray(ClassNameInvMap[obj->descriptorType()]);
     }
     else if (method == "compute") {
         if (nrhs!=4 || nlhs>2)
@@ -125,9 +125,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
             if (nlhs > 1)
                 plhs[1] = MxArray(keypoints);
         }
-        else if (rhs[2].isCell()) {  // second variant that accepts an image set
+        else if (rhs[2].isCell()) { // second variant that accepts an image set
             vector<Mat> images(rhs[2].toVector<Mat>()), descriptors;
-            vector<vector<KeyPoint> > keypoints(rhs[3].toVector<vector<KeyPoint> >());
+            vector<vector<KeyPoint> > keypoints(rhs[3].toVector(
+                const_mem_fun_ref_t<vector<KeyPoint>, MxArray>(
+                &MxArray::toVector<KeyPoint>)));
             obj->compute(images, keypoints, descriptors);
             plhs[0] = MxArray(descriptors);
             if (nlhs > 1)

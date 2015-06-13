@@ -2,13 +2,19 @@ classdef TestCircle
     %TestCircle
     properties (Constant)
     end
-    
+
     methods (Static)
-        function test_1
+        function test_circle
             im = 255*ones(128,128,3,'uint8');
-            a = cv.circle(im, [64,64], 20);
+            im = cv.circle(im, [64,64], 20);
         end
-        
+
+        function test_options
+            img = zeros([100 100 3],'uint8');
+            img = cv.circle(img, [50 50], 30, ...
+                'Color',[255 0 0], 'Thickness','Filled');
+        end
+
         function test_error_1
             try
                 cv.circle();
@@ -18,6 +24,5 @@ classdef TestCircle
             end
         end
     end
-    
-end
 
+end
