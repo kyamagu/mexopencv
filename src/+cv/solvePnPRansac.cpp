@@ -9,12 +9,13 @@ using namespace std;
 using namespace cv;
 
 namespace {
-/** Method used for solving the pose estimation problem.
- */
+/// Method used for solving the pose estimation problem.
 const ConstMap<std::string,int> PnPMethod = ConstMap<std::string,int>
     ("Iterative", cv::SOLVEPNP_ITERATIVE)
+    ("EPnP",      cv::SOLVEPNP_EPNP)
     ("P3P",       cv::SOLVEPNP_P3P)
-    ("EPnP",      cv::SOLVEPNP_EPNP);
+    ("DLS",       cv::SOLVEPNP_DLS)
+    ("UPnP",      cv::SOLVEPNP_UPNP);
 }
 
 /**
@@ -30,10 +31,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<3 || (nrhs%2)!=1 || nlhs>4)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
     Mat distCoeffs(4, 1, CV_64F);
     Mat rvec(3, 1, CV_64F), tvec(3, 1, CV_64F);
@@ -51,7 +52,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else if (key=="IterationsCount")
             iterationsCount = rhs[i+1].toInt();
         else if (key=="ReprojectionError")
-            reprojectionError = rhs[i+1].toDouble();
+            reprojectionError = rhs[i+1].toFloat();
         else if (key=="Confidence")
             confidence = rhs[i+1].toDouble();
         else if (key=="Rvec") {
@@ -62,7 +63,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             tvec = rhs[i+1].toMat(CV_64F);
             useExtrinsicGuess = true;
         }
-        else if (key=="Flags")
+        else if (key=="Method")
             flags = PnPMethod[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
@@ -73,18 +74,18 @@ void mexFunction( int nlhs, mxArray *plhs[],
     bool success = false;
     Mat cameraMatrix(rhs[2].toMat(CV_64F));
     if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
-        Mat objectPoints(rhs[0].toMat(CV_32F)),
-            imagePoints(rhs[1].toMat(CV_32F));
+        Mat objectPoints(rhs[0].toMat(CV_32F).reshape(3,0)),
+            imagePoints(rhs[1].toMat(CV_32F).reshape(2,0));
         success = solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs,
             rvec, tvec, useExtrinsicGuess, iterationsCount, reprojectionError,
-            confidence, inliers, flags);
+            confidence, (nlhs>2 ? inliers : noArray()), flags);
     }
     else if (rhs[0].isCell() && rhs[1].isCell()) {
         vector<Point3f> objectPoints(rhs[0].toVector<Point3f>());
         vector<Point2f> imagePoints(rhs[1].toVector<Point2f>());
         success = solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs,
             rvec, tvec, useExtrinsicGuess, iterationsCount, reprojectionError,
-            confidence, inliers, flags);
+            confidence, (nlhs>2 ? inliers : noArray()), flags);
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");

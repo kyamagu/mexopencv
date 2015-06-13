@@ -9,12 +9,13 @@ using namespace std;
 using namespace cv;
 
 namespace {
-/** Method used for solving the pose estimation problem.
- */
+/// Method used for solving the pose estimation problem.
 const ConstMap<std::string,int> PnPMethod = ConstMap<std::string,int>
     ("Iterative", cv::SOLVEPNP_ITERATIVE)
+    ("EPnP",      cv::SOLVEPNP_EPNP)
     ("P3P",       cv::SOLVEPNP_P3P)
-    ("EPnP",      cv::SOLVEPNP_EPNP);
+    ("DLS",       cv::SOLVEPNP_DLS)
+    ("UPnP",      cv::SOLVEPNP_UPNP);
 }
 
 /**
@@ -30,7 +31,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<3 || (nrhs%2)!=1 || nlhs>3)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
 
@@ -53,7 +54,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             tvec = rhs[i+1].toMat(CV_64F);
             useExtrinsicGuess = true;
         }
-        else if (key=="Flags")
+        else if (key=="Method")
             flags = PnPMethod[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
@@ -63,8 +64,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
     bool success = false;
     Mat cameraMatrix(rhs[2].toMat(CV_64F));
     if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
-        Mat objectPoints(rhs[0].toMat(CV_32F)),
-            imagePoints(rhs[1].toMat(CV_32F));
+        Mat objectPoints(rhs[0].toMat(CV_32F).reshape(3,0)),
+            imagePoints(rhs[1].toMat(CV_32F).reshape(2,0));
         success = solvePnP(objectPoints, imagePoints, cameraMatrix, distCoeffs,
             rvec, tvec, useExtrinsicGuess, flags);
     }
