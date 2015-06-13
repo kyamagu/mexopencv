@@ -343,8 +343,13 @@ cv::Ptr<cv::BFMatcher> createBFMatcher(
  *    - "BruteForce-Hamming" or "BruteForce-HammingLUT"
  *    - "BruteForce-Hamming(2)"
  *    - "FlannBased"
+ *    .
+ *    Or:
  *    - "FlannBasedMatcher"
  *    - "BFMatcher"
+ *    .
+ *    The last two matcher types are the ones that accept extra arguments
+ *    passed to the corresponding create functions.
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
  * @return smart pointer to an instance cv::DescriptorMatcher
