@@ -28,7 +28,7 @@ map<int,Ptr<MSER> > obj_;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-    if (nrhs<2 || nlhs>1)
+    if (nrhs<2 || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
 
     // Argument vector
@@ -151,7 +151,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error", "Invalid arguments");
     }
     else if (method == "detectRegions") {
-        if (nrhs != 3 || nlhs>2)
+        if (nrhs!=3 || nlhs>2)
             mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
         Mat image(rhs[2].toMat());
         vector<vector<Point> > msers;
