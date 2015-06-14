@@ -5,6 +5,13 @@ classdef UnitTest
     %   UnitTest;
     properties (Constant)
         TESTDIR = fullfile(mexopencv.root(),'test','unit_tests');
+        SKIP_OCTAVE = {
+            'TestConjGradSolver'  % local functions in M-classes
+            'TestDownhillSolver'
+            'TestNormalize'
+            'TestSVM'
+            'TestDTrees'          % throws and crashes
+        };
     end
 
     methods
@@ -15,6 +22,10 @@ classdef UnitTest
             for i = 1:numel(d)
                 class_name = strrep(d(i).name,'.m','');
                 fprintf('== %s ======\n',class_name);
+                if mexopencv.isOctave() && any(strcmp(class_name, UnitTest.SKIP_OCTAVE))
+                    disp('SKIP');
+                    continue
+                end
                 UnitTest.all(class_name);
             end
         end
