@@ -32,19 +32,27 @@ classdef UnitTest
                 error('UnitTest:all','invalid arg');
             end
 
-            if isprop(mc,'MethodList')
+            if ~mexopencv.isOctave() && isprop(mc,'MethodList')
                 mt = {mc.MethodList.Name};
             else
-                mt = cellfun(@(x) x.Name,mc.Methods,'UniformOutput',false);
+                mt = cellfun(@(x) x.Name, mc.Methods, 'UniformOutput',false);
             end
             mt = sort(mt(:))';
             for m = mt(strncmp('test',mt,length('test')))
                 fprintf('-- %s ------\n',m{:});
                 try
-                    feval([class_name,'.',m{:}]);
+                    if ~mexopencv.isOctave()
+                        feval([class_name,'.',m{:}]);
+                    else
+                        eval([class_name,'.',m{:}]);
+                    end
                     disp('PASS');
                 catch e
-                    disp(e.getReport);
+                    if ~mexopencv.isOctave()
+                        disp(e.getReport);
+                    else
+                        disp(e.message);
+                    end
                     disp('FAIL');
                 end
             end
@@ -52,4 +60,3 @@ classdef UnitTest
     end
 
 end
-
