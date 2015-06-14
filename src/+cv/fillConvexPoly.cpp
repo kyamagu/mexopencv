@@ -24,15 +24,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
-    Mat img = rhs[0].toMat();
-    vector<Point> pts = rhs[1].toVector<Point>();
     Scalar color;
-    int lineType=8;
-    int shift=0;
+    int lineType = cv::LINE_8;
+    int shift = 0;
     for (int i=2; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
+        string key(rhs[i].toString());
         if (key=="Color")
             color = rhs[i+1].toScalar();
         else if (key=="LineType")
@@ -43,8 +41,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
-    // Execute function
-    fillConvexPoly(img, &pts[0], pts.size(), color, lineType, shift);
+
+    // Process
+    Mat img(rhs[0].toMat());
+    vector<Point> pts(rhs[1].toVector<Point>());
+    fillConvexPoly(img, pts, color, lineType, shift);
     plhs[0] = MxArray(img);
 }

@@ -26,26 +26,27 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<MxArray> rhs(prhs,prhs+nrhs);
 
     // Option processing
-    const string text(rhs[0].toString());
     int fontFace = cv::FONT_HERSHEY_SIMPLEX;
+    int fontStyle = 0;
     double fontScale = 1.0;
     int thickness = 1;
-    int fontStyle = 0;
     for (int i=1; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
+        string key(rhs[i].toString());
         if (key=="FontFace")
             fontFace = FontFace[rhs[i+1].toString()];
+        else if (key=="FontStyle")
+            fontStyle = FontStyle[rhs[i+1].toString()];
         else if (key=="FontScale")
             fontScale = rhs[i+1].toDouble();
         else if (key=="Thickness")
-            thickness = rhs[i+1].toInt();
-        else if (key=="FontStyle")
-            fontStyle = FontStyle[rhs[i+1].toString()];
+            thickness = (rhs[i+1].isChar()) ?
+                ThicknessType[rhs[i+1].toString()] : rhs[i+1].toInt();
         else
             mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option");
     }
 
-    // Execute function
+    // Process
+    const string text(rhs[0].toString());
     int baseLine = 0;
     Size s = getTextSize(text, fontFace | fontStyle, fontScale, thickness,
         &baseLine);

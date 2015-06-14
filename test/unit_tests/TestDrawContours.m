@@ -14,13 +14,13 @@ classdef TestDrawContours
             0 0 0 0 0 0 0 0 0 0;...
             ]);
     end
-    
+
     methods (Static)
         function test_1
             [contours, hierarchy] = cv.findContours(TestDrawContours.img);
             im = cv.drawContours(TestDrawContours.img,contours,'Hierarchy',hierarchy);
         end
-        
+
         function test_error_1
             try
                 cv.drawContours();
@@ -30,6 +30,5 @@ classdef TestDrawContours
             end
         end
     end
-    
-end
 
+end

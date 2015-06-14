@@ -34,12 +34,18 @@ classdef BackgroundSubtractorMOG2 < handle
     end
 
     properties (Dependent)
-        frameSize        % Size of the frame (not accessible >= 2.4.0)
-        nframes          % Number of frames  (not accessible >= 2.4.0)
-        history          % History
-        nmixtures        % Number of mixture components (not accessible >= 2.4.0)
-        varThreshold     % Threshold value
-        backgroundRatio  % Ratio of the background (not accessible >= 2.4.0)
+        History          % History
+        NMixtures        % Number of mixture components
+        VarThreshold     % Threshold value
+        BackgroundRatio  % Ratio of the background
+        ComplexityReductionThreshold
+        DetectShadows
+        ShadowThreshold
+        ShadowValue
+        VarInit
+        VarMax
+        VarMin
+        VarThresholdGen
     end
 
     methods
@@ -47,19 +53,18 @@ classdef BackgroundSubtractorMOG2 < handle
             %BACKGROUNDSUBTRACTORMOG  BackgroundSubtractorMOG2 constructor
             %
             %    bs = cv.BackgroundSubtractorMOG2()
-            %    bs = cv.BackgroundSubtractorMOG2(history, varThreshold, 'OptionName', optionValue, ...)
+            %    bs = cv.BackgroundSubtractorMOG2('OptionName', optionValue, ...)
             %
-            % ## Input
-            % * __history__ Length of the history.
-            % * __varThreshold__ Threshold on the squared Mahalanobis distance to
+            % ## Options
+            % * __History__ Length of the history. default 500
+            % * __VarThreshold__ Threshold on the squared Mahalanobis distance to
             %        decide whether it is well described by the background
             %        model. This parameter does not affect the background
             %        update. A typical value could be 4 sigma, that is,
-            %        varThreshold=4*4=16.
-            %
-            % ## Options
-            % * __BShadowDetection__ Parameter defining whether shadow detection
-            %        should be enabled (true or false).
+            %        varThreshold=4*4=16. default 16
+            % * __DetectShadows__ If true, the algorithm will detect shadows and
+            %        mark them. It decreases the speed a bit, so if you do not
+            %        need this feature, set the parameter to false. default true
             %
             % See also cv.BackgroundSubtractorMOG2
             %
@@ -107,52 +112,88 @@ classdef BackgroundSubtractorMOG2 < handle
             im = BackgroundSubtractorMOG2_(this.id, 'getBackgroundImage');
         end
 
-        function value = get.frameSize(this)
-            value = BackgroundSubtractorMOG2_(this.id, 'frameSize');
+        function value = get.History(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'History');
+        end
+        function set.History(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'History', value);
         end
 
-        function set.frameSize(this, value)
-            BackgroundSubtractorMOG2_(this.id, 'frameSize', value);
+        function value = get.NMixtures(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'NMixtures');
+        end
+        function set.NMixtures(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'NMixtures', value);
         end
 
-        function value = get.nframes(this)
-            value = BackgroundSubtractorMOG2_(this.id, 'nframes');
+        function value = get.VarThreshold(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'VarThreshold');
+        end
+        function set.VarThreshold(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'VarThreshold', value);
         end
 
-        function set.nframes(this, value)
-            BackgroundSubtractorMOG2_(this.id, 'nframes', value);
+        function value = get.BackgroundRatio(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'BackgroundRatio');
+        end
+        function set.BackgroundRatio(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'BackgroundRatio', value);
         end
 
-        function value = get.history(this)
-            value = BackgroundSubtractorMOG2_(this.id, 'history');
+        function value = get.ComplexityReductionThreshold(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'ComplexityReductionThreshold');
+        end
+        function set.ComplexityReductionThreshold(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'ComplexityReductionThreshold', value);
         end
 
-        function set.history(this, value)
-            BackgroundSubtractorMOG2_(this.id, 'history', value);
+        function value = get.DetectShadows(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'DetectShadows');
+        end
+        function set.DetectShadows(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'DetectShadows', value);
         end
 
-        function value = get.nmixtures(this)
-            value = BackgroundSubtractorMOG2_(this.id, 'nmixtures');
+        function value = get.ShadowThreshold(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'ShadowThreshold');
+        end
+        function set.ShadowThreshold(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'ShadowThreshold', value);
         end
 
-        function set.nmixtures(this, value)
-            BackgroundSubtractorMOG2_(this.id, 'nmixtures', value);
+        function value = get.ShadowValue(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'ShadowValue');
+        end
+        function set.ShadowValue(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'ShadowValue', value);
         end
 
-        function value = get.varThreshold(this)
-            value = BackgroundSubtractorMOG2_(this.id, 'varThreshold');
+        function value = get.VarInit(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'VarInit');
+        end
+        function set.VarInit(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'VarInit', value);
         end
 
-        function set.varThreshold(this, value)
-            BackgroundSubtractorMOG2_(this.id, 'varThreshold', value);
+        function value = get.VarMax(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'VarMax');
+        end
+        function set.VarMax(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'VarMax', value);
         end
 
-        function value = get.backgroundRatio(this)
-            value = BackgroundSubtractorMOG2_(this.id, 'backgroundRatio');
+        function value = get.VarMin(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'VarMin');
+        end
+        function set.VarMin(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'VarMin', value);
         end
 
-        function set.backgroundRatio(this, value)
-            BackgroundSubtractorMOG2_(this.id, 'backgroundRatio', value);
+        function value = get.VarThresholdGen(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'VarThresholdGen');
+        end
+        function set.VarThresholdGen(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'VarThresholdGen', value);
         end
     end
 

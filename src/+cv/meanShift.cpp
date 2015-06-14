@@ -28,7 +28,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Option processing
     Mat probImage(rhs[0].toMat());
     Rect window(rhs[1].toRect());
-    TermCriteria criteria(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 10, 1);
+    TermCriteria criteria(TermCriteria::COUNT+TermCriteria::EPS, 10, 1);
     for (int i=2; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="Criteria")

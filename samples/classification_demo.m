@@ -1,68 +1,70 @@
-function classification_demo
-%CLASSIFICATION_DEMO  classification demo
-%
+%% Classification demo
 % This demonstrates an example of machine learning algorithms in a simple
 % classification problem. It compares different classifiers using the same
 % data samples.
-%
-% Before start, addpath('/path/to/mexopencv');
-%
 
+%%
 % Prepare data: there are two normal distributions
-X = [randn(1000,5)+.5; randn(1000,5)-.5]; % features
-Y = [    ones(1000,1);    -ones(1000,1)]; % labels
-test_idx = mod(1:numel(Y),3)==0;
+X = double([randn(1000,5)+.5; randn(1000,5)-.5]); % features
+Y =  int32([    ones(1000,1);    -ones(1000,1)]); % labels
+test_idx = mod(1:numel(Y),3)==0;                  % train/test split
 
-% Try ANN_MLP
-ann_mlp_demo(cv.ANN_MLP([5,2]), X, Y, test_idx);
-
-% Try other classifiers
-classifiers = {...
-    cv.NormalBayesClassifier,...
-    cv.KNearest,...
-    cv.SVM,...
-    cv.DTree,...
-    cv.Boost,...
-    cv.RTrees,...
-    cv.ERTrees...
+%%
+% try a bunch of classifiers
+classifiers = { ...
+    cv.ANN_MLP(), ...
+    cv.NormalBayesClassifier(), ...
+    cv.KNearest(), ...
+    cv.SVM(), ...
+    cv.DTrees(), ...
+    cv.Boost(), ...
+    cv.RTrees(), ...
+    ... cv.ERTrees(), ...
+    ... cv.GBTrees(), ...
+    cv.LogisticRegression() ...
 };
+
+% ANN_MLP must be initialized properly with non-default values
+classifiers{1}.LayerSizes = [5,2];
+classifiers{1}.setActivationFunction('Sigmoid', 'Param1',1, 'Param2',1);
+
+%%
+% for each classifier
 for i = 1:numel(classifiers)
-    classifier_demo(classifiers{i}, X, Y, test_idx);
-end
+    try
 
-end
+        classifier = classifiers{i};
+        fprintf('=== %s ===\n', class(classifier));
 
-function ann_mlp_demo(classifier, X, Y, test_idx)
-%ANN_MLP_DEMO
+        Ytrain = Y(~test_idx,:);
+        if isa(classifier, 'cv.ANN_MLP')
+            % Unroll to an indicator representation
+            Ytrain = double([Ytrain==1, Ytrain==-1]);
+        elseif isa(classifier, 'cv.LogisticRegression')
+            Ytrain = double(Ytrain);
+        end
+        
+        % train
+        tic;
+        classifier.train(X(~test_idx,:), Ytrain);
+        fprintf('Training time %f seconds\n', toc);
 
-Yi = double([Y==1,Y==-1]); % Unroll to an indicator representation
+        % predict
+        tic;
+        Yhat = classifier.predict(X(test_idx,:));
+        fprintf('Prediction time %f seconds\n', toc);
 
-fprintf('=== %s ===\n',class(classifier));
-tic;
-classifier.train(X(~test_idx,:),Yi(~test_idx,:));
-fprintf('Training time %f seconds\n',toc);
-tic;
-Yihat = classifier.predict(X(test_idx,:));
-fprintf('Prediction time %f seconds\n',toc);
+        if isa(classifier, 'cv.ANN_MLP')
+            % Get it back to a categorical vector
+            Yhat = (Yhat(:,1) > Yhat(:,2))*2 - 1;
+        end
 
-Yhat = 2*(Yihat(:,1)>Yihat(:,2))-1; % Get it back to a categorical vector
+        % evaluate
+        accuracy = nnz(Yhat == Y(test_idx)) / nnz(test_idx);
+        fprintf('Accuracy: %.2f%%\n', accuracy*100);
 
-accuracy = nnz(Yhat==Y(test_idx)) / nnz(test_idx);
-fprintf('Accuracy: %f\n',accuracy);
-
-end
-
-function classifier_demo(classifier, X, Y, test_idx)
-%CLASSIFIER_DEMO
-
-fprintf('=== %s ===\n',class(classifier));
-tic;
-classifier.train(X(~test_idx,:),Y(~test_idx));
-fprintf('Training time %f seconds\n',toc);
-tic;
-Yhat = classifier.predict(X(test_idx,:));
-fprintf('Prediction time %f seconds\n',toc);
-accuracy = nnz(Yhat==Y(test_idx)) / nnz(test_idx);
-fprintf('Accuracy: %f\n',accuracy);
-
+    catch ME
+        %disp(ME.getReport())
+        disp('error!')
+    end
 end

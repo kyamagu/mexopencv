@@ -42,6 +42,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
         mexErrMsgIdAndTxt("mexopencv:error","imdecode failed");
     // OpenCV's default is BGR while Matlab's is RGB
     if (m.type() == CV_8UC3)
-        cvtColor(m, m, CV_BGR2RGB);
+        cvtColor(m, m, cv::COLOR_BGR2RGB);
     plhs[0] = MxArray(m);
 }

@@ -6,9 +6,9 @@ classdef TestRTrees
     methods (Static)        
         function test_1
             X = [randn(50,3)+1;randn(50,3)-1];
-            Y = [ones(50,1);-ones(50,1)];
+            Y = double([ones(50,1);-ones(50,1)]);
             classifier = cv.RTrees;
-            classifier.train(X,Y,'VarType','Regression');
+            classifier.train(X,Y);
             Yhat = classifier.predict(X);
         end
         
@@ -16,11 +16,10 @@ classdef TestRTrees
             X = [randn(50,3)+1;randn(50,3)-1];
             Y = [ones(50,1);-ones(50,1)];
             classifier = cv.RTrees;
-            classifier.train(X,Y,'CalcVarImportance',true);
+            classifier.CalculateVarImportance = true;
+            classifier.train(X,Y);
             Yhat = classifier.predict(X);
-            %classifier.get_train_error;
-            classifier.getVarImportance;
-            P = classifier.predict_prob(X);
+            classifier.getVarImportance();
         end
     end
     

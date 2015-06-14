@@ -11,6 +11,9 @@ function make(varargin)
 % ## Options
 % * **opencv_path** string specifying the path to OpenCV installation
 %       default `'C:\OpenCV'`
+% * **opencv_contrib** flag to indicate whether optional opencv modules are
+%       available or not. These can only be selected in OpenCV at compile-time.
+%       default `false`.
 % * __clean__ clean all compiled MEX files. default `false`
 % * __test__ run all unit-tests. default `false`
 % * __dryrun__ dont actually run commands, just print them. default `false`
@@ -38,13 +41,8 @@ function make(varargin)
 %    mexopencv.make('extra','--jobs=2')           % instruct Make to execute N
 %                                                 %  jobs in parallel (Unix only)
 %
-% See also mex
+% See also: mex
 %
-
-if isOctave
-    setenv('CFLAGS', '-fpermissive');
-    setenv('CXXFLAGS', '-fpermissive');
-end
 
 MEXOPENCV_ROOT = mexopencv.root();
 
@@ -62,33 +60,42 @@ if ispc % Windows
             fprintf('Cleaning all generated files...\n');
         end
 
-        cmd = fullfile(MEXOPENCV_ROOT, '+cv', ['*.' mexext]);
-        if opts.verbose > 0, disp(cmd); end
-        if ~opts.dryrun, delete(cmd); end
+        del_cmds = {
+            fullfile(MEXOPENCV_ROOT, '+cv', ['*.' mexext]) ;
+            fullfile(MEXOPENCV_ROOT, '+cv', '*.pdb') ;
+            fullfile(MEXOPENCV_ROOT, '+cv', '*.idb') ;
+            fullfile(MEXOPENCV_ROOT, '+cv', 'private', ['*.' mexext]) ;
+            fullfile(MEXOPENCV_ROOT, '+cv', 'private', '*.pdb') ;
+            fullfile(MEXOPENCV_ROOT, '+cv', 'private', '*.idb') ;
+            fullfile(MEXOPENCV_ROOT, 'lib', '*.obj') ;
+            fullfile(MEXOPENCV_ROOT, 'lib', '*.lib') ;
+            fullfile(MEXOPENCV_ROOT, 'lib', '*.pdb') ;
+            fullfile(MEXOPENCV_ROOT, 'lib', '*.idb')
+        };
+        if opts.opencv_contrib
+            del_cmds = [del_cmds ; ...
+                fullfile(MEXOPENCV_ROOT, 'opencv_contrib', '+cv', ['*.' mexext]) ; ...
+                fullfile(MEXOPENCV_ROOT, 'opencv_contrib', '+cv', '*.pdb') ; ...
+                fullfile(MEXOPENCV_ROOT, 'opencv_contrib', '+cv', '*.idb') ; ...
+                fullfile(MEXOPENCV_ROOT, 'opencv_contrib', '+cv', 'private', ['*.' mexext]) ; ...
+                fullfile(MEXOPENCV_ROOT, 'opencv_contrib', '+cv', 'private', '*.pdb') ; ...
+                fullfile(MEXOPENCV_ROOT, 'opencv_contrib', '+cv', 'private', '*.idb') ...
+            ];
+        end
 
-        cmd = fullfile(MEXOPENCV_ROOT, '+cv', 'private', ['*.' mexext]);
-        if opts.verbose > 0, disp(cmd); end
-        if ~opts.dryrun, delete(cmd); end
-
-        cmd = fullfile(MEXOPENCV_ROOT, '+cv', '*.pdb');
-        if opts.verbose > 0, disp(cmd); end
-        if ~opts.dryrun, delete(cmd); end
-
-        cmd = fullfile(MEXOPENCV_ROOT, '+cv', 'private', '*.pdb');
-        if opts.verbose > 0, disp(cmd); end
-        if ~opts.dryrun, delete(cmd); end
-
-        cmd = fullfile(MEXOPENCV_ROOT, 'lib', '*.obj');
-        if opts.verbose > 0, disp(cmd); end
-        if ~opts.dryrun, delete(cmd); end
+        for i=1:numel(del_cmds)
+            cmd = del_cmds{i};
+            if opts.verbose > 0, disp(cmd); end
+            if ~opts.dryrun, delete(cmd); end
+        end
 
         return;
     end
 
-    % Unittests
+    % Unit-testing
     if opts.test
         if opts.verbose > 0
-            fprintf('Running unittests...\n');
+            fprintf('Running unit-tests...\n');
         end
 
         cd(fullfile(MEXOPENCV_ROOT,'test'));
@@ -96,18 +103,12 @@ if ispc % Windows
         return;
     end
 
-    % compile flags
+    % mex build options
     [cv_cflags,cv_libs] = pkg_config(opts);
     [comp_flags,link_flags] = compilation_flags(opts);
-    if isOctave
-        mex_flags = sprintf('%s %s -I''%s'' %s %s',...
-            comp_flags, link_flags, fullfile(MEXOPENCV_ROOT,'include'), ...
-            cv_cflags, cv_libs);
-    else
-        mex_flags = sprintf('-largeArrayDims %s %s -I''%s'' %s %s',...
-            comp_flags, link_flags, fullfile(MEXOPENCV_ROOT,'include'), ...
-            cv_cflags, cv_libs);
-    end
+    mex_flags = sprintf('-largeArrayDims %s %s -I''%s'' %s %s',...
+        comp_flags, link_flags, fullfile(MEXOPENCV_ROOT,'include'), ...
+        cv_cflags, cv_libs);
     if opts.verbose > 1
         mex_flags = ['-v ' mex_flags];    % verbose mex output
     elseif opts.verbose == 0 && ~verLessThan('matlab', '8.3')
@@ -117,61 +118,45 @@ if ispc % Windows
         mex_flags = ['-g ' mex_flags];    % debug vs. optimized builds
     end
 
-    % Compile MxArray
-    src = fullfile(MEXOPENCV_ROOT,'src','MxArray.cpp');
-    dst = fullfile(MEXOPENCV_ROOT,'lib','MxArray.obj');
-    if compile_needed(src, dst) || opts.force
-        if isOctave
-            cmd = sprintf('mex %s -c ''%s'' -o ''%s''', ...
-                mex_flags, src, dst);
-        else
+    % Compile MxArray and any other shared sources into OBJs (compile-only)
+    files = prepare_source_files(...
+        fullfile(MEXOPENCV_ROOT,'src'), 'cpp', ...
+        fullfile(MEXOPENCV_ROOT,'lib'), 'obj');
+    for i=1:numel(files)
+        if opts.force || compile_needed(files(i).src, files(i).dst)
             cmd = sprintf('mex %s -c ''%s'' -outdir ''%s''', ...
-                mex_flags, src, fileparts(dst));
+                mex_flags, files(i).src, fullfile(MEXOPENCV_ROOT,'lib'));
+            if opts.verbose > 0, disp(cmd); end
+            if ~opts.dryrun, eval(cmd); end
+            opts.force = true;  % dependency changed, invalidate all MEX-files
+        else
+            if opts.verbose > 0, fprintf('Skipped "%s"\n', files(i).src); end
         end
-        if opts.verbose > 0, disp(cmd); end
-        if ~opts.dryrun, eval(cmd); end
-        opts.force = true;
-    else
-        if opts.verbose > 0
-            fprintf('Skipped "%s"\n', src);
+        if ~opts.dryrun && ~exist(files(i).dst, 'file')
+            error('mexopencv:make', 'Failed to compile "%s"', files(i).src);
         end
     end
-    if ~exist(dst, 'file') && ~opts.dryrun
-        error('mexopencv:make', '"%s" not found', dst);
-    end
+    objs = strtrim(sprintf(' ''%s''',files.dst));
 
-    % Compile other MEX files
-    obj = fullfile(MEXOPENCV_ROOT,'lib','MxArray.obj');
-    srcs = dir( fullfile(MEXOPENCV_ROOT,'src','+cv','*.cpp') );
-    [~,srcs] = cellfun(@fileparts, {srcs.name}, 'UniformOutput',false);
-    psrcs = dir( fullfile(MEXOPENCV_ROOT,'src','+cv','private','*.cpp'));
-    [~,psrcs] = cellfun(@fileparts, {psrcs.name}, 'UniformOutput',false);
-    psrcs = strcat('private', filesep, psrcs);
-    srcs = [srcs,psrcs];
+    % Build MEX files
+    files = collect_mex_files(opts);
     if opts.progressbar
         hWait = waitbar(0, 'Compiling MEX files...');
     end
-    for i = 1:numel(srcs)
+    for i = 1:numel(files)
         if opts.progressbar
-            waitbar(i/numel(srcs), hWait);
+            waitbar(i/numel(files), hWait);
         end
-        src = fullfile(MEXOPENCV_ROOT,'src','+cv',[srcs{i} '.cpp']);
-        dst = fullfile(MEXOPENCV_ROOT,'+cv',srcs{i});
-        fulldst = [dst, '.', mexext];
-        if compile_needed(src, fulldst) || opts.force
-            if isOctave
-                cmd = sprintf('mex %s ''%s'' ''%s'' -o ''%s''',...
-                    mex_flags, src, obj, dst);
-            else
-                cmd = sprintf('mex %s ''%s'' ''%s'' -output ''%s''',...
-                    mex_flags, src, obj, dst);
-            end
+        if opts.force || compile_needed(files(i).src, files(i).dst)
+            cmd = sprintf('mex %s ''%s'' %s -output ''%s''',...
+                mex_flags, files(i).src, objs, files(i).out);
             if opts.verbose > 0, disp(cmd); end
             if ~opts.dryrun, eval(cmd); end
         else
-            if opts.verbose > 0
-                fprintf('Skipped "%s"\n', src);
-            end
+            if opts.verbose > 0, fprintf('Skipped "%s"\n', files(i).src); end
+        end
+        if ~opts.dryrun && ~exist(files(i).dst, 'file')
+            error('mexopencv:make', 'Failed to compile "%s"', files(i).src);
         end
     end
     if opts.progressbar
@@ -190,6 +175,7 @@ else % Unix
     if opts.test           , options = [options 'test']; end
     if ~isempty(opts.extra), options = [options opts.extra]; end
 
+    % call Makefile
     cmd = sprintf('make MATLABDIR="%s" MEXEXT=%s %s', ...
         matlabroot, mexext, sprintf(' %s', options{:}));
     if opts.verbose > 0, disp(cmd); end
@@ -198,29 +184,29 @@ end
 
 end
 
-%
+%%
 % Helper functions for windows
 %
+
 function [cflags,libs] = pkg_config(opts)
     %PKG_CONFIG  constructs OpenCV-related option flags for Windows
+    %
+
     I_path = fullfile(opts.opencv_path,'include');
-    if isOctave
-        L_path = fullfile(opts.opencv_path,arch_str(),compiler_str(),'bin');
-    else
-        L_path = fullfile(opts.opencv_path,arch_str(),compiler_str(),'lib');
-    end  
+    if ~exist(I_path,'dir')
+        error('mexopencv:make', 'OpenCV include path not found: %s', I_path);
+    end
+
+    L_path = fullfile(opts.opencv_path,arch_str(),compiler_str(),'lib');
+    if ~exist(L_path,'dir')
+        error('mexopencv:make', 'OpenCV library path not found: %s', L_path);
+    end
+
     l_options = strcat({' -l'}, lib_names(L_path));
     if opts.debug
         l_options = strcat(l_options,'d');    % link against debug binaries
     end
     l_options = [l_options{:}];
-
-    if ~exist(I_path,'dir')
-        error('mexopencv:make', 'OpenCV include path not found: %s', I_path);
-    end
-    if ~exist(L_path,'dir')
-        error('mexopencv:make', 'OpenCV library path not found: %s', L_path);
-    end
 
     cflags = sprintf('-I''%s''', I_path);
     libs = sprintf('-L''%s'' %s', L_path, l_options);
@@ -228,7 +214,10 @@ end
 
 function s = arch_str()
     %ARCH_STR  return architecture used in mex
-    if xor(isempty(strfind(mexext, '64')), isOctave && ~isempty(strfind(computer, 'x86_64')))
+    %
+    % See also: mexext
+    %
+    if isempty(strfind(mexext, '64'))
         s = 'x86';
     else
         s = 'x64';
@@ -237,52 +226,54 @@ end
 
 function s = compiler_str()
     %COMPILER_STR  return compiler shortname
-    if isOctave
-        s = 'mingw';
-    else
-        s = '';
-        cc = mex.getCompilerConfigurations('C++', 'Selected');
-        if strcmp(cc.Manufacturer, 'Microsoft')
-            if ~isempty(strfind(cc.Name, 'Visual'))  % Visual Studio
-                switch cc.Version
-                    case '12.0'
-                        s = 'vc12';    % VS2013
-                    case '11.0'
-                        s = 'vc11';    % VS2012
-                    case '10.0'
-                        s = 'vc10';    % VS2010
-                    case '9.0'
-                        s = 'vc9';     % VS2008
-                    case '8.0'
-                        s = 'vc8';     % VS2005
-                end
-            elseif ~isempty(strfind(cc.Name, 'SDK'))  % Windows SDK
-                switch cc.Version
-                    case '8.1'
-                        s = 'vc12';    % VS2013
-                    case '8.0'
-                        s = 'vc11';    % VS2012
-                    case '7.1'
-                        s = 'vc10';    % VS2010
-                    case {'7.0', '6.1'}
-                        s = 'vc9';     % VS2008
-                    case '6.0'
-                        s = 'vc8';     % VS2005
-                end
+    %
+    % See also: mex.getCompilerConfigurations
+    %
+    s = '';
+    cc = mex.getCompilerConfigurations('C++', 'Selected');
+    if strcmp(cc.Manufacturer, 'Microsoft')
+        if ~isempty(strfind(cc.Name, 'Visual'))  % Visual Studio
+            switch cc.Version
+                case '12.0'
+                    s = 'vc12';    % VS2013
+                case '11.0'
+                    s = 'vc11';    % VS2012
+                case '10.0'
+                    s = 'vc10';    % VS2010
+                case '9.0'
+                    s = 'vc9';     % VS2008
+                case '8.0'
+                    s = 'vc8';     % VS2005
             end
-        elseif strcmp(cc.Manufacturer, 'Intel')  % Intel C++ Composer
-            % TODO: check versions 11.0, 12.0, 13.0, 14.0, 15.0
-        elseif ~isempty(strfind(cc.Name, 'GNU'))  % MinGW (GNU GCC)
-            s = 'mingw';
+        elseif ~isempty(strfind(cc.Name, 'SDK'))  % Windows SDK
+            switch cc.Version
+                case '8.1'
+                    s = 'vc12';    % VS2013
+                case '8.0'
+                    s = 'vc11';    % VS2012
+                case '7.1'
+                    s = 'vc10';    % VS2010
+                case {'7.0', '6.1'}
+                    s = 'vc9';     % VS2008
+                case '6.0'
+                    s = 'vc8';     % VS2005
+            end
         end
-        if isempty(s)
-            error('mexopencv:make', 'Unsupported compiler: %s', cc.Name);
-        end
+    elseif strcmp(cc.Manufacturer, 'Intel')  % Intel C++ Composer
+        % TODO: check versions 11.0, 12.0, 13.0, 14.0, 15.0
+    elseif ~isempty(strfind(cc.Name, 'GNU'))  % MinGW (GNU GCC)
+        s = 'mingw';
+    end
+    if isempty(s)
+        error('mexopencv:make', 'Unsupported compiler: %s', cc.Name);
     end
 end
 
 function [comp_flags,link_flags] = compilation_flags(opts)
     %COMPILATION_FLAGS  return compiler/linker flags passed directly to them
+    %
+    % See also: mex.getCompilerConfigurations
+    %
 
     % additional flags. default none
     comp_flags = {};
@@ -290,12 +281,8 @@ function [comp_flags,link_flags] = compilation_flags(opts)
 
     % override _SECURE_SCL for VS versions prior to VS2010,
     % or when linking against debug OpenCV binaries
-    if isOctave
-      isVS = false;
-    else
-      c = mex.getCompilerConfigurations('C++','Selected');
-      isVS = strcmp(c.Manufacturer,'Microsoft') && ~isempty(strfind(c.Name,'Visual'));
-    end
+    c = mex.getCompilerConfigurations('C++','Selected');
+    isVS = strcmp(c.Manufacturer,'Microsoft') && ~isempty(strfind(c.Name,'Visual'));
     if isVS && (str2double(c.Version) < 10 || opts.debug)
         comp_flags{end+1} = '/D_SECURE_SCL=1';
     end
@@ -322,18 +309,17 @@ end
 
 function l = lib_names(L_path)
     %LIB_NAMES  return library names
-    if isOctave
-        d = dir( fullfile(L_path,'*opencv_*.dll') );
-        l = regexp({d.name}, '(opencv_.+)\.dll', 'tokens', 'once');
-    else
-        d = dir( fullfile(L_path,'opencv_*d.lib') );
-        l = regexp({d.name}, '(opencv_.+)d\.lib', 'tokens', 'once');
+    %
+    d = dir( fullfile(L_path,'opencv_*.lib') );
+    l = unique(regexprep({d.name}, 'd?\.lib$', ''));
+    if isempty(l)
+        error('mexopencv:make', 'Failed to find OpenCV libraries')
     end
-    l = [l{:}];
 end
 
 function r = compile_needed(src, dst)
-    %COMPILE_NEEDED check timestamps
+    %COMPILE_NEEDED  check timestamps
+    %
     if ~exist(dst, 'file')
         r = true;
     else
@@ -343,8 +329,67 @@ function r = compile_needed(src, dst)
     end
 end
 
+function files = prepare_source_files(dir_src, src_ext, dir_dst, dst_ext)
+    %PREPARE_SOURCE_FILES  Lists source files and corresponding targets
+    %
+
+    % get directory listing of sources
+    f = dir(fullfile(dir_src,['*.' src_ext]));
+    
+    % base filenames
+    [~,names] = cellfun(@fileparts, {f.name}, 'UniformOutput',false);
+    
+    % full source filenames
+    srcs = cellfun(@(n) fullfile(dir_src,[n '.' src_ext]), names, 'Uniform',false);
+
+    % destionation filenames (w/o extension)
+    outs = cellfun(@(n) fullfile(dir_dst,n), names, 'Uniform',false);
+    
+    % full destination filenames (w/ extension)
+    dsts = strcat(outs, ['.' dst_ext]);
+    
+    % return structure
+    files = struct('name',names, 'src',srcs, 'dst',dsts, 'out',outs);
+end
+
+function files = collect_mex_files(opts)
+    %COLLECT_MEX_FILES  Collect all source files to be compiled into MEX
+    %
+
+    MEXOPENCV_ROOT = mexopencv.root();
+    files = {};
+
+    % ROOT\src\+cv\*.cpp
+    files{1} = prepare_source_files(...
+        fullfile(MEXOPENCV_ROOT,'src','+cv'), 'cpp', ...
+        fullfile(MEXOPENCV_ROOT,'+cv'), mexext);
+
+    % ROOT\src\+cv\private\*.cpp
+    files{2} = prepare_source_files(...
+        fullfile(MEXOPENCV_ROOT,'src','+cv','private'), 'cpp', ...
+        fullfile(MEXOPENCV_ROOT,'+cv','private'), mexext);
+
+    if opts.opencv_contrib
+        % ROOT\opencv_contrib\src\+cv\*.cpp
+        files{3} = prepare_source_files(...
+            fullfile(MEXOPENCV_ROOT,'opencv_contrib','src','+cv'), 'cpp', ...
+            fullfile(MEXOPENCV_ROOT,'opencv_contrib','+cv'), mexext);
+
+        % ROOT\opencv_contrib\src\+cv\private\*.cpp
+        files{4} = prepare_source_files(...
+            fullfile(MEXOPENCV_ROOT,'opencv_contrib','src','+cv','private'), 'cpp', ...
+            fullfile(MEXOPENCV_ROOT,'opencv_contrib','+cv','private'), mexext);
+    end
+
+    % all combined as an array of structs
+    files = [files{:}];
+end
+
 function check_path_opencv(opts)
     %CHECK_PATH_OPENCV  check OpenCV bin folder is on the system PATH env. var.
+    %
+    % See also: getenv
+    %
 
     % check system PATH environment variable
     cv_folder = fullfile(opts.opencv_path,arch_str(),compiler_str(),'bin');
@@ -367,11 +412,14 @@ end
 
 function check_path_mexopencv(opts)
     %CHECK_PATH_MEXOPENCV  check mexopencv is on MATLAB search path
+    %
+    % See also: path
+    %
 
     % check MATLAB search path
-    cv_folder = mexopencv.root();
+    mcv_folder = mexopencv.root();
     C = textscan(path(), '%s', 'Delimiter',pathsep());
-    if ~any(strcmpi(cv_folder,C{1}))
+    if ~any(strcmpi(mcv_folder,C{1}))
         % reminder
         if opts.verbose > 0
             disp('To use mexopencv, add its root folder to MATLAB search path.');
@@ -379,19 +427,24 @@ function check_path_mexopencv(opts)
 
         % add mexopencv to path temporarily for this session
         if ~opts.dryrun
-            addpath(cv_folder, '-end');
+            addpath(mcv_folder, '-end');
         end
     end
 end
 
-%
+%%
 % Helper function to parse options
 %
+
 function opts = getargs(varargin)
     %GETARGS  Process parameter name/value pairs
+    %
+    % See also: inputParser
+    %
 
     % default values
     opts.opencv_path = 'C:\opencv';  % OpenCV location
+    opts.opencv_contrib = false;     % optional/extra OpenCV modules
     opts.clean = false;              % clean mode
     opts.test = false;               % unittest mode
     opts.dryrun = false;             % dry run mode
@@ -413,6 +466,8 @@ function opts = getargs(varargin)
         switch lower(pname)
             case 'opencv_path'
                 opts.opencv_path = char(val);
+            case 'opencv_contrib'
+                opts.opencv_contrib = logical(val);
             case 'clean'
                 opts.clean = logical(val);
             case 'test'
@@ -433,17 +488,4 @@ function opts = getargs(varargin)
                 error('mexopencv:make', 'Invalid parameter name:  %s.', pname);
         end
     end
-end
-
-%%
-%% Return: true if the environment is Octave.
-%%
-function retval = isOctave
-    persistent cacheval;  % speeds up repeated calls
-
-    if isempty (cacheval)
-        cacheval = (exist ('OCTAVE_VERSION', 'builtin') > 0);
-    end
-
-    retval = cacheval;
 end

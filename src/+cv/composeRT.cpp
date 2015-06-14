@@ -8,28 +8,39 @@
 using namespace std;
 using namespace cv;
 
-/// Field names for struct
-const char* _fieldnames[] = {"rvec3", "tvec3", "dr3dr1", "dr3dt1", "dr3dr2",
-    "dr3dt2", "dt3dr1", "dt3dt1", "dt3dr2", "dt3dt2"};
-/// Create a struct
-mxArray* valueStruct(const Mat& rvec3, const Mat& tvec3, const Mat& dr3dr1,
+namespace {
+/** Create a new MxArray from combined transformations.
+ * @param rvec3 Rotation vector of the superposition.
+ * @param tvec3 Translation vector of the superposition.
+ * @param dr3dr1 Derivative of \p rvec3 with regard to \c rvec1.
+ * @param dr3dt1 Derivative of \p rvec3 with regard to \c tvec1.
+ * @param dr3dr2 Derivative of \p rvec3 with regard to \c rvec2.
+ * @param dr3dt2 Derivative of \p rvec3 with regard to \c tvec2.
+ * @param dt3dr1 Derivative of \p tvec3 with regard to \c rvec1.
+ * @param dt3dt1 Derivative of \p tvec3 with regard to \c tvec1.
+ * @param dt3dr2 Derivative of \p tvec3 with regard to \c rvec2.
+ * @param dt3dt2 Derivative of \p tvec3 with regard to \c tvec2.
+ * @return output MxArray struct object.
+ */
+MxArray valueStruct(const Mat& rvec3, const Mat& tvec3, const Mat& dr3dr1,
     const Mat& dr3dt1, const Mat& dr3dr2, const Mat& dr3dt2, const Mat& dt3dr1,
     const Mat& dt3dt1, const Mat& dt3dr2, const Mat& dt3dt2)
 {
-    mxArray* p = mxCreateStructMatrix(1,1,10,_fieldnames);
-    if (!p)
-        mexErrMsgIdAndTxt("mexopencv:error","Allocation error");
-    mxSetField(p,0,"rvec3",MxArray(rvec3));
-    mxSetField(p,0,"tvec3",MxArray(tvec3));
-    mxSetField(p,0,"dr3dr1",MxArray(dr3dr1));
-    mxSetField(p,0,"dr3dt1",MxArray(dr3dt1));
-    mxSetField(p,0,"dr3dr2",MxArray(dr3dr2));
-    mxSetField(p,0,"dr3dt2",MxArray(dr3dt2));
-    mxSetField(p,0,"dt3dr1",MxArray(dt3dr1));
-    mxSetField(p,0,"dt3dt1",MxArray(dt3dt1));
-    mxSetField(p,0,"dt3dr2",MxArray(dt3dr2));
-    mxSetField(p,0,"dt3dt2",MxArray(dt3dt2));
-    return p;
+    const char* fieldnames[] = {"rvec3", "tvec3", "dr3dr1", "dr3dt1",
+        "dr3dr2", "dr3dt2", "dt3dr1", "dt3dt1", "dt3dr2", "dt3dt2"};
+    MxArray s = MxArray::Struct(fieldnames, 10);
+    s.set("rvec3",  rvec3);
+    s.set("tvec3",  tvec3);
+    s.set("dr3dr1", dr3dr1);
+    s.set("dr3dt1", dr3dt1);
+    s.set("dr3dr2", dr3dr2);
+    s.set("dr3dt2", dr3dt2);
+    s.set("dt3dr1", dt3dr1);
+    s.set("dt3dt1", dt3dt1);
+    s.set("dt3dr2", dt3dr2);
+    s.set("dt3dt2", dt3dt2);
+    return s;
+}
 }
 
 /**
@@ -45,18 +56,17 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs!=4 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
-    Mat rvec1(rhs[0].toMat(CV_32F));
-    Mat tvec1(rhs[1].toMat(CV_32F));
-    Mat rvec2(rhs[2].toMat(CV_32F));
-    Mat tvec2(rhs[3].toMat(CV_32F));
-    Mat rvec3, tvec3, dr3dr1, dr3dt1, dr3dr2, dr3dt2, dt3dr1, dt3dt1, dt3dr2, dt3dt2;
-    
-    // Process
-    composeRT(rvec1, tvec1, rvec2, tvec2, rvec3, tvec3, dr3dr1, dr3dt1, dr3dr2, dr3dt2, dt3dr1, dt3dt1, dt3dr2, dt3dt2);
 
-    plhs[0] = valueStruct(rvec3, tvec3, dr3dr1, dr3dt1, dr3dr2, dr3dt2, dt3dr1, dt3dt1, dt3dr2, dt3dt2);
+    // Process
+    Mat rvec1(rhs[0].toMat(CV_32F)), tvec1(rhs[1].toMat(CV_32F)),
+        rvec2(rhs[2].toMat(CV_32F)), tvec2(rhs[3].toMat(CV_32F));
+    Mat rvec3, tvec3, dr3dr1, dr3dt1, dr3dr2, dr3dt2,
+        dt3dr1, dt3dt1, dt3dr2, dt3dt2;
+    composeRT(rvec1, tvec1, rvec2, tvec2, rvec3, tvec3,
+        dr3dr1, dr3dt1, dr3dr2, dr3dt2, dt3dr1, dt3dt1, dt3dr2, dt3dt2);
+    plhs[0] = valueStruct(rvec3, tvec3,
+        dr3dr1, dr3dt1, dr3dr2, dr3dt2, dt3dr1, dt3dt1, dt3dr2, dt3dt2);
 }

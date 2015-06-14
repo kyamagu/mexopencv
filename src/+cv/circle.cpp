@@ -24,21 +24,19 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
-    Mat img = rhs[0].toMat();
-    Point center = rhs[1].toPoint();
-    int radius = rhs[2].toInt();
     Scalar color;
-    int thickness=1;
-    int lineType=8;
-    int shift=0;
+    int thickness = 1;
+    int lineType = cv::LINE_8;
+    int shift = 0;
     for (int i=3; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
+        string key(rhs[i].toString());
         if (key=="Color")
             color = rhs[i+1].toScalar();
         else if (key=="Thickness")
-            thickness = rhs[i+1].toInt();
+            thickness = (rhs[i+1].isChar()) ?
+                ThicknessType[rhs[i+1].toString()] : rhs[i+1].toInt();
         else if (key=="LineType")
             lineType = (rhs[i+1].isChar()) ?
                 LineType[rhs[i+1].toString()] : rhs[i+1].toInt();
@@ -47,8 +45,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
-    // Execute function
+
+    // Process
+    Mat img(rhs[0].toMat());
+    Point center(rhs[1].toPoint());
+    int radius = rhs[2].toInt();
     circle(img, center, radius, color, thickness, lineType, shift);
     plhs[0] = MxArray(img);
 }

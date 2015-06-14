@@ -35,14 +35,14 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     
     // Option processing
-    int interpolation=INTER_LINEAR;
-    int borderType=BORDER_CONSTANT;
+    int interpolation=cv::INTER_LINEAR;
+    int borderType=cv::BORDER_CONSTANT;
     Scalar borderValue;
     for (int i=opts; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="Interpolation") {
-            interpolation = InterType[rhs[i+1].toString()];
-            if (interpolation==INTER_AREA)
+            interpolation = InterpType[rhs[i+1].toString()];
+            if (interpolation==cv::INTER_AREA)
                 mexErrMsgIdAndTxt("mexopencv:error","'Area' is not supported");
         }
         else if (key=="BorderType")

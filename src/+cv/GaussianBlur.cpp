@@ -29,7 +29,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     Size ksize(5,5);
     double sigmaX = 0;
     double sigmaY = 0;
-    int borderType = BORDER_DEFAULT;
+    int borderType = cv::BORDER_DEFAULT;
     for (int i=1; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="KSize")

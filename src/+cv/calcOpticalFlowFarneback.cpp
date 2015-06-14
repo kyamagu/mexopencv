@@ -38,7 +38,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         string key = rhs[i].toString();
         if (key=="InitialFlow") {
             flow = rhs[i+1].toMat(CV_32F);
-            flags |= OPTFLOW_USE_INITIAL_FLOW;
+            flags |= cv::OPTFLOW_USE_INITIAL_FLOW;
         }
         else if (key=="PyrScale")
             pyrScale = rhs[i+1].toDouble();
@@ -53,7 +53,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else if (key=="PolySigma")
             polySigma = rhs[i+1].toDouble();
         else if (key=="Gaussian")
-            flags |= OPTFLOW_FARNEBACK_GAUSSIAN;
+            flags |= cv::OPTFLOW_FARNEBACK_GAUSSIAN;
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }

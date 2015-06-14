@@ -11,10 +11,13 @@ using namespace cv;
 /** Histogram comparison methods
  */
 const ConstMap<std::string,int> HistComp = ConstMap<std::string,int>
-    ("Correl",CV_COMP_CORREL)
-    ("ChiSqr",CV_COMP_CHISQR)
-    ("Intersect",CV_COMP_INTERSECT)
-    ("Bhattacharyya",CV_COMP_BHATTACHARYYA);
+    ("Correlation",     cv::HISTCMP_CORREL)
+    ("ChiSquare",       cv::HISTCMP_CHISQR)
+    ("Intersection",    cv::HISTCMP_INTERSECT)
+    ("Bhattacharyya",   cv::HISTCMP_BHATTACHARYYA)
+    ("Hellinger",       cv::HISTCMP_HELLINGER)
+    ("AltChiSquare",    cv::HISTCMP_CHISQR_ALT)
+    ("KullbackLeibler", cv::HISTCMP_KL_DIV);
 
 /**
  * Main entry called from Matlab
@@ -34,7 +37,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
     // Option processing
-    int method = CV_COMP_CORREL;
+    int method = cv::HISTCMP_CORREL;
     for (int i=2; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="Method")

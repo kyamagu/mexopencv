@@ -29,7 +29,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     Mat element;
     Point anchor(-1,-1);
     int iterations = 1;
-    int borderType = BORDER_CONSTANT;
+    int borderType = cv::BORDER_CONSTANT;
     Scalar borderValue = morphologyDefaultBorderValue();
     for (int i=1; i<nrhs; i+=2) {
         string key = rhs[i].toString();
@@ -41,7 +41,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             iterations = rhs[i+1].toInt();
         else if (key=="BorderType")
             borderType = BorderType[rhs[i+1].toString()];
-        else if (key=="BorderType")
+        else if (key=="BorderValue")
             borderValue = rhs[i+1].toScalar();
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");

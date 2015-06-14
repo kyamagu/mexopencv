@@ -17,13 +17,13 @@ classdef TestGoodFeaturesToTrack
             0 0 0 0 0 0 0 0 0 0 0 0 0;...
             ]);
     end
-    
+
     methods (Static)
         function test_1
             im = TestGoodFeaturesToTrack.img;
             result = cv.goodFeaturesToTrack(im);
         end
-        
+
         function test_error_1
             try
                 cv.goodFeaturesToTrack();
@@ -33,6 +33,5 @@ classdef TestGoodFeaturesToTrack
             end
         end
     end
-    
-end
 
+end

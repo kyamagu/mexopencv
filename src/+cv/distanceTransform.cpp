@@ -11,9 +11,9 @@ using namespace cv;
 /** Mask size for distance transform
  */
 const ConstMap<std::string,int> DistMask = ConstMap<std::string,int>
-    ("3",CV_DIST_MASK_3)
-    ("5",CV_DIST_MASK_5)
-    ("Precise",CV_DIST_MASK_PRECISE);
+    ("3",       cv::DIST_MASK_3)
+    ("5",       cv::DIST_MASK_5)
+    ("Precise", cv::DIST_MASK_PRECISE);
 
 /**
  * Main entry called from Matlab
@@ -33,20 +33,20 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
     // Option processing
-    int distanceType = CV_DIST_L2;
+    int distanceType = cv::DIST_L2;
     int maskSize = 3;
     for (int i=1; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="DistanceType") {
             distanceType = DistType[rhs[i+1].toString()];
-            if (distanceType!=CV_DIST_L1 &&
-                distanceType!=CV_DIST_L2 &&
-                distanceType!=CV_DIST_C)
+            if (distanceType!=cv::DIST_L1 &&
+                distanceType!=cv::DIST_L2 &&
+                distanceType!=cv::DIST_C)
                 mexErrMsgIdAndTxt("mexopencv:error","Unsupported option");
         }
         else if (key=="MaskSize")
             if (rhs[i].classID()==mxCHAR_CLASS && rhs[i+1].toString()=="MaskPrecise")
-                maskSize = CV_DIST_MASK_PRECISE;
+                maskSize = cv::DIST_MASK_PRECISE;
             else
                 maskSize = rhs[i+1].toInt();
         else

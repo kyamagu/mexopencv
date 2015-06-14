@@ -2,25 +2,20 @@
  * @file BOWImgDescriptorExtractor_.cpp
  * @brief mex interface for BOWImgDescriptorExtractor
  * @author Kota Yamaguchi
- * @date 2012
+ * @author Amro
+ * @date 2012, 2015
  */
 #include "mexopencv.hpp"
-#include "opencv2/nonfree/nonfree.hpp"
+#include "mexopencv_features2d.hpp"
 using namespace std;
 using namespace cv;
 
+// Persistent objects
 namespace {
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,BOWImgDescriptorExtractor> obj_;
-/// Alias for argument number check
-inline void nargchk(bool cond)
-{
-    if (!cond)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-}
-
+map<int,Ptr<BOWImgDescriptorExtractor> > obj_;
 }
 
 /**
@@ -34,66 +29,107 @@ void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
     nargchk(nrhs>=2 && nlhs<=3);
+
+    // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     int id = rhs[0].toInt();
     string method(rhs[1].toString());
 
-    if (last_id==0)
-        initModule_nonfree();
-
-    // Constructor call
+    // Constructor is called. Create a new object from argument
     if (method == "new") {
-        nargchk(nrhs>=3 && nrhs<=4 && nlhs<=1);
-        string dmatcher = (nrhs==4) ? rhs[3].toString() : string("BruteForce");
-        obj_.insert(pair<int,BOWImgDescriptorExtractor>(++last_id,
-            BOWImgDescriptorExtractor(
-                DescriptorExtractor::create(rhs[2].toString()),
-                DescriptorMatcher::create(dmatcher)
-            )));
+        nargchk(nrhs==4 && nlhs<=1);
+        // extractor
+        Ptr<DescriptorExtractor> extractor;
+        if (rhs[2].isChar())
+            extractor = createDescriptorExtractor(rhs[2].toString(),
+                rhs.end(), rhs.end());
+        else if (rhs[2].isCell() && rhs[2].numel() >= 2) {
+            vector<MxArray> args(rhs[2].toVector<MxArray>());
+            extractor = createDescriptorExtractor(args[0].toString(),
+                args.begin() + 1, args.end());
+        }
+        else
+            mexErrMsgIdAndTxt("mexopencv:error", "Invalid arguments");
+        // matcher
+        Ptr<DescriptorMatcher> matcher;
+        if (rhs[3].isChar())
+            matcher = createDescriptorMatcher(rhs[3].toString(),
+                rhs.end(), rhs.end());
+        else if (rhs[3].isCell() && rhs[3].numel() >= 2) {
+            vector<MxArray> args(rhs[3].toVector<MxArray>());
+            matcher = createDescriptorMatcher(args[0].toString(),
+                args.begin() + 1, args.end());
+        }
+        else
+            mexErrMsgIdAndTxt("mexopencv:error", "Invalid arguments");
+        obj_[++last_id] = makePtr<BOWImgDescriptorExtractor>(extractor, matcher);
         plhs[0] = MxArray(last_id);
         return;
     }
 
     // Big operation switch
-    BOWImgDescriptorExtractor& obj = obj_.find(id)->second;
+    Ptr<BOWImgDescriptorExtractor> obj = obj_[id];
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
     }
-    else if (method == "setVocabulary") {
-        nargchk(nrhs==3 && nlhs==0);
-        obj.setVocabulary(rhs[2].isUint8() ? rhs[2].toMat() : rhs[2].toMat(CV_32F));
-    }
-    else if (method == "getVocabulary") {
-        nargchk(nrhs==2 && nlhs<=1);
-        plhs[0] = MxArray(obj.getVocabulary());
-    }
     else if (method == "descriptorSize") {
         nargchk(nrhs==2 && nlhs<=1);
-        plhs[0] = MxArray(obj.descriptorSize());
+        plhs[0] = MxArray(obj->descriptorSize());
     }
     else if (method == "descriptorType") {
         nargchk(nrhs==2 && nlhs<=1);
-        plhs[0] = MxArray(obj.descriptorType());
+        plhs[0] = MxArray(ClassNameInvMap[obj->descriptorType()]);
     }
     else if (method == "compute") {
-        nargchk(nrhs==4 && nlhs<=3);
-        Mat image(rhs[2].isUint8() ? rhs[2].toMat() : rhs[2].toMat(CV_32F));
-        vector<KeyPoint> keypoints(rhs[3].toVector<KeyPoint>());
         Mat imgDescriptor;
         vector<vector<int> > pointIdxsOfClusters;
-        Mat descriptors;
-        obj.compute(image,keypoints,imgDescriptor,&pointIdxsOfClusters,&descriptors);
+        if (nrhs==4 && nlhs<=3) {  // first variant
+            Mat image(rhs[2].toMat(rhs[2].isUint8() ? CV_8U : CV_32F));
+            vector<KeyPoint> keypoints(rhs[3].toVector<KeyPoint>());
+            Mat descriptors;
+            obj->compute(image, keypoints, imgDescriptor, &pointIdxsOfClusters, &descriptors);
+            if (nrhs>2)
+                plhs[2] = MxArray(descriptors);
+        }
+        else if (nrhs==3 && nlhs<=2) {  // second variant
+            Mat keypointDescriptors(rhs[2].toMat());
+            obj->compute(keypointDescriptors, imgDescriptor, &pointIdxsOfClusters);
+        }
+        else
+            nargchk(false);
         plhs[0] = MxArray(imgDescriptor);
         if (nrhs>1) {
             vector<Mat> vm;
             vm.reserve(pointIdxsOfClusters.size());
-            for (vector<vector<int> >::iterator it=pointIdxsOfClusters.begin();it<pointIdxsOfClusters.end();++it)
-                vm.push_back(Mat(*it));
+            for (vector<vector<int> >::const_iterator it = pointIdxsOfClusters.begin();
+                 it != pointIdxsOfClusters.end(); ++it)
+                vm.push_back(Mat(*it,false));
             plhs[1] = MxArray(vm);
         }
-        if (nrhs>2)
-            plhs[2] = MxArray(descriptors);
+    }
+    else if (method == "compute2") {
+        nargchk(nrhs==4 && nlhs<=1);
+        Mat image(rhs[2].toMat(rhs[2].isUint8() ? CV_8U : CV_32F)), imgDescriptor;
+        vector<KeyPoint> keypoints(rhs[3].toVector<KeyPoint>());
+        obj->compute2(image, keypoints, imgDescriptor);
+        plhs[0] = MxArray(imgDescriptor);
+    }
+    else if (method == "get") {
+        nargchk(nrhs==3 && nlhs<=1);
+        string prop(rhs[2].toString());
+        if (prop == "Vocabulary")
+            plhs[0] = MxArray(obj->getVocabulary());
+        else
+            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property %s", prop.c_str());
+    }
+    else if (method == "set") {
+        nargchk(nrhs==4 && nlhs==0);
+        string prop(rhs[2].toString());
+        if (prop == "Vocabulary")
+            obj->setVocabulary(rhs[3].toMat(rhs[3].isUint8() ? CV_8U : CV_32F));
+        else
+            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property %s", prop.c_str());
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation %s", method.c_str());

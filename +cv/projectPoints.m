@@ -1,18 +1,15 @@
 %PROJECTPOINTS  Projects 3D points to an image plane
 %
-%    imagePoints = cv.projectPoints(objectPoints, rvec, tvec, cameraMatrix, distCoeffs)
+%    imagePoints = cv.projectPoints(objectPoints, rvec, tvec, cameraMatrix)
 %    [imagePoints, jacobian] = cv.projectPoints(...)
 %    [...] = cv.projectPoints(..., 'OptionName', optionValue, ...)
 %
 % ## Input
-% * __objectPoints__ Array of object points, Nx1x3/1xNx3 array or cell array
-%        of 3-element vectors, where N is the number of points in the view.
+% * __objectPoints__ Array of object points, Nx3/Nx1x3/1xNx3 array or cell array
+%        of 3-element vectors, where `N` is the number of points in the view.
 % * __rvec__ Rotation vector. See cv.Rodrigues for details.
 % * __tvec__ Translation vector.
-% * __cameraMatrix__ Camera matrix A = [fx,0,cx;0,fy,cy;0,0,1].
-% * __distCoeffs__ Input vector of distortion coefficients [k1,k2,p1,p2,k3,
-%        k4,k5,k6] of 4, 5, or 8 elements. If the vector is NULL/empty, the
-%        zero distortion coefficients are assumed.
+% * __cameraMatrix__ Camera matrix `A = [fx,0,cx;0,fy,cy;0,0,1]`.
 %
 % ## Output
 % * __imagePoints__ Output array of image points, Nx1x2/1xNx2 array or cell
@@ -23,6 +20,9 @@
 %        the principal point and the distortion coefficients.
 %
 % ## Options
+% * __DistCoeffs__ Input vector of distortion coefficients [k1,k2,p1,p2,k3,
+%        k4,k5,k6] of 4, 5, 8, or 12 elements. If the vector is empty, the
+%        zero distortion coefficients are assumed. default empty
 % * __AspectRatio__ Optional "fixed aspect ratio" parameter. If the
 %        parameter is not 0, the function assumes that the aspect ratio
 %        (fx/fy) is fixed and correspondingly adjusts the jacobian matrix.

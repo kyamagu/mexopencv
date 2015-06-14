@@ -24,7 +24,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    int distType=CV_DIST_L2;
+    int distType=cv::DIST_L2;
     double param=0;
     double reps=0.01;
     double aeps=0.01;

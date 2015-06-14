@@ -12,8 +12,8 @@ using namespace cv;
 /** Inpainting algorithm types for option processing
  */
 const ConstMap<std::string,int> InpaintType = ConstMap<std::string,int>
-    ("NS",        cv::INPAINT_NS)
-    ("Telea",    cv::INPAINT_TELEA);
+    ("NS",    cv::INPAINT_NS)
+    ("Telea", cv::INPAINT_TELEA);
 
 /**
  * Main entry called from Matlab
@@ -34,7 +34,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     // Option processing
     double inpaintRadius = 3.0;
-    int flags = INPAINT_NS;
+    int flags = cv::INPAINT_NS;
     for (int i=2; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="Radius")

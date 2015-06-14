@@ -2,13 +2,48 @@ classdef TestEllipse
     %TestEllipse
     properties (Constant)
     end
-    
+
     methods (Static)
-        function test_1
+        function test_first_variant
             im = 255*ones(128,128,3,'uint8');
-            a = cv.ellipse(im, [64,64], [20,10]);
+            im = cv.ellipse(im, [64,64], [20,10]);
         end
-        
+
+        function test_second_variant
+            img = 255*ones(128,128,3,'uint8');
+            img = cv.ellipse(img, ...
+                struct('center',[64,64], 'size',[20,10], 'angle',0));
+        end
+
+        function test_compare_variants
+            img = 255*ones([100 100 3],'uint8');
+            pt = [50 50]; sz = [25 20]; deg = -50;
+            img1 = cv.ellipse(img, pt, sz, 'Angle',deg);
+            img2 = cv.ellipse(img, ...
+                struct('center',pt, 'size',2*sz, 'angle',deg));
+            assert(isequal(img1,img2));
+        end
+
+        function test_options
+            % rotated ellipse
+            img = 255*ones(128,128,3,'uint8');
+            img = cv.ellipse(img, [64,64], [20,10], 'Angle',60);
+
+            % arc
+            img = 255*ones(128,128,3,'uint8');
+            img = cv.ellipse(img, [64,64], [20,10], ...
+                'StartAngle',20, 'EndAngle',300, ...
+                'LineType','AA', 'Thickness',3);
+
+            % filled
+            img = zeros(128,128,3,'uint8');
+            img = cv.ellipse(img, [64,64], [20,10], ...
+                'Color',[255,0,255], 'Thickness','Filled');
+            img = cv.ellipse(img, ...
+                struct('center',[64,64], 'size',[40,20], 'Angle',0), ...
+                'Color',[0,255,0], 'Thickness',-1);
+        end
+
         function test_error_1
             try
                 cv.ellipse();
@@ -18,6 +53,5 @@ classdef TestEllipse
             end
         end
     end
-    
-end
 
+end

@@ -8,44 +8,6 @@
 using namespace std;
 using namespace cv;
 
-/// Conversion to vector<vector<Point_<T> > >
-template <typename T>
-vector<vector<Point_<T> > > MxArrayToVecVecPt(MxArray& arr)
-{
-    vector<MxArray> va = arr.toVector<MxArray>();
-    vector<vector<Point_<T> > > vvp;
-    vvp.reserve(va.size());
-    for (vector<MxArray>::iterator it=va.begin(); it<va.end(); ++it)
-    {
-        vector<MxArray> v = (*it).toVector<MxArray>();
-        vector<Point_<T> > vp;
-        vp.reserve(v.size());
-        for (vector<MxArray>::iterator jt=v.begin(); jt<v.end(); ++jt)
-            vp.push_back((*jt).toPoint_<T>());
-        vvp.push_back(vp);
-    }
-    return vvp;
-}
-
-/// Conversion to vector<vector<Point3_<T> > >
-template <typename T>
-vector<vector<Point3_<T> > > MxArrayToVecVecPt3(MxArray& arr)
-{
-    vector<MxArray> va = arr.toVector<MxArray>();
-    vector<vector<Point3_<T> > > vvp;
-    vvp.reserve(va.size());
-    for (vector<MxArray>::iterator it=va.begin(); it<va.end(); ++it)
-    {
-        vector<MxArray> v = (*it).toVector<MxArray>();
-        vector<Point3_<T> > vp;
-        vp.reserve(v.size());
-        for (vector<MxArray>::iterator jt=v.begin(); jt<v.end(); ++jt)
-            vp.push_back((*jt).toPoint3_<T>());
-        vvp.push_back(vp);
-    }
-    return vvp;
-}
-
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments
@@ -62,10 +24,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    vector<vector<Point3f> > objectPoints = MxArrayToVecVecPt3<float>(rhs[0]);
-    vector<vector<Point2f> > imagePoints = MxArrayToVecVecPt<float>(rhs[1]);
-    Size imageSize = rhs[2].toSize();
-    double aspectRatio=1;
+
+    // Option processing
+    double aspectRatio = 1.0;
     for (int i=3; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="AspectRatio")
@@ -75,6 +36,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     
     // Process
+    vector<vector<Point3f> > objectPoints(MxArrayToVectorVectorPoint3<float>(rhs[0]));
+    vector<vector<Point2f> > imagePoints(MxArrayToVectorVectorPoint<float>(rhs[1]));
+    Size imageSize(rhs[2].toSize());
     Mat m = initCameraMatrix2D(objectPoints, imagePoints, imageSize, aspectRatio);
     plhs[0] = MxArray(m);
 }

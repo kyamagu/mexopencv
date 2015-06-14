@@ -22,14 +22,6 @@ const ConstMap<std::string,int> HistogramNormType = ConstMap<std::string,int>
  */
 const ConstMap<int,std::string> InvHistogramNormType = ConstMap<int,std::string>
     (HOGDescriptor::L2Hys,"L2Hys");
-
-/// Alias for argument number check
-inline void nargchk(bool cond)
-{
-    if (!cond)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-}
-
 }
 
 /**

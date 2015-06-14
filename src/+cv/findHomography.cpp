@@ -11,9 +11,9 @@ using namespace cv;
 /** Methods for option processing
  */
 const ConstMap<std::string,int> Method = ConstMap<std::string,int>
-    ("0",    0)
-    ("Ransac",    CV_RANSAC)
-    ("LMedS",    CV_LMEDS);
+    ("0",      0)
+    ("Ransac", cv::RANSAC)
+    ("LMedS",  cv::LMEDS);
 
 /**
  * Main entry called from Matlab

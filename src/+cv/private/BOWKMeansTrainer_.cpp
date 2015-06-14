@@ -12,21 +12,13 @@ namespace {
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,BOWKMeansTrainer> obj_;
+map<int,Ptr<BOWKMeansTrainer> > obj_;
 
 /** KMeans initalization types
  */
-const ConstMap<std::string,int> Initialization = ConstMap<std::string,int>
-    ("Random",KMEANS_RANDOM_CENTERS)
-    ("PP",KMEANS_PP_CENTERS);
-
-/// Alias for argument number check
-inline void nargchk(bool cond)
-{
-    if (!cond)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-}
-
+const ConstMap<std::string,int> KmeansInitMap = ConstMap<std::string,int>
+    ("Random", cv::KMEANS_RANDOM_CENTERS)
+    ("PP",     cv::KMEANS_PP_CENTERS);
 }
 
 /**
@@ -40,6 +32,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
     nargchk(nrhs>=2 && nlhs<=2);
+
     vector<MxArray> rhs(prhs,prhs+nrhs);
     int id = rhs[0].toInt();
     string method(rhs[1].toString());
@@ -49,8 +42,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
         nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
         int clusterCount = rhs[2].toInt();
         TermCriteria criteria;
-        int attempts=3;
-        int flags=KMEANS_PP_CENTERS;
+        int attempts = 3;
+        int flags = cv::KMEANS_PP_CENTERS;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key=="Criteria")
@@ -58,46 +51,45 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else if (key=="Attempts")
                 attempts = rhs[i+1].toInt();
             else if (key=="Initialization")
-                flags = Initialization[rhs[i+1].toString()];
+                flags = KmeansInitMap[rhs[i+1].toString()];
             else
                 mexErrMsgIdAndTxt("mexopencv:error","Unknown option %s",key.c_str());
         }
-        //obj_[++last_id] = BOWKMeansTrainer(clusterCount,criteria,attempts,flags);
-        obj_.insert(pair<int,BOWKMeansTrainer>(++last_id,
-            BOWKMeansTrainer(clusterCount,criteria,attempts,flags)));
+        obj_[++last_id] = makePtr<BOWKMeansTrainer>(clusterCount, criteria, attempts, flags);
         plhs[0] = MxArray(last_id);
         return;
     }
     
     // Big operation switch
-    BOWKMeansTrainer& obj = obj_.find(id)->second;
+    Ptr<BOWKMeansTrainer> obj = obj_[id];
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
     }
-    else if (method == "add") {
-        nargchk(nrhs==3 && nlhs==0);
-        obj.add(rhs[2].toMat(CV_32F));
+    else if (method == "clear") {
+        nargchk(nrhs==2 && nlhs==0);
+        obj->clear();
     }
     else if (method == "getDescriptors") {
         nargchk(nrhs==2 && nlhs<=1);
-        plhs[0] = MxArray(obj.getDescriptors());
+        plhs[0] = MxArray(obj->getDescriptors());
     }
     else if (method == "descriptorsCount") {
         nargchk(nrhs==2 && nlhs<=1);
-        // plhs[0] = MxArray(obj.descripotorsCount());
-        plhs[0] = MxArray(obj.descripotorsCount()); // OpenCV has typo...
+        plhs[0] = MxArray(obj->descriptorsCount());
     }
-    else if (method == "clear") {
-        nargchk(nrhs==2 && nlhs==0);
-        obj.clear();
+    else if (method == "add") {
+        nargchk(nrhs==3 && nlhs==0);
+        obj->add(rhs[2].toMat(CV_32F));
     }
     else if (method == "cluster") {
         nargchk(nrhs<=3 && nlhs<=1);
-        if (nrhs==2)
-            plhs[0] = MxArray(obj.cluster());
-        else
-            plhs[0] = MxArray(obj.cluster(rhs[2].toMat(CV_32F)));
+        Mat vocabulary;
+        if (nrhs==2)  // first variant
+            vocabulary = obj->cluster();
+        else          // second variant
+            vocabulary = obj->cluster(rhs[2].toMat(CV_32F));
+        plhs[0] = MxArray(vocabulary);
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation %s", method.c_str());

@@ -26,11 +26,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
     // Option processing
-    int interpolation=INTER_LINEAR;
+    int interpolation=cv::INTER_LINEAR;
     for (int i=2; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="Interpolation")
-            interpolation = InterType[rhs[i+1].toString()];
+            interpolation = InterpType[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }

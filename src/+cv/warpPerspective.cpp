@@ -28,16 +28,16 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Option processing
     Mat src(rhs[0].toMat());
     Size dsize = src.size();
-    int interpolation=INTER_LINEAR;
+    int interpolation=cv::INTER_LINEAR;
     bool warp_inverse=false;
-    int borderType=BORDER_CONSTANT;
+    int borderType=cv::BORDER_CONSTANT;
     Scalar borderValue;
     for (int i=2; i<nrhs; i+=2) {
         string key = rhs[i].toString();
         if (key=="DSize")
             dsize = rhs[i+1].toSize();
         else if (key=="Interpolation")
-            interpolation = InterType[rhs[i+1].toString()];
+            interpolation = InterpType[rhs[i+1].toString()];
         else if (key=="WarpInverse")
             warp_inverse = rhs[i+1].toBool();
         else if (key=="BorderType")

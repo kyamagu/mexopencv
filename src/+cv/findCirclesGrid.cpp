@@ -41,8 +41,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    int flags = ((symmetricGrid) ? CALIB_CB_SYMMETRIC_GRID : CALIB_CB_ASYMMETRIC_GRID) |
-        ((clustering) ? CALIB_CB_CLUSTERING : 0);
+    int flags = ((symmetricGrid) ? cv::CALIB_CB_SYMMETRIC_GRID : cv::CALIB_CB_ASYMMETRIC_GRID) |
+        ((clustering) ? cv::CALIB_CB_CLUSTERING : 0);
     // Process
     vector<Point2f> centers;
     bool b = findCirclesGrid(image, patternSize, centers, flags);
