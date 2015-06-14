@@ -41,6 +41,12 @@ classdef TestPCA
         end
 
         function test_4
+            if mexopencv.isOctave()
+                % TODO: load/save of objects to MAT-file in Octave
+                disp('SKIP');
+                return
+            end
+
             fname = [tempname '.mat'];
             cleanObj = onCleanup(@() delete(fname));
 
