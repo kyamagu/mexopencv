@@ -706,11 +706,12 @@ class MxArray
      */
     inline bool isUint64() const { return mxIsUint64(p_); }
     /** Determine whether a struct array has a specified field.
+     * @param fieldName name of field to check
+     * @return true if struct array has specified field, false otherwise.
      */
-    bool isField(const std::string& fieldName, mwIndex index=0) const
+    inline bool isField(const std::string& fieldName) const
     {
-        return isStruct() &&
-               mxGetField(p_, index, fieldName.c_str()) != NULL;
+        return isStruct() && mxGetFieldNumber(p_, fieldName.c_str()) != -1;
     }
     /** Template for numeric array element accessor.
      * @param index linear index of the array element.
