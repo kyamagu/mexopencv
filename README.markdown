@@ -9,6 +9,8 @@ MATLAB's native data type and OpenCV data types. The package is suitable for
 fast prototyping of OpenCV application in MATLAB, use of OpenCV as an external
 toolbox in MATLAB, and development of a custom MEX function.
 
+The current version of mexopencv is compatible with OpenCV 3.x. [Please check the v2.4 branch for OpenCV 2.4.x](https://github.com/kyamagu/mexopencv/tree/v2.4).
+
 Contents
 ========
 
@@ -34,10 +36,10 @@ Build
 
 Prerequisite:
 
- * Unix: MATLAB, OpenCV (>=2.4.0), g++, make, pkg-config
- * Windows: MATLAB, OpenCV (>=2.4.0), supported compiler
+ * Unix: MATLAB, OpenCV (>=3.0.0), g++, make, pkg-config
+ * Windows: MATLAB, OpenCV (>=3.0.0), supported compiler
 
-For OpenCV older than v2.4.0, check out the corresponding v2.x branch.
+For OpenCV older than v3.0, [check out the corresponding v2.x branch.](https://github.com/kyamagu/mexopencv/tree/v2.4)
 
 Unix
 ----
