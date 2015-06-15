@@ -5,7 +5,7 @@ classdef TestCopyMakeBorder
 
     methods (Static)
         function test_1
-            src = imread('img001.jpg');
+            src = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
             border = {10, 20, 30, 40};
             dst = cv.copyMakeBorder(src, border{:}, 'BorderType','Default');
             dst = cv.copyMakeBorder(src, border{:}, 'BorderType','Reflect');

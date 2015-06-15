@@ -5,7 +5,10 @@ classdef TestSolve
             A = magic(5);
             b = ones(5,1);
             x = A\b;
-            x = linsolve(A, b);
+            if ~mexopencv.isOctave()
+                %TODO: http://savannah.gnu.org/bugs/?45212
+                x = linsolve(A, b);
+            end
             [x,ret] = cv.solve(A, b);
             assert(isscalar(ret) && islogical(ret));
             assert(isvector(x));

@@ -5,6 +5,13 @@ classdef UnitTest
     %   UnitTest;
     properties (Constant)
         TESTDIR = fullfile(mexopencv.root(),'test','unit_tests');
+        SKIP_OCTAVE = {
+            'TestConjGradSolver'  % local functions in M-classes
+            'TestDownhillSolver'
+            'TestNormalize'
+            'TestSVM'
+            'TestDTrees'          % throws and crashes
+        };
     end
 
     methods
@@ -15,6 +22,10 @@ classdef UnitTest
             for i = 1:numel(d)
                 class_name = strrep(d(i).name,'.m','');
                 fprintf('== %s ======\n',class_name);
+                if mexopencv.isOctave() && any(strcmp(class_name, UnitTest.SKIP_OCTAVE))
+                    disp('SKIP');
+                    continue
+                end
                 UnitTest.all(class_name);
             end
         end
@@ -32,19 +43,27 @@ classdef UnitTest
                 error('UnitTest:all','invalid arg');
             end
 
-            if isprop(mc,'MethodList')
+            if ~mexopencv.isOctave() && isprop(mc,'MethodList')
                 mt = {mc.MethodList.Name};
             else
-                mt = cellfun(@(x) x.Name,mc.Methods,'UniformOutput',false);
+                mt = cellfun(@(x) x.Name, mc.Methods, 'UniformOutput',false);
             end
             mt = sort(mt(:))';
             for m = mt(strncmp('test',mt,length('test')))
                 fprintf('-- %s ------\n',m{:});
                 try
-                    feval([class_name,'.',m{:}]);
+                    if ~mexopencv.isOctave()
+                        feval([class_name,'.',m{:}]);
+                    else
+                        eval([class_name,'.',m{:}]);
+                    end
                     disp('PASS');
                 catch e
-                    disp(e.getReport);
+                    if ~mexopencv.isOctave()
+                        disp(e.getReport);
+                    else
+                        disp(e.message);
+                    end
                     disp('FAIL');
                 end
             end
@@ -52,4 +71,3 @@ classdef UnitTest
     end
 
 end
-
