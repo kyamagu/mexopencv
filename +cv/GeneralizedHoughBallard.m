@@ -18,21 +18,24 @@ classdef GeneralizedHoughBallard < handle
     end
 
     properties (Dependent)
-        % Canny high threshold.
-        CannyHighThresh
-        % Canny low threshold.
+        % Canny low threshold. default 50
         CannyLowThresh
-        % Inverse ratio of the accumulator resolution to the image resolution.
-        Dp
-        % Maximal size of inner buffers.
-        MaxBufferSize
+        % Canny high threshold. default 100
+        CannyHighThresh
         % Minimum distance between the centers of the detected objects.
+        % default 1.0
         MinDist
+        % Inverse ratio of the accumulator resolution to the image resolution.
+        % default 1.0
+        Dp
+        % Maximal size of inner buffers. default 1000
+        MaxBufferSize
 
-        % R-Table levels.
+        % R-Table levels. default 360
         Levels
         % The accumulator threshold for the template centers at the detection
         % stage. The smaller it is, the more false positions may be detected.
+        % default 100
         VotesThreshold
     end
 
@@ -72,14 +75,17 @@ classdef GeneralizedHoughBallard < handle
             %    [positions,votes] = hough.detect(edges, dx, dy)
             %
             % ## Input
-            % * __image__
-            % * __edges__
-            % * __dx__
-            % * __dy__
+            % * __image__ input image, 8-bit 1-channel image
+            % * __edges__ image edges
+            % * __dx__ image x-derivative of the same size as `edges` and
+            %       single-precision floating type.
+            % * __dy__ image y-derivate of the same size and type as `dx`.
             %
             % ## Output
-            % * __positions__
-            % * __votes__
+            % * __positions__ Cell array of 4-element vectors, each of the
+            %        form: `[posx, posy, scale, angle]`
+            % * __votes__ Cell array of 3-element vectors, of the same length
+            %        as `positions`.
             %
             [positions,votes] = GeneralizedHoughBallard_(this.id, 'detect', varargin{:});
         end
@@ -92,13 +98,19 @@ classdef GeneralizedHoughBallard < handle
             %    hough.setTemplate(..., 'OptionName', optionValue, ...)
             %
             % ## Input
-            % * __templ__
-            % * __edges__
-            % * __dx__
-            % * __dy__
+            % * __templ__ template, 8-bit 1-channel image
+            % * __edges__ template edges
+            % * __dx__ template x-derivative of the same size as `edges` and
+            %       single-precision floating type.
+            % * __dy__ template y-derivate of the same size and type as `dx`.
             %
             % ## Options
-            % * __Center__
+            % * __Center__ Template center `[x,y]`. The default `[-1,-1]`
+            %       will use `[size(templ,2) size(templ,1)]./2` as center.
+            %
+            % In the first variant of the function (with the `templ` input),
+            % the `edges` are internally calculated using the cv.Canny filter,
+            % and the derivatives `dx` and `dy` using cv.Sobel operator.
             %
             GeneralizedHoughBallard_(this.id, 'setTemplate', varargin{:});
         end

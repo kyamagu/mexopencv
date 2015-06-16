@@ -19,41 +19,44 @@ classdef GeneralizedHoughGuil < handle
     end
 
     properties (Dependent)
-        % Canny high threshold.
-        CannyHighThresh
-        % Canny low threshold.
+        % Canny low threshold. default 50
         CannyLowThresh
-        % Inverse ratio of the accumulator resolution to the image resolution.
-        Dp
-        % Maximal size of inner buffers.
-        MaxBufferSize
+        % Canny high threshold. default 100
+        CannyHighThresh
         % Minimum distance between the centers of the detected objects.
+        % default 1.0
         MinDist
+        % Inverse ratio of the accumulator resolution to the image resolution.
+        % default 1.0
+        Dp
+        % Maximal size of inner buffers. default 1000
+        MaxBufferSize
 
-        % Maximal difference between angles that treated as equal.
-        AngleEpsilon
-        % Angle step in degrees.
-        AngleStep
-        % Angle votes threshold.
-        AngleThresh
-        % Feature table levels.
-        Levels
-        % Maximal rotation angle to detect in degrees.
-        MaxAngle
-        % Maximal scale to detect.
-        MaxScale
-        % Minimal rotation angle to detect in degrees.
-        MinAngle
-        % Minimal scale to detect.
-        MinScale
-        % Position votes threshold.
-        PosThresh
-        % Scale step.
-        ScaleStep
-        % Scale votes threshold.
-        ScaleThresh
         % Angle difference in degrees between two points in feature.
+        % default 90.0
         Xi
+        % Maximal difference between angles that treated as equal. default 1.0
+        AngleEpsilon
+        % Feature table levels. default 360
+        Levels
+        % Minimal rotation angle to detect in degrees. default 0.0
+        MinAngle
+        % Maximal rotation angle to detect in degrees. default 360
+        MaxAngle
+        % Angle step in degrees. default 1.0
+        AngleStep
+        % Angle votes threshold. default 15000
+        AngleThresh
+        % Minimal scale to detect. default 0.5
+        MinScale
+        % Maximal scale to detect. default 2.0
+        MaxScale
+        % Scale step. default 0.05
+        ScaleStep
+        % Scale votes threshold. default 1000
+        ScaleThresh
+        % Position votes threshold. default 100
+        PosThresh
     end
 
     methods
@@ -92,14 +95,17 @@ classdef GeneralizedHoughGuil < handle
             %    [positions,votes] = hough.detect(edges, dx, dy)
             %
             % ## Input
-            % * __image__
-            % * __edges__
-            % * __dx__
-            % * __dy__
+            % * __image__ input image, 8-bit 1-channel image
+            % * __edges__ image edges
+            % * __dx__ image x-derivative of the same size as `edges` and
+            %       single-precision floating type.
+            % * __dy__ image y-derivate of the same size and type as `dx`.
             %
             % ## Output
-            % * __positions__
-            % * __votes__
+            % * __positions__ Cell array of 4-element vectors, each of the
+            %        form: `[posx, posy, scale, angle]`
+            % * __votes__ Cell array of 3-element vectors, of the same length
+            %        as `positions`.
             %
             [positions,votes] = GeneralizedHoughGuil_(this.id, 'detect', varargin{:});
         end
@@ -112,13 +118,19 @@ classdef GeneralizedHoughGuil < handle
             %    hough.setTemplate(..., 'OptionName', optionValue, ...)
             %
             % ## Input
-            % * __templ__
-            % * __edges__
-            % * __dx__
-            % * __dy__
+            % * __templ__ template, 8-bit 1-channel image
+            % * __edges__ template edges
+            % * __dx__ template x-derivative of the same size as `edges` and
+            %       single-precision floating type.
+            % * __dy__ template y-derivate of the same size and type as `dx`.
             %
             % ## Options
-            % * __Center__
+            % * __Center__ Template center `[x,y]`. The default `[-1,-1]`
+            %       will use `[size(templ,2) size(templ,1)]./2` as center.
+            %
+            % In the first variant of the function (with the `templ` input),
+            % the `edges` are internally calculated using the cv.Canny filter,
+            % and the derivatives `dx` and `dy` using cv.Sobel operator.
             %
             GeneralizedHoughGuil_(this.id, 'setTemplate', varargin{:});
         end

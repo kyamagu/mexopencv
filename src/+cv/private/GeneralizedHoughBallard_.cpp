@@ -101,16 +101,17 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "detect") {
         if ((nrhs!=3 && nrhs!=5) || nlhs>2)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        Mat positions, votes;
+        vector<Vec4f> positions;
+        vector<Vec3i> votes;
         if (nrhs == 3) {
-            Mat image(rhs[2].toMat());
-            obj->detect(image, positions, votes);
+            Mat image(rhs[2].toMat(CV_8U));
+            obj->detect(image, positions, (nlhs>1) ? votes : noArray());
         }
         else {
-            Mat edges(rhs[2].toMat()),
-                   dx(rhs[3].toMat()),
-                   dy(rhs[4].toMat());
-            obj->detect(edges, dx, dy, positions, votes);
+            Mat edges(rhs[2].toMat(CV_8U)),
+                   dx(rhs[3].toMat(CV_32F)),
+                   dy(rhs[4].toMat(CV_32F));
+            obj->detect(edges, dx, dy, positions, (nlhs>1) ? votes : noArray());
         }
         plhs[0] = MxArray(positions);
         if (nlhs>1)
@@ -129,13 +130,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
         if (edges_variant) {
-            Mat edges(rhs[2].toMat()),
-                   dx(rhs[3].toMat()),
-                   dy(rhs[4].toMat());
+            Mat edges(rhs[2].toMat(CV_8U)),
+                   dx(rhs[3].toMat(CV_32F)),
+                   dy(rhs[4].toMat(CV_32F));
             obj->setTemplate(edges, dx, dy, templCenter);
         }
         else {
-            Mat templ(rhs[2].toMat());
+            Mat templ(rhs[2].toMat(CV_8U));
             obj->setTemplate(templ, templCenter);
         }
     }

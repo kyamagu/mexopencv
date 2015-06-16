@@ -10,6 +10,8 @@ classdef UnitTest
             'TestDownhillSolver'
             'TestNormalize'
             'TestSVM'
+            'TestGeneralizedHoughBallard'
+            'TestGeneralizedHoughGuil'
             'TestDTrees'          % throws and crashes
         };
     end
