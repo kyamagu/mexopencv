@@ -5,7 +5,7 @@
 %
 
 %% Input image
-img = imread('building.jpg');
+img = imread(fullfile(mexopencv.root(),'test','building.jpg'));
 gray = cv.cvtColor(img, 'RGB2GRAY');
 
 %% Preprocess

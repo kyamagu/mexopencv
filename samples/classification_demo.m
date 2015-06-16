@@ -48,7 +48,7 @@ for i = 1:numel(classifiers)
         elseif isa(classifier, 'cv.LogisticRegression')
             Ytrain = double(Ytrain);
         end
-        
+
         % train
         tic;
         classifier.train(X(~test_idx,:), Ytrain);
