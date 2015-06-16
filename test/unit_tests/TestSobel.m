@@ -14,16 +14,21 @@ classdef TestSobel
             0 0 0 0 0 0 0 0 0 0;...
             ]);
     end
-    
+
     methods (Static)
         function test_1
             result = cv.Sobel(TestSobel.img);
         end
-        
+
         function test_2
             result = cv.Sobel(TestSobel.img,'KSize',5);
         end
-        
+
+        function test_3
+            results = cv.Sobel(TestSobel.img, 'XOrder',1, 'YOrder',1, ...
+                'BorderType','Default', 'DDepth','double');
+        end
+
         function test_error_1
             try
                 cv.Sobel();
@@ -33,6 +38,6 @@ classdef TestSobel
             end
         end
     end
-    
+
 end
 
