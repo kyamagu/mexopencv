@@ -8,13 +8,6 @@
 using namespace std;
 using namespace cv;
 
-/// set or clear a bit in flag depending on bool value
-#define UPDATE_FLAG(NUM, TF, BIT)       \
-    do {                                \
-        if ((TF)) { (NUM) |=  (BIT); }  \
-        else      { (NUM) &= ~(BIT); }  \
-    } while(0)
-
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments
