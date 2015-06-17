@@ -13,6 +13,7 @@
 %
 % ## Options
 % * __Color__ 3-element floating point vector specifying circle color.
+%       default is a black color
 % * __Thickness__ Thickness of the circle outline, if positive. Negative
 %       thickness means that a filled circle is to be drawn (-1 or the string
 %       'Filled'). default 1.

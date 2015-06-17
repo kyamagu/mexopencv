@@ -1,4 +1,4 @@
-%ARROWEDLINE  Draws an arrow segment pointing from the first point to the second one. 
+%ARROWEDLINE  Draws an arrow segment pointing from the first point to the second one.
 %
 %    img = cv.arrowedLine(img, pt1, pt2)
 %    [...] = cv.arrowedLine(..., 'OptionName', optionValue, ...)
@@ -12,7 +12,7 @@
 % * __img__ Output image.
 %
 % ## Options
-% * __Color__ Line color.
+% * __Color__ Line color. default is a black color
 % * __Thickness__ Line thickness. default 1.
 % * __LineType__ Type of the line. One of 8,4,'AA' (Anti-aliased line).
 %        default 8.

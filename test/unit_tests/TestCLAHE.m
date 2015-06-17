@@ -8,6 +8,7 @@ classdef TestCLAHE
         function test_1
             src = cv.imread(TestCLAHE.fname, 'Flags',0);
             dst = cv.CLAHE(src, 'ClipLimit',40, 'TileGridSize',[8 8]);
+            assert(isequal(size(dst), size(src)));
         end
 
         function test_error_1

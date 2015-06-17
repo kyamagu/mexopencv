@@ -7,6 +7,14 @@ classdef TestArrowedLine
         function test_1
             im = 255*ones(128,128,3,'uint8');
             a = cv.arrowedLine(im, [64,64], [20,10]);
+            assert(isequal(size(a), size(im)));
+        end
+
+        function test_2
+            im = zeros(128,128,3);
+            a = cv.arrowedLine(im, [64,64], [20,10], 'Color',rand(1,3), ...
+                'Thickness',2, 'LineType','AA', 'TipLength',0.2);
+            assert(isequal(size(a), size(im)));
         end
 
         function test_error_1
