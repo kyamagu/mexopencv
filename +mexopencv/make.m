@@ -195,13 +195,20 @@ else % Unix
     options = {};
     if opts.dryrun         , options = [options '--dry-run']; end
     if opts.force          , options = [options '--always-make']; end
-    if opts.clean          , options = [options 'clean']; end
-    if opts.test           , options = [options 'test']; end
+    if opts.verbose < 1    , options = [options '--silent']; end
+    if opts.verbose > 1    , options = [options 'CFLAGS+=-v']; end
+    if opts.debug          , options = [options 'CFLAGS+=-g']; end
     if ~isempty(opts.extra), options = [options opts.extra]; end
 
+    targets = {'all'};
+    if opts.clean          , targets = ['clean' targets]; end
+    if opts.opencv_contrib , targets = [targets 'contrib']; end
+    if opts.test           , targets = [targets 'test']; end
+
     % call Makefile
-    cmd = sprintf('make MATLABDIR="%s" MEXEXT=%s %s', ...
-        matlabroot, mexext, sprintf(' %s', options{:}));
+    cmd = sprintf('make MATLABDIR="%s" MEXEXT=%s %s %s', ...
+        matlabroot, mexext, ...
+        sprintf(' %s', options{:}), sprintf(' %s', targets{:}));
     if opts.verbose > 0, disp(cmd); end
     system(cmd);
 end
