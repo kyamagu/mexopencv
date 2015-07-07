@@ -5,7 +5,7 @@ classdef TestBorderInterpolate
 
     methods (Static)
         function test_1
-            img = imread('img001.jpg');
+            img = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
             [rows,cols,~] = size(img);
             r = cv.borderInterpolate(rows+50, rows, 'BorderType','Reflect101');
             c = cv.borderInterpolate(-5, cols, 'BorderType','Wrap');

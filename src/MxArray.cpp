@@ -118,7 +118,7 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
     // handle special case of empty input Mat by creating an empty array
     classid = (classid == mxUNKNOWN_CLASS) ? ClassIDOf[mat.depth()] : classid;
     if (mat.empty()) {
-        p_ = mxCreateNumericArray(0, 0, classid, mxREAL);
+        p_ = mxCreateNumericMatrix(0, 0, classid, mxREAL);
         if (!p_)
             mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
         return;
