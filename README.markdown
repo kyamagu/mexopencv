@@ -9,7 +9,9 @@ MATLAB's native data type and OpenCV data types. The package is suitable for
 fast prototyping of OpenCV application in MATLAB, use of OpenCV as an external
 toolbox in MATLAB, and development of a custom MEX function.
 
-The current version of mexopencv is compatible with OpenCV 3.x. [Please check the v2.4 branch for OpenCV 2.4.x](https://github.com/kyamagu/mexopencv/tree/v2.4).
+The current version of mexopencv is compatible with OpenCV 3.x.
+Please check the [v2.4 branch](https://github.com/kyamagu/mexopencv/tree/v2.4)
+for OpenCV 2.4.x.
 
 Contents
 ========
@@ -39,7 +41,8 @@ Prerequisite:
  * Unix: MATLAB, OpenCV (>=3.0.0), g++, make, pkg-config
  * Windows: MATLAB, OpenCV (>=3.0.0), supported compiler
 
-For OpenCV older than v3.0, [check out the corresponding v2.x branch.](https://github.com/kyamagu/mexopencv/tree/v2.4)
+For OpenCV older than v3.0, check out the corresponding
+[v2.x branch](https://github.com/kyamagu/mexopencv/tree/v2.4).
 
 Unix
 ----
@@ -105,6 +108,10 @@ MATLAB. On Mac, you can use `otool -L` command instead.
 
 Windows
 -------
+
+Refer to [this wiki page](https://github.com/kyamagu/mexopencv/wiki) for
+detailed instructions on how to compile OpenCV 3.0 with `opencv_contrib`
+modules on Windows.
 
 ### 1) Configure a C/C++ compiler for MEX-files in MATLAB
 
@@ -260,10 +267,12 @@ Usage
 Once MEX functions are compiled, you can add path to the project directory and
 call MEX functions within MATLAB using package name `cv`.
 
-    addpath('/path/to/mexopencv');
-    result = cv.filter2D(img, kern);  % with package name 'cv'
-    import cv.*;
-    result = filter2D(img, kern);     % no need to specify 'cv' after imported
+``` matlab
+addpath('/path/to/mexopencv');
+result = cv.filter2D(img, kern);  % with package name 'cv'
+import cv.*;
+result = filter2D(img, kern);     % no need to specify 'cv' after imported
+```
 
 Note that some functions such as `cv.imread` overload MATLAB's builtin function
 when imported. Use the scoped name when you need to avoid name collision. It is
@@ -295,8 +304,10 @@ The mexopencv includes a simple documentation utility that generates HTML help
 files for MATLAB. The following command creates a user documentation under
 `doc/matlab/` directory.
 
-    addpath('utils');
-    MDoc;
+``` matlab
+addpath('utils');
+MDoc;
+```
 
 Online documentation is available at
 http://kyamagu.github.io/mexopencv/
@@ -304,8 +315,10 @@ http://kyamagu.github.io/mexopencv/
 You can test the functionality of compiled files by `UnitTest` class
 located inside `test` directory.
 
-    addpath('test');
-    UnitTest;
+``` matlab
+addpath('test');
+UnitTest;
+```
 
 Developing a new MEX function
 =============================
@@ -314,22 +327,22 @@ All you need to do is to add your MEX source file in `src/+cv/`. If you
 want to add a MEX function called `myfunc`, create `src/+cv/myfunc.cpp`.
 The minimum contents of the `myfunc.cpp` would look like this:
 
-    #include "mexopencv.hpp"
-    void mexFunction(int nlhs, mxArray *plhs[],
-                     int nrhs, const mxArray *prhs[])
-    {
-        // Check arguments
-        if (nlhs!=1 || nrhs!=1)
-            mexErrMsgIdAndTxt("myfunc:invalidArgs", "Wrong number of arguments");
+``` cpp
+#include "mexopencv.hpp"
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
+{
+    // Check arguments
+    nargchk (nlhs<=1 && nrhs==1);
 
-        // Convert MxArray to cv::Mat
-        cv::Mat mat = MxArray(prhs[0]).toMat();
+    // Convert MxArray to cv::Mat
+    cv::Mat mat = MxArray(prhs[0]).toMat();
 
-        // Do whatever you want
+    // Do whatever you want
 
-        // Convert cv::Mat back to mxArray*
-        plhs[0] = MxArray(mat);
-    }
+    // Convert cv::Mat back to mxArray*
+    plhs[0] = MxArray(mat);
+}
+```
 
 This example simply copies an input to `cv::Mat` object and then copies again to
 the output. Notice how the `MxArray` class provided by mexopencv converts
@@ -342,29 +355,31 @@ The `mexopencv.hpp` header includes a class `MxArray` to manipulate `mxArray`
 object. Mostly this class is used to convert between OpenCV data types and
 `mxArray`.
 
-    int i            = MxArray(prhs[0]).toInt();
-    double d         = MxArray(prhs[0]).toDouble();
-    bool b           = MxArray(prhs[0]).toBool();
-    std::string s    = MxArray(prhs[0]).toString();
-    cv::Mat mat      = MxArray(prhs[0]).toMat();   // For pixels
-    cv::Mat ndmat    = MxArray(prhs[0]).toMatND(); // For N-D array
-    cv::Point pt     = MxArray(prhs[0]).toPoint();
-    cv::Size siz     = MxArray(prhs[0]).toSize();
-    cv::Rect rct     = MxArray(prhs[0]).toRect();
-    cv::Scalar sc    = MxArray(prhs[0]).toScalar();
-    cv::SparseMat sp = MxArray(prhs[0]).toSparseMat(); // Only double to float
+``` cpp
+int i            = MxArray(prhs[0]).toInt();
+double d         = MxArray(prhs[0]).toDouble();
+bool b           = MxArray(prhs[0]).toBool();
+std::string s    = MxArray(prhs[0]).toString();
+cv::Mat mat      = MxArray(prhs[0]).toMat();   // For pixels
+cv::Mat ndmat    = MxArray(prhs[0]).toMatND(); // For N-D array
+cv::Point pt     = MxArray(prhs[0]).toPoint();
+cv::Size siz     = MxArray(prhs[0]).toSize();
+cv::Rect rct     = MxArray(prhs[0]).toRect();
+cv::Scalar sc    = MxArray(prhs[0]).toScalar();
+cv::SparseMat sp = MxArray(prhs[0]).toSparseMat(); // Only double to float
 
-    plhs[0] = MxArray(i);
-    plhs[0] = MxArray(d);
-    plhs[0] = MxArray(b);
-    plhs[0] = MxArray(s);
-    plhs[0] = MxArray(mat);
-    plhs[0] = MxArray(ndmat);
-    plhs[0] = MxArray(pt);
-    plhs[0] = MxArray(siz);
-    plhs[0] = MxArray(rct);
-    plhs[0] = MxArray(sc);
-    plhs[0] = MxArray(sp); // Only 2D float to double
+plhs[0] = MxArray(i);
+plhs[0] = MxArray(d);
+plhs[0] = MxArray(b);
+plhs[0] = MxArray(s);
+plhs[0] = MxArray(mat);
+plhs[0] = MxArray(ndmat);
+plhs[0] = MxArray(pt);
+plhs[0] = MxArray(siz);
+plhs[0] = MxArray(rct);
+plhs[0] = MxArray(sc);
+plhs[0] = MxArray(sp); // Only 2D float to double
+```
 
 Check `MxAraay.hpp` for the complete list of the conversion API.
 
@@ -390,25 +405,27 @@ If there is such a class inside `test/unit_tests/`, typing `make test` would
 invoke all test cases and show your result. Use `test/` directory to place any
 resource file necessary for testing. An example of testing class is shown below:
 
-    classdef TestMyFunc
-        methods (Static)
-            function test_1
-                src = imread(fullfile(mexopencv.root(),'test','myimg.png'));
-                ref = [1,2,3];                  % reference output
-                dst = cv.myfunc(src);           % execute your function
-                assert(all(dst(:) == ref(:)));  % check the output
-            end
+``` matlab
+classdef TestMyFunc
+    methods (Static)
+        function test_1
+            src = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
+            ref = [1,2,3];                  % reference output
+            dst = cv.myfunc(src);           % execute your function
+            assert(isequal(dst, ref));      % check the output
+        end
 
-            function test_error_1
-                try
-                    cv.myfunc('foo');           % myfunc should throw an error
-                    error('UnitTest:Fail','myfunc incorrectly returned');
-                catch e
-                    assert(strcmp(e.identifier,'mexopencv:error'));
-                end
+        function test_error_1
+            try
+                cv.myfunc('foo');           % myfunc should throw an error
+                error('UnitTest:Fail','myfunc incorrectly returned');
+            catch e
+                assert(strcmp(e.identifier,'mexopencv:error'));
             end
         end
     end
+end
+```
 
 In Windows, add path to the `test` directory and invoke `UnitTest` to run all
 the test routines.
@@ -421,10 +438,18 @@ file with '.m' extension. For example, a help file for `filter2D.mex*` would be
 `filter2D.m`. Inside the help file should be only MATLAB comments. An example
 is shown below:
 
-    %MYFUNC  brief description about myfunc
-    %
-    % Detailed description of function continues
-    % ...
+``` matlab
+%MYFUNC  brief description about myfunc
+%
+% ## Input
+% * __in__ input image.
+%
+% ## Output
+% * __out__ output image.
+%
+% Detailed description of function continues...
+%
+```
 
 License
 =======
