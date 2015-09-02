@@ -705,6 +705,20 @@ class MxArray
      * @return true if array is of type \c mxUINT64_CLASS, false otherwise.
      */
     inline bool isUint64() const { return mxIsUint64(p_); }
+    /** Determine whether array represents data as integer types
+     * (8-bit, 16-bit, 32-bit or 64-bit, both signed and unsigned).
+     * @return true for integer numeric arrays, false otherwise.
+     */
+    inline bool isInteger() const
+    {
+        return (isUint8() || isInt8() || isUint16() || isInt16() ||
+            isUint32() || isInt32() || isUint64() || isInt64());
+    }
+    /** Determine whether array represents data as floating-point numbers,
+     * both single and double precision.
+     * @return true for floating-point numeric arrays, false otherwise.
+     */
+    inline bool isFloat() const { return (isDouble() || isSingle()); }
     /** Determine whether a struct array has a specified field.
      * @param fieldName name of field to check
      * @return true if struct array has specified field, false otherwise.
