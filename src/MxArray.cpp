@@ -728,6 +728,23 @@ std::vector<cv::Point3d> MxArray::toVector() const
 }
 
 template <>
+std::vector<cv::Size> MxArray::toVector() const
+{
+    if (isNumeric()) {
+        std::vector<cv::Size> vs;
+        if (numel() == 2)
+            vs.push_back(toSize());
+        else
+            toMat(CV_32S).reshape(2, 0).copyTo(vs);
+        return vs;
+    }
+    else {
+        return toVector(
+            std::const_mem_fun_ref_t<cv::Size, MxArray>(&MxArray::toSize));
+    }
+}
+
+template <>
 std::vector<cv::Rect> MxArray::toVector() const
 {
     if (isNumeric()) {

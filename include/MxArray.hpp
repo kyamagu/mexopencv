@@ -1588,6 +1588,26 @@ std::vector<cv::Point3f> MxArray::toVector() const;
 template <>
 std::vector<cv::Point3d> MxArray::toVector() const;
 
+/** Convert MxArray to std::vector<Size>.
+ * @return std::vector<Size> value.
+ *
+ * The input MxArray can be either:
+ * - a cell-array of sizes (2-element vectors) of length \c N, e.g:
+ *   <tt>{[w,h], [w,h], ...}</tt>
+ * - a numeric matrix of size \c Nx2, \c Nx1x2, or \c 1xNx2 in the form:
+ *   <tt>[w,h; w,h; ...]</tt> or <tt>cat(3, [w,h], [w,h], ...)</tt>
+ * .
+ * where \c N will be the output vector size.
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Size> v = cellArray.toVector<Size>();
+ * @endcode
+ */
+template <>
+std::vector<cv::Size> MxArray::toVector() const;
+
 /** Convert MxArray to std::vector<Rect>.
  * @return std::vector<Rect> value.
  *
