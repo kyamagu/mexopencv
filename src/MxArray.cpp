@@ -14,7 +14,7 @@ const char *cv_moments_fields[10] = {"m00", "m10", "m01", "m20", "m11", "m02",
 const char *cv_rotated_rect_fields[3] = {"center", "size", "angle"};
 /// Field names for cv::TermCriteria.
 const char *cv_term_criteria_fields[3] = {"type", "maxCount", "epsilon"};
-/// Field names for cv::Keypoint.
+/// Field names for cv::KeyPoint.
 const char *cv_keypoint_fields[6] = {"pt", "size", "angle", "response",
                                      "octave", "class_id"};
 /// Field names for cv::DMatch.
@@ -50,12 +50,15 @@ const ConstMap<int,mxClassID> ClassIDOf = ConstMap<int,mxClassID>
     (CV_32S,    mxINT32_CLASS);
 
 /** Comparison operator for sparse matrix elements.
+ * This functor sorts SparseMat nodes in column-major order.
+ * Only meant to be used on arrays with 2 dimensions.
  */
 struct CompareSparseMatNode {
     /// Comparison functor
     bool operator () (const cv::SparseMat::Node* rhs,
                       const cv::SparseMat::Node* lhs) const
     {
+        // sort by column, then by row
         if (rhs->idx[1] < lhs->idx[1])
             return true;
         if (rhs->idx[1] == lhs->idx[1] && rhs->idx[0] < lhs->idx[0])
@@ -131,7 +134,7 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
     const mwSize nchannels = input.channels();
     const int* dims_ = input.size;
     std::vector<mwSize> d(dims_, dims_ + input.dims);
-    d.push_back(nchannels);
+    d.push_back(nchannels); // mxCreate* ignores trailing singleton dimensions
     std::swap(d[0], d[1]);
     if (classid == mxLOGICAL_CLASS) {
         // OpenCV's logical true is any nonzero, while MATLAB's true is 1.
@@ -163,35 +166,39 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 
 MxArray::MxArray(const cv::SparseMat& mat)
 {
+    // MATLAB only supports 2D sparse arrays of class double
     if (mat.dims() != 2 || mat.type() != CV_32FC1)
         mexErrMsgIdAndTxt("mexopencv:error", "Not a 2D float sparse matrix");
-    // Create a sparse array.
-    const mwSize nnz = mat.nzcount();
-    p_ = mxCreateSparse(mat.size(0), mat.size(1), nnz, mxREAL);
+    // Create a sparse array, and get pointers to data (PR, IR, JC)
+    const mwSize m = mat.size(0), n = mat.size(1), nnz = mat.nzcount();
+    p_ = mxCreateSparse(m, n, nnz, mxREAL);
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-    // Sort nodes before we put elems into mxArray.
-    std::vector<const cv::SparseMat::Node*> nodes;
-    nodes.reserve(nnz);
-    for (cv::SparseMatConstIterator it = mat.begin(); it != mat.end(); ++it)
-        nodes.push_back(it.node());
-    std::sort(nodes.begin(), nodes.end(), CompareSparseMatNode());
-    // Copy data.
-    mwIndex *ir = mxGetIr(p_);
-    mwIndex *jc = mxGetJc(p_);
-    double *pr = mxGetPr(p_);
+    mwIndex *ir = mxGetIr(p_);  // array of length nzmax
+    mwIndex *jc = mxGetJc(p_);  // array of length n+1
+    double *pr = mxGetPr(p_);   // array of length nzmax
     if (!ir || !jc || !pr)
         mexErrMsgIdAndTxt("mexopencv:error", "Null pointer error");
-    mwIndex i = 0;
+    // collect SparseMat nodes. They are enumerated semi-randomly
+    // (iterator returns them in an order based on their index hash)
+    std::vector<const cv::SparseMat::Node*> nodes;
+    nodes.reserve(nnz);
+    for (cv::SparseMat::const_iterator it = mat.begin(); it != mat.end(); ++it)
+        nodes.push_back(it.node());
+    // sort the nodes in a column-major order before we put elems into mxArray
+    std::sort(nodes.begin(), nodes.end(), CompareSparseMatNode());
+    // Copy data by converting from (row,col,val) triplets to CSC format
     jc[0] = 0;
-    for (std::vector<const cv::SparseMat::Node*>::const_iterator
-         it = nodes.begin(); it != nodes.end(); ++it)
-    {
-        const mwIndex row = (*it)->idx[0], col = (*it)->idx[1];
+    for (mwIndex i = 0; i < nodes.size(); ++i) {
+        const mwIndex row = nodes[i]->idx[0], col = nodes[i]->idx[1];
         ir[i] = row;
         jc[col+1] = i+1;
-        pr[i] = static_cast<double>(mat.value<float>(*it));
-        ++i;
+        pr[i] = static_cast<double>(mat.value<float>(nodes[i]));
+    }
+    // fill indices in JC array where columns were empty and had no values
+    for (mwIndex i = 1; i < n+1; ++i) {
+        if (jc[i] == 0)
+            jc[i] = jc[i-1];
     }
 }
 
@@ -393,7 +400,7 @@ cv::Mat MxArray::toMat(int depth, bool transpose) const
     cv::merge(channels, mat);
     // transpose cv::Mat if needed
     if (mat.dims==2 && transpose)
-        mat = mat.t();
+        cv::transpose(mat, mat);  // in-place transpose
     return mat;
 }
 
@@ -411,29 +418,30 @@ cv::MatND MxArray::toMatND(int depth, bool transpose) const
     m.convertTo(mat, CV_MAKETYPE(depth, 1));
     // transpose cv::MatND if needed
     if (mat.dims==2 && transpose)
-        mat = mat.t();
+        cv::transpose(mat, mat);  // in-place transpose
     return mat;
 }
 
 cv::SparseMat MxArray::toSparseMat() const
 {
     // Check if it's sparse.
-    if (!isSparse() || !isDouble())
-        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not sparse");
+    if (!isSparse() || !isDouble() || isComplex())
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not real double sparse");
     // Create cv::SparseMat.
     const mwSize m = mxGetM(p_), n = mxGetN(p_);
     const int dims[] = {m, n};
     cv::SparseMat mat(2, dims, CV_32F);
-    // Copy data.
-    const mwIndex *ir = mxGetIr(p_);
-    const mwIndex *jc = mxGetJc(p_);
-    const double *pr = mxGetPr(p_);
+    // Copy data by converting from CSC format to (row,col,val) triplets
+    const mwIndex *ir = mxGetIr(p_);  // array of length nzmax
+    const mwIndex *jc = mxGetJc(p_);  // array of length n+1
+    const double *pr = mxGetPr(p_);   // array of length nzmax
     if (!ir || !jc || !pr)
          mexErrMsgIdAndTxt("mexopencv:error", "Null pointer error");
-    for (mwIndex j=0; j<n; ++j) {
-        const mwIndex start = jc[j], end = jc[j + 1] - 1;
-        // (row,col) <= val.
-        for (mwIndex i = start; i <= end; ++i)
+    for (mwIndex j = 0; j < n; ++j) {
+        // JC contains indices into PR and IR of the first non-zero value in a column
+        const mwIndex start = jc[j], end = jc[j+1];
+        for (mwIndex i = start; i < end; ++i)
+            // mat(row,col) = val
             mat.ref<float>(ir[i], j) = static_cast<float>(pr[i]);
     }
     return mat;
