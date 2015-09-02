@@ -1,6 +1,7 @@
 /**
  * @file matMulDeriv.cpp
- * @brief mex interface for matMulDeriv
+ * @brief mex interface for cv::matMulDeriv
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -21,7 +22,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs!=2 || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     Mat A(rhs[0].toMat(CV_32F)), B(rhs[1].toMat(CV_32F)), dABdA, dABdB;

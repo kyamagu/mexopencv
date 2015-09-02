@@ -1,6 +1,7 @@
 /**
  * @file equalizeHist.cpp
- * @brief mex interface for equalizeHist
+ * @brief mex interface for cv::equalizeHist
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -21,10 +22,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs!=1 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Process
     Mat src(rhs[0].toMat(CV_8U)), dst;
     equalizeHist(src, dst);

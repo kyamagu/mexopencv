@@ -1,6 +1,7 @@
 /**
  * @file calcOpticalFlowPyrLK.cpp
- * @brief mex interface for calcOpticalFlowPyrLK
+ * @brief mex interface for cv::calcOpticalFlowPyrLK
+ * @ingroup video
  * @author Kota Yamaguchi
  * @date 2011
  */

@@ -1,6 +1,7 @@
 /**
  * @file drawChessboardCorners.cpp
- * @brief mex interface for drawChessboardCorners
+ * @brief mex interface for cv::drawChessboardCorners
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */

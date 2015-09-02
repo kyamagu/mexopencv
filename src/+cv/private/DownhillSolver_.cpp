@@ -1,6 +1,7 @@
 /**
  * @file DownhillSolver_.cpp
- * @brief mex interface for DownhillSolver
+ * @brief mex interface for cv::DownhillSolver
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

@@ -1,6 +1,7 @@
 /**
  * @file drawContours.cpp
- * @brief mex interface for drawContours
+ * @brief mex interface for cv::drawContours
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */

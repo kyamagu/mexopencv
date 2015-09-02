@@ -1,6 +1,7 @@
 /**
  * @file Laplacian.cpp
- * @brief mex interface for Laplacian
+ * @brief mex interface for cv::Laplacian
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -26,7 +27,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
     int ddepth = -1;
     int ksize = 1;
@@ -48,7 +49,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Execute function
     Mat img(rhs[0].toMat());
     Laplacian(img, img, ddepth, ksize, scale, delta, borderType);

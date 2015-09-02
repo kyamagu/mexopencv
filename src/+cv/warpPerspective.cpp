@@ -1,6 +1,7 @@
 /**
  * @file warpPerspective.cpp
- * @brief mex interface for warpPerspective
+ * @brief mex interface for cv::warpPerspective
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -21,10 +22,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<2 || (nrhs%2)!=0 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
     Mat src(rhs[0].toMat());
     Size dsize = src.size();

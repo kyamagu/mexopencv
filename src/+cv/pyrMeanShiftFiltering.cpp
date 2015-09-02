@@ -1,6 +1,7 @@
 /**
  * @file pyrMeanShiftFiltering.cpp
- * @brief mex interface for pyrMeanShiftFiltering
+ * @brief mex interface for cv::pyrMeanShiftFiltering
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -21,10 +22,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<1 || (nrhs%2)!=1 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
     double sp = 5;
     double sr = 10;
@@ -40,7 +41,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Process
     Mat src(rhs[0].toMat()), dst;
     pyrMeanShiftFiltering(src, dst, sp, sr, maxLevel);

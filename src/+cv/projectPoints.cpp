@@ -1,6 +1,7 @@
 /**
  * @file projectPoints.cpp
- * @brief mex interface for projectPoints
+ * @brief mex interface for cv::projectPoints
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */

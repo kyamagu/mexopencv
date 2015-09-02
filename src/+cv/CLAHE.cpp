@@ -1,6 +1,7 @@
 /**
  * @file CLAHE.cpp
- * @brief mex interface for CLAHE
+ * @brief mex interface for cv::CLAHE
+ * @ingroup imgproc
  * @author Amro
  * @date 2015
  */

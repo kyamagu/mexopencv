@@ -1,6 +1,7 @@
 /**
  * @file stereoRectifyUncalibrated.cpp
- * @brief mex interface for stereoRectifyUncalibrated
+ * @brief mex interface for cv::stereoRectifyUncalibrated
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -21,10 +22,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<4 || ((nrhs%2)==1) || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     Mat F(rhs[2].toMat(CV_32F));
     Size imgSize(rhs[3].toSize());
     // Option processing
@@ -36,7 +37,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Process
     Mat H1, H2;
     if (rhs[0].isNumeric() && rhs[1].isNumeric()) {

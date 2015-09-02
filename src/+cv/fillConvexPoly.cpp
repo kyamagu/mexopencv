@@ -1,6 +1,7 @@
 /**
  * @file fillConvexPoly.cpp
- * @brief mex interface for fillConvexPoly
+ * @brief mex interface for cv::fillConvexPoly
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */

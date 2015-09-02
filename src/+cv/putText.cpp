@@ -1,6 +1,7 @@
 /**
  * @file putText.cpp
- * @brief mex interface for putText
+ * @brief mex interface for cv::putText
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */

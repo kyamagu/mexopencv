@@ -1,6 +1,7 @@
 /**
  * @file Sobel.cpp
- * @brief mex interface for Sobel
+ * @brief mex interface for cv::Sobel
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */

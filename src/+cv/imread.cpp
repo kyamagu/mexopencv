@@ -1,6 +1,7 @@
 /**
  * @file imread.cpp
- * @brief mex interface for imread
+ * @brief mex interface for cv::imread
+ * @ingroup imgcodecs
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -24,7 +25,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
     int flags = 1;
     for (int i=1; i<nrhs; i+=2) {

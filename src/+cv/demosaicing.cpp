@@ -1,6 +1,7 @@
 /**
  * @file demosaicing.cpp
- * @brief mex interface for demosaicing
+ * @brief mex interface for cv::demosaicing
+ * @ingroup imgproc
  * @author Amro
  * @date 2015
  */

@@ -1,6 +1,7 @@
 /**
  * @file cornerHarris.cpp
- * @brief mex interface for cornerHarris
+ * @brief mex interface for cv::cornerHarris
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */

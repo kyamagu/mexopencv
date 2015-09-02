@@ -1,6 +1,7 @@
 /**
  * @file calcBackProject.cpp
- * @brief mex interface for calcBackProject
+ * @brief mex interface for cv::calcBackProject
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */

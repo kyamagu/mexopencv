@@ -1,6 +1,7 @@
 /**
  * @file Subdiv2D_.cpp
  * @brief mex interface for cv::Subdiv2D
+ * @ingroup imgproc
  * @author Amro
  * @date 2015
  */

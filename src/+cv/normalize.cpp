@@ -1,6 +1,7 @@
 /**
  * @file normalize.cpp
  * @brief mex interface for cv::normalize
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

@@ -1,6 +1,7 @@
 /**
  * @file matchTemplate.cpp
- * @brief mex interface for matchTemplate
+ * @brief mex interface for cv::matchTemplate
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */

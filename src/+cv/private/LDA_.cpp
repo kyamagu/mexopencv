@@ -1,6 +1,7 @@
 /**
  * @file LDA_.cpp
- * @brief mex interface for LDA_
+ * @brief mex interface for cv::LDA
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

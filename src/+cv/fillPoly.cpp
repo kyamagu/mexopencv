@@ -1,6 +1,7 @@
 /**
  * @file fillPoly.cpp
- * @brief mex interface for fillPoly
+ * @brief mex interface for cv::fillPoly
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */

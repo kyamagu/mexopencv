@@ -1,6 +1,7 @@
 /**
  * @file remap.cpp
- * @brief mex interface for remap
+ * @brief mex interface for cv::remap
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -21,10 +22,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<2 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Decide argument format
     Mat map2;
     int opts = 2; // start of optional args
@@ -52,7 +53,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Apply
     Mat src(rhs[0].toMat()), dst;
     Mat map1 = (rhs[1].classID()==mxINT16_CLASS && rhs[1].ndims()>2) ?

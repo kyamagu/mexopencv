@@ -1,6 +1,7 @@
 /**
  * @file BackgroundSubtractorMOG2_.cpp
- * @brief mex interface for BackgroundSubtractorMOG2_
+ * @brief mex interface for cv::BackgroundSubtractorMOG2
+ * @ingroup video
  * @author Kota Yamaguchi, Amro
  * @date 2015
  */

@@ -1,6 +1,7 @@
 /**
  * @file circle.cpp
- * @brief mex interface for circle
+ * @brief mex interface for cv::circle
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */

@@ -1,6 +1,7 @@
 /**
  * @file FREAK_.cpp
- * @brief mex interface for FREAK
+ * @brief mex interface for cv::xfeatures2d::FREAK
+ * @ingroup xfeatures2d
  * @author Amro
  * @date 2015
  */

@@ -1,6 +1,7 @@
 /**
  * @file BackgroundSubtractorGMG_.cpp
- * @brief mex interface for BackgroundSubtractorGMG_
+ * @brief mex interface for cv::bgsegm::BackgroundSubtractorGMG
+ * @ingroup bgsegm
  * @author Amro
  * @date 2015
  */

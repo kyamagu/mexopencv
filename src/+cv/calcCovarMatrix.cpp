@@ -1,6 +1,7 @@
 /**
  * @file calcCovarMatrix.cpp
- * @brief mex interface for calcCovarMatrix
+ * @brief mex interface for cv::calcCovarMatrix
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

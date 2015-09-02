@@ -1,6 +1,7 @@
 /**
  * @file invert.cpp
- * @brief mex interface for invert
+ * @brief mex interface for cv::invert
+ * @ingroup core
  * @author Kota Yamaguchi
  * @date 2012
  */

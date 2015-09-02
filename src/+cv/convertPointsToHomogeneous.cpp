@@ -1,6 +1,7 @@
 /**
  * @file convertPointsToHomogeneous.cpp
- * @brief mex interface for convertPointsToHomogeneous
+ * @brief mex interface for cv::convertPointsToHomogeneous
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */

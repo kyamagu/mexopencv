@@ -1,6 +1,7 @@
 /**
  * @file imwrite.cpp
- * @brief mex interface for imwrite
+ * @brief mex interface for cv::imwrite
+ * @ingroup imgcodecs
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -24,7 +25,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
     vector<int> params;
     for (int i=2; i<nrhs; i+=2) {
@@ -53,7 +54,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Process
     string filename(rhs[0].toString());
     Mat m(rhs[1].toMat(CV_8U));

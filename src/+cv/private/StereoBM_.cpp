@@ -1,6 +1,7 @@
 /**
  * @file StereoBM_.cpp
- * @brief mex interface for StereoBM_
+ * @brief mex interface for cv::StereoBM
+ * @ingroup calib3d
  * @author Kota Yamaguchi, Amro
  * @date 2012, 2015
  */
@@ -36,7 +37,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 {
     if (nrhs<2 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     vector<MxArray> rhs(prhs,prhs+nrhs);
     int id = rhs[0].toInt();
     string method(rhs[1].toString());

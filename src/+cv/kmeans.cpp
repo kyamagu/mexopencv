@@ -1,6 +1,7 @@
 /**
  * @file kmeans.cpp
- * @brief mex interface for kmeans
+ * @brief mex interface for cv::kmeans
+ * @ingroup core
  * @author Kota Yamaguchi
  * @date 2011
  */

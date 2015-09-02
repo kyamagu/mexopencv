@@ -1,6 +1,7 @@
 /**
  * @file transform.cpp
- * @brief mex interface for transform
+ * @brief mex interface for cv::transform
+ * @ingroup core
  * @author Kota Yamaguchi
  * @date 2011
  */

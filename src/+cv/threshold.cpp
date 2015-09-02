@@ -1,6 +1,7 @@
 /**
  * @file threshold.cpp
- * @brief mex interface for threshold
+ * @brief mex interface for cv::threshold
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */

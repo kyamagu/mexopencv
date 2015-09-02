@@ -1,6 +1,7 @@
 /**
  * @file PCA_.cpp
- * @brief mex interface for PCA_
+ * @brief mex interface for cv::PCA
+ * @ingroup core
  * @author Kota Yamaguchi
  * @date 2012
  */

@@ -1,6 +1,7 @@
 /**
  * @file VideoWriter_.cpp
- * @brief mex interface for VideoWriter_
+ * @brief mex interface for cv::VideoWriter
+ * @ingroup videoio
  * @author Kota Yamaguchi
  * @date 2012
  */

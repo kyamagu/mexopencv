@@ -1,6 +1,7 @@
 /**
  * @file getTextSize.cpp
- * @brief mex interface for getTextSize
+ * @brief mex interface for cv::getTextSize
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */

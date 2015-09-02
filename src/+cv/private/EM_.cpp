@@ -1,6 +1,7 @@
 /**
  * @file EM_.cpp
- * @brief mex interface for EM
+ * @brief mex interface for cv::ml::EM
+ * @ingroup ml
  * @author Vladimir Eremeev, Amro
  * @date 2012, 2015
  */

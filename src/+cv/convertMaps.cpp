@@ -1,6 +1,7 @@
 /**
  * @file convertMaps.cpp
- * @brief mex interface for convertMaps
+ * @brief mex interface for cv::convertMaps
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -21,10 +22,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<2 || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Decide argument format
     Mat map2;
     int opts = 1; // start of optional args
@@ -46,7 +47,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Apply
     Mat dst1, dst2;
     Mat map1 = (rhs[0].classID()==mxINT16_CLASS && rhs[0].ndims()>2) ?

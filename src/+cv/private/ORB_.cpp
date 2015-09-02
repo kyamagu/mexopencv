@@ -1,6 +1,7 @@
 /**
  * @file ORB_.cpp
- * @brief mex interface for ORB
+ * @brief mex interface for cv::ORB
+ * @ingroup features2d
  * @author Amro, Kota Yamaguchi
  * @date 2015
  */

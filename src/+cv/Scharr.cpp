@@ -1,6 +1,7 @@
 /**
  * @file Scharr.cpp
- * @brief mex interface for Scharr
+ * @brief mex interface for cv::Scharr
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -24,7 +25,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
     int ddepth=-1;
     int xorder=1;
@@ -49,7 +50,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Execute function
     Mat img(rhs[0].toMat());
     Scharr(img, img, ddepth, xorder, yorder, scale, delta, borderType);

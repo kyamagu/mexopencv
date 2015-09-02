@@ -1,6 +1,7 @@
 /**
  * @file LineSegmentDetector_.cpp
- * @brief mex interface for LineSegmentDetector
+ * @brief mex interface for cv::LineSegmentDetector
+ * @ingroup imgproc
  * @author Amro
  * @date 2015
  */

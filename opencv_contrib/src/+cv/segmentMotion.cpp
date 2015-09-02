@@ -1,6 +1,7 @@
 /**
  * @file segmentMotion.cpp
- * @brief mex interface for segmentMotion
+ * @brief mex interface for cv::motempl::segmentMotion
+ * @ingroup optflow
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -23,10 +24,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<3 || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Process
     Mat mhi(rhs[0].toMat(CV_32F)), segmask;
     vector<Rect> boundingRects;

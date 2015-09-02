@@ -1,6 +1,7 @@
 /**
  * @file EMD.cpp
- * @brief mex interface for EMD
+ * @brief mex interface for cv::EMD
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -24,7 +25,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
     int distType = cv::DIST_L2;
     Mat cost;

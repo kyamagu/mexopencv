@@ -1,6 +1,7 @@
 /**
  * @file evaluateFeatureDetector.cpp
- * @brief mex interface for evaluateFeatureDetector
+ * @brief mex interface for cv::evaluateFeatureDetector
+ * @ingroup features2d
  * @author Amro
  * @date 2015
  */

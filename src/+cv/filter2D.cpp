@@ -1,6 +1,7 @@
 /**
  * @file filter2D.cpp
- * @brief mex interface for filter2D
+ * @brief mex interface for cv::filter2D
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -14,8 +15,6 @@ using namespace cv;
  * @param plhs pointers to mxArrays in the left-hand-side
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
- *
- * Wrapper for filter2D
  */
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
@@ -26,7 +25,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
     Point anchor(-1,-1);
     int ddepth = -1;

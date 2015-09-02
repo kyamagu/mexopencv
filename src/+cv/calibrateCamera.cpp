@@ -1,6 +1,7 @@
 /**
  * @file calibrateCamera.cpp
- * @brief mex interface for calibrateCamera
+ * @brief mex interface for cv::calibrateCamera
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -21,7 +22,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<3 || ((nrhs%2)!=1) || nlhs>5)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
 
@@ -60,7 +61,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Process
     vector<vector<Point3f> > objectPoints(MxArrayToVectorVectorPoint3<float>(rhs[0]));
     vector<vector<Point2f> > imagePoints(MxArrayToVectorVectorPoint<float>(rhs[1]));

@@ -1,6 +1,7 @@
 /**
  * @file clipLine.cpp
- * @brief mex interface for clipLine
+ * @brief mex interface for cv::clipLine
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */

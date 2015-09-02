@@ -1,6 +1,7 @@
 /**
  * @file pointPolygonTest.cpp
- * @brief mex interface for pointPolygonTest
+ * @brief mex interface for cv::pointPolygonTest
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2013
  */
@@ -21,7 +22,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<2 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
    

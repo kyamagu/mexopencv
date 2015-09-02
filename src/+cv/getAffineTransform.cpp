@@ -1,6 +1,7 @@
 /**
  * @file getAffineTransform.cpp
- * @brief mex interface for getAffineTransform
+ * @brief mex interface for cv::getAffineTransform
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -21,7 +22,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs!=2 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     if (!rhs[0].isNumeric() || rhs[0].rows()!=3 || rhs[0].cols()!=2 ||

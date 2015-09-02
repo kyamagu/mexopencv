@@ -1,6 +1,7 @@
 /**
  * @file ellipse.cpp
- * @brief mex interface for ellipse
+ * @brief mex interface for cv::ellipse
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */

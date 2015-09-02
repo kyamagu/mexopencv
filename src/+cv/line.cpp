@@ -1,6 +1,7 @@
 /**
  * @file line.cpp
- * @brief mex interface for line
+ * @brief mex interface for cv::line
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */

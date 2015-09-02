@@ -1,6 +1,7 @@
 /**
  * @file solvePnPRansac.cpp
- * @brief mex interface for solvePnPRansac
+ * @brief mex interface for cv::solvePnPRansac
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */

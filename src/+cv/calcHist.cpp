@@ -1,6 +1,7 @@
 /**
  * @file calcHist.cpp
- * @brief mex interface for calcHist
+ * @brief mex interface for cv::calcHist
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */

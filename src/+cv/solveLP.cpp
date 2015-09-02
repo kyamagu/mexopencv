@@ -1,6 +1,7 @@
 /**
  * @file solveLP.cpp
- * @brief mex interface for solveLP
+ * @brief mex interface for cv::solveLP
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

@@ -1,6 +1,7 @@
 /**
  * @file findChessboardCorners.cpp
- * @brief mex interface for findChessboardCorners
+ * @brief mex interface for cv::findChessboardCorners
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -21,13 +22,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<2 || (nrhs%2)!=0 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     Mat image(rhs[0].toMat());
     Size patternSize(rhs[1].toSize());
-    
+
     // Option processing
     bool adaptiveThresh = true;
     bool normalizeImage = true;

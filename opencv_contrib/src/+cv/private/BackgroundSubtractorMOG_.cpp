@@ -1,6 +1,7 @@
 /**
  * @file BackgroundSubtractorMOG_.cpp
- * @brief mex interface for BackgroundSubtractorMOG_
+ * @brief mex interface for cv::bgsegm::BackgroundSubtractorMOG
+ * @ingroup bgsegm
  * @author Kota Yamaguchi, Amro
  * @date 2015
  */

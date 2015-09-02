@@ -1,6 +1,7 @@
 /**
  * @file Utils_.cpp
  * @brief mex interface for some utilities and system functions
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

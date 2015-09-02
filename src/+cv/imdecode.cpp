@@ -1,6 +1,7 @@
 /**
  * @file imdecode.cpp
- * @brief mex interface for imdecode
+ * @brief mex interface for cv::imdecode
+ * @ingroup imgcodecs
  * @author Kota Yamaguchi
  * @date 2012
  */

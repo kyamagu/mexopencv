@@ -1,6 +1,7 @@
 /**
  * @file GeneralizedHoughGuil_.cpp
- * @brief mex interface for GeneralizedHoughGuil
+ * @brief mex interface for cv::GeneralizedHoughGuil
+ * @ingroup imgproc
  * @author Amro
  * @date 2015
  */

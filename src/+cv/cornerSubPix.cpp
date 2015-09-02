@@ -1,6 +1,7 @@
 /**
  * @file cornerSubPix.cpp
- * @brief mex interface for cornerSubPix
+ * @brief mex interface for cv::cornerSubPix
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */

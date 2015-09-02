@@ -1,6 +1,7 @@
 /**
  * @file sepFilter2D.cpp
- * @brief mex interface for sepFilter2D
+ * @brief mex interface for cv::sepFilter2D
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -24,7 +25,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
     Point anchor(-1,-1);
     int ddepth = -1;

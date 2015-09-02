@@ -1,6 +1,7 @@
 /**
  * @file calibrationMatrixValues.cpp
- * @brief mex interface for calibrationMatrixValues
+ * @brief mex interface for cv::calibrationMatrixValues
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */

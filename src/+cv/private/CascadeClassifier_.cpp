@@ -1,6 +1,7 @@
 /**
  * @file CascadeClassifier_.cpp
- * @brief mex interface for CascadeClassifier_
+ * @brief mex interface for cv::CascadeClassifier
+ * @ingroup objdetect
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -27,7 +28,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 {
     if (nrhs<1 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Determine argument format between (filename,...) or (id,method,...)
     vector<MxArray> rhs(prhs,prhs+nrhs);
     int id = 0;
@@ -48,7 +49,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
-    
+
     // Big operation switch
     CascadeClassifier& obj = obj_[id];
     if (method == "delete") {
@@ -69,7 +70,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "detectMultiScale") {
         if (nrhs<3 || (nrhs%2)!=1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        
+
         // Option processing
         double scaleFactor=1.1;
         int minNeighbors=3, flags=0;
@@ -89,7 +90,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             else
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
-        
+
         // Run
         Mat image(rhs[2].toMat());
         vector<Rect> objects;

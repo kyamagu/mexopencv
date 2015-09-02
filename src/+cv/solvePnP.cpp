@@ -1,6 +1,7 @@
 /**
  * @file solvePnP.cpp
- * @brief mex interface for solvePnP
+ * @brief mex interface for cv::solvePnP
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */

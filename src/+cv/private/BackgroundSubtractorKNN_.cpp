@@ -1,6 +1,7 @@
 /**
  * @file BackgroundSubtractorKNN_.cpp
- * @brief mex interface for BackgroundSubtractorKNN
+ * @brief mex interface for cv::BackgroundSubtractorKNN
+ * @ingroup video
  * @author Amro
  * @date 2015
  */

@@ -1,6 +1,7 @@
 /**
  * @file arrowedLine.cpp
- * @brief mex interface for arrowedLine
+ * @brief mex interface for cv::arrowedLine
+ * @ingroup imgproc
  * @author Amro
  * @date 2015
  */

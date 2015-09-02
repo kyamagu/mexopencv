@@ -1,6 +1,7 @@
 /**
  * @file grabCut.cpp
- * @brief mex interface for grabCut
+ * @brief mex interface for cv::grabCut
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -21,8 +22,6 @@ const ConstMap<std::string,int> GrabCutType = ConstMap<std::string,int>
  * @param plhs pointers to mxArrays in the left-hand-side
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
- *
- * This is the entry point of the function
  */
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
@@ -58,7 +57,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
     }
-    
+
     // Initialize mask and rect
     Mat mask;
     Rect rect;

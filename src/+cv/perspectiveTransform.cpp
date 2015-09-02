@@ -1,6 +1,7 @@
 /**
  * @file perspectiveTransform.cpp
- * @brief mex interface for perspectiveTransform
+ * @brief mex interface for cv::perspectiveTransform
+ * @ingroup core
  * @author Kota Yamaguchi
  * @date 2011
  */

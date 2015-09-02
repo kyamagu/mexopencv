@@ -1,6 +1,7 @@
 /**
  * @file eigen.cpp
  * @brief mex interface for cv::eigen
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

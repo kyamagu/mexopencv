@@ -1,6 +1,7 @@
 /**
  * @file drawMatches.cpp
- * @brief mex interface for drawMatches
+ * @brief mex interface for cv::drawMatches
+ * @ingroup features2d
  * @author Kota Yamaguchi
  * @date 2011
  */

@@ -1,6 +1,7 @@
 /**
  * @file convexHull.cpp
- * @brief mex interface for convexHull
+ * @brief mex interface for cv::convexHull
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -21,7 +22,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<1 || ((nrhs%2)!=1) || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     bool clockwise=false;
@@ -35,7 +36,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Process
     if (rhs[0].isNumeric()) {
         Mat points(rhs[0].toMat(CV_32S));

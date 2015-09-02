@@ -1,6 +1,7 @@
 /**
  * @file compareHist.cpp
- * @brief mex interface for compareHist
+ * @brief mex interface for cv::compareHist
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -35,7 +36,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
     int method = cv::HISTCMP_CORREL;
     for (int i=2; i<nrhs; i+=2) {
@@ -46,7 +47,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Process
     MatND H1(rhs[0].toMat()), H2(rhs[1].toMat());
     double d = compareHist(H1, H2, method);

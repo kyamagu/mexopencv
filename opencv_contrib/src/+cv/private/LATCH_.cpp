@@ -1,6 +1,7 @@
 /**
  * @file LATCH_.cpp
- * @brief mex interface for LATCH
+ * @brief mex interface for cv::xfeatures2d::LATCH
+ * @ingroup xfeatures2d
  * @author Amro
  * @date 2015
  */

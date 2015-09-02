@@ -1,6 +1,7 @@
 /**
  * @file ConjGradSolver_.cpp
- * @brief mex interface for ConjGradSolver
+ * @brief mex interface for cv::ConjGradSolver
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

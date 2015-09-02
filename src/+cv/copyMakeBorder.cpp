@@ -1,6 +1,7 @@
 /**
  * @file copyMakeBorder.cpp
- * @brief mex interface for copyMakeBorder
+ * @brief mex interface for cv::copyMakeBorder
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

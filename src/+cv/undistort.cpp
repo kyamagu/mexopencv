@@ -1,6 +1,7 @@
 /**
  * @file undistort.cpp
- * @brief mex interface for undistort
+ * @brief mex interface for cv::undistort
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -21,7 +22,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<3 || ((nrhs%2)!=1) || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     
@@ -38,7 +39,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Process
     Mat dst;
     undistort(src, dst, cameraMatrix, distCoeffs, newCameraMatrix);

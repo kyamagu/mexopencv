@@ -1,6 +1,7 @@
 /**
  * @file reprojectImageTo3D.cpp
- * @brief mex interface for reprojectImageTo3D
+ * @brief mex interface for cv::reprojectImageTo3D
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -21,10 +22,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<2 || ((nrhs%2)!=0) || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
     int depth=-1;
     bool handleMissingValues=false;

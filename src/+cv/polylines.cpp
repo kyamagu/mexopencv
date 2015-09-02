@@ -1,6 +1,7 @@
 /**
  * @file polylines.cpp
- * @brief mex interface for polylines
+ * @brief mex interface for cv::polylines
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */

@@ -1,6 +1,7 @@
 /**
  * @file isContourConvex.cpp
- * @brief mex interface for isContourConvex
+ * @brief mex interface for cv::isContourConvex
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -21,7 +22,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs!=1 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     if (rhs[0].isNumeric()) {

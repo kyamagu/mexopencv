@@ -1,6 +1,7 @@
 /**
  * @file SIFT_.cpp
- * @brief mex interface for SIFT
+ * @brief mex interface for cv::xfeatures2d::SIFT
+ * @ingroup xfeatures2d
  * @author Amro, Kota Yamaguchi
  * @date 2015
  */

@@ -1,6 +1,7 @@
 /**
  * @file SVD_.cpp
- * @brief mex interface for SVD_
+ * @brief mex interface for cv::SVD
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

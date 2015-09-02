@@ -1,6 +1,7 @@
 /**
  * @file cornerMinEigenVal.cpp
- * @brief mex interface for cornerMinEigenVal
+ * @brief mex interface for cv::cornerMinEigenVal
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */

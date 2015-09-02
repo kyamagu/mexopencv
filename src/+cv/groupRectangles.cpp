@@ -1,6 +1,7 @@
 /**
  * @file groupRectangles.cpp
- * @brief mex interface for groupRectangles
+ * @brief mex interface for cv::groupRectangles
+ * @ingroup objdetect
  * @author Kota Yamaguchi
  * @date 2011
  */

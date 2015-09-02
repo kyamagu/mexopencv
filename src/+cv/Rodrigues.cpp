@@ -1,6 +1,7 @@
 /**
  * @file Rodrigues.cpp
- * @brief mex interface for Rodrigues
+ * @brief mex interface for cv::Rodrigues
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -21,10 +22,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs!=1 || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Process
     Mat src(rhs[0].toMat(CV_32F)), dst;
     Mat jacobian;

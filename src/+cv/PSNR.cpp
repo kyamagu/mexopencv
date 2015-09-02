@@ -1,6 +1,7 @@
 /**
  * @file PSNR.cpp
- * @brief mex interface for PSNR
+ * @brief mex interface for cv::PSNR
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

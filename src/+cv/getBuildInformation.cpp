@@ -1,6 +1,7 @@
 /**
  * @file getBuildInformation.cpp
- * @brief mex interface for getBuildInformation
+ * @brief mex interface for cv::getBuildInformation
+ * @ingroup core
  * @author Amro
  * @date 2013
  */

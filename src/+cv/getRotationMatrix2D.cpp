@@ -1,6 +1,7 @@
 /**
  * @file getRotationMatrix2D.cpp
- * @brief mex interface for getRotationMatrix2D
+ * @brief mex interface for cv::getRotationMatrix2D
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -21,7 +22,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs!=3 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     if (!rhs[0].isNumeric() || rhs[0].numel()!=2 ||

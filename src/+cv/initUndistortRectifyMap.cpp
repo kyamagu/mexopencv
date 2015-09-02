@@ -1,6 +1,7 @@
 /**
  * @file initUndistortRectifyMap.cpp
- * @brief mex interface for initUndistortRectifyMap
+ * @brief mex interface for cv::initUndistortRectifyMap
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -27,7 +28,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<4 || ((nrhs%2)!=0) || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     Mat cameraMatrix(rhs[0].toMat(CV_32F));

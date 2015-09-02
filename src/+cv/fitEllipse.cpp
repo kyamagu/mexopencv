@@ -1,6 +1,7 @@
 /**
  * @file fitEllipse.cpp
- * @brief mex interface for fitEllipse
+ * @brief mex interface for cv::fitEllipse
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -21,10 +22,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs!=1 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Process
     if (rhs[0].isNumeric()) {
         Mat points(rhs[0].toMat());
@@ -32,6 +33,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else if (rhs[0].isCell()) {
         vector<Point> points(rhs[0].toVector<Point>());
-        plhs[0] = MxArray(fitEllipse(points));        
+        plhs[0] = MxArray(fitEllipse(points));
     }
 }

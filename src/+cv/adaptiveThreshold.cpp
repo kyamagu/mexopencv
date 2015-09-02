@@ -1,6 +1,7 @@
 /**
  * @file adaptiveThreshold.cpp
- * @brief mex interface for adaptiveThreshold
+ * @brief mex interface for cv::adaptiveThreshold
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */

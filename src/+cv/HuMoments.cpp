@@ -1,6 +1,7 @@
 /**
  * @file HuMoments.cpp
- * @brief mex interface for HuMoments
+ * @brief mex interface for cv::HuMoments
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -21,10 +22,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs!=1 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Process
     Moments mo(rhs[0].toMoments());
     vector<double> hu(7,0);

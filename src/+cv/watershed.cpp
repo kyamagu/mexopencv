@@ -1,6 +1,7 @@
 /**
  * @file watershed.cpp
- * @brief mex interface for watershed
+ * @brief mex interface for cv::watershed
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -21,10 +22,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs!=2 || nlhs!=1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);    
-    
+    vector<MxArray> rhs(prhs,prhs+nrhs);
+
     // Process
     Mat image(rhs[0].toMat(CV_8U)), marker(rhs[1].toMat(CV_32S));
     watershed(image, marker);

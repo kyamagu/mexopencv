@@ -1,6 +1,7 @@
 /**
  * @file findCirclesGrid.cpp
- * @brief mex interface for findCirclesGrid
+ * @brief mex interface for cv::findCirclesGrid
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */

@@ -1,6 +1,7 @@
 /**
  * @file blendLinear.cpp
- * @brief mex interface for blendLinear
+ * @brief mex interface for cv::blendLinear
+ * @ingroup imgproc
  * @author Amro
  * @date 2015
  */

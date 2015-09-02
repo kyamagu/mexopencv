@@ -1,6 +1,7 @@
 /**
  * @file HOGDescriptor_.cpp
- * @brief mex interface for HOGDescriptor
+ * @brief mex interface for cv::HOGDescriptor
+ * @ingroup objdetect
  * @author Kota Yamaguchi
  * @date 2012
  */

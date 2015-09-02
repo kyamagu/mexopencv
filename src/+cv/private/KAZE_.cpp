@@ -1,6 +1,7 @@
 /**
  * @file KAZE_.cpp
- * @brief mex interface for KAZE
+ * @brief mex interface for cv::KAZE
+ * @ingroup features2d
  * @author Amro
  * @date 2015
  */

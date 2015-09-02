@@ -1,6 +1,7 @@
 /**
  * @file decomposeProjectionMatrix.cpp
- * @brief mex interface for decomposeProjectionMatrix
+ * @brief mex interface for cv::decomposeProjectionMatrix
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */

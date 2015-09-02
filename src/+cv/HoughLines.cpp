@@ -1,6 +1,7 @@
 /**
  * @file HoughLines.cpp
- * @brief mex interface for HoughLines
+ * @brief mex interface for cv::HoughLines
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */

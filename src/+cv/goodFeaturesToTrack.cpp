@@ -1,6 +1,7 @@
 /**
  * @file goodFeaturesToTrack.cpp
- * @brief mex interface for goodFeaturesToTrack
+ * @brief mex interface for cv::goodFeaturesToTrack
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */

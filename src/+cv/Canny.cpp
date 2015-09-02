@@ -1,6 +1,7 @@
 /**
  * @file Canny.cpp
- * @brief mex interface for Canny
+ * @brief mex interface for cv::Canny
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */

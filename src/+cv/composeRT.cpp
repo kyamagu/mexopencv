@@ -1,6 +1,7 @@
 /**
  * @file composeRT.cpp
- * @brief mex interface for composeRT
+ * @brief mex interface for cv::composeRT
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */

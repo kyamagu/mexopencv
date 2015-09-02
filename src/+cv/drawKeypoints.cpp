@@ -1,6 +1,7 @@
 /**
  * @file drawKeypoints.cpp
- * @brief mex interface for drawKeypoints
+ * @brief mex interface for cv::drawKeypoints
+ * @ingroup features2d
  * @author Kota Yamaguchi
  * @date 2011
  */

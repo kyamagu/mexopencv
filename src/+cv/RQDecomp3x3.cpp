@@ -1,6 +1,7 @@
 /**
  * @file RQDecomp3x3.cpp
- * @brief mex interface for RQDecomp3x3
+ * @brief mex interface for cv::RQDecomp3x3
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -21,10 +22,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs!=1 || nlhs>5)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Process
     Mat M(rhs[0].toMat(CV_32F));
     Mat R, Q;

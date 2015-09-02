@@ -1,6 +1,7 @@
 /**
  * @file imencode.cpp
- * @brief mex interface for imencode
+ * @brief mex interface for cv::imencode
+ * @ingroup imgcodecs
  * @author Kota Yamaguchi
  * @date 2012
  */

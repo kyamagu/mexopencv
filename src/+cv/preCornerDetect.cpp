@@ -1,6 +1,7 @@
 /**
  * @file preCornerDetect.cpp
- * @brief mex interface for preCornerDetect
+ * @brief mex interface for cv::preCornerDetect
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */

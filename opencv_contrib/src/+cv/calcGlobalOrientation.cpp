@@ -1,6 +1,7 @@
 /**
  * @file calcGlobalOrientation.cpp
- * @brief mex interface for calcGlobalOrientation
+ * @brief mex interface for cv::motempl::calcGlobalOrientation
+ * @ingroup optflow
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -23,10 +24,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<5 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Process
     Mat orientation(rhs[0].toMat());
     Mat mask(rhs[1].toMat());

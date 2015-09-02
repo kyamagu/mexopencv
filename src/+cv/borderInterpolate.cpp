@@ -1,6 +1,7 @@
 /**
  * @file borderInterpolate.cpp
- * @brief mex interface for borderInterpolate
+ * @brief mex interface for cv::borderInterpolate
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

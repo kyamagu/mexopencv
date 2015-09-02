@@ -1,6 +1,7 @@
 /**
  * @file VideoCapture_.cpp
- * @brief mex interface for VideoCapture_
+ * @brief mex interface for cv::VideoCapture
+ * @ingroup videoio
  * @author Kota Yamaguchi
  * @date 2012
  */

@@ -1,6 +1,7 @@
 /**
  * @file KalmanFilter_.cpp
- * @brief mex interface for KalmanFilter_
+ * @brief mex interface for cv::KalmanFilter
+ * @ingroup video
  * @author Kota Yamaguchi
  * @date 2012
  */

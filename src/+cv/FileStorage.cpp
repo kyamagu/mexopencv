@@ -1,6 +1,7 @@
 /**
  * @file FileStorage.cpp
- * @brief mex interface for FileStorage
+ * @brief mex interface for cv::FileStorage
+ * @ingroup core
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -164,7 +165,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check arguments
     if (!(nrhs>=2&&nlhs==0)&&!(nrhs==1&&nlhs<=1))
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     string filename(MxArray(prhs[0]).toString());
     if (nrhs==1) {
         // Read

@@ -1,6 +1,7 @@
 /**
  * @file invertAffineTransform.cpp
- * @brief mex interface for invertAffineTransform
+ * @brief mex interface for cv::invertAffineTransform
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -21,7 +22,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs!=1 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     Mat src(MxArray(prhs[0]).toMat()), dst;
     invertAffineTransform(src, dst);

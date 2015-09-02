@@ -1,6 +1,7 @@
 /**
  * @file solve.cpp
- * @brief mex interface for solve
+ * @brief mex interface for cv::solve
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

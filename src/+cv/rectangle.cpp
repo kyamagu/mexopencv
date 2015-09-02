@@ -1,6 +1,7 @@
 /**
  * @file rectangle.cpp
- * @brief mex interface for rectangle
+ * @brief mex interface for cv::rectangle
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */

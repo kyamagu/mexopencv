@@ -1,6 +1,7 @@
 /**
  * @file boundingRect.cpp
- * @brief mex interface for boundingRect
+ * @brief mex interface for cv::boundingRect
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -21,10 +22,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs!=1 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Process
     if (rhs[0].isNumeric()) {
         Mat curve(rhs[0].toMat());

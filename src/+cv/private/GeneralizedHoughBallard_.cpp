@@ -1,6 +1,7 @@
 /**
  * @file GeneralizedHoughBallard_.cpp
- * @brief mex interface for GeneralizedHoughBallard
+ * @brief mex interface for cv::GeneralizedHoughBallard
+ * @ingroup imgproc
  * @author Amro
  * @date 2015
  */

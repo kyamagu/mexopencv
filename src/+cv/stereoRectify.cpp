@@ -1,6 +1,7 @@
 /**
  * @file stereoRectify.cpp
- * @brief mex interface for stereoRectify
+ * @brief mex interface for cv::stereoRectify
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */

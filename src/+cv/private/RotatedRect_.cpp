@@ -1,6 +1,7 @@
 /**
  * @file RotatedRect_.cpp
  * @brief mex interface for cv::RotatedRect
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

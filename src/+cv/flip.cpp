@@ -1,6 +1,7 @@
 /**
  * @file flip.cpp
  * @brief mex interface for cv::flip
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

@@ -1,6 +1,7 @@
 /**
  * @file HoughCircles.cpp
- * @brief mex interface for HoughCircles
+ * @brief mex interface for cv::HoughCircles
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */

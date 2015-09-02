@@ -1,6 +1,7 @@
 /**
  * @file BOWKMeansTrainer_.cpp
- * @brief mex interface for BOWKMeansTrainer
+ * @brief mex interface for cv::BOWKMeansTrainer
+ * @ingroup features2d
  * @author Kota Yamaguchi
  * @date 2012
  */

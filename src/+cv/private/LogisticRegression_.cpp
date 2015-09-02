@@ -1,6 +1,7 @@
 /**
  * @file LogisticRegression_.cpp
- * @brief mex interface for LogisticRegression
+ * @brief mex interface for cv::ml::LogisticRegression
+ * @ingroup ml
  * @author Amro
  * @date 2015
  */

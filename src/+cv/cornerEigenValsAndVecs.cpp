@@ -1,6 +1,7 @@
 /**
  * @file cornerEigenValsAndVecs.cpp
- * @brief mex interface for cornerEigenValsAndVecs
+ * @brief mex interface for cv::cornerEigenValsAndVecs
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */

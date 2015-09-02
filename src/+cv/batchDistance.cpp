@@ -1,6 +1,7 @@
 /**
  * @file batchDistance.cpp
- * @brief mex interface for batchDistance
+ * @brief mex interface for cv::batchDistance
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

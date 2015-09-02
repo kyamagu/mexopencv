@@ -1,6 +1,7 @@
 /**
  * @file stereoCalibrate.cpp
- * @brief mex interface for stereoCalibrate
+ * @brief mex interface for cv::stereoCalibrate
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */

@@ -1,6 +1,7 @@
 /**
  * @file getOptimalNewCameraMatrix.cpp
- * @brief mex interface for getOptimalNewCameraMatrix
+ * @brief mex interface for cv::getOptimalNewCameraMatrix
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -21,7 +22,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Check the number of arguments
     if (nrhs<3 || ((nrhs%2)!=1) || nlhs>2)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
     Mat cameraMatrix(rhs[0].toMat(CV_32F));
