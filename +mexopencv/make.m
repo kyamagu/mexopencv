@@ -10,7 +10,7 @@ function make(varargin)
 %
 % ## Options
 % * **opencv_path** string specifying the path to OpenCV installation
-%       default `'C:\OpenCV'`
+%       default `'C:\OpenCV\build'`
 % * **opencv_contrib** flag to indicate whether optional opencv modules are
 %       available or not. These can only be selected in OpenCV at compile-time.
 %       default `false`.
@@ -518,7 +518,7 @@ function opts = getargs(varargin)
     %
 
     % default values
-    opts.opencv_path = 'C:\opencv';  % OpenCV location
+    opts.opencv_path = 'C:\opencv\build';  % OpenCV location
     opts.opencv_contrib = false;     % optional/extra OpenCV modules
     opts.clean = false;              % clean mode
     opts.test = false;               % unittest mode
