@@ -26,20 +26,19 @@ map<int,Ptr<BackgroundSubtractorGMG> > obj_;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
-    if (nrhs<2 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    // Check the number of arguments
+    nargchk(nrhs>=2 && nlhs<=1);
 
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    // Argument vector
+    vector<MxArray> rhs(prhs, prhs+nrhs);
     int id = rhs[0].toInt();
     string method(rhs[1].toString());
 
     // constructor call
     if (method == "new") {
-        if ((nrhs%2)!=0 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(nrhs>=2 && (nrhs%2)==0 && nlhs<=1);
         int initializationFrames = 120;
         double decisionThreshold = 0.8;
         for (int i=2; i<nrhs; i+=2) {
@@ -60,23 +59,19 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Big operation switch
     Ptr<BackgroundSubtractorGMG> obj = obj_[id];
     if (method == "delete") {
-        if (nrhs!=2 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
+        nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
     }
     else if (method == "clear") {
-        if (nrhs!=2 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==2 && nlhs==0);
         obj->clear();
     }
     else if (method == "save") {
-        if (nrhs!=3 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==3 && nlhs==0);
         obj->save(rhs[2].toString());
     }
     else if (method == "load") {
-        if (nrhs<3 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
         string objname;
         bool loadFromString = false;
         for (int i=3; i<nrhs; i+=2) {
@@ -103,18 +98,15 @@ void mexFunction( int nlhs, mxArray *plhs[],
         //*/
     }
     else if (method == "empty") {
-        if (nrhs!=2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==2 && nlhs<=1);
         plhs[0] = MxArray(obj->empty());
     }
     else if (method == "getDefaultName") {
-        if (nrhs!=2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==2 && nlhs<=1);
         plhs[0] = MxArray(obj->getDefaultName());
     }
     else if (method == "apply") {
-        if (nrhs<3 || (nrhs%2)!=1 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
         double learningRate = -1;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
@@ -125,18 +117,16 @@ void mexFunction( int nlhs, mxArray *plhs[],
         }
         Mat image(rhs[2].toMat()), fgmask;
         obj->apply(image, fgmask, learningRate);
-        plhs[0] = MxArray(fgmask,mxLOGICAL_CLASS);
+        plhs[0] = MxArray(fgmask, mxLOGICAL_CLASS);
     }
     else if (method == "getBackgroundImage") {
-        if (nrhs!=2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==2 && nlhs<=1);
         Mat backgroundImage;
         obj->getBackgroundImage(backgroundImage);
         plhs[0] = MxArray(backgroundImage);
     }
     else if (method == "get") {
-        if (nrhs!=3 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==3 && nlhs<=1);
         string prop(rhs[2].toString());
         if (prop == "BackgroundPrior")
             plhs[0] = MxArray(obj->getBackgroundPrior());
@@ -162,8 +152,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized property");
     }
     else if (method == "set") {
-        if (nrhs!=4 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==4 && nlhs==0);
         string prop(rhs[2].toString());
         if (prop == "BackgroundPrior")
             obj->setBackgroundPrior(rhs[3].toDouble());
