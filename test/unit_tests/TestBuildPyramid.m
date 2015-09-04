@@ -1,25 +1,16 @@
 classdef TestBuildPyramid
     %TestBuildPyramid
-    properties (Constant)
-        img = [...
-            0 0 0 0 0 0 0 0 0 0;...
-            0 0 0 0 0 0 0 0 0 0;...
-            0 0 0 0 0 0 0 0 0 0;...
-            0 0 0 1 1 1 0 0 0 0;...
-            0 0 0 1 1 1 0 0 0 0;...
-            0 0 0 1 1 1 0 0 0 0;...
-            0 0 0 0 0 0 0 0 0 0;...
-            0 0 0 0 0 0 0 0 0 0;...
-            0 0 0 0 0 0 0 0 0 0;...
-            0 0 0 0 0 0 0 0 0 0;...
-            ];
-    end
-    
+
     methods (Static)
         function test_1
-            py = cv.buildPyramid(TestBuildPyramid.img,'MaxLevel',3);
+            img = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
+            pyr = cv.buildPyramid(img, 'MaxLevel',3);
+            validateattributes(pyr, {'cell'}, {'vector', 'numel',3+1});
+            cellfun(@(v) validateattributes(v, ...
+                {class(img)}, {'ndims',ndims(img)}), pyr);
+            assert(isequal(pyr{1}, img));
         end
-        
+
         function test_error_1
             try
                 cv.buildPyramid();
@@ -29,6 +20,5 @@ classdef TestBuildPyramid
             end
         end
     end
-    
-end
 
+end
