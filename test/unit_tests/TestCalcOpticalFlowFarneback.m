@@ -1,7 +1,7 @@
 classdef TestCalcOpticalFlowFarneback
     %TestCalcOpticalFlowFarneback
     properties (Constant)
-        im = im2uint8([...
+        im = 255*uint8([...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
@@ -12,16 +12,24 @@ classdef TestCalcOpticalFlowFarneback
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
-            ]);
+        ]);
     end
-    
+
     methods (Static)
         function test_1
             im1 = TestCalcOpticalFlowFarneback.im;
-            im2 = [zeros(10,1,'uint8'),im1(:,1:end-1)];
-            flow = cv.calcOpticalFlowFarneback(im1,im2);
+            im2 = circshift(im1, [0 1]);
+            flow = cv.calcOpticalFlowFarneback(im1, im2);
         end
-        
+
+        function test_2
+            prevImg = rgb2gray(imread(fullfile(mexopencv.root(),'test','RubberWhale1.png')));
+            nextImg = rgb2gray(imread(fullfile(mexopencv.root(),'test','RubberWhale2.png')));
+            flow = cv.calcOpticalFlowFarneback(prevImg, nextImg);
+            validateattributes(flow, {'single'}, ...
+                {'3d', 'size',[size(prevImg,1) size(prevImg,2) 2]});
+        end
+
         function test_error_1
             try
                 cv.calcOpticalFlowFarneback();
@@ -31,6 +39,5 @@ classdef TestCalcOpticalFlowFarneback
             end
         end
     end
-    
-end
 
+end
