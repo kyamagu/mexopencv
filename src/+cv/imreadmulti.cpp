@@ -1,9 +1,9 @@
 /**
- * @file imread.cpp
- * @brief mex interface for cv::imread
+ * @file imreadmulti.cpp
+ * @brief mex interface for cv::imreadmulti
  * @ingroup imgcodecs
- * @author Kota Yamaguchi
- * @date 2012
+ * @author Amro
+ * @date 2015
  */
 #include "mexopencv.hpp"
 using namespace std;
@@ -22,14 +22,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     nargchk(nrhs>=1 && (nrhs%2)==1 && nlhs<=1);
 
     // Argument vector
-    vector<MxArray> rhs(prhs, prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs + nrhs);
 
     // Option processing
     bool unchanged = false,
          anydepth = false,
-         anycolor = false,
+         anycolor = true,
          grayscale = false,
-         color = true,
+         color = false,
          gdal = false;
     int flags0 = 0;
     bool override = false;
@@ -61,7 +61,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (key == "FlipChannels")
             flip = rhs[i+1].toBool();
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     int flags = 0;
     if (override) {
@@ -86,13 +87,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Process
     string filename(rhs[0].toString());
-    Mat img = imread(filename, flags);
-    if (img.data == NULL)
-        mexErrMsgIdAndTxt("mexopencv:error", "imread failed");
-    if (flip && (img.channels() == 3 || img.channels() == 4)) {
-        // OpenCV's default is BGR/BGRA while MATLAB's is RGB/RGBA
-        cvtColor(img, img, (img.channels()==3 ?
-            cv::COLOR_BGR2RGB : cv::COLOR_BGRA2RGBA));
+    vector<Mat> imgs;
+    bool status = imreadmulti(filename, imgs, flags);
+    if (!status)
+        mexErrMsgIdAndTxt("mexopencv:error", "imreadmulti failed");
+    for (vector<Mat>::iterator it = imgs.begin(); it != imgs.end(); ++it) {
+        if ((*it).data == NULL)
+            mexErrMsgIdAndTxt("mexopencv:error", "imreadmulti failed");
+        if (flip && (it->channels() == 3 || it->channels() == 4)) {
+            // OpenCV's default is BGR/BGRA while MATLAB's is RGB/RGBA
+            cvtColor(*it, *it, (it->channels()==3 ?
+                cv::COLOR_BGR2RGB : cv::COLOR_BGRA2RGBA));
+        }
     }
-    plhs[0] = MxArray(img);
+    plhs[0] = MxArray(imgs);
 }
