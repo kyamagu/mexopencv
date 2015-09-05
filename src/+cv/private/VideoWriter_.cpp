@@ -9,52 +9,61 @@
 using namespace std;
 using namespace cv;
 
+namespace {
 // Persistent objects
-
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,VideoWriter> obj_;
+map<int,Ptr<VideoWriter> > obj_;
 
-// Local scope
-namespace {
-/// Option argument parser for constructor and open()
-class open_options {
-public:
+/// Capture Property map for option processing
+const ConstMap<string,int> VidWriterProp = ConstMap<string,int>
+    ("Quality",    cv::VIDEOWRITER_PROP_QUALITY)
+    ("FrameBytes", cv::VIDEOWRITER_PROP_FRAMEBYTES);
+
+/// Option arguments parser used by constructor and open method
+struct OptionsParser
+{
+    /// 4-character code of codec used to compress the frames.
     int fourcc;
+    /// Framerate of the created video stream.
     double fps;
+    /// Flag to indicate whether to expect color or grayscale frames.
     bool isColor;
-    open_options(vector<MxArray>::iterator first,
-                 vector<MxArray>::iterator last) :
-        fourcc(CV_FOURCC('U','2','6','3')),  // H263 codec
-        fps(25),
-        isColor(true)
+
+    /** Parse input arguments.
+     * @param first iterator at the beginning of the arguments vector.
+     * @param last iterator at the end of the arguments vector.
+     */
+    OptionsParser(vector<MxArray>::const_iterator first,
+                  vector<MxArray>::const_iterator last)
+        : fourcc(CV_FOURCC('U','2','6','3')),  // H263 codec
+          fps(25),
+          isColor(true)
     {
-        if (((last-first)%2)!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        for (; first < last; first+=2) {
+        nargchk(((last-first) % 2) == 0);
+        for (; first != last; first += 2) {
             string key((*first).toString());
-            MxArray& val = *(first+1);
-            if (key=="fourcc") {
-                if (val.isChar()) {                    
-                    string x(val.toString());
-                    fourcc = CV_FOURCC(x[0],x[1],x[2],x[3]);
+            const MxArray& val = *(first + 1);
+            if (key == "FourCC") {
+                if (val.isChar() && val.numel()==4) {
+                    string cc(val.toString());
+                    fourcc = VideoWriter::fourcc(cc[0], cc[1], cc[2], cc[3]);
                 }
-                else {
+                else
                     fourcc = val.toInt();
-                }
             }
-            else if (key=="FPS")
+            else if (key == "FPS")
                 fps = val.toDouble();
-            else if (key=="Color")
+            else if (key == "Color")
                 isColor = val.toBool();
             else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
     };
 };
-}
-
+}  // anonymous namespace
 
 /**
  * Main entry called from Matlab
@@ -63,60 +72,78 @@ public:
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
-    if (nrhs<1 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
-    // Determine argument format between constructor or (id,method,...)
-    vector<MxArray> rhs(prhs,prhs+nrhs);
-    int id = 0;
-    string method;
-    if (rhs[0].isChar() && nrhs>=2) {
-        // Constructor is called. Create a new object from argument
-        string filename(rhs[0].toString());
-        Size frameSize(rhs[1].toSize());
-        open_options opts(rhs.begin()+2,rhs.end());
-        obj_[++last_id] = VideoWriter(filename, opts.fourcc, opts.fps, frameSize, opts.isColor);
+    // Check the number of arguments
+    nargchk(nrhs>=2 && nlhs<=1);
+
+    // Argument vector
+    vector<MxArray> rhs(prhs, prhs+nrhs);
+    int id = rhs[0].toInt();
+    string method(rhs[1].toString());
+
+    // Constructor is called. Create a new object from arguments
+    if (method == "new") {
+        nargchk(nrhs==2 && nlhs==1);
+        obj_[++last_id] = makePtr<VideoWriter>();
         plhs[0] = MxArray(last_id);
         return;
     }
-    else if (rhs[0].isNumeric() && rhs[0].numel()==1 && nrhs>1) {
-        id = rhs[0].toInt();
-        method = rhs[1].toString();
-    }
-    else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
-    
+
     // Big operation switch
-    VideoWriter& obj = obj_[id];
+    Ptr<VideoWriter> obj = obj_[id];
     if (method == "delete") {
-        if (nrhs!=2 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
+        nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
     }
     else if (method == "open") {
-        if (nrhs<4)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs>=4 && nlhs<=1);
         string filename(rhs[2].toString());
         Size frameSize(rhs[3].toSize());
-        open_options opts(rhs.begin()+4,rhs.end());
-        bool b = obj.open(filename, opts.fourcc, opts.fps, frameSize, opts.isColor);
+        OptionsParser opts(rhs.begin() + 4, rhs.end());
+        bool b = obj->open(filename, opts.fourcc, opts.fps, frameSize,
+            opts.isColor);
         plhs[0] = MxArray(b);
     }
     else if (method == "isOpened") {
-        if (nrhs!=2)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        plhs[0] = MxArray(obj.isOpened());
+        nargchk(nrhs==2 && nlhs<=1);
+        bool b = obj->isOpened();
+        plhs[0] = MxArray(b);
+    }
+    else if (method == "release") {
+        nargchk(nrhs==2 && nlhs==0);
+        obj->release();
     }
     else if (method == "write") {
-        if (nrhs!=3 || nlhs>0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
+        bool flip = true;
+        for (int i=3; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key == "FlipChannels")
+                flip = rhs[i+1].toBool();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
+        }
         Mat frame(rhs[2].toMat());
-        if (frame.type()==CV_8UC3)
-            cvtColor(frame,frame,cv::COLOR_RGB2BGR);
-        obj.write(frame);
+        if (flip && frame.channels() == 3)
+            cvtColor(frame, frame, cv::COLOR_RGB2BGR);
+        obj->write(frame);
+    }
+    else if (method == "get") {
+        nargchk(nrhs==3 && nlhs<=1);
+        string prop(rhs[2].toString());
+        double value = obj->get(VidWriterProp[prop]);
+        plhs[0] = MxArray(value);
+    }
+    else if (method == "set") {
+        nargchk(nrhs==4 && nlhs==0);
+        string prop(rhs[2].toString());
+        double value = rhs[3].toDouble();
+        bool success = obj->set(VidWriterProp[prop], value);
+        if (!success)
+            mexWarnMsgIdAndTxt("mexopencv:error",
+                "Error setting property %s", prop.c_str());
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
