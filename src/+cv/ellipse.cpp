@@ -16,21 +16,17 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<2 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(nrhs>=2 && nlhs<=1);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // cv::ellipse has two overloaded variants
     bool rrect_variant = rhs[1].isStruct();
-    bool cond = (rrect_variant ? ((nrhs%2)==0) : (nrhs>=3 && (nrhs%2)==1));
-    if (!cond)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(rrect_variant ? ((nrhs%2)==0) : (nrhs>=3 && (nrhs%2)==1));
 
     // Option processing
     double angle = 0;
@@ -59,7 +55,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else if (key=="Shift" && !rrect_variant)
             shift = rhs[i+1].toInt();
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
 
     // Process

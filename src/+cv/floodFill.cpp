@@ -16,16 +16,14 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
+    // Check the number of arguments
+    nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=4);
+
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
-    
-    // Check the input format
-    if (nrhs<3 || (nrhs%2)!=1 || nlhs>4)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+    vector<MxArray> rhs(prhs, prhs+nrhs);
+
     // Option processing
     bool useMask = false;
     Mat mask;
@@ -55,7 +53,8 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else if (key=="MaskOnly")
             maskOnly = rhs[i+1].toBool();
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     
     // Apply

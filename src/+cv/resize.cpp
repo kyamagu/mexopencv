@@ -16,20 +16,19 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
     if (nrhs<2 || (nrhs%2)!=0 || nlhs>1)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
     
     // Option processing
-    int interpolation=cv::INTER_LINEAR;
+    int interpolation = cv::INTER_LINEAR;
     for (int i=2; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
+        string key(rhs[i].toString());
         if (key=="Interpolation")
             interpolation = InterpType[rhs[i+1].toString()];
         else
@@ -46,7 +45,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else
         mexErrMsgIdAndTxt("mexopencv:error","Invalid second argument");
     
-    // Apply
+    // Process
     Mat src(rhs[0].toMat()), dst;
     resize(src, dst, dsize, fx, fy, interpolation);
     plhs[0] = MxArray(dst);

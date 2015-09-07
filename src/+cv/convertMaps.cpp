@@ -16,15 +16,13 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<2 || nlhs>2)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk (nrhs>=1 && nlhs<=2);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Decide argument format
     Mat map2;
@@ -39,7 +37,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     int dstmaptype = CV_16SC2;
     bool nninterpolation = false;
     for (int i=opts; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
+        string key(rhs[i].toString());
         if (key=="DstMapType")
             dstmaptype = rhs[i+1].toInt();
         else if (key=="NNInterpolation")

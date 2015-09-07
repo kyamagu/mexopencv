@@ -16,8 +16,7 @@ int last_id = 0;
 /// Object container
 map<int,Ptr<PCA> > obj_;
 
-/** Data arrangement options
- */
+/// Data arrangement options
 const ConstMap<std::string,int> DataAs = ConstMap<std::string,int>
     ("Row", PCA::DATA_AS_ROW)
     ("Col", PCA::DATA_AS_COL);
@@ -30,21 +29,19 @@ const ConstMap<std::string,int> DataAs = ConstMap<std::string,int>
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
-    if (nrhs<2 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    // Check the number of arguments
+    nargchk(nrhs>=2 && nlhs<=1);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
     int id = rhs[0].toInt();
     string method(rhs[1].toString());
 
     // Constructor call
     if (method == "new") {
-        if (nrhs!=2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==2 && nlhs<=1);
         obj_[++last_id] = makePtr<PCA>();
         plhs[0] = MxArray(last_id);
         return;
@@ -53,13 +50,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Big operation switch
     Ptr<PCA> obj = obj_[id];
     if (method == "delete") {
-        if (nrhs!=2 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
+        nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
     }
     else if (method == "read") {
-        if (nrhs<3 || (nrhs%2)==0 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
         bool loadFromString = false;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
@@ -75,14 +70,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
         obj->read(fs.root());
     }
     else if (method == "write") {
-        if (nrhs!=3 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==3 && nlhs==0);
         FileStorage fs(rhs[2].toString(), FileStorage::WRITE);
         obj->write(fs);
     }
     else if (method == "compute") {
-        if (nrhs<3 || (nrhs%2)!=1 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
         Mat mean;
         int flags = PCA::DATA_AS_ROW;
         int maxComponents = 0;
@@ -110,18 +103,15 @@ void mexFunction( int nlhs, mxArray *plhs[],
             obj->operator()(data, mean, flags, maxComponents);
     }
     else if (method == "project") {
-        if (nrhs!=3 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==3 && nlhs<=1);
         plhs[0] = MxArray(obj->project(rhs[2].toMat()));
     }
     else if (method == "backProject") {
-        if (nrhs!=3 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==3 && nlhs<=1);
         plhs[0] = MxArray(obj->backProject(rhs[2].toMat()));
     }
     else if (method == "get") {
-        if (nrhs!=3 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==3 && nlhs<=1);
         string prop(rhs[2].toString());
         if (prop == "eigenvectors")
             plhs[0] = MxArray(obj->eigenvectors);
@@ -133,8 +123,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
     else if (method == "set") {
-        if (nrhs!=4 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==4 && nlhs==0);
         string prop(rhs[2].toString());
         if (prop == "eigenvectors")
             obj->eigenvectors = rhs[3].toMat();

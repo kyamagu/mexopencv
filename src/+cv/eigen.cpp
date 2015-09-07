@@ -19,7 +19,7 @@ using namespace cv;
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    nargchk (nrhs==1 && nlhs<=3);
+    nargchk(nrhs==1 && nlhs<=3);
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);

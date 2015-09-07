@@ -9,13 +9,14 @@
 using namespace std;
 using namespace cv;
 
-/** SolveLPResult map for option processing
- */
+namespace {
+/// SolveLPResult map for option processing
 const ConstMap<int,string> SolveLPResultInvMap = ConstMap<int,string>
     (cv::SOLVELP_UNBOUNDED,  "Unbound")
     (cv::SOLVELP_UNFEASIBLE, "Unfeasible")
     (cv::SOLVELP_SINGLE,     "Single")
     (cv::SOLVELP_MULTI,      "Multi");
+}
 
 /**
  * Main entry called from Matlab
@@ -27,11 +28,10 @@ const ConstMap<int,string> SolveLPResultInvMap = ConstMap<int,string>
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs!=2 || nlhs>2)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(nrhs==2 && nlhs<=2);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Process
     Mat Func(rhs[0].toMat(rhs[0].isSingle() ? CV_32F : CV_64F)),

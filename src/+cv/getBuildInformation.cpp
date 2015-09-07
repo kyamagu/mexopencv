@@ -6,6 +6,8 @@
  * @date 2013
  */
 #include "mexopencv.hpp"
+using namespace std;
+using namespace cv;
 
 /**
  * Main entry called from Matlab
@@ -17,15 +19,12 @@
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs>0 || nlhs>1) {
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
-    }
+    nargchk(nrhs==0 && nlhs<=1);
 
-    // get info
-    std::string info = cv::getBuildInformation();
-    if (nlhs > 0) {
+    // Process
+    string info = getBuildInformation();
+    if (nlhs > 0)
         plhs[0] = MxArray(info);
-    } else {
+    else
         mexPrintf("%s\n", info.c_str());
-    }
 }

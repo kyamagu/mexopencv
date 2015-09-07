@@ -16,15 +16,13 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<1 || (nrhs%2)!=1 || nlhs>2)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(nrhs>=1 && (nrhs%2)==1 && nlhs<=2);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
     int fontFace = cv::FONT_HERSHEY_SIMPLEX;
@@ -45,12 +43,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option");
     }
+    fontFace |= fontStyle;
 
     // Process
     const string text(rhs[0].toString());
     int baseLine = 0;
-    Size s = getTextSize(text, fontFace | fontStyle, fontScale, thickness,
-        &baseLine);
+    Size s = getTextSize(text, fontFace, fontScale, thickness, &baseLine);
     plhs[0] = MxArray(s);
     if (nlhs>1)
         plhs[1] = MxArray(baseLine);

@@ -9,12 +9,14 @@
 using namespace std;
 using namespace cv;
 
-/** Mask size for distance transform
- */
-const ConstMap<std::string,int> DistMask = ConstMap<std::string,int>
+namespace {
+/// Mask size for distance transform
+const ConstMap<string,int> DistMask = ConstMap<string,int>
     ("3",       cv::DIST_MASK_3)
     ("5",       cv::DIST_MASK_5)
     ("Precise", cv::DIST_MASK_PRECISE);
+
+}
 
 /**
  * Main entry called from Matlab
@@ -23,21 +25,19 @@ const ConstMap<std::string,int> DistMask = ConstMap<std::string,int>
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<1 || ((nrhs%2)!=1) || nlhs>2)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(nrhs>=1 && (nrhs%2)==1 && nlhs<=2);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
     
     // Option processing
     int distanceType = cv::DIST_L2;
     int maskSize = 3;
     for (int i=1; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
+        string key(rhs[i].toString());
         if (key=="DistanceType") {
             distanceType = DistType[rhs[i+1].toString()];
             if (distanceType!=cv::DIST_L1 &&

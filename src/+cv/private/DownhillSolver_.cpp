@@ -122,18 +122,17 @@ private:
  */
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
-    if (nrhs<2 || nlhs>2)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    // Check the number of arguments
+    nargchk(nrhs>=2 && nlhs<=2);
 
     // Arguments vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
     int id = rhs[0].toInt();
     string method(rhs[1].toString());
 
     // Constructor is called. Create a new object from argument
     if (method == "new") {
-        if (nrhs<2 || (nrhs%2)!=0 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs>=2 && (nrhs%2)==0 && nlhs<=1);
         Ptr<MinProblemSolver::Function> f;
         Mat initStep(Mat_<double>(1, 1, 0.0));
         TermCriteria termcrit(TermCriteria::MAX_ITER+TermCriteria::EPS, 5000, 1e-6);
@@ -157,34 +156,31 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Big operation switch
     Ptr<DownhillSolver> obj = obj_[id];
     if (method == "delete") {
-        if (nrhs!=2 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
+        nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
     }
     else if (method == "clear") {
-        if (nrhs!=2 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==2 && nlhs==0);
         obj->clear();
     }
     else if (method == "load") {
         //TODO
+        nargchk(false);
     }
     else if (method == "save") {
         //TODO
+        nargchk(false);
     }
     else if (method == "empty") {
-        if (nrhs!=2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(nrhs==2 && nlhs<=1);
         plhs[0] = MxArray(obj->empty());
     }
     else if (method == "getDefaultName") {
-        if (nrhs!=2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(nrhs==2 && nlhs<=1);
         plhs[0] = MxArray(obj->getDefaultName());
     }
     else if (method == "minimize") {
-        if (nrhs!=3 || nlhs>2)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(nrhs==3 && nlhs<=2);
         Mat x(rhs[2].toMat(CV_64F));
         double fx = obj->minimize(x);
         plhs[0] = MxArray(x);
@@ -192,8 +188,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             plhs[1] = MxArray(fx);
     }
     else if (method == "get") {
-        if (nrhs!=3 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(nrhs==3 && nlhs<=1);
         string prop(rhs[2].toString());
         if (prop == "Function") {
             Ptr<MinProblemSolver::Function> f(obj->getFunction());
@@ -211,8 +206,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property %s", prop.c_str());
     }
     else if (method == "set") {
-        if (nrhs!=4 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(nrhs==4 && nlhs==0);
         string prop(rhs[2].toString());
         if (prop == "Function")
             obj->setFunction(MatlabFunction::create(rhs[3]));
