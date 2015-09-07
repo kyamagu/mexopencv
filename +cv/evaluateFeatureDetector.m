@@ -3,9 +3,9 @@
 %    [repeatability, correspCount] = cv.evaluateFeatureDetector(img1, img2, H1to2, keypoints1, keypoints2)
 %
 % ## Input
-% * __img1__
-% * __img2__
-% * __H1to2__ Homography, 3x3 double matrix
+% * __img1__ First image.
+% * __img2__ Second image.
+% * __H1to2__ 3x3 double matrix. Homography relating `img1` to `img2`.
 % * __keypoints1__ Keypoints detected in `img1`
 % * __keypoints2__ Keypoints detected in `img2`
 %

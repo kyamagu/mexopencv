@@ -13,3 +13,5 @@
 % * __ClipLimit__ default 40.0
 % * __TileGridSize__ default [8,8]
 %
+% See also: adapthisteq
+%

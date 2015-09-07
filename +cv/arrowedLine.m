@@ -15,10 +15,10 @@
 % * __Color__ Line color. default is a black color
 % * __Thickness__ Line thickness. default 1.
 % * __LineType__ Type of the line. One of 8,4,'AA' (Anti-aliased line).
-%        default 8.
+%       default 8.
 % * __Shift__ Number of fractional bits in the point coordinates. default 0.
 % * __TipLength__ The length of the arrow tip in relation to the arrow length.
-%        default 0.1
+%       default 0.1
 %
 % The function cv.arrowedLine draws an arrow between `pt1` and `pt2` points
 % in the image.

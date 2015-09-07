@@ -33,5 +33,5 @@
 %
 % > E. Rosten (Machine Learning for High-speed Corner Detection, 2006).
 %
-% See also cv.FeatureDetector cv.DescriptorExtractor
+% See also: cv.FeatureDetector, cv.DescriptorExtractor, detectFASTFeatures
 %

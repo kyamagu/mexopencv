@@ -6,17 +6,18 @@
 % ## Input
 % * __image__ 8-bit input image (grayscale or color image).
 % * __thresh__ Threshold for the hysteresis procedure. Scalar or 2-element
-%       vector.
+%       vector `[low_thresh,high_thresh]`.
 %
 % ## Output
 % * __edges__ Output edge map; single channels 8-bit image, which has the
-%       same size as image.
+%       same size as `image`.
 %
 % ## Options
 % * __ApertureSize__ Aperture size for the Sobel operator. Default 3
-% * __L2Gradient__ Flag indicating whether a more accurate L2 norm  should be
-%       used to compute the image gradient magnitude (`L2gradient=true`), or
-%       whether the default L1 norm is enough (`L2gradient=false`).
+% * __L2Gradient__ Flag indicating whether a more accurate L2 norm
+%       `sqrt((dI/dx)^2 + (dI/dy)^2)` should be used to compute the image
+%       gradient magnitude (`L2gradient=true`), or whether the default L1 norm
+%       `abs(dI/dx) + abs(dI/dy)` is enough (`L2gradient=false`).
 %       Default false
 %
 % The function finds edges in the input image image and marks them in the output
@@ -31,4 +32,6 @@
 % > John Canny. A computational approach to edge detection.
 % > Pattern Analysis and Machine Intelligence, IEEE Transactions on,
 % > (6):679-698, 1986.
+%
+% See also: cv.threshold, edge
 %

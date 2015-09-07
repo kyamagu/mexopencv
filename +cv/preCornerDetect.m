@@ -7,7 +7,7 @@
 % * __src__ Source single-channel 8-bit of floating-point image.
 %
 % ## Output
-% * __dst__ Output image that has the single type and the same size as `src`.
+% * __dst__ Output image that has the `single` type and the same size as `src`.
 %
 % ## Options
 % * __KSize__ Aperture size of the cv.Sobel operator. default 3.
@@ -24,7 +24,10 @@
 % The corners can be found as local maximums of the functions, as shown below:
 %
 %    corners = cv.preCornerDetect(image, 'KSize',3);
+%
 %    % dilation with 3x3 rectangular structuring element
 %    dilated_corners = cv.dilate(corners);
 %    corner_mask = (corners == dilated_corners);
+%
+% See also: cv.cornerMinEigenVal
 %

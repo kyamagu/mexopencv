@@ -9,15 +9,15 @@
 %         vertices in the destination image.
 %
 % ## Output
-% * __T__ 2-by-3 transformation matrix
+% * __T__ 2-by-3 affine transformation matrix
 %
-% The function calculates the 2 x 3 matrix of an affine transform so that
-% 
+% The function calculates the 2x3 matrix of an affine transform so that:
+%
 %     [X_i; X_i] = T * [x_i; y_i; 1]
-% 
+%
 % where
 %
-%     dst(i,:) = [X_i, Y_i], src(i,:) = [x_i, y_i]
+%     dst(i,:) = [X_i, Y_i], src(i,:) = [x_i, y_i]  for i=1,2,3
 %
-% See also cv.warpAffine
+% See also cv.warpAffine, cv.transform
 %

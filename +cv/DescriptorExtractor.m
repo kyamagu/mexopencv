@@ -23,7 +23,8 @@ classdef DescriptorExtractor < handle
     %    extractor = cv.DescriptorExtractor('SURF');
     %    descriptors = extractor.compute(img, keypoints);
     %
-    % See also: cv.FeatureDetector, cv.BOWImgDescriptorExtractor
+    % See also: cv.FeatureDetector, cv.BOWImgDescriptorExtractor,
+    %  extractFeatures
     %
 
     properties (SetAccess = private)

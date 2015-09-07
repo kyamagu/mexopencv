@@ -15,7 +15,7 @@ classdef RotatedRect
             %    pts = cv.RotatedRect.points(rrect)
             %
             % ## Input
-            % * __rrect__ rotated rectangle. A structure with the follwing
+            % * __rrect__ rotated rectangle. A structure with the following
             %       fields:
             %       * __center__ The rectangle mass center `[x,y]`.
             %       * __size__ Width and height of the rectangle `[w,h]`.
@@ -27,6 +27,8 @@ classdef RotatedRect
             % * __pts__ 4-by-2 points matrix of the rectangle vertices.
             %       `[x1 y1; x2 y2; x3 y3; x4 y4]`
             %
+            % See also: cv.boxPoints, bbox2points
+            %
             pts = RotatedRect_('points', rrect);
         end
 
@@ -36,7 +38,7 @@ classdef RotatedRect
             %    rect = cv.RotatedRect.boundingRect(rrect)
             %
             % ## Input
-            % * __rrect__ rotated rectangle. A structure with the follwing
+            % * __rrect__ rotated rectangle. A structure with the following
             %       fields:
             %       * __center__ The rectangle mass center `[x,y]`.
             %       * __size__ Width and height of the rectangle `[w,h]`.

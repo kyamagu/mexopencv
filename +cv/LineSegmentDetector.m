@@ -146,28 +146,29 @@ classdef LineSegmentDetector < handle
         function [lines, width, prec, nfa] = detect(this, img)
             %DETECT  Finds lines in the input image.
             %
+            %    lines = lsd.detect(img)
             %    [lines, width, prec, nfa] = lsd.detect(img)
             %
             % ## Input
             % * __img__ A grayscale (`uint8`) input image.
             %
             % ## Output
-            % * __lines__ A cell-array of elements of the form
-            %       `{[x1, y1, x2, y2]}` specifying the beginning and ending
+            % * __lines__ A cell-array of 4-element vectors of the form
+            %       `{[x1, y1, x2, y2], ..}` specifying the beginning and ending
             %       point of a line. Where point 1 `[x1,y1]` is the start,
             %       point 2 `[x2,y2] the end. Returned lines are strictly
             %       oriented depending on the gradient.
             % * __width__ Vector of widths of the regions, where the lines are
-            %       found. E.g. Width of line. 
+            %       found. E.g. Width of line.
             % * __prec__ Vector of precisions with which the lines are found.
             % * __nfa__ Vector containing number of false alarms in the line
             %       region, with precision of 10%. The bigger the value,
-            %       logarithmically better the detection.
+            %       logarithmically better the detection. This vector will be
+            %       calculated only when the object refine type is 'Advanced',
+            %       empty otherwise.
             %       * -1 corresponds to 10 mean false alarms
             %       * 0 corresponds to 1 mean false alarm
-            %       * 1 corresponds to 0.1 mean false alarms This vector will
-            %         be calculated only when the object refine type is
-            %         'Advanced'.
+            %       * 1 corresponds to 0.1 mean false alarms
             %
             [lines, width, prec, nfa] = LineSegmentDetector_(this.id, 'detect', img);
         end
@@ -178,7 +179,7 @@ classdef LineSegmentDetector < handle
             %    img = lsd.drawSegments(img, lines)
             %
             % ## Input
-            % * __img__ The image, where the liens will be drawn. Should be
+            % * __img__ The image, where the lines will be drawn. Should be
             %       bigger or equal to the image, where the lines were found.
             % * __lines__ A vector of the lines that needed to be drawn.
             %
@@ -198,14 +199,14 @@ classdef LineSegmentDetector < handle
             %
             % ## Input
             % * __sz__ The size of the image, where `lines1` and `lines2`
-            %       were found.
+            %       were found `[w,h]`.
             % * __lines1__ The first group of lines that needs to be drawn.
             %       It is visualized in blue color.
             % * __lines2__ The second group of lines. They visualized in red
             %       color.
             %
             % ## Output
-            % * __img__ color imgae with the two groups of lines drawn.
+            % * __img__ color image with the two groups of lines drawn.
             % * __count__ count of non overlapping (mismatching) pixels.
             %
             % ## Options

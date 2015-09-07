@@ -8,7 +8,7 @@ classdef BRISK < handle
     % > In IEEE International Conference on Computer Vision (ICCV) 2011,
     % > pages 2548-2555. IEEE, 2011.
     %
-    % See also: cv.BRISK.BRISK
+    % See also: cv.BRISK.BRISK, detectBRISKFeatures
     %
 
     properties (SetAccess = private)
@@ -31,14 +31,15 @@ classdef BRISK < handle
             %
             % ## Options
             % Options accepted by first variant:
+            %
             % * __Threshold__ FAST/AGAST detection threshold score. default 30
             % * __Octaves__ detection octaves. Use 0 to do single scale.
             %       default 3
             % * __PatternScale__ apply this scale to the pattern used for
             %       sampling the neighbourhood of a keypoint. default 1.0
             %
-            % ## Options
             % Options accepted by second variant for a custom pattern:
+            %
             % * __DMax__ threshold for the short pairings used for descriptor
             %       formation (in pixels for keypoint scale 1). default 5.85
             % * __DMin__ threshold for the long pairings used for orientation

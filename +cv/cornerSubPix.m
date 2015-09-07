@@ -28,9 +28,9 @@
 %       `struct('type','Count+EPS', 'maxCount',50, 'epsilon',0.001)`.
 %       Struct with the following fields is accepted:
 %       * __type__ one of 'Count', 'EPS', or 'Count+EPS' to indicate which
-%         criteria to use.
-%       * __maxCount__
-%       * __epsilon__
+%             criteria to use.
+%       * __maxCount__ maximum number of iterations
+%       * __epsilon__ minimum difference in corner position
 %
 % The function iterates to find the sub-pixel accurate location of corners or
 % radial saddle points.

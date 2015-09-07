@@ -4,10 +4,10 @@
 %    dst = cv.Sobel(..., 'OptionName', optionValue, ...)
 %
 % ## Input
-% * __src__ Source image.
+% * __src__ input image.
 %
 % ## Output
-% * __dst__ Destination image of the same size and the same number of channels as
+% * __dst__ output image of the same size and the same number of channels as
 %         `src`.
 %
 % ## Options
@@ -17,15 +17,15 @@
 % * __XOrder__ Order of the derivative x. default 1
 % * __YOrder__ Order of the derivative y. default 1
 % * __Scale__ Optional scale factor for the computed derivative values. By
-%             default, no scaling is applied (see cv.getDerivKernels for
-%   		  details). default 1
+%       default, no scaling is applied (see cv.getDerivKernels for
+%       details). default 1
 % * __Delta__ Optional delta value that is added to the results prior to
-%             storing them in `dst`. default 0
+%       storing them in `dst`. default 0
 % * __BorderType__ Pixel extrapolation method. default 'Default'
 % * __DDepth__ output image depth, see combinations below; in the case of
 %       8-bit input images it will result in truncated derivatives.
-%       When `DDepth=-1`, the output image will have the same depth as the
-%       source.
+%       When `DDepth=-1` (default), the output image will have the same depth
+%       as the source.
 %       * SDepth = 'uint8'           --> DDepth = -1, 'int16', 'single', 'double'
 %       * SDepth = 'uint16', 'int16' --> DDepth = -1, 'single', 'double'
 %       * SDepth = 'single'          --> DDepth = -1, 'single', 'double'
@@ -64,5 +64,5 @@
 %    [-1 -2 -1; 0 0 0; 1 2 1]
 %
 % See also: cv.Scharr, cv.Laplacian, cv.sepFilter2D, cv.filter2D,
-%    cv.GaussianBlur
+%    cv.GaussianBlur, cv.cartToPolar
 %

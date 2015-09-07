@@ -23,6 +23,7 @@ classdef HOGDescriptor < handle
     %
     % See also cv.HOGDescriptor.HOGDescriptor cv.HOGDescriptor.compute
     % cv.HOGDescriptor.detect cv.HOGDescriptor.detectMultiScale
+    % extractHOGFeatures
     %
 
     properties (SetAccess = private)

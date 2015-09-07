@@ -9,15 +9,15 @@
 %     the destination image.
 %
 % ## Output
-% * __T__ 3-by-3 transformation matrix
+% * __T__ 3-by-3 perspective transformation matrix
 %
-% The function calculates the 3 x 3 matrix of a perspective transform so that
-% 
-%     t_i * [X_i; X_i; 1] = T * [x_i; y_i; 1];
-% 
+% The function calculates the 3x3 matrix of a perspective transform so that:
+%
+%     t_i * [X_i; Y_i; 1] = T * [x_i; y_i; 1]
+%
 % where
 %
-%     dst(i,:) = [X_i, Y_i], src(i,:) = [x_i, y_i]
+%     dst(i,:) = [X_i, Y_i], src(i,:) = [x_i, y_i]  for i=1,2,3
 %
-% See also cv.perspectiveTransform
+% See also: cv.findHomography, cv.warpPerspective, cv.perspectiveTransform
 %

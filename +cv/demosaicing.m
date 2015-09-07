@@ -35,5 +35,5 @@
 % * __Channels__ Number of channels. If <= 0, automatically determined based
 %       on `code`. default 0
 %
-% See also: cv.cvtColor
+% See also: cv.cvtColor, demosaic
 %

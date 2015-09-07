@@ -16,10 +16,10 @@
 %
 % ## Options
 % * __Method__ Method used to computed a homography matrix. The following
-%        methods are possible:
-% * __0__ a regular method using all the points. (default)
-% * __Ransac__ RANSAC-based robust method.
-% * __LMedS__ Least-Median robust method.
+%       methods are possible:
+%       * __0__ a regular method using all the points. (default)
+%       * __Ransac__ RANSAC-based robust method.
+%       * __LMedS__ Least-Median robust method.
 % * __RansacReprojThreshold__ Maximum allowed reprojection error to treat a
 %        point pair as an inlier (used in the RANSAC method only). That is,
 %        if `|| dstPoints_i - convertPointsToHomogeneous(H*srcPoints_i) ||`
