@@ -6,6 +6,7 @@
 % ## Input
 % * __curve__ Input vector of 2D points stored in numeric array
 %       (Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors (`{[x,y], ...}`).
+%       Supports integer (`int32`) and floating point (`single`) classes.
 %
 % ## Output
 % * __approxCurve__ Result of the approximation. The type should match the

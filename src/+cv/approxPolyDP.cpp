@@ -39,13 +39,23 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Process
     if (rhs[0].isNumeric()) {
-        Mat curve(rhs[0].toMat()), approxCurve;
+        Mat curve(rhs[0].toMat(rhs[0].isInt32() ? CV_32S : CV_32F)),
+            approxCurve;
         approxPolyDP(curve, approxCurve, epsilon, closed);
-        plhs[0] = MxArray(approxCurve);
+        plhs[0] = MxArray(approxCurve.reshape(1,0));  // Nx2
     }
     else if (rhs[0].isCell()) {
-        vector<Point> curve(rhs[0].toVector<Point>()), approxCurve;
-        approxPolyDP(curve, approxCurve, epsilon, closed);
-        plhs[0] = MxArray(approxCurve);
+        if (!rhs[0].isEmpty() && rhs[0].at<MxArray>(0).isInt32()) {
+            vector<Point> curve(rhs[0].toVector<Point>()), approxCurve;
+            approxPolyDP(curve, approxCurve, epsilon, closed);
+            plhs[0] = MxArray(approxCurve);
+        }
+        else {
+            vector<Point2f> curve(rhs[0].toVector<Point2f>()), approxCurve;
+            approxPolyDP(curve, approxCurve, epsilon, closed);
+            plhs[0] = MxArray(approxCurve);
+        }
     }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid input");
 }
