@@ -9,7 +9,9 @@
 %       treated as 1's. Zero pixels remain 0's, so the image is treated as
 %       binary. You can use cv.compare, cv.inRange, cv.threshold,
 %       cv.adaptiveThreshold, cv.Canny, and others to create a binary image
-%       out of a grayscale or color one.
+%       out of a grayscale or color one. If mode equals to `CComp` or
+%       `FloodFill`, the input can also be a 32-bit integer image of labels
+%       (`int32` class).
 %
 % ## Output
 % * __contours__ Detected contours. Each contour is stored as a vector of
@@ -39,6 +41,8 @@
 %           hole of a connected component, it is still put at the top level.
 %     * __Tree__ retrieves all of the contours and reconstructs a full
 %           hierarchy of nested contours
+%     * __FloodFill__ connected components of a multi-level image (only valid
+%           for 32-bit integer images).
 % * __Method__ Contour approximation method, default is 'None'. One of:
 %     * __None__ stores absolutely all the contour points. That is, any 2
 %           subsequent points `(x1,y1)` and `(x2,y2)` of the contour will be

@@ -12,10 +12,11 @@ using namespace cv;
 namespace {
 /// Mode of the contour retrieval algorithm for option processing
 const ConstMap<string,int> ContourMode = ConstMap<string,int>
-    ("External", cv::RETR_EXTERNAL)  //!< retrieve only the most external (top-level) contours
-    ("List",     cv::RETR_LIST)      //!< retrieve all the contours without any hierarchical information
-    ("CComp",    cv::RETR_CCOMP)     //!< retrieve the connected components (that can possibly be nested)
-    ("Tree",     cv::RETR_TREE);     //!< retrieve all the contours and the whole hierarchy
+    ("External",  cv::RETR_EXTERNAL)   // retrieve only the most external (top-level) contours
+    ("List",      cv::RETR_LIST)       // retrieve all the contours without any hierarchical information
+    ("CComp",     cv::RETR_CCOMP)      // retrieve the connected components (that can possibly be nested)
+    ("Tree",      cv::RETR_TREE)       // retrieve all the contours and the whole hierarchy
+    ("FloodFill", cv::RETR_FLOODFILL);
 
 /// Type of the contour approximation algorithm for option processing
 const ConstMap<string,int> ContourType = ConstMap<string,int>
@@ -57,10 +58,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
-    Mat image(rhs[0].toMat(CV_8U));
+    Mat image(rhs[0].toMat(rhs[0].isInt32() ? CV_32S : CV_8U));
     vector<vector<Point> > contours;
     vector<Vec4i> hierarchy;
-    findContours(image, contours, hierarchy, mode, method, offset);
+    findContours(image, contours, ((nlhs>1) ? hierarchy : noArray()),
+        mode, method, offset);
     plhs[0] = MxArray(contours);
     if (nlhs > 1)
         plhs[1] = MxArray(hierarchy);
