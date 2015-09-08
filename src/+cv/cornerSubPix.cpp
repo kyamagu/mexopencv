@@ -42,7 +42,16 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Process
     Mat image(rhs[0].toMat(rhs[0].isUint8() ? CV_8U : CV_32F));
-    vector<Point2f> corners(rhs[1].toVector<Point2f>());
-    cornerSubPix(image, corners, winSize, zeroZone, criteria);
-    plhs[0] = MxArray(corners);
+    if (rhs[1].isNumeric()) {
+        Mat corners(rhs[1].toMat(CV_32F));
+        cornerSubPix(image, corners, winSize, zeroZone, criteria);
+        plhs[0] = MxArray(corners);
+    }
+    else if (rhs[1].isCell()) {
+        vector<Point2f> corners(rhs[1].toVector<Point2f>());
+        cornerSubPix(image, corners, winSize, zeroZone, criteria);
+        plhs[0] = MxArray(corners);
+    }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid input");
 }

@@ -5,12 +5,13 @@
 %
 % ## Input
 % * __im__ Input single-channel image.
-% * __corners__ Initial coordinates of the input corners. Cell array of
-%         2-element arrays `{[x,y], ...}`
+% * __corners__ Initial coordinates of the input corners, stored in numeric
+%       array (Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors
+%       (`{[x,y], ...}`). Supports single floating-point class.
 %
 % ## Output
-% * __corners__ Output refined coordinates. Cell array of the same size as
-%         the input `corners`.
+% * __corners__ Output refined coordinates, of the same size and type as the
+%       input `corners` (numeric or cell matching the input format).
 %
 % ## Options
 % * __WinSize__ Half of the side length of the search window. For example, if
