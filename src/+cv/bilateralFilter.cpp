@@ -50,7 +50,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
-    Mat src(rhs[0].toMat()), dst;
+    Mat src(rhs[0].toMat(rhs[0].isUint8() ? CV_8U : CV_32F)), dst;
     bilateralFilter(src, dst, d, sigmaColor, sigmaSpace, borderType);
-    plhs[0] = MxArray(dst,rhs[0].classID());
+    plhs[0] = MxArray(dst);
 }

@@ -22,6 +22,8 @@
 %       as their colors are close enough (see `SigmaColor`). When `Diameter>0`,
 %       it specifies the neighborhood size regardless of `SigmaSpace`.
 %       Otherwise, `Diameter` is proportional to `SigmaSpace`. Default: 50.0
+% * __BorderType__ border mode used to extrapolate pixels outside of the
+%       image. See cv.copyMakeBorder. Default: 'Default'
 %
 % The function applies bilateral filtering to the input image, as described
 % in [CVonline]. cv.bilateralFilter can reduce unwanted noise very well while
