@@ -42,16 +42,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         string key(rhs[i].toString());
         if (key=="AdaptiveMethod")
             adaptiveMethod = AdaptiveMethod[rhs[i+1].toString()];
-        else if (key=="ThresholdType") {
+        else if (key=="ThresholdType")
             thresholdType = ThreshType[rhs[i+1].toString()];
-            if (!(thresholdType==cv::THRESH_BINARY || thresholdType==cv::THRESH_BINARY_INV))
-                mexErrMsgIdAndTxt("mexopencv:error","Invalid threshold type");
-        }
-        else if (key=="BlockSize") {
+        else if (key=="BlockSize")
             blockSize = rhs[i+1].toInt();
-            if ((blockSize%2)!=1)
-                mexErrMsgIdAndTxt("mexopencv:error","BlockSize must be odd");
-        }
         else if (key=="C")
             C = rhs[i+1].toDouble();
         else
