@@ -33,7 +33,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key=="DDepth")
-            ddepth = rhs[i+1].toInt();
+            ddepth = (rhs[i+1].isChar()) ?
+                ClassNameMap[rhs[i+1].toString()] : rhs[i+1].toInt();
         else if (key=="KSize")
             ksize = rhs[i+1].toInt();
         else if (key=="Scale")
@@ -47,7 +48,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
-    Mat img(rhs[0].toMat());
-    Laplacian(img, img, ddepth, ksize, scale, delta, borderType);
-    plhs[0] = MxArray(img);
+    Mat src(rhs[0].toMat()), dst;
+    Laplacian(src, dst, ddepth, ksize, scale, delta, borderType);
+    plhs[0] = MxArray(dst);
 }
