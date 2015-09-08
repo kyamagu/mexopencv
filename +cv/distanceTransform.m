@@ -8,7 +8,7 @@
 % * __src__ 8-bit, single-channel (binary) source image.
 %
 % ## Output
-% * __dst__ Output image with calculated distances. It is a 32-bit
+% * __dst__ Output image with calculated distances. It is a 8-bit or 32-bit
 %       floating-point, single-channel image of the same size as `src`.
 % * __labels__ Optional output 2D array of labels (the discrete Voronoi
 %       diagram). It has the type `int32` and the same size as `src`.
@@ -26,6 +26,17 @@
 %       * __3__ approximate distance transform with 3x3 mask (default)
 %       * __5__ approximate distance transform with 5x5 mask
 %       * __Precise__ precise distance transform
+% * __LabelType__ Type of the label array to build, default 'CComp'. Only
+%       supported by the second variant with `labels` output. One of:
+%       * __CComp__ each connected component of zeros in `src` (as well as all
+%             the non-zero pixels closest to the connected component) will be
+%             assigned the same label.
+%       * __Pixel__ each zero pixel (and all the non-zero pixels closest to
+%             it) gets its own label.
+% * __DstType__ Type of output image `dst`. It can be `uint8` or `single`.
+%       Only supported by the first variant without `labels` output. Type
+%       `uint8` can be used only for the first variant of the function and
+%       `DistanceType = 'L1'`, otherwise the default `single` is assumed.
 %
 % The function cv.distanceTransform calculates the approximate or precise
 % distance from every binary image pixel to the nearest zero pixel. For zero
@@ -62,10 +73,13 @@
 % algorithms are linear on the number of pixels.
 %
 % The second variant of the function does not only compute the minimum distance
-% for each pixel (x, y) but also identifies the nearest connected component
-% consisting of zero pixels. Index of the component is stored in labels(x, y).
-% The connected components of zero pixels are also found and marked by the
-% function.
+% for each pixel `(x,y)` but also identifies the nearest connected component
+% consisting of zero pixels (`LabelType='CComp'`) or the nearest zero pixel
+% (`LabelType='Pixel'`). Index of the component/pixel is stored in
+% `labels(x,y)`. When `LabelType` is 'CComp' the function automatically finds
+% connected components of zero pixels in the input image and marks them with
+% distinct labels. When `LabelType` is 'Pixel', the function scans through the
+% input image and marks all the zero pixels with distinct labels.
 %
 % In this mode, the complexity is still linear. That is, the function provides
 % a very fast way to compute the Voronoi diagram for a binary image. Currently,

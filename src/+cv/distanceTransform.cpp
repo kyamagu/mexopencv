@@ -16,6 +16,10 @@ const ConstMap<string,int> DistMask = ConstMap<string,int>
     ("5",       cv::DIST_MASK_5)
     ("Precise", cv::DIST_MASK_PRECISE);
 
+/// distance transform label types
+const ConstMap<string,int> DistLabelTypes = ConstMap<string,int>
+    ("CComp", cv::DIST_LABEL_CCOMP)
+    ("Pixel", cv::DIST_LABEL_PIXEL);
 }
 
 /**
@@ -32,38 +36,37 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);
-    
+    bool with_labels = (nlhs > 1);
+
     // Option processing
     int distanceType = cv::DIST_L2;
-    int maskSize = 3;
+    int maskSize = cv::DIST_MASK_3;
+    int labelType = cv::DIST_LABEL_CCOMP;
+    int dstType = CV_32F;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="DistanceType") {
+        if (key=="DistanceType")
             distanceType = DistType[rhs[i+1].toString()];
-            if (distanceType!=cv::DIST_L1 &&
-                distanceType!=cv::DIST_L2 &&
-                distanceType!=cv::DIST_C)
-                mexErrMsgIdAndTxt("mexopencv:error","Unsupported option");
-        }
         else if (key=="MaskSize")
-            if (rhs[i].classID()==mxCHAR_CLASS && rhs[i+1].toString()=="MaskPrecise")
-                maskSize = cv::DIST_MASK_PRECISE;
-            else
-                maskSize = rhs[i+1].toInt();
+            maskSize = (rhs[i+1].isChar()) ?
+                DistMask[rhs[i+1].toString()] : rhs[i+1].toInt();
+        else if (with_labels && key=="LabelType")
+            labelType = DistLabelTypes[rhs[i+1].toString()];
+        else if (!with_labels && key=="DstType")
+            dstType = ClassNameMap[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
 
     // Process
-    Mat src(rhs[0].toMat()), dst;
-    if (nlhs > 1) {
+    Mat src(rhs[0].toMat(CV_8U)), dst;
+    if (with_labels) {
         Mat labels;
-        distanceTransform(src, dst, labels, distanceType, maskSize);
-        plhs[0] = MxArray(dst);
+        distanceTransform(src, dst, labels, distanceType, maskSize, labelType);
         plhs[1] = MxArray(labels);
     }
     else {
-        distanceTransform(src, dst, distanceType, maskSize);
-        plhs[0] = MxArray(dst);
+        distanceTransform(src, dst, distanceType, maskSize, dstType);
     }
+    plhs[0] = MxArray(dst);
 }
