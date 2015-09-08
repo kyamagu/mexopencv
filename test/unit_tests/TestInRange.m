@@ -5,19 +5,25 @@ classdef TestInRange
         function test_1
             img = imread(fullfile(mexopencv.root(),'test','left01.jpg'));
             bw = cv.inRange(img, 50, 200);
-            assert(ismatrix(bw) && isequal(size(bw), size(img)));
-            assert(islogical(bw));
+            validateattributes(bw, {'logical'}, {'2d', 'size',size(img)});
         end
 
         function test_rgb_image
             img = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
             hsv = cv.cvtColor(img, 'RGB2HSV');
             bw = cv.inRange(hsv, [10 0 0], [165,255,255]);  % red hue
+            validateattributes(bw, {'logical'}, ...
+                {'2d', 'size',[size(img,1) size(img,2)]});
         end
 
         function test_grayscale_image
             % requires Image Processing Toolbox
-            if ~license('test','image_toolbox'), return; end
+            if mexopencv.isOctave()
+                img_tlbx = 'image';
+            else
+                img_tlbx = 'image_toolbox';
+            end
+            if ~license('test', img_tlbx), return; end
 
             % compare against IM2BW
             % Note: lower bound in IM2BW is non-inclusive,

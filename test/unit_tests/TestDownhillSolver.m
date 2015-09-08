@@ -101,6 +101,8 @@ end
 
 %%
 % https://en.wikipedia.org/wiki/Test_functions_for_optimization
+% TODO: these functions needs to be on the path as a top-level functions
+%       saved in their own M-files.
 
 % Rosenbrock function
 function f = rosenbrockFcn(x)

@@ -7,6 +7,14 @@ classdef TestCornerMinEigenVal
     methods (Static)
         function test_1
             result = cv.cornerMinEigenVal(TestCornerMinEigenVal.img);
+            validateattributes(result, {'single'}, ...
+                {'size',size(TestCornerMinEigenVal.img)});
+        end
+
+        function test_2
+            result = cv.cornerMinEigenVal(im2single(TestCornerMinEigenVal.img));
+            validateattributes(result, {'single'}, ...
+                {'size',size(TestCornerMinEigenVal.img)});
         end
 
         function test_error_1

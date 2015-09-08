@@ -5,8 +5,16 @@ classdef TestCornerHarris
     end
 
     methods (Static)
-        function test_1
+        function test_8bit
             result = cv.cornerHarris(TestCornerHarris.img);
+            validateattributes(result, {'single'}, ...
+                {'size',size(TestCornerHarris.img)});
+        end
+
+        function test_float
+            result = cv.cornerHarris(im2single(TestCornerHarris.img));
+            validateattributes(result, {'single'}, ...
+                {'size',size(TestCornerHarris.img)});
         end
 
         function test_error_1

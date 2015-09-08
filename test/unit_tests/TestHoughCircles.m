@@ -1,13 +1,15 @@
 classdef TestHoughCircles
     %TestHoughCircles
-    properties (Constant)
-    end
 
     methods (Static)
         function test_1
-            im = rgb2gray(imread(fullfile(mexopencv.root(),'test','img001.jpg')));
-            im = imresize(im,0.5);
-            result = cv.HoughCircles(im);
+            im = rgb2gray(imread(fullfile(mexopencv.root(),'test','balloon.jpg')));
+            circles = cv.HoughCircles(im, 'Method','Gradient', 'DP',2, ...
+                'Param1',500, 'Param2',5, ...
+                'MinDist',150, 'MinRadius',0, 'MaxRadius',80);
+            validateattributes(circles, {'cell'}, {'vector'});
+            cellfun(@(v) validateattributes(v, {'numeric'}, ...
+                {'vector', 'numel',3, 'real'}), circles);
         end
 
         function test_error_1

@@ -12,22 +12,23 @@ classdef TestErode
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
-            ]);
+        ]);
     end
-    
+
     methods (Static)
         function test_1
             result = cv.erode(TestErode.img);
+            validateattributes(result, {class(TestErode.img)}, ...
+                {'size',size(TestErode.img)});
         end
-        
-        function test_3
-            result = cv.erode(TestErode.img, 'Anchor', [0,1]);
+
+        function test_2
+            result = cv.erode(TestErode.img, 'Element',ones(3), ...
+                'Anchor',[0,1], 'Iterations',1, 'BorderType','Constant');
+            validateattributes(result, {class(TestErode.img)}, ...
+                {'size',size(TestErode.img)});
         end
-        
-        function test_4
-            result = cv.erode(TestErode.img, 'BorderType', 'Constant');
-        end
-        
+
         function test_error_1
             try
                 cv.erode();
@@ -37,6 +38,5 @@ classdef TestErode
             end
         end
     end
-    
-end
 
+end
