@@ -7,8 +7,8 @@
 % * __src__ Input (distorted) image.
 % * __cameraMatrix__ Input camera matrix `A = [fx 0 cx; 0 fy cy; 0 0 1]`.
 % * __distCoeffs__ Input vector of distortion coefficients
-%       `[k1,k2,p1,p2,k3,k4,k5,k6]` of 4, 5, or 8 elements. If the vector is
-%       empty, the zero distortion coefficients are assumed.
+%       `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4]` of 4, 5, 8 or 12 elements.
+%       If the vector is empty, the zero distortion coefficients are assumed.
 %
 % ## Output
 % * __dst__ Output (corrected) image that has the same size and type as `src`.
@@ -39,5 +39,5 @@
 % be scaled accordingly, while the distortion coefficients remain the same.
 %
 % See also: cv.undistortPoints, cv.calibrateCamera,
-%  cv.initUndistortRectifyMap, cv.remap
+%  cv.initUndistortRectifyMap, cv.remap, undistortImage
 %

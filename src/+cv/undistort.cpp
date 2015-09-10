@@ -29,15 +29,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     for (int i=3; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key=="NewCameraMatrix")
-            newCameraMatrix = rhs[i+1].toMat(CV_32F);
+            newCameraMatrix = rhs[i+1].toMat(CV_64F);
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
 
     // Process
     Mat src(rhs[0].toMat()), dst,
-        cameraMatrix(rhs[1].toMat()),
-        distCoeffs(rhs[2].toMat());
+        cameraMatrix(rhs[1].toMat(CV_64F)),
+        distCoeffs(rhs[2].toMat(CV_64F));
     undistort(src, dst, cameraMatrix, distCoeffs, newCameraMatrix);
     plhs[0] = MxArray(dst);
 }
