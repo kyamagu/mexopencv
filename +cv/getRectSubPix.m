@@ -13,7 +13,11 @@
 %
 % ## Output
 % * __dst__ Extracted patch that has the size `PatchSize`, the same number
-%       of channels as `src`.
+%       of channels as `src`, and the specified type in `PatchType`.
+%
+% ## Options
+% * __PatchType__ Depth of the extracted pixels. By default (-1), they have
+%       the same depth as `src`. Supports either `uint8` or `single`.
 %
 % The function cv.getRectSubPix extracts pixels from `src`:
 %

@@ -29,13 +29,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     for (int i=3; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key=="PatchType")
-            patchType = rhs[i+1].toInt();
+            patchType = (rhs[i+1].isChar()) ?
+                ClassNameMap[rhs[i+1].toString()] : rhs[i+1].toInt();
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
 
     // Process
-    Mat image(rhs[0].toMat()), patch;
+    Mat image(rhs[0].toMat(rhs[0].isUint8() ? CV_8U : CV_32F)), patch;
     Size patchSize(rhs[1].toSize());
     Point2f center(rhs[2].toPoint2f());
     getRectSubPix(image, patchSize, center, patch, patchType);
