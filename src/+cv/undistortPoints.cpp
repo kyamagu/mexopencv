@@ -29,17 +29,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     for (int i=3; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key=="R")
-            R = rhs[i+1].toMat(CV_32F);
+            R = rhs[i+1].toMat(CV_64F);
         else if (key=="P")
-            P = rhs[i+1].toMat(CV_32F);
+            P = rhs[i+1].toMat(CV_64F);
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
 
     // Process
-    Mat src(rhs[0].toMat()), dst,
-        cameraMatrix(rhs[1].toMat()),
-        distCoeffs(rhs[2].toMat());
+    Mat src(rhs[0].toMat(rhs[0].isSingle() ? CV_32F : CV_64F)), dst,
+        cameraMatrix(rhs[1].toMat(CV_64F)),
+        distCoeffs(rhs[2].toMat(CV_64F));
+    bool cn1 = (src.channels() == 1);
+    if (cn1) src = src.reshape(2,0);
     undistortPoints(src, dst, cameraMatrix, distCoeffs, R, P);
+    if (cn1) dst = dst.reshape(1,0);
     plhs[0] = MxArray(dst);
 }
