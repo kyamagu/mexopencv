@@ -9,6 +9,13 @@
 using namespace std;
 using namespace cv;
 
+namespace {
+/// automatic threshold type for option processing
+const ConstMap<string,int> AutoThresholdTypesMap = ConstMap<string,int>
+    ("Otsu",     cv::THRESH_OTSU)
+    ("Triangle", cv::THRESH_TRIANGLE);
+}
+
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments
@@ -25,7 +32,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
-    double thresh = 0.5;
     double maxVal = 1.0;
     int thresholdType = cv::THRESH_TRUNC;
     for (int i=2; i<nrhs; i+=2) {
@@ -39,17 +45,17 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Second argument
-    if (rhs[1].isNumeric())
-        thresh = rhs[1].toDouble();
-    else if (rhs[1].isChar())
-        thresholdType |= cv::THRESH_OTSU;
+    double thresh = 0;
+    if (rhs[1].isChar())
+        thresholdType |= AutoThresholdTypesMap[rhs[1].toString()];
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+        thresh = rhs[1].toDouble();
 
     // Process
-    Mat src(rhs[0].toMat()), dst;
-    double result = threshold(src, dst, thresh, maxVal, thresholdType);
+    Mat src(rhs[0].toMat(rhs[0].isUint8() ? CV_8U :
+        (rhs[0].isInt16() ? CV_16S : CV_32F))), dst;
+    thresh = threshold(src, dst, thresh, maxVal, thresholdType);
     plhs[0] = MxArray(dst);
     if (nlhs>1)
-        plhs[1] = MxArray(result);
+        plhs[1] = MxArray(thresh);
 }
