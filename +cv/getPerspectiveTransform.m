@@ -3,10 +3,11 @@
 %    T = cv.getPerspectiveTransform(src, dst)
 %
 % ## Input
-% * __src__ 4-by-2 row vectors of coordinates of quadrangle vertices in the
-%     source image.
-% * __dst__ 4-by-2 row vectors of the corresponding quadrangle vertices in
-%     the destination image.
+% * __src__ Coordinates of quadrangle vertices in the source image. A numeric
+%       4-by-2 row vectors or a cell-array of 2-element vectors of length 4
+%       `{[x,y], [x,y], [x,y], [x,y]}`
+% * __dst__ Coordinates of the corresponding quadrangle vertices in the
+%       destination image. Same type and size as `src`.
 %
 % ## Output
 % * __T__ 3-by-3 perspective transformation matrix
@@ -19,5 +20,6 @@
 %
 %     dst(i,:) = [X_i, Y_i], src(i,:) = [x_i, y_i]  for i=1,2,3
 %
-% See also: cv.findHomography, cv.warpPerspective, cv.perspectiveTransform
+% See also: cv.findHomography, cv.warpPerspective, cv.perspectiveTransform,
+%  cp2tform, fitgeotrans, estimateGeometricTransform
 %
