@@ -3,8 +3,9 @@
 %    [kx, ky] = cv.getDerivKernels('OptionName', optionValue, ...)
 %
 % ## Output
-% * __kx__ Output matrix of row filter coefficients.
-% * __ky__ Output matrix of column filter coefficients.
+% * __kx__ Output matrix of row filter coefficients. It has the type `KType`.
+% * __ky__ Output matrix of column filter coefficients. It has the type
+%       `KType`.
 %
 % ## Options
 % * __Dx__ Derivative order in respect of x. default 1
@@ -17,6 +18,8 @@
 %       But if you compute derivatives of an 8-bit image, store the results in
 %       a 16-bit image, and wish to preserve all the fractional bits, you may
 %       want to set `Normalize=false`. default false
+% * __KType__ Type of filter coefficients. It can be `single` or `double`.
+%       default `single`
 %
 % The function computes and returns the filter coefficients for spatial image
 % derivatives. When `KSize='Scharr'`, the Scharr 3x3 kernels are generated

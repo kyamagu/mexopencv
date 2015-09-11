@@ -35,11 +35,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (key=="Sigma")
             sigma = rhs[i+1].toDouble();
         else if (key=="KType")
-            ktype = rhs[i+1].toInt();
+            ktype = (rhs[i+1].isChar()) ?
+                ClassNameMap[rhs[i+1].toString()] : rhs[i+1].toInt();
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
 
     // Process
-    plhs[0] = MxArray(getGaussianKernel(ksize, sigma, ktype));
+    Mat kernel = getGaussianKernel(ksize, sigma, ktype);
+    plhs[0] = MxArray(kernel);
 }
