@@ -34,7 +34,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key=="DDepth")
-            ddepth = rhs[i+1].toInt();
+            ddepth = (rhs[i+1].isChar()) ?
+                ClassNameMap[rhs[i+1].toString()] : rhs[i+1].toInt();
         else if (key=="XOrder")
             dx = rhs[i+1].toInt();
         else if (key=="YOrder")
@@ -50,7 +51,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Execute function
-    Mat img(rhs[0].toMat());
-    Scharr(img, img, ddepth, dx, dy, scale, delta, borderType);
-    plhs[0] = MxArray(img);
+    Mat src(rhs[0].toMat()), dst;
+    Scharr(src, dst, ddepth, dx, dy, scale, delta, borderType);
+    plhs[0] = MxArray(dst);
 }
