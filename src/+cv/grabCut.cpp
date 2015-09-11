@@ -12,9 +12,9 @@ using namespace cv;
 namespace {
 /// GrabCut algorithm types for option processing
 const ConstMap<string,int> GrabCutType = ConstMap<string,int>
-    ("Rect", cv::GC_INIT_WITH_RECT)
-    ("Mask", cv::GC_INIT_WITH_MASK)
-    ("Eval", cv::GC_EVAL);
+    ("InitWithRect", cv::GC_INIT_WITH_RECT)
+    ("InitWithMask", cv::GC_INIT_WITH_MASK)
+    ("Eval",         cv::GC_EVAL);
 }
 
 /**
@@ -31,36 +31,37 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);
+    bool rect_variant = (rhs[1].numel() == 4 &&
+        (rhs[1].rows()==1 || rhs[1].cols()==1));
 
     // Option processing
     Mat bgdModel, fgdModel;
     int iterCount = 10;
-    int mode = (rhs[1].isDouble() && rhs[1].numel()==4) ?
-        cv::GC_INIT_WITH_RECT : cv::GC_INIT_WITH_MASK; // Automatic determination
-    if (nrhs>2) {
-        for (int i=2; i<nrhs; i+=2) {
-            string key = rhs[i].toString();
-            if (key=="BgdModel")
-                bgdModel = rhs[i+1].toMat();
-            else if (key=="FgdModel")
-                fgdModel = rhs[i+1].toMat();
-            else if (key=="Init")
-                mode = GrabCutType[rhs[i+1].toString()];
-            else if (key=="MaxIter")
-                iterCount = rhs[i+1].toInt();
-            else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-        }
+    int mode = cv::GC_EVAL;
+    for (int i=2; i<nrhs; i+=2) {
+        string key(rhs[i].toString());
+        if (key=="BgdModel")
+            bgdModel = rhs[i+1].toMat(CV_64F);
+        else if (key=="FgdModel")
+            fgdModel = rhs[i+1].toMat(CV_64F);
+        else if (key=="IterCount")
+            iterCount = rhs[i+1].toInt();
+        else if (key=="Mode")
+            mode = GrabCutType[rhs[i+1].toString()];
+        else
+            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
 
     // Initialize mask and rect
     Mat mask;
     Rect rect;
-    if (mode == cv::GC_INIT_WITH_MASK)
-        mask = rhs[1].toMat(CV_8U);
-    else
+    if (rect_variant) {
         rect = rhs[1].toRect();
-    
+        mode = cv::GC_INIT_WITH_RECT;
+    }
+    else
+        mask = rhs[1].toMat(CV_8U);
+
     // Process
     Mat img(rhs[0].toMat(CV_8U));
     grabCut(img, mask, rect, bgdModel, fgdModel, iterCount, mode);
