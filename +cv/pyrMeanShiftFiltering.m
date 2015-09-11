@@ -14,6 +14,13 @@
 % * __SP__ The spatial window radius. default 5
 % * __SR__ The color window radius. default 10
 % * __MaxLevel__ Maximum level of the pyramid for the segmentation. default 1
+% * __Criteria__ Termination criteria: when to stop meanshift iterations.
+%       default `struct('type','Count+EPS', 'maxCount',5, 'epsilon',1.0)`.
+%       Struct with the following fields is accepted:
+%       * __type__ one of 'Count', 'EPS', or 'Count+EPS' to indicate which
+%             criteria to use.
+%       * __maxCount__ maximum number of iterations
+%       * __epsilon__
 %
 % The function implements the filtering stage of meanshift segmentation, that
 % is, the output of the function is the filtered "posterized" image with color

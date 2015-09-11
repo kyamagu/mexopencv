@@ -28,6 +28,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double sp = 5;
     double sr = 10;
     int maxLevel = 1;
+    TermCriteria termcrit(TermCriteria::MAX_ITER+TermCriteria::EPS, 5, 1);
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key=="SP")
@@ -36,12 +37,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             sr = rhs[i+1].toDouble();
         else if (key=="MaxLevel")
             maxLevel = rhs[i+1].toInt();
+        else if (key=="Criteria")
+            termcrit = rhs[i+1].toTermCriteria();
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
 
     // Process
-    Mat src(rhs[0].toMat()), dst;
-    pyrMeanShiftFiltering(src, dst, sp, sr, maxLevel);
+    Mat src(rhs[0].toMat(CV_8U)), dst;
+    pyrMeanShiftFiltering(src, dst, sp, sr, maxLevel, termcrit);
     plhs[0] = MxArray(dst);
 }
