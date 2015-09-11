@@ -15,10 +15,19 @@
 %       as `src`.
 %
 % ## Options
+% * __DDepth__ desired depth of the destination image. default -1. When
+%       `DDepth=-1`, the output image will have the same depth as the source.
+%       The following combinations are supported:
+%       * SDepth = 'uint8'           --> DDepth = -1, 'int16', 'single', 'double'
+%       * SDepth = 'uint16', 'int16' --> DDepth = -1, 'single', 'double'
+%       * SDepth = 'single'          --> DDepth = -1, 'single', 'double'
+%       * SDepth = 'double'          --> DDepth = -1, 'double'
 % * __Anchor__ Anchor of the kernel that indicates the relative position of a
 %       filtered point within the kernel. The anchor should lie within the
 %       kernel. The special default value (-1,-1) means that the anchor is at
 %       the kernel center.
+% * __Delta__ optional value added to the filtered pixels before storing them
+%       in `dst`. Default 0
 % * __BorderType__ Pixel extrapolation method, see cv.copyMakeBorder.
 %       Default 'Default'
 %
@@ -38,5 +47,5 @@
 % The function uses the DFT-based algorithm in case of sufficiently large
 % kernels (~`11x11` or larger) and the direct algorithm for small kernels.
 %
-% See also: cv.sepFilter2D, cv.dft, cv.matchTemplate
+% See also: cv.sepFilter2D, cv.dft, cv.matchTemplate, imfilter, conv2
 %

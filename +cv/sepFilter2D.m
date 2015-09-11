@@ -18,6 +18,7 @@
 % * __Delta__ Value added to the filtered results before storing them.
 %       default 0
 % * __BorderType__ Pixel extrapolation method. default 'Default'
+% * __DDepth__ Destination image depth, see cv.filter2D. default -1
 %
 % The function applies a separable linear filter to the image. That is, first,
 % every row of `src` is filtered with the 1D kernel `kernelX`. Then, every
