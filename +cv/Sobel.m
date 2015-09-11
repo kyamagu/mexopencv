@@ -36,9 +36,9 @@
 % (that is, no Gaussian smoothing is done). `KSize=1` can only be used for the
 % first or the second x- or y- derivatives.
 %
-% There is also the special value `KSize=-1` that corresponds to the `3x3`
-% Scharr filter that may give more accurate results than the `3x3` Sobel.
-% The Scharr aperture is:
+% There is also the special value `KSize=-1` or `KSize='Scharr'` that
+% corresponds to the `3x3` Scharr filter that may give more accurate results
+% than the `3x3` Sobel. The Scharr aperture is:
 %
 %    [-3 0 3; -10 0 10; -3 0 3]
 %
@@ -64,5 +64,5 @@
 %    [-1 -2 -1; 0 0 0; 1 2 1]
 %
 % See also: cv.Scharr, cv.Laplacian, cv.sepFilter2D, cv.filter2D,
-%    cv.GaussianBlur, cv.cartToPolar
+%    cv.GaussianBlur, cv.cartToPolar, edge
 %

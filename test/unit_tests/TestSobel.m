@@ -12,21 +12,22 @@ classdef TestSobel
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
-            ]);
+        ]);
     end
 
     methods (Static)
         function test_1
             result = cv.Sobel(TestSobel.img);
+            validateattributes(result, {class(TestSobel.img)}, ...
+                {'size',size(TestSobel.img)});
         end
 
         function test_2
-            result = cv.Sobel(TestSobel.img,'KSize',5);
-        end
-
-        function test_3
-            results = cv.Sobel(TestSobel.img, 'XOrder',1, 'YOrder',1, ...
+            result = cv.Sobel(TestSobel.img, 'KSize',5, ...
+                'XOrder',0, 'YOrder',1, 'Scale',1, 'Delta',0, ...
                 'BorderType','Default', 'DDepth','double');
+            validateattributes(result, {'double'}, ...
+                {'size',size(TestSobel.img)});
         end
 
         function test_error_1
@@ -40,4 +41,3 @@ classdef TestSobel
     end
 
 end
-
