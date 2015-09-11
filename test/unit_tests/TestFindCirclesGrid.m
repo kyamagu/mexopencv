@@ -4,7 +4,7 @@ classdef TestFindCirclesGrid
     methods (Static)
         function test_1
             img = imread(fullfile(mexopencv.root(),'test','acircles_pattern.png'));
-            img = imresize(img, 0.5);
+            img = cv.resize(img, 0.5, 0.5);
             sz = [4 11];
             [centers,found] = cv.findCirclesGrid(img, sz, 'SymmetricGrid',false);
             validateattributes(centers, {'cell'}, {'vector'});

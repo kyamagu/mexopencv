@@ -24,7 +24,7 @@ setappdata(window,'flag',false);
 while true
     % Grab and preprocess an image
     im = camera.read;
-    im = cv.resize(im,0.5);
+    im = cv.resize(im,0.5,0.5);
     gr = cv.cvtColor(im,'RGB2GRAY');
     gr = cv.equalizeHist(gr);
 
