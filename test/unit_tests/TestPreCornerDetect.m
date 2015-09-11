@@ -7,6 +7,14 @@ classdef TestPreCornerDetect
     methods (Static)
         function test_1
             result = cv.preCornerDetect(TestPreCornerDetect.img);
+            validateattributes(result, {'single'}, {'real', '2d', ...
+                'size',size(TestPreCornerDetect.img)});
+        end
+
+        function test_2
+            result = cv.preCornerDetect(im2double(TestPreCornerDetect.img));
+            validateattributes(result, {'single'}, {'real', '2d', ...
+                'size',size(TestPreCornerDetect.img)});
         end
 
         function test_error_1

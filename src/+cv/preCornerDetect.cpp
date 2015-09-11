@@ -38,7 +38,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
-    Mat src(rhs[0].toMat()), dst;
+    Mat src(rhs[0].toMat(rhs[0].isUint8() ? CV_8U : CV_32F)), dst;
     preCornerDetect(src, dst, ksize, borderType);
     plhs[0] = MxArray(dst);
 }
