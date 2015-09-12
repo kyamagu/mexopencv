@@ -35,7 +35,25 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
-    Mat array((rhs[0].classID()==mxUINT8_CLASS) ?
-        rhs[0].toMat(CV_8U) : rhs[0].toMat(CV_32F));
-    plhs[0] = MxArray(moments(array, binaryImage));
+    Moments m;
+    if (rhs[0].isNumeric() || rhs[0].isLogical()) {
+        // raster image
+        binaryImage |= rhs[0].isLogical();
+        Mat array(rhs[0].toMat());  // CV_8U, CV_16U, CV_16S, CV_32F, CV_64F
+        m = moments(array, binaryImage);
+    }
+    else if (rhs[0].isCell()) {
+        // contour points
+        if (!rhs[0].isEmpty() && rhs[0].at<MxArray>(0).isInt32()) {
+            vector<Point> array(rhs[0].toVector<Point>());
+            m = moments(array, binaryImage);
+        }
+        else {
+            vector<Point2f> array(rhs[0].toVector<Point2f>());
+            m = moments(array, binaryImage);
+        }
+    }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid input");
+    plhs[0] = MxArray(m);
 }
