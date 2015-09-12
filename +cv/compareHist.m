@@ -4,8 +4,9 @@
 %    d = cv.compareHist(H1, H2, 'Method', method)
 %
 % ## Input
-% * __H1__ First compared histogram.
-% * __H2__ Second compared histogram of the same size as `H1`.
+% * __H1__ First compared histogram. Both dense or sparse arrays are supported
+%       (single-precision floating-point).
+% * __H2__ Second compared histogram of the same size and type as `H1`.
 %
 % ## Output
 % * __d__ Output distance `d(H1,H2)`.
