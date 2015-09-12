@@ -35,25 +35,34 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             distType = DistType[rhs[i+1].toString()];
         else if (key=="Param")
             param = rhs[i+1].toDouble();
-        else if (key=="REps")
+        else if (key=="RadiusEps")
             reps = rhs[i+1].toDouble();
-        else if (key=="AEps")
+        else if (key=="AngleEps")
             aeps = rhs[i+1].toDouble();
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
 
     // Process
+    Mat line;  // 4x1 or 6x1
     if (rhs[0].isNumeric()) {
-        Mat points(rhs[0].toMat());
-        Vec4f line;
+        Mat points(rhs[0].toMat(CV_32F));
         fitLine(points, line, distType, param, reps, aeps);
-        plhs[0] = MxArray(Mat(line));
     }
-    else if (rhs[0].isCell()) {
-        vector<Point2f> points(rhs[0].toVector<Point2f>());
-        Vec4f line;
-        fitLine(points, line, distType, param, reps, aeps);
-        plhs[0] = MxArray(Mat(line));
+    else if (rhs[0].isCell() && !rhs[0].isEmpty()) {
+        mwSize n = rhs[0].at<MxArray>(0).numel();
+        if (n == 2) {
+            vector<Point2f> points(rhs[0].toVector<Point2f>());
+            fitLine(points, line, distType, param, reps, aeps);
+        }
+        else if (n == 3) {
+            vector<Point3f> points(rhs[0].toVector<Point3f>());
+            fitLine(points, line, distType, param, reps, aeps);
+        }
+        else
+            mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
     }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
+    plhs[0] = MxArray(line);
 }
