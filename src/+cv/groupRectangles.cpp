@@ -20,23 +20,25 @@ void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
     // Check the number of arguments
-    if (nrhs<2 || (nrhs%2)!=0 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+    nargchk(nrhs>=2 && (nrhs%2)==0 && nlhs<=1);
+
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    vector<Rect> rectList(rhs[0].toVector<Rect>());
-    int groupThreshold = rhs[1].toInt();
-    double eps=0.2;
-    
+
+    // Option processing
+    double eps = 0.2;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key=="EPS")
             eps = rhs[i+1].toDouble();
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option %s", key.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
-    
-    groupRectangles(rectList,groupThreshold,eps);
+
+    // Process
+    vector<Rect> rectList(rhs[0].toVector<Rect>());
+    int groupThreshold = rhs[1].toInt();
+    groupRectangles(rectList, groupThreshold, eps);
     plhs[0] = MxArray(rectList);
 }
