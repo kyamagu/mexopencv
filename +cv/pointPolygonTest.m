@@ -23,5 +23,5 @@
 % Otherwise, the return value is a signed distance between the point and the
 % nearest contour edge.
 %
-% See also: cv.distanceTransform
+% See also: cv.distanceTransform, inpolygon
 %

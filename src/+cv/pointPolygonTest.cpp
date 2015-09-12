@@ -35,13 +35,17 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
+    double result = 0;
     Point2f pt(rhs[1].toPoint2f());
     if (rhs[0].isNumeric()) {
-        Mat contour(rhs[0].toMat(CV_32F));
-        plhs[0] = MxArray(pointPolygonTest(contour, pt, measureDist));
+        Mat contour(rhs[0].toMat(rhs[0].isInt32() ? CV_32S : CV_32F));
+        result = pointPolygonTest(contour, pt, measureDist);
     }
     else if (rhs[0].isCell()) {
         vector<Point2f> contour(rhs[0].toVector<Point2f>());
-        plhs[0] = MxArray(pointPolygonTest(contour, pt, measureDist));
+        result = pointPolygonTest(contour, pt, measureDist);
     }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid input");
+    plhs[0] = MxArray(result);
 }
