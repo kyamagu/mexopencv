@@ -9,6 +9,40 @@
 using namespace std;
 using namespace cv;
 
+namespace {
+void check_arguments(int hist_dims, bool uniform,
+    const vector<vector<float> > &ranges, const vector<int> &channels)
+{
+    // some sanity checks not covered in cv::calcBackProject
+    if (!channels.empty() && channels.size() < hist_dims)
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Channels must match histogram dimensionality");
+    if ((!ranges.empty() || !uniform) && ranges.size() != hist_dims)
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Ranges must match histogram dimensionality");
+    if (!uniform) {
+        for (vector<vector<float> >::const_iterator it = ranges.begin(); it != ranges.end(); ++it)
+            if (it->empty())
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Ranges cannot be empty for non-uniform histogram");
+    }
+}
+
+/// determine histogram dimensionality: 1-D, 2-D, or N-D
+int histogram_dims(const SparseMat &hist)
+{
+    return ((hist.dims() > 2) ? hist.dims() :
+        ((hist.size(0) == 1 || hist.size(1) == 1) ? 1 : 2));
+}
+
+/// determine histogram dimensionality: 1-D, 2-D, or N-D
+int histogram_dims(const MatND &hist)
+{
+    return ((hist.dims > 2) ? hist.dims :
+        ((hist.rows == 1 || hist.cols == 1) ? 1 : 2));
+}
+}
+
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments
@@ -16,66 +50,70 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<3 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
-    // Prepare arguments
-    vector<MxArray> rhs(prhs,prhs+nrhs);
-    
-    // arrays
-    vector<MxArray> arrays_(rhs[0].toVector<MxArray>());
-    vector<Mat> arrays(arrays_.size());
-    for (int i=0; i<arrays_.size(); ++i)
-        arrays[i] = (arrays_[i].isUint8()) ?
-            arrays_[i].toMat(CV_8U) : arrays_[i].toMat(CV_32F);
-    
-    // channels
+    nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
+
+    // Argument vector
+    vector<MxArray> rhs(prhs, prhs+nrhs);
+
+    // source arrays (cell array of images)
+    vector<Mat> arrays;
+    {
+        vector<MxArray> arrays_(rhs[0].toVector<MxArray>());
+        arrays.reserve(arrays_.size());
+        for (vector<MxArray>::const_iterator it = arrays_.begin(); it != arrays_.end(); ++it)
+            arrays.push_back(it->toMat(it->isUint8() ? CV_8U :
+                (it->isUint16() ? CV_16U : CV_32F)));
+    }
+
+    // channels: default to use all channels from all images
     int total_channels = 0;
-    for (vector<Mat>::iterator it = arrays.begin(); it < arrays.end(); ++it)
-        total_channels += (*it).channels();
+    for (vector<Mat>::const_iterator it = arrays.begin(); it != arrays.end(); ++it)
+        total_channels += it->channels();
     vector<int> channels(total_channels);
     for (int i=0; i<total_channels; ++i)
         channels[i] = i;
-    
-    // dims, histSize, ranges
-    vector<MxArray> ranges_(rhs[2].toVector<MxArray>());
-    vector<Mat> ranges(ranges_.size());
-    for (int i=0; i<ranges_.size(); ++i)
-        ranges[i] = ranges_[i].toMat(CV_32F);
-    vector<const float*> ranges_ptr(ranges.size());
-    for (int i=0; i<ranges.size(); ++i)
-        ranges_ptr[i] = ranges[i].ptr<float>(0);
-    
+
+    // ranges (cell array of vectors): bin boundaries in each hist dimension
+    vector<vector<float> > ranges(MxArrayToVectorVectorPrimitive<float>(rhs[2]));
+    mwSize dims = ranges.size();
+    vector<const float*> ranges_ptr(dims);
+    for (mwIndex i=0; i<dims; ++i)
+        ranges_ptr[i] = (!ranges[i].empty() ? &ranges[i][0] : NULL);
+
     // Option processing
-    double scale = 1;
+    double scale = 1.0;
     bool uniform = false;
     for (int i=3; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
-        if (key=="Uniform")
-            uniform = rhs[i+1].toBool();
-        else if (key=="Scale")
-            scale = rhs[i+1].toDouble();
-        else if (key=="Channels")
+        string key(rhs[i].toString());
+        if (key == "Channels")
             channels = rhs[i+1].toVector<int>();
+        else if (key == "Scale")
+            scale = rhs[i+1].toDouble();
+        else if (key == "Uniform")
+            uniform = rhs[i+1].toBool();
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
-    
+
+    // Process
     Mat backProject;
     if (rhs[1].isSparse()) {
-        SparseMat hist(rhs[1].toSparseMat());
-        calcBackProject(&arrays[0], arrays.size(), &channels[0], hist,
-            backProject, &ranges_ptr[0], scale, uniform);
-        plhs[0] = MxArray(backProject);
+        SparseMat hist(rhs[1].toSparseMat());  // 2D sparse matrix
+        check_arguments(histogram_dims(hist), uniform, ranges, channels);
+        calcBackProject((arrays.empty() ? NULL : &arrays[0]), arrays.size(),
+            (channels.empty() ? NULL : &channels[0]), hist, backProject,
+            (ranges_ptr.empty() ? NULL : &ranges_ptr[0]), scale, uniform);
     }
     else {
-        MatND hist(rhs[1].toMatND());
-        calcBackProject(&arrays[0], arrays.size(), &channels[0], hist,
-            backProject, &ranges_ptr[0], scale, uniform);
-        plhs[0] = MxArray(backProject);
+        MatND hist(rhs[1].toMatND(CV_32F));  // multi-dim dense array
+        check_arguments(histogram_dims(hist), uniform, ranges, channels);
+        calcBackProject((arrays.empty() ? NULL : &arrays[0]), arrays.size(),
+            (channels.empty() ? NULL : &channels[0]), hist, backProject,
+            (ranges_ptr.empty() ? NULL : &ranges_ptr[0]), scale, uniform);
     }
+    plhs[0] = MxArray(backProject);
 }
