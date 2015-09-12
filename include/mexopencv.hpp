@@ -388,6 +388,38 @@ std::vector<cv::Matx<T,m,n> > MxArrayToVectorMatx(const MxArray& arr)
 *      Conversion Functions: MxArray to vector of vectors      *
 \**************************************************************/
 
+/** Convert an MxArray to std::vector<std::vector<T>>
+ *
+ * @param arr MxArray object. In one of the following forms:
+ * - a cell-array of cell-arrays of numeric scalars,
+ *   e.g: <tt>{{s1, s2, ...}, {s1, ...}, ...}</tt>
+ * - a cell-array of numeric vectors,
+ *   e.g: <tt>{[s1, s2, ...], [s1, ...], ...}</tt>
+ * @return vector of vectors of primitives of type T
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<vector<int>> vvi = MxArrayToVectorVectorPrimitive<int>(cellArray);
+ * @endcode
+ */
+template <typename T>
+std::vector<std::vector<T> > MxArrayToVectorVectorPrimitive(const MxArray& arr)
+{
+    /*
+    std::vector<MxArray> vva(arr.toVector<MxArray>());
+    std::vector<std::vector<T> > vv;
+    vv.reserve(vva.size());
+    for (std::vector<MxArray>::const_iterator it = vva.begin(); it != vva.end(); ++it) {
+        vv.push_back(it->toVector<T>());
+    }
+    return vv;
+    */
+    typedef std::vector<T> VecT;
+    const_mem_fun_ref_t<VecT, MxArray> func(&MxArray::toVector<T>);
+    return arr.toVector(func);
+}
+
 /** Convert an MxArray to std::vector<std::vector<cv::Point_<T>>>
  *
  * @param arr MxArray object. In one of the following forms:
