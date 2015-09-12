@@ -28,7 +28,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Point2f center;
     float radius = 0;
     if (rhs[0].isNumeric()) {
-        Mat points(rhs[0].toMat(CV_32F));
+        Mat points(rhs[0].toMat(rhs[0].isInt32() ? CV_32S : CV_32F));
         minEnclosingCircle(points, center, radius);
     }
     else if (rhs[0].isCell()) {

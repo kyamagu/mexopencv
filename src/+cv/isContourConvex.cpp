@@ -25,16 +25,16 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Process
+    bool b = false;
     if (rhs[0].isNumeric()) {
-        Mat points(rhs[0].toMat(CV_32F));
-        bool b = isContourConvex(points);
-        plhs[0] = MxArray(b);
+        Mat points(rhs[0].toMat(rhs[0].isInt32() ? CV_32S : CV_32F));
+        b = isContourConvex(points);
     }
     else if (rhs[0].isCell()) {
         vector<Point2f> points(rhs[0].toVector<Point2f>());
-        bool b = isContourConvex(points);
-        plhs[0] = MxArray(b);
+        b = isContourConvex(points);
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
+    plhs[0] = MxArray(b);
 }
