@@ -23,7 +23,7 @@ namespace {
  * @param dt3dt2 Derivative of \p tvec3 with regard to \c tvec2.
  * @return output MxArray struct object.
  */
-MxArray valueStruct(const Mat& rvec3, const Mat& tvec3, const Mat& dr3dr1,
+MxArray toStruct(const Mat& rvec3, const Mat& tvec3, const Mat& dr3dr1,
     const Mat& dr3dt1, const Mat& dr3dr2, const Mat& dr3dt2, const Mat& dt3dr1,
     const Mat& dt3dt1, const Mat& dt3dr2, const Mat& dt3dt2)
 {
@@ -51,23 +51,24 @@ MxArray valueStruct(const Mat& rvec3, const Mat& tvec3, const Mat& dr3dr1,
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs!=4 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(nrhs==4 && nlhs<=1);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Process
-    Mat rvec1(rhs[0].toMat(CV_32F)), tvec1(rhs[1].toMat(CV_32F)),
-        rvec2(rhs[2].toMat(CV_32F)), tvec2(rhs[3].toMat(CV_32F));
-    Mat rvec3, tvec3, dr3dr1, dr3dt1, dr3dr2, dr3dt2,
+    Mat rvec1(rhs[0].toMat(rhs[0].isSingle() ? CV_32F : CV_64F)),
+        tvec1(rhs[1].toMat(rhs[1].isSingle() ? CV_32F : CV_64F)),
+        rvec2(rhs[2].toMat(rhs[2].isSingle() ? CV_32F : CV_64F)),
+        tvec2(rhs[3].toMat(rhs[3].isSingle() ? CV_32F : CV_64F)),
+        rvec3, tvec3,
+        dr3dr1, dr3dt1, dr3dr2, dr3dt2,
         dt3dr1, dt3dt1, dt3dr2, dt3dt2;
     composeRT(rvec1, tvec1, rvec2, tvec2, rvec3, tvec3,
         dr3dr1, dr3dt1, dr3dr2, dr3dt2, dt3dr1, dt3dt1, dt3dr2, dt3dt2);
-    plhs[0] = valueStruct(rvec3, tvec3,
+    plhs[0] = toStruct(rvec3, tvec3,
         dr3dr1, dr3dt1, dr3dr2, dr3dt2, dt3dr1, dt3dt1, dt3dr2, dt3dt2);
 }
