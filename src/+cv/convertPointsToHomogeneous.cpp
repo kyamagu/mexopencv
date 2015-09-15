@@ -16,34 +16,37 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs!=1 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(nrhs==1 && nlhs<=1);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Process
     if (rhs[0].isNumeric()) {
-        Mat src(rhs[0].toMat(CV_32F)), dst;
+        // input is Nx2/Nx1x2/1xNx2 or Nx3/Nx1x3/1xNx3 matrix
+        Mat src(rhs[0].toMat(rhs[0].isSingle() ? CV_32F : CV_64F)), dst;
+        bool cn1 = (src.channels() == 1);
         convertPointsToHomogeneous(src, dst);
-        plhs[0] = MxArray(dst.reshape(1,0));  // N-by-(3/4) numeric matrix
+        if (cn1) dst = dst.reshape(1,0);  // N-by-(3/4) numeric matrix
+        plhs[0] = MxArray(dst);
     }
     else if (rhs[0].isCell() && !rhs[0].isEmpty()) {
-        mwSize n = rhs[0].at<MxArray>(0).numel();
-        if (n==2) {
-            vector<Point2f> src(rhs[0].toVector<Point2f>());
-            vector<Point3f> dst;
+        mwSize dim = rhs[0].at<MxArray>(0).numel();
+        if (dim == 2) {
+            // input is cell array {[x,y], [x,y], ..}
+            vector<Point2d> src(rhs[0].toVector<Point2d>());
+            vector<Point3d> dst;
             convertPointsToHomogeneous(src, dst);
             plhs[0] = MxArray(dst);  // 1xN cell-array {[x,y,z], ...}
             //plhs[0] = MxArray(Mat(dst,false).reshape(1,0));  // N-by-3 numeric matrix
         }
-        else if (n==3) {
-            vector<Point3f> src(rhs[0].toVector<Point3f>());
-            vector<Vec4f> dst;
+        else if (dim == 3) {
+            // input is cell array {[x,y,z], [x,y,z], ..}
+            vector<Point3d> src(rhs[0].toVector<Point3d>());
+            vector<Vec4d> dst;
             convertPointsToHomogeneous(src, dst);
             plhs[0] = MxArray(dst);  // 1xN cell-array {[x,y,z,w], ...}
             //plhs[0] = MxArray(Mat(dst, false).reshape(1, 0));  // N-by-4 numeric matrix
@@ -53,5 +56,4 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
-
 }
