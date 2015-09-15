@@ -18,7 +18,7 @@ namespace {
  * @param aspectRatio Aspect ratio <tt>fy/fx</tt>.
  * @return output MxArray struct object.
  */
-MxArray valueStruct(double fovx, double fovy, double focalLength,
+MxArray toStruct(double fovx, double fovy, double focalLength,
     const Point2d& principalPoint, double aspectRatio)
 {
     const char* fieldnames[] = {
@@ -40,26 +40,23 @@ MxArray valueStruct(double fovx, double fovy, double focalLength,
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs!=4 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(nrhs==4 && nlhs<=1);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Process
-    Mat cameraMatrix(rhs[0].toMat(CV_32F));
+    Mat cameraMatrix(rhs[0].toMat(CV_64F));
     Size imageSize(rhs[1].toSize());
     double apertureWidth = rhs[2].toDouble(),
-           apertureHeight = rhs[3].toDouble();
-    double fovx, fovy, focalLength, aspectRatio;
+           apertureHeight = rhs[3].toDouble(),
+           fovx, fovy, focalLength, aspectRatio;
     Point2d principalPoint;
     calibrationMatrixValues(cameraMatrix, imageSize,
-        apertureWidth, apertureHeight, fovx, fovy, focalLength,
-        principalPoint, aspectRatio);
-    plhs[0] = valueStruct(fovx, fovy, focalLength,
-        principalPoint, aspectRatio);
+        apertureWidth, apertureHeight,
+        fovx, fovy, focalLength, principalPoint, aspectRatio);
+    plhs[0] = toStruct(fovx, fovy, focalLength, principalPoint, aspectRatio);
 }
