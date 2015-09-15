@@ -7,16 +7,15 @@
 % * __B__ Second multiplied matrix.
 %
 % ## Output
-% * __dABdA__ First output derivative matrix d(A*B)/dA of size A.rows *
-%        B.cols x A.rows * A.cols.
-% * __dABdB__ Second output derivative matrix d(A*B)/dB of size A.rows * 
-%        B.cols x B.rows * B.cols.
+% * __dABdA__ First output derivative matrix `d(A*B)/dA` of size
+%       `(A.rows * B.cols)x(A.rows * A.cols)` and same type as `A`.
+% * __dABdB__ Second output derivative matrix `d(A*B)/dB` of size
+%       `(A.rows * B.cols)x(B.rows * B.cols)` and same type as `A`.
 %
 % The function computes partial derivatives of the elements of the matrix
-% product A*B with regard to the elements of each of the two input
-% matrices. The function is used to compute the Jacobian matrices in
-% cv.stereoCalibrate but can also be used in any other similar optimization
-% function.
+% product `A*B` with regard to the elements of each of the two input matrices.
+% The function is used to compute the Jacobian matrices in cv.stereoCalibrate
+% but can also be used in any other similar optimization function.
 %
-% See also cv.stereoCalibrate
+% See also: cv.stereoCalibrate
 %
