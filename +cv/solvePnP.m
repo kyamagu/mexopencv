@@ -11,8 +11,8 @@
 % * __imagePoints__ Array of corresponding image points, 1xNx2/Nx1x2 or
 %       Nx2 array, where `N` is the number of points, or cell array of
 %       length `N` of 2-element vectors can be also passed here
-%       `{[x,y], ...}`
-% * __cameraMatrix__ Input camera matrix `A = [fx,0,cx; 0,fy,cy; 0,0,1]`.
+%       `{[x,y], ...}`.
+% * __cameraMatrix__ Input camera matrix `A = [fx 0 cx; 0 fy cy; 0 0 1]`.
 %
 % ## Output
 % * __rvec__ Output rotation vector (see cv.Rodrigues) that, together with
@@ -22,11 +22,12 @@
 % * __success__ success logical flag.
 %
 % ## Options
-% * __DistCoeffs__ Input vector of distortion coefficients [k1,k2,p1,p2,k3,
-%       k4,k5,k6,s1,s2,s3,s4] of 4, 5, 8, or 12 elements. If the vector is
-%       empty, the zero distortion coefficients are assumed. default empty.
-% * __Rvec__ Initial `rvec`. default empty.
-% * __Tvec__ Initial `tvec`. default empty.
+% * __DistCoeffs__ Input vector of distortion coefficients
+%       `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4]` of 4, 5, 8, or 12 elements.
+%       If the vector is empty, the zero distortion coefficients are assumed.
+%       default empty.
+% * __Rvec__ Initial `rvec`. Not set by default.
+% * __Tvec__ Initial `tvec`. Not set by default.
 % * __UseExtrinsicGuess__ Parameter used for `Method='Iterative'`. If true,
 %       the function uses the provided `rvec` and `tvec` values as initial
 %       approximations of the rotation and translation vectors, respectively,
@@ -46,6 +47,10 @@
 %             that both have the same value. Then the `cameraMatrix` is
 %             updated with the estimated focal length.
 %
+% The function estimates the object pose given a set of object points,
+% their corresponding image projections, as well as the camera matrix and
+% the distortion coefficients.
+%
 % ## References
 % [1]:
 % > X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang; "Complete Solution
@@ -63,10 +68,6 @@
 % [4]:
 % > A.Penate-Sanchez, J.Andrade-Cetto, F.Moreno-Noguer.
 % > "Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation".
-%
-% The function estimates the object pose given a set of object points,
-% their corresponding image projections, as well as the camera matrix and
-% the distortion coefficients.
 %
 % See also: cv.solvePnPRansac
 %
