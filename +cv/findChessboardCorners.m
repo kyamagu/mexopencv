@@ -1,41 +1,63 @@
 %FINDCHESSBOARDCORNERS  Finds the positions of internal corners of the chessboard
 %
-%    corners = cv.findChessboardCorners(im, patternSize)
+%    [corners,ok] = cv.findChessboardCorners(im, patternSize)
 %    [...] = cv.findChessboardCorners(..., 'OptionName', optionValue, ...)
 %
 % ## Input
-% * __im__ Source chessboard view. It must be an 8-bit grayscale or color image.
+% * __im__ Source chessboard view. It must be an 8-bit grayscale or color
+%       image.
 % * __patternSize__ Number of inner corners per a chessboard row and column
-%        (`patternSize = [points_per_row,points_per_colum] = [columns,rows]`).
+%       (`patternSize = [points_per_row,points_per_colum] = [columns,rows]`).
 %
 % ## Output
-% * __corners__ Output array of detected corners.
+% * __corners__ Output array of detected corners. Cell array of 2-element
+%       vectors `{[x,y], ...}`. Returns an empty cell if it fails to find all
+%       the corners.
+% * __ok__ returns true if all of the corners are found and they are placed in
+%       a certain order. Otherwise, if the function fails to find all the
+%       corners or reorder them, it returns false.
 %
 % ## Options
 % * __AdaptiveThresh__ Use adaptive thresholding to convert the image to black
-%        and white, rather than a fixed threshold level (computed from the
-%        average image brightness). default true.
+%       and white, rather than a fixed threshold level (computed from the
+%       average image brightness). default true.
 % * __NormalizeImage__ Normalize the image gamma with cv.equalizeHist before
-%        applying fixed or adaptive thresholding. default true.
+%       applying fixed or adaptive thresholding. default true.
 % * __FilterQuads__ Use additional criteria (like contour area, perimeter,
-%        square-like shape) to filter out false quads extracted at the contour
-%        retrieval stage. default false.
+%       square-like shape) to filter out false quads extracted at the contour
+%       retrieval stage. default false.
 % * __FastCheck__ Run a fast check on the image that looks for chessboard
-%        corners, and shortcut the call if none is found. This can drastically
-%        speed up the call in the degenerate condition when no chessboard is
-%        observed. default false.
+%       corners, and shortcut the call if none is found. This can drastically
+%       speed up the call in the degenerate condition when no chessboard is
+%       observed. default false.
 %
 % The function attempts to determine whether the input image is a view of the
 % chessboard pattern and locate the internal chessboard corners. The function
 % returns a non-zero value if all of the corners are found and they are placed
-% in a certain order (row by row, left to right in every row). Otherwise, if the
-% function fails to find all the corners or reorder them, it returns 0. For
-% example, a regular chessboard has 8 x 8 squares and 7 x 7 internal corners,
-% that is, points where the black squares touch each other. The detected
-% coordinates are approximate, and to determine their positions more accurately,
-% the function calls cv.cornerSubPix. You also may use the function
-% cv.cornerSubPix with different parameters if returned coordinates are not
-% accurate enough.
+% in a certain order (row by row, left to right in every row). Otherwise, if
+% the function fails to find all the corners or reorder them, it returns an
+% empty cell array. For example, a regular chessboard has 8x8 squares and 7x7
+% internal corners, that is, points where the black squares touch each other.
+% The detected coordinates are approximate, and to determine their positions
+% more accurately, the function calls cv.cornerSubPix. You also may use the
+% function cv.cornerSubPix with different parameters if returned coordinates
+% are not accurate enough.
+%
+% ## Example
+% Sample usage of detecting and drawing chessboard corners:
+%
+%    patternsize = [9,6];         % interior number of corners
+%    gray = imread(fullfile(mexopencv.root(),'test','left01.jpg'));
+%    % 'FastCheck' saves a lot of time on images
+%    % that do not contain any chessboard corners
+%    [corners,patternfound] = cv.findChessboardCorners(gray, patternsize, ...
+%        'AdaptiveThresh',true, 'NormalizeImage',true, 'FastCheck',true);
+%    if patternfound
+%        corners = cv.cornerSubPix(gray, corners, 'Criteria',...
+%            struct('type','Count+EPS', 'maxCount',30, 'epsilon',0.1));
+%    end
+%    img = cv.drawChessboardCorners(repmat(gray,[1 1 3]), patternsize, ...
+%        cat(1,corners{:}), 'PatternWasFound',patternfound);
 %
 % ## Note
 % The function requires white space (like a square-thick border, the wider the
@@ -44,5 +66,6 @@
 % the outer black squares cannot be segmented properly and so the square
 % grouping and ordering algorithm fails.
 %
-% See also cv.drawChessboardCorners cv.calibrateCamera
+% See also: cv.drawChessboardCorners, cv.calibrateCamera,
+%  detectCheckerboardPoints
 %

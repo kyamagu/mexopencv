@@ -1,14 +1,21 @@
 classdef TestFindChessboardCorners
     %TestFindChessboardCorners
-    properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','left01.jpg'));
-    end
-    
+
     methods (Static)
         function test_1
-            result = cv.findChessboardCorners(TestFindChessboardCorners.img, [9,6]);
+            img = imread(fullfile(mexopencv.root(),'test','left01.jpg'));
+            patternSize = [9 6];
+            [corners,found] = cv.findChessboardCorners(img, patternSize, ...
+                'AdaptiveThresh',true, 'NormalizeImage',true, 'FastCheck',true);
+            validateattributes(found, {'logical'}, {'scalar'});
+            if found
+                validateattributes(corners, {'cell'}, ...
+                    {'vector', 'numel',prod(patternSize)});
+                cellfun(@(v) validateattributes(v, {'numeric'}, ...
+                    {'vector', 'numel',2}), corners);
+            end
         end
-        
+
         function test_error_1
             try
                 cv.findChessboardCorners();
@@ -18,6 +25,5 @@ classdef TestFindChessboardCorners
             end
         end
     end
-    
-end
 
+end

@@ -16,46 +16,37 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<2 || (nrhs%2)!=0 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(nrhs>=2 && (nrhs%2)==0 && nlhs<=2);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
-
-    Mat image(rhs[0].toMat());
-    Size patternSize(rhs[1].toSize());
+    vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
-    bool adaptiveThresh = true;
-    bool normalizeImage = true;
-    bool filterQuads = false;
-    bool fastCheck = false;
+    int flags = cv::CALIB_CB_ADAPTIVE_THRESH + cv::CALIB_CB_NORMALIZE_IMAGE;
     for (int i=2; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
-        if (key=="AdaptiveThresh")
-            adaptiveThresh = rhs[i+1].toBool();
-        else if (key=="NormalizeImage")
-            normalizeImage = rhs[i+1].toBool();
-        else if (key=="FilterQuads")
-            filterQuads = rhs[i+1].toBool();
-        else if (key=="FastCheck")
-            fastCheck = rhs[i+1].toBool();
+        string key(rhs[i].toString());
+        if (key == "AdaptiveThresh")
+            UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_CB_ADAPTIVE_THRESH);
+        else if (key == "NormalizeImage")
+            UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_CB_NORMALIZE_IMAGE);
+        else if (key == "FilterQuads")
+            UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_CB_FILTER_QUADS);
+        else if (key == "FastCheck")
+            UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_CB_FAST_CHECK);
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s",key.c_str());
     }
-    int flags = ((adaptiveThresh) ? cv::CALIB_CB_ADAPTIVE_THRESH : 0) |
-        ((normalizeImage) ? cv::CALIB_CB_NORMALIZE_IMAGE : 0) |
-        ((filterQuads) ? cv::CALIB_CB_FILTER_QUADS : 0) |
-        ((fastCheck) ? cv::CALIB_CB_FAST_CHECK : 0);
+
     // Process
+    Mat image(rhs[0].toMat(CV_8U));
+    Size patternSize(rhs[1].toSize());
     vector<Point2f> corners;
-    bool b = findChessboardCorners(image, patternSize, corners, flags);
-    if (b)
-        plhs[0] = MxArray(corners);
-    else
-        plhs[0] = MxArray(Mat());
+    bool ok = findChessboardCorners(image, patternSize, corners, flags);
+    plhs[0] = MxArray(corners);
+    if (nlhs > 1)
+        plhs[1] = MxArray(ok);
 }
