@@ -16,23 +16,20 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<3 || ((nrhs%2)!=1) || nlhs>2)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=2);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
-    Mat cameraMatrix(rhs[0].toMat(CV_32F));
-    Mat distCoeffs(rhs[1].toMat(CV_32F));
-    Size imageSize(rhs[2].toSize());;
-    double alpha=0.8;
+    vector<MxArray> rhs(prhs, prhs+nrhs);
+
+    // Option processing
+    double alpha = 0.8;
     Size newImageSize;
-    bool centerPrincipalPoint=false;
+    bool centerPrincipalPoint = false;
     for (int i=3; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
+        string key(rhs[i].toString());
         if (key=="Alpha")
             alpha = rhs[i+1].toDouble();
         else if (key=="NewImageSize")
@@ -43,10 +40,14 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
     // Process
+    Mat cameraMatrix(rhs[0].toMat(rhs[0].isSingle() ? CV_32F : CV_64F)),
+        distCoeffs(rhs[1].toMat(rhs[1].isSingle() ? CV_32F : CV_64F));
+    Size imageSize(rhs[2].toSize());;
     Rect validPixROI;
-    Mat m = getOptimalNewCameraMatrix(cameraMatrix, distCoeffs, imageSize,
-        alpha, newImageSize, &validPixROI, centerPrincipalPoint);
-    plhs[0] = MxArray(m);
+    Mat A = getOptimalNewCameraMatrix(cameraMatrix, distCoeffs, imageSize,
+        alpha, newImageSize, (nlhs>1 ? &validPixROI : NULL),
+        centerPrincipalPoint);
+    plhs[0] = MxArray(A);
     if (nlhs>1)
         plhs[1] = MxArray(validPixROI);
 }
