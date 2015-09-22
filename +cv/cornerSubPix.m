@@ -58,3 +58,5 @@
 % The algorithm sets the center of the neighborhood window at this new center
 % `q` and then iterates until the center stays within a set threshold.
 %
+% See also: cv.find4QuadCornerSubpix
+%
