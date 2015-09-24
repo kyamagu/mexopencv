@@ -1,7 +1,9 @@
 classdef TestMoments
     %TestMoments
     properties (Constant)
-        fields = {'m00','m10','m01','m20','m11','m02','m30','m21','m12','m03'};
+        fields = {'m00','m10','m01','m20','m11','m02','m30','m21','m12','m03', ...
+            'mu20','mu11','mu02','mu30','mu21','mu12','mu03', ...
+            'nu20','nu11','nu02','nu30','nu21','nu12','nu03'};
     end
 
     methods (Static)

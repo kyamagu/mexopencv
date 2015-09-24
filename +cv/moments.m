@@ -10,16 +10,12 @@
 %
 % ## Output
 % * __mo__ Output moments. A structure with the following fields:
-%       * __m00__
-%       * __m10__
-%       * __m01__
-%       * __m20__
-%       * __m11__
-%       * __m02__
-%       * __m30__
-%       * __m21__
-%       * __m12__
-%       * __m03__
+%       * Spatial moments: __m00__, __m10__, __m01__, __m20__, __m11__,
+%           __m02__, __m30__, __m21__, __m12__, __m03__
+%       * Central moments: __mu20__, __mu11__, __mu02__, __mu30__, __mu21__,
+%           __mu12__, __mu03__
+%       * Central normalized moments: __nu20__, __nu11__, __nu02__, __nu30__,
+%           __nu21__, __nu12__, __nu03__
 %
 % ## Options
 % * __BinaryImage__ If it is true, all non-zero image pixels are treated as

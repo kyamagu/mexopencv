@@ -8,8 +8,10 @@
 namespace {
 
 /// Field names for cv::Moments.
-const char *cv_moments_fields[10] = {"m00", "m10", "m01", "m20", "m11", "m02",
-                                     "m30", "m21", "m12", "m03"};
+const char *cv_moments_fields[24] = {
+    "m00", "m10", "m01", "m20", "m11", "m02","m30", "m21", "m12", "m03",
+    "mu20", "mu11", "mu02", "mu30", "mu21", "mu12", "mu03",
+    "nu20", "nu11", "nu02", "nu30", "nu21", "nu12", "nu03"};
 /// Field names for cv::RotatedRect.
 const char *cv_rotated_rect_fields[3] = {"center", "size", "angle"};
 /// Field names for cv::TermCriteria.
@@ -203,20 +205,34 @@ MxArray::MxArray(const cv::SparseMat& mat)
 }
 
 MxArray::MxArray(const cv::Moments& m)
-    : p_(mxCreateStructMatrix(1, 1, 10, cv_moments_fields))
+    : p_(mxCreateStructMatrix(1, 1, 24, cv_moments_fields))
 {
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
-    set("m00", m.m00);
-    set("m10", m.m10);
-    set("m01", m.m01);
-    set("m20", m.m20);
-    set("m11", m.m11);
-    set("m02", m.m02);
-    set("m30", m.m30);
-    set("m12", m.m12);
-    set("m21", m.m21);
-    set("m03", m.m03);
+    set("m00",  m.m00);
+    set("m10",  m.m10);
+    set("m01",  m.m01);
+    set("m20",  m.m20);
+    set("m11",  m.m11);
+    set("m02",  m.m02);
+    set("m30",  m.m30);
+    set("m12",  m.m12);
+    set("m21",  m.m21);
+    set("m03",  m.m03);
+    set("mu20", m.mu20);
+    set("mu11", m.mu11);
+    set("mu02", m.mu02);
+    set("mu30", m.mu30);
+    set("mu21", m.mu21);
+    set("mu12", m.mu12);
+    set("mu03", m.mu03);
+    set("nu20", m.nu20);
+    set("nu11", m.nu11);
+    set("nu02", m.nu02);
+    set("nu30", m.nu30);
+    set("nu21", m.nu21);
+    set("nu12", m.nu12);
+    set("nu03", m.nu03);
 }
 
 MxArray::MxArray(const cv::KeyPoint& p)
@@ -449,6 +465,7 @@ cv::SparseMat MxArray::toSparseMat() const
 
 cv::Moments MxArray::toMoments(mwIndex index) const
 {
+    // the muXX and nuXX are computed from mXX
     return cv::Moments(
         (isField("m00")) ? at("m00", index).toDouble() : 0,
         (isField("m10")) ? at("m10", index).toDouble() : 0,
