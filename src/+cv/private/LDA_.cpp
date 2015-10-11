@@ -9,6 +9,14 @@
 using namespace std;
 using namespace cv;
 
+//
+//TODO: https://github.com/Itseez/opencv/pull/5320
+// (this was fixed in master after 3.0.0 shipped)
+// there is an uninitialized private variable in cv::LDA, so it sometimes
+// might fail as it's reading garbage from memory, other times it works!
+// Mainly the "project" and "reconstruct" methods are affected.
+//
+
 namespace {
 // Persistent objects
 /// Last object id to allocate
@@ -66,24 +74,24 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "compute") {
         nargchk(nrhs==4 && nlhs==0);
-        Mat labels(rhs[3].toMat());
+        Mat labels(rhs[3].toMat(CV_32S));
         if (rhs[2].isCell()) {
             vector<Mat> src(rhs[2].toVector<Mat>());
             obj->compute(src, labels);
         }
         else {
-            Mat src(rhs[2].toMat());
+            Mat src(rhs[2].toMat(CV_64F));
             obj->compute(src, labels);
         }
     }
     else if (method == "project") {
         nargchk(nrhs==3 && nlhs<=1);
-        Mat src(rhs[2].toMat());
+        Mat src(rhs[2].toMat(CV_64F));
         plhs[0] = MxArray(obj->project(src));
     }
     else if (method == "reconstruct") {
         nargchk(nrhs==3 && nlhs<=1);
-        Mat src(rhs[2].toMat());
+        Mat src(rhs[2].toMat(CV_64F));
         plhs[0] = MxArray(obj->reconstruct(src));
     }
     else if (method == "get") {
