@@ -1,6 +1,7 @@
 /**
  * @file SimpleBlobDetector_.cpp
- * @brief mex interface for SimpleBlobDetector
+ * @brief mex interface for cv::SimpleBlobDetector
+ * @ingroup features2d
  * @author Amro
  * @date 2015
  */

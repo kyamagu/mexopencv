@@ -1,6 +1,7 @@
 /**
  * @file NormalBayesClassifier_.cpp
- * @brief mex interface for NormalBayesClassifier
+ * @brief mex interface for cv::ml::NormalBayesClassifier
+ * @ingroup ml
  * @author Kota Yamaguchi, Amro
  * @date 2012, 2015
  */

@@ -1,6 +1,7 @@
 /**
  * @file flip.cpp
  * @brief mex interface for cv::flip
+ * @ingroup core
  * @author Amro
  * @date 2015
  */
@@ -18,7 +19,7 @@ using namespace cv;
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    nargchk (nrhs==2 && nlhs<=1);
+    nargchk(nrhs==2 && nlhs<=1);
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);

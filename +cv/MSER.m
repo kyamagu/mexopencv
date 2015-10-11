@@ -7,7 +7,7 @@ classdef MSER < handle
     % Also see http://code.opencv.org/projects/opencv/wiki/MSER for useful
     % comments and parameters description.
     %
-    % See also: cv.FeatureDetector, cv.DescriptorExtractor
+    % See also: cv.FeatureDetector, cv.DescriptorExtractor, detectMSERFeatures
     %
 
     properties (SetAccess = private)

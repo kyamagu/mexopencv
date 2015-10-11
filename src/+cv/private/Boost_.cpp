@@ -1,6 +1,7 @@
 /**
  * @file Boost_.cpp
- * @brief mex interface for Boost
+ * @brief mex interface for cv::ml::Boost
+ * @ingroup ml
  * @author Kota Yamaguchi, Amro
  * @date 2012, 2015
  */

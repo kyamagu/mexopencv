@@ -1,6 +1,7 @@
 /**
  * @file rectangle.cpp
- * @brief mex interface for rectangle
+ * @brief mex interface for cv::rectangle
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -15,21 +16,17 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<2 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(nrhs>=2 && nlhs<=1);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // cv::rectangle has two overloaded variants
     bool rect_variant = (rhs[1].numel() == 4);
-    bool cond = (rect_variant ? ((nrhs%2)==0) : (nrhs>=3 && (nrhs%2)==1));
-    if (!cond)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(rect_variant ? ((nrhs%2)==0) : (nrhs>=3 && (nrhs%2)==1));
 
     // Option processing
     Scalar color;

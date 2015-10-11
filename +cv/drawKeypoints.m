@@ -1,10 +1,10 @@
 %DRAWKEYPOINTS  Draws keypoints
 %
-%    im = cv.drawKeypoints(im, keypoints)
-%    im = cv.drawKeypoints(im, keypoints, 'OptionName', optionValue, ...)
+%    out = cv.drawKeypoints(im, keypoints)
+%    out = cv.drawKeypoints(im, keypoints, 'OptionName', optionValue, ...)
 %
 % ## Input
-% * __im__ Source image on which keypoints are to be drawn.
+% * __im__ Source image.
 % * __keypoints__ Keypoints from the source image.
 %       A 1-by-N structure array with the following fields:
 %       * __pt__ coordinates of the keypoint `[x,y]`
@@ -21,7 +21,7 @@
 %             object they belong to.
 %
 % ## Output
-% * __im__ Output image. Its content depends on the option values defining
+% * __out__ Output image. Its content depends on the option values defining
 %       what is drawn in the output image. See possible options below.
 %       By default, the source image, and single keypoints will be drawn.
 %       For each keypoint, only the center point will be drawn (without
@@ -30,12 +30,11 @@
 % ## Options
 % * __Color__ Color of keypoints. If all -1, random colors are picked up.
 %       default [-1,-1,-1,-1]
-% * __NotDrawSinglePoints__ Single keypoints will not be drawn. default false
-% * __DrawRichKeypoints__ For each keypoint, the circle around keypoint
-%       with keypoint size and orientation will be drawn. default false.
-% * __OutImage__ If set, Output image matrix will not be created. keypoints
-%       will be drawn on existing content of output image. Default not set,
-%       with source image used instead.
+% * __DrawRichKeypoints__ For each keypoint, the circle around keypoint with
+%       keypoint size and orientation will be drawn. default false.
+% * __OutImage__ If set, keypoints will be drawn on existing content of output
+%       image, otherwise source image is used instead. Default not set
+%       (i.e keypoints are drawn on top of `im`).
 %
 % See also: cv.drawMatches, cv.FeatureDetector
 %

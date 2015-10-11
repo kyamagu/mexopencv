@@ -1,6 +1,7 @@
 /**
  * @file SVM_.cpp
- * @brief mex interface for SVM
+ * @brief mex interface for cv::ml::SVM
+ * @ingroup ml
  * @author Kota Yamaguchi, Amro
  * @date 2012, 2015
  */
@@ -462,7 +463,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     else if (method == "getDecisionFunction") {
         if (nrhs!=3 || nlhs>3)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        int index = rhs[2].toInt();  //TODO check against number of classes?
+        int index = rhs[2].toInt();
         Mat alpha, svidx;
         double rho = obj->getDecisionFunction(index, alpha, svidx);
         plhs[0] = MxArray(alpha);

@@ -3,8 +3,8 @@
 %    status = cv.isContourConvex(contour)
 %
 % ## Input
-% * __contour__ Input 2D point set, stored in a cell array of 2-element vectors or
-%         1-by-N-by-2 numeric array.
+% * __contour__ Input vector of 2D points, stored in numeric array
+%       (Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors (`{[x,y], ...}`).
 %
 % ## Output
 % * __status__ Output logical value.

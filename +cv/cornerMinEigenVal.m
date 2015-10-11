@@ -8,7 +8,7 @@
 %
 % ## Output
 % * __dst__ Image to store the minimal eigenvalues. It has the same size as
-%       `src` and the single type.
+%       `src` and the `single` type (single-channel).
 %
 % ## Options
 % * __BlockSize__ Neighborhood size (see the details on
@@ -21,5 +21,5 @@
 % that is, `min(lambda_1,lambda_2)` in terms of the formulae in the
 % cv.cornerEigenValsAndVecs description.
 %
-% See also cv.cornerEigenValsAndVecs
+% See also: cv.cornerEigenValsAndVecs, detectMinEigenFeatures
 %

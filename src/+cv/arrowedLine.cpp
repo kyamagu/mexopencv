@@ -1,6 +1,7 @@
 /**
  * @file arrowedLine.cpp
- * @brief mex interface for arrowedLine
+ * @brief mex interface for cv::arrowedLine
+ * @ingroup imgproc
  * @author Amro
  * @date 2015
  */
@@ -18,11 +19,10 @@ using namespace cv;
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<3 || (nrhs%2)!=1 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
     Scalar color;
@@ -50,7 +50,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Process
     Mat img(rhs[0].toMat());
-    Point pt1(rhs[1].toPoint()), pt2(rhs[2].toPoint());
+    Point pt1(rhs[1].toPoint()),
+          pt2(rhs[2].toPoint());
     arrowedLine(img, pt1, pt2, color, thickness, lineType, shift, tipLength);
     plhs[0] = MxArray(img);
 }

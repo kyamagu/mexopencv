@@ -14,7 +14,7 @@ for i=0:5
     dy = fix(i/2)*150;
     white = [255,255,255];
     black = [0,0,0];
-    
+
     if i==0
         for j=0:9
             angle = (j+5)*pi/21;
@@ -24,7 +24,7 @@ for i=0:5
                 'Color',white, 'Thickness',1, 'LineType',8, 'Shift',0);
         end
     end
-    
+
     opts = {'Angle',0, 'StartAngle',0, 'EndAngle',360, ...
         'Thickness','Filled', 'LineType',8, 'Shift',0};
     img = cv.ellipse(img, [dx+150, dy+100], [100,70], 'Color',white, opts{:});

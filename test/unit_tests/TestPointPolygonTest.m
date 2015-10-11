@@ -1,14 +1,30 @@
 classdef TestPointPolygonTest
     %TestPointPolygonTest
-    properties (Constant)
-        contour = {[0,0],[1,0],[2,2],[3,3],[3,4]};
-    end
-    
+
     methods (Static)
         function test_1
-            b = cv.pointPolygonTest(TestPointPolygonTest.contour,[2.3,2.4]);
+            contour = [0 0; 1 0; 2 2; 3 3; 3 4];
+            b = cv.pointPolygonTest(contour, [2.3 2.4]);
+            validateattributes(b, {'double'}, {'scalar'});
         end
-        
+
+        function test_2
+            contour = {[0 0], [1 0], [2 2], [3 3], [3 4]};
+            b = cv.pointPolygonTest(contour, [2.3 2.4]);
+            validateattributes(b, {'double'}, {'scalar'});
+        end
+
+        function test_3
+            contour = [0 0; 1 0; 2 2; 3 3; 3 4];
+
+            b = cv.pointPolygonTest(contour, [2.3,2.4], 'MeasureDist',true);
+            validateattributes(b, {'double'}, {'scalar', 'real'});
+
+            b = cv.pointPolygonTest(contour, [2.3,2.4], 'MeasureDist',false);
+            validateattributes(b, {'double'}, {'scalar', 'integer'});
+            assert(b == 0 || b == 1 || b == -1);
+        end
+
         function test_error_1
             try
                 cv.pointPolygonTest();
@@ -18,6 +34,5 @@ classdef TestPointPolygonTest
             end
         end
     end
-    
-end
 
+end

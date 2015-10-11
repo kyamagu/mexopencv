@@ -1,6 +1,7 @@
 /**
  * @file MSER_.cpp
- * @brief mex interface for MSER
+ * @brief mex interface for cv::MSER
+ * @ingroup features2d
  * @author Amro, Kota Yamaguchi
  * @date 2015
  */

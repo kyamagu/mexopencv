@@ -16,11 +16,11 @@
 % ## Options
 % * __PatternWasFound__ Parameter indicating whether the complete board was
 %       found or not. The return value of cv.findChessboardCorners should be
-%       passed here.
+%       passed here. default true
 %
 % The function draws individual chessboard corners detected either as red
 % circles if the board was not found, or as colored corners connected with
 % lines if the board was found.
 %
-% See also cv.findChessboardCorners
+% See also: cv.findChessboardCorners, findCirclesGrid
 %

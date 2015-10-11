@@ -1,6 +1,7 @@
 /**
  * @file KeyPointsFilter_.cpp
- * @brief mex interface for KeyPointsFilter
+ * @brief mex interface for cv::KeyPointsFilter
+ * @ingroup features2d
  * @author Amro
  * @date 2015
  */

@@ -1,6 +1,7 @@
 /**
  * @file CLAHE.cpp
- * @brief mex interface for CLAHE
+ * @brief mex interface for cv::CLAHE
+ * @ingroup imgproc
  * @author Amro
  * @date 2015
  */
@@ -18,11 +19,10 @@ using namespace cv;
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<1 || (nrhs%2)==0 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(nrhs>=1 && (nrhs%2)==1 && nlhs<=1);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
     double clipLimit = 40.0;

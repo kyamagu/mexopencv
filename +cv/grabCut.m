@@ -1,33 +1,52 @@
 %GRABCUT  Runs the GrabCut algorithm
 %
-%    [ trimap ] = cv.grabCut(img, bbox);
-%    [ trimap ] = cv.grabCut(img, trimap);
-%    [ trimap ] = cv.grabCut(img, trimap, 'OptionName', optionValue, ...);
-%    [ trimap, bgdmodel, fgdmodel ] = cv.grabCut(...);
+%    mask = cv.grabCut(img, rect);
+%    mask = cv.grabCut(img, mask);
+%    [mask, bgdmodel, fgdmodel] = cv.grabCut(...);
+%    [...] = cv.grabCut(..., 'OptionName', optionValue, ...);
 %
 % ## Input
-% * __img__ uint8 type H-by-W-by-3 RGB array
-% * __bbox__ 1-by-4 double array [x y w h]
-%          It will automatically create a trimap initialized with
-%          label 0 for background and label 3 for foreground (see trimap)
-% * __trimap__ uint8 H-by-W array of labels
-%            {0:bg, 1:fg, 2:probably-bg, 3:probably-fg}
+% * __img__ Input 8-bit 3-channel image.
+% * __rect__ ROI containing a segmented object. A 1-by-4 vector `[x y w h]`.
+%       It will automatically create the `mask`. The pixels outside of the ROI
+%       are marked as "obvious background" with label 0, and label 3 for
+%       foreground (see `mask`). Using this variant will set `Mode` to
+%       'InitWithRect'.
+% * __mask__ Input 8-bit single-channel mask of same size as `img` and type
+%       `uint8`. Its elements may have one of the following values:
+%       * __0__ an obvious background pixel
+%       * __1__ an obvious foreground (object) pixel
+%       * __2__ a possible background pixel
+%       * __3__ a possible foreground pixel
 %
 % ## Output
-% * __trimap__ uint8 H-by-W array with
-%            {0:bg, 1:fg, 2:probably-bg, 3:probably-fg}
-% * __bgdmodel__ background model to be used for next iteration.
-% * __fgdmodel__ foreground model to be used for next iteration.
+% * __mask__ output 8-bit single-channel updated mask. The mask is initialized
+%       by the function when `Mode` is set to 'InitWithRect' (see `rect`).
+% * __bgdmodel__ Output array for the background model, to be used for next
+%       iteration. Do not modify it while you are processing the same image.
+% * __fgdmodel__ Output array for the foreground model, to be used for next
+%       iteration. Do not modify it while you are processing the same image.
 %
 % ## Options
-% * __BgdModel__ Initial background model from the output.
-% * __FgdModel__ Initial foreground model from the output.
-% * __Init__ Initialization method. One of the following. Default is
-%     automatically determined from the second argument.
-%     __'Rect'__ Second argument is treated as a rectangle to start.
-%     __'Mask'__ Second argument is treated as an initial trimap.
-%     __'Eval'__ GrabCut algorithm should just resume.
-% * __MaxIter__ Specifies maximum number of iteration.
+% * __BgdModel__ Initial array for the background model. A 1x65 double vector.
+% * __FgdModel__ Initial array for the foreground model. A 1x65 double vector.
+% * __IterCount__ Number of iterations the algorithm should make before
+%       returning the result. Note that the result can be refined with further
+%       calls with `Mode` as 'InitWithMask' or 'Eval'. Default 10
+% * __Mode__ Operation mode, default 'Eval'. Could be one of the following:
+%       * __InitWithRect__ The function initializes the state and the mask
+%             using the provided rectangle. After that it runs `IterCount`
+%             iterations of the algorithm. This should only be used with the
+%             variant of the function that takes `rect` as input.
+%       * __InitWithMask__ The function initializes the state using the
+%             provided `mask`. Then, all the pixels outside of the ROI are
+%             automatically initialized as background with label 0. This
+%             should only be used with the variant of the function that takes
+%             `mask` as input.
+%       * __Eval__ The value means that the algorithm should just resume.
 %
-% See also cv.watershed
+% The function implements the GrabCut image segmentation algorithm.
+% http://en.wikipedia.org/wiki/GrabCut
+%
+% See also: cv.watershed
 %

@@ -3,8 +3,8 @@
 % image and label them.
 
 %% Input Image
-% some binary (black-n-white) image
-src = imread('blobs.png');  % class(src) = logical
+% some binary (black-n-white) image, i.e class(src) = logical
+src = imread(fullfile(mexopencv.root(),'test','bw.png'));
 imshow(src), title('Source')
 snapnow
 

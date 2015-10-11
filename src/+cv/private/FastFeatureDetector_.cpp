@@ -1,6 +1,7 @@
 /**
  * @file FastFeatureDetector_.cpp
- * @brief mex interface for FastFeatureDetector
+ * @brief mex interface for cv::FastFeatureDetector
+ * @ingroup features2d
  * @author Amro
  * @date 2015
  */

@@ -1,6 +1,7 @@
 %COPYMAKEBORDER  Forms a border around an image.
 %
 %    dst = cv.copyMakeBorder(src, top, bottom, left, right)
+%    dst = cv.copyMakeBorder(src, [top, bottom, left, right])
 %    [...] = cv.copyMakeBorder(..., 'OptionName', optionValue, ...)
 %
 % ## Input
@@ -15,8 +16,14 @@
 %       `[size(src,1)+top+bottom, size(src,2)+left+right, size(src,3)]`.
 %
 % ## Options
-% * __BorderType__ Border type. See cv.borderInterpolate for details.
-% * __Value__ Border value if `BorderType=='Constant'`
+% * __BorderType__ Border type, one of:
+%       * __Constant__ `iiiiii|abcdefgh|iiiiiii` with some specified `i`
+%       * __Replicate__ `aaaaaa|abcdefgh|hhhhhhh`
+%       * __Reflect__ `fedcba|abcdefgh|hgfedcb`
+%       * __Reflect101__ `gfedcb|abcdefgh|gfedcba`
+%       * __Wrap__ `cdefgh|abcdefgh|abcdefg`
+%       * __Default__ same as 'Reflect101' (default)
+% * __Value__ Border value when `BorderType` is 'Constant'. default zeros
 %
 % The function copies the source image into the middle of the destination image.
 % The areas to the left, to the right, above and below the copied source image
@@ -24,5 +31,5 @@
 % based on it do (they extrapolate pixels on-fly), but what other more complex
 % functions, including your own, may do to simplify image boundary handling.
 %
-% See also: cv.borderInterpolate
+% See also: cv.borderInterpolate, padarray
 %

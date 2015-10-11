@@ -13,11 +13,11 @@
 %
 % ## Options
 % * __BorderType__ Border type, one of:
-%       * __Constant__
-%       * __Replicate__
-%       * __Reflect__
-%       * __Wrap__
-%       * __Reflect101__
+%       * __Constant__ `iiiiii|abcdefgh|iiiiiii` with some specified `i`
+%       * __Replicate__ `aaaaaa|abcdefgh|hhhhhhh`
+%       * __Reflect__ `fedcba|abcdefgh|hgfedcb`
+%       * __Reflect101__ `gfedcb|abcdefgh|gfedcba`
+%       * __Wrap__ `cdefgh|abcdefgh|abcdefg`
 %       * __Default__ same as 'Reflect101' (default)
 %       When `BorderType=='Constant'`, the function always returns -1,
 %       regardless of `p` and `len`.

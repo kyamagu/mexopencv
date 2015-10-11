@@ -1,6 +1,7 @@
 /**
  * @file AgastFeatureDetector_.cpp
- * @brief mex interface for AgastFeatureDetector
+ * @brief mex interface for cv::AgastFeatureDetector
+ * @ingroup features2d
  * @author Amro
  * @date 2015
  */

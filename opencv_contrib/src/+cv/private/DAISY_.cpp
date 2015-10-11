@@ -1,6 +1,7 @@
 /**
  * @file DAISY_.cpp
- * @brief mex interface for DAISY
+ * @brief mex interface for cv::xfeatures2d::DAISY
+ * @ingroup xfeatures2d
  * @author Amro
  * @date 2015
  */

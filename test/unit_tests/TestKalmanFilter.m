@@ -1,8 +1,6 @@
 classdef TestKalmanFilter
     %TestKalmanFilter
-    properties (Constant)
-    end
-    
+
     methods (Static)
         function test_1
             kf = cv.KalmanFilter(5,4,'ControlParams',2);
@@ -29,7 +27,11 @@ classdef TestKalmanFilter
             kf.gain;
             kf.errorCovPost;
         end
-    end
-    
-end
 
+        function test_2
+            kf = cv.KalmanFilter();
+            kf.init(5, 4, 'ControlParams',2);
+        end
+    end
+
+end

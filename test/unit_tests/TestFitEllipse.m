@@ -1,14 +1,24 @@
 classdef TestFitEllipse
     %TestFitEllipse
-    properties (Constant)
-        points = mat2cell(255*randn(50,2),ones(50,1),2)';
-    end
-    
+
     methods (Static)
         function test_1
-            rct = cv.fitEllipse(TestFitEllipse.points);
+            % noisy circle, numeric matrix
+            t = linspace(0, 2*pi, 50).';
+            points = bsxfun(@plus, [cos(t) sin(t)]*100, [150 150]);
+            points = bsxfun(@plus, points, randn(size(points))*10);
+
+            rct = cv.fitEllipse(points);
+            validateattributes(rct, {'struct'}, {'scalar'});
+            assert(all(ismember({'center','size','angle'}, fieldnames(rct))));
+
+            % cell array of points
+            points = num2cell(points,2);
+            rct = cv.fitEllipse(points);
+            validateattributes(rct, {'struct'}, {'scalar'});
+            assert(all(ismember({'center','size','angle'}, fieldnames(rct))));
         end
-        
+
         function test_error_1
             try
                 cv.fitEllipse();
@@ -18,6 +28,5 @@ classdef TestFitEllipse
             end
         end
     end
-    
-end
 
+end

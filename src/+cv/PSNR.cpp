@@ -1,6 +1,7 @@
 /**
  * @file PSNR.cpp
- * @brief mex interface for PSNR
+ * @brief mex interface for cv::PSNR
+ * @ingroup core
  * @author Amro
  * @date 2015
  */
@@ -18,14 +19,14 @@ using namespace cv;
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs!=2 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(nrhs==2 && nlhs<=1);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Process
-    Mat src1(rhs[0].toMat(CV_8U)), src2(rhs[1].toMat(CV_8U));
+    Mat src1(rhs[0].toMat(CV_8U)),
+        src2(rhs[1].toMat(CV_8U));
     double d = PSNR(src1, src2);
     plhs[0] = MxArray(d);
 }

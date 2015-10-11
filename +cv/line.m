@@ -9,10 +9,11 @@
 % * __pt2__ Second point of the line segment `[x2,y2]`.
 %
 % ## Output
-% * __img__ Output image.
+% * __img__ Output image, same size and type as input `img`.
 %
 % ## Options
 % * __Color__ 3-element floating point vector specifying line color.
+%       default zeros
 % * __Thickness__ Line thickness. default 1.
 % * __LineType__ Type of the line boundary. One of:
 %       * 8: 8-connected line (default)

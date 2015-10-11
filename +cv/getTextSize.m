@@ -9,21 +9,21 @@
 % ## Output
 % * __siz__ Size of a box that contains the specified text `[w,h]`.
 % * __baseLine__ y-coordinate of the baseline relative to the bottom-most
-%        text point.
+%       text point.
 %
 % ## Options
 % * __FontFace__ Font to use. One of the following:
-%     * `'HersheySimplex'` (default)
-%     * `'HersheyPlain'`
-%     * `'HersheyDuplex'`
-%     * `'HersheyComplex'`
-%     * `'HersheyTriplex'`
-%     * `'HersheyComplexSmall'`
-%     * `'HersheyScriptSimplex'`
-%     * `'HersheyScriptComplex'`
+%       * __HersheySimplex__ (default)
+%       * __HersheyPlain__
+%       * __HersheyDuplex__
+%       * __HersheyComplex__
+%       * __HersheyTriplex__
+%       * __HersheyComplexSmall__
+%       * __HersheyScriptSimplex__
+%       * __HersheyScriptComplex__
 % * __FontStyle__ Font style. One of 'Regular' (default) or 'Italic'
 % * __FontScale__ Font scale factor that is multiplied by the
-%        font-specific base size. default 1.0
+%       font-specific base size. default 1.0
 % * __Thickness__ Thickness of lines used to render the text. default 1
 %
 % The function cv.getTextSize calculates and returns the size of a box that

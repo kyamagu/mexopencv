@@ -12,8 +12,8 @@ classdef KeyPointsFilter
             %
             % ## Input
             % * __keypoints__ input collection of keypoints.
-            % * __imgSize__ image size `[width,height]`
-            % * __borderSize__ border size
+            % * __imgSize__ image size `[width,height]`.
+            % * __borderSize__ border size, should be a positive number.
             %
             % ## Output
             % * __keypoints__ output filtered keypoints.
@@ -28,7 +28,7 @@ classdef KeyPointsFilter
             %
             % ## Input
             % * __keypoints__ input collection of keypoints.
-            % * __minSize__ minimum keypoint size
+            % * __minSize__ minimum keypoint size.
             % * __maxSize__ maximum keypoint size. default `realmax('single')`
             %
             % ## Output
@@ -44,7 +44,7 @@ classdef KeyPointsFilter
             %
             % ## Input
             % * __keypoints__ input collection of keypoints.
-            % * __mask__ image mask
+            % * __mask__ image mask.
             %
             % ## Output
             % * __keypoints__ output filtered keypoints.
@@ -73,10 +73,12 @@ classdef KeyPointsFilter
             %
             % ## Input
             % * __keypoints__ input collection of keypoints.
-            % * __npoints__ number of keypoints to retain
+            % * __npoints__ number of keypoints to retain.
             %
             % ## Output
             % * __keypoints__ output filtered keypoints.
+            %
+            % This method takes keypoints and culls them by the response.
             %
             keypoints = KeyPointsFilter_('retainBest', keypoints, npoints);
         end

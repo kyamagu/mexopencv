@@ -1,6 +1,7 @@
 /**
  * @file BRISK_.cpp
- * @brief mex interface for BRISK
+ * @brief mex interface for cv::BRISK
+ * @ingroup features2d
  * @author Amro
  * @date 2015
  */

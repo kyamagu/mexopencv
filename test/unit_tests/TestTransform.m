@@ -1,14 +1,13 @@
 classdef TestTransform
     %TestTransform
-    properties (Constant)
-    end
 
     methods (Static)
         function test_1
-            M = [cos(pi/4),sin(pi/4);...
-                -sin(pi/4),cos(pi/4);];
-            src = shiftdim(randn(10,2),-1);
-            dst = cv.transform(src,M);
+            M = [cos(pi/4) sin(pi/4) ; ...
+                -sin(pi/4) cos(pi/4)];
+            src = shiftdim(randn(10,2), -1);
+            dst = cv.transform(src, M);
+            validateattributes(dst, {class(src)}, {'size',[1 10 2]});
         end
 
         function test_2
@@ -28,7 +27,23 @@ classdef TestTransform
 
             % compare against MATLAB
             dst2 = M * [src;ones(1,N)];    % 2xN = (2x3) * (3xN)
-            assert(norm(dst-dst2)<1e-6);
+            assert(norm(dst-dst2) < 1e-6);
+        end
+
+        function test_3
+            for d=1:4
+                src = rand(30,20,d);
+                mtx = rand(10,d);
+                dst = cv.transform(src, mtx);
+                validateattributes(dst, {class(src)}, ...
+                    {'size',[size(src,1) size(src,2) size(mtx,1)]});
+
+                % basically one matrix-multiplication with some reshape/permute!
+                dst2 = permute(reshape(permute(...
+                    mtx * reshape(permute(src, [3 2 1]), size(src,3), []), ...
+                    [2 1 3]), [size(src,2) size(src,1) size(mtx,1)]), [2 1 3]);
+                assert(isequal(dst, dst2));
+            end
         end
 
         function test_error_1
@@ -42,4 +57,3 @@ classdef TestTransform
     end
 
 end
-

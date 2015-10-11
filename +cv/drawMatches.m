@@ -1,7 +1,7 @@
 %DRAWMATCHES  Draws the found matches of keypoints from two images
 %
-%    im = cv.drawMatches(im1, keypoints1, im2, keypoints2, matches1to2)
-%    im = cv.drawMatches(..., 'OptionName', optionValue, ...)
+%    out = cv.drawMatches(im1, keypoints1, im2, keypoints2, matches1to2)
+%    out = cv.drawMatches(..., 'OptionName', optionValue, ...)
 %
 % ## Input
 % * __im1__ First source image.
@@ -32,7 +32,7 @@
 %       * __distance__ distance between descriptors (scalar)
 %
 % ## Output
-% * __im__ Output image. Its content depends on the option values defining
+% * __out__ Output image. Its content depends on the option values defining
 %       what is drawn in the output image. See possible options below.
 %       By default, the two source images, matches, and single
 %       keypoints will be drawn. For each keypoint, only the center point
@@ -40,8 +40,8 @@
 %       keypoint size and orientation).
 %
 % ## Options
-% * __MatchColor__ Color of matches (lines and connected keypoints). If all -1,
-%       the color is generated randomly. default [-1,-1,-1,-1].
+% * __MatchColor__ Color of matches (lines and connected keypoints). If all
+%       -1, the color is generated randomly. default [-1,-1,-1,-1].
 % * __SinglePointColor__ Color of single keypoints (circles), which means that
 %       keypoints do not have the matches. If all -1, the color is generated
 %       randomly. default [-1,-1,-1,-1].
@@ -50,20 +50,20 @@
 % * __NotDrawSinglePoints__ Single keypoints will not be drawn. default false
 % * __DrawRichKeypoints__ For each keypoint, the circle around keypoint with
 %       keypoint size and orientation will be drawn. default false.
-% * __OutImage__ If set, Output image matrix will not be created. Matches will
-%       be drawn on existing content of output image. Default not set
+% * __OutImage__ If set, matches will be drawn on existing content of output
+%       image, otherwise source image is used instead. Default not set
 %
-% This function draws matches of keypoints from two images in the output image.
-% Match is a line connecting two keypoints (circles).
+% This function draws matches of keypoints from two images in the output
+% image. Match is a line connecting two keypoints (circles).
 %
 % In pseudo-code, the function works as follows:
 %
-%   for m=1:numel(matches1to2)
-%       if ~MatchesMask(m), continue, end
-%       kp1 = keypoints1(matches1to2(m).queryIdx + 1)
-%       kp2 = keypoints2(matches1to2(m).trainIdx + 1)
-%       draw_match(kp1, kp2)
-%   end
+%    for m=1:numel(matches1to2)
+%        if ~MatchesMask(m), continue, end
+%        kp1 = keypoints1(matches1to2(m).queryIdx + 1);
+%        kp2 = keypoints2(matches1to2(m).trainIdx + 1);
+%        draw_match(kp1, kp2);
+%    end
 %
-% See also: cv.drawKeypoints
+% See also: cv.drawKeypoints, showMatchedFeatures
 %

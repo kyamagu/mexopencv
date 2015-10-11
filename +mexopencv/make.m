@@ -10,7 +10,7 @@ function make(varargin)
 %
 % ## Options
 % * **opencv_path** string specifying the path to OpenCV installation
-%       default `'C:\OpenCV'`
+%       default `'C:\OpenCV\build'`
 % * **opencv_contrib** flag to indicate whether optional opencv modules are
 %       available or not. These can only be selected in OpenCV at compile-time.
 %       default `false`.
@@ -20,10 +20,10 @@ function make(varargin)
 % * __force__ Unconditionally build all files. default `false`
 % * __verbose__ output verbosity. The higher the number, the more output
 %       is shown. default 1
-%  * __0__ no output at all
-%  * __1__ echo commands and information messages only
-%  * __2__ verbose output from mex
-%  * __3__ show all compile/link warnings and errors
+%      * __0__ no output at all
+%      * __1__ echo commands and information messages only
+%      * __2__ verbose output from mex
+%      * __3__ show all compile/link warnings and errors
 % * __progress__ show a progress bar GUI during compilation (Windows only).
 %       default `true`
 % * __debug__ Produce binaries with debugging information, linked against
@@ -31,23 +31,23 @@ function make(varargin)
 % * __extra__ extra arguments passed to Unix make command. default `''`
 %
 % ## Examples
+%
 %    mexopencv.make('opencv_path', pathname)      % Windows only
+%    mexopencv.make(..., 'opencv_contrib', true)  % build with contrib modules
 %    mexopencv.make('clean',true)                 % clean MEX files
 %    mexopencv.make('test',true)                  % run unittests
 %    mexopencv.make('dryrun',true, 'force',true)  % print commands used to build
-%    mexopencv.make('verbose',2)                  % verbose compiler output
+%    mexopencv.make(..., 'verbose',2)             % verbose compiler output
 %    mexopencv.make(..., 'progress',true)         % show progress bar
-%    mexopencv.make('debug',true)                 % enalbe debugging symbols
+%    mexopencv.make(..., 'debug',true)            % enalbe debugging symbols
 %    mexopencv.make('extra','--jobs=2')           % instruct Make to execute N
 %                                                 %  jobs in parallel (Unix only)
 %
 % See also: mex
 %
 
-MEXOPENCV_ROOT = mexopencv.root();
-
 % navigate to directory
-cwd = cd(MEXOPENCV_ROOT);
+cwd = cd(mexopencv.root());
 cObj = onCleanup(@()cd(cwd));
 
 % parse options
@@ -61,31 +61,31 @@ if ispc % Windows
         end
 
         del_cmds = {
-            fullfile(MEXOPENCV_ROOT, '+cv', ['*.' mexext]) ;
-            fullfile(MEXOPENCV_ROOT, '+cv', '*.pdb') ;
-            fullfile(MEXOPENCV_ROOT, '+cv', '*.idb') ;
-            fullfile(MEXOPENCV_ROOT, '+cv', 'private', ['*.' mexext]) ;
-            fullfile(MEXOPENCV_ROOT, '+cv', 'private', '*.pdb') ;
-            fullfile(MEXOPENCV_ROOT, '+cv', 'private', '*.idb') ;
-            fullfile(MEXOPENCV_ROOT, 'lib', '*.obj') ;
-            fullfile(MEXOPENCV_ROOT, 'lib', '*.o') ;
-            fullfile(MEXOPENCV_ROOT, 'lib', '*.lib') ;
-            fullfile(MEXOPENCV_ROOT, 'lib', '*.pdb') ;
-            fullfile(MEXOPENCV_ROOT, 'lib', '*.idb')
+            fullfile('+cv', ['*.' mexext]) ;
+            fullfile('+cv', '*.pdb') ;
+            fullfile('+cv', '*.idb') ;
+            fullfile('+cv', 'private', ['*.' mexext]) ;
+            fullfile('+cv', 'private', '*.pdb') ;
+            fullfile('+cv', 'private', '*.idb') ;
+            fullfile('lib', '*.obj') ;
+            fullfile('lib', '*.o') ;
+            fullfile('lib', '*.lib') ;
+            fullfile('lib', '*.pdb') ;
+            fullfile('lib', '*.idb')
         };
         if opts.opencv_contrib
             del_cmds = [del_cmds ; ...
-                fullfile(MEXOPENCV_ROOT, 'opencv_contrib', '+cv', ['*.' mexext]) ; ...
-                fullfile(MEXOPENCV_ROOT, 'opencv_contrib', '+cv', '*.pdb') ; ...
-                fullfile(MEXOPENCV_ROOT, 'opencv_contrib', '+cv', '*.idb') ; ...
-                fullfile(MEXOPENCV_ROOT, 'opencv_contrib', '+cv', 'private', ['*.' mexext]) ; ...
-                fullfile(MEXOPENCV_ROOT, 'opencv_contrib', '+cv', 'private', '*.pdb') ; ...
-                fullfile(MEXOPENCV_ROOT, 'opencv_contrib', '+cv', 'private', '*.idb') ...
+                fullfile('opencv_contrib', '+cv', ['*.' mexext]) ; ...
+                fullfile('opencv_contrib', '+cv', '*.pdb') ; ...
+                fullfile('opencv_contrib', '+cv', '*.idb') ; ...
+                fullfile('opencv_contrib', '+cv', 'private', ['*.' mexext]) ; ...
+                fullfile('opencv_contrib', '+cv', 'private', '*.pdb') ; ...
+                fullfile('opencv_contrib', '+cv', 'private', '*.idb') ...
             ];
         end
 
         for i=1:numel(del_cmds)
-            cmd = del_cmds{i};
+            cmd = fullfile(mexopencv.root(), del_cmds{i});
             if opts.verbose > 0, disp(cmd); end
             if ~opts.dryrun, delete(cmd); end
         end
@@ -99,7 +99,7 @@ if ispc % Windows
             fprintf('Running unit-tests...\n');
         end
 
-        cd(fullfile(MEXOPENCV_ROOT,'test'));
+        cd(fullfile(mexopencv.root(),'test'));
         if ~opts.dryrun, UnitTest(); end
         return;
     end
@@ -108,7 +108,7 @@ if ispc % Windows
     [cv_cflags,cv_libs] = pkg_config(opts);
     [comp_flags,link_flags] = compilation_flags(opts);
     mex_flags = sprintf('%s %s -I''%s'' %s %s',...
-        comp_flags, link_flags, fullfile(MEXOPENCV_ROOT,'include'), ...
+        comp_flags, link_flags, fullfile(mexopencv.root(),'include'), ...
         cv_cflags, cv_libs);
     if ~mexopencv.isOctave()
         mex_flags = ['-largeArrayDims ' mex_flags];
@@ -129,13 +129,13 @@ if ispc % Windows
         objext = 'o';
     end
     files = prepare_source_files(...
-        fullfile(MEXOPENCV_ROOT,'src'), 'cpp', ...
-        fullfile(MEXOPENCV_ROOT,'lib'), objext);
+        fullfile(mexopencv.root(),'src'), 'cpp', ...
+        fullfile(mexopencv.root(),'lib'), objext);
     for i=1:numel(files)
         if opts.force || compile_needed(files(i).src, files(i).dst)
             if ~mexopencv.isOctave()
                 cmd = sprintf('mex %s -c ''%s'' -outdir ''%s''', ...
-                    mex_flags, files(i).src, fullfile(MEXOPENCV_ROOT,'lib'));
+                    mex_flags, files(i).src, fullfile(mexopencv.root(),'lib'));
             else
                 cmd = sprintf('mex %s -c ''%s'' -o ''%s''', ...
                     mex_flags, files(i).src, files(i).dst);
@@ -184,7 +184,7 @@ if ispc % Windows
 
     % Octave mex command leaves behind temporary obj files in current dir
     if ~opts.dryrun && mexopencv.isOctave()
-        delete(fullfile(MEXOPENCV_ROOT,'*.o'));
+        delete(fullfile(mexopencv.root(),'*.o'));
     end
 
     % check both OpenCV/mexopencv folders are on the appropriate paths
@@ -428,29 +428,28 @@ function files = collect_mex_files(opts)
     %COLLECT_MEX_FILES  Collect all source files to be compiled into MEX
     %
 
-    MEXOPENCV_ROOT = mexopencv.root();
     files = {};
 
     % ROOT\src\+cv\*.cpp
     files{1} = prepare_source_files(...
-        fullfile(MEXOPENCV_ROOT,'src','+cv'), 'cpp', ...
-        fullfile(MEXOPENCV_ROOT,'+cv'), mexext);
+        fullfile(mexopencv.root(),'src','+cv'), 'cpp', ...
+        fullfile(mexopencv.root(),'+cv'), mexext);
 
     % ROOT\src\+cv\private\*.cpp
     files{2} = prepare_source_files(...
-        fullfile(MEXOPENCV_ROOT,'src','+cv','private'), 'cpp', ...
-        fullfile(MEXOPENCV_ROOT,'+cv','private'), mexext);
+        fullfile(mexopencv.root(),'src','+cv','private'), 'cpp', ...
+        fullfile(mexopencv.root(),'+cv','private'), mexext);
 
     if opts.opencv_contrib
         % ROOT\opencv_contrib\src\+cv\*.cpp
         files{3} = prepare_source_files(...
-            fullfile(MEXOPENCV_ROOT,'opencv_contrib','src','+cv'), 'cpp', ...
-            fullfile(MEXOPENCV_ROOT,'opencv_contrib','+cv'), mexext);
+            fullfile(mexopencv.root(),'opencv_contrib','src','+cv'), 'cpp', ...
+            fullfile(mexopencv.root(),'opencv_contrib','+cv'), mexext);
 
         % ROOT\opencv_contrib\src\+cv\private\*.cpp
         files{4} = prepare_source_files(...
-            fullfile(MEXOPENCV_ROOT,'opencv_contrib','src','+cv','private'), 'cpp', ...
-            fullfile(MEXOPENCV_ROOT,'opencv_contrib','+cv','private'), mexext);
+            fullfile(mexopencv.root(),'opencv_contrib','src','+cv','private'), 'cpp', ...
+            fullfile(mexopencv.root(),'opencv_contrib','+cv','private'), mexext);
     end
 
     % all combined as an array of structs
@@ -489,18 +488,22 @@ function check_path_mexopencv(opts)
     %
 
     % check MATLAB search path
-    mcv_folder = mexopencv.root();
     C = textscan(path(), '%s', 'Delimiter',pathsep());
-    if ~any(strcmpi(mcv_folder,C{1}))
+    if ~any(strcmpi(mexopencv.root(), C{1}))
         % reminder
         if opts.verbose > 0
             disp('To use mexopencv, add its root folder to MATLAB search path.');
+            fprintf(' addpath(''%s'')\n', mexopencv.root());
         end
 
         % add mexopencv to path temporarily for this session
         if ~opts.dryrun
-            addpath(mcv_folder, '-end');
+            addpath(mexopencv.root(), '-end');
         end
+    end
+    if opts.opencv_contrib && ~opts.dryrun && ...
+            ~any(strcmpi(fullfile(mexopencv.root(),'opencv_contrib'), C{1}))
+        addpath(fullfile(mexopencv.root(),'opencv_contrib'), '-end');
     end
 end
 
@@ -515,7 +518,7 @@ function opts = getargs(varargin)
     %
 
     % default values
-    opts.opencv_path = 'C:\opencv';  % OpenCV location
+    opts.opencv_path = 'C:\opencv\build';  % OpenCV location
     opts.opencv_contrib = false;     % optional/extra OpenCV modules
     opts.clean = false;              % clean mode
     opts.test = false;               % unittest mode

@@ -1,6 +1,7 @@
 /**
  * @file calcMotionGradient.cpp
- * @brief mex interface for calcMotionGradient
+ * @brief mex interface for cv::motempl::calcMotionGradient
+ * @ingroup optflow
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -17,30 +18,29 @@ using namespace cv::motempl;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<3 || (nrhs%2)!=1 || nlhs>2)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+    nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=2);
+
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+    vector<MxArray> rhs(prhs, prhs+nrhs);
+
     // Option processing
-    int apertureSize=3;
+    int apertureSize = 3;
     for (int i=3; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
+        string key(rhs[i].toString());
         if (key=="ApertureSize")
             apertureSize = rhs[i+1].toInt();
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Process
     Mat mhi(rhs[0].toMat(CV_32F)), mask, orientation;
-    double delta1 = rhs[1].toDouble(), delta2 = rhs[2].toDouble();
-    calcMotionGradient(mhi,mask,orientation,delta1,delta2,apertureSize);
+    double delta1 = rhs[1].toDouble(),
+           delta2 = rhs[2].toDouble();
+    calcMotionGradient(mhi, mask, orientation, delta1, delta2, apertureSize);
     plhs[0] = MxArray(mask);
     if (nlhs>1)
         plhs[1] = MxArray(orientation);

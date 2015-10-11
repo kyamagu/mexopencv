@@ -1,6 +1,7 @@
 /**
  * @file isContourConvex.cpp
- * @brief mex interface for isContourConvex
+ * @brief mex interface for cv::isContourConvex
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -15,25 +16,25 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs!=1 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+    nargchk(nrhs==1 && nlhs<=1);
+
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
+
+    // Process
+    bool b = false;
     if (rhs[0].isNumeric()) {
-        Mat points(rhs[0].toMat(CV_32F));
-        bool b = isContourConvex(points);
-        plhs[0] = MxArray(b);
+        Mat points(rhs[0].toMat(rhs[0].isInt32() ? CV_32S : CV_32F));
+        b = isContourConvex(points);
     }
     else if (rhs[0].isCell()) {
         vector<Point2f> points(rhs[0].toVector<Point2f>());
-        bool b = isContourConvex(points);
-        plhs[0] = MxArray(b);
+        b = isContourConvex(points);
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
+    plhs[0] = MxArray(b);
 }

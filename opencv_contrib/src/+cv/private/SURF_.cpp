@@ -1,6 +1,7 @@
 /**
  * @file SURF_.cpp
- * @brief mex interface for SURF
+ * @brief mex interface for cv::xfeatures2d::SURF
+ * @ingroup xfeatures2d
  * @author Amro, Kota Yamaguchi
  * @date 2015
  */
