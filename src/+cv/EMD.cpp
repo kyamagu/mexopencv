@@ -24,7 +24,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Argument vector
     vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+
     // Option processing
     int distType = CV_DIST_L2;
     Mat cost;
@@ -43,10 +43,15 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     if (distType==CV_DIST_USER && cost.empty())
         mexErrMsgIdAndTxt("mexopencv:error","Cost matrix empty");
-    
+
     // Process
     Mat signature1(rhs[0].toMat()), signature2(rhs[1].toMat()), flow;
-    double d = EMD(signature1, signature2, distType, cost, &lowerBound, flow);
+    double d;
+    if (distType==CV_DIST_USER)
+        d = EMD(signature1, signature2, distType, cost);
+    else
+        d = EMD(signature1, signature2, distType, cost, &lowerBound, flow);
+
     plhs[0] = MxArray(d);
     if (nlhs>1)
         plhs[1] = MxArray(lowerBound);
