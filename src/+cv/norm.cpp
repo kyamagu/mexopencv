@@ -1,6 +1,7 @@
 /**
  * @file norm.cpp
  * @brief mex interface for cv::norm
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

@@ -1,6 +1,7 @@
 /**
  * @file boundingRect.cpp
- * @brief mex interface for boundingRect
+ * @brief mex interface for cv::boundingRect
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -15,23 +16,35 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs!=1 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+    nargchk(nrhs==1 && nlhs<=1);
+
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+    vector<MxArray> rhs(prhs, prhs+nrhs);
+
     // Process
-    if (rhs[0].isNumeric()) {
-        Mat curve(rhs[0].toMat());
-        plhs[0] = MxArray(boundingRect(curve));
+    Rect r;
+    if (rhs[0].isNumeric() || rhs[0].isLogical()) {
+        // points or mask
+        Mat curve(rhs[0].toMat(
+            rhs[0].isUint8() || rhs[0].isLogical() ? CV_8U :
+            (rhs[0].isFloat() ? CV_32F : CV_32S)));
+        r = boundingRect(curve);
     }
     else if (rhs[0].isCell()) {
-        vector<Point> curve(rhs[0].toVector<Point>());
-        plhs[0] = MxArray(boundingRect(curve));        
+        // points
+        if (!rhs[0].isEmpty() && rhs[0].at<MxArray>(0).isFloat()) {
+            vector<Point2f> curve(rhs[0].toVector<Point2f>());
+            r = boundingRect(curve);
+        }
+        else {
+            vector<Point> curve(rhs[0].toVector<Point>());
+            r = boundingRect(curve);
+        }
     }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid input");
+    plhs[0] = MxArray(r);
 }

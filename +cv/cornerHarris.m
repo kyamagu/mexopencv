@@ -7,8 +7,8 @@
 % * __src__ Input single-channel 8-bit or floating-point image.
 %
 % ## Output
-% * __dst__ Image to store the Harris detector responses. It has the same
-%       size as `src` and the single type.
+% * __dst__ Image to store the Harris detector responses. It has the type
+%       `single` and the same size as `src` (single-channel).
 %
 % ## Options
 % * __BlockSize__ Neighborhood size (see the details on
@@ -18,12 +18,15 @@
 % * __BorderType__ Pixel extrapolation method. default 'Default'
 %
 % The function runs the Harris corner detector on the image. Similarly to
-% cv.cornerMinEigenVal and cv.cornerEigenValsAndVecs, for each pixel `(x,y)` it
-% calculates a `2 x 2` gradient covariance matrix `M(x,y)` over a
+% cv.cornerMinEigenVal and cv.cornerEigenValsAndVecs, for each pixel `(x,y)`
+% it calculates a `2 x 2` gradient covariance matrix `M(x,y)` over a
 % `BlockSize x BlockSize` neighborhood. Then, it computes the following
 % characteristic:
 %
 %     dst(x,y) = det(M(x,y)) - k * (trace(M(x,y)))^2
 %
 % Corners in the image can be found as the local maxima of this response map.
+%
+% See also: cv.cornerEigenValsAndVecs, cv.cornerMinEigenVal,
+%  corner, cornermetric, detectHARRISFeatures
 %

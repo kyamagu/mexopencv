@@ -1,6 +1,7 @@
 /**
  * @file BriefDescriptorExtractor_.cpp
- * @brief mex interface for BriefDescriptorExtractor
+ * @brief mex interface for cv::xfeatures2d::BriefDescriptorExtractor
+ * @ingroup xfeatures2d
  * @author Amro
  * @date 2015
  */

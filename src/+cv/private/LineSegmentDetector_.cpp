@@ -1,6 +1,7 @@
 /**
  * @file LineSegmentDetector_.cpp
- * @brief mex interface for LineSegmentDetector
+ * @brief mex interface for cv::LineSegmentDetector
+ * @ingroup imgproc
  * @author Amro
  * @date 2015
  */
@@ -31,6 +32,7 @@ const ConstMap<string,int> LineSegmentDetectorModesMap = ConstMap<string,int>
  */
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
+    // Check the number of arguments
     nargchk(nrhs>=2 && nlhs<=4);
 
     // Arguments vector
@@ -88,7 +90,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         obj->clear();
     }
     else if (method == "load") {
-        nargchk(nrhs>=3 && (nrhs%2)!=0 && nlhs==0);
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
         string objname;
         bool loadFromString = false;
         for (int i=3; i<nrhs; i+=2) {
@@ -131,7 +133,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==3 && nlhs<=4);
         Mat image(rhs[2].toMat(CV_8U)), width, prec, nfa;
         vector<Vec4f> lines;
-        obj->detect(image, lines, width, prec, nfa);
+        obj->detect(image, lines,
+            (nlhs>1 ? width : noArray()),
+            (nlhs>2 ? prec  : noArray()),
+            (nlhs>3 ? nfa   : noArray()));
         plhs[0] = MxArray(lines);
         if (nlhs>1)
             plhs[1] = MxArray(width);
@@ -149,7 +154,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         plhs[0] = MxArray(image);
     }
     else if (method == "compareSegments") {
-        nargchk(nrhs>=5 && (nrhs%2)!=0 && nlhs<=2);
+        nargchk(nrhs>=5 && (nrhs%2)==1 && nlhs<=2);
         Size size(rhs[2].toSize());
         Mat image;
         for (int i=5; i<nrhs; i+=2) {

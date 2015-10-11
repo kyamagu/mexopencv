@@ -7,6 +7,7 @@ classdef TestNormalize
                 'Alpha',-50, 'Beta',100);
             J = my_normalize_minmax(img, -50, 100, 'int8');
             assert(max(abs(double(I(:))-double(J(:)))) < 1e-6);
+            validateattributes(I, {class(J)}, {'size',size(J)});
         end
 
         function test_minmax_color
@@ -15,6 +16,7 @@ classdef TestNormalize
                 'Alpha',0, 'Beta',1);
             J = my_normalize_minmax(img, 0, 1, 'double');
             assert(max(abs(double(I(:))-double(J(:)))) < 1e-6);
+            validateattributes(I, {class(J)}, {'size',size(J)});
         end
 
         function test_lp_1
@@ -23,6 +25,7 @@ classdef TestNormalize
                 'Alpha',1);
             J = my_normalize_Lp(img, 'L1', 1, 'double');
             assert(max(abs(double(I(:))-double(J(:)))) < 1e-6);
+            validateattributes(I, {class(J)}, {'size',size(J)});
         end
 
         function test_lp_2
@@ -31,6 +34,7 @@ classdef TestNormalize
                 'Alpha',1);
             J = my_normalize_Lp(img, 'L2', 1, 'double');
             assert(max(abs(double(I(:))-double(J(:)))) < 1e-6);
+            validateattributes(I, {class(J)}, {'size',size(J)});
         end
 
         function test_lp_inf
@@ -39,6 +43,7 @@ classdef TestNormalize
                 'Alpha',1);
             J = my_normalize_Lp(img, 'Inf', 1, 'double');
             assert(max(abs(double(I(:))-double(J(:)))) < 1e-6);
+            validateattributes(I, {class(J)}, {'size',size(J)});
         end
 
         function test_mask
@@ -46,6 +51,7 @@ classdef TestNormalize
             mask = (rand(size(img)) > 0.5);
             I = cv.normalize(img, 'NormType','MinMax', 'Mask',mask);
             I = cv.normalize(img, 'NormType','L2', 'Mask',mask);
+            validateattributes(I, {class(img)}, {'size',size(img)});
         end
 
         function test_error

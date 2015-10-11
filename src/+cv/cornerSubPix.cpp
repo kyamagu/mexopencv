@@ -1,6 +1,7 @@
 /**
  * @file cornerSubPix.cpp
- * @brief mex interface for cornerSubPix
+ * @brief mex interface for cv::cornerSubPix
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -15,15 +16,13 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<2 || ((nrhs%2)!=0) || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(nrhs>=2 && (nrhs%2)==0 && nlhs<=1);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
     Size winSize(3,3);
@@ -43,7 +42,16 @@ void mexFunction( int nlhs, mxArray *plhs[],
 
     // Process
     Mat image(rhs[0].toMat(rhs[0].isUint8() ? CV_8U : CV_32F));
-    vector<Point2f> corners(rhs[1].toVector<Point2f>());
-    cornerSubPix(image, corners, winSize, zeroZone, criteria);
-    plhs[0] = MxArray(corners);
+    if (rhs[1].isNumeric()) {
+        Mat corners(rhs[1].toMat(CV_32F));
+        cornerSubPix(image, corners, winSize, zeroZone, criteria);
+        plhs[0] = MxArray(corners);
+    }
+    else if (rhs[1].isCell()) {
+        vector<Point2f> corners(rhs[1].toVector<Point2f>());
+        cornerSubPix(image, corners, winSize, zeroZone, criteria);
+        plhs[0] = MxArray(corners);
+    }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid input");
 }

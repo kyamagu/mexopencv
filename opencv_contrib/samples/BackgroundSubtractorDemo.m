@@ -19,7 +19,7 @@ disp('Keep out of the frame.');
 for t = 1:bs.History
     % Get an image
     im = camera.read;
-    im = cv.resize(im,0.5);
+    im = cv.resize(im,0.5,0.5);
     imshow(im);
     title(num2str(t));
 
@@ -42,7 +42,7 @@ setappdata(window,'flag',false);
 while true
     % Get an image
     im = camera.read;
-    im = cv.resize(im,0.5);
+    im = cv.resize(im,0.5,0.5);
 
     % detect and show foreground
     fg = bs.apply(im, 'LearningRate', 0);

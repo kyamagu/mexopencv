@@ -1,6 +1,7 @@
 /**
  * @file Laplacian.cpp
- * @brief mex interface for Laplacian
+ * @brief mex interface for cv::Laplacian
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -14,29 +15,26 @@ using namespace cv;
  * @param plhs pointers to mxArrays in the left-hand-side
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
- *
- * Wrapper for Laplacian
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<1 || (nrhs%2)!=1 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(nrhs>=1 && (nrhs%2)==1 && nlhs<=1);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+    vector<MxArray> rhs(prhs, prhs+nrhs);
+
     // Option processing
     int ddepth = -1;
     int ksize = 1;
     double scale = 1;
-    double delta=0;
-    int borderType=cv::BORDER_DEFAULT;
+    double delta = 0;
+    int borderType = cv::BORDER_DEFAULT;
     for (int i=1; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
+        string key(rhs[i].toString());
         if (key=="DDepth")
-            ddepth = rhs[i+1].toInt();
+            ddepth = (rhs[i+1].isChar()) ?
+                ClassNameMap[rhs[i+1].toString()] : rhs[i+1].toInt();
         else if (key=="KSize")
             ksize = rhs[i+1].toInt();
         else if (key=="Scale")
@@ -48,9 +46,9 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
-    // Execute function
-    Mat img(rhs[0].toMat());
-    Laplacian(img, img, ddepth, ksize, scale, delta, borderType);
-    plhs[0] = MxArray(img);
+
+    // Process
+    Mat src(rhs[0].toMat()), dst;
+    Laplacian(src, dst, ddepth, ksize, scale, delta, borderType);
+    plhs[0] = MxArray(dst);
 }

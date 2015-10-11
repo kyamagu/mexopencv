@@ -1,6 +1,7 @@
 /**
  * @file StarDetector_.cpp
- * @brief mex interface for StarDetector
+ * @brief mex interface for cv::xfeatures2d::StarDetector
+ * @ingroup xfeatures2d
  * @author Amro, Kota Yamaguchi
  * @date 2015
  */

@@ -1,6 +1,7 @@
 /**
  * @file GeneralizedHoughGuil_.cpp
- * @brief mex interface for GeneralizedHoughGuil
+ * @brief mex interface for cv::GeneralizedHoughGuil
+ * @ingroup imgproc
  * @author Amro
  * @date 2015
  */
@@ -23,21 +24,19 @@ map<int,Ptr<GeneralizedHoughGuil> > obj_;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
-    if (nrhs<2 || nlhs>2)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    // Check the number of arguments
+    nargchk(nrhs>=2 && nlhs<=2);
 
     // Arguments vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
     int id = rhs[0].toInt();
     string method(rhs[1].toString());
 
     // Constructor is called. Create a new object from argument
     if (method == "new") {
-        if (nrhs!=2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==2 && nlhs<=1);
         obj_[++last_id] = createGeneralizedHoughGuil();
         plhs[0] = MxArray(last_id);
         return;
@@ -46,18 +45,15 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Big operation switch
     Ptr<GeneralizedHoughGuil> obj = obj_[id];
     if (method == "delete") {
-        if (nrhs!=2 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
+        nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
     }
     else if (method == "clear") {
-        if (nrhs!=2 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==2 && nlhs==0);
         obj->clear();
     }
     else if (method == "load") {
-        if (nrhs<3 || (nrhs%2)==0 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
         string objname;
         bool loadFromString = false;
         for (int i=3; i<nrhs; i+=2) {
@@ -84,41 +80,37 @@ void mexFunction( int nlhs, mxArray *plhs[],
         //*/
     }
     else if (method == "save") {
-        if (nrhs!=3 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==3 && nlhs==0);
         obj->save(rhs[2].toString());
     }
     else if (method == "empty") {
-        if (nrhs!=2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(nrhs==2 && nlhs<=1);
         plhs[0] = MxArray(obj->empty());
     }
     else if (method == "getDefaultName") {
-        if (nrhs!=2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(nrhs==2 && nlhs<=1);
         plhs[0] = MxArray(obj->getDefaultName());
     }
     else if (method == "detect") {
-        if ((nrhs!=3 && nrhs!=5) || nlhs>2)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        Mat positions, votes;
+        nargchk((nrhs==3 || nrhs==5) && nlhs<=2);
+        vector<Vec4f> positions;
+        vector<Vec3i> votes;
         if (nrhs == 3) {
-            Mat image(rhs[2].toMat());
-            obj->detect(image, positions, votes);
+            Mat image(rhs[2].toMat(CV_8U));
+            obj->detect(image, positions, (nlhs>1) ? votes : noArray());
         }
         else {
-            Mat edges(rhs[2].toMat()),
-                   dx(rhs[3].toMat()),
-                   dy(rhs[4].toMat());
-            obj->detect(edges, dx, dy, positions, votes);
+            Mat edges(rhs[2].toMat(CV_8U)),
+                   dx(rhs[3].toMat(CV_32F)),
+                   dy(rhs[4].toMat(CV_32F));
+            obj->detect(edges, dx, dy, positions, (nlhs>1) ? votes : noArray());
         }
         plhs[0] = MxArray(positions);
         if (nlhs>1)
             plhs[1] = MxArray(votes);
     }
     else if (method == "setTemplate") {
-        if (nrhs<3 || (nrhs%2)==0 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
         bool edges_variant = (nrhs>=5 && rhs[3].isNumeric() && rhs[4].isNumeric());
         Point templCenter(-1,-1);
         for (int i=(edges_variant ? 5 : 3); i<nrhs; i+=2) {
@@ -129,19 +121,18 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
         }
         if (edges_variant) {
-            Mat edges(rhs[2].toMat()),
-                   dx(rhs[3].toMat()),
-                   dy(rhs[4].toMat());
+            Mat edges(rhs[2].toMat(CV_8U)),
+                   dx(rhs[3].toMat(CV_32F)),
+                   dy(rhs[4].toMat(CV_32F));
             obj->setTemplate(edges, dx, dy, templCenter);
         }
         else {
-            Mat templ(rhs[2].toMat());
+            Mat templ(rhs[2].toMat(CV_8U));
             obj->setTemplate(templ, templCenter);
         }
     }
     else if (method == "get") {
-        if (nrhs!=3 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(nrhs==3 && nlhs<=1);
         string prop(rhs[2].toString());
         if (prop == "CannyHighThresh")
             plhs[0] = MxArray(obj->getCannyHighThresh());
@@ -181,8 +172,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property %s", prop.c_str());
     }
     else if (method == "set") {
-        if (nrhs!=4 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(nrhs==4 && nlhs==0);
         string prop(rhs[2].toString());
         if (prop == "CannyHighThresh")
             obj->setCannyHighThresh(rhs[3].toInt());

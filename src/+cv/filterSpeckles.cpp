@@ -1,6 +1,7 @@
 /**
  * @file filterSpeckles.cpp
- * @brief mex interface for filterSpeckles
+ * @brief mex interface for cv::filterSpeckles
+ * @ingroup calib3d
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -15,21 +16,19 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs!=4 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+    nargchk(nrhs==4 && nlhs<=1);
+
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
-    Mat img(rhs[0].toMat(CV_16S));
-    double newVal=rhs[1].toDouble();
-    int maxSpeckleSize=rhs[2].toInt();
-    double maxDiff=rhs[3].toDouble();
-    
+    vector<MxArray> rhs(prhs, prhs+nrhs);
+
     // Process
+    Mat img(rhs[0].toMat(rhs[0].isUint8() ? CV_8U : CV_16S));
+    double newVal = rhs[1].toDouble();
+    int maxSpeckleSize = rhs[2].toInt();
+    double maxDiff = rhs[3].toDouble();
     filterSpeckles(img, newVal, maxSpeckleSize, maxDiff);
     plhs[0] = MxArray(img);
 }

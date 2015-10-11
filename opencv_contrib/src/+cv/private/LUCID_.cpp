@@ -1,6 +1,7 @@
 /**
  * @file LUCID_.cpp
- * @brief mex interface for LUCID
+ * @brief mex interface for cv::xfeatures2d::LUCID
+ * @ingroup xfeatures2d
  * @author Amro
  * @date 2015
  */

@@ -1,6 +1,7 @@
 /**
  * @file KNearest_.cpp
- * @brief mex interface for KNearest
+ * @brief mex interface for cv::ml::KNearest
+ * @ingroup ml
  * @author Kota Yamaguchi, Amro
  * @date 2012, 2015
  */

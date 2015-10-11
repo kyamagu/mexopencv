@@ -1,10 +1,12 @@
 /**
  * @file evaluateFeatureDetector.cpp
- * @brief mex interface for evaluateFeatureDetector
+ * @brief mex interface for cv::evaluateFeatureDetector
+ * @ingroup features2d
  * @author Amro
  * @date 2015
  */
 #include "mexopencv.hpp"
+#include "mexopencv_features2d.hpp"
 #include "opencv2/features2d.hpp"
 using namespace std;
 using namespace cv;
@@ -19,10 +21,31 @@ using namespace cv;
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    nargchk (nrhs==5 && nlhs<=2);
+    nargchk(nrhs>=5 && (nrhs%2)==1 && nlhs<=2);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
+
+    // Option processing
+    Ptr<FeatureDetector> fdetector;
+    for (int i=5; i<nrhs; i+=2) {
+        string key(rhs[i].toString());
+        if (key == "Detector") {
+            if (rhs[i+1].isChar())
+                fdetector = createFeatureDetector(
+                    rhs[i+1].toString(), rhs.end(), rhs.end());
+            else if (rhs[i+1].isCell() && rhs[i+1].numel() >= 1) {
+                vector<MxArray> args(rhs[i+1].toVector<MxArray>());
+                fdetector = createFeatureDetector(
+                    args[0].toString(), args.begin() + 1, args.end());
+            }
+            else
+                mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
+        }
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
 
     // Process
     Mat img1(rhs[0].toMat()),
@@ -33,7 +56,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     float repeatability = -1.0f;
     int correspCount = -1;
     evaluateFeatureDetector(img1, img2, H1to2, &keypoints1, &keypoints2,
-        repeatability, correspCount);
+        repeatability, correspCount, fdetector);
     plhs[0] = MxArray(repeatability);
     if (nlhs>1)
         plhs[1] = MxArray(correspCount);

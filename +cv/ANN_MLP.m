@@ -79,14 +79,20 @@ classdef ANN_MLP < handle
     % is a classical random sequential back-propagation algorithm. The second
     % (default) one is a batch RPROP algorithm.
     %
-    % * [BackPropWikipedia] http://en.wikipedia.org/wiki/Backpropagation.
-    %   Wikipedia article about the back-propagation algorithm.
-    % * [LeCun98] LeCun, L. Bottou, G.B. Orr and K.-R. Muller, Efficient backprop,
-    %   in Neural Networks Tricks of the Trade, Springer Lecture Notes in
-    %   Computer Sciences 1524, pp.5-50, 1998.
-    % * [RPROP93] M. Riedmiller and H. Braun, A Direct Adaptive Method for Faster
-    %   Backpropagation Learning: The RPROP Algorithm, Proc. ICNN, San
-    %   Francisco (1993).
+    % ## References
+    % [BackPropWikipedia]:
+    % > http://en.wikipedia.org/wiki/Backpropagation.
+    % > Wikipedia article about the back-propagation algorithm.
+    %
+    % [LeCun98]:
+    % > LeCun, L. Bottou, G.B. Orr and K.-R. Muller, "Efficient backprop",
+    % > in Neural Networks Tricks of the Trade, Springer Lecture Notes in
+    % > Computer Sciences 1524, pp.5-50, 1998.
+    %
+    % [RPROP93]:
+    % > M. Riedmiller and H. Braun, "A Direct Adaptive Method for Faster
+    % > Backpropagation Learning: The RPROP Algorithm", Proc. ICNN, San
+    % > Francisco (1993).
     %
     % See also cv.ANN_MLP.ANN_MLP cv.ANN_MLP.train
     % cv.ANN_MLP.predict

@@ -1,6 +1,7 @@
 /**
  * @file blur.cpp
- * @brief mex interface for blur
+ * @brief mex interface for cv::blur
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -15,22 +16,20 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<1 || ((nrhs%2)!=1) || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+    nargchk(nrhs>=1 && (nrhs%2)==1 && nlhs<=1);
+
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
-    
+    vector<MxArray> rhs(prhs, prhs+nrhs);
+
     // Option processing
     Size ksize(5,5);
     Point anchor(-1,-1);
     int borderType = cv::BORDER_DEFAULT;
     for (int i=1; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
+        string key(rhs[i].toString());
         if (key=="KSize")
             ksize = rhs[i+1].toSize();
         else if (key=="Anchor")
@@ -40,7 +39,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Process
     Mat src(rhs[0].toMat()), dst;
     blur(src, dst, ksize, anchor, borderType);

@@ -1,6 +1,7 @@
 /**
  * @file AKAZE_.cpp
- * @brief mex interface for AKAZE
+ * @brief mex interface for cv::AKAZE
+ * @ingroup features2d
  * @author Amro
  * @date 2015
  */

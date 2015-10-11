@@ -1,6 +1,7 @@
 /**
  * @file demosaicing.cpp
- * @brief mex interface for demosaicing
+ * @brief mex interface for cv::demosaicing
+ * @ingroup imgproc
  * @author Amro
  * @date 2015
  */
@@ -9,9 +10,8 @@ using namespace std;
 using namespace cv;
 
 namespace {
-/** Color conversion types for option processing
- */
-const ConstMap<std::string,int> ColorConv = ConstMap<std::string,int>
+/// Color conversion types for option processing
+const ConstMap<string,int> ColorConv = ConstMap<string,int>
     // Demosaicing
     ("BayerBG2BGR",     cv::COLOR_BayerBG2BGR)
     ("BayerGB2BGR",     cv::COLOR_BayerGB2BGR)
@@ -59,11 +59,10 @@ const ConstMap<std::string,int> ColorConv = ConstMap<std::string,int>
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<2 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(nrhs>=2 && nlhs<=1);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
     int dcn = 0;

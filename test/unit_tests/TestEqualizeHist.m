@@ -1,25 +1,16 @@
 classdef TestEqualizeHist
     %TestEqualizeHist
     properties (Constant)
-        img = uint8([...
-            0 0 0 0 0 0 0 0 0 0;...
-            0 0 0 0 0 0 0 0 0 0;...
-            0 0 0 0 0 0 0 0 0 0;...
-            0 0 0 1 1 1 0 0 0 0;...
-            0 0 0 1 1 1 0 0 0 0;...
-            0 0 0 1 1 1 0 0 0 0;...
-            0 0 0 0 0 0 0 0 0 0;...
-            0 0 0 0 0 0 0 0 0 0;...
-            0 0 0 0 0 0 0 0 0 0;...
-            0 0 0 0 0 0 0 0 0 0;...
-            ]);
+        img = imread(fullfile(mexopencv.root(),'test','left01.jpg'));
     end
-    
+
     methods (Static)
         function test_1
-            result = cv.equalizeHist(TestErode.img);
+            dst = cv.equalizeHist(TestEqualizeHist.img);
+            validateattributes(dst, {class(TestEqualizeHist.img)}, ...
+                {'size',size(TestEqualizeHist.img)});
         end
-        
+
         function test_error_1
             try
                 cv.equalizeHist();
@@ -29,6 +20,5 @@ classdef TestEqualizeHist
             end
         end
     end
-    
-end
 
+end

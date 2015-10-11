@@ -1,6 +1,7 @@
 /**
  * @file inRange.cpp
  * @brief mex interface for cv::inRange
+ * @ingroup core
  * @author Amro
  * @date 2015
  */

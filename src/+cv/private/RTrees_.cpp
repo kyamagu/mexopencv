@@ -1,6 +1,7 @@
 /**
  * @file RTrees_.cpp
- * @brief mex interface for RTrees
+ * @brief mex interface for cv::ml::RTrees
+ * @ingroup ml
  * @author Kota Yamaguchi, Amro
  * @date 2012, 2015
  */

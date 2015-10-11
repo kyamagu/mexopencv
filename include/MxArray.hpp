@@ -705,6 +705,20 @@ class MxArray
      * @return true if array is of type \c mxUINT64_CLASS, false otherwise.
      */
     inline bool isUint64() const { return mxIsUint64(p_); }
+    /** Determine whether array represents data as integer types
+     * (8-bit, 16-bit, 32-bit or 64-bit, both signed and unsigned).
+     * @return true for integer numeric arrays, false otherwise.
+     */
+    inline bool isInteger() const
+    {
+        return (isUint8() || isInt8() || isUint16() || isInt16() ||
+            isUint32() || isInt32() || isUint64() || isInt64());
+    }
+    /** Determine whether array represents data as floating-point numbers,
+     * both single and double precision.
+     * @return true for floating-point numeric arrays, false otherwise.
+     */
+    inline bool isFloat() const { return (isDouble() || isSingle()); }
     /** Determine whether a struct array has a specified field.
      * @param fieldName name of field to check
      * @return true if struct array has specified field, false otherwise.
@@ -1475,7 +1489,7 @@ std::vector<cv::Mat> MxArray::toVector() const;
  * - a cell-array of 2D integer points (2-element vectors) of length \c N,
  *   e.g: <tt>{[x,y], [x,y], ...}</tt>
  * - a numeric matrix of size \c Nx2, \c Nx1x2, or \c 1xNx2 in the form:
- *   <tt>[x,y; x,y; ...]</tt> or <tt>cat(3, [x,y], [x,y], ...)</tt>
+ *   <tt>[x,y; x,y; ...]</tt> or <tt>cat(3, [x,x,...], [y,y,...])</tt>
  * .
  * where \c N will be the output vector size.
  *
@@ -1495,7 +1509,7 @@ std::vector<cv::Point> MxArray::toVector() const;
  * - a cell-array of 2D float points (2-element vectors) of length \c N, e.g:
  *   <tt>{[x,y], [x,y], ...}</tt>
  * - a numeric matrix of size \c Nx2, \c Nx1x2, or \c 1xNx2 in the form:
- *   <tt>[x,y; x,y; ...]</tt> or <tt>cat(3, [x,y], [x,y], ...)</tt>
+ *   <tt>[x,y; x,y; ...]</tt> or <tt>cat(3, [x,x,...], [y,y,...])</tt>
  * .
  * where \c N will be the output vector size.
  *
@@ -1515,7 +1529,7 @@ std::vector<cv::Point2f> MxArray::toVector() const;
  * - a cell-array of 2D double points (2-element vectors) of length \c N, e.g:
  *   <tt>{[x,y], [x,y], ...}</tt>
  * - a numeric matrix of size \c Nx2, \c Nx1x2, or \c 1xNx2 in the form:
- *   <tt>[x,y; x,y; ...]</tt> or <tt>cat(3, [x,y], [x,y], ...)</tt>
+ *   <tt>[x,y; x,y; ...]</tt> or <tt>cat(3, [x,x,...], [y,y,...])</tt>
  * .
  * where \c N will be the output vector size.
  *
@@ -1535,7 +1549,8 @@ std::vector<cv::Point2d> MxArray::toVector() const;
  * - a cell-array of 3D integer points (3-element vectors) of length \c N, e.g:
  *   <tt>{[x,y,z], [x,y,z], ...}</tt>
  * - a numeric matrix of size \c Nx3, \c Nx1x3, or \c 1xNx3 in the form:
- *   <tt>[x,y,z; x,y,z; ...]</tt> or <tt>cat(3, [x,y,z], [x,y,z], ...)</tt>
+ *   <tt>[x,y,z; x,y,z; ...]</tt> or
+ *   <tt>cat(3, [x,x,...], [y,y,...], [z,z,...])</tt>
  * .
  * where \c N will be the output vector size.
  *
@@ -1555,7 +1570,8 @@ std::vector<cv::Point3i> MxArray::toVector() const;
  * - a cell-array of 3D float points (3-element vectors) of length \c N, e.g:
  *   <tt>{[x,y,z], [x,y,z], ...}</tt>
  * - a numeric matrix of size \c Nx3, \c Nx1x3, or \c 1xNx3 in the form:
- *   <tt>[x,y,z; x,y,z; ...]</tt> or <tt>cat(3, [x,y,z], [x,y,z], ...)</tt>
+ *   <tt>[x,y,z; x,y,z; ...]</tt> or
+ *   <tt>cat(3, [x,x,...], [y,y,...], [z,z,...])</tt>
  * .
  * where \c N will be the output vector size.
  *
@@ -1575,7 +1591,8 @@ std::vector<cv::Point3f> MxArray::toVector() const;
  * - a cell-array of 3D double points (3-element vectors) of length \c N, e.g:
  *   <tt>{[x,y,z], [x,y,z], ...}</tt>
  * - a numeric matrix of size \c Nx3, \c Nx1x3, or \c 1xNx3 in the form:
- *   <tt>[x,y,z; x,y,z; ...]</tt> or <tt>cat(3, [x,y,z], [x,y,z], ...)</tt>
+ *   <tt>[x,y,z; x,y,z; ...]</tt> or
+ *   <tt>cat(3, [x,x,...], [y,y,...], [z,z,...])</tt>
  * .
  * where \c N will be the output vector size.
  *
@@ -1588,6 +1605,26 @@ std::vector<cv::Point3f> MxArray::toVector() const;
 template <>
 std::vector<cv::Point3d> MxArray::toVector() const;
 
+/** Convert MxArray to std::vector<Size>.
+ * @return std::vector<Size> value.
+ *
+ * The input MxArray can be either:
+ * - a cell-array of sizes (2-element vectors) of length \c N, e.g:
+ *   <tt>{[w,h], [w,h], ...}</tt>
+ * - a numeric matrix of size \c Nx2, \c Nx1x2, or \c 1xNx2 in the form:
+ *   <tt>[w,h; w,h; ...]</tt> or <tt>cat(3, [w,w,...], [h,h,...])</tt>
+ * .
+ * where \c N will be the output vector size.
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Size> v = cellArray.toVector<Size>();
+ * @endcode
+ */
+template <>
+std::vector<cv::Size> MxArray::toVector() const;
+
 /** Convert MxArray to std::vector<Rect>.
  * @return std::vector<Rect> value.
  *
@@ -1596,7 +1633,7 @@ std::vector<cv::Point3d> MxArray::toVector() const;
  *   <tt>{[x,y,w,h], [x,y,w,h], ...}</tt>
  * - a numeric matrix of size \c Nx4, \c Nx1x4, or \c 1xNx4 in the form:
  *   <tt>[x,y,w,h; x,y,w,h; ...]</tt> or
- *   <tt>cat(3, [x,y,w,h], [x,y,w,h], ...)</tt>
+ *   <tt>cat(3, [x,x,...], [y,y,...] ,[w,w,...], [h,h,...])</tt>
  * .
  * where \c N will be the output vector size.
  *
@@ -1616,7 +1653,7 @@ std::vector<cv::Rect> MxArray::toVector() const;
  * - a cell-array of 2-element vectors of length \c N, e.g:
  *   <tt>{[v1,v2], [v1,v2], ...}</tt>
  * - a numeric matrix of size \c Nx2, \c Nx1x2, or \c 1xNx2 in the form:
- *   <tt>[v1,v2; v1,v2; ...]</tt> or <tt>cat(3, [v1,v2], [v1,v2], ...)</tt>
+ *   <tt>[v1,v2; v1,v2; ...]</tt> or <tt>cat(3, [v1,v1,...], [v2,v2,...])</tt>
  * .
  * where \c N will be the output vector size.
  *
@@ -1636,7 +1673,7 @@ std::vector<cv::Vec2i> MxArray::toVector() const;
  * - a cell-array of 2-element vectors of length \c N, e.g:
  *   <tt>{[v1,v2], [v1,v2], ...}</tt>
  * - a numeric matrix of size \c Nx2, \c Nx1x2, or \c 1xNx2 in the form:
- *   <tt>[v1,v2; v1,v2; ...]</tt> or <tt>cat(3, [v1,v2], [v1,v2], ...)</tt>
+ *   <tt>[v1,v2; v1,v2; ...]</tt> or <tt>cat(3, [v1,v1,...], [v2,v2,...])</tt>
  * .
  * where \c N will be the output vector size.
  *
@@ -1657,7 +1694,7 @@ std::vector<cv::Vec2f> MxArray::toVector() const;
  *   <tt>{[v1,v2,v3], [v1,v2,v3], ...}</tt>
  * - a numeric matrix of size \c Nx3, \c Nx1x3, or \c 1xNx3 in the form:
  *   <tt>[v1,v2,v3; v1,v2,v3; ...]</tt> or
- *   <tt>cat(3, [v1,v2,v3], [v1,v2,v3], ...)</tt>
+ *   <tt>cat(3, [v1,v1,...], [v2,v2,...], [v3,v3,...])</tt>
  * .
  * where \c N will be the output vector size.
  *
@@ -1678,7 +1715,7 @@ std::vector<cv::Vec3i> MxArray::toVector() const;
  *   <tt>{[v1,v2,v3], [v1,v2,v3], ...}</tt>
  * - a numeric matrix of size \c Nx3, \c Nx1x3, or \c 1xNx3 in the form:
  *   <tt>[v1,v2,v3; v1,v2,v3; ...]</tt> or
- *   <tt>cat(3, [v1,v2,v3], [v1,v2,v3], ...)</tt>
+ *   <tt>cat(3, [v1,v1,...], [v2,v2,...], [v3,v3,...])</tt>
  * .
  * where \c N will be the output vector size.
  *
@@ -1699,7 +1736,7 @@ std::vector<cv::Vec3f> MxArray::toVector() const;
  *   <tt>{[v1,v2,v3,v4], [v1,v2,v3,v4], ...}</tt>
  * - a numeric matrix of size \c Nx4, \c Nx1x4, or \c 1xNx4 in the form:
  *   <tt>[v1,v2,v3,v4; v1,v2,v3,v4; ...]</tt> or
- *   <tt>cat(3, [v1,v2,v3,v4], [v1,v2,v3,v4], ...)</tt>
+ *   <tt>cat(3, [v1,v1,...], [v2,v2,...], [v3,v3,...], [v4,v4,...])</tt>
  * .
  * where \c N will be the output vector size.
  *
@@ -1720,7 +1757,7 @@ std::vector<cv::Vec4i> MxArray::toVector() const;
  *   <tt>{[v1,v2,v3,v4], [v1,v2,v3,v4], ...}</tt>
  * - a numeric matrix of size \c Nx4, \c Nx1x4, or \c 1xNx4 in the form:
  *   <tt>[v1,v2,v3,v4; v1,v2,v3,v4; ...]</tt> or
- *   <tt>cat(3, [v1,v2,v3,v4], [v1,v2,v3,v4], ...)</tt>
+ *   <tt>cat(3, [v1,v1,...], [v2,v2,...], [v3,v3,...], [v4,v4,...])</tt>
  * .
  * where \c N will be the output vector size.
  *

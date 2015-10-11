@@ -1,6 +1,7 @@
 /**
  * @file BOWImgDescriptorExtractor_.cpp
- * @brief mex interface for BOWImgDescriptorExtractor
+ * @brief mex interface for cv::BOWImgDescriptorExtractor
+ * @ingroup features2d
  * @author Kota Yamaguchi
  * @author Amro
  * @date 2012, 2015

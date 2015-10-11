@@ -1,7 +1,7 @@
 classdef TestCornerSubPix
     %TestCornerSubPix
     properties (Constant)
-        img = im2uint8([...
+        img = 255 * uint8([...
             0 0 0 0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0 0 0 0;...
@@ -15,14 +15,35 @@ classdef TestCornerSubPix
             0 0 0 0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0 0 0 0;...
-            ]);
+        ]);
     end
 
     methods (Static)
-        function test_1
-            im = TestCornerSubPix.img;
-            corners = {[3,3],[8,8]};
-            result = cv.cornerSubPix(im,corners);
+        function test_cellarray
+            corners = {[3,3], [8,8]};
+            result = cv.cornerSubPix(TestCornerSubPix.img, corners);
+            validateattributes(result, {'cell'}, {'vector', ...
+                'numel',numel(corners)});
+            cellfun(@(v) validateattributes(v, {'numeric'}, ...
+                {'vector', 'numel',2}), result);
+        end
+
+        function test_numeric_1
+            corners = [3,3; 8,8];
+            result = cv.cornerSubPix(TestCornerSubPix.img, corners);
+            validateattributes(result, {'numeric'}, {'size',size(corners)});
+        end
+
+        function test_numeric_2
+            corners = cat(3, [3, 8], [3, 8]);
+            result = cv.cornerSubPix(TestCornerSubPix.img, corners);
+            validateattributes(result, {'numeric'}, {'size',size(corners)});
+        end
+
+        function test_numeric_3
+            corners = cat(3, [3; 8], [3; 8]);
+            result = cv.cornerSubPix(TestCornerSubPix.img, corners);
+            validateattributes(result, {'numeric'}, {'size',size(corners)});
         end
 
         function test_error_1

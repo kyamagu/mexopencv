@@ -1,6 +1,7 @@
 /**
  * @file DescriptorMatcher_.cpp
- * @brief mex interface for DescriptorMatcher
+ * @brief mex interface for cv::DescriptorMatcher
+ * @ingroup features2d
  * @author Kota Yamaguchi
  * @author Amro
  * @date 2012, 2015

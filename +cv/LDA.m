@@ -12,7 +12,7 @@ classdef LDA < handle
     %    Y = lda.project(Xtest);
     %    Xapprox = lda.reconstruct(Y);
     %
-    % See also: cv.PCA
+    % See also: cv.PCA, fitcdiscr
     %
 
     properties (SetAccess = private)
@@ -34,9 +34,9 @@ classdef LDA < handle
             %    lda = cv.LDA('OptionName', optionValue, ...)
             %
             % ## Options
-            % * __NumComponents number of components (default 0). If 0 (or less)
-            %       number of components are given, they are automatically
-            %       determined for given data in computation.
+            % * __NumComponents__ number of components (default 0). If 0 (or
+            %       less) number of components are given, they are
+            %       automatically determined for given data in computation.
             %
             % See also: cv.LDA.compute
             %
@@ -81,8 +81,11 @@ classdef LDA < handle
             %    lda.compute(src, labels)
             %
             % ## Input
-            % * __src__ data samples (matrix of rows of size N-by-d)
-            % * __labels__ corresponding labels (vector of length N)
+            % * __src__ data samples (matrix of rows of size `N-by-d`, or a
+            %       cell-array of `N` vectors each of length `d`).
+            %       Floating-point type.
+            % * __labels__ corresponding labels (vector of length `N`).
+            %       Integer type.
             %
             % Performs a Discriminant Analysis with Fisher's Optimization
             % Criterion on given data in `src` and corresponding labels in

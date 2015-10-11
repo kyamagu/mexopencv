@@ -1,6 +1,7 @@
 /**
  * @file approxPolyDP.cpp
- * @brief mex interface for approxPolyDP
+ * @brief mex interface for cv::approxPolyDP
+ * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -15,19 +16,19 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<1 || ((nrhs%2)!=1) || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+    nargchk(nrhs>=1 && (nrhs%2)==1 && nlhs<=1);
+
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
-    double epsilon=2.0;
-    bool closed=true;
+    vector<MxArray> rhs(prhs, prhs+nrhs);
+
+    // Option processing
+    double epsilon = 2.0;
+    bool closed = true;
     for (int i=1; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
+        string key(rhs[i].toString());
         if (key=="Epsilon")
             epsilon = rhs[i+1].toDouble();
         else if (key=="Closed")
@@ -35,15 +36,26 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
+
     // Process
     if (rhs[0].isNumeric()) {
-        Mat curve(rhs[0].toMat()), approxCurve;
+        Mat curve(rhs[0].toMat(rhs[0].isInt32() ? CV_32S : CV_32F)),
+            approxCurve;
         approxPolyDP(curve, approxCurve, epsilon, closed);
-        plhs[0] = MxArray(approxCurve);
+        plhs[0] = MxArray(approxCurve.reshape(1,0));  // Nx2
     }
     else if (rhs[0].isCell()) {
-        vector<Point> curve(rhs[0].toVector<Point>()), approxCurve;
-        approxPolyDP(curve, approxCurve, epsilon, closed);
-        plhs[0] = MxArray(approxCurve);
+        if (!rhs[0].isEmpty() && rhs[0].at<MxArray>(0).isInt32()) {
+            vector<Point> curve(rhs[0].toVector<Point>()), approxCurve;
+            approxPolyDP(curve, approxCurve, epsilon, closed);
+            plhs[0] = MxArray(approxCurve);
+        }
+        else {
+            vector<Point2f> curve(rhs[0].toVector<Point2f>()), approxCurve;
+            approxPolyDP(curve, approxCurve, epsilon, closed);
+            plhs[0] = MxArray(approxCurve);
+        }
     }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid input");
 }

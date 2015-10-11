@@ -1,18 +1,18 @@
 classdef TestLine
     %TestLine
-    properties (Constant)
-    end
 
     methods (Static)
         function test_line
-            im = 255*ones(128,128,3,'uint8');
-            im = cv.line(im, [64,64], [20,10]);
+            img = 255*ones(128,128,3,'uint8');
+            out = cv.line(img, [64,64], [20,10]);
+            validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
         function test_options
             img = zeros([100,100,3],'uint8');
-            img = cv.line(img, [20 20], [80 80], ...
+            out = cv.line(img, [20 20], [80 80], ...
                 'Color',[255 0 0], 'Thickness',3, 'LineType','AA');
+            validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
         function test_error_1

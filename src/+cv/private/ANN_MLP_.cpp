@@ -1,6 +1,7 @@
 /**
  * @file ANN_MLP_.cpp
- * @brief mex interface for ANN_MLP
+ * @brief mex interface for cv::ml::ANN_MLP
+ * @ingroup ml
  * @author Kota Yamaguchi, Amro
  * @date 2012, 2015
  */

@@ -1,6 +1,7 @@
 /**
  * @file calcCovarMatrix.cpp
- * @brief mex interface for calcCovarMatrix
+ * @brief mex interface for cv::calcCovarMatrix
+ * @ingroup core
  * @author Amro
  * @date 2015
  */
@@ -18,11 +19,10 @@ using namespace cv;
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<1 || (nrhs%2)==0 || nlhs>2)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(nrhs>=1 && (nrhs%2)==1 && nlhs<=2);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
     Mat mean;

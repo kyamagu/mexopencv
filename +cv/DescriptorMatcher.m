@@ -20,7 +20,7 @@ classdef DescriptorMatcher < handle
     %    matcher.train(); % Optional for BruteForce matcher
     %    matches = matcher.match(Y);
     %
-    % See also: cv.DescriptorExtractor
+    % See also: cv.DescriptorExtractor, matchFeatures
     %
 
     properties (SetAccess = private)

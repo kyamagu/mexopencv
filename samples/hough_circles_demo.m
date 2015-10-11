@@ -1,4 +1,6 @@
 %% Hough circles demo
+% An example using the Hough circle detector.
+%
 % This program demonstrates circle finding with the Hough transform.
 %
 % <https://github.com/Itseez/opencv/blob/master/samples/cpp/houghcircles.cpp>
@@ -19,10 +21,13 @@ gray = cv.cvtColor(img, 'RGB2GRAY');
 gray = cv.medianBlur(gray, 'KSize',5);
 
 %% HoughCircles
+tic
 circles = cv.HoughCircles(gray, 'Method','Gradient', 'DP',2, ...
     'MinDist',size(gray,1)/8, 'Param1',200, 'Param2',100, ...
     'MinRadius',20, 'MaxRadius',80);
+toc
 
+%%
 for i=1:numel(circles)
     center = round(circles{i}(1:2));
     radius = round(circles{i}(3));

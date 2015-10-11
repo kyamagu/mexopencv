@@ -1,6 +1,7 @@
 /**
  * @file DescriptorExtractor_.cpp
- * @brief mex interface for DescriptorExtractor
+ * @brief mex interface for cv::DescriptorExtractor
+ * @ingroup features2d
  * @author Kota Yamaguchi
  * @author Amro
  * @date 2012, 2015

@@ -7,7 +7,7 @@ classdef SURF < handle
     % > "Surf: Speeded up robust features".
     % > Computer Vision-ECCV 2006, pages 404-417, 2006.
     %
-    % See also: cv.FeatureDetector, cv.DescriptorExtractor
+    % See also: cv.FeatureDetector, cv.DescriptorExtractor, detectSURFFeatures
     %
 
     properties (SetAccess = private)

@@ -1,6 +1,7 @@
 /**
  * @file imdecode.cpp
- * @brief mex interface for imdecode
+ * @brief mex interface for cv::imdecode
+ * @ingroup imgcodecs
  * @author Kota Yamaguchi
  * @date 2012
  */
@@ -15,33 +16,78 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<1 || (nrhs%2)!=1 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    nargchk(nrhs>=1 && (nrhs%2)==1 && nlhs<=1);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
-    int flags = 1;
+    bool unchanged = false,
+         anydepth = false,
+         anycolor = false,
+         grayscale = false,
+         color = true;
+    int flags0 = 0;
+    bool override = false;
+    bool flip = true;
     for (int i=1; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
-        if (key == "Flags")
-            flags = rhs[i+1].toInt();
+        string key(rhs[i].toString());
+        if (key == "Flags") {
+            flags0 = rhs[i+1].toInt();
+            override = true;
+        }
+        else if (key == "Unchanged")
+            unchanged = rhs[i+1].toBool();
+        else if (key == "AnyDepth")
+            anydepth = rhs[i+1].toBool();
+        else if (key == "AnyColor")
+            anycolor = rhs[i+1].toBool();
+        else if (key == "Grayscale") {
+            grayscale = rhs[i+1].toBool();
+            color = !grayscale;
+            anycolor = false;
+        }
+        else if (key == "Color") {
+            color = rhs[i+1].toBool();
+            grayscale = !color;
+            anycolor = false;
+        }
+        else if (key == "FlipChannels")
+            flip = rhs[i+1].toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+    }
+    int flags = 0;
+    if (override) {
+        // explicitly specified int flags
+        flags = flags0;
+    }
+    else if (unchanged) {
+        // depth and cn as is (as determined by decoder).
+        // This is the only way to load alpha channel if present
+        flags = cv::IMREAD_UNCHANGED;
+    }
+    else {
+        // depth as is, otherwise CV_8U
+        flags |= (anydepth ? IMREAD_ANYDEPTH : 0);
+        // channels as is (if gray then cn=1, else cn=3 [BGR])
+        flags |= (anycolor ? IMREAD_ANYCOLOR :
+            // otherwise explicitly either cn = 3 or cn = 1
+            (color ? IMREAD_COLOR : IMREAD_GRAYSCALE));
     }
 
     // Process
     Mat buf(rhs[0].toMat(CV_8U));
-    Mat m = imdecode(buf, flags);
-    if (m.data == NULL)
+    Mat img = imdecode(buf, flags);
+    if (img.data == NULL)
         mexErrMsgIdAndTxt("mexopencv:error","imdecode failed");
-    // OpenCV's default is BGR while Matlab's is RGB
-    if (m.type() == CV_8UC3)
-        cvtColor(m, m, cv::COLOR_BGR2RGB);
-    plhs[0] = MxArray(m);
+    if (flip && (img.channels() == 3 || img.channels() == 4)) {
+        // OpenCV's default is BGR/BGRA while MATLAB's is RGB/RGBA
+        cvtColor(img, img, (img.channels()==3 ?
+            cv::COLOR_BGR2RGB : cv::COLOR_BGRA2RGBA));
+    }
+    plhs[0] = MxArray(img);
 }

@@ -1,6 +1,7 @@
 /**
  * @file FeatureDetector_.cpp
- * @brief mex interface for FeatureDetector
+ * @brief mex interface for cv::FeatureDetector
+ * @ingroup features2d
  * @author Kota Yamaguchi
  * @author Amro
  * @date 2012, 2015

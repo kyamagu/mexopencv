@@ -1,6 +1,7 @@
 /**
  * @file LSVMDetector_.cpp
- * @brief mex interface for LSVMDetector
+ * @brief mex interface for cv::lsvm::LSVMDetector
+ * @ingroup latentsvm
  * @author Kota Yamaguchi
  * @date 2012
  */

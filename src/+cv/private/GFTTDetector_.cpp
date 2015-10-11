@@ -1,6 +1,7 @@
 /**
  * @file GFTTDetector_.cpp
- * @brief mex interface for GFTTDetector
+ * @brief mex interface for cv::GFTTDetector
+ * @ingroup features2d
  * @author Amro
  * @date 2015
  */

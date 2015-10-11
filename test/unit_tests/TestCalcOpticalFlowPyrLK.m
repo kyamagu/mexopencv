@@ -1,7 +1,7 @@
 classdef TestCalcOpticalFlowPyrLK
     %TestCalcOpticalFlowPyrLK
     properties (Constant)
-        im = im2uint8([...
+        im = 255*uint8([...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
@@ -12,16 +12,42 @@ classdef TestCalcOpticalFlowPyrLK
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
-            ]);
+        ]);
     end
-    
+
     methods (Static)
         function test_1
             im1 = TestCalcOpticalFlowPyrLK.im;
-            im2 = [zeros(10,1,'uint8'),im1(:,1:end-1)];
-            pts = cv.calcOpticalFlowPyrLK(im1,im2,{[3,3]});
+            im2 = circshift(im1, [0 1]);
+            pts = cv.calcOpticalFlowPyrLK(im1, im2, {[3,3]});
         end
-        
+
+        function test_2
+            prevImg = rgb2gray(imread(fullfile(mexopencv.root(),'test','RubberWhale1.png')));
+            nextImg = rgb2gray(imread(fullfile(mexopencv.root(),'test','RubberWhale2.png')));
+            prevPts = cv.goodFeaturesToTrack(prevImg);
+            [nextPts,status,err] = cv.calcOpticalFlowPyrLK(prevImg, nextImg, prevPts);
+            validateattributes(nextPts, {'cell'}, ...
+                {'vector', 'numel',numel(prevPts)});
+            cellfun(@(pt) validateattributes(pt, {'numeric'}, ...
+                {'vector', 'numel',2}), nextPts);
+            validateattributes(status, {'uint8'}, ...
+                {'vector', 'binary', 'numel',numel(nextPts)});
+            validateattributes(err, {'single'}, ...
+                {'vector', 'real', 'numel',numel(nextPts)});
+        end
+
+        function test_3
+            prevImg = rgb2gray(imread(fullfile(mexopencv.root(),'test','RubberWhale1.png')));
+            nextImg = rgb2gray(imread(fullfile(mexopencv.root(),'test','RubberWhale2.png')));
+            prevPts = cv.goodFeaturesToTrack(prevImg);
+            prevPyr = cv.buildOpticalFlowPyramid(prevImg);
+            nextPyr = cv.buildOpticalFlowPyramid(nextImg);
+            nextPts = cv.calcOpticalFlowPyrLK(prevImg, nextImg, prevPts);
+            validateattributes(nextPts, {'cell'}, ...
+                {'vector', 'numel',numel(prevPts)});
+        end
+
         function test_error_1
             try
                 cv.calcOpticalFlowPyrLK();
@@ -31,6 +57,5 @@ classdef TestCalcOpticalFlowPyrLK
             end
         end
     end
-    
-end
 
+end

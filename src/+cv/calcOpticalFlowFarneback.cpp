@@ -1,6 +1,7 @@
 /**
  * @file calcOpticalFlowFarneback.cpp
- * @brief mex interface for calcOpticalFlowFarneback
+ * @brief mex interface for cv::calcOpticalFlowFarneback
+ * @ingroup video
  * @author Kota Yamaguchi
  * @date 2011
  */
@@ -15,27 +16,25 @@ using namespace cv;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    if (nrhs<2 || ((nrhs%2)!=0) || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-    
+    nargchk(nrhs>=2 && (nrhs%2)==0 && nlhs<=1);
+
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
-    
-    Mat prevImg(rhs[0].toMat(CV_8U)), nextImg(rhs[1].toMat(CV_8U));
+    vector<MxArray> rhs(prhs, prhs+nrhs);
+
+    // Option processing
     Mat flow;
-    double pyrScale=0.5;
-    int levels=1;
-    int winsize=3;
-    int iterations=10;
-    int polyN=5;
-    double polySigma=1.1;
-    int flags=0;
+    double pyrScale = 0.5;
+    int levels = 1;
+    int winsize = 3;
+    int iterations = 10;
+    int polyN = 5;
+    double polySigma = 1.1;
+    int flags = 0;
     for (int i=2; i<nrhs; i+=2) {
-        string key = rhs[i].toString();
+        string key(rhs[i].toString());
         if (key=="InitialFlow") {
             flow = rhs[i+1].toMat(CV_32F);
             flags |= cv::OPTFLOW_USE_INITIAL_FLOW;
@@ -53,13 +52,15 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else if (key=="PolySigma")
             polySigma = rhs[i+1].toDouble();
         else if (key=="Gaussian")
-            flags |= cv::OPTFLOW_FARNEBACK_GAUSSIAN;
+            UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::OPTFLOW_FARNEBACK_GAUSSIAN);
         else
             mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
     }
-    
+
     // Process
-    calcOpticalFlowFarneback(prevImg, nextImg, flow, pyrScale, levels, winsize,
-        iterations, polyN, polySigma, flags);
+    Mat prevImg(rhs[0].toMat(CV_8U)),
+        nextImg(rhs[1].toMat(CV_8U));
+    calcOpticalFlowFarneback(prevImg, nextImg, flow, pyrScale, levels,
+        winsize, iterations, polyN, polySigma, flags);
     plhs[0] = MxArray(flow);
 }

@@ -1,7 +1,7 @@
 classdef TestInpaint
     %TestInpaint
     properties (Constant)
-        img = im2uint8(randn(10,10));
+        img = 255*uint8(randn(10,10));
         mask = uint8([...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
@@ -13,18 +13,23 @@ classdef TestInpaint
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
-            ]);
+        ]);
     end
-    
+
     methods (Static)
         function test_1
-            result = cv.inpaint(TestInpaint.img,TestInpaint.mask);
+            result = cv.inpaint(TestInpaint.img, TestInpaint.mask);
+            validateattributes(result, {class(TestInpaint.img)}, ...
+                {'size',size(TestInpaint.img)});
         end
-        
+
         function test_2
-            result = cv.inpaint(TestInpaint.img,TestInpaint.mask,'Method','Telea');
+            result = cv.inpaint(TestInpaint.img, TestInpaint.mask, ...
+                'Method','Telea');
+            validateattributes(result, {class(TestInpaint.img)}, ...
+                {'size',size(TestInpaint.img)});
         end
-        
+
         function test_error_1
             try
                 cv.inpaint();
@@ -34,6 +39,5 @@ classdef TestInpaint
             end
         end
     end
-    
-end
 
+end

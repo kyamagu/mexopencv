@@ -1,7 +1,5 @@
 classdef TestInvert
-    %TestKmeans
-    properties (Constant)
-    end
+    %TestInvert
 
     methods (Static)
         function test_nonsingular
@@ -48,4 +46,3 @@ classdef TestInvert
     end
 
 end
-

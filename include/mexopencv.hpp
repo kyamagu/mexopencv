@@ -53,42 +53,57 @@ const ConstMap<std::string,int> BorderType = ConstMap<std::string,int>
     ("Constant",    cv::BORDER_CONSTANT)    // iiiiii|abcdefgh|iiiiiii for some i
     ("Replicate",   cv::BORDER_REPLICATE)   // aaaaaa|abcdefgh|hhhhhhh
     ("Reflect",     cv::BORDER_REFLECT)     // fedcba|abcdefgh|hgfedcb
-    ("Wrap",        cv::BORDER_WRAP)        // cdefgh|abcdefgh|abcdefg
     ("Reflect101",  cv::BORDER_REFLECT_101) // gfedcb|abcdefgh|gfedcba
+    ("Wrap",        cv::BORDER_WRAP)        // cdefgh|abcdefgh|abcdefg
     ("Transparent", cv::BORDER_TRANSPARENT) // uvwxyz|absdefgh|ijklmno
-    ("Default",     cv::BORDER_DEFAULT)     // same as "Reflect101"
-    ("Isolated",    cv::BORDER_ISOLATED);   // do not look outside of ROI
+    ("Default",     cv::BORDER_DEFAULT);    // same as "Reflect101"
+
+/// Inverse border type map for option processing
+const ConstMap<int,std::string> BorderTypeInv = ConstMap<int,std::string>
+    (cv::BORDER_CONSTANT,    "Constant")
+    (cv::BORDER_REPLICATE,   "Replicate")
+    (cv::BORDER_REFLECT,     "Reflect")
+    (cv::BORDER_REFLECT_101, "Reflect101")
+    (cv::BORDER_WRAP,        "Wrap")
+    (cv::BORDER_TRANSPARENT, "Transparent");
 
 /// Interpolation type map for option processing
 const ConstMap<std::string,int> InterpType = ConstMap<std::string,int>
-    ("Nearest",  cv::INTER_NEAREST)  // nearest neighbor interpolation
-    ("Linear",   cv::INTER_LINEAR)   // bilinear interpolation
-    ("Cubic",    cv::INTER_CUBIC)    // bicubic interpolation
-    ("Area",     cv::INTER_AREA)     // area-based (or super) interpolation
-    ("Lanczos4", cv::INTER_LANCZOS4) // Lanczos interpolation over 8x8 neighborhood
-    ("Max",      cv::INTER_MAX);
-    //("WarpInverseMap", cv::WARP_INVERSE_MAP);
+    ("Nearest",  cv::INTER_NEAREST)   // nearest neighbor interpolation
+    ("Linear",   cv::INTER_LINEAR)    // bilinear interpolation
+    ("Cubic",    cv::INTER_CUBIC)     // bicubic interpolation
+    ("Area",     cv::INTER_AREA)      // area-based (or super) interpolation
+    ("Lanczos4", cv::INTER_LANCZOS4); // Lanczos interpolation over 8x8 neighborhood
 
 /// Thresholding type map for option processing
 const ConstMap<std::string,int> ThreshType = ConstMap<std::string,int>
-    ("Binary",    cv::THRESH_BINARY)
-    ("BinaryInv", cv::THRESH_BINARY_INV)
-    ("Trunc",     cv::THRESH_TRUNC)
-    ("ToZero",    cv::THRESH_TOZERO)
-    ("ToZeroInv", cv::THRESH_TOZERO_INV)
-    ("Mask",      cv::THRESH_MASK);
-    //("Otsu",    cv::THRESH_OTSU);
+    ("Binary",    cv::THRESH_BINARY)      // val = (val > thresh) ? maxVal : 0
+    ("BinaryInv", cv::THRESH_BINARY_INV)  // val = (val > thresh) ? 0 : maxVal
+    ("Trunc",     cv::THRESH_TRUNC)       // val = (val > thresh) ? thresh : val
+    ("ToZero",    cv::THRESH_TOZERO)      // val = (val > thresh) ? val : 0
+    ("ToZeroInv", cv::THRESH_TOZERO_INV); // val = (val > thresh) ? 0 : val
 
 /// Distance types for Distance Transform and M-estimators
 const ConstMap<std::string,int> DistType = ConstMap<std::string,int>
-    ("User",   cv::DIST_USER)
-    ("L1",     cv::DIST_L1)
-    ("L2",     cv::DIST_L2)
-    ("C",      cv::DIST_C)
-    ("L12",    cv::DIST_L12)
-    ("Fair",   cv::DIST_FAIR)
-    ("Welsch", cv::DIST_WELSCH)
-    ("Huber",  cv::DIST_HUBER);
+    ("User",   cv::DIST_USER)   // user-defined distance
+    ("L1",     cv::DIST_L1)     // distance = |x1-x2| + |y1-y2|
+    ("L2",     cv::DIST_L2)     // the simple euclidean distance
+    ("C",      cv::DIST_C)      // distance = max(|x1-x2|,|y1-y2|)
+    ("L12",    cv::DIST_L12)    // distance = 2*(sqrt(1+x*x/2) - 1)
+    ("Fair",   cv::DIST_FAIR)   // distance = c^2*(|x|/c-log(1+|x|/c)), c = 1.3998
+    ("Welsch", cv::DIST_WELSCH) // distance = c^2/2*(1-exp(-(x/c)^2)), c = 2.9846
+    ("Huber",  cv::DIST_HUBER); // distance = |x|<c ? x^2/2 : c(|x|-c/2), c=1.345
+
+/// Inverse Distance types for Distance Transform and M-estimators
+const ConstMap<int,std::string> DistTypeInv = ConstMap<int,std::string>
+    (cv::DIST_USER,   "User")
+    (cv::DIST_L1,     "L1")
+    (cv::DIST_L2,     "L2")
+    (cv::DIST_C,      "C")
+    (cv::DIST_L12,    "L12")
+    (cv::DIST_FAIR,   "Fair")
+    (cv::DIST_WELSCH, "Welsch")
+    (cv::DIST_HUBER,  "Huber");
 
 /// Line type for drawing
 const ConstMap<std::string,int> LineType = ConstMap<std::string,int>
@@ -371,6 +386,38 @@ std::vector<cv::Matx<T,m,n> > MxArrayToVectorMatx(const MxArray& arr)
 /**************************************************************\
 *      Conversion Functions: MxArray to vector of vectors      *
 \**************************************************************/
+
+/** Convert an MxArray to std::vector<std::vector<T>>
+ *
+ * @param arr MxArray object. In one of the following forms:
+ * - a cell-array of cell-arrays of numeric scalars,
+ *   e.g: <tt>{{s1, s2, ...}, {s1, ...}, ...}</tt>
+ * - a cell-array of numeric vectors,
+ *   e.g: <tt>{[s1, s2, ...], [s1, ...], ...}</tt>
+ * @return vector of vectors of primitives of type T
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<vector<int>> vvi = MxArrayToVectorVectorPrimitive<int>(cellArray);
+ * @endcode
+ */
+template <typename T>
+std::vector<std::vector<T> > MxArrayToVectorVectorPrimitive(const MxArray& arr)
+{
+    /*
+    std::vector<MxArray> vva(arr.toVector<MxArray>());
+    std::vector<std::vector<T> > vv;
+    vv.reserve(vva.size());
+    for (std::vector<MxArray>::const_iterator it = vva.begin(); it != vva.end(); ++it) {
+        vv.push_back(it->toVector<T>());
+    }
+    return vv;
+    */
+    typedef std::vector<T> VecT;
+    const_mem_fun_ref_t<VecT, MxArray> func(&MxArray::toVector<T>);
+    return arr.toVector(func);
+}
 
 /** Convert an MxArray to std::vector<std::vector<cv::Point_<T>>>
  *

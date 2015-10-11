@@ -5,12 +5,12 @@
 %
 % ## Input
 % * __im__ Image on which to draw contours.
-% * __contours__ All the input contours. Each contour is stored as a point
-%       vector. A cell array of cell arrays of the form:
-%       `{{[x,y],[x,y],...}, ...}`
+% * __contours__ All the input contours. Each contour is stored as a 2D point
+%       vector (integer points). A cell array of cell arrays of the form:
+%       `{{[x,y],[x,y],...}, ...}`, or a cell array of Nx2 matrices.
 %
 % ## Output
-% * __im__ Destination image.
+% * __im__ Destination image, same size and type as input `im`.
 %
 % ## Options
 % * __ContourIdx__ Parameter indicating a contour to draw. A zero-based index
@@ -25,18 +25,19 @@
 % * __Hierarchy__ Optional information about hierarchy. It is only needed if
 %       you want to draw only some of the contours (see `MaxLevel`).
 %       A cell array of 4-element vectors for each contour of the form
-%       `{[next,prev,child,parent], ...}`, or a Nx4/Nx1x4/1xNx4 numeric matrix.
+%       `{[next,prev,child,parent], ...}`, or a Nx4/Nx1x4/1xNx4 numeric
+%       matrix of integers. default empty
 % * __MaxLevel__ Maximal level for drawn contours. If it is 0, only the
-%         specified contour is drawn. If it is 1, the function draws the
-%         contour(s) and all the nested contours. If it is 2, the function draws
-%         the contours, all the nested contours, all the nested-to-nested
-%         contours, and so on. This parameter is only taken into account when
-%         there is `hierarchy` available. default `intmax('int32')`
+%       specified contour is drawn. If it is 1, the function draws the
+%       contour(s) and all the nested contours. If it is 2, the function draws
+%       the contours, all the nested contours, all the nested-to-nested
+%       contours, and so on. This parameter is only taken into account when
+%       there is `Hierarchy` available. default `intmax('int32')`
 % * __Offset__ Optional contour shift parameter. Shift all the drawn contours
-%         by the specified `offset = (dx,dy)`. default [0,0]
+%       by the specified `offset = (dx,dy)`. default [0,0]
 %
-% The function draws contour outlines in the image if `thickness >= 0` or fills
-% the area bounded by the contours if `thickness < 0`.
+% The function draws contour outlines in the image if `Thickness >= 0` or
+% fills the area bounded by the contours if `Thickness < 0`.
 %
-% See also: cv.findContours
+% See also: cv.findContours, visboundaries, bwlabel
 %
