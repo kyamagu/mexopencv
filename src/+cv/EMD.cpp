@@ -46,7 +46,16 @@ void mexFunction( int nlhs, mxArray *plhs[],
     
     // Process
     Mat signature1(rhs[0].toMat()), signature2(rhs[1].toMat()), flow;
-    double d = EMD(signature1, signature2, distType, cost, &lowerBound, flow);
+    double d;
+    if (distType==CV_DIST_USER)
+    {
+        d = EMD(signature1, signature2, distType, cost);
+    }
+    else
+    {
+        d = EMD(signature1, signature2, distType, cost, &lowerBound, flow);
+    }
+	
     plhs[0] = MxArray(d);
     if (nlhs>1)
         plhs[1] = MxArray(lowerBound);
