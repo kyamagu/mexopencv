@@ -6,11 +6,16 @@ classdef TestImencode
 
     methods (Static)
         function test_encode
-            frmts = {'.jpg', '.png', '.ppm', '.tif', '.bmp', ...
-                '.webp', '.ras', '.jp2', '.exr', '.hdr'};
+            frmts = TestImwrite.getFormats();
             for i=1:numel(frmts)
-                buf = cv.imencode(frmts{i}, TestImencode.im);
-                validateattributes(buf, {'uint8'}, {'vector', 'nonempty'});
+                try
+                    buf = cv.imencode(frmts(i).ext, TestImencode.im, ...
+                        frmts(i).opts{:});
+                    validateattributes(buf, {'uint8'}, {'vector', 'nonempty'});
+                catch ME
+                    %TODO: some codecs are not available on all platforms
+                    fprintf('SKIPPED: %s (%s)\n', frmts(i).name, frmts(i).ext);
+                end
             end
         end
 
