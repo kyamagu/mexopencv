@@ -5,90 +5,20 @@ classdef TestImwrite
     end
 
     methods (Static)
-        function test_write_jpeg
-            filename = [tempname '.jpg'];
-            cObj = onCleanup(@() TestImwrite.deleteFile(filename));
-
-            cv.imwrite(filename, TestImwrite.im, ....
-                'JpegQuality',90, 'JpegProgressive',false, ...
-                'JpegOptimize',false, 'JpegResetInterval',0, ...
-                'JpegLumaQuality',0, 'JpegChromaQuality',0);
-            assert(exist(filename,'file')==2, 'Failed to write JPEG');
-        end
-
-        function test_write_png
-            filename = [tempname '.png'];
-            cObj = onCleanup(@() TestImwrite.deleteFile(filename));
-
-            cv.imwrite(filename, TestImwrite.im, ...
-                'PngCompression',9, 'PngStrategy','RLE');
-            assert(exist(filename,'file')==2, 'Failed to write PNG');
-        end
-
-        function test_write_pxm
-            filename = [tempname '.ppm'];
-            cObj = onCleanup(@() TestImwrite.deleteFile(filename));
-
-            cv.imwrite(filename, TestImwrite.im, 'PxmBinary',false);
-            assert(exist(filename,'file')==2, 'Failed to write PPM');
-        end
-
-        function test_write_tiff
-            filename = [tempname '.tif'];
-            cObj = onCleanup(@() TestImwrite.deleteFile(filename));
-
-            cv.imwrite(filename, TestImwrite.im);
-            assert(exist(filename,'file')==2, 'Failed to write TIFF');
-        end
-
-        function test_write_bmp
-            filename = [tempname '.bmp'];
-            cObj = onCleanup(@() TestImwrite.deleteFile(filename));
-
-            cv.imwrite(filename, TestImwrite.im);
-            assert(exist(filename,'file')==2, 'Failed to write BMP');
-        end
-
-        function test_write_webp
-            filename = [tempname '.webp'];
-            cObj = onCleanup(@() TestImwrite.deleteFile(filename));
-
-            cv.imwrite(filename, TestImwrite.im);
-            assert(exist(filename,'file')==2, 'Failed to write WebP');
-        end
-
-        function test_write_sunras
-            filename = [tempname '.ras'];
-            cObj = onCleanup(@() TestImwrite.deleteFile(filename));
-
-            cv.imwrite(filename, TestImwrite.im);
-            assert(exist(filename,'file')==2, 'Failed to write Sun Raster');
-        end
-
-        function test_write_jpeg2000
-            filename = [tempname '.jp2'];
-            cObj = onCleanup(@() TestImwrite.deleteFile(filename));
-
-            cv.imwrite(filename, TestImwrite.im);
-            assert(exist(filename,'file')==2, 'Failed to write JPEG-2000');
-        end
-
-        function test_write_exr
-            filename = [tempname '.exr'];
-            cObj = onCleanup(@() TestImwrite.deleteFile(filename));
-
-            %TODO
-            cv.imwrite(filename, TestImwrite.im);
-            assert(exist(filename,'file')==2, 'Failed to write OpenEXR');
-        end
-
-        function test_write_hdr
-            filename = [tempname '.hdr'];
-            cObj = onCleanup(@() TestImwrite.deleteFile(filename));
-
-            %TODO
-            cv.imwrite(filename, TestImwrite.im);
-            assert(exist(filename,'file')==2, 'Failed to write Radiance HDR');
+        function test_write
+            frmts = TestImwrite.getFormats();
+            for i=1:numel(frmts)
+                filename = [tempname frmts(i).ext];
+                cObj = onCleanup(@() TestImwrite.deleteFile(filename));
+                try
+                    cv.imwrite(filename, TestImwrite.im, frmts(i).opts{:});
+                    assert(exist(filename,'file')==2, ...
+                        'Failed to write %s', frmts(i).name);
+                catch ME
+                    %TODO: some codecs are not available on all platforms
+                    fprintf('SKIPPED: %s (%s)\n', frmts(i).name, frmts(i).ext);
+                end
+            end
         end
 
         function test_verify_lossless_png
@@ -154,6 +84,35 @@ classdef TestImwrite
             if exist(fname, 'file') == 2
                 delete(fname);
             end
+        end
+
+        function frmts = getFormats()
+            frmts = repmat(struct('name','', 'ext','', 'opts',{{}}), 10, 1);
+            frmts(1).name = 'JPEG';
+            frmts(1).ext = '.jpg';
+            frmts(1).opts = {'JpegQuality',90, 'JpegProgressive',false, ...
+                'JpegOptimize',false, 'JpegResetInterval',0, ...
+                'JpegLumaQuality',0, 'JpegChromaQuality',0};
+            frmts(2).name = 'PNG';
+            frmts(2).ext = '.png';
+            frmts(2).opts = {'PngCompression',9, 'PngStrategy','RLE'};
+            frmts(3).name = 'PPM';
+            frmts(3).ext = '.ppm';
+            frmts(3).opts = {'PxmBinary',false};
+            frmts(4).name = 'TIFF';
+            frmts(4).ext = '.tif';
+            frmts(5).name = 'BMP';
+            frmts(5).ext = '.bmp';
+            frmts(6).name = 'WebP';
+            frmts(6).ext = '.webp';
+            frmts(7).name = 'Sun Raster';
+            frmts(7).ext = '.ras';
+            frmts(8).name = 'JPEG-2000';
+            frmts(8).ext = '.jp2';
+            frmts(9).name = 'OpenEXR';
+            frmts(9).ext = '.exr';
+            frmts(10).name = 'Radiance HDR';
+            frmts(10).ext = '.hdr';
         end
     end
 
