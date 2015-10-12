@@ -415,7 +415,7 @@ std::vector<std::vector<T> > MxArrayToVectorVectorPrimitive(const MxArray& arr)
     return vv;
     */
     typedef std::vector<T> VecT;
-    const_mem_fun_ref_t<VecT, MxArray> func(&MxArray::toVector<T>);
+    std::const_mem_fun_ref_t<VecT, MxArray> func(&MxArray::toVector<T>);
     return arr.toVector(func);
 }
 
