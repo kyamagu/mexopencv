@@ -14,7 +14,7 @@ classdef TestStereoBM
             validateattributes(D, {'int16'}, {'size',[size(im1,1) size(im1,2)]});
 
             % points cloud
-            %{{
+            %{
             [X,Y] = ndgrid(1:size(D,1), 1:size(D,2));
             C = imread(fullfile(mexopencv.root(),'test','tsukuba.png'));
             scatter3(X(:), Y(:), D(:), 6, reshape(im2double(C),[],3), '.'); axis equal
