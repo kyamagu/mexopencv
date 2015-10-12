@@ -36,24 +36,24 @@ classdef TestRemap
             assert(isequal(dst, img));
 
             % reflect image left to right
-            dst = cv.remap(img, fliplr(X), Y);
-            assert(isequal(dst, fliplr(img)));
+            dst = cv.remap(img, fliplr_(X), Y);
+            assert(isequal(dst, fliplr_(img)));
 
             % turn image upside down
-            dst = cv.remap(img, X, flipud(Y));
-            assert(isequal(dst, flipud(img)));
+            dst = cv.remap(img, X, flipud_(Y));
+            assert(isequal(dst, flipud_(img)));
 
             % combine previous two
-            dst = cv.remap(img, fliplr(X), flipud(Y));
-            assert(isequal(dst, rot90(img,2)));
+            dst = cv.remap(img, fliplr_(X), flipud_(Y));
+            assert(isequal(dst, rot90_(img,2)));
 
             % rotate 90 degrees
-            dst = cv.remap(img, rot90(X), rot90(Y));
-            assert(isequal(dst, rot90(img)));
+            dst = cv.remap(img, rot90_(X), rot90_(Y));
+            assert(isequal(dst, rot90_(img)));
 
             % circularly shift in both directions (100 in cols, -200 in rows)
-            dst = cv.remap(img, circshift(X, 100, 2), circshift(Y, -200, 1));
-            assert(isequal(dst, circshift(circshift(img,100,2),-200,1)));
+            dst = cv.remap(img, circshift(X, [0 100]), circshift(Y, [-200 0]));
+            assert(isequal(dst, circshift(img, [-200 100 0])));
 
             % crop
             dst = cv.remap(img, X(1:200,1:300), Y(1:200,1:300));
@@ -72,8 +72,8 @@ classdef TestRemap
             [Y,X] = ndgrid((1:r)-1, (1:c)-1);  % 0-based indices
 
             % reflect image left to right
-            dst = cv.remap(img, cat(3, fliplr(X), Y));
-            assert(isequal(dst, fliplr(img)));
+            dst = cv.remap(img, cat(3, fliplr_(X), Y));
+            assert(isequal(dst, fliplr_(img)));
         end
 
         function test_5_fixed_point
@@ -113,10 +113,10 @@ classdef TestRemap
             [r,c,~] = size(img);
             [Y,X] = ndgrid((1:r)-1, (1:c)-1);  % 0-based indices
 
-            dst = cv.remap(img, [zeros(r,100)-1 X(:,101:end)], flipud(Y), ...
+            dst = cv.remap(img, [zeros(r,100)-1 X(:,101:end)], flipud_(Y), ...
                 'Dst',img, 'BorderType','Transparent');
             validateattributes(dst, {class(img)}, {'size',size(img)});
-            isequal(dst, [img(:,1:100,:) flipud(img(:,101:end,:))]);
+            isequal(dst, [img(:,1:100,:) flipud_(img(:,101:end,:))]);
         end
 
         function test_error_1
@@ -129,4 +129,42 @@ classdef TestRemap
         end
     end
 
+end
+
+%% workarounds for older MATLAB versions, to work with ndims>2
+% (FLIP was introduced in R2013b)
+% (FLIPUD/FLIPLR/ROT90 started supporting ND-arrays in R2014a)
+
+function Y = flipud_(X)
+    if ~mexopencv.isOctave() && verLessThan('matlab','8.2')
+        Y = flipdim(X,1);
+    else
+        Y = flipud(X);
+    end
+end
+
+function Y = fliplr_(X)
+    if ~mexopencv.isOctave() && verLessThan('matlab','8.2')
+        Y = flipdim(X,2);
+    else
+        Y = fliplr(X);
+    end
+end
+
+function Y = rot90_(X,k)
+    if nargin < 2, k = 1; end
+    if ~mexopencv.isOctave() && verLessThan('matlab','8.3')
+        switch mod(k,4)
+            case 0
+                Y = X;
+            case 1
+                Y = permute(fliplr_(X), [2 1 3:ndims(X)]);
+            case 2
+                Y = fliplr_(flipud_(X));
+            case 3
+                Y = fliplr_(permute(X, [2 1 3:ndims(X)]));
+        end
+    else
+        Y = rot90(X,k);
+    end
 end

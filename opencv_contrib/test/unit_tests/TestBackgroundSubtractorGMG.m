@@ -13,8 +13,8 @@ classdef TestBackgroundSubtractorGMG
             fgmask = bs.apply(frame, 'LearningRate',0);
             if false
                 %TODO: getBackgroundImage always empty for GMG
-	            bg = bs.getBackgroundImage();
-	            validateattributes(bg, {'uint8'}, {'size',[100 100 3]});
+                bg = bs.getBackgroundImage();
+                validateattributes(bg, {'uint8'}, {'size',[100 100 3]});
             end
         end
     end
