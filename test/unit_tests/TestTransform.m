@@ -47,7 +47,7 @@ classdef TestTransform
                 dst2 = permute(reshape(permute(...
                     mtx * reshape(permute(src, [3 2 1]), size(src,3), []), ...
                     [2 1 3]), [size(src,2) size(src,1) size(mtx,1)]), [2 1 3]);
-                assert(isequal(dst, dst2));
+                assert(isequal(size(dst), size(dst2)) && all(abs(dst(:) - dst2(:)) < 1e-9));
             end
         end
 
