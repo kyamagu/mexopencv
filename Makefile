@@ -46,6 +46,7 @@ DOXYGEN    ?= doxygen
 
 # mexopencv directories
 TARGETDIR  = +cv
+TSDIR      = +test
 INCLUDEDIR = include
 LIBDIR     = lib
 SRCDIR     = src
@@ -64,7 +65,9 @@ endif
 HEADERS    := $(wildcard $(INCLUDEDIR)/*.hpp)
 SRCS0      := $(wildcard $(SRCDIR)/*.cpp)
 SRCS1      := $(wildcard $(SRCDIR)/$(TARGETDIR)/*.cpp) \
-              $(wildcard $(SRCDIR)/$(TARGETDIR)/$(PRIVATEDIR)/*.cpp)
+              $(wildcard $(SRCDIR)/$(TARGETDIR)/$(PRIVATEDIR)/*.cpp) \
+              $(wildcard $(SRCDIR)/$(TARGETDIR)/$(TSDIR)/*.cpp) \
+              $(wildcard $(SRCDIR)/$(TARGETDIR)/$(TSDIR)/$(PRIVATEDIR)/*.cpp)
 SRCS2      := $(wildcard $(CONTRIBDIR)/$(SRCDIR)/$(TARGETDIR)/*.cpp) \
               $(wildcard $(CONTRIBDIR)/$(SRCDIR)/$(TARGETDIR)/$(PRIVATEDIR)/*.cpp)
 OBJECTS0   := $(subst $(SRCDIR), $(LIBDIR), $(SRCS0:.cpp=.$(OBJEXT)))
@@ -96,6 +99,7 @@ override LDFLAGS += -L$(LIBDIR) -lMxArray $(CV_LDFLAGS)
 # (http://make.mad-scientist.net/papers/how-not-to-use-vpath/)
 vpath %.cpp $(SRCDIR)/$(TARGETDIR)
 vpath %.cpp $(SRCDIR)/$(TARGETDIR)/$(PRIVATEDIR)
+vpath %.cpp $(SRCDIR)/$(TARGETDIR)/$(TSDIR)/$(PRIVATEDIR)
 vpath %.cpp $(CONTRIBDIR)/$(SRCDIR)/$(TARGETDIR)
 vpath %.cpp $(CONTRIBDIR)/$(SRCDIR)/$(TARGETDIR)/$(PRIVATEDIR)
 
@@ -118,6 +122,7 @@ $(TARGETS0): $(OBJECTS0)
 # MEX-files
 $(TARGETDIR)/%.$(MEXEXT) \
 $(TARGETDIR)/$(PRIVATEDIR)/%.$(MEXEXT) \
+$(TARGETDIR)/$(TSDIR)/$(PRIVATEDIR)/%.$(MEXEXT) \
 $(CONTRIBDIR)/$(TARGETDIR)/%.$(MEXEXT) \
 $(CONTRIBDIR)/$(TARGETDIR)/$(PRIVATEDIR)/%.$(MEXEXT) \
 : %.cpp $(TARGETS0)
@@ -128,6 +133,7 @@ clean:
         $(LIBDIR)/*.$(LIBEXT) $(LIBDIR)/*.$(OBJEXT) \
         $(TARGETDIR)/*.$(MEXEXT) \
         $(TARGETDIR)/$(PRIVATEDIR)/*.$(MEXEXT) \
+        $(TARGETDIR)/$(TSDIR)/$(PRIVATEDIR)/*.$(MEXEXT) \
         $(CONTRIBDIR)/$(TARGETDIR)/*.$(MEXEXT) \
         $(CONTRIBDIR)/$(TARGETDIR)/$(PRIVATEDIR)/*.$(MEXEXT)
 

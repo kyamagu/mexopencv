@@ -170,6 +170,32 @@ inline void nargchk(bool cond)
     }
 }
 
+/** Cutom error callback to be invoked by cv::error(), CV_Assert, etc...
+ * @param status status code.
+ * @param func_name function name.
+ * @param err_msg error message.
+ * @param file_name filename path.
+ * @param line line number.
+ * @param userdata optional user data pointer (unused).
+ * @return zero code.
+ * @sa cv::redirectError
+ */
+int MexErrorHandler(int status, const char *func_name, const char *err_msg,
+    const char *file_name, int line, void * /*userdata*/)
+{
+    mexErrMsgIdAndTxt("mexopencv:error",
+        "OpenCV Error:\n"
+        "  Status  : %s (%d)\n"
+        "  Message : %s\n"
+        "  Function: %s\n"
+        "  File    : <a href=\"matlab:opentoline('%s',%d)\">%s</a>\n"
+        "  Line    : %d\n",
+        cvErrorStr(status), status, err_msg,
+        (func_name ? func_name : "(unknown)"),
+        file_name, line, file_name, line);
+    return 0;
+}
+
 /**************************************************************\
 *           Conversion Functions: MxArray to vector            *
 \**************************************************************/
