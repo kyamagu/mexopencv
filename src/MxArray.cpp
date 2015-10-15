@@ -118,6 +118,18 @@ MxArray::MxArray(const std::string& s)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
 }
 
+#if 0
+// - works for multi-channel arrays, but doesnt work for ND-arrays because
+// cv::split is broken for mat.dims>2, http://code.opencv.org/issues/4426.
+// Even if cv::split was fixed, we still need to get
+// the order of dimensions right for ND-array (row to column major order)
+// (the std::swap below only gets it right for 2D arrays).
+// - There's another bug regarding multi-channel arrays where mat.channels()
+// is limited because of cv::transpose, which is only implemented for a number
+// of cases, and asserts that mat.elementSize() <= 32
+// (elementSize = sizeof(depth)*nchannels), so for mat.depth()==CV_8U we can
+// go up to 32 channels, but for mat.depth()==CV_64F we can only go up to a
+// maximum of 4 channels (8*4 == 32)
 MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
 {
     // handle special case of empty input Mat by creating an empty array
@@ -165,6 +177,76 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool transpose)
         channels[i].convertTo(m, type);          // Write to mxArray through m
     }
 }
+#else
+// works for any cv::Mat/cv::MatND (any combination of channels and dimensions)
+MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool)
+{
+    // determine classID of output array
+    classid = (classid == mxUNKNOWN_CLASS) ? ClassIDOf[mat.depth()] : classid;
+
+    // handle special case of empty input Mat by returning 0x0 array
+    if (mat.empty()) {
+        // TODO: maybe return empty array of same dimensions 0x1, 1x0x2, ...
+        p_ = mxCreateNumericMatrix(0, 0, classid, mxREAL);
+        if (!p_)
+            mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+        return;
+    }
+
+    // Create output mxArray (of specified type), equivalent to the input Mat
+    const mwSize cn = mat.channels();
+    const mwSize len = mat.total() * cn;
+    std::vector<mwSize> sz(mat.size.p, mat.size.p + mat.dims);
+    if (cn > 1)
+        sz.push_back(cn);  // channels is treated as another dimension
+    std::reverse(sz.begin(), sz.end());  // row vs. column major order
+    if (classid == mxLOGICAL_CLASS)
+        p_ = mxCreateLogicalArray(sz.size(), &sz[0]);
+    else
+        p_ = mxCreateNumericArray(sz.size(), &sz[0], classid, mxREAL);
+    if (!p_)
+        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+
+    // fill output with values from input Mat
+    // (linearized as a 1D-vector, both dimensions and channels)
+    {
+        // wrap destination data using a cv::Mat
+        const int type = CV_MAKETYPE(DepthOf[classid], 1); // destination type
+        cv::Mat m(len, 1, type, mxGetData(p_));  // only creates Mat header
+
+        // copy flattened input to output array (converting to specified type)
+        const cv::Mat mat0(len, 1, mat.depth(), mat.data); // no data copying
+        if (classid == mxLOGICAL_CLASS) {
+            // OpenCV's logical true is any nonzero, while MATLAB's true is 1
+            cv::compare(mat0, 0, m, cv::CMP_NE); // values either 0 or 255
+            m.setTo(1, m);  // values either 0 or 1 (CV_8U)
+        }
+        else
+            mat0.convertTo(m, type);
+    }
+
+    // rearrange dimensions of mxArray by calling PERMUTE from MATLAB. We want
+    // to convert from row-major order (C-style, last dim changes fastest) to a
+    // column-major order (MATLAB-style, first dim changes fastest). This will
+    // handle all cases of cv::Mat as multi-channels and/or multi-dimensions.
+    std::vector<double> order;
+    order.reserve(sz.size());
+    for (int i=sz.size(); i>0; i--)
+        order.push_back(i);
+
+    // CALL: out = permute(in, ndims(in):-1:1)
+    mxArray *lhs, *rhs[2];
+    rhs[0] = const_cast<mxArray*>(p_);
+    rhs[1] = MxArray(order);
+    lhs = NULL;              // new data copy will be returned
+    if (mexCallMATLAB(1, &lhs, 2, rhs, "permute") != 0)
+        mexErrMsgIdAndTxt("mexopencv:error", "Error calling permute");
+    p_ = lhs;
+    mxDestroyArray(rhs[0]);  // discard old copy
+    mxDestroyArray(rhs[1]);
+    CV_DbgAssert(!isNull() && classID()==classid && numel()==len);
+}
+#endif
 
 MxArray::MxArray(const cv::SparseMat& mat)
 {
@@ -391,7 +473,47 @@ std::string MxArray::toString() const
 
 cv::Mat MxArray::toMat(int depth, bool transpose) const
 {
-    // Create cv::Mat object (of the specified depth), equivalent to mxArray
+    CV_Assert(isNumeric() || isLogical() || isChar());
+
+    // the rest of this function works fine for 2D and 3D arrays, but for
+    // higher ND-arrays the order of dimensions is not right (the std::swap
+    // below is only intended for 2d array).
+    // So instead we use MxArray::toMatND on the input ND-array and then
+    // convert the last dimension of the MatND into channels.
+    if (ndims() > 3) {
+        cv::Mat matnd(toMatND(depth, transpose));  // ND-array, 1-channel
+        CV_DbgAssert(matnd.isContinuous() && matnd.dims == ndims() && matnd.channels() == 1);
+        std::vector<int> d(matnd.size.p, matnd.size.p + matnd.dims);
+        const int cn = d.back();
+        const int type = CV_MAKETYPE(matnd.depth(), cn);
+        CV_Assert(cn <= CV_CN_MAX);
+/*
+        // straightforward implementation, unfortunately it throws an
+        // exception that ND-array reshape is not yet implemented.
+        //TODO: this was fixed in master after 3.0.0:
+        // https://github.com/Itseez/opencv/pull/4212
+        return matnd.reshape(cn, d.size()-1, &d[0]);
+*/
+/*
+        // an alternative implementation, but it creates a temp copy
+        cv::Mat mat(d.size()-1, &d[0], type, matnd.data);
+        return mat.clone();
+*/
+///*
+        // another hacky implementation, works without creating a temp copy
+        const cv::Mat mat(d.size()-1, &d[0], type, matnd.data); // header only
+        // Mat::reshape leaves an extra singleton dimension at the end (e.g
+        // 5x4x3x2 1-ch -> 5x4x3x1 2-cn) but it correctly sets cn in the flags
+        matnd = matnd.reshape(cn, 0);
+        // this fixes the number of dimensions (sorta like SQUEEZE)
+        matnd.copySize(mat);  // dims reduced and size/step pointers reallocated
+        return matnd;
+//*/
+    }
+
+    // Create cv::Mat object (of the specified depth), equivalent to mxArray.
+    // At this point we create either a 2-dim with 1-channel mat, or a 2-dim
+    // with multi-channels mat. Multi-dims case is handled above.
     std::vector<int> d(dims(), dims()+ndims());
     const mwSize ndims = (d.size()>2) ? d.size()-1 : d.size();
     const mwSize nchannels = (d.size()>2) ? d.back() : 1;
@@ -411,15 +533,19 @@ cv::Mat MxArray::toMat(int depth, bool transpose) const
         const cv::Mat m(ndims, &d[0], type, pd); // only creates Mat headers
         // Read from mxArray through m, writing into channels[i]
         m.convertTo(channels[i], CV_MAKETYPE(depth, 1));
+        // transpose cv::Mat if needed. We do this inside the loop on each 2d
+        // 1-cn slice to avoid cv::transpose limitation on number of channels
+        if (transpose)
+            cv::transpose(channels[i], channels[i]);  // in-place transpose
     }
     // Merge channels back into one cv::Mat array
+    // (Note that unlike cv::split, cv::merge works for all cases of dims/cn)
     cv::merge(channels, mat);
-    // transpose cv::Mat if needed
-    if (mat.dims==2 && transpose)
-        cv::transpose(mat, mat);  // in-place transpose
     return mat;
 }
 
+#if 0
+// works for 2D, but for ND-arrays the dimensions are not arranged correctly
 cv::MatND MxArray::toMatND(int depth, bool transpose) const
 {
     // Create cv::MatND object (of the specified depth), equivalent to mxArray
@@ -437,6 +563,53 @@ cv::MatND MxArray::toMatND(int depth, bool transpose) const
         cv::transpose(mat, mat);  // in-place transpose
     return mat;
 }
+#else
+// works for any number of dimensions
+cv::MatND MxArray::toMatND(int depth, bool) const
+{
+    CV_Assert(isNumeric() || isLogical() || isChar());
+    CV_Assert(ndims() <= CV_MAX_DIM);
+
+    // rearrange ND-array from MATLAB-style (column-major order, first dim
+    // changes fastest) to C-style (row-major order, last dim changes fastest)
+    // by calling PERMUTE from MATLAB.
+    std::vector<double> order;
+    order.reserve(ndims());
+    for (int i=ndims(); i>0; i--)
+        order.push_back(i);
+
+    // CALL: out = permute(in, ndims(in):-1:1)
+    mxArray *lhs, *rhs[2];
+    rhs[0] = const_cast<mxArray*>(p_);
+    rhs[1] = MxArray(order);
+    lhs = NULL;    // new data copy will be returned
+    if (mexCallMATLAB(1, &lhs, 2, rhs, "permute") != 0)
+        mexErrMsgIdAndTxt("mexopencv:error", "Error calling permute");
+    mxDestroyArray(rhs[1]);
+    CV_DbgAssert(lhs!=NULL && mxGetClassID(lhs)==classID() &&
+        mxGetNumberOfElements(lhs)==numel());
+
+    // Create output cv::MatND object of the specified depth, and of same size
+    // as mxArray. This is a single-channel multi-dimensional array.
+    std::vector<int> d(dims(), dims() + ndims());
+    depth = (depth == CV_USRTYPE1) ? DepthOf[classID()] : depth;
+    cv::MatND mat(d.size(), &d[0], CV_MAKETYPE(depth, 1));
+
+    // Copy data from mxArray to cv::MatND (converting to specified depth)
+    {
+        // wrap source data using a cv::Mat (only creates header, data shared)
+        const int type = CV_MAKETYPE(DepthOf[classID()], 1);  // source type
+        const cv::MatND m(d.size(), &d[0], type, mxGetData(lhs));
+
+        // Read from mxArray through m, writing into mat
+        m.convertTo(mat, CV_MAKETYPE(depth, 1));
+    }
+
+    // clean temporary copy, and return result
+    mxDestroyArray(lhs);
+    return mat;
+}
+#endif
 
 cv::SparseMat MxArray::toSparseMat() const
 {

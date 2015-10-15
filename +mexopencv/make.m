@@ -277,6 +277,8 @@ function s = compiler_str()
         if strcmp(cc.Manufacturer, 'Microsoft')
             if ~isempty(strfind(cc.Name, 'Visual'))  % Visual Studio
                 switch cc.Version
+                    case '14.0'
+                        s = 'vc14';    % VS2015
                     case '12.0'
                         s = 'vc12';    % VS2013
                     case '11.0'

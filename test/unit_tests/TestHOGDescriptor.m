@@ -177,12 +177,14 @@ function deleteFile(fname)
 end
 
 function img = get_image()
+    img = [];
     vidfile = get_pedestrian_video();
     if exist(vidfile, 'file')
         vid = cv.VideoCapture(vidfile);
         img = vid.read();
         vid.release();
-    else
+    end
+    if isempty(img)
         img = imread(fullfile(mexopencv.root(),'test','lena.jpg'));
     end
 end
