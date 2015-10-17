@@ -31,7 +31,40 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<MxArray> rhs(prhs, prhs+nrhs);
     string method(rhs[0].toString());
 
-    if (method == "toMat_row_vector") {
+
+    if (method == "from_scalar_int") {
+        nargchk(nrhs==1 && nlhs<=1);
+        int x = 5;
+        MxArray arr(x);
+        CV_Assert(arr.isDouble() && arr.ndims() == 2);  // arr.isInt32()
+        CV_Assert(arr.numel() == 1 && arr.rows() == 1 && arr.cols() == 1);
+        plhs[0] = arr;
+    }
+    else if (method == "from_scalar_double") {
+        nargchk(nrhs==1 && nlhs<=1);
+        double x = 3.14;
+        MxArray arr(x);
+        CV_Assert(arr.isDouble() && arr.ndims() == 2);
+        CV_Assert(arr.numel() == 1 && arr.rows() == 1 && arr.cols() == 1);
+        plhs[0] = arr;
+    }
+    else if (method == "from_scalar_bool") {
+        nargchk(nrhs==1 && nlhs<=1);
+        bool x = true;
+        MxArray arr(x);
+        CV_Assert(arr.isLogicalScalar() && arr.ndims() == 2);
+        CV_Assert(arr.numel() == 1 && arr.rows() == 1 && arr.cols() == 1);
+        plhs[0] = arr;
+    }
+    else if (method == "from_string") {
+        nargchk(nrhs==1 && nlhs<=1);
+        string str = "test";
+        MxArray arr(str);
+        CV_Assert(arr.isChar() && arr.ndims() == 2);
+        CV_Assert(arr.numel() == str.size() && arr.rows() == 1 && arr.cols() == str.size());
+        plhs[0] = arr;
+    }
+    else if (method == "toMat_row_vector") {
         nargchk(nrhs==2 && nlhs<=1);
         Mat m(rhs[1].toMat());
         CV_Assert(m.depth() == CV_64F && m.channels() == 1);
@@ -57,16 +90,16 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==1 && nlhs<=1);
         Mat m = (Mat_<double>(1,10) << 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         MxArray arr(m);
-        CV_Assert(arr.isDouble());
-        CV_Assert(arr.ndims() == 2 && arr.rows() == 1 && arr.cols() == 10);
+        CV_Assert(arr.isDouble() && arr.ndims() == 2);
+        CV_Assert(arr.numel() == 10 && arr.rows() == 1 && arr.cols() == 10);
         plhs[0] = arr;
     }
     else if (method == "fromMat_col_vector") {
         nargchk(nrhs==1 && nlhs<=1);
         Mat m = (Mat_<double>(10,1) << 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         MxArray arr(m);
-        CV_Assert(arr.isDouble());
-        CV_Assert(arr.ndims() == 2 && arr.rows() == 10 && arr.cols() == 1);
+        CV_Assert(arr.isDouble() && arr.ndims() == 2);
+        CV_Assert(arr.numel() == 10 && arr.rows() == 10 && arr.cols() == 1);
         plhs[0] = arr;
     }
     else
