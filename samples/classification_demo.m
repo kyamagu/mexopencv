@@ -10,12 +10,13 @@ Y =  int32([    ones(1000,1);    -ones(1000,1)]); % labels
 test_idx = mod(1:numel(Y),3)==0;                  % train/test split
 
 %%
-% try a bunch of classifiers
-classifiers = { ...
+% try a bunch of classifiers (using their default options)
+models = { ...
     cv.ANN_MLP(), ...
     cv.NormalBayesClassifier(), ...
     cv.KNearest(), ...
     cv.SVM(), ...
+    cv.DTrees(), ...
     cv.Boost(), ...
     cv.RTrees(), ...
     ... cv.ERTrees(), ...
@@ -23,30 +24,23 @@ classifiers = { ...
     cv.LogisticRegression() ...
 };
 
-if ~mexopencv.isOctave()
-    %TODO: this throws and crashes Octave,
-    % while MATLAB gracefully handles exceptions from MEX
-    classifiers{end+1} = cv.DTrees();
-end
-
-% ANN_MLP must be initialized properly with non-default values
-classifiers{1}.LayerSizes = [5,2];
-classifiers{1}.setActivationFunction('Sigmoid', 'Param1',1, 'Param2',1);
-
 %%
 % for each classifier
-for i = 1:numel(classifiers)
+for i = 1:numel(models)
     try
 
-        classifier = classifiers{i};
+        classifier = models{i};
         fprintf('=== %s ===\n', class(classifier));
 
         Ytrain = Y(~test_idx,:);
         if isa(classifier, 'cv.ANN_MLP')
-            % Unroll to an indicator representation
+            % ANN_MLP must be initialized properly with non-default values
+            classifier.LayerSizes = [size(X,2), 2];
+            classifier.setActivationFunction('Sigmoid', ...
+                'Param1',1, 'Param2',1);
+
+            % Unroll labels to an indicator representation
             Ytrain = double([Ytrain==1, Ytrain==-1]);
-        elseif isa(classifier, 'cv.LogisticRegression')
-            Ytrain = double(Ytrain);
         end
 
         % train
@@ -65,6 +59,7 @@ for i = 1:numel(classifiers)
         end
 
         % evaluate
+        Yhat = int32(Yhat);
         accuracy = nnz(Yhat == Y(test_idx)) / nnz(test_idx);
         fprintf('Accuracy: %.2f%%\n', accuracy*100);
 
