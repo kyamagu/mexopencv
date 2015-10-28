@@ -700,6 +700,11 @@ const ConstMap<string, cvflann::flann_centers_init_t> CentersInit =
     ("KMeansPP",  cvflann::FLANN_CENTERS_KMEANSPP)
     ("Groupwise", cvflann::FLANN_CENTERS_GROUPWISE);
 
+/** Convert MxArray to FLANN index parameters
+ * @param m MxArray object of a cell array of the form
+ *    {'type', 'OptionName', optionValue, ...}
+ * @return smart pointer to an instance of cv::flann::IndexParams.
+ */
 Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
 {
     Ptr<flann::IndexParams> p;
@@ -858,6 +863,11 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
     return p;
 }
 
+/** Convert MxArray to FLANN search parameters
+ * @param m MxArray object of a cell array of the form
+ *    {'OptionName', optionValue, ...}
+ * @return smart pointer to an instance of cv::flann::SearchParams.
+ */
 Ptr<flann::SearchParams> toSearchParams(const MxArray& m)
 {
     vector<MxArray> rhs(m.toVector<MxArray>());

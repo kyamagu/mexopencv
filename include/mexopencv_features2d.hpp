@@ -303,20 +303,6 @@ cv::Ptr<cv::DescriptorExtractor> createDescriptorExtractor(std::string type,
 
 // ==================== Descriptor Matching ====================
 
-/** Convert MxArray to FLANN index parameters
- * @param m MxArray object of a cell array of the form
- *    {'type', 'OptionName', optionValue, ...}
- * @return smart pointer to an instance of cv::flann::IndexParams.
- */
-cv::Ptr<cv::flann::IndexParams> toIndexParams(const MxArray& m);
-
-/** Convert MxArray to FLANN search parameters
- * @param m MxArray object of a cell array of the form
- *    {'OptionName', optionValue, ...}
- * @return smart pointer to an instance of cv::flann::SearchParams.
- */
-cv::Ptr<cv::flann::SearchParams> toSearchParams(const MxArray& m);
-
 /** Create an instance of FlannBasedMatcher using options in arguments
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
