@@ -1,18 +1,23 @@
 classdef LUCID < handle
-    %LUCID  Class implementing the locally uniform comparison image descriptor.
+    %LUCID  Class implementing the Locally Uniform Comparison Image Descriptor.
     %
     % As described in [LUCID].
     %
     % An image descriptor that can be computed very fast, while being about as
     % robust as, for example, cv.SURF or cv.BRIEF.
     %
+    % LUCID is a simple description method based on linear time permutation
+    % distances between the ordering of RGB values of two image patches.
+    % LUCID is computable in linear time with respect to the number of pixels
+    % and does not require floating point computation.
+    %
     % ## References
     % [LUCID]:
-    % > HK Yuen, John Princen, John Illingworth, and Josef Kittler.
-    % > "Comparative study of hough transform methods for circle finding".
-    % > Image and Vision Computing, 8(1):71-77, 1990.
+    % > Andrew Ziegler, Eric Christiansen, David Kriegman, Serge J. Belongie.
+    % > "Locally Uniform Comparison Image Descriptor".
+    % > In Advances in Neural Information Processing Systems, pp. 1-9. 2012.
     %
-    % See also: cv.LUCID.LUCID
+    % See also: cv.LUCID.LUCID, cv.DescriptorExtractor
     %
 
     properties (SetAccess = private)
@@ -49,6 +54,11 @@ classdef LUCID < handle
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
+            %    typename = obj.typeid()
+            %
+            % ## Output
+            % * __typename__ Name of C++ type
+            %
             typename = LUCID_(this.id, 'typeid');
         end
     end
@@ -56,7 +66,7 @@ classdef LUCID < handle
     %% Algorithm
     methods
         function clear(this)
-            %CLEAR  Clears the algorithm state.
+            %CLEAR  Clears the algorithm state
             %
             %    obj.clear()
             %
@@ -65,29 +75,30 @@ classdef LUCID < handle
             LUCID_(this.id, 'clear');
         end
 
-        function name = getDefaultName(this)
-            %GETDEFAULTNAME  Returns the algorithm string identifier.
+        function b = empty(this)
+            %EMPTY  Checks if detector object is empty.
             %
-            %    name = obj.getDefaultName()
+            %    b = obj.empty()
             %
             % ## Output
-            % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            % * __b__ Returns true if the detector object is empty (e.g in the
+            %       very beginning or after unsuccessful read).
             %
-            % See also: cv.LUCID.save, cv.LUCID.load
+            % See also: cv.LUCID.clear, cv.LUCID.load
             %
-            name = LUCID_(this.id, 'getDefaultName');
+            b = LUCID_(this.id, 'empty');
         end
 
         function save(this, filename)
-            %SAVE  Saves the algorithm to a file.
+            %SAVE  Saves the algorithm parameters to a file
             %
             %    obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
             %
-            % This method stores the algorithm parameters in a file storage.
+            % This method stores the algorithm parameters in the specified
+            % XML or YAML file.
             %
             % See also: cv.LUCID.load
             %
@@ -95,7 +106,7 @@ classdef LUCID < handle
         end
 
         function load(this, fname_or_str, varargin)
-            %LOAD  Loads algorithm from a file or a string.
+            %LOAD  Loads algorithm from a file or a string
             %
             %    obj.load(fname)
             %    obj.load(str, 'FromString',true)
@@ -113,38 +124,39 @@ classdef LUCID < handle
             %       a filename or a string containing the serialized model.
             %       default false
             %
-            % This method reads algorithm parameters from a file storage.
-            % The previous model state is discarded.
+            % This method reads algorithm parameters from the specified XML or
+            % YAML file (either from disk or serialized string). The previous
+            % algorithm state is discarded.
             %
             % See also: cv.LUCID.save
             %
             LUCID_(this.id, 'load', fname_or_str, varargin{:});
         end
+
+        function name = getDefaultName(this)
+            %GETDEFAULTNAME  Returns the algorithm string identifier
+            %
+            %    name = obj.getDefaultName()
+            %
+            % ## Output
+            % * __name__ This string is used as top level XML/YML node tag
+            %       when the object is saved to a file or string.
+            %
+            % See also: cv.LUCID.save, cv.LUCID.load
+            %
+            name = LUCID_(this.id, 'getDefaultName');
+        end
     end
 
-    %% Features2D
+    %% Features2D: DescriptorExtractor
     methods
-        function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
-            %
-            %    b = obj.empty()
-            %
-            % ## Output
-            % * __b__ Returns true if the detector object is empty
-            %       (e.g. in the very beginning or after unsuccessful read).
-            %
-            % See also: cv.LUCID.clear
-            %
-            b = LUCID_(this.id, 'empty');
-        end
-
-        function n = defaultNorm(this)
+        function ntype = defaultNorm(this)
             %DEFAULTNORM  Returns the default norm type
             %
-            %    norm = obj.defaultNorm()
+            %    ntype = obj.defaultNorm()
             %
             % ## Output
-            % * __norm__ Norm type. One of `cv::NormTypes`:
+            % * __ntype__ Norm type. One of `cv::NormTypes`:
             %       * __Inf__
             %       * __L1__
             %       * __L2__
@@ -152,7 +164,11 @@ classdef LUCID < handle
             %       * __Hamming__
             %       * __Hamming2__
             %
-            n = LUCID_(this.id, 'defaultNorm');
+            % Always `Hamming` for LUCID.
+            %
+            % See also: cv.LUCID.compute, cv.DescriptorMatcher
+            %
+            ntype = LUCID_(this.id, 'defaultNorm');
         end
 
         function sz = descriptorSize(this)
@@ -161,7 +177,10 @@ classdef LUCID < handle
             %    sz = obj.descriptorSize()
             %
             % ## Output
-            % * __sz__ Descriptor size
+            % * __sz__ Descriptor size. Depends on `LucidKernel` argument in
+            %       constructor.
+            %
+            % See also: cv.LUCID.descriptorType, cv.LUCID.compute
             %
             sz = LUCID_(this.id, 'descriptorSize');
         end
@@ -174,34 +193,41 @@ classdef LUCID < handle
             % ## Output
             % * __dtype__ Descriptor type, one of numeric MATLAB class names.
             %
+            % Always `uint8` for LUCID.
+            %
+            % See also: cv.LUCID.descriptorSize, cv.LUCID.compute
+            %
             dtype = LUCID_(this.id, 'descriptorType');
         end
 
-        function [descriptors, keypoints] = compute(this, image, keypoints)
+        function [descriptors, keypoints] = compute(this, img, keypoints)
             %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set.
             %
-            %    [descriptors, keypoints] = obj.compute(image, keypoints)
-            %    [descriptors, keypoints] = obj.compute(images, keypoints)
+            %    [descriptors, keypoints] = obj.compute(img, keypoints)
+            %    [descriptors, keypoints] = obj.compute(imgs, keypoints)
             %
             % ## Inputs
-            % * __image__ Image, input 8-bit integer color image.
-            % * __images__ Image set.
+            % * __img__ Image (first variant), 8-bit color image.
+            % * __imgs__ Image set (second variant), cell array of images.
             % * __keypoints__ Input collection of keypoints. Keypoints for
             %       which a descriptor cannot be computed are removed.
             %       Sometimes new keypoints can be added, for example: cv.SIFT
             %       duplicates keypoint with several dominant orientations
-            %       (for each orientation).
+            %       (for each orientation). In the first variant, this is a
+            %       struct-array of detected keypoints. In the second variant,
+            %       it is a cell-array, where `keypoints{i}` is a set of keypoints
+            %       detected in `images{i}` (a struct-array like before).
             %
             % ## Outputs
             % * __descriptors__ Computed descriptors. In the second variant of
             %       the method `descriptors{i}` are descriptors computed for a
-            %       `keypoints(i)`. Row `j` in `descriptors` (or
+            %       `keypoints{i}`. Row `j` in `descriptors` (or
             %       `descriptors{i}`) is the descriptor for `j`-th keypoint.
             % * __keypoints__ Optional output with possibly updated keypoints.
             %
-            % See also: cv.LUCID
+            % See also: cv.LUCID.LUCID
             %
-            [descriptors, keypoints] = LUCID_(this.id, 'compute', image, keypoints);
+            [descriptors, keypoints] = LUCID_(this.id, 'compute', img, keypoints);
         end
     end
 

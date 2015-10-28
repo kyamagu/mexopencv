@@ -1,6 +1,8 @@
 classdef AKAZE < handle
     %AKAZE  Class implementing the AKAZE keypoint detector and descriptor extractor
     %
+    % As described in [ANB13].
+    %
     % Note: AKAZE descriptors can only be used with KAZE or AKAZE keypoints.
     %
     % ## References:
@@ -9,7 +11,8 @@ classdef AKAZE < handle
     % > Pablo F. Alcantarilla, Jesus Nuevo and Adrien Bartoli.
     % > In British Machine Vision Conference (BMVC), Bristol, UK, Sept 2013.
     %
-    % See also: cv.KAZE
+    % See also: cv.AKAZE.AKAZE, cv.KAZE, cv.FeatureDetector,
+    %   cv.DescriptorExtractor
     %
 
     properties (SetAccess = private)
@@ -17,27 +20,41 @@ classdef AKAZE < handle
     end
 
     properties (Dependent)
-        % Type of the extracted descriptor. One of:
+        % Type of the extracted descriptor.
+        %
+        % One of:
         %
         % * __KAZE__
         % * __KAZEUpright__ Upright descriptors, not invariant to rotation.
-        % * __MLDB__
+        % * __MLDB__ (default)
         % * __MLDBUpright__ Upright descriptors, not invariant to rotation.
         DescriptorType
-        % Size of the descriptor in bits. 0 -> Full size
+        % Size of the descriptor in bits.
+        %
+        % 0 -> Full size. Default 0
         DescriptorSize
-        % Number of channels in the descriptor (1, 2, 3)
+        % Number of channels in the descriptor (1, 2, 3).
+        %
+        % Default 3
         DescriptorChannels
-        % Detector response threshold to accept point
+        % Detector response threshold to accept point.
+        %
+        % Default 0.001
         Threshold
-        % Maximum octave evolution of the image
+        % Maximum octave evolution of the image.
+        %
+        % Default 4
         NOctaves
-        % Default number of sublevels per scale level
+        % Default number of sublevels per scale level.
+        %
+        % Default 4
         NOctaveLayers
-        % Diffusivity type. One of:
+        % Diffusivity type.
+        %
+        % One of:
         %
         % * __PM_G1__
-        % * __PM_G2__
+        % * __PM_G2__ (default)
         % * __WEICKERT__
         % * __CHARBONNIER__
         Diffusivity
@@ -51,13 +68,14 @@ classdef AKAZE < handle
             %    obj = cv.AKAZE(..., 'OptionName',optionValue, ...)
             %
             % ## Options
-            % * __DescriptorType__ default 'MLDB'
-            % * __DescriptorSize__ default 0
-            % * __DescriptorChannels__ default 3
-            % * __Threshold__ default 0.001
-            % * __NOctaves__ default 4
-            % * __NOctaveLayers__ default 4
-            % * __Diffusivity__ default 'PM_G2'
+            % * __DescriptorType__ See cv.AKAZE.DescriptorType, default 'MLDB'
+            % * __DescriptorSize__ See cv.AKAZE.DescriptorSize, default 0
+            % * __DescriptorChannels__ See cv.AKAZE.DescriptorChannels,
+            %       default 3
+            % * __Threshold__ See cv.AKAZE.Threshold, default 0.001
+            % * __NOctaves__ See cv.AKAZE.NOctaves, default 4
+            % * __NOctaveLayers__ See cv.AKAZE.NOctaveLayers, default 4
+            % * __Diffusivity__ See cv.AKAZE.Diffusivity, default 'PM_G2'
             %
             % See also: cv.AKAZE.detectAndCompute
             %
@@ -75,6 +93,11 @@ classdef AKAZE < handle
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
+            %    typename = obj.typeid()
+            %
+            % ## Output
+            % * __typename__ Name of C++ type
+            %
             typename = AKAZE_(this.id, 'typeid');
         end
     end
@@ -82,38 +105,39 @@ classdef AKAZE < handle
     %% Algorithm
     methods
         function clear(this)
-            %CLEAR  Clears the algorithm state.
+            %CLEAR  Clears the algorithm state
             %
             %    obj.clear()
             %
-            % See also: cv.AKAZE.empty
+            % See also: cv.AKAZE.empty, cv.AKAZE.load
             %
             AKAZE_(this.id, 'clear');
         end
 
-        function name = getDefaultName(this)
-            %GETDEFAULTNAME  Returns the algorithm string identifier.
+        function b = empty(this)
+            %EMPTY  Checks if detector object is empty.
             %
-            %    name = obj.getDefaultName()
+            %    b = obj.empty()
             %
             % ## Output
-            % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            % * __b__ Returns true if the detector object is empty (e.g in the
+            %       very beginning or after unsuccessful read).
             %
-            % See also: cv.AKAZE.save, cv.AKAZE.load
+            % See also: cv.AKAZE.clear, cv.AKAZE.load
             %
-            name = AKAZE_(this.id, 'getDefaultName');
+            b = AKAZE_(this.id, 'empty');
         end
 
         function save(this, filename)
-            %SAVE  Saves the algorithm to a file.
+            %SAVE  Saves the algorithm parameters to a file
             %
             %    obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
             %
-            % This method stores the algorithm parameters in a file storage.
+            % This method stores the algorithm parameters in the specified
+            % XML or YAML file.
             %
             % See also: cv.AKAZE.load
             %
@@ -121,7 +145,7 @@ classdef AKAZE < handle
         end
 
         function load(this, fname_or_str, varargin)
-            %LOAD  Loads algorithm from a file or a string.
+            %LOAD  Loads algorithm from a file or a string
             %
             %    obj.load(fname)
             %    obj.load(str, 'FromString',true)
@@ -139,38 +163,39 @@ classdef AKAZE < handle
             %       a filename or a string containing the serialized model.
             %       default false
             %
-            % This method reads algorithm parameters from a file storage.
-            % The previous model state is discarded.
+            % This method reads algorithm parameters from the specified XML or
+            % YAML file (either from disk or serialized string). The previous
+            % algorithm state is discarded.
             %
             % See also: cv.AKAZE.save
             %
             AKAZE_(this.id, 'load', fname_or_str, varargin{:});
         end
+
+        function name = getDefaultName(this)
+            %GETDEFAULTNAME  Returns the algorithm string identifier
+            %
+            %    name = obj.getDefaultName()
+            %
+            % ## Output
+            % * __name__ This string is used as top level XML/YML node tag
+            %       when the object is saved to a file or string.
+            %
+            % See also: cv.AKAZE.save, cv.AKAZE.load
+            %
+            name = AKAZE_(this.id, 'getDefaultName');
+        end
     end
 
-    %% Features2D
+    %% Features2D: FeatureDetector + DescriptorExtractor
     methods
-        function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
-            %
-            %    b = obj.empty()
-            %
-            % ## Output
-            % * __b__ Returns true if the detector object is empty
-            %       (e.g. in the very beginning or after unsuccessful read).
-            %
-            % See also: cv.AKAZE.clear
-            %
-            b = AKAZE_(this.id, 'empty');
-        end
-
-        function n = defaultNorm(this)
+        function ntype = defaultNorm(this)
             %DEFAULTNORM  Returns the default norm type
             %
-            %    norm = obj.defaultNorm()
+            %    ntype = obj.defaultNorm()
             %
             % ## Output
-            % * __norm__ Norm type. One of `cv::NormTypes`:
+            % * __ntype__ Norm type. One of `cv::NormTypes`:
             %       * __Inf__
             %       * __L1__
             %       * __L2__
@@ -178,16 +203,27 @@ classdef AKAZE < handle
             %       * __Hamming__
             %       * __Hamming2__
             %
-            n = AKAZE_(this.id, 'defaultNorm');
+            % `L2` when cv.AKAZE.DescriptorType is 'KAZE' or 'KAZEUpright',
+            % otherwise 'Hamming' for 'MLDB' and 'MLDBUpright'.
+            %
+            % See also: cv.AKAZE.compute, cv.DescriptorMatcher
+            %
+            ntype = AKAZE_(this.id, 'defaultNorm');
         end
 
         function sz = descriptorSize(this)
-            %DESCRIPTORSIZE  Returns the descriptor size in bytes
+            %DESCRIPTORSIZE  Returns the descriptor size in floats/bytes
             %
             %    sz = obj.descriptorSize()
             %
             % ## Output
-            % * __sz__ Descriptor size
+            % * __sz__ Descriptor size.
+            %
+            % 64 when cv.AKAZE.DescriptorType is 'KAZE' or 'KAZEUpright',
+            % otherwise for 'MLDB' and 'MLDBUpright' the size depends on
+            % cv.AKAZE.DescriptorSize and cv.AKAZE.DescriptorChannels.
+            %
+            % See also: cv.AKAZE.descriptorType, cv.AKAZE.compute
             %
             sz = AKAZE_(this.id, 'descriptorSize');
         end
@@ -200,105 +236,116 @@ classdef AKAZE < handle
             % ## Output
             % * __dtype__ Descriptor type, one of numeric MATLAB class names.
             %
+            % `single` when cv.AKAZE.DescriptorType is 'KAZE' or 'KAZEUpright',
+            % otherwise 'uint8' for 'MLDB' and 'MLDBUpright'.
+            %
+            % See also: cv.AKAZE.descriptorSize, cv.AKAZE.compute
+            %
             dtype = AKAZE_(this.id, 'descriptorType');
         end
 
-        function keypoints = detect(this, image, varargin)
+        function keypoints = detect(this, img, varargin)
             %DETECT  Detects keypoints in an image or image set.
             %
-            %    keypoints = obj.detect(image)
-            %    keypoints = obj.detect(images)
+            %    keypoints = obj.detect(img)
+            %    keypoints = obj.detect(imgs)
             %    [...] = obj.detect(..., 'OptionName',optionValue, ...)
             %
             % ## Inputs
-            % * __image__ Image.
-            % * __images__ Image set.
+            % * __img__ Image (first variant), 8-bit grayscale image.
+            % * __imgs__ Image set (second variant), cell array of images.
             %
             % ## Outputs
-            % * __keypoints__ The detected keypoints.
-            %       A 1-by-N structure array with the following fields:
-            %       * __pt__ coordinates of the keypoint `[x,y]`
-            %       * __size__ diameter of the meaningful keypoint neighborhood
-            %       * __angle__ computed orientation of the keypoint (-1 if not
-            %             applicable). Its possible values are in a range
-            %             [0,360) degrees. It is measured relative to image
-            %             coordinate system (y-axis is directed downward), i.e
-            %             in clockwise.
-            %       * __response__ the response by which the most strong
-            %             keypoints have been selected. Can be used for further
-            %             sorting or subsampling.
-            %       * __octave__ octave (pyramid layer) from which the keypoint
-            %             has been extracted.
-            %       * **class_id** object id that can be used to clustered
-            %             keypoints by an object they belong to.
-            %
-            %       In the second variant of the method `keypoints(i)` is a
-            %       set of keypoints detected in `images{i}`.
+            % * __keypoints__ The detected keypoints. In the first variant,
+            %       a 1-by-N structure array. In the second variant of the
+            %       method, `keypoints{i}` is a set of keypoints detected in
+            %       `imgs{i}`.
             %
             % ## Options
-            % * __Mask__ In the first variant, a mask specifying where to look
-            %       for keypoints (optional). It must be a logical or 8-bit
-            %       integer matrix with non-zero values in the region of
-            %       interest.
-            %       In the second variant, a cell-array of masks for each input
-            %       image specifying where to look for keypoints (optional).
-            %       `masks{i}` is a mask for `images{i}`.
-            %       default none
+            % * __Mask__ A mask specifying where to look for keypoints
+            %       (optional). It must be a logical or 8-bit integer matrix
+            %       with non-zero values in the region of interest. In the
+            %       second variant, it is a cell-array of masks for each input
+            %       image, `masks{i}` is a mask for `imgs{i}`.
+            %       Not set by default.
             %
             % See also: cv.AKAZE.compute, cv.AKAZE.detectAndCompute
             %
-            keypoints = AKAZE_(this.id, 'detect', image, varargin{:});
+            keypoints = AKAZE_(this.id, 'detect', img, varargin{:});
         end
 
-        function [descriptors, keypoints] = compute(this, image, keypoints)
+        function [descriptors, keypoints] = compute(this, img, keypoints)
             %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set.
             %
-            %    [descriptors, keypoints] = obj.compute(image, keypoints)
-            %    [descriptors, keypoints] = obj.compute(images, keypoints)
+            %    [descriptors, keypoints] = obj.compute(img, keypoints)
+            %    [descriptors, keypoints] = obj.compute(imgs, keypoints)
             %
             % ## Inputs
-            % * __image__ Image.
-            % * __images__ Image set.
+            % * __img__ Image (first variant), 8-bit grayscale image.
+            % * __imgs__ Image set (second variant), cell array of images.
             % * __keypoints__ Input collection of keypoints. Keypoints for
             %       which a descriptor cannot be computed are removed.
             %       Sometimes new keypoints can be added, for example: cv.SIFT
             %       duplicates keypoint with several dominant orientations
-            %       (for each orientation).
+            %       (for each orientation). In the first variant, this is a
+            %       struct-array of detected keypoints. In the second variant,
+            %       it is a cell-array, where `keypoints{i}` is a set of keypoints
+            %       detected in `images{i}` (a struct-array like before).
             %
             % ## Outputs
             % * __descriptors__ Computed descriptors. In the second variant of
             %       the method `descriptors{i}` are descriptors computed for a
-            %       `keypoints(i)`. Row `j` in `descriptors` (or
+            %       `keypoints{i}`. Row `j` in `descriptors` (or
             %       `descriptors{i}`) is the descriptor for `j`-th keypoint.
             % * __keypoints__ Optional output with possibly updated keypoints.
             %
             % See also: cv.AKAZE.detect, cv.AKAZE.detectAndCompute
             %
-            [descriptors, keypoints] = AKAZE_(this.id, 'compute', image, keypoints);
+            [descriptors, keypoints] = AKAZE_(this.id, 'compute', img, keypoints);
         end
 
-        function [keypoints, descriptors] = detectAndCompute(this, image, varargin)
-            %DETECTANDCOMPUTE  Detects keypoints and computes the descriptors
+        function [keypoints, descriptors] = detectAndCompute(this, img, varargin)
+            %DETECTANDCOMPUTE  Detects keypoints and computes their descriptors
             %
-            %    [keypoints, descriptors] = obj.detectAndCompute(image)
+            %    [keypoints, descriptors] = obj.detectAndCompute(img)
             %    [...] = obj.detectAndCompute(..., 'OptionName',optionValue, ...)
             %
             % ## Input
-            % * __image__ Image.
+            % * __img__ Image, input 8-bit grayscale image. Internally image
+            %       is converted to 32-bit floating-point in the [0,1] range.
             %
             % ## Output
-            % * __keypoints__ The detected keypoints.
-            % * __descriptors__ Computed descriptors.
+            % * __keypoints__ The detected keypoints. A 1-by-N structure array
+            %       with the following fields:
+            %       * __pt__ coordinates of the keypoint `[x,y]`
+            %       * __size__ diameter of the meaningful keypoint neighborhood
+            %       * __angle__ computed orientation of the keypoint (-1 if not
+            %             applicable); it's in [0,360) degrees and measured
+            %             relative to image coordinate system (y-axis is
+            %             directed downward), i.e in clockwise.
+            %       * __response__ the response by which the most strong
+            %             keypoints have been selected. Can be used for further
+            %             sorting or subsampling.
+            %       * __octave__ octave (pyramid layer) from which the keypoint
+            %             has been extracted.
+            %       * **class_id** object class (if the keypoints need to be
+            %             clustered by an object they belong to).
+            % * __descriptors__ Computed descriptors. Output concatenated
+            %       vectors of descriptors. Each descriptor is a vector of
+            %       length cv.AKAZE.descriptorSize, so the total size of
+            %       descriptors will be `numel(keypoints) * obj.descriptorSize()`.
+            %       A matrix of size N-by-sz, one row per keypoint.
             %
             % ## Options
             % * __Mask__ optional mask specifying where to look for keypoints.
-            %       default none
+            %       Not set by default.
             % * __Keypoints__ If passed, then the method will use the provided
-            %       vector of keypoints instead of detecting them.
+            %       vector of keypoints instead of detecting them, and the
+            %       algorithm just computes their descriptors.
             %
             % See also: cv.AKAZE.detect, cv.AKAZE.compute
             %
-            [keypoints, descriptors] = AKAZE_(this.id, 'detectAndCompute', image, varargin{:});
+            [keypoints, descriptors] = AKAZE_(this.id, 'detectAndCompute', img, varargin{:});
         end
     end
 

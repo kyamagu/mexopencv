@@ -9,7 +9,7 @@ classdef FastFeatureDetector < handle
     % > "Machine Learning for High-speed Corner Detection".
     % > In Computer Vision-ECCV 2006, pages 430-443. Springer, 2006.
     %
-    % See also: cv.AgastFeatureDetector, cv.FeatureDetector
+    % See also: cv.FAST, cv.AGAST, cv.FeatureDetector, detectFASTFeatures
     %
 
     properties (SetAccess = private)
@@ -19,15 +19,19 @@ classdef FastFeatureDetector < handle
     properties (Dependent)
         % Threshold on difference between intensity of the central pixel
         % and pixels of a circle around this pixel.
+        %
+        % Default is 10
         Threshold
         % If true, non-maximum suppression is applied to detected corners
         % (keypoints).
+        %
+        % Default is true.
         NonmaxSuppression
         % One of the three neighborhoods as defined in the paper:
         %
-        % * __TYPE_5_8__
-        % * __TYPE_7_12__
-        % * __TYPE_9_16__
+        % * **TYPE_5_8**
+        % * **TYPE_7_12**
+        % * **TYPE_9_16** (default)
         Type
     end
 
@@ -39,9 +43,11 @@ classdef FastFeatureDetector < handle
             %    obj = cv.FastFeatureDetector(..., 'OptionName',optionValue, ...)
             %
             % ## Options
-            % * __Threshold__  default 10
-            % * __NonmaxSuppression__ default true
-            % * __Type__ default 'TYPE_9_16'
+            % * __Threshold__  See cv.FastFeatureDetector.Threshold,
+            %       default 10
+            % * __NonmaxSuppression__ See
+            %       cv.FastFeatureDetector.NonmaxSuppression, default true
+            % * __Type__ See cv.FastFeatureDetector.Type, default 'TYPE_9_16'
             %
             % See also: cv.FastFeatureDetector.detect
             %
@@ -59,6 +65,11 @@ classdef FastFeatureDetector < handle
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
+            %    typename = obj.typeid()
+            %
+            % ## Output
+            % * __typename__ Name of C++ type
+            %
             typename = FastFeatureDetector_(this.id, 'typeid');
         end
     end
@@ -66,38 +77,41 @@ classdef FastFeatureDetector < handle
     %% Algorithm
     methods
         function clear(this)
-            %CLEAR  Clears the algorithm state.
+            %CLEAR  Clears the algorithm state
             %
             %    obj.clear()
             %
-            % See also: cv.FastFeatureDetector.empty
+            % See also: cv.FastFeatureDetector.empty,
+            %  cv.FastFeatureDetector.load
             %
             FastFeatureDetector_(this.id, 'clear');
         end
 
-        function name = getDefaultName(this)
-            %GETDEFAULTNAME  Returns the algorithm string identifier.
+        function b = empty(this)
+            %EMPTY  Checks if detector object is empty.
             %
-            %    name = obj.getDefaultName()
+            %    b = obj.empty()
             %
             % ## Output
-            % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            % * __b__ Returns true if the detector object is empty (e.g in the
+            %       very beginning or after unsuccessful read).
             %
-            % See also: cv.FastFeatureDetector.save, cv.FastFeatureDetector.load
+            % See also: cv.FastFeatureDetector.clear,
+            %  cv.FastFeatureDetector.load
             %
-            name = FastFeatureDetector_(this.id, 'getDefaultName');
+            b = FastFeatureDetector_(this.id, 'empty');
         end
 
         function save(this, filename)
-            %SAVE  Saves the algorithm to a file.
+            %SAVE  Saves the algorithm parameters to a file
             %
             %    obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
             %
-            % This method stores the algorithm parameters in a file storage.
+            % This method stores the algorithm parameters in the specified
+            % XML or YAML file.
             %
             % See also: cv.FastFeatureDetector.load
             %
@@ -105,7 +119,7 @@ classdef FastFeatureDetector < handle
         end
 
         function load(this, fname_or_str, varargin)
-            %LOAD  Loads algorithm from a file or a string.
+            %LOAD  Loads algorithm from a file or a string
             %
             %    obj.load(fname)
             %    obj.load(str, 'FromString',true)
@@ -123,116 +137,62 @@ classdef FastFeatureDetector < handle
             %       a filename or a string containing the serialized model.
             %       default false
             %
-            % This method reads algorithm parameters from a file storage.
-            % The previous model state is discarded.
+            % This method reads algorithm parameters from the specified XML or
+            % YAML file (either from disk or serialized string). The previous
+            % algorithm state is discarded.
             %
             % See also: cv.FastFeatureDetector.save
             %
             FastFeatureDetector_(this.id, 'load', fname_or_str, varargin{:});
         end
+
+        function name = getDefaultName(this)
+            %GETDEFAULTNAME  Returns the algorithm string identifier
+            %
+            %    name = obj.getDefaultName()
+            %
+            % ## Output
+            % * __name__ This string is used as top level XML/YML node tag
+            %       when the object is saved to a file or string.
+            %
+            % See also: cv.FastFeatureDetector.save,
+            %  cv.FastFeatureDetector.load
+            %
+            name = FastFeatureDetector_(this.id, 'getDefaultName');
+        end
     end
 
-    %% Features2D
+    %% Features2D: FeatureDetector
     methods
-        function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
-            %
-            %    b = obj.empty()
-            %
-            % ## Output
-            % * __b__ Returns true if the detector object is empty
-            %       (e.g. in the very beginning or after unsuccessful read).
-            %
-            % See also: cv.FastFeatureDetector.clear
-            %
-            b = FastFeatureDetector_(this.id, 'empty');
-        end
-
-        function n = defaultNorm(this)
-            %DEFAULTNORM  Returns the default norm type
-            %
-            %    norm = obj.defaultNorm()
-            %
-            % ## Output
-            % * __norm__ Norm type. One of `cv::NormTypes`:
-            %       * __Inf__
-            %       * __L1__
-            %       * __L2__
-            %       * __L2Sqr__
-            %       * __Hamming__
-            %       * __Hamming2__
-            %
-            n = FastFeatureDetector_(this.id, 'defaultNorm');
-        end
-
-        function sz = descriptorSize(this)
-            %DESCRIPTORSIZE  Returns the descriptor size in bytes
-            %
-            %    sz = obj.descriptorSize()
-            %
-            % ## Output
-            % * __sz__ Descriptor size
-            %
-            sz = FastFeatureDetector_(this.id, 'descriptorSize');
-        end
-
-        function dtype = descriptorType(this)
-            %DESCRIPTORTYPE  Returns the descriptor type
-            %
-            %    dtype = obj.descriptorType()
-            %
-            % ## Output
-            % * __dtype__ Descriptor type, one of numeric MATLAB class names.
-            %
-            dtype = FastFeatureDetector_(this.id, 'descriptorType');
-        end
-
-        function keypoints = detect(this, image, varargin)
+        function keypoints = detect(this, img, varargin)
             %DETECT  Detects keypoints in an image or image set.
             %
-            %    keypoints = obj.detect(image)
-            %    keypoints = obj.detect(images)
+            %    keypoints = obj.detect(img)
+            %    keypoints = obj.detect(imgs)
             %    [...] = obj.detect(..., 'OptionName',optionValue, ...)
             %
             % ## Inputs
-            % * __image__ Image, grayscale image where keypoints (corners)
-            %       are detected.
-            % * __images__ Image set.
+            % * __img__ Image (first variant), 8-bit grayscale image where
+            %       keypoints (corners) are detected.
+            % * __imgs__ Image set (second variant), cell array of images.
             %
             % ## Outputs
-            % * __keypoints__ The detected keypoints.
-            %       A 1-by-N structure array with the following fields:
-            %       * __pt__ coordinates of the keypoint `[x,y]`
-            %       * __size__ diameter of the meaningful keypoint neighborhood
-            %       * __angle__ computed orientation of the keypoint (-1 if not
-            %             applicable). Its possible values are in a range
-            %             [0,360) degrees. It is measured relative to image
-            %             coordinate system (y-axis is directed downward), i.e
-            %             in clockwise.
-            %       * __response__ the response by which the most strong
-            %             keypoints have been selected. Can be used for further
-            %             sorting or subsampling.
-            %       * __octave__ octave (pyramid layer) from which the keypoint
-            %             has been extracted.
-            %       * **class_id** object id that can be used to clustered
-            %             keypoints by an object they belong to.
-            %
-            %       In the second variant of the method `keypoints(i)` is a
-            %       set of keypoints detected in `images{i}`.
+            % * __keypoints__ The detected keypoints. In the first variant,
+            %       a 1-by-N structure array. In the second variant of the
+            %       method, `keypoints{i}` is a set of keypoints detected in
+            %       `imgs{i}`.
             %
             % ## Options
-            % * __Mask__ In the first variant, a mask specifying where to look
-            %       for keypoints (optional). It must be a logical or 8-bit
-            %       integer matrix with non-zero values in the region of
-            %       interest.
-            %       In the second variant, a cell-array of masks for each input
-            %       image specifying where to look for keypoints (optional).
-            %       `masks{i}` is a mask for `images{i}`.
-            %       default none
+            % * __Mask__ A mask specifying where to look for keypoints
+            %       (optional). It must be a logical or 8-bit integer matrix
+            %       with non-zero values in the region of interest. In the
+            %       second variant, it is a cell-array of masks for each input
+            %       image, `masks{i}` is a mask for `imgs{i}`.
+            %       Not set by default.
             %
             % See also: cv.FastFeatureDetector.FastFeatureDetector
             %
-            keypoints = FastFeatureDetector_(this.id, 'detect', image, varargin{:});
+            keypoints = FastFeatureDetector_(this.id, 'detect', img, varargin{:});
         end
     end
 
