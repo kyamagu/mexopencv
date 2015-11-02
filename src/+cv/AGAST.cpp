@@ -1,20 +1,21 @@
 /**
- * @file FAST.cpp
- * @brief mex interface for cv::FAST
+ * @file AGAST.cpp
+ * @brief mex interface for cv::AGAST
  * @ingroup features2d
- * @author Kota Yamaguchi
- * @date 2011
+ * @author Amro
+ * @date 2015
  */
 #include "mexopencv.hpp"
 using namespace std;
 using namespace cv;
 
 namespace {
-/// FAST neighborhood types
-const ConstMap<string, int> FASTTypeMap = ConstMap<string, int>
-    ("TYPE_5_8",  cv::FastFeatureDetector::TYPE_5_8)
-    ("TYPE_7_12", cv::FastFeatureDetector::TYPE_7_12)
-    ("TYPE_9_16", cv::FastFeatureDetector::TYPE_9_16);
+/// AGAST neighborhood types
+const ConstMap<std::string, int> AgastTypeMap = ConstMap<std::string, int>
+    ("AGAST_5_8",   cv::AgastFeatureDetector::AGAST_5_8)
+    ("AGAST_7_12d", cv::AgastFeatureDetector::AGAST_7_12d)
+    ("AGAST_7_12s", cv::AgastFeatureDetector::AGAST_7_12s)
+    ("OAST_9_16",   cv::AgastFeatureDetector::OAST_9_16);
 }
 
 /**
@@ -35,7 +36,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Option processing
     int threshold = 10;
     bool nonmaxSupression = true;
-    int type = cv::FastFeatureDetector::TYPE_9_16;
+    int type = cv::AgastFeatureDetector::OAST_9_16;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "Threshold")
@@ -43,7 +44,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (key == "NonmaxSuppression")
             nonmaxSupression = rhs[i+1].toBool();
         else if (key == "Type")
-            type = FASTTypeMap[rhs[i+1].toString()];
+            type = AgastTypeMap[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s",key.c_str());
@@ -52,6 +53,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Process
     Mat image(rhs[0].toMat(CV_8U));
     vector<KeyPoint> keypoints;
-    FAST(image, keypoints, threshold, nonmaxSupression, type);
+    AGAST(image, keypoints, threshold, nonmaxSupression, type);
     plhs[0] = MxArray(keypoints);
 }

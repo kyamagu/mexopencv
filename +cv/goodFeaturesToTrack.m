@@ -62,6 +62,6 @@
 % > In Computer Vision and Pattern Recognition, 1994. Proceedings CVPR'94.,
 % > 1994 IEEE Computer Society Conference on, pages 593-600. IEEE, 1994.
 %
-% See also: cv.cornerMinEigenVal, cv.cornerHarris, cv.calcOpticalFlowPyrLK,
-%   cv.estimateRigidTransform, corner
+% See also: cv.GFTTDetector, cv.cornerMinEigenVal, cv.cornerHarris,
+%   cv.calcOpticalFlowPyrLK, cv.estimateRigidTransform, corner
 %

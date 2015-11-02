@@ -1,5 +1,5 @@
-classdef TestFAST
-    %TestFAST
+classdef TestAGAST
+    %TestAGAST
     properties (Constant)
         img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
         kfields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};
@@ -7,23 +7,23 @@ classdef TestFAST
 
     methods (Static)
         function test_detect_img
-            kpts = cv.FAST(TestFAST.img, ...
+            kpts = cv.AGAST(TestAGAST.img, ...
                 'Threshold',10, 'NonmaxSuppression',true);
             validateattributes(kpts, {'struct'}, {'vector'});
-            assert(all(ismember(TestFAST.kfields, fieldnames(kpts))));
+            assert(all(ismember(TestAGAST.kfields, fieldnames(kpts))));
         end
 
         function test_detect_types
-            types = {'TYPE_5_8', 'TYPE_7_12', 'TYPE_9_16'};
+            types = {'AGAST_5_8', 'AGAST_7_12d', 'AGAST_7_12s', 'OAST_9_16'};
             for i=1:numel(types)
-                kpts = cv.FAST(TestFAST.img, 'Type',types{i});
+                kpts = cv.AGAST(TestAGAST.img, 'Type',types{i});
                 validateattributes(kpts, {'struct'}, {'vector'});
             end
         end
 
         function test_error_1
             try
-                cv.FAST();
+                cv.AGAST();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

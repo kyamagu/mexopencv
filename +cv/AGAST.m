@@ -1,7 +1,7 @@
-%FAST  Detects corners using the FAST algorithm
+%AGAST  Detects corners using the AGAST algorithm
 %
-%    keypoints = cv.FAST(im)
-%    keypoints = cv.FAST(im, 'OptionName', optionValue, ...)
+%    keypoints = cv.AGAST(im)
+%    keypoints = cv.AGAST(im, 'OptionName', optionValue, ...)
 %
 % ## Input
 % * __im__ 8-bit grayscale image where keypoints (corners) are to be detected.
@@ -24,21 +24,23 @@
 %
 % ## Options
 % * __Threshold__ Threshold on difference between intensity of the central
-%        pixel and pixels on a circle around this pixel. See the algorithm
-%        description [Rosten06]. default 10.
+%        pixel and pixels on a circle around this pixel. default 10.
 % * __NonmaxSuppression__ If it is true, non-maximum supression is applied
 %        to detected corners (keypoints). default true.
-% * __Type__ one of the three neighborhoods as defined in the paper:
-%       * **TYPE_9_16** (default)
-%       * **TYPE_7_12**
-%       * **TYPE_5_8**
+% * __Type__ one of the four neighborhoods as defined in the paper:
+%       * **AGAST_5_8**
+%       * **AGAST_7_12d**
+%       * **AGAST_7_12s**
+%       * **OAST_9_16** (default)
 %
-% Detects corners using the FAST algorithm by [Rosten06].
+% Detects corners using the AGAST algorithm by [mair2010].
 %
 % ## References
-% [Rosten06]:
-% > E. Rosten (Machine Learning for High-speed Corner Detection, 2006).
+% [mair2010]:
+% > E. Mair, G. D. Hager, D. Burschka, M. Suppa, and G. Hirzinger.
+% > "Adaptive and generic corner detection based on the accelerated segment
+% > test". In "European Conference on Computer Vision (ECCV'10)", Sept 2010.
+% > (http://www6.in.tum.de/Main/ResearchAgast)
 %
-% See also: cv.FastFeatureDetector, cv.AGAST, cv.FeatureDetector,
-%  detectFASTFeatures
+% See also: cv.AgastFeatureDetector, cv.FAST, cv.FeatureDetector
 %
