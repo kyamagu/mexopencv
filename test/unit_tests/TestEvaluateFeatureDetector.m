@@ -23,7 +23,7 @@ classdef TestEvaluateFeatureDetector
             img1 = imread(TestEvaluateFeatureDetector.im);
             img2 = cv.warpPerspective(img1, H);
             [repeat, correspCount] = cv.evaluateFeatureDetector(...
-                img1, img2, H, {}, {}, 'Detector',{'ORB', 'NFeatures',500});
+                img1, img2, H, {}, {}, 'Detector',{'ORB', 'MaxFeatures',500});
             validateattributes(repeat, {'numeric'}, {'scalar'});
             validateattributes(correspCount, {'numeric'}, {'scalar', 'integer'});
         end

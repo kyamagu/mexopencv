@@ -1,5 +1,5 @@
-classdef TestStarDetector
-    %TestStarDetector
+classdef TestGFTTDetector
+    %TestGFTTDetector
     properties (Constant)
         img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
         kfields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};
@@ -7,38 +7,39 @@ classdef TestStarDetector
 
     methods (Static)
         function test_detect_img
-            obj = cv.StarDetector('MaxSize',45, 'SuppressNonmaxSize',5);
+            obj = cv.GFTTDetector('MaxFeatures',1000);
+            assert(obj.MaxFeatures == 1000);
             typename = obj.typeid();
 
-            kpts = obj.detect(TestStarDetector.img);
+            kpts = obj.detect(TestGFTTDetector.img);
             validateattributes(kpts, {'struct'}, {'vector'});
-            assert(all(ismember(TestStarDetector.kfields, fieldnames(kpts))));
+            assert(all(ismember(TestGFTTDetector.kfields, fieldnames(kpts))));
         end
 
         function test_detect_imgset
-            imgs = {TestStarDetector.img, TestStarDetector.img};
-            obj = cv.StarDetector();
+            imgs = {TestGFTTDetector.img, TestGFTTDetector.img};
+            obj = cv.GFTTDetector();
 
             kpts = obj.detect(imgs);
             validateattributes(kpts, {'cell'}, {'vector', 'numel',numel(imgs)});
             cellfun(@(kpt) validateattributes(kpt, {'struct'}, {'vector'}), kpts);
-            cellfun(@(kpt) assert(all(ismember(TestStarDetector.kfields, fieldnames(kpt)))), kpts);
+            cellfun(@(kpt) assert(all(ismember(TestGFTTDetector.kfields, fieldnames(kpt)))), kpts);
         end
 
         function test_detect_mask
-            mask = zeros(size(TestStarDetector.img), 'uint8');
+            mask = zeros(size(TestGFTTDetector.img), 'uint8');
             mask(:,1:end/2) = 255;  % only search left half of the image
-            obj = cv.StarDetector();
-            kpts = obj.detect(TestStarDetector.img, 'Mask',mask);
+            obj = cv.GFTTDetector();
+            kpts = obj.detect(TestGFTTDetector.img, 'Mask',mask);
             validateattributes(kpts, {'struct'}, {'vector'});
-            assert(all(ismember(TestStarDetector.kfields, fieldnames(kpts))));
+            assert(all(ismember(TestGFTTDetector.kfields, fieldnames(kpts))));
             xy = cat(1, kpts.pt);
-            assert(all(xy(:,1) <= ceil(size(TestStarDetector.img,2)/2)));
+            assert(all(xy(:,1) <= ceil(size(TestGFTTDetector.img,2)/2)));
         end
 
         function test_error_1
             try
-                cv.StarDetector('foobar');
+                cv.GFTTDetector('foobar');
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));
