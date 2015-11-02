@@ -1,6 +1,8 @@
 classdef DescriptorMatcher < handle
     %DESCRIPTORMATCHER  Common interface for matching keypoint descriptors.
     %
+    % Class for matching keypoint descriptors.
+    %
     % Matchers of keypoint descriptors in OpenCV have wrappers with a common
     % interface that enables you to easily switch between different algorithms
     % solving the same problem. This section is devoted to matching
@@ -17,10 +19,11 @@ classdef DescriptorMatcher < handle
     %    Y = rand(100,10);
     %    matcher = cv.DescriptorMatcher('BruteForce');
     %    matcher.add(X);
-    %    matcher.train(); % Optional for BruteForce matcher
+    %    matcher.train();  % Optional for BruteForce matcher
     %    matches = matcher.match(Y);
     %
-    % See also: cv.DescriptorExtractor, matchFeatures
+    % See also: cv.DescriptorExtractor, cv.FeatureDetector, cv.drawMatches,
+    %  matchFeatures
     %
 
     properties (SetAccess = private)
@@ -70,13 +73,14 @@ classdef DescriptorMatcher < handle
             % The Brute-force matcher constructor (`BFMatcher`) accepts the
             % following options:
             %
-            % * __NormType__ One of 'L1', 'L2' (default), 'Hamming', 'Hamming2'
+            % * __NormType__ One of 'L1', 'L2' (default), 'Hamming', or
+            %       'Hamming2'. See cv.DescriptorExtractor.defaultNorm.
             %       * `L1` and `L2` norms are preferable choices for cv.SIFT
             %         and cv.SURF descriptors.
             %       * `Hamming` should be used with cv.ORB, cv.BRISK and
             %         cv.BRIEF.
             %       * `Hamming2` should be used with cv.ORB when `WTA_K`
-            %         equals 3 or 4 (see cv.ORB constructor description).
+            %         equals 3 or 4 (see cv.ORB.WTA_K description).
             % * __CrossCheck__ If it is false, this is will be default
             %       `BFMatcher` behaviour when it finds the `k` nearest
             %       neighbors for each query descriptor. If `CrossCheck==true`,
@@ -93,10 +97,10 @@ classdef DescriptorMatcher < handle
             % the following optional arguments:
             %
             % * __Index__ Type of indexer, default 'KDTree'. One of the below.
-            %       Each index type takes optional arguments. You can specify
-            %       the indexer by a cell array that starts from the type name
-            %       followed by option arguments:
-            %       `{'Type', 'OptionName',optionValue, ...}`
+            %       Each index type takes optional arguments (see IndexParams
+            %       options below). You can specify the indexer by a cell
+            %       array that starts from the type name followed by option
+            %       arguments: `{'Type', 'OptionName',optionValue, ...}`.
             %       * __'Linear'__     Brute-force matching, linear search
             %       * __'KDTree'__     Randomized kd-trees, parallel search
             %       * __'KMeans'__     Hierarchical k-means tree
@@ -121,7 +125,7 @@ classdef DescriptorMatcher < handle
             %     * __Sorted__ only for radius search, require neighbours
             %           sorted by distance. default true
             %
-            % ## IndexParams Options
+            % ## IndexParams Options for `FlannBasedMatcher`
             %
             % The following are the options for FLANN indexers
             % (Fast Library for Approximate Nearest Neighbors):
@@ -130,7 +134,7 @@ classdef DescriptorMatcher < handle
             % Linear index takes no options.
             %
             % ### `Saved`
-            % Saved index takes only one argument specifing the filename.
+            % Saved index takes only one argument specifying the filename.
             %
             % ### `KDTree` and `Composite`
             % * __Trees__ The number of parallel kd-trees to use. Good values
@@ -246,43 +250,58 @@ classdef DescriptorMatcher < handle
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
+            %    typename = obj.typeid()
+            %
+            % ## Output
+            % * __typename__ Name of C++ type
+            %
             typename = DescriptorMatcher_(this.id, 'typeid');
         end
     end
 
     %% Algorithm
     methods
-        function name = getDefaultName(this)
-            %GETDEFAULTNAME  Returns the algorithm string identifier.
+        function clear(this)
+            %CLEAR  Clears the train descriptor collection
             %
-            %    name = obj.getDefaultName()
+            %    matcher.clear()
+            %
+            % See also: cv.DescriptorMatcher.empty
+            %
+            DescriptorMatcher_(this.id, 'clear');
+        end
+
+        function status = empty(this)
+            %EMPTY  Returns true if there are no train descriptors in the collection
+            %
+            %    status = matcher.empty()
             %
             % ## Output
-            % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            % * __status__ boolean status
             %
-            % See also: cv.DescriptorMatcher.save, cv.DescriptorMatcher.load
+            % See also: cv.DescriptorMatcher.clear
             %
-            name = DescriptorMatcher_(this.id, 'getDefaultName');
+            status = DescriptorMatcher_(this.id, 'empty');
         end
 
         function save(this, filename)
-            %SAVE  Saves the algorithm to a file.
+            %SAVE  Saves the algorithm parameters to a file
             %
             %    obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
             %
-            % This method stores the algorithm parameters in a file storage.
+            % This method stores the algorithm parameters in the specified
+            % XML or YAML file.
             %
-            % See also: cv.MyClass.load
+            % See also: cv.DescriptorMatcher.load
             %
             DescriptorMatcher_(this.id, 'save', filename);
         end
 
         function load(this, fname_or_str, varargin)
-            %LOAD  Loads algorithm from a file or a string.
+            %LOAD  Loads algorithm from a file or a string
             %
             %    obj.load(fname)
             %    obj.load(str, 'FromString',true)
@@ -300,43 +319,44 @@ classdef DescriptorMatcher < handle
             %       a filename or a string containing the serialized model.
             %       default false
             %
-            % This method reads algorithm parameters from a file storage.
-            % The previous model state is discarded.
+            % This method reads algorithm parameters from the specified XML or
+            % YAML file (either from disk or serialized string). The previous
+            % algorithm state is discarded.
             %
-            % See also: cv.MyClass.save
+            % See also: cv.DescriptorMatcher.save
             %
             DescriptorMatcher_(this.id, 'load', fname_or_str, varargin{:});
+        end
+
+        function name = getDefaultName(this)
+            %GETDEFAULTNAME  Returns the algorithm string identifier
+            %
+            %    name = obj.getDefaultName()
+            %
+            % ## Output
+            % * __name__ This string is used as top level XML/YML node tag
+            %       when the object is saved to a file or string.
+            %
+            % See also: cv.DescriptorMatcher.save, cv.DescriptorMatcher.load
+            %
+            name = DescriptorMatcher_(this.id, 'getDefaultName');
         end
     end
 
     %% DescriptorMatcher
     methods
-        function clear(this)
-            %CLEAR  Clears the train descriptor collection
-            %
-            %    matcher.clear()
-            %
-            DescriptorMatcher_(this.id, 'clear');
-        end
-
-        function status = empty(this)
-            %EMPTY  Returns true if there are no train descriptors in the collection
-            %
-            %    status = matcher.empty()
-            %
-            % ## Output
-            % * __status__ boolean status
-            %
-            status = DescriptorMatcher_(this.id, 'empty');
-        end
-
         function status = isMaskSupported(this)
             %ISMASKSUPPORTED  Returns true if the descriptor matcher supports masking permissible matches
             %
             %    status = matcher.isMaskSupported()
             %
             % ## Output
-            % * __status__ boolean status
+            % * __status__ boolean status.
+            %
+            % Brute-force matchers support masking, while Flann-based matchers
+            % do no support masking.
+            %
+            % See also: cv.DescriptorMatcher.match
             %
             status = DescriptorMatcher_(this.id, 'isMaskSupported');
         end
@@ -349,6 +369,8 @@ classdef DescriptorMatcher < handle
             % ## Outpt
             % * __descriptors__ Set of train descriptors. A cell array of
             %       matrices.
+            %
+            % See also: cv.DescriptorMatcher.add
             %
             descriptors = DescriptorMatcher_(this.id, 'getTrainDescriptors');
         end
@@ -366,6 +388,8 @@ classdef DescriptorMatcher < handle
             %       a set of descriptors from the same train image.
             %       Can be either a matrix or a cell array of matrices
             %       (matrices of type `uint8` or `single`)
+            %
+            % See also: cv.DescriptorMatcher.getTrainDescriptors
             %
             DescriptorMatcher_(this.id, 'add', descriptors);
         end
@@ -392,15 +416,6 @@ classdef DescriptorMatcher < handle
             %    matches = matcher.match(queryDescriptors)
             %    [...] = matcher.match(..., 'OptionName', optionValue, ...)
             %
-            % In the first variant of this method, the train descriptors are
-            % passed as an input argument. In the second variant of the method,
-            % train descriptors collection that was set by
-            % cv.DescriptorMatcher.add() is used.
-            % Optional mask (or masks) can be passed to specify which query
-            % and training descriptors can be matched. Namely,
-            % `queryDescriptors(i,:)` can be matched with
-            % `trainDescriptors(j,:)` only if `mask(i,j)` is non-zero.
-            %
             % ## Input
             % * __queryDescriptors__ Query set of descriptors.
             % * __trainDescriptors__ Train set of descriptors. This set is not
@@ -411,8 +426,7 @@ classdef DescriptorMatcher < handle
             % * __matches__ Matches. If a query descriptor is masked out in
             %       `Mask`, no match is added for this descriptor. So,
             %       `matches` size may be smaller than the query descriptors
-            %       count.
-            %       A 1-by-N structure array with the following fields:
+            %       count. A 1-by-N structure array with the following fields:
             %       * __queryIdx__ query descriptor index (zero-based index)
             %       * __trainIdx__ train descriptor index (zero-based index)
             %       * __imgIdx__ train image index (zero-based index)
@@ -422,12 +436,25 @@ classdef DescriptorMatcher < handle
             % * __Mask__ default empty
             %       * In the first form, mask specifying permissible matches
             %       between an input query and train matrices of descriptors.
-            %       Matrix of size `[size(queryDescriptors,1),size(trainDescriptors,1)]`
-            %       * In the second form, set of masks. Each `masks{i}` specifies
-            %       permissible matches between the input query descriptors and
-            %       stored train descriptors from the i-th image `trainDescCollection{i}`.
-            %       Cell array of length `length(trainDescriptors)`, each a matrix
-            %       of size `[size(queryDescriptors,1),size(trainDescriptors{i},1)]`
+            %       Matrix of size
+            %       `[size(queryDescriptors,1),size(trainDescriptors,1)]`.
+            %       * In the second form, set of masks. Each `masks{i}`
+            %       specifies permissible matches between the input query
+            %       descriptors and stored train descriptors from the i-th
+            %       image `trainDescCollection{i}`. Cell array of length
+            %       `length(trainDescriptors)`, each a matrix of size
+            %       `[size(queryDescriptors,1),size(trainDescriptors{i},1)]`.
+            %
+            % In the first variant of this method, the train descriptors are
+            % passed as an input argument. In the second variant of the
+            % method, train descriptors collection that was set by
+            % cv.DescriptorMatcher.add() is used. Optional mask (or masks) can
+            % be passed to specify which query and training descriptors can be
+            % matched. Namely, `queryDescriptors(i,:)` can be matched with
+            % `trainDescriptors(j,:)` only if `mask(i,j)` is non-zero.
+            %
+            % See also: cv.DescriptorMatcher.knnMatch,
+            %  cv.DescriptorMatcher.radiusMatch
             %
             matches = DescriptorMatcher_(this.id, 'match', queryDescriptors, varargin{:});
         end
@@ -462,25 +489,29 @@ classdef DescriptorMatcher < handle
             % * __Mask__ default empty
             %       * In the first form, mask specifying permissible matches
             %       between an input query and train matrices of descriptors.
-            %       Matrix of size `[size(queryDescriptors,1),size(trainDescriptors,1)]`
-            %       * In the second form, set of masks. Each `masks{i}` specifies
-            %       permissible matches between the input query descriptors and
-            %       stored train descriptors from the i-th image `trainDescCollection{i}`.
-            %       Cell array of length `length(trainDescriptors)`, each a matrix
-            %       of size `[size(queryDescriptors,1),size(trainDescriptors{i},1)]`
-            % * __CompactResult__ Parameter used when the mask (or masks) is not
-            %       empty. If `compactResult` is false, the `matches` vector has the
-            %       same size as `queryDescriptors` rows. If `compactResult` is
-            %       true, the matches vector does not contain matches for fully
-            %       masked-out query descriptors. default false
+            %       Matrix of size
+            %       `[size(queryDescriptors,1),size(trainDescriptors,1)]`.
+            %       * In the second form, set of masks. Each `masks{i}`
+            %       specifies permissible matches between the input query
+            %       descriptors and stored train descriptors from the i-th
+            %       image `trainDescCollection{i}`. Cell array of length
+            %       `length(trainDescriptors)`, each a matrix of size
+            %       `[size(queryDescriptors,1),size(trainDescriptors{i},1)]`.
+            % * __CompactResult__ Parameter used when the mask (or masks) is
+            %       not empty. If `CompactResult` is false, the `matches`
+            %       vector has the same size as `queryDescriptors` rows. If
+            %       `CompactResult` is true, the matches vector does not
+            %       contain matches for fully masked-out query descriptors.
+            %       default false
             %
-            % These extended variants of cv.DescriptorMatcher.match() methods
-            % find several best matches for each query descriptor. The matches
-            % are returned in the distance increasing order. See
+            % This extended variant of cv.DescriptorMatcher.match() method
+            % finds several best matches for each query descriptor. The
+            % matches are returned in the distance increasing order. See
             % cv.DescriptorMatcher.match() for the details about query and
             % train descriptors.
             %
-            % See also: cv.DescriptorMatcher.match
+            % See also: cv.DescriptorMatcher.match,
+            %  cv.DescriptorMatcher.radiusMatch, cv.batchDistance
             %
             matches = DescriptorMatcher_(this.id, 'knnMatch', ...
                 queryDescriptors, varargin{:});
@@ -516,24 +547,28 @@ classdef DescriptorMatcher < handle
             % * __Mask__ default empty
             %       * In the first form, mask specifying permissible matches
             %       between an input query and train matrices of descriptors.
-            %       Matrix of size `[size(queryDescriptors,1),size(trainDescriptors,1)]`
-            %       * In the second form, set of masks. Each `masks{i}` specifies
-            %       permissible matches between the input query descriptors and
-            %       stored train descriptors from the i-th image `trainDescCollection{i}`.
-            %       Cell array of length `length(trainDescriptors)`, each a matrix
-            %       of size `[size(queryDescriptors,1),size(trainDescriptors{i},1)]`
-            % * __CompactResult__ Parameter used when the mask (or masks) is not
-            %       empty. If `compactResult` is false, the `matches` vector has the
-            %       same size as `queryDescriptors` rows. If `compactResult` is
-            %       true, the matches vector does not contain matches for fully
-            %       masked-out query descriptors. default false
+            %       Matrix of size
+            %       `[size(queryDescriptors,1),size(trainDescriptors,1)]`.
+            %       * In the second form, set of masks. Each `masks{i}`
+            %       specifies permissible matches between the input query
+            %       descriptors and stored train descriptors from the i-th
+            %       image `trainDescCollection{i}`. Cell array of length
+            %       `length(trainDescriptors)`, each a matrix of size
+            %       `[size(queryDescriptors,1),size(trainDescriptors{i},1)]`.
+            % * __CompactResult__ Parameter used when the mask (or masks) is
+            %       not empty. If `CompactResult` is false, the `matches`
+            %       vector has the same size as `queryDescriptors` rows. If
+            %       `CompactResult` is true, the matches vector does not
+            %       contain matches for fully masked-out query descriptors.
+            %       default false
             %
             % For each query descriptor, the methods find such training
             % descriptors that the distance between the query descriptor and
             % the training descriptor is equal or smaller than `maxDistance`.
             % Found matches are returned in the distance increasing order.
             %
-            % See also: cv.DescriptorMatcher.match
+            % See also: cv.DescriptorMatcher.match,
+            %  cv.DescriptorMatcher.knnMatch, cv.batchDistance
             %
             matches = DescriptorMatcher_(this.id, 'radiusMatch',...
                 queryDescriptors, varargin{:});
