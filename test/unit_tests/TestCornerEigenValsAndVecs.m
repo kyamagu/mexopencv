@@ -13,7 +13,7 @@ classdef TestCornerEigenValsAndVecs
 
         function test_float
             result = cv.cornerEigenValsAndVecs(...
-                im2single(TestCornerEigenValsAndVecs.img));
+                single(TestCornerEigenValsAndVecs.img)/255);
             validateattributes(result, {'single'}, {'ndims',3, ...
                 'size',[size(TestCornerEigenValsAndVecs.img) 6]});
         end

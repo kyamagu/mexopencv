@@ -12,13 +12,18 @@ classdef TestFitLine
         end
 
         function test_2
-            % we use MVNRND from statistics toolbox
+            % we use MVNRND from Statistics Toolbox
             if mexopencv.isOctave()
-                stat_tlbx = 'statistics';
+                stat_lic = 'statistics';
+                stat_pkg = stat_lic;
             else
-                stat_tlbx = 'statistics_toolbox';
+                stat_lic = 'statistics_toolbox';
+                stat_pkg = 'stats';
             end
-            if ~license('test', stat_tlbx), return; end
+            if ~license('test', stat_lic) || isempty(ver(stat_pkg))
+                disp('SKIP');
+                return;
+            end
 
             % random 3D points with a strong correlation
             points = mvnrnd([0 0 0], [7 5 5; 5 7 5; 5 5 7], 100);

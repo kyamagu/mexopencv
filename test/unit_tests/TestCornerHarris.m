@@ -12,7 +12,7 @@ classdef TestCornerHarris
         end
 
         function test_float
-            result = cv.cornerHarris(im2single(TestCornerHarris.img));
+            result = cv.cornerHarris(single(TestCornerHarris.img)/255);
             validateattributes(result, {'single'}, ...
                 {'size',size(TestCornerHarris.img)});
         end

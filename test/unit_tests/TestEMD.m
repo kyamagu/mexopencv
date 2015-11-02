@@ -9,13 +9,18 @@ classdef TestEMD
         end
 
         function test_2
-            % we use NORMPDF from statistics toolbox
+            % we use NORMPDF from Statistics Toolbox
             if mexopencv.isOctave()
-                stat_tlbx = 'statistics';
+                stat_lic = 'statistics';
+                stat_pkg = stat_lic;
             else
-                stat_tlbx = 'statistics_toolbox';
+                stat_lic = 'statistics_toolbox';
+                stat_pkg = 'stats';
             end
-            if ~license('test', stat_tlbx), return; end
+            if ~license('test', stat_lic) || isempty(ver(stat_pkg))
+                disp('SKIP');
+                return;
+            end
 
             % signatures of two 1D histograms
             x = linspace(-4,4,50).'; sig1 = [normpdf(x, 0, 1) x];

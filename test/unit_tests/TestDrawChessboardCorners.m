@@ -10,7 +10,7 @@ classdef TestDrawChessboardCorners
             out = repmat(img, [1 1 3]);
             out = cv.drawChessboardCorners(out, patternSize, corners, ...
                 'PatternWasFound',found);
-            validateattributes(out, {class(img)}, {'size',[size(img) 3]})
+            validateattributes(out, {class(img)}, {'3d', 'size',[size(img) 3]})
         end
 
         function test_2
@@ -21,7 +21,7 @@ classdef TestDrawChessboardCorners
 
             out = cv.drawChessboardCorners(img, patternSize, corners, ...
                 'PatternWasFound',found);
-            validateattributes(out, {class(img)}, {'size',[size(img) 1]})
+            validateattributes(out, {class(img)}, {'2d', 'size',size(img)})
         end
 
         function test_error_1

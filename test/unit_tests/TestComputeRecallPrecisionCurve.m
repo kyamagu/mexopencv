@@ -17,8 +17,10 @@ classdef TestComputeRecallPrecisionCurve
             % Ideally we would look into the thresold overlap mask matrix
             correctMatches1to2Mask = cell(size(matches1to2));
             for i=1:numel(matches1to2)
-                d = [matches1to2{i}.distance];
-                correctMatches1to2Mask{i} = (d < quantile(d,0.25));
+                [~,ord] = sort([matches1to2{i}.distance]);
+                mask = false(size(ord));
+                mask(ord(1:fix(end/2))) = true;
+                correctMatches1to2Mask{i} = mask;
             end
 
             recallPrecisionCurve = cv.computeRecallPrecisionCurve(...

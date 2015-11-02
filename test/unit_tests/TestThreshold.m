@@ -27,15 +27,21 @@ classdef TestThreshold
         end
 
         function test_compare_im2bw
-            % image processing toolbox
+            % requires Image Processing Toolbox
             if mexopencv.isOctave()
-                img_tlbx = 'image';
+                img_lic = 'image';
+                img_pkg = img_lic;
             else
-                img_tlbx = 'image_toolbox';
+                img_lic = 'image_toolbox';
+                img_pkg = 'images';
             end
-            if ~license('test', img_tlbx), return; end
+            if ~license('test', img_lic) || isempty(ver(img_pkg))
+                disp('SKIP');
+                return;
+            end
+
             % compare against im2bw
-            img = imread('left01.jpg');
+            img = imread(fullfile(mexopencv.root(),'test','left01.jpg'));
             [img1,t1] = cv.threshold(img, 'Otsu', ...
                 'MaxValue',255, 'Method','Binary');
             t2 = graythresh(img);

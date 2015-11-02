@@ -15,6 +15,7 @@ classdef TestImencode
                 catch ME
                     %TODO: some codecs are not available on all platforms
                     fprintf('SKIPPED: %s (%s)\n', frmts(i).name, frmts(i).ext);
+                    continue;
                 end
             end
         end
@@ -70,6 +71,12 @@ classdef TestImencode
         end
 
         function test_error_unrecognized_extension
+            %TODO: crashes Octave
+            if mexopencv.isOctave()
+                disp('SKIP');
+                return;
+            end
+
             try
                 cv.imencode('.foobar', TestImencode.im);
                 throw('UnitTest:Fail');
