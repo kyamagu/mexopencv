@@ -104,7 +104,7 @@ public:
     /** Constructor
      * @param func name of an M-file function that implements an SVM kernel
      */
-    MatlabFunction(const string &func)
+    explicit MatlabFunction(const string &func)
     : fun_name(func)
     {}
 
