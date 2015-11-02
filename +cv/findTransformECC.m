@@ -68,7 +68,7 @@
 % > Georgios D Evangelidis and Emmanouil Z Psarakis. "Parametric image
 % > alignment using enhanced correlation coefficient maximization".
 % > Pattern Analysis and Machine Intelligence, IEEE Transactions on,
-% > 30(10):1858–1865, 2008.
+% > 30(10):1858-1865, 2008.
 %
 % See also: cv.estimateRigidTransform, cv.findHomography
 %

@@ -37,6 +37,6 @@
 %
 % ## References
 % [PM03]:
-% > Patrick Pérez, Michel Gangnet, and Andrew Blake. "Poisson image editing".
+% > Patrick Perez, Michel Gangnet, and Andrew Blake. "Poisson image editing".
 % > In ACM Transactions on Graphics (TOG), volume 22, pages 313-318. ACM, 2003.
 %
