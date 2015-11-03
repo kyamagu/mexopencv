@@ -74,7 +74,6 @@ classdef UnitTest
             ntests = [0 0];
             tID = tic();
             for i=1:numel(d)
-                if i>3; break; end
                 klass = strrep(d(i).name, '.m', '');
                 fprintf('== %s ==\n', klass);
                 if mexopencv.isOctave() && any(strcmp(klass, UnitTest.SKIP))
