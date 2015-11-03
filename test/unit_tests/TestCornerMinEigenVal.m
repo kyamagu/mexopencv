@@ -12,7 +12,8 @@ classdef TestCornerMinEigenVal
         end
 
         function test_2
-            result = cv.cornerMinEigenVal(im2single(TestCornerMinEigenVal.img));
+            result = cv.cornerMinEigenVal(...
+                single(TestCornerMinEigenVal.img)/255);
             validateattributes(result, {'single'}, ...
                 {'size',size(TestCornerMinEigenVal.img)});
         end

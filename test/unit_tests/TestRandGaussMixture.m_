@@ -1,0 +1,29 @@
+classdef TestRandGaussMixture
+    %TestRandGaussMixture
+
+    %TODO: https://github.com/Itseez/opencv/issues/5466
+
+    methods (Static)
+        function test_1
+            d = 3;
+            k = 2;
+            mu = rand(k,d);
+            sigma = repmat(eye(d), [1 1 k]);
+            weights = ones(1,k) ./ k;
+            nsamples = 50;
+            [samples,sampIDX] = cv.randGaussMixture(mu, sigma, nsamples);
+            validateattributes(samples, {'numeric'}, {'size',[nsamples d]});
+            validateattributes(sampIDX, {'numeric'}, ...
+                {'vector', 'numel',nsamples, 'integer', 'nonnegative' '<',k});
+        end
+
+        function test_error_1
+            try
+                cv.randGaussMixture();
+                throw('UnitTest:Fail');
+            catch e
+                assert(strcmp(e.identifier,'mexopencv:error'));
+            end
+        end
+    end
+end

@@ -123,6 +123,12 @@ if ispc % Windows
     end
     if opts.debug
         mex_flags = ['-g ' mex_flags];    % debug vs. optimized builds
+    else
+        if ~mexopencv.isOctave()
+            mex_flags = ['-O ' mex_flags];
+        else
+            mex_flags = ['-O2 ' mex_flags];
+        end
     end
 
     % Compile MxArray and any other shared sources into OBJs (compile-only)
@@ -154,15 +160,26 @@ if ispc % Windows
         end
     end
     objs = strtrim(sprintf(' ''%s''',files.dst));
+    %objs = fullfile(mexopencv.root(),'lib',['*.' objext]);
 
     % Build MEX files
     files = collect_mex_files(opts);
     if opts.progressbar
-        hWait = waitbar(0, 'Compiling MEX files...');
+        if ~mexopencv.isOctave()
+            cancellation = {'CreateCancelBtn','setappdata(gcbf,''cancel'',true)'};
+        else
+            %TODO: https://savannah.gnu.org/bugs/?45364
+            cancellation = {};
+        end
+        hWait = waitbar(0, 'Compiling MEX files...', ...
+            'Name','mexopencv', cancellation{:});
+        setappdata(hWait, 'cancel',false);
+        wbCleanObj = onCleanup(@() delete(hWait));  % close(hWait)
     end
     for i = 1:numel(files)
         if opts.progressbar
-            waitbar(i/numel(files), hWait);
+            waitbar(i/numel(files), hWait, strrep(files(i).name,'_','\_'));
+            if getappdata(hWait, 'cancel'), break; end
         end
         if opts.force || compile_needed(files(i).src, files(i).dst)
             if ~mexopencv.isOctave()
@@ -180,9 +197,6 @@ if ispc % Windows
         if ~opts.dryrun && ~exist(files(i).dst, 'file')
             error('mexopencv:make', 'Failed to compile "%s"', files(i).src);
         end
-    end
-    if opts.progressbar
-        close(hWait);
     end
 
     % Octave mex command leaves behind temporary obj files in current dir

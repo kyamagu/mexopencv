@@ -26,22 +26,21 @@ map<int,Ptr<AgastFeatureDetector> > obj_;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
-    if (nrhs<2 || nlhs>1)
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    // Check the number of arguments
+    nargchk(nrhs>=2 && nlhs<=1);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
     int id = rhs[0].toInt();
     string method(rhs[1].toString());
 
     // Constructor is called. Create a new object from argument
     if (method == "new") {
-        if (nrhs<2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
-        obj_[++last_id] = createAgastFeatureDetector(rhs.begin() + 2, rhs.end());
+        nargchk(nrhs>=2 && nlhs<=1);
+        obj_[++last_id] = createAgastFeatureDetector(
+            rhs.begin() + 2, rhs.end());
         plhs[0] = MxArray(last_id);
         return;
     }
@@ -49,71 +48,49 @@ void mexFunction( int nlhs, mxArray *plhs[],
     // Big operation switch
     Ptr<AgastFeatureDetector> obj = obj_[id];
     if (method == "delete") {
-        if (nrhs!=2 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Output not assigned");
+        nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
     }
     else if (method == "typeid") {
-        if (nrhs!=2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(nrhs==2 && nlhs<=1);
         plhs[0] = MxArray(string(typeid(*obj).name()));
     }
     else if (method == "clear") {
-        if (nrhs!=2 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==2 && nlhs==0);
         obj->clear();
     }
     else if (method == "load") {
-        if (nrhs<3 || (nrhs%2)==0 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
         string objname;
         bool loadFromString = false;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="ObjName")
+            if (key == "ObjName")
                 objname = rhs[i+1].toString();
-            else if (key=="FromString")
+            else if (key == "FromString")
                 loadFromString = rhs[i+1].toBool();
             else
-                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         obj_[id] = (loadFromString ?
             Algorithm::loadFromString<AgastFeatureDetector>(rhs[2].toString(), objname) :
             Algorithm::load<AgastFeatureDetector>(rhs[2].toString(), objname));
     }
     else if (method == "save") {
-        if (nrhs!=3 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+        nargchk(nrhs==3 && nlhs==0);
         obj->save(rhs[2].toString());
     }
     else if (method == "empty") {
-        if (nrhs!=2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(nrhs==2 && nlhs<=1);
         plhs[0] = MxArray(obj->empty());
     }
     else if (method == "getDefaultName") {
-        if (nrhs!=2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(nrhs==2 && nlhs<=1);
         plhs[0] = MxArray(obj->getDefaultName());
     }
-    else if (method == "defaultNorm") {
-        if (nrhs!=2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
-        plhs[0] = MxArray(NormTypeInv[obj->defaultNorm()]);
-    }
-    else if (method == "descriptorSize") {
-        if (nrhs!=2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
-        plhs[0] = MxArray(obj->descriptorSize());
-    }
-    else if (method == "descriptorType") {
-        if (nrhs!=2 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
-        plhs[0] = MxArray(ClassNameInvMap[obj->descriptorType()]);
-    }
     else if (method == "detect") {
-        if (nrhs<3 || (nrhs%2)!=1 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
         if (rhs[2].isNumeric()) {  // first variant that accepts an image
             Mat mask;
             for (int i=3; i<nrhs; i+=2) {
@@ -121,9 +98,10 @@ void mexFunction( int nlhs, mxArray *plhs[],
                 if (key == "Mask")
                     mask = rhs[i+1].toMat(CV_8U);
                 else
-                    mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                    mexErrMsgIdAndTxt("mexopencv:error",
+                        "Unrecognized option %s", key.c_str());
             }
-            Mat image(rhs[2].toMat());
+            Mat image(rhs[2].toMat(CV_8U));
             vector<KeyPoint> keypoints;
             obj->detect(image, keypoints, mask);
             plhs[0] = MxArray(keypoints);
@@ -137,13 +115,21 @@ void mexFunction( int nlhs, mxArray *plhs[],
                     vector<MxArray> arr(rhs[i+1].toVector<MxArray>());
                     masks.clear();
                     masks.reserve(arr.size());
-                    for (vector<MxArray>::const_iterator iter = arr.begin(); iter != arr.end(); iter++)
-                        masks.push_back(iter->toMat(CV_8U));
+                    for (vector<MxArray>::const_iterator it = arr.begin(); it != arr.end(); ++it)
+                        masks.push_back(it->toMat(CV_8U));
                 }
                 else
-                    mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                    mexErrMsgIdAndTxt("mexopencv:error",
+                        "Unrecognized option %s", key.c_str());
             }
-            vector<Mat> images(rhs[2].toVector<Mat>());
+            //vector<Mat> images(rhs[2].toVector<Mat>());
+            vector<Mat> images;
+            {
+                vector<MxArray> arr(rhs[2].toVector<MxArray>());
+                images.reserve(arr.size());
+                for (vector<MxArray>::const_iterator it = arr.begin(); it != arr.end(); ++it)
+                    images.push_back(it->toMat(CV_8U));
+            }
             vector<vector<KeyPoint> > keypoints;
             obj->detect(images, keypoints, masks);
             plhs[0] = MxArray(keypoints);
@@ -152,8 +138,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
             mexErrMsgIdAndTxt("mexopencv:error", "Invalid arguments");
     }
     else if (method == "get") {
-        if (nrhs!=3 || nlhs>1)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(nrhs==3 && nlhs<=1);
         string prop(rhs[2].toString());
         if (prop == "NonmaxSuppression")
             plhs[0] = MxArray(obj->getNonmaxSuppression());
@@ -162,11 +147,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else if (prop == "Type")
             plhs[0] = MxArray(AgastTypeInvMap[obj->getType()]);
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property %s", prop.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
     }
     else if (method == "set") {
-        if (nrhs!=4 || nlhs!=0)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(nrhs==4 && nlhs==0);
         string prop(rhs[2].toString());
         if (prop == "NonmaxSuppression")
             obj->setNonmaxSuppression(rhs[3].toBool());
@@ -175,8 +160,15 @@ void mexFunction( int nlhs, mxArray *plhs[],
         else if (prop == "Type")
             obj->setType(AgastTypeMap[rhs[3].toString()]);
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property %s", prop.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
     }
+    //else if (method == "defaultNorm")
+    //else if (method == "descriptorSize")
+    //else if (method == "descriptorType")
+    //else if (method == "compute")
+    //else if (method == "detectAndCompute")
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unrecognized operation %s",method.c_str());
 }

@@ -17,6 +17,7 @@ classdef TestImwrite
                 catch ME
                     %TODO: some codecs are not available on all platforms
                     fprintf('SKIPPED: %s (%s)\n', frmts(i).name, frmts(i).ext);
+                    continue;
                 end
             end
         end
@@ -68,6 +69,12 @@ classdef TestImwrite
         end
 
         function test_error_unrecognized_extension
+            %TODO: crashes Octave
+            if mexopencv.isOctave()
+                disp('SKIP');
+                return;
+            end
+
             try
                 cv.imwrite('image.foobar', TestImwrite.im);
                 throw('UnitTest:Fail');

@@ -27,7 +27,11 @@ classdef TestDrawMatches
             [kpts2, feat2] = obj.detectAndCompute(im2);
             matcher = cv.DescriptorMatcher('BruteForce-Hamming');
             m = matcher.match(feat1, feat2);
-            mask = ([m.distance] < quantile([m.distance], 0.1));
+
+            [~,ord] = sort([m.distance]);
+            mask = false(size(ord));
+            mask(ord(1:min(20,end))) = true;
+
             out = cv.drawMatches(im1, kpts1, im2, kpts2, m, ...
                 'MatchesMask',mask, ...
                 'OutImage',repmat(cat(2,im1,im2), [1 1 3]), ...

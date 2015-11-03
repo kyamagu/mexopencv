@@ -21,7 +21,11 @@ classdef TestRecoverPose
 
         function test_2
             % we load data from CVST toolbox
-            if ~license('test', 'video_and_image_blockset'), return; end
+            if ~license('test', 'video_and_image_blockset') || isempty(ver('vision'))
+                disp('SKIP');
+                return;
+            end
+
             load stereoPointPairs
             [E,mask] = cv.findEssentialMat(matchedPoints1, matchedPoints2);
             [R, t, ~, mask] = cv.recoverPose(...

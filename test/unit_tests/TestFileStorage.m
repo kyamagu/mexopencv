@@ -2,7 +2,7 @@ classdef TestFileStorage
     %TestFileStorage
     properties (Constant)
     end
-    
+
     methods (Static)
         function test_1
             S = struct('field1', magic(4), 'field2', 'this is the second field');
@@ -15,7 +15,7 @@ classdef TestFileStorage
                 delete(fname);
             end
         end
-        
+
         function test_error_1
             try
                 cv.FileStorage();
@@ -25,6 +25,5 @@ classdef TestFileStorage
             end
         end
     end
-    
-end
 
+end

@@ -30,7 +30,7 @@ public:
     /** Constructor
      * @param func name of an M-file that generates the mask
      */
-    MatlabMaskGenerator(const string &func)
+    explicit MatlabMaskGenerator(const string &func)
     : fun_name(func)
     {}
 

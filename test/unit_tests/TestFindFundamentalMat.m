@@ -26,7 +26,11 @@ classdef TestFindFundamentalMat
 
         function test_2
             % we load data from CVST toolbox
-            if ~license('test', 'video_and_image_blockset'), return; end
+            if ~license('test', 'video_and_image_blockset') || isempty(ver('vision'))
+                disp('SKIP');
+                return;
+            end
+
             load stereoPointPairs
             F = cv.findFundamentalMat(matchedPoints1, matchedPoints2);
             validateattributes(F, {'numeric'}, {'real', 'size',[3 3]});

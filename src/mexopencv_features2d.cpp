@@ -26,8 +26,8 @@ Ptr<BRISK> createBRISK(
         mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
     // second variant for custom patterns
     if ((last-first) >= 2 && !first->isChar()) {
-        vector<float> radiusList(first->toVector<float>()); first++;
-        vector<int> numberList(first->toVector<int>()); first++;
+        vector<float> radiusList(first->toVector<float>()); ++first;
+        vector<int> numberList(first->toVector<int>()); ++first;
         float dMax = 5.85f, dMin = 8.2f;
         vector<int> indexChange;
         for (; first != last; first += 2) {
@@ -53,7 +53,7 @@ Ptr<BRISK> createBRISK(
         for (; first != last; first += 2) {
             string key((*first).toString());
             const MxArray& val = *(first + 1);
-            if (key == "Thresh")
+            if (key == "Threshold")
                 thresh = val.toInt();
             else if (key == "Octaves")
                 octaves = val.toInt();
@@ -85,7 +85,7 @@ Ptr<ORB> createORB(
     for (; first != last; first += 2) {
         string key((*first).toString());
         const MxArray& val = *(first + 1);
-        if (key == "NFeatures")
+        if (key == "MaxFeatures")
             nfeatures = val.toInt();
         else if (key == "ScaleFactor")
             scaleFactor = val.toFloat();
@@ -196,7 +196,7 @@ Ptr<GFTTDetector> createGFTTDetector(
     for (; first != last; first += 2) {
         string key((*first).toString());
         const MxArray& val = *(first + 1);
-        if (key == "MaxCorners")
+        if (key == "MaxFeatures")
             maxCorners = val.toInt();
         else if (key == "QualityLevel")
             qualityLevel = val.toDouble();
@@ -204,7 +204,7 @@ Ptr<GFTTDetector> createGFTTDetector(
             minDistance = val.toDouble();
         else if (key == "BlockSize")
             blockSize = val.toInt();
-        else if (key == "UseHarrisDetector")
+        else if (key == "HarrisDetector")
             useHarrisDetector = val.toBool();
         else if(key == "K")
             k = val.toDouble();
@@ -424,7 +424,7 @@ Ptr<SURF> createSURF(
             nOctaveLayers = val.toInt();
         else if (key == "Extended")
             extended = val.toBool();
-        else if (key == "UpRight")
+        else if (key == "Upright")
             upright = val.toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
@@ -700,6 +700,11 @@ const ConstMap<string, cvflann::flann_centers_init_t> CentersInit =
     ("KMeansPP",  cvflann::FLANN_CENTERS_KMEANSPP)
     ("Groupwise", cvflann::FLANN_CENTERS_GROUPWISE);
 
+/** Convert MxArray to FLANN index parameters
+ * @param m MxArray object of a cell array of the form
+ *    {'type', 'OptionName', optionValue, ...}
+ * @return smart pointer to an instance of cv::flann::IndexParams.
+ */
 Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
 {
     Ptr<flann::IndexParams> p;
@@ -858,6 +863,11 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
     return p;
 }
 
+/** Convert MxArray to FLANN search parameters
+ * @param m MxArray object of a cell array of the form
+ *    {'OptionName', optionValue, ...}
+ * @return smart pointer to an instance of cv::flann::SearchParams.
+ */
 Ptr<flann::SearchParams> toSearchParams(const MxArray& m)
 {
     vector<MxArray> rhs(m.toVector<MxArray>());

@@ -19,11 +19,16 @@ classdef TestInRange
         function test_grayscale_image
             % requires Image Processing Toolbox
             if mexopencv.isOctave()
-                img_tlbx = 'image';
+                img_lic = 'image';
+                img_pkg = img_lic;
             else
-                img_tlbx = 'image_toolbox';
+                img_lic = 'image_toolbox';
+                img_pkg = 'images';
             end
-            if ~license('test', img_tlbx), return; end
+            if ~license('test', img_lic) || isempty(ver(img_pkg))
+                disp('SKIP');
+                return;
+            end
 
             % compare against IM2BW
             % Note: lower bound in IM2BW is non-inclusive,

@@ -35,7 +35,7 @@ classdef TestImreadmulti
             imgs2 = cell(1,num_pages);
             for i=1:num_pages
                 % (convert indexed images to grayscale)
-                [X,map] = imread('mri.tif', 'Info',info, 'Index',i);
+                [X,map] = imread(filename, 'Info',info, 'Index',i);
                 imgs2{i} = ind2gray(X, map);
             end
             assert(isequal(imgs1(:), imgs2(:)), 'Images are not equal');

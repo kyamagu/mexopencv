@@ -4,7 +4,7 @@
 %    keypoints = cv.FAST(im, 'OptionName', optionValue, ...)
 %
 % ## Input
-% * __im__ Image where keypoints (corners) are to be detected.
+% * __im__ 8-bit grayscale image where keypoints (corners) are to be detected.
 %
 % ## Output
 % * __keypoints__ Keypoints detected on the image. A 1-by-N structure array.
@@ -25,13 +25,20 @@
 % ## Options
 % * __Threshold__ Threshold on difference between intensity of the central
 %        pixel and pixels on a circle around this pixel. See the algorithm
-%        description [E. Rosten, 2006]. default 10.
-% * __NonMaxSupression__ If it is true, non-maximum supression is applied
+%        description [Rosten06]. default 10.
+% * __NonmaxSuppression__ If it is true, non-maximum supression is applied
 %        to detected corners (keypoints). default true.
+% * __Type__ one of the three neighborhoods as defined in the paper:
+%       * **TYPE_9_16** (default)
+%       * **TYPE_7_12**
+%       * **TYPE_5_8**
 %
-% Detects corners using the FAST algorithm by:
+% Detects corners using the FAST algorithm by [Rosten06].
 %
+% ## References
+% [Rosten06]:
 % > E. Rosten (Machine Learning for High-speed Corner Detection, 2006).
 %
-% See also: cv.FeatureDetector, cv.DescriptorExtractor, detectFASTFeatures
+% See also: cv.FastFeatureDetector, cv.AGAST, cv.FeatureDetector,
+%  detectFASTFeatures
 %

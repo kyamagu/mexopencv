@@ -27,22 +27,21 @@ map<int,Ptr<DescriptorMatcher> > obj_;
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
+    // Check the number of arguments
     nargchk(nrhs>=2 && nlhs<=1);
 
     // Argument vector
-    vector<MxArray> rhs(prhs,prhs+nrhs);
+    vector<MxArray> rhs(prhs, prhs+nrhs);
     int id = rhs[0].toInt();
     string method(rhs[1].toString());
 
     // Constructor is called. Create a new object from argument
     if (method == "new") {
         nargchk(nrhs>=3 && nlhs<=1);
-        string descriptorMatcherType(rhs[2].toString());
-        obj_[++last_id] = createDescriptorMatcher(descriptorMatcherType,
-            rhs.begin() + 3, rhs.end());
+        obj_[++last_id] = createDescriptorMatcher(
+            rhs[2].toString(), rhs.begin() + 3, rhs.end());
         plhs[0] = MxArray(last_id);
         return;
     }
@@ -62,17 +61,18 @@ void mexFunction( int nlhs, mxArray *plhs[],
         obj->clear();
     }
     else if (method == "load") {
-        nargchk(nrhs>=3 && (nrhs%2)!=0 && nlhs==0);
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
         string objname;
         bool loadFromString = false;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="ObjName")
+            if (key == "ObjName")
                 objname = rhs[i+1].toString();
-            else if (key=="FromString")
+            else if (key == "FromString")
                 loadFromString = rhs[i+1].toBool();
             else
-                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         FileStorage fs(rhs[2].toString(), FileStorage::READ +
             (loadFromString ? FileStorage::MEMORY : 0));
@@ -89,7 +89,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
         plhs[0] = MxArray(obj->empty());
     }
     else if (method == "getDefaultName") {
-        nargchk(nrhs == 2 && nlhs <= 1);
+        nargchk(nrhs==2 && nlhs<=1);
         plhs[0] = MxArray(obj->getDefaultName());
     }
     else if (method == "isMaskSupported") {
@@ -102,11 +102,14 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
     else if (method == "add") {
         nargchk(nrhs==3 && nlhs==0);
-        vector<MxArray> va(rhs[2].toVector<MxArray>());
         vector<Mat> descriptors;
-        descriptors.reserve(va.size());
-        for (vector<MxArray>::const_iterator it=va.begin(); it!=va.end(); ++it)
-            descriptors.push_back(it->toMat(it->isUint8() ? CV_8U : CV_32F));
+        {
+            vector<MxArray> va(rhs[2].toVector<MxArray>());
+            descriptors.reserve(va.size());
+            for (vector<MxArray>::const_iterator it = va.begin(); it != va.end(); ++it)
+                descriptors.push_back(it->toMat(
+                    it->isUint8() ? CV_8U : CV_32F));
+        }
         obj->add(descriptors);
     }
     else if (method == "train") {
@@ -123,10 +126,11 @@ void mexFunction( int nlhs, mxArray *plhs[],
             Mat mask;
             for (int i=4; i<nrhs; i+=2) {
                 string key(rhs[i].toString());
-                if (key=="Mask")
+                if (key == "Mask")
                     mask = rhs[i+1].toMat(CV_8U);
                 else
-                    mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                    mexErrMsgIdAndTxt("mexopencv:error",
+                        "Unrecognized option %s", key.c_str());
             }
             obj->match(queryDescriptors, trainDescriptors, matches, mask);
         }
@@ -140,11 +144,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
                     vector<MxArray> va(rhs[i+1].toVector<MxArray>());
                     masks.clear();
                     masks.reserve(va.size());
-                    for (vector<MxArray>::const_iterator iter = va.begin(); iter != va.end(); iter++)
-                        masks.push_back(iter->toMat(CV_8U));
+                    for (vector<MxArray>::const_iterator it = va.begin(); it != va.end(); ++it)
+                        masks.push_back(it->toMat(CV_8U));
                 }
                 else
-                    mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                    mexErrMsgIdAndTxt("mexopencv:error",
+                        "Unrecognized option %s", key.c_str());
             }
             obj->match(queryDescriptors, matches, masks);
         }
@@ -162,15 +167,16 @@ void mexFunction( int nlhs, mxArray *plhs[],
             bool compactResult = false;
             for (int i=5; i<nrhs; i+=2) {
                 string key(rhs[i].toString());
-                if (key=="Mask")
+                if (key == "Mask")
                     mask = rhs[i+1].toMat(CV_8U);
-                else if (key=="CompactResult")
+                else if (key == "CompactResult")
                     compactResult = rhs[i+1].toBool();
                 else
-                    mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                    mexErrMsgIdAndTxt("mexopencv:error",
+                        "Unrecognized option %s", key.c_str());
             }
-            obj->knnMatch(queryDescriptors, trainDescriptors, matches, k, mask,
-                compactResult);
+            obj->knnMatch(queryDescriptors, trainDescriptors, matches,
+                k, mask, compactResult);
         }
         else {  // second variant
             nargchk((nrhs%2)==0);
@@ -184,13 +190,14 @@ void mexFunction( int nlhs, mxArray *plhs[],
                     vector<MxArray> va(rhs[i+1].toVector<MxArray>());
                     masks.clear();
                     masks.reserve(va.size());
-                    for (vector<MxArray>::const_iterator iter = va.begin(); iter != va.end(); iter++)
-                        masks.push_back(iter->toMat(CV_8U));
+                    for (vector<MxArray>::const_iterator it = va.begin(); it != va.end(); ++it)
+                        masks.push_back(it->toMat(CV_8U));
                 }
-                else if (key=="CompactResult")
+                else if (key == "CompactResult")
                     compactResult = rhs[i+1].toBool();
                 else
-                    mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                    mexErrMsgIdAndTxt("mexopencv:error",
+                        "Unrecognized option %s", key.c_str());
             }
             obj->knnMatch(queryDescriptors, matches, k, masks, compactResult);
         }
@@ -203,19 +210,20 @@ void mexFunction( int nlhs, mxArray *plhs[],
         if (nrhs>=5 && rhs[3].isNumeric() && rhs[4].isNumeric()) {  // first variant
             nargchk((nrhs%2)==1);
             Mat trainDescriptors(rhs[3].toMat(rhs[3].isUint8() ? CV_8U : CV_32F));
-            float maxDistance = rhs[4].toDouble();
+            float maxDistance = rhs[4].toFloat();
             Mat mask;
             bool compactResult = false;
             for (int i=5; i<nrhs; i+=2) {
                 string key(rhs[i].toString());
-                if (key=="Mask")
+                if (key == "Mask")
                     mask = rhs[i+1].toMat(CV_8U);
-                else if (key=="CompactResult")
+                else if (key == "CompactResult")
                     compactResult = rhs[i+1].toBool();
                 else
-                    mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                    mexErrMsgIdAndTxt("mexopencv:error",
+                        "Unrecognized option %s", key.c_str());
             }
-            obj->radiusMatch(queryDescriptors, trainDescriptors, matches, 
+            obj->radiusMatch(queryDescriptors, trainDescriptors, matches,
                 maxDistance, mask, compactResult);
         }
         else {  // second variant
@@ -230,18 +238,21 @@ void mexFunction( int nlhs, mxArray *plhs[],
                     vector<MxArray> va(rhs[i+1].toVector<MxArray>());
                     masks.clear();
                     masks.reserve(va.size());
-                    for (vector<MxArray>::const_iterator iter = va.begin(); iter != va.end(); iter++)
-                        masks.push_back(iter->toMat(CV_8U));
+                    for (vector<MxArray>::const_iterator it = va.begin(); it != va.end(); ++it)
+                        masks.push_back(it->toMat(CV_8U));
                 }
-                else if (key=="CompactResult")
+                else if (key == "CompactResult")
                     compactResult = rhs[i+1].toBool();
                 else
-                    mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                    mexErrMsgIdAndTxt("mexopencv:error",
+                        "Unrecognized option %s", key.c_str());
             }
-            obj->radiusMatch(queryDescriptors, matches, maxDistance, masks, compactResult);
+            obj->radiusMatch(queryDescriptors, matches,
+                maxDistance, masks, compactResult);
         }
         plhs[0] = MxArray(matches);
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unrecognized operation %s",method.c_str());
 }

@@ -10,8 +10,8 @@ fast prototyping of OpenCV application in MATLAB, use of OpenCV as an external
 toolbox in MATLAB, and development of a custom MEX function.
 
 The latest version of mexopencv (master branch) is compatible with OpenCV 3.x.
-For OpenCV versions older than 3.0, please checkout the corresponding 2.x
-branches ([v2.4](https://github.com/kyamagu/mexopencv/tree/v2.4),
+For older OpenCV versions, please checkout the corresponding 2.x branches in
+([v2.4](https://github.com/kyamagu/mexopencv/tree/v2.4),
 [v2.3](https://github.com/kyamagu/mexopencv/tree/v2.3), and
 [v2.1](https://github.com/kyamagu/mexopencv/tree/v2.1)).
 
@@ -60,8 +60,14 @@ Build
 
 Prerequisite:
 
- * Unix: MATLAB, OpenCV (>=3.0.0), g++, make, pkg-config
- * Windows: MATLAB, OpenCV (>=3.0.0), supported compiler
+ * Unix: MATLAB, OpenCV (>= 3.0.0), g++, make, pkg-config
+ * Windows: MATLAB, OpenCV (>= 3.0.0), supported compiler
+
+We also have preliminary support for Octave (>= 4.0.0).
+
+Currently, mexopencv targets the final 3.0.0 stable version of OpenCV. You
+must built it against this exact version, rather than using the bleeding-edge
+dev-version of `opencv` or `opencv_contrib`.
 
 Unix
 ----

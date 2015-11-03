@@ -7,6 +7,26 @@ classdef TestDenoise_TVL1
     methods (Static)
         function test_1
             img = TestDenoise_TVL1.im;
+            images = repmat({img},1,5);
+            out = cv.denoise_TVL1(images, 'Lambda',1.0, 'NIters',30);
+            validateattributes(out, {class(img)}, {'size',size(img)});
+        end
+
+        function test_2
+            % requires Image Processing Toolbox
+            if mexopencv.isOctave()
+                img_lic = 'image';
+                img_ver = img_lic;
+            else
+                img_lic = 'image_toolbox';
+                img_ver = 'images';
+            end
+            if ~license('test', img_lic) || isempty(ver(img_ver))
+                disp('SKIP');
+                return;
+            end
+
+            img = TestDenoise_TVL1.im;
             images = cell(1,5);
             for i=1:numel(images)
                 images{i} = imnoise(img, 'gaussian');
@@ -15,7 +35,7 @@ classdef TestDenoise_TVL1
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
-        function test_2
+        function test_3
             img = TestDenoise_TVL1.im;
             images = cell(1,5);
             for i=1:numel(images)
@@ -25,7 +45,7 @@ classdef TestDenoise_TVL1
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
-        function test_3
+        function test_4
             img = TestDenoise_TVL1.im;
             images = cell(1,5);
             for i=1:numel(images)
@@ -53,7 +73,7 @@ function noisy = make_noisy(img, sigma, pepper_salt_ratio)
     noisy = uint8(double(img) + double(noise) - 128);
     noise = uint8((randn(size(noise))*2)*255);
     mask = randi([0 round(1/pepper_salt_ratio)], size(img), 'uint8');
-    mask(:,1:end/2) = 1;
+    mask(:,1:fix(end/2)) = 1;
     noise(mask~=0) = 128;
     noisy = uint8(double(noisy) + double(noise) - 128);
 end
