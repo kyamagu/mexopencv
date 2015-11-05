@@ -274,11 +274,11 @@ classdef ORB < handle
             %    keypoints = obj.detect(imgs)
             %    [...] = obj.detect(..., 'OptionName',optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __img__ Image (first variant), 8-bit grayscale image.
             % * __imgs__ Image set (second variant), cell array of images.
             %
-            % ## Outputs
+            % ## Output
             % * __keypoints__ The detected keypoints. In the first variant,
             %       a 1-by-N structure array. In the second variant of the
             %       method, `keypoints{i}` is a set of keypoints detected in
@@ -303,7 +303,7 @@ classdef ORB < handle
             %    [descriptors, keypoints] = obj.compute(img, keypoints)
             %    [descriptors, keypoints] = obj.compute(imgs, keypoints)
             %
-            % ## Inputs
+            % ## Input
             % * __img__ Image (first variant), 8-bit grayscale image.
             % * __imgs__ Image set (second variant), cell array of images.
             % * __keypoints__ Input collection of keypoints. Keypoints for
@@ -315,7 +315,7 @@ classdef ORB < handle
             %       it is a cell-array, where `keypoints{i}` is a set of keypoints
             %       detected in `images{i}` (a struct-array like before).
             %
-            % ## Outputs
+            % ## Output
             % * __descriptors__ Computed descriptors. In the second variant of
             %       the method `descriptors{i}` are descriptors computed for a
             %       `keypoints{i}`. Row `j` in `descriptors` (or

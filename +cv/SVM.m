@@ -478,12 +478,12 @@ classdef SVM < handle
             %    [err,resp] = model.calcError(...)
             %    [...] = model.calcError(..., 'OptionName', optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __samples__ See the train method.
             % * __responses__ See the train method.
             % * __csvFilename__ See the train method.
             %
-            % ## Outputs
+            % ## Output
             % * __err__ computed error.
             % * __resp__ the optional output responses.
             %
@@ -514,10 +514,10 @@ classdef SVM < handle
             %    [results,f] = model.predict(samples)
             %    [...] = model.predict(..., 'OptionName', optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __samples__ The input samples, floating-point matrix.
             %
-            % ## Outputs
+            % ## Output
             % * __results__ The output matrix of results.
             % * __f__ If you pass one sample then prediction result is
             %       returned here, otherwise unused and returns 0. If you want

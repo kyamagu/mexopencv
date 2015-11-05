@@ -155,11 +155,11 @@ classdef StarDetector < handle
             %    keypoints = obj.detect(imgs)
             %    [...] = obj.detect(..., 'OptionName',optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __img__ Image (first variant), 8-bit/16-bit grayscale image.
             % * __imgs__ Image set (second variant), cell array of images.
             %
-            % ## Outputs
+            % ## Output
             % * __keypoints__ The detected keypoints. In the first variant,
             %       a 1-by-N structure array. In the second variant of the
             %       method, `keypoints{i}` is a set of keypoints detected in

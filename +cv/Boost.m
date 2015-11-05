@@ -517,12 +517,12 @@ classdef Boost < handle
             %    [err,resp] = model.calcError(...)
             %    [...] = model.calcError(..., 'OptionName', optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __samples__ See the train method.
             % * __responses__ See the train method.
             % * __csvFilename__ See the train method.
             %
-            % ## Outputs
+            % ## Output
             % * __err__ computed error.
             % * __resp__ the optional output responses.
             %
