@@ -33,8 +33,8 @@ classdef TestInRange
             % compare against IM2BW
             % Note: lower bound in IM2BW is non-inclusive,
             %       while it is inclusive in INRANGE, hence the +1
-            img = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
-            gray = im2uint8(rgb2gray(img));
+            gray = cv.imread(fullfile(mexopencv.root(),'test','img001.jpg'), 'Grayscale',true);
+            assert(isa(gray,'uint8'));
             level = graythresh(gray);  % level in [0,1] range
             BW1 = im2bw(gray, level);
             BW2 = cv.inRange(gray, fix(255*level)+1, 255);

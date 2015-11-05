@@ -1,7 +1,7 @@
 classdef TestFeatureDetector
     %TestFeatureDetector
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
+        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
         kfields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};
         detectors = { ...
             ... % features2d (opencv)
@@ -15,6 +15,7 @@ classdef TestFeatureDetector
 
     methods (Static)
         function test_detect_img
+            img = imread(TestFeatureDetector.im);
             for i=1:numel(TestFeatureDetector.detectors)
                 try
                     obj = cv.FeatureDetector(TestFeatureDetector.detectors{i});
@@ -25,7 +26,7 @@ classdef TestFeatureDetector
                 end
                 typename = obj.typeid();
 
-                kpts = obj.detect(TestFeatureDetector.img);
+                kpts = obj.detect(img);
                 validateattributes(kpts, {'struct'}, {'vector'});
                 assert(all(ismember(TestFeatureDetector.kfields, ...
                     fieldnames(kpts))));
@@ -33,7 +34,8 @@ classdef TestFeatureDetector
         end
 
         function test_detect_imgset
-            imgs = {TestFeatureDetector.img, TestFeatureDetector.img};
+            img = imread(TestFeatureDetector.im);
+            imgs = {img, img};
             for i=1:numel(TestFeatureDetector.detectors)
                 try
                     obj = cv.FeatureDetector(TestFeatureDetector.detectors{i});
@@ -54,7 +56,8 @@ classdef TestFeatureDetector
         end
 
         function test_detect_mask
-            mask = zeros(size(TestFeatureDetector.img), 'uint8');
+            img = imread(TestFeatureDetector.im);
+            mask = zeros(size(img), 'uint8');
             mask(:,1:end/2) = 255;  % only search left half of the image
 
             for i=1:numel(TestFeatureDetector.detectors)
@@ -66,12 +69,12 @@ classdef TestFeatureDetector
                     continue;
                 end
 
-                kpts = obj.detect(TestFeatureDetector.img, 'Mask',mask);
+                kpts = obj.detect(img, 'Mask',mask);
                 validateattributes(kpts, {'struct'}, {'vector'});
                 assert(all(ismember(TestFeatureDetector.kfields, ...
                     fieldnames(kpts))));
                 xy = cat(1, kpts.pt);
-                assert(all(xy(:,1) <= ceil(size(TestFeatureDetector.img,2)/2)));
+                assert(all(xy(:,1) <= ceil(size(img,2)/2)));
             end
         end
     end

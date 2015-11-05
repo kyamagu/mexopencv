@@ -1,7 +1,5 @@
 classdef TestSolveLP
     %TestSolveLP
-    properties (Constant)
-    end
 
     methods (Static)
         function test_basic_1

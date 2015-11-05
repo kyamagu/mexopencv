@@ -1,26 +1,25 @@
 classdef TestConnectedComponents
     %TestConnectedComponents
     properties (Constant)
-        bw = logical(imread(fullfile(mexopencv.root(),'test','bw.png')));
+        im = fullfile(mexopencv.root(),'test','bw.png');
     end
 
     methods (Static)
         function test_1
-            [L,N,stats,centroids] = cv.connectedComponents(TestConnectedComponents.bw);
+            bw = logical(imread(TestConnectedComponents.im));
+            [L,N,stats,centroids] = cv.connectedComponents(bw);
             assert(isinteger(L));
             validateattributes(L, {'numeric'}, ...
-                {'size',size(TestConnectedComponents.bw), 'integer', 'nonnegative', '<',N}, ...
-                'cv.connectedComponents', 'L');
-            validateattributes(N, {'numeric'}, {'scalar', 'integer', 'nonnegative'}, ...
-                'cv.connectedComponents', 'N');
-            validateattributes(stats, {'int32'}, {'size',[N 5]}, ...
-                'cv.connectedComponents', 'stats');
-            validateattributes(centroids, {'numeric'}, {'real', 'size',[N 2]}, ...
-                'cv.connectedComponents', 'centroids');
+                {'size',size(bw), 'integer', 'nonnegative', '<',N});
+            validateattributes(N, {'numeric'}, ...
+                {'scalar', 'integer', 'nonnegative'});
+            validateattributes(stats, {'int32'}, {'size',[N 5]});
+            validateattributes(centroids, {'numeric'}, {'real', 'size',[N 2]});
         end
 
         function test_2
-            [L,N] = cv.connectedComponents(TestConnectedComponents.bw, ...
+            bw = logical(imread(TestConnectedComponents.im));
+            [L,N] = cv.connectedComponents(bw, ...
                 'Connectivity',8, 'LType','uint16');
             validateattributes(L, {'uint16'}, {}, '', 'L');
             assert(all(unique(L(:)) == (0:N-1)'));

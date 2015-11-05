@@ -3,7 +3,7 @@ classdef TestHoughCircles
 
     methods (Static)
         function test_1
-            im = rgb2gray(imread(fullfile(mexopencv.root(),'test','balloon.jpg')));
+            im = cv.imread(fullfile(mexopencv.root(),'test','balloon.jpg'), 'Grayscale',true);
             circles = cv.HoughCircles(im, 'Method','Gradient', 'DP',2, ...
                 'Param1',500, 'Param2',5, ...
                 'MinDist',150, 'MinRadius',0, 'MaxRadius',80);

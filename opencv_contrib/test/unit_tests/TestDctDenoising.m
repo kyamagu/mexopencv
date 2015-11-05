@@ -6,7 +6,7 @@ classdef TestDctDenoising
 
     methods (Static)
         function test_gray
-            img = rgb2gray(imread(TestDctDenoising.im));
+            img = cv.imread(TestDctDenoising.im, 'Grayscale',true);
             img = cv.resize(img, 0.4, 0.4);
             dst = cv.dctDenoising(img);
             validateattributes(dst, {class(img)}, {'size',size(img)});

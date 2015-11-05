@@ -1,7 +1,7 @@
 classdef TestFREAK
     %TestFREAK
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
+        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
     end
 
     methods (Static)
@@ -10,8 +10,9 @@ classdef TestFREAK
             typename = obj.typeid();
             ntype = obj.defaultNorm();
 
-            kpts = cv.FAST(TestFREAK.img, 'Threshold',20);
-            [desc, kpts2] = obj.compute(TestFREAK.img, kpts);
+            img = imread(TestFREAK.im);
+            kpts = cv.FAST(img, 'Threshold',20);
+            [desc, kpts2] = obj.compute(img, kpts);
             validateattributes(kpts2, {'struct'}, {'vector'});
             assert(all(ismember(fieldnames(kpts), fieldnames(kpts2))));
             validateattributes(desc, {obj.descriptorType()}, ...
@@ -19,8 +20,9 @@ classdef TestFREAK
         end
 
         function test_compute_imgset
-            imgs = {TestFREAK.img, TestFREAK.img};
-            kpts = cv.FAST(TestFREAK.img, 'Threshold',20);
+            img = imread(TestFREAK.im);
+            imgs = {img, img};
+            kpts = cv.FAST(img, 'Threshold',20);
             kpts = {kpts, kpts};
 
             obj = cv.FREAK();

@@ -1,7 +1,5 @@
 classdef TestCalcCovarMatrix
     %TestCalcCovarMatrix
-    properties (Constant)
-    end
 
     methods (Static)
         function test_1

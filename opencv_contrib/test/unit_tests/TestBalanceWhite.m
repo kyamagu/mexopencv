@@ -1,20 +1,20 @@
 classdef TestBalanceWhite
     %TestBalanceWhite
     properties (Constant)
-        im = imread(fullfile(mexopencv.root(),'test','lena.jpg'));
+        im = fullfile(mexopencv.root(),'test','lena.jpg');
     end
 
     methods (Static)
         function test_1
-            dst = cv.balanceWhite(TestBalanceWhite.im, 'Type','Simple', ...
+            img = imread(TestBalanceWhite.im);
+            dst = cv.balanceWhite(img, 'Type','Simple', ...
                 'InputMin',0, 'InputMax',255, 'OutputMin',0, 'OutputMax',255);
-            validateattributes(dst, {class(TestBalanceWhite.im)}, ...
-                {'size',size(TestBalanceWhite.im)});
+            validateattributes(dst, {class(img)}, {'size',size(img)});
         end
 
         function test_rgb
             % CV_8UC3
-            img = TestBalanceWhite.im;
+            img = imread(TestBalanceWhite.im);
             dst = cv.balanceWhite(img);
             validateattributes(dst, {class(img)}, {'size',size(img)});
 
@@ -26,7 +26,7 @@ classdef TestBalanceWhite
 
         function test_gray
             % CV_8U
-            img = rgb2gray(TestBalanceWhite.im);
+            img = cv.imread(TestBalanceWhite.im, 'Grayscale',true);
             dst = cv.balanceWhite(img);
             validateattributes(dst, {class(img)}, {'size',size(img)});
 

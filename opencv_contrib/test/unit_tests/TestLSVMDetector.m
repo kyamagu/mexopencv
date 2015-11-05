@@ -2,7 +2,7 @@ classdef TestLSVMDetector
     %TestLSVMDetector
     properties (Constant)
         xmlfile = fullfile(mexopencv.root(),'test','cat.xml');
-        img = imread(fullfile(mexopencv.root(),'test','cat.jpg'));
+        im = fullfile(mexopencv.root(),'test','cat.jpg');
     end
 
     methods (Static)
@@ -12,7 +12,8 @@ classdef TestLSVMDetector
             assert(detector.getClassCount() == 1);
             assert(iscellstr(detector.getClassNames()));
 
-            objects = detector.detect(TestLSVMDetector.img);
+            img = imread(TestLSVMDetector.im);
+            objects = detector.detect(img);
             if ~isempty(objects)
                 validateattributes(objects, {'struct'}, {'vector'});
                 arrayfun(@(S) validateattributes(S.rect, {'numeric'}, ...
@@ -32,7 +33,8 @@ classdef TestLSVMDetector
             assert(detector.getClassCount() == 2);
             assert(iscellstr(detector.getClassNames()));
 
-            objects = detector.detect(TestLSVMDetector.img);
+            img = imread(TestLSVMDetector.im);
+            objects = detector.detect(img);
             if ~isempty(objects)
                 validateattributes(objects, {'struct'}, {'vector'});
                 arrayfun(@(S) validateattributes(S.rect, {'numeric'}, ...

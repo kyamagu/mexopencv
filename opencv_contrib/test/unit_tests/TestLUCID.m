@@ -1,7 +1,7 @@
 classdef TestLUCID
     %TestLUCID
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
+        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
     end
 
     methods (Static)
@@ -10,8 +10,9 @@ classdef TestLUCID
             typename = obj.typeid();
             ntype = obj.defaultNorm();
 
-            kpts = cv.FAST(TestLUCID.img, 'Threshold',20);
-            [desc, kpts2] = obj.compute(TestLUCID.img, kpts);
+            img = imread(TestLUCID.im);
+            kpts = cv.FAST(img, 'Threshold',20);
+            [desc, kpts2] = obj.compute(img, kpts);
             validateattributes(kpts2, {'struct'}, {'vector'});
             assert(all(ismember(fieldnames(kpts), fieldnames(kpts2))));
             validateattributes(desc, {obj.descriptorType()}, ...
@@ -19,8 +20,9 @@ classdef TestLUCID
         end
 
         function test_compute_imgset
-            imgs = {TestLUCID.img, TestLUCID.img};
-            kpts = cv.FAST(TestLUCID.img, 'Threshold',20);
+            img = imread(TestLUCID.im);
+            imgs = {img, img};
+            kpts = cv.FAST(img, 'Threshold',20);
             kpts = {kpts, kpts};
 
             obj = cv.LUCID();

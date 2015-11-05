@@ -1,21 +1,23 @@
 classdef TestPyrDown
     %TestPyrDown
     properties (Constant)
-        im = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
+        im = fullfile(mexopencv.root(),'test','img001.jpg');
     end
 
     methods (Static)
         function test_1
-            result = cv.pyrDown(TestPyrDown.im);
+            img = imread(TestPyrDown.im);
+            result = cv.pyrDown(img);
         end
 
         function test_2
-            img = double(TestPyrDown.im) ./ 255;
+            img = imread(TestPyrDown.im);
+            img = double(img) ./ 255;
             result = cv.pyrDown(img);
         end
 
         function test_3
-            img = TestPyrDown.im;
+            img = imread(TestPyrDown.im);
             img = img(1:400,1:512);
             [h,w,~] = size(img);
             sz = round([w,h]./2);
@@ -23,7 +25,7 @@ classdef TestPyrDown
         end
 
         function test_4
-            img = TestPyrDown.im;
+            img = imread(TestPyrDown.im);
             img2 = cv.pyrDown(img);
             img3 = cv.pyrDown(img2);
             img4 = cv.pyrDown(img3);

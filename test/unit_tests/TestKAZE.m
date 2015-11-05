@@ -1,7 +1,7 @@
 classdef TestKAZE
     %TestKAZE
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
+        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
         kfields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};
     end
 
@@ -13,11 +13,12 @@ classdef TestKAZE
             typename = obj.typeid();
             ntype = obj.defaultNorm();
 
-            kpts = obj.detect(TestKAZE.img);
+            img = imread(TestKAZE.im);
+            kpts = obj.detect(img);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestKAZE.kfields, fieldnames(kpts))));
 
-            [desc, kpts2] = obj.compute(TestKAZE.img, kpts);
+            [desc, kpts2] = obj.compute(img, kpts);
             validateattributes(kpts2, {'struct'}, {'vector'});
             assert(all(ismember(TestKAZE.kfields, fieldnames(kpts2))));
             validateattributes(desc, {obj.descriptorType()}, ...
@@ -25,7 +26,8 @@ classdef TestKAZE
         end
 
         function test_detect_compute_imgset
-            imgs = {TestKAZE.img, TestKAZE.img};
+            img = imread(TestKAZE.im);
+            imgs = {img, img};
             obj = cv.KAZE();
 
             kpts = obj.detect(imgs);
@@ -40,8 +42,9 @@ classdef TestKAZE
         end
 
         function test_detectAndCompute
+            img = imread(TestKAZE.im);
             obj = cv.KAZE();
-            [kpts, desc] = obj.detectAndCompute(TestKAZE.img);
+            [kpts, desc] = obj.detectAndCompute(img);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestKAZE.kfields, fieldnames(kpts))));
             validateattributes(desc, {obj.descriptorType()}, ...
@@ -49,24 +52,26 @@ classdef TestKAZE
         end
 
         function test_detectAndCompute_providedKeypoints
+            img = imread(TestKAZE.im);
             obj = cv.KAZE();
-            kpts = obj.detect(TestKAZE.img);
+            kpts = obj.detect(img);
 
             kpts = kpts(1:min(20,end));
-            [~, desc] = obj.detectAndCompute(TestKAZE.img, 'Keypoints',kpts);
+            [~, desc] = obj.detectAndCompute(img, 'Keypoints',kpts);
             validateattributes(desc, {obj.descriptorType()}, ...
                 {'size',[numel(kpts) obj.descriptorSize()]});
         end
 
         function test_detect_mask
-            mask = zeros(size(TestKAZE.img), 'uint8');
+            img = imread(TestKAZE.im);
+            mask = zeros(size(img), 'uint8');
             mask(:,1:end/2) = 255;  % only search left half of the image
             obj = cv.KAZE();
-            kpts = obj.detect(TestKAZE.img, 'Mask',mask);
+            kpts = obj.detect(img, 'Mask',mask);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestKAZE.kfields, fieldnames(kpts))));
             xy = cat(1, kpts.pt);
-            assert(all(xy(:,1) <= ceil(size(TestKAZE.img,2)/2)));
+            assert(all(xy(:,1) <= ceil(size(img,2)/2)));
         end
 
         function test_error_1

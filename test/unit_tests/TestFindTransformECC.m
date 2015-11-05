@@ -1,12 +1,13 @@
 classdef TestFindTransformECC
     %TestFindTransformECC
     properties (Constant)
-        im = rgb2gray(imread(fullfile(mexopencv.root(),'test','fruits.jpg')));
+        im = fullfile(mexopencv.root(),'test','fruits.jpg');
     end
 
     methods (Static)
         function test_translation
-            img = cv.resize(TestFindTransformECC.im, [216 216]);
+            img = cv.imread(TestFindTransformECC.im, 'Grayscale',true);
+            img = cv.resize(img, [216 216]);
             translationGround = [1 0 randi([10 20]);
                                  0 1 randi([10 20])];
             warpedImage = cv.warpAffine(img, translationGround, ...
@@ -21,7 +22,8 @@ classdef TestFindTransformECC
         end
 
         function test_euclidean
-            img = cv.resize(TestFindTransformECC.im, [216 216]);
+            img = cv.imread(TestFindTransformECC.im, 'Grayscale',true);
+            img = cv.resize(img, [216 216]);
             angle = pi/30 + pi*randi([-2 2])/180;
             euclideanGround = [cos(angle) -sin(angle) randi([10 20]);
                                sin(angle)  cos(angle) randi([10 20])];
@@ -37,7 +39,8 @@ classdef TestFindTransformECC
         end
 
         function test_affine
-            img = cv.resize(TestFindTransformECC.im, [216 216]);
+            img = cv.imread(TestFindTransformECC.im, 'Grayscale',true);
+            img = cv.resize(img, [216 216]);
             affineGround = [1-(rand*0.1-0.05) rand*0.06-0.03 randi([10 20]);
                             rand*0.06-0.03 1-(rand*0.1-0.05) randi([10 20])];
             warpedImage = cv.warpAffine(img, affineGround, ...
@@ -52,7 +55,8 @@ classdef TestFindTransformECC
         end
 
         function test_homography
-            img = cv.resize(TestFindTransformECC.im, [216 216]);
+            img = cv.imread(TestFindTransformECC.im, 'Grayscale',true);
+            img = cv.resize(img, [216 216]);
             homoGround = [1-(rand*0.1-0.05) rand*0.06-0.03 randi([10 20]);
                           rand*0.06-0.03 1-(rand*0.1-0.05) randi([10 20]);
                           rand*0.0002+0.0002 rand*0.0002+0.0002 1];

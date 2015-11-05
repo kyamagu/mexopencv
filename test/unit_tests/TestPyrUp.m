@@ -1,21 +1,23 @@
 classdef TestPyrUp
     %TestPyrUp
     properties (Constant)
-        im = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
+        im = fullfile(mexopencv.root(),'test','img001.jpg');
     end
 
     methods (Static)
         function test_1
-            result = cv.pyrUp(TestPyrUp.im);
+            img = imread(TestPyrUp.im);
+            result = cv.pyrUp(img);
         end
 
         function test_2
-            img = double(TestPyrUp.im) ./ 255;
+            img = imread(TestPyrUp.im);
+            img = double(img) ./ 255;
             result = cv.pyrUp(img);
         end
 
         function test_3
-            img = TestPyrUp.im;
+            img = imread(TestPyrUp.im);
             img = img(1:400,1:512);
             [h,w,~] = size(img);
             sz = [w,h].*2;

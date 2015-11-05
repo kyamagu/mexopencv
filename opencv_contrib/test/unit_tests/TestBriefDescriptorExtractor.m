@@ -1,7 +1,7 @@
 classdef TestBriefDescriptorExtractor
     %TestBriefDescriptorExtractor
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
+        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
     end
 
     methods (Static)
@@ -10,8 +10,9 @@ classdef TestBriefDescriptorExtractor
             typename = obj.typeid();
             ntype = obj.defaultNorm();
 
-            kpts = cv.FAST(TestBriefDescriptorExtractor.img, 'Threshold',20);
-            [desc, kpts2] = obj.compute(TestBriefDescriptorExtractor.img, kpts);
+            img = imread(TestBriefDescriptorExtractor.im);
+            kpts = cv.FAST(img, 'Threshold',20);
+            [desc, kpts2] = obj.compute(img, kpts);
             validateattributes(kpts2, {'struct'}, {'vector'});
             assert(all(ismember(fieldnames(kpts), fieldnames(kpts2))));
             validateattributes(desc, {obj.descriptorType()}, ...
@@ -19,8 +20,9 @@ classdef TestBriefDescriptorExtractor
         end
 
         function test_compute_imgset
-            imgs = {TestBriefDescriptorExtractor.img, TestBriefDescriptorExtractor.img};
-            kpts = cv.FAST(TestBriefDescriptorExtractor.img, 'Threshold',20);
+            img = imread(TestBriefDescriptorExtractor.im);
+            imgs = {img, img};
+            kpts = cv.FAST(img, 'Threshold',20);
             kpts = {kpts, kpts};
 
             obj = cv.BriefDescriptorExtractor();

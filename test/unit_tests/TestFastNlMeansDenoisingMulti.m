@@ -1,12 +1,12 @@
 classdef TestFastNlMeansDenoisingMulti
     %TestFastNlMeansDenoisingMulti
     properties (Constant)
-        im = rgb2gray(imread(fullfile(mexopencv.root(),'test','lena.jpg')));
+        im = fullfile(mexopencv.root(),'test','lena.jpg');
     end
 
     methods (Static)
         function test_1
-            img = TestFastNlMeansDenoisingMulti.im;
+            img = cv.imread(TestFastNlMeansDenoisingMulti.im, 'Grayscale',true);
             imgs = repmat({img},1,5);
             out = cv.fastNlMeansDenoisingMulti(imgs, 2, 3, 'H',20);
             validateattributes(out, {class(img)}, {'size',size(img)});
@@ -26,7 +26,7 @@ classdef TestFastNlMeansDenoisingMulti
                 return;
             end
 
-            img = TestFastNlMeansDenoisingMulti.im;
+            img = cv.imread(TestFastNlMeansDenoisingMulti.im, 'Grayscale',true);
             imgs = cell(1,5);
             for i=1:numel(imgs)
                 imgs{i} = imnoise(img, 'gaussian');

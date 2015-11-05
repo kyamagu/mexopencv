@@ -1,7 +1,7 @@
 classdef TestSURF
     %TestSURF
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
+        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
         kfields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};
     end
 
@@ -13,11 +13,12 @@ classdef TestSURF
             typename = obj.typeid();
             ntype = obj.defaultNorm();
 
-            kpts = obj.detect(TestSURF.img);
+            img = imread(TestSURF.im);
+            kpts = obj.detect(img);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestSURF.kfields, fieldnames(kpts))));
 
-            [desc, kpts2] = obj.compute(TestSURF.img, kpts);
+            [desc, kpts2] = obj.compute(img, kpts);
             validateattributes(kpts2, {'struct'}, {'vector'});
             assert(all(ismember(TestSURF.kfields, fieldnames(kpts2))));
             validateattributes(desc, {obj.descriptorType()}, ...
@@ -25,7 +26,8 @@ classdef TestSURF
         end
 
         function test_detect_compute_imgset
-            imgs = {TestSURF.img, TestSURF.img};
+            img = imread(TestSURF.im);
+            imgs = {img, img};
             obj = cv.SURF();
 
             kpts = obj.detect(imgs);
@@ -40,8 +42,9 @@ classdef TestSURF
         end
 
         function test_detectAndCompute
+            img = imread(TestSURF.im);
             obj = cv.SURF();
-            [kpts, desc] = obj.detectAndCompute(TestSURF.img);
+            [kpts, desc] = obj.detectAndCompute(img);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestSURF.kfields, fieldnames(kpts))));
             validateattributes(desc, {obj.descriptorType()}, ...
@@ -49,24 +52,26 @@ classdef TestSURF
         end
 
         function test_detectAndCompute_providedKeypoints
+            img = imread(TestSURF.im);
             obj = cv.SURF();
-            kpts = obj.detect(TestSURF.img);
+            kpts = obj.detect(img);
 
             kpts = kpts(1:min(20,end));
-            [~, desc] = obj.detectAndCompute(TestSURF.img, 'Keypoints',kpts);
+            [~, desc] = obj.detectAndCompute(img, 'Keypoints',kpts);
             validateattributes(desc, {obj.descriptorType()}, ...
                 {'size',[numel(kpts) obj.descriptorSize()]});
         end
 
         function test_detect_mask
-            mask = zeros(size(TestSURF.img), 'uint8');
+            img = imread(TestSURF.im);
+            mask = zeros(size(img), 'uint8');
             mask(:,1:end/2) = 255;  % only search left half of the image
             obj = cv.SURF();
-            kpts = obj.detect(TestSURF.img, 'Mask',mask);
+            kpts = obj.detect(img, 'Mask',mask);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestSURF.kfields, fieldnames(kpts))));
             xy = cat(1, kpts.pt);
-            assert(all(xy(:,1) <= ceil(size(TestSURF.img,2)/2)));
+            assert(all(xy(:,1) <= ceil(size(img,2)/2)));
         end
 
         function test_error_1

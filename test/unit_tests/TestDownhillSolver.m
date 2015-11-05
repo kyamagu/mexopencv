@@ -1,7 +1,5 @@
 classdef TestDownhillSolver
     %TestDownhillSolver
-    properties (Constant)
-    end
 
     methods (Static)
         function test_rosenbrock

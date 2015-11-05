@@ -1,12 +1,12 @@
 classdef TestWarpAffine
     %TestWarpAffine
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
+        img = fullfile(mexopencv.root(),'test','img001.jpg');
     end
 
     methods (Static)
         function test_1
-            im = TestWarpAffine.img;
+            im = imread(TestWarpAffine.img);
             M = eye(2,3);  % identity transform
             dst = cv.warpAffine(im, M);
             validateattributes(dst, {class(im)}, {'size',size(im)});
@@ -14,7 +14,7 @@ classdef TestWarpAffine
         end
 
         function test_2
-            im = rgb2gray(TestWarpAffine.img);
+            im = cv.imread(TestWarpAffine.img, 'Grayscale',true);
             M = eye(2,3);  % identity transform
             dst = cv.warpAffine(im, M, 'DSize',[256 256], ...
                 'Interpolation','Linear', 'WarpInverse',false, ...
@@ -23,7 +23,7 @@ classdef TestWarpAffine
         end
 
         function test_3
-            im = TestWarpAffine.img;
+            im = imread(TestWarpAffine.img);
             [h,w,~] = size(im);
             M = cv.getRotationMatrix2D([w h]./2, 30, 0.7);
             dst = cv.warpAffine(im, M, 'Dst',im, 'BorderType','Transparent');

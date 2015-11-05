@@ -1,7 +1,5 @@
 classdef TestBatchDistance
     %TestBatchDistance
-    properties (Constant)
-    end
 
     methods (Static)
         function test_1

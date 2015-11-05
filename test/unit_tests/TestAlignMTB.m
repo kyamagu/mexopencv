@@ -19,7 +19,7 @@ classdef TestAlignMTB
         end
 
         function test_shifting
-            img = rgb2gray(imread(fullfile(mexopencv.root(),'test','lena.jpg')));
+            img = cv.imread(fullfile(mexopencv.root(),'test','lena.jpg'), 'Grayscale',true);
 
             shift = randi([0 32], [1 2]);
 
@@ -33,7 +33,7 @@ classdef TestAlignMTB
         end
 
         function test_3
-            img = rgb2gray(imread(fullfile(mexopencv.root(),'test','lena.jpg')));
+            img = cv.imread(fullfile(mexopencv.root(),'test','lena.jpg'), 'Grayscale',true);
             obj = cv.AlignMTB();
             [tb, eb] = obj.computeBitmaps(img);
             validateattributes(tb, {class(img)}, {'size',size(img)});

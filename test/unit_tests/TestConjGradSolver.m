@@ -1,7 +1,5 @@
 classdef TestConjGradSolver
     %TestConjGradSolver
-    properties (Constant)
-    end
 
     methods (Static)
         function test_rosenbrock

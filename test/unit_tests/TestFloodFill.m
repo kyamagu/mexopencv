@@ -1,12 +1,12 @@
 classdef TestFloodFill
     %TestFloodFill
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
+        img = fullfile(mexopencv.root(),'test','img001.jpg');
     end
 
     methods (Static)
         function test_gray
-            im = rgb2gray(TestFloodFill.img);
+            im = cv.imread(TestFloodFill.img, 'Grayscale',true);
             seed = [100,100];
             value = 255;
             [rslt,rect,a] = cv.floodFill(im, seed, value);
@@ -16,14 +16,14 @@ classdef TestFloodFill
         end
 
         function test_color
-            im = TestFloodFill.img;
+            im = imread(TestFloodFill.img);
             seed = [100,100];
             value = [255 0 0];
             [rslt,rect,a] = cv.floodFill(im, seed, value);
         end
 
         function test_options
-            im = TestFloodFill.img;
+            im = imread(TestFloodFill.img);
             seed = [100,100];
             value = [255 0 0];
             rslt = cv.floodFill(im, seed, value, 'FixedRange',false, ...
@@ -31,7 +31,7 @@ classdef TestFloodFill
         end
 
         function test_mask
-            im = rgb2gray(TestFloodFill.img);
+            im = cv.imread(TestFloodFill.img, 'Grayscale',true);
             mask = zeros(size(im)+2, 'uint8');
             seed = [100,100];
             value = 255;

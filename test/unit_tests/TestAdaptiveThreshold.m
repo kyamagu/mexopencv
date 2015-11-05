@@ -1,34 +1,31 @@
 classdef TestAdaptiveThreshold
     %TestAdaptiveThreshold
-    properties (Constant)
-        img = randi(255, [100 100], 'uint8');
-    end
 
     methods (Static)
         function test_1
-            result = cv.adaptiveThreshold(TestAdaptiveThreshold.img, 255);
-            validateattributes(result, {class(TestAdaptiveThreshold.img)}, ...
-                {'size',size(TestAdaptiveThreshold.img)});
+            img = randi(255, [100 100], 'uint8');
+            out = cv.adaptiveThreshold(img, 255);
+            validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
         function test_2
-            result = cv.adaptiveThreshold(TestAdaptiveThreshold.img, 255, ...
-                'AdaptiveMethod','Gaussian');
+            img = randi(255, [100 100], 'uint8');
+            out = cv.adaptiveThreshold(img, 255, 'AdaptiveMethod','Gaussian');
         end
 
         function test_3
-            result = cv.adaptiveThreshold(TestAdaptiveThreshold.img, 255, ...
-                'ThresholdType','BinaryInv');
+            img = randi(255, [100 100], 'uint8');
+            out = cv.adaptiveThreshold(img, 255, 'ThresholdType','BinaryInv');
         end
 
         function test_4
-            result = cv.adaptiveThreshold(TestAdaptiveThreshold.img, 255, ...
-                'BlockSize',7);
+            img = randi(255, [100 100], 'uint8');
+            out = cv.adaptiveThreshold(img, 255, 'BlockSize',7);
         end
 
         function test_5
-            result = cv.adaptiveThreshold(TestAdaptiveThreshold.img, 255, ...
-                'C',1);
+            img = randi(255, [100 100], 'uint8');
+            out = cv.adaptiveThreshold(img, 255, 'C',1);
         end
 
         function test_error_1

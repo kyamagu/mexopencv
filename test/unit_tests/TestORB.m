@@ -1,7 +1,7 @@
 classdef TestORB
     %TestORB
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
+        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
         kfields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};
     end
 
@@ -12,11 +12,12 @@ classdef TestORB
             typename = obj.typeid();
             ntype = obj.defaultNorm();
 
-            kpts = obj.detect(TestORB.img);
+            img = imread(TestORB.im);
+            kpts = obj.detect(img);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestORB.kfields, fieldnames(kpts))));
 
-            [desc, kpts2] = obj.compute(TestORB.img, kpts);
+            [desc, kpts2] = obj.compute(img, kpts);
             validateattributes(kpts2, {'struct'}, {'vector'});
             assert(all(ismember(TestORB.kfields, fieldnames(kpts2))));
             validateattributes(desc, {obj.descriptorType()}, ...
@@ -24,7 +25,8 @@ classdef TestORB
         end
 
         function test_detect_compute_imgset
-            imgs = {TestORB.img, TestORB.img};
+            img = imread(TestORB.im);
+            imgs = {img, img};
             obj = cv.ORB();
 
             kpts = obj.detect(imgs);
@@ -39,8 +41,9 @@ classdef TestORB
         end
 
         function test_detectAndCompute
+            img = imread(TestORB.im);
             obj = cv.ORB();
-            [kpts, desc] = obj.detectAndCompute(TestORB.img);
+            [kpts, desc] = obj.detectAndCompute(img);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestORB.kfields, fieldnames(kpts))));
             validateattributes(desc, {obj.descriptorType()}, ...
@@ -48,24 +51,26 @@ classdef TestORB
         end
 
         function test_detectAndCompute_providedKeypoints
+            img = imread(TestORB.im);
             obj = cv.ORB();
-            kpts = obj.detect(TestORB.img);
+            kpts = obj.detect(img);
 
             kpts = kpts(1:min(20,end));
-            [~, desc] = obj.detectAndCompute(TestORB.img, 'Keypoints',kpts);
+            [~, desc] = obj.detectAndCompute(img, 'Keypoints',kpts);
             validateattributes(desc, {obj.descriptorType()}, ...
                 {'size',[numel(kpts) obj.descriptorSize()]});
         end
 
         function test_detect_mask
-            mask = zeros(size(TestORB.img), 'uint8');
+            img = imread(TestORB.im);
+            mask = zeros(size(img), 'uint8');
             mask(:,1:end/2) = 255;  % only search left half of the image
             obj = cv.ORB();
-            kpts = obj.detect(TestORB.img, 'Mask',mask);
+            kpts = obj.detect(img, 'Mask',mask);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestORB.kfields, fieldnames(kpts))));
             xy = cat(1, kpts.pt);
-            assert(all(xy(:,1) <= ceil(size(TestORB.img,2)/2)));
+            assert(all(xy(:,1) <= ceil(size(img,2)/2)));
         end
 
         function test_error_1

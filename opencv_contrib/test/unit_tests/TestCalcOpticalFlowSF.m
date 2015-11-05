@@ -28,8 +28,8 @@ classdef TestCalcOpticalFlowSF
                 disp('SKIP');
                 return;
             end
-            prevImg = rgb2gray(imread(fullfile(mexopencv.root(),'test','RubberWhale1.png')));
-            nextImg = rgb2gray(imread(fullfile(mexopencv.root(),'test','RubberWhale2.png')));
+            prevImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale1.png'), 'Grayscale',true);
+            nextImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'), 'Grayscale',true);
             flow = cv.calcOpticalFlowSF(prevImg, nextImg);
             validateattributes(flow, {'single'}, ...
                 {'3d', 'size',[size(prevImg,1) size(prevImg,2) 2]});

@@ -1,15 +1,16 @@
 classdef TestKeyPointsFilter
     %TestKeyPointsFilter
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','cat.jpg'));
+        im = fullfile(mexopencv.root(),'test','cat.jpg');
         fields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};
     end
 
     methods (Static)
         function test_filter
-            [h,w,~] = size(TestKeyPointsFilter.img);
+            img = imread(TestKeyPointsFilter.im);
+            [h,w,~] = size(img);
             detector = cv.FeatureDetector('ORB');
-            kpts = detector.detect(TestKeyPointsFilter.img);
+            kpts = detector.detect(img);
 
             border = 50;
             kp = cv.KeyPointsFilter.runByImageBorder(kpts, [w,h], border);
@@ -45,7 +46,7 @@ classdef TestKeyPointsFilter
         end
 
         function test_convert_to
-            kpts = cv.FAST(TestKeyPointsFilter.img);
+            kpts = cv.FAST(imread(TestKeyPointsFilter.im));
 
             pts = cv.KeyPointsFilter.convertToPoints(kpts);
             validateattributes(pts, {'cell'}, {'vector', 'numel',numel(kpts)});
@@ -77,7 +78,7 @@ classdef TestKeyPointsFilter
         end
 
         function test_overlap
-            kpts = cv.FAST(TestKeyPointsFilter.img);
+            kpts = cv.FAST(imread(TestKeyPointsFilter.im));
             ovrls = arrayfun(@(kp) ...
                 cv.KeyPointsFilter.overlap(kpts(1), kp), kpts);
             validateattributes(ovrls, {'numeric'}, ...
@@ -85,7 +86,7 @@ classdef TestKeyPointsFilter
         end
 
         function test_hash
-            kpts = cv.FAST(TestKeyPointsFilter.img);
+            kpts = cv.FAST(imread(TestKeyPointsFilter.im));
             hashes = arrayfun(@(k) cv.KeyPointsFilter.hash(k), kpts);
             validateattributes(hashes, {'uint64'}, ...
                 {'vector', 'nonnegative', 'numel',numel(kpts)});
