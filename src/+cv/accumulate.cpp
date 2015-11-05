@@ -38,6 +38,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Process
     Mat src(rhs[0].toMat(rhs[0].isUint8() ? CV_8U : CV_32F)),
         dst(rhs[1].toMat(rhs[1].isSingle() ? CV_32F : CV_64F));
-    accumulate(src, dst, mask);
+    cv::accumulate(src, dst, mask);
     plhs[0] = MxArray(dst);
 }
