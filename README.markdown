@@ -1,5 +1,6 @@
 mexopencv
 =========
+[![Build Status](https://travis-ci.org/kyamagu/mexopencv.svg)](https://travis-ci.org/kyamagu/mexopencv)
 
 Collection and a development kit of MATLAB MEX functions for OpenCV library
 
