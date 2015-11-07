@@ -9,7 +9,7 @@ classdef TestThreshold
         end
 
         function test_methods
-            img = randi(255, [100 100], 'uint8');
+            img = cv.imread(fullfile(mexopencv.root(),'test','sudoku.jpg'), 'Grayscale',true);
             types = {'Binary', 'BinaryInv', 'Trunc', 'ToZero', 'ToZeroInv'};
             for i=1:numel(types)
                 result = cv.threshold(img, 127, ...
