@@ -1,7 +1,7 @@
 classdef TestAKAZE
     %TestAKAZE
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
+        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
         kfields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};
     end
 
@@ -12,11 +12,12 @@ classdef TestAKAZE
             typename = obj.typeid();
             ntype = obj.defaultNorm();
 
-            kpts = obj.detect(TestAKAZE.img);
+            img = imread(TestAKAZE.im);
+            kpts = obj.detect(img);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestAKAZE.kfields, fieldnames(kpts))));
 
-            [desc, kpts2] = obj.compute(TestAKAZE.img, kpts);
+            [desc, kpts2] = obj.compute(img, kpts);
             validateattributes(kpts2, {'struct'}, {'vector'});
             assert(all(ismember(TestAKAZE.kfields, fieldnames(kpts2))));
             validateattributes(desc, {obj.descriptorType()}, ...
@@ -24,7 +25,8 @@ classdef TestAKAZE
         end
 
         function test_detect_compute_imgset
-            imgs = {TestAKAZE.img, TestAKAZE.img};
+            img = imread(TestAKAZE.im);
+            imgs = {img, img};
             obj = cv.AKAZE();
 
             kpts = obj.detect(imgs);
@@ -39,8 +41,9 @@ classdef TestAKAZE
         end
 
         function test_detectAndCompute
+            img = imread(TestAKAZE.im);
             obj = cv.AKAZE();
-            [kpts, desc] = obj.detectAndCompute(TestAKAZE.img);
+            [kpts, desc] = obj.detectAndCompute(img);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestAKAZE.kfields, fieldnames(kpts))));
             validateattributes(desc, {obj.descriptorType()}, ...
@@ -48,32 +51,35 @@ classdef TestAKAZE
         end
 
         function test_detectAndCompute_providedKeypoints
+            img = imread(TestAKAZE.im);
             obj = cv.AKAZE();
-            kpts = obj.detect(TestAKAZE.img);
+            kpts = obj.detect(img);
 
             kpts = kpts(1:min(20,end));
-            [~, desc] = obj.detectAndCompute(TestAKAZE.img, 'Keypoints',kpts);
+            [~, desc] = obj.detectAndCompute(img, 'Keypoints',kpts);
             validateattributes(desc, {obj.descriptorType()}, ...
                 {'size',[numel(kpts) obj.descriptorSize()]});
         end
 
         function test_detect_mask
-            mask = zeros(size(TestAKAZE.img), 'uint8');
+            img = imread(TestAKAZE.im);
+            mask = zeros(size(img), 'uint8');
             mask(:,1:end/2) = 255;  % only search left half of the image
             obj = cv.AKAZE();
-            kpts = obj.detect(TestAKAZE.img, 'Mask',mask);
+            kpts = obj.detect(img, 'Mask',mask);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestAKAZE.kfields, fieldnames(kpts))));
             xy = cat(1, kpts.pt);
-            assert(all(xy(:,1) <= ceil(size(TestAKAZE.img,2)/2)));
+            assert(all(xy(:,1) <= ceil(size(img,2)/2)));
         end
 
         function test_desc_types
             types = {'KAZE', 'KAZEUpright', 'MLDB', 'MLDBUpright'};
+            img = imread(TestAKAZE.im);
             obj = cv.AKAZE();
             for i=1:numel(types)
                 obj.DescriptorType = types{i};
-                [kpts, desc] = obj.detectAndCompute(TestAKAZE.img);
+                [kpts, desc] = obj.detectAndCompute(img);
                 validateattributes(kpts, {'struct'}, {'vector'});
                 validateattributes(desc, {obj.descriptorType()}, ...
                     {'size',[numel(kpts) obj.descriptorSize()]});

@@ -1,22 +1,23 @@
 classdef TestFAST
     %TestFAST
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
+        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
         kfields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};
     end
 
     methods (Static)
         function test_detect_img
-            kpts = cv.FAST(TestFAST.img, ...
-                'Threshold',10, 'NonmaxSuppression',true);
+            img = imread(TestFAST.im);
+            kpts = cv.FAST(img, 'Threshold',10, 'NonmaxSuppression',true);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestFAST.kfields, fieldnames(kpts))));
         end
 
         function test_detect_types
             types = {'TYPE_5_8', 'TYPE_7_12', 'TYPE_9_16'};
+            img = imread(TestFAST.im);
             for i=1:numel(types)
-                kpts = cv.FAST(TestFAST.img, 'Type',types{i});
+                kpts = cv.FAST(img, 'Type',types{i});
                 validateattributes(kpts, {'struct'}, {'vector'});
             end
         end

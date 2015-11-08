@@ -23,8 +23,8 @@ classdef TestEstimateRigidTransform
         end
 
         function test_images_input
-            im1 = rgb2gray(imread(fullfile(mexopencv.root(),'test','RubberWhale1.png')));
-            im2 = rgb2gray(imread(fullfile(mexopencv.root(),'test','RubberWhale2.png')));
+            im1 = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale1.png'), 'Grayscale',true);
+            im2 = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'), 'Grayscale',true);
             M = cv.estimateRigidTransform(im1, im2, 'FullAffine',true);
             validateattributes(M, {'double'}, {'size',[2 3]});
         end

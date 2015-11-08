@@ -1,12 +1,12 @@
 classdef TestBuildOpticalFlowPyramid
     %TestBuildOpticalFlowPyramid
     properties (Constant)
-        img = rgb2gray(imread(fullfile(mexopencv.root(),'test','fruits.jpg')));
+        img = fullfile(mexopencv.root(),'test','fruits.jpg');
     end
 
     methods (Static)
         function test_1
-            im = TestBuildOpticalFlowPyramid.img;
+            im = cv.imread(TestBuildOpticalFlowPyramid.img, 'Grayscale',true);
             [pyramid,mxLvl] = cv.buildOpticalFlowPyramid(im, ...
                 'WithDerivatives',true, 'MaxLevel',3);
             validateattributes(mxLvl, {'numeric'}, ...
@@ -22,7 +22,7 @@ classdef TestBuildOpticalFlowPyramid
         end
 
         function test_2
-            im = TestBuildOpticalFlowPyramid.img;
+            im = cv.imread(TestBuildOpticalFlowPyramid.img, 'Grayscale',true);
             [pyramid,mxLvl] = cv.buildOpticalFlowPyramid(im, ...
                 'WithDerivatives',false, 'MaxLevel',3);
             validateattributes(mxLvl, {'numeric'}, ...

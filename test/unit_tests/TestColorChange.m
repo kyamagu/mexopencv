@@ -1,12 +1,9 @@
 classdef TestColorChange
     %TestColorChange
-    properties (Constant)
-        im = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
-    end
 
     methods (Static)
         function test_1
-            img = TestColorChange.im;
+            img = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
             mask = zeros(size(img,1), size(img,2), 'uint8');
             mask(250:end, 320:end) = 255;
 

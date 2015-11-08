@@ -1,19 +1,20 @@
 classdef TestCalcBackProject
     %TestCalcBackProject
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
+        img = fullfile(mexopencv.root(),'test','img001.jpg');
     end
 
     methods (Static)
         function test_1
             % 2D histogram
-            im = single(TestCalcBackProject.img);
+            img = imread(TestCalcBackProject.img);
+            im = single(img);
             [h,w,~] = size(im);
             histSize = [30, 32];
             edges1 = linspace(0, 256, histSize(1)+1);
             edges2 = linspace(0, 256, histSize(2)+1);
             edges = {edges1, edges2};
-            H = cv.calcHist(TestCalcBackProject.img(:,:,[1 2]), edges);
+            H = cv.calcHist(img(:,:,[1 2]), edges);
 
             B = cv.calcBackProject(im(:,:,[1 2]), H, edges);
             validateattributes(B, {class(im)}, {'size',[h,w]});
@@ -31,7 +32,7 @@ classdef TestCalcBackProject
             validateattributes(BB, {class(im)}, {'size',[h,w]});
             assert(isequal(B,BB));
 
-            HH = cv.calcHist(TestCalcBackProject.img(:,:,[1 2]), edges, 'Sparse',true);
+            HH = cv.calcHist(img(:,:,[1 2]), edges, 'Sparse',true);
             BB = cv.calcBackProject(im(:,:,[1 2]), HH, edges);
             validateattributes(BB, {class(im)}, {'size',[h,w]});
             assert(isequal(B,BB));
@@ -39,8 +40,8 @@ classdef TestCalcBackProject
 
         function test_histc
             % compare against HISTC
-            im = rgb2gray(TestCalcBackProject.img);  % uint8 grayscale
-            edges = [0 50 100 150 200 256];          % 1D histogram
+            im = cv.imread(TestCalcBackProject.img, 'Grayscale',true);  % uint8 grayscale
+            edges = [0 50 100 150 200 256];                             % 1D histogram
             H1 = cv.calcHist(im, edges);
             B1 = cv.calcBackProject(single(im), H1, edges);
             [H2,B2]  = histc(im(:), edges);
@@ -55,8 +56,8 @@ classdef TestCalcBackProject
                 disp('SKIP');
                 return
             end
-            im = rgb2gray(TestCalcBackProject.img);  % uint8 grayscale
-            edges = [0 50 100 150 200 256];          % 1D histogram
+            im = cv.imread(TestCalcBackProject.img, 'Grayscale',true);  % uint8 grayscale
+            edges = [0 50 100 150 200 256];                             % 1D histogram
             H1 = cv.calcHist(im, edges);
             B1 = cv.calcBackProject(single(im), H1, edges);
             [H2,~,B2]  = histcounts(im, [edges(1:end-1) 255]);

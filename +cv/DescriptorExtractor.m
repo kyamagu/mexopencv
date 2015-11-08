@@ -228,7 +228,7 @@ classdef DescriptorExtractor < handle
             %    [descriptors, keypoints] = extractor.compute(img, keypoints)
             %    [descriptors, keypoints] = extractor.compute(imgs, keypoints)
             %
-            % ## Inputs
+            % ## Input
             % * __img__ Image (first variant).
             % * __imgs__ Image set (second variant), cell array of images.
             % * __keypoints__ Input collection of keypoints. Keypoints for
@@ -254,7 +254,7 @@ classdef DescriptorExtractor < handle
             %       * **class_id** object class (if the keypoints need to be
             %             clustered by an object they belong to).
             %
-            % ## Outputs
+            % ## Output
             % * __descriptors__ Computed descriptors. In the second variant of
             %       the method `descriptors{i}` are descriptors computed for a
             %       `keypoints{i}`. Row `j` in `descriptors` (or

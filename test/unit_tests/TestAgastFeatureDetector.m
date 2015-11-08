@@ -1,7 +1,7 @@
 classdef TestAgastFeatureDetector
     %TestAgastFeatureDetector
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
+        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
         kfields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};
     end
 
@@ -12,13 +12,15 @@ classdef TestAgastFeatureDetector
             assert(obj.NonmaxSuppression == true);
             typename = obj.typeid();
 
-            kpts = obj.detect(TestAgastFeatureDetector.img);
+            img = imread(TestAgastFeatureDetector.im);
+            kpts = obj.detect(img);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestAgastFeatureDetector.kfields, fieldnames(kpts))));
         end
 
         function test_detect_imgset
-            imgs = {TestAgastFeatureDetector.img, TestAgastFeatureDetector.img};
+            img = imread(TestAgastFeatureDetector.im);
+            imgs = {img, img};
             obj = cv.AgastFeatureDetector();
 
             kpts = obj.detect(imgs);
@@ -28,22 +30,24 @@ classdef TestAgastFeatureDetector
         end
 
         function test_detect_mask
-            mask = zeros(size(TestAgastFeatureDetector.img), 'uint8');
+            img = imread(TestAgastFeatureDetector.im);
+            mask = zeros(size(img), 'uint8');
             mask(:,1:end/2) = 255;  % only search left half of the image
             obj = cv.AgastFeatureDetector();
-            kpts = obj.detect(TestAgastFeatureDetector.img, 'Mask',mask);
+            kpts = obj.detect(img, 'Mask',mask);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestAgastFeatureDetector.kfields, fieldnames(kpts))));
             xy = cat(1, kpts.pt);
-            assert(all(xy(:,1) <= ceil(size(TestAgastFeatureDetector.img,2)/2)));
+            assert(all(xy(:,1) <= ceil(size(img,2)/2)));
         end
 
         function test_detect_types
             types = {'AGAST_5_8', 'AGAST_7_12d', 'AGAST_7_12s', 'OAST_9_16'};
+            img = imread(TestAgastFeatureDetector.im);
             obj = cv.AgastFeatureDetector();
             for i=1:numel(types)
                 obj.Type = types{i};
-                kpts = obj.detect(TestAgastFeatureDetector.img);
+                kpts = obj.detect(img);
                 validateattributes(kpts, {'struct'}, {'vector'});
             end
         end

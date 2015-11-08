@@ -1,7 +1,7 @@
 classdef TestGFTTDetector
     %TestGFTTDetector
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
+        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
         kfields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};
     end
 
@@ -11,13 +11,15 @@ classdef TestGFTTDetector
             assert(obj.MaxFeatures == 1000);
             typename = obj.typeid();
 
-            kpts = obj.detect(TestGFTTDetector.img);
+            img = imread(TestGFTTDetector.im);
+            kpts = obj.detect(img);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestGFTTDetector.kfields, fieldnames(kpts))));
         end
 
         function test_detect_imgset
-            imgs = {TestGFTTDetector.img, TestGFTTDetector.img};
+            img = imread(TestGFTTDetector.im);
+            imgs = {img, img};
             obj = cv.GFTTDetector();
 
             kpts = obj.detect(imgs);
@@ -27,14 +29,15 @@ classdef TestGFTTDetector
         end
 
         function test_detect_mask
-            mask = zeros(size(TestGFTTDetector.img), 'uint8');
+            img = imread(TestGFTTDetector.im);
+            mask = zeros(size(img), 'uint8');
             mask(:,1:end/2) = 255;  % only search left half of the image
             obj = cv.GFTTDetector();
-            kpts = obj.detect(TestGFTTDetector.img, 'Mask',mask);
+            kpts = obj.detect(img, 'Mask',mask);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestGFTTDetector.kfields, fieldnames(kpts))));
             xy = cat(1, kpts.pt);
-            assert(all(xy(:,1) <= ceil(size(TestGFTTDetector.img,2)/2)));
+            assert(all(xy(:,1) <= ceil(size(img,2)/2)));
         end
 
         function test_error_1

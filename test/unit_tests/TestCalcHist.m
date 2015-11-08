@@ -1,13 +1,13 @@
 classdef TestCalcHist
     %TestCalcHist
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
+        img = fullfile(mexopencv.root(),'test','img001.jpg');
     end
 
     methods (Static)
         function test_1
             % 2D histogram
-            im = TestCalcHist.img;
+            im = imread(TestCalcHist.img);
             histSize = [30, 32];
             edges1 = linspace(0, 256, histSize(1)+1);
             edges2 = linspace(0, 256, histSize(2)+1);
@@ -45,8 +45,8 @@ classdef TestCalcHist
 
         function test_histc
             % compare against HISTC
-            im = rgb2gray(TestCalcHist.img);  % uint8 grayscale
-            edges = [0 50 100 150 200 256];   % 1D histogram
+            im = cv.imread(TestCalcHist.img, 'Grayscale',true);  % uint8 grayscale
+            edges = [0 50 100 150 200 256];                      % 1D histogram
             H1 = cv.calcHist(im, edges);
             H2  = histc(im(:), edges);
             assert(isequal(H1, H2(1:end-1)));
@@ -65,8 +65,8 @@ classdef TestCalcHist
                 disp('SKIP');
                 return
             end
-            im = rgb2gray(TestCalcHist.img);  % uint8 grayscale
-            edges = [0 50 100 150 200 256];   % 1D histogram
+            im = cv.imread(TestCalcHist.img, 'Grayscale',true);  % uint8 grayscale
+            edges = [0 50 100 150 200 256];                      % 1D histogram
             H1 = cv.calcHist(im, edges);
             H2  = histcounts(im, [edges(1:end-1) 255]);
             assert(isequal(H1(:), H2(:)));

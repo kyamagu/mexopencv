@@ -1,27 +1,27 @@
 classdef TestSqrBoxFilter
     %TestSqrBoxFilter
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
+        im = fullfile(mexopencv.root(),'test','fruits.jpg');
     end
 
     methods (Static)
         function test_1
-            out = cv.sqrBoxFilter(TestBoxFilter.img);
-            validateattributes(out, {'single'}, ...
-                {'size',size(TestBoxFilter.img)});
+            img = imread(TestSqrBoxFilter.im);
+            out = cv.sqrBoxFilter(img);
+            validateattributes(out, {'single'}, {'size',size(img)});
         end
 
         function test_2
-            out = cv.sqrBoxFilter(TestBoxFilter.img, 'DDepth','double', ...
+            img = imread(TestSqrBoxFilter.im);
+            out = cv.sqrBoxFilter(img, 'DDepth','double', ...
                 'KSize',[5 5], 'Anchor',[-1 -1], 'BorderType','Default');
-            validateattributes(out, {'double'}, ...
-                {'size',size(TestBoxFilter.img)});
+            validateattributes(out, {'double'}, {'size',size(img)});
         end
 
         function test_3
-            out = cv.sqrBoxFilter(TestBoxFilter.img, 'Normalize',false);
-            validateattributes(out, {'single'}, ...
-                {'size',size(TestBoxFilter.img)});
+            img = imread(TestSqrBoxFilter.im);
+            out = cv.sqrBoxFilter(img, 'Normalize',false);
+            validateattributes(out, {'single'}, {'size',size(img)});
         end
 
         function test_error_1

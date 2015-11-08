@@ -1,7 +1,7 @@
 classdef TestStarDetector
     %TestStarDetector
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
+        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
         kfields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};
     end
 
@@ -10,13 +10,15 @@ classdef TestStarDetector
             obj = cv.StarDetector('MaxSize',45, 'SuppressNonmaxSize',5);
             typename = obj.typeid();
 
-            kpts = obj.detect(TestStarDetector.img);
+            img = imread(TestStarDetector.im);
+            kpts = obj.detect(img);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestStarDetector.kfields, fieldnames(kpts))));
         end
 
         function test_detect_imgset
-            imgs = {TestStarDetector.img, TestStarDetector.img};
+            img = imread(TestStarDetector.im);
+            imgs = {img, img};
             obj = cv.StarDetector();
 
             kpts = obj.detect(imgs);
@@ -26,14 +28,15 @@ classdef TestStarDetector
         end
 
         function test_detect_mask
-            mask = zeros(size(TestStarDetector.img), 'uint8');
+            img = imread(TestStarDetector.im);
+            mask = zeros(size(img), 'uint8');
             mask(:,1:end/2) = 255;  % only search left half of the image
             obj = cv.StarDetector();
-            kpts = obj.detect(TestStarDetector.img, 'Mask',mask);
+            kpts = obj.detect(img, 'Mask',mask);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestStarDetector.kfields, fieldnames(kpts))));
             xy = cat(1, kpts.pt);
-            assert(all(xy(:,1) <= ceil(size(TestStarDetector.img,2)/2)));
+            assert(all(xy(:,1) <= ceil(size(img,2)/2)));
         end
 
         function test_error_1

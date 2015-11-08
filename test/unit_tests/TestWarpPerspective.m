@@ -1,12 +1,12 @@
 classdef TestWarpPerspective
     %TestWarpPerspective
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
+        img = fullfile(mexopencv.root(),'test','img001.jpg');
     end
 
     methods (Static)
         function test_1
-            im = TestWarpPerspective.img;
+            im = imread(TestWarpPerspective.img);
             M = eye(3,3);  % identity transform
             dst = cv.warpPerspective(im, M);
             validateattributes(dst, {class(im)}, {'size',size(im)});
@@ -14,7 +14,7 @@ classdef TestWarpPerspective
         end
 
         function test_2
-            im = rgb2gray(TestWarpPerspective.img);
+            im = cv.imread(TestWarpPerspective.img, 'Grayscale',true);
             M = eye(3,3);  % identity transform
             dst = cv.warpPerspective(im, M, 'DSize',[256 256], ...
                 'Interpolation','Linear', 'WarpInverse',false, ...
@@ -23,7 +23,7 @@ classdef TestWarpPerspective
         end
 
         function test_3
-            im = TestWarpPerspective.img;
+            im = imread(TestWarpPerspective.img);
             [h,w,~] = size(im);
             H = eye(3) + [...
                 randn()/50      randn()/100     randi([10 20]);

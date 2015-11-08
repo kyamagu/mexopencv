@@ -609,7 +609,8 @@ Ptr<DAISY> createDAISY(
 }
 #endif
 
-Ptr<FeatureDetector> createFeatureDetector(string type,
+Ptr<FeatureDetector> createFeatureDetector(
+    const string& type,
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
@@ -649,7 +650,8 @@ Ptr<FeatureDetector> createFeatureDetector(string type,
     return p;
 }
 
-Ptr<DescriptorExtractor> createDescriptorExtractor(string type,
+Ptr<DescriptorExtractor> createDescriptorExtractor(
+    const string& type,
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
@@ -939,7 +941,8 @@ Ptr<BFMatcher> createBFMatcher(
     return makePtr<BFMatcher>(normType, crossCheck);
 }
 
-Ptr<DescriptorMatcher> createDescriptorMatcher(string type,
+Ptr<DescriptorMatcher> createDescriptorMatcher(
+    const string& type,
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {

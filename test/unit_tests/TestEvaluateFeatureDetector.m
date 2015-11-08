@@ -1,6 +1,5 @@
 classdef TestEvaluateFeatureDetector
     %TestEvaluateFeatureDetector
-
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','fruits.jpg');
     end

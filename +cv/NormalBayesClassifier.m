@@ -353,12 +353,12 @@ classdef NormalBayesClassifier < handle
             %    [err,resp] = model.calcError(...)
             %    [...] = model.calcError(..., 'OptionName', optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __samples__ See the train method.
             % * __responses__ See the train method.
             % * __csvFilename__ See the train method.
             %
-            % ## Outputs
+            % ## Output
             % * __err__ computed error.
             % * __resp__ the optional output responses.
             %
@@ -389,11 +389,11 @@ classdef NormalBayesClassifier < handle
             %    [results,f] = model.predict(samples)
             %    [...] = model.predict(..., 'OptionName', optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __samples__ The input samples, floating-point matrix. One or
             %       more vectors stored as rows of the matrix.
             %
-            % ## Outputs
+            % ## Output
             % * __results__ The predicted class for each sample.
             % * __f__ unused and returns 0.
             %
@@ -422,7 +422,7 @@ classdef NormalBayesClassifier < handle
             %    [outputs,outputProbs,f] = model.predictProb(inputs)
             %    [...] = model.predictProb(inputs, 'OptionName',optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __samples__ The input samples, floating-point matrix. One or
             %       more vectors stored as rows of the matrix.
             %

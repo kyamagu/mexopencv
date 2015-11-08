@@ -37,7 +37,7 @@ classdef TestScharr
         end
 
         function test_4
-            img = rgb2gray(imread(fullfile(mexopencv.root(),'test','fruits.jpg')));
+            img = cv.imread(fullfile(mexopencv.root(),'test','fruits.jpg'), 'Grayscale',true);
             result = cv.Scharr(img);
             validateattributes(result, {class(img)}, {'size',size(img)});
         end

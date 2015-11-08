@@ -1,7 +1,7 @@
 classdef TestDescriptorExtractor
     %TestDescriptorExtractor
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
+        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
         extractors = { ...
             ... % features2d (opencv)
             'BRISK', 'ORB', 'KAZE', 'AKAZE', ...
@@ -13,7 +13,8 @@ classdef TestDescriptorExtractor
 
     methods (Static)
         function test_compute_img
-            kpts0 = cv.FAST(TestDescriptorExtractor.img, 'Threshold',20);
+            img = imread(TestDescriptorExtractor.im);
+            kpts0 = cv.FAST(img, 'Threshold',20);
             for i=1:numel(TestDescriptorExtractor.extractors)
                 try
                     obj = cv.DescriptorExtractor(...
@@ -30,18 +31,18 @@ classdef TestDescriptorExtractor
                 % KAZE/AKAZE descriptors only work with their own detectors
                 switch TestDescriptorExtractor.extractors{i}
                     case 'KAZE'
-                        kpts = detect(cv.KAZE(), TestDescriptorExtractor.img);
+                        kpts = detect(cv.KAZE(), img);
                     case 'AKAZE'
-                        kpts = detect(cv.AKAZE(), TestDescriptorExtractor.img);
+                        kpts = detect(cv.AKAZE(), img);
                     otherwise
                         kpts = kpts0;
                 end
 
                 % LUCID works on RGB images
                 if strcmp(TestDescriptorExtractor.extractors{i}, 'LUCID')
-                    im = cv.cvtColor(TestDescriptorExtractor.img, 'GRAY2RGB');
+                    im = cv.cvtColor(img, 'GRAY2RGB');
                 else
-                    im = TestDescriptorExtractor.img;
+                    im = img;
                 end
 
                 [desc, kpts2] = obj.compute(im, kpts);
@@ -53,7 +54,8 @@ classdef TestDescriptorExtractor
         end
 
         function test_compute_imgset
-            kpts0 = cv.FAST(TestDescriptorExtractor.img, 'Threshold',20);
+            img = imread(TestDescriptorExtractor.im);
+            kpts0 = cv.FAST(img, 'Threshold',20);
             for i=1:numel(TestDescriptorExtractor.extractors)
                 try
                     obj = cv.DescriptorExtractor(...
@@ -68,9 +70,9 @@ classdef TestDescriptorExtractor
                 % KAZE/AKAZE descriptors only work with their own detectors
                 switch TestDescriptorExtractor.extractors{i}
                     case 'KAZE'
-                        kpts = detect(cv.KAZE(), TestDescriptorExtractor.img);
+                        kpts = detect(cv.KAZE(), img);
                     case 'AKAZE'
-                        kpts = detect(cv.AKAZE(), TestDescriptorExtractor.img);
+                        kpts = detect(cv.AKAZE(), img);
                     otherwise
                         kpts = kpts0;
                 end
@@ -78,9 +80,9 @@ classdef TestDescriptorExtractor
 
                 % LUCID works on RGB images
                 if strcmp(TestDescriptorExtractor.extractors{i}, 'LUCID')
-                    im = cv.cvtColor(TestDescriptorExtractor.img, 'GRAY2RGB');
+                    im = cv.cvtColor(img, 'GRAY2RGB');
                 else
-                    im = TestDescriptorExtractor.img;
+                    im = img;
                 end
                 imgs = {im, im};
 

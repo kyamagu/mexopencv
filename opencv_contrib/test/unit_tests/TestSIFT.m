@@ -1,7 +1,7 @@
 classdef TestSIFT
     %TestSIFT
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
+        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
         kfields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};
     end
 
@@ -11,11 +11,12 @@ classdef TestSIFT
             typename = obj.typeid();
             ntype = obj.defaultNorm();
 
-            kpts = obj.detect(TestSIFT.img);
+            img = imread(TestSIFT.im);
+            kpts = obj.detect(img);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestSIFT.kfields, fieldnames(kpts))));
 
-            [desc, kpts2] = obj.compute(TestSIFT.img, kpts);
+            [desc, kpts2] = obj.compute(img, kpts);
             validateattributes(kpts2, {'struct'}, {'vector'});
             assert(all(ismember(TestSIFT.kfields, fieldnames(kpts2))));
             validateattributes(desc, {obj.descriptorType()}, ...
@@ -23,7 +24,8 @@ classdef TestSIFT
         end
 
         function test_detect_compute_imgset
-            imgs = {TestSIFT.img, TestSIFT.img};
+            img = imread(TestSIFT.im);
+            imgs = {img, img};
             obj = cv.SIFT();
 
             kpts = obj.detect(imgs);
@@ -38,8 +40,9 @@ classdef TestSIFT
         end
 
         function test_detectAndCompute
+            img = imread(TestSIFT.im);
             obj = cv.SIFT();
-            [kpts, desc] = obj.detectAndCompute(TestSIFT.img);
+            [kpts, desc] = obj.detectAndCompute(img);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestSIFT.kfields, fieldnames(kpts))));
             validateattributes(desc, {obj.descriptorType()}, ...
@@ -47,24 +50,26 @@ classdef TestSIFT
         end
 
         function test_detectAndCompute_providedKeypoints
+            img = imread(TestSIFT.im);
             obj = cv.SIFT();
-            kpts = obj.detect(TestSIFT.img);
+            kpts = obj.detect(img);
 
             kpts = kpts(1:min(20,end));
-            [~, desc] = obj.detectAndCompute(TestSIFT.img, 'Keypoints',kpts);
+            [~, desc] = obj.detectAndCompute(img, 'Keypoints',kpts);
             validateattributes(desc, {obj.descriptorType()}, ...
                 {'size',[numel(kpts) obj.descriptorSize()]});
         end
 
         function test_detect_mask
-            mask = zeros(size(TestSIFT.img), 'uint8');
+            img = imread(TestSIFT.im);
+            mask = zeros(size(img), 'uint8');
             mask(:,1:end/2) = 255;  % only search left half of the image
             obj = cv.SIFT();
-            kpts = obj.detect(TestSIFT.img, 'Mask',mask);
+            kpts = obj.detect(img, 'Mask',mask);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestSIFT.kfields, fieldnames(kpts))));
             xy = cat(1, kpts.pt);
-            assert(all(xy(:,1) <= ceil(size(TestSIFT.img,2)/2)));
+            assert(all(xy(:,1) <= ceil(size(img,2)/2)));
         end
 
         function test_error_1

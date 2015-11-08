@@ -452,12 +452,12 @@ classdef EM < handle
             %    [err,resp] = model.calcError(...)
             %    [...] = model.calcError(..., 'OptionName', optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __samples__ See the train method.
             % * __responses__ See the train method.
             % * __csvFilename__ See the train method.
             %
-            % ## Outputs
+            % ## Output
             % * __err__ computed error.
             % * __resp__ the optional output responses.
             %
@@ -488,10 +488,10 @@ classdef EM < handle
             %    [results,f] = model.predict(samples)
             %    [...] = model.predict(..., 'OptionName', optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __samples__ The input samples, floating-point matrix.
             %
-            % ## Outputs
+            % ## Output
             % * __results__ Output matrix of posterior probabilities of each
             %       component given a sample. A matrix of size
             %       `nsamples-by-ClustersNumber` size.

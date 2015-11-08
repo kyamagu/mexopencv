@@ -23,8 +23,8 @@ classdef TestCalcOpticalFlowPyrLK
         end
 
         function test_2
-            prevImg = rgb2gray(imread(fullfile(mexopencv.root(),'test','RubberWhale1.png')));
-            nextImg = rgb2gray(imread(fullfile(mexopencv.root(),'test','RubberWhale2.png')));
+            prevImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale1.png'), 'Grayscale',true);
+            nextImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'), 'Grayscale',true);
             prevPts = cv.goodFeaturesToTrack(prevImg);
             [nextPts,status,err] = cv.calcOpticalFlowPyrLK(prevImg, nextImg, prevPts);
             validateattributes(nextPts, {'cell'}, ...
@@ -38,8 +38,8 @@ classdef TestCalcOpticalFlowPyrLK
         end
 
         function test_3
-            prevImg = rgb2gray(imread(fullfile(mexopencv.root(),'test','RubberWhale1.png')));
-            nextImg = rgb2gray(imread(fullfile(mexopencv.root(),'test','RubberWhale2.png')));
+            prevImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale1.png'), 'Grayscale',true);
+            nextImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'), 'Grayscale',true);
             prevPts = cv.goodFeaturesToTrack(prevImg);
             prevPyr = cv.buildOpticalFlowPyramid(prevImg);
             nextPyr = cv.buildOpticalFlowPyramid(nextImg);

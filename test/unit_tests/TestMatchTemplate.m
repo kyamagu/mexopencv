@@ -1,12 +1,12 @@
 classdef TestMatchTemplate
     %TestMatchTemplate
     properties (Constant)
-        im = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
+        im = fullfile(mexopencv.root(),'test','img001.jpg');
     end
 
     methods (Static)
         function test_result_grayscale
-            img = rgb2gray(TestMatchTemplate.im);
+            img = cv.imread(TestMatchTemplate.im, 'Grayscale',true);
             tmpl = img(150:350,150:350);
             result = cv.matchTemplate(img, tmpl);
             validateattributes(result, {'numeric'}, ...
@@ -14,7 +14,7 @@ classdef TestMatchTemplate
         end
 
         function test_result_rgb
-            img = TestMatchTemplate.im;
+            img = imread(TestMatchTemplate.im);
             tmpl = img(150:350,150:350,:);
             result = cv.matchTemplate(img, tmpl);
             [H,W,~] = size(img);
@@ -24,7 +24,7 @@ classdef TestMatchTemplate
         end
 
         function test_methods
-            img = rgb2gray(TestMatchTemplate.im);
+            img = cv.imread(TestMatchTemplate.im, 'Grayscale',true);
             tmpl = img(150:350,150:350);
             comp1 = {'SqDiff', 'CCorr', 'CCoeff'};
             comp2 = strcat(comp1,'Normed');
@@ -35,7 +35,7 @@ classdef TestMatchTemplate
         end
 
         function test_mask_grayscale
-            img = rgb2gray(TestMatchTemplate.im);
+            img = cv.imread(TestMatchTemplate.im, 'Grayscale',true);
             tmpl = img(150:350,150:350);
             mask = false(size(tmpl));
             mask(50:150,10:end-10) = true;
@@ -43,7 +43,7 @@ classdef TestMatchTemplate
         end
 
         function test_mask_rgb
-            img = TestMatchTemplate.im;
+            img = imread(TestMatchTemplate.im);
             tmpl = img(150:350,150:350,:);
             mask = false(size(tmpl));
             mask(50:150,10:end-10,:) = true;
@@ -65,11 +65,11 @@ classdef TestMatchTemplate
             end
 
             try
-                img = rgb2gray(imread('peppers.png'));
-                tmpl = rgb2gray(imread('onion.png'));
+                img = cv.imread('peppers.png', 'Grayscale',true);
+                tmpl = cv.imread('onion.png', 'Grayscale',true);
             catch ME
-                img = rgb2gray(imread(fullfile(mexopencv.root(),'test','pic1.png')));
-                tmpl = rgb2gray(imread(fullfile(mexopencv.root(),'test','templ.png')));
+                img = cv.imread(fullfile(mexopencv.root(),'test','pic1.png'), 'Grayscale',true);
+                tmpl = cv.imread(fullfile(mexopencv.root(),'test','templ.png'), 'Grayscale',true);
             end
 
             result = cv.matchTemplate(img, tmpl, 'Method','CCorrNormed');

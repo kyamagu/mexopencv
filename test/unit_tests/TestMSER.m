@@ -1,7 +1,7 @@
 classdef TestMSER
     %TestMSER
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
+        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
         kfields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};
     end
 
@@ -11,13 +11,15 @@ classdef TestMSER
             assert(obj.MinArea == 60);
             typename = obj.typeid();
 
-            kpts = obj.detect(TestMSER.img);
+            img = imread(TestMSER.im);
+            kpts = obj.detect(img);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestMSER.kfields, fieldnames(kpts))));
         end
 
         function test_detect_imgset
-            imgs = {TestMSER.img, TestMSER.img};
+            img = imread(TestMSER.im);
+            imgs = {img, img};
             obj = cv.MSER();
 
             kpts = obj.detect(imgs);
@@ -27,19 +29,21 @@ classdef TestMSER
         end
 
         function test_detect_mask
-            mask = zeros(size(TestMSER.img), 'uint8');
+            img = imread(TestMSER.im);
+            mask = zeros(size(img), 'uint8');
             mask(:,1:end/2) = 255;  % only search left half of the image
             obj = cv.MSER();
-            kpts = obj.detect(TestMSER.img, 'Mask',mask);
+            kpts = obj.detect(img, 'Mask',mask);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestMSER.kfields, fieldnames(kpts))));
             xy = cat(1, kpts.pt);
-            assert(all(xy(:,1) <= ceil(size(TestMSER.img,2)/2)));
+            assert(all(xy(:,1) <= ceil(size(img,2)/2)));
         end
 
         function test_detectRegions
+            img = imread(TestMSER.im);
             obj = cv.MSER();
-            [chains, bboxes] = obj.detectRegions(TestMSER.img);
+            [chains, bboxes] = obj.detectRegions(img);
             if ~isempty(chains)
                 validateattributes(chains, {'cell'}, ...
                     {'vector', 'numel',numel(bboxes)});

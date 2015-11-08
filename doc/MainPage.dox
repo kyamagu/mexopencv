@@ -82,7 +82,7 @@ In mexopencv, this is usually used to exposed C++ classes as MATLAB classes.
 You can optionally add a testing script for your new function. The testing
 convention in mexopencv is that testing scripts are all written as a static
 function in a MATLAB class. For example, `test/unit_tests/TestFilter2D.m` is
-a class that describes test cases for `cv::filter2d` function. Inside of the
+a class that describes test cases for `cv::filter2D` function. Inside of the
 class, a couple of test cases are written as static functions whose name start
 with 'test'.
 

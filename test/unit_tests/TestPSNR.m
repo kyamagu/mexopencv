@@ -1,7 +1,5 @@
 classdef TestPSNR
     %TestPSNR
-    properties (Constant)
-    end
 
     methods (Static)
         function test_1

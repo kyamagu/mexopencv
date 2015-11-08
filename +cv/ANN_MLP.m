@@ -514,12 +514,12 @@ classdef ANN_MLP < handle
             %    [err,resp] = model.calcError(...)
             %    [...] = model.calcError(..., 'OptionName', optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __samples__ See the train method.
             % * __responses__ See the train method.
             % * __csvFilename__ See the train method.
             %
-            % ## Outputs
+            % ## Output
             % * __err__ computed error.
             % * __resp__ the optional output responses.
             %
@@ -550,11 +550,11 @@ classdef ANN_MLP < handle
             %    [results,f] = model.predict(samples)
             %    [...] = model.predict(..., 'OptionName', optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __samples__ The input samples (one or more) stored as rows of
             %       the floating-point matrix.
             %
-            % ## Outputs
+            % ## Output
             % * __results__ Predicted responses for corresponding samples.
             % * __f__ Returned when you pass one sample. Otherwise unused and
             %       returns 0.

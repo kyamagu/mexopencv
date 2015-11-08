@@ -1,7 +1,5 @@
 classdef TestConvexHull
     %TestConvexHull
-    properties (Constant)
-    end
 
     methods (Static)
         function test_input_1

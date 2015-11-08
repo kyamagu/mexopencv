@@ -1,12 +1,9 @@
 classdef TestIlluminationChange
     %TestIlluminationChange
-    properties (Constant)
-        im = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
-    end
 
     methods (Static)
         function test_1
-            img = TestIlluminationChange.im;
+            img = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
             mask = zeros(size(img,1), size(img,2), 'uint8');
             mask(200:275, 350:440) = 255;
 

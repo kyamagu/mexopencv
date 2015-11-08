@@ -1,7 +1,7 @@
 classdef TestDAISY
     %TestDAISY
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
+        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
     end
 
     methods (Static)
@@ -10,8 +10,9 @@ classdef TestDAISY
             typename = obj.typeid();
             ntype = obj.defaultNorm();
 
-            kpts = cv.FAST(TestDAISY.img, 'Threshold',20);
-            [desc, kpts2] = obj.compute(TestDAISY.img, kpts);
+            img = imread(TestDAISY.im);
+            kpts = cv.FAST(img, 'Threshold',20);
+            [desc, kpts2] = obj.compute(img, kpts);
             validateattributes(kpts2, {'struct'}, {'vector'});
             assert(all(ismember(fieldnames(kpts), fieldnames(kpts2))));
             validateattributes(desc, {obj.descriptorType()}, ...
@@ -19,8 +20,9 @@ classdef TestDAISY
         end
 
         function test_compute_imgset
-            imgs = {TestDAISY.img, TestDAISY.img};
-            kpts = cv.FAST(TestDAISY.img, 'Threshold',20);
+            img = imread(TestDAISY.im);
+            imgs = {img, img};
+            kpts = cv.FAST(img, 'Threshold',20);
             kpts = {kpts, kpts};
 
             obj = cv.DAISY();
@@ -38,15 +40,15 @@ classdef TestDAISY
                 return;
             end
 
-            im = cv.resize(TestDAISY.img, [64 64]);
+            img = cv.resize(imread(TestDAISY.im), [64 64]);
             obj = cv.DAISY();
 
-            desc = obj.compute_all(im);
+            desc = obj.compute_all(img);
             validateattributes(desc, {obj.descriptorType()}, ...
                 {'size',[NaN obj.descriptorSize()]});
 
-            roi = round([0 0 size(im,2)/2 size(im,1)/2]);
-            desc = obj.compute_all(im, roi);
+            roi = round([0 0 size(img,2)/2 size(img,1)/2]);
+            desc = obj.compute_all(img, roi);
             validateattributes(desc, {obj.descriptorType()}, ...
                 {'size',[NaN obj.descriptorSize()]});
         end

@@ -212,7 +212,7 @@ classdef FREAK < handle
             %    [descriptors, keypoints] = obj.compute(img, keypoints)
             %    [descriptors, keypoints] = obj.compute(imgs, keypoints)
             %
-            % ## Inputs
+            % ## Input
             % * __img__ Image (first variant), 8-bit/16-bit grayscale image.
             % * __imgs__ Image set (second variant), cell array of images.
             % * __keypoints__ Input collection of keypoints. Keypoints for
@@ -224,7 +224,7 @@ classdef FREAK < handle
             %       it is a cell-array, where `keypoints{i}` is a set of keypoints
             %       detected in `images{i}` (a struct-array like before).
             %
-            % ## Outputs
+            % ## Output
             % * __descriptors__ Computed descriptors. In the second variant of
             %       the method `descriptors{i}` are descriptors computed for a
             %       `keypoints{i}`. Row `j` in `descriptors` (or

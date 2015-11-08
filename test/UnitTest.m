@@ -32,6 +32,7 @@ classdef UnitTest
             'TestStereoCalibrate'
             'TestStereoRectify'
             'TestStereoRectifyUncalibrated'
+            'TestSuperResolution'
             % codecs
             'TestVideoWriter'
         };

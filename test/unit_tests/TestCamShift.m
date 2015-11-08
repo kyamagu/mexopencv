@@ -1,12 +1,10 @@
 classdef TestCamShift
     %TestCamShift
-    properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
-    end
 
     methods (Static)
         function test_1
-            im = TestCamShift.img(:,:,1:2);
+            im = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
+            im = im(:,:,1:2);
             edges = {linspace(0,256,32+1), linspace(0,256,32+1)};
             H = cv.calcHist(im, edges);
             B = cv.calcBackProject(im, H, edges);

@@ -1,7 +1,7 @@
 classdef TestSimpleBlobDetector
     %TestSimpleBlobDetector
     properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
+        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
         kfields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};
     end
 
@@ -10,13 +10,15 @@ classdef TestSimpleBlobDetector
             obj = cv.SimpleBlobDetector('MinThreshold',50, 'MaxThreshold',220);
             typename = obj.typeid();
 
-            kpts = obj.detect(TestSimpleBlobDetector.img);
+            img = imread(TestSimpleBlobDetector.im);
+            kpts = obj.detect(img);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestSimpleBlobDetector.kfields, fieldnames(kpts))));
         end
 
         function test_detect_imgset
-            imgs = {TestSimpleBlobDetector.img, TestSimpleBlobDetector.img};
+            img = imread(TestSimpleBlobDetector.im);
+            imgs = {img, img};
             obj = cv.SimpleBlobDetector();
 
             kpts = obj.detect(imgs);
@@ -26,14 +28,15 @@ classdef TestSimpleBlobDetector
         end
 
         function test_detect_mask
-            mask = zeros(size(TestSimpleBlobDetector.img), 'uint8');
+            img = imread(TestSimpleBlobDetector.im);
+            mask = zeros(size(img), 'uint8');
             mask(:,1:end/2) = 255;  % only search left half of the image
             obj = cv.SimpleBlobDetector();
-            kpts = obj.detect(TestSimpleBlobDetector.img, 'Mask',mask);
+            kpts = obj.detect(img, 'Mask',mask);
             validateattributes(kpts, {'struct'}, {'vector'});
             assert(all(ismember(TestSimpleBlobDetector.kfields, fieldnames(kpts))));
             xy = cat(1, kpts.pt);
-            assert(all(xy(:,1) <= ceil(size(TestSimpleBlobDetector.img,2)/2)));
+            assert(all(xy(:,1) <= ceil(size(img,2)/2)));
         end
 
         function test_error_1

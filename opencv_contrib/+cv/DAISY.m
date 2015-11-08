@@ -217,7 +217,7 @@ classdef DAISY < handle
             %    [descriptors, keypoints] = obj.compute(img, keypoints)
             %    [descriptors, keypoints] = obj.compute(imgs, keypoints)
             %
-            % ## Inputs
+            % ## Input
             % * __img__ Image (first variant), 8-bit grayscale image. Input
             %       image is internally converted to 32-bit floating-point in
             %       [0,1] range.
@@ -231,7 +231,7 @@ classdef DAISY < handle
             %       it is a cell-array, where `keypoints{i}` is a set of keypoints
             %       detected in `images{i}` (a struct-array like before).
             %
-            % ## Outputs
+            % ## Output
             % * __descriptors__ Computed descriptors. In the second variant of
             %       the method `descriptors{i}` are descriptors computed for a
             %       `keypoints{i}`. Row `j` in `descriptors` (or

@@ -18,7 +18,7 @@ classdef TestThreshold
         end
 
         function test_auto_threshold
-            img = rgb2gray(imread(fullfile(mexopencv.root(),'test','fruits.jpg')));
+            img = cv.imread(fullfile(mexopencv.root(),'test','fruits.jpg'), 'Grayscale',true);
             [result,t] = cv.threshold(img, 'Otsu', ...
                 'Method','Binary', 'MaxValue',255);
             [result,t] = cv.threshold(img, 'Triangle', ...

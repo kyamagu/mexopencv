@@ -390,12 +390,12 @@ classdef KNearest < handle
             %    [err,resp] = model.calcError(...)
             %    [...] = model.calcError(..., 'OptionName', optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __samples__ See the train method.
             % * __responses__ See the train method.
             % * __csvFilename__ See the train method.
             %
-            % ## Outputs
+            % ## Output
             % * __err__ computed error.
             % * __resp__ the optional output responses.
             %
@@ -426,10 +426,10 @@ classdef KNearest < handle
             %    [results,f] = model.predict(samples)
             %    [...] = model.predict(..., 'OptionName', optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __samples__ The input samples, floating-point matrix.
             %
-            % ## Outputs
+            % ## Output
             % * __results__ See the cv.KNearest.findNearest method.
             % * __f__ See the cv.KNearest.findNearest method.
             %

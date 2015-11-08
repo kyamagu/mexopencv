@@ -1,9 +1,6 @@
 classdef TestGetBuildInformation
     %TestGetBuildInformation
 
-    properties (Constant)
-    end
-
     methods (Static)
         function test_1
             info = cv.getBuildInformation();

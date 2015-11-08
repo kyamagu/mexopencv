@@ -1,13 +1,13 @@
 classdef TestFastNlMeansDenoising
     %TestFastNlMeansDenoising
     properties (Constant)
-        im = rgb2gray(imread(fullfile(mexopencv.root(),'test','lena.jpg')));
+        im = fullfile(mexopencv.root(),'test','lena.jpg');
     end
 
     methods (Static)
         function test_1
-            img = TestFastNlMeansDenoising.im;
-            out = cv.fastNlMeansDenoising(TestFastNlMeansDenoising.im, 'H',20);
+            img = cv.imread(TestFastNlMeansDenoising.im, 'Grayscale',true);
+            out = cv.fastNlMeansDenoising(img, 'H',20);
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
@@ -25,7 +25,8 @@ classdef TestFastNlMeansDenoising
                 return;
             end
 
-            img = imnoise(TestFastNlMeansDenoising.im, 'gaussian');
+            img = cv.imread(TestFastNlMeansDenoising.im, 'Grayscale',true);
+            img = imnoise(img, 'gaussian');
             out = cv.fastNlMeansDenoising(img, 'H',20);
             validateattributes(out, {class(img)}, {'size',size(img)});
         end

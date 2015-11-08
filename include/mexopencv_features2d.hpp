@@ -45,28 +45,28 @@ const ConstMap<int, std::string> FASTTypeMapInv = ConstMap<int, std::string>
     (cv::FastFeatureDetector::TYPE_9_16, "TYPE_9_16");
 
 /// KAZE Diffusivity type
-const ConstMap<std::string, int> KAZEDiffusivityType = ConstMap <std::string, int>
+const ConstMap<std::string, int> KAZEDiffusivityType = ConstMap<std::string, int>
     ("PM_G1",       cv::KAZE::DIFF_PM_G1)
     ("PM_G2",       cv::KAZE::DIFF_PM_G2)
     ("WEICKERT",    cv::KAZE::DIFF_WEICKERT)
     ("CHARBONNIER", cv::KAZE::DIFF_CHARBONNIER);
 
 /// inverse KAZE Diffusivity type
-const ConstMap<int, std::string> KAZEDiffusivityTypeInv = ConstMap <int, std::string>
+const ConstMap<int, std::string> KAZEDiffusivityTypeInv = ConstMap<int, std::string>
     (cv::KAZE::DIFF_PM_G1,       "PM_G1")
     (cv::KAZE::DIFF_PM_G2,       "PM_G2")
     (cv::KAZE::DIFF_WEICKERT,    "WEICKERT")
     (cv::KAZE::DIFF_CHARBONNIER, "CHARBONNIER");
 
 /// AKAZE descriptor type
-const ConstMap<std::string, int> AKAZEDescriptorType = ConstMap <std::string, int>
+const ConstMap<std::string, int> AKAZEDescriptorType = ConstMap<std::string, int>
     ("KAZEUpright", cv::AKAZE::DESCRIPTOR_KAZE_UPRIGHT)
     ("KAZE",        cv::AKAZE::DESCRIPTOR_KAZE)
     ("MLDBUpright", cv::AKAZE::DESCRIPTOR_MLDB_UPRIGHT)
     ("MLDB",        cv::AKAZE::DESCRIPTOR_MLDB);
 
 /// inverse AKAZE descriptor type
-const ConstMap<int, std::string> AKAZEDescriptorTypeInv = ConstMap <int, std::string>
+const ConstMap<int, std::string> AKAZEDescriptorTypeInv = ConstMap<int, std::string>
     (cv::AKAZE::DESCRIPTOR_KAZE_UPRIGHT, "KAZEUpright")
     (cv::AKAZE::DESCRIPTOR_KAZE,         "KAZE")
     (cv::AKAZE::DESCRIPTOR_MLDB_UPRIGHT, "MLDBUpright")
@@ -275,7 +275,8 @@ cv::Ptr<cv::xfeatures2d::DAISY> createDAISY(
  * @param last iterator at the end of the vector range
  * @return smart pointer to an instance cv::FeatureDetector
  */
-cv::Ptr<cv::FeatureDetector> createFeatureDetector(std::string type,
+cv::Ptr<cv::FeatureDetector> createFeatureDetector(
+    const std::string& type,
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 
@@ -296,7 +297,8 @@ cv::Ptr<cv::FeatureDetector> createFeatureDetector(std::string type,
  * @param last iterator at the end of the vector range
  * @return smart pointer to an instance cv::DescriptorExtractor
  */
-cv::Ptr<cv::DescriptorExtractor> createDescriptorExtractor(std::string type,
+cv::Ptr<cv::DescriptorExtractor> createDescriptorExtractor(
+    const std::string& type,
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 
@@ -340,7 +342,8 @@ cv::Ptr<cv::BFMatcher> createBFMatcher(
  * @param last iterator at the end of the vector range
  * @return smart pointer to an instance cv::DescriptorMatcher
  */
-cv::Ptr<cv::DescriptorMatcher> createDescriptorMatcher(std::string type,
+cv::Ptr<cv::DescriptorMatcher> createDescriptorMatcher(
+    const std::string& type,
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 

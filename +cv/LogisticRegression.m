@@ -441,12 +441,12 @@ classdef LogisticRegression < handle
             %    [err,resp] = model.calcError(...)
             %    [...] = model.calcError(..., 'OptionName', optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __samples__ See the train method.
             % * __responses__ See the train method.
             % * __csvFilename__ See the train method.
             %
-            % ## Outputs
+            % ## Output
             % * __err__ computed error.
             % * __resp__ the optional output responses.
             %
@@ -477,13 +477,13 @@ classdef LogisticRegression < handle
             %    [results,f] = model.predict(samples)
             %    [...] = model.predict(..., 'OptionName', optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __samples__ The input data for the prediction algorithm. `MxN`
             %       matrix, where each row contains variables (features) of
             %       one object being classified. Should have `single` data
             %       type.
             %
-            % ## Outputs
+            % ## Output
             % * __results__ Predicted labels as a column matrix of `int32`
             %       type.
             % * __f__ unused and returns 0.

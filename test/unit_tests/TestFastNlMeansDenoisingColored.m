@@ -1,12 +1,9 @@
 classdef TestFastNlMeansDenoisingColored
     %TestFastNlMeansDenoisingColored
-    properties (Constant)
-        im = imread(fullfile(mexopencv.root(),'test','lena.jpg'));
-    end
 
     methods (Static)
         function test_1
-            img = TestFastNlMeansDenoisingColored.im;
+            img = imread(fullfile(mexopencv.root(),'test','lena.jpg'));
             out = cv.fastNlMeansDenoisingColored(img, 'H',10, 'HColor',10);
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
@@ -25,7 +22,8 @@ classdef TestFastNlMeansDenoisingColored
                 return;
             end
 
-            img = imnoise(TestFastNlMeansDenoisingColored.im, 'gaussian');
+            img = imread(fullfile(mexopencv.root(),'test','lena.jpg'));
+            img = imnoise(img, 'gaussian');
             out = cv.fastNlMeansDenoisingColored(img, 'H',10, 'HColor',10);
             validateattributes(out, {class(img)}, {'size',size(img)});
         end

@@ -1,13 +1,11 @@
 classdef TestDecolor
     %TestDecolor
-    properties (Constant)
-        img = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
-    end
 
     methods (Static)
         function test_1
-            [gray,clrBoosted] = cv.decolor(TestDecolor.img);
-            sz = size(TestDecolor.img);
+            img = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
+            [gray,clrBoosted] = cv.decolor(img);
+            sz = size(img);
             validateattributes(gray, {'uint8'}, {'2d', 'size',sz(1:2)});
             validateattributes(clrBoosted, {'uint8'}, {'3d', 'size',sz});
         end

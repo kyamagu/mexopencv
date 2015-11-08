@@ -1,13 +1,10 @@
 classdef TestSeamlessClone
     %TestSeamlessClone
-    properties (Constant)
-        im = imread(fullfile(mexopencv.root(),'test','balloon.jpg'));
-    end
 
     methods (Static)
         function test_1
-            img = TestSeamlessClone.im;
-            dst = TestSeamlessClone.im;
+            img = imread(fullfile(mexopencv.root(),'test','balloon.jpg'));
+            dst = img;
             mask = zeros(size(img,1), size(img,2), 'uint8');
             mask(20:120, 5:100) = 255;
             p = [400 200];

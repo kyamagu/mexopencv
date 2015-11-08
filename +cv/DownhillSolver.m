@@ -162,11 +162,11 @@ classdef DownhillSolver < handle
             %
             %    [x,fx] = solver.minimize(x0)
             %
-            % ## Inputs
+            % ## Input
             % * __x0__ The initial point, that will become a centroid of an
             %       initial simplex.
             %
-            % ## Outputs
+            % ## Output
             % * __x__ After the algorithm will terminate, it will be setted
             %       to the point where the algorithm stops, the point of
             %       possible minimum.

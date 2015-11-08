@@ -3,10 +3,10 @@ classdef TestPhaseCorrelate
 
     methods (Static)
         function test_1
-            im1 = imread(fullfile(mexopencv.root(),'test','RubberWhale1.png'));
-            im2 = imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'));
-            im1 = rgb2gray(im2double(im1));
-            im2 = rgb2gray(im2double(im2));
+            im1 = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale1.png'), 'Grayscale',true);
+            im2 = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'), 'Grayscale',true);
+            im1 = double(im1) / 255;
+            im2 = double(im2) / 255;
             [pshift,resp] = cv.phaseCorrelate(im1, im2);
             validateattributes(pshift, {'numeric'}, {'vector', 'numel',2});
             validateattributes(resp, {'double'}, {'scalar'});

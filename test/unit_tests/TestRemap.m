@@ -66,7 +66,7 @@ classdef TestRemap
 
         function test_4_combined_maps
             % grayscale image
-            img = rgb2gray(imread(TestRemap.im));
+            img = cv.imread(TestRemap.im, 'Grayscale',true);
 
             [r,c,~] = size(img);
             [Y,X] = ndgrid((1:r)-1, (1:c)-1);  % 0-based indices
