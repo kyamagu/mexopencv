@@ -1,0 +1,84 @@
+#
+# Travis CI build script
+#
+
+#TODO:
+# * compile opencv_contrib
+# * clang compiler
+# * OSX operating system
+
+# C++
+language: cpp
+
+compiler: gcc
+
+# Ubuntu 12.04 LTS Server Edition 64-bit (precise)
+sudo: required
+os: linux
+
+# Ubuntu 14.04 LTS Server Edition 64-bit (trusty)
+#dist: trusty
+
+branches:
+  only:
+    - master
+    - v3.0
+
+env:
+  global:
+    - MCV_ROOT=$(pwd)
+    - OCTAVE=octave --no-gui --no-window-system
+    - OCTAVERC=$HOME/.octaverc
+    - OCT_STATS=yes
+    - OCT_IMAGE=no
+    - DOXY=yes
+
+before_install:
+  # install Octave 4.0.0 and OpenCV 3.0.0 from PPA
+  - sudo add-apt-repository -y ppa:octave/stable
+  - sudo add-apt-repository -y ppa:amarburg/opencv3
+  - sudo apt-get update -qq
+  - sudo apt-get install -y octave liboctave-dev octave-pkg-dev
+  - sudo apt-get install -y libopencv3-dev
+  - if [ "$DOXY" = "yes" ]; then sudo apt-get install -y doxygen ; fi
+  # show current environment
+  - lsb_release -a
+  - uname -a
+  - dpkg -s octave liboctave-dev libopencv3-dev
+  - $CXX --version
+  - make --version
+  - pkg-config --version
+  - $OCTAVE --version
+  - pkg-config --modversion opencv
+  - pkg-config --cflags --libs opencv
+  - if [ "$DOXY" = "yes" ]; then doxygen --version ; fi
+
+install:
+  # compile mexopencv
+  # (avoid using too many parallel jobs, as it could starve memory!)
+  - make WITH_OCTAVE=1 NO_CV_PKGCONFIG_HACK=1 -j2 all
+  # build docs
+  - if [ "$DOXY" = "yes" ]; then make WITH_OCTAVE=1 doc ; fi
+
+before_script:
+  # some tests use functions from image and statistics toolboxes
+  # they are optional, tests will simply skip if packages are not detected
+  # (latest octave-image fails to compile with gcc-4.6 as it needs C++11 support)
+  - if [ "$OCT_STATS" = "yes" ]; then $OCTAVE --eval "pkg install -forge -local io statistics" ; fi
+  - if [ "$OCT_IMAGE" = "yes" ]; then $OCTAVE --eval "pkg install -forge -local image" ; fi
+  # create .octaverc file (where we setup path and load required packages on start)
+  # (due to bug in Octave, we must also add private directories on path)
+  - touch $OCTAVERC
+  - echo "more off" >> $OCTAVERC
+  - if [ "$OCT_STATS" = "yes" ]; then echo "pkg load statistics" >> $OCTAVERC ; fi
+  - if [ "$OCT_IMAGE" = "yes" ]; then echo "pkg load image" >> $OCTAVERC ; fi
+  - echo "cd('$MCV_ROOT');" >> $OCTAVERC
+  - echo "addpath('$MCV_ROOT');" >> $OCTAVERC
+  - echo "addpath(fullfile('$MCV_ROOT','+cv','private'));" >> $OCTAVERC
+  - echo "%addpath(fullfile('$MCV_ROOT','opencv_contrib'));" >> $OCTAVERC
+  - echo "%addpath(fullfile('$MCV_ROOT','opencv_contrib','+cv','private'));" >> $OCTAVERC
+  - cat $OCTAVERC
+
+script:
+  # run test suite
+  - make WITH_OCTAVE=1 test

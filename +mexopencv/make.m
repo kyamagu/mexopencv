@@ -103,7 +103,7 @@ if ispc % Windows
         end
 
         cd(fullfile(mexopencv.root(),'test'));
-        if ~opts.dryrun, UnitTest(); end
+        if ~opts.dryrun, UnitTest(opts.opencv_contrib); end
         return;
     end
 
@@ -210,6 +210,7 @@ if ispc % Windows
 
 else % Unix
     options = {};
+    if mexopencv.isOctave(), options = [options 'WITH_OCTAVE=1']; end
     if opts.dryrun         , options = [options '--dry-run']; end
     if opts.force          , options = [options '--always-make']; end
     if opts.verbose < 1    , options = [options '--silent']; end

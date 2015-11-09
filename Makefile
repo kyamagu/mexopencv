@@ -6,9 +6,11 @@
 #
 # The following configuration parameters are recognized:
 #
-# MATLABDIR             MATLAB root directory.
-# MATLAB                MATLAB executable.
-# MEX                   MATLAB MEX compiler frontend.
+# WITH_OCTAVE           Switch between MATLAB or Octave mode.
+#                       Boolean, if not set, assumes MATLAB by default.
+# MATLABDIR             MATLAB/Octave root directory.
+# MATLAB                MATLAB/Octave executable.
+# MEX                   MATLAB/Octave MEX compiler frontend.
 # MEXEXT                extension of MEX-files.
 # DOXYGEN               Doxygen executable used to generate documentation.
 # NO_CV_PKGCONFIG_HACK  Boolean. If not set, we attempt to fix the output of
@@ -39,9 +41,15 @@
 # ============================================================================
 
 # programs
+ifndef WITH_OCTAVE
 MATLABDIR  ?= /usr/local/matlab
 MEX        ?= $(MATLABDIR)/bin/mex
-MATLAB     ?= $(MATLABDIR)/bin/matlab
+MATLAB     ?= $(MATLABDIR)/bin/matlab -nodisplay -noFigureWindows -nosplash
+else
+MATLABDIR  ?= /usr
+MEX        ?= $(MATLABDIR)/bin/mkoctfile --mex
+MATLAB     ?= $(MATLABDIR)/bin/octave --no-gui --no-window-system --quiet
+endif
 DOXYGEN    ?= doxygen
 
 # mexopencv directories
@@ -56,7 +64,11 @@ CONTRIBDIR = opencv_contrib
 # file extensions
 OBJEXT     ?= o
 LIBEXT     ?= a
+ifndef WITH_OCTAVE
 MEXEXT     ?= $(shell $(MATLABDIR)/bin/mexext)
+else
+MEXEXT     ?= mex
+endif
 ifeq ($(MEXEXT),)
     $(error "MEX extension not set")
 endif
@@ -91,7 +103,14 @@ CV_LDFLAGS := $(filter-out $(LIB_SUFFIX),$(CV_LDFLAGS)) \
 endif
 
 # compiler/linker flags
-override CFLAGS  += -cxx -largeArrayDims -I$(INCLUDEDIR) $(CV_CFLAGS)
+ifndef WITH_OCTAVE
+override CFLAGS  += -largeArrayDims -cxx
+else
+# -flto
+# -fdata-sections -ffunction-sections -Wl,--gc-sections
+override CFLAGS  += -O2 -s -fpermissive
+endif
+override CFLAGS  += -I$(INCLUDEDIR) $(CV_CFLAGS)
 override LDFLAGS += -L$(LIBDIR) -lMxArray $(CV_LDFLAGS)
 
 # search path for prerequisites of pattern rules
@@ -113,11 +132,15 @@ contrib:  $(TARGETS2)
 
 # MxArray objects
 $(LIBDIR)/%.$(OBJEXT): $(SRCDIR)/%.cpp $(HEADERS)
+ifndef WITH_OCTAVE
 	$(MEX) -c $(CFLAGS) -outdir $(LIBDIR) $<
+else
+	$(MEX) -c $(CFLAGS) -o $@ $<
+endif
 
 # MxArray library
 $(TARGETS0): $(OBJECTS0)
-	$(AR) -cq $@ $^
+	$(AR) -crs $@ $^
 
 # MEX-files
 $(TARGETDIR)/%.$(MEXEXT) \
@@ -126,10 +149,16 @@ $(TARGETDIR)/$(TSDIR)/$(PRIVATEDIR)/%.$(MEXEXT) \
 $(CONTRIBDIR)/$(TARGETDIR)/%.$(MEXEXT) \
 $(CONTRIBDIR)/$(TARGETDIR)/$(PRIVATEDIR)/%.$(MEXEXT) \
 : %.cpp $(TARGETS0)
+ifndef WITH_OCTAVE
 	$(MEX) $(CFLAGS) -output ${@:.$(MEXEXT)=} $< $(LDFLAGS)
+else
+	$(MEX) $(CFLAGS) -o ${@:.$(MEXEXT)=} $< $(LDFLAGS)
+	$(RM) ./$(notdir $(<:.cpp=.$(OBJEXT)))
+endif
 
 clean:
 	$(RM) -r \
+        *.$(OBJEXT) \
         $(LIBDIR)/*.$(LIBEXT) $(LIBDIR)/*.$(OBJEXT) \
         $(TARGETDIR)/*.$(MEXEXT) \
         $(TARGETDIR)/$(PRIVATEDIR)/*.$(MEXEXT) \
@@ -141,4 +170,8 @@ doc:
 	$(DOXYGEN) Doxyfile
 
 test:
-	$(MATLAB) -nodisplay -r "addpath(pwd);cd test;try,UnitTest;catch e,disp(e.getReport);end;exit;"
+ifndef WITH_OCTAVE
+	$(MATLAB) -r "addpath(pwd);cd test;try,UnitTest(false);catch e,disp(e.getReport);end;exit;"
+else
+	$(MATLAB) --eval "addpath(pwd);cd test;try,UnitTest(false);catch e,disp(e);exit(1);end;exit(0);"
+endif
