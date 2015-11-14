@@ -733,13 +733,14 @@ mwIndex MxArray::subs(mwIndex i, mwIndex j) const
 {
     if (i >= rows() || j >= cols())
         mexErrMsgIdAndTxt("mexopencv:error", "Subscript out of range");
-    const mwIndex si[] = {i, j};
+    mwIndex si[] = {i, j};
     return mxCalcSingleSubscript(p_, 2, si);
 }
 
 mwIndex MxArray::subs(const std::vector<mwIndex>& si) const
 {
-    return mxCalcSingleSubscript(p_, si.size(), (!si.empty() ? &si[0] : NULL));
+    std::vector<mwIndex> v(si);
+    return mxCalcSingleSubscript(p_, si.size(), (!v.empty() ? &v[0] : NULL));
 }
 
 MxArray MxArray::at(const std::string& fieldName, mwIndex index) const
