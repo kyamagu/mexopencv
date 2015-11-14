@@ -15,6 +15,8 @@
 # DOXYGEN               Doxygen executable used to generate documentation.
 # NO_CV_PKGCONFIG_HACK  Boolean. If not set, we attempt to fix the output of
 #                       pkg-config for OpenCV.
+# PKG_CONFIG_OPENCV     Name of the OpenCV 3.0 package in pkg-config. By
+#                       default, opencv.
 # CFLAGS                Extra flags to give to the C/C++ MEX compiler.
 # LDFLAGS               Extra flags to give to compiler when it invokes the
 #                       linker.
@@ -88,11 +90,12 @@ TARGETS1   := $(subst $(SRCDIR)/$(TARGETDIR), $(TARGETDIR), $(SRCS1:.cpp=.$(MEXE
 TARGETS2   := $(subst $(CONTRIBDIR)/$(SRCDIR)/$(TARGETDIR), $(CONTRIBDIR)/$(TARGETDIR), $(SRCS2:.cpp=.$(MEXEXT)))
 
 # OpenCV flags
-ifneq ($(shell pkg-config --exists --atleast-version=3 opencv; echo $$?), 0)
+PKG_CONFIG_OPENCV ?= opencv
+ifneq ($(shell pkg-config --exists --atleast-version=3 $(PKG_CONFIG_OPENCV); echo $$?), 0)
     $(error "OpenCV 3.0 package was not found in the pkg-config search path")
 endif
-CV_CFLAGS  := $(shell pkg-config --cflags opencv)
-CV_LDFLAGS := $(shell pkg-config --libs opencv)
+CV_CFLAGS  := $(shell pkg-config --cflags $(PKG_CONFIG_OPENCV))
+CV_LDFLAGS := $(shell pkg-config --libs $(PKG_CONFIG_OPENCV))
 ifndef NO_CV_PKGCONFIG_HACK
 LIB_SUFFIX := %.so %.dylib %.a %.la %.dll.a %.dll
 CV_LDFLAGS := $(filter-out $(LIB_SUFFIX),$(CV_LDFLAGS)) \
