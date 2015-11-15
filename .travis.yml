@@ -1,5 +1,6 @@
 #
-# Travis CI build script
+# Travis CI build script.
+# https://travis-ci.org/kyamagu/mexopencv
 #
 
 #TODO:
@@ -19,18 +20,29 @@ os: linux
 # Ubuntu 14.04 LTS Server Edition 64-bit (trusty)
 #dist: trusty
 
+# whitelisted branches to build
 branches:
   only:
     - master
     - v3.0
 
+# global environment variables
 env:
   global:
     - MCV_ROOT=$(pwd)
-    - OCTAVE=octave --no-gui --no-window-system
     - OCTAVERC=$HOME/.octaverc
+    - OCTAVE_OPTS="--no-gui --no-window-system"
+    # whether to install Octave Forge packages. They are optional, tests will
+    # simply skip if needed packages are not detected. Note that the latest
+    # octave-image fails to compile with gcc-4.6 as it needs C++11 support.
     - OCT_STATS=yes
     - OCT_IMAGE=no
+    # common options for make
+    - MAKE_OPTS="NO_CV_PKGCONFIG_HACK=1 TEST_CONTRIB=false WITH_OCTAVE=1"
+    # Extra make arguments
+    # (avoid using too many parallel jobs, as it could starve memory!)
+    - MAKE_EXTRA=-j2
+    # whether to generate doxygen HTML documentation
     - DOXY=yes
 
 before_install:
@@ -41,44 +53,46 @@ before_install:
   - sudo apt-get install -y octave liboctave-dev octave-pkg-dev
   - sudo apt-get install -y libopencv3-dev
   - if [ "$DOXY" = "yes" ]; then sudo apt-get install -y doxygen ; fi
-  # show current environment
+  # install image and statistics packages used by some tests
+  - if [ "$OCT_STATS" = "yes" ]; then octave $OCTAVE_OPTS --eval "try, pkg install -forge -local io statistics, end" ; fi
+  - if [ "$OCT_IMAGE" = "yes" ]; then octave $OCTAVE_OPTS --eval "try, pkg install -forge -local image, end" ; fi
+  # show info about build tools
+  - printenv
   - lsb_release -a
   - uname -a
   - dpkg -s octave liboctave-dev libopencv3-dev
   - $CXX --version
   - make --version
   - pkg-config --version
-  - $OCTAVE --version
+  - octave $OCTAVE_OPTS --version
+  - octave $OCTAVE_OPTS --eval "pkg list"
   - pkg-config --modversion opencv
   - pkg-config --cflags --libs opencv
   - if [ "$DOXY" = "yes" ]; then doxygen --version ; fi
 
 install:
   # compile mexopencv
-  # (avoid using too many parallel jobs, as it could starve memory!)
-  - make WITH_OCTAVE=1 NO_CV_PKGCONFIG_HACK=1 -j2 all
+  - make $MAKE_OPTS $MAKE_EXTRA all
   # build docs
-  - if [ "$DOXY" = "yes" ]; then make WITH_OCTAVE=1 doc ; fi
+  - if [ "$DOXY" = "yes" ]; then make $MAKE_OPTS doc ; fi
 
 before_script:
-  # some tests use functions from image and statistics toolboxes
-  # they are optional, tests will simply skip if packages are not detected
-  # (latest octave-image fails to compile with gcc-4.6 as it needs C++11 support)
-  - if [ "$OCT_STATS" = "yes" ]; then $OCTAVE --eval "pkg install -forge -local io statistics" ; fi
-  - if [ "$OCT_IMAGE" = "yes" ]; then $OCTAVE --eval "pkg install -forge -local image" ; fi
   # create .octaverc file (where we setup path and load required packages on start)
   # (due to bug in Octave, we must also add private directories on path)
   - touch $OCTAVERC
+  - echo "crash_dumps_octave_core(false);" >> $OCTAVERC
   - echo "more off" >> $OCTAVERC
-  - if [ "$OCT_STATS" = "yes" ]; then echo "pkg load statistics" >> $OCTAVERC ; fi
-  - if [ "$OCT_IMAGE" = "yes" ]; then echo "pkg load image" >> $OCTAVERC ; fi
+  - if [ "$OCT_STATS" = "yes" ]; then echo "try, pkg load statistics, end" >> $OCTAVERC ; fi
+  - if [ "$OCT_IMAGE" = "yes" ]; then echo "try, pkg load image, end" >> $OCTAVERC ; fi
   - echo "cd('$MCV_ROOT');" >> $OCTAVERC
   - echo "addpath('$MCV_ROOT');" >> $OCTAVERC
   - echo "addpath(fullfile('$MCV_ROOT','+cv','private'));" >> $OCTAVERC
   - echo "%addpath(fullfile('$MCV_ROOT','opencv_contrib'));" >> $OCTAVERC
   - echo "%addpath(fullfile('$MCV_ROOT','opencv_contrib','+cv','private'));" >> $OCTAVERC
   - cat $OCTAVERC
+  # print cv build info
+  - octave $OCTAVE_OPTS --eval "path, disp(cv.getBuildInformation())"
 
 script:
   # run test suite
-  - make WITH_OCTAVE=1 test
+  - make $MAKE_OPTS test
