@@ -167,11 +167,7 @@ classdef UnitTest
                     disp('PASS');
                     npass = npass + 1;
                 catch ME
-                    if ~mexopencv.isOctave()
-                        disp(ME.getReport());
-                    else
-                        disp(ME.message);
-                    end
+                    fprintf(2, '%s\n', UnitTest.getReportException(ME));
                     disp('FAIL');
                     nfail = nfail + 1;
                 end
@@ -181,6 +177,32 @@ classdef UnitTest
                 varargout{1} = [npass, nfail];
             end
         end
+
+        function str = getReportException(ME)
+            %GETREPORTEXCEPTION  Get error message for exception.
+            %
+            % Returns a formatted error message from a caught exception,
+            % along with stack trace.
+            % Handles both MATLAB and Octave.
+            %
+            % See also: MException.getReport
+            %
+            if ~mexopencv.isOctave()
+                str = getReport(ME, 'extended');
+            else
+                str = {};
+                str{end+1} = sprintf('error: %s', ME.message);
+                if ~isempty(ME.stack)
+                    str{end+1} = sprintf('error: called from');
+                    for i=1:numel(ME.stack)
+                        str{end+1} = sprintf('    %s at line %d column %d', ...
+                            ME.stack(i).name, ME.stack(i).line, ME.stack(i).column);
+                    end
+                end
+                str = sprintf('%s\n', str{:});
+            end
+        end
+
     end
 
 end
