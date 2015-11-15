@@ -83,6 +83,17 @@ classdef UnitTest
                 end
                 numtests = UnitTest.all(klass);
                 ntests = ntests + numtests;
+
+                % avoid out-of-memory errors (especially for CI)
+                if mod(i,25)==0
+                    if mexopencv.isOctave()
+                        %clear -classes
+                        clear -functions
+                    else
+                        %clear classes
+                        clear functions
+                    end
+                end
             end
             elapsed = toc(tID);
 
