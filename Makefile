@@ -20,6 +20,8 @@
 # CFLAGS                Extra flags to give to the C/C++ MEX compiler.
 # LDFLAGS               Extra flags to give to compiler when it invokes the
 #                       linker.
+# TEST_CONTRIB          Boolean, controls whether to run opencv_contrib tests
+#                       as well as core opencv tests. false by default.
 #
 # The above settings can be defined as shell environment variables and/or
 # specified on the command line as arguments to make:
@@ -172,9 +174,12 @@ clean:
 doc:
 	$(DOXYGEN) Doxyfile
 
+# controls opencv_contrib testing
+TEST_CONTRIB ?= false
+
 test:
 ifndef WITH_OCTAVE
-	$(MATLAB) -r "addpath(pwd);cd test;try,UnitTest(false);catch e,disp(e.getReport);end;exit;"
+	$(MATLAB) -r "addpath(pwd);cd test;try,UnitTest($(TEST_CONTRIB));catch e,disp(e.getReport);end;exit;"
 else
-	$(MATLAB) --eval "addpath(pwd);cd test;try,UnitTest(false);catch e,disp(e);exit(1);end;exit(0);"
+	$(MATLAB) --eval "addpath(pwd);cd test;try,UnitTest($(TEST_CONTRIB));catch e,disp(e);exit(1);end;exit(0);"
 endif
