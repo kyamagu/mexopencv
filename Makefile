@@ -52,7 +52,7 @@ MATLAB     ?= $(MATLABDIR)/bin/matlab -nodisplay -noFigureWindows -nosplash
 else
 MATLABDIR  ?= /usr
 MEX        ?= $(MATLABDIR)/bin/mkoctfile --mex
-MATLAB     ?= $(MATLABDIR)/bin/octave --no-gui --no-window-system --quiet
+MATLAB     ?= $(MATLABDIR)/bin/octave-cli --no-gui --no-window-system --quiet
 endif
 DOXYGEN    ?= doxygen
 
@@ -177,9 +177,12 @@ doc:
 # controls opencv_contrib testing
 TEST_CONTRIB ?= false
 
+#TODO: https://savannah.gnu.org/bugs/?41699
+# we can't always trust Octave's exit code on Windows! It throws 0xC0000005
+# on exit  (access violation), even when it runs just fine.
 test:
 ifndef WITH_OCTAVE
 	$(MATLAB) -r "addpath(pwd);cd test;try,UnitTest($(TEST_CONTRIB));catch e,disp(e.getReport);end;exit;"
 else
-	$(MATLAB) --eval "addpath(pwd);cd test;try,UnitTest($(TEST_CONTRIB));catch e,disp(e);exit(1);end;exit(0);"
+	$(MATLAB) --eval "addpath(pwd);cd test;try,UnitTest($(TEST_CONTRIB));catch e,disp(e);exit(1);end;exit(0);" || echo "Exit code: $$?"
 endif

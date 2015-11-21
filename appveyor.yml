@@ -1,0 +1,154 @@
+#
+# AppVeyor CI build script.
+# https://ci.appveyor.com/project/kyamagu/mexopencv
+#
+
+# version format
+version: 3.0.0.{build}
+
+# clone directory
+clone_folder: c:\projects\mexopencv
+
+# whitelisted branches to build
+branches:
+  only:
+  - master
+  - v3.0
+
+# global environment variables
+environment:
+  MCV_ROOT: c:\projects\mexopencv
+  OPENCV_DIR: c:\dev\build\install
+  OCTAVE_HOME: c:\dev\octave-4.0.0
+  #TODO: https://savannah.gnu.org/bugs/?41699
+  # we use octave-cli.exe here instead of octave.exe because of a bug
+  # in the MinGW/MXE build causing Octave to crash on exit with a segfault
+  # after having used any GraphicsMagick functions (imread, etc..).
+  # Even then, we can't always trust Octave's exit code on Windows! It throws
+  # 0xC0000005 on exit (access violation), even when it runs just fine.
+  #TODO: The YAML parser report errors if we use % as first char in a command,
+  # so we cannot just write %OCTAVE%, we must use: call %OCTAVE%
+  OCTAVE: octave-cli --no-gui --no-window-system
+  # whether to generate doxygen HTML documentation
+  DOXY: yes
+  # for pkg-config to find opencv.pc when using the makefile
+  PKG_CONFIG_PATH: /c/dev/build/install
+  # whether to run mexopencv.make() in Octave or use external makefile
+  WITH_MAKE: yes
+  # options in case of makefile (the quotes around the path are needed here!)
+  MAKE_OPTS: NO_CV_PKGCONFIG_HACK=1 TEST_CONTRIB=true WITH_OCTAVE=1 MATLABDIR='/c/dev/octave-4.0.0'
+  # Extra make arguments like number of parallel jobs (NPROC+1 is recommended).
+  # Note that GNU Make 3.81 bundled with Octave has poor parallel jobs support
+  # (make -jN freezes, make -j has no limit creating way too many processes!).
+  # So we download a newer GNU Make 4.1 for Windows (mingw32-make -jN works).
+  MAKE_EXTRA: -j2
+
+# immediately finish build if one of the jobs fails
+matrix:
+  fast_finish: true
+
+# disable automatic building/testing/deploying phases, we use custom scripts
+build: off
+test: off
+deploy: off
+
+# keep build artifacts, which can be downloaded later
+artifacts:
+  - path: test\UnitTest_*.log
+    name: tests-log
+
+# enable debugging using an RDP connection
+#on_finish:
+#  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
+install:
+  # download and install dependencies
+  - if not exist "c:\dev" ( mkdir "c:\dev" )
+  - cd "c:\dev"
+  - if "%DOXY%" == "yes" ( choco install doxygen.portable -y )
+  - echo Installing GNU Make ...
+  - ps: Start-FileDownload "ftp://ftp.equation.com/make/32/make.exe" -FileName mingw32-make.exe
+  - set "PATH=c:\dev;%PATH%"
+  - echo Installing OpenCV ...
+  - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.0.0/build_mingw_x86.7z" -FileName build_mingw_x86.7z
+  - 7z x "c:\dev\build_mingw_x86.7z" -o"c:\dev\build" -y > nul
+  - set "PATH=%OPENCV_DIR%\x86\mingw\bin;%PATH%"
+  - echo Installing Octave ...
+  - ps: Start-FileDownload "https://ftp.gnu.org/gnu/octave/windows/octave-4.0.0_0.zip" -FileName octave-4.0.0_0.zip
+  - 7z x "c:\dev\octave-4.0.0_0.zip" -o"c:\dev" -y > nul
+  - copy /y "%OCTAVE_HOME%\bin\libopenblas.dll" "%OCTAVE_HOME%\bin\libblas.dll" > nul
+  - set "PATH=%OCTAVE_HOME%\bin;%PATH%"
+  - echo Installing Octave packages ...
+  - call %OCTAVE% --eval "try, pkg('install', fullfile(matlabroot,'src','image-2.4.0.tar.gz'), '-noauto'); end"
+  - call %OCTAVE% --eval "try, pkg('install', fullfile(matlabroot,'src','io-2.2.7.tar.gz'), '-noauto'); end"
+  - call %OCTAVE% --eval "try, pkg('install', fullfile(matlabroot,'src','statistics-1.2.4.tar.gz'), '-noauto'); end"
+  - dir "c:\dev"
+  # show info about build tools
+  - set
+  - ver
+  - systeminfo
+  - cmake --version
+  - mingw32-make --version
+  - g++ --version
+  - call %OCTAVE% --version
+  - call %OCTAVE% --eval "pkg list"
+  - if "%DOXY%" == "yes" ( doxygen --version )
+
+before_build:
+  # create .octaverc file (where we setup path and load required packages on start)
+  #TODO: due to bug in Octave, we must also add private directories on path
+  - ps: |
+      $OctaveRC = @"
+        crash_dumps_octave_core(false);
+        more off
+        try, pkg load image, end
+        try, pkg load statistics, end
+        cd(getenv('MCV_ROOT'))
+        addpath(getenv('MCV_ROOT'))
+        addpath(fullfile(getenv('MCV_ROOT'),'+cv','private'))
+        addpath(fullfile(getenv('MCV_ROOT'),'opencv_contrib'))
+        addpath(fullfile(getenv('MCV_ROOT'),'opencv_contrib','+cv','private'))
+      "@
+      # one for SHELL=sh.exe and one for SHELL=cmd.exe
+      $HomeDirs = @(
+        (Join-Path (Join-Path $env:OCTAVE_HOME 'home') $env:USERNAME),
+        $env:USERPROFILE
+      )
+      $HomeDirs | ForEach-Object {
+        $OctaveRCFile = (Join-Path $_ '.octaverc')
+        New-Item -ItemType File -Path "$OctaveRCFile" -Force | Out-Null
+        $OctaveRC | Out-File -FilePath "$OctaveRCFile" -Encoding ASCII
+      }
+      cat "$OctaveRCFile"
+
+build_script:
+  # compile mexopencv
+  - cd "%MCV_ROOT%"
+  - if "%WITH_MAKE%" == "yes" (
+      sh --login -c "cd \"$MCV_ROOT\" && mingw32-make $MAKE_OPTS $MAKE_EXTRA all contrib"
+    ) else (
+      %OCTAVE% --eval "mexopencv.make('opencv_path',getenv('OPENCV_DIR'), 'opencv_contrib',true, 'progress',false, 'verbose',1);"
+    )
+  # generate HTML docs
+  - if "%DOXY%" == "yes" ( doxygen Doxyfile )
+
+after_build:
+  # package all built MEX-files in a zip file
+  - pushd "%MCV_ROOT%" && 7z a -t7z "%APPVEYOR_BUILD_FOLDER%\mexopencv.7z" *.mex -r -y && popd
+  - appveyor PushArtifact "%APPVEYOR_BUILD_FOLDER%\mexopencv.7z" -DeploymentName "binaries_octave_x86"
+  # package HTML docs
+  - if "%DOXY%" == "yes" ( 7z a -t7z "%APPVEYOR_BUILD_FOLDER%\mexopencv_doc.7z" "%MCV_ROOT%\doc\html\" -y > nul )
+  - if "%DOXY%" == "yes" ( appveyor PushArtifact "%APPVEYOR_BUILD_FOLDER%\mexopencv_doc.7z" -DeploymentName "docs-cpp" )
+
+before_test:
+  # print cv build info
+  - call %OCTAVE% --eval "path, disp(cv.getBuildInformation())"
+
+test_script:
+  # run test suite
+  #TODO: we reset %ERRORLEVEL% because we can't rely on Octave exit code
+  - if "%WITH_MAKE%" == "yes" (
+      sh --login -c "cd \"$MCV_ROOT\" && mingw32-make $MAKE_OPTS test"
+    ) else (
+      %OCTAVE% --eval "cd test;try,UnitTest(true);catch e,disp(e);exit(1);end;exit(0);" || ver > nul
+    )
