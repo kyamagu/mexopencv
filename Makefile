@@ -20,6 +20,8 @@
 # CFLAGS                Extra flags to give to the C/C++ MEX compiler.
 # LDFLAGS               Extra flags to give to compiler when it invokes the
 #                       linker.
+# TEST_CONTRIB          Boolean, controls whether to run opencv_contrib tests
+#                       as well as core opencv tests. false by default.
 #
 # The above settings can be defined as shell environment variables and/or
 # specified on the command line as arguments to make:
@@ -50,7 +52,7 @@ MATLAB     ?= $(MATLABDIR)/bin/matlab -nodisplay -noFigureWindows -nosplash
 else
 MATLABDIR  ?= /usr
 MEX        ?= $(MATLABDIR)/bin/mkoctfile --mex
-MATLAB     ?= $(MATLABDIR)/bin/octave --no-gui --no-window-system --quiet
+MATLAB     ?= $(MATLABDIR)/bin/octave-cli --no-gui --no-window-system --quiet
 endif
 DOXYGEN    ?= doxygen
 
@@ -172,9 +174,15 @@ clean:
 doc:
 	$(DOXYGEN) Doxyfile
 
+# controls opencv_contrib testing
+TEST_CONTRIB ?= false
+
+#TODO: https://savannah.gnu.org/bugs/?41699
+# we can't always trust Octave's exit code on Windows! It throws 0xC0000005
+# on exit  (access violation), even when it runs just fine.
 test:
 ifndef WITH_OCTAVE
-	$(MATLAB) -r "addpath(pwd);cd test;try,UnitTest(false);catch e,disp(e.getReport);end;exit;"
+	$(MATLAB) -r "addpath(pwd);cd test;try,UnitTest($(TEST_CONTRIB));catch e,disp(e.getReport);end;exit;"
 else
-	$(MATLAB) --eval "addpath(pwd);cd test;try,UnitTest(false);catch e,disp(e);exit(1);end;exit(0);"
+	$(MATLAB) --eval "addpath(pwd);cd test;try,UnitTest($(TEST_CONTRIB));catch e,disp(e);exit(1);end;exit(0);" || echo "Exit code: $$?"
 endif
