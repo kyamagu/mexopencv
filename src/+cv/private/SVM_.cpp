@@ -399,6 +399,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==2 && nlhs<=1);
         plhs[0] = MxArray(obj->getSupportVectors());
     }
+    else if (method == "getUncompressedSupportVectors") {
+        nargchk(nrhs==2 && nlhs<=1);
+        plhs[0] = MxArray(obj->getUncompressedSupportVectors());
+    }
     else if (method == "setCustomKernel") {
         nargchk(nrhs==3 && nlhs==0);
         obj->setCustomKernel(MatlabFunction::create(rhs[2].toString()));

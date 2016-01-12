@@ -666,12 +666,34 @@ classdef SVM < handle
             %    sv = model.getSupportVectors()
             %
             % ## Output
-            % * __sv__ All the support vector as floating-point matrix, where
-            %       support vectors are stored as matrix rows.
+            % * __sv__ Support vectors.
             %
-            % See also: cv.SVM.getDecisionFunction
+            % The method returns all the support vectors as a floating-point
+            % matrix, where support vectors are stored as matrix rows.
+            %
+            % See also: cv.SVM.getUncompressedSupportVectors,
+            %  cv.SVM.getDecisionFunction
             %
             sv = SVM_(this.id, 'getSupportVectors');
+        end
+
+        function sv = getUncompressedSupportVectors(this)
+            %GETUNCOMPRESSEDSUPPORTVECTORS  Retrieves all the uncompressed support vectors of a linear SVM
+            %
+            %    sv = model.getUncompressedSupportVectors()
+            %
+            % ## Output
+            % * __sv__ Uncompressed support vectors.
+            %
+            % The method returns all the uncompressed support vectors of a
+            % linear SVM that the compressed support vector, used for
+            % prediction, was derived from. They are returned in a
+            % floating-point matrix, where the support vectors are stored as
+            % matrix rows.
+            %
+            % See also: cv.SVM.getSupportVectors, cv.SVM.getDecisionFunction
+            %
+            sv = SVM_(this.id, 'getUncompressedSupportVectors');
         end
 
         function setCustomKernel(this, kernelFunc)

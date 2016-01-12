@@ -224,6 +224,36 @@ classdef TestSVM
                 {'vector', 'integer', 'numel',numel(TestSVM.Y)});
             assert(all(ismember(unique(Yhat), [1;-1])));
         end
+
+        function test_sv
+            % set up training data
+            labels = int32([1; -1; -1; -1]);
+            data = single([501, 10; 255, 10; 501, 255; 10, 501]);
+
+            model = cv.SVM();
+            model.Type = 'C_SVC';
+            model.TermCriteria = struct('type','Count', ...
+                'maxCount',100, 'epsilon',1e-6);
+
+            % test retrieval of SVs and compressed SVs on linear SVM
+            model.KernelType = 'Linear';
+            model.train(data, labels);
+
+            sv = model.getSupportVectors();
+            assert(size(sv,1) == 1);  % by default compressed SV returned
+            sv = model.getUncompressedSupportVectors();
+            assert(size(sv,1) == 3);
+
+            % test retrieval of SVs and compressed SVs on non-linear SVM
+            model.KernelType = 'Poly';
+            model.Degree = 2;
+            model.train(data, labels);
+
+            sv = model.getSupportVectors();
+            assert(size(sv,1) == 3);
+            sv = model.getUncompressedSupportVectors();
+            assert(size(sv,1) == 0);  % inapplicable for non-linear SVMs
+        end
     end
 
 end
