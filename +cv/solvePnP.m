@@ -23,9 +23,9 @@
 %
 % ## Options
 % * __DistCoeffs__ Input vector of distortion coefficients
-%       `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4]` of 4, 5, 8, or 12 elements.
-%       If the vector is empty, the zero distortion coefficients are assumed.
-%       default empty.
+%       `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4,taux,tauy]` of 4, 5, 8, 12 or 14
+%       elements. If the vector is empty, the zero distortion coefficients are
+%       assumed. default empty.
 % * __Rvec__ Initial `rvec`. Not set by default.
 % * __Tvec__ Initial `tvec`. Not set by default.
 % * __UseExtrinsicGuess__ Parameter used for `Method='Iterative'`. If true,

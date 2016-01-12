@@ -6,13 +6,13 @@
 %
 % ## Input
 % * __cameraMatrix1__ First camera matrix 3x3.
+% * __distCoeffs1__ First camera distortion parameters of 4, 5, 8, 12 or 14
+%       elements.
 % * __cameraMatrix2__ Second camera matrix 3x3.
+% * __distCoeffs2__ Second camera distortion parameters of 4, 5, 8, 12 or 14
+%       elements.
 % * __cameraMatrix3__ Third camera matrix 3x3.
-% * __distCoeffs1__ First camera distortion parameters of 4, 5, 8, or 12
-%       elements.
-% * __distCoeffs2__ Second camera distortion parameters of 4, 5, 8, or 12
-%       elements.
-% * __distCoeffs3__ Third camera distortion parameters of 4, 5, 8, or 12
+% * __distCoeffs3__ Third camera distortion parameters of 4, 5, 8, 12 or 14
 %       elements.
 % * __imageSize__ Size of the image used for stereo calibration `[w,h]`.
 % * __R12__ Rotation matrix between the coordinate systems of the first and the

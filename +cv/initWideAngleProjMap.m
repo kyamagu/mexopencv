@@ -7,8 +7,9 @@
 % ## Input
 % * __cameraMatrix__ Input camera matrix `A = [f_x 0 c_x; 0 f_y c_y; 0 0 1]`
 % * __distCoeffs__ Input vector of distortion coefficients
-%       `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4]` of 4, 5, 8, or 12 elements. If
-%       the vector is empty, the zero distortion coefficients are assumed.
+%       `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4,taux,tauy]` of 4, 5, 8, 12 or 14
+%       elements. If the vector is empty, the zero distortion coefficients are
+%       assumed.
 % * __imageSize__ image size `[w,h]`.
 % * __destImageWidth__
 %

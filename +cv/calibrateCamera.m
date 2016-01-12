@@ -26,7 +26,8 @@
 % * __cameraMatrix__ Output 3x3 floating-point camera matrix
 %       `A = [fx 0 cx; 0 fy cy; 0 0 1]`
 % * __distCoeffs__ Output vector of distortion coefficients
-%       `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4]` of 4, 5, 8, or 12 elements.
+%       `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4,taux,tauy]` of 4, 5, 8, 12 or 14
+%       elements.
 % * __reprojErr__ Output final re-projection error.
 % * __rvecs__ Output cell array of rotation vectors (see cv.Rodrigues)
 %       estimated for each pattern view (cell array of 3-element vectors).
@@ -44,8 +45,8 @@
 %       `cameraMatrix`. If 'UseIntrinsicGuess' and/or 'FixAspectRatio' are
 %       specified, some or all of `fx`, `fy`, `cx`, `cy` must be initialized
 %       before calling the function. Not set by default (uses `eye(3)`).
-% * __DistCoeffs__ Input 4, 5, 8, or 12 elements vector used as an initial
-%       values of `distCoeffs`. Not set by default (uses `zeros(1,12)`).
+% * __DistCoeffs__ Input 4, 5, 8, 12 or 14 elements vector used as an initial
+%       values of `distCoeffs`. Not set by default (uses `zeros(1,14)`).
 % * __UseIntrinsicGuess__ Logical flag. When true, `CameraMatrix` contains
 %       valid initial values of `fx`, `fy`, `cx`, `cy` that are optimized
 %       further. Otherwise, `(cx,cy)` is initially set to the image center
@@ -84,6 +85,15 @@
 %       not changed during the optimization. If 'UseIntrinsicGuess' is set,
 %       the coefficient from the supplied `DistCoeffs` matrix is used.
 %       Otherwise, it is set to 0. default false.
+% * __TiltedModel__ Coefficients `tauX` and `tauY` are enabled. To provide the
+%       backward compatibility, this extra flag should be explicitly specified
+%       to make the calibration function use the tilted sensor model and
+%       return 14 coefficients. If the flag is not set, the function computes
+%       and returns only 5 distortion coefficients. default false.
+% * __FixTauXTauY__ The coefficients of the tilted sensor model are not
+%       changed during the optimization. If `UseIntrinsicGuess` is set, the
+%       coefficient from the supplied `DistCoeffs` matrix is used. Otherwise,
+%       it is set to 0. default false.
 % * __Criteria__ Termination criteria for the iterative optimization algorithm.
 %       default `struct('type','Count+EPS', 'maxCount',30, 'epsilon',eps)`
 %

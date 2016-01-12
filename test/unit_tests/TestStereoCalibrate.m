@@ -53,13 +53,14 @@ classdef TestStereoCalibrate
                 'ZeroTangentDist',true, 'RationalModel',true, ...
                 'ThinPrismModel',true, 'FixAspectRatio',true, ...
                 'FixPrincipalPoint',true, 'FixK3',true, ...
-                'FixK4',true, 'FixK5',true, 'FixS1S2S3S4',true);
+                'FixK4',true, 'FixK5',true, 'FixS1S2S3S4',true, ...
+                'TiltedModel',true, 'FixTauXTauY',true);
             validateattributes(S, {'struct'}, {'scalar'});
             assert(all(ismember(TestStereoCalibrate.fields, fieldnames(S))));
             validateattributes(S.cameraMatrix1, {'numeric'}, {'size',[3 3]});
             validateattributes(S.cameraMatrix2, {'numeric'}, {'size',[3 3]});
-            validateattributes(S.distCoeffs1, {'numeric'}, {'vector', 'numel',12});
-            validateattributes(S.distCoeffs2, {'numeric'}, {'vector', 'numel',12});
+            validateattributes(S.distCoeffs1, {'numeric'}, {'vector', 'numel',14});
+            validateattributes(S.distCoeffs2, {'numeric'}, {'vector', 'numel',14});
             validateattributes(S.R, {'numeric'}, {'size',[3 3]});
             validateattributes(S.T, {'numeric'}, {'vector', 'numel',3});
             validateattributes(S.E, {'numeric'}, {'size',[3 3]});
