@@ -36,7 +36,27 @@ const ConstMap<string,int> CapProp = ConstMap<string,int>
     ("Exposure",      cv::CAP_PROP_EXPOSURE)
     ("ConvertRGB",    cv::CAP_PROP_CONVERT_RGB)
     //("WhiteBalance",  cv::CAP_PROP_WHITE_BALANCE)
-    ("Rectification", cv::CAP_PROP_RECTIFICATION);
+    ("Rectification", cv::CAP_PROP_RECTIFICATION)
+    //TODO: other undocumented properties
+    ("Monochrome",    cv::CAP_PROP_MONOCHROME)
+    ("Sharpness",     cv::CAP_PROP_SHARPNESS)
+    ("AutoExposure",  cv::CAP_PROP_AUTO_EXPOSURE)
+    ("Gamma",         cv::CAP_PROP_GAMMA)
+    ("Temperature",   cv::CAP_PROP_TEMPERATURE)
+    ("Trigger",       cv::CAP_PROP_TRIGGER)
+    ("TriggerDelay",  cv::CAP_PROP_TRIGGER_DELAY)
+    ("Zoom",          cv::CAP_PROP_ZOOM)
+    ("Focus",         cv::CAP_PROP_FOCUS)
+    ("GUID",          cv::CAP_PROP_GUID)
+    ("ISOSpeed",      cv::CAP_PROP_ISO_SPEED)
+    ("Backlight",     cv::CAP_PROP_BACKLIGHT)
+    ("Pan",           cv::CAP_PROP_PAN)
+    ("Tilt",          cv::CAP_PROP_TILT)
+    ("Roll",          cv::CAP_PROP_ROLL)
+    ("Iris",          cv::CAP_PROP_IRIS)
+    ("Settings",      cv::CAP_PROP_SETTINGS)
+    ("Buffersize",    cv::CAP_PROP_BUFFERSIZE)
+    ("Autofocus",     cv::CAP_PROP_AUTOFOCUS);
 
 /// Camera API map for option processing
 const ConstMap<string,int> CameraApiMap = ConstMap<string,int>
@@ -182,18 +202,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "get") {
         nargchk(nrhs==3 && nlhs<=1);
-        string prop(rhs[2].toString());
-        double value = obj->get(CapProp[prop]);
+        int prop = (rhs[2].isChar()) ?
+            CapProp[rhs[2].toString()] : rhs[2].toInt();
+        double value = obj->get(prop);
         plhs[0] = MxArray(value);
     }
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
-        string prop(rhs[2].toString());
+        int prop = (rhs[2].isChar()) ?
+            CapProp[rhs[2].toString()] : rhs[2].toInt();
         double value = rhs[3].toDouble();
-        bool success = obj->set(CapProp[prop], value);
+        bool success = obj->set(prop, value);
         if (!success)
             mexWarnMsgIdAndTxt("mexopencv:error",
-                "Error setting property %s", prop.c_str());
+                "Error setting property %d", prop);
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");

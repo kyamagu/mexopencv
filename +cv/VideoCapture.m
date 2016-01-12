@@ -4,9 +4,6 @@ classdef VideoCapture < handle
     % The class provides an API for capturing video from cameras or for
     % reading video files and image sequences.
     %
-    % When querying a property that is not supported by the backend used by
-    % the cv.VideoCapture class, value 0 is returned.
-    %
     % ## Example
     % Here is how the class can be used:
     %
@@ -289,6 +286,49 @@ classdef VideoCapture < handle
             % See also: cv.VideoCapture.read, cv.VideoCapture.grab
             %
             frame = VideoCapture_(this.id, 'retrieve', varargin{:});
+        end
+
+        function value = get(this, prop)
+            %GET  Returns the specified VideoCapture property
+            %
+            % ## Input
+            % * __prop__ Property identifier. It can be specified as a string
+            %       (one of the recognized properties), or directly as its
+            %       corresponding integer code.
+            %
+            % ## Output
+            % * __value__ Value of the property (as a `double`).
+            %
+            % When querying a property that is not supported by the backend
+            % used by the cv.VideoCapture class, value 0 is returned.
+            %
+            % ## Example
+            % All the following are equivalent:
+            %
+            %    b = cap.Brightness
+            %    b = cap.get('Brightness')
+            %    b = cap.get(10)  % enum value defined in OpenCV source code
+            %
+            % See also: cv.VideoCapture.set
+            %
+            value = VideoCapture_(this.id, 'get', prop);
+        end
+
+        function set(this, prop, value)
+            %SET  Sets a property in the VideoCapture
+            %
+            % ## Input
+            % * __prop__ Property identifier. It can be specified as a string
+            %       (one of the recognized properties), or directly as its
+            %       corresponding integer code.
+            % * __value__ Value of the property (as a `double`).
+            %
+            % On failure (unsupported property), the function issues a
+            % warning.
+            %
+            % See also: cv.VideoCapture.get
+            %
+            VideoCapture_(this.id, 'set', prop, value);
         end
     end
 
