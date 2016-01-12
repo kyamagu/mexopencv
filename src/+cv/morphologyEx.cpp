@@ -18,7 +18,8 @@ const ConstMap<string,int> MorphType = ConstMap<string,int>
     ("Close",    cv::MORPH_CLOSE)
     ("Gradient", cv::MORPH_GRADIENT)
     ("Tophat",   cv::MORPH_TOPHAT)
-    ("Blackhat", cv::MORPH_BLACKHAT);
+    ("Blackhat", cv::MORPH_BLACKHAT)
+    ("HitMiss",  cv::MORPH_HITMISS);
 }
 
 /**

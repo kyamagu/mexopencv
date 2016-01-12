@@ -19,9 +19,12 @@
 %             `dst = tophat(src,element) = src - open(src,element)`
 %       * __Blackhat__ "black hat"
 %             `dst = blackhat(src,element) = close(src,element) - src`
+%       * __HitMiss__ "hit and miss". Only supported for `uint8` 1-channel
+%             binary images. Tutorial can be found in this page
+%             http://opencv-code.com/tutorials/hit-or-miss-transform-in-opencv/
 %
 % ## Output
-% * __dst__ Destination image of the same size and type as `src`.
+% * __dst__ Destination image of the same size and type as source image.
 %
 % ## Options
 % * __Element__ Structuring element kernel. It can be created using
@@ -34,8 +37,8 @@
 % * __BorderValue__ Border value in case of a constant border. The default
 %       value has a special meaning. See cv.dilate and cv.erode for details.
 %
-% The function can perform advanced morphological transformations using an
-% erosion and dilation as basic operations.
+% The function cv.morphologyEx can perform advanced morphological
+% transformations using an erosion and dilation as basic operations.
 %
 % In case of multi-channel images, each channel is processed independently.
 %
