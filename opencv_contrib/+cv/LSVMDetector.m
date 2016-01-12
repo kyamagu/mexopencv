@@ -1,5 +1,5 @@
-classdef LSVMDetector < handle
-    %LSVMDETECTOR  Latent SVM detector
+classdef DPMDetector < handle
+    %DPMDETECTOR  Deformable Part-based Models (DPM) detector
     %
     % ## Discriminatively Trained Part Based Models for Object Detection
     %
@@ -40,7 +40,7 @@ classdef LSVMDetector < handle
     % The basic usage is the following:
     %
     %    img = imread(fullfile(mexopencv.root(),'test','cat.jpg'));
-    %    detector = cv.LSVMDetector(fullfile(mexopencv.root(),'test','cat.xml'));
+    %    detector = cv.DPMDetector(fullfile(mexopencv.root(),'test','cat.xml'));
     %    detections = detector.detect(img);
     %    for i=1:numel(detections)
     %        img = cv.rectangle(img, detections(i).rect, 'Color',[0 255 0]);
@@ -49,11 +49,14 @@ classdef LSVMDetector < handle
     %
     % The detector can also accept multiple models as cell array of strings:
     %
-    %    detector = cv.LSVMDetector({'cat.xml','car.xml'});
+    %    detector = cv.DPMDetector({'cat.xml','car.xml'});
     %
-    % The XML file must be a format compatible to OpenCV's Latent SVM
-    % detector, but you can convert models from the original implementation
-    % in [Felzenszwalb2010a] using cv.LSVMDetector.mat2xml method.
+    % The XML file must be a format compatible to OpenCV's DPM detector, but
+    % you can convert models from the original implementation in
+    % [Felzenszwalb2010a] using cv.DPMDetector.mat2opencvxml method.
+    %
+    % You can find examples of pre-trained models here:
+    % https://github.com/Itseez/opencv_extra/tree/3.1.0/testdata/cv/dpm/VOC2007_Cascade/
     %
     % ## References
     % [Felzenszwalb2010a]:
@@ -70,11 +73,8 @@ classdef LSVMDetector < handle
     % > 2010, pages 2241-2248.
     % > http://www.cs.berkeley.edu/~rbg/papers/Cascade-Object-Detection-with-Deformable-Part-Models--Felzenszwalb-Girshick-McAllester.pdf
     %
-    % See also: cv.LSVMDetector.LSVMDetector, cv.LSVMDetector.detect
+    % See also: cv.DPMDetector.DPMDetector, cv.DPMDetector.detect
     %
-
-    %TODO: The 'latentsvm' module has been replaced by 'dpm' module.
-    % https://github.com/Itseez/opencv_contrib/pull/286
 
     properties (SetAccess = private)
         % Object ID
@@ -82,11 +82,11 @@ classdef LSVMDetector < handle
     end
 
     methods
-        function this = LSVMDetector(filenames, varargin)
-            %LSVMDETECTOR  Load and create a new detector
+        function this = DPMDetector(filenames, varargin)
+            %DPMDETECTOR  Load and create a new detector
             %
-            %    detector = cv.LSVMDetector(filenames)
-            %    detector = cv.LSVMDetector(filenames, classnames)
+            %    detector = cv.DPMDetector(filenames)
+            %    detector = cv.DPMDetector(filenames, classnames)
             %
             % ## Input
             % * __filenames__ A set of filenames storing the trained detectors
@@ -99,10 +99,7 @@ classdef LSVMDetector < handle
             %        the name "cat".
             %
             % Load the trained models from given .xml files and return a new
-            % LSVMDetector detector.
-            %
-            % You can find examples of pretrained models here:
-            % https://github.com/Itseez/opencv_contrib/tree/3.0.0/modules/latentsvm/testdata/latentsvm/models_VOC2007_cascade/
+            % DPMDetector detector.
             %
             % `filenames` is a string or a cell array of strings specifying
             % the location of model files. Optionally the method takes class
@@ -110,18 +107,18 @@ classdef LSVMDetector < handle
             % filenames. By default, `classnames` are set to the name of the
             % file without xml extension.
             %
-            % See also: cv.LSVMDetector, cv.LSVMDetector.detect,
-            %  cv.LSVMDetector.mat2xml
+            % See also: cv.DPMDetector, cv.DPMDetector.detect,
+            %  cv.DPMDetector.mat2opencvxml
             %
-            this.id = LSVMDetector_(0, 'new', filenames, varargin{:});
+            this.id = DPMDetector_(0, 'new', filenames, varargin{:});
         end
 
         function delete(this)
             %DELETE Destructor
             %
-            % See also: cv.LSVMDetector
+            % See also: cv.DPMDetector
             %
-            LSVMDetector_(this.id, 'delete');
+            DPMDetector_(this.id, 'delete');
         end
 
         function status = isEmpty(this)
@@ -132,9 +129,9 @@ classdef LSVMDetector < handle
             % ## Output
             % * __status__ boolean
             %
-            % See also: cv.LSVMDetector.LSVMDetector
+            % See also: cv.DPMDetector.DPMDetector
             %
-            status = LSVMDetector_(this.id, 'isEmpty');
+            status = DPMDetector_(this.id, 'isEmpty');
         end
 
         function names = getClassNames(this)
@@ -148,9 +145,9 @@ classdef LSVMDetector < handle
             % Return the class (model) `names` that were passed in constructor
             % or extracted from models filenames in those methods.
             %
-            % See also: cv.LSVMDetector.getClassCount
+            % See also: cv.DPMDetector.getClassCount
             %
-            names = LSVMDetector_(this.id, 'getClassNames');
+            names = DPMDetector_(this.id, 'getClassNames');
         end
 
         function count = getClassCount(this)
@@ -161,20 +158,19 @@ classdef LSVMDetector < handle
             % ## Output
             % * __count__ a numeric value.
             %
-            % See also: cv.LSVMDetector.getClassNames
+            % See also: cv.DPMDetector.getClassNames
             %
-            count = LSVMDetector_(this.id, 'getClassCount');
+            count = DPMDetector_(this.id, 'getClassCount');
         end
 
-        function objects = detect(this, img, varargin)
+        function objects = detect(this, img)
             %DETECT  Detects objects
             %
             %    objects = detector.detect(img)
-            %    objects = detector.detect(img, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __img__ An image where objects are to be detected
-            %       (8-bit integer or 32-bit floating-point color image).
+            %       (8-bit integer or 64-bit floating-point color image).
             %
             % ## Output
             % * __objects__ The detections. A struct array of detected objects
@@ -183,42 +179,35 @@ classdef LSVMDetector < handle
             %       * __score__ score of the detection
             %       * __class__ name of the object class
             %
-            % ## Options
-            % * __OverlapThreshold__ Threshold for the non-maximum suppression
-            %     algorithm. default 0.5
-            %
             % Find rectangular regions in the given image that are likely to
             % contain objects of loaded classes (models) and corresponding
             % confidence levels.
             %
-            % See also: cv.LSVMDetector.LSVMDetector
+            % See also: cv.DPMDetector.DPMDetector
             %
-            objects = LSVMDetector_(this.id, 'detect', img, varargin{:});
+            objects = DPMDetector_(this.id, 'detect', img);
         end
     end
 
-    %TODO: The version of mat2xml below is outdated and generates old-format
-    % XML files. For the new version, see:
-    % https://github.com/Itseez/opencv_extra/pull/257
-    % and the new mat2opencvxml.m function in 'dpm' module
-
     methods (Static)
-        function mat2xml(matpath, xmlpath)
-            %MAT2XML  Convert MAT model files to XML
+        function mat2opencvxml(matpath, xmlpath)
+            %MAT2OPENCVXML  Convert DPM 2007 model (MAT) to cascade model (XML)
             %
-            %    cv.LSVMDetector.mat2xml(matpath, xmlpath)
+            %    cv.DPMDetector.mat2opencvxml(matpath, xmlpath)
             %
             % ## Input
-            % * __matpath__ input filename, path to the model mat file.
-            % * __xmlpath__ output filename, path to the model xml file.
+            % * __matpath__ input MAT filename, path to the DPM VOC 2007
+            %       model.
+            % * __xmlpath__ output XML filename, path to the OpenCV file
+            %       storage model.
             %
             % The method converts [Felzenszwalb2010] model files to xml
             % format specified by OpenCV's implementation. The usage is the
             % following:
             %
-            %    matpath = 'VOC2009/cat_final.mat';
+            %    matpath = 'VOC2007/cat_final.mat';
             %    xmlpath = 'cat.xml';
-            %    cv.LSVMDetector.mat2xml(matpath, xmlpath);
+            %    cv.DPMDetector.mat2opencvxml(matpath, xmlpath);
             %
             % Check the latest models in:
             %
@@ -226,112 +215,266 @@ classdef LSVMDetector < handle
             % * http://www.cs.berkeley.edu/~rbg/latent/index.html
             % * https://github.com/rbgirshick/voc-dpm
             %
-            % This `mat2xml` utility is taken from:
-            % https://github.com/Itseez/opencv_extra/blob/3.0.0/testdata/cv/latentsvmdetector/mat2xml.m
+            % This `mat2opencvxml` utility is taken from:
+            % https://github.com/Itseez/opencv_extra/blob/3.1.0/testdata/cv/dpm/mat2opencvxml.m
             %
-            % See also: cv.LSVMDetector
+            % See also: cv.DPMDetector
             %
+
+            % load VOC2007 DPM model
             load(matpath);
-            num_feat = 31;
-            rootfilters = cell(1,length(model.rootfilters));
-            for i = 1:length(model.rootfilters)
-              rootfilters{i} = model.rootfilters{i}.w;
+            thresh = -0.5;
+            pca = 5;
+            csc_model = cascade_model(model, '2007', pca, thresh);
+
+            num_feat = 32;
+            rootfilters = cell(1,length(csc_model.rootfilters));
+            for i = 1:length(csc_model.rootfilters)
+                rootfilters{i} = csc_model.rootfilters{i}.w;
             end
-            partfilters = cell(1,length(model.partfilters));
-            for i = 1:length(model.partfilters)
-              partfilters{i} = model.partfilters{i}.w;
+            partfilters = cell(1,length(csc_model.partfilters));
+            for i = 1:length(csc_model.partfilters)
+                partfilters{i} = csc_model.partfilters{i}.w;
             end
-            [ridx,oidx,root,rsize,numparts] = deal(cell(...
-                1,model.numcomponents));
-            [pidx,didx,part,psize] = deal(cell(...
-                model.numcomponents,length(model.components{1}.parts)));
-            for c = 1:model.numcomponents
-              ridx{c} = model.components{c}.rootindex;
-              oidx{c} = model.components{c}.offsetindex;
-              root{c} = model.rootfilters{ridx{c}}.w;
-              rsize{c} = [size(root{c},1) size(root{c},2)];
-              numparts{c} = length(model.components{c}.parts);
-              for j = 1:numparts{c}
-                pidx{c,j} = model.components{c}.parts{j}.partindex;
-                didx{c,j} = model.components{c}.parts{j}.defindex;
-                part{c,j} = model.partfilters{pidx{c,j}}.w;
-                psize{c,j} = [size(part{c,j},1) size(part{c,j},2)];
-                % reverse map from partfilter index to (component, part#)
-                % rpidx{pidx{c,j}} = [c j];
-              end
+            [ridx, oidx, root, root_pca, offset, loc, rsize, numparts] = ...
+                deal(cell(1,csc_model.numcomponents));
+            [pidx, didx, part, part_pca, psize] = ...
+                deal(cell(csc_model.numcomponents,length(csc_model.components{1}.parts)));
+            for c = 1:csc_model.numcomponents
+                ridx{c} = csc_model.components{c}.rootindex;
+                oidx{c} = csc_model.components{c}.offsetindex;
+                root{c} = csc_model.rootfilters{ridx{c}}.w;
+                root_pca{c} = csc_model.rootfilters{ridx{c}}.wpca;
+                offset{c} = csc_model.offsets{oidx{c}}.w;
+                loc{c} = csc_model.loc{c}.w;
+                rsize{c} = [size(root{c},1) size(root{c},2)];
+                numparts{c} = length(csc_model.components{c}.parts);
+                for j = 1:numparts{c}
+                    pidx{c,j} = csc_model.components{c}.parts{j}.partindex;
+                    didx{c,j} = csc_model.components{c}.parts{j}.defindex;
+                    part{c,j} = csc_model.partfilters{pidx{c,j}}.w;
+                    part_pca{c,j} = csc_model.partfilters{pidx{c,j}}.wpca;
+                    psize{c,j} = [size(part{c,j},1) size(part{c,j},2)];
+                    % reverse map from partfilter index to (component, part#)
+                    %rpidx{pidx{c,j}} = [c j];
+                end
             end
+
+            maxsizex = ceil(csc_model.maxsize(2));
+            maxsizey = ceil(csc_model.maxsize(1));
+
+            pca_rows = size(csc_model.pca_coeff, 1);
+            pca_cols = size(csc_model.pca_coeff, 2);
 
             f = fopen(xmlpath, 'wb');
-            fprintf(f, '<Model>\n');
-            fprintf(f, '\t<!-- Number of components -->\n');
-            fprintf(f, '\t<NumComponents>%d</NumComponents>\n', model.numcomponents);
-            fprintf(f, '\t<!-- Number of features -->\n');
-            fprintf(f, '\t<P>%d</P>\n', num_feat);
-            fprintf(f, '\t<!-- Score threshold -->\n');
-            fprintf(f, '\t<ScoreThreshold>%.16f</ScoreThreshold>\n', model.thresh);
-            for c = 1:model.numcomponents
-                fprintf(f, '\t<Component>\n');
-                fprintf(f, '\t\t<!-- Root filter description -->\n');
-                fprintf(f, '\t\t<RootFilter>\n');
-                fprintf(f, '\t\t\t<!-- Dimensions -->\n');
+            fprintf(f, '<?xml version="1.0"?>\n');
+            fprintf(f, '<opencv_storage>\n');
+            fprintf(f, '<SBin>%d</SBin>\n', csc_model.sbin);
+            fprintf(f, '<NumComponents>%d</NumComponents>\n', csc_model.numcomponents);
+            fprintf(f, '<NumFeatures>%d</NumFeatures>\n', num_feat);
+            fprintf(f, '<Interval>%d</Interval>\n', csc_model.interval);
+            fprintf(f, '<MaxSizeX>%d</MaxSizeX>\n', maxsizex);
+            fprintf(f, '<MaxSizeY>%d</MaxSizeY>\n', maxsizey);
+
+            % the pca coeff
+            fprintf(f, '<PCAcoeff type_id="opencv-matrix">\n');
+            fprintf(f,  '\t<rows>%d</rows>\n', pca_rows);
+            fprintf(f,  '\t<cols>%d</cols>\n', pca_cols);
+            fprintf(f,  '\t<dt>d</dt>\n');
+            fprintf(f,  '\t<data>\n');
+            for i=1:pca_rows
+                fprintf(f,  '\t');
+                for j=1:pca_cols
+                    fprintf(f,  '%f ', csc_model.pca_coeff(i, j));
+                end
+                fprintf(f,  '\n');
+            end
+            fprintf(f,  '\t</data>\n');
+            fprintf(f, '</PCAcoeff>\n');
+            fprintf(f, '<PCADim>%d</PCADim>\n', pca_cols);
+            fprintf(f, '<ScoreThreshold>%.16f</ScoreThreshold>\n', csc_model.thresh);
+
+            fprintf(f, '<Bias>\n');
+            for c = 1:csc_model.numcomponents
+                fprintf(f,  '%f ', offset{c});
+            end
+            fprintf(f, '\n</Bias>\n');
+
+            fprintf(f, '<RootFilters>\n');
+            for c = 1:csc_model.numcomponents
                 rootfilter = root{c};
-                fprintf(f, '\t\t\t<sizeX>%d</sizeX>\n', rsize{c}(2));
-                fprintf(f, '\t\t\t<sizeY>%d</sizeY>\n', rsize{c}(1));
-                fprintf(f, '\t\t\t<!-- Weights (binary representation) -->\n');
-                fprintf(f, '\t\t\t<Weights>');
-                for jj = 1:rsize{c}(1)
-                    for ii = 1:rsize{c}(2)
-                        for kk = 1:num_feat
-                            fwrite(f, rootfilter(jj, ii, kk), 'double');
+                rows = size(rootfilter,1);
+                cols = size(rootfilter,2);
+                depth = size(rootfilter,3);
+                fprintf(f, '\t<_ type_id="opencv-matrix">\n');
+                fprintf(f,  '\t<rows>%d</rows>\n', rows);
+                fprintf(f,  '\t<cols>%d</cols>\n', cols*depth);
+                fprintf(f,  '\t<dt>d</dt>\n');
+                fprintf(f,  '\t<data>\n');
+                for i=1:rows
+                    fprintf(f,  '\t');
+                    for j=1:cols
+                        for k=1:depth
+                            fprintf(f,  '%f ', rootfilter(i, j, k));
                         end
                     end
+                    fprintf(f,  '\n');
                 end
-                fprintf(f, '\t\t\t</Weights>\n');
-                fprintf(f, '\t\t\t<!-- Linear term in score function -->\n');
-                fprintf(f, '\t\t\t<LinearTerm>%.16f</LinearTerm>\n', model.offsets{1,c}.w);
-                fprintf(f, '\t\t</RootFilter>\n\n');
-                fprintf(f, '\t\t<!-- Part filters description -->\n');
-                fprintf(f, '\t\t<PartFilters>\n');
-                fprintf(f, '\t\t\t<NumPartFilters>%d</NumPartFilters>\n', numparts{c});
+                fprintf(f,  '\t</data>\n');
+                fprintf(f, '\t</_>\n');
+            end
+            fprintf(f, '</RootFilters>\n');
 
-                for j=1:numparts{c}
-                    fprintf(f, '\t\t\t<!-- Part filter %d description -->\n', j);
-                    fprintf(f, '\t\t\t<PartFilter>\n');
-                    partfilter = part{c,j};
-                    anchor = model.defs{didx{c,j}}.anchor;
-                    def = model.defs{didx{c,j}}.w;
+            fprintf(f, '<RootPCAFilters>\n');
+            for c = 1:csc_model.numcomponents
+                rootfilter_pca = root_pca{c};
+                rows = size(rootfilter_pca,1);
+                cols = size(rootfilter_pca,2);
+                depth = size(rootfilter_pca,3);
+                fprintf(f, '\t<_ type_id="opencv-matrix">\n');
+                fprintf(f,  '\t<rows>%d</rows>\n', rows);
+                fprintf(f,  '\t<cols>%d</cols>\n', cols*depth);
+                fprintf(f,  '\t<dt>d</dt>\n');
+                fprintf(f,  '\t<data>\n');
+                for i=1:rows
+                    fprintf(f,  '\t');
+                    for j=1:cols
+                        for k=1:depth
+                            fprintf(f,  '%f ', rootfilter_pca(i, j, k));
+                        end
+                    end
+                    fprintf(f,  '\n');
+                end
+                fprintf(f,  '\t</data>\n');
+                fprintf(f, '\t</_>\n');
+            end
+            fprintf(f, '</RootPCAFilters>\n');
 
-                    fprintf(f, '\t\t\t\t<!-- Dimensions -->\n');
-                    fprintf(f, '\t\t\t\t<sizeX>%d</sizeX>\n', psize{c,j}(2));
-                    fprintf(f, '\t\t\t\t<sizeY>%d</sizeY>\n', psize{c,j}(1));
-                    fprintf(f, '\t\t\t\t<!-- Weights (binary representation) -->\n');
-                    fprintf(f, '\t\t\t\t<Weights>');
-                    for jj = 1:psize{c,j}(1)
-                        for ii = 1:psize{c,j}(2)
-                            for kk = 1:num_feat
-                                fwrite(f, partfilter(jj, ii, kk), 'double');
+            fprintf(f, '<PartFilters>\n');
+            for c = 1:csc_model.numcomponents
+                for p=1:numparts{c}
+                    partfilter = part{c,p};
+                    rows = size(partfilter,1);
+                    cols = size(partfilter,2);
+                    depth = size(partfilter,3);
+                    fprintf(f, '\t<_ type_id="opencv-matrix">\n');
+                    fprintf(f,  '\t<rows>%d</rows>\n', rows);
+                    fprintf(f,  '\t<cols>%d</cols>\n', cols*depth);
+                    fprintf(f,  '\t<dt>d</dt>\n');
+                    fprintf(f,  '\t<data>\n');
+                    for i=1:rows
+                        fprintf(f,  '\t');
+                        for j=1:cols
+                            for k=1:depth
+                                fprintf(f,  '%f ', partfilter(i, j, k));
                             end
                         end
+                        fprintf(f,  '\n');
                     end
-                    fprintf(f, '\t\t\t\t</Weights>\n');
-                    fprintf(f, '\t\t\t\t<!-- Part filter offset -->\n');
-                    fprintf(f, '\t\t\t\t<V>\n');
-                    fprintf(f, '\t\t\t\t\t<Vx>%d</Vx>\n', anchor(1));
-                    fprintf(f, '\t\t\t\t\t<Vy>%d</Vy>\n', anchor(2));
-                    fprintf(f, '\t\t\t\t</V>\n');
-                    fprintf(f, '\t\t\t\t<!-- Quadratic penalty function coefficients -->\n');
-                    fprintf(f, '\t\t\t\t<Penalty>\n');
-                    fprintf(f, '\t\t\t\t\t<dx>%.16f</dx>\n', def(2));
-                    fprintf(f, '\t\t\t\t\t<dy>%.16f</dy>\n', def(4));
-                    fprintf(f, '\t\t\t\t\t<dxx>%.16f</dxx>\n', def(1));
-                    fprintf(f, '\t\t\t\t\t<dyy>%.16f</dyy>\n', def(3));
-                    fprintf(f, '\t\t\t\t</Penalty>\n');
-                     fprintf(f, '\t\t\t</PartFilter>\n');
+                    fprintf(f,  '\t</data>\n');
+                    fprintf(f, '\t</_>\n');
                 end
-                fprintf(f, '\t\t</PartFilters>\n');
-                fprintf(f, '\t</Component>\n');
             end
-            fprintf(f, '</Model>');
+            fprintf(f, '</PartFilters>\n');
+
+            fprintf(f, '<PartPCAFilters>\n');
+            for c = 1:csc_model.numcomponents
+                for p=1:numparts{c}
+                    partfilter = part_pca{c,p};
+                    rows = size(partfilter,1);
+                    cols = size(partfilter,2);
+                    depth = size(partfilter,3);
+                    fprintf(f, '\t<_ type_id="opencv-matrix">\n');
+                    fprintf(f,  '\t<rows>%d</rows>\n', rows);
+                    fprintf(f,  '\t<cols>%d</cols>\n', cols*depth);
+                    fprintf(f,  '\t<dt>d</dt>\n');
+                    fprintf(f,  '\t<data>\n');
+                    for i=1:rows
+                        fprintf(f,  '\t');
+                        for j=1:cols
+                            for k=1:depth
+                                fprintf(f,  '%f ', partfilter(i, j, k));
+                            end
+                        end
+                        fprintf(f,  '\n');
+                    end
+                    fprintf(f,  '\t</data>\n');
+                    fprintf(f, '\t</_>\n');
+                end
+            end
+            fprintf(f, '</PartPCAFilters>\n');
+
+            fprintf(f, '<PrunThreshold>\n');
+            for c = 1:csc_model.numcomponents
+                fprintf(f, '\t<_>\n');
+                fprintf(f,  '\t');
+                t = csc_model.cascade.t{ridx{c}};
+                for j=1:length(t)
+                    fprintf(f,  '%f ', t(j));
+                end
+                fprintf(f, '\n\t</_>\n');
+            end
+            fprintf(f, '</PrunThreshold>\n');
+
+            fprintf(f, '<Anchor>\n');
+            for c = 1:csc_model.numcomponents
+                for p=1:numparts{c}
+                    fprintf(f, '\t<_>\n');
+                    fprintf(f,  '\t');
+                    anchor = csc_model.defs{didx{c,p}}.anchor;
+                    for j=1:length(anchor)
+                        fprintf(f,  '%f ', anchor(j));
+                    end
+                    fprintf(f, '\n\t</_>\n');
+                end
+            end
+            fprintf(f, '</Anchor>\n');
+
+            fprintf(f, '<Deformation>\n');
+            for c = 1:csc_model.numcomponents
+                for p=1:numparts{c}
+                    fprintf(f, '\t<_>\n');
+                    fprintf(f,  '\t');
+                    def = csc_model.defs{didx{c,p}}.w;
+                    for j=1:length(def)
+                        fprintf(f,  '%f ', def(j));
+                    end
+                    fprintf(f, '\n\t</_>\n');
+                end
+            end
+            fprintf(f, '</Deformation>\n');
+
+            fprintf(f, '<NumParts>\n');
+            for c = 1:csc_model.numcomponents
+                fprintf(f,  '%f ', numparts{c});
+            end
+            fprintf(f, '</NumParts>\n');
+
+            fprintf(f, '<PartOrder>\n');
+            for c = 1:csc_model.numcomponents
+                fprintf(f, '\t<_>\n');
+                fprintf(f,  '\t');
+                order = csc_model.cascade.order{c};
+                for i=1:length(order)
+                    fprintf(f,  '%f ', order(i));
+                end
+                fprintf(f, '\n\t</_>\n');
+            end
+            fprintf(f, '</PartOrder>\n');
+
+            fprintf(f, '<LocationWeight>\n');
+            for c = 1:csc_model.numcomponents
+                fprintf(f, '\t<_>\n');
+                fprintf(f,  '\t');
+                loc_w = loc{c};
+                for i=1:length(loc_w)
+                    fprintf(f,  '%f ', loc_w(i));
+                end
+                fprintf(f, '\n\t</_>\n');
+            end
+            fprintf(f, '</LocationWeight>\n');
+
+            fprintf(f, '</opencv_storage>');
             fclose(f);
         end
     end

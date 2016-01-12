@@ -1,5 +1,5 @@
-classdef TestLSVMDetector
-    %TestLSVMDetector
+classdef TestDPMDetector
+    %TestDPMDetector
     properties (Constant)
         xmlfile = fullfile(mexopencv.root(),'test','cat.xml');
         im = fullfile(mexopencv.root(),'test','cat.jpg');
@@ -7,12 +7,12 @@ classdef TestLSVMDetector
 
     methods (Static)
         function test_1
-            detector = cv.LSVMDetector(TestLSVMDetector.xmlfile);
+            detector = cv.DPMDetector(TestDPMDetector.xmlfile);
             assert(~detector.isEmpty());
             assert(detector.getClassCount() == 1);
             assert(iscellstr(detector.getClassNames()));
 
-            img = imread(TestLSVMDetector.im);
+            img = imread(TestDPMDetector.im);
             objects = detector.detect(img);
             if ~isempty(objects)
                 validateattributes(objects, {'struct'}, {'vector'});
@@ -26,14 +26,14 @@ classdef TestLSVMDetector
         end
 
         function test_2
-            detector = cv.LSVMDetector(...
-                {TestLSVMDetector.xmlfile, TestLSVMDetector.xmlfile}, ...
+            detector = cv.DPMDetector(...
+                {TestDPMDetector.xmlfile, TestDPMDetector.xmlfile}, ...
                 {'cat1', 'cat2'});
             assert(~detector.isEmpty());
             assert(detector.getClassCount() == 2);
             assert(iscellstr(detector.getClassNames()));
 
-            img = imread(TestLSVMDetector.im);
+            img = imread(TestDPMDetector.im);
             objects = detector.detect(img);
             if ~isempty(objects)
                 validateattributes(objects, {'struct'}, {'vector'});
