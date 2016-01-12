@@ -108,8 +108,7 @@ classdef TestSVM
             Yhat = model.predict(TestSVM.X);
             validateattributes(Yhat, {'numeric'}, ...
                 {'vector', 'integer' 'numel',numel(TestSVM.Y)});
-            %TODO: https://github.com/Itseez/opencv/pull/4174
-            %assert(all(ismember(unique(Yhat), [1;-1])));  %TODO: [0;1] not [-1;1]?
+            assert(all(ismember(unique(Yhat), [1;-1])));
         end
 
         function test_data_options1
