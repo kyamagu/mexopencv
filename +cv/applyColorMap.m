@@ -5,19 +5,19 @@
 % ## Input
 % * __src__ The source image, grayscale or colored does not matter.
 % * __colormap__ The colormap to apply. A string, one of:
-%       * __Autumn__
-%       * __Bone__
-%       * __Jet__
-%       * __Winter__
-%       * __Rainbow__
-%       * __Ocean__
-%       * __Summer__
-%       * __Spring__
-%       * __Cool__
-%       * __Hsv__
-%       * __Pink__
-%       * __Hot__
-%       * __Parula__
+%       * __Autumn__ Shades of red and yellow color map.
+%       * __Bone__ Gray-scale with a tinge of blue color map.
+%       * __Jet__ Variant of HSV.
+%       * __Winter__ Shades of blue and green color map.
+%       * __Rainbow__ Red-orange-yellow-green-blue-violet color map.
+%       * __Ocean__ Black to white with shades of blue color map.
+%       * __Summer__ Shades of green and yellow colormap.
+%       * __Spring__ Shades of magenta and yellow color map.
+%       * __Cool__ Shades of cyan and magenta color map.
+%       * __Hsv__ Hue-saturation-value color map.
+%       * __Pink__ Pastel shades of pink color map.
+%       * __Hot__ Black-red-yellow-white color map.
+%       * __Parula__ Blue-green-orange-yellow color map.
 %
 % ## Output
 % * __dst__ The result is the colormapped source image. Same row/column size
@@ -44,6 +44,17 @@
 %
 %    % Show the result
 %    imshow(img_color)
+%
+% ## Example
+%
+%    cmaps = {'Autumn', 'Bone', 'Jet', 'Winter', 'Rainbow', 'Ocean', ...
+%        'Summer', 'Spring', 'Cool', 'Hsv', 'Pink', 'Hot', 'Parula'};
+%    img = cell2mat(cellfun(@(cmap) ...
+%        cv.applyColorMap(repmat(uint8(0:255), 20, 1), cmap), cmaps(:), ...
+%        'UniformOutput',false));
+%    image(img)
+%    set(gca, 'YTick', 10:20:20*numel(cmaps), 'YTickLabel',cmaps)
+%    title('Colormaps')
 %
 % See also: cv.LUT, ind2rgb, colormap, autumn, bone, jet, winter, summer,
 %  spring, cool, hsv, pink, hot, parula

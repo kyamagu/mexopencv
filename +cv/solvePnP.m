@@ -35,39 +35,48 @@
 % * __Method__ Method for solving the PnP problem. One of the following:
 %       * __Iterative__ Iterative method is based on Levenberg-Marquardt
 %             optimization. In this case the function finds such a pose that
-%             minimizes reprojection error, that is the sum of squared distances
-%             between the observed projections `imagePoints` and the projected
-%             (using cv.projectPoints) `objectPoints`. This is the default.
-%       * __P3P__ Method is based on the paper [1]. In this case the
-%             function requires exactly four object and image points.
-%       * __EPnP__ Method has been introduced in the paper [2].
-%       * __DLS__ Method is based on the paper of [3].
-%       * __UPnP__ Method is based on the paper of [4]. In this case the
-%             function also estimates the parameters `fx` and `fy` assuming
-%             that both have the same value. Then the `cameraMatrix` is
-%             updated with the estimated focal length.
+%             minimizes reprojection error, that is the sum of squared
+%             distances between the observed projections `imagePoints` and the
+%             projected (using cv.projectPoints) `objectPoints`. This is the
+%             default.
+%       * __P3P__ Method is based on the paper [gao2003complete]. In this case
+%             the function requires exactly four object and image points.
+%       * __EPnP__ Method has been introduced in the paper [morenoepnp] and
+%             [lepetit2009epnp].
+%       * __DLS__ Method is based on the paper of [hesch2011direct].
+%       * __UPnP__ Method is based on the paper of [penate2013exhaustive]. In
+%             this case the function also estimates the parameters `fx` and
+%             `fy` assuming that both have the same value. Then the
+%             `cameraMatrix` is updated with the estimated focal length.
 %
 % The function estimates the object pose given a set of object points,
 % their corresponding image projections, as well as the camera matrix and
 % the distortion coefficients.
 %
 % ## References
-% [1]:
-% > X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang; "Complete Solution
+% [gao2003complete]:
+% > X.S. Gao, X.R. Hou, J. Tang, H.F. Chang; "Complete Solution
 % > Classification for the Perspective-Three-Point Problem",
-% > IEEE Trans. on PAMI, vol. 25, No. 8, August 2003.
+% > IEEE Trans. on PAMI, vol. 25, No. 8, p. 930-943, August 2003.
 %
-% [2]:
-% > F.Moreno-Noguer, V.Lepetit and P.Fua;
+% [morenoepnp]:
+% > F. Moreno-Noguer, V. Lepetit and P. Fua;
 % > "EPnP: Efficient Perspective-n-Point Camera Pose Estimation".
 %
-% [3]:
+% [lepetit2009epnp]:
+% > V. Lepetit, F. Moreno-Noguer, P. Fua;
+% > "EPnP: An accurate O(n) solution to the PnP problem".
+% > IJCV, vol. 81, No. 2, p. 155-166, 2009
+%
+% [hesch2011direct]:
 % > Joel A. Hesch and Stergios I. Roumeliotis.
 % > "A Direct Least-Squares (DLS) Method for PnP".
+% > IEEE International Conference on Computer Vision, p. 383-390, 2011.
 %
-% [4]:
-% > A.Penate-Sanchez, J.Andrade-Cetto, F.Moreno-Noguer.
-% > "Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation".
+% [penate2013exhaustive]:
+% > A. Penate-Sanchez, J. Andrade-Cetto, F. Moreno-Noguer; "Exhaustive
+% > Linearization for Robust Camera Pose and Focal Length Estimation".
+% > IEEE Trans. on PAMI, vol. 35, No. 10, p. 2387-2400, 2013.
 %
 % See also: cv.solvePnPRansac
 %

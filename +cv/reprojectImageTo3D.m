@@ -5,7 +5,8 @@
 %
 % ## Input
 % * __disparity__ Input single-channel 8-bit unsigned, 16-bit signed, 32-bit
-%       signed or 32-bit floating-point disparity image.
+%       signed or 32-bit floating-point disparity image. If 16-bit signed
+%       format is used, the values are assumed to have no fractional bits.
 % * __Q__ 4x4 perspective transformation matrix that can be obtained with
 %       cv.stereoRectify.
 %
