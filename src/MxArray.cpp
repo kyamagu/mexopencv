@@ -618,7 +618,7 @@ cv::SparseMat MxArray::toSparseMat() const
         mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not real double sparse");
     // Create cv::SparseMat.
     const mwSize m = mxGetM(p_), n = mxGetN(p_);
-    const int dims[] = {m, n};
+    const int dims[] = {static_cast<int>(m), static_cast<int>(n)};
     cv::SparseMat mat(2, dims, CV_32F);
     // Copy data by converting from CSC format to (row,col,val) triplets
     const mwIndex *ir = mxGetIr(p_);  // array of length nzmax
