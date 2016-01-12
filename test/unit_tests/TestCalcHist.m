@@ -86,11 +86,8 @@ classdef TestCalcHist
             edges = {[0 1], [0 1], [0 1], [0 1]};
             histSize = [7 8 9 10];
             H = cv.calcHist(X, edges, 'HistSize',histSize, 'Uniform',true);
-            %---
-            %TODO: there's a bug in MxArray::MxArray(Mat) when mat.dims>2
-            %validateattributes(H, {'single'}, {'ndims',4, 'size',histSize});
-            %assert(isequal(sum(H(:)), h*w));
-            %---
+            validateattributes(H, {'single'}, {'ndims',4, 'size',histSize});
+            assert(isequal(sum(H(:)), h*w));
         end
 
         function test_error_1
