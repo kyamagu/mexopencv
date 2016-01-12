@@ -252,7 +252,7 @@ classdef AKAZE < handle
             %    [...] = obj.detect(..., 'OptionName',optionValue, ...)
             %
             % ## Input
-            % * __img__ Image (first variant), 8-bit grayscale image.
+            % * __img__ Image (first variant), grayscale image.
             % * __imgs__ Image set (second variant), cell array of images.
             %
             % ## Output
@@ -281,7 +281,7 @@ classdef AKAZE < handle
             %    [descriptors, keypoints] = obj.compute(imgs, keypoints)
             %
             % ## Input
-            % * __img__ Image (first variant), 8-bit grayscale image.
+            % * __img__ Image (first variant), grayscale image.
             % * __imgs__ Image set (second variant), cell array of images.
             % * __keypoints__ Input collection of keypoints. Keypoints for
             %       which a descriptor cannot be computed are removed.
@@ -311,8 +311,9 @@ classdef AKAZE < handle
             %    [...] = obj.detectAndCompute(..., 'OptionName',optionValue, ...)
             %
             % ## Input
-            % * __img__ Image, input 8-bit grayscale image. Internally image
-            %       is converted to 32-bit floating-point in the [0,1] range.
+            % * __img__ Input `uint8`/`uint16`/`single` grayscale image.
+            %       Internally image is converted to 32-bit floating-point in
+            %       the [0,1] range.
             %
             % ## Output
             % * __keypoints__ The detected keypoints. A 1-by-N structure array
