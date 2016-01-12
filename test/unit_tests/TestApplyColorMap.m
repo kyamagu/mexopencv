@@ -24,6 +24,7 @@ classdef TestApplyColorMap
                 'Summer', 'Spring', 'Cool', 'Hsv', 'Pink', 'Hot', 'Parula'};
             for i=1:numel(cmaps)
                 dst = cv.applyColorMap(src, cmaps{i});
+                validateattributes(dst, {'uint8'}, {'ndims',3, 'size',[size(src) 3]});
             end
         end
 

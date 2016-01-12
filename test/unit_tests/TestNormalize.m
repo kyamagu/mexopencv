@@ -1,4 +1,5 @@
 classdef TestNormalize
+    %TestNormalize
 
     methods (Static)
         function test_minmax_gray
@@ -77,7 +78,6 @@ function Y = my_normalize_minmax(X, alpha, beta, klass)
     mn = double(min(X(:)));
     mx = double(max(X(:)));
     Y = (double(X) - mn)./(mx - mn) .* (b - a) + a;
-    % cv::saturate_cast<>
     Y = my_saturate_cast(Y, klass);
 end
 
@@ -95,10 +95,10 @@ function Y = my_normalize_Lp(X, Lp, alpha, klass)
     % scale
     Y = double(X);
     Y = Y ./ norm(Y(:),p) .* alpha;
-    % cv::saturate_cast<>
     Y = my_saturate_cast(Y, klass);
 end
 
+% cv::saturate_cast<klass>(double)
 function X = my_saturate_cast(X, klass)
     if isinteger(cast(0,klass))
         X = round(X);

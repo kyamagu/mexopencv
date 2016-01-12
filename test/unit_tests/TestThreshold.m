@@ -14,6 +14,7 @@ classdef TestThreshold
             for i=1:numel(types)
                 result = cv.threshold(img, 127, ...
                     'MaxValue',255, 'Method',types{i});
+                validateattributes(result, {class(img)}, {'size',size(img)});
             end
         end
 
@@ -21,8 +22,11 @@ classdef TestThreshold
             img = cv.imread(fullfile(mexopencv.root(),'test','fruits.jpg'), 'Grayscale',true);
             [result,t] = cv.threshold(img, 'Otsu', ...
                 'Method','Binary', 'MaxValue',255);
+            validateattributes(result, {class(img)}, {'size',size(img)});
+            validateattributes(t, {'numeric'}, {'scalar'});
             [result,t] = cv.threshold(img, 'Triangle', ...
                 'Method','Binary', 'MaxValue',255);
+            validateattributes(result, {class(img)}, {'size',size(img)});
             validateattributes(t, {'numeric'}, {'scalar'});
         end
 

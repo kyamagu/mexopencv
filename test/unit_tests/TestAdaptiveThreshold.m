@@ -14,21 +14,25 @@ classdef TestAdaptiveThreshold
         function test_2
             img = cv.imread(TestAdaptiveThreshold.im, 'Grayscale',true);
             out = cv.adaptiveThreshold(img, 255, 'AdaptiveMethod','Gaussian');
+            validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
         function test_3
             img = cv.imread(TestAdaptiveThreshold.im, 'Grayscale',true);
             out = cv.adaptiveThreshold(img, 255, 'ThresholdType','BinaryInv');
+            validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
         function test_4
             img = cv.imread(TestAdaptiveThreshold.im, 'Grayscale',true);
             out = cv.adaptiveThreshold(img, 255, 'BlockSize',7);
+            validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
         function test_5
             img = cv.imread(TestAdaptiveThreshold.im, 'Grayscale',true);
             out = cv.adaptiveThreshold(img, 255, 'C',1);
+            validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
         function test_error_1
