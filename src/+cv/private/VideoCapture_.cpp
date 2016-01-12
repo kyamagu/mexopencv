@@ -37,6 +37,37 @@ const ConstMap<string,int> CapProp = ConstMap<string,int>
     ("ConvertRGB",    cv::CAP_PROP_CONVERT_RGB)
     //("WhiteBalance",  cv::CAP_PROP_WHITE_BALANCE)
     ("Rectification", cv::CAP_PROP_RECTIFICATION);
+
+/// Camera API map for option processing
+const ConstMap<string,int> CameraApiMap = ConstMap<string,int>
+    ("Any",             cv::CAP_ANY)
+    ("VfW",             cv::CAP_VFW)
+    ("V4L",             cv::CAP_V4L)
+    ("V4L2",            cv::CAP_V4L2)
+    ("FireWare",        cv::CAP_FIREWARE)
+    ("FireWire",        cv::CAP_FIREWIRE)
+    ("IEEE1394",        cv::CAP_IEEE1394)
+    ("DC1394",          cv::CAP_DC1394)
+    ("CMU1394",         cv::CAP_CMU1394)
+    ("QuickTime",       cv::CAP_QT)
+    ("Unicap",          cv::CAP_UNICAP)
+    ("DirectShow",      cv::CAP_DSHOW)
+    ("PvAPI",           cv::CAP_PVAPI)
+    ("OpenNI",          cv::CAP_OPENNI)
+    ("OpenNIAsus",      cv::CAP_OPENNI_ASUS)
+    ("Android",         cv::CAP_ANDROID)
+    ("XIMEA",           cv::CAP_XIAPI)
+    ("AVFoundation",    cv::CAP_AVFOUNDATION)
+    ("Giganetix",       cv::CAP_GIGANETIX)
+    ("MediaFoundation", cv::CAP_MSMF)
+    ("WinRT",           cv::CAP_WINRT)
+    ("IntelPerC",       cv::CAP_INTELPERC)
+    ("OpenNI2",         cv::CAP_OPENNI2)
+    ("OpenNI2Asus",     cv::CAP_OPENNI2_ASUS)
+    ("gPhoto2",         cv::CAP_GPHOTO2)
+    ("GStreamer",       cv::CAP_GSTREAMER)
+    ("FFMPEG",          cv::CAP_FFMPEG)
+    ("Images",          cv::CAP_IMAGES);
 }
 
 /**
@@ -58,10 +89,19 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Constructor is called. Create a new object from arguments
     if (method == "new") {
-        nargchk(nrhs==3 && nlhs<=1);
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
+        int pref = cv::CAP_ANY;
+        for (int i=3; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key == "API")
+                pref = CameraApiMap[rhs[i+1].toString()];
+            else
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
+        }
         obj_[++last_id] = (rhs[2].isChar()) ?
-            makePtr<VideoCapture>(rhs[2].toString()) :
-            makePtr<VideoCapture>(rhs[2].toInt());
+            makePtr<VideoCapture>(rhs[2].toString(), pref) :
+            makePtr<VideoCapture>(rhs[2].toInt() + pref);
         plhs[0] = MxArray(last_id);
         return;
     }
@@ -73,10 +113,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         obj_.erase(id);
     }
     else if (method == "open") {
-        nargchk(nrhs==3 && nlhs<=1);
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
+        int pref = cv::CAP_ANY;
+        for (int i=3; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key == "API")
+                pref = CameraApiMap[rhs[i+1].toString()];
+            else
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
+        }
+        // index should be within 0-99, and pref is multiples of 100
         bool b = (rhs[2].isChar()) ?
-            obj->open(rhs[2].toString()) :
-            obj->open(rhs[2].toInt());
+            obj->open(rhs[2].toString(), pref) :
+            obj->open(rhs[2].toInt() + pref);
         plhs[0] = MxArray(b);
     }
     else if (method == "isOpened") {

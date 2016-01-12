@@ -83,30 +83,72 @@ classdef VideoCapture < handle
     end
 
     methods
-        function this = VideoCapture(filename)
+        function this = VideoCapture(index, varargin)
             %VIDEOCAPTURE  Create a new VideoCapture object
             %
-            %    cap = cv.VideoCapture(devid)
+            %    cap = cv.VideoCapture(index)
             %    cap = cv.VideoCapture(filename)
+            %    cap = cv.VideoCapture(..., 'API',apiPreference)
             %
             % ## Input
-            % * __devid__ id of the opened video capturing device (i.e. a
-            %       camera index). If there is a single camera connected, just
-            %       pass 0.
+            % * __index__ id of the video capturing device to open. If there
+            %       is a single camera connected, just pass 0.
             % * __filename__ name of the opened video file (eg. `video.avi`)
             %       or image sequence (eg. `img_%02d.jpg`, which will read
             %       samples like `img_00.jpg`, `img_01.jpg`, `img_02.jpg`, ...)
             %
+            % ## Options
+            % * __API__ preferred capture API to use. Can be used to enforce a
+            %       specific reader implementation if multiple are available:
+            %       e.g. 'FFMPEG' 'Images'. Available implementations:
+            %       * __Any__ autodetect. This is the default.
+            %       * __VfW__ platform native.
+            %       * __V4L__ platform native.
+            %       * __V4L2__ platform native.
+            %       * __FireWare__ IEEE 1394 drivers.
+            %       * __FireWire__ IEEE 1394 drivers.
+            %       * __IEEE1394__ IEEE 1394 drivers.
+            %       * __DC1394__ IEEE 1394 drivers.
+            %       * __CMU1394__ IEEE 1394 drivers.
+            %       * __QuickTime__ QuickTime.
+            %       * __Unicap__ Unicap drivers.
+            %       * __DirectShow__ DirectShow (via videoInput).
+            %       * __PvAPI__ PvAPI, Prosilica GigE SDK.
+            %       * __OpenNI__ OpenNI (for Kinect).
+            %       * __OpenNIAsus__ OpenNI (for Asus Xtion).
+            %       * __Android__ Android - not used.
+            %       * __XIMEA__ XIMEA Camera API.
+            %       * __AVFoundation__ AVFoundation framework for iOS
+            %             (OS X Lion will have the same API).
+            %       * __Giganetix__ Smartek Giganetix GigEVisionSDK.
+            %       * __MediaFoundation__ Microsoft Media Foundation
+            %             (via videoInput).
+            %       * __WinRT__ Microsoft Windows Runtime using Media
+            %             Foundation.
+            %       * __IntelPerC__ Intel Perceptual Computing SDK.
+            %       * __OpenNI2__ OpenNI2 (for Kinect).
+            %       * __OpenNI2Asus__ OpenNI2 (for Asus Xtion and
+            %             Occipital Structure sensors).
+            %       * __gPhoto2__ gPhoto2 connection.
+            %       * __GStreamer__ GStreamer.
+            %       * __FFMPEG__ FFMPEG.
+            %       * __Images__ OpenCV Image Sequence (e.g. `img_%02d.jpg`).
+            %
             % Creates a new video capture instance. With no argument, it
             % connects to the default camera device found in the system.
-            % You can specify camera devices by `devid`, an integer value
+            % You can specify camera devices by `index`, an integer value
             % starting from 0. You can also specify a `filename` to open a
             % video file.
             %
+            % ## Example
+            % To open camera 1 using the MS Media Foundation API:
+            %
+            %    cap = cv.VideoCapture(1, 'API','MediaFoundation')
+            %
             % See also: cv.VideoCapture.open
             %
-            if nargin < 1, filename = 0; end
-            this.id = VideoCapture_(0, 'new', filename);
+            if nargin < 1, index = 0; end
+            this.id = VideoCapture_(0, 'new', index, varargin{:});
         end
 
         function delete(this)
@@ -117,25 +159,25 @@ classdef VideoCapture < handle
             VideoCapture_(this.id, 'delete');
         end
 
-        function successFlag = open(this, filename)
+        function successFlag = open(this, index, varargin)
             %OPEN  Open video file or a capturing device for video capturing
             %
-            %    successFlag = cap.open(devid)
+            %    successFlag = cap.open(index)
             %    successFlag = cap.open(filename)
-            %
-            % ## Input
-            % Inputs are the same as in the constructor.
+            %    successFlag = cap.open(..., 'API',apiPreference)
             %
             % ## Output
             % * __successFlag__ bool, true if successful
+            %
+            % Inputs and options are the same as in the constructor.
             %
             % The method first call cv.VideoCapture.release to close the
             % already opened file or camera.
             %
             % See also: cv.VideoCapture.VideoCapture, cv.VideoCapture.isOpened
             %
-            if nargin < 1, filename = 0; end
-            successFlag = VideoCapture_(this.id, 'open', filename);
+            if nargin < 1, index = 0; end
+            successFlag = VideoCapture_(this.id, 'open', index, varargin{:});
         end
 
         function retval = isOpened(this)
