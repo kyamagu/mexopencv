@@ -310,6 +310,8 @@ function s = compiler_str()
                 end
             elseif ~isempty(strfind(cc.Name, 'SDK'))  % Windows SDK
                 switch cc.Version
+                    case '10.0'
+                        s = 'vc14';    % VS2015
                     case '8.1'
                         s = 'vc12';    % VS2013
                     case '8.0'
@@ -324,7 +326,7 @@ function s = compiler_str()
             end
         elseif strcmp(cc.Manufacturer, 'Intel')  % Intel C++ Composer
             % TODO: check versions 11.0, 12.0, 13.0, 14.0, 15.0
-        elseif ~isempty(strfind(cc.Name, 'GNU'))  % MinGW (GNU GCC)
+        elseif strcmp(cc.Manufacturer, 'GNU')  % MinGW (GNU GCC)
             s = 'mingw';
         end
         if isempty(s)
