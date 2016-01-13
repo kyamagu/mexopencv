@@ -21,7 +21,7 @@ classdef TestNormalBayesClassifier
             Yhat = model.predict(X);
             validateattributes(Yhat, {'numeric'}, ...
                 {'vector', 'integer', 'numel',numel(Y)});
-            assert(all(ismember(unique(Yhat), [1;-1])));
+            assert(all(ismember(unique(Yhat), unique(Y))));
             acc = nnz(Yhat == Y) / numel(Y);
 
             [Yhat, prob] = model.predictProb(X);
@@ -52,6 +52,7 @@ classdef TestNormalBayesClassifier
 
             model = cv.NormalBayesClassifier();
             model.train(X, Y);
+            Yhat = model.predict(X);
             [Yhat,prob] = model.predictProb(X);
             validateattributes(Yhat, {'numeric'}, ...
                 {'vector', 'integer', 'numel',numel(Y)});
