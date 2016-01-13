@@ -279,7 +279,8 @@ classdef LogisticRegression < handle
             %    count = model.getVarCount()
             %
             % ## Output
-            % * __count__ number of variables in training samples.
+            % * __count__ number of variables in training samples (plus one to
+            %       account for the implicitly prepended bias/intercept term).
             %
             % See also: cv.LogisticRegression.train
             %
@@ -431,6 +432,9 @@ classdef LogisticRegression < handle
             % * __TrainTestSplitRatio__ same as above.
             % * __TrainTestSplitShuffle__ same as above.
             %
+            % The training algorithm uses one-vs-rest scheme for multiclass
+            % case (i.e a binary problem is fit for each label).
+            %
             % See also: cv.LogisticRegression.predict, cv.LogisticRegression.calcError
             %
             status = LogisticRegression_(this.id, 'train', samples, responses, varargin{:});
@@ -487,13 +491,22 @@ classdef LogisticRegression < handle
             %       type.
             %
             % ## Output
-            % * __results__ Predicted labels as a column matrix of `int32`
-            %       type.
-            % * __f__ unused and returns 0.
+            % * __results__ Predicted labels as a column vector of `int32`
+            %       type. In case `RawOutput` was set, it returns a `single`
+            %       matrix of size `size(samples,1)-by-size(thetas,1)` which
+            %       contains the raw output of the sigmoid function(s).
+            % * __f__ The same as the response of the first sample, i.e
+            %       `results(1)`.
             %
             % ## Options
-            % * __Flags__ The optional predict flags, model-dependent.
-            %       Not used. default 0
+            % * __Flags__ The optional predict flags, model-dependent. For
+            %       convenience, you can set the individual flag options
+            %       below, instead of directly setting bits here. default 0
+            % * __RawOutput__ makes the method return the raw results (the
+            %       value of the sigmoid function), not the class label.
+            %       default false
+            %
+            % TODO: https://github.com/Itseez/opencv/pull/5964
             %
             % See also: cv.LogisticRegression.train, cv.LogisticRegression.calcError
             %
@@ -506,13 +519,17 @@ classdef LogisticRegression < handle
         function thetas = getLearntThetas(this)
             %GETLEARNTTHETAS  Returns the trained paramters
             %
-            %    thetas = classifier.getLearntThetas()
+            %    thetas = model.getLearntThetas()
             %
             % ## Output
             % * __thetas__ It returns learnt paramters of the Logistic
             %       Regression as a matrix of type `single` arranged across
             %       rows. For a two-class classifcation problem, it returns a
-            %       row matrix.
+            %       single row matrix.
+            %
+            % `thetas` is a matrix of size `nclasses-by-model.getVarCount()`
+            % if `nclasses>2`, otherwise `1-by-model.getVarCount()` if
+            % `nclasses=2`.
             %
             % See also: cv.LogisticRegression.train
             %
