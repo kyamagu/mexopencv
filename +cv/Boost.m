@@ -462,7 +462,10 @@ classdef Boost < handle
             %       lines and lines staring with '#'. default 1
             % * __ResponseStartIdx__ Index of the first output variable. If
             %       -1, the function considers the last variable as the
-            %       response. default -1
+            %       response. If the dataset only contains input variables and
+            %       no responses, use `ResponseStartIdx = -2` and
+            %       `ResponseEndIdx = 0`, then the output variables vector
+            %       will just contain zeros. default -1
             % * __ResponseEndIdx__ Index of the last output variable + 1. If
             %       -1, then there is single response variable at
             %       `ResponseStartIdx`. default -1
