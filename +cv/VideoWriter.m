@@ -24,6 +24,9 @@ classdef VideoWriter < handle
         % Current quality (0..100%) of the encoded videostream. Can be
         % adjusted dynamically in some codecs.
         Quality
+
+        % Number of stripes for parallel encoding. -1 for auto detection
+        NStripes
     end
 
     properties (Dependent, SetAccess = private)
@@ -172,6 +175,13 @@ classdef VideoWriter < handle
         end
         function set.Quality(this, value)
             VideoWriter_(this.id, 'set', 'Quality', value);
+        end
+
+        function value = get.NStripes(this)
+            value = VideoWriter_(this.id, 'get', 'NStripes');
+        end
+        function set.NStripes(this, value)
+            VideoWriter_(this.id, 'set', 'NStripes', value);
         end
 
         function value = get.FrameBytes(this)
