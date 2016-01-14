@@ -84,7 +84,10 @@ classdef VideoWriter < handle
             %
             % ## Options
             % * __FourCC__ 4-character code of codec used to compress the
-            %       frames. List of codes can be obtained at [FOURCC].
+            %       frames. List of codes can be obtained at [FOURCC]. FFMPEG
+            %       backend with MP4 container natively uses other values as
+            %       FourCC code: see [ObjectType], so you may receive a
+            %       warning message from OpenCV about fourcc code conversion.
             %       Examples are:
             %       * __PIM1__ MPEG-1 codec
             %       * __MJPG__ Motion-JPEG codec
@@ -97,6 +100,8 @@ classdef VideoWriter < handle
             %       * __FLV1__ Sorenson Spark (Flash Video)
             %       * __X264__ H.264
             %       * __AVC1__ MPEG-4 Part 10/H.264 (Apple)
+            %       * __WMV1__ Windows Media Video 7 (Microsoft)
+            %       * __WMV2__ Windows Media Video 8 (Microsoft)
             %       * __-1__ prompts with codec selection dialog (Windows only)
             % * __FPS__ Framerate of the created video stream. default 25.
             % * __Color__ If true, the encoder will expect and encode color
@@ -110,6 +115,9 @@ classdef VideoWriter < handle
             % ## References
             % [FOURCC]:
             % > "Video Codecs by FOURCC", http://www.fourcc.org/codecs.php
+            %
+            % [ObjectType]:
+            % > http://www.mp4ra.org/codecs.html
             %
             % See also: cv.VideoWriter.VideoWriter cv.VideoWriter.isOpened
             %
