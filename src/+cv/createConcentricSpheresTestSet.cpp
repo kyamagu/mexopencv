@@ -11,7 +11,8 @@ using namespace std;
 using namespace cv;
 using namespace cv::ml;
 
-//TODO: https://github.com/Itseez/opencv/issues/5469
+//TODO: bug in 3.1.0, fixed in master
+// https://github.com/Itseez/opencv/pull/5965
 
 /**
  * Main entry called from Matlab

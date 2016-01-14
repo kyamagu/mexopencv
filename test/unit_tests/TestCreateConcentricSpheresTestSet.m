@@ -3,12 +3,6 @@ classdef TestCreateConcentricSpheresTestSet
 
     methods (Static)
         function test_1
-            %TODO: https://github.com/Itseez/opencv/issues/5469
-            if true
-                disp('SKIP');
-                return;
-            end
-
             nsamples = 50;
             nfeatures = 2;
             nclasses = 2;
@@ -17,6 +11,7 @@ classdef TestCreateConcentricSpheresTestSet
             validateattributes(samples, {'numeric'}, {'size',[nsamples nfeatures]});
             validateattributes(sampIDX, {'numeric'}, ...
                 {'vector', 'numel',nsamples, 'integer', 'nonnegative' '<',nclasses});
+            %gscatter(samples(:,1), samples(:,2), sampIDX)
         end
 
         function test_error_1
