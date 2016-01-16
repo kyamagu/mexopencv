@@ -9,14 +9,6 @@
 using namespace std;
 using namespace cv;
 
-//
-//TODO: https://github.com/Itseez/opencv/pull/5320
-// (this was fixed in master after 3.0.0 shipped)
-// there is an uninitialized private variable in cv::LDA, so it sometimes
-// might fail as it's reading garbage from memory, other times it works!
-// Mainly the "project" and "reconstruct" methods are affected.
-//
-
 namespace {
 // Persistent objects
 /// Last object id to allocate
