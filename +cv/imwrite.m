@@ -27,12 +27,25 @@
 %       A higher value means a smaller size and longer compression time.
 %       Default value is 3.
 % * __PngStrategy__ For PNG; used to tune the compression algorithm. These
-%       flags come from the zlib library. One of:
-%       * __Default__ (default).
-%       * __Filtered__
-%       * __HuffmanOnly__
-%       * __RLE__
-%       * __Fixed__
+%       flags will be modify the way of PNG image compression and will be
+%       passed to the underlying zlib processing stage. The strategy parameter
+%       only affects the compression ratio but not the correctness of the
+%       compressed output even if it is not set appropriately. One of:
+%       * __Default__ (default) Use this value for normal data.
+%       * __Filtered__ Use this value for data produced by a filter (or
+%	          predictor). Filtered data consists mostly of small values with a
+%             somewhat random distribution. In this case, the compression
+%             algorithm is tuned to compress them better. The effect of
+%             `Filtered` is to force more Huffman coding and less string
+%             matching; it is somewhat intermediate between `Default` and
+%             `HuffmanOnly`.
+%       * __HuffmanOnly__ Use this value to force Huffman encoding only
+%             (no string match).
+%       * __RLE__ Use this value to limit match distances to one (run-length
+%             encoding). `RLE` is designed to be almost as fast as
+%             `HuffmanOnly`, but give better compression for PNG image data.
+%       * __Fixed__ Using this value prevents the use of dynamic Huffman
+%             codes, allowing for a simpler decoder for special applications.
 % * __PngBilevel__ Binary level PNG, 0 or 1, controls packing of pixels per
 %       bytes. If false, PNG files pack pixels of bit-depths 1, 2, and 4 into
 %       bytes as small as possible. default is false.
@@ -55,6 +68,9 @@
 % order is different, use cv.cvtColor to convert it before saving. Or, use the
 % universal cv.FileStorage I/O functions to save the image to XML or YAML
 % format.
+%
+% (If the chosen encoder does not support the depth of the input image, the
+% image will be implicitly cast to 8-bit).
 %
 % If the image cannot be saved (because of IO errors, improper permissions,
 % unsupported or invalid format), the function throws an error.
