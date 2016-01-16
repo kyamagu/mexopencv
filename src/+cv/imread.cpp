@@ -30,6 +30,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
          anycolor = false,
          color = true,
          gdal = false;
+    int scale_denom = 1;
     int flags = 0;
     bool override = false;
     bool flip = true;
@@ -55,6 +56,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         }
         else if (key == "GDAL")
             gdal = rhs[i+1].toBool();
+        else if (key == "ReduceScale") {
+            scale_denom = rhs[i+1].toInt();
+            CV_Assert(scale_denom==1 || scale_denom==2 ||
+                scale_denom==4 || scale_denom==8);
+        }
         else if (key == "FlipChannels")
             flip = rhs[i+1].toBool();
         else
@@ -80,6 +86,16 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             flags |= (anycolor ? cv::IMREAD_ANYCOLOR :
                 // otherwise explicitly either cn = 3 or cn = 1
                 (color ? cv::IMREAD_COLOR : cv::IMREAD_GRAYSCALE));
+
+            // image size reduction (this applies to both grayscale/color)
+            if (scale_denom > 1) {
+                if (scale_denom == 2)
+                    flags |= cv::IMREAD_REDUCED_GRAYSCALE_2;
+                else if (scale_denom == 4)
+                    flags |= cv::IMREAD_REDUCED_GRAYSCALE_4;
+                else if (scale_denom == 8)
+                    flags |= cv::IMREAD_REDUCED_GRAYSCALE_8;
+            }
         }
     }
 

@@ -22,6 +22,13 @@
 % * __Grayscale__ If set, always convert image to the single channel grayscale
 %       image. default false
 % * __GDAL__ If set, use the gdal driver for loading the image. default false
+% * __ReduceScale__ Loads the image reduced by a scale factor (JPEG library
+%	    natively supports direct image scaling, other formats are resized
+%       after loading). One of:
+%       * `1`: no scaling (default).
+%       * `2`: image scaled by 1/2 factor.
+%       * `4`: image scaled by 1/4 factor.
+%       * `8`: image scaled by 1/8 factor.
 % * __Flags__ Advanced option to directly set the flag specifying the depth
 %       and color type of a loaded image. Note that setting this integer flag
 %       overrides all the other flag options. Not set by default:
