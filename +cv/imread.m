@@ -37,6 +37,7 @@
 % The function cv.imread loads an image from the specified file and returns
 % it. If the image cannot be read (because of missing file, improper
 % permissions, unsupported or invalid format), the function issues an error.
+%
 % Currently, the following file formats are supported:
 %
 % * Windows bitmaps - `*.bmp`, `*.dib` (always supported)
@@ -50,10 +51,15 @@
 % * TIFF files - `*.tiff`, `*.tif` (see the Notes section)
 % * OpenEXR Image files - `*.exr` (see the Notes section)
 % * Radiance HDR - `*.hdr`, `*.pic` (always supported)
+% * Raster and Vector geospatial data supported by Gdal (see the Notes section)
 %
-% ## Note
+% ## Notes
 % The function determines the type of an image by the content, not by the file
 % extension.
+%
+% In the case of color images, the decoded images will have the channels
+% stored in BGR order. If `FlipChannels` is set, the channels are flipped to
+% RGB order.
 %
 % On Microsoft Windows OS and MacOSX, the codecs shipped with an OpenCV image
 % (libjpeg, libpng, libtiff, and libjasper) are used by default. So, OpenCV can
@@ -68,9 +74,11 @@
 % in Debian and Ubuntu) to get the codec support or turn on the
 % `OPENCV_BUILD_3RDPARTY_LIBS` flag in CMake.
 %
-% In the case of color images, the decoded images will have the channels
-% stored in BGR order. If `FlipChannels` is set, the channels are flipped to
-% RGB order
+% In the case you set `WITH_GDAL` flag to true in CMake and `GDAL` option to
+% load the image, then GDAL driver (http://www.gdal.org) will be used in order
+% to decode the image by supporting the following formats:
+% Raster (http://www.gdal.org/formats_list.html),
+% Vector (http://www.gdal.org/ogr_formats.html).
 %
 % See also: cv.imwrite, cv.imdecode, imread, imfinfo, imformats
 %
