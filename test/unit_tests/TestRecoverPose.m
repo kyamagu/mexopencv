@@ -6,12 +6,11 @@ classdef TestRecoverPose
             N = 10;
             p1 = rand(N,2);
             p2 = rand(N,2);
-            focal = 1.0;
-            pp = [0,0];
-            [E, mask] = cv.findEssentialMat(p1, p2, 'Method','Ransac', ...
-                'Focal',focal, 'PrincipalPoint',pp);
-            [R, t, good, mask2] = cv.recoverPose(E, p1, p2, 'Mask',mask, ...
-                'Focal',focal, 'PrincipalPoint',pp);
+            K = eye(3);
+            [E, mask] = cv.findEssentialMat(p1, p2, ...
+                'CameraMatrix',K, 'Method','Ransac');
+            [R, t, good, mask2] = cv.recoverPose(E, p1, p2, ...
+                'CameraMatrix',K, 'Mask',mask);
             validateattributes(R, {'numeric'}, {'size',[3 3]});
             validateattributes(t, {'numeric'}, {'vector', 'numel',3});
             validateattributes(good, {'numeric'}, {'scalar', 'integer'});

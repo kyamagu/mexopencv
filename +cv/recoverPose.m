@@ -21,11 +21,9 @@
 %       see the `Mask` input option.
 %
 % ## Options
-% * __Focal__ focal length of the camera. Note that this function assumes that
-%       `points1` and `points2` are feature points from cameras with same
-%       focal length and principle point. default 1.0
-% * __PrincipalPoint__ principle point of the camera `[ppx,ppy]`.
-%       default [0,0]
+% * __CameraMatrix__ Camera matrix `K = [fx 0 cx; 0 fy cy; 0 0 1]`. Note that
+%       this function assumes that `points1` and `points2` are feature points
+%       from cameras with the same camera matrix. default `eye(3)`.
 % * __Mask__ Input mask of length N for inliers in `points1` and `points2`
 %       (0 for outliers and to 1 for the other points (inliers). If it is not
 %       empty, then it marks inliers in `points1` and `points2` for then given
@@ -52,7 +50,11 @@
 %        points2{i} = ...;  % [x,y]
 %    end
 %
-%    [E, mask] = cv.findEssentialMat(points1, points2, 'Method','Ransac');
+%    % cametra matrix with both focal lengths = 1, and principal point = [0 0]
+%    cameraMatrix = eye(3,3);
+%
+%    [E, mask] = cv.findEssentialMat(points1, points2, ...
+%        'CameraMatrix',cameraMatrix, 'Method','Ransac');
 %    [R, t, ~, mask] = cv.recoverPose(E, points1, points2, 'Mask',mask);
 %
 % ## References

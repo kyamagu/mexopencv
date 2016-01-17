@@ -25,15 +25,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
-    double focal = 1.0;
-    Point2d pp(0,0);
+    Mat cameraMatrix = Mat::eye(3, 3, CV_64F);
     Mat mask;
     for (int i=3; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key == "Focal")
-            focal = rhs[i+1].toDouble();
-        else if (key == "PrincipalPoint")
-            pp = rhs[i+1].toPoint_<double>();
+        if (key == "CameraMatrix")
+            cameraMatrix = rhs[i+1].toMat(CV_64F);
         else if (key == "Mask")
             mask = rhs[i+1].toMat(CV_8U);
         else
@@ -48,13 +45,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     if (rhs[1].isNumeric() && rhs[2].isNumeric()) {
         Mat points1(rhs[1].toMat(CV_64F)),
             points2(rhs[2].toMat(CV_64F));
-        good = recoverPose(E, points1, points2, R, t, focal, pp,
+        good = recoverPose(E, points1, points2, cameraMatrix, R, t,
             (nlhs>3 ? mask : noArray()));
     }
     else if (rhs[1].isCell() && rhs[2].isCell()) {
         vector<Point2d> points1(rhs[1].toVector<Point2d>()),
                         points2(rhs[2].toVector<Point2d>());
-        good = recoverPose(E, points1, points2, R, t, focal, pp,
+        good = recoverPose(E, points1, points2, cameraMatrix, R, t,
             (nlhs>3 ? mask : noArray()));
     }
     else
