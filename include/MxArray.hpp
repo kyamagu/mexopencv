@@ -534,7 +534,7 @@ class MxArray
     /** Array of each dimension.
      * @return array of dimensions, number of elements in each dimension.
      */
-    inline const mwSize* dims() const { return mxGetDimensions(p_); };
+    inline const mwSize* dims() const { return mxGetDimensions(p_); }
     /** Number of rows in an array.
      * @return number of rows in the array (first dimension).
      */
@@ -633,7 +633,7 @@ class MxArray
      * @return true if the array was copied out of the global workspace,
      *         false otherwise.
      */
-    inline bool isFromGlobalWS() const { return mxIsFromGlobalWS(p_); };
+    inline bool isFromGlobalWS() const { return mxIsFromGlobalWS(p_); }
     /** Determine whether input is infinite.
      * @param d double-precision floating-point number
      * @return true if value is infinity, false otherwise.
@@ -1097,7 +1097,8 @@ template <typename T, int cn>
 cv::Vec<T,cn> MxArray::toVec() const
 {
     if (!isNumeric() || numel() != cn)
-        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a cv::Vec");
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "MxArray is not a cv::Vec%d", cn);
     /*
     std::vector<T> v(toVector<T>());
     return (!v.empty() && v.size() == cn) ?
@@ -1113,7 +1114,8 @@ template <typename T, int m, int n>
 cv::Matx<T,m,n> MxArray::toMatx() const
 {
     if (!isNumeric() || numel() != m*n || rows() != m || cols() != n)
-        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a cv::Matx");
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "MxArray is not a cv::Matx%d%d", m, n);
     /*
     // C is row-major, MATLAB is column-major order
     std::vector<T> v(toVector<T>());
