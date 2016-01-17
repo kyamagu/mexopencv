@@ -81,6 +81,8 @@
 %       changed during the optimization. If `UseIntrinsicGuess` is set, the
 %       coefficient from the supplied `DistCoeffs` matrix is used. Otherwise,
 %       it is set to 0. default false.
+% * __UseLU__ Use LU instead of SVD decomposition for solving. Much faster but
+%       potentially less precise. default false.
 % * __Criteria__ Termination criteria for the iterative optimization algorithm.
 %       default `struct('type','Count+EPS', 'maxCount',30, 'epsilon',1e-6)`
 %
