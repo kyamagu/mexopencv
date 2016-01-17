@@ -18,11 +18,13 @@ map<int,Ptr<StereoSGBM> > obj_;
 
 /// Option values for StereoSGBM mode
 const ConstMap<string, int> SGBMModeMap = ConstMap<string, int>
-    ("SGBM", StereoSGBM::MODE_SGBM)
-    ("HH",   StereoSGBM::MODE_HH);
+    ("SGBM",     StereoSGBM::MODE_SGBM)
+    ("HH",       StereoSGBM::MODE_HH)
+    ("SGBM3Way", StereoSGBM::MODE_SGBM_3WAY);
 const ConstMap<int, string> InvSGBMModeMap = ConstMap<int, string>
-    (StereoSGBM::MODE_SGBM, "SGBM")
-    (StereoSGBM::MODE_HH,   "HH");
+    (StereoSGBM::MODE_SGBM,      "SGBM")
+    (StereoSGBM::MODE_HH,        "HH")
+    (StereoSGBM::MODE_SGBM_3WAY, "SGBM3Way");
 }
 
 /**
