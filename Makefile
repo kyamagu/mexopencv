@@ -40,7 +40,7 @@
 # Note that the Makefile uses pkg-config to locate OpenCV, so you need to have
 # the opencv.pc file accessible from the PKG_CONFIG_PATH environment variable.
 #
-# Required OpenCV version: 3.0
+# Required OpenCV version: >= 3.0.0
 #
 # ============================================================================
 
@@ -94,7 +94,7 @@ TARGETS2   := $(subst $(CONTRIBDIR)/$(SRCDIR)/$(TARGETDIR), $(CONTRIBDIR)/$(TARG
 # OpenCV flags
 PKG_CONFIG_OPENCV ?= opencv
 ifneq ($(shell pkg-config --exists --atleast-version=3 $(PKG_CONFIG_OPENCV); echo $$?), 0)
-    $(error "OpenCV 3.0 package was not found in the pkg-config search path")
+    $(error "OpenCV 3.x package was not found in the pkg-config search path")
 endif
 CV_CFLAGS  := $(shell pkg-config --cflags $(PKG_CONFIG_OPENCV))
 CV_LDFLAGS := $(shell pkg-config --libs $(PKG_CONFIG_OPENCV))
