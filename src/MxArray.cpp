@@ -526,28 +526,7 @@ cv::Mat MxArray::toMat(int depth, bool transpose) const
         const int cn = d.back();
         const int type = CV_MAKETYPE(matnd.depth(), cn);
         CV_Assert(cn <= CV_CN_MAX);
-/*
-        // straightforward implementation, unfortunately it throws an
-        // exception that ND-array reshape is not yet implemented.
-        //TODO: this was fixed in master after 3.0.0:
-        // https://github.com/Itseez/opencv/pull/4212
         return matnd.reshape(cn, d.size()-1, &d[0]);
-*/
-/*
-        // an alternative implementation, but it creates a temp copy
-        cv::Mat mat(d.size()-1, &d[0], type, matnd.data);
-        return mat.clone();
-*/
-///*
-        // another hacky implementation, works without creating a temp copy
-        const cv::Mat mat(d.size()-1, &d[0], type, matnd.data); // header only
-        // Mat::reshape leaves an extra singleton dimension at the end (e.g
-        // 5x4x3x2 1-ch -> 5x4x3x1 2-cn) but it correctly sets cn in the flags
-        matnd = matnd.reshape(cn, 0);
-        // this fixes the number of dimensions (sorta like SQUEEZE)
-        matnd.copySize(mat);  // dims reduced and size/step pointers reallocated
-        return matnd;
-//*/
     }
 
     // Create cv::Mat object (of the specified depth), equivalent to mxArray.
