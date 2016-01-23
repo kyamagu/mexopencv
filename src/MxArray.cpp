@@ -120,9 +120,7 @@ MxArray::MxArray(const std::string& s)
 
 #if 0
 // - works for multi-channel arrays, but doesnt work for ND-arrays because
-// cv::split is broken for mat.dims>2, http://code.opencv.org/issues/4426.
-// Even if cv::split was fixed, we still need to get
-// the order of dimensions right for ND-array (row to column major order)
+// the order of dimensions is not right (row to column major order)
 // (the std::swap below only gets it right for 2D arrays).
 // - There's another bug regarding multi-channel arrays where mat.channels()
 // is limited because of cv::transpose, which is only implemented for a number
@@ -539,7 +537,6 @@ cv::Mat MxArray::toMat(int depth, bool transpose) const
             cv::transpose(channels[i], channels[i]);  // in-place transpose
     }
     // Merge channels back into one cv::Mat array
-    // (Note that unlike cv::split, cv::merge works for all cases of dims/cn)
     cv::merge(channels, mat);
     return mat;
 }
