@@ -398,10 +398,14 @@ class MxArray
      * @endcode
      */
     cv::MatND toMatND(int depth = CV_USRTYPE1, bool transpose = true) const;
-    /** Convert double sparse MxArray to float cv::SparseMat.
+    /** Convert double sparse MxArray to 2D single-channel cv::SparseMat.
+     * @param depth depth of cv::SparseMat. e.g., \c CV_32F, \c CV_64F. When
+     *    \c CV_USERTYPE1 is specified, depth will be automatically determined
+     *    from the the classid of the MxArray (which is double, the only
+     *    supported type for MATLAB sparse arrays). default: \c CV_USERTYPE1.
      * @return cv::SparseMat object.
      */
-    cv::SparseMat toSparseMat() const;
+    cv::SparseMat toSparseMat(int depth = CV_USRTYPE1) const;
     /** Convert MxArray to cv::Moments.
      * @param index linear index of the struct array element.
      * @return cv::Moments object.

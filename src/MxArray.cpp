@@ -249,39 +249,80 @@ MxArray::MxArray(const cv::Mat& mat, mxClassID classid, bool)
 MxArray::MxArray(const cv::SparseMat& mat)
 {
     // MATLAB only supports 2D sparse arrays of class double
-    if (mat.dims() != 2 || mat.type() != CV_32FC1)
-        mexErrMsgIdAndTxt("mexopencv:error", "Not a 2D float sparse matrix");
-    // Create a sparse array, and get pointers to data (PR, IR, JC)
+    if (mat.dims() != 2 || mat.channels() != 1)
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Not a 2D 1-channel sparse matrix");
+    /*
+    else {
+        //TODO: convert cv::SparseMat to dense cv::Mat to dense mxArray
+        Mat m;
+        mat.copyTo(m);  // mat.convertTo(m);
+        *this = MxArray(m);
+        return;
+    }
+    */
+
+    // create sparse array of same dimensions and capacity
     const mwSize m = mat.size(0), n = mat.size(1), nnz = mat.nzcount();
     p_ = mxCreateSparse(m, n, nnz, mxREAL);
     if (!p_)
         mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+
+    // get pointers to data (PR, IR, JC)
     mwIndex *ir = mxGetIr(p_);  // array of length nzmax
     mwIndex *jc = mxGetJc(p_);  // array of length n+1
     double *pr = mxGetPr(p_);   // array of length nzmax
     if (!ir || !jc || !pr)
         mexErrMsgIdAndTxt("mexopencv:error", "Null pointer error");
+
     // collect SparseMat nodes. They are enumerated semi-randomly
-    // (iterator returns them in an order based on their index hash)
+    // (iterator returns them in an order based on their hash value)
     std::vector<const cv::SparseMat::Node*> nodes;
     nodes.reserve(nnz);
     for (cv::SparseMat::const_iterator it = mat.begin(); it != mat.end(); ++it)
         nodes.push_back(it.node());
     // sort the nodes in a column-major order before we put elems into mxArray
     std::sort(nodes.begin(), nodes.end(), CompareSparseMatNode());
+
     // Copy data by converting from (row,col,val) triplets to CSC format
     jc[0] = 0;
     for (mwIndex i = 0; i < nodes.size(); ++i) {
         const mwIndex row = nodes[i]->idx[0], col = nodes[i]->idx[1];
         ir[i] = row;
         jc[col+1] = i+1;
-        pr[i] = static_cast<double>(mat.value<float>(nodes[i]));
+        // val = mat(row,col), up-casting value to double
+        switch (mat.depth()) {
+            case CV_8U:
+                pr[i] = static_cast<double>(mat.value<uchar>(nodes[i]));
+                break;
+            case CV_8S:
+                pr[i] = static_cast<double>(mat.value<schar>(nodes[i]));
+                break;
+            case CV_16U:
+                pr[i] = static_cast<double>(mat.value<ushort>(nodes[i]));
+                break;
+            case CV_16S:
+                pr[i] = static_cast<double>(mat.value<short>(nodes[i]));
+                break;
+            case CV_32S:
+                pr[i] = static_cast<double>(mat.value<int>(nodes[i]));
+                break;
+            case CV_32F:
+                pr[i] = static_cast<double>(mat.value<float>(nodes[i]));
+                break;
+            case CV_64F:
+                pr[i] = mat.value<double>(nodes[i]);
+                break;
+            default:
+                break;  // should never reach this case
+        }
     }
     // fill indices in JC array where columns were empty and had no values
     for (mwIndex i = 1; i < n+1; ++i) {
         if (jc[i] == 0)
             jc[i] = jc[i-1];
     }
+    //CV_DbgAssert(jc[0] == 0 && jc[n] == nnz);  // sanity check
 }
 
 MxArray::MxArray(const cv::Moments& m)
@@ -608,28 +649,61 @@ cv::MatND MxArray::toMatND(int depth, bool) const
 }
 #endif
 
-cv::SparseMat MxArray::toSparseMat() const
+cv::SparseMat MxArray::toSparseMat(int depth) const
 {
-    // Check if it's sparse.
-    if (!isSparse() || !isDouble() || isComplex())
-        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not real double sparse");
-    // Create cv::SparseMat.
-    const mwSize m = mxGetM(p_), n = mxGetN(p_);
+    // check if it's sparse. MATLAB only has 2D double sparse arrays.
+    if (!isSparse() || !isDouble() || isComplex() || ndims() != 2)
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "MxArray is not real 2D double sparse");
+
+    // create cv::SparseMat of same size and requested depth
+    depth = (depth == CV_USRTYPE1) ? DepthOf[classID()] : depth;
+    const mwSize m = rows(), n = cols();
     const int dims[] = {static_cast<int>(m), static_cast<int>(n)};
-    cv::SparseMat mat(2, dims, CV_32F);
-    // Copy data by converting from CSC format to (row,col,val) triplets
+    cv::SparseMat mat(2, dims, depth);
+
+    // get pointers to data (PR, IR, JC)
     const mwIndex *ir = mxGetIr(p_);  // array of length nzmax
     const mwIndex *jc = mxGetJc(p_);  // array of length n+1
     const double *pr = mxGetPr(p_);   // array of length nzmax
     if (!ir || !jc || !pr)
          mexErrMsgIdAndTxt("mexopencv:error", "Null pointer error");
+
+    // copy data by converting from CSC format to (row,col,val) triplets
     for (mwIndex j = 0; j < n; ++j) {
         // JC contains indices into PR and IR of the first non-zero value in a column
         const mwIndex start = jc[j], end = jc[j+1];
-        for (mwIndex i = start; i < end; ++i)
-            // mat(row,col) = val
-            mat.ref<float>(ir[i], j) = static_cast<float>(pr[i]);
+        for (mwIndex i = start; i < end; ++i) {
+            // mat(row,col) = val, casting double value to depth
+            //TODO: consider using cv::saturate_cast instead of static_cast
+            switch (mat.depth()) {
+                case CV_8U:
+                    mat.ref<uchar>(ir[i], j) = static_cast<uchar>(pr[i]);
+                    break;
+                case CV_8S:
+                    mat.ref<schar>(ir[i], j) = static_cast<schar>(pr[i]);
+                    break;
+                case CV_16U:
+                    mat.ref<ushort>(ir[i], j) = static_cast<ushort>(pr[i]);
+                    break;
+                case CV_16S:
+                    mat.ref<short>(ir[i], j) = static_cast<short>(pr[i]);
+                    break;
+                case CV_32S:
+                    mat.ref<int>(ir[i], j) = static_cast<int>(pr[i]);
+                    break;
+                case CV_32F:
+                    mat.ref<float>(ir[i], j) = static_cast<float>(pr[i]);
+                    break;
+                case CV_64F:
+                    mat.ref<double>(ir[i], j) = pr[i];
+                    break;
+                default:
+                    break;  // should never reach this case
+            }
+        }
     }
+    //CV_DbgAssert(mat.nzcount() == nzmax());  // sanity check
     return mat;
 }
 

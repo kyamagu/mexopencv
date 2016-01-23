@@ -115,7 +115,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     dims = check_arguments(dims, uniform, ranges, channels, histSize);
     if (sparse) {
         SparseMat hist;
-        if (accumulate) hist = hist0.toSparseMat();
+        if (accumulate) hist = hist0.toSparseMat(CV_32F);
         calcHist((!arrays.empty() ? &arrays[0] : NULL), arrays.size(),
             (!channels.empty() ? &channels[0] : NULL), mask, hist, dims,
             (!histSize.empty() ? &histSize[0] : NULL),
