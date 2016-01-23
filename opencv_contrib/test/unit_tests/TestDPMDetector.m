@@ -26,6 +26,13 @@ classdef TestDPMDetector
         end
 
         function test_2
+            %TODO: Octave throws error:
+            % (out of memory or dimension too large for Octave's index type)
+            if mexopencv.isOctave()
+                disp('SKIP');
+                return;
+            end
+
             detector = cv.DPMDetector(...
                 {TestDPMDetector.xmlfile, TestDPMDetector.xmlfile}, ...
                 {'cat1', 'cat2'});
