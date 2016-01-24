@@ -83,6 +83,22 @@ const ConstMap<std::string, int> TermCritType = ConstMap<std::string, int>
 
 }  // anonymous namespace
 
+int MexErrorHandler(int status, const char *func_name, const char *err_msg,
+    const char *file_name, int line, void * /*userdata*/)
+{
+    mexErrMsgIdAndTxt("mexopencv:error",
+        "OpenCV Error:\n"
+        "  Status  : %s (%d)\n"
+        "  Message : %s\n"
+        "  Function: %s\n"
+        "  File    : <a href=\"matlab:opentoline('%s',%d)\">%s</a>\n"
+        "  Line    : %d\n",
+        cvErrorStr(status), status, err_msg,
+        (func_name ? func_name : "(unknown)"),
+        file_name, line, file_name, line);
+    return 0;
+}
+
 MxArray& MxArray::operator=(const MxArray& rhs)
 {
     if (this != &rhs)

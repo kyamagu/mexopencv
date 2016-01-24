@@ -105,6 +105,19 @@ template<> struct MxTypes<bool> {
     static const mxClassID type = mxLOGICAL_CLASS;
 };
 
+/** Cutom error callback to be invoked by cv::error(), CV_Assert, etc...
+ * @param status status code.
+ * @param func_name function name.
+ * @param err_msg error message.
+ * @param file_name filename path.
+ * @param line line number.
+ * @param userdata optional user data pointer (unused).
+ * @return zero code.
+ * @sa cv::redirectError
+ */
+int MexErrorHandler(int status, const char *func_name, const char *err_msg,
+    const char *file_name, int line, void * /*userdata*/);
+
 /** mxArray object wrapper for data conversion and manipulation.
  */
 class MxArray
