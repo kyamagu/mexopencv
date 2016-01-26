@@ -68,7 +68,7 @@ Prerequisite:
 
 We also have preliminary support for Octave (>= 4.0.0).
 
-Currently, mexopencv targets the final 3.0.0 stable version of OpenCV. You
+Currently, mexopencv targets the final 3.1.0 stable version of OpenCV. You
 must built it against this exact version, rather than using the bleeding-edge
 dev-version of `opencv` or `opencv_contrib`.
 
