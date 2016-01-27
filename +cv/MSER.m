@@ -2,10 +2,7 @@ classdef MSER < handle
     %MSER  Maximally Stable Extremal Region extractor
     %
     % The class encapsulates all the parameters of the MSER extraction
-    % algorithm
-    % (see http://en.wikipedia.org/wiki/Maximally_stable_extremal_regions).
-    % Also see http://code.opencv.org/projects/opencv/wiki/MSER for useful
-    % comments and parameters description.
+    % algorithm (see [WikiArticle]).
     %
     % * there are two different implementation of MSER, one for gray image,
     %   one for color image
@@ -13,10 +10,11 @@ classdef MSER < handle
     %   be faster than union-find method.
     % * the color image algorithm is taken from [Forssen07]; it should be much
     %   slower than gray image method (3~4 times).
-    % * though the name is *contours*, the result actually is a list of point
-    %   set.
     %
     % ## References
+    % [WikiArticle]:
+    % > http://en.wikipedia.org/wiki/Maximally_stable_extremal_regions
+    %
     % [Nister08]:
     % > David Nister and Henrik Stewenius. "Linear Time Maximally Stable
     % > Extremal Regions". In Proceedings of the 10th ECCV '08, pp 183-196.
@@ -55,7 +53,7 @@ classdef MSER < handle
 
     methods
         function this = MSER(varargin)
-            %MSER  The full constructor
+            %MSER  Full constructor for MSER detector
             %
             %    obj = cv.MSER()
             %    obj = cv.MSER(..., 'OptionName',optionValue, ...)
@@ -69,14 +67,16 @@ classdef MSER < handle
             %       default 14400.
             % * __MaxVariation__ prune the area have simliar size to its
             %       children. default 0.25
-            % * __MinDiversity__ trace back to cut off mser with diversity
-            %       `< MinDiversity`. default 0.2.
+            % * __MinDiversity__ for color image, trace back to cut off mser
+            %       with diversity less than `MinDiversity`. default 0.2.
             % * __MaxEvolution__ for color image, the evolution steps.
             %       default 200.
-            % * __AreaThreshold__ the area threshold to cause re-initialize.
-            %       default 1.01.
-            % * __MinMargin__ ignore too small margin. default 0.003.
-            % * __EdgeBlurSize__ the aperture size for edge blur. default 5.
+            % * __AreaThreshold__ for color image, the area threshold to cause
+            %       re-initialize. default 1.01.
+            % * __MinMargin__ for color image, ignore too small margin.
+            %       default 0.003.
+            % * __EdgeBlurSize__ for color image, the aperture size for edge
+            %       blur. default 5.
             %
             % See also: cv.MSER.detectRegions, cv.MSER.detect
             %
@@ -227,16 +227,19 @@ classdef MSER < handle
             %DETECTREGIONS  Maximally stable extremal region extractor
             %
             % ## Input
-            % * __image__ Input 8-bit grayscale or color image.
+            % * __image__ Input 8-bit grayscale or color image (supports
+            %       1/3/4-channels).
             %
             % ## Output
-            % * __msers__ The output vector of connected points. Cell-array of
-            %       cell-array of 2D points `{{[x,y],[x,y],..}, {[x,y],..}}`.
-            % * __bboxes__ Output vector of rectangles. A cell-array of
-            %       4-element vectors `{[x,y,width,height], ...}`.
+            % * __msers__ The output vector of connected points (list of
+            %       point sets). Cell-array of cell-array of 2D points
+            %       `{{[x,y],[x,y],..}, {[x,y],..}}`.
+            % * __bboxes__ Output vector of rectangles (bounding boxes). A
+            %       cell-array of 4-element vectors
+            %       `{[x,y,width,height], ...}`.
             %
-            % Runs the extractor on the specified image; returns the MSERs,
-            % each encoded as a contour (see cv.findContours).
+            % Runs the extractor on the specified image; returns the MSER
+            % regions, each encoded as a contour (see cv.findContours).
             %
             % See also: cv.MSER.detect
             %

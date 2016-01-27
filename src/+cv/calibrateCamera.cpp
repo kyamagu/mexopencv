@@ -60,6 +60,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_THIN_PRISM_MODEL);
         else if (key == "FixS1S2S3S4")
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_FIX_S1_S2_S3_S4);
+        else if (key == "TiltedModel")
+            UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_TILTED_MODEL);
+        else if (key == "FixTauXTauY")
+            UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_FIX_TAUX_TAUY);
+        else if (key == "UseLU")
+            UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_USE_LU);
         else if (key == "Criteria")
             criteria = rhs[i+1].toTermCriteria();
         else

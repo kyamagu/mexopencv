@@ -19,7 +19,8 @@ map<int,Ptr<VideoWriter> > obj_;
 /// Capture Property map for option processing
 const ConstMap<string,int> VidWriterProp = ConstMap<string,int>
     ("Quality",    cv::VIDEOWRITER_PROP_QUALITY)
-    ("FrameBytes", cv::VIDEOWRITER_PROP_FRAMEBYTES);
+    ("FrameBytes", cv::VIDEOWRITER_PROP_FRAMEBYTES)
+    ("NStripes",   cv::VIDEOWRITER_PROP_NSTRIPES);
 
 /// Option arguments parser used by constructor and open method
 struct OptionsParser

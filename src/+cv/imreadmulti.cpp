@@ -28,16 +28,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     bool unchanged = false,
          anydepth = false,
          anycolor = true,
-         grayscale = false,
          color = false,
          gdal = false;
-    int flags0 = 0;
+    int flags = 0;
     bool override = false;
     bool flip = true;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "Flags") {
-            flags0 = rhs[i+1].toInt();
+            flags = rhs[i+1].toInt();
             override = true;
         }
         else if (key == "Unchanged")
@@ -47,13 +46,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (key == "AnyColor")
             anycolor = rhs[i+1].toBool();
         else if (key == "Grayscale") {
-            grayscale = rhs[i+1].toBool();
-            color = !grayscale;
+            color = !rhs[i+1].toBool();
             anycolor = false;
         }
         else if (key == "Color") {
             color = rhs[i+1].toBool();
-            grayscale = !color;
             anycolor = false;
         }
         else if (key == "GDAL")
@@ -64,25 +61,26 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
     }
-    int flags = 0;
-    if (override) {
-        // explicitly specified int flags
-        flags = flags0;
-    }
-    else if (unchanged) {
-        // depth and cn as is (as determined by decoder).
-        // This is the only way to load alpha channel if present
-        flags = cv::IMREAD_UNCHANGED;
-    }
-    else {
-        // use GDAL as decoder
-        flags |= (gdal ? IMREAD_LOAD_GDAL : 0);
-        // depth as is, otherwise CV_8U
-        flags |= (anydepth ? IMREAD_ANYDEPTH : 0);
-        // channels as is (if gray then cn=1, else cn=3 [BGR])
-        flags |= (anycolor ? IMREAD_ANYCOLOR :
-            // otherwise explicitly either cn = 3 or cn = 1
-            (color ? IMREAD_COLOR : IMREAD_GRAYSCALE));
+
+    // build flag value from options
+    if (!override) {
+        if (unchanged) {
+            // depth and cn as is (as determined by decoder).
+            // This is the only way to load alpha channel if present
+            flags = cv::IMREAD_UNCHANGED;
+        }
+        else if (gdal) {
+            // use GDAL as decoder
+            flags = cv::IMREAD_LOAD_GDAL;
+        }
+        else {
+            // depth as is, otherwise CV_8U
+            flags |= (anydepth ? cv::IMREAD_ANYDEPTH : 0);
+            // channels as is (if gray then cn=1, else cn=3 [BGR])
+            flags |= (anycolor ? cv::IMREAD_ANYCOLOR :
+                // otherwise explicitly either cn = 3 or cn = 1
+                (color ? cv::IMREAD_COLOR : cv::IMREAD_GRAYSCALE));
+        }
     }
 
     // Process
@@ -92,7 +90,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     if (!status)
         mexErrMsgIdAndTxt("mexopencv:error", "imreadmulti failed");
     for (vector<Mat>::iterator it = imgs.begin(); it != imgs.end(); ++it) {
-        if ((*it).data == NULL)
+        if (it->data == NULL)
             mexErrMsgIdAndTxt("mexopencv:error", "imreadmulti failed");
         if (flip && (it->channels() == 3 || it->channels() == 4)) {
             // OpenCV's default is BGR/BGRA while MATLAB's is RGB/RGBA

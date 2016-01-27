@@ -90,7 +90,7 @@ classdef EM < handle
         %
         % Default value of the parameter is 5. Some of EM implementation could
         % determine the optimal number of mixtures within a specified value
-        % range, but that is not the case in ML yet. Must be at least 2.
+        % range, but that is not the case in ML yet. Must be at least 1.
         ClustersNumber
 
         % Constraint on covariance matrices which defines type of matrices.
@@ -388,7 +388,10 @@ classdef EM < handle
             %       lines and lines staring with '#'. default 1
             % * __ResponseStartIdx__ Index of the first output variable. If
             %       -1, the function considers the last variable as the
-            %       response. default -1
+            %       response. If the dataset only contains input variables and
+            %       no responses, use `ResponseStartIdx = -2` and
+            %       `ResponseEndIdx = 0`, then the output variables vector
+            %       will just contain zeros. default -1
             % * __ResponseEndIdx__ Index of the last output variable + 1. If
             %       -1, then there is single response variable at
             %       `ResponseStartIdx`. default -1
@@ -493,11 +496,12 @@ classdef EM < handle
             %
             % ## Output
             % * __results__ Output matrix of posterior probabilities of each
-            %       component given a sample. A matrix of size
-            %       `nsamples-by-ClustersNumber` size.
-            % * __f__ If you pass one sample then this returns the index of
-            %       the most probable mixture component for the given sample.
-            %       Otherwise the result for the first sample is returned.
+            %       component given a sample. A `double` matrix of size
+            %       `nsamples-by-ClustersNumber`.
+            % * __f__ If you pass one sample then this returns the zero-based
+            %       index of the most probable mixture component for the given
+            %       sample. Otherwise the result for the first sample is
+            %       returned.
             %
             % ## Options
             % * __Flags__ The optional predict flags, model-dependent.
@@ -506,7 +510,11 @@ classdef EM < handle
             % See also: cv.EM/predict2, cv.EM/train, cv.EM/calcError
             %
             [~, labels, results] = this.predict2(samples);
-            f = labels(1);
+            if ~isempty(labels)
+                f = labels(1);
+            else
+                f = 0;
+            end
             %TODO: https://github.com/Itseez/opencv/issues/5443
             %[results,f] = EM_(this.id, 'predict', samples, varargin{:});
         end

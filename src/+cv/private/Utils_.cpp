@@ -29,27 +29,27 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     if (method == "checkHardwareSupport") {
         nargchk(nrhs==1 && nlhs<=1);
         MxArray s = MxArray::Struct();
-        s.set("MMX",            checkHardwareSupport(cv::CPU_MMX));
-        s.set("SSE",            checkHardwareSupport(cv::CPU_SSE));
-        s.set("SSE2",           checkHardwareSupport(cv::CPU_SSE2));
-        s.set("SSE3",           checkHardwareSupport(cv::CPU_SSE3));
-        s.set("SSSE3",          checkHardwareSupport(cv::CPU_SSSE3));
-        s.set("SSE4_1",         checkHardwareSupport(cv::CPU_SSE4_1));
-        s.set("SSE4_2",         checkHardwareSupport(cv::CPU_SSE4_2));
-        s.set("POPCNT",         checkHardwareSupport(cv::CPU_POPCNT));
-        s.set("AVX",            checkHardwareSupport(cv::CPU_AVX));
-        s.set("AVX2",           checkHardwareSupport(cv::CPU_AVX2));
-        s.set("FMA3",           checkHardwareSupport(cv::CPU_FMA3));
-        s.set("AVX_512F",       checkHardwareSupport(cv::CPU_AVX_512F));
-        s.set("AVX_512BW",      checkHardwareSupport(cv::CPU_AVX_512BW));
-        s.set("AVX_512CD",      checkHardwareSupport(cv::CPU_AVX_512CD));
-        s.set("AVX_512DQ",      checkHardwareSupport(cv::CPU_AVX_512DQ));
-        s.set("AVX_512ER",      checkHardwareSupport(cv::CPU_AVX_512ER));
-        s.set("AVX_512IFMA512", checkHardwareSupport(cv::CPU_AVX_512IFMA512));
-        s.set("AVX_512PF",      checkHardwareSupport(cv::CPU_AVX_512PF));
-        s.set("AVX_512VBMI",    checkHardwareSupport(cv::CPU_AVX_512VBMI));
-        s.set("AVX_512VL",      checkHardwareSupport(cv::CPU_AVX_512VL));
-        s.set("NEON",           checkHardwareSupport(cv::CPU_NEON));
+        s.set("MMX",            checkHardwareSupport(CV_CPU_MMX));
+        s.set("SSE",            checkHardwareSupport(CV_CPU_SSE));
+        s.set("SSE2",           checkHardwareSupport(CV_CPU_SSE2));
+        s.set("SSE3",           checkHardwareSupport(CV_CPU_SSE3));
+        s.set("SSSE3",          checkHardwareSupport(CV_CPU_SSSE3));
+        s.set("SSE4_1",         checkHardwareSupport(CV_CPU_SSE4_1));
+        s.set("SSE4_2",         checkHardwareSupport(CV_CPU_SSE4_2));
+        s.set("POPCNT",         checkHardwareSupport(CV_CPU_POPCNT));
+        s.set("AVX",            checkHardwareSupport(CV_CPU_AVX));
+        s.set("AVX2",           checkHardwareSupport(CV_CPU_AVX2));
+        s.set("FMA3",           checkHardwareSupport(CV_CPU_FMA3));
+        s.set("AVX_512F",       checkHardwareSupport(CV_CPU_AVX_512F));
+        s.set("AVX_512BW",      checkHardwareSupport(CV_CPU_AVX_512BW));
+        s.set("AVX_512CD",      checkHardwareSupport(CV_CPU_AVX_512CD));
+        s.set("AVX_512DQ",      checkHardwareSupport(CV_CPU_AVX_512DQ));
+        s.set("AVX_512ER",      checkHardwareSupport(CV_CPU_AVX_512ER));
+        s.set("AVX_512IFMA512", checkHardwareSupport(CV_CPU_AVX_512IFMA512));
+        s.set("AVX_512PF",      checkHardwareSupport(CV_CPU_AVX_512PF));
+        s.set("AVX_512VBMI",    checkHardwareSupport(CV_CPU_AVX_512VBMI));
+        s.set("AVX_512VL",      checkHardwareSupport(CV_CPU_AVX_512VL));
+        s.set("NEON",           checkHardwareSupport(CV_CPU_NEON));
         plhs[0] = s;
     }
     else if (method == "getBuildInformation") {

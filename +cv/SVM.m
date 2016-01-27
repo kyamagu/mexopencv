@@ -396,7 +396,10 @@ classdef SVM < handle
             %       lines and lines staring with '#'. default 1
             % * __ResponseStartIdx__ Index of the first output variable. If
             %       -1, the function considers the last variable as the
-            %       response. default -1
+            %       response. If the dataset only contains input variables and
+            %       no responses, use `ResponseStartIdx = -2` and
+            %       `ResponseEndIdx = 0`, then the output variables vector
+            %       will just contain zeros. default -1
             % * __ResponseEndIdx__ Index of the last output variable + 1. If
             %       -1, then there is single response variable at
             %       `ResponseStartIdx`. default -1
@@ -666,12 +669,34 @@ classdef SVM < handle
             %    sv = model.getSupportVectors()
             %
             % ## Output
-            % * __sv__ All the support vector as floating-point matrix, where
-            %       support vectors are stored as matrix rows.
+            % * __sv__ Support vectors.
             %
-            % See also: cv.SVM.getDecisionFunction
+            % The method returns all the support vectors as a floating-point
+            % matrix, where support vectors are stored as matrix rows.
+            %
+            % See also: cv.SVM.getUncompressedSupportVectors,
+            %  cv.SVM.getDecisionFunction
             %
             sv = SVM_(this.id, 'getSupportVectors');
+        end
+
+        function sv = getUncompressedSupportVectors(this)
+            %GETUNCOMPRESSEDSUPPORTVECTORS  Retrieves all the uncompressed support vectors of a linear SVM
+            %
+            %    sv = model.getUncompressedSupportVectors()
+            %
+            % ## Output
+            % * __sv__ Uncompressed support vectors.
+            %
+            % The method returns all the uncompressed support vectors of a
+            % linear SVM that the compressed support vector, used for
+            % prediction, was derived from. They are returned in a
+            % floating-point matrix, where the support vectors are stored as
+            % matrix rows.
+            %
+            % See also: cv.SVM.getSupportVectors, cv.SVM.getDecisionFunction
+            %
+            sv = SVM_(this.id, 'getUncompressedSupportVectors');
         end
 
         function setCustomKernel(this, kernelFunc)

@@ -1,29 +1,30 @@
 /**
- * @file LSVMDetector_.cpp
- * @brief mex interface for cv::lsvm::LSVMDetector
- * @ingroup latentsvm
+ * @file DPMDetector_.cpp
+ * @brief mex interface for cv::dpm::DPMDetector
+ * @ingroup dpm
  * @author Kota Yamaguchi
  * @date 2012
  */
 #include "mexopencv.hpp"
-#include "opencv2/latentsvm.hpp"
+#include "opencv2/dpm.hpp"
+#include <sstream>
 using namespace std;
 using namespace cv;
-using namespace cv::lsvm;
+using namespace cv::dpm;
 
 namespace {
 
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,Ptr<LSVMDetector> > obj_;
+map<int,Ptr<DPMDetector> > obj_;
 
 /** Convert object detections to struct array
  * @param vo vector of detections
  * @param classNames mapping of class IDs to class names
  * @return struct-array MxArray object
  */
-MxArray toStruct(const vector<LSVMDetector::ObjectDetection>& vo,
+MxArray toStruct(const vector<DPMDetector::ObjectDetection>& vo,
     const vector<string>& classNames)
 {
     const char* fields[] = {"rect", "score", "class"};
@@ -33,8 +34,11 @@ MxArray toStruct(const vector<LSVMDetector::ObjectDetection>& vo,
         s.set("score", vo[i].score, i);
         if (vo[i].classID >= 0 && vo[i].classID < classNames.size())
             s.set("class", classNames[vo[i].classID], i);
-        else
-            s.set("class", string(""), i);
+        else {
+            ostringstream ss;
+            ss << vo[i].classID;
+            s.set("class", ss.str(), i);
+        }
     }
     return s;
 }
@@ -51,7 +55,7 @@ MxArray toStruct(const vector<LSVMDetector::ObjectDetection>& vo,
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    nargchk(nrhs>=2 && nlhs<=2);
+    nargchk(nrhs>=2 && nlhs<=1);
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);
@@ -62,15 +66,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     if (method == "new") {
         nargchk((nrhs==3 || nrhs==4) && nlhs<=1);
         obj_[++last_id] = (nrhs == 3) ?
-            LSVMDetector::create(rhs[2].toVector<string>()) :
-            LSVMDetector::create(rhs[2].toVector<string>(),
+            DPMDetector::create(rhs[2].toVector<string>()) :
+            DPMDetector::create(rhs[2].toVector<string>(),
                 rhs[3].toVector<string>());
         plhs[0] = MxArray(last_id);
         return;
     }
 
     // Big operation switch
-    Ptr<LSVMDetector> obj = obj_[id];
+    Ptr<DPMDetector> obj = obj_[id];
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
@@ -80,19 +84,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         plhs[0] = MxArray(obj->isEmpty());
     }
     else if (method == "detect") {
-        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
-        float overlapThreshold = 0.5f;
-        for (int i=3; i<nrhs; i+=2) {
-            string key(rhs[i].toString());
-            if (key == "OverlapThreshold")
-                overlapThreshold = rhs[i+1].toFloat();
-            else
-                mexErrMsgIdAndTxt("mexopencv:error",
-                    "Unrecognized option %s", key.c_str());
-        }
-        Mat image(rhs[2].toMat(rhs[2].isUint8() ? CV_8U : CV_32F));
-        vector<LSVMDetector::ObjectDetection> objects;
-        obj->detect(image, objects, overlapThreshold);
+        nargchk(nrhs==3 && nlhs<=1);
+        Mat image(rhs[2].toMat(rhs[2].isUint8() ? CV_8U : CV_64F));
+        vector<DPMDetector::ObjectDetection> objects;
+        obj->detect(image, objects);
         plhs[0] = toStruct(objects, obj->getClassNames());
     }
     else if (method == "getClassNames") {

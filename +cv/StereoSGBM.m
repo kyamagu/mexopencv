@@ -77,8 +77,8 @@ classdef StereoSGBM < handle
         P1
         % second parameter controlling the disparity smoothness, default 0
         P2
-        % one of 'SGBM' (default) or 'HH' (runs the full-scale two-pass
-        % dynamic programming algorithm).
+        % one of 'SGBM' (default), 'SGBM3Way', or 'HH' (runs the full-scale
+        % two-pass dynamic programming algorithm).
         Mode
     end
 

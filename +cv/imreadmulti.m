@@ -37,6 +37,9 @@
 % * __FlipChannels__ in case the output is color image, flips the color order
 %       from OpenCV's BGR/BGRA to MATLAB's RGB/RGBA order. default true
 %
+% The function cv.imreadmulti loads a multi-page image from the specified file
+% into a cell-array of matrices.
+%
 % See cv.imread for details.
 %
 % See also: cv.imread, imread

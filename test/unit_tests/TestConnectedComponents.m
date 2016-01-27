@@ -14,7 +14,7 @@ classdef TestConnectedComponents
             validateattributes(N, {'numeric'}, ...
                 {'scalar', 'integer', 'nonnegative'});
             validateattributes(stats, {'int32'}, {'size',[N 5]});
-            validateattributes(centroids, {'numeric'}, {'real', 'size',[N 2]});
+            validateattributes(centroids, {'double'}, {'real', 'size',[N 2]});
         end
 
         function test_2

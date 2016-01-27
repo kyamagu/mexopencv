@@ -112,7 +112,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                     mexErrMsgIdAndTxt("mexopencv:error",
                         "Unrecognized option %s", key.c_str());
             }
-            Mat image(rhs[2].toMat(CV_8U));
+            Mat image(rhs[2].toMat(rhs[2].isUint8() ? CV_8U :
+                (rhs[2].isUint16() ? CV_16U : CV_32F)));
             vector<KeyPoint> keypoints;
             obj->detect(image, keypoints, mask);
             plhs[0] = MxArray(keypoints);
@@ -139,7 +140,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 vector<MxArray> arr(rhs[2].toVector<MxArray>());
                 images.reserve(arr.size());
                 for (vector<MxArray>::const_iterator it = arr.begin(); it != arr.end(); ++it)
-                    images.push_back(it->toMat(CV_8U));
+                    images.push_back(it->toMat(it->isUint8() ? CV_8U :
+                        (it->isUint16() ? CV_16U : CV_32F)));
             }
             vector<vector<KeyPoint> > keypoints;
             obj->detect(images, keypoints, masks);
@@ -151,7 +153,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "compute") {
         nargchk(nrhs==4 && nlhs<=2);
         if (rhs[2].isNumeric()) {  // first variant that accepts an image
-            Mat image(rhs[2].toMat(CV_8U)), descriptors;
+            Mat image(rhs[2].toMat(rhs[2].isUint8() ? CV_8U :
+                (rhs[2].isUint16() ? CV_16U : CV_32F))),
+                descriptors;
             vector<KeyPoint> keypoints(rhs[3].toVector<KeyPoint>());
             obj->compute(image, keypoints, descriptors);
             plhs[0] = MxArray(descriptors);
@@ -165,7 +169,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 vector<MxArray> arr(rhs[2].toVector<MxArray>());
                 images.reserve(arr.size());
                 for (vector<MxArray>::const_iterator it = arr.begin(); it != arr.end(); ++it)
-                    images.push_back(it->toMat(CV_8U));
+                    images.push_back(it->toMat(it->isUint8() ? CV_8U :
+                        (it->isUint16() ? CV_16U : CV_32F)));
             }
             vector<vector<KeyPoint> > keypoints(rhs[3].toVector(
                 const_mem_fun_ref_t<vector<KeyPoint>, MxArray>(
@@ -195,7 +200,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat image(rhs[2].toMat(CV_8U)), descriptors;
+        Mat image(rhs[2].toMat(rhs[2].isUint8() ? CV_8U :
+            (rhs[2].isUint16() ? CV_16U : CV_32F))),
+            descriptors;
         obj->detectAndCompute(image, mask, keypoints, descriptors,
             useProvidedKeypoints);
         plhs[0] = MxArray(keypoints);

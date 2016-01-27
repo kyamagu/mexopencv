@@ -35,6 +35,10 @@
 %
 % Detects corners using the AGAST algorithm by [mair2010].
 %
+% For non-Intel platforms, there is a tree optimised variant of AGAST with
+% same numerical results. The 32-bit binary tree tables were generated
+% automatically from original code using perl script.
+%
 % ## References
 % [mair2010]:
 % > E. Mair, G. D. Hager, D. Burschka, M. Suppa, and G. Hirzinger.

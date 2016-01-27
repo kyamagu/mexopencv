@@ -18,8 +18,8 @@
 %       * __cameraMatrix1__ output first camera matrix
 %             `A = [fx1 0 cx1; 0 fy1 cy1; 0 0 1]`.
 %       * __distCoeffs1__ output vector of distortion coefficients
-%             `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4]` of 4, 5, 8, or 12
-%             elements. The output vector length depends on the options.
+%             `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4,taux,tauy]` of 4, 5, 8, 12
+%             or 14 elements. The output vector length depends on the options.
 %       * __cameraMatrix2__ output second camera matrix
 %             `A = [fx2 0 cx2; 0 fy2 cy2; 0 0 1]`. The parameter is similar to
 %             `cameraMatrix1`.
@@ -72,6 +72,17 @@
 %       during the optimization. If 'UseIntrinsicGuess' is set, the
 %       coefficient from the supplied `DistCoeffs` matrix is used. Otherwise,
 %       it is set to 0. default false
+% * __TiltedModel__ Coefficients `tauX` and `tauY` are enabled. To provide the
+%       backward compatibility, this extra flag should be explicitly specified
+%       to make the calibration function use the tilted sensor model and
+%       return 14 coefficients. If the flag is not set, the function computes
+%       and returns only 5 distortion coefficients. default false.
+% * __FixTauXTauY__ The coefficients of the tilted sensor model are not
+%       changed during the optimization. If `UseIntrinsicGuess` is set, the
+%       coefficient from the supplied `DistCoeffs` matrix is used. Otherwise,
+%       it is set to 0. default false.
+% * __UseLU__ Use LU instead of SVD decomposition for solving. Much faster but
+%       potentially less precise. default false.
 % * __Criteria__ Termination criteria for the iterative optimization algorithm.
 %       default `struct('type','Count+EPS', 'maxCount',30, 'epsilon',1e-6)`
 %

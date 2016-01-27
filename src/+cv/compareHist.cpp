@@ -50,11 +50,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Process
     double d = 0;
     if (rhs[0].isSparse() && rhs[1].isSparse()) {
-        SparseMat H1(rhs[0].toSparseMat()), H2(rhs[1].toSparseMat());
+        SparseMat H1(rhs[0].toSparseMat(CV_32F)),
+                  H2(rhs[1].toSparseMat(CV_32F));
         d = compareHist(H1, H2, method);
     }
     else {
-        MatND H1(rhs[0].toMatND(CV_32F)), H2(rhs[1].toMatND(CV_32F));
+        MatND H1(rhs[0].toMatND(CV_32F)),
+              H2(rhs[1].toMatND(CV_32F));
         d = compareHist(H1, H2, method);
     }
     plhs[0] = MxArray(d);

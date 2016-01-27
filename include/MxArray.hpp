@@ -105,6 +105,19 @@ template<> struct MxTypes<bool> {
     static const mxClassID type = mxLOGICAL_CLASS;
 };
 
+/** Cutom error callback to be invoked by cv::error(), CV_Assert, etc...
+ * @param status status code.
+ * @param func_name function name.
+ * @param err_msg error message.
+ * @param file_name filename path.
+ * @param line line number.
+ * @param userdata optional user data pointer (unused).
+ * @return zero code.
+ * @sa cv::redirectError
+ */
+int MexErrorHandler(int status, const char *func_name, const char *err_msg,
+    const char *file_name, int line, void * /*userdata*/);
+
 /** mxArray object wrapper for data conversion and manipulation.
  */
 class MxArray
@@ -398,10 +411,14 @@ class MxArray
      * @endcode
      */
     cv::MatND toMatND(int depth = CV_USRTYPE1, bool transpose = true) const;
-    /** Convert double sparse MxArray to float cv::SparseMat.
+    /** Convert double sparse MxArray to 2D single-channel cv::SparseMat.
+     * @param depth depth of cv::SparseMat. e.g., \c CV_32F, \c CV_64F. When
+     *    \c CV_USERTYPE1 is specified, depth will be automatically determined
+     *    from the the classid of the MxArray (which is double, the only
+     *    supported type for MATLAB sparse arrays). default: \c CV_USERTYPE1.
      * @return cv::SparseMat object.
      */
-    cv::SparseMat toSparseMat() const;
+    cv::SparseMat toSparseMat(int depth = CV_USRTYPE1) const;
     /** Convert MxArray to cv::Moments.
      * @param index linear index of the struct array element.
      * @return cv::Moments object.
@@ -534,7 +551,7 @@ class MxArray
     /** Array of each dimension.
      * @return array of dimensions, number of elements in each dimension.
      */
-    inline const mwSize* dims() const { return mxGetDimensions(p_); };
+    inline const mwSize* dims() const { return mxGetDimensions(p_); }
     /** Number of rows in an array.
      * @return number of rows in the array (first dimension).
      */
@@ -633,7 +650,7 @@ class MxArray
      * @return true if the array was copied out of the global workspace,
      *         false otherwise.
      */
-    inline bool isFromGlobalWS() const { return mxIsFromGlobalWS(p_); };
+    inline bool isFromGlobalWS() const { return mxIsFromGlobalWS(p_); }
     /** Determine whether input is infinite.
      * @param d double-precision floating-point number
      * @return true if value is infinity, false otherwise.
@@ -1097,7 +1114,8 @@ template <typename T, int cn>
 cv::Vec<T,cn> MxArray::toVec() const
 {
     if (!isNumeric() || numel() != cn)
-        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a cv::Vec");
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "MxArray is not a cv::Vec%d", cn);
     /*
     std::vector<T> v(toVector<T>());
     return (!v.empty() && v.size() == cn) ?
@@ -1113,7 +1131,8 @@ template <typename T, int m, int n>
 cv::Matx<T,m,n> MxArray::toMatx() const
 {
     if (!isNumeric() || numel() != m*n || rows() != m || cols() != n)
-        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not a cv::Matx");
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "MxArray is not a cv::Matx%d%d", m, n);
     /*
     // C is row-major, MATLAB is column-major order
     std::vector<T> v(toVector<T>());

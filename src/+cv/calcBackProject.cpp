@@ -102,7 +102,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Process
     Mat backProject;
     if (rhs[1].isSparse()) {
-        SparseMat hist(rhs[1].toSparseMat());  // 2D sparse matrix
+        SparseMat hist(rhs[1].toSparseMat(CV_32F));  // 2D sparse matrix
         check_arguments(histogram_dims(hist), uniform, ranges, channels);
         calcBackProject((arrays.empty() ? NULL : &arrays[0]), arrays.size(),
             (channels.empty() ? NULL : &channels[0]), hist, backProject,

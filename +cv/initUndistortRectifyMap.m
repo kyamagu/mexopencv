@@ -6,8 +6,9 @@
 % ## Input
 % * __cameraMatrix__ Input camera matrix `A = [f_x 0 c_x; 0 f_y c_y; 0 0 1]`
 % * __distCoeffs__ Input vector of distortion coefficients
-%       `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4]` of 4, 5, 8, or 12 elements. If
-%       the vector is empty, the zero distortion coefficients are assumed.
+%       `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4,taux,tauy]` of 4, 5, 8, 12 or 14
+%       elements. If the vector is empty, the zero distortion coefficients are
+%       assumed.
 % * __newCameraMatrix__ New camera matrix
 %       `Ap = [fp_x 0 cp_x; 0 fp_y cp_y; 0 0 1]`
 % * __siz__ Undistorted image size `[w,h]`.
@@ -57,12 +58,19 @@
 %    [X Y Z]' = inv(R) * [x y 1]'
 %    xp = X / W
 %    yp = Y / W
-%    xpp = xp*(1 + k1*r^2 + k2*r^4 + k3*r^6) + 2*p1*xp*yp + p2*(r^2 + 2*xp^2)
-%    ypp = yp*(1 + k1*r^2 + k2*r^4 + k3*r^6) + p1*(r^2 + 2*yp^2) + 2*p2*xp*yp
-%    map_x(u,v) = xpp * f_x + c_x
-%    map_y(u,v) = ypp * f_y + c_y
+%    r^2 = xp^2 + yp^2
+%    xpp = xp*(1 + k1*r^2 + k2*r^4 + k3*r^6)/(1 + k4*r^2 + k5*r^4 + k6*r^6) +
+%          2*p1*xp*yp + p2*(r^2 + 2*xp^2) + s1*r^2 + s2*r^4
+%    ypp = yp*(1 + k1*r^2 + k2*r^4 + k3*r^6)/(1 + k4*r^2 + k5*r^4 + k6*r^6) +
+%          p1*(r^2 + 2*yp^2) + 2*p2*xp*yp + s3*r^2 + s4*r^4
+%      [xppp]   [R33(taux,tauy)              0 -R13(taux,tauy)]                  [xpp]
+%    s*[yppp] = [             0 R33(taux,tauy) -R23(taux,tauy)] * R(taux,tauy) * [ypp]
+%      [   1]   [             0              0               1]                  [  1]
+%    map_x(u,v) = xppp * f_x + c_x
+%    map_y(u,v) = yppp * f_y + c_y
 %
-% where `k1`, `k2`, `p1`, `p2`, `k3` are the distortion coefficients.
+% where `k1`, `k2`, `p1`, `p2`, `k3`, `k4`, `k5`, `k6`, `s1`, `s2`, `s3`,
+% `s4`, `taux`, `tauy` are the distortion coefficients.
 %
 % In case of a stereo camera, this function is called twice: once for each
 % camera head, after cv.stereoRectify, which in its turn is called after

@@ -192,6 +192,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             string key(rhs[i].toString());
             if (key == "Flags")
                 flags = rhs[i+1].toInt();
+            else if (key == "RawOutput")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::RAW_OUTPUT);
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());

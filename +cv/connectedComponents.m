@@ -13,7 +13,7 @@
 %       0 represents the background label.
 % * __N__ the total number of labels.
 % * __stats__ (optional) statistics output for each label, including the
-%       background label, see below for available statistics. A Nx5 integer
+%       background label, see below for available statistics. A Nx5 `int32`
 %       matrix. Statistics are accessed via `stats(label, col)` where:
 %       * `col=1`: The leftmost (x) coordinate which is the inclusive start of
 %             the bounding box in the horizontal direction.
@@ -22,8 +22,9 @@
 %       * `col=3`: The horizontal size of the bounding box (width).
 %       * `col=4`: The vertical size of the bounding box (height).
 %       * `col=5`: The total area (in pixels) of the connected component.
-% * __centroids__ (optional) floating point centroid `(x,y)` output for each
-%       label, including the background label. A Nx2 numeric matrix.
+% * __centroids__ (optional) 64-bit floating point centroid `(x,y)` output for
+%       each label, including the background label. A Nx2 numeric matrix.
+%       Centroids are accessed via `centroids(label,:)` for x and y.
 %
 % ## Options
 % * __Connectivity__ 8 or 4 for 8-way or 4-way connectivity respectively.

@@ -24,7 +24,6 @@ classdef TestWarpPerspective
 
         function test_3
             im = imread(TestWarpPerspective.img);
-            [h,w,~] = size(im);
             H = eye(3) + [...
                 randn()/50      randn()/100     randi([10 20]);
                 randn()/100     randn()/50      randi([10 20]);

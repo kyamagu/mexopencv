@@ -18,24 +18,22 @@
 %       computed only in the RANSAC and LMedS robust methods.
 %
 % ## Options
-% * __Focal__ focal length of the camera. Note that this function assumes that
-%       `points1` and `points2` are feature points from cameras with same
-%       focal length and principle point. default 1.0
-% * __PrincipalPoint__ principle point of the camera `[ppx,ppy]`.
-%       default [0,0]
+% * __CameraMatrix__ Camera matrix `K = [fx 0 cx; 0 fy cy; 0 0 1]`. Note that
+%       this function assumes that `points1` and `points2` are feature points
+%       from cameras with the same camera matrix. default `eye(3)`.
 % * __Method__ Method for computing a essential matrix. One of:
 %       * __Ransac__ for the RANSAC algorithm. (default)
 %       * __LMedS__ for the LMedS algorithm.
+% * __Confidence__ Parameter used for the RANSAC or LMedS methods only. It
+%       specifies a desirable level of confidence (probability) that the
+%       estimated matrix is correct. In the range 0..1 exclusive.
+%       default 0.999
 % * __Threshold__ Parameter used for RANSAC. It is the maximum distance from a
 %       point to an epipolar line in pixels, beyond which the point is
 %       considered an outlier and is not used for computing the final
 %       essential matrix. It can be set to something like 1-3, depending
 %       on the accuracy of the point localization, image resolution, and
 %       the image noise. default 1.0
-% * __Confidence__ Parameter used for the RANSAC or LMedS methods only. It
-%       specifies a desirable level of confidence (probability) that the
-%       estimated matrix is correct. In the range 0..1 exclusive.
-%       default 0.999
 %
 % This function estimates essential matrix based on the five-point algorithm
 % solver in [Nister03]. [SteweniusCFS] is also a related. The epipolar
@@ -43,14 +41,17 @@
 %
 %    [p2;1]' * inv(K)' * E * inv(K) * [p1;1] = 0
 %
-%    K = [f 0 xpp;
-%         0 f ypp;
-%         0 0   1]
-%
 % where `E` is an essential matrix, `p1` and `p2` are corresponding points in
 % the first and the second images, respectively. The result of this function
 % may be passed further to cv.decomposeEssentialMat or cv.recoverPose to
 % recover the relative pose between cameras.
+%
+% `K` is the camera matrix with focal length `fx` and `fy` and principal point
+% `[cx,cy]`:
+%
+%    K = [fx  0 cx;
+%         0  fy cy;
+%         0   0  1]
 %
 % ## Example
 % Estimation of essential matrix using the RANSAC algorithm:

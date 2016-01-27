@@ -11,8 +11,6 @@ using namespace std;
 using namespace cv;
 using namespace cv::ml;
 
-//TODO: https://github.com/Itseez/opencv/issues/5469
-
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments

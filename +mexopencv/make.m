@@ -23,7 +23,8 @@ function make(varargin)
 %      * __0__ no output at all
 %      * __1__ echo commands and information messages only
 %      * __2__ verbose output from mex
-%      * __3__ show all compile/link warnings and errors
+%      * __3__ enables all compiler warnings
+%      * __4__ enables verbose compiler/linker output
 % * __progress__ show a progress bar GUI during compilation (Windows only).
 %       default `true`
 % * __debug__ Produce binaries with debugging information, linked against
@@ -53,95 +54,32 @@ cObj = onCleanup(@()cd(cwd));
 % parse options
 opts = getargs(varargin{:});
 
-if ispc % Windows
+if ~ispc  % Unix
+    makefile_unix(opts);
+    return;
+
+else      % Windows
     % Clean
     if opts.clean
-        if opts.verbose > 0
-            fprintf('Cleaning all generated files...\n');
-        end
-
-        del_cmds = {
-            fullfile('+cv', ['*.' mexext]) ;
-            fullfile('+cv', '*.pdb') ;
-            fullfile('+cv', '*.idb') ;
-            fullfile('+cv', 'private', ['*.' mexext]) ;
-            fullfile('+cv', 'private', '*.pdb') ;
-            fullfile('+cv', 'private', '*.idb') ;
-            fullfile('+cv', '+test', 'private', ['*.' mexext]) ;
-            fullfile('+cv', '+test', 'private', '*.pdb') ;
-            fullfile('+cv', '+test', 'private', '*.idb') ;
-            fullfile('lib', '*.obj') ;
-            fullfile('lib', '*.o') ;
-            fullfile('lib', '*.lib') ;
-            fullfile('lib', '*.pdb') ;
-            fullfile('lib', '*.idb')
-        };
-        if opts.opencv_contrib
-            del_cmds = [del_cmds ; ...
-                fullfile('opencv_contrib', '+cv', ['*.' mexext]) ; ...
-                fullfile('opencv_contrib', '+cv', '*.pdb') ; ...
-                fullfile('opencv_contrib', '+cv', '*.idb') ; ...
-                fullfile('opencv_contrib', '+cv', 'private', ['*.' mexext]) ; ...
-                fullfile('opencv_contrib', '+cv', 'private', '*.pdb') ; ...
-                fullfile('opencv_contrib', '+cv', 'private', '*.idb') ...
-            ];
-        end
-
-        for i=1:numel(del_cmds)
-            cmd = fullfile(mexopencv.root(), del_cmds{i});
-            if opts.verbose > 0, disp(cmd); end
-            if ~opts.dryrun, delete(cmd); end
-        end
-
+        target_clean(opts);
         return;
     end
 
     % Unit-testing
     if opts.test
-        if opts.verbose > 0
-            fprintf('Running unit-tests...\n');
-        end
-
-        cd(fullfile(mexopencv.root(),'test'));
-        if ~opts.dryrun, UnitTest(opts.opencv_contrib); end
+        target_test(opts);
         return;
     end
 
     % mex build options
-    [cv_cflags,cv_libs] = pkg_config(opts);
-    [comp_flags,link_flags] = compilation_flags(opts);
-    mex_flags = sprintf('%s %s -I''%s'' %s %s',...
-        comp_flags, link_flags, fullfile(mexopencv.root(),'include'), ...
-        cv_cflags, cv_libs);
-    if ~mexopencv.isOctave()
-        mex_flags = ['-largeArrayDims ' mex_flags];
-    end
-    if opts.verbose > 1
-        mex_flags = ['-v ' mex_flags];    % verbose mex output
-    elseif opts.verbose == 0 && ~mexopencv.isOctave() && ~verLessThan('matlab', '8.3')
-        mex_flags = ['-silent ' mex_flags];  % R2014a
-    end
-    if opts.debug
-        mex_flags = ['-g ' mex_flags];    % debug vs. optimized builds
-    else
-        if ~mexopencv.isOctave()
-            mex_flags = ['-O ' mex_flags];
-        else
-            mex_flags = ['-O2 ' mex_flags];
-        end
-    end
+    mex_flags = mex_options(opts);
 
     % Compile MxArray and any other shared sources into OBJs (compile-only)
-    if ~mexopencv.isOctave()
-        objext = 'obj';
-    else
-        objext = 'o';
-    end
     files = prepare_source_files(...
         fullfile(mexopencv.root(),'src'), 'cpp', ...
-        fullfile(mexopencv.root(),'lib'), objext);
+        fullfile(mexopencv.root(),'lib'), objext());
     for i=1:numel(files)
-        if opts.force || compile_needed(files(i).src, files(i).dst)
+        if compile_needed(files(i).src, files(i).dst, opts)
             if ~mexopencv.isOctave()
                 cmd = sprintf('mex %s -c ''%s'' -outdir ''%s''', ...
                     mex_flags, files(i).src, fullfile(mexopencv.root(),'lib'));
@@ -160,10 +98,9 @@ if ispc % Windows
         end
     end
     objs = strtrim(sprintf(' ''%s''',files.dst));
-    %objs = fullfile(mexopencv.root(),'lib',['*.' objext]);
+    %objs = fullfile(mexopencv.root(),'lib',['*.' objext()]);
 
-    % Build MEX files
-    files = collect_mex_files(opts);
+    % show progress
     if opts.progressbar
         if ~mexopencv.isOctave()
             cancellation = {'CreateCancelBtn','setappdata(gcbf,''cancel'',true)'};
@@ -176,12 +113,15 @@ if ispc % Windows
         setappdata(hWait, 'cancel',false);
         wbCleanObj = onCleanup(@() delete(hWait));  % close(hWait)
     end
+
+    % Build MEX files
+    files = collect_mex_files(opts);
     for i = 1:numel(files)
         if opts.progressbar
             waitbar(i/numel(files), hWait, strrep(files(i).name,'_','\_'));
             if getappdata(hWait, 'cancel'), break; end
         end
-        if opts.force || compile_needed(files(i).src, files(i).dst)
+        if compile_needed(files(i).src, files(i).dst, opts)
             if ~mexopencv.isOctave()
                 cmd = sprintf('mex %s ''%s'' %s -output ''%s''',...
                     mex_flags, files(i).src, objs, files(i).out);
@@ -207,16 +147,32 @@ if ispc % Windows
     % check both OpenCV/mexopencv folders are on the appropriate paths
     check_path_opencv(opts);
     check_path_mexopencv(opts);
+end
 
-else % Unix
+end
+
+%%
+% Helper functions for Unix
+%
+
+function makefile_unix(opts)
+    %MAKEFILE_UNIX  Builds using a makefile on Unix platforms
+    %
+
     options = {};
-    if mexopencv.isOctave(), options = [options 'WITH_OCTAVE=1']; end
     if opts.dryrun         , options = [options '--dry-run']; end
     if opts.force          , options = [options '--always-make']; end
     if opts.verbose < 1    , options = [options '--silent']; end
     if opts.verbose > 1    , options = [options 'CFLAGS+=-v']; end
     if opts.debug          , options = [options 'CFLAGS+=-g']; end
     if ~isempty(opts.extra), options = [options opts.extra]; end
+
+    if mexopencv.isOctave()
+        options = ['WITH_OCTAVE=1' options];
+    end
+    if opts.test && opts.opencv_contrib
+        options = ['TEST_CONTRIB=true' options];
+    end
 
     targets = {'all'};
     if opts.clean          , targets = ['clean' targets]; end
@@ -231,29 +187,116 @@ else % Unix
     system(cmd);
 end
 
+%%
+% Helper functions for Windows
+%
+
+function target_clean(opts)
+    %TARGET_CLEAN  make clean
+    %
+
+    % files to delete
+    del_cmds = {
+        fullfile('+cv', ['*.' mexext]) ;
+        fullfile('+cv', '*.pdb') ;
+        fullfile('+cv', '*.idb') ;
+        fullfile('+cv', 'private', ['*.' mexext]) ;
+        fullfile('+cv', 'private', '*.pdb') ;
+        fullfile('+cv', 'private', '*.idb') ;
+        fullfile('+cv', '+test', 'private', ['*.' mexext]) ;
+        fullfile('+cv', '+test', 'private', '*.pdb') ;
+        fullfile('+cv', '+test', 'private', '*.idb') ;
+        fullfile('lib', '*.obj') ;
+        fullfile('lib', '*.o') ;
+        fullfile('lib', '*.lib') ;
+        fullfile('lib', '*.pdb') ;
+        fullfile('lib', '*.idb')
+    };
+    if opts.opencv_contrib
+        del_cmds = [del_cmds ; ...
+            fullfile('opencv_contrib', '+cv', ['*.' mexext]) ; ...
+            fullfile('opencv_contrib', '+cv', '*.pdb') ; ...
+            fullfile('opencv_contrib', '+cv', '*.idb') ; ...
+            fullfile('opencv_contrib', '+cv', 'private', ['*.' mexext]) ; ...
+            fullfile('opencv_contrib', '+cv', 'private', '*.pdb') ; ...
+            fullfile('opencv_contrib', '+cv', 'private', '*.idb') ...
+        ];
+    end
+
+    % delete files
+    if opts.verbose > 0, fprintf('Cleaning all generated files...\n'); end
+    for i=1:numel(del_cmds)
+        cmd = fullfile(mexopencv.root(), del_cmds{i});
+        if opts.verbose > 0, disp(cmd); end
+        if ~opts.dryrun, delete(cmd); end
+    end
 end
 
-%%
-% Helper functions for windows
-%
+function target_test(opts)
+    %TARGET_TEST  make test
+    %
+
+    if opts.verbose > 0, fprintf('Running unit-tests...\n'); end
+    cd(fullfile(mexopencv.root(),'test'));
+    if ~opts.dryrun, UnitTest(opts.opencv_contrib); end
+end
+
+function mex_flags = mex_options(opts)
+    %MEX_OPTIONS  Construct options string to pass to MEX command
+    %
+    % See also: mex
+    %
+
+    % compiler/linker flags
+    [cv_cflags, cv_libs] = pkg_config(opts);
+    [comp_flags, link_flags] = compilation_flags(opts);
+    mex_flags = sprintf('%s %s -I''%s'' %s %s',...
+        comp_flags, link_flags, fullfile(mexopencv.root(),'include'), ...
+        cv_cflags, cv_libs);
+
+    % large-array-handling API for 64-bit platforms
+    if ~mexopencv.isOctave()
+        mex_flags = ['-largeArrayDims ' mex_flags];
+    end
+
+    % verbosity
+    if opts.verbose > 1
+        % verbose mex output
+        mex_flags = ['-v ' mex_flags];
+    elseif opts.verbose < 1 && ~mexopencv.isOctave() && ~verLessThan('matlab', '8.3')
+        % suppress mex messages (only R2014a and up)
+        mex_flags = ['-silent ' mex_flags];
+    end
+
+    % debug vs. optimized builds
+    if opts.debug
+        mex_flags = ['-g ' mex_flags];
+    else
+        if ~mexopencv.isOctave()
+            mex_flags = ['-O ' mex_flags];
+        else
+            mex_flags = ['-O2 ' mex_flags];
+        end
+    end
+end
 
 function [cflags,libs] = pkg_config(opts)
     %PKG_CONFIG  constructs OpenCV-related option flags for Windows
     %
 
-    I_path = fullfile(opts.opencv_path,'include');
+    I_path = fullfile(opts.opencv_path, 'include');
     if ~exist(I_path,'dir')
         error('mexopencv:make', 'OpenCV include path not found: %s', I_path);
     end
 
-    L_path = fullfile(opts.opencv_path,arch_str(),compiler_str(),'lib');
+    L_path = fullfile(opts.opencv_path, arch_str(), compiler_str(), 'lib');
     if ~exist(L_path,'dir')
         error('mexopencv:make', 'OpenCV library path not found: %s', L_path);
     end
 
     l_options = strcat({' -l'}, lib_names(L_path));
     if opts.debug
-        l_options = strcat(l_options,'d');    % link against debug binaries
+        l_options = strcat(l_options, 'd');    % link against debug binaries
     end
     l_options = [l_options{:}];
 
@@ -266,6 +309,7 @@ function s = arch_str()
     %
     % See also: mexext, computer
     %
+
     persistent cacheval;
     if isempty(cacheval)
         if ~mexopencv.isOctave()
@@ -287,6 +331,7 @@ function s = compiler_str()
     %
     % See also: mex.getCompilerConfigurations
     %
+
     if mexopencv.isOctave()
         s = 'mingw';
     else
@@ -310,6 +355,8 @@ function s = compiler_str()
                 end
             elseif ~isempty(strfind(cc.Name, 'SDK'))  % Windows SDK
                 switch cc.Version
+                    case '10.0'
+                        s = 'vc14';    % VS2015
                     case '8.1'
                         s = 'vc12';    % VS2013
                     case '8.0'
@@ -324,7 +371,7 @@ function s = compiler_str()
             end
         elseif strcmp(cc.Manufacturer, 'Intel')  % Intel C++ Composer
             % TODO: check versions 11.0, 12.0, 13.0, 14.0, 15.0
-        elseif ~isempty(strfind(cc.Name, 'GNU'))  % MinGW (GNU GCC)
+        elseif strcmp(cc.Manufacturer, 'GNU')  % MinGW (GNU GCC)
             s = 'mingw';
         end
         if isempty(s)
@@ -346,22 +393,32 @@ function [comp_flags,link_flags] = compilation_flags(opts)
     if ~mexopencv.isOctave()
         % override _SECURE_SCL for VS versions prior to VS2010,
         % or when linking against debug OpenCV binaries
-        c = mex.getCompilerConfigurations('C++','Selected');
+        c = mex.getCompilerConfigurations('C++', 'Selected');
         isVS = strcmp(c.Manufacturer,'Microsoft') && ~isempty(strfind(c.Name,'Visual'));
         if isVS && (str2double(c.Version) < 10 || opts.debug)
             comp_flags{end+1} = '/D_SECURE_SCL=1';
         end
+        % link against debug CRT
         if isVS && opts.debug
-            comp_flags{end+1} = '/MDd';   % link against debug CRT
+            comp_flags{end+1} = '/MDd';
         end
     else
+        % less strict compilation needed for Octave
         comp_flags{end+1} = '-fpermissive';
     end
 
-    % show all compiler warnings, and verbose output from linker
+    % show all compiler warnings
     if opts.verbose > 2
         comp_flags{end+1} = '-Wall';
+        if mexopencv.isOctave()
+            comp_flags{end+1} = '-Wextra';
+        end
+    end
+
+    % show verbose output from compiler/linker
+    if opts.verbose > 3
         if ~mexopencv.isOctave()
+            comp_flags{end+1} = '/showIncludes';
             link_flags{end+1} = '/VERBOSE';
         else
             comp_flags{end+1} = '--verbose';
@@ -396,11 +453,12 @@ end
 function l = lib_names(L_path)
     %LIB_NAMES  return library names
     %
+
     if ~mexopencv.isOctave()
-        d = dir( fullfile(L_path,'opencv_*.lib') );
+        d = dir(fullfile(L_path, 'opencv_*.lib'));
         l = unique(regexprep({d.name}, 'd?\.lib$', ''));
     else
-        d = dir( fullfile(L_path,'libopencv_*.a') );
+        d = dir(fullfile(L_path, 'libopencv_*.a'));
         l = unique(regexprep({d.name}, 'd?(?:\.dll)?\.a$', ''));
         l = regexprep(l, '^(?:lib)?', '');
     end
@@ -409,15 +467,31 @@ function l = lib_names(L_path)
     end
 end
 
-function r = compile_needed(src, dst)
+function r = compile_needed(src, dst, opts)
     %COMPILE_NEEDED  check timestamps
     %
-    if ~exist(dst, 'file')
+
+    if opts.force
+        r = true;
+    elseif ~exist(dst, 'file')
         r = true;
     else
         d1 = dir(src);
         d2 = dir(dst);
         r = (d1.datenum >= d2.datenum);
+    end
+end
+
+function o = objext()
+    %OBJEXT  Extension for object files compiled in C/C++
+    %
+    % See also: mexext
+    %
+
+    if ~mexopencv.isOctave()
+        o = 'obj';
+    else
+        o = 'o';
     end
 end
 
@@ -450,28 +524,28 @@ function files = collect_mex_files(opts)
 
     files = {};
 
-    % ROOT\src\+cv\*.cpp
+    % MCVROOT\src\+cv\*.cpp
     files{end+1} = prepare_source_files(...
         fullfile(mexopencv.root(),'src','+cv'), 'cpp', ...
         fullfile(mexopencv.root(),'+cv'), mexext);
 
-    % ROOT\src\+cv\private\*.cpp
+    % MCVROOT\src\+cv\private\*.cpp
     files{end+1} = prepare_source_files(...
         fullfile(mexopencv.root(),'src','+cv','private'), 'cpp', ...
         fullfile(mexopencv.root(),'+cv','private'), mexext);
 
-    % ROOT\src\+cv\+test\private\*.cpp
+    % MCVROOT\src\+cv\+test\private\*.cpp
     files{end+1} = prepare_source_files(...
         fullfile(mexopencv.root(),'src','+cv','+test','private'), 'cpp', ...
         fullfile(mexopencv.root(),'+cv','+test','private'), mexext);
 
     if opts.opencv_contrib
-        % ROOT\opencv_contrib\src\+cv\*.cpp
+        % MCVROOT\opencv_contrib\src\+cv\*.cpp
         files{end+1} = prepare_source_files(...
             fullfile(mexopencv.root(),'opencv_contrib','src','+cv'), 'cpp', ...
             fullfile(mexopencv.root(),'opencv_contrib','+cv'), mexext);
 
-        % ROOT\opencv_contrib\src\+cv\private\*.cpp
+        % MCVROOT\opencv_contrib\src\+cv\private\*.cpp
         files{end+1} = prepare_source_files(...
             fullfile(mexopencv.root(),'opencv_contrib','src','+cv','private'), 'cpp', ...
             fullfile(mexopencv.root(),'opencv_contrib','+cv','private'), mexext);
@@ -488,10 +562,10 @@ function check_path_opencv(opts)
     %
 
     % check system PATH environment variable
-    cv_folder = fullfile(opts.opencv_path,arch_str(),compiler_str(),'bin');
+    cv_folder = fullfile(opts.opencv_path, arch_str(), compiler_str(), 'bin');
     p = getenv('PATH');
     C = textscan(p, '%s', 'Delimiter',pathsep());
-    if ~any(strcmpi(cv_folder,C{1}))
+    if ~any(strcmpi(cv_folder, C{1}))
         % reminder
         if opts.verbose > 0
             disp('To finish the setup, add OpenCV bin folder to the system');
@@ -526,9 +600,22 @@ function check_path_mexopencv(opts)
             addpath(mexopencv.root(), '-end');
         end
     end
-    if opts.opencv_contrib && ~opts.dryrun && ...
-            ~any(strcmpi(fullfile(mexopencv.root(),'opencv_contrib'), C{1}))
-        addpath(fullfile(mexopencv.root(),'opencv_contrib'), '-end');
+
+    % same for contrib modules
+    if opts.opencv_contrib
+        mcv_contrib = fullfile(mexopencv.root(),'opencv_contrib');
+        if ~any(strcmpi(mcv_contrib, C{1}))
+            % reminder
+            if opts.verbose > 0
+                disp('To enable opencv_contrib, add it to MATLAB search path.');
+                fprintf(' addpath(''%s'')\n', mcv_contrib);
+            end
+
+            % add contrib to path temporarily for this session
+            if ~opts.dryrun
+                addpath(mcv_contrib, '-end');
+            end
+        end
     end
 end
 
@@ -555,7 +642,7 @@ function opts = getargs(varargin)
     opts.extra = '';                 % extra options to be passed to MAKE (Unix only)
 
     nargs = length(varargin);
-    if mod(nargs,2)~=0
+    if mod(nargs,2) ~= 0
         error('mexopencv:make', 'Wrong number of arguments.');
     end
 

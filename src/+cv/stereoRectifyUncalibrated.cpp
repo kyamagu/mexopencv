@@ -42,10 +42,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
         Mat points1(rhs[0].toMat(CV_64F)),
             points2(rhs[0].toMat(CV_64F));
-        if (points1.channels() == 1 && points1.cols == 2)
-            points1 = points1.reshape(2,0);
-        if (points2.channels() == 1 && points2.cols == 2)
-            points2 = points2.reshape(2,0);
         b = stereoRectifyUncalibrated(points1, points2, F, imgSize, H1, H2,
             threshold);
     }

@@ -32,17 +32,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
-    double focal = 1.0;
-    Point2d pp(0,0);
+    Mat cameraMatrix = Mat::eye(3, 3, CV_64F);
     int method = cv::RANSAC;
     double prob = 0.999;
     double threshold = 1.0;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key == "Focal")
-            focal = rhs[i+1].toDouble();
-        else if (key == "PrincipalPoint")
-            pp = rhs[i+1].toPoint_<double>();
+        if (key == "CameraMatrix")
+            cameraMatrix = rhs[i+1].toMat(CV_64F);
         else if (key == "Method")
             method = (rhs[i+1].isChar()) ?
                 Method[rhs[i+1].toString()] : rhs[i+1].toInt();
@@ -60,14 +57,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
         Mat points1(rhs[0].toMat(CV_64F)),
             points2(rhs[1].toMat(CV_64F));
-        E = findEssentialMat(points1, points2, focal, pp, method, prob,
-            threshold, (nlhs>1 ? mask : noArray()));
+        E = findEssentialMat(points1, points2, cameraMatrix, method,
+            prob, threshold, (nlhs>1 ? mask : noArray()));
     }
     else if (rhs[0].isCell() && rhs[1].isCell()) {
         vector<Point2d> points1(rhs[0].toVector<Point2d>()),
                         points2(rhs[1].toVector<Point2d>());
-        E = findEssentialMat(points1, points2, focal, pp, method, prob,
-            threshold, (nlhs>1 ? mask : noArray()));
+        E = findEssentialMat(points1, points2, cameraMatrix, method,
+            prob, threshold, (nlhs>1 ? mask : noArray()));
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error", "Invalid input");

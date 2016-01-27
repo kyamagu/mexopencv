@@ -42,5 +42,35 @@
 % normalized. If you want to only use the mask to calculate the norm or
 % min-max but modify the whole array, you can use cv.norm and Mat::convertTo.
 %
+% ## Example
+% Possible usage with some positive example data:
+%
+%    positiveData = [2.0, 8.0, 10.0];
+%
+%    % Norm to probability (total count)
+%    % sum(numbers) = 20.0
+%    % 2.0      0.1     (2.0/20.0)
+%    % 8.0      0.4     (8.0/20.0)
+%    % 10.0     0.5     (10.0/20.0)
+%    normalizedData_l1 = cv.normalize(positiveData, 'NormType','L1');
+%
+%    % Norm to unit vector: ||positiveData|| = 1.0
+%    % 2.0      0.15
+%    % 8.0      0.62
+%    % 10.0     0.77
+%    normalizedData_l2 = cv.normalize(positiveData, 'NormType','L2');
+%
+%    % Norm to max element
+%    % 2.0      0.2     (2.0/10.0)
+%    % 8.0      0.8     (8.0/10.0)
+%    % 10.0     1.0     (10.0/10.0)
+%    normalizedData_inf = cv.normalize(positiveData, 'NormType','Inf');
+%
+%    % Norm to range [0.0;1.0]
+%    % 2.0      0.0     (shift to left border)
+%    % 8.0      0.75    (6.0/8.0)
+%    % 10.0     1.0     (shift to right border)
+%    normalizedData_minmax = cv.normalize(positiveData, 'NormType','MinMax');
+%
 % See also: cv.norm, norm, min, max
 %

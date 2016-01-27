@@ -178,13 +178,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        // HACK: we must do this one sample at a time!
-        //TODO: https://github.com/Itseez/opencv/pull/4167
-        Mat samples(rhs[2].toMat(CV_32F));
-        Mat results(samples.rows, 1, CV_32S);
-        float f = 0;
-        for (size_t i=0; i<samples.rows; ++i)
-            f = obj->predict(samples.row(i), results.row(i), flags);
+        Mat samples(rhs[2].toMat(CV_32F)),
+            results;
+        float f = obj->predict(samples, results, flags);
         plhs[0] = MxArray(results);
         if (nlhs>1)
             plhs[1] = MxArray(f);
@@ -202,8 +198,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        // HACK: we must do this one sample at a time!
-        //TODO: https://github.com/Itseez/opencv/pull/4167
+        //HACK: we must do this one sample at a time to avoid incorrect outputProbs
+        //TODO: https://github.com/Itseez/opencv/issues/5911
         Mat inputs(rhs[2].toMat(CV_32F));
         Mat outputs(inputs.rows, 1, CV_32S),
             outputProbs;
