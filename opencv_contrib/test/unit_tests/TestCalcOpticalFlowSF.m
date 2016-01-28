@@ -20,16 +20,13 @@ classdef TestCalcOpticalFlowSF
             im1 = TestCalcOpticalFlowSF.im;
             im2 = circshift(im1, [0 1]);
             flow = cv.calcOpticalFlowSF(im1, im2);
+            validateattributes(flow, {'single'}, ...
+                {'3d', 'size',[size(im1,1) size(im1,2) 2]});
         end
 
         function test_2
-            %TODO: crashes MATLAB
-            if true
-                disp('SKIP');
-                return;
-            end
-            prevImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale1.png'), 'Grayscale',true);
-            nextImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'), 'Grayscale',true);
+            prevImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale1.png'), 'Color',true);
+            nextImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'), 'Color',true);
             flow = cv.calcOpticalFlowSF(prevImg, nextImg);
             validateattributes(flow, {'single'}, ...
                 {'3d', 'size',[size(prevImg,1) size(prevImg,2) 2]});

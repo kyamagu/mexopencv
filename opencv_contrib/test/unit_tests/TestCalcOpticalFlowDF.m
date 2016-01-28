@@ -20,6 +20,8 @@ classdef TestCalcOpticalFlowDF
             im1 = TestCalcOpticalFlowDF.im;
             im2 = circshift(im1, [0 1]);
             flow = cv.calcOpticalFlowDF(im1, im2);
+            validateattributes(flow, {'single'}, ...
+                {'3d', 'size',[size(im1,1) size(im1,2) 2]});
         end
 
         function test_2
