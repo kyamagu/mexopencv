@@ -255,6 +255,15 @@ cv::Ptr<cv::xfeatures2d::LATCH> createLATCH(
 cv::Ptr<cv::xfeatures2d::DAISY> createDAISY(
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
+
+/** Create an instance of MSDDetector using options in arguments
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to an instance cv::xfeatures2d::MSDDetector
+ */
+cv::Ptr<cv::xfeatures2d::MSDDetector> createMSDDetector(
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
 #endif
 
 /** Factory function for FeatureDetector creation
@@ -271,6 +280,7 @@ cv::Ptr<cv::xfeatures2d::DAISY> createDAISY(
  *    - "SIFT" (requires `xfeatures2d` module)
  *    - "SURF" (requires `xfeatures2d` module)
  *    - "StarDetector" (requires `xfeatures2d` module)
+ *    - "MSDDetector" (requires `xfeatures2d` module)
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
  * @return smart pointer to an instance cv::FeatureDetector

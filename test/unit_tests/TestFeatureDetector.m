@@ -9,7 +9,7 @@ classdef TestFeatureDetector
             'GFTTDetector', 'SimpleBlobDetector', 'MSER', ...
             'BRISK', 'ORB', 'KAZE', 'AKAZE', ...
             ... % xfeatures2d (opencv_contrib)
-            'SIFT', 'SURF', 'StarDetector'
+            'SIFT', 'SURF', 'StarDetector', 'MSDDetector'
         };
     end
 

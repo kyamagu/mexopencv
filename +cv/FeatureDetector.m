@@ -44,6 +44,8 @@ classdef FeatureDetector < handle
             %       * __SURF__ see cv.SURF (requires `xfeatures2d` module)
             %       * __StarDetector__ see cv.StarDetector (requires
             %             `xfeatures2d` module)
+            %       * __MSDDetector__ see cv.MSDDetector (requires
+            %             `xfeatures2d` module)
             %
             % ## Options
             % Refer to the constructors of each feature detector for a
