@@ -2,7 +2,7 @@
  * @file mexopencv_shape.cpp
  * @author Amro
  * @date 2015
-*/
+ */
 
 #include "mexopencv_shape.hpp"
 #include <typeinfo>

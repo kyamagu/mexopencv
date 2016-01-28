@@ -4,7 +4,7 @@ mexopencv
 [![AppVeyor](https://img.shields.io/appveyor/ci/kyamagu/mexopencv.svg)](https://ci.appveyor.com/project/kyamagu/mexopencv)
 [![License](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg)](LICENSE)
 
-Collection and a development kit of MATLAB MEX functions for OpenCV library
+Collection and a development kit of MATLAB MEX functions for OpenCV library.
 
 The package provides MATLAB MEX functions that interface a hundred of
 OpenCV APIs. Also the package contains C++ class that converts between
@@ -63,13 +63,11 @@ Build
 
 Prerequisite:
 
- * Unix: MATLAB, OpenCV (>= 3.0.0), g++, make, pkg-config
- * Windows: MATLAB, OpenCV (>= 3.0.0), supported compiler
-
-We also have preliminary support for Octave (>= 4.0.0).
+ * Unix: MATLAB or Octave (>= 4.0.0), OpenCV (>= 3.0.0), g++, make, pkg-config
+ * Windows: MATLAB or Octave (>= 4.0.0), OpenCV (>= 3.0.0), supported compiler
 
 Currently, mexopencv targets the final 3.1.0 stable version of OpenCV. You
-must built it against this exact version, rather than using the bleeding-edge
+must build it against this exact version, rather than using the bleeding-edge
 dev-version of `opencv` or `opencv_contrib`.
 
 Unix

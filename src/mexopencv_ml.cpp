@@ -2,7 +2,7 @@
  * @file mexopencv_ml.cpp
  * @author Amro
  * @date 2015
-*/
+ */
 
 #include "mexopencv_ml.hpp"
 using std::vector;

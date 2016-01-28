@@ -2,7 +2,7 @@
  * @file mexopencv_features2d.cpp
  * @author Amro
  * @date 2015
-*/
+ */
 
 #include "mexopencv_features2d.hpp"
 using std::vector;

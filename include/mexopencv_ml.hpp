@@ -7,7 +7,7 @@
  * Header file for MEX-functions that use ML module from OpenCV library.
  * This file includes maps for option processing, as well as functions for
  * creating instances of classes from parsed arguments.
-*/
+ */
 #ifndef __MEXOPENCV_ML_HPP__
 #define __MEXOPENCV_ML_HPP__
 

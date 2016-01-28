@@ -8,7 +8,7 @@
  * from OpenCV library. This file includes maps for option processing, as well
  * as functions for creating instances of Features2D-derived classes from
  * parsed arguments.
-*/
+ */
 #ifndef __MEXOPENCV_FEATURES2D_HPP__
 #define __MEXOPENCV_FEATURES2D_HPP__
 

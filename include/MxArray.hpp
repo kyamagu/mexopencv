@@ -116,7 +116,7 @@ template<> struct MxTypes<bool> {
  * @sa cv::redirectError
  */
 int MexErrorHandler(int status, const char *func_name, const char *err_msg,
-    const char *file_name, int line, void * /*userdata*/);
+    const char *file_name, int line, void *userdata);
 
 /** mxArray object wrapper for data conversion and manipulation.
  */
