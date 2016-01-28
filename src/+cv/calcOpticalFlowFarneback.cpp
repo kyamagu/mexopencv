@@ -27,8 +27,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Option processing
     Mat flow;
     double pyrScale = 0.5;
-    int levels = 1;
-    int winsize = 3;
+    int levels = 5;
+    int winsize = 13;
     int iterations = 10;
     int polyN = 5;
     double polySigma = 1.1;
