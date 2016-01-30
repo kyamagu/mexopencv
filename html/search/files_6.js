@@ -1,10 +1,13 @@
 var searchData=
 [
   ['gaussianblur_2ecpp',['GaussianBlur.cpp',['../_gaussian_blur_8cpp.html',1,'']]],
-  ['gbtrees_5f_2ecpp',['GBTrees_.cpp',['../_g_b_trees___8cpp.html',1,'']]],
+  ['generalizedhoughballard_5f_2ecpp',['GeneralizedHoughBallard_.cpp',['../_generalized_hough_ballard___8cpp.html',1,'']]],
+  ['generalizedhoughguil_5f_2ecpp',['GeneralizedHoughGuil_.cpp',['../_generalized_hough_guil___8cpp.html',1,'']]],
   ['getaffinetransform_2ecpp',['getAffineTransform.cpp',['../get_affine_transform_8cpp.html',1,'']]],
   ['getbuildinformation_2ecpp',['getBuildInformation.cpp',['../get_build_information_8cpp.html',1,'']]],
+  ['getdefaultnewcameramatrix_2ecpp',['getDefaultNewCameraMatrix.cpp',['../get_default_new_camera_matrix_8cpp.html',1,'']]],
   ['getderivkernels_2ecpp',['getDerivKernels.cpp',['../get_deriv_kernels_8cpp.html',1,'']]],
+  ['getgaborkernel_2ecpp',['getGaborKernel.cpp',['../get_gabor_kernel_8cpp.html',1,'']]],
   ['getgaussiankernel_2ecpp',['getGaussianKernel.cpp',['../get_gaussian_kernel_8cpp.html',1,'']]],
   ['getoptimalnewcameramatrix_2ecpp',['getOptimalNewCameraMatrix.cpp',['../get_optimal_new_camera_matrix_8cpp.html',1,'']]],
   ['getperspectivetransform_2ecpp',['getPerspectiveTransform.cpp',['../get_perspective_transform_8cpp.html',1,'']]],
@@ -12,7 +15,11 @@ var searchData=
   ['getrotationmatrix2d_2ecpp',['getRotationMatrix2D.cpp',['../get_rotation_matrix2_d_8cpp.html',1,'']]],
   ['getstructuringelement_2ecpp',['getStructuringElement.cpp',['../get_structuring_element_8cpp.html',1,'']]],
   ['gettextsize_2ecpp',['getTextSize.cpp',['../get_text_size_8cpp.html',1,'']]],
+  ['getvaliddisparityroi_2ecpp',['getValidDisparityROI.cpp',['../get_valid_disparity_r_o_i_8cpp.html',1,'']]],
+  ['gfttdetector_5f_2ecpp',['GFTTDetector_.cpp',['../_g_f_t_t_detector___8cpp.html',1,'']]],
+  ['glob_2ecpp',['glob.cpp',['../glob_8cpp.html',1,'']]],
   ['goodfeaturestotrack_2ecpp',['goodFeaturesToTrack.cpp',['../good_features_to_track_8cpp.html',1,'']]],
   ['grabcut_2ecpp',['grabCut.cpp',['../grab_cut_8cpp.html',1,'']]],
-  ['grouprectangles_2ecpp',['groupRectangles.cpp',['../group_rectangles_8cpp.html',1,'']]]
+  ['grouprectangles_2ecpp',['groupRectangles.cpp',['../group_rectangles_8cpp.html',1,'']]],
+  ['grouprectangles_5fmeanshift_2ecpp',['groupRectangles_meanshift.cpp',['../group_rectangles__meanshift_8cpp.html',1,'']]]
 ];

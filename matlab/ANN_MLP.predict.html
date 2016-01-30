@@ -15,15 +15,34 @@
          </tr>
       </table>
       <div class="title">cv.ANN_MLP/predict</div>
-      <div class="helpcontent"><p>Predicts the response for input samples.</p>
+      <div class="helpcontent"><p>Predicts response(s) for the provided sample(s)</p>
 
-<pre><code>results = classifier.predict(samples)
+<pre><code>[results,f] = model.predict(samples)
+[...] = model.predict(..., 'OptionName', optionValue, ...)
 </code></pre>
 
-<p>The method estimates the most probable classes for input vectors.
-Input vectors (one or more) are stored as rows of the matrix
-samples.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="ANN_MLP.html">cv.ANN_MLP</a> <a href="ANN_MLP.train.html">cv.ANN_MLP/train</a></div>
+<h2> Input</h2>
+
+<ul>
+<li><strong>samples</strong> The input samples (one or more) stored as rows of
+the floating-point matrix.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>results</strong> Predicted responses for corresponding samples.</li>
+<li><strong>f</strong> Returned when you pass one sample. Otherwise unused and
+returns 0.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Flags</strong> The optional predict flags, model-dependent.
+Not used. default 0</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="ANN_MLP.train.html">cv.ANN_MLP/train</a>, <a href="ANN_MLP.calcError.html">cv.ANN_MLP/calcError</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

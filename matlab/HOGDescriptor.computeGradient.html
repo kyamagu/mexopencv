@@ -1,0 +1,64 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.HOGDescriptor/computeGradient</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.HOGDescriptor/computeGradient</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.HOGDescriptor/computeGradient</div>
+      <div class="helpcontent"><p>Computes gradient</p>
+
+<pre><code>[grad, angleOfs] = hog.computeGradient(im)
+[...] = hog.computeGradient(im, 'Option', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>im</strong> 8-bit 1- or 3-channel source image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>grad</strong> gradient magnitudes (2-channel float matrix of same
+size as the image plus padding).</li>
+<li><strong>angleOfs</strong> quantized gradient orientation with integers in
+the range <code>[0,NBins-1]</code> (2-channel 8-bit matrix of same
+size as the image plus the padding).</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>paddingTL</strong> Optional padding. default [0,0]</li>
+<li><strong>paddingBR</strong> Optional padding. default [0,0]</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.compute.html">cv.HOGDescriptor/compute</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

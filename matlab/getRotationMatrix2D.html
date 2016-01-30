@@ -17,35 +17,38 @@
       <div class="title">cv.getRotationMatrix2D</div>
       <div class="helpcontent"><p>Calculates an affine matrix of 2D rotation</p>
 
-<pre><code>T = <a href="getRotationMatrix2D.html">cv.getRotationMatrix2D</a>(center, angle, scale)
+<pre><code>M = <a href="getRotationMatrix2D.html">cv.getRotationMatrix2D</a>(center, angle, scale)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>center</strong> Center of the rotation in the source image.</li>
+<li><strong>center</strong> Center of the rotation in the source image <code>[x,y]</code>.</li>
 <li><strong>angle</strong> Rotation angle in degrees. Positive values mean counter-clockwise
-rotation (the coordinate origin is assumed to be the top-left
-corner).</li>
+rotation (the coordinate origin is assumed to be the top-left corner).</li>
 <li><strong>scale</strong> Isotropic scale factor.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>T</strong> The output affine transformation, 2x3 floating-point matrix.</li>
+<li><strong>M</strong> The output affine transformation, 2x3 double matrix.</li>
 </ul>
 
 <p>The function calculates the following matrix:</p>
 
-<pre><code> [ a, b, (1-a)*center.x-b*center.y ;
-  -b, a, b*center.x+(1-a)*center.y ]
+<pre><code> [ a, b, (1-a)*center(1) - b*center(2) ;
+  -b, a, b*center(1) + (1-a)*center(2) ]
 </code></pre>
 
 <p>where</p>
 
 <pre><code> a = scale * cos(angle)
- b = scale * sin(angle)</code></pre>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="getAffineTransform.html">cv.getAffineTransform</a>, <a href="warpAffine.html">cv.warpAffine</a></div>
+ b = scale * sin(angle)
+</code></pre>
+
+<p>The transformation maps the rotation center to itself. If this is not the
+target, adjust the shift.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="getAffineTransform.html">cv.getAffineTransform</a>, <a href="warpAffine.html">cv.warpAffine</a>, <a href="transform.html">cv.transform</a></div>
    </body>
 </html>

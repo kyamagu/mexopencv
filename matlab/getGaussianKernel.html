@@ -17,40 +17,42 @@
       <div class="title">cv.getGaussianKernel</div>
       <div class="helpcontent"><p>Returns Gaussian filter coefficients</p>
 
-<pre><code>kernel = <a href="getGaussianKernel.html">cv.getGaussianKernel</a>('OptionName', optionValue, ...)
-
+<pre><code>kernel = <a href="getGaussianKernel.html">cv.getGaussianKernel</a>()
+kernel = <a href="getGaussianKernel.html">cv.getGaussianKernel</a>('OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>kernel</strong> Output kernel.</li>
+<li><strong>kernel</strong> Output kernel of the specified size and type.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>KSize</strong> Aperture size. It should be odd (<code>ksize%2 ==1</code>) and positive.
-default 5.</li>
+<li><strong>KSize</strong> Aperture size. It should be odd (<code>mod(KSize,2)==1</code>) and
+positive. default 5.</li>
 <li><strong>Sigma</strong> Gaussian standard deviation. If it is non-positive, it is
-computed from ksize as <code>sigma = 0.3 * ((ksize-1) * 0.5 - 1) + 0.8</code>.
+computed from <code>KSize</code> as <code>sigma = 0.3 * ((KSize-1) * 0.5 - 1) + 0.8</code>.
 default -1.</li>
+<li><strong>KType</strong> Type of filter coefficients. It can be <code>single</code> or <code>double</code>.
+default <code>double</code>.</li>
 </ul>
 
-<p>The function computes and returns the ksize x 1 matrix of Gaussian filter
-coefficients</p>
+<p>The function computes and returns the <code>KSize x 1</code> matrix of Gaussian filter
+coefficients:</p>
 
-<pre><code> G_i = \alpha * \exp(-(i-(ksize-1)/2)^2/(2*\sigma)^2)
+<pre><code> G_i = alpha * exp( -(i - (KSize-1)/2)^2 / (2*sigma^2) )
 </code></pre>
 
-<p>where <code>i = 0, ..., ksize-1</code> and \alpha is the scale factor chosen so that
+<p>where <code>i = 0, ..., KSize-1</code> and <code>alpha</code> is the scale factor chosen so that
 <code>\sum_i G_i = 1</code>.</p>
 
 <p>Two of such generated kernels can be passed to <a href="sepFilter2D.html">cv.sepFilter2D</a>. Those
 functions automatically recognize smoothing kernels (a symmetrical kernel
 with sum of weights equal to 1) and handle them accordingly. You may also
 use the higher-level cv.GaussianBlur</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="sepFilter2D.html">cv.sepFilter2D</a> <a href="getDerivKernels.html">cv.getDerivKernels</a> <a href="getStructuringElement.html">cv.getStructuringElement</a>
-  <a href="GaussianBlur.html">cv.GaussianBlur</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="sepFilter2D.html">cv.sepFilter2D</a>, <a href="getDerivKernels.html">cv.getDerivKernels</a>, <a href="getStructuringElement.html">cv.getStructuringElement</a>,
+   <a href="GaussianBlur.html">cv.GaussianBlur</a></div>
    </body>
 </html>

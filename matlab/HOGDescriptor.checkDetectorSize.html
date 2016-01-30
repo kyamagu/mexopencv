@@ -17,15 +17,19 @@
       <div class="title">cv.HOGDescriptor/checkDetectorSize</div>
       <div class="helpcontent"><p>Checks the size of the detector is valid</p>
 
-<pre><code>s = hog.checkDetectorSize()
+<pre><code>tf = hog.checkDetectorSize()
 </code></pre>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>s</strong> a logical value, validity of detector size</li>
+<li><strong>tf</strong> a logical value, indicates validity of detector size.</li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.html">cv.HOGDescriptor</a></div>
+
+<p>The detector is considered valid if the coefficients vector is
+either empty or has length matching <code>hog.getDescriptorSize()</code> or
+<code>hog.getDescriptorSize()+1</code>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.SvmDetector.html">cv.HOGDescriptor/SvmDetector</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

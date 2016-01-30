@@ -1,0 +1,79 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.EM/CovarianceMatrixType</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.EM/CovarianceMatrixType</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.EM/CovarianceMatrixType</div>
+      <div class="helpcontent"><p>Constraint on covariance matrices which defines type of matrices.</p>
+
+<p>Possible values:</p>
+
+<ul>
+<li><strong>Spherical</strong> A scaled identity matrix <code>mu_k*I</code>. There is the only
+parameter <code>mu_k</code> to be estimated for each matrix. The option
+may be used in special cases, when the constraint is relevant,
+or as a first step in the optimization (for example in case
+when the data is preprocessed with cv.PCA). The results of
+such preliminary estimation may be passed again to the
+optimization procedure, this time with
+<code>CovarianceMatrixType='Diagonal'</code>.</li>
+<li><strong>Diagonal</strong> A diagonal matrix with positive diagonal elements.
+The number of free parameters is <code>d</code> for each matrix. This is
+most commonly used option yielding good estimation results.</li>
+<li><strong>Generic</strong> A symmetric positively defined matrix. The number of
+free parameters in each matrix is about <code>d^2/2</code>. It is not
+recommended to use this option, unless there is pretty
+accurate initial estimation of the parameters and/or a huge
+number of training samples.</li>
+<li><strong>Default</strong> Synonym for 'Diagonal'. This is the default.</li>
+</ul>
+</div><!--after help -->
+      <!--Property-->
+      <div class="sectiontitle">Property Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Constant</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Dependent</td>
+            <td>true</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Transient</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">GetAccess</td>
+            <td>'public'</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">SetAccess</td>
+            <td>'public'</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">GetObservable</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">SetObservable</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

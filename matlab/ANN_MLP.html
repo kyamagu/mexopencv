@@ -15,47 +15,60 @@
          </tr>
       </table>
       <div class="title">cv.ANN_MLP</div>
-      <div class="helpcontent"><p>Neural Networks</p>
+      <div class="helpcontent"><p>Artificial Neural Networks - Multi-Layer Perceptrons</p>
+
+<p>Unlike many other models in ML that are constructed and trained at once,
+in the MLP model these steps are separated. First, a network with the
+specified topology is created. All the weights are set to zeros. Then,
+the network is trained using a set of input and output vectors. The
+training procedure can be repeated more than once, that is, the weights
+can be adjusted based on the new training data.</p>
+
+<h2> Neural Networks</h2>
 
 <p>ML implements feed-forward artificial neural networks or, more
 particularly, multi-layer perceptrons (MLP), the most commonly used type
-of neural networks. MLP consists of the input layer, output layer, and one
-or more hidden layers. Each layer of MLP includes one or more neurons
-directionally linked with the neurons from the previous and the next layer.</p>
+of neural networks. MLP consists of the input layer, output layer, and
+one or more hidden layers. Each layer of MLP includes one or more
+neurons directionally linked with the neurons from the previous and the
+next layer. The example below represents a 3-layer perceptron with three
+inputs, two outputs, and the hidden layer including five neurons:</p>
+
+<p>&lt;&lt;<a href="http://docs.opencv.org/3.0.0/mlp.png">http://docs.opencv.org/3.0.0/mlp.png</a>&gt;&gt;</p>
 
 <p>All the neurons in MLP are similar. Each of them has several input links
-(it takes the output values from several neurons in the previous layer as
-input) and several output links (it passes the response to several neurons
-in the next layer). The values retrieved from the previous layer are
-summed up with certain weights, individual for each neuron, plus the bias
-term. The sum is transformed using the activation function  that may be
-also different for different neurons.</p>
+(it takes the output values from several neurons in the previous layer
+as input) and several output links (it passes the response to several
+neurons in the next layer). The values retrieved from the previous layer
+are summed up with certain weights, individual for each neuron, plus the
+bias  term. The sum is transformed using the activation function <code>f</code>
+that may be also different for different neurons.</p>
 
-<p>In other words, given the outputs <code>x_j</code> of the layer <code>n</code>, the outputs <code>y_i</code> of
-the layer <code>n+1</code> are computed as:</p>
+<p>&lt;&lt;<a href="http://docs.opencv.org/3.0.0/neuron_model.png">http://docs.opencv.org/3.0.0/neuron_model.png</a>&gt;&gt;</p>
 
-<pre><code>u_i = \sum_j (w_{i,j}^{n+1} * x_j) + w_{i,bias}^{n+1}
+<p>In other words, given the outputs <code>x_j</code> of the layer <code>n</code>, the outputs
+<code>y_i</code> of the layer <code>n+1</code> are computed as:</p>
+
+<pre><code>u_i = sum_j (w_{i,j}^{n+1} * x_j) + w_{i,bias}^{n+1}
 y_i = f(u_i)
 </code></pre>
 
-<p>Different activation functions may be used. OpenCV implements three
-standard functions:</p>
+<p>Different activation functions may be used. ML implements three standard
+functions:</p>
 
 <ul>
-<li><p>Identity:</p>
-<p>        f(x) = y</p>
-</li>
-<li><p>Symmetrical sigmoid: (default)</p>
-<p>        f(x) = \beta * (1-\exp{- \alpha * x}) / (1+\exp{- \alpha * x})</p>
-</li>
-<li><p>Gaussian function:</p>
-<p>        f(x) = \beta * \exp{- \alpha * x * x}</p>
-</li>
+<li><strong>Identity</strong>: Identity function <code>f(x) = y</code></li>
+<li><strong>Sigmoid</strong>: Symmetrical sigmoid, which is the default choice for MLP
+<code>f(x) = beta * (1-exp(-alpha*x)) / (1+exp(-alpha*x))</code></li>
+<li><strong>Gaussian</strong>: Gaussian function, which is not completely supported at
+the moment <code>f(x) = beta * exp(-alpha*x*x)</code></li>
 </ul>
 
-<p>In OpenCV, all the neurons have the same activation functions, with the
-same free parameters (\alpha,\beta) that are specified by user and are
-not altered by the training algorithms.</p>
+<p>&lt;&lt;<a href="http://docs.opencv.org/3.0.0/sigmoid_bipolar.png">http://docs.opencv.org/3.0.0/sigmoid_bipolar.png</a>&gt;&gt;</p>
+
+<p>In ML, all the neurons have the same activation functions, with the
+same free parameters (<code>alpha</code>, <code>beta</code>) that are specified by user and
+are not altered by the training algorithms.</p>
 
 <p>So, the whole trained network works as follows:</p>
 
@@ -68,48 +81,67 @@ activation functions.</li>
 <li> Pass outputs further downstream until you compute the output layer.</li>
 </ol>
 
-<p>So, to compute the network, you need to know all the weights <code>w_{i,j}^{n+1}</code>.
-The weights are computed by the training algorithm. The algorithm takes a
-training set, multiple input vectors with the corresponding output vectors,
-and iteratively adjusts the weights to enable the network to give the
-desired response to the provided input vectors.</p>
+<p>So, to compute the network, you need to know all the weights
+<code>w_{i,j}^{n+1}</code>. The weights are computed by the training algorithm. The
+algorithm takes a training set, multiple input vectors with the
+corresponding output vectors, and iteratively adjusts the weights to
+enable the network to give the desired response to the provided input
+vectors.</p>
 
-<p>The larger the network size (the number of hidden layers and their sizes)
-is, the more the potential network flexibility is. The error on the
-training set could be made arbitrarily small. But at the same time the
-learned network also learn the noise present in the training set, so
-the error on the test set usually starts increasing after the network size
-reaches a limit. Besides, the larger networks are trained much longer than
-the smaller ones, so it is reasonable to pre-process the data, using PCA
-or similar technique, and train a smaller network on only essential
-features.</p>
+<p>The larger the network size (the number of hidden layers and their
+sizes) is, the more the potential network flexibility is. The error on
+the training set could be made arbitrarily small. But at the same time
+the learned network also learn the noise present in the training set, so
+the error on the test set usually starts increasing after the network
+size reaches a limit. Besides, the larger networks are trained much
+longer than the smaller ones, so it is reasonable to pre-process the
+data, using <a href="PCA.html">cv.PCA</a> or similar technique, and train a smaller network on
+only essential features.</p>
 
 <p>Another MPL feature is an inability to handle categorical data as is.
 However, there is a workaround. If a certain feature in the input or
-output (in case of n-class classifier for n&gt;2) layer is categorical and
-can take M&gt;2 different values, it makes sense to represent it as a binary
-tuple of M elements, where the i-th element is 1 if and only if the
-feature is equal to the i-th value out of M possible. It increases the
-size of the input/output layer but speeds up the training algorithm
+output (in case of n-class classifier for <code>n&gt;2</code>) layer is categorical
+and can take <code>M&gt;2</code> different values, it makes sense to represent it as a
+binary tuple of <code>M</code> elements, where the i-th element is 1 if and only if
+the feature is equal to the i-th value out of <code>M</code> possible. It increases
+the size of the input/output layer but speeds up the training algorithm
 convergence and at the same time enables fuzzy values of such variables,
 that is, a tuple of probabilities instead of a fixed value.</p>
 
-<p>OpenCV implements two algorithms for training MLP's.The first algorithm
+<p>ML implements two algorithms for training MLP's.The first algorithm
 is a classical random sequential back-propagation algorithm. The second
 (default) one is a batch RPROP algorithm.</p>
 
-<ul>
-<li>[BackPropWikipedia] <a href="http://en.wikipedia.org/wiki/Backpropagation">http://en.wikipedia.org/wiki/Backpropagation</a>.
-Wikipedia article about the back-propagation algorithm.</li>
-<li>[LeCun98] LeCun, L. Bottou, G.B. Orr and K.-R. Muller, Efficient backprop,
+<h2> References</h2>
+
+<p>[BackPropWikipedia]:</p>
+
+<blockquote>
+<a href="http://en.wikipedia.org/wiki/Backpropagation">http://en.wikipedia.org/wiki/Backpropagation</a></blockquote>
+
+<p>.</p>
+
+<blockquote>
+<p>Wikipedia article about the back-propagation algorithm.</p>
+</blockquote>
+
+<p>[LeCun98]:</p>
+
+<blockquote>
+<p>LeCun, L. Bottou, G.B. Orr and K.-R. Muller, &quot;Efficient backprop&quot;,
 in Neural Networks Tricks of the Trade, Springer Lecture Notes in
-Computer Sciences 1524, pp.5-50, 1998.</li>
-<li>[RPROP93] M. Riedmiller and H. Braun, A Direct Adaptive Method for Faster
-Backpropagation Learning: The RPROP Algorithm, Proc. ICNN, San
-Francisco (1993).</li>
-</ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="ANN_MLP.ANN_MLP.html">cv.ANN_MLP/ANN_MLP</a> <a href="ANN_MLP.create.html">cv.ANN_MLP/create</a> <a href="ANN_MLP.train.html">cv.ANN_MLP/train</a>
-  <a href="ANN_MLP.predict.html">cv.ANN_MLP/predict</a></div>
+Computer Sciences 1524, pp.5-50, 1998.</p>
+</blockquote>
+
+<p>[RPROP93]:</p>
+
+<blockquote>
+<p>M. Riedmiller and H. Braun, &quot;A Direct Adaptive Method for Faster
+Backpropagation Learning: The RPROP Algorithm&quot;, Proc. ICNN, San
+Francisco (1993).</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="ANN_MLP.ANN_MLP.html">cv.ANN_MLP/ANN_MLP</a>, <a href="ANN_MLP.train.html">cv.ANN_MLP/train</a>, <a href="ANN_MLP.predict.html">cv.ANN_MLP/predict</a>,
+   nnstart, nprtool, nftool</div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -132,13 +164,57 @@ Francisco (1993).</li>
       <table class="summary-list">
          <tr class="summary-item">
             <td class="name"><a href="ANN_MLP.ANN_MLP.html">ANN_MLP</a></td>
-            <td class="m-help">Constructs MLP model&nbsp;</td>
+            <td class="m-help">Creates an empty ANN-MLP model&nbsp;</td>
          </tr>
       </table>
       <!--Properties-->
       <div class="sectiontitle"><a name="properties"></a>Property Summary
       </div>
       <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="ANN_MLP.ActivationFunction.html">ActivationFunction</a></td>
+            <td class="m-help">Activation function for all neurons.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="ANN_MLP.BackpropMomentumScale.html">BackpropMomentumScale</a></td>
+            <td class="m-help">BPROP: Strength of the momentum term (the difference between weights&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="ANN_MLP.BackpropWeightScale.html">BackpropWeightScale</a></td>
+            <td class="m-help">BPROP: Strength of the weight gradient term.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="ANN_MLP.LayerSizes.html">LayerSizes</a></td>
+            <td class="m-help">Integer vector specifying the number of neurons in each layer&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="ANN_MLP.RpropDW0.html">RpropDW0</a></td>
+            <td class="m-help">RPROP: Initial value `delta_0` of update-values `delta_ij`.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="ANN_MLP.RpropDWMax.html">RpropDWMax</a></td>
+            <td class="m-help">RPROP: Update-values upper limit `delta_max`.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="ANN_MLP.RpropDWMin.html">RpropDWMin</a></td>
+            <td class="m-help">RPROP: Update-values lower limit `delta_min`.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="ANN_MLP.RpropDWMinus.html">RpropDWMinus</a></td>
+            <td class="m-help">RPROP: Decrease factor `eta_minus`.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="ANN_MLP.RpropDWPlus.html">RpropDWPlus</a></td>
+            <td class="m-help">RPROP: Increase factor `eta_plus`.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="ANN_MLP.TermCriteria.html">TermCriteria</a></td>
+            <td class="m-help">Termination criteria of the training algorithm.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="ANN_MLP.TrainMethod.html">TrainMethod</a></td>
+            <td class="m-help">Training method of the MLP.&nbsp;</td>
+         </tr>
          <tr class="summary-item">
             <td class="name"><a href="ANN_MLP.id.html">id</a></td>
             <td class="m-help">Object ID&nbsp;</td>
@@ -161,16 +237,16 @@ Francisco (1993).</li>
                &nbsp;
                
             </td>
-            <td class="name"><a href="ANN_MLP.clear.html">clear</a></td>
-            <td class="m-help">Deallocates memory and resets the model state&nbsp;</td>
+            <td class="name"><a href="ANN_MLP.calcError.html">calcError</a></td>
+            <td class="m-help">Computes error on the training or test dataset&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
                &nbsp;
                
             </td>
-            <td class="name"><a href="ANN_MLP.create.html">create</a></td>
-            <td class="m-help">Constructs MLP with the specified topology&nbsp;</td>
+            <td class="name"><a href="ANN_MLP.clear.html">clear</a></td>
+            <td class="m-help">Clears the algorithm state&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -179,6 +255,14 @@ Francisco (1993).</li>
             </td>
             <td class="name"><a href="ANN_MLP.delete.html">delete</a></td>
             <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.empty.html">empty</a></td>
+            <td class="m-help">Returns true if the algorithm is empty&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -217,23 +301,23 @@ Francisco (1993).</li>
                &nbsp;
                
             </td>
-            <td class="name"><a href="ANN_MLP.get_layer_count.html">get_layer_count</a></td>
-            <td class="m-help">Returns the number of layers in the MLP&nbsp;</td>
+            <td class="name"><a href="ANN_MLP.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
                &nbsp;
                
             </td>
-            <td class="name"><a href="ANN_MLP.get_layer_sizes.html">get_layer_sizes</a></td>
-            <td class="m-help">Returns numbers of neurons in each layer of the MLP&nbsp;</td>
+            <td class="name"><a href="ANN_MLP.getVarCount.html">getVarCount</a></td>
+            <td class="m-help">Returns the number of variables in training samples&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
                &nbsp;
                
             </td>
-            <td class="name"><a href="ANN_MLP.get_weights.html">get_weights</a></td>
+            <td class="name"><a href="ANN_MLP.getWeights.html">getWeights</a></td>
             <td class="m-help">Returns neurons weights of the particular layer&nbsp;</td>
          </tr>
          <tr class="summary-item">
@@ -243,6 +327,22 @@ Francisco (1993).</li>
             </td>
             <td class="name"><a href="ANN_MLP.gt.html">gt</a></td>
             <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.isClassifier.html">isClassifier</a></td>
+            <td class="m-help">Returns true if the model is a classifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.isTrained.html">isTrained</a></td>
+            <td class="m-help">Returns true if the model is trained&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">Sealed 
@@ -266,7 +366,7 @@ Francisco (1993).</li>
                
             </td>
             <td class="name"><a href="ANN_MLP.load.html">load</a></td>
-            <td class="m-help">Loads the model from a file&nbsp;</td>
+            <td class="m-help">Loads algorithm from a file or a string&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -298,7 +398,7 @@ Francisco (1993).</li>
                
             </td>
             <td class="name"><a href="ANN_MLP.predict.html">predict</a></td>
-            <td class="m-help">Predicts the response for input samples.&nbsp;</td>
+            <td class="m-help">Predicts response(s) for the provided sample(s)&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -306,7 +406,23 @@ Francisco (1993).</li>
                
             </td>
             <td class="name"><a href="ANN_MLP.save.html">save</a></td>
-            <td class="m-help">Saves the model to a file&nbsp;</td>
+            <td class="m-help">Saves the algorithm parameters to a file or a string&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.setActivationFunction.html">setActivationFunction</a></td>
+            <td class="m-help">Initialize the activation function for each neuron&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ANN_MLP.setTrainMethod.html">setTrainMethod</a></td>
+            <td class="m-help">Sets training method and common parameters&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -314,7 +430,7 @@ Francisco (1993).</li>
                
             </td>
             <td class="name"><a href="ANN_MLP.train.html">train</a></td>
-            <td class="m-help">Trains the model&nbsp;</td>
+            <td class="m-help">Trains/updates the MLP&nbsp;</td>
          </tr>
       </table>
    </body>

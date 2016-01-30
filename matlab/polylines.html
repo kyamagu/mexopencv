@@ -25,31 +25,32 @@
 
 <ul>
 <li><strong>img</strong> Image.</li>
-<li><strong>pts</strong> Array of polygonal curves. That is, cell array of cell array of
-2-element vectors.</li>
+<li><strong>pts</strong> Array of polygonal curves, where each polygon is represented as an
+array of points. A cell array of cell arrays of 2-element vectors, in
+the form <code>{{[x,y], [x,y], ...}, ...}</code>, or a cell array of Nx2 matries.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>img</strong> Output image.</li>
+<li><strong>img</strong> Output image, same size and type as input <code>img</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>Closed</strong> Flag indicating whether the drawn polylines are closed or
-not. If they are closed, the function draws a line from the last
-vertex of each curve to its first vertex. default true.</li>
-<li><strong>Color</strong> 3-element floating point vector specifying line color.</li>
-<li><strong>Thickness</strong> Line thickness. default 1.</li>
-<li><strong>LineType</strong> Type of the line boundary. One of 8,4,'AA' (Anti-aliased
+<li><strong>Closed</strong> Flag indicating whether the drawn polylines are closed or not.
+If they are closed, the function draws a line from the last vertex of
+each curve to its first vertex. default true.</li>
+<li><strong>Color</strong> 3-element floating point vector specifying polyline color.
+default zeros</li>
+<li><strong>Thickness</strong> Thickness of the polyline edges. default 1.</li>
+<li><strong>LineType</strong> Type of the line segments. One of 8,4,'AA' (Anti-aliased
 line). default 8.</li>
-<li><strong>Shift</strong> Number of fractional bits in the vertex coordinates. default
-0.</li>
+<li><strong>Shift</strong> Number of fractional bits in the vertex coordinates. default 0.</li>
 </ul>
 
-<p>The function polylines draws one or more polygonal curves.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="circle.html">cv.circle</a> <a href="line.html">cv.line</a> <a href="rectangle.html">cv.rectangle</a> <a href="fillPoly.html">cv.fillPoly</a> <a href="fillConvexPoly.html">cv.fillConvexPoly</a></div>
+<p>The function <a href="polylines.html">cv.polylines</a> draws one or more polygonal curves.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="circle.html">cv.circle</a>, <a href="line.html">cv.line</a>, <a href="rectangle.html">cv.rectangle</a>, <a href="fillPoly.html">cv.fillPoly</a>, <a href="fillConvexPoly.html">cv.fillConvexPoly</a></div>
    </body>
 </html>

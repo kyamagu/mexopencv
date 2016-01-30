@@ -22,11 +22,6 @@ matches = matcher.radiusMatch(queryDescriptors, maxDistance)
 [...] = matcher.radiusMatch(..., 'OptionName', optionValue, ...)
 </code></pre>
 
-<p>For each query descriptor, the methods find such training descriptors
-that the distance between the query descriptor and the training
-descriptor is equal or smaller than <code>maxDistance</code>. Found matches
-are returned in the distance increasing order.</p>
-
 <h2> Input</h2>
 
 <ul>
@@ -35,7 +30,9 @@ are returned in the distance increasing order.</p>
 added to the train descriptors collection stored in the
 class object.</li>
 <li><strong>maxDistance</strong> Threshold for the distance between matched
-descriptors.</li>
+descriptors. Distance here means metric distance (e.g.
+Hamming distance), not the distance between coordinates
+(which is measured in Pixels)!</li>
 </ul>
 
 <h2> Output</h2>
@@ -58,21 +55,30 @@ that has the following fields:<ul>
 <li><strong>Mask</strong> default empty<ul>
 <li>In the first form, mask specifying permissible matches
 between an input query and train matrices of descriptors.
-Matrix of size <code>[size(queryDescriptors,1),size(trainDescriptors,1)]</code></li>
-<li>In the second form, set of masks. Each <code>masks{i}</code> specifies
-permissible matches between the input query descriptors and
-stored train descriptors from the i-th image <code>trainDescCollection{i}</code>.
-Cell array of length <code>length(trainDescriptors)</code>, each a matrix
-of size <code>[size(queryDescriptors,1),size(trainDescriptors{i},1)]</code></li>
+Matrix of size
+<code>[size(queryDescriptors,1),size(trainDescriptors,1)]</code>.</li>
+<li>In the second form, set of masks. Each <code>masks{i}</code>
+specifies permissible matches between the input query
+descriptors and stored train descriptors from the i-th
+image <code>trainDescCollection{i}</code>. Cell array of length
+<code>length(trainDescriptors)</code>, each a matrix of size
+<code>[size(queryDescriptors,1),size(trainDescriptors{i},1)]</code>.</li>
 </ul>
 </li>
-<li><strong>CompactResult</strong> Parameter used when the mask (or masks) is not
-empty. If <code>compactResult</code> is false, the <code>matches</code> vector has the
-same size as <code>queryDescriptors</code> rows. If <code>compactResult</code> is
-true, the matches vector does not contain matches for fully
-masked-out query descriptors. default false</li>
+<li><strong>CompactResult</strong> Parameter used when the mask (or masks) is
+not empty. If <code>CompactResult</code> is false, the <code>matches</code>
+vector has the same size as <code>queryDescriptors</code> rows. If
+<code>CompactResult</code> is true, the matches vector does not
+contain matches for fully masked-out query descriptors.
+default false</li>
 </ul>
-</div><!--after help -->
+
+<p>For each query descriptor, the methods find such training
+descriptors that the distance between the query descriptor and
+the training descriptor is equal or smaller than <code>maxDistance</code>.
+Found matches are returned in the distance increasing order.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DescriptorMatcher.match.html">cv.DescriptorMatcher/match</a>,
+   <a href="DescriptorMatcher.knnMatch.html">cv.DescriptorMatcher/knnMatch</a>, <a href="batchDistance.html">cv.batchDistance</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

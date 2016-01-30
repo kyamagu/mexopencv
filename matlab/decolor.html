@@ -1,0 +1,64 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.decolor</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.decolor</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.decolor</div>
+      <div class="helpcontent"><p>Transforms a color image to a grayscale image</p>
+
+<pre><code>[grayscale,color_boost] = <a href="decolor.html">cv.decolor</a>(src)
+[grayscale,color_boost] = <a href="decolor.html">cv.decolor</a>(src, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Input 8-bit 3-channel color image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>grayscale</strong> Output 8-bit 1-channel grayscale image.</li>
+<li><strong>color_boost</strong> Output 8-bit 3-channel contrast-boosted color image.
+It is obtained by converting <code>src</code> to Lab color space, replacing the
+lightness channel with <code>grayscale</code>, and converting back to RGB color
+space.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>FlipChannels</strong> whether to flip the order of color channels in input
+<code>src</code> and output <code>color_boost</code>, between MATLAB's RGB order and
+OpenCV's BGR (input: RGB-&gt;BGR, output: BGR-&gt;RGB). default true</li>
+</ul>
+
+<p>It is a basic tool in digital printing, stylized black-and-white photograph
+rendering, and in many single channel image processing applications [CL12].</p>
+
+<p>This function is to be applied on color images.</p>
+
+<h2> References</h2>
+
+<p>[CL12]:</p>
+
+<blockquote>
+<p>Cewu Lu, Li Xu, and Jiaya Jia. &quot;Contrast preserving decolorization&quot;.
+In Computational Photography (ICCP), 2012 IEEE International Conference
+on, pages 1-7. IEEE, 2012.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="cvtColor.html">cv.cvtColor</a></div>
+   </body>
+</html>

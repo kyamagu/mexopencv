@@ -1,0 +1,76 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.logPolar</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.logPolar</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.logPolar</div>
+      <div class="helpcontent"><p>Remaps an image to log-polar space</p>
+
+<pre><code>dst = <a href="logPolar.html">cv.logPolar</a>(src, center, M)
+dst = <a href="logPolar.html">cv.logPolar</a>(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Source image.</li>
+<li><strong>center</strong> The transformation center; where the output precision is
+maximal.</li>
+<li><strong>M</strong> Magnitude scale parameter.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Destination image, same size and type as <code>src</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Interpolation</strong> Interpolation method, default 'Linear'. One of:<ul>
+<li><strong>Nearest</strong> nearest neighbor interpolation</li>
+<li><strong>Linear</strong> bilinear interpolation</li>
+<li><strong>Cubic</strong> bicubic interpolation</li>
+<li><strong>Lanczos4</strong> Lanczos interpolation over 8x8 neighborhood</li>
+</ul>
+</li>
+<li><strong>FillOutliers</strong> flag, fills all of the destination image pixels. If some
+of them correspond to outliers in the source image, they are set to
+zero. default true</li>
+<li><strong>InverseMap</strong> flag, inverse transformation, default false. For example,
+polar transforms:<ul>
+<li>flag is not set: Forward transformation <code>dst(phi,rho) = src(x,y)</code></li>
+<li>flag is set: Inverse transformation <code>dst(x,y) = src(phi,rho)</code></li>
+</ul>
+</li>
+</ul>
+
+<p>Transforms the source image using the following transformation:</p>
+
+<pre><code>dst(phi,rho) = src(x,y)
+</code></pre>
+
+<p>where:</p>
+
+<pre><code>rho = M * log(sqrt(x^2 + y^2))
+phi = atan(y/x)
+</code></pre>
+
+<p>The function emulates the human &quot;foveal&quot; vision and can be used for fast
+scale and rotation-invariant template matching, for object tracking and so
+forth.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="linearPolar.html">cv.linearPolar</a></div>
+   </body>
+</html>

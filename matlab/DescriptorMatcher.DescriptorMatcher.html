@@ -15,193 +15,250 @@
          </tr>
       </table>
       <div class="title">cv.DescriptorMatcher/DescriptorMatcher</div>
-      <div class="helpcontent"><p>DescriptorMatcher constructors</p>
+      <div class="helpcontent"><p>Creates a descriptor matcher by name.</p>
 
 <pre><code>matcher = <a href="DescriptorMatcher.html">cv.DescriptorMatcher</a>(type)
-matcher = <a href="DescriptorMatcher.html">cv.DescriptorMatcher</a>('FlannBased', 'OptionName', optionValue, ...)
+matcher = <a href="DescriptorMatcher.html">cv.DescriptorMatcher</a>(type, 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>type</strong> Type of the detector. see below. default 'BruteForce'</li>
-</ul>
-
-<h2> Output</h2>
-
+<li><p><strong>type</strong> In the first variant, it creates a descriptor matcher
+of a given type with the default parameters (using default
+constructor). The following types are recognized:</p>
 <ul>
-<li><strong>matcher</strong> New instance of the DescriptorMatcher</li>
+<li><strong>'BruteForce'</strong> (default) L2 distance</li>
+<li><strong>'BruteForce-SL2'</strong> L2SQR distance</li>
+<li><strong>'BruteForce-L1'</strong> L1 distance</li>
+<li><strong>'BruteForce-Hamming'</strong>, <strong>'BruteForce-HammingLUT'</strong></li>
+<li><strong>'BruteForce-Hamming(2)'</strong></li>
+<li><strong>'FlannBased'</strong> Flann-based indexing</li>
 </ul>
-
-<p>The following matcher types are supported:</p>
-
-<pre><code> 'BruteForce'             L2 distance
- 'BruteForce-L1'          L1 distance
- 'BruteForce-Hamming'     Hamming distance
- 'BruteForce-HammingLUT'  Hamming distance lookup table
- 'FlannBased'             Flann-based indexing
-</code></pre>
-
-<p>L1 and L2 norms are preferable choices for SIFT and SURF descriptors,
-Hamming should be used with ORB and BRIEF, HammingLUT should be used
-with ORB when <code>WTA_K</code>==3 or 4 (see <code>cv.ORB</code> constructor description).</p>
-
-<p>Flann-based descriptor matcher trains on a train descriptor
-collection and calls its nearest search methods to find the best
-matches. So, this matcher may be faster when matching a large
-train collection than the brute force matcher. FlannBased matcher
-does not support masking permissible matches of descriptor sets.</p>
-
-<p>The FlannBased matcher takes optional arguments</p>
-
+<p>       In the second variant, it creates a matcher of the given
+type using the specified parameters. The following
+descriptor matcher types are supported:</p>
 <ul>
-<li><strong>Index</strong> Type of indexer. One of the below. 
-Each index type takes optional arguments. You can
-specify the indexer by a cell array that starts
-from the type name followed by option arguments:
-<code>{'Type', 'OptionName', optionValue,...}</code><ul>
-<li><code>'Linear'</code>     Brute-force matching, linear search</li>
-<li><code>'KDTree'</code>     Randomized kd-trees, parallel search</li>
-<li><code>'KMeans'</code>     Hierarchical k-means tree</li>
-<li><code>'Composite'</code>  Combination of KDTree and KMeans</li>
-<li><code>'LSH'</code>        multi-probe LSH</li>
-<li><code>'Autotuned'</code>  Automatic tuning to one of the above
-(Linear, KDTree, KMeans)</li>
-<li><code>'Saved'</code>      Load saved index from a file</li>
+<li><strong>'BFMatcher'</strong> Brute-force descriptor matcher. For each
+descriptor in the first set, this matcher finds the
+closest descriptor in the second set by trying each
+one. This descriptor matcher supports masking
+permissible matches of descriptor sets.</li>
+<li><strong>'FlannBasedMatcher'</strong> Flann-based descriptor matcher.
+This matcher trains <code>flann::Index_</code> on a train
+descriptor collection and calls its nearest search
+methods to find the best matches. So, this matcher
+may be faster when matching a large train collection
+than the brute force matcher. <code>FlannBasedMatcher</code>
+does not support masking permissible matches of
+descriptor sets because <code>flann::Index</code> does not
+support this.</li>
 </ul>
 </li>
-<li><strong>Search</strong> Option in matching operation. Takes a cell
-array of option pairs.</li>
 </ul>
 
-<p>For example, KDTree with tree size=4 is specified by:</p>
+<h2> Options</h2>
 
-<pre><code>matcher = <a href="DescriptorMatcher.html">cv.DescriptorMatcher</a>('FlannBased',...
-    'Index',  {'KDTree', 'Trees', 4},...
+<p>The Brute-force matcher constructor (<code>BFMatcher</code>) accepts the
+following options:</p>
+
+<ul>
+<li><strong>NormType</strong> One of 'L1', 'L2' (default), 'Hamming', or
+'Hamming2'. See <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a>.defaultNorm.<ul>
+<li><code>L1</code> and <code>L2</code> norms are preferable choices for <a href="SIFT.html">cv.SIFT</a>
+and <a href="SURF.html">cv.SURF</a> descriptors.</li>
+<li><code>Hamming</code> should be used with <a href="ORB.html">cv.ORB</a>, <a href="BRISK.html">cv.BRISK</a> and
+<a href="BRIEF.html">cv.BRIEF</a>.</li>
+<li><code>Hamming2</code> should be used with <a href="ORB.html">cv.ORB</a> when <code>WTA_K</code>
+equals 3 or 4 (see <a href="ORB.html">cv.ORB</a>.WTA_K description).</li>
+</ul>
+</li>
+<li><strong>CrossCheck</strong> If it is false, this is will be default
+<code>BFMatcher</code> behaviour when it finds the <code>k</code> nearest
+neighbors for each query descriptor. If <code>CrossCheck==true</code>,
+then the <a href="DescriptorMatcher.html">cv.DescriptorMatcher</a>.knnMatch() method with <code>k=1</code>
+will only return pairs <code>(i,j)</code> such that for i-th query
+descriptor the j-th descriptor in the matcher's collection
+is the nearest and vice versa, i.e. the <code>BFMatcher</code> will
+only return consistent pairs. Such technique usually
+produces best results with minimal number of outliers when
+there are enough matches. This is alternative to the ratio
+test, used by <em>D. Lowe</em> in SIFT paper. default false</li>
+</ul>
+
+<p>The Flann-based matcher constructor (<code>FlannBasedMatcher</code>) takes
+the following optional arguments:</p>
+
+<ul>
+<li><p><strong>Index</strong> Type of indexer, default 'KDTree'. One of the below.
+Each index type takes optional arguments (see IndexParams
+options below). You can specify the indexer by a cell
+array that starts from the type name followed by option
+arguments: <code>{'Type', 'OptionName',optionValue, ...}</code>.</p>
+<ul>
+<li><strong>'Linear'</strong>     Brute-force matching, linear search</li>
+<li><strong>'KDTree'</strong>     Randomized kd-trees, parallel search</li>
+<li><strong>'KMeans'</strong>     Hierarchical k-means tree</li>
+<li><strong>'HierarchicalClustering'</strong> Hierarchical index</li>
+<li><strong>'Composite'</strong>  Combination of KDTree and KMeans</li>
+<li><strong>'LSH'</strong>        multi-probe LSH</li>
+<li><strong>'Autotuned'</strong>  Automatic tuning to one of the above
+(<code>Linear</code>, <code>KDTree</code>, <code>KMeans</code>)</li>
+<li><strong>'Saved'</strong>      Load saved index from a file</li>
+</ul>
+</li>
+<li><p><strong>Search</strong> Option in matching operation. Takes a cell
+array of option pairs:</p>
+<ul>
+<li><strong>Checks</strong> The number of times the tree(s) in the index
+should be recursively traversed. A higher value for
+this parameter would give better search precision, but
+also take more time. If automatic configuration was
+used when the index was created, the number of checks
+required to achieve the specified precision was also
+computed, in which case this parameter is ignored.
+-1 for unlimited. default 32</li>
+<li><strong>EPS</strong> search for eps-approximate neighbours. default 0</li>
+<li><strong>Sorted</strong> only for radius search, require neighbours
+sorted by distance. default true</li>
+</ul>
+</li>
+</ul>
+
+<h2> IndexParams Options for <code>FlannBasedMatcher</code></h2>
+
+<p>The following are the options for FLANN indexers
+(Fast Library for Approximate Nearest Neighbors):</p>
+
+<h3> <code>Linear</code></h3>
+
+<p>Linear index takes no options.</p>
+
+<h3> <code>Saved</code></h3>
+
+<p>Saved index takes only one argument specifying the filename.</p>
+
+<h3> <code>KDTree</code> and <code>Composite</code></h3>
+
+<ul>
+<li><strong>Trees</strong> The number of parallel kd-trees to use. Good values
+are in the range [1..16]. default 4</li>
+</ul>
+
+<h3> <code>KMeans</code> and <code>Composite</code></h3>
+
+<ul>
+<li><strong>Branching</strong> The branching factor to use for the hierarchical
+k-means tree. default 32</li>
+<li><strong>Iterations</strong> The maximum number of iterations to use in the
+k-means clustering stage when building the k-means tree.
+A value of -1 used here means that the k-means clustering
+should be iterated until convergence. default 11</li>
+<li><strong>CentersInit</strong> The algorithm to use for selecting the initial
+centers when performing a k-means clustering step. The
+possible values are (default is 'Random'):<ul>
+<li><strong>'Random'</strong>   picks the initial cluster centers randomly</li>
+<li><strong>'Gonzales'</strong> picks the initial centers using Gonzales
+algorithm</li>
+<li><strong>'KMeansPP'</strong>  picks the initial centers using the
+algorithm suggested in [ArthurKmeansPP2007]</li>
+<li><strong>'Groupwise'</strong> chooses the initial centers in a way
+inspired by Gonzales (by Pierre-Emmanuel Viel).</li>
+</ul>
+</li>
+<li><strong>CBIndex</strong> This parameter (cluster boundary index) influences
+the way exploration is performed in the hierarchical
+kmeans tree. When <code>CBIndex</code> is zero the next kmeans domain
+to be explored is choosen to be the one with the closest
+center. A value greater then zero also takes into account
+the size of the domain. default 0.2</li>
+</ul>
+
+<h3> <code>HierarchicalClustering</code></h3>
+
+<ul>
+<li><strong>Branching</strong> same as above.</li>
+<li><strong>CentersInit</strong> same as above.</li>
+<li><strong>Trees</strong> same as above.</li>
+<li><strong>LeafSize</strong> maximum leaf size. default 100</li>
+</ul>
+
+<h3> <code>LSH</code></h3>
+
+<ul>
+<li><strong>TableNumber</strong> The number of hash tables to use (usually
+between 10 and 30). default 20</li>
+<li><strong>KeySize</strong> The length of the key in the hash tables (usually
+between 10 and 20). default 15</li>
+<li><strong>MultiProbeLevel</strong> Number of levels to use in multi-probe
+(0 is regular LSH, 2 is recommended). default 0</li>
+</ul>
+
+<h3> <code>Autotuned</code></h3>
+
+<ul>
+<li><strong>TargetPrecision</strong> Is a number between 0 and 1 specifying the
+percentage of the approximate nearest-neighbor searches
+that return the exact nearest-neighbor. Using a higher
+value for this parameter gives more accurate results, but
+the search takes longer. The optimum value usually depends
+on the application. default 0.8</li>
+<li><strong>BuildWeight</strong> Specifies the importance of the index build
+time raported to the nearest-neighbor search time. In some
+applications it is acceptable for the index build step to
+take a long time if the subsequent searches in the index
+can be performed very fast. In other applications it is
+required that the index be build as fast as possible even
+if that leads to slightly longer search times. default 0.01</li>
+<li><strong>MemoryWeight</strong> Is used to specify the tradeoff between time
+(index build time and search time) and memory used by the
+index. A value less than 1 gives more importance to the
+time spent and a value greater than 1 gives more
+importance to the memory usage. default 0</li>
+<li><strong>SampleFraction</strong> Is a number between 0 and 1 indicating what
+fraction of the dataset to use in the automatic parameter
+configuration algorithm. Running the algorithm on the full
+dataset gives the most accurate results, but for very
+large datasets can take longer than desired. In such case
+using just a fraction of the data helps speeding up this
+algorithm while still giving good approximations of the
+optimum parameters. default 0.1</li>
+</ul>
+
+<h2> Example</h2>
+
+<p>For example, <code>KDTree</code> with tree size = 4 is specified by:</p>
+
+<pre><code>matcher = <a href="DescriptorMatcher.html">cv.DescriptorMatcher</a>('FlannBasedMatcher', ...
+    'Index',  {'KDTree', 'Trees', 4}, ...
     'Search', {'Sorted', true})
 </code></pre>
 
-<p>Options for FLANN (Fast Library for Approximate Nearest Neighbors)
-indexers are the following:</p>
+<p>Here is an example for loading a saved index:</p>
 
-<h3> KDTree and Composite</h3>
+<pre><code>matcher = <a href="DescriptorMatcher.html">cv.DescriptorMatcher</a>('FlannBasedMatcher', ...
+    'Index', {'Saved', '/path/to/saved/index.xml'})
+</code></pre>
 
-<ul>
-<li><strong>Trees</strong> The number of parallel kd-trees to use. Good
-values are in the range [1..16]. default 4</li>
-</ul>
-
-<h3> KMeans and Composite</h3>
-
-<ul>
-<li><strong>Branching</strong> The branching factor to use for the
-hierarchical k-means tree. default 32</li>
-<li><strong>Iterations</strong> The maximum number of iterations to use in
-the k-means clustering stage when building the k-means
-tree. A value of -1 used here means that the k-means
-clustering should be iterated until convergence.
-default 11</li>
-<li><strong>CentersInit</strong> The algorithm to use for selecting the
-initial centers when performing a k-means clustering
-step. The possible values are (default <code>'Random'</code>):<ul>
-<li><code>'Random'</code>    picks the initial cluster centers
-randomly</li>
-<li><code>'Gonzales'</code>  picks the initial centers using Gonzales
-algorithm</li>
-<li><code>'KMeansPP'</code>  picks the initial centers using the
-algorithm suggested in [ArthurKmeansPP2007]</li>
-</ul>
-</li>
-<li><strong>CBIndex</strong> This parameter (cluster boundary index)
-influences the way exploration is performed in the
-hierarchical kmeans tree. When <code>CBIndex</code> is zero the
-next kmeans domain to be explored is choosen to be the
-one with the closest center. A value greater then zero
-also takes into account the size of the domain.
-default 0.2</li>
-</ul>
+<h2> References:</h2>
 
 <p>[ArthurKmeansPP2007]:</p>
 
 <blockquote>
-<p>Arthur and S. Vassilvitskii <em>"k-means++: the advantages of careful seeding"</em>,
-Proceedings of the eighteenth annual ACM-SIAM symposium on Discrete
-algorithms, 2007</p>
+<p>Arthur and S. Vassilvitskii
+<em>"k-means++: the advantages of careful seeding"</em>,
+Proceedings of the eighteenth annual ACM-SIAM symposium
+on Discrete algorithms, 2007</p>
 </blockquote>
 
-<h3> LSH</h3>
-
-<ul>
-<li><strong>TableNumber</strong> The number of hash tables to use
-(between 10 and 30 usually).</li>
-<li><strong>KeySize</strong> The length of the key in the hash tables
-(between 10 and 20 usually).</li>
-<li><strong>MultiProbeLevel</strong> Number of levels to use in multi-probe
-(0 is regular LSH, 2 is recommended).</li>
-</ul>
+<p>[LSH]:</p>
 
 <blockquote>
 <p><em>Multi-Probe LSH: Efficient Indexing for High-Dimensional Similarity Search</em>
 by Qin Lv, William Josephson, Zhe Wang, Moses Charikar, Kai Li.,
-Proceedings of the 33rd International Conference on Very Large Data Bases
-(VLDB). Vienna, Austria. September 2007</p>
+Proceedings of the 33rd International Conference on
+Very Large Data Bases (VLDB). Vienna, Austria. September 2007</p>
 </blockquote>
-
-<h3> Autotuned</h3>
-
-<ul>
-<li><strong>TargetPrecision</strong> Is a number between 0 and 1 specifying
-the percentage of the approximate nearest-neighbor
-searches that return the exact nearest-neighbor. Using
-a higher value for this parameter gives more accurate
-results, but the search takes longer. The optimum
-value usually depends on the application. default 0.9</li>
-<li><strong>BuildWeight</strong> Specifies the importance of the index build
-time raported to the nearest-neighbor search time. In
-some applications it?s acceptable for the index build
-step to take a long time if the subsequent searches in
-the index can be performed very fast. In other
-applications it?s required that the index be build as
-fast as possible even if that leads to slightly longer
-search times. default 0.01</li>
-<li><strong>MemoryWeight</strong> Is used to specify the tradeoff between
-time (index build time and search time) and memory
-used by the index. A value less than 1 gives more
-importance to the time spent and a value greater than
-1 gives more importance to the memory usage. default 0</li>
-<li><strong>SampleFraction</strong> Is a number between 0 and 1 indicating
-what fraction of the dataset to use in the automatic
-parameter configuration algorithm. Running the
-algorithm on the full dataset gives the most accurate
-results, but for very large datasets can take longer
-than desired. In such case using just a fraction of
-the data helps speeding up this algorithm while still
-giving good approximations of the optimum parameters.
-default 0.1</li>
-</ul>
-
-<h3> Saved</h3>
-
-<p>Saved index takes only one argument specifing filename:</p>
-
-<pre><code>matcher = <a href="DescriptorMatcher.html">cv.DescriptorMatcher</a>('FlannBased',...
-    'Index', {'Saved', '/path/to/saved/index.xml')}
-</code></pre>
-
-<h3> Search</h3>
-
-<ul>
-<li><strong>Checks</strong> The number of times the tree(s) in the index should
-be recursively traversed. A higher value for this parameter
-would give better search precision, but also take more time.
-If automatic configuration was used when the index was
-created, the number of checks required to achieve the
-specified precision was also computed, in which case this
-parameter is ignored. -1 for unlimited. default 32</li>
-<li><strong>EPS</strong> search for eps-approximate neighbours. default 0</li>
-<li><strong>Sorted</strong> only for radius search, require neighbours sorted
-by distance. default true</li>
-</ul>
 </div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DescriptorMatcher.html">cv.DescriptorMatcher</a></div>
    </body>
 </html>

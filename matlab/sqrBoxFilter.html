@@ -1,0 +1,60 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.sqrBoxFilter</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.sqrBoxFilter</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.sqrBoxFilter</div>
+      <div class="helpcontent"><p>Calculates the normalized sum of squares of the pixel values overlapping the filter</p>
+
+<pre><code>dst = <a href="sqrBoxFilter.html">cv.sqrBoxFilter</a>(src)
+dst = <a href="sqrBoxFilter.html">cv.sqrBoxFilter</a>(src, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> input image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> output image of the same size as <code>src</code> and the type specified.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>DDepth</strong> the output image depth (-1 to use <code>class(src)</code>). Default -1,
+which chooses between <code>single</code> or <code>double</code> (<code>double</code> if input image is
+also <code>double</code>, <code>single</code> otherwise). See <a href="filter2D.html">cv.filter2D</a> for details.</li>
+<li><strong>KSize</strong> kernel size. Default [5,5]</li>
+<li><strong>Anchor</strong> kernel anchor point <code>[x,y]</code>. The default value [-1,-1] denotes
+that the anchor is at the kernel center</li>
+<li><strong>Normalize</strong> flag, specifying whether the kernel is normalized by its
+area or not. default true</li>
+<li><strong>BorderType</strong> border mode used to extrapolate pixels outside of the
+image. See <a href="copyMakeBorder.html">cv.copyMakeBorder</a>. Default 'Default'</li>
+</ul>
+
+<p>For every pixel (x,y) in the source image, the function calculates the sum
+of squares of those neighboring pixel values which overlap the filter placed
+over the pixel (x,y).</p>
+
+<p>The unnormalized square box filter can be useful in computing local image
+statistics such as the the local variance and standard deviation around the
+neighborhood of a pixel.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="boxFilter.html">cv.boxFilter</a></div>
+   </body>
+</html>

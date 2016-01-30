@@ -1,0 +1,79 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.NormalBayesClassifier/predictProb</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.NormalBayesClassifier/predictProb</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.NormalBayesClassifier/predictProb</div>
+      <div class="helpcontent"><p>Predicts the response for sample(s)</p>
+
+<pre><code>outputs = model.predictProb(inputs)
+[outputs,outputProbs,f] = model.predictProb(inputs)
+[...] = model.predictProb(inputs, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>inputs</strong> The input samples, floating-point matrix. One or
+more vectors stored as rows of the matrix.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>outputs</strong> The predicted class for each sample.</li>
+<li><strong>outputProbs</strong> Matrix that contains the output probabilities
+corresponding to each element of result. (A matrix of size
+<code>nsamples-by-nclasses</code>). The probabilities are not
+normalized to the 0..1 range.</li>
+<li><strong>f</strong> unused and returns 0.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Flags</strong> The optional predict flags, model-dependent. For
+convenience, you can set the individual flag options
+below, instead of directly setting bits here. default 0</li>
+<li><strong>RawOutput</strong> makes the method return the raw results (class
+index without mapping to class labels). default false</li>
+</ul>
+
+<p>The method estimates the most probable classes for input
+vectors. Input vectors (one or more) are stored as rows of the
+matrix inputs. In case of multiple input vectors, there should
+be one output vector <code>outputs</code>. The matrix <code>outputProbs</code>
+contains the output probabilities corresponding to each element
+of result.</p>
+
+<p>The function is parallelized with the TBB library.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="NormalBayesClassifier.predict.html">cv.NormalBayesClassifier/predict</a>, <a href="NormalBayesClassifier.train.html">cv.NormalBayesClassifier/train</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

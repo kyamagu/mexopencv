@@ -17,8 +17,8 @@
       <div class="title">cv.imread</div>
       <div class="helpcontent"><p>Loads an image from a file</p>
 
-<pre><code>dst = <a href="imread.html">cv.imread</a>(filename)
-dst = <a href="imread.html">cv.imread</a>(filename, 'Flags', flags)
+<pre><code>img = <a href="imread.html">cv.imread</a>(filename)
+img = <a href="imread.html">cv.imread</a>(filename, 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
@@ -30,54 +30,96 @@ dst = <a href="imread.html">cv.imread</a>(filename, 'Flags', flags)
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Loaded image.</li>
+<li><strong>img</strong> Loaded image, whose depth and number of channels depend on options.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>Flags</strong> Flags specifying the color type of a loaded image.</li>
+<li><strong>Unchanged</strong> If set, return the loaded image as is (with alpha channel,
+otherwise it gets cropped). Both the depth and number of channels are
+unchanged as determined by the decoder. default false</li>
+<li><strong>AnyDepth</strong> If set, return 16-bit/32-bit image when the input has the
+corresponding depth, otherwise convert it to 8-bit. default false</li>
+<li><strong>AnyColor</strong> If set, the image is read in any possible color format.
+default false</li>
+<li><strong>Color</strong> If set, always convert image to the 3 channel BGR color image.
+default true</li>
+<li><strong>Grayscale</strong> If set, always convert image to the single channel grayscale
+image. default false</li>
+<li><strong>GDAL</strong> If set, use the gdal driver for loading the image. default false</li>
+<li><strong>ReduceScale</strong> Loads the image reduced by a scale factor (JPEG library
+natively supports direct image scaling, other formats are resized
+after loading). One of:<ul>
+<li><code>1</code>: no scaling (default).</li>
+<li><code>2</code>: image scaled by 1/2 factor.</li>
+<li><code>4</code>: image scaled by 1/4 factor.</li>
+<li><code>8</code>: image scaled by 1/8 factor.</li>
+</ul>
+</li>
+<li><strong>Flags</strong> Advanced option to directly set the flag specifying the depth
+and color type of a loaded image. Note that setting this integer flag
+overrides all the other flag options. Not set by default:<ul>
+<li><code>&gt;0</code>: Return a 3-channel color image. Note that in the current
+implementation the alpha channel, if any, is stripped from the
+output image. For example, a 4-channel RGBA image is loaded as
+RGB if <code>Flags &gt;= 0</code>.</li>
+<li><code>=0</code>: Return a grayscale image</li>
+<li><code>&lt;0</code>: Return the loaded image as is (with alpha channel if present).</li>
+</ul>
+</li>
+<li><strong>FlipChannels</strong> in case the output is color image, flips the color order
+from OpenCV's BGR/BGRA to MATLAB's RGB/RGBA order. default true</li>
 </ul>
 
-<pre><code>  &gt;0: Return a 3-channel color image
-  =0: Return a grayscale image
-  &lt;0: Return the loaded image as is. Note that in the current
-      implementation the alpha channel, if any, is stripped from the output
-      image. For example, a 4-channel RGBA image is loaded as RGB if
-      flags &gt;= 0.
-</code></pre>
+<p>The function <a href="imread.html">cv.imread</a> loads an image from the specified file and returns
+it. If the image cannot be read (because of missing file, improper
+permissions, unsupported or invalid format), the function issues an error.</p>
 
-<p>The function imread loads an image from the specified file and returns it. If
-the image cannot be read (because of missing file, improper permissions,
-unsupported or invalid format), the function returns an empty matrix.
-Currently, the following file formats are supported:</p>
+<p>Currently, the following file formats are supported:</p>
 
-<pre><code> Windows bitmaps - *.bmp, *.dib (always supported)
- JPEG files - *.jpeg, *.jpg, *.jpe (see the Notes section)
- JPEG 2000 files - *.jp2 (see the Notes section)
- Portable Network Graphics - *.png (see the Notes section)
- Portable image format - *.pbm, *.pgm, *.ppm (always supported)
- Sun rasters - *.sr, *.ras (always supported)
- TIFF files - *.tiff, *.tif (see the Notes section)
-</code></pre>
+<ul>
+<li>Windows bitmaps - <code>*.bmp</code>, <code>*.dib</code> (always supported)</li>
+<li>JPEG files - <code>*.jpeg</code>, <code>*.jpg</code>, <code>*.jpe</code> (see the Notes section)</li>
+<li>JPEG 2000 files - <code>*.jp2</code> (see the Notes section)</li>
+<li>Portable Network Graphics - <code>*.png</code> (see the Notes section)</li>
+<li>WebP - <code>*.webp</code> (see the Notes section)</li>
+<li>Portable image format - <code>*.pbm</code>, <code>*.pgm</code>, <code>*.ppm</code>, <code>*.pxm</code>, <code>*.pnm</code>
+(always supported)</li>
+<li>Sun rasters - <code>*.sr</code>, <code>*.ras</code> (always supported)</li>
+<li>TIFF files - <code>*.tiff</code>, <code>*.tif</code> (see the Notes section)</li>
+<li>OpenEXR Image files - <code>*.exr</code> (see the Notes section)</li>
+<li>Radiance HDR - <code>*.hdr</code>, <code>*.pic</code> (always supported)</li>
+<li>Raster and Vector geospatial data supported by Gdal (see the Notes section)</li>
+</ul>
 
 <h2> Notes</h2>
 
 <p>The function determines the type of an image by the content, not by the file
 extension.</p>
 
-<p>On Microsoft Windows* OS and MacOSX*, the codecs shipped with an OpenCV image
+<p>In the case of color images, the decoded images will have the channels
+stored in BGR order. If <code>FlipChannels</code> is set, the channels are flipped to
+RGB order.</p>
+
+<p>On Microsoft Windows OS and MacOSX, the codecs shipped with an OpenCV image
 (libjpeg, libpng, libtiff, and libjasper) are used by default. So, OpenCV can
 always read JPEGs, PNGs, and TIFFs. On MacOSX, there is also an option to use
 native MacOSX image readers. But beware that currently these native image
 loaders give images with different pixel values because of the color
 management embedded into MacOSX.</p>
 
-<p>On Linux*, BSD flavors and other Unix-like open-source operating systems,
+<p>On Linux, BSD flavors and other Unix-like open-source operating systems,
 OpenCV looks for codecs supplied with an OS image. Install the relevant
-packages (do not forget the development files, for example, libjpeg-dev,
-in Debian* and Ubuntu*) to get the codec support or turn on the
+packages (do not forget the development files, for example, &quot;libjpeg-dev&quot;,
+in Debian and Ubuntu) to get the codec support or turn on the
 <code>OPENCV_BUILD_3RDPARTY_LIBS</code> flag in CMake.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="imwrite.html">cv.imwrite</a></div>
+
+<p>In the case you set <code>WITH_GDAL</code> flag to true in CMake and <code>GDAL</code> option to
+load the image, then GDAL driver (<a href="http://www.gdal.org">http://www.gdal.org</a>) will be used in order
+to decode the image by supporting the following formats:
+Raster (<a href="http://www.gdal.org/formats_list.html">http://www.gdal.org/formats_list.html</a>),
+Vector (<a href="http://www.gdal.org/ogr_formats.html">http://www.gdal.org/ogr_formats.html</a>).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="imwrite.html">cv.imwrite</a>, <a href="imdecode.html">cv.imdecode</a>, imread, imfinfo, imformats</div>
    </body>
 </html>

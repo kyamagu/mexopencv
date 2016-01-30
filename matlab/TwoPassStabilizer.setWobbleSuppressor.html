@@ -1,0 +1,67 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.TwoPassStabilizer/setWobbleSuppressor</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.TwoPassStabilizer/setWobbleSuppressor</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.TwoPassStabilizer/setWobbleSuppressor</div>
+      <div class="helpcontent"><p>Set the wobble suppressing algorithm for the video stabilizer</p>
+
+<pre><code>stab.setWobbleSuppressor(wobbleSuppressType, ...)
+
+stab.setWobbleSuppressor('NullWobbleSuppressor')
+stab.setWobbleSuppressor('MoreAccurateMotionWobbleSuppressor', 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>wobbleSuppressType</strong> wobble suppressing method. One of:<ul>
+<li><strong>NullWobbleSuppressor</strong></li>
+<li><strong>MoreAccurateMotionWobbleSuppressor</strong></li>
+</ul>
+</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>MotionEstimator</strong> Global 2D motion estimation method which
+take frames as input, specified as:
+<code>{motionEstType, {estType, 'key',val, ...}, 'OptionName',optionVal, ...}</code>.
+See <a href="TwoPassStabilizer.html">cv.TwoPassStabilizer</a>.setMotionEstimator for details.
+Default is
+<code>{'KeypointBasedMotionEstimator', {'MotionEstimatorRansacL2', 'MotionModel','Homography'}}</code></li>
+<li><strong>Period</strong> default 30</li>
+</ul>
+
+<p>The class uses <code>NullWobbleSuppressor</code> by default.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="TwoPassStabilizer.getWobbleSuppressor.html">cv.TwoPassStabilizer/getWobbleSuppressor</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

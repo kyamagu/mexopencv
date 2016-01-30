@@ -1,0 +1,115 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SuperResolution/setOpticalFlow</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SuperResolution/setOpticalFlow</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SuperResolution/setOpticalFlow</div>
+      <div class="helpcontent"><p>Dense optical flow algorithm</p>
+
+<pre><code>obj.setOpticalFlow(optFlowType)
+obj.setOpticalFlow(optFlowType, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>optFlowType</strong> Dense optical flow algorithm. One of:<ul>
+<li><strong>FarnebackOpticalFlow</strong> wrapper for
+<a href="calcOpticalFlowFarneback.html">cv.calcOpticalFlowFarneback</a> function.</li>
+<li><strong>DualTVL1OpticalFlow</strong> wrapper for
+<a href="DualTVL1OpticalFlow.html">cv.DualTVL1OpticalFlow</a> class.</li>
+<li><strong>FarnebackOpticalFlowCUDA</strong> wrapper for
+<code>cv::cuda::FarnebackOpticalFlow</code> (requires CUDA)</li>
+<li><strong>DualTVL1OpticalFlowCUDA</strong> wrapper for
+<code>cv::cuda::OpticalFlowDual_TVL1</code> (requires CUDA)</li>
+<li><strong>BroxOpticalFlowCUDA</strong> wrapper for
+<code>cv::cuda::BroxOpticalFlow</code> (requires CUDA)</li>
+<li><strong>PyrLKOpticalFlowCUDA</strong> wrapper for
+<code>cv::cuda::DensePyrLKOpticalFlow</code> (requires CUDA)</li>
+</ul>
+</li>
+</ul>
+
+<h2> Options</h2>
+
+<p>The following are options for the various algorithms:</p>
+
+<h3> <code>FarnebackOpticalFlow</code>, <code>FarnebackOpticalFlowCUDA</code></h3>
+
+<p>See <a href="calcOpticalFlowFarneback.html">cv.calcOpticalFlowFarneback</a> for a description of the options:</p>
+
+<ul>
+<li><strong>PyrScale</strong> default 0.5</li>
+<li><strong>LevelsNumber</strong> default 5</li>
+<li><strong>WindowSize</strong> default 13</li>
+<li><strong>Iterations</strong> default 10</li>
+<li><strong>PolyN</strong> default 5</li>
+<li><strong>PolySigma</strong> default 1.1</li>
+<li><strong>Flags</strong> default 0</li>
+</ul>
+
+<h3> <code>DualTVL1OpticalFlow</code>, <code>DualTVL1OpticalFlowCUDA</code></h3>
+
+<p>See <a href="DualTVL1OpticalFlow.html">cv.DualTVL1OpticalFlow</a> for a description of the options:</p>
+
+<ul>
+<li><strong>Tau</strong> default 0.25</li>
+<li><strong>Lambda</strong> default 0.15</li>
+<li><strong>Theta</strong> default 0.3</li>
+<li><strong>ScalesNumber</strong> default 5</li>
+<li><strong>WarpingsNumber</strong> default 5</li>
+<li><strong>Epsilon</strong> default 0.01</li>
+<li><strong>Iterations</strong> default 10</li>
+<li><strong>UseInitialFlow</strong> default false</li>
+</ul>
+
+<h3> <code>BroxOpticalFlowCUDA</code></h3>
+
+<ul>
+<li><strong>Alpha</strong> default 0.197</li>
+<li><strong>Gamma</strong> default 50.0</li>
+<li><strong>ScaleFactor</strong> default 0.8</li>
+<li><strong>InnerIterations</strong> default 10</li>
+<li><strong>OuterIterations</strong> default 77</li>
+<li><strong>SolverIterations</strong> default 10</li>
+</ul>
+
+<h3> <code>PyrLKOpticalFlowCUDA</code></h3>
+
+<p>See <a href="calcOpticalFlowPyrLK.html">cv.calcOpticalFlowPyrLK</a> for a description of the options:</p>
+
+<ul>
+<li><strong>WindowSize</strong> default 13</li>
+<li><strong>MaxLevel</strong> default 3</li>
+<li><strong>Iterations</strong> default 30</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SuperResolution.getOpticalFlow.html">cv.SuperResolution/getOpticalFlow</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

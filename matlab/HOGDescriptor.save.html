@@ -18,14 +18,22 @@
       <div class="helpcontent"><p>Saves a HOG descriptor config to a file</p>
 
 <pre><code> hog.save(filename)
+ hog.save(filename, 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>filename</strong> HOG descriptor config filename</li>
+<li><strong>filename</strong> HOG descriptor config filename (XML or YAML).</li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.html">cv.HOGDescriptor</a></div>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>ObjName</strong> The optional name of the node to write (if empty,
+a default name value will be used). default empty</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.load.html">cv.HOGDescriptor/load</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

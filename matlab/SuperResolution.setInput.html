@@ -1,0 +1,61 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SuperResolution/setInput</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SuperResolution/setInput</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SuperResolution/setInput</div>
+      <div class="helpcontent"><p>Set input frame source for Super Resolution algorithm</p>
+
+<pre><code>obj.setInput(frameSourceType, ...)
+
+obj.setInput('Camera', deviceId)
+obj.setInput('Video', filename)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>frameSourceType</strong> Input frame source type. One of:<ul>
+<li><strong>Camera</strong> wrapper around <a href="VideoCapture.html">cv.VideoCapture</a> with a camera
+device as source.</li>
+<li><strong>Video</strong> wrapper around <a href="VideoCapture.html">cv.VideoCapture</a> with a video
+file as source.</li>
+</ul>
+</li>
+<li><strong>deviceId</strong> id of the opened video capturing device (i.e. a
+camera index). If there is a single camera connected, just
+pass 0. default 0</li>
+<li><strong>filename</strong> name of the opened video file (eg. <code>video.avi</code>)
+or image sequence (eg. <code>img_%02d.jpg</code>, which will read
+samples like <code>img_00.jpg</code>, <code>img_01.jpg</code>, <code>img_02.jpg</code>, ...)</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SuperResolution.nextFrame.html">cv.SuperResolution/nextFrame</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

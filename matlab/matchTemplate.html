@@ -18,48 +18,84 @@
       <div class="helpcontent"><p>Compares a template against overlapped image regions</p>
 
 <pre><code>result = <a href="matchTemplate.html">cv.matchTemplate</a>(image, tmpl)
-result = <a href="matchTemplate.html">cv.matchTemplate</a>(image, tmpl, 'Method', methodValue)
+result = <a href="matchTemplate.html">cv.matchTemplate</a>(image, tmpl, 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>image</strong> Image where the search is running.</li>
-<li><strong>tmpl</strong> Searched template. It must be not greater than the source image and
-have the same data type.</li>
+<li><strong>image</strong> Image where the search is running.  It must be 8-bit integer or
+32-bit floating-point.</li>
+<li><strong>tmpl</strong> Searched template. It must be not greater than the source <code>image</code>
+and have the same data type.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
 <li><strong>result</strong> Map of comparison results. It is single-channel 32-bit
-floating-point. If image is W x H and templ is w x h, then result is
-(W-w+1) x (H-h+1).</li>
+floating-point. If <code>image</code> is <code>W x H</code> and <code>templ</code> is <code>w x h</code>, then
+result is <code>(W-w+1) x (H-h+1)</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>Method</strong> Parameter specifying the comparison method. One of the following:
-'SqDiff'        Squared difference
-'SqDiffNormed'  Normalized squared difference
-'CCorr'         Cross correlation
-'CCorrNormed'   Normalized cross correlation
-'CCoeff'        Cosine efficient
-'CCoeffNormed'  Normalized cosine efficient</li>
+<li><strong>Method</strong> Parameter specifying the comparison method, default 'SqDiff'.
+One of the following:<ul>
+<li><strong>SqDiff</strong>        Squared difference</li>
+<li><strong>SqDiffNormed</strong>  Normalized squared difference</li>
+<li><strong>CCorr</strong>         Cross correlation</li>
+<li><strong>CCorrNormed</strong>   Normalized cross correlation</li>
+<li><strong>CCoeff</strong>        Cosine coefficient</li>
+<li><strong>CCoeffNormed</strong>  Normalized cosine coefficient</li>
+</ul>
+</li>
+<li><strong>Mask</strong> Mask of searched template. It must have the same datatype and
+size with <code>templ</code>. It is not set by default.</li>
 </ul>
 
-<p>The function slides through image, compares the overlapped patches of size w
-x h against templ using the specified method and stores the comparison results
-in result.</p>
+<p>The function slides through <code>image</code>, compares the overlapped patches of size
+<code>w x h</code> against <code>templ</code> using the specified method and stores the comparison
+results in <code>result</code>.</p>
+
+<p>Here are the formulae for the available comparison methods (<code>I</code> denotes
+image, <code>T</code> template, <code>R</code> result). The summation is done over template and/or
+the image patch: <code>x'=0..w-1</code>, <code>y'=0..h-1</code>:</p>
+
+<ul>
+<li><p><strong>SqDiff</strong>:</p>
+<p>        R(x,y) = \sum_{x',y'} (T(x',y') - I(x+x',y+y'))^2</p>
+</li>
+<li><p><strong>SqDiffNormed</strong>:</p>
+<p>        R(x,y) = \sum_{x',y'} (T(x',y') - I(x+x',y+y'))^2 /
+sqrt(\sum<em>{x',y'} (T(x',y')^2) * sum</em>{x',y'} (I(x+x',y+y')^2))</p>
+</li>
+<li><p><strong>CCorr</strong>:</p>
+<p>        R(x,y) = \sum_{x',y'} (T(x',y') * I(x+x',y+y'))</p>
+</li>
+<li><p><strong>CCorrNormed</strong>:</p>
+<p>        R(x,y) = \sum_{x',y'} (T(x',y') * I(x+x',y+y')) /
+sqrt(\sum<em>{x',y'} (T(x',y')^2) * sum</em>{x',y'} (I(x+x',y+y')^2))</p>
+</li>
+<li><p><strong>CCoeff</strong>:</p>
+<p>        R(x,y) = \sum_{x',y'} (T'(x',y') * I'(x+x',y+y')), where</p>
+<p>        T'(x',y') = T(x',y') - 1 / (w*h) * \sum_{x'',y''} T(x'',y'')
+I'(x+x',y+y') = I(x+x',y+y') - 1 / (w*h) * \sum_{x'',y''} I(x+x'',y+y'')</p>
+</li>
+<li><p><strong>CCoeffNormed</strong>:</p>
+<p>        R(x,y) = \sum_{x',y'} (T'(x',y') * I'(x+x',y+y')) /
+sqrt(\sum<em>{x',y'} (T'(x',y')^2) * sum</em>{x',y'} (I'(x+x',y+y')^2))</p>
+</li>
+</ul>
 
 <p>After the function finishes the comparison, the best matches can be found as
-global minimums (when 'SqDiff' was used) or maximums (when 'CCorr' or 'CCoeff'
-was used) using the min() max() function. In case of a color image, template
-summation in the numerator and each sum in the denominator is done over all
-of the channels and separate mean values are used for each channel. That is,
-the function can take a color template and a color image. The result will
-still be a single-channel image, which is easier to analyze.</p>
-</div><!--after help -->
+global minimums (when 'SqDiff' was used) or maximums (when 'CCorr' or
+'CCoeff' was used) using the <code>min</code> and <code>max</code> functions. In case of a color
+image, template summation in the numerator and each sum in the denominator
+is done over all of the channels and separate mean values are used for each
+channel. That is, the function can take a color template and a color image.
+The result will still be a single-channel image, which is easier to analyze.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> normxcorr2, xcorr2, conv2, filter2, vision.TemplateMatcher</div>
    </body>
 </html>

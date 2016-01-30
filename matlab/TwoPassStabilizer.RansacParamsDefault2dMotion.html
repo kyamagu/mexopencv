@@ -1,0 +1,81 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.TwoPassStabilizer.RansacParamsDefault2dMotion</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.TwoPassStabilizer.RansacParamsDefault2dMotion</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.TwoPassStabilizer.RansacParamsDefault2dMotion</div>
+      <div class="helpcontent"><p>Default RANSAC method parameters for a given motion model</p>
+
+<pre><code>ransac = <a href="TwoPassStabilizer.html">cv.TwoPassStabilizer</a>.RansacParamsDefault2dMotion(model)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>model</strong> Motion model. One of:<ul>
+<li><strong>Translation</strong></li>
+<li><strong>TranslationAndScale</strong></li>
+<li><strong>Rotation</strong></li>
+<li><strong>Rigid</strong></li>
+<li><strong>Similarity</strong></li>
+<li><strong>Affine</strong></li>
+<li><strong>Homography</strong></li>
+</ul>
+</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>ransac</strong> Default RANSAC method parameters for the given
+motion model. A struct with the following fields:<ul>
+<li><strong>Size</strong> Subset size.</li>
+<li><strong>Thresh</strong> Maximum re-projection error value to classify
+as inlier.</li>
+<li><strong>Eps</strong> Maximum ratio of incorrect correspondences.</li>
+<li><strong>Prob</strong> Required success probability.</li>
+</ul>
+</li>
+</ul>
+
+<p>Here are the parameters corresponding to each motion model:</p>
+
+<ul>
+<li><strong>Translation</strong> <code>struct('Size',1, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>TranslationAndScale</strong> <code>struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>Rotation</strong> <code>struct('Size',1, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>Rigid</strong> <code>struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>Similarity</strong> <code>struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>Affine</strong> <code>struct('Size',3, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>Homography</strong> <code>struct('Size',4, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="TwoPassStabilizer.setMotionEstimator.html">cv.TwoPassStabilizer/setMotionEstimator</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>true</td>
+         </tr>
+      </table>
+   </body>
+</html>

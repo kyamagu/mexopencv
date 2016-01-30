@@ -15,28 +15,24 @@
          </tr>
       </table>
       <div class="title">cv.BackgroundSubtractorMOG2/BackgroundSubtractorMOG2</div>
-      <div class="helpcontent"><p>BackgroundSubtractorMOG2 constructor</p>
+      <div class="helpcontent"><p>Creates MOG2 Background Subtractor</p>
 
 <pre><code>bs = <a href="BackgroundSubtractorMOG2.html">cv.BackgroundSubtractorMOG2</a>()
-bs = <a href="BackgroundSubtractorMOG2.html">cv.BackgroundSubtractorMOG2</a>(history, varThreshold, 'OptionName', optionValue, ...)
+bs = <a href="BackgroundSubtractorMOG2.html">cv.BackgroundSubtractorMOG2</a>('OptionName', optionValue, ...)
 </code></pre>
-
-<h2> Input</h2>
-
-<ul>
-<li><strong>history</strong> Length of the history.</li>
-<li><strong>varThreshold</strong> Threshold on the squared Mahalanobis distance to
-decide whether it is well described by the background
-model. This parameter does not affect the background
-update. A typical value could be 4 sigma, that is,
-varThreshold=4*4=16.</li>
-</ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>BShadowDetection</strong> Parameter defining whether shadow detection
-should be enabled (true or false).</li>
+<li><strong>History</strong> Length of the history. default 500</li>
+<li><strong>VarThreshold</strong> Threshold on the squared Mahalanobis distance
+between the pixel and the model to decide whether a pixel
+is well described by the background model. This parameter
+does not affect the background update. default 16</li>
+<li><strong>DetectShadows</strong> If true, the algorithm will detect shadows
+and mark them. It decreases the speed a bit, so if you do
+not need this feature, set the parameter to false.
+default true</li>
 </ul>
 </div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BackgroundSubtractorMOG2.html">cv.BackgroundSubtractorMOG2</a></div>
    </body>

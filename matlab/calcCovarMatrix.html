@@ -1,0 +1,80 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.calcCovarMatrix</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.calcCovarMatrix</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.calcCovarMatrix</div>
+      <div class="helpcontent"><p>Calculates the covariance matrix of a set of vectors.</p>
+
+<pre><code>[covar,mean] = <a href="calcCovarMatrix.html">cv.calcCovarMatrix</a>(samples)
+[...] = <a href="calcCovarMatrix.html">cv.calcCovarMatrix</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>samples</strong> Samples stored as rows/columns of a single matrix.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>covar</strong> Output covariance matrix of the type <code>CType</code> and square size.</li>
+<li><strong>mean</strong> Output array as the average value of the input vectors.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Mean</strong> Input array as the average value of the input vectors.
+See 'UseAvg' below. It is not set by default</li>
+<li><strong>Flags</strong> Operation flags. Default is equivalent to
+{'Normal',true, 'Rows',true}</li>
+<li><strong>Normal</strong> The covariance matrix will be a square matrix of the same
+size as the total number of elements in each input vector. One
+and only one of 'Scrambled' and 'Normal' must be specified.
+default true</li>
+<li><strong>Scrambled</strong> The covariance matrix will be <code>nsamples x nsamples</code>.
+Such an unusual covariance matrix is used for fast <a href="PCA.html">cv.PCA</a> of a
+set of very large vectors (see, for example, the EigenFaces
+technique for face recognition). Eigenvalues of this &quot;scrambled&quot;
+matrix match the eigenvalues of the true covariance matrix. The
+&quot;true&quot; eigenvectors can be easily calculated from the
+eigenvectors of the &quot;scrambled&quot; covariance matrix. default false</li>
+<li><strong>Rows</strong> If the flag is specified, all the input vectors are stored
+as rows of the samples matrix. mean should be a single-row
+vector in this case. default true</li>
+<li><strong>Cols</strong> If the flag is specified, all the input vectors are stored
+as columns of the samples matrix. mean should be a single-column
+vector in this case. default false</li>
+<li><strong>Scale</strong> If the flag is specified, the covariance matrix is scaled.
+In the &quot;normal&quot; mode, scale is <code>1./nsamples</code>. In the &quot;scrambled&quot;
+mode, scale is the reciprocal of the total number of elements in
+each input vector. By default (if the flag is not specified),
+the covariance matrix is not scaled (<code>scale=1</code>). default false</li>
+<li><strong>UseAvg</strong> If the flag is specified, the function does not calculate
+mean from the input vectors but, instead, uses the passed mean
+vector. This is useful if mean has been pre-calculated or known
+in advance, or if the covariance matrix is calculated by parts.
+In this case, mean is not a mean vector of the input sub-set of
+vectors but rather the mean vector of the whole set.
+default false</li>
+<li><strong>CType</strong> type of the matrix. default is 'double'</li>
+</ul>
+
+<p>The functions <a href="calcCovarMatrix.html">cv.calcCovarMatrix</a> calculate the covariance matrix and,
+optionally, the mean vector of the set of input vectors.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="PCA.html">cv.PCA</a>, cov, mean</div>
+   </body>
+</html>

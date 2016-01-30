@@ -17,80 +17,150 @@
       <div class="title">cv.Boost/train</div>
       <div class="helpcontent"><p>Trains a boosted tree classifier</p>
 
-<pre><code>classifier.train(trainData, responses)
-classifier.train(..., 'OptionName', optionValue, ...)
+<pre><code>status = model.train(samples, responses)
+status = model.train(csvFilename, [])
+[...] = model.train(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>trainData</strong> Row vectors of feature.</li>
+<li><strong>samples</strong> Row vectors of feature.</li>
 <li><strong>responses</strong> Output of the corresponding feature vectors.</li>
+<li><strong>csvFilename</strong> The input CSV file name from which to load
+dataset. In this variant, you should set the second
+argument to an empty array.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>status</strong> Success flag.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>VarIdx</strong> Indicator variables (features) of interest.
-Must have the same size to responses.</li>
-<li><strong>SampleIdx</strong> Indicator samples of interest. Must have the
-the same size to responses.</li>
-<li><strong>VarType</strong> Solves classification problem when 'Categorical'.
-Otherwise, the training is treated as a regression problem.
-default 'Categorical'</li>
-<li><strong>MissingMask</strong> Indicator mask for missing observation.</li>
-<li><p><strong>BoostType</strong> Type of the boosting algorithm. Possible values
-are listed below. Gentle AdaBoost and Real AdaBoost are often the preferable
-choices. default 'Real'.</p>
-<ul>
-<li>'Discrete' Discrete AbaBoost.</li>
-<li>'Real'     Real AbaBoost. It is a technique that utilizes
-confidence-rated predictions and works well
-with categorical data.</li>
-<li>'Logit'    LogitBoost. It can produce good regression fits.</li>
-<li>'Gentle'   Gentle AdaBoost. It puts less weight on outlier
-data points and for that reason is often good
-with regression data.</li>
-</ul>
-</li>
-<li><p><strong>WeakCount</strong> The number of weak classifiers. default 100.</p>
-</li>
-<li><strong>WeightTrimRate</strong> A threshold between 0 and 1 used to save
-computational time. Samples with summary weight &lt;= 1 -
-WeightTrimRate do not participate in the next iteration of
-training. Set this parameter to 0 to turn off this
-functionality. default 0.95.</li>
-<li><strong>MaxDepth</strong> The maximum possible depth of the tree. That is
-the training algorithms attempts to split a node while its
-depth is less than max_depth. The actual depth may be
-smaller if the other termination criteria are met, and/or
-if the tree is pruned. default 1.</li>
-<li><strong>UseSurrogates</strong> If true then surrogate splits will be built.
-These splits allow to work with missing data and compute
-variable importance correctly. default true.</li>
-<li><strong>Priors</strong> The array of a priori class probabilities, sorted by
-the class label value. The parameter can be used to tune
-the decision tree preferences toward a certain class. For
-example, if you want to detect some rare anomaly
-occurrence, the training base will likely contain much
-more normal cases than anomalies, so a very good
-classification performance will be achieved just by
-considering every case as normal. To avoid this, the
-priors can be specified, where the anomaly probability is
-artificially increased (up to 0.5 or even greater), so the
-weight of the misclassified anomalies becomes much bigger,
-and the tree is adjusted properly. You can also think
-about this parameter as weights of prediction categories
-which determine relative weights that you give to
-misclassification. That is, if the weight of the first
-category is 1 and the weight of the second category is 10,
-then each mistake in predicting the second category is
-equivalent to making 10 mistakes in predicting the first
-category. default none.</li>
+<li><strong>Data</strong> Training data options, specified as a cell array of
+key/value pairs of the form <code>{'key',val, ...}</code>. See below.</li>
+<li><strong>Flags</strong> The optional training flags, model-dependent. For
+convenience, you can set the individual flag options
+below, instead of directly setting bits here. default 0</li>
+<li><strong>RawOutput</strong> See the predict method. default false</li>
+<li><strong>CompressedInput</strong> See the predict method. default false</li>
+<li><strong>PredictSum</strong> See the predict method. default false</li>
+<li><strong>PredictMaxVote</strong> See the predict method. default false</li>
 </ul>
 
-<p>The method trains the Boost model.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Boost.html">cv.Boost</a> <a href="Boost.predict.html">cv.Boost/predict</a></div>
+<h3> Options for <code>Data</code> (first variant with samples and reponses)</h3>
+
+<ul>
+<li><strong>Layout</strong> Sample types. Default 'Row'. One of:<ul>
+<li><strong>Row</strong> each training sample is a row of samples.</li>
+<li><strong>Col</strong> each training sample occupies a column of
+samples.</li>
+</ul>
+</li>
+<li><strong>VarIdx</strong> vector specifying which variables to use for
+training. It can be an integer vector (<code>int32</code>) containing
+0-based variable indices or logical vector (<code>uint8</code> or
+<code>logical</code>) containing a mask of active variables. Not set
+by default, which uses all variables in the input data.</li>
+<li><strong>SampleIdx</strong> vector specifying which samples to use for
+training. It can be an integer vector (<code>int32</code>) containing
+0-based sample indices or logical vector (<code>uint8</code> or
+<code>logical</code>) containing a mask of training samples of
+interest. Not set by default, which uses all samples in
+the input data.</li>
+<li><strong>SampleWeights</strong> optional floating-point vector with weights
+for each sample. Some samples may be more important than
+others for training. You may want to raise the weight of
+certain classes to find the right balance between hit-rate
+and false-alarm rate, and so on. Not set by default, which
+effectively assigns an equal weight of 1 for all samples.</li>
+<li><strong>VarType</strong> optional vector of type <code>uint8</code> and size
+<code>&lt;num_of_vars_in_samples&gt; + &lt;num_of_vars_in_responses&gt;</code>,
+containing types of each input and output variable. By
+default considers all variables as numerical (both input
+and output variables). In case there is only one output
+variable of integer type, it is considered categorical.
+You can also specify a cell-array of strings (or as one
+string of single characters, e.g 'NNNC'). Possible values:<ul>
+<li><strong>Numerical</strong>, <strong>N</strong> same as 'Ordered'</li>
+<li><strong>Ordered</strong>, <strong>O</strong> ordered variables</li>
+<li><strong>Categorical</strong>, <strong>C</strong> categorical variables</li>
+</ul>
+</li>
+<li><strong>MissingMask</strong> Indicator mask for missing observation (not
+currently implemented). Not set by default</li>
+<li><strong>TrainTestSplitCount</strong> divides the dataset into train/test
+sets, by specifying number of samples to use for the test
+set. By default all samples are used for the training set.</li>
+<li><strong>TrainTestSplitRatio</strong> divides the dataset into train/test
+sets, by specifying ratio of samples to use for the test
+set. By default all samples are used for the training set.</li>
+<li><strong>TrainTestSplitShuffle</strong> when splitting dataset into
+train/test sets, specify whether to shuffle the samples.
+Otherwise samples are assigned sequentially (first train
+then test). default true</li>
+</ul>
+
+<h3> Options for <code>Data</code> (second variant for loading CSV file)</h3>
+
+<ul>
+<li><strong>HeaderLineCount</strong> The number of lines in the beginning to
+skip; besides the header, the function also skips empty
+lines and lines staring with '#'. default 1</li>
+<li><strong>ResponseStartIdx</strong> Index of the first output variable. If
+-1, the function considers the last variable as the
+response. If the dataset only contains input variables and
+no responses, use <code>ResponseStartIdx = -2</code> and
+<code>ResponseEndIdx = 0</code>, then the output variables vector
+will just contain zeros. default -1</li>
+<li><strong>ResponseEndIdx</strong> Index of the last output variable + 1. If
+-1, then there is single response variable at
+<code>ResponseStartIdx</code>. default -1</li>
+<li><strong>VarTypeSpec</strong> The optional text string that specifies the
+variables' types. It has the format
+<code>ord[n1-n2,n3,n4-n5,...]cat[n6,n7-n8,...]</code>. That is,
+variables from <code>n1</code> to <code>n2</code> (inclusive range), <code>n3</code>, <code>n4</code>
+to <code>n5</code> ... are considered ordered and <code>n6</code>, <code>n7</code> to
+<code>n8</code> ... are considered as categorical. The range
+<code>[n1..n2] + [n3] + [n4..n5] + ... + [n6] + [n7..n8]</code>
+should cover all the variables. If <code>VarTypeSpec</code> is not
+specified, then algorithm uses the following rules:<ul>
+<li>all input variables are considered ordered by default.
+If some column contains has non- numerical values, e.g.
+'apple', 'pear', 'apple', 'apple', 'mango', the
+corresponding variable is considered categorical.</li>
+<li>if there are several output variables, they are all
+considered as ordered. Errors are reported when
+non-numerical values are used.</li>
+<li>if there is a single output variable, then if its values
+are non-numerical or are all integers, then it's
+considered categorical. Otherwise, it's considered
+ordered.</li>
+</ul>
+</li>
+<li><strong>Delimiter</strong> The character used to separate values in each
+line. default ','</li>
+<li><strong>Missing</strong> The character used to specify missing
+measurements. It should not be a digit. Although it's a
+non-numerical value, it surely does not affect the
+decision of whether the variable ordered or categorical.
+default '?'</li>
+<li><strong>TrainTestSplitCount</strong> same as above.</li>
+<li><strong>TrainTestSplitRatio</strong> same as above.</li>
+<li><strong>TrainTestSplitShuffle</strong> same as above.</li>
+</ul>
+
+<p>The method trains the <a href="Boost.html">cv.Boost</a> model.</p>
+
+<p>Depending on the <code>responses</code> data type (or the specified
+<code>VarType</code> for the response), the method solves a classification
+problem for categorical labels, otherwise the training is
+treated as a regression problem for numerical responses.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Boost.predict.html">cv.Boost/predict</a>, <a href="Boost.calcError.html">cv.Boost/calcError</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

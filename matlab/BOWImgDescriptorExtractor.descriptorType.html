@@ -15,13 +15,21 @@
          </tr>
       </table>
       <div class="title">cv.BOWImgDescriptorExtractor/descriptorType</div>
-      <div class="helpcontent"><p>Returns an image descriptor type</p>
+      <div class="helpcontent"><p>Returns image descriptor type</p>
 
-<pre><code>s = extractor.descriptorType()
+<pre><code>dtype = extractor.descriptorType()
 </code></pre>
 
-<p>s is a numeric value.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a></div>
+<h2> Output</h2>
+
+<ul>
+<li><strong>dtype</strong> Returns an image descriptor type, one of
+numeric MATLAB class names.</li>
+</ul>
+
+<p>Always <code>single</code> for BOWImgDescriptorExtractor.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BOWImgDescriptorExtractor.descriptorSize.html">cv.BOWImgDescriptorExtractor/descriptorSize</a>,
+   <a href="DescriptorExtractor.descriptorType.html">cv.DescriptorExtractor/descriptorType</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

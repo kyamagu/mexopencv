@@ -15,16 +15,20 @@
          </tr>
       </table>
       <div class="title">cv.BOWImgDescriptorExtractor/descriptorSize</div>
-      <div class="helpcontent"><p>Returns an image discriptor size if the vocabulary is set</p>
+      <div class="helpcontent"><p>Returns image discriptor size</p>
 
-<pre><code>s = extractor.descriptorSize()
+<pre><code>sz = extractor.descriptorSize()
 </code></pre>
 
-<p>s is a numeric value.</p>
+<h2> Output</h2>
 
-<p>Returns an image discriptor size if the vocabulary is set.
-Otherwise, it returns 0.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a></div>
+<ul>
+<li><strong>sz</strong> Returns an image discriptor size if the vocabulary
+is set. Otherwise, it returns 0.</li>
+</ul>
+
+<p>This is basically <code>size(Vocabulary,1)</code> (i.e number of clusters).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BOWImgDescriptorExtractor.descriptorType.html">cv.BOWImgDescriptorExtractor/descriptorType</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

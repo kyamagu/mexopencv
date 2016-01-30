@@ -17,36 +17,67 @@
       <div class="title">cv.adaptiveThreshold</div>
       <div class="helpcontent"><p>Applies an adaptive threshold to an array</p>
 
-<pre><code>dst = <a href="adaptiveThreshold.html">cv.adaptiveThreshold</a>(src, maxVal)
-dst = <a href="adaptiveThreshold.html">cv.adaptiveThreshold</a>(src, maxVal, 'AdaptiveMethod', 'Mean', ...)
+<pre><code>dst = <a href="adaptiveThreshold.html">cv.adaptiveThreshold</a>(src, maxValue)
+dst = <a href="adaptiveThreshold.html">cv.adaptiveThreshold</a>(src, maxValue, 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>src</strong> Source 8-bit single-channel image.</li>
-<li><strong>maxVal</strong> Non-zero value assigned to the pixels for which the condition
-is satisfied.</li>
+<li><strong>src</strong> Source 8-bit single-channel <code>uint8</code> image.</li>
+<li><strong>maxValue</strong> Non-zero value assigned to the pixels for which the condition
+is satisfied. See the details below.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Destination image of the same size and the same type as src.</li>
+<li><strong>dst</strong> Destination image of the same size and the same type as <code>src</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>AdaptiveMethod</strong> Adaptive thresholding algorithm to use, either
-'Mean' or 'Gaussian'.</li>
-<li><strong>ThresholdType</strong> Thresholding type that must be either 'Binary' or
-'BinaryInv'.</li>
-<li><strong>BlockSize</strong> Size of a pixel neighborhood that is used to calculate a
-threshold value for the pixel: 3, 5, 7, and so on.</li>
-<li><strong>C</strong> Constant subtracted from the mean or weighted mean. Normally, it
-is positive but may be zero or negative as well.</li>
+<li><strong>AdaptiveMethod</strong> Adaptive thresholding algorithm to use, default 'Mean'.
+One of:<ul>
+<li><strong>Mean</strong> the threshold value <code>T(x,y)</code> is a mean of the
+<code>BlockSize x BlockSize</code> neighborhood of <code>(x,y)</code> minus <code>C</code></li>
+<li><strong>Gaussian</strong> the threshold value <code>T(x,y)</code> is a weighted sum
+(cross-correlation with a Gaussian window) of the
+<code>BlockSize x BlockSize</code> neighborhood of <code>(x,y)</code> minus <code>C</code>.
+The default sigma (standard deviation) is used for the specified
+<code>BlockSize</code>. See cv.getGaussianKernel</li>
 </ul>
-</div><!--after help -->
+</li>
+<li><strong>ThresholdType</strong> Thresholding type, default 'Binary'. One of:<ul>
+<li><strong>Binary</strong>    <code>dst(x,y) = (src(x,y) &gt; thresh) ? maxValue : 0</code></li>
+<li><strong>BinaryInv</strong> <code>dst(x,y) = (src(x,y) &gt; thresh) ? 0 : maxValue</code></li>
+</ul>
+</li>
+<li><strong>BlockSize</strong> Size of a pixel neighborhood that is used to calculate a
+threshold value for the pixel: 3, 5, 7, and so on. Default 3</li>
+<li><strong>C</strong> Constant subtracted from the mean or weighted mean. Normally, it
+is positive but may be zero or negative as well. Default 5</li>
+</ul>
+
+<p>The function transforms a grayscale image to a binary image according to
+the formulae:</p>
+
+<ul>
+<li><p><strong>Binary</strong></p>
+<p>                   | maxValue, if src(x,y) &gt; T(x,y)
+dst(x,y) = |
+| 0, otherwise</p>
+</li>
+<li><p><strong>BinaryInv</strong></p>
+<p>                   | 0, if src(x,y) &gt; T(x,y)
+dst(x,y) = |
+| maxValue, otherwise</p>
+</li>
+</ul>
+
+<p>where <code>T(x,y)</code> is a threshold calculated individually for each pixel (see
+<code>AdaptiveMethod</code> parameter).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="threshold.html">cv.threshold</a>, <a href="blur.html">cv.blur</a>, <a href="GaussianBlur.html">cv.GaussianBlur</a></div>
    </body>
 </html>

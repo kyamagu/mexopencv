@@ -15,9 +15,10 @@
          </tr>
       </table>
       <div class="title">cv.drawChessboardCorners</div>
-      <div class="helpcontent"><p>Finds the positions of internal corners of the chessboard</p>
+      <div class="helpcontent"><p>Renders the detected chessboard corners</p>
 
 <pre><code>im = <a href="drawChessboardCorners.html">cv.drawChessboardCorners</a>(im, patternSize, corners)
+im = <a href="drawChessboardCorners.html">cv.drawChessboardCorners</a>(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
@@ -36,9 +37,17 @@
 <li><strong>im</strong> Destination image.</li>
 </ul>
 
+<h2> Options</h2>
+
+<ul>
+<li><strong>PatternWasFound</strong> Parameter indicating whether the complete board was
+found or not. The return value of <a href="findChessboardCorners.html">cv.findChessboardCorners</a> should be
+passed here. default true</li>
+</ul>
+
 <p>The function draws individual chessboard corners detected either as red
 circles if the board was not found, or as colored corners connected with
 lines if the board was found.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findChessboardCorners.html">cv.findChessboardCorners</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findChessboardCorners.html">cv.findChessboardCorners</a>, <a href="findCirclesGrid.html">findCirclesGrid</a></div>
    </body>
 </html>

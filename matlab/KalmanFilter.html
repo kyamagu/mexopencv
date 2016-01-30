@@ -19,8 +19,10 @@
 
 <p>The class implements a standard Kalman filter
 <a href="http://en.wikipedia.org/wiki/Kalman_filter">http://en.wikipedia.org/wiki/Kalman_filter</a>, [Welch95]. However, you can
-modify transitionMatrix, controlMatrix, and measurementMatrix to get an
-extended Kalman filter functionality.</p>
+modify <code>transitionMatrix</code>, <code>controlMatrix</code>, and <code>measurementMatrix</code> to
+get an extended Kalman filter functionality.</p>
+
+<h2> Example</h2>
 
 <pre><code>% initialization
 kf = <a href="KalmanFilter.html">cv.KalmanFilter</a>(4,2);
@@ -32,11 +34,21 @@ kf.measurementNoiseCov = eye(2) * 1e-1;
 kf.errorCovPost = eye(4) * 0.1;
 
 % dynamics
-p_pred = kf.predict;         % update internal state
+p_pred = kf.predict();       % update internal state
 measure = [11;21];           % measurement
-p_est = kf.correct(measure); % correct</code></pre>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KalmanFilter.KalmanFilter.html">cv.KalmanFilter/KalmanFilter</a> <a href="KalmanFilter.predict.html">cv.KalmanFilter/predict</a>
-  <a href="KalmanFilter.correct.html">cv.KalmanFilter/correct</a></div>
+p_est = kf.correct(measure); % correct
+</code></pre>
+
+<h2> References</h2>
+
+<p>[Welch95]:</p>
+
+<blockquote>
+<p>Greg Welch and Gary Bishop. An introduction to the kalman filter, 1995.
+<a href="http://www.cs.unc.edu/~welch/media/pdf/kalman_intro.pdf">http://www.cs.unc.edu/~welch/media/pdf/kalman_intro.pdf</a></p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KalmanFilter.init.html">cv.KalmanFilter/init</a>, <a href="KalmanFilter.predict.html">cv.KalmanFilter/predict</a>,
+    <a href="KalmanFilter.correct.html">cv.KalmanFilter/correct</a>, vision.KalmanFilter</div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -72,11 +84,11 @@ p_est = kf.correct(measure); % correct</code></pre>
          </tr>
          <tr class="summary-item">
             <td class="name"><a href="KalmanFilter.errorCovPost.html">errorCovPost</a></td>
-            <td class="m-help">posteriori error estimate covariance matrix `(P(k)): P(k)=(I-K(k)*H)*P'(k)`&nbsp;</td>
+            <td class="m-help">posteriori error estimate covariance matrix&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="name"><a href="KalmanFilter.errorCovPre.html">errorCovPre</a></td>
-            <td class="m-help">priori error estimate covariance matrix `(P'(k)): P'(k)=A*P(k-1)*At + Q`&nbsp;</td>
+            <td class="m-help">priori error estimate covariance matrix&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="name"><a href="KalmanFilter.gain.html">gain</a></td>

@@ -15,14 +15,20 @@
          </tr>
       </table>
       <div class="title">cv.VideoWriter</div>
-      <div class="helpcontent"><p>VideoWriter wrapper class</p>
+      <div class="helpcontent"><p>Video Writer class</p>
 
-<p>Video writer class. Here is how to write to a video file:</p>
+<p>When querying a property that is not supported by the backend
+used by the <a href="VideoWriter.html">cv.VideoWriter</a> class, value 0 is returned.</p>
+
+<h2> Example</h2>
+
+<p>Here is how to write to a video file:</p>
 
 <pre><code>vid = <a href="VideoWriter.html">cv.VideoWriter</a>('myvideo.mpg', [640,480]);
 vid.write(im);         % add a frame
 clear vid;             % finish</code></pre>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="VideoWriter.VideoWriter.html">cv.VideoWriter/VideoWriter</a> <a href="VideoWriter.write.html">cv.VideoWriter/write</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="VideoWriter.VideoWriter.html">cv.VideoWriter/VideoWriter</a>, <a href="VideoWriter.write.html">cv.VideoWriter/write</a>,
+   <a href="VideoWriter.VideoWriter.html">VideoWriter</a>, avifile, movie2avi, vision.VideoFileWriter</div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -45,13 +51,25 @@ clear vid;             % finish</code></pre>
       <table class="summary-list">
          <tr class="summary-item">
             <td class="name"><a href="VideoWriter.VideoWriter.html">VideoWriter</a></td>
-            <td class="m-help">VideoWriter constructors&nbsp;</td>
+            <td class="m-help">VideoWriter constructor&nbsp;</td>
          </tr>
       </table>
       <!--Properties-->
       <div class="sectiontitle"><a name="properties"></a>Property Summary
       </div>
       <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="VideoWriter.FrameBytes.html">FrameBytes</a></td>
+            <td class="m-help">Size of just encoded video frame; note that the encoding order may&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoWriter.NStripes.html">NStripes</a></td>
+            <td class="m-help">Number of stripes for parallel encoding. -1 for auto detection&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoWriter.Quality.html">Quality</a></td>
+            <td class="m-help">Current quality (0..100%) of the encoded videostream. Can be&nbsp;</td>
+         </tr>
          <tr class="summary-item">
             <td class="name"><a href="VideoWriter.id.html">id</a></td>
             <td class="m-help">Object ID&nbsp;</td>
@@ -118,6 +136,14 @@ clear vid;             % finish</code></pre>
             <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
          </tr>
          <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="VideoWriter.isOpened.html">isOpened</a></td>
+            <td class="m-help">Returns true if video writer has been successfully initialized&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
             <td class="attributes">Sealed 
                &nbsp;
                
@@ -156,6 +182,22 @@ clear vid;             % finish</code></pre>
             </td>
             <td class="name"><a href="VideoWriter.notify.html">notify</a></td>
             <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="VideoWriter.open.html">open</a></td>
+            <td class="m-help">Initializes or reinitializes video writer&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="VideoWriter.release.html">release</a></td>
+            <td class="m-help">Closes the video writer&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">

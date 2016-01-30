@@ -30,29 +30,37 @@ dst = <a href="Laplacian.html">cv.Laplacian</a>(..., 'OptionName', optionValue, 
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Destination image of the same size and the same number of
-channels as src.</li>
+<li><strong>dst</strong> Destination image of the same size and the same number of channels
+as <code>src</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>KSize</strong> Aperture size used to compute the second-derivative filters. The
-size must be positive and odd.</li>
+<li><strong>DDepth</strong> Desired depth of the destination image. default -1, which uses
+the same type as the input <code>src</code>.</li>
+<li><strong>KSize</strong> Aperture size used to compute the second-derivative filters. See
+getDerivKernels for details. The size must be positive and odd.
+default 1</li>
 <li><strong>Scale</strong> Optional scale factor for the computed Laplacian values. By
-default, no scaling is applied.</li>
+default, no scaling is applied. See <a href="getDerivKernels.html">cv.getDerivKernels</a> for details.
+default 1</li>
 <li><strong>Delta</strong> Optional delta value that is added to the results prior to
-storing them in dst .</li>
-<li><strong>BorderType</strong> Pixel extrapolation method.</li>
+storing them in <code>dst</code>. default 0</li>
+<li><strong>BorderType</strong> Pixel extrapolation method, see <a href="copyMakeBorder.html">cv.copyMakeBorder</a>.
+Default 'Default'</li>
 </ul>
 
 <p>The function calculates the Laplacian of the source image by adding up the
-second x and y derivatives calculated using the Sobel operator.</p>
+second x and y derivatives calculated using the Sobel operator:</p>
 
-<p>This is done when ksize &gt; 1 . When ksize = 1 , the Laplacian is computed by
-filtering the image with the following aperture:</p>
+<pre><code>dst = \Delta src = d^2(src)/dx^2 + d^2(src)/dy^2
+</code></pre>
+
+<p>This is done when <code>KSize &gt; 1</code>. When <code>KSize = 1</code>, the Laplacian is computed
+by filtering the image with the following 3x3 aperture:</p>
 
 <pre><code>[0, 1, 0; 1,-4, 1; 0, 1, 0]</code></pre>
-</div><!--after help -->
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Sobel.html">cv.Sobel</a>, <a href="Scharr.html">cv.Scharr</a></div>
    </body>
 </html>

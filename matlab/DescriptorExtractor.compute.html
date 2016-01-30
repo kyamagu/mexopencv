@@ -15,33 +15,39 @@
          </tr>
       </table>
       <div class="title">cv.DescriptorExtractor/compute</div>
-      <div class="helpcontent"><p>Computes the descriptors for a set of keypoints detected in an image</p>
+      <div class="helpcontent"><p>Computes the descriptors for a set of keypoints detected in an image or image set.</p>
 
-<pre><code>descroptors = extractor.compute(im, keypoints)
+<pre><code>[descriptors, keypoints] = extractor.compute(img, keypoints)
+[descriptors, keypoints] = extractor.compute(imgs, keypoints)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>im</strong> Image.</li>
+<li><strong>img</strong> Image (first variant).</li>
+<li><strong>imgs</strong> Image set (second variant), cell array of images.</li>
 <li><strong>keypoints</strong> Input collection of keypoints. Keypoints for
 which a descriptor cannot be computed are removed.
-Sometimes new keypoints can be added, for example:
-SIFT duplicates keypoint with several dominant
-orientations (for each orientation).
-A 1-by-N structure array, it has the following fields:<ul>
-<li><strong>pt</strong> coordinates of the keypoint [x,y]</li>
+Sometimes new keypoints can be added, for example: <a href="SIFT.html">cv.SIFT</a>
+duplicates keypoint with several dominant orientations
+(for each orientation). In the first variant, this is a
+struct-array of detected keypoints. In the second variant,
+it is a cell-array, where <code>keypoints{i}</code> is a set of keypoints
+detected in <code>images{i}</code> (a struct-array like before).
+Each keypoint is a struct with the following fields:<ul>
+<li><strong>pt</strong> coordinates of the keypoint <code>[x,y]</code></li>
 <li><strong>size</strong> diameter of the meaningful keypoint neighborhood</li>
-<li><strong>angle</strong> computed orientation of the keypoint (-1 if not applicable).
-Its possible values are in a range [0,360) degrees. It is measured
-relative to image coordinate system (y-axis is directed downward),
-ie in clockwise.</li>
-<li><strong>response</strong> the response by which the most strong keypoints have been
-selected. Can be used for further sorting or subsampling.</li>
-<li><strong>octave</strong> octave (pyramid layer) from which the keypoint has been
-extracted.</li>
-<li><strong>class_id</strong> object id that can be used to clustered keypoints by an
-object they belong to.</li>
+<li><strong>angle</strong> computed orientation of the keypoint (-1 if not
+applicable); it's in [0,360) degrees and measured
+relative to image coordinate system (y-axis is
+directed downward), i.e in clockwise.</li>
+<li><strong>response</strong> the response by which the most strong
+keypoints have been selected. Can be used for further
+sorting or subsampling.</li>
+<li><strong>octave</strong> octave (pyramid layer) from which the keypoint
+has been extracted.</li>
+<li><strong>class_id</strong> object class (if the keypoints need to be
+clustered by an object they belong to).</li>
 </ul>
 </li>
 </ul>
@@ -49,10 +55,13 @@ object they belong to.</li>
 <h2> Output</h2>
 
 <ul>
-<li><strong>descriptors</strong> Computed descriptors.</li>
-<li><strong>keypoints</strong> Keypoints for which descriptors have been computed.</li>
+<li><strong>descriptors</strong> Computed descriptors. In the second variant of
+the method <code>descriptors{i}</code> are descriptors computed for a
+<code>keypoints{i}</code>. Row <code>j</code> in <code>descriptors</code> (or
+<code>descriptors{i}</code>) is the descriptor for <code>j</code>-th keypoint.</li>
+<li><strong>keypoints</strong> Optional output with possibly updated keypoints.</li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DescriptorExtractor.DescriptorExtractor.html">cv.DescriptorExtractor/DescriptorExtractor</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

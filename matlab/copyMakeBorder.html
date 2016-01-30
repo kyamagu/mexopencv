@@ -1,0 +1,64 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.copyMakeBorder</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.copyMakeBorder</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.copyMakeBorder</div>
+      <div class="helpcontent"><p>Forms a border around an image.</p>
+
+<pre><code>dst = <a href="copyMakeBorder.html">cv.copyMakeBorder</a>(src, top, bottom, left, right)
+dst = <a href="copyMakeBorder.html">cv.copyMakeBorder</a>(src, [top, bottom, left, right])
+[...] = <a href="copyMakeBorder.html">cv.copyMakeBorder</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Source image.</li>
+<li><strong>top</strong>, <strong>bottom</strong>, <strong>left</strong>, <strong>right</strong> Parameter specifying how many
+pixels in each direction from the source image rectangle to extrapolate.
+For example, <code>top=1</code>, <code>bottom=1</code>, <code>left=1</code>, <code>right=1</code> mean that
+1 pixel-wide border needs to be built.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Destination image of the same type as <code>src</code> and the size
+<code>[size(src,1)+top+bottom, size(src,2)+left+right, size(src,3)]</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>BorderType</strong> Border type, one of:<ul>
+<li><strong>Constant</strong> <code>iiiiii|abcdefgh|iiiiiii</code> with some specified <code>i</code></li>
+<li><strong>Replicate</strong> <code>aaaaaa|abcdefgh|hhhhhhh</code></li>
+<li><strong>Reflect</strong> <code>fedcba|abcdefgh|hgfedcb</code></li>
+<li><strong>Reflect101</strong> <code>gfedcb|abcdefgh|gfedcba</code></li>
+<li><strong>Wrap</strong> <code>cdefgh|abcdefgh|abcdefg</code></li>
+<li><strong>Default</strong> same as 'Reflect101' (default)</li>
+</ul>
+</li>
+<li><strong>Value</strong> Border value when <code>BorderType</code> is 'Constant'. default zeros</li>
+</ul>
+
+<p>The function copies the source image into the middle of the destination image.
+The areas to the left, to the right, above and below the copied source image
+will be filled with extrapolated pixels. This is not what filtering functions
+based on it do (they extrapolate pixels on-fly), but what other more complex
+functions, including your own, may do to simplify image boundary handling.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="borderInterpolate.html">cv.borderInterpolate</a>, padarray</div>
+   </body>
+</html>

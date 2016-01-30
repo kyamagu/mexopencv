@@ -24,14 +24,13 @@
 <h2> Input</h2>
 
 <ul>
-<li><strong>text</strong> Text string.</li>
+<li><strong>text</strong> Input text string.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>siz</strong> Size of of a box that contains the specified text
-(<code>[width,height]</code>).</li>
+<li><strong>siz</strong> Size of a box that contains the specified text <code>[w,h]</code>.</li>
 <li><strong>baseLine</strong> y-coordinate of the baseline relative to the bottom-most
 text point.</li>
 </ul>
@@ -40,14 +39,14 @@ text point.</li>
 
 <ul>
 <li><strong>FontFace</strong> Font to use. One of the following:<ul>
-<li><code>'HersheySimplex'</code> (default)</li>
-<li><code>'HersheyPlain'</code></li>
-<li><code>'HersheyDuplex'</code></li>
-<li><code>'HersheyComplex'</code></li>
-<li><code>'HersheyTriplex'</code></li>
-<li><code>'HersheyComplexSmall'</code></li>
-<li><code>'HersheyScriptSimplex'</code></li>
-<li><code>'HersheyScriptComplex'</code></li>
+<li><strong>HersheySimplex</strong> (default)</li>
+<li><strong>HersheyPlain</strong></li>
+<li><strong>HersheyDuplex</strong></li>
+<li><strong>HersheyComplex</strong></li>
+<li><strong>HersheyTriplex</strong></li>
+<li><strong>HersheyComplexSmall</strong></li>
+<li><strong>HersheyScriptSimplex</strong></li>
+<li><strong>HersheyScriptComplex</strong></li>
 </ul>
 </li>
 <li><strong>FontStyle</strong> Font style. One of 'Regular' (default) or 'Italic'</li>
@@ -61,36 +60,8 @@ contains the specified text.</p>
 
 <h2> Example</h2>
 
-<p>The following code renders some text, the tight box surrounding it, and
-the baseline:</p>
-
-<pre><code>txt = 'Funny text inside the box';
-fontFace = 'HersheyScriptSimplex';
-fontScale = 2;
-thickness = 3;
-
-img = zeros(300,800,3, 'uint8');
-
-[textSize,baseline] = <a href="getTextSize.html">cv.getTextSize</a>(txt, 'FontFace',fontFace, ...
-    'FontScale',fontScale, 'Thickness',thickness);
-baseline = baseline + thickness;
-
-% center the text
-textOrg = [size(img,2) - textSize(1), size(img,1) + textSize(2)] ./ 2;
-
-% draw the box
-img = <a href="rectangle.html">cv.rectangle</a>(img, textOrg + [0, baseline], ...
-    textOrg + [textSize(1), -textSize(2)], 'Color',[0,0,255]);
-
-% ... and the baseline first
-img = <a href="line.html">cv.line</a>(img, textOrg + [0, thickness], ...
-    textOrg + [textSize(1), thickness], 'Color',[0,255,0]);
-
-% then put the text itself
-img = <a href="putText.html">cv.putText</a>(img, txt, textOrg, 'Color',[255,255,255], ...
-    'Thickness',thickness, 'FontFace',fontFace, 'FontScale',fontScale);
-
-imshow(img, 'InitialMagnification',100, 'Border','tight')</code></pre>
+<p>Refer to the <code>draw_text_demo.m</code> sample. The code renders some text, the
+tight box surrounding it, and the baseline.</p>
 </div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="putText.html">cv.putText</a></div>
    </body>
 </html>

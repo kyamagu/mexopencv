@@ -23,26 +23,28 @@
 <h2> Input</h2>
 
 <ul>
-<li><strong>src</strong> 3-by-2 row vectors of coordinates of triangle vertices in the source
-image.</li>
-<li><strong>dst</strong> 3-by-2 row vectors of coordinates of the corresponding triangle
-vertices in the destination image.</li>
+<li><strong>src</strong> Coordinates of triangle vertices in the source image. A numeric
+3-by-2 row vectors or a cell-array of 2-element vectors of length 3
+<code>{[x,y], [x,y], [x,y]}</code></li>
+<li><strong>dst</strong> Coordinates of the corresponding triangle vertices in the
+destination image. Same type and size as <code>src</code>.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>T</strong> 2-by-3 transformation matrix</li>
+<li><strong>T</strong> 2-by-3 affine transformation matrix</li>
 </ul>
 
-<p>The function calculates the 2 x 3 matrix of an affine transform so that</p>
+<p>The function calculates the 2x3 matrix of an affine transform so that:</p>
 
 <pre><code> [X_i; X_i] = T * [x_i; y_i; 1]
 </code></pre>
 
 <p>where</p>
 
-<pre><code> dst(i,:) = [X_i, Y_i], src(i,:) = [x_i, y_i]</code></pre>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="warpAffine.html">cv.warpAffine</a></div>
+<pre><code> dst(i,:) = [X_i, Y_i], src(i,:) = [x_i, y_i]  for i=1,2,3</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="warpAffine.html">cv.warpAffine</a>, <a href="transform.html">cv.transform</a>, cp2tform, fitgeotrans,
+   estimateGeometricTransform</div>
    </body>
 </html>

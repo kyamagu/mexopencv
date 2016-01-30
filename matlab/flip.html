@@ -1,0 +1,55 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.flip</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.flip</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.flip</div>
+      <div class="helpcontent"><p>Flips a 2D array around vertical, horizontal, or both axes</p>
+
+<pre><code>dst = <a href="flip.html">cv.flip</a>(src, flipCode)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> input array.</li>
+<li><strong>flipCode</strong> a flag to specify how to flip the array:<ul>
+<li>0 means flipping around the x-axis</li>
+<li>positive value (for example, 1) means flipping around y-axis.</li>
+<li>Negative value (for example, -1) means flipping around both axes.</li>
+</ul>
+</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><p><strong>dst</strong> output array of the same size and type as <code>src</code>.</p>
+<p>  The example scenarios of using the function are the following:</p>
+</li>
+<li><p>Vertical flipping of the image (<code>flipCode == 0</code>) to switch between
+top-left and bottom-left image origin. This is a typical operation in
+video processing on Microsoft Windows OS.</p>
+</li>
+<li>Horizontal flipping of the image with the subsequent horizontal shift
+and absolute difference calculation to check for a vertical-axis
+symmetry (<code>flipCode &gt; 0</code>).</li>
+<li>Simultaneous horizontal and vertical flipping of the image with the
+subsequent shift and absolute difference calculation to check for a
+central symmetry (<code>flipCode &lt; 0</code>).</li>
+<li>Reversing the order of point arrays (flipCode &gt; 0 or flipCode == 0).</li>
+</ul>
+</div><!--after help -->
+   </body>
+</html>

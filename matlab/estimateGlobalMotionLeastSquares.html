@@ -1,0 +1,57 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.estimateGlobalMotionLeastSquares</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.estimateGlobalMotionLeastSquares</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.estimateGlobalMotionLeastSquares</div>
+      <div class="helpcontent"><p>Estimates best global motion between two 2D point clouds in the least-squares sense</p>
+
+<pre><code>M = <a href="estimateGlobalMotionLeastSquares.html">cv.estimateGlobalMotionLeastSquares</a>(points0, points1)
+[M,rmse] = <a href="estimateGlobalMotionLeastSquares.html">cv.estimateGlobalMotionLeastSquares</a>(points0, points1)
+[...] = <a href="estimateGlobalMotionLeastSquares.html">cv.estimateGlobalMotionLeastSquares</a>(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>points0</strong> Source set of 2D points of type <code>single</code>, stored in numeric
+array (Nx2/Nx1x2/1xNx2) or cell-array of 2-element vectors
+<code>{[x,y], [x,y], ...}</code>.</li>
+<li><strong>points1</strong> Destination set of 2D points of type <code>single</code>, of same format
+as <code>points0</code>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>M</strong> 3x3 2D transformation matrix of type <code>single</code>.</li>
+<li><strong>rmse</strong> Final root-mean-square error.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>MotionModel</strong> Motion model between two point clouds. One of:<ul>
+<li><strong>Translation</strong></li>
+<li><strong>TranslationAndScale</strong></li>
+<li><strong>Rotation</strong></li>
+<li><strong>Rigid</strong></li>
+<li><strong>Similarity</strong></li>
+<li><strong>Affine</strong> (default)</li>
+</ul>
+</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="estimateGlobalMotionRansac.html">cv.estimateGlobalMotionRansac</a></div>
+   </body>
+</html>

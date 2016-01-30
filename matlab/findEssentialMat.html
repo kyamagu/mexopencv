@@ -1,0 +1,115 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.findEssentialMat</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.findEssentialMat</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.findEssentialMat</div>
+      <div class="helpcontent"><p>Calculates an essential matrix from the corresponding points in two images</p>
+
+<pre><code>E = <a href="findEssentialMat.html">cv.findEssentialMat</a>(points1, points2)
+[E, mask] = <a href="findEssentialMat.html">cv.findEssentialMat</a>(...)
+[...] = <a href="findEssentialMat.html">cv.findEssentialMat</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>points1</strong> Cell array of N (N&gt;=5) 2D points from the first image, or numeric array
+Nx2/Nx1x2/1xNx2. The point coordinates should be floating-point
+(single or double precision).</li>
+<li><strong>points2</strong> Cell array or numeric array of the second image points of the
+same size and format as <code>points1</code>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>E</strong> Essential matrix, 3x3.</li>
+<li><strong>mask</strong> Output vector of N elements, every element of which is set to 0
+for outliers and to 1 for the other points (inliers). The array is
+computed only in the RANSAC and LMedS robust methods.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>CameraMatrix</strong> Camera matrix <code>K = [fx 0 cx; 0 fy cy; 0 0 1]</code>. Note that
+this function assumes that <code>points1</code> and <code>points2</code> are feature points
+from cameras with the same camera matrix. default <code>eye(3)</code>.</li>
+<li><strong>Method</strong> Method for computing a essential matrix. One of:<ul>
+<li><strong>Ransac</strong> for the RANSAC algorithm. (default)</li>
+<li><strong>LMedS</strong> for the LMedS algorithm.</li>
+</ul>
+</li>
+<li><strong>Confidence</strong> Parameter used for the RANSAC or LMedS methods only. It
+specifies a desirable level of confidence (probability) that the
+estimated matrix is correct. In the range 0..1 exclusive.
+default 0.999</li>
+<li><strong>Threshold</strong> Parameter used for RANSAC. It is the maximum distance from a
+point to an epipolar line in pixels, beyond which the point is
+considered an outlier and is not used for computing the final
+essential matrix. It can be set to something like 1-3, depending
+on the accuracy of the point localization, image resolution, and
+the image noise. default 1.0</li>
+</ul>
+
+<p>This function estimates essential matrix based on the five-point algorithm
+solver in [Nister03]. [SteweniusCFS] is also a related. The epipolar
+geometry is described by the following equation:</p>
+
+<pre><code>[p2;1]' * inv(K)' * E * inv(K) * [p1;1] = 0
+</code></pre>
+
+<p>where <code>E</code> is an essential matrix, <code>p1</code> and <code>p2</code> are corresponding points in
+the first and the second images, respectively. The result of this function
+may be passed further to <a href="decomposeEssentialMat.html">cv.decomposeEssentialMat</a> or <a href="recoverPose.html">cv.recoverPose</a> to
+recover the relative pose between cameras.</p>
+
+<p><code>K</code> is the camera matrix with focal length <code>fx</code> and <code>fy</code> and principal point
+<code>[cx,cy]</code>:</p>
+
+<pre><code>K = [fx  0 cx;
+     0  fy cy;
+     0   0  1]
+</code></pre>
+
+<h2> Example</h2>
+
+<p>Estimation of essential matrix using the RANSAC algorithm:</p>
+
+<pre><code>% initialize the points here
+points1 = {[1,1],[3,1],[5,1],...}
+points2 = {[2,3],[4,3],[6,3],...}
+% estimate essential matrix
+[E, mask] = <a href="findEssentialMat.html">cv.findEssentialMat</a>(points1, points2, 'Method','Ransac');
+</code></pre>
+
+<h2> References</h2>
+
+<p>[Nister03]:</p>
+
+<blockquote>
+<p>David Nister. &quot;An efficient solution to the five-point relative pose
+problem&quot;. Pattern Analysis and Machine Intelligence, IEEE Transactions on,
+26(6):756-770, 2004.</p>
+</blockquote>
+
+<p>[SteweniusCFS]:</p>
+
+<blockquote>
+<p>Henrik Stewenius. &quot;Calibrated fivepoint solver&quot;.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findFundamentalMat.html">cv.findFundamentalMat</a>, <a href="recoverPose.html">cv.recoverPose</a></div>
+   </body>
+</html>

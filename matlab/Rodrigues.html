@@ -24,17 +24,18 @@
 <h2> Input</h2>
 
 <ul>
-<li><strong>src</strong> Input rotation vector (3x1 or 1x3) or rotation matrix (3x3).</li>
+<li><strong>src</strong> Input rotation vector (3x1 or 1x3) or rotation matrix (3x3).
+Both single and double-precision floating-point types are supported.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
 <li><strong>dst</strong> Output rotation matrix (3x3) or rotation vector (3x1 or 1x3),
-respectively.</li>
+respectively. Same data type as <code>src</code>.</li>
 <li><strong>jacobian</strong> Optional output Jacobian matrix, 3x9 or 9x3, which is a
 matrix of partial derivatives of the output array components with
-respect to the input array components.</li>
+respect to the input array components. Same data type as <code>src</code>.</li>
 </ul>
 
 <p>The function transforms a rotation matrix in the following way:</p>

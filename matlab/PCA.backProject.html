@@ -23,24 +23,27 @@
 <h2> Input</h2>
 
 <ul>
-<li><strong>Y</strong> PC coefficients</li>
+<li><strong>Y</strong> coordinates of the vectors in the principal component
+subspace, the layout and size are the same as of
+<a href="PCA.html">cv.PCA</a>.project output vectors.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>X</strong> Reconstructed vectors</li>
+<li><strong>X</strong> reconstructed vectors; the layout and size are the same
+as of <a href="PCA.html">cv.PCA</a>.project input vectors.</li>
 </ul>
 
-<p>The methods are inverse operations to pca.project. They
-take PC coordinates of projected vectors and reconstruct the
+<p>The method is the inverse operation to <a href="PCA.html">cv.PCA</a>.project. It
+takes PC coordinates of projected vectors and reconstruct the
 original vectors. Unless all the principal components have
 been retained, the reconstructed vectors are different from
 the originals. But typically, the difference is small if the
 number of components is large enough (but still much smaller
 than the original vector dimensionality). As a result, PCA is
 used.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="PCA.html">cv.PCA</a> <a href="PCA.project.html">cv.PCA/project</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="PCA.compute.html">cv.PCA/compute</a>, <a href="PCA.project.html">cv.PCA/project</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

@@ -17,7 +17,7 @@
       <div class="title">cv.HuMoments</div>
       <div class="helpcontent"><p>Calculates seven Hu invariants</p>
 
-<pre><code>m = <a href="HuMoments.html">cv.HuMoments</a>(mo)
+<pre><code>hu = <a href="HuMoments.html">cv.HuMoments</a>(mo)
 </code></pre>
 
 <h2> Input</h2>
@@ -29,17 +29,40 @@
 <h2> Output</h2>
 
 <ul>
-<li><strong>hu</strong> Output Hu invariants.</li>
+<li><strong>hu</strong> Output Hu invariants, a vector of length 7.</li>
 </ul>
 
 <p>The function calculates seven Hu invariants (introduced in [Hu62]; see also
-<a href="http://en.wikipedia.org/wiki/Image_moment">http://en.wikipedia.org/wiki/Image_moment</a>).</p>
+<a href="http://en.wikipedia.org/wiki/Image_moment">http://en.wikipedia.org/wiki/Image_moment</a>), defined as:</p>
+
+<pre><code>hu[0] =  eta_20 + eta_02
+hu[1] = (eta_20 - eta_02)^2 + 4*eta_11^2
+hu[2] = (eta_30 - 3*eta_12)^2 + (3*eta_21 - eta_03)^2
+hu[3] = (eta_30 + eta_12)^2 + (eta_21 + eta_03)^2
+hu[4] = (eta_30 - 3*eta_12)*(eta_30 + eta_12)*[(eta_30 + eta_12)^2 - 3*(eta_21 + eta_03)^2] +
+        (3*eta_21 - eta_03)*(eta_21 + eta_03)*[3*(eta_30 + eta_12)^2-(eta_21 + eta_03)^2]
+hu[5] = (eta_20 - eta_02)*[(eta_30 + eta_12)^2 - (eta_21 + eta_03)^2] +
+        4*eta_11(eta_30 + eta_12)*(eta_21 + eta_03)
+hu[6] = (3*eta_21 - eta_03)*(eta_21 + eta_03)*[3*(eta_30 + eta_12)^2-(eta_21 + eta_03)^2] -
+        (eta_30 - 3*eta_12)*(eta_21 + eta_03)*[3*(eta_30 + eta_12)^2-(eta_21 + eta_03)^2]
+</code></pre>
+
+<p>where <code>eta_ji</code> stands for <code>mo.nu[ji]</code>.</p>
 
 <p>These values are proved to be invariants to the image scale, rotation, and
 reflection except the seventh one, whose sign is changed by reflection. This
 invariance is proved with the assumption of infinite image resolution. In
 case of raster images, the computed Hu invariants for the original and
 transformed images are a bit different.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="moments.html">cv.moments</a></div>
+
+<h2> References</h2>
+
+<p>[Hu62]:</p>
+
+<blockquote>
+<p>Ming-Kuei Hu. &quot;Visual pattern recognition by moment invariants&quot;.
+Information Theory, IRE Transactions on, 8(2):179-187, 1962.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="moments.html">cv.moments</a>, <a href="matchShapes.html">cv.matchShapes</a></div>
    </body>
 </html>

@@ -15,45 +15,258 @@
          </tr>
       </table>
       <div class="title">cv.MSER</div>
-      <div class="helpcontent"><p>Maximally stable extremal region extractor</p>
+      <div class="helpcontent"><p>Maximally Stable Extremal Region extractor</p>
 
-<pre><code>chains = <a href="MSER.html">cv.MSER</a>(im)
-chains = <a href="MSER.html">cv.MSER</a>(im, 'OptionName', optionValue, ...)
-</code></pre>
-
-<h2> Input</h2>
+<p>The class encapsulates all the parameters of the MSER extraction
+algorithm (see [WikiArticle]).</p>
 
 <ul>
-<li><strong>im</strong> Input 8-bit grayscale image.</li>
+<li>there are two different implementation of MSER, one for gray image,
+one for color image</li>
+<li>the gray image algorithm is taken from [Nister08]; the paper claims to
+be faster than union-find method.</li>
+<li>the color image algorithm is taken from [Forssen07]; it should be much
+slower than gray image method (3~4 times).</li>
 </ul>
 
-<h2> Output</h2>
+<h2> References</h2>
 
-<ul>
-<li><strong>chains</strong> The output vector of connected points.
-Cell array of cell array of points <code>{{[x,y],[x,y],..}, {[x,y],..}}</code></li>
-</ul>
+<p>[WikiArticle]:</p>
 
-<h2> Options</h2>
+<blockquote>
+<a href="http://en.wikipedia.org/wiki/Maximally_stable_extremal_regions">http://en.wikipedia.org/wiki/Maximally_stable_extremal_regions</a></blockquote>
 
-<ul>
-<li><strong>Delta</strong> delta, in the code, it compares
-<code>(size_{i}-size_{i-delta})/size_{i-delta}</code>. default 5.</li>
-<li><strong>MinArea</strong> prune the area which smaller than minArea. default 60.</li>
-<li><strong>MaxArea</strong> prune the area which bigger than maxArea. default 14400.</li>
-<li><strong>MaxVariation</strong> prune the area have simliar size to its children. default 0.25</li>
-<li><strong>MinDiversity</strong> trace back to cut off mser with diversity &lt; min_diversity.
-default 0.2.</li>
-<li><strong>MaxEvolution</strong> for color image, the evolution steps. default 200.</li>
-<li><strong>AreaThreshold</strong> the area threshold to cause re-initialize. default 1.01.</li>
-<li><strong>MinMargin</strong> ignore too small margin. default 0.003.</li>
-<li><strong>EdgeBlurSize</strong> the aperture size for edge blur. default 5.</li>
-<li><strong>Mask</strong> Optional input mask that marks the regions where we should detect
-features</li>
-</ul>
+<p>[Nister08]:</p>
 
-<p>The class encapsulates all the parameters of the MSER extraction algorithm
-(see <a href="http://en.wikipedia.org/wiki/Maximally_stable_extremal_regions">http://en.wikipedia.org/wiki/Maximally_stable_extremal_regions</a>).</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.html">cv.FeatureDetector</a> <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a></div>
+<blockquote>
+<p>David Nister and Henrik Stewenius. &quot;Linear Time Maximally Stable
+Extremal Regions&quot;. In Proceedings of the 10th ECCV '08, pp 183-196.
+doi: 10.1007/978-3-540-88688-4_14</p>
+</blockquote>
+
+<p>[Forssen07]:</p>
+
+<blockquote>
+<p>Per-Erik Forssen. &quot;Maximally Stable Colour Regions for Recognition and
+Matching&quot;. in CVPR '07. IEEE Conference on , pp.1-8, 17-22 June 2007
+doi: 10.1109/CVPR.2007.383120
+<a href="http://www.cs.ubc.ca/~perfo/papers/forssen_cvpr07.pdf">http://www.cs.ubc.ca/~perfo/papers/forssen_cvpr07.pdf</a></p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.html">cv.FeatureDetector</a>, detectMSERFeatures</div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="MSER.MSER.html">MSER</a></td>
+            <td class="m-help">Full constructor for MSER detector&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="MSER.Delta.html">Delta</a></td>
+            <td class="m-help">&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="MSER.MaxArea.html">MaxArea</a></td>
+            <td class="m-help">prune the area which bigger than MaxArea.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="MSER.MinArea.html">MinArea</a></td>
+            <td class="m-help">prune the area which smaller than MinArea.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="MSER.Pass2Only.html">Pass2Only</a></td>
+            <td class="m-help">default false&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="MSER.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.clear.html">clear</a></td>
+            <td class="m-help">Clears the algorithm state&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.detect.html">detect</a></td>
+            <td class="m-help">Detects keypoints in an image or image set.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.detectRegions.html">detectRegions</a></td>
+            <td class="m-help">Maximally stable extremal region extractor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.empty.html">empty</a></td>
+            <td class="m-help">Checks if detector object is empty.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.load.html">load</a></td>
+            <td class="m-help">Loads algorithm from a file or a string&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.save.html">save</a></td>
+            <td class="m-help">Saves the algorithm parameters to a file&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MSER.typeid.html">typeid</a></td>
+            <td class="m-help">Name of the C++ type (RTTI)&nbsp;</td>
+         </tr>
+      </table>
    </body>
 </html>

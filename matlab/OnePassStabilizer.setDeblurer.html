@@ -1,0 +1,62 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.OnePassStabilizer/setDeblurer</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.OnePassStabilizer/setDeblurer</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.OnePassStabilizer/setDeblurer</div>
+      <div class="helpcontent"><p>Set the deblurring algorithm for the video stabilizer</p>
+
+<pre><code>stab.setDeblurer(deblurerType, ...)
+
+stab.setDeblurer('NullDeblurer')
+stab.setDeblurer('WeightingDeblurer', 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>deblurerType</strong> Deblurring method. One of:<ul>
+<li><strong>NullDeblurer</strong></li>
+<li><strong>WeightingDeblurer</strong></li>
+</ul>
+</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Radius</strong> default 0</li>
+<li><strong>Sensitivity</strong> default 0.1</li>
+</ul>
+
+<p>The class uses <code>NullDeblurer</code> by default.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="OnePassStabilizer.getDeblurer.html">cv.OnePassStabilizer/getDeblurer</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

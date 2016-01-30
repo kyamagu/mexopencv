@@ -24,47 +24,51 @@ dst = <a href="undistortPoints.html">cv.undistortPoints</a>(..., 'OptionName', o
 <h2> Input</h2>
 
 <ul>
-<li><strong>src</strong> Observed point coordinates, 1xNx2 or 1xNx2.</li>
-<li><strong>cameraMatrix</strong> Input camera matrix A = [fx,0,cx;0,fy,cy;0,0,1].</li>
-<li><strong>distCoeffs</strong> Input vector of distortion coefficients [k1,k2,p1,p2,k3,k4,k5,
-        k6] of 4, 5, or 8 elements. If the vector is empty, the zero distortion
-coefficients are assumed.</li>
+<li><strong>src</strong> Observed point coordinates. An Nx2, 1xNx2, or Nx1x2 array (either
+<code>single</code> or <code>double</code>).</li>
+<li><strong>cameraMatrix</strong> Input camera matrix <code>A = [fx 0 cx; 0 fy cy; 0 0 1]</code>.</li>
+<li><strong>distCoeffs</strong> Input vector of distortion coefficients
+<code>[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4,taux,tauy]</code> of 4, 5, 8, 12 or 14
+elements. If the vector is empty, the zero distortion coefficients are
+assumed.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
 <li><strong>dst</strong> Output ideal point coordinates after undistortion and reverse
-perspective transformation.</li>
+perspective transformation. If matrix <code>P</code> is identity or omitted,
+<code>dst</code> will contain normalized point coordinates. Same size and type as
+the input points <code>src</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>R</strong> Rectification transformation in the object space (3x3 matrix). R1 or
-R2 computed by <a href="stereoRectify.html">cv.stereoRectify</a> can be passed here. If the matrix is
-empty, the identity transformation is used.</li>
-<li><strong>P</strong> New camera matrix (3x3) or new projection matrix (3x4). P1 or P2
+<li><strong>R</strong> Rectification transformation in the object space (3x3 matrix). <code>R1</code>
+or <code>R2</code> computed by <a href="stereoRectify.html">cv.stereoRectify</a> can be passed here. If the matrix
+is empty, the identity transformation is used. default empty</li>
+<li><strong>P</strong> New camera matrix (3x3) or new projection matrix (3x4). <code>P1</code> or <code>P2</code>
 computed by <a href="stereoRectify.html">cv.stereoRectify</a> can be passed here. If the matrix is
-empty, the identity new camera matrix is used.</li>
+empty, the identity new camera matrix is used. default empty</li>
 </ul>
 
-<p>The function is similar to <a href="undistort.html">cv.undistort</a> and <a href="initUndistortRectifyMap.html">cv.initUndistortRectifyMap</a> but it
-operates on a sparse set of points instead of a raster image. Also the
+<p>The function is similar to <a href="undistort.html">cv.undistort</a> and <a href="initUndistortRectifyMap.html">cv.initUndistortRectifyMap</a> but
+it operates on a sparse set of points instead of a raster image. Also the
 function performs a reverse transformation to <a href="projectPoints.html">cv.projectPoints</a>. In case of a
 3D object, it does not reconstruct its 3D coordinates, but for a planar
-object, it does, up to a translation vector, if the proper R is specified.</p>
+object, it does, up to a translation vector, if the proper <code>R</code> is specified.</p>
 
-<pre><code>% (u,v) is the input point, (u', v') is the output point
-% camera_matrix=[fx 0 cx; 0 fy cy; 0 0 1]
-% P=[fx' 0 cx' tx; 0 fy' cy' ty; 0 0 1 tz]
-x&quot; = (u - cx)/fx
-y&quot; = (v - cy)/fy
-(x',y') = <a href="undistort.html">cv.undistort</a>(x&quot;,y&quot;,dist_coeffs)
-[X,Y,W]T = R*[x' y' 1]T
+<pre><code>% (u,v) is the input point, (up, vp) is the output point
+% camera_matrix = [fx 0 cx; 0 fy cy; 0 0 1]
+% P = [fxp 0 cxp tx; 0 fyp cyp ty; 0 0 tz]
+xpp = (u - cx)/fx
+ypp = (v - cy)/fy
+(xp,yp) = <a href="undistort.html">cv.undistort</a>(xpp, ypp, dist_coeffs)
+[X,Y,W]' = R*[xp yp 1]'
 x = X/W, y = Y/W
-u' = x*fx' + cx'
-v' = y*fy' + cy',
+up = x*fxp + cxp
+vp = y*fyp + cyp
 </code></pre>
 
 <p>where <a href="undistort.html">cv.undistort</a> is an approximate iterative algorithm that estimates the
@@ -73,7 +77,7 @@ coordinates (&quot;normalized&quot; means that the coordinates do not depend on 
 camera matrix).</p>
 
 <p>The function can be used for both a stereo camera head or a monocular camera
-(when R is empty).</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="undistortPoints.html">cv.undistortPoints</a> <a href="calibrateCamera.html">cv.calibrateCamera</a></div>
+(when <code>R</code> is empty).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="undistort.html">cv.undistort</a>, <a href="calibrateCamera.html">cv.calibrateCamera</a>, undistortPoints</div>
    </body>
 </html>

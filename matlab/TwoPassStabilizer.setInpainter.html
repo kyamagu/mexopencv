@@ -1,0 +1,123 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.TwoPassStabilizer/setInpainter</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.TwoPassStabilizer/setInpainter</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.TwoPassStabilizer/setInpainter</div>
+      <div class="helpcontent"><p>Set the inpainting algorithm for the video stabilizer</p>
+
+<pre><code>stab.setInpainter(inpainterType, ...)
+
+stab.setInpainter('NullInpainter')
+stab.setInpainter('ColorInpainter', 'OptionName',optionValue, ...)
+stab.setInpainter('InpaintingPipeline', {{inpainterType, ...}, {inpainterType, ...}, ...}, 'OptionName',optionValue, ...)
+stab.setInpainter('ConsistentMosaicInpainter', 'OptionName',optionValue, ...)
+stab.setInpainter('MotionInpainter', 'OptionName',optionValue, ...)
+stab.setInpainter('ColorAverageInpainter', 'OptionName',optionValue, ...)
+stab.setInpainter('ColorInpainter', 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>inpainterType</strong> inpainting method. One of:<ul>
+<li><strong>NullInpainter</strong> Null inpainter.</li>
+<li><strong>InpaintingPipeline</strong> A pipeline composed of other
+inpainters, applied in sequence.</li>
+<li><strong>ConsistentMosaicInpainter</strong></li>
+<li><strong>MotionInpainter</strong> (requires CUDA)</li>
+<li><strong>ColorAverageInpainter</strong></li>
+<li><strong>ColorInpainter</strong></li>
+</ul>
+</li>
+</ul>
+
+<h2> Options</h2>
+
+<p>The following are options accepted by all algorithms:</p>
+
+<ul>
+<li><strong>MotionModel</strong> Describes motion model between two point
+clouds. One of:<ul>
+<li><strong>Translation</strong></li>
+<li><strong>TranslationAndScale</strong></li>
+<li><strong>Rotation</strong></li>
+<li><strong>Rigid</strong></li>
+<li><strong>Similarity</strong></li>
+<li><strong>Affine</strong></li>
+<li><strong>Homography</strong></li>
+<li><strong>Unknown</strong> (default)</li>
+</ul>
+</li>
+<li><strong>Radius</strong> default 0</li>
+</ul>
+
+<p>The following are options for the various algorithms:</p>
+
+<h3> <code>ColorInpainter</code></h3>
+
+<ul>
+<li><strong>Method</strong> Inpainting algorithm. One of:<ul>
+<li><strong>NS</strong> Navier-Stokes based method</li>
+<li><strong>Telea</strong> Method by Alexandru Telea (default)</li>
+</ul>
+</li>
+<li><strong>Radius2</strong> default 2.0</li>
+</ul>
+
+<h3> <code>ConsistentMosaicInpainter</code></h3>
+
+<ul>
+<li><strong>StdevThresh</strong> default 20.0</li>
+</ul>
+
+<h3> <code>MotionInpainter</code></h3>
+
+<ul>
+<li><strong>OptFlowEstimator</strong> dense optical flow estimator specified as
+<code>{optflowType, 'OptionName',optionValue, ...}</code>, where
+<code>optflowType</code> is one of:<ul>
+<li><strong>DensePyrLkOptFlowEstimatorGpu</strong> (default, requires CUDA)</li>
+</ul>
+</li>
+<li><strong>FlowErrorThreshold</strong> default 1e-4</li>
+<li><strong>DistThreshold</strong> default 5.0</li>
+<li><strong>BorderMode</strong> default 'Replicate'</li>
+</ul>
+
+<h3> <code>InpaintingPipeline</code></h3>
+
+<p>Same as the common ones, where values set will be propagated to
+all inpainters in the pipeline.</p>
+
+<p>The class uses <code>NullInpainter</code> by default.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="TwoPassStabilizer.getInpainter.html">cv.TwoPassStabilizer/getInpainter</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

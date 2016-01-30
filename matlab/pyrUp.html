@@ -1,0 +1,60 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.pyrUp</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.pyrUp</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.pyrUp</div>
+      <div class="helpcontent"><p>Upsamples an image and then blurs it</p>
+
+<pre><code>dst = <a href="pyrUp.html">cv.pyrUp</a>(src)
+dst = <a href="pyrUp.html">cv.pyrUp</a>(src, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Input image; <code>uint8</code>, <code>uint16</code>, <code>int16</code>, <code>single</code>, or <code>double</code>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Destination image. It has the specified size and the same type
+as <code>src</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>DstSize</strong> Size of the output image <code>[w,h]</code>. default [0,0], see below.</li>
+<li><strong>BorderType</strong> Pixel extrapolation method, see <a href="copyMakeBorder.html">cv.copyMakeBorder</a>
+('Constant' isn't supported). Default 'Default'</li>
+</ul>
+
+<p>By default, size of the output image is computed as
+<code>[size(src,2)*2 size(src,1)*2]</code>, but in any case, the following conditions
+should be satisfied:</p>
+
+<pre><code>abs(DstSize(2) - size(src,2)*2) &lt;= mod(DstSize(2),2)
+abs(DstSize(1) - size(src,1)*2) &lt;= mod(DstSize(1),2)
+</code></pre>
+
+<p>The function performs the upsampling step of the Gaussian pyramid
+construction, though it can actually be used to construct the Laplacian
+pyramid. First, it upsamples the source image by injecting even zero rows
+and columns and then convolves the result with the same kernel as in
+<a href="pyrDown.html">cv.pyrDown</a> multiplied by 4.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="pyrDown.html">cv.pyrDown</a>, <a href="buildPyramid.html">cv.buildPyramid</a></div>
+   </body>
+</html>

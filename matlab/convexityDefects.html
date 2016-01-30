@@ -1,0 +1,47 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.convexityDefects</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.convexityDefects</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.convexityDefects</div>
+      <div class="helpcontent"><p>Finds the convexity defects of a contour</p>
+
+<pre><code>defects = <a href="convexityDefects.html">cv.convexityDefects</a>(contour, convexhull);
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>contour</strong> Input contour. 2D point set, stored in numeric array
+(Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors (<code>{[x,y], ...}</code>).</li>
+<li><strong>convexhull</strong> Corresponding convex hull obtained using <a href="convexHull.html">cv.convexHull</a> that
+should contain indices of the contour points that make the hull.
+A numeric vector of 0-based indices.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>defects</strong> The output vector of convexity defects <code>{[v0,v1,v2,v3], ...}</code>.
+Each convexity defect is represented as 4-element integer vector
+<code>[start_index, end_index, farthest_pt_index, fixpt_depth]</code>, where
+indices are 0-based indices in the original contour of the convexity
+defect (beginning, end and the farthest point), and <code>fixpt_depth</code> is
+fixed-point approximation (with 8 fractional bits) of the distance
+between the farthest contour point and the hull. That is, to get the
+floating-point value of the depth will be <code>fixpt_depth/256.0</code>.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="convexHull.html">cv.convexHull</a></div>
+   </body>
+</html>

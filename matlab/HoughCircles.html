@@ -18,6 +18,7 @@
       <div class="helpcontent"><p>Finds circles in a grayscale image using the Hough transform</p>
 
 <pre><code>circles = <a href="HoughCircles.html">cv.HoughCircles</a>(image)
+circles = <a href="HoughCircles.html">cv.HoughCircles</a>(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
@@ -29,34 +30,72 @@
 <h2> Output</h2>
 
 <ul>
-<li><strong>circles</strong> Output vector of found circles. Each vector is encoded as a
-3-element floating-point vector (x, y, radius).</li>
+<li><strong>circles</strong> Output vector of found circles. A cell-array of 3-element
+floating-point vectors <code>{[x, y, radius], ...}</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
+<li><strong>Method</strong> Detection method. Currently, the only implemented method is
+'Gradient' (default). One of:<ul>
+<li><strong>Standard</strong> classical or standard Hough transform. Every line is
+represented by two floating-point numbers <code>(rho,theta)</code>, where
+<code>rho</code> is a distance between <code>(0,0)</code> point and the line, and
+<code>theta</code> is the angle between x-axis and the normal to the line.
+Thus, the matrix must be (the created sequence will be) of
+<code>single</code> type with 2-channels.</li>
+<li><strong>Probabilistic</strong> probabilistic Hough transform (more efficient in
+case if the picture contains a few long linear segments). It
+returns line segments rather than the whole line. Each segment
+is represented by starting and ending points, and the matrix
+must be (the created sequence will be) of the <code>int32</code> type with
+4-channels.</li>
+<li><strong>MultiScale</strong> multi-scale variant of the classical Hough transform.
+The lines are encoded the same way as 'Standard'.</li>
+<li><strong>Gradient</strong> basically 21HT, described in [Yuen90].</li>
+</ul>
+</li>
 <li><strong>DP</strong> Inverse ratio of the accumulator resolution to the image resolution.
-For example, if dp=1 , the accumulator has the same resolution as the
-input image. If dp=2 , the accumulator has half as big width and
-height. default 1.</li>
+For example, if <code>DP=1</code>, the accumulator has the same resolution as
+the input image. If <code>DP=2</code>, the accumulator has half as big width
+and height. default 1.</li>
 <li><strong>MinDist</strong> Minimum distance between the centers of the detected circles.
 If the parameter is too small, multiple neighbor circles may be
 falsely detected in addition to a true one. If it is too large, some
-circles may be missed. default image.rows/8.</li>
-<li><strong>Param1</strong> First method-specific parameter. It is the higher threshold of
-the two passed to the Canny() edge detector (the lower one is twice
-smaller). default 100.</li>
-<li><strong>Param2</strong> Second method-specific parameter. It is the accumulator
-threshold for the circle centers at the detection stage. The smaller
-it is, the more false circles may be detected. Circles, corresponding
-to the larger accumulator values, will be returned first. default 100.</li>
+circles may be missed. default <code>size(image,1)/8</code>.</li>
+<li><strong>Param1</strong> First method-specific parameter. In case of 'Gradient', it is
+the higher threshold of the two passed to the <a href="Canny.html">cv.Canny</a> edge detector
+(the lower one is twice smaller). default 100.</li>
+<li><strong>Param2</strong> Second method-specific parameter. In case of 'Gradient', it is
+the accumulator threshold for the circle centers at the detection
+stage. The smaller it is, the more false circles may be detected.
+Circles, corresponding to the larger accumulator values, will be
+returned first. default 100.</li>
 <li><strong>MinRadius</strong> Minimum circle radius. default 0.</li>
 <li><strong>MaxRadius</strong> Maximum circle radius. default 0.</li>
 </ul>
 
 <p>The function finds circles in a grayscale image using a modification of the
-Hough transform</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="fitEllipse.html">cv.fitEllipse</a>, <a href="minEnclosingCircle.html">cv.minEnclosingCircle</a></div>
+Hough transform.</p>
+
+<h2> Note</h2>
+
+<p>Usually the function detects the centers of circles well. However, it may
+fail to find correct radii. You can assist to the function by specifying the
+radius range (<code>MinRadius</code> and <code>MaxRadius</code>) if you know it. Or, you may
+ignore the returned radius, use only the center, and find the correct radius
+using an additional procedure.</p>
+
+<h2> References</h2>
+
+<p>[Yuen90]:</p>
+
+<blockquote>
+<p>HK Yuen, John Princen, John Illingworth, and Josef Kittler.
+&quot;Comparative study of hough transform methods for circle finding&quot;.
+Image and Vision Computing, 8(1):71-77, 1990.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="fitEllipse.html">cv.fitEllipse</a>, <a href="minEnclosingCircle.html">cv.minEnclosingCircle</a>, imfindcircles</div>
    </body>
 </html>

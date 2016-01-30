@@ -1,0 +1,48 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.find4QuadCornerSubpix</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.find4QuadCornerSubpix</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.find4QuadCornerSubpix</div>
+      <div class="helpcontent"><p>Finds subpixel-accurate positions of the chessboard corners</p>
+
+<pre><code>[corners,success] = <a href="find4QuadCornerSubpix.html">cv.find4QuadCornerSubpix</a>(img, corners)
+[...] = <a href="find4QuadCornerSubpix.html">cv.find4QuadCornerSubpix</a>(img, corners, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>img</strong> Input single-channel 8-bit image.</li>
+<li><strong>corners</strong> Initial coordinates of the input corners, stored in numeric
+array (Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors
+<code>{[x,y], ...}</code>. Supports single floating-point class.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>corners</strong> Output refined coordinates, of the same size and type as the
+input <code>corners</code> (numeric or cell matching the input format).</li>
+<li><strong>success</strong> boolean success value.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>RegionSize</strong> region size <code>[w,h]</code>. default [3,3]</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="cornerSubPix.html">cv.cornerSubPix</a></div>
+   </body>
+</html>

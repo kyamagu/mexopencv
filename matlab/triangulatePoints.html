@@ -1,0 +1,53 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.triangulatePoints</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.triangulatePoints</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.triangulatePoints</div>
+      <div class="helpcontent"><p>Reconstructs points by triangulation</p>
+
+<pre><code>points4D = <a href="triangulatePoints.html">cv.triangulatePoints</a>(projMatr1, projMatr2, projPoints1, projPoints2)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>projMatr1</strong> 3x4 projection matrix of the first camera.</li>
+<li><strong>projMatr2</strong> 3x4 projection matrix of the second camera.</li>
+<li><strong>projPoints1</strong> 2xN array of feature points in the first image. It can be
+also a cell array of feature points <code>{[x,y], ...}</code> or two-channel
+array of size 1xNx2 or Nx1x2.</li>
+<li><strong>projPoints2</strong> 2xN array of corresponding points in the second image. It
+can be also a cell array of feature points <code>{[x,y], ...}</code> or
+two-channel array of size 1xNx2 or Nx1x2.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>points4D</strong> 4xN array of reconstructed points in homogeneous coordinates
+<code>[[x;y;z;w], ...]</code></li>
+</ul>
+
+<p>The function reconstructs 3-dimensional points (in homogeneous coordinates)
+by using their observations with a stereo camera. Projections matrices can
+be obtained from <a href="stereoRectify.html">cv.stereoRectify</a>.</p>
+
+<h2> Note</h2>
+
+<p>Keep in mind that all input data should be of float type in order for
+this function to work (<code>single</code> or <code>double</code>).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="reprojectImageTo3D.html">cv.reprojectImageTo3D</a></div>
+   </body>
+</html>

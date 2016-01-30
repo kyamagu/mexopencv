@@ -26,25 +26,26 @@
 <ul>
 <li><strong>objectPoints</strong> Vector of vectors of the calibration pattern points in
 the calibration pattern coordinate space. Cell array of cell array
-of 3-element vectors are accepted.</li>
+of 3-element vectors are accepted <code>{{[x,y,z],...}, ...}</code>.</li>
 <li><strong>imagePoints</strong> Vector of vectors of the projections of the calibration
 pattern points. Cell array of cell array of 2-element vectors are
-accepted.</li>
+accepted <code>{{[x,y],...}, ...}</code>.</li>
 <li><strong>imageSize</strong> Image size in pixels used to initialize the principal
-point.</li>
+point <code>[w,h]</code>.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>cameraMatrix</strong> Camera matrix.</li>
+<li><strong>cameraMatrix</strong> Camera matrix 3x3, <code>A = [fx 0 cx; 0 fy cy; 0 0 1]</code></li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>AspectRatio</strong> If it is zero or negative, both fx and fy are estimated
-independently. Otherwise, fx = fy * AspectRatio.</li>
+<li><strong>AspectRatio</strong> If it is zero or negative, both <code>fx</code> and <code>fy</code> are
+estimated independently. Otherwise, <code>fx = fy * AspectRatio</code>.
+default 1.0</li>
 </ul>
 
 <p>The function estimates and returns an initial camera matrix for the

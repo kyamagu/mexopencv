@@ -17,28 +17,31 @@
       <div class="title">cv.BOWImgDescriptorExtractor</div>
       <div class="helpcontent"><p>Class to compute an image descriptor using the bag of visual words</p>
 
-<p>Class to compute an image descriptor using the bag of visual words.
-Such a computation consists of the following steps:</p>
+<p>Such a computation consists of the following steps:</p>
 
 <ol>
 <li>Compute descriptors for a given image and its keypoints set.</li>
-<li>Find the nearest visual words from the vocabulary for each
-keypoint descriptor.</li>
+<li>Find the nearest visual words from the vocabulary for each keypoint
+descriptor.</li>
 <li>Compute the bag-of-words image descriptor as is a normalized
-histogram of vocabulary words encountered in the image. The i-th
-bin of the histogram is a frequency of i-th word of the
-vocabulary in the given image.</li>
+histogram of vocabulary words encountered in the image. The i-th bin
+of the histogram is a frequency of i-th word of the vocabulary in
+the given image.</li>
 </ol>
 
-<p>The basic usage is the following:</p>
+<h2> Example</h2>
 
-<pre><code>trainer = <a href="BOWKMeansTrainer.html">cv.BOWKMeansTrainer</a>();
+<pre><code>% create bag of visual words
+trainer = <a href="BOWKMeansTrainer.html">cv.BOWKMeansTrainer</a>(K);
 dictionary = trainer.cluster(train_descs);
+
+% Compute histogram of visual word occurrences of an image
 extractor = <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a>('SIFT','BruteForce');
 extractor.setVocabulary(dictionary);
-descs = extractor.compute(im,keypoints);</code></pre>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BOWImgDescriptorExtractor.BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor/BOWImgDescriptorExtractor</a>
-  <a href="BOWKMeansTrainer.html">cv.BOWKMeansTrainer</a></div>
+descs = extractor.compute(im, keypoints);</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BOWImgDescriptorExtractor.BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor/BOWImgDescriptorExtractor</a>,
+   <a href="BOWKMeansTrainer.html">cv.BOWKMeansTrainer</a>, bagOfFeatures, trainImageCategoryClassifier,
+   indexImages, retrieveImages</div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -61,13 +64,17 @@ descs = extractor.compute(im,keypoints);</code></pre>
       <table class="summary-list">
          <tr class="summary-item">
             <td class="name"><a href="BOWImgDescriptorExtractor.BOWImgDescriptorExtractor.html">BOWImgDescriptorExtractor</a></td>
-            <td class="m-help">Create a new BOWImgDescriptorExtractor&nbsp;</td>
+            <td class="m-help">The constructor&nbsp;</td>
          </tr>
       </table>
       <!--Properties-->
       <div class="sectiontitle"><a name="properties"></a>Property Summary
       </div>
       <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="BOWImgDescriptorExtractor.Vocabulary.html">Vocabulary</a></td>
+            <td class="m-help">Visual vocabulary&nbsp;</td>
+         </tr>
          <tr class="summary-item">
             <td class="name"><a href="BOWImgDescriptorExtractor.id.html">id</a></td>
             <td class="m-help">Object ID&nbsp;</td>
@@ -98,6 +105,22 @@ descs = extractor.compute(im,keypoints);</code></pre>
                &nbsp;
                
             </td>
+            <td class="name"><a href="BOWImgDescriptorExtractor.compute1.html">compute1</a></td>
+            <td class="m-help">Computes an image descriptor using keypoint descriptors&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BOWImgDescriptorExtractor.compute2.html">compute2</a></td>
+            <td class="m-help">Computes an image descriptor using the set visual vocabulary&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="BOWImgDescriptorExtractor.delete.html">delete</a></td>
             <td class="m-help">Destructor&nbsp;</td>
          </tr>
@@ -107,7 +130,7 @@ descs = extractor.compute(im,keypoints);</code></pre>
                
             </td>
             <td class="name"><a href="BOWImgDescriptorExtractor.descriptorSize.html">descriptorSize</a></td>
-            <td class="m-help">Returns an image discriptor size if the vocabulary is set&nbsp;</td>
+            <td class="m-help">Returns image discriptor size&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -115,7 +138,7 @@ descs = extractor.compute(im,keypoints);</code></pre>
                
             </td>
             <td class="name"><a href="BOWImgDescriptorExtractor.descriptorType.html">descriptorType</a></td>
-            <td class="m-help">Returns an image descriptor type&nbsp;</td>
+            <td class="m-help">Returns image descriptor type&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -148,14 +171,6 @@ descs = extractor.compute(im,keypoints);</code></pre>
             </td>
             <td class="name"><a href="BOWImgDescriptorExtractor.ge.html">ge</a></td>
             <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="attributes">
-               &nbsp;
-               
-            </td>
-            <td class="name"><a href="BOWImgDescriptorExtractor.getVocabulary.html">getVocabulary</a></td>
-            <td class="m-help">Returns the set vocabulary&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -204,14 +219,6 @@ descs = extractor.compute(im,keypoints);</code></pre>
             </td>
             <td class="name"><a href="BOWImgDescriptorExtractor.notify.html">notify</a></td>
             <td class="m-help">Notify listeners of event.&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="attributes">
-               &nbsp;
-               
-            </td>
-            <td class="name"><a href="BOWImgDescriptorExtractor.setVocabulary.html">setVocabulary</a></td>
-            <td class="m-help">Sets a visual vocabulary&nbsp;</td>
          </tr>
       </table>
    </body>

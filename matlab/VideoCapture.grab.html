@@ -1,0 +1,64 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.VideoCapture/grab</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.VideoCapture/grab</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.VideoCapture/grab</div>
+      <div class="helpcontent"><p>Grabs the next frame from video file or capturing device</p>
+
+<pre><code>successFlag = cap.grab()
+</code></pre>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>successFlag</strong> bool, success flag</li>
+</ul>
+
+<p>The function grabs the next frame from video file or camera and
+returns true (non-zero) in the case of success.</p>
+
+<p>The primary use of the function is in multi-camera environments,
+especially when the cameras do not have hardware synchronization.
+That is, you call cv.VideoCapture/grab for each camera and after
+that call the slower method <a href="VideoCapture.html">cv.VideoCapture</a>.retrieve to decode
+and get frame from each camera. This way the overhead on
+demosaicing or motion jpeg decompression etc. is eliminated and
+the retrieved frames from different cameras will be closer in
+time.</p>
+
+<p>Also, when a connected camera is multi-head (for example, a
+stereo camera or a Kinect device), the correct way of retrieving
+data from it is to call cv.VideoCapture/grab first and then call
+<a href="VideoCapture.html">cv.VideoCapture</a>.retrieve one or more times with different values
+of the channel parameter <code>StreamIdx</code>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="VideoCapture.read.html">cv.VideoCapture/read</a>, <a href="VideoCapture.retrieve.html">cv.VideoCapture/retrieve</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

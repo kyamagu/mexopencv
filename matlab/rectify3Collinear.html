@@ -1,0 +1,103 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.rectify3Collinear</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.rectify3Collinear</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.rectify3Collinear</div>
+      <div class="helpcontent"><p>Computes the rectification transformations for 3-head camera, where all the heads are on the same line</p>
+
+<pre><code>S = <a href="rectify3Collinear.html">cv.rectify3Collinear</a>(cameraMatrix1, distCoeffs1, cameraMatrix2,
+        distCoeffs2, cameraMatrix3, distCoeffs3, imageSize, R12, T12, R13, T13)
+[...] = <a href="rectify3Collinear.html">cv.rectify3Collinear</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>cameraMatrix1</strong> First camera matrix 3x3.</li>
+<li><strong>distCoeffs1</strong> First camera distortion parameters of 4, 5, 8, 12 or 14
+elements.</li>
+<li><strong>cameraMatrix2</strong> Second camera matrix 3x3.</li>
+<li><strong>distCoeffs2</strong> Second camera distortion parameters of 4, 5, 8, 12 or 14
+elements.</li>
+<li><strong>cameraMatrix3</strong> Third camera matrix 3x3.</li>
+<li><strong>distCoeffs3</strong> Third camera distortion parameters of 4, 5, 8, 12 or 14
+elements.</li>
+<li><strong>imageSize</strong> Size of the image used for stereo calibration <code>[w,h]</code>.</li>
+<li><strong>R12</strong> Rotation matrix between the coordinate systems of the first and the
+second cameras, 3x3/3x1 (see cv.Rodrigues)</li>
+<li><strong>T12</strong> Translation vector between coordinate systems of the first and the
+second cameras, 3x1.</li>
+<li><strong>R13</strong> Rotation matrix between the coordinate systems of the first and the
+third cameras, 3x3/3x1 (see cv.Rodrigues)</li>
+<li><strong>T13</strong> Translation vector between coordinate systems of the first and the
+third cameras, 3x1.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>S</strong> scalar struct having the following fields:<ul>
+<li><strong>R1</strong> 3x3 rectification transform (rotation matrix) for the first
+camera.</li>
+<li><strong>R2</strong> 3x3 rectification transform (rotation matrix) for the second
+camera.</li>
+<li><strong>R3</strong> 3x3 rectification transform (rotation matrix) for the third
+camera.</li>
+<li><strong>P1</strong> 3x4 projection matrix in the new (rectified) coordinate
+systems for the first camera.</li>
+<li><strong>P2</strong> 3x4 projection matrix in the new (rectified) coordinate
+systems for the second camera.</li>
+<li><strong>P3</strong> 3x4 projection matrix in the new (rectified) coordinate
+systems for the third camera.</li>
+<li><strong>Q</strong> 4x4 disparity-to-depth mapping matrix (see
+cv.reprojectImageTo3D).</li>
+<li><strong>roi1</strong>, <strong>roi2</strong> rectangles inside the rectified images where all
+the pixels are valid <code>[x,y,w,h]</code>. If <code>Alpha=0</code>, the ROIs cover
+the whole images. Otherwise, they are likely to be smaller.</li>
+<li><strong>ratio</strong> disparity ratio, floating-point numeric scalar.</li>
+</ul>
+</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>ImgPoints1</strong>, <strong>ImgPoints3</strong> Optional cell arrays of 2D points
+<code>{[x,y], ...}</code>, used to adjust the third matrix <code>P3</code>.
+Not set by default.</li>
+<li><strong>Alpha</strong> Free scaling parameter. If it is -1 or absent, the function
+performs the default scaling. Otherwise, the parameter should be
+between 0 and 1. <code>Alpha=0</code> means that the rectified images are zoomed
+and shifted so that only valid pixels are visible (no black areas
+after rectification). <code>Alpha=1</code> means that the rectified image is
+decimated and shifted so that all the pixels from the original iamges
+from the cameras are retained in the rectified images (no source image
+pixels are lost). Obviously, any intermediate value yields an
+intermediate result between those two extreme cases. default -1</li>
+<li><strong>NewImageSize</strong> New image resolution after rectification. The same size
+should be passed to <a href="initUndistortRectifyMap.html">cv.initUndistortRectifyMap</a>. When [0,0] is passed
+(default), it is set to the original <code>imageSize</code>. Setting it to larger
+value can help you preserve details in the original image, especially
+when there is a big radial distortion.</li>
+<li><strong>ZeroDisparity</strong> If the flag is set, the function makes the principal
+points of each camera have the same pixel coordinates in the rectified
+views. And if the flag is not set, the function may still shift the
+images in the horizontal or vertical direction (depending on the
+orientation of epipolar lines) to maximize the useful image area.
+default true.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="stereoRectify.html">cv.stereoRectify</a></div>
+   </body>
+</html>

@@ -23,19 +23,24 @@
 <h2> Input</h2>
 
 <ul>
-<li><strong>src</strong> Input vector of N-dimensional points.</li>
+<li><strong>src</strong> Input vector of N-dimensional points (3D/4D points).
+Mx3/Mx1x3/1xMx3 or Mx4/Mx1x4/1xMx4 numeric array, or cell-array of
+3/4-element vectors in the form: <code>{[x,y,z], [x,y,z], ...}</code> or
+<code>{[x,y,z,w], [x,y,z,w], ...}</code>. Supports floating-point types.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Output vector of N-1-dimensional points.</li>
+<li><strong>dst</strong> Output vector of (N-1)-dimensional points (2D/3D points).
+Mx2/Mx1x2 or Mx3/Mx1x3 numeric array, or cell-array of 2/3-elements
+vectors, respectively matching the input shape.</li>
 </ul>
 
 <p>The function converts points homogeneous to Euclidean space using
-perspective projection. That is, each point (x1, x2, ... x(n-1), xn) is
-converted to (x1/xn, x2/xn, ..., x(n-1)/xn). When xn=0, the output point
-coordinates will be (0,0,0,...).</p>
+perspective projection. That is, each point <code>(x1, x2, ..., x(n-1), xn)</code> is
+converted to <code>(x1/xn, x2/xn, ..., x(n-1)/xn)</code>. When <code>xn=0</code>, the output point
+coordinates will be <code>(0,0,0,...)</code>.</p>
 </div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="convertPointsToHomogeneous.html">cv.convertPointsToHomogeneous</a></div>
    </body>
 </html>

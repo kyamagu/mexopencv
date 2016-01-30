@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['initialization',['Initialization',['../kmeans_8cpp.html#a509bd1f6723e07ed51586eb6d743accc',1,'kmeans.cpp']]],
-  ['inpainttype',['InpaintType',['../inpaint_8cpp.html#a363f6dd476ed981bc67e2d82475860fa',1,'inpaint.cpp']]],
-  ['intertype',['InterType',['../mexopencv_8hpp.html#a382f451ace31d043ef192744a439053b',1,'mexopencv.hpp']]]
+  ['motionmodelinvmap',['MotionModelInvMap',['../mexopencv__videostab_8hpp.html#a212d4977f2126327e0cfe49ec968f6c1',1,'mexopencv_videostab.hpp']]],
+  ['motionmodelmap',['MotionModelMap',['../mexopencv__videostab_8hpp.html#ad6201c61b33d55be82952596bc07a267',1,'mexopencv_videostab.hpp']]]
 ];

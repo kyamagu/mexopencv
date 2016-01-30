@@ -1,0 +1,57 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.EMDL1</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.EMDL1</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.EMDL1</div>
+      <div class="helpcontent"><p>Computes the &quot;minimal work&quot; distance between two weighted point configurations</p>
+
+<pre><code>dist = <a href="EMDL1.html">cv.EMDL1</a>(signature1, signature2)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>signature1</strong> First signature, a single column floating-point matrix.
+Each row is the value of the histogram in each bin.</li>
+<li><strong>signature2</strong> Second signature of the same format and size as
+<code>signature1</code>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dist</strong> output distance.</li>
+</ul>
+
+<p>Base on the papers [1] and [2].</p>
+
+<h2> References</h2>
+
+<p>[1]:</p>
+
+<blockquote>
+<p>&quot;EMD-L1: An efficient and Robust Algorithm for comparing histogram-based
+descriptors&quot;, by Haibin Ling and Kazunori Okuda</p>
+</blockquote>
+
+<p>[2]:</p>
+
+<blockquote>
+<p>&quot;The Earth Mover's Distance is the Mallows Distance: Some Insights from
+Statistics&quot;, by Elizaveta Levina and Peter Bickel.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="EMD.html">cv.EMD</a>, <a href="compareHist.html">cv.compareHist</a></div>
+   </body>
+</html>

@@ -1,0 +1,202 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.OnePassStabilizer/setMotionEstimator</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.OnePassStabilizer/setMotionEstimator</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.OnePassStabilizer/setMotionEstimator</div>
+      <div class="helpcontent"><p>Set the motion estimating algorithm for the video stabilizer</p>
+
+<pre><code>stab.setMotionEstimator(motionEstType, ...)
+
+stab.setMotionEstimator('KeypointBasedMotionEstimator', {estType, ...}, 'OptionName',optionValue, ...)
+stab.setMotionEstimator('FromFileMotionReader', path, 'OptionName',optionValue, ...)
+stab.setMotionEstimator('ToFileMotionWriter', path, {motionEstType, ...}, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>motionEstType</strong> Global 2D motion estimation methods which
+take frames as input. One of:<ul>
+<li><strong>KeypointBasedMotionEstimator</strong> Describes a global 2D
+motion estimation method which uses keypoints
+detection and optical flow for matching.</li>
+<li><strong>FromFileMotionReader</strong></li>
+<li><strong>ToFileMotionWriter</strong></li>
+</ul>
+</li>
+<li><strong>path</strong> name of file for motion to read-from/write-to.</li>
+<li><strong>estType</strong> Global motion estimation method, which estimates
+global motion between two 2D point clouds as a 3x3 2D
+transformation matrix. One of:<ul>
+<li><strong>MotionEstimatorL1</strong> Describes a global 2D motion
+estimation method which minimizes L1 error.
+Note: To be able to use this method you must build
+OpenCV with CLP library support.</li>
+<li><strong>MotionEstimatorRansacL2</strong> Describes a robust
+RANSAC-based global 2D motion estimation method
+which minimizes L2 error.</li>
+</ul>
+</li>
+</ul>
+
+<h2> Options</h2>
+
+<p>The following are options for the various algorithms:</p>
+
+<h3> <code>KeypointBasedMotionEstimator</code>, <code>FromFileMotionReader</code>, <code>ToFileMotionWriter</code></h3>
+
+<ul>
+<li><strong>MotionModel</strong> Describes motion model between two point
+clouds. Default is based on the estimation method. One of:<ul>
+<li><strong>Translation</strong></li>
+<li><strong>TranslationAndScale</strong></li>
+<li><strong>Rotation</strong></li>
+<li><strong>Rigid</strong></li>
+<li><strong>Similarity</strong></li>
+<li><strong>Affine</strong></li>
+<li><strong>Homography</strong></li>
+<li><strong>Unknown</strong></li>
+</ul>
+</li>
+</ul>
+
+<h3> <code>KeypointBasedMotionEstimator</code></h3>
+
+<ul>
+<li><strong>Detector</strong> feature detector, specified in the form:
+<code>{detectorType, 'OptionName',optionValue, ...}</code>.
+See <a href="FeatureDetector.html">cv.FeatureDetector</a>.FeatureDetector for a list of
+supported feature detectors. Default is <code>{'GFTTDetector'}</code>.</li>
+<li><strong>OpticalFlowEstimator</strong> sparse optical flow estimator
+specified as: <code>{optflowType, 'OptionName',optionValue, ...}</code>,
+where <code>optflowType</code> is one of:<ul>
+<li><strong>SparsePyrLkOptFlowEstimator</strong> (default) wrapper around
+<a href="calcOpticalFlowPyrLK.html">cv.calcOpticalFlowPyrLK</a>.</li>
+<li><strong>SparsePyrLkOptFlowEstimatorGpu</strong></li>
+</ul>
+</li>
+<li><strong>OutlierRejector</strong> outlier rejector specified as:
+<code>{rejectorType, 'OptionName',optionValue, ...}</code>, where
+<code>rejectorType</code> is one of:<ul>
+<li><strong>NullOutlierRejector</strong> (default)</li>
+<li><strong>TranslationBasedLocalOutlierRejector</strong></li>
+</ul>
+</li>
+</ul>
+
+<h3> <code>MotionEstimatorL1</code> and <code>MotionEstimatorRansacL2</code></h3>
+
+<ul>
+<li><strong>MotionModel</strong> Describes motion model between two point
+clouds. One of:<ul>
+<li><strong>Translation</strong></li>
+<li><strong>TranslationAndScale</strong></li>
+<li><strong>Rotation</strong></li>
+<li><strong>Rigid</strong></li>
+<li><strong>Similarity</strong></li>
+<li><strong>Affine</strong> (default)</li>
+<li><strong>Homography</strong></li>
+<li><strong>Unknown</strong></li>
+</ul>
+</li>
+</ul>
+
+<h3> <code>MotionEstimatorRansacL2</code></h3>
+
+<ul>
+<li><strong>MinInlierRatio</strong> default 0.1</li>
+<li><p><strong>RansacParams</strong> Describes RANSAC method parameters. A struct
+with the following fields:</p>
+<ul>
+<li><strong>Size</strong> Subset size.</li>
+<li><strong>Thresh</strong> Maximum re-projection error value to classify
+as inlier.</li>
+<li><strong>Eps</strong> Maximum ratio of incorrect correspondences.</li>
+<li><strong>Prob</strong> Required success probability.</li>
+</ul>
+<p>       If a string is passed, it uses the default RANSAC
+parameters for the given motion model. Here are the
+defaults corresponding to each motion model:</p>
+<ul>
+<li><strong>Translation</strong> <code>struct('Size',1, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>TranslationAndScale</strong> <code>struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>Rotation</strong> <code>struct('Size',1, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>Rigid</strong> <code>struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>Similarity</strong> <code>struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>Affine</strong> <code>struct('Size',3, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>Homography</strong> <code>struct('Size',4, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+</ul>
+<p>       By default is it set to 'Affine'.</p>
+</li>
+</ul>
+
+<h3> <code>SparsePyrLkOptFlowEstimator</code></h3>
+
+<ul>
+<li><strong>WinSize</strong> Size of the search window at each pyramid level.
+default [21,21]</li>
+<li><strong>MaxLevel</strong> 0-based maximal pyramid level number. default 3</li>
+</ul>
+
+<h3> <code>TranslationBasedLocalOutlierRejector</code></h3>
+
+<ul>
+<li><strong>CellSize</strong> default [50,50]</li>
+<li><p><strong>RansacParams</strong> Describes RANSAC method parameters. A struct
+with the following fields:</p>
+<ul>
+<li><strong>Size</strong> Subset size.</li>
+<li><strong>Thresh</strong> Maximum re-projection error value to classify
+as inlier.</li>
+<li><strong>Eps</strong> Maximum ratio of incorrect correspondences.</li>
+<li><strong>Prob</strong> Required success probability.</li>
+</ul>
+<p>       If a string is passed, it uses the default RANSAC
+parameters for the given motion model. Here are the
+defaults corresponding to each motion model:</p>
+<ul>
+<li><strong>Translation</strong> <code>struct('Size',1, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>TranslationAndScale</strong> <code>struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>Rotation</strong> <code>struct('Size',1, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>Rigid</strong> <code>struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>Similarity</strong> <code>struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>Affine</strong> <code>struct('Size',3, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+<li><strong>Homography</strong> <code>struct('Size',4, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)</code></li>
+</ul>
+<p>       By default is it set to 'Translation'.</p>
+</li>
+</ul>
+
+<p>The class uses <code>KeypointBasedMotionEstimator</code> by default with
+<code>MotionEstimatorRansacL2</code>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="OnePassStabilizer.getMotionEstimator.html">cv.OnePassStabilizer/getMotionEstimator</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

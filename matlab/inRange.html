@@ -1,0 +1,58 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.inRange</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.inRange</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.inRange</div>
+      <div class="helpcontent"><p>Checks if array elements lie between the elements of two other arrays</p>
+
+<pre><code>dst = <a href="inRange.html">cv.inRange</a>(src, lowerb, upperb)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> first input array.</li>
+<li><strong>lowerb</strong> inclusive lower boundary array or a scalar.</li>
+<li><strong>upperb</strong> inclusive upper boundary array or a scalar.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> output array of the same size as <code>src</code> and of logical type.</li>
+</ul>
+
+<p>The function checks the range as follows:</p>
+
+<ul>
+<li><p>For every element of a single-channel input array:</p>
+<p>         dst(i,j,..) = lowerb(i,j,..,1) &lt;= src(i,j,..,1) &lt;= upperb(i,j,..,1)</p>
+</li>
+<li><p>For two-channel arrays:</p>
+<p>         dst(i,j,..) = lowerb(i,j,..,1) &lt;= src(i,j,..,1) &lt;= upperb(i,j,..,1) and
+lowerb(i,j,..,2) &lt;= src(i,j,..,2) &lt;= upperb(i,j,..,2)</p>
+</li>
+<li><p>and so forth.</p>
+</li>
+</ul>
+
+<p>That is, <code>dst(i,j,...)</code> is set to true if <code>src(i,j,...,:)</code> is within the
+specified 1D, 2D, 3D, ... box and false otherwise.</p>
+
+<p>When the lower and/or upper boundary parameters are scalars, the indexes at
+<code>lowerb</code> and <code>upperb</code> in the above formulas should be omitted.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="threshold.html">cv.threshold</a></div>
+   </body>
+</html>

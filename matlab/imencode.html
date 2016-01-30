@@ -24,37 +24,83 @@ buf = <a href="imencode.html">cv.imencode</a>(ext, img, 'OptionName', optionValu
 <h2> Input</h2>
 
 <ul>
-<li><strong>ext</strong> File extension that defines the output format: '.jpg', '.png'.</li>
-<li><strong>img</strong> Image to be written.</li>
+<li><strong>ext</strong> File extension that defines the output format. For example:
+'.bmp', '.jpg', '.png', '.tif', etc...</li>
+<li><strong>img</strong> Image to be encoded.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>buf</strong> Output buffer of the compressed image.</li>
+<li><strong>buf</strong> Output buffer of the compressed image. A row vector of type
+<code>uint8</code> that contains encoded image as an array of bytes.
+If the image cannot be encoded, the function throws an error.</li>
 </ul>
 
 <h2> Options</h2>
 
-<p>Format-specific save parameters. The following parameters are currently
-supported</p>
-
 <ul>
-<li><strong>JpegQuality</strong> For JPEG, it can be a quality from 0 to 100 (the
-higher is the better). Default value is 95.</li>
-<li><strong>PngCompression</strong> For PNG, it can be the compression level from 0 to<ol>
-<li>A higher value means a smaller size and longer compression
-time. Default value is 3.</li>
-</ol>
-</li>
-<li><strong>PxmBinary</strong> For PPM, PGM, or PBM, it can be a binary format flag, 0
-or 1. Default value is 1.</li>
+<li><strong>FlipChannels</strong> in case the input is color image, flips the color order
+from MATLAB's RGB/RGBA to OpenCV's BGR/BGRA order. default true</li>
 </ul>
 
-<p>The function compresses the image and stores it in the memory buffer
-that is resized to fit the result. See <a href="imwrite.html">cv.imwrite</a> for the list of
-supported formats and flags description.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="imdecode.html">cv.imdecode</a> <a href="imread.html">cv.imread</a> <a href="imwrite.html">cv.imwrite</a>
- </div>
+<p>The following format-specific save parameters are currently supported:</p>
+
+<ul>
+<li><strong>JpegQuality</strong> For JPEG, it can be a quality from 0 to 100 (the higher is
+the better). Default value is 95.</li>
+<li><strong>JpegProgressive</strong> Enable JPEG features, 0 or 1, default is false.</li>
+<li><strong>JpegOptimize</strong> Enable JPEG features, 0 or 1, default is false.</li>
+<li><strong>JpegResetInterval</strong> JPEG restart interval, 0 - 65535,
+default is 0 (no restart).</li>
+<li><strong>JpegLumaQuality</strong> Separate luma quality level, 0 - 100,
+default is 0 (don't use).</li>
+<li><strong>JpegChromaQuality</strong> Separate chroma quality level, 0 - 100,
+default is 0 (don't use).</li>
+<li><strong>PngCompression</strong> For PNG, it can be the compression level from 0 to 9.
+A higher value means a smaller size and longer compression time.
+Default value is 3.</li>
+<li><strong>PngStrategy</strong> For PNG; used to tune the compression algorithm. These
+flags will be modify the way of PNG image compression and will be
+passed to the underlying zlib processing stage. The strategy parameter
+only affects the compression ratio but not the correctness of the
+compressed output even if it is not set appropriately. One of:<ul>
+<li><strong>Default</strong> (default) Use this value for normal data.</li>
+<li><strong>Filtered</strong> Use this value for data produced by a filter (or
+predictor). Filtered data consists mostly of small values with a
+somewhat random distribution. In this case, the compression
+algorithm is tuned to compress them better. The effect of
+<code>Filtered</code> is to force more Huffman coding and less string
+matching; it is somewhat intermediate between <code>Default</code> and
+<code>HuffmanOnly</code>.</li>
+<li><strong>HuffmanOnly</strong> Use this value to force Huffman encoding only
+(no string match).</li>
+<li><strong>RLE</strong> Use this value to limit match distances to one (run-length
+encoding). <code>RLE</code> is designed to be almost as fast as
+<code>HuffmanOnly</code>, but give better compression for PNG image data.</li>
+<li><strong>Fixed</strong> Using this value prevents the use of dynamic Huffman
+codes, allowing for a simpler decoder for special applications.</li>
+</ul>
+</li>
+<li><strong>PngBilevel</strong> Binary level PNG, 0 or 1, controls packing of pixels per
+bytes. If false, PNG files pack pixels of bit-depths 1, 2, and 4 into
+bytes as small as possible. default is false.</li>
+<li><strong>PxmBinary</strong> For PPM, PGM, or PBM, it can be a binary format flag, 0 or 1,
+to specify ASCII or binary encoding. default is true.</li>
+<li><strong>WebpQuality</strong> For WEBP, it can be a quality from 1 to 100 (the higher is
+the better). By default (without any parameter) and for quality above
+100 the lossless compression is used.</li>
+</ul>
+
+<p>For advanced uses, you can directly pass a vector of paramters:</p>
+
+<ul>
+<li><strong>Params</strong> Format-specific save parameters encoded as pairs:
+<code>[paramId_1, paramValue_1, paramId_2, paramValue_2, ...]</code>.</li>
+</ul>
+
+<p>The function compresses the image and stores it in the memory buffer. See
+<a href="imwrite.html">cv.imwrite</a> for the list of supported formats and flags description.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="imdecode.html">cv.imdecode</a>, <a href="imwrite.html">cv.imwrite</a></div>
    </body>
 </html>

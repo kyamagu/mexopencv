@@ -1,17 +1,18 @@
 var searchData=
 [
-  ['decomposeprojectionmatrix_2ecpp',['decomposeProjectionMatrix.cpp',['../decompose_projection_matrix_8cpp.html',1,'']]],
-  ['descriptorextractor_5f_2ecpp',['DescriptorExtractor_.cpp',['../_descriptor_extractor___8cpp.html',1,'']]],
-  ['descriptormatcher_5f_2ecpp',['DescriptorMatcher_.cpp',['../_descriptor_matcher___8cpp.html',1,'']]],
-  ['destroy',['destroy',['../class_mx_array.html#aeab469ebea779b8e3cf7e07e4459b925',1,'MxArray']]],
-  ['dilate_2ecpp',['dilate.cpp',['../dilate_8cpp.html',1,'']]],
-  ['dims',['dims',['../class_mx_array.html#aff4e9a0a157a07a2ab1928d615574b3d',1,'MxArray']]],
-  ['distancetransform_2ecpp',['distanceTransform.cpp',['../distance_transform_8cpp.html',1,'']]],
-  ['distmask',['DistMask',['../distance_transform_8cpp.html#abf4a1dc4c40c005dbe761522a44a1fdf',1,'distanceTransform.cpp']]],
-  ['disttype',['DistType',['../mexopencv_8hpp.html#a9e21369cd3329a2eafe1e8a530eeda9f',1,'mexopencv.hpp']]],
-  ['drawchessboardcorners_2ecpp',['drawChessboardCorners.cpp',['../draw_chessboard_corners_8cpp.html',1,'']]],
-  ['drawcontours_2ecpp',['drawContours.cpp',['../draw_contours_8cpp.html',1,'']]],
-  ['drawkeypoints_2ecpp',['drawKeypoints.cpp',['../draw_keypoints_8cpp.html',1,'']]],
-  ['drawmatches_2ecpp',['drawMatches.cpp',['../draw_matches_8cpp.html',1,'']]],
-  ['dtree_5f_2ecpp',['DTree_.cpp',['../_d_tree___8cpp.html',1,'']]]
+  ['edgepreservingfilter_2ecpp',['edgePreservingFilter.cpp',['../edge_preserving_filter_8cpp.html',1,'']]],
+  ['eigen_2ecpp',['eigen.cpp',['../eigen_8cpp.html',1,'']]],
+  ['ellipse_2ecpp',['ellipse.cpp',['../ellipse_8cpp.html',1,'']]],
+  ['ellipse2poly_2ecpp',['ellipse2Poly.cpp',['../ellipse2_poly_8cpp.html',1,'']]],
+  ['em_5f_2ecpp',['EM_.cpp',['../_e_m___8cpp.html',1,'']]],
+  ['emd_2ecpp',['EMD.cpp',['../_e_m_d_8cpp.html',1,'']]],
+  ['emdl1_2ecpp',['EMDL1.cpp',['../_e_m_d_l1_8cpp.html',1,'']]],
+  ['eps',['Eps',['../class_mx_array.html#a7b11a00959b9bcb1279be9be85278cbb',1,'MxArray']]],
+  ['equalizehist_2ecpp',['equalizeHist.cpp',['../equalize_hist_8cpp.html',1,'']]],
+  ['erode_2ecpp',['erode.cpp',['../erode_8cpp.html',1,'']]],
+  ['estimateaffine3d_2ecpp',['estimateAffine3D.cpp',['../estimate_affine3_d_8cpp.html',1,'']]],
+  ['estimateglobalmotionleastsquares_2ecpp',['estimateGlobalMotionLeastSquares.cpp',['../estimate_global_motion_least_squares_8cpp.html',1,'']]],
+  ['estimateglobalmotionransac_2ecpp',['estimateGlobalMotionRansac.cpp',['../estimate_global_motion_ransac_8cpp.html',1,'']]],
+  ['estimaterigidtransform_2ecpp',['estimateRigidTransform.cpp',['../estimate_rigid_transform_8cpp.html',1,'']]],
+  ['evaluatefeaturedetector_2ecpp',['evaluateFeatureDetector.cpp',['../evaluate_feature_detector_8cpp.html',1,'']]]
 ];

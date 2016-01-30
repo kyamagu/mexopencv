@@ -1,0 +1,51 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.sampsonDistance</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.sampsonDistance</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.sampsonDistance</div>
+      <div class="helpcontent"><p>Calculates the Sampson Distance between two points</p>
+
+<pre><code>sd = <a href="sampsonDistance.html">cv.sampsonDistance</a>(pt1, pt2, F)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>pt1</strong> first homogeneous 2D point.</li>
+<li><strong>pt2</strong> second homogeneous 2D point.</li>
+<li><strong>F</strong> 3x3 fundamental matrix.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>sd</strong> calculated Sampson distance.</li>
+</ul>
+
+<p>The function <a href="sampsonDistance.html">cv.sampsonDistance</a> calculates and returns the first order
+approximation of the geometric error as:</p>
+
+<pre><code>                                 (pt2'*F*pt1)^2
+sd(pt1,pt2) = -----------------------------------------------------
+              ((F*pt1)(0) + (F*pt1)(1) + (F'*pt2)(0) + (F'*pt2)(1))
+</code></pre>
+
+<p>The fundamental matrix may be calculated using the <a href="findFundamentalMat.html">cv.findFundamentalMat</a>
+function. See HZ 11.4.3 for details.</p>
+
+<p>All inputs are in double-precision floating-point type.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findFundamentalMat.html">cv.findFundamentalMat</a></div>
+   </body>
+</html>

@@ -15,10 +15,31 @@
          </tr>
       </table>
       <div class="title">cv.NormalBayesClassifier/save</div>
-      <div class="helpcontent"><p>Saves the model to a file</p>
+      <div class="helpcontent"><p>Saves the algorithm parameters to a file or a string</p>
 
-<pre><code>classifier.save(filename)</code></pre>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="NormalBayesClassifier.html">cv.NormalBayesClassifier</a></div>
+<pre><code>model.save(filename)
+str = model.save(filename)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>filename</strong> Name of the file to save to. In case of string
+output, only the filename extension is used to determine
+the output format (XML or YAML).</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>str</strong> optional output. If requested, the model is persisted
+to a string in memory instead of writing to disk.</li>
+</ul>
+
+<p>This method stores the complete model state to the specified
+XML or YAML file (or to a string in memory, based on the number
+of output arguments).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="NormalBayesClassifier.load.html">cv.NormalBayesClassifier/load</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

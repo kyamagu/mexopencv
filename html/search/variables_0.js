@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['_5ffieldnames',['_fieldnames',['../calibration_matrix_values_8cpp.html#a8cd15ec30e4121ace6bb812839da0f55',1,'_fieldnames():&#160;calibrationMatrixValues.cpp'],['../compose_r_t_8cpp.html#a8cd15ec30e4121ace6bb812839da0f55',1,'_fieldnames():&#160;composeRT.cpp'],['../decompose_projection_matrix_8cpp.html#a8cd15ec30e4121ace6bb812839da0f55',1,'_fieldnames():&#160;decomposeProjectionMatrix.cpp'],['../stereo_calibrate_8cpp.html#a8cd15ec30e4121ace6bb812839da0f55',1,'_fieldnames():&#160;stereoCalibrate.cpp'],['../stereo_rectify_8cpp.html#a8cd15ec30e4121ace6bb812839da0f55',1,'_fieldnames():&#160;stereoRectify.cpp']]]
+  ['agasttypeinvmap',['AgastTypeInvMap',['../mexopencv__features2d_8hpp.html#a74933b434b03e10846d749d1cbc00e98',1,'mexopencv_features2d.hpp']]],
+  ['agasttypemap',['AgastTypeMap',['../mexopencv__features2d_8hpp.html#ac2fa97140d9e825be9e20b207cb1fe69',1,'mexopencv_features2d.hpp']]],
+  ['akazedescriptortype',['AKAZEDescriptorType',['../mexopencv__features2d_8hpp.html#a9c28121258b81ec72154561d677a674e',1,'mexopencv_features2d.hpp']]],
+  ['akazedescriptortypeinv',['AKAZEDescriptorTypeInv',['../mexopencv__features2d_8hpp.html#adf4b539935375bbd092fb61c0554d526',1,'mexopencv_features2d.hpp']]]
 ];

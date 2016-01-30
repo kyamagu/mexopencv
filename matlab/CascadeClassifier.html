@@ -20,14 +20,100 @@
 <p>The object detector described below has been initially proposed by
 Paul Viola [Viola01] and improved by Rainer Lienhart [Lienhart02].</p>
 
+<p>First, a classifier (namely a cascade of boosted classifiers working
+with haar-like features) is trained with a few hundred sample views of a
+particular object (i.e., a face or a car), called positive examples,
+that are scaled to the same size (say, 20x20), and negative examples -
+arbitrary images of the same size.</p>
+
+<p>After a classifier is trained, it can be applied to a region of interest
+(of the same size as used during the training) in an input image. The
+classifier outputs a &quot;1&quot; if the region is likely to show the object
+(i.e., face/car), and &quot;0&quot; otherwise. To search for the object in the
+whole image one can move the search window across the image and check
+every location using the classifier. The classifier is designed so that
+it can be easily &quot;resized&quot; in order to be able to find the objects of
+interest at different sizes, which is more efficient than resizing the
+image itself. So, to find an object of an unknown size in the image the
+scan procedure should be done several times at different scales.</p>
+
+<p>The word &quot;cascade&quot; in the classifier name means that the resultant
+classifier consists of several simpler classifiers (stages) that are
+applied subsequently to a region of interest until at some stage the
+candidate is rejected or all the stages are passed. The word &quot;boosted&quot;
+means that the classifiers at every stage of the cascade are complex
+themselves and they are built out of basic classifiers using one of four
+different boosting techniques (weighted voting). Currently Discrete
+Adaboost, Real Adaboost, Gentle Adaboost and Logitboost are supported.
+The basic classifiers are decision-tree classifiers with at least 2
+leaves. Haar-like features are the input to the basic classifiers, and
+are calculated as described below. The current algorithm uses the
+following Haar-like features:</p>
+
+<ol>
+<li>Edge features</li>
+<li>Line features</li>
+<li>Center-surround features</li>
+</ol>
+
+<p>See image: &lt;<a href="http://docs.opencv.org/3.0.0/haarfeatures.png">http://docs.opencv.org/3.0.0/haarfeatures.png</a>&gt;</p>
+
+<p>The feature used in a particular classifier is specified by its shape
+(1a, 2b etc.), position within the region of interest and the scale
+(this scale is not the same as the scale used at the detection stage,
+though these two scales are multiplied). For example, in the case of the
+third line feature (2c) the response is calculated as the difference
+between the sum of image pixels under the rectangle covering the whole
+feature (including the two white stripes and the black stripe in the
+middle) and the sum of the image pixels under the black stripe
+multiplied by 3 in order to compensate for the differences in the size
+of areas. The sums of pixel values over a rectangular regions are
+calculated rapidly using integral images (see below and the integral
+description).</p>
+
+<p>The following reference is for the detection part only. There is a
+separate application called <code>opencv_traincascade</code> that can train a
+cascade of boosted classifiers from a set of samples. This is not
+included in mexopencv.</p>
+
+<h2> Note</h2>
+
+<p>In the new interface it is also possible to use LBP (local binary
+pattern) features in addition to Haar-like features.</p>
+
+<h2> Example</h2>
+
 <p>The usage example is shown in the following:</p>
 
-<pre><code>filename = 'haarcascades/haarcascade_frontalface_alt.xml';
-cls = <a href="CascadeClassifier.html">cv.CascadeClassifier</a>(filename);
-boxes = cls.detect(im);</code></pre>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="CascadeClassifier.CascadeClassifier.html">cv.CascadeClassifier/CascadeClassifier</a>
-  <a href="CascadeClassifier.empty.html">cv.CascadeClassifier/empty</a> <a href="CascadeClassifier.load.html">cv.CascadeClassifier/load</a>
-  <a href="CascadeClassifier.detect.html">cv.CascadeClassifier/detect</a></div>
+<pre><code>xmlfile = fullfile(mexopen<a href="root.html">cv.root</a>(),'test','haarcascade_frontalface_alt2.xml');
+cc = <a href="CascadeClassifier.html">cv.CascadeClassifier</a>(xmlfile);
+im = imread(fullfile(mexopen<a href="root.html">cv.root</a>(),'test','lena.jpg'));
+boxes = cc.detect(im);
+for i=1:numel(boxes)
+    im = <a href="rectangle.html">cv.rectangle</a>(im, boxes{i}, 'Color',[0 255 0], 'Thickness',2);
+end
+imshow(im)
+</code></pre>
+
+<h2> References</h2>
+
+<p>[Viola01]:</p>
+
+<blockquote>
+<p>Paul Viola and Michael Jones. &quot;Rapid Object Detection using a Boosted
+Cascade of Simple Features&quot;. IEEE CVPR, 2001, Vol 1, pages I-511.
+<a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.10.6807">http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.10.6807</a></p>
+</blockquote>
+
+<p>[Lienhart02]:</p>
+
+<blockquote>
+<p>Rainer Lienhart and Jochen Maydt. &quot;An Extended Set of Haar-like
+Features for Rapid Object Detection&quot;. IEEE ICIP 2002, Vol. 1,
+pp. 900-903, Sep. 2002.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="CascadeClassifier.CascadeClassifier.html">cv.CascadeClassifier/CascadeClassifier</a>,
+   <a href="CascadeClassifier.detect.html">cv.CascadeClassifier/detect</a>, vision.CascadeObjectDetector</div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -50,7 +136,7 @@ boxes = cls.detect(im);</code></pre>
       <table class="summary-list">
          <tr class="summary-item">
             <td class="name"><a href="CascadeClassifier.CascadeClassifier.html">CascadeClassifier</a></td>
-            <td class="m-help">Loads a classifier from a file&nbsp;</td>
+            <td class="m-help">Creates a new cascade classifier object&nbsp;</td>
          </tr>
       </table>
       <!--Properties-->
@@ -73,6 +159,14 @@ boxes = cls.detect(im);</code></pre>
             </td>
             <td class="name"><a href="CascadeClassifier.addlistener.html">addlistener</a></td>
             <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Static 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="CascadeClassifier.convert.html">convert</a></td>
+            <td class="m-help">Convert classifier file from the old format to the new format&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -135,8 +229,40 @@ boxes = cls.detect(im);</code></pre>
                &nbsp;
                
             </td>
+            <td class="name"><a href="CascadeClassifier.getFeatureType.html">getFeatureType</a></td>
+            <td class="m-help">Get features type&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="CascadeClassifier.getMaskGenerator.html">getMaskGenerator</a></td>
+            <td class="m-help">Get the current mask generator function&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="CascadeClassifier.getOriginalWindowSize.html">getOriginalWindowSize</a></td>
+            <td class="m-help">Get original window size&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="CascadeClassifier.gt.html">gt</a></td>
             <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="CascadeClassifier.isOldFormatCascade.html">isOldFormatCascade</a></td>
+            <td class="m-help">Check if loaded classifer is from the old format&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">Sealed 
@@ -185,6 +311,14 @@ boxes = cls.detect(im);</code></pre>
             </td>
             <td class="name"><a href="CascadeClassifier.notify.html">notify</a></td>
             <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="CascadeClassifier.setMaskGenerator.html">setMaskGenerator</a></td>
+            <td class="m-help">Set the current mask generator function&nbsp;</td>
          </tr>
       </table>
    </body>

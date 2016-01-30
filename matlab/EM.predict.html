@@ -15,35 +15,37 @@
          </tr>
       </table>
       <div class="title">cv.EM/predict</div>
-      <div class="helpcontent"><p>Returns a likelihood logarithm value and an index 
-of the most probable mixture component for the given 
-sample.</p>
+      <div class="helpcontent"><p>Predicts response(s) for the provided sample(s)</p>
 
-<pre><code>[log_likelihood, cluster, probs] = em.predict(sample)
+<pre><code>[results,f] = model.predict(samples)
+[...] = model.predict(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>samples</strong> Samples for classification. It should be a
-matrix with each row representing separate
-sample.</li>
+<li><strong>samples</strong> The input samples, floating-point matrix.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><p><strong>log</strong>likelihood__ Likelihood logarithm values</p>
-</li>
-<li><p><strong>cluster</strong>        Indices of the most probable mixture
-components for each sample</p>
-</li>
-<li><p><strong>probs</strong>          Matrix pf posterior probabilities of each
-component given the sample. 
-It has nsamples x nclusters size.</p>
-</li>
+<li><strong>results</strong> Output matrix of posterior probabilities of each
+component given a sample. A <code>double</code> matrix of size
+<code>nsamples-by-ClustersNumber</code>.</li>
+<li><strong>f</strong> If you pass one sample then this returns the zero-based
+index of the most probable mixture component for the given
+sample. Otherwise the result for the first sample is
+returned.</li>
 </ul>
-</div><!--after help -->
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Flags</strong> The optional predict flags, model-dependent.
+Not used. default 0</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="EM.predict2.html">cv.EM/predict2</a>, <a href="EM.train.html">cv.EM/train</a>, <a href="EM.calcError.html">cv.EM/calcError</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

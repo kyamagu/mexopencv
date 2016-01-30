@@ -15,38 +15,20 @@
          </tr>
       </table>
       <div class="title">cv.FeatureDetector</div>
-      <div class="helpcontent"><p>FeatureDetector class</p>
+      <div class="helpcontent"><p>Common interface of 2D image Feature Detectors.</p>
 
-<p>Feature detector class. Here is how to use:</p>
+<p>Class for detecting keypoints in images.</p>
 
-<pre><code>detector = <a href="FeatureDetector.html">cv.FeatureDetector</a>('SURF');
-keypoints = detector.detect(im);
-</code></pre>
+<p>Feature detectors in OpenCV have wrappers with a common interface that
+enables you to easily switch between different algorithms solving the
+same problem. All objects that implement keypoint detectors inherit the
+FeatureDetector interface.</p>
 
-<p>The following detector types are supported:</p>
+<h2> Example</h2>
 
-<pre><code> 'FAST'       FastFeatureDetector
- 'STAR'       StarFeatureDetector
- 'SIFT'       SiftFeatureDetector
- 'SURF'       SurfFeatureDetector
- 'ORB'        OrbFeatureDetector
- 'MSER'       MserFeatureDetector
- 'GFTT'       GoodFeaturesToTrackDetector
- 'HARRIS'     GoodFeaturesToTrackDetector with Harris detector enabled
- 'Dense'      DenseFeatureDetector
- 'SimpleBlob' SimpleBlobDetector
-</code></pre>
-
-<p>Also a combined format with one of the following adaptor is
-supported</p>
-
-<pre><code> 'Grid'       GridAdaptedFeatureDetector
- 'Pyramid'    PyramidAdaptedFeatureDetector
-</code></pre>
-
-<p>for example: 'GridFAST', 'PyramidSTAR'.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.FeatureDetector.html">cv.FeatureDetector/FeatureDetector</a> <a href="FeatureDetector.write.html">cv.FeatureDetector/write</a>
-  <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a></div>
+<pre><code>detector = <a href="FeatureDetector.html">cv.FeatureDetector</a>('ORB');
+keypoints = detector.detect(img);</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a>, <a href="KeyPointsFilter.html">cv.KeyPointsFilter</a>, <a href="drawKeypoints.html">cv.drawKeypoints</a></div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -69,7 +51,7 @@ supported</p>
       <table class="summary-list">
          <tr class="summary-item">
             <td class="name"><a href="FeatureDetector.FeatureDetector.html">FeatureDetector</a></td>
-            <td class="m-help">FeatureDetector constructors&nbsp;</td>
+            <td class="m-help">Creates a feature detector by name.&nbsp;</td>
          </tr>
       </table>
       <!--Properties-->
@@ -77,12 +59,12 @@ supported</p>
       </div>
       <table class="summary-list">
          <tr class="summary-item">
-            <td class="name"><a href="FeatureDetector.id.html">id</a></td>
-            <td class="m-help">Object ID&nbsp;</td>
+            <td class="name"><a href="FeatureDetector.Type.html">Type</a></td>
+            <td class="m-help">Type of the detector&nbsp;</td>
          </tr>
          <tr class="summary-item">
-            <td class="name"><a href="FeatureDetector.type.html">type</a></td>
-            <td class="m-help">of the detector&nbsp;</td>
+            <td class="name"><a href="FeatureDetector.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
          </tr>
       </table>
       <!--Methods-->
@@ -102,8 +84,16 @@ supported</p>
                &nbsp;
                
             </td>
+            <td class="name"><a href="FeatureDetector.clear.html">clear</a></td>
+            <td class="m-help">Clears the algorithm state&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="FeatureDetector.delete.html">delete</a></td>
-            <td class="m-help">FeatureDetector destructor&nbsp;</td>
+            <td class="m-help">Destructor&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -111,7 +101,15 @@ supported</p>
                
             </td>
             <td class="name"><a href="FeatureDetector.detect.html">detect</a></td>
-            <td class="m-help">Detects keypoints in an image&nbsp;</td>
+            <td class="m-help">Detects keypoints in an image or image set.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="FeatureDetector.empty.html">empty</a></td>
+            <td class="m-help">Checks if detector object is empty.&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -150,8 +148,8 @@ supported</p>
                &nbsp;
                
             </td>
-            <td class="name"><a href="FeatureDetector.get.html">get</a></td>
-            <td class="m-help">Get a feature detector parameter&nbsp;</td>
+            <td class="name"><a href="FeatureDetector.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -182,16 +180,16 @@ supported</p>
                &nbsp;
                
             </td>
-            <td class="name"><a href="FeatureDetector.lt.html">lt</a></td>
-            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+            <td class="name"><a href="FeatureDetector.load.html">load</a></td>
+            <td class="m-help">Loads algorithm from a file or a string&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
                &nbsp;
                
             </td>
-            <td class="name"><a href="FeatureDetector.name.html">name</a></td>
-            <td class="m-help">FeatureDetector name&nbsp;</td>
+            <td class="name"><a href="FeatureDetector.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -214,24 +212,16 @@ supported</p>
                &nbsp;
                
             </td>
-            <td class="name"><a href="FeatureDetector.read.html">read</a></td>
-            <td class="m-help">Reads a feature detector object from a file&nbsp;</td>
+            <td class="name"><a href="FeatureDetector.save.html">save</a></td>
+            <td class="m-help">Saves the algorithm parameters to a file&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
                &nbsp;
                
             </td>
-            <td class="name"><a href="FeatureDetector.set.html">set</a></td>
-            <td class="m-help">Set a feature detector parameter&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="attributes">
-               &nbsp;
-               
-            </td>
-            <td class="name"><a href="FeatureDetector.write.html">write</a></td>
-            <td class="m-help">Writes a feature detector object to a file&nbsp;</td>
+            <td class="name"><a href="FeatureDetector.typeid.html">typeid</a></td>
+            <td class="m-help">Name of the C++ type (RTTI)&nbsp;</td>
          </tr>
       </table>
    </body>

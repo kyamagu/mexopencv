@@ -1,0 +1,63 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.GeneralizedHoughGuil/setTemplate</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.GeneralizedHoughGuil/setTemplate</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.GeneralizedHoughGuil/setTemplate</div>
+      <div class="helpcontent"><p>Set template to search</p>
+
+<pre><code>hough.setTemplate(templ)
+hough.setTemplate(edges, dx, dy)
+hough.setTemplate(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>templ</strong> template, 8-bit 1-channel image</li>
+<li><strong>edges</strong> template edges</li>
+<li><strong>dx</strong> template x-derivative of the same size as <code>edges</code> and
+single-precision floating type.</li>
+<li><strong>dy</strong> template y-derivate of the same size and type as <code>dx</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Center</strong> Template center <code>[x,y]</code>. The default <code>[-1,-1]</code>
+will use <code>[size(templ,2) size(templ,1)]./2</code> as center.</li>
+</ul>
+
+<p>In the first variant of the function (with the <code>templ</code> input),
+the <code>edges</code> are internally calculated using the <a href="Canny.html">cv.Canny</a> filter,
+and the derivatives <code>dx</code> and <code>dy</code> using <a href="Sobel.html">cv.Sobel</a> operator.</p>
+</div><!--after help -->
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

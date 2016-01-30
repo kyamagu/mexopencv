@@ -18,7 +18,7 @@
       <div class="helpcontent"><p>Calculates eigenvalues and eigenvectors of image blocks for corner detection</p>
 
 <pre><code>dst = <a href="cornerEigenValsAndVecs.html">cv.cornerEigenValsAndVecs</a>(src)
-dst = <a href="cornerEigenValsAndVecs.html">cv.cornerEigenValsAndVecs</a>(src, 'KSize', [5,5], ...)
+dst = <a href="cornerEigenValsAndVecs.html">cv.cornerEigenValsAndVecs</a>(src, 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
@@ -30,31 +30,41 @@ dst = <a href="cornerEigenValsAndVecs.html">cv.cornerEigenValsAndVecs</a>(src, '
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Image to store the results. It has the same size as src and the
-single type.</li>
+<li><strong>dst</strong> Image to store the results. It has the same row/column size as
+<code>src</code> and the <code>single</code> type (where <code>size(dst,3)==6</code>).
+Eigenvalues and eigenvectors are stored along the channels, see below.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>BlockSize</strong> Neighborhood size. default 5.</li>
-<li><strong>ApertureSize</strong> Aperture parameter for the Sobel() operator. default 3.</li>
-<li><strong>BorderType</strong> Border mode used to extrapolate pixels outside of the
-image. default 'Default'</li>
+<li><strong>BlockSize</strong> Neighborhood size (see details below). default 5.</li>
+<li><strong>KSize</strong> Aperture parameter for the <a href="Sobel.html">cv.Sobel</a> operator. default 3.</li>
+<li><strong>BorderType</strong> Pixel extrapolation method. default 'Default'</li>
 </ul>
 
-<p>For every pixel p, the function cornerEigenValsAndVecs considers a blockSize x
-blockSize neigborhood S(p). It calculates the covariation matrix of
-derivatives over the neighborhood.</p>
+<p>For every pixel <code>p</code>, the function <a href="cornerEigenValsAndVecs.html">cv.cornerEigenValsAndVecs</a> considers a
+<code>blockSize x blockSize</code> neigborhood <code>S(p)</code>. It calculates the covariation
+matrix of derivatives over the neighborhood as:</p>
 
-<p>After that, it finds eigenvectors and eigenvalues of M and stores them in the
-destination image as where (\lambda_1, \lambda_2, x_1, y_1, x_2, y_2) where</p>
-
-<pre><code> \lambda_N are the non-sorted eigenvalues of M
- x_N are the eigenvectors corresponding to \lambda_N
+<pre><code>M = [
+    \sum_{S(p)}(dI/dx)^2        \sum_{S(p)}(dI/dx * dI/dy)
+    \sum_{S(p)}(dI/dx * dI/dy)  \sum_{S(p)}(dI/dy)^2
+]
 </code></pre>
 
+<p>where the derivatives are computed using the Sobel operator.</p>
+
+<p>After that, it finds eigenvectors and eigenvalues of <code>M</code> and stores them in
+the destination image as <code>(lambda_1, lambda_2, x_1, y_1, x_2, y_2)</code> where:</p>
+
+<ul>
+<li><code>lambda_1</code>, <code>lambda_2</code> are the non-sorted eigenvalues of <code>M</code></li>
+<li><code>x_1</code>, <code>y_1</code> are the eigenvectors corresponding to <code>lambda_1</code></li>
+<li><code>x_2</code>, <code>y_2</code> are the eigenvectors corresponding to <code>lambda_2</code></li>
+</ul>
+
 <p>The output of the function can be used for robust edge or corner detection.</p>
-</div><!--after help -->
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="cornerMinEigenVal.html">cv.cornerMinEigenVal</a>, <a href="cornerHarris.html">cv.cornerHarris</a>, <a href="preCornerDetect.html">cv.preCornerDetect</a></div>
    </body>
 </html>

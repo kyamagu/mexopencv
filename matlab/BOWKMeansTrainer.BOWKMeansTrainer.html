@@ -15,7 +15,7 @@
          </tr>
       </table>
       <div class="title">cv.BOWKMeansTrainer/BOWKMeansTrainer</div>
-      <div class="helpcontent"><p>Create a new BOWKMeansTrainer</p>
+      <div class="helpcontent"><p>The constructor</p>
 
 <pre><code>trainer = <a href="BOWKMeansTrainer.html">cv.BOWKMeansTrainer</a>(dictionarySize)
 [...] = <a href="BOWKMeansTrainer.html">cv.BOWKMeansTrainer</a>(...,'OptionName', optionValue, ...)
@@ -27,30 +27,27 @@
 <li><strong>dictionarySize</strong> Number of clusters.</li>
 </ul>
 
-<h2> Output</h2>
-
-<ul>
-<li><strong>trainer</strong> Created BOWKMeansTrainer object</li>
-</ul>
-
 <h2> Options</h2>
 
 <ul>
-<li><strong>Criteria</strong> The algorithm termination criteria, that is, the maximum
-number of iterations and/or the desired accuracy. The accuracy is
-specified as criteria.epsilon. As soon as each of the cluster
-centers moves by less than criteria.epsilon on some iteration, the
-algorithm stops.</li>
-<li><strong>Attempts</strong> The number of times the algorithm is executed using
-different initial labelings. The algorithm returns the labels that
-yield the best compactness. default 3.</li>
-<li><strong>Initialization</strong> Method to initialize seeds. One of the followings:<ul>
-<li>'Random'  Select random initial centers in each attempt. (default)</li>
-<li>'PP'      Use kmeans++ center initialization by Arthur and
-Vassilvitskii [Arthur2007].</li>
+<li><strong>Criteria</strong> The algorithm termination criteria, that is, the
+maximum number of iterations and/or the desired accuracy.
+The accuracy is specified as <code>Criteria.epsilon</code>. As soon
+as each of the cluster centers moves by less than
+<code>Criteria.epsilon</code> on some iteration, the algorithm stops.
+default <code>struct('type','Count+EPS', 'maxCount',100, 'epsilon',eps('float'))</code></li>
+<li><strong>Attempts</strong> The number of times the algorithm is executed
+using different initial labelings. The algorithm returns
+the labels that yield the best compactness. default 3.</li>
+<li><strong>Initialization</strong> Method to initialize seeds, default 'PP'.
+One of the followings:<ul>
+<li><strong>'Random'</strong> Select random initial centers in each
+attempt.</li>
+<li><strong>'PP'</strong>  Use kmeans++ center initialization by
+Arthur and Vassilvitskii [Arthur2007].</li>
 </ul>
 </li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BOWKMeansTrainer.html">cv.BOWKMeansTrainer</a> <a href="kmeans.html">cv.kmeans</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BOWKMeansTrainer.html">cv.BOWKMeansTrainer</a>, <a href="kmeans.html">cv.kmeans</a></div>
    </body>
 </html>

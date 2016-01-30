@@ -1,0 +1,78 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.solve</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.solve</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.solve</div>
+      <div class="helpcontent"><p>Solves one or more linear systems or least-squares problems.</p>
+
+<pre><code>[dst,ret] = <a href="solve.html">cv.solve</a>(src1, src2)
+[...] = <a href="solve.html">cv.solve</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src1</strong> input matrix on the left-hand side of the system.</li>
+<li><strong>src2</strong> input matrix on the right-hand side of the system.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> output solution.</li>
+<li><strong>ret</strong> Logical return value, see below.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Method</strong> solution (matrix inversion) method, default 'LU'. One of the
+following matrix decomposition types:<ul>
+<li><strong>LU</strong> Gaussian elimination with the optimal pivot element chosen.</li>
+<li><strong>SVD</strong> singular value decomposition (SVD) method; the system can be
+over-defined and/or the matrix <code>src1</code> can be singular</li>
+<li><strong>EIG</strong> eigenvalue decomposition; the matrix <code>src1</code> must be symmetrical</li>
+<li><strong>Cholesky</strong> Cholesky LLT factorization; the matrix <code>src1</code> must be
+symmetrical and positively defined</li>
+<li><strong>QR</strong> QR factorization; the system can be over-defined and/or the
+matrix <code>src1</code> can be singular</li>
+</ul>
+</li>
+<li><strong>IsNormal</strong> this flag can be used together with any of the previous methods;
+it means that the normal equations <code>src1' * src1 * dst = src1' * src2</code>
+are solved instead of the original system <code>src1 * dst = src2</code>.
+defaul false</li>
+</ul>
+
+<p>The function <a href="solve.html">cv.solve</a> solves a linear system or least-squares problem (the
+latter is possible with 'SVD' or 'QR' methods, or by specifying the flag
+'IsNormal'):</p>
+
+<pre><code>dst = argmin_{X} ||src1*X - src2||
+</code></pre>
+
+<p>If 'LU' or 'Cholesky' method is used, the function returns 1 if <code>src1</code>
+(or <code>src1'*src1</code>) is non-singular. Otherwise, it returns 0. In the latter
+case, <code>dst</code> is not valid. Other methods find a pseudo-solution in case of a
+singular left-hand side part.</p>
+
+<h2> Note</h2>
+
+<p>If you want to find a unity-norm solution of an under-defined singular
+system <code>src1 * dst = 0</code>, the function <a href="solve.html">cv.solve</a> will not do the work.
+Use <a href="SVD.html">cv.SVD</a>.SolveZ instead.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="invert.html">cv.invert</a>, <a href="SVD.html">cv.SVD</a>, <a href="eigen.html">cv.eigen</a>, mldivide, inv, <a href="SVD.html">SVD</a>, eig</div>
+   </body>
+</html>

@@ -1,0 +1,67 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.RTrees/getSplits</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.RTrees/getSplits</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.RTrees/getSplits</div>
+      <div class="helpcontent"><p>Returns all the splits</p>
+
+<pre><code>splits = classifier.getSplits()
+</code></pre>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>splits</strong> Struct-array with the following fields:<ul>
+<li><strong>varIdx</strong> Index of variable on which the split is
+created.</li>
+<li><strong>inversed</strong> If true, then the inverse split rule is
+used (i.e. left and right branches are exchanged in
+the rule expressions below).</li>
+<li><strong>quality</strong> The split quality, a positive number. It is
+used to choose the best split. (It is also used to
+compute variable importance).</li>
+<li><strong>next</strong> Index of the next split in the list of splits
+for the node (surrogate splits).</li>
+<li><strong>c</strong> The threshold value in case of split on an ordered
+variable. The rule is:
+<code>if var_value &lt; c, next_node = left; else next_node = right; end</code></li>
+<li><strong>subsetOfs</strong> Offset of the bitset used by the split on
+a categorical variable. The rule is:
+<code>if bitset(var_value) == 1, next_node = left; else next_node = right; end</code></li>
+</ul>
+</li>
+</ul>
+
+<p>all the split indices are zero-based indices in the returned
+vector.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="RTrees.getSubsets.html">cv.RTrees/getSubsets</a>, <a href="RTrees.getNodes.html">cv.RTrees/getNodes</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

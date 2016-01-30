@@ -1,0 +1,56 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SuperResolution/SuperResolution</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SuperResolution/SuperResolution</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SuperResolution/SuperResolution</div>
+      <div class="helpcontent"><p>Create Bilateral TV-L1 Super Resolution</p>
+
+<pre><code>obj = <a href="SuperResolution.html">cv.SuperResolution</a>(superresType)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>superresType</strong> Super resolution algorithm type, one of:<ul>
+<li><strong>BTVL1</strong> Bilateral TV-L1 on CPU. This is the default.</li>
+<li><strong>BTVL1_CUDA</strong> Bilateral TV-L1 on GPU (requires CUDA).</li>
+</ul>
+</li>
+</ul>
+
+<p>This class implements Super Resolution algorithm described in
+the papers [Farsiu03] and [Mitzel09].</p>
+
+<p>Here are important members of the class that control the
+algorithm, which you can set after constructing the class
+instance:</p>
+
+<ul>
+<li><code>Scale</code> (int) Scale factor.</li>
+<li><code>Iterations</code> (int) Iteration count.</li>
+<li><code>Tau</code> (double) Asymptotic value of steepest descent method.</li>
+<li><code>Lambda</code> (double) Weight parameter to balance data term and
+smoothness term.</li>
+<li><code>Alpha</code> (double) Parameter of spacial distribution in
+Bilateral-TV.</li>
+<li><code>KernelSize</code> (int) Kernel size of Bilateral-TV filter.</li>
+<li><code>BlurKernelSize</code> (int) Gaussian blur kernel size.</li>
+<li><code>BlurSigma</code> (double) Gaussian blur sigma.</li>
+<li><code>TemporalAreaRadius</code> (int) Radius of the temporal search area.</li>
+<li><code>OpticalFlow</code> Dense optical flow algorithm.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SuperResolution.nextFrame.html">cv.SuperResolution/nextFrame</a></div>
+   </body>
+</html>

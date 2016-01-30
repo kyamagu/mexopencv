@@ -26,44 +26,44 @@
 <ul>
 <li><strong>img</strong> Image.</li>
 <li><strong>txt</strong> Text string to be drawn.</li>
-<li><strong>org</strong> Bottom-left corner of the text string in the image. <code>[x,y]</code></li>
+<li><strong>org</strong> Bottom-left corner of the text string in the image <code>[x,y]</code>.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>img</strong> Output image.</li>
+<li><strong>img</strong> Output image, same size and type as input <code>img</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>FontFace</strong> Font to use. One of the following:<ul>
-<li><code>'HersheySimplex'</code> (default)</li>
-<li><code>'HersheyPlain'</code></li>
-<li><code>'HersheyDuplex'</code></li>
-<li><code>'HersheyComplex'</code></li>
-<li><code>'HersheyTriplex'</code></li>
-<li><code>'HersheyComplexSmall'</code></li>
-<li><code>'HersheyScriptSimplex'</code></li>
-<li><code>'HersheyScriptComplex'</code></li>
+<li><strong>FontFace</strong> Font type to use. One of the following:<ul>
+<li><strong>HersheySimplex</strong> (default)</li>
+<li><strong>HersheyPlain</strong></li>
+<li><strong>HersheyDuplex</strong></li>
+<li><strong>HersheyComplex</strong></li>
+<li><strong>HersheyTriplex</strong></li>
+<li><strong>HersheyComplexSmall</strong></li>
+<li><strong>HersheyScriptSimplex</strong></li>
+<li><strong>HersheyScriptComplex</strong></li>
 </ul>
 </li>
 <li><strong>FontStyle</strong> Font style. One of 'Regular' (default) or 'Italic'</li>
-<li><strong>FontScale</strong> Font scale factor that is multiplied by the
-font-specific base size. default 1.0</li>
+<li><strong>FontScale</strong> Font scale factor that is multiplied by the font-specific
+base size. default 1.0</li>
 <li><strong>Color</strong> 3-element floating point vector specifying text color.</li>
 <li><strong>Thickness</strong> Thickness of the lines used to draw a text. default 1.</li>
-<li><strong>LineType</strong> Type of the line boundary. One of 8,4,'AA' (Anti-aliased
-line). default 8.</li>
+<li><strong>LineType</strong> Line type. One of 8,4,'AA' (Anti-aliased line). See <a href="line.html">cv.line</a>
+for details. default 8.</li>
 <li><strong>BottomLeftOrigin</strong> When true, the image data origin is at the
 bottom-left corner. Otherwise, it is at the top-left corner.
 default false.</li>
 </ul>
 
-<p>The function <code>putText</code> renders the specified text string in the image.
+<p>The function <a href="putText.html">cv.putText</a> renders the specified text string in the image.
 Symbols that cannot be rendered using the specified font are replaced by
-question marks.</p>
+question marks. See <a href="getTextSize.html">cv.getTextSize</a> for a text rendering code example.</p>
 </div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="getTextSize.html">cv.getTextSize</a></div>
    </body>
 </html>

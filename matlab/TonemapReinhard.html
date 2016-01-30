@@ -1,0 +1,199 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.TonemapReinhard</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.TonemapReinhard</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.TonemapReinhard</div>
+      <div class="helpcontent"><p>Tonemapping algorithm used to map HDR image to 8-bit range</p>
+
+<p>This is a global tonemapping operator that models human visual system.</p>
+
+<p>Mapping function is controlled by adaptation parameter, that is computed
+using light adaptation and color adaptation.</p>
+
+<p>For more information see [RD05].</p>
+
+<h2> References</h2>
+
+<p>[RD05]:</p>
+
+<blockquote>
+<p>Erik Reinhard and Kate Devlin.
+&quot;Dynamic range reduction inspired by photoreceptor physiology&quot;.
+Visualization and Computer Graphics, IEEE Transactions on,
+11(1):13-24, 2005.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Tonemap.html">cv.Tonemap</a>, <a href="TonemapDrago.html">cv.TonemapDrago</a>, <a href="TonemapDurand.html">cv.TonemapDurand</a>,
+   <a href="TonemapMantiuk.html">cv.TonemapMantiuk</a>, <a href="Tonemap.html">Tonemap</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="TonemapReinhard.TonemapReinhard.html">TonemapReinhard</a></td>
+            <td class="m-help">Creates TonemapReinhard object&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="TonemapReinhard.ColorAdaptation.html">ColorAdaptation</a></td>
+            <td class="m-help">chromatic adaptation in [0, 1] range.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="TonemapReinhard.Gamma.html">Gamma</a></td>
+            <td class="m-help">positive value for gamma correction.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="TonemapReinhard.Intensity.html">Intensity</a></td>
+            <td class="m-help">result intensity in [-8, 8] range.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="TonemapReinhard.LightAdaptation.html">LightAdaptation</a></td>
+            <td class="m-help">light adaptation in [0, 1] range.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="TonemapReinhard.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="TonemapReinhard.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="TonemapReinhard.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="TonemapReinhard.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="TonemapReinhard.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="TonemapReinhard.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="TonemapReinhard.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="TonemapReinhard.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="TonemapReinhard.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="TonemapReinhard.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="TonemapReinhard.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="TonemapReinhard.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="TonemapReinhard.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="TonemapReinhard.process.html">process</a></td>
+            <td class="m-help">Tonemaps image&nbsp;</td>
+         </tr>
+      </table>
+   </body>
+</html>

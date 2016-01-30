@@ -1,0 +1,263 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.GFTTDetector</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.GFTTDetector</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.GFTTDetector</div>
+      <div class="helpcontent"><p>Wrapping class for feature detection using the goodFeaturesToTrack function.</p>
+
+<p>The function finds the most prominent corners in the image or in the
+specified image region, as described in [Shi94]:</p>
+
+<ol>
+<li>Function calculates the corner quality measure at every source image
+pixel using the <a href="cornerMinEigenVal.html">cv.cornerMinEigenVal</a> or <a href="cornerHarris.html">cv.cornerHarris</a>.</li>
+<li>Function performs a non-maximum suppression (the local maximums in
+<code>3x3</code> neighborhood are retained).</li>
+<li>The corners with the minimal eigenvalue less than
+<code>QualityLevel * max_{x,y}(qualityMeasureMap(x,y))</code> are rejected.</li>
+<li>The remaining corners are sorted by the quality measure in the
+descending order.</li>
+<li>Function throws away each corner for which there is a stronger
+corner at a distance less than <code>maxDistance</code>.</li>
+</ol>
+
+<h2> References:</h2>
+
+<p>[Shi94]:</p>
+
+<blockquote>
+<p>Jianbo Shi and Carlo Tomasi. &quot;Good features to track&quot;.
+In Computer Vision and Pattern Recognition, 1994. Proceedings CVPR'94.,
+1994 IEEE Computer Society Conference on, pages 593-600. IEEE, 1994.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="goodFeaturesToTrack.html">cv.goodFeaturesToTrack</a>, <a href="cornerHarris.html">cv.cornerHarris</a>, <a href="cornerMinEigenVal.html">cv.cornerMinEigenVal</a>,
+   <a href="FeatureDetector.html">cv.FeatureDetector</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="GFTTDetector.GFTTDetector.html">GFTTDetector</a></td>
+            <td class="m-help">Constructor&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="GFTTDetector.BlockSize.html">BlockSize</a></td>
+            <td class="m-help">Size of an average block for computing a derivative covariation&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GFTTDetector.HarrisDetector.html">HarrisDetector</a></td>
+            <td class="m-help">Parameter indicating whether to use a Harris detector&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GFTTDetector.K.html">K</a></td>
+            <td class="m-help">Free parameter of the Harris detector.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GFTTDetector.MaxFeatures.html">MaxFeatures</a></td>
+            <td class="m-help">Maximum number of corners to return.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GFTTDetector.MinDistance.html">MinDistance</a></td>
+            <td class="m-help">Minimum possible Euclidean distance between the returned corners.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GFTTDetector.QualityLevel.html">QualityLevel</a></td>
+            <td class="m-help">Parameter characterizing the minimal accepted quality of image&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GFTTDetector.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.clear.html">clear</a></td>
+            <td class="m-help">Clears the algorithm state&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.detect.html">detect</a></td>
+            <td class="m-help">Detects keypoints in an image or image set.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.empty.html">empty</a></td>
+            <td class="m-help">Checks if detector object is empty.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.load.html">load</a></td>
+            <td class="m-help">Loads algorithm from a file or a string&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.save.html">save</a></td>
+            <td class="m-help">Saves the algorithm parameters to a file&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GFTTDetector.typeid.html">typeid</a></td>
+            <td class="m-help">Name of the C++ type (RTTI)&nbsp;</td>
+         </tr>
+      </table>
+   </body>
+</html>

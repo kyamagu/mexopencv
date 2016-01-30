@@ -18,20 +18,21 @@
       <div class="helpcontent"><p>Performs a point-in-contour test</p>
 
 <pre><code>d = <a href="pointPolygonTest.html">cv.pointPolygonTest</a>(contour, pt)
+d = <a href="pointPolygonTest.html">cv.pointPolygonTest</a>(..., 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>contour</strong> Input 2D point set, stored in a cell array of 2-element vectors or
-1-by-N-by-2 numeric array.</li>
-<li><strong>pt</strong> Point tested against the contour.</li>
+<li><strong>contour</strong> Input contour, stored in numeric array (Nx2/Nx1x2/1xNx2) or
+cell array of 2-element vectors (<code>{[x,y], ...}</code>).</li>
+<li><strong>pt</strong> Point tested against the contour <code>[x,y]</code>.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>rct</strong> Output status value (See below).</li>
+<li><strong>d</strong> Output value (See below).</li>
 </ul>
 
 <h2> Options</h2>
@@ -39,15 +40,15 @@
 <ul>
 <li><strong>MeasureDist</strong> If true, the function estimates the signed distance from
 the point to the nearest contour edge. Otherwise, the function only
-checks if the point is inside a contour or not.</li>
+checks if the point is inside a contour or not. default false</li>
 </ul>
 
 <p>The function determines whether the point is inside a contour, outside, or
 lies on an edge (or coincides with a vertex). It returns positive (inside),
 negative (outside), or zero (on an edge) value, correspondingly. When
-measureDist=false , the return value is +1, -1, and 0, respectively.
+<code>MeasureDist=false</code>, the return value is +1, -1, and 0, respectively.
 Otherwise, the return value is a signed distance between the point and the
 nearest contour edge.</p>
-</div><!--after help -->
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="distanceTransform.html">cv.distanceTransform</a>, inpolygon</div>
    </body>
 </html>

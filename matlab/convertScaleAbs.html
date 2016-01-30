@@ -1,0 +1,56 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.convertScaleAbs</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.convertScaleAbs</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.convertScaleAbs</div>
+      <div class="helpcontent"><p>Scales, calculates absolute values, and converts the result to 8-bit</p>
+
+<pre><code>dst = <a href="convertScaleAbs.html">cv.convertScaleAbs</a>(src)
+dst = <a href="convertScaleAbs.html">cv.convertScaleAbs</a>(src, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> input array.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> output 8-bit array.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Alpha</strong> optional scale factor. Default 1.0</li>
+<li><strong>Beta</strong> optional delta added to the scaled values. Default 0.0</li>
+</ul>
+
+<p>On each element of the input array, the function <a href="convertScaleAbs.html">cv.convertScaleAbs</a> performs
+three operations sequentially: scaling, taking an absolute value, conversion
+to an unsigned 8-bit type:</p>
+
+<pre><code>dst(I) = saturate_cast&lt;uchar&gt;(|src(I) * alpha + beta|)
+</code></pre>
+
+<p>In case of multi-channel arrays, the function processes each channel
+independently. When the output is not 8-bit, the operation can be emulated
+by calling the <code>Mat::convertTo</code> method (or by using matrix expressions) and
+then by calculating an absolute value of the result.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> abs, uint8, cast</div>
+   </body>
+</html>

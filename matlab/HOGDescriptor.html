@@ -15,34 +15,77 @@
          </tr>
       </table>
       <div class="title">cv.HOGDescriptor</div>
-      <div class="helpcontent"><p>Histogram of Oriented Gaussian descriptor</p>
+      <div class="helpcontent"><p>Histogram of Oriented Gaussian (HOG) descriptor and detector</p>
 
-<p>The descriptor of:</p>
+<p>The class implements Histogram of Oriented Gradients object detector
+[Dalal2005].</p>
 
-<blockquote>
-<p>Navneet Dalal and Bill Triggs. Histogram of oriented gradients for
-human detection. 2005.</p>
-</blockquote>
+<h2> Example</h2>
 
-<p>The basic usage is the following:</p>
+<p>The basic usage is the following for computing HOG descriptors:</p>
 
 <pre><code>hog = <a href="HOGDescriptor.html">cv.HOGDescriptor</a>();
 descriptors = hog.compute(im);
 </code></pre>
 
-<p>If you need to compute descriptors for a set of certain keypoints, use
-'Locations' option:</p>
+<p>This computes descriptors in a &quot;dense&quot; setting; Each row is a feature
+vector computed from a window of size <code>WinSize</code> slided across the input
+image gradient. Each vector element is a histogram of gradient
+orientations (quantized into <code>NBins</code> directions). The histogram is
+collected within a &quot;cell&quot; of pixels of size <code>CellSize</code>, and locally
+normalized (see <code>HistogramNormType</code> and <code>L2HysThreshold</code>) over larger
+spatial &quot;block&quot; regions of size <code>BlockSize</code> overlapped according to
+<code>BlockStride</code>. See <a href="HOGDescriptor.html">cv.HOGDescriptor</a>.getDescriptorSize.</p>
+
+<p>If you need to compute descriptors for a set of certain &quot;sparse&quot;
+keypoints (for example SIFT or SURF keypoints), use the <code>Locations</code>
+option of the compute method:</p>
 
 <pre><code>keypoints = <a href="FAST.html">cv.FAST</a>(im);
 descriptors = hog.compute(im, 'Locations', {keypoints.pt});
 </code></pre>
 
-<p>The built-in people detector is accessible through:</p>
+<p>The next step in object recognition using HOG descriptors is to feed the
+descriptors computed from positive and negative images into a linear SVM
+classifier trained to classify whether a window is an object or not.
+This trained SVM model is represented by a set of coefficients for each
+element in the feature vector. This vector is assigned to the
+<a href="HOGDescriptor.html">cv.HOGDescriptor</a>.SvmDetector property.</p>
 
-<pre><code>hog.setSVMDetector('Default');
-boxes = hog.detectMultiScale(im);</code></pre>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.HOGDescriptor.html">cv.HOGDescriptor/HOGDescriptor</a> <a href="HOGDescriptor.compute.html">cv.HOGDescriptor/compute</a>
-  <a href="HOGDescriptor.detect.html">cv.HOGDescriptor/detect</a> <a href="HOGDescriptor.detectMultiScale.html">cv.HOGDescriptor/detectMultiScale</a></div>
+<p>Alternatively, you can use the default built-in people detector which is
+accessible by name as:</p>
+
+<pre><code>% detect and localize upright people in images
+hog.SVMDetector = 'DefaultPeopleDetector';
+boxes = hog.detectMultiScale(im);
+</code></pre>
+
+<p>In this case, there is no need to train an SVM model.</p>
+
+<p>Either way, you simply call the detect methods which use the saved
+coefficients on the input feature-vector to compute a weighted sum. If
+the sum is greater than a user-specified threshold <code>HitThreshold</code>, then
+it is classified an object (a pedestrian in the case of the builtin
+detectors).</p>
+
+<p>The <a href="HOGDescriptor.html">cv.HOGDescriptor</a>.detectMultiScale method detects at multiple scales
+(see <code>NLevels</code> and <code>Scale</code>) and directly returns the bounding boxes. The
+<a href="HOGDescriptor.html">cv.HOGDescriptor</a>.detect method returns a list of top-left corner points,
+where the detected object size is the same as the detector's window
+size.</p>
+
+<h2> References</h2>
+
+<p>[Dalal2005]:</p>
+
+<blockquote>
+<p>Navneet Dalal and Bill Triggs. &quot;Histogram of oriented gradients for
+human detection&quot;. CVPR 2005.
+<a href="http://lear.inrialpes.fr/pubs/2005/DT05/">http://lear.inrialpes.fr/pubs/2005/DT05/</a></p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.HOGDescriptor.html">cv.HOGDescriptor/HOGDescriptor</a>, <a href="HOGDescriptor.compute.html">cv.HOGDescriptor/compute</a>,
+   <a href="HOGDescriptor.detect.html">cv.HOGDescriptor/detect</a>, <a href="HOGDescriptor.detectMultiScale.html">cv.HOGDescriptor/detectMultiScale</a>,
+   extractHOGFeatures</div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -65,7 +108,7 @@ boxes = hog.detectMultiScale(im);</code></pre>
       <table class="summary-list">
          <tr class="summary-item">
             <td class="name"><a href="HOGDescriptor.HOGDescriptor.html">HOGDescriptor</a></td>
-            <td class="m-help">Create or load a new HOG descriptor object&nbsp;</td>
+            <td class="m-help">Create a new or load an existing HOG descriptor and detector&nbsp;</td>
          </tr>
       </table>
       <!--Properties-->
@@ -109,6 +152,14 @@ boxes = hog.detectMultiScale(im);</code></pre>
             <td class="m-help">Number of levels&nbsp;</td>
          </tr>
          <tr class="summary-item">
+            <td class="name"><a href="HOGDescriptor.SignedGradient.html">SignedGradient</a></td>
+            <td class="m-help">Signed gradient&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="HOGDescriptor.SvmDetector.html">SvmDetector</a></td>
+            <td class="m-help">Coefficients for the linear SVM classifier.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
             <td class="name"><a href="HOGDescriptor.WinSigma.html">WinSigma</a></td>
             <td class="m-help">Window sigma&nbsp;</td>
          </tr>
@@ -147,7 +198,15 @@ boxes = hog.detectMultiScale(im);</code></pre>
                
             </td>
             <td class="name"><a href="HOGDescriptor.compute.html">compute</a></td>
-            <td class="m-help">Compute HOG descriptors&nbsp;</td>
+            <td class="m-help">Returns HOG block descriptors computed for the whole image&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="HOGDescriptor.computeGradient.html">computeGradient</a></td>
+            <td class="m-help">Computes gradient&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -171,7 +230,23 @@ boxes = hog.detectMultiScale(im);</code></pre>
                
             </td>
             <td class="name"><a href="HOGDescriptor.detectMultiScale.html">detectMultiScale</a></td>
-            <td class="m-help">DETECT  Performs object detection with a multi-scale window&nbsp;</td>
+            <td class="m-help">Performs object detection with a multi-scale window&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="HOGDescriptor.detectMultiScaleROI.html">detectMultiScaleROI</a></td>
+            <td class="m-help">Evaluate specified ROI and return confidence value for each location in multiple scales&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="HOGDescriptor.detectROI.html">detectROI</a></td>
+            <td class="m-help">Evaluate specified ROI and return confidence value for each location&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -220,6 +295,14 @@ boxes = hog.detectMultiScale(im);</code></pre>
             </td>
             <td class="name"><a href="HOGDescriptor.getWinSigma.html">getWinSigma</a></td>
             <td class="m-help">Get window sigma&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="HOGDescriptor.groupRectangles.html">groupRectangles</a></td>
+            <td class="m-help">Groups the object candidate rectangles&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -282,16 +365,16 @@ boxes = hog.detectMultiScale(im);</code></pre>
                &nbsp;
                
             </td>
-            <td class="name"><a href="HOGDescriptor.save.html">save</a></td>
-            <td class="m-help">Saves a HOG descriptor config to a file&nbsp;</td>
+            <td class="name"><a href="HOGDescriptor.readALTModel.html">readALTModel</a></td>
+            <td class="m-help">Read model from SVMlight format&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
                &nbsp;
                
             </td>
-            <td class="name"><a href="HOGDescriptor.setSVMDetector.html">setSVMDetector</a></td>
-            <td class="m-help">Sets coefficients for the linear SVM classifier&nbsp;</td>
+            <td class="name"><a href="HOGDescriptor.save.html">save</a></td>
+            <td class="m-help">Saves a HOG descriptor config to a file&nbsp;</td>
          </tr>
       </table>
    </body>

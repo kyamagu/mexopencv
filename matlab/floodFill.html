@@ -18,53 +18,113 @@
       <div class="helpcontent"><p>Fills a connected component with the given color</p>
 
 <pre><code>dst = <a href="floodFill.html">cv.floodFill</a>(src, seed, newVal)
-dst = <a href="floodFill.html">cv.floodFill</a>(src, seed, newVal, 'Mask', mask, ...)
-[dst, rect, area] = <a href="floodFill.html">cv.floodFill</a>(src, seed, newVal, ...)
-[dst, mask, rect, area] = <a href="floodFill.html">cv.floodFill</a>(src, seed, newVal, 'Mask', mask, ...)
+[dst, rect, area] = <a href="floodFill.html">cv.floodFill</a>(src, seed, newVal)
+[dst, rect, area, mask] = <a href="floodFill.html">cv.floodFill</a>(..., 'Mask',mask, 'MaskOnly',true)
+[...] = <a href="floodFill.html">cv.floodFill</a>(..., 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>src</strong> Input/output 1- or 3-channel, 8-bit, or floating-point image. It is
-modified by the function unless the 'MaskOnly' flag is set in the
-option</li>
-<li><strong>seed</strong> Starting point.</li>
-<li><strong>newVal</strong> New value of the repainted domain pixels.</li>
+<li><strong>src</strong> Input 1- or 3-channel, 8-bit, or floating-point image.</li>
+<li><strong>seed</strong> Starting seed point <code>[x,y]</code>.</li>
+<li><strong>newVal</strong> New value of the repainted domain pixels. It should match the
+range and dimensions of the input image: 1-element vector (brightness)
+for grayscale images, and 3-element vector (color) for RGB images.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Destination image of the same size and the same type as src.</li>
+<li><strong>dst</strong> Destination image of the same size and the same type as <code>src</code>.
+Contains the modified input unless the <code>MaskOnly</code> flag is set in the
+second variant of the function, in which case <code>dst</code> is the same as the
+input <code>src</code> unmodified. See the details below.</li>
 <li><strong>rect</strong> Optional output parameter set by the function to the minimum
-bounding rectangle of the repainted domain.</li>
+bounding rectangle of the repainted domain <code>[x,y,w,h]</code>.</li>
 <li><strong>area</strong> Optional output parameter set by the function to the number of
-filled pixels</li>
+filled pixels.</li>
+<li><strong>mask</strong> Optional output containing the updated input <code>Mask</code>. Populated in
+the second variant of the function with the <code>Mask</code> option. On output,
+pixels in the mask corresponding to filled pixels in the image are set
+to 1 or to the value specified in <code>MaskFillValue</code> option as described
+below.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
 <li><strong>LoDiff</strong> Maximal lower brightness/color difference between the currently
-observed pixel and one of its neighbors belonging to the
-component, or a seed pixel being added to the component.</li>
+observed pixel and one of its neighbors belonging to the component, or
+a seed pixel being added to the component. default zeros</li>
 <li><strong>UpDiff</strong> Maximal upper brightness/color difference between the currently
-observed pixel and one of its neighbors belonging to the
-component, or a seed pixel being added to the component.</li>
-<li><strong>Connectivity</strong> 4 or 8</li>
+observed pixel and one of its neighbors belonging to the component, or
+a seed pixel being added to the component. default zeros</li>
+<li><strong>Connectivity</strong> Connectivity value, 4 or 8. The default value of 4 means
+that only the four nearest neighbor pixels (those that share an edge
+are considered. A connectivity value of 8 means that the eight nearest
+neighbor pixels (those that share a corner) will be considered.
+default 4</li>
 <li><strong>FixedRange</strong> If set, the difference between the current pixel and
 seed pixel is considered. Otherwise, the difference between
 neighbor pixels is considered (that is, the range is
-floating).</li>
-<li><strong>MaskOnly</strong> If set, the function does not change the image ( newVal
-is ignored), but fills the mask. The flag can be used for
-the second variant only.</li>
+floating). default false</li>
+<li><strong>Mask</strong> Operation mask that should be a single-channel 8-bit image,
+2 pixels wider and 2 pixels taller than image. Flood-filling cannot go
+across non-zero pixels in the input mask. For example, an edge
+detector output can be used as a mask to stop filling at edges. It is
+possible to use the same mask in multiple calls to the function to
+make sure the filled areas do not overlap. Not set by default.</li>
+<li><strong>MaskOnly</strong> If set, the function does not change the image in the output
+(<code>newVal</code> is ignored), and only fills the output <code>mask</code> with the value
+specified in <code>MaskFillValue</code> as described. This option only make sense
+in function variants that have the mask parameter. default false</li>
+<li><strong>MaskFillValue</strong> Value between 1 and 255 with which to fill the output
+<code>Mask</code>. This option only make sense in function variants that have the
+mask parameter. default 0 (which effectively flood-fills the mask by
+the default filling value of 1)</li>
 </ul>
 
-<p>The functions floodFill fill a connected component starting from the
-seed point with the specified color. The connectivity is determined by
-the color/brightness closeness of the neighbor pixels.</p>
-</div><!--after help -->
+<p>The function <a href="floodFill.html">cv.floodFill</a> fills a connected component starting from the seed
+point with the specified color. The connectivity is determined by the
+color/brightness closeness of the neighbor pixels. The pixel at <code>(x,y)</code> is
+considered to belong to the repainted domain if:</p>
+
+<ul>
+<li><p>in case of a grayscale image and floating range:</p>
+<p>        src(x',y') - loDiff &lt;= src(x,y) &lt;= src(x',y') + upDiff</p>
+</li>
+<li><p>in case of a grayscale image and fixed range:</p>
+<p>        src(seedPoint.x,seedPoint.y) - loDiff &lt;= src(x,y) &lt;= src(seedPoint.x,seedPoint.y) + upDiff</p>
+</li>
+<li><p>in case of a color image and floating range:</p>
+<p>        src(x',y')<em>r - loDiffr <= src(x,y)</em>r &lt;= src(x',y')_r + upDiffr,
+src(x',y')<em>g - loDiffg <= src(x,y)</em>g &lt;= src(x',y')_g + upDiffg
+src(x',y')<em>b - loDiffb <= src(x,y)</em>b &lt;= src(x',y')_b + upDiffb</p>
+</li>
+<li><p>in case of a color image and fixed range:</p>
+<p>        src(seedPoint.x,seedPoint.y)<em>r - loDiffr <= src(x,y)</em>r &lt;= src(seedPoint.x,seedPoint.y)_r + upDiffr,
+src(seedPoint.x,seedPoint.y)<em>g - loDiffg <= src(x,y)</em>g &lt;= src(seedPoint.x,seedPoint.y)_g + upDiffg
+src(seedPoint.x,seedPoint.y)<em>b - loDiffb <= src(x,y)</em>b &lt;= src(seedPoint.x,seedPoint.y)_b + upDiffb</p>
+</li>
+</ul>
+
+<p>where <code>src(x',y')</code> is the value of one of pixel neighbors that is already
+known to belong to the component. That is, to be added to the connected
+component, a color/brightness of the pixel should be close enough to:</p>
+
+<ul>
+<li>Color/brightness of one of its neighbors that already belong to the
+connected component in case of a floating range.</li>
+<li>Color/brightness of the seed point in case of a fixed range.</li>
+</ul>
+
+<p>Use this function to either mark a connected component with the specified
+color, or build a mask and then extract the contour, or copy the region to
+another image, and so on.</p>
+
+<p><strong>Note:</strong> Since the mask is larger than the filled image, a pixel <code>(x,y)</code> in
+image corresponds to the pixel <code>(x+1,y+1)</code> in the mask.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findContours.html">cv.findContours</a>, imfill</div>
    </body>
 </html>

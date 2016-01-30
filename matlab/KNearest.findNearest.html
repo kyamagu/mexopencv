@@ -1,0 +1,81 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.KNearest/findNearest</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.KNearest/findNearest</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.KNearest/findNearest</div>
+      <div class="helpcontent"><p>Finds the neighbors and predicts responses for input vectors</p>
+
+<pre><code>results = classifier.findNearest(samples, K)
+[results,neiResp,dists,f] = classifier.findNearest(samples, K)
+[...] = classifier.findNearest(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>samples</strong> Input samples stored by rows. It is a
+single-precision floating-point matrix of size
+<code>nsamples-by-nfeatures</code>.</li>
+<li><strong>K</strong> Number of used nearest neighbors. Should be greater than
+or equal to 1.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>results</strong> Vector with results of prediction (regression or
+classification) for each input sample. It is a
+single-precision floating-point vector with <code>nsamples</code>
+elements.</li>
+<li><strong>neiResp</strong> Optional output array for corresponding neighbor
+responses. It is a single-precision floating-point matrix
+of size <code>nsamples-by-K</code>.</li>
+<li><strong>dists</strong> Optional output distances from the input vectors to
+the corresponding neighbors. It is a single-precision
+floating-point matrix of size <code>nsamples-by-K</code>.</li>
+<li><strong>f</strong> If only a single input vector is passed, the predicted
+value is returned by the method. Otherwise it returns the
+prediction of the first sample.</li>
+</ul>
+
+<p>For each input vector (a row of the matrix samples), the method
+finds the <code>K</code> nearest neighbors. In case of regression, the
+predicted result is a mean value of the particular vector's
+neighbor responses. In case of classification, the class is
+determined by voting.</p>
+
+<p>For each input vector, the neighbors are sorted by their
+distances to the vector.</p>
+
+<p>The function is parallelized with the TBB library.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KNearest.predict.html">cv.KNearest/predict</a>, <a href="KNearest.train.html">cv.KNearest/train</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

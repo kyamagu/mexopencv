@@ -17,8 +17,17 @@
       <div class="title">cv.SVM/SVM</div>
       <div class="helpcontent"><p>Creates/trains a new SVM instance</p>
 
-<pre><code>classifier = <a href="SVM.html">cv.SVM</a>
-classifier = <a href="SVM.html">cv.SVM</a>(...)</code></pre>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SVM.html">cv.SVM</a> <a href="SVM.train.html">cv.SVM/train</a></div>
+<pre><code>model = <a href="SVM.html">cv.SVM</a>()
+model = <a href="SVM.html">cv.SVM</a>(...)
+</code></pre>
+
+<p>The first variant creates an empty model. Use <a href="SVM.html">cv.SVM</a>.train to
+train the model. Since SVM has several parameters, you may want
+to find the best parameters for your problem, it can be done
+with <a href="SVM.html">cv.SVM</a>.trainAuto.</p>
+
+<p>The second variant accepts the same parameters as the train
+method, in which case it forwards the call after construction.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SVM.html">cv.SVM</a>, <a href="SVM.train.html">cv.SVM/train</a>, <a href="SVM.load.html">cv.SVM/load</a></div>
    </body>
 </html>

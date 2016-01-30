@@ -17,54 +17,91 @@
       <div class="title">cv.remap</div>
       <div class="helpcontent"><p>Applies a generic geometrical transformation to an image</p>
 
-<pre><code>dst = <a href="remap.html">cv.remap</a>(src, X, Y)
-dst = <a href="remap.html">cv.remap</a>(src, XY)
-dst = <a href="remap.html">cv.remap</a>(src, map1, map2)
-dst = <a href="remap.html">cv.remap</a>(src, X, Y, 'BorderType', borderType, ...)
-dst = <a href="remap.html">cv.remap</a>(src, XY, 'BorderType', borderType, ...)
-dst = <a href="remap.html">cv.remap</a>(src, map1, map2, 'BorderType', borderType, ...)
+<pre><code>dst = <a href="remap.html">cv.remap</a>(src, map1, map2)
+dst = <a href="remap.html">cv.remap</a>(src, map1)
+dst = <a href="remap.html">cv.remap</a>(..., 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
 <li><strong>src</strong> Source image.</li>
-<li><strong>X</strong> x values of the transformation</li>
-<li><strong>Y</strong> y values of the transformation</li>
-<li><strong>XY</strong> (x,y) values of the transformation</li>
-<li><strong>map1</strong> The first map created by <a href="convertMaps.html">cv.convertMaps</a>, int16 type</li>
-<li><strong>map2</strong> The second map created by <a href="convertMaps.html">cv.convertMaps</a>, uint16 type</li>
+<li><strong>map1</strong> The first map of either (x,y) points or just x values of the
+transformation having the type <code>int16</code> (2-channels), <code>single</code>
+(1-channels), or <code>single</code> (2-channels). See <a href="convertMaps.html">cv.convertMaps</a> for details
+on converting a floating-point representation to fixed-point for speed.</li>
+<li><strong>map2</strong> The second map of y values of the transformation having the type
+<code>uint16</code> (1-channel) or <code>single</code> (1-channel), or none (empty map if
+<code>map1</code> is (x,y) points), respectively.</li>
+</ul>
+
+<p>In other words, the following map combinations are valid:</p>
+
+<ul>
+<li><em>separate floating-point representation</em>: <code>map1</code> as NxMx1 <code>single</code> matrix,
+and <code>map2</code> as NxMx1 <code>single</code> matrix</li>
+<li><em>combined floating-point representation</em>: <code>map1</code> as NxMx2 <code>single</code> array,
+and unspecified/empty <code>map2</code>. This is equivalent to <code>map1=cat(3,map1,map2)</code>
+from the separate floating-point representation.</li>
+<li><em>fixed-point representation</em>: <code>map1</code> as <code>NxMx2</code> <code>int16</code> array, and <code>map2</code>
+as <code>NxMx1</code> <code>uint16</code> matrix, converted from the floating-point
+representation using <a href="convertMaps.html">cv.convertMaps</a>.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Destination image. It has the same size as X (or XY) and the same
-type as src.</li>
+<li><strong>dst</strong> Destination image. It has the same row/column size as <code>map1</code> and
+the same type as <code>src</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>BorderType</strong> Pixel extrapolation method. When 'Transparent' , it means
-that the pixels in the destination image that corresponds to
-the outliers in the source image are not modified by the
-function. default: 'Constant'</li>
-<li><strong>BorderValue</strong> Value used in case of a constant border. default: 0</li>
-<li><strong>Interpolation</strong> interpolation method. default: 'Linear'</li>
+<li><strong>Interpolation</strong> interpolation method, default 'Linear'. One of:<ul>
 <li><strong>Nearest</strong> a nearest-neighbor interpolation</li>
 <li><strong>Linear</strong> a bilinear interpolation (used by default)</li>
 <li><strong>Cubic</strong> a bicubic interpolation over 4x4 pixel neighborhood</li>
 <li><strong>Lanczos4</strong> a Lanczos interpolation over 8x8 pixel neighborhood</li>
 </ul>
+</li>
+<li><strong>BorderType</strong> Pixel extrapolation method. When 'Transparent', it means
+that the pixels in the destination image corresponding to the
+&quot;outliers&quot; in the source image are not modified by the function.
+default 'Constant'<ul>
+<li><strong>Constant</strong> <code>iiiiii|abcdefgh|iiiiiii</code> with some specified <code>i</code></li>
+<li><strong>Replicate</strong> <code>aaaaaa|abcdefgh|hhhhhhh</code></li>
+<li><strong>Reflect</strong> <code>fedcba|abcdefgh|hgfedcb</code></li>
+<li><strong>Reflect101</strong> <code>gfedcb|abcdefgh|gfedcba</code></li>
+<li><strong>Wrap</strong> <code>cdefgh|abcdefgh|abcdefg</code></li>
+<li><strong>Transparent</strong> <code>uvwxyz|absdefgh|ijklmno</code></li>
+<li><strong>Default</strong> same as 'Reflect101'</li>
+</ul>
+</li>
+<li><strong>BorderValue</strong> Value used in case of a constant border. default 0</li>
+<li><strong>Dst</strong> Optional initial image for the output. If not set, it is
+automatically created by the function. Note that it must match the
+row/column size of <code>map1</code> and the type of <code>src</code>, otherwise it is
+ignored and recreated by the function. This option is only useful when
+<code>BorderType=Transparent</code>, in which case the transformed image is drawn
+onto the existing <code>Dst</code> without extrapolating pixels. Not set by
+default.</li>
+</ul>
 
-<p>The function remap transforms the source image using the specified map:</p>
+<p>The function <a href="remap.html">cv.remap</a> transforms the source image using the specified map:</p>
 
-<pre><code> dst(x,y) = src(X(x,y), Y(x,y))
+<pre><code> dst(x,y) = src(mapX(x,y), mapY(x,y))
 </code></pre>
 
-<p>where values of pixels with non-integer coordinates are computed using one of
-available interpolation methods.</p>
-</div><!--after help -->
+<p>where values of pixels with non-integer coordinates are computed using one
+of available interpolation methods. <code>mapX</code> and <code>mapY</code> can be encoded as
+separate floating-point maps in <code>map1</code> and <code>map2</code> respectively, or
+interleaved floating-point maps of (x,y) in <code>map1</code>, or fixed-point maps
+created by using <a href="convertMaps.html">cv.convertMaps</a>. The reason you might want to convert from
+floating to fixed-point representations of a map is that they can yield much
+faster (2x) remapping operations. In the converted case, <code>map1</code> contains
+pairs <code>(floor(x), floor(y))</code> and <code>map2</code> contains indices in a table of
+interpolation coefficients.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="convertMaps.html">cv.convertMaps</a>, interp2, imwarp</div>
    </body>
 </html>

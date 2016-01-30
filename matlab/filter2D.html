@@ -18,13 +18,13 @@
       <div class="helpcontent"><p>Convolves an image with the kernel</p>
 
 <pre><code>dst = <a href="filter2D.html">cv.filter2D</a>(src, kernel)
-dst = <a href="filter2D.html">cv.filter2D</a>(src, kernel, 'Anchor', [0,1], ...)
+dst = <a href="filter2D.html">cv.filter2D</a>(src, kernel, 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>img</strong> Source image.</li>
+<li><strong>img</strong> input image.</li>
 <li><strong>kernel</strong> Convolution kernel (or rather a correlation kernel), a
 single-channel floating point matrix. If you want to apply different kernels to
 different channels, split the image into separate color planes and
@@ -34,33 +34,48 @@ process them individually.</li>
 <h2> Output</h2>
 
 <ul>
-<li><strong>result</strong> Destination image of the same size and the same number of
-channels as src.</li>
+<li><strong>result</strong> output image of the same size and the same number of channels
+as <code>src</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>Anchor</strong> Anchor of the kernel that indicates the relative position of
-a filtered point within the kernel. The anchor should lie within
-the kernel. The special default value (-1,-1) means that the anchor
-is at the kernel center.</li>
-<li><strong>BorderType</strong> Pixel extrapolation method. Default 'Default'</li>
+<li><strong>DDepth</strong> desired depth of the destination image. default -1. When
+<code>DDepth=-1</code>, the output image will have the same depth as the source.
+The following combinations are supported:<ul>
+<li>SDepth = 'uint8'           --&gt; DDepth = -1, 'int16', 'single', 'double'</li>
+<li>SDepth = 'uint16', 'int16' --&gt; DDepth = -1, 'single', 'double'</li>
+<li>SDepth = 'single'          --&gt; DDepth = -1, 'single', 'double'</li>
+<li>SDepth = 'double'          --&gt; DDepth = -1, 'double'</li>
+</ul>
+</li>
+<li><strong>Anchor</strong> Anchor of the kernel that indicates the relative position of a
+filtered point within the kernel. The anchor should lie within the
+kernel. The special default value (-1,-1) means that the anchor is at
+the kernel center.</li>
+<li><strong>Delta</strong> optional value added to the filtered pixels before storing them
+in <code>dst</code>. Default 0</li>
+<li><strong>BorderType</strong> Pixel extrapolation method, see <a href="copyMakeBorder.html">cv.copyMakeBorder</a>.
+Default 'Default'</li>
 </ul>
 
-<p>The function applies an arbitrary linear filter to an image. In-place
-operation is supported. When the aperture is partially outside the image, the
-function interpolates outlier pixel values according to the specified border
-mode.</p>
+<p>The function applies an arbitrary linear filter to an image. When the
+aperture is partially outside the image, the function interpolates outlier
+pixel values according to the specified border mode.</p>
 
-<p>The function does actually compute correlation, not the convolution. That is,
-the kernel is not mirrored around the anchor point. If you need a real
-convolution, flip the kernel using flip() and set the new anchor to
-(kernel.cols - anchor.x - 1, kernel.rows - anchor.y - 1).</p>
+<p>The function does actually compute correlation, not the convolution:</p>
+
+<pre><code>dst(x,y) = \sum_{0 &lt;= xp &lt;= size(kernel,2), 0 &lt;= yp &lt;= size(kernel,1)}
+           kernel(xp,yp) * src(x + xp - anchor(1), y + yp - anchor(2))
+</code></pre>
+
+<p>That is, the kernel is not mirrored around the anchor point. If you need a
+real convolution, flip the kernel using <a href="flip.html">cv.flip</a> and set the new anchor to
+<code>(size(kernel,2) - anchor(1) - 1, size(kernel,1) - anchor(2) - 1)</code>.</p>
 
 <p>The function uses the DFT-based algorithm in case of sufficiently large
-kernels (~<code>11 x 11</code> or larger) and the direct algorithm (that uses the
-engine retrieved by createLinearFilter() ) for small kernels.</p>
-</div><!--after help -->
+kernels (~<code>11x11</code> or larger) and the direct algorithm for small kernels.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="sepFilter2D.html">cv.sepFilter2D</a>, cv.dft, <a href="matchTemplate.html">cv.matchTemplate</a>, imfilter, conv2</div>
    </body>
 </html>

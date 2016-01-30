@@ -1,0 +1,46 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.computeRecallPrecisionCurve</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.computeRecallPrecisionCurve</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.computeRecallPrecisionCurve</div>
+      <div class="helpcontent"><p>Evaluate a descriptor extractor by computing precision/recall curve</p>
+
+<pre><code>recallPrecisionCurve = <a href="computeRecallPrecisionCurve.html">cv.computeRecallPrecisionCurve</a>(matches1to2, correctMatches1to2Mask)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>matches1to2</strong> Cell array of matches, each match is a structure array
+with the following fields:<ul>
+<li><strong>queryIdx</strong> query descriptor index (zero-based index)</li>
+<li><strong>trainIdx</strong> train descriptor index (zero-based index)</li>
+<li><strong>imgIdx</strong> train image index (zero-based index)</li>
+<li><strong>distance</strong> distance between descriptors (scalar)</li>
+</ul>
+</li>
+<li><strong>correctMatches1to2Mask</strong> Cell array of the same size as <code>matches1to2</code>.
+A mask indicating correct matches.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>recallPrecisionCurve</strong> Recall/precision curve, Nx2 matrix.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="evaluateFeatureDetector.html">cv.evaluateFeatureDetector</a>, <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a>,
+   <a href="DescriptorMatcher.html">cv.DescriptorMatcher</a></div>
+   </body>
+</html>

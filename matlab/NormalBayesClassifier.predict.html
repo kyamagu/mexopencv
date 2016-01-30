@@ -15,15 +15,39 @@
          </tr>
       </table>
       <div class="title">cv.NormalBayesClassifier/predict</div>
-      <div class="helpcontent"><p>Predicts the response for a sample</p>
+      <div class="helpcontent"><p>Predicts responses for input samples</p>
 
-<pre><code>results = classifier.predict(samples)
+<pre><code>[results,f] = model.predict(samples)
+[...] = model.predict(..., 'OptionName', optionValue, ...)
 </code></pre>
 
-<p>The method estimates the most probable classes for input vectors.
-Input vectors (one or more) are stored as rows of the matrix
-samples.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="NormalBayesClassifier.html">cv.NormalBayesClassifier</a></div>
+<h2> Input</h2>
+
+<ul>
+<li><strong>samples</strong> The input samples, floating-point matrix. One or
+more vectors stored as rows of the matrix.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>results</strong> The predicted class for each sample.</li>
+<li><strong>f</strong> unused and returns 0.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Flags</strong> The optional predict flags, model-dependent. For
+convenience, you can set the individual flag options
+below, instead of directly setting bits here. default 0</li>
+<li><strong>RawOutput</strong> makes the method return the raw results (class
+index without mapping to class labels). default false</li>
+</ul>
+
+<p>The method is an alias for <a href="KNearest.html">cv.KNearest</a>.predictProb, without
+returning the probabilities.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="NormalBayesClassifier.train.html">cv.NormalBayesClassifier/train</a>, <a href="NormalBayesClassifier.predictProb.html">cv.NormalBayesClassifier/predictProb</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

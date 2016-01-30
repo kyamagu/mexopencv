@@ -15,38 +15,52 @@
          </tr>
       </table>
       <div class="title">cv.EM/trainE</div>
-      <div class="helpcontent"><p>Trains the GMM, starting from the Expectation step</p>
+      <div class="helpcontent"><p>Estimate the Gaussian mixture parameters from a samples set, starting from the Expectation step</p>
 
-<pre><code>[ log_likelihoods labels probs ] = em.trainE(samples, means0)
-[ log_likelihoods labels probs ] = em.trainE(samples, means0, 'OptionName', optionValue, ...)
+<pre><code>[logLikelihoods, labels, probs] = model.trainE(samples, means0)
+[...] = model.trainE(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><p><strong>samples</strong> Samples from which the Gaussian mixture model will be estimated. 
-It should be a one-channel matrix, each row of which is a sample. </p>
-</li>
-<li><p><strong>means0</strong>  Initial means ak of mixture components. It is a one-channel matrix of
-nclusters x dims size</p>
-</li>
+<li><strong>samples</strong> Samples from which the Gaussian mixture model will
+be estimated. It should be a one-channel matrix, each row
+of which is a sample. If the matrix does not have <code>double</code>
+type it will be converted to the inner matrix of such type
+for the further computing.</li>
+<li><strong>means0</strong> Initial means <code>a_k</code> of mixture components. It is a
+one-channel matrix of <code>ClustersNumber-by-dims</code> size. If the
+matrix does not have <code>double</code> type it will be converted to
+the inner matrix of such type for the further computing.</li>
 </ul>
 
 <h2> Output</h2>
 
-<p>see EM.train</p>
+<ul>
+<li><strong>logLikelihoods</strong> See the <a href="EM.html">cv.EM</a>.trainEM method.</li>
+<li><strong>labels</strong> See the <a href="EM.html">cv.EM</a>.trainEM method.</li>
+<li><strong>probs</strong> See the <a href="EM.html">cv.EM</a>.trainEM method.</li>
+</ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><p><strong>Covs0</strong>       The vector of initial covariance matrices Sk of mixture components. 
-Each of covariance matrices is a one-channel matrix of dims x dims size.</p>
-</li>
-<li><p><strong>Weights0</strong>    Initial weights pi_k of mixture components. It should be a one-channel 
-matrix with 1 x nclusters or nclusters x 1 size.</p>
-</li>
+<li><strong>Covs0</strong> The vector of initial covariance matrices <code>S_k</code> of
+mixture components. Each of covariance matrices is a
+one-channel matrix of <code>dims-by-dims</code> size. If the matrices
+do not have <code>double</code> type they will be converted to the
+inner matrices of such type for the further computing.</li>
+<li><strong>Weights0</strong> Initial weights <code>PI_k</code> of mixture components. It
+should be a one-channel floating-point vector of length
+<code>ClustersNumber</code>.</li>
 </ul>
-</div><!--after help -->
+
+<p>This variation starts with Expectation step. You need to provide
+initial means <code>a_k</code> of mixture components. Optionally you can
+pass initial weights <code>PI_k</code> and covariance matrices <code>S_k</code> of
+mixture components.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="EM.trainM.html">cv.EM/trainM</a>, <a href="EM.trainEM.html">cv.EM/trainEM</a>, <a href="EM.train.html">cv.EM/train</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

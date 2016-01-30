@@ -23,19 +23,39 @@
 <h2> Input</h2>
 
 <ul>
-<li><strong>points</strong> Input 2D point set, stored in a cell array of 2-element vectors or
-1-by-N-by-2 numeric array.</li>
+<li><strong>points</strong> Input 2D point set, stored in numeric array
+(Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors (<code>{[x,y], ...}</code>).</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>rct</strong> Output rotated rectangle struct.</li>
+<li><strong>rct</strong> Output rotated rectangle struct with the following fields:<ul>
+<li><strong>center</strong> The rectangle mass center <code>[x,y]</code>.</li>
+<li><strong>size</strong> Width and height of the rectangle <code>[w,h]</code>.</li>
+<li><strong>angle</strong> The rotation angle in a clockwise direction.
+When the angle is 0, 90, 180, 270 etc., the
+rectangle becomes an up-right rectangle.</li>
+</ul>
+</li>
 </ul>
 
 <p>The function calculates the ellipse that fits (in a least-squares sense) a
 set of 2D points best of all. It returns the rotated rectangle in which the
-ellipse is inscribed. The algorithm [Fitzgibbon95] is used.</p>
-</div><!--after help -->
+ellipse is inscribed. The first algorithm described by [Fitzgibbon95] is
+used. Developer should keep in mind that it is possible that the returned
+ellipse/rotatedRect data contains negative indices, due to the data points
+being close to the border of the containing Mat element.</p>
+
+<h2> References</h2>
+
+<p>[Fitzgibbon95]:</p>
+
+<blockquote>
+<p>Andrew W Fitzgibbon and Robert B Fisher.
+&quot;A buyer's guide to conic fitting&quot;. In Proceedings of the 6th British
+conference on Machine vision (Vol. 2), pages 513-522. BMVA Press, 1995.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="minAreaRect.html">cv.minAreaRect</a></div>
    </body>
 </html>

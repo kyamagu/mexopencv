@@ -1,9 +1,25 @@
 var searchData=
 [
-  ['adaptivemethod',['AdaptiveMethod',['../adaptive_threshold_8cpp.html#a0d2146c120c5fb4a9e2b7fe41306f1b5',1,'adaptiveThreshold.cpp']]],
-  ['adaptivethreshold_2ecpp',['adaptiveThreshold.cpp',['../adaptive_threshold_8cpp.html',1,'']]],
-  ['ann_5fmlp_5f_2ecpp',['ANN_MLP_.cpp',['../_a_n_n___m_l_p___8cpp.html',1,'']]],
-  ['approxpolydp_2ecpp',['approxPolyDP.cpp',['../approx_poly_d_p_8cpp.html',1,'']]],
-  ['arclength_2ecpp',['arcLength.cpp',['../arc_length_8cpp.html',1,'']]],
-  ['at',['at',['../class_mx_array.html#a70bab71c28d7b8559ecbf652b299da18',1,'MxArray::at(mwIndex index) const '],['../class_mx_array.html#a5bdc668cca9f2d1ac892ebe7b70ba7bf',1,'MxArray::at(mwIndex i, mwIndex j) const '],['../class_mx_array.html#a4a08ca330eddd1d7529fa7e52787c13b',1,'MxArray::at(const std::vector&lt; mwIndex &gt; &amp;si) const '],['../class_mx_array.html#ab0bd69bb02dceceb08e9aa0d370f67e3',1,'MxArray::at(const std::string &amp;fieldName, mwIndex index=0) const '],['../class_mx_array.html#a62f177d012ce761a354369f9d67eb5f5',1,'MxArray::at(mwIndex index) const ']]]
+  ['backgroundsubtractorgmg_5f_2ecpp',['BackgroundSubtractorGMG_.cpp',['../_background_subtractor_g_m_g___8cpp.html',1,'']]],
+  ['backgroundsubtractorknn_5f_2ecpp',['BackgroundSubtractorKNN_.cpp',['../_background_subtractor_k_n_n___8cpp.html',1,'']]],
+  ['backgroundsubtractormog2_5f_2ecpp',['BackgroundSubtractorMOG2_.cpp',['../_background_subtractor_m_o_g2___8cpp.html',1,'']]],
+  ['backgroundsubtractormog_5f_2ecpp',['BackgroundSubtractorMOG_.cpp',['../_background_subtractor_m_o_g___8cpp.html',1,'']]],
+  ['balancewhite_2ecpp',['balanceWhite.cpp',['../balance_white_8cpp.html',1,'']]],
+  ['batchdistance_2ecpp',['batchDistance.cpp',['../batch_distance_8cpp.html',1,'']]],
+  ['bilateralfilter_2ecpp',['bilateralFilter.cpp',['../bilateral_filter_8cpp.html',1,'']]],
+  ['blendlinear_2ecpp',['blendLinear.cpp',['../blend_linear_8cpp.html',1,'']]],
+  ['blur_2ecpp',['blur.cpp',['../blur_8cpp.html',1,'']]],
+  ['boost_5f_2ecpp',['Boost_.cpp',['../_boost___8cpp.html',1,'']]],
+  ['borderinterpolate_2ecpp',['borderInterpolate.cpp',['../border_interpolate_8cpp.html',1,'']]],
+  ['bordertype',['BorderType',['../mexopencv_8hpp.html#a00356b723e15328be56a3a62edd0a0d8',1,'mexopencv.hpp']]],
+  ['bordertypeinv',['BorderTypeInv',['../mexopencv_8hpp.html#ab7eb5c42545f42b9824ecc9f34855304',1,'mexopencv.hpp']]],
+  ['boundingrect_2ecpp',['boundingRect.cpp',['../bounding_rect_8cpp.html',1,'']]],
+  ['bowimgdescriptorextractor_5f_2ecpp',['BOWImgDescriptorExtractor_.cpp',['../_b_o_w_img_descriptor_extractor___8cpp.html',1,'']]],
+  ['bowkmeanstrainer_5f_2ecpp',['BOWKMeansTrainer_.cpp',['../_b_o_w_k_means_trainer___8cpp.html',1,'']]],
+  ['boxfilter_2ecpp',['boxFilter.cpp',['../box_filter_8cpp.html',1,'']]],
+  ['boxpoints_2ecpp',['boxPoints.cpp',['../box_points_8cpp.html',1,'']]],
+  ['briefdescriptorextractor_5f_2ecpp',['BriefDescriptorExtractor_.cpp',['../_brief_descriptor_extractor___8cpp.html',1,'']]],
+  ['brisk_5f_2ecpp',['BRISK_.cpp',['../_b_r_i_s_k___8cpp.html',1,'']]],
+  ['buildopticalflowpyramid_2ecpp',['buildOpticalFlowPyramid.cpp',['../build_optical_flow_pyramid_8cpp.html',1,'']]],
+  ['buildpyramid_2ecpp',['buildPyramid.cpp',['../build_pyramid_8cpp.html',1,'']]]
 ];

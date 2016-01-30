@@ -1,0 +1,100 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.recoverPose</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.recoverPose</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.recoverPose</div>
+      <div class="helpcontent"><p>Recover relative camera rotation and translation from an estimated essential matrix and the corresponding points in two images, using cheirality check</p>
+
+<pre><code>[R, t, good] = <a href="recoverPose.html">cv.recoverPose</a>(E, points1, points2)
+[R, t, good, mask] = <a href="recoverPose.html">cv.recoverPose</a>(...)
+[...] = <a href="recoverPose.html">cv.recoverPose</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>E</strong> The input essential matrix, 3x3.</li>
+<li><strong>points1</strong> Cell array of N 2D points from the first image, or numeric array
+Nx2/Nx1x2/1xNx2. The point coordinates should be floating-point
+(single or double precision).</li>
+<li><strong>points2</strong> Cell array or numeric array of the second image points of the
+same size and format as <code>points1</code>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>R</strong> Recovered relative rotation, 3x3 matrix.</li>
+<li><strong>t</strong> Recoverd relative translation, 3x1 vector.</li>
+<li><strong>good</strong> the number of inliers which pass the cheirality check.</li>
+<li><strong>mask</strong> Output mask for inliers in <code>points1</code> and <code>points2</code>. In the output
+mask only inliers which pass the cheirality check. Vector of length N,
+see the <code>Mask</code> input option.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>CameraMatrix</strong> Camera matrix <code>K = [fx 0 cx; 0 fy cy; 0 0 1]</code>. Note that
+this function assumes that <code>points1</code> and <code>points2</code> are feature points
+from cameras with the same camera matrix. default <code>eye(3)</code>.</li>
+<li><strong>Mask</strong> Input mask of length N for inliers in <code>points1</code> and <code>points2</code>
+(0 for outliers and to 1 for the other points (inliers). If it is not
+empty, then it marks inliers in <code>points1</code> and <code>points2</code> for then given
+essential matrix <code>E</code>. Only these inliers will be used to recover pose.
+This function decomposes an essential matrix using
+<a href="decomposeEssentialMat.html">cv.decomposeEssentialMat</a> and then verifies possible pose hypotheses by
+doing cheirality check. The cheirality check basically means that the
+triangulated 3D points should have positive depth. Some details can be
+found in [Nister03]. Not set by default.</li>
+</ul>
+
+<p>This function can be used to process output <code>E</code> and <code>mask</code> from
+<a href="findEssentialMat.html">cv.findEssentialMat</a>. In this scenario, <code>points1</code> and <code>points2</code> are the same
+input for <a href="findEssentialMat.html">cv.findEssentialMat</a>.</p>
+
+<h2> Example</h2>
+
+<pre><code>% Estimation of fundamental matrix using the RANSAC algorithm
+point_count = 100;
+points1 = cell(1, point_count);
+points2 = cell(1, point_count);
+% initialize the points here ...
+for i=1:point_count
+    points1{i} = ...;  % [x,y]
+    points2{i} = ...;  % [x,y]
+end
+
+% cametra matrix with both focal lengths = 1, and principal point = [0 0]
+cameraMatrix = eye(3,3);
+
+[E, mask] = <a href="findEssentialMat.html">cv.findEssentialMat</a>(points1, points2, ...
+    'CameraMatrix',cameraMatrix, 'Method','Ransac');
+[R, t, ~, mask] = <a href="recoverPose.html">cv.recoverPose</a>(E, points1, points2, 'Mask',mask);
+</code></pre>
+
+<h2> References</h2>
+
+<p>[Nister03]:</p>
+
+<blockquote>
+<p>David Nister. &quot;An efficient solution to the five-point relative pose
+problem&quot;. Pattern Analysis and Machine Intelligence, IEEE Transactions on,
+26(6):756-770, 2004.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findEssentialMat.html">cv.findEssentialMat</a>, <a href="decomposeEssentialMat.html">cv.decomposeEssentialMat</a>,
+   <a href="triangulatePoints.html">cv.triangulatePoints</a></div>
+   </body>
+</html>

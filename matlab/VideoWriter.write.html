@@ -18,6 +18,7 @@
       <div class="helpcontent"><p>Writes the next video frame</p>
 
 <pre><code>vid.write(frame)
+vid.write(frame, 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
@@ -26,10 +27,18 @@
 <li><strong>frame</strong> The written frame</li>
 </ul>
 
-<p>The method writes a frame to the video. The size of the frame
-must be the same to the parameter specified in the
-constructor.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="VideoWriter.html">cv.VideoWriter</a></div>
+<h2> Options</h2>
+
+<ul>
+<li><strong>FlipChannels</strong> in case the input is color image, flips the
+color order from MATLAB's RGB to OpenCV's BGR order.
+default true</li>
+</ul>
+
+<p>The method writes the specified image to video file. It must
+have the same size as has been specified when opening the video
+writer.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="VideoWriter.open.html">cv.VideoWriter/open</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

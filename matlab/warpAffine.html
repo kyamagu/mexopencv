@@ -18,45 +18,70 @@
       <div class="helpcontent"><p>Applies an affine transformation to an image</p>
 
 <pre><code>dst = <a href="warpAffine.html">cv.warpAffine</a>(src, M)
-dst = <a href="warpAffine.html">cv.warpAffine</a>(src, M, 'DSize', dsize, ...)
+dst = <a href="warpAffine.html">cv.warpAffine</a>(src, M, 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>src</strong> Source image.</li>
-<li><strong>M</strong> 2 x 3 transformation matrix.</li>
+<li><strong>src</strong> Input image.</li>
+<li><strong>M</strong> 2x3 transformation matrix, floating-point.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Destination image that has the size dsize and the same type as src.</li>
+<li><strong>dst</strong> Output image that has the size <code>DSize</code> (with
+<code>size(dst,3) == size(src,3)</code>) and the same type as <code>src</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>DSize</strong> Size of the destination image</li>
-<li><strong>Interpolation</strong> interpolation method. default: 'Linear'</li>
+<li><strong>DSize</strong> Size of the output image <code>[w,h]</code>. Default <code>[0,0]</code> means using
+the same size as the input <code>[size(src,2) size(src,1)]</code>.</li>
+<li><strong>Interpolation</strong> interpolation method, default 'Linear'. One of:<ul>
+<li><strong>Nearest</strong> nearest neighbor interpolation</li>
+<li><strong>Linear</strong> bilinear interpolation</li>
+<li><strong>Cubic</strong> bicubic interpolation</li>
+<li><strong>Lanczos4</strong> Lanczos interpolation over 8x8 neighborhood</li>
+</ul>
+</li>
 <li><strong>WarpInverse</strong> Logical flag to apply inverse affine transform, meaning
-that M is the inverse transformation (dst -&gt; src)</li>
+that <code>M</code> is the inverse transformation (<code>dst -&gt; src</code>). default false</li>
 <li><strong>BorderType</strong> Pixel extrapolation method. When 'Transparent', it means
-that the pixels in the destination image corresponding to
-the outliers in the source image are not modified by the
-function. default: 'Constant'</li>
-<li><strong>BorderValue</strong> Value used in case of a constant border. default: 0</li>
+that the pixels in the destination image corresponding to the
+&quot;outliers&quot; in the source image are not modified by the function.
+default 'Constant'<ul>
+<li><strong>Constant</strong> <code>iiiiii|abcdefgh|iiiiiii</code> with some specified <code>i</code></li>
+<li><strong>Replicate</strong> <code>aaaaaa|abcdefgh|hhhhhhh</code></li>
+<li><strong>Reflect</strong> <code>fedcba|abcdefgh|hgfedcb</code></li>
+<li><strong>Reflect101</strong> <code>gfedcb|abcdefgh|gfedcba</code></li>
+<li><strong>Wrap</strong> <code>cdefgh|abcdefgh|abcdefg</code></li>
+<li><strong>Transparent</strong> <code>uvwxyz|absdefgh|ijklmno</code></li>
+<li><strong>Default</strong> same as 'Reflect101'</li>
+</ul>
+</li>
+<li><strong>BorderValue</strong> Value used in case of a constant border. default 0</li>
+<li><strong>Dst</strong> Optional initial image for the output. If not set, it is
+automatically created by the function. Note that it must match the
+expected size <code>DSize</code> and the type of <code>src</code>, otherwise it is ignored
+and recreated by the function. This option is only useful when
+<code>BorderType=Transparent</code>, in which case the transformed image is drawn
+onto the existing <code>Dst</code> without extrapolating pixels. Not set by
+default.</li>
 </ul>
 
-<p>The function warpAffine transforms the source image using the specified
-matrix</p>
+<p>The function <a href="warpAffine.html">cv.warpAffine</a> transforms the source image using the specified
+matrix:</p>
 
-<pre><code> dst(x,y) = src(M_11*x+M_12*y+M_13, M_21*x+M_22*y+M_23)
+<pre><code> dst(x,y) = src(M_11*x + M_12*y + M_13, M_21*x + M_22*y + M_23)
 </code></pre>
 
-<p>when the 'WarpInverse' option is true. Otherwise, the transformation is first
+<p>when the <code>WarpInverse</code> option is true. Otherwise, the transformation is first
 inverted with <a href="invertAffineTransform.html">cv.invertAffineTransform</a> and then put in the formula above
-instead of M.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="warpPerspective.html">cv.warpPerspective</a> <a href="resize.html">cv.resize</a> <a href="getRectSubPix.html">cv.getRectSubPix</a></div>
+instead of <code>M</code>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="warpPerspective.html">cv.warpPerspective</a>, <a href="remap.html">cv.remap</a>, <a href="resize.html">cv.resize</a>, <a href="getRectSubPix.html">cv.getRectSubPix</a>,
+   <a href="transform.html">cv.transform</a>, imtransform, imwarp</div>
    </body>
 </html>

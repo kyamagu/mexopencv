@@ -1,0 +1,61 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.RotatedRect.points</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.RotatedRect.points</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.RotatedRect.points</div>
+      <div class="helpcontent"><p>Returns 4 vertices of the rectangle</p>
+
+<pre><code>pts = <a href="RotatedRect.html">cv.RotatedRect</a>.points(rrect)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>rrect</strong> rotated rectangle. A structure with the following
+fields:<ul>
+<li><strong>center</strong> The rectangle mass center <code>[x,y]</code>.</li>
+<li><strong>size</strong> Width and height of the rectangle <code>[w,h]</code>.</li>
+<li><strong>angle</strong> The rotation angle in a clockwise direction.
+When the angle is 0, 90, 180, 270 etc., the
+rectangle becomes an up-right rectangle.</li>
+</ul>
+</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>pts</strong> 4-by-2 points matrix of the rectangle vertices.
+<code>[x1 y1; x2 y2; x3 y3; x4 y4]</code></li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="boxPoints.html">cv.boxPoints</a>, bbox2points</div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>true</td>
+         </tr>
+      </table>
+   </body>
+</html>

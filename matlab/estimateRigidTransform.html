@@ -18,22 +18,23 @@
       <div class="helpcontent"><p>Computes an optimal affine transformation between two 2D point sets</p>
 
 <pre><code>M = <a href="estimateRigidTransform.html">cv.estimateRigidTransform</a>(src, dst)
-M = <a href="estimateRigidTransform.html">cv.estimateRigidTransform</a>(src, dst, 'OptionName', optionValue)
+M = <a href="estimateRigidTransform.html">cv.estimateRigidTransform</a>(src, dst, 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>src</strong> First input 2D point set stored cell array of 2-element vectors, or
-an image</li>
-<li><strong>dst</strong> Second input 2D point set of the same size and the same type as A, or
-another image.</li>
+<li><strong>src</strong> First input 2D point set stored in a cell array of 2-element
+vectors <code>{[x,y], ...}</code>, or first image (8-bit numeric array, 1- or
+3-channels).</li>
+<li><strong>dst</strong> Second input 2D point set of the same size and the same type as
+<code>src</code>, or second image (8-bit numeric array, 1- or 3-channels).</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>M</strong> Output matrix (see below).</li>
+<li><strong>M</strong> output 2x3 affine transformation <code>[A|b]</code> matrix (see below).</li>
 </ul>
 
 <h2> Options</h2>
@@ -45,30 +46,31 @@ class of transformations to choose from is limited to combinations of
 translation, rotation, and uniform scaling (5 degrees of freedom).</li>
 </ul>
 
-<p>The function finds an optimal affine transform [A|b] (a 2 x 3 floating-point
+<p>The function finds an optimal affine transform <code>[A|b]</code> (a 2x3 floating-point
 matrix) that approximates best the affine transformation between:</p>
 
 <ul>
 <li>Two point sets</li>
 <li>Two raster images. In this case, the function first finds some features in
-the src image and finds the corresponding features in dst image. After
+the <code>src</code> image and finds the corresponding features in <code>dst</code> image. After
 that, the problem is reduced to the first case.</li>
 </ul>
 
-<p>In case of point sets, the problem is formulated as follows: you need to find
-a 2x2 matrix A and 2x1 vector b so that:</p>
+<p>In case of point sets, the problem is formulated as follows: you need to
+find a 2x2 matrix <code>A</code> and 2x1 vector <code>b</code> so that:</p>
 
-<pre><code> [A*|b*] = argmin_{[A|b]} \sum_i || dst[i] - Asrc[i]^T - b ||^2
+<pre><code>[A*|b*] = argmin_{[A|b]} \sum_i || dst{i} - A*src{i}' - b ||^2
 </code></pre>
 
-<p>where src[i] and dst[i] are the i-th points in src and dst, respectively.
-[A|b] can be either arbitrary (when fullAffine=true) or have a form of</p>
+<p>where <code>src{i}</code> and <code>dst{i}</code> are the i-th points in <code>src</code> and <code>dst</code>,
+respectively. <code>[A|b]</code> can be either arbitrary (when <code>FullAffine=true</code>) or
+have a form of:</p>
 
-<pre><code> [ a11, a12, b1;...
-  -a12, a22, b2 ]
+<pre><code>[ a11, a12, b1;
+ -a12, a11, b2 ]
 </code></pre>
 
-<p>when fullAffine=false.</p>
-</div><!--after help -->
+<p>when <code>FullAffine=false</code>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="getAffineTransform.html">cv.getAffineTransform</a>, <a href="getPerspectiveTransform.html">cv.getPerspectiveTransform</a>, <a href="findHomography.html">cv.findHomography</a></div>
    </body>
 </html>

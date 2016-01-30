@@ -24,7 +24,7 @@ keypoints = <a href="FAST.html">cv.FAST</a>(im, 'OptionName', optionValue, ...)
 <h2> Input</h2>
 
 <ul>
-<li><strong>im</strong> Image where keypoints (corners) are to be detected.</li>
+<li><strong>im</strong> 8-bit grayscale image where keypoints (corners) are to be detected.</li>
 </ul>
 
 <h2> Output</h2>
@@ -53,16 +53,27 @@ object they belong to.</li>
 <ul>
 <li><strong>Threshold</strong> Threshold on difference between intensity of the central
 pixel and pixels on a circle around this pixel. See the algorithm
-description [E. Rosten, 2006]. default 10.</li>
-<li><strong>NonMaxSupression</strong> If it is true, non-maximum supression is applied
+description [Rosten06]. default 10.</li>
+<li><strong>NonmaxSuppression</strong> If it is true, non-maximum supression is applied
 to detected corners (keypoints). default true.</li>
+<li><strong>Type</strong> one of the three neighborhoods as defined in the paper:<ul>
+<li><strong>TYPE_9_16</strong> (default)</li>
+<li><strong>TYPE_7_12</strong></li>
+<li><strong>TYPE_5_8</strong></li>
+</ul>
+</li>
 </ul>
 
-<p>Detects corners using the FAST algorithm by:</p>
+<p>Detects corners using the FAST algorithm by [Rosten06].</p>
+
+<h2> References</h2>
+
+<p>[Rosten06]:</p>
 
 <blockquote>
 <p>E. Rosten (Machine Learning for High-speed Corner Detection, 2006).</p>
 </blockquote>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.html">cv.FeatureDetector</a> <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FastFeatureDetector.html">cv.FastFeatureDetector</a>, <a href="AGAST.html">cv.AGAST</a>, <a href="FeatureDetector.html">cv.FeatureDetector</a>,
+   detectFASTFeatures</div>
    </body>
 </html>

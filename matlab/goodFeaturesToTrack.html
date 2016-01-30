@@ -24,39 +24,42 @@ corners = <a href="goodFeaturesToTrack.html">cv.goodFeaturesToTrack</a>(image, '
 <h2> Input</h2>
 
 <ul>
-<li><strong>image</strong> Input single-channel 8-bit or floating-point image.</li>
+<li><strong>image</strong> Input 8-bit or floating-point 32-bit, single-channel image.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>corners</strong> Output vector of detected corners.</li>
+<li><strong>corners</strong> Output vector of detected corners. A cell array of 2-elements
+vectors <code>{[x,y], ...}</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
 <li><strong>MaxCorners</strong> Maximum number of corners to return. If there are more
-corners than are found, the strongest of them is returned. default 1000.</li>
+corners than are found, the strongest of them is returned.
+default 1000.</li>
 <li><strong>QualityLevel</strong> Parameter characterizing the minimal accepted quality of
 image corners. The parameter value is multiplied by the best corner
 quality measure, which is the minimal eigenvalue (see
-<a href="cornerMinEigenVal.html">cv.cornerMinEigenVal</a> ) or the Harris function response (see
-<a href="cornerHarris.html">cv.cornerHarris</a> ). The corners with the quality measure less than the
+cv.cornerMinEigenVal) or the Harris function response (see
+cv.cornerHarris). The corners with the quality measure less than the
 product are rejected. For example, if the best corner has the quality
-measure = 1500, and the qualityLevel=0.01 , then all the corners with
-the quality measure less than 15 are rejected.</li>
+measure = 1500, and the <code>QualityLevel=0.01</code>, then all the corners with
+the quality measure less than 15 are rejected. default 0.01</li>
 <li><strong>MinDistance</strong> Minimum possible Euclidean distance between the returned
-corners.</li>
+corners. default 2.0</li>
 <li><strong>Mask</strong> Optional region of interest. If the image is not empty (it needs
-to have the type CV_8UC1 and the same size as image ), it specifies
-the region in which the corners are detected.</li>
+to have the type <code>uint8</code>/<code>logical</code> and the same size as <code>image</code>), it
+specifies the region in which the corners are detected. It is not set
+by default.</li>
 <li><strong>BlockSize</strong> Size of an average block for computing a derivative
 covariation matrix over each pixel neighborhood. See
-<a href="cornerEigenValsAndVecs.html">cv.cornerEigenValsAndVecs</a>.</li>
+<a href="cornerEigenValsAndVecs.html">cv.cornerEigenValsAndVecs</a>. default 3</li>
 <li><strong>UseHarrisDetector</strong> Parameter indicating whether to use a Harris detector
-(see <a href="cornerHarris.html">cv.cornerHarris</a> ) or cv.cornerMinEigenVal</li>
-<li><strong>K</strong> Harris detector free parameter.</li>
+(see cv.cornerHarris) or <a href="cornerMinEigenVal.html">cv.cornerMinEigenVal</a>, default false</li>
+<li><strong>K</strong> Free parameter of the Harris detector. default 0.04</li>
 </ul>
 
 <p>The function finds the most prominent corners in the image or in the specified
@@ -64,18 +67,34 @@ image region, as described in [Shi94]:</p>
 
 <ol>
 <li>Function calculates the corner quality measure at every source image pixel
-using the cornerMinEigenVal() or cornerHarris().</li>
-<li>Function performs a non-maximum suppression (the local maximums in 3 x 3
+using the <a href="cornerMinEigenVal.html">cv.cornerMinEigenVal</a> or <a href="cornerHarris.html">cv.cornerHarris</a>.</li>
+<li>Function performs a non-maximum suppression (the local maximums in <code>3x3</code>
 neighborhood are retained).</li>
-<li>The corners with the minimal eigenvalue less than QualityLevel * max_{x,y}
-(qualityMeasureMap(x,y)) are rejected.</li>
+<li>The corners with the minimal eigenvalue less than
+<code>QualityLevel * max_{x,y}(qualityMeasureMap(x,y))</code> are rejected.</li>
 <li>The remaining corners are sorted by the quality measure in the descending
 order.</li>
 <li>Function throws away each corner for which there is a stronger corner at
-a distance less than maxDistance.</li>
+a distance less than <code>maxDistance</code>.</li>
 </ol>
 
 <p>The function can be used to initialize a point-based tracker of an object.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="cornerMinEigenVal.html">cv.cornerMinEigenVal</a> <a href="cornerHarris.html">cv.cornerHarris</a> <a href="FeatureDetector.html">cv.FeatureDetector</a></div>
+
+<p><strong>NOTE</strong>: If the function is called with different values <code>A</code> and <code>B</code> of the
+parameter <code>QualityLevel</code>, and <code>A &gt; B</code>, the vector of returned corners with
+<code>QualityLevel=A</code> will be the prefix of the output vector with
+<code>QualityLevel=B</code>.</p>
+
+<h2> References</h2>
+
+<p>[Shi94]:</p>
+
+<blockquote>
+<p>Jianbo Shi and Carlo Tomasi. Good features to track.
+In Computer Vision and Pattern Recognition, 1994. Proceedings CVPR'94.,
+1994 IEEE Computer Society Conference on, pages 593-600. IEEE, 1994.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="GFTTDetector.html">cv.GFTTDetector</a>, <a href="cornerMinEigenVal.html">cv.cornerMinEigenVal</a>, <a href="cornerHarris.html">cv.cornerHarris</a>,
+    <a href="calcOpticalFlowPyrLK.html">cv.calcOpticalFlowPyrLK</a>, <a href="estimateRigidTransform.html">cv.estimateRigidTransform</a>, corner</div>
    </body>
 </html>

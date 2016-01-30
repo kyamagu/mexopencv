@@ -17,58 +17,25 @@
       <div class="title">cv.EM/EM</div>
       <div class="helpcontent"><p>EM constructor</p>
 
-<pre><code>em = <a href="EM.html">cv.EM</a>()
-em = <a href="EM.html">cv.EM</a>('OptionName', optionValue, ...)
-
-em = <a href="EM.html">cv.EM</a>(filename)
-
-In the first form (without arguments, or with options), 
-the new object is created, which then needs training.
-
-In the second form (with given file name as an input), 
-the new object is created, which then loads parameters (options, 
-trained weights, means and covariations) which were
-saved to this file by some earlier created object.
+<pre><code>model = <a href="EM.html">cv.EM</a>()
+model = <a href="EM.html">cv.EM</a>(filename)
 </code></pre>
+
+<p>Creates empty EM model. The model should be trained then using
+train method. Alternatively, you can use one of the other train*
+methods or load it from file using load method.</p>
+
+<p>In the second form (with given file name as an input), the new
+object is created, which then loads parameters (options, trained
+weights, means and covariations) which were saved to this file
+by some earlier created object.</p>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>filename</strong>  Name of XML or YML file, containing
+<li><strong>filename</strong> Name of XML or YML file, containing
 previously saved model</li>
 </ul>
-
-<h2> Options</h2>
-
-<ul>
-<li><p><strong>Nclusters</strong> Number of clusters (mixture components), 
-default is cv::EM::DEFAULT_NCLUSTERS = 5</p>
-</li>
-<li><p><strong>CovMatType</strong> Constrain covariance matrix type:
-'Spherical' A scaled identity matrix mu_k * I. There is the only
-parameter mu_k to be estimated for each matrix. 
-The option may be used in special cases, when the constraint 
-is relevant, or as a first step in the optimization 
-(for example in case when the data is preprocessed with PCA). 
-The results of such preliminary estimation may be passed again 
-to the optimization procedure, this time with CovMatType='Diagonal'</p>
-<p>        'Diagonal'  A diagonal matrix with positive diagonal elements. The number of 
-free parameters is d for each matrix. This is most commonly used option
-yielding good estimation results.</p>
-<p>        'Generic'   A symmetric positively defined matrix. The number of free parameters 
-in each matrix is about d^2 / 2. It is not recommended to use this option,
-unless there is pretty accurate initial estimation of the parameters 
-and/or a huge number of training samples.</p>
-<p>        Default is 'Diagonal'</p>
-</li>
-<li><p><strong>MaxIters</strong>     Maximum number of iterations, 
-default is EM::DEFAULT<em>MAX</em>ITERS=100</p>
-</li>
-<li><p><strong>Epsilon</strong>      Minimum allowed change of likelihood logarithm, 
-default is cv::FLT_EPSILON = 1.192092896e-07f</p>
-</li>
-</ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">see also</div><div class="footerlink"> <a href="EM.html">cv.EM</a> <a href="EM.train.html">cv.EM/train</a> <a href="EM.predict.html">cv.EM/predict</a>
-</div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="EM.html">cv.EM</a>, <a href="EM.train.html">cv.EM/train</a>, <a href="EM.load.html">cv.EM/load</a></div>
    </body>
 </html>

@@ -17,37 +17,39 @@
       <div class="title">cv.fillPoly</div>
       <div class="helpcontent"><p>Fills the area bounded by one or more polygons</p>
 
-<pre><code>img = <a href="fillConvexPoly.html">cv.fillConvexPoly</a>(img, pts)
-[...] = <a href="fillConvexPoly.html">cv.fillConvexPoly</a>(..., 'OptionName', optionValue, ...)
+<pre><code>img = <a href="fillPoly.html">cv.fillPoly</a>(img, pts)
+[...] = <a href="fillPoly.html">cv.fillPoly</a>(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
 <li><strong>img</strong> Image.</li>
-<li><strong>pts</strong> Polygon vertices in cell array of cell array of 2-element
-vectors.</li>
+<li><strong>pts</strong> Array of polygons where each polygon is represented as an array
+of points. A cell array of cell arrays of 2-element vectors, in the
+form: <code>{{[x,y], [x,y], ...}, ...}</code>, or a cell array of Nx2 matrices.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>img</strong> Output image.</li>
+<li><strong>img</strong> Output image, same size and type as input <code>img</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>Color</strong> 3-element floating point vector specifying polygon color.</li>
-<li><strong>LineType</strong> Type of the ellipse boundary. One of 8,4,'AA'
+<li><strong>Color</strong> 3-element floating point vector specifying polygon color.
+default zeros</li>
+<li><strong>LineType</strong> Type of the polygon boundaries. One of 8,4,'AA'
 (Anti-aliased line). default 8.</li>
-<li><strong>Shift</strong> Number of fractional bits in the point coordinates. default 0</li>
+<li><strong>Shift</strong> Number of fractional bits in the vertex coordinates. default 0</li>
+<li><strong>Offset</strong> Optional offset of all points of the contours. default <code>[0,0]</code></li>
 </ul>
 
-<p>The function fillPoly fills an area bounded by several polygonal
+<p>The function <a href="fillPoly.html">cv.fillPoly</a> fills an area bounded by several polygonal
 contours. The function can fill complex areas, for example, areas with
-holes, contours with self-intersections (some of thier parts), and so
-forth.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="line.html">cv.line</a> <a href="fillConvexPoly.html">cv.fillConvexPoly</a></div>
+holes, contours with self-intersections (some of thier parts), and so forth.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="line.html">cv.line</a>, <a href="fillConvexPoly.html">cv.fillConvexPoly</a></div>
    </body>
 </html>

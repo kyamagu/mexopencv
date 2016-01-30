@@ -17,9 +17,90 @@
       <div class="title">cv.EM</div>
       <div class="helpcontent"><p>Expectation Maximization Algorithm</p>
 
-<p>This is an algorithm to train Gaussian Mixture Models (GMM)</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">see also</div><div class="footerlink"> <a href="EM.EM.html">cv.EM/EM</a> <a href="EM.train.html">cv.EM/train</a> <a href="EM.predict.html">cv.EM/predict</a>
-</div>
+<p>The class implements the Expectation Maximization algorithm.
+This is an algorithm to train Gaussian Mixture Models (GMM).</p>
+
+<h2> Expectation Maximization</h2>
+
+<p>The Expectation Maximization(EM) algorithm estimates the parameters of
+the multivariate probability density function in the form of a Gaussian
+mixture distribution with a specified number of mixtures.</p>
+
+<p>Consider the set of the <code>N</code> feature vectors <code>{x1,x2,...,xN}</code> from a
+<code>d</code>-dimensional Euclidean space drawn from a Gaussian mixture:</p>
+
+<pre><code>p(x;a_k,S_k,PI_k) = sum_{k=1..m} PI_k * p_k(x),
+    PI_k&gt;=0,  sum_{k=1..m}(PI_k)=1
+
+p_k(x) = phi(x;a_k,S_k)
+       = 1/((2*pi)^(d/2) * |Sk|^(1/2)) *
+         exp(-0.5 * (x - a_k)' * inv(S_k) * (x - a_k))
+</code></pre>
+
+<p>where <code>m</code> is the number of mixtures, <code>p_k</code> is the normal distribution
+density with the mean <code>a_k</code> and covariance matrix <code>S_k</code>, <code>PI_k</code> is the
+weight of the k-th mixture. Given the number of mixtures <code>m</code> and the
+samples <code>xi, i=1..N</code> the algorithm finds the maximum-likelihood
+estimates (MLE) of all the mixture parameters, that is, <code>a_k</code>, <code>S_k</code> and
+<code>PI_k</code>:</p>
+
+<pre><code>L(x,theta) = logp(x,theta)
+           = sum_{i=1..N} log(sum_{k=1..m} PI_k * p_k(x))
+-&gt; argmax_{theta IN THETA},
+
+THETA = {(a_k,S_k,PI_k): a_k IN R^d, S_k=S_k'&gt;0, S_k IN R^(dxd),
+                         PI_k&gt;=0, sum_{k=1..m}(PI_k)=1}
+</code></pre>
+
+<p>The EM algorithm is an iterative procedure. Each iteration includes two
+steps. At the first step (Expectation step or E-step), you find a
+probability <code>p_{i,k}</code> (denoted <code>alpha_{i,k}</code> in the formula below) of
+sample <code>i</code> to belong to mixture <code>k</code> using the currently available
+mixture parameter estimates:</p>
+
+<pre><code>alpha_{k,i} = ( PI_k * phi(x;a_k,S_k) ) /
+              sum_{j=1..m} (PI_j * phi(x;a_j,S_j))
+</code></pre>
+
+<p>At the second step (Maximization step or M-step), the mixture parameter
+estimates are refined using the computed probabilities:</p>
+
+<pre><code>PI_k = (1/N) * sum_{i=1..N}(alpha_{k,i})
+a_k = sum_{i=1..N}(alpha_{k,i}*x_i) / sum_{i=1..N}(alpha_{k,i})
+S_k = sum_{i=1..N}(alpha_{k,i} * (x_i - a_k)*(x_i - a_k)') /
+      sum_{i=1..N}(alpha_{k,i})
+</code></pre>
+
+<p>Alternatively, the algorithm may start with the M-step when the initial
+values for <code>p_{i,k}</code> can be provided. Another alternative when <code>p_{i,k}</code>
+are unknown is to use a simpler clustering algorithm to pre-cluster the
+input samples and thus obtain initial <code>p_{i,k}</code>. Often (including
+machine learning) the k-means algorithm is used for that purpose.</p>
+
+<p>One of the main problems of the EM algorithm is a large number of
+parameters to estimate. The majority of the parameters reside in
+covariance matrices, which are <code>dxd</code> elements each where <code>d</code> is the
+feature space dimensionality. However, in many practical problems, the
+covariance matrices are close to diagonal or even to <code>mu_k * I</code>, where
+<code>I</code> is an identity matrix and <code>mu_k</code> is a mixture-dependent &quot;scale&quot;
+parameter. So, a robust computation scheme could start with harder
+constraints on the covariance matrices and then use the estimated
+parameters as an input for a less constrained optimization problem
+(often a diagonal covariance matrix is already a good enough
+approximation).</p>
+
+<h2> References</h2>
+
+<p>[Bilmes98]:</p>
+
+<blockquote>
+<p>J. A. Bilmes. &quot;A Gentle Tutorial of the EM Algorithm and its
+Application to Parameter Estimation for Gaussian Mixture and Hidden
+Markov Models&quot;. Technical Report TR-97-021, International Computer
+Science Institute and Computer Science Division, University of
+California at Berkeley, April 1998.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="EM.EM.html">cv.EM/EM</a>, <a href="EM.train.html">cv.EM/train</a>, <a href="EM.predict.html">cv.EM/predict</a>, <a href="kmeans.html">cv.kmeans</a>, fitgmdist</div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -50,36 +131,16 @@
       </div>
       <table class="summary-list">
          <tr class="summary-item">
-            <td class="name"><a href="EM.CovMatType.html">CovMatType</a></td>
-            <td class="m-help">Constraint of covariance matrix type&nbsp;</td>
+            <td class="name"><a href="EM.ClustersNumber.html">ClustersNumber</a></td>
+            <td class="m-help">The number of mixture components in the Gaussian mixture model.&nbsp;</td>
          </tr>
          <tr class="summary-item">
-            <td class="name"><a href="EM.Covs.html">Covs</a></td>
-            <td class="m-help">covariations&nbsp;</td>
+            <td class="name"><a href="EM.CovarianceMatrixType.html">CovarianceMatrixType</a></td>
+            <td class="m-help">Constraint on covariance matrices which defines type of matrices.&nbsp;</td>
          </tr>
          <tr class="summary-item">
-            <td class="name"><a href="EM.Epsilon.html">Epsilon</a></td>
-            <td class="m-help">Epsilon&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="name"><a href="EM.IsTrained.html">IsTrained</a></td>
-            <td class="m-help">whether the model is trained or not&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="name"><a href="EM.MaxIters.html">MaxIters</a></td>
-            <td class="m-help">Maximum number of iterations&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="name"><a href="EM.Means.html">Means</a></td>
-            <td class="m-help">means&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="name"><a href="EM.Nclusters.html">Nclusters</a></td>
-            <td class="m-help">Number of clusters (mixture components)&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="name"><a href="EM.Weights.html">Weights</a></td>
-            <td class="m-help">weights&nbsp;</td>
+            <td class="name"><a href="EM.TermCriteria.html">TermCriteria</a></td>
+            <td class="m-help">The termination criteria of the EM algorithm.&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="name"><a href="EM.id.html">id</a></td>
@@ -103,8 +164,32 @@
                &nbsp;
                
             </td>
+            <td class="name"><a href="EM.calcError.html">calcError</a></td>
+            <td class="m-help">Computes error on the training or test dataset&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="EM.clear.html">clear</a></td>
+            <td class="m-help">Clears the algorithm state&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="EM.delete.html">delete</a></td>
             <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="EM.empty.html">empty</a></td>
+            <td class="m-help">Returns true if the algorithm is empty&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -143,8 +228,64 @@
                &nbsp;
                
             </td>
+            <td class="name"><a href="EM.getCovs.html">getCovs</a></td>
+            <td class="m-help">Returns covariation matrices&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="EM.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="EM.getMeans.html">getMeans</a></td>
+            <td class="m-help">Returns the cluster centers (means of the Gaussian mixture)&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="EM.getVarCount.html">getVarCount</a></td>
+            <td class="m-help">Returns the number of variables in training samples&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="EM.getWeights.html">getWeights</a></td>
+            <td class="m-help">Returns weights of the mixtures&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="EM.gt.html">gt</a></td>
             <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="EM.isClassifier.html">isClassifier</a></td>
+            <td class="m-help">Returns true if the model is a classifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="EM.isTrained.html">isTrained</a></td>
+            <td class="m-help">Returns true if the model is trained&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">Sealed 
@@ -168,7 +309,7 @@
                
             </td>
             <td class="name"><a href="EM.load.html">load</a></td>
-            <td class="m-help">Load model parameters from a file&nbsp;</td>
+            <td class="m-help">Loads algorithm from a file or a string&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -200,7 +341,15 @@
                
             </td>
             <td class="name"><a href="EM.predict.html">predict</a></td>
-            <td class="m-help">Returns a likelihood logarithm value and an index &nbsp;</td>
+            <td class="m-help">Predicts response(s) for the provided sample(s)&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="EM.predict2.html">predict2</a></td>
+            <td class="m-help">Returns log-likelihood values and indices of the most probable mixture component for given samples&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -208,7 +357,7 @@
                
             </td>
             <td class="name"><a href="EM.save.html">save</a></td>
-            <td class="m-help">Save object to a file&nbsp;</td>
+            <td class="m-help">Saves the algorithm parameters to a file or a string&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -216,7 +365,7 @@
                
             </td>
             <td class="name"><a href="EM.train.html">train</a></td>
-            <td class="m-help">Trains the GMM&nbsp;</td>
+            <td class="m-help">Estimates the Gaussian mixture parameters from a samples set&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -224,7 +373,15 @@
                
             </td>
             <td class="name"><a href="EM.trainE.html">trainE</a></td>
-            <td class="m-help">Trains the GMM, starting from the Expectation step&nbsp;</td>
+            <td class="m-help">Estimate the Gaussian mixture parameters from a samples set, starting from the Expectation step&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="EM.trainEM.html">trainEM</a></td>
+            <td class="m-help">Estimate the Gaussian mixture parameters from a samples set&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -232,7 +389,7 @@
                
             </td>
             <td class="name"><a href="EM.trainM.html">trainM</a></td>
-            <td class="m-help">Trains the GMM, starting from the Maximization step&nbsp;</td>
+            <td class="m-help">Estimate the Gaussian mixture parameters from a samples set, starting from the Maximization step&nbsp;</td>
          </tr>
       </table>
    </body>

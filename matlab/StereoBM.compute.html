@@ -15,12 +15,15 @@
          </tr>
       </table>
       <div class="title">cv.StereoBM/compute</div>
-      <div class="helpcontent"><p>disparity = bm.compute(left, right)</p>
+      <div class="helpcontent"><p>Computes disparity map for the specified stereo pair</p>
+
+<pre><code>disparity = bm.compute(left, right)
+</code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>left</strong> Left 8-bit single-channel or 3-channel image.</li>
+<li><strong>left</strong> Left 8-bit single-channel image.</li>
 <li><strong>right</strong> Right image of the same size and the same type as
 the left one.</li>
 </ul>
@@ -29,19 +32,18 @@ the left one.</li>
 
 <ul>
 <li><strong>disparity</strong> Output disparity map. It has the same size as
-the input images. When disptype==CV_16S, the map is a
-16-bit signed single-channel image, containing
-disparity values scaled by 16. To get the true
-disparity values from such fixed-point representation,
-you will need to divide each disp element by 16.</li>
+the input images. Some algorithms, like <a href="StereoBM.html">cv.StereoBM</a> or
+<a href="StereoSGBM.html">cv.StereoSGBM</a> compute 16-bit fixed-point disparity map
+(where each disparity value has 4 fractional bits),
+whereas other algorithms output 32-bit floating-point
+disparity map.</li>
 </ul>
 
-<p>The method executes the BM algorithm on a rectified stereo
-pair. See the stereo_match.cpp OpenCV sample on how to
-prepare images and call the method. Note that the method is
-not constant, thus you should not use the same <a href="StereoBM.html">cv.StereoBM</a>
-instance from within different threads simultaneously.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="StereoBM.html">cv.StereoBM</a> <a href="StereoBM.init.html">cv.StereoBM/init</a></div>
+<p>The method executes the BM algorithm on a rectified stereo pair.
+Note that the method is not constant, thus you should not use
+the same <a href="StereoBM.html">cv.StereoBM</a> instance from within different threads
+simultaneously.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="StereoBM.StereoBM.html">cv.StereoBM/StereoBM</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

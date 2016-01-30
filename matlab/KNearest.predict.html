@@ -15,14 +15,35 @@
          </tr>
       </table>
       <div class="title">cv.KNearest/predict</div>
-      <div class="helpcontent"><p>Predicts the response for a sample</p>
+      <div class="helpcontent"><p>Predicts response(s) for the provided sample(s)</p>
 
-<pre><code>results = classifier.predict(samples)
-results = classifier.predict(samples, 'OptionName', optionValue, ...)
+<pre><code>[results,f] = model.predict(samples)
+[...] = model.predict(..., 'OptionName', optionValue, ...)
 </code></pre>
 
-<p>The method is an alias for find_nearest</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KNearest.find_nearest.html">cv.KNearest/find_nearest</a></div>
+<h2> Input</h2>
+
+<ul>
+<li><strong>samples</strong> The input samples, floating-point matrix.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>results</strong> See the <a href="KNearest.html">cv.KNearest</a>.findNearest method.</li>
+<li><strong>f</strong> See the <a href="KNearest.html">cv.KNearest</a>.findNearest method.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Flags</strong> The optional predict flags, model-dependent.
+Not used. default 0</li>
+</ul>
+
+<p>The method is an alias for <a href="KNearest.html">cv.KNearest</a>.findNearest, using
+<code>DefaultK</code> as value for number of nearest neighbors.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KNearest.findNearest.html">cv.KNearest/findNearest</a>, <a href="KNearest.train.html">cv.KNearest/train</a>, <a href="KNearest.calcError.html">cv.KNearest/calcError</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

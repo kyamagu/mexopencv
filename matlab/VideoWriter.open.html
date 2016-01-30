@@ -1,0 +1,102 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.VideoWriter/open</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.VideoWriter/open</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.VideoWriter/open</div>
+      <div class="helpcontent"><p>Initializes or reinitializes video writer</p>
+
+<pre><code>retval = vid.open(filename, frameSize)
+retval = vid.open(filename, frameSize, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>filename</strong> Name of the output video file</li>
+<li><strong>frameSize</strong> Size of the video frames <code>[width, height]</code>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>retval</strong> bool, indicates if video is successfully initialized</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>FourCC</strong> 4-character code of codec used to compress the
+frames. List of codes can be obtained at [FOURCC]. FFMPEG
+backend with MP4 container natively uses other values as
+FourCC code: see [ObjectType], so you may receive a
+warning message from OpenCV about fourcc code conversion.
+Examples are:<ul>
+<li><strong>PIM1</strong> MPEG-1 codec</li>
+<li><strong>MJPG</strong> Motion-JPEG codec</li>
+<li><strong>MP42</strong> MPEG-4 (Microsoft)</li>
+<li><strong>DIV3</strong> DivX MPEG-4 Part 2</li>
+<li><strong>DIVX</strong> DivX codec</li>
+<li><strong>XVID</strong> XVID MPEG-4 Part 2</li>
+<li><strong>U263</strong> H263 (default)</li>
+<li><strong>I263</strong> ITU H.263</li>
+<li><strong>FLV1</strong> Sorenson Spark (Flash Video)</li>
+<li><strong>X264</strong> H.264</li>
+<li><strong>AVC1</strong> MPEG-4 Part 10/H.264 (Apple)</li>
+<li><strong>WMV1</strong> Windows Media Video 7 (Microsoft)</li>
+<li><strong>WMV2</strong> Windows Media Video 8 (Microsoft)</li>
+<li><strong>-1</strong> prompts with codec selection dialog (Windows only)</li>
+</ul>
+</li>
+<li><strong>FPS</strong> Framerate of the created video stream. default 25.</li>
+<li><strong>Color</strong> If true, the encoder will expect and encode color
+frames, otherwise it will work with grayscale frames (the
+flag is currently supported on Windows only). default true</li>
+</ul>
+
+<p>The method opens a video writer. On Linux FFMPEG is
+used to write videos; on Windows FFMPEG or VFW is used; on
+MacOSX QTKit is used.</p>
+
+<h2> References</h2>
+
+<p>[FOURCC]:</p>
+
+<blockquote>
+<p>&quot;Video Codecs by FOURCC&quot;, <a href="http://www.fourcc.org/codecs.php">http://www.fourcc.org/codecs.php</a></p>
+</blockquote>
+
+<p>[ObjectType]:</p>
+
+<blockquote>
+<a href="http://www.mp4ra.org/codecs.html">http://www.mp4ra.org/codecs.html</a></blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="VideoWriter.VideoWriter.html">cv.VideoWriter/VideoWriter</a> <a href="VideoWriter.isOpened.html">cv.VideoWriter/isOpened</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

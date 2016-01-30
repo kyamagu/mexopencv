@@ -17,45 +17,63 @@
       <div class="title">cv.resize</div>
       <div class="helpcontent"><p>Resizes an image</p>
 
-<pre><code>dst = <a href="resize.html">cv.resize</a>(src, scale)
-dst = <a href="resize.html">cv.resize</a>(src, siz)
-dst = <a href="resize.html">cv.resize</a>(src, scale, 'Interpolation', interpolation)
+<pre><code>dst = <a href="resize.html">cv.resize</a>(src, dsize)
+dst = <a href="resize.html">cv.resize</a>(src, fx, fy)
+dst = <a href="resize.html">cv.resize</a>(..., 'Interpolation', interpolation)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>src</strong> Source image.</li>
-<li><strong>siz</strong> Destination image size.</li>
-<li><strong>scale</strong> Scale factor along both x and y axis.</li>
+<li><strong>src</strong> input image.</li>
+<li><strong>dsize</strong> output image size <code>[w,h]</code>.</li>
+<li><strong>fx</strong> Scale factors along the horizontal axis.</li>
+<li><strong>fy</strong> Scale factors along the vertical axis.</li>
 </ul>
+
+<p>When scale factors are specified, the output image size is computed as:
+<code>dsize = round([fx*size(src,2), fy*size(src,1)])</code>.</p>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Destination image. It has the size siz or the size computed from
-size(src) and scale. The type of dst is the same as of src.</li>
+<li><strong>dst</strong> output image. It has the size <code>dsize</code> or the size computed from
+<code>size(src)</code> and <code>fx</code> and <code>fy</code>. The type of <code>dst</code> is the same as of
+<code>src</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>Interpolation</strong> interpolation method. default: 'Linear'</li>
+<li><strong>Interpolation</strong> interpolation method, default 'Linear'. One of:<ul>
 <li><strong>Nearest</strong> a nearest-neighbor interpolation</li>
 <li><strong>Linear</strong> a bilinear interpolation (used by default)</li>
-<li><strong>Area</strong> resampling using pixel area relation. It may be a preferred
-method for image decimation, as it gives moire-free results.
-But when the image is zoomed, it is similar to the 'Nearest'
-method.</li>
 <li><strong>Cubic</strong> a bicubic interpolation over 4x4 pixel neighborhood</li>
+<li><strong>Area</strong> resampling using pixel area relation. It may be a preferred
+method for image decimation, as it gives moire-free results. But
+when the image is zoomed, it is similar to the 'Nearest' method.</li>
 <li><strong>Lanczos4</strong> a Lanczos interpolation over 8x8 pixel neighborhood</li>
 </ul>
+</li>
+</ul>
 
-<p>The function resize resizes the image src down to or up to the specified size.</p>
+<p>The function <a href="resize.html">cv.resize</a> resizes the image <code>src</code> down to or up to the
+specified size. The size and type of <code>dst</code> are derived from <code>src</code>, <code>dsize</code>,
+<code>fx</code> and <code>fy</code>. If you want to resize <code>src</code> so that it fits a specified size,
+you may call the function as follows:</p>
+
+<pre><code>dst = <a href="resize.html">cv.resize</a>(src, [w,h], 'Interpolation',interp)
+</code></pre>
+
+<p>If you want to decimate the image by factor of 2 in each direction, you can
+call the function this way:</p>
+
+<pre><code>dst = <a href="resize.html">cv.resize</a>(src, 0.5, 0.5, 'Interpolation',interp)
+</code></pre>
 
 <p>To shrink an image, it will generally look best with 'Area' interpolation,
 whereas to enlarge an image, it will generally look best with 'Cubic' (slow)
 or 'Linear' (faster but still looks OK).</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="warpAffine.html">cv.warpAffine</a> <a href="warpPerspective.html">cv.warpPerspective</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="warpAffine.html">cv.warpAffine</a>, <a href="warpPerspective.html">cv.warpPerspective</a>, <a href="remap.html">cv.remap</a>, imresize</div>
    </body>
 </html>

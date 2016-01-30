@@ -1,0 +1,56 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.batchDistance</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.batchDistance</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.batchDistance</div>
+      <div class="helpcontent"><p>Naive nearest neighbor finder</p>
+
+<pre><code>[dst,nidx] = <a href="batchDistance.html">cv.batchDistance</a>(src1, src2)
+[...] = <a href="batchDistance.html">cv.batchDistance</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src1</strong> samples matrix of size N1-by-M, type either 'single' or 'uint8'</li>
+<li><strong>src2</strong> samples matrix of size N2-by-M, type either 'single' or 'uint8'</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> distance matrix (see description below).</li>
+<li><strong>nidx</strong> zero-based indices of nearest neighbors (matrix of size N1-by-K).
+Only computed if <code>K&gt;0</code>, otherwise an empty matrix is returned.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>DType</strong> default -1</li>
+<li><strong>NormType</strong> Distance metric used. Default 'L2'</li>
+<li><strong>K</strong> Number of nearest neighbors in to find. If <code>K=0</code> (the default),
+the full pairwaise distance matrix is computed (of size N1-by-N2),
+otherwise only distances to the K-nearest neighbors is returned
+(matrix of size N1-by-K).</li>
+<li><strong>Mask</strong> Not set by default.</li>
+<li><strong>Update</strong> default 0.</li>
+<li><strong>CrossCheck</strong> default false.</li>
+</ul>
+
+<p>See <a href="http://en.wikipedia.org/wiki/Nearest_neighbor_search">http://en.wikipedia.org/wiki/Nearest_neighbor_search</a></p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> pdist2, knnsearch</div>
+   </body>
+</html>

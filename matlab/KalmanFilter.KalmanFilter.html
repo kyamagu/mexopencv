@@ -17,7 +17,7 @@
       <div class="title">cv.KalmanFilter/KalmanFilter</div>
       <div class="helpcontent"><p>KalmanFilter constructor</p>
 
-<pre><code>kf = <a href="KalmanFilter.html">cv.KalmanFilter</a>
+<pre><code>kf = <a href="KalmanFilter.html">cv.KalmanFilter</a>()
 kf = <a href="KalmanFilter.html">cv.KalmanFilter</a>(dynamParams, measureParams)
 kf = <a href="KalmanFilter.html">cv.KalmanFilter</a>(..., 'OptionName', optionValue, ...)
 </code></pre>
@@ -32,8 +32,14 @@ kf = <a href="KalmanFilter.html">cv.KalmanFilter</a>(..., 'OptionName', optionVa
 <h2> Options</h2>
 
 <ul>
-<li><strong>ControlParams</strong> Dimensionality of the control vector.</li>
+<li><strong>ControlParams</strong> Dimensionality of the control vector.
+default 0</li>
+<li><strong>Type</strong> Type of the created matrices that should be <code>single</code>
+or <code>double</code>. default <code>single</code></li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KalmanFilter.html">cv.KalmanFilter</a> <a href="KalmanFilter.init.html">cv.KalmanFilter/init</a></div>
+
+<p>The constructor invokes the <a href="KalmanFilter.html">cv.KalmanFilter</a>.init method to
+initialize the object with the passed parameters.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KalmanFilter.html">cv.KalmanFilter</a>, <a href="KalmanFilter.init.html">cv.KalmanFilter/init</a></div>
    </body>
 </html>

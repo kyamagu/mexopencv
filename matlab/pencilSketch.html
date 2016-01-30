@@ -1,0 +1,49 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.pencilSketch</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.pencilSketch</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.pencilSketch</div>
+      <div class="helpcontent"><p>Pencil-like non-photorealistic line drawing</p>
+
+<pre><code>[dst1,dst2] = <a href="pencilSketch.html">cv.pencilSketch</a>(src)
+[dst1,dst2] = <a href="pencilSketch.html">cv.pencilSketch</a>(src, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Input 8-bit 3-channel image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst1</strong> Output 8-bit 1-channel image.</li>
+<li><strong>dst2</strong> Output image with the same size and type as <code>src</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>SigmaS</strong> Range between 0 to 200. default 60</li>
+<li><strong>SigmaR</strong> Range between 0 to 1. default 0.07</li>
+<li><strong>ShadeFactor</strong> Range between 0 to 0.1. default 0.02</li>
+<li><strong>FlipChannels</strong> whether to flip the order of color channels in input
+<code>src</code> and output <code>dst2</code>, between MATLAB's RGB order and OpenCV's BGR
+(input: RGB-&gt;BGR, output: BGR-&gt;RGB). default true</li>
+</ul>
+</div><!--after help -->
+   </body>
+</html>

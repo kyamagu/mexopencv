@@ -15,7 +15,7 @@
          </tr>
       </table>
       <div class="title">cv.EMD</div>
-      <div class="helpcontent"><p>Computes the 'minimal' work distance between two weighted point configurations</p>
+      <div class="helpcontent"><p>Computes the &quot;minimal work&quot; distance between two weighted point configurations</p>
 
 <pre><code>d = <a href="EMD.html">cv.EMD</a>(signature1, signature2)
 d = <a href="EMD.html">cv.EMD</a>(signature1, signature2, 'OptionName', optionValue, ...)
@@ -25,59 +25,83 @@ d = <a href="EMD.html">cv.EMD</a>(signature1, signature2, 'OptionName', optionVa
 <h2> Input</h2>
 
 <ul>
-<li><strong>signature1</strong> First signature, a size1 x dims + 1 floating-point matrix.
-Each row stores the point weight followed by the point coordinates.
-The matrix is allowed to have a single column (weights only) if the
-user-defined cost matrix is used.</li>
-<li><strong>signature2</strong> Second signature of the same format as signature1, though
-the number of rows may be different. The total weights may be
-different. In this case an extra ?dummy? point is added to either
-signature1 or signature2.</li>
+<li><strong>signature1</strong> First signature, a <code>size1-by-(dims+1)</code> floating-point
+matrix. Each row stores the point weight followed by the point
+coordinates <code>[w,x1,x2,...,xn]</code>. The matrix is allowed to have a single
+column (weights only) if the user-defined <code>Cost</code> matrix is used.
+Weights can not be negative and must not all be zeros.</li>
+<li><strong>signature2</strong> Second signature <code>size2-by-(dims+1)</code> of the same format as
+<code>signature1</code>, though the number of rows may be different. The total
+weights may be different. In this case an extra &quot;dummy&quot; point is added
+to either <code>signature1</code> or <code>signature2</code>.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
 <li><strong>d</strong> Output distance value.</li>
-<li><strong>lowerBound</strong> lower boundary of a distance between the two signatures.
-See 'LowerBound' in options.</li>
-<li><strong>flow</strong> Resultant size1 x size2 flow matrix: flow(i,j) is a flow from
-i-th point of signature1 to j-th point of signature2</li>
+<li><strong>lowerBound</strong> Optional output lower boundary of a distance between the
+two signatures. See 'LowerBound' in options.</li>
+<li><strong>flow</strong> Optional resultant <code>size1-by-size2</code> flow matrix of type <code>single</code>.
+<code>flow(i,j)</code> is a flow from i-th point of <code>signature1</code> to j-th point
+of <code>signature2</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>DistType</strong> Used metric.'L1', 'L2', and 'C' stand for one of the
-standard metrics. 'User' means that a pre-calculated cost matrix
-cost is used. default 'L2'.</li>
-<li><strong>Cost</strong> User-defined  size1 x size2 cost matrix. Also, if a cost matrix
-is used, lower boundary lowerBound cannot be calculated because it
-needs a metric function.</li>
+<li><strong>DistType</strong> Used metric,  default 'L2'. One of:<ul>
+<li><strong>L1</strong> Manhattan distance: <code>d = |x1-x2| + |y1-y2|</code></li>
+<li><strong>L2</strong> Euclidean distance: <code>d = sqrt((x1-x2)^2 + (y1-y2)^2)</code></li>
+<li><strong>C</strong> Chebyshev distance: <code>d = max(|x1-x2|,|y1-y2|)</code></li>
+<li><strong>User</strong> User-defined distance, means that a pre-calculated cost
+matrix is used. Should be used when <code>Cost</code> is set.</li>
+</ul>
+</li>
+<li><strong>Cost</strong> User-defined <code>size1-by-size2</code> cost matrix. Also, if a cost matrix
+is used, output lower boundary <code>lowerBound</code> cannot be calculated
+because it needs a metric function. Not set by default</li>
 <li><strong>LowerBound</strong> Optional input/output parameter: lower boundary of a
-distance between the two signatures that is a distance between
-mass centers. The lower boundary may not be calculated if the
-user-defined cost matrix is used, the total weights of point
-configurations are not equal, or if the signatures consist of
-weights only (the signature matrices have a single column). If the
-calculated distance between mass centers is greater or equal to
-lowerBound (it means that the signatures are far enough), the
-function does not calculate EMD. In any case lowerBound is set to
-the calculated distance between mass centers on return. Thus, if
-you want to calculate both distance between mass centers and EMD,
-lowerBound should be set to 0. default 0.</li>
+distance between the two signatures that is a distance between mass
+centers. The lower boundary may not be calculated if the user-defined
+cost matrix is used, the total weights of point configurations are not
+equal, or if the signatures consist of weights only (the signature
+matrices have a single column). If the calculated distance between
+mass centers is greater or equal to <code>LowerBound</code> (it means that the
+signatures are far enough), the function does not calculate EMD. In
+any case <code>LowerBound</code> is set to the calculated distance between mass
+centers on return. Thus, if you want to calculate both distance
+between mass centers and EMD, <code>LowerBound</code> should be set to 0.
+default 0.</li>
 </ul>
 
-<p>The function computes the earth mover distance and/or a lower boundary
-of the distance between the two weighted point configurations. One of
-the applications described in [RubnerSept98] is multi-dimensional
-histogram comparison for image retrieval. EMD is a transportation
-problem that is solved using some modification of a simplex algorithm,
-thus the complexity is exponential in the worst case, though, on average
-it is much faster. In the case of a real metric the lower boundary can
-be calculated even faster (using linear-time algorithm) and it can be
-used to determine roughly whether the two signatures are far enough so
-that they cannot relate to the same object.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calcHist.html">cv.calcHist</a> <a href="compareHist.html">cv.compareHist</a></div>
+<p>The function computes the earth mover distance and/or a lower boundary of
+the distance between the two weighted point configurations. One of the
+applications described in [RubnerSept98], [Rubner2000] is multi-dimensional
+histogram comparison for image retrieval. EMD is a transportation problem
+that is solved using some modification of a simplex algorithm, thus the
+complexity is exponential in the worst case, though, on average it is much
+faster. In the case of a real metric the lower boundary can be calculated
+even faster (using linear-time algorithm) and it can be used to determine
+roughly whether the two signatures are far enough so that they cannot relate
+to the same object.</p>
+
+<h2> References</h2>
+
+<p>[RubnerSept98]:</p>
+
+<blockquote>
+<p>Yossi Rubner, Carlo Tomasi, and Leonidas J Guibas.
+&quot;The earth mover's distance as a metric for image retrieval&quot;. 1998.</p>
+</blockquote>
+
+<p>[Rubner2000]:</p>
+
+<blockquote>
+<p>Yossi Rubner, Carlo Tomasi, and Leonidas J Guibas.
+&quot;The earth mover's distance as a metric for image retrieval&quot;.
+International Journal of Computer Vision, 40(2):99-121, 2000.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calcHist.html">cv.calcHist</a>, <a href="compareHist.html">cv.compareHist</a></div>
    </body>
 </html>

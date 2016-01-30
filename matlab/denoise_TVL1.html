@@ -1,0 +1,100 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.denoise_TVL1</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.denoise_TVL1</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.denoise_TVL1</div>
+      <div class="helpcontent"><p>Primal-Dual algorithm to perform image denoising</p>
+
+<pre><code>result = <a href="denoise_TVL1.html">cv.denoise_TVL1</a>(observations)
+result = <a href="denoise_TVL1.html">cv.denoise_TVL1</a>(observations, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>observations</strong> This cell array should contain one or more noised
+versions of the image that is to be restored. All images should have
+the same size and <code>uint8</code> type (grayscale).</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>result</strong> the denoised 8-bit image.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Lambda</strong> Corresponds to <code>lambda</code> in the formulas below. As it is
+enlarged, the smooth (blurred) images are treated more favorably than
+detailed (but maybe more noised) ones. Roughly speaking, as it becomes
+smaller, the result will be more blur but more sever outliers will be
+removed. default 1.0</li>
+<li><strong>NIters</strong> Number of iterations that the algorithm will run. Of course, as
+more iterations as better, but it is hard to quantitatively refine
+this statement, so just use the default and increase it if the results
+are poor. default 30</li>
+</ul>
+
+<p>Primal-dual algorithm is an algorithm for solving special types of
+variational problems (that is, finding a function to minimize some
+functional). As the image denoising, in particular, may be seen as the
+variational problem, primal-dual algorithm then can be used to perform
+denoising and this is exactly what is implemented.</p>
+
+<p>It should be noted, that this implementation was taken from the July 2013
+blog entry [MA13], which also contained (slightly more general) ready-to-use
+source code on Python. Subsequently, that code was rewritten on C++ with the
+usage of OpenCV by <em>Vadim Pisarevsky</em> at the end of July 2013 and finally it
+was slightly adapted by later authors.</p>
+
+<p>Although the thorough discussion and justification of the algorithm involved
+may be found in [ChambolleEtAl], it might make sense to skim over it here,
+following [MA13]. To begin with, we consider the 1-byte gray-level images as
+the functions from the rectangular domain of pixels (it may be seen as set
+<code>{(x,y) in NxN | 1&lt;=x&lt;=n, 1&lt;=y&lt;=m}</code> for some <code>m,n in N</code> into <code>{0,1,...,255}</code>.
+We shall denote the noised images as <code>f_i</code> and with this view, given some
+image <code>x</code> of the same size, we may measure how bad it is by the formula:</p>
+
+<pre><code>|| nabla_x || + lambda * sum_i || x - f_i ||
+</code></pre>
+
+<p><code>|| . ||</code> here denotes L2-norm and as you see, the first addend states that
+we want our image to be smooth (ideally, having zero gradient, thus being
+constant) and the second states that we want our result to be close to the
+observations we've got. If we treat <code>x</code> as a function, this is exactly the
+functional what we seek to minimize and here the Primal-Dual algorithm comes
+into play.</p>
+
+<h2> References</h2>
+
+<p>[MA13]:</p>
+
+<blockquote>
+<p>Alexander Mordvintsev. &quot;ROG and TV-L1 denoising with primal-dual algorithm&quot;.</p>
+</blockquote>
+
+<p>[ChambolleEtAl]:</p>
+
+<blockquote>
+<p>Antonin Chambolle, Vicent Caselles, Daniel Cremers, Matteo Novaga, and
+Thomas Pock. &quot;An introduction to total variation for image analysis&quot;.
+Theoretical foundations and numerical methods for sparse recovery,
+9:263-340, 2010.</p>
+</blockquote>
+</div><!--after help -->
+   </body>
+</html>

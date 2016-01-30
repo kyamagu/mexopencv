@@ -1,0 +1,66 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.pyrDown</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.pyrDown</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.pyrDown</div>
+      <div class="helpcontent"><p>Blurs an image and downsamples it</p>
+
+<pre><code>dst = <a href="pyrDown.html">cv.pyrDown</a>(src)
+dst = <a href="pyrDown.html">cv.pyrDown</a>(src, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Input image; <code>uint8</code>, <code>uint16</code>, <code>int16</code>, <code>single</code>, or <code>double</code>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Destination image. It has the specified size and the same type
+as <code>src</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>DstSize</strong> Size of the output image <code>[w,h]</code>. default [0,0], see below.</li>
+<li><strong>BorderType</strong> Pixel extrapolation method, see <a href="copyMakeBorder.html">cv.copyMakeBorder</a>
+('Constant' isn't supported). Default 'Default'</li>
+</ul>
+
+<p>By default, size of the output image is computed as
+<code>[(size(src,2)+1)/2 (size(src,1)+1)/2]</code>, but in any case, the following
+conditions should be satisfied:</p>
+
+<pre><code>abs(DstSize(2)*2 - size(src,2)) &lt;= 2
+abs(DstSize(1)*2 - size(src,1)) &lt;= 2
+</code></pre>
+
+<p>The function performs the downsampling step of the Gaussian pyramid
+construction. First, it convolves the source image with the kernel:</p>
+
+<pre><code>1/256 * [1  4  6  4  1;
+         4 16 24 16  4;
+         6 24 34 24  6;
+         4 16 24 16  4;
+         1  4  6  4  1]
+</code></pre>
+
+<p>Then, it downsamples the image by rejecting even rows and columns.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="pyrUp.html">cv.pyrUp</a>, <a href="buildPyramid.html">cv.buildPyramid</a></div>
+   </body>
+</html>

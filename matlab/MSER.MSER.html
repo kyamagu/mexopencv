@@ -1,0 +1,48 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.MSER/MSER</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.MSER/MSER</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.MSER/MSER</div>
+      <div class="helpcontent"><p>Full constructor for MSER detector</p>
+
+<pre><code>obj = <a href="MSER.html">cv.MSER</a>()
+obj = <a href="MSER.html">cv.MSER</a>(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Delta</strong> delta, in the code, it compares
+<code>(size_{i}-size_{i-delta})/size_{i-delta}</code>. default 5.</li>
+<li><strong>MinArea</strong> prune the area which smaller than minArea.
+default 60.</li>
+<li><strong>MaxArea</strong> prune the area which bigger than maxArea.
+default 14400.</li>
+<li><strong>MaxVariation</strong> prune the area have simliar size to its
+children. default 0.25</li>
+<li><strong>MinDiversity</strong> for color image, trace back to cut off mser
+with diversity less than <code>MinDiversity</code>. default 0.2.</li>
+<li><strong>MaxEvolution</strong> for color image, the evolution steps.
+default 200.</li>
+<li><strong>AreaThreshold</strong> for color image, the area threshold to cause
+re-initialize. default 1.01.</li>
+<li><strong>MinMargin</strong> for color image, ignore too small margin.
+default 0.003.</li>
+<li><strong>EdgeBlurSize</strong> for color image, the aperture size for edge
+blur. default 5.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="MSER.detectRegions.html">cv.MSER/detectRegions</a>, <a href="MSER.detect.html">cv.MSER/detect</a></div>
+   </body>
+</html>

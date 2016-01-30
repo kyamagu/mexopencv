@@ -1,0 +1,253 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SimpleBlobDetector</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SimpleBlobDetector</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SimpleBlobDetector</div>
+      <div class="helpcontent"><p>Class for extracting blobs from an image.</p>
+
+<p>The class implements a simple algorithm for extracting blobs from an
+image:</p>
+
+<ol>
+<li>Convert the source image to binary images by applying thresholding
+with several thresholds from <code>MinThreshold</code> (inclusive) to
+<code>MaxThreshold</code> (exclusive) with distance <code>ThresholdStep</code> between
+neighboring thresholds.</li>
+<li>Extract connected components from every binary image by
+<a href="findContours.html">cv.findContours</a> and calculate their centers.</li>
+<li>Group centers from several binary images by their coordinates. Close
+centers form one group that corresponds to one blob, which is
+controlled by the <code>MinDistBetweenBlobs</code> parameter.</li>
+<li>From the groups, estimate final centers of blobs and their radiuses
+and return as locations and sizes of keypoints.</li>
+</ol>
+
+<p>This class performs several filtrations of returned blobs. You should
+set <code>FilterBy*</code> to true/false to turn on/off corresponding filtration.
+Available filtrations:</p>
+
+<ul>
+<li><strong>By color</strong>. This filter compares the intensity of a binary image at
+the center of a blob to <code>BlobColor</code>. If they differ, the blob is
+filtered out. Use <code>BlobColor = 0</code> to extract dark blobs and
+<code>BlobColor = 255</code> to extract light blobs.</li>
+<li><strong>By area</strong>. Extracted blobs have an area between <code>MinArea</code> (inclusive)
+and <code>MaxArea</code> (exclusive).</li>
+<li><strong>By circularity</strong>. Extracted blobs have circularity
+(<code>(4*pi*area)/(perimeter*perimeter)</code>) between <code>MinCircularity</code>
+(inclusive) and <code>MaxCircularity</code> (exclusive).</li>
+<li><strong>By ratio</strong> of the minimum inertia to maximum inertia. Extracted
+blobs have this ratio between <code>MinInertiaRatio</code> (inclusive) and
+<code>MaxInertiaRatio</code> (exclusive).</li>
+<li><strong>By convexity</strong>. Extracted blobs have convexity
+(area / area of blob convex hull) between <code>MinConvexity</code> (inclusive)
+and <code>MaxConvexity</code> (exclusive).</li>
+</ul>
+
+<p>Default values of parameters are tuned to extract dark circular blobs.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.html">cv.FeatureDetector</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="SimpleBlobDetector.SimpleBlobDetector.html">SimpleBlobDetector</a></td>
+            <td class="m-help">Constructor&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="SimpleBlobDetector.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.clear.html">clear</a></td>
+            <td class="m-help">Clears the algorithm state&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.detect.html">detect</a></td>
+            <td class="m-help">Detects keypoints in an image or image set.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.empty.html">empty</a></td>
+            <td class="m-help">Checks if detector object is empty.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.load.html">load</a></td>
+            <td class="m-help">Loads algorithm from a file or a string&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.save.html">save</a></td>
+            <td class="m-help">Saves the algorithm parameters to a file&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SimpleBlobDetector.typeid.html">typeid</a></td>
+            <td class="m-help">Name of the C++ type (RTTI)&nbsp;</td>
+         </tr>
+      </table>
+   </body>
+</html>

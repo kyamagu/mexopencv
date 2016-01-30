@@ -17,37 +17,108 @@
       <div class="title">cv.Boost</div>
       <div class="helpcontent"><p>Boosting</p>
 
+<p>Boosted tree classifier derived from <a href="DTrees.html">cv.DTrees</a>.</p>
+
+<h2> Boosting</h2>
+
 <p>A common machine learning task is supervised learning. In supervised
-learning, the goal is to learn the functional relationship F: y = F(x)
-between the input x and the output y. Predicting the qualitative output is
-called classification, while predicting the quantitative output is called
-regression.</p>
+learning, the goal is to learn the functional relationship <code>F: y = F(x)</code>
+between the input <code>x</code> and the output <code>y</code>. Predicting the qualitative
+output is called <em>classification</em>, while predicting the quantitative
+output is called <em>regression</em>.</p>
 
 <p>Boosting is a powerful learning concept that provides a solution to the
 supervised classification learning task. It combines the performance of
 many weak classifiers to produce a powerful committee [HTF01]. A weak
-classifier is only required to be better than chance, and thus can be very
-simple and computationally inexpensive. However, many of them smartly
-combine results to a strong classifier that often outperforms most
-monolithic strong classifiers such as SVMs and Neural Networks.</p>
+classifier is only required to be better than chance, and thus can be
+very simple and computationally inexpensive. However, many of them
+smartly combine results to a strong classifier that often outperforms
+most monolithic strong classifiers such as SVMs and Neural Networks.</p>
 
 <p>Decision trees are the most popular weak classifiers used in boosting
 schemes. Often the simplest decision trees with only a single split node
-per tree (called stumps ) are sufficient.</p>
+per tree (called stumps) are sufficient.</p>
 
-<p>The boosted model is based on N training examples (xi,yi) with xi IN
-R^k and yi IN {-1,+1}. xi is a K-component vector. Each component
-encodes a feature relevant to the learning task at hand. The desired
-two-class output is encoded as -1 and +1.</p>
+<p>The boosted model is based on <code>N</code> training examples <code>(xi,yi), i=1..N</code>
+with <code>xi IN R^k</code> and <code>yi IN {-1,+1}</code>. <code>xi</code> is a K-component vector. Each
+component encodes a feature relevant to the learning task at hand. The
+desired two-class output is encoded as -1 and +1.</p>
 
 <p>Different variants of boosting are known as Discrete Adaboost, Real
 AdaBoost, LogitBoost, and Gentle AdaBoost [FHT98]. All of them are very
-similar in their overall structure.</p>
+similar in their overall structure. Therefore, this chapter focuses only
+on the standard two-class Discrete AdaBoost algorithm, outlined below.
+Initially the same weight is assigned to each sample (step 2). Then, a
+weak classifier <code>f_m(x)</code> is trained on the weighted training data
+(step 3a). Its weighted training error and scaling factor <code>c_m</code> is
+computed (step 3b). The weights are increased for training samples that
+have been misclassified (step 3c). All weights are then normalized, and
+the process of finding the next weak classifier continues for another
+<code>M-1</code> times. The final classifier <code>F(x)</code> is the sign of the weighted sum
+over the individual weak classifiers (step 4).</p>
 
-<p>[FHT98] Friedman, J. H., Hastie, T. and Tibshirani, R. Additive Logistic
-Regression: a Statistical View of Boosting. Technical Report, Dept. of
-Statistics, Stanford University, 1998.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Boost.Boost.html">cv.Boost/Boost</a> <a href="Boost.train.html">cv.Boost/train</a> <a href="Boost.predict.html">cv.Boost/predict</a></div>
+<h3> Two-class Discrete AdaBoost Algorithm</h3>
+
+<ol>
+<li>Set <code>N</code> examples <code>(xi,yi), i=1..N</code> with <code>xi IN R^K</code>, <code>yi IN {-1,+1}</code>.</li>
+<li>Assign weights as <code>wi = 1/N, i=1..N</code>.</li>
+<li>Repeat for <code>m=1,2,...,M</code>:<ol>
+<li>Fit the classifier <code>f_m(x) IN {-1,1}</code>, using weights <code>wi</code> on the
+training data.</li>
+<li>Compute <code>err_m = Ew[1_(y!=f_m(x))]</code>, <code>c_m = log((1-err_m)/err_m)</code>.</li>
+<li>Set <code>wi = wi * exp[c_m * 1(yi!=f_m(xi))], i=1,2,...,N</code>, and
+renormalize so that <code>sum_i{wi}=1</code>.</li>
+</ol>
+</li>
+<li>Classify new samples <code>x</code> using the formula:
+<code>sign(sum{m} = 1 * M * c_m * f_m(x))</code>.</li>
+</ol>
+
+<p><strong>Note</strong>: Similar to the classical boosting methods, the current
+implementation supports two-class classifiers only. For <code>M &gt; 2</code> classes,
+there is the AdaBoost.MH algorithm (described in [FHT98]) that reduces
+the problem to the two-class problem, yet with a much larger training
+set.</p>
+
+<p>To reduce computation time for boosted models without substantially
+losing accuracy, the influence trimming technique can be employed. As
+the training algorithm proceeds and the number of trees in the ensemble
+is increased, a larger number of the training samples are classified
+correctly and with increasing confidence, thereby those samples receive
+smaller weights on the subsequent iterations. Examples with a very low
+relative weight have a small impact on the weak classifier training.
+Thus, such examples may be excluded during the weak classifier training
+without having much effect on the induced classifier. This process is
+controlled with the <code>WeightTrimRate</code> parameter. Only examples with the
+summary fraction <code>WeightTrimRate</code> of the total weight mass are used in
+the weak classifier training. Note that the weights for all training
+examples are recomputed at each training iteration. Examples deleted at
+a particular iteration may be used again for learning some of the weak
+classifiers further [FHT98].</p>
+
+<h3>  Prediction with Boost</h3>
+
+<p>The <a href="Boost.html">cv.Boost</a>.predict method should be used. Pass <code>RawOutput=true</code> to get
+the raw sum from Boost classifier.</p>
+
+<h2> References</h2>
+
+<p>[HTF01]:</p>
+
+<blockquote>
+<p>Hastie Trevor, Tibshirani Robert, and Friedman Jerome. &quot;The elements
+of statistical learning: data mining, inference and prediction&quot;.
+New York: Springer-Verlag, 1(8):371-406, 2001.</p>
+</blockquote>
+
+<p>[FHT98]:</p>
+
+<blockquote>
+<p>Jerome Friedman, Trevor Hastie, and Robert Tibshirani. &quot;Additive
+Logistic Regression: a Statistical View of Boosting&quot;. Technical
+Report, Dept. of Statistics, Stanford University, 1998.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Boost.Boost.html">cv.Boost/Boost</a>, <a href="DTrees.html">cv.DTrees</a>, <a href="RTrees.html">cv.RTrees</a>, fitensemble</div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -70,7 +141,7 @@ Statistics, Stanford University, 1998.</p>
       <table class="summary-list">
          <tr class="summary-item">
             <td class="name"><a href="Boost.Boost.html">Boost</a></td>
-            <td class="m-help">Boosted tree classifier&nbsp;</td>
+            <td class="m-help">Creates/trains a new Boost model&nbsp;</td>
          </tr>
       </table>
       <!--Properties-->
@@ -78,8 +149,52 @@ Statistics, Stanford University, 1998.</p>
       </div>
       <table class="summary-list">
          <tr class="summary-item">
-            <td class="name"><a href="Boost.Params.html">Params</a></td>
-            <td class="m-help">Object parameters&nbsp;</td>
+            <td class="name"><a href="Boost.BoostType.html">BoostType</a></td>
+            <td class="m-help">Type of the boosting algorithm.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="Boost.CVFolds.html">CVFolds</a></td>
+            <td class="m-help">If `CVFolds > 1` then algorithms prunes the built decision tree&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="Boost.MaxCategories.html">MaxCategories</a></td>
+            <td class="m-help">Cluster possible values of a categorical variable into&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="Boost.MaxDepth.html">MaxDepth</a></td>
+            <td class="m-help">The maximum possible depth of the tree.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="Boost.MinSampleCount.html">MinSampleCount</a></td>
+            <td class="m-help">If the number of samples in a node is less than this parameter then&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="Boost.Priors.html">Priors</a></td>
+            <td class="m-help">The array of a priori class probabilities, sorted by the class label&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="Boost.RegressionAccuracy.html">RegressionAccuracy</a></td>
+            <td class="m-help">Termination criteria for regression trees.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="Boost.TruncatePrunedTree.html">TruncatePrunedTree</a></td>
+            <td class="m-help">If true then pruned branches are physically removed from the tree.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="Boost.Use1SERule.html">Use1SERule</a></td>
+            <td class="m-help">If true then a pruning will be harsher.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="Boost.UseSurrogates.html">UseSurrogates</a></td>
+            <td class="m-help">If true then surrogate splits will be built.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="Boost.WeakCount.html">WeakCount</a></td>
+            <td class="m-help">The number of weak classifiers.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="Boost.WeightTrimRate.html">WeightTrimRate</a></td>
+            <td class="m-help">A threshold between 0 and 1 used to save computational time.&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="name"><a href="Boost.id.html">id</a></td>
@@ -103,8 +218,16 @@ Statistics, Stanford University, 1998.</p>
                &nbsp;
                
             </td>
+            <td class="name"><a href="Boost.calcError.html">calcError</a></td>
+            <td class="m-help">Computes error on the training or test dataset&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="Boost.clear.html">clear</a></td>
-            <td class="m-help">Deallocates memory and resets the model state&nbsp;</td>
+            <td class="m-help">Clears the algorithm state&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -113,6 +236,14 @@ Statistics, Stanford University, 1998.</p>
             </td>
             <td class="name"><a href="Boost.delete.html">delete</a></td>
             <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.empty.html">empty</a></td>
+            <td class="m-help">Returns true if the algorithm is empty&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -151,8 +282,72 @@ Statistics, Stanford University, 1998.</p>
                &nbsp;
                
             </td>
+            <td class="name"><a href="Boost.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.getNodes.html">getNodes</a></td>
+            <td class="m-help">Returns all the nodes&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.getRoots.html">getRoots</a></td>
+            <td class="m-help">GETROOS  Returns indices of root nodes&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.getSplits.html">getSplits</a></td>
+            <td class="m-help">Returns all the splits&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.getSubsets.html">getSubsets</a></td>
+            <td class="m-help">Returns all the bitsets for categorical splits&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.getVarCount.html">getVarCount</a></td>
+            <td class="m-help">Returns the number of variables in training samples&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="Boost.gt.html">gt</a></td>
             <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.isClassifier.html">isClassifier</a></td>
+            <td class="m-help">Returns true if the model is a classifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="Boost.isTrained.html">isTrained</a></td>
+            <td class="m-help">Returns true if the model is trained&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">Sealed 
@@ -176,7 +371,7 @@ Statistics, Stanford University, 1998.</p>
                
             </td>
             <td class="name"><a href="Boost.load.html">load</a></td>
-            <td class="m-help">Loads the model from a file&nbsp;</td>
+            <td class="m-help">Loads algorithm from a file or a string&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -208,7 +403,7 @@ Statistics, Stanford University, 1998.</p>
                
             </td>
             <td class="name"><a href="Boost.predict.html">predict</a></td>
-            <td class="m-help">Predicts responses for input samples&nbsp;</td>
+            <td class="m-help">Predicts response(s) for the provided sample(s)&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -216,7 +411,7 @@ Statistics, Stanford University, 1998.</p>
                
             </td>
             <td class="name"><a href="Boost.save.html">save</a></td>
-            <td class="m-help">Saves the model to a file&nbsp;</td>
+            <td class="m-help">Saves the algorithm parameters to a file or a string&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">

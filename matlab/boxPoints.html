@@ -1,0 +1,49 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.boxPoints</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.boxPoints</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.boxPoints</div>
+      <div class="helpcontent"><p>Finds the four vertices of a rotated rectangle</p>
+
+<pre><code>points = <a href="boxPoints.html">cv.boxPoints</a>(box)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>box</strong> The input rotated rectangle. A structure with the following
+fields:<ul>
+<li><strong>center</strong> The rectangle mass center <code>[x,y]</code>.</li>
+<li><strong>size</strong> Width and height of the rectangle <code>[w,h]</code>.</li>
+<li><strong>angle</strong> The rotation angle in a clockwise direction.
+When the angle is 0, 90, 180, 270 etc., the
+rectangle becomes an up-right rectangle.</li>
+</ul>
+</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>points</strong> The output array of four vertices of rectangles. A 4-by-2
+numeric matrix, each row a point: <code>[x1 y1; x2 y2; x3 y3; x4 y4]</code>.</li>
+</ul>
+
+<p>The function finds the four vertices of a rotated rectangle. This function
+is useful to draw the rectangle. You can also use <a href="RotatedRect.html">cv.RotatedRect</a>.points
+method. Please visit the tutorial on bounding rectangle for more information.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="RotatedRect.html">cv.RotatedRect</a></div>
+   </body>
+</html>

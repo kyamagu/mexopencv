@@ -23,26 +23,35 @@
 <h2> Input</h2>
 
 <ul>
-<li><strong>cameraMatrix</strong> Input camera matrix that can be estimated by
+<li><strong>cameraMatrix</strong> Input 3x3 camera matrix that can be estimated by
 <a href="calibrateCamera.html">cv.calibrateCamera</a> or <a href="stereoCalibrate.html">cv.stereoCalibrate</a>.</li>
-<li><strong>imageSize</strong> Input image size [w,h] in pixels.</li>
-<li><strong>apertureWidth</strong> Physical width of the sensor.</li>
-<li><strong>apertureHeight</strong> Physical height of the sensor.</li>
+<li><strong>imageSize</strong> Input image size <code>[w,h]</code> in pixels.</li>
+<li><strong>apertureWidth</strong> Physical width in mm of the sensor.</li>
+<li><strong>apertureHeight</strong> Physical height in mm of the sensor.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>S</strong> Struct with the following fields</li>
-<li><strong>fovx</strong> Output field of view in degrees along the horizontal sensor axis.</li>
-<li><strong>fovy</strong> Output field of view in degrees along the vertical sensor axis.</li>
+<li><strong>S</strong> Struct with the following fields<ul>
+<li><strong>fovx</strong> Output field of view in degrees along the horizontal sensor
+axis.</li>
+<li><strong>fovy</strong> Output field of view in degrees along the vertical sensor
+axis.</li>
 <li><strong>focalLength</strong> Focal length of the lens in mm.</li>
-<li><strong>principalPoint</strong> Principal point in pixels.</li>
-<li><strong>aspectRatio</strong> fy/fx.</li>
+<li><strong>principalPoint</strong> Principal point <code>[cx,cy]</code> in mm.</li>
+<li><strong>aspectRatio</strong> Pixel aspect ratio <code>fy/fx</code>.</li>
+</ul>
+</li>
 </ul>
 
 <p>The function computes various useful camera characteristics from the
 previously estimated camera matrix.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calibrateCamera.html">cv.calibrateCamera</a> <a href="stereoCalibrate.html">cv.stereoCalibrate</a></div>
+
+<h2> Note</h2>
+
+<p>Do keep in mind that the unity measure 'mm' stands for whatever unit of
+measure one chooses for the chessboard pitch (it can thus be any value).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calibrateCamera.html">cv.calibrateCamera</a>, <a href="stereoCalibrate.html">cv.stereoCalibrate</a></div>
    </body>
 </html>

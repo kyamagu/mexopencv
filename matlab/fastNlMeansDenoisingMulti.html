@@ -1,0 +1,74 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.fastNlMeansDenoisingMulti</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.fastNlMeansDenoisingMulti</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.fastNlMeansDenoisingMulti</div>
+      <div class="helpcontent"><p>Modification of fastNlMeansDenoising function for colored images sequences</p>
+
+<pre><code>dst = <a href="fastNlMeansDenoisingMulti.html">cv.fastNlMeansDenoisingMulti</a>(srcImgs, imgToDenoiseIndex, temporalWindowSize)
+dst = <a href="fastNlMeansDenoisingMulti.html">cv.fastNlMeansDenoisingMulti</a>(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>srcImgs</strong> Input 8-bit (or 16-bit with 'L1' norm) 1-channel, 2-channel,
+3-channel or 4-channel images sequence. All images should have the
+same type and size.</li>
+<li><strong>imgToDenoiseIndex</strong> Target image to denoise index in <code>srcImgs</code> sequence
+(0-based index).</li>
+<li><strong>temporalWindowSize</strong> Number of surrounding images to use for target
+image denoising. Should be odd. Images from
+<code>imgToDenoiseIndex - temporalWindowSize/2</code> to
+<code>imgToDenoiseIndex + temporalWindowSize/2</code> from <code>srcImgs</code> will be used
+to denoise <code>srcImgs{imgToDenoiseIndex}</code> image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Output image with the same size and type as <code>srcImgs</code> images.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>H</strong> Array of parameters regulating filter strength, either one parameter
+applied to all channels or one value per channel in <code>dst</code>. Big <code>H</code>
+value perfectly removes noise but also removes image details, smaller
+<code>H</code> value preserves details but also preserves some noise. default [3]</li>
+<li><strong>TemplateWindowSize</strong> Size in pixels of the template patch that is used
+to compute weights. Should be odd. Recommended value 7 pixels.
+default 7</li>
+<li><strong>SearchWindowSize</strong> Size in pixels of the window that is used to compute
+weighted average for given pixel. Should be odd. Affect performance
+linearly: greater <code>SearchWindowsSize</code> - greater denoising time.
+Recommended value 21 pixels. default 21</li>
+<li><strong>NormType</strong> Type of norm used for weight calculation. Can be either:<ul>
+<li><strong>L2</strong> (default)</li>
+<li><strong>L1</strong></li>
+</ul>
+</li>
+</ul>
+
+<p>Modification of <a href="fastNlMeansDenoising.html">cv.fastNlMeansDenoising</a> function for images sequence where
+consequtive images have been captured in small period of time. For example
+video. This version of the function is for grayscale images or for manual
+manipulation with colorspaces. For more details see:
+<a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.131.6394">http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.131.6394</a></p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="fastNlMeansDenoising.html">cv.fastNlMeansDenoising</a>, <a href="fastNlMeansDenoisingColored.html">cv.fastNlMeansDenoisingColored</a>,
+   <a href="fastNlMeansDenoisingColoredMulti.html">cv.fastNlMeansDenoisingColoredMulti</a></div>
+   </body>
+</html>

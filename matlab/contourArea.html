@@ -24,7 +24,9 @@ a = <a href="contourArea.html">cv.contourArea</a>(curve, 'OptionName', optionVal
 <h2> Input</h2>
 
 <ul>
-<li><strong>curve</strong> Input vector of a 2D point stored in numeric array or cell array.</li>
+<li><strong>curve</strong> Input vector of 2D points (contour vertices) stored in numeric
+array (Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors
+(<code>{[x,y], ...}</code>).</li>
 </ul>
 
 <h2> Output</h2>
@@ -43,10 +45,20 @@ of a contour by taking the sign of an area. By default, the parameter
 is false, which means that the absolute value is returned.</li>
 </ul>
 
-<p>The function computes a contour area. Similarly to <a href="moments.html">cv.moments</a> , the area is
+<p>The function computes a contour area. Similarly to <a href="moments.html">cv.moments</a>, the area is
 computed using the Green formula. Thus, the returned area and the number of
 non-zero pixels, if you draw the contour using <a href="drawContours.html">cv.drawContours</a> or <a href="fillPoly.html">cv.fillPoly</a>,
-can be different.</p>
-</div><!--after help -->
+can be different. Also, the function will most certainly give a wrong results
+for contours with self-intersections.</p>
+
+<h2> Example</h2>
+
+<pre><code>contour = {[0 0], [10 0], [10 10], [5 4]};
+area0 = <a href="contourArea.html">cv.contourArea</a>(contour);
+approx = <a href="approxPolyDP.html">cv.approxPolyDP</a>(contour, 'Epsilon',5, 'Closed',true);
+area1 = <a href="contourArea.html">cv.contourArea</a>(approx);
+fprintf('area0 = %.2f\narea1 = %.2f\napprox poly vertices = %d\n', ...
+    area0, area1, numel(approx));</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="arcLength.html">cv.arcLength</a></div>
    </body>
 </html>

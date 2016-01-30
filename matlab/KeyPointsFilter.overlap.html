@@ -1,0 +1,57 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.KeyPointsFilter.overlap</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.KeyPointsFilter.overlap</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.KeyPointsFilter.overlap</div>
+      <div class="helpcontent"><p>Compute overlap for pair of keypoints</p>
+
+<pre><code>ovrl = <a href="KeyPointsFilter.html">cv.KeyPointsFilter</a>.overlap(kp1, kp2)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>kp1</strong> First keypoint.</li>
+<li><strong>kp2</strong> Second keypoint.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>ovrl</strong> Overlap is the ratio between area of keypoint
+regions' intersection and area of keypoint regions' union
+(considering keypoint region as circle). If they don't
+overlap, we get zero. If they coincide at same location
+with same size, we get 1.</li>
+</ul>
+</div><!--after help -->
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>true</td>
+         </tr>
+      </table>
+   </body>
+</html>

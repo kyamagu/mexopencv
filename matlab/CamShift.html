@@ -17,28 +17,33 @@
       <div class="title">cv.CamShift</div>
       <div class="helpcontent"><p>Finds an object center, size, and orientation</p>
 
-<pre><code>window = <a href="CamShift.html">cv.CamShift</a>(probImage, window, 'OptionName', optionValue, ...)
+<pre><code>box = <a href="CamShift.html">cv.CamShift</a>(probImage, window)
+[box,window] = <a href="CamShift.html">cv.CamShift</a>(probImage, window)
+[...] = <a href="CamShift.html">cv.CamShift</a>(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
 <li><strong>probImage</strong> Back projection of the object histogram. See
-<a href="calcBackProject.html">cv.calcBackProject</a>.</li>
-<li><strong>window</strong> Initial window.</li>
+<a href="calcBackProject.html">cv.calcBackProject</a> for details.</li>
+<li><strong>window</strong> Initial search window <code>[x,y,w,h]</code>.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>window</strong> Output rectangle with rotation.</li>
+<li><strong>box</strong> Output rectangle with rotation. A scalar structure of the form:
+<code>struct('center',[x,y], 'size',[w,h], 'angle',a)</code></li>
+<li><strong>window</strong> Converged CAMSHIFT window <code>[x,y,w,h]</code></li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>Criteria</strong> Stop criteria for the underlying meanShift. Accepts a
-struct with 'type', 'maxCount', and 'epsilon' fields.</li>
+<li><strong>Criteria</strong> Stop criteria for the underlying <a href="meanShift.html">cv.meanShift</a>. Accepts a
+struct with 'type', 'maxCount', and 'epsilon' fields.
+Default <code>struct('type','Count+EPS', 'maxCount',100, 'epsilon',1.0)</code></li>
 </ul>
 
 <p>The function implements the CAMSHIFT object tracking algrorithm
@@ -46,7 +51,16 @@ struct with 'type', 'maxCount', and 'epsilon' fields.</li>
 adjusts the window size and finds the optimal rotation. The function
 returns the rotated rectangle structure that includes the object
 position, size, and orientation. The next position of the search window
-can be obtained with RotatedRect::boundingRect.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="meanShift.html">cv.meanShift</a> <a href="calcBackProject.html">cv.calcBackProject</a></div>
+can be obtained with <a href="RotatedRect.html">cv.RotatedRect</a>.boundingRect.</p>
+
+<h2> References</h2>
+
+<p>[Bradski98]:</p>
+
+<blockquote>
+<p>Gary R Bradski. Computer vision face tracking for use in a perceptual
+user interface. 1998.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="meanShift.html">cv.meanShift</a>. <a href="calcBackProject.html">cv.calcBackProject</a>, vision.HistogramBasedTracker</div>
    </body>
 </html>

@@ -1,0 +1,78 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.HOGDescriptor/detectROI</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.HOGDescriptor/detectROI</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.HOGDescriptor/detectROI</div>
+      <div class="helpcontent"><p>Evaluate specified ROI and return confidence value for each location</p>
+
+<pre><code>[pts, confidences] = hog.detectROI(im, locations)
+[...] = hog.detectROI(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>im</strong> 8-bit 1- or 3-channel image where objects are detected.</li>
+<li><strong>locations</strong> cell array of 2-element points <code>{[x,y],...}</code> at
+which detector is executed. These are top-left corner
+of candidate points at which to detect objects.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>pts</strong> Left-top corner points of detected objects boundaries.
+A cell array of points where objects are found of the form
+<code>{[x,y], ...}</code>. The width and height of boundaries are
+specified by the <code>WinSize</code> parameter. These are the
+filtered <code>locations</code> at which objects where actually
+detected.</li>
+<li><strong>confidences</strong> vector of confidences for each of the
+candidate locations (prediction of the SVM classifier).</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>HitThreshold</strong> Threshold for the distance between features
+and SVM classifying plane. Usually it is 0 and should be
+specfied in the detector coefficients (as the last free
+coefficient). But if the free coefficient is omitted
+(which is allowed), you can specify it manually here.
+default 0</li>
+<li><strong>WinStride</strong> Window stride <code>[w,h]</code>. It must be a multiple of
+block stride. Not set by default in which case it uses
+<code>CellSize</code>.</li>
+<li><strong>Padding</strong> Padding <code>[w,h]</code>. default [0,0]</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.detect.html">cv.HOGDescriptor/detect</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

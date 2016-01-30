@@ -35,14 +35,27 @@ coordinates in the subspace. Such a transformation is also known as
 Karhunen-Loeve Transform, or KLT. See
 <a href="http://en.wikipedia.org/wiki/Principal_component_analysis">http://en.wikipedia.org/wiki/Principal_component_analysis</a></p>
 
+<h2> Example</h2>
+
 <p>The following shows a quick example of how to reduce dimensionality
 of samples from 10 to 3.</p>
 
 <pre><code>Xtrain = randn(100,10);
 Xtest  = randn(100,10);
-pca = <a href="PCA.html">cv.PCA</a>(Xtrain, 'MaxComponents', 3);
+pca = <a href="PCA.html">cv.PCA</a>(Xtrain, 'MaxComponents',3);
 Y = pca.project(Xtest);
-Xapprox = pca.backProject(Y);</code></pre>
+Xapprox = pca.backProject(Y);
+</code></pre>
+
+<p>The class also implements the save/load pattern to regular MAT-files,
+so we can do the following:</p>
+
+<pre><code>pca = <a href="PCA.html">cv.PCA</a>(randn(100,5));
+save out.mat pca
+clear pca
+
+load out.mat
+disp(pca)</code></pre>
 </div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="PCA.PCA.html">cv.PCA/PCA</a></div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
@@ -75,11 +88,11 @@ Xapprox = pca.backProject(Y);</code></pre>
       <table class="summary-list">
          <tr class="summary-item">
             <td class="name"><a href="PCA.eigenvalues.html">eigenvalues</a></td>
-            <td class="m-help">&nbsp;</td>
+            <td class="m-help">of the covariation matrix.&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="name"><a href="PCA.eigenvectors.html">eigenvectors</a></td>
-            <td class="m-help">&nbsp;</td>
+            <td class="m-help">of the covariation matrix.&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="name"><a href="PCA.id.html">id</a></td>
@@ -87,7 +100,7 @@ Xapprox = pca.backProject(Y);</code></pre>
          </tr>
          <tr class="summary-item">
             <td class="name"><a href="PCA.mean.html">mean</a></td>
-            <td class="m-help">Sample mean&nbsp;</td>
+            <td class="m-help">value subtracted before the projection and added after&nbsp;</td>
          </tr>
       </table>
       <!--Methods-->
@@ -116,7 +129,7 @@ Xapprox = pca.backProject(Y);</code></pre>
                
             </td>
             <td class="name"><a href="PCA.compute.html">compute</a></td>
-            <td class="m-help">Performs Principal Component Analysis of the supplied dataset&nbsp;</td>
+            <td class="m-help">Performs Principal Component Analysis on the supplied dataset&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -183,14 +196,6 @@ Xapprox = pca.backProject(Y);</code></pre>
             <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
          </tr>
          <tr class="summary-item">
-            <td class="attributes">Static 
-               &nbsp;
-               
-            </td>
-            <td class="name"><a href="PCA.loadobj.html">loadobj</a></td>
-            <td class="m-help">Deserialization after load&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
             <td class="attributes">
                &nbsp;
                
@@ -227,16 +232,16 @@ Xapprox = pca.backProject(Y);</code></pre>
                &nbsp;
                
             </td>
-            <td class="name"><a href="PCA.saveobj.html">saveobj</a></td>
-            <td class="m-help">Serialization before save&nbsp;</td>
+            <td class="name"><a href="PCA.read.html">read</a></td>
+            <td class="m-help">Read PCA from file&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
                &nbsp;
                
             </td>
-            <td class="name"><a href="PCA.struct.html">struct</a></td>
-            <td class="m-help">Converts to a struct array&nbsp;</td>
+            <td class="name"><a href="PCA.write.html">write</a></td>
+            <td class="m-help">Write PCA to file&nbsp;</td>
          </tr>
       </table>
    </body>

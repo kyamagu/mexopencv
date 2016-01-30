@@ -23,26 +23,28 @@
 <h2> Input</h2>
 
 <ul>
-<li><strong>src</strong> 4-by-2 row vectors of coordinates of quadrangle vertices in the
-source image.</li>
-<li><strong>dst</strong> 4-by-2 row vectors of the corresponding quadrangle vertices in
-the destination image.</li>
+<li><strong>src</strong> Coordinates of quadrangle vertices in the source image. A numeric
+4-by-2 row vectors or a cell-array of 2-element vectors of length 4
+<code>{[x,y], [x,y], [x,y], [x,y]}</code></li>
+<li><strong>dst</strong> Coordinates of the corresponding quadrangle vertices in the
+destination image. Same type and size as <code>src</code>.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>T</strong> 3-by-3 transformation matrix</li>
+<li><strong>T</strong> 3-by-3 perspective transformation matrix</li>
 </ul>
 
-<p>The function calculates the 3 x 3 matrix of a perspective transform so that</p>
+<p>The function calculates the 3x3 matrix of a perspective transform so that:</p>
 
-<pre><code> t_i * [X_i; X_i; 1] = T * [x_i; y_i; 1];
+<pre><code> t_i * [X_i; Y_i; 1] = T * [x_i; y_i; 1]
 </code></pre>
 
 <p>where</p>
 
-<pre><code> dst(i,:) = [X_i, Y_i], src(i,:) = [x_i, y_i]</code></pre>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="perspectiveTransform.html">cv.perspectiveTransform</a></div>
+<pre><code> dst(i,:) = [X_i, Y_i], src(i,:) = [x_i, y_i]  for i=1,2,3</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findHomography.html">cv.findHomography</a>, <a href="warpPerspective.html">cv.warpPerspective</a>, <a href="perspectiveTransform.html">cv.perspectiveTransform</a>,
+   cp2tform, fitgeotrans, estimateGeometricTransform</div>
    </body>
 </html>

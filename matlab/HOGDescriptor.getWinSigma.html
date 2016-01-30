@@ -17,15 +17,18 @@
       <div class="title">cv.HOGDescriptor/getWinSigma</div>
       <div class="helpcontent"><p>Get window sigma</p>
 
-<pre><code>s = hog.getWinSigma()
+<pre><code>ws = hog.getWinSigma()
 </code></pre>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>s</strong> a numeric value, window sigma</li>
+<li><strong>ws</strong> a numeric value, window sigma.</li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.html">cv.HOGDescriptor</a></div>
+
+<p>This returns <code>hog.WinSigma</code> or <code>sum(hog.BlockSize)/8</code> if it is
+negative.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.WinSigma.html">cv.HOGDescriptor/WinSigma</a>, <a href="HOGDescriptor.BlockSize.html">cv.HOGDescriptor/BlockSize</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

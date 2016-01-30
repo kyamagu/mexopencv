@@ -25,31 +25,36 @@
 
 <ul>
 <li><strong>img</strong> Image.</li>
-<li><strong>pt1</strong> First point of the line segment.</li>
-<li><strong>pt2</strong> First point of the line segment.</li>
+<li><strong>pt1</strong> First point of the line segment <code>[x1,y1]</code>.</li>
+<li><strong>pt2</strong> Second point of the line segment <code>[x2,y2]</code>.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>img</strong> Output image.</li>
+<li><strong>img</strong> Output image, same size and type as input <code>img</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>Color</strong> 3-element floating point vector specifying line color.</li>
+<li><strong>Color</strong> 3-element floating point vector specifying line color.
+default zeros</li>
 <li><strong>Thickness</strong> Line thickness. default 1.</li>
-<li><strong>LineType</strong> Type of the line boundary. One of 8,4,'AA' (Anti-aliased
-line). default 8.</li>
+<li><strong>LineType</strong> Type of the line boundary. One of:<ul>
+<li>8: 8-connected line (default)</li>
+<li>4: 4-connected line</li>
+<li>'AA': anti-aliased line</li>
+</ul>
+</li>
 <li><strong>Shift</strong> Number of fractional bits in the point coordinates. default 0</li>
 </ul>
 
-<p>The function line draws the line segment between pt1 and pt2 points in
-the image. The line is clipped by the image boundaries. For
+<p>The function <a href="line.html">cv.line</a> draws the line segment between <code>pt1</code> and <code>pt2</code> points
+in the image. The line is clipped by the image boundaries. For
 non-antialiased lines with integer coordinates, the 8-connected or
 4-connected Bresenham algorithm is used. Thick lines are drawn with
 rounding endings. Antialiased lines are drawn using Gaussian filtering.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="circle.html">cv.circle</a> <a href="ellipse.html">cv.ellipse</a> <a href="rectangle.html">cv.rectangle</a> <a href="polylines.html">cv.polylines</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="circle.html">cv.circle</a>, <a href="ellipse.html">cv.ellipse</a>, <a href="rectangle.html">cv.rectangle</a>, <a href="polylines.html">cv.polylines</a></div>
    </body>
 </html>

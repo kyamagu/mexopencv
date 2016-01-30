@@ -1,0 +1,58 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.LineSegmentDetector/LineSegmentDetector</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.LineSegmentDetector/LineSegmentDetector</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.LineSegmentDetector/LineSegmentDetector</div>
+      <div class="helpcontent"><p>Creates a LineSegmentDetector object and initializes it.</p>
+
+<pre><code>lsd = <a href="LineSegmentDetector.html">cv.LineSegmentDetector</a>()
+lsd = <a href="LineSegmentDetector.html">cv.LineSegmentDetector</a>('OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Refine</strong> The way found lines will be refined, one of:<ul>
+<li><strong>None</strong>  No refinement applied.</li>
+<li><strong>Standard</strong> (default) Standard refinement is applied.
+E.g. breaking arches into smaller straighter line
+approximations.</li>
+<li><strong>Advanced</strong> Advanced refinement. Number of false alarms
+is calculated, lines are refined through increase of
+precision, decrement in size, etc.</li>
+</ul>
+</li>
+<li><strong>Scale</strong> The scale of the image that will be used to find the
+lines. In the range <code>[0,1)</code>. default 0.8</li>
+<li><strong>SigmaScale</strong> Sigma for Gaussian filter. It is computed as
+<code>sigma = SigmaScale/Scale</code>. default 0.6</li>
+<li><strong>QuantError</strong> Bound to the quantization error on the gradient
+norm. default 2.0</li>
+<li><strong>AngleTol</strong> Gradient angle tolerance in degrees. default 22.5</li>
+<li><strong>DetectionThreshold</strong> Detection threshold:
+<code>-log10(NFA) &gt; DetectionThreshold</code>. Used only when
+advancent refinement is chosen. default 0</li>
+<li><strong>MinDensity</strong> Minimal density of aligned region points in the
+enclosing rectangle. default 0.7</li>
+<li><strong>NBins</strong> Number of bins in pseudo-ordering of gradient
+modulus. default 1024</li>
+</ul>
+
+<p>The <a href="LineSegmentDetector.html">cv.LineSegmentDetector</a> algorithm is defined using the
+standard values. Only advanced users may want to edit those, as
+to tailor it for their own application.</p>
+</div><!--after help -->
+   </body>
+</html>

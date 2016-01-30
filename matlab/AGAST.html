@@ -1,0 +1,85 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.AGAST</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.AGAST</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.AGAST</div>
+      <div class="helpcontent"><p>Detects corners using the AGAST algorithm</p>
+
+<pre><code>keypoints = <a href="AGAST.html">cv.AGAST</a>(im)
+keypoints = <a href="AGAST.html">cv.AGAST</a>(im, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>im</strong> 8-bit grayscale image where keypoints (corners) are to be detected.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>keypoints</strong> Keypoints detected on the image. A 1-by-N structure array.
+It has the following fields:<ul>
+<li><strong>pt</strong> coordinates of the keypoint [x,y]</li>
+<li><strong>size</strong> diameter of the meaningful keypoint neighborhood</li>
+<li><strong>angle</strong> computed orientation of the keypoint (-1 if not applicable).
+Its possible values are in a range [0,360) degrees. It is measured
+relative to image coordinate system (y-axis is directed downward),
+ie in clockwise.</li>
+<li><strong>response</strong> the response by which the most strong keypoints have been
+selected. Can be used for further sorting or subsampling.</li>
+<li><strong>octave</strong> octave (pyramid layer) from which the keypoint has been
+extracted.</li>
+<li><strong>class_id</strong> object id that can be used to clustered keypoints by an
+object they belong to.</li>
+</ul>
+</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Threshold</strong> Threshold on difference between intensity of the central
+pixel and pixels on a circle around this pixel. default 10.</li>
+<li><strong>NonmaxSuppression</strong> If it is true, non-maximum supression is applied
+to detected corners (keypoints). default true.</li>
+<li><strong>Type</strong> one of the four neighborhoods as defined in the paper:<ul>
+<li><strong>AGAST_5_8</strong></li>
+<li><strong>AGAST_7_12d</strong></li>
+<li><strong>AGAST_7_12s</strong></li>
+<li><strong>OAST_9_16</strong> (default)</li>
+</ul>
+</li>
+</ul>
+
+<p>Detects corners using the AGAST algorithm by [mair2010].</p>
+
+<p>For non-Intel platforms, there is a tree optimised variant of AGAST with
+same numerical results. The 32-bit binary tree tables were generated
+automatically from original code using perl script.</p>
+
+<h2> References</h2>
+
+<p>[mair2010]:</p>
+
+<blockquote>
+<p>E. Mair, G. D. Hager, D. Burschka, M. Suppa, and G. Hirzinger.
+&quot;Adaptive and generic corner detection based on the accelerated segment
+test&quot;. In &quot;European Conference on Computer Vision (ECCV'10)&quot;, Sept 2010.
+(<a href="http://www6.in.tum.de/Main/ResearchAgast">http://www6.in.tum.de/Main/ResearchAgast</a>)</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="AgastFeatureDetector.html">cv.AgastFeatureDetector</a>, <a href="FAST.html">cv.FAST</a>, <a href="FeatureDetector.html">cv.FeatureDetector</a></div>
+   </body>
+</html>

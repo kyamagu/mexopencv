@@ -1,0 +1,124 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SVM/trainAuto</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SVM/trainAuto</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SVM/trainAuto</div>
+      <div class="helpcontent"><p>Trains an SVM with optimal parameters</p>
+
+<pre><code>status = model.trainAuto(samples, responses)
+status = model.trainAuto(csvFilename, [])
+[...] = model.trainAuto(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>samples</strong> See the train method.</li>
+<li><strong>responses</strong> See the train method.</li>
+<li><strong>csvFilename</strong> See the train method.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>status</strong> Success flag.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Data</strong> See the train method.</li>
+<li><strong>KFold</strong> Cross-validation parameter. The training set is
+divided into <code>KFold</code> subsets. One subset is used to train
+the model, the others form the test set. So, the SVM
+algorithm is executed <code>KFold</code> times. default 10</li>
+<li><strong>Balanced</strong> If true and the problem is 2-class classification
+then the method creates more balanced cross-validation
+subsets that is proportions between classes in subsets are
+close to such proportion in the whole train dataset.
+default false</li>
+<li><p><strong>CGrid</strong>, <strong>GammaGrid</strong>, <strong>NuGrid</strong>,
+<strong>PGrid</strong>, <strong>CoeffGrid</strong>, <strong>DegreeGrid</strong>
+Iteration grid for the corresponding SVM parameter.
+A structure that represents the logarithmic grid range of
+SVM parameters. It is used for optimizing model accuracy
+by varying model parameters, the accuracy estimate being
+computed by cross-validation. It accepts a struct having
+the fields below. It also accepts a 3-element vector in
+which each parameter is specified in the same order as the
+supported struct:</p>
+<ul>
+<li><strong>minVal</strong> Minimum value of the model parameter</li>
+<li><strong>maxVal</strong> Maximum value of the model parameter</li>
+<li><strong>logStep</strong> Logarithmic step for iterating the model
+parameter</li>
+</ul>
+<p>       The grid determines the following iteration sequence of
+the model parameter values: <code>minVal * logStep.^(0:n)</code>,
+where <code>n</code> is the maximal index satisfying
+<code>minVal*logStep^n &lt; maxVal</code>. The grid is logarithmic, so
+<code>logStep</code> must always be greater then 1.</p>
+<p>       Defaults are:</p>
+<ul>
+<li>'CGrid'     : <code>struct('minVal',0.1,  'maxVal',500, 'logStep',5 )</code></li>
+<li>'GammaGrid' : <code>struct('minVal',1e-5, 'maxVal',0.6, 'logStep',15)</code></li>
+<li>'PGrid'     : <code>struct('minVal',0.01, 'maxVal',100, 'logStep',7 )</code></li>
+<li>'NuGrid'    : <code>struct('minVal',0.01, 'maxVal',0.2, 'logStep',3 )</code></li>
+<li>'CoeffGrid' : <code>struct('minVal',0.1,  'maxVal',300, 'logStep',14)</code></li>
+<li>'DegreeGrid': <code>struct('minVal',0.01, 'maxVal',4,   'logStep',7 )</code></li>
+</ul>
+</li>
+</ul>
+
+<p>The method trains the SVM model automatically by choosing the
+optimal parameters <code>C</code>, <code>Gamma</code>, <code>P</code>, <code>Nu</code>, <code>Coef0</code>, <code>Degree</code> of
+an SVM model. Parameters are considered optimal when the
+cross-validation estimate of the test set error is minimal.</p>
+
+<p>If there is no need to optimize a parameter, the corresponding
+grid step should be set to any value less than or equal to 1.
+For example, to avoid optimization in gamma, set <code>logStep = 0</code>
+in <code>GammaGrid</code>, and <code>minVal</code>, <code>maxVal</code> as arbitrary numbers. In
+this case, the value of the parameter <code>Gamma</code> is taken for
+gamma.</p>
+
+<p>And, finally, if the optimization in a parameter is required but
+the corresponding grid is unknown, you may set it by name to
+obtain the default grid of that parameter. To generate a grid,
+for example, for gamma, set <code>GammaGrid='Gamma'</code>.</p>
+
+<p>This function works for the classification (<code>C_SVC</code> or <code>NU_SVC</code>)
+as well as for the regression (<code>EPS_SVR</code> or <code>NU_SVR</code>). For
+<code>ONE_CLASS</code>, no optimization is made and the usual SVM with the
+specified parameters is executed.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SVM.train.html">cv.SVM/train</a>, <a href="SVM.html">cv.SVM</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

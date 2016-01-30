@@ -15,12 +15,21 @@
          </tr>
       </table>
       <div class="title">cv.CascadeClassifier/CascadeClassifier</div>
-      <div class="helpcontent"><p>Loads a classifier from a file</p>
+      <div class="helpcontent"><p>Creates a new cascade classifier object</p>
 
-<pre><code>classifier = <a href="CascadeClassifier.html">cv.CascadeClassifier</a>(filename)
+<pre><code>classifier = <a href="CascadeClassifier.html">cv.CascadeClassifier</a>()
+classifier = <a href="CascadeClassifier.html">cv.CascadeClassifier</a>(filename)
 </code></pre>
 
-<p>filename specifies an XML file containing trained classifier.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="CascadeClassifier.html">cv.CascadeClassifier</a></div>
+<h2> Input</h2>
+
+<ul>
+<li><strong>filename</strong> Name of the XML file from which the trained
+classifier is loaded. This is handled by the
+<a href="CascadeClassifier.html">cv.CascadeClassifier</a>.load method.</li>
+</ul>
+
+<p>Supports HAAR and LBP cascades.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="CascadeClassifier.load.html">cv.CascadeClassifier/load</a>, <a href="CascadeClassifier.detect.html">cv.CascadeClassifier/detect</a></div>
    </body>
 </html>

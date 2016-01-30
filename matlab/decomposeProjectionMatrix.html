@@ -17,7 +17,8 @@
       <div class="title">cv.decomposeProjectionMatrix</div>
       <div class="helpcontent"><p>Decomposes a projection matrix into a rotation matrix and a camera matrix</p>
 
-<pre><code>S = <a href="decomposeProjectionMatrix.html">cv.decomposeProjectionMatrix</a>(projMatrix)
+<pre><code>[cameraMatrix,rotMatrix,transVect] = <a href="decomposeProjectionMatrix.html">cv.decomposeProjectionMatrix</a>(projMatrix)
+[cameraMatrix,rotMatrix,transVect,S] = <a href="decomposeProjectionMatrix.html">cv.decomposeProjectionMatrix</a>(projMatrix)
 </code></pre>
 
 <h2> Input</h2>
@@ -29,24 +30,39 @@
 <h2> Output</h2>
 
 <ul>
-<li><strong>S</strong> Struct with the following fields</li>
 <li><strong>cameraMatrix</strong> 3x3 camera matrix K.</li>
 <li><strong>rotMatrix</strong> 3x3 external rotation matrix R.</li>
 <li><strong>transVect</strong> 4x1 translation vector T.</li>
+<li><strong>S</strong> Optional output struct with the following fields:<ul>
 <li><strong>rotMatrX</strong> 3x3 rotation matrix around x-axis.</li>
 <li><strong>rotMatrY</strong> 3x3 rotation matrix around y-axis.</li>
 <li><strong>rotMatrZ</strong> 3x3 rotation matrix around z-axis.</li>
-<li><strong>eulerAngles</strong> three-element vector containing three Euler angles of
-rotation.</li>
+<li><strong>eulerAngles</strong> 3-element vector containing three Euler angles of
+rotation in degrees.</li>
+</ul>
+</li>
 </ul>
 
 <p>The function computes a decomposition of a projection matrix into a
 calibration and a rotation matrix and the position of a camera.</p>
 
 <p>It optionally returns three rotation matrices, one for each axis, and
-three Euler angles that could be used in OpenGL.</p>
+three Euler angles that could be used in OpenGL. Note, there is always more
+than one sequence of rotations about the three principle axes that results
+in the same orientation of an object, eg. see [Slabaugh]. Returned three
+rotation matrices and corresponding three Euler angules are only one of the
+possible solutions.</p>
 
 <p>The function is based on cv.RQDecomp3x3</p>
+
+<h2> References</h2>
+
+<p>[Slabaugh]:</p>
+
+<blockquote>
+<p>Gregory G Slabaugh. &quot;Computing euler angles from a rotation matrix&quot;.
+Retrieved on August, 6:2000, 1999.</p>
+</blockquote>
 </div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="RQDecomp3x3.html">cv.RQDecomp3x3</a></div>
    </body>
 </html>

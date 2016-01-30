@@ -23,19 +23,19 @@
 <h2> Input</h2>
 
 <ul>
-<li><strong>points</strong> Input 2D point set, stored in a cell array of 2-element vectors or
-1-by-N-by-2 numeric array.</li>
+<li><strong>points</strong> Input vector of 2D points, stored in numeric array
+(Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors (<code>{[x,y], ...}</code>).</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>center</strong> Output center of circle.</li>
-<li><strong>radius</strong> Output radius of circle.</li>
+<li><strong>center</strong> Output center of circle <code>[x,y]</code>.</li>
+<li><strong>radius</strong> Output radius of circle <code>r</code>.</li>
 </ul>
 
 <p>The function finds the minimal enclosing circle of a 2D point set using an
 iterative algorithm.</p>
-</div><!--after help -->
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="minEnclosingTriangle.html">cv.minEnclosingTriangle</a></div>
    </body>
 </html>

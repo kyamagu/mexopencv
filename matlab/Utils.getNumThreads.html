@@ -1,0 +1,67 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.Utils.getNumThreads</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.Utils.getNumThreads</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.Utils.getNumThreads</div>
+      <div class="helpcontent"><p>Returns number of threads used by OpenCV for parallel regions</p>
+
+<pre><code>n = <a href="Utils.html">cv.Utils</a>.getNumThreads()
+</code></pre>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>n</strong> number of threads.</li>
+</ul>
+
+<p>The exact meaning of return value depends on the threading
+framework used by OpenCV library:</p>
+
+<ul>
+<li><strong>TBB</strong> The number of threads, that OpenCV will try to use for
+parallel regions. If there is any
+<code>tbb::thread_scheduler_init</code> in user code conflicting with
+OpenCV, then function returns default number of threads
+used by TBB library.</li>
+<li><strong>OpenMP</strong> An upper bound on the number of threads that could
+be used to form a new team.</li>
+<li><strong>Concurrency</strong> The number of threads, that OpenCV will try to
+use for parallel regions.</li>
+<li><strong>GCD</strong> Unsupported; returns the GCD thread pool limit (512)
+for compatibility.</li>
+<li><strong>C=</strong> The number of threads, that OpenCV will try to use for
+parallel regions, if before called <code>setNumThreads</code> with
+<code>threads &gt; 0</code>, otherwise returns the number of logical
+CPUs, available for the process.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Utils.setNumThreads.html">cv.Utils.setNumThreads</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>true</td>
+         </tr>
+      </table>
+   </body>
+</html>

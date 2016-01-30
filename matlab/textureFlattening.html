@@ -1,0 +1,59 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.textureFlattening</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.textureFlattening</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.textureFlattening</div>
+      <div class="helpcontent"><p>Texture Flattening</p>
+
+<pre><code>dst = <a href="textureFlattening.html">cv.textureFlattening</a>(src, mask)
+dst = <a href="textureFlattening.html">cv.textureFlattening</a>(src, mask, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Input 8-bit 3-channel image.</li>
+<li><strong>mask</strong> Input 8-bit 1 or 3-channel image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Output image with the same size and type as <code>src</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>LowThreshold</strong> Range from 0 to 100. default 30</li>
+<li><strong>HighThreshold</strong> Value &gt; 100. default 45</li>
+<li><strong>KernelSize</strong> The size of the Sobel kernel to be used. default 3</li>
+<li><strong>FlipChannels</strong> whether to flip the order of color channels in inputs
+<code>src</code> and <code>mask</code> and output <code>dst</code>, between MATLAB's RGB order and
+OpenCV's BGR (input: RGB-&gt;BGR, output: BGR-&gt;RGB). default true</li>
+</ul>
+
+<p>By retaining only the gradients at edge locations, before integrating with
+the Poisson solver, one washes out the texture of the selected region,
+giving its contents a flat aspect. Here Canny Edge Detector is used.</p>
+
+<h2> Note</h2>
+
+<p>The algorithm assumes that the color of the source image is close to that of
+the destination. This assumption means that when the colors don't match, the
+source image color gets tinted toward the color of the destination image.</p>
+</div><!--after help -->
+   </body>
+</html>

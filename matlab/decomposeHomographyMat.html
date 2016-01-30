@@ -1,0 +1,60 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.decomposeHomographyMat</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.decomposeHomographyMat</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.decomposeHomographyMat</div>
+      <div class="helpcontent"><p>Decompose a homography matrix to rotation(s), translation(s) and plane normal(s)</p>
+
+<pre><code>[motions, nsols] = <a href="decomposeHomographyMat.html">cv.decomposeHomographyMat</a>(H, K)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>H</strong> The input homography matrix between two images, 3x3.</li>
+<li><strong>K</strong> The input intrinsic camera calibration matrix, 3x3.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>motions</strong> Decomposed <code>H</code>. A scalar struct with the following fields:<ul>
+<li><strong>R</strong> Array of rotation matrices. Cell array of 3x3 rotations.</li>
+<li><strong>t</strong> Array of translation matrices. Cell array of 3x1 translations.</li>
+<li><strong>n</strong> Array of plane normal matrices. Cell array of 3x1 normals.</li>
+</ul>
+</li>
+<li><strong>nsols</strong> number of solutions.</li>
+</ul>
+
+<p>This function extracts relative camera motion between two views observing a
+planar object from the homography <code>H</code> induced by the plane. The intrinsic
+camera matrix <code>K</code> must also be provided. The function may return up to four
+mathematical solution sets. At least two of the solutions may further be
+invalidated if point correspondences are available by applying positive
+depth constraint (all points must be in front of the camera). The
+decomposition method is described in detail in [Malis].</p>
+
+<h2> References</h2>
+
+<p>[Malis]:</p>
+
+<blockquote>
+<p>Ezio Malis, Manuel Vargas, and others. &quot;Deeper understanding of the
+homography decomposition for vision-based control&quot;. 2007.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findHomography.html">cv.findHomography</a>, <a href="decomposeEssentialMat.html">cv.decomposeEssentialMat</a></div>
+   </body>
+</html>

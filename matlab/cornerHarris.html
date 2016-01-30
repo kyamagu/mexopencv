@@ -15,10 +15,10 @@
          </tr>
       </table>
       <div class="title">cv.cornerHarris</div>
-      <div class="helpcontent"><p>Harris edge detector</p>
+      <div class="helpcontent"><p>Harris corner detector</p>
 
 <pre><code>dst = <a href="cornerHarris.html">cv.cornerHarris</a>(src)
-dst = <a href="cornerHarris.html">cv.cornerHarris</a>(src, 'KSize', [5,5], ...)
+dst = <a href="cornerHarris.html">cv.cornerHarris</a>(src, 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
@@ -30,29 +30,31 @@ dst = <a href="cornerHarris.html">cv.cornerHarris</a>(src, 'KSize', [5,5], ...)
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Image to store the results. It has the same size as src and the
-single type.</li>
+<li><strong>dst</strong> Image to store the Harris detector responses. It has the type
+<code>single</code> and the same size as <code>src</code> (single-channel).</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>BlockSize</strong> Neighborhood size. default 5.</li>
-<li><strong>ApertureSize</strong> Aperture parameter for the Sobel() operator. default 3.</li>
-<li><strong>K</strong> Harris detector free parameter.</li>
-<li><strong>BorderType</strong> Border mode used to extrapolate pixels outside of the
-image. default 'Default'</li>
+<li><strong>BlockSize</strong> Neighborhood size (see the details on
+cv.cornerEigenValsAndVecs). default 5.</li>
+<li><strong>KSize</strong> Aperture parameter for the <a href="Sobel.html">cv.Sobel</a> operator. default 3.</li>
+<li><strong>K</strong> Harris detector free parameter. See the formula below. default 0.04</li>
+<li><strong>BorderType</strong> Pixel extrapolation method. default 'Default'</li>
 </ul>
 
-<p>The function runs the Harris edge detector on the image. Similarly to
-<a href="cornerMinEigenVal.html">cv.cornerMinEigenVal</a> and <a href="cornerEigenValsAndVecs.html">cv.cornerEigenValsAndVecs</a>, for each pixel (x,y) it
-calculates a 2 x 2 gradient covariance matrix M(x,y) over a BlockSize x 
-BlockSize neighborhood. Then, it computes the following characteristic:</p>
+<p>The function runs the Harris corner detector on the image. Similarly to
+<a href="cornerMinEigenVal.html">cv.cornerMinEigenVal</a> and <a href="cornerEigenValsAndVecs.html">cv.cornerEigenValsAndVecs</a>, for each pixel <code>(x,y)</code>
+it calculates a <code>2 x 2</code> gradient covariance matrix <code>M(x,y)</code> over a
+<code>BlockSize x BlockSize</code> neighborhood. Then, it computes the following
+characteristic:</p>
 
-<pre><code> dst(x,y) = det(M(x,y)) - k x (tr(M(x,y)))^2
+<pre><code> dst(x,y) = det(M(x,y)) - k * (trace(M(x,y)))^2
 </code></pre>
 
 <p>Corners in the image can be found as the local maxima of this response map.</p>
-</div><!--after help -->
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="cornerEigenValsAndVecs.html">cv.cornerEigenValsAndVecs</a>, <a href="cornerMinEigenVal.html">cv.cornerMinEigenVal</a>,
+   corner, cornermetric, detectHARRISFeatures</div>
    </body>
 </html>

@@ -15,13 +15,17 @@
          </tr>
       </table>
       <div class="title">cv.Boost/Boost</div>
-      <div class="helpcontent"><p>Boosted tree classifier</p>
+      <div class="helpcontent"><p>Creates/trains a new Boost model</p>
 
-<pre><code>classifier = <a href="Boost.html">cv.Boost</a>
-classifier = <a href="Boost.html">cv.Boost</a>(...)
+<pre><code>model = <a href="Boost.html">cv.Boost</a>()
+model = <a href="Boost.html">cv.Boost</a>(...)
 </code></pre>
 
-<p>The constructor takes the same parameter to the train method.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Boost.html">cv.Boost</a> <a href="Boost.train.html">cv.Boost/train</a></div>
+<p>The first variant creates an empty model. Use <a href="Boost.html">cv.Boost</a>.train to
+train the model, or <a href="Boost.html">cv.Boost</a>.load to load a pre-trained model.</p>
+
+<p>The second variant accepts the same parameters as the train
+method, in which case it forwards the call after construction.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Boost.html">cv.Boost</a>, <a href="Boost.train.html">cv.Boost/train</a></div>
    </body>
 </html>

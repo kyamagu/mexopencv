@@ -30,17 +30,16 @@
 <h2> Output</h2>
 
 <ul>
-<li><strong>dABdA</strong> First output derivative matrix d(A*B)/dA of size A.rows *
-B.cols x A.rows * A.cols.</li>
-<li><strong>dABdB</strong> Second output derivative matrix d(A*B)/dB of size A.rows * 
-B.cols x B.rows * B.cols.</li>
+<li><strong>dABdA</strong> First output derivative matrix <code>d(A*B)/dA</code> of size
+<code>(A.rows * B.cols)x(A.rows * A.cols)</code> and same type as <code>A</code>.</li>
+<li><strong>dABdB</strong> Second output derivative matrix <code>d(A*B)/dB</code> of size
+<code>(A.rows * B.cols)x(B.rows * B.cols)</code> and same type as <code>A</code>.</li>
 </ul>
 
 <p>The function computes partial derivatives of the elements of the matrix
-product A*B with regard to the elements of each of the two input
-matrices. The function is used to compute the Jacobian matrices in
-<a href="stereoCalibrate.html">cv.stereoCalibrate</a> but can also be used in any other similar optimization
-function.</p>
+product <code>A*B</code> with regard to the elements of each of the two input matrices.
+The function is used to compute the Jacobian matrices in <a href="stereoCalibrate.html">cv.stereoCalibrate</a>
+but can also be used in any other similar optimization function.</p>
 </div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="stereoCalibrate.html">cv.stereoCalibrate</a></div>
    </body>
 </html>

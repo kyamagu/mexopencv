@@ -15,41 +15,59 @@
          </tr>
       </table>
       <div class="title">cv.Boost/predict</div>
-      <div class="helpcontent"><p>Predicts responses for input samples</p>
+      <div class="helpcontent"><p>Predicts response(s) for the provided sample(s)</p>
 
-<pre><code>results = classifier.predict(samples)
-[...] = classifier.predict(..., 'OptionName', optionValue, ...)
+<pre><code>[results,f] = model.predict(samples)
+[...] = model.predict(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>samples</strong> Input row vectors</li>
+<li><strong>samples</strong> Input row vectors (one or more) stored as rows of
+a floating-point matrix.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>results</strong> Output labels or regression values</li>
+<li><strong>results</strong> Output labels or regression values.</li>
+<li><strong>f</strong> The same as the response of the first sample.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>MissingMask</strong> Optional mask of missing measurements. To
-handle missing measurements, the weak classifiers must
-include surrogate splits.</li>
-<li><strong>Slice</strong> Continuous subset of the sequence of weak classifiers
-to be used for prediction. 2-element vector or ':' (all)
-is accepted. default ':'.</li>
-<li><strong>RawMode</strong> Normally, it should be set to false.</li>
-<li><strong>ReturnSum</strong> If true then return sum of votes instead of the
-class label.</li>
+<li><strong>Flags</strong> The optional predict flags, model-dependent. For
+convenience, you can set the individual flag options
+below, instead of directly setting bits here. default 0</li>
+<li><strong>RawOutput</strong> makes the method return the raw results (the
+sum), not the class label. default false</li>
+<li><strong>CompressedInput</strong> compressed data, containing only the
+active samples/variables. default false</li>
+<li><strong>PreprocessedInput</strong> This parameter is normally set to false,
+implying a regular input. If it is true, the method
+assumes that all the values of the discrete input
+variables have been already normalized to 0..NCategories
+ranges since the decision tree uses such normalized
+representation internally. It is useful for faster
+prediction with tree ensembles. For ordered input
+variables, the flag is not used. Default false</li>
+<li><strong>PredictAuto</strong> Setting this to true, overrides all of the
+other <code>Predict*</code> flags. It automatically chooses between
+<code>PredictSum</code> and <code>PredictMaxVote</code> (if the model is a
+regressor or the number of classes are 2 with <code>RawOutput</code>
+set then it picks <code>PredictSum</code>, otherwise it picks
+<code>PredictMaxVote</code> by default). default true</li>
+<li><strong>PredictSum</strong> If true then return sum of votes instead of the
+class label. default false</li>
+<li><strong>PredictMaxVote</strong> If true then return the class label with
+the max vote. default false</li>
 </ul>
 
 <p>The method runs the sample through the trees in the ensemble and
 returns the output class label based on the weighted voting.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Boost.html">cv.Boost</a> <a href="Boost.train.html">cv.Boost/train</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Boost.train.html">cv.Boost/train</a>, <a href="Boost.calcError.html">cv.Boost/calcError</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

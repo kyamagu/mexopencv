@@ -1,0 +1,65 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.KeyPointsFilter.convertFromPoints</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.KeyPointsFilter.convertFromPoints</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.KeyPointsFilter.convertFromPoints</div>
+      <div class="helpcontent"><p>Convert vector of points to vector of keypoints, where each keypoint is assigned the same size and the same orientation</p>
+
+<pre><code>keypoints = <a href="KeyPointsFilter.html">cv.KeyPointsFilter</a>.convertFromPoints(points2f)
+keypoints = <a href="KeyPointsFilter.html">cv.KeyPointsFilter</a>.convertFromPoints(points2f, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>points2f</strong> Array of (x,y) coordinates of each keypoint.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>keypoints</strong> Keypoints similar to those obtained from any
+feature detection algorithm like SIFT/SURF/ORB.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Size</strong> keypoint diameter.</li>
+<li><strong>Response</strong> keypoint detector response on the keypoint (that
+is, strength of the keypoint).</li>
+<li><strong>Octave</strong> pyramid octave in which the keypoint has been
+detected.</li>
+<li><strong>ClassId</strong> object id.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KeyPointsFilter.convertToPoints.html">cv.KeyPointsFilter.convertToPoints</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>true</td>
+         </tr>
+      </table>
+   </body>
+</html>

@@ -1,0 +1,72 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.HOGDescriptor/groupRectangles</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.HOGDescriptor/groupRectangles</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.HOGDescriptor/groupRectangles</div>
+      <div class="helpcontent"><p>Groups the object candidate rectangles</p>
+
+<pre><code>[rects, weights] = hog.groupRectangles(rects, weights)
+[...] = hog.groupRectangles(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>rects</strong> Input cell array of rectangles, where each rectangle
+is represented as a 4-element vector <code>{[x,y,w,h], ...}</code>,
+or a numeric Nx4/Nx1x4/1xNx4 array.</li>
+<li><strong>weights</strong> Input vector of associated weights.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>rects</strong> outupt updated rectangles. Grouped rectangles are
+the average of all rectangles in that cluster.</li>
+<li><strong>weights</strong> output updated weights. Corresponding grouped
+weights are the maximum weights of all rectangles in that
+cluster.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>EPS</strong> Relative difference between sides of the rectangles to
+merge them into a group. default 0.2</li>
+<li><strong>GroupThreshold</strong> Minimum possible number of rectangles in a
+group minus 1. The threshold is used on a group of
+rectangles to decide whether to retain it or not. If less
+than or equal to zero, no grouping is performed. default 1
+(i.e only groups with two or more rectangles are kept).</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="groupRectangles.html">cv.groupRectangles</a>, <a href="SimilarRects.html">cv.SimilarRects</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

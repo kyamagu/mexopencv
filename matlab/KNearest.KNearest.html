@@ -15,13 +15,17 @@
          </tr>
       </table>
       <div class="title">cv.KNearest/KNearest</div>
-      <div class="helpcontent"><p>K-Nearest Neighbors constructor</p>
+      <div class="helpcontent"><p>Creates/trains a K-Nearest Neighbors model</p>
 
-<pre><code>classifier = <a href="KNearest.html">cv.KNearest</a>
-classifier = <a href="KNearest.html">cv.KNearest</a>(trainData, responses, 'OptionName', optionValue, ...)
+<pre><code>model = <a href="KNearest.html">cv.KNearest</a>()
+model = <a href="KNearest.html">cv.KNearest</a>(...)
 </code></pre>
 
-<p>The constructor optionally takes the same argument to train method.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KNearest.html">cv.KNearest</a> <a href="KNearest.train.html">cv.KNearest/train</a></div>
+<p>The first variant creates an empty model. Use <a href="KNearest.html">cv.KNearest</a>.train
+to train the model.</p>
+
+<p>The second variant accepts the same parameters as the train
+method, in which case it forwards the call after construction.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KNearest.html">cv.KNearest</a>, <a href="KNearest.train.html">cv.KNearest/train</a></div>
    </body>
 </html>

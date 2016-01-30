@@ -23,18 +23,27 @@
 <h2> Input</h2>
 
 <ul>
-<li><strong>points</strong> Input 2D point set, stored in a cell array of 2-element vectors or
-1-by-N-by-2 numeric array.</li>
+<li><strong>points</strong> Input vector of 2D points, stored in numeric array
+(Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors (<code>{[x,y], ...}</code>).</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>rct</strong> Output rotated rectangle.</li>
+<li><strong>rct</strong> Output rotated rectangle struct with the following fields:<ul>
+<li><strong>center</strong> The rectangle mass center <code>[x,y]</code>.</li>
+<li><strong>size</strong> Width and height of the rectangle <code>[w,h]</code>.</li>
+<li><strong>angle</strong> The rotation angle in a clockwise direction.
+When the angle is 0, 90, 180, 270 etc., the
+rectangle becomes an up-right rectangle.</li>
+</ul>
+</li>
 </ul>
 
 <p>The function calculates and returns the minimum-area bounding rectangle
-(possibly rotated) for a specified point set.</p>
-</div><!--after help -->
+(possibly rotated) for a specified point set. Developer should keep in mind
+that the returned <code>rct</code> can contain negative indices when data is close to
+the containing Mat element boundary.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="fitEllipse.html">cv.fitEllipse</a>, <a href="convexHull.html">cv.convexHull</a></div>
    </body>
 </html>

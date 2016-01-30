@@ -17,96 +17,151 @@
       <div class="title">cv.RTrees/train</div>
       <div class="helpcontent"><p>Trains the Random Trees model</p>
 
-<pre><code>classifier.train(trainData, responses)
-classifier.train(trainData, responses, 'OptionName', optionValue, ...)
+<pre><code>status = model.train(samples, responses)
+status = model.train(csvFilename, [])
+[...] = model.train(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>trainData</strong> Row vectors of feature.</li>
+<li><strong>samples</strong> Row vectors of feature.</li>
 <li><strong>responses</strong> Output of the corresponding feature vectors.</li>
+<li><strong>csvFilename</strong> The input CSV file name from which to load
+dataset. In this variant, you should set the second
+argument to an empty array.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>status</strong> Success flag.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>VarIdx</strong> Indicator variables (features) of interest.
-Must have the same size to responses.</li>
-<li><strong>SampleIdx</strong> Indicator samples of interest. Must have the
-the same size to responses.</li>
-<li><strong>VarType</strong> Solves classification problem when 'Categorical'.
-Otherwise, the training is treated as a regression problem.
-default 'Categorical'</li>
-<li><strong>MissingMask</strong> Indicator mask for missing observation.</li>
-<li><strong>MaxDepth</strong> The maximum possible depth of the tree. That is
-the training algorithms attempts to split a node while its
-depth is less than max_depth. The actual depth may be
-smaller if the other termination criteria are met, and/or
-if the tree is pruned. default 5.</li>
-<li><strong>MinSampleCount</strong> If the number of samples in a node is less
-than this parameter then the node will not be splitted.
-default 10.</li>
-<li><strong>RegressionAccuracy</strong> Termination criteria for regression
-trees. If all absolute differences between an estimated
-value in a node and values of train samples in this node
-are less than this parameter then the node will not be
-splitted. default 0.</li>
-<li><strong>UseSurrogates</strong> If true then surrogate splits will be built.
-These splits allow to work with missing data and compute
-variable importance correctly. default false.</li>
-<li><strong>MaxCategories</strong> Cluster possible values of a categorical
-variable into K &lt;= MaxCategories clusters to find a
-suboptimal split. If a discrete variable, on which the
-training procedure tries to make a split, takes more than
-MaxCategories values, the precise best subset estimation
-may take a very long time because the algorithm is
-exponential. Instead, many decision trees engines
-(including ML) try to find sub-optimal split in this case
-by clustering all the samples into max_categories clusters
-that is some categories are merged together. The
-clustering is applied only in n&gt;2-class classification
-problems for categorical variables with N &gt; max_categories
-possible values. In case of regression and 2-class
-classification the optimal split can be found efficiently
-without employing clustering, thus the parameter is not
-used in these cases. default 0.</li>
-<li><strong>Priors</strong> The array of a priori class probabilities, sorted by
-the class label value. The parameter can be used to tune
-the decision tree preferences toward a certain class. For
-example, if you want to detect some rare anomaly
-occurrence, the training base will likely contain much
-more normal cases than anomalies, so a very good
-classification performance will be achieved just by
-considering every case as normal. To avoid this, the
-priors can be specified, where the anomaly probability is
-artificially increased (up to 0.5 or even greater), so the
-weight of the misclassified anomalies becomes much bigger,
-and the tree is adjusted properly. You can also think
-about this parameter as weights of prediction categories
-which determine relative weights that you give to
-misclassification. That is, if the weight of the first
-category is 1 and the weight of the second category is 10,
-then each mistake in predicting the second category is
-equivalent to making 10 mistakes in predicting the first
-category. default none.</li>
-<li><strong>CalcVarImportance</strong> If true then variable importance will
-be calculated and then it can be retrieved by
-getVarImportance(). default false.</li>
-<li><strong>NActiveVars</strong> The size of the randomly selected subset of
-features at each tree node and that are used to find the
-best split(s). If you set it to 0 then the size will be
-set to the square root of the total number of features.
-default 0.</li>
-<li><strong>MaxNumOfTreesInTheForest</strong> The maximum number of trees in the
-forest (suprise, suprise). default 50.</li>
-<li><strong>ForestAccuracy</strong> Sufficient accuracy (OOB error). default 0.1</li>
-<li><strong>TermCritType</strong> The type of the termination criteria. One of
-'Iter', 'EPS', or 'Iter+EPS'. default 'Iter+EPS'</li>
+<li><strong>Data</strong> Training data options, specified as a cell array of
+key/value pairs of the form <code>{'key',val, ...}</code>. See below.</li>
+<li><strong>Flags</strong> The optional training flags, model-dependent. For
+convenience, you can set the individual flag options
+below, instead of directly setting bits here. default 0</li>
+<li><strong>RawOutput</strong> See the predict method. default false</li>
+<li><strong>PredictSum</strong> See the predict method. default false</li>
+<li><strong>PredictMaxVote</strong> See the predict method. default false</li>
 </ul>
 
-<p>The method trains the RTrees model.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="RTrees.html">cv.RTrees</a> <a href="RTrees.predict.html">cv.RTrees/predict</a> <a href="RTrees.predict_prob.html">cv.RTrees/predict_prob</a></div>
+<h3> Options for <code>Data</code> (first variant with samples and reponses)</h3>
+
+<ul>
+<li><strong>Layout</strong> Sample types. Default 'Row'. One of:<ul>
+<li><strong>Row</strong> each training sample is a row of samples.</li>
+<li><strong>Col</strong> each training sample occupies a column of
+samples.</li>
+</ul>
+</li>
+<li><strong>VarIdx</strong> vector specifying which variables to use for
+training. It can be an integer vector (<code>int32</code>) containing
+0-based variable indices or logical vector (<code>uint8</code> or
+<code>logical</code>) containing a mask of active variables. Not set
+by default, which uses all variables in the input data.</li>
+<li><strong>SampleIdx</strong> vector specifying which samples to use for
+training. It can be an integer vector (<code>int32</code>) containing
+0-based sample indices or logical vector (<code>uint8</code> or
+<code>logical</code>) containing a mask of training samples of
+interest. Not set by default, which uses all samples in
+the input data.</li>
+<li><strong>SampleWeights</strong> optional floating-point vector with weights
+for each sample. Some samples may be more important than
+others for training. You may want to raise the weight of
+certain classes to find the right balance between hit-rate
+and false-alarm rate, and so on. Not set by default, which
+effectively assigns an equal weight of 1 for all samples.</li>
+<li><strong>VarType</strong> optional vector of type <code>uint8</code> and size
+<code>&lt;num_of_vars_in_samples&gt; + &lt;num_of_vars_in_responses&gt;</code>,
+containing types of each input and output variable. By
+default considers all variables as numerical (both input
+and output variables). In case there is only one output
+variable of integer type, it is considered categorical.
+You can also specify a cell-array of strings (or as one
+string of single characters, e.g 'NNNC'). Possible values:<ul>
+<li><strong>Numerical</strong>, <strong>N</strong> same as 'Ordered'</li>
+<li><strong>Ordered</strong>, <strong>O</strong> ordered variables</li>
+<li><strong>Categorical</strong>, <strong>C</strong> categorical variables</li>
+</ul>
+</li>
+<li><strong>MissingMask</strong> Indicator mask for missing observation (not
+currently implemented). Not set by default</li>
+<li><strong>TrainTestSplitCount</strong> divides the dataset into train/test
+sets, by specifying number of samples to use for the test
+set. By default all samples are used for the training set.</li>
+<li><strong>TrainTestSplitRatio</strong> divides the dataset into train/test
+sets, by specifying ratio of samples to use for the test
+set. By default all samples are used for the training set.</li>
+<li><strong>TrainTestSplitShuffle</strong> when splitting dataset into
+train/test sets, specify whether to shuffle the samples.
+Otherwise samples are assigned sequentially (first train
+then test). default true</li>
+</ul>
+
+<h3> Options for <code>Data</code> (second variant for loading CSV file)</h3>
+
+<ul>
+<li><strong>HeaderLineCount</strong> The number of lines in the beginning to
+skip; besides the header, the function also skips empty
+lines and lines staring with '#'. default 1</li>
+<li><strong>ResponseStartIdx</strong> Index of the first output variable. If
+-1, the function considers the last variable as the
+response. If the dataset only contains input variables and
+no responses, use <code>ResponseStartIdx = -2</code> and
+<code>ResponseEndIdx = 0</code>, then the output variables vector
+will just contain zeros. default -1</li>
+<li><strong>ResponseEndIdx</strong> Index of the last output variable + 1. If
+-1, then there is single response variable at
+<code>ResponseStartIdx</code>. default -1</li>
+<li><strong>VarTypeSpec</strong> The optional text string that specifies the
+variables' types. It has the format
+<code>ord[n1-n2,n3,n4-n5,...]cat[n6,n7-n8,...]</code>. That is,
+variables from <code>n1</code> to <code>n2</code> (inclusive range), <code>n3</code>, <code>n4</code>
+to <code>n5</code> ... are considered ordered and <code>n6</code>, <code>n7</code> to
+<code>n8</code> ... are considered as categorical. The range
+<code>[n1..n2] + [n3] + [n4..n5] + ... + [n6] + [n7..n8]</code>
+should cover all the variables. If <code>VarTypeSpec</code> is not
+specified, then algorithm uses the following rules:<ul>
+<li>all input variables are considered ordered by default.
+If some column contains has non- numerical values, e.g.
+'apple', 'pear', 'apple', 'apple', 'mango', the
+corresponding variable is considered categorical.</li>
+<li>if there are several output variables, they are all
+considered as ordered. Errors are reported when
+non-numerical values are used.</li>
+<li>if there is a single output variable, then if its values
+are non-numerical or are all integers, then it's
+considered categorical. Otherwise, it's considered
+ordered.</li>
+</ul>
+</li>
+<li><strong>Delimiter</strong> The character used to separate values in each
+line. default ','</li>
+<li><strong>Missing</strong> The character used to specify missing
+measurements. It should not be a digit. Although it's a
+non-numerical value, it surely does not affect the
+decision of whether the variable ordered or categorical.
+default '?'</li>
+<li><strong>TrainTestSplitCount</strong> same as above.</li>
+<li><strong>TrainTestSplitRatio</strong> same as above.</li>
+<li><strong>TrainTestSplitShuffle</strong> same as above.</li>
+</ul>
+
+<p>The method trains the <a href="RTrees.html">cv.RTrees</a> model.</p>
+
+<p>The method is very similar to the method <a href="DTrees.html">cv.DTrees</a>.train and
+follows the generic method train conventions. The estimate of
+the training error (OOB-error) is stored inside the class (see
+<a href="RTrees.html">cv.RTrees</a>.getVarImportance).</p>
+
+<p>The function is parallelized with the TBB library.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="RTrees.predict.html">cv.RTrees/predict</a>, <a href="RTrees.calcError.html">cv.RTrees/calcError</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

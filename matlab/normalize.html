@@ -1,0 +1,108 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.normalize</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.normalize</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.normalize</div>
+      <div class="helpcontent"><p>Normalizes the norm or value range of an array</p>
+
+<pre><code>dst = <a href="normalize.html">cv.normalize</a>(src)
+dst = <a href="normalize.html">cv.normalize</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> input array.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> output array of the same size as <code>src</code>. See <code>DType</code> option.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Alpha</strong> norm value to normalize to or the lower range boundary in case
+of the range normalization. default 1</li>
+<li><strong>Beta</strong> upper range boundary in case of the range normalization; it is
+not used for the norm normalization. default 0</li>
+<li><strong>NormType</strong> normalization type, default 'L2'. One of:<ul>
+<li><strong>Inf</strong></li>
+<li><strong>L1</strong></li>
+<li><strong>L2</strong></li>
+<li><strong>MinMax</strong></li>
+</ul>
+</li>
+<li><strong>DType</strong> when negative, the output array has the same type as <code>src</code>;
+otherwise, it has the same number of channels as <code>src</code> and the
+specified depth (a numeric class name: 'uint8', 'double', etc...).
+default -1</li>
+<li><strong>Mask</strong> optional operation mask. Not set by default.</li>
+<li><strong>Dest</strong> initial array used for output. This can initialize <code>dst</code> when
+<code>Mask</code> is used. Not set by default.</li>
+</ul>
+
+<p>The functions <a href="normalize.html">cv.normalize</a> scale and shift the input array elements so that:</p>
+
+<pre><code>||dst||_Lp = alpha
+</code></pre>
+
+<p>(where <code>p</code>=Inf, 1 or 2) when <code>NormType</code>='Inf', 'L1', or 'L2', respectively;
+or so that:</p>
+
+<pre><code>min(dst) = alpha, max(dst) = beta
+</code></pre>
+
+<p>when <code>NormType</code>='MinMax' (for dense arrays only). The optional <code>Mask</code>
+specifies a sub-array to be normalized. This means that the norm or min-max
+are calculated over the sub-array, and then this sub-array is modified to be
+normalized. If you want to only use the mask to calculate the norm or
+min-max but modify the whole array, you can use <a href="norm.html">cv.norm</a> and Mat::convertTo.</p>
+
+<h2> Example</h2>
+
+<p>Possible usage with some positive example data:</p>
+
+<pre><code>positiveData = [2.0, 8.0, 10.0];
+
+% Norm to probability (total count)
+% sum(numbers) = 20.0
+% 2.0      0.1     (2.0/20.0)
+% 8.0      0.4     (8.0/20.0)
+% 10.0     0.5     (10.0/20.0)
+normalizedData_l1 = <a href="normalize.html">cv.normalize</a>(positiveData, 'NormType','L1');
+
+% Norm to unit vector: ||positiveData|| = 1.0
+% 2.0      0.15
+% 8.0      0.62
+% 10.0     0.77
+normalizedData_l2 = <a href="normalize.html">cv.normalize</a>(positiveData, 'NormType','L2');
+
+% Norm to max element
+% 2.0      0.2     (2.0/10.0)
+% 8.0      0.8     (8.0/10.0)
+% 10.0     1.0     (10.0/10.0)
+normalizedData_inf = <a href="normalize.html">cv.normalize</a>(positiveData, 'NormType','Inf');
+
+% Norm to range [0.0;1.0]
+% 2.0      0.0     (shift to left border)
+% 8.0      0.75    (6.0/8.0)
+% 10.0     1.0     (shift to right border)
+normalizedData_minmax = <a href="normalize.html">cv.normalize</a>(positiveData, 'NormType','MinMax');</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="norm.html">cv.norm</a>, <a href="norm.html">norm</a>, min, max</div>
+   </body>
+</html>

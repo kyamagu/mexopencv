@@ -18,13 +18,13 @@
       <div class="helpcontent"><p>Reads an image from a buffer in memory</p>
 
 <pre><code>img = <a href="imdecode.html">cv.imdecode</a>(buf)
-img = <a href="imdecode.html">cv.imdecode</a>(buf, 'Flags', flags)
+img = <a href="imdecode.html">cv.imdecode</a>(buf, 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>buf</strong> Input array of an encoded image.</li>
+<li><strong>buf</strong> Input byte array of an encoded image (<code>uint8</code> vector).</li>
 </ul>
 
 <h2> Output</h2>
@@ -36,22 +36,42 @@ img = <a href="imdecode.html">cv.imdecode</a>(buf, 'Flags', flags)
 <h2> Options</h2>
 
 <ul>
-<li><strong>Flags</strong> Flags specifying the color type of a loaded image.</li>
+<li><strong>Unchanged</strong> If set, return the loaded image as is (with alpha channel,
+otherwise it gets cropped). Both the depth and number of channels are
+unchanged as determined by the decoder. default false</li>
+<li><strong>AnyDepth</strong> If set, return 16-bit/32-bit image when the input has the
+corresponding depth, otherwise convert it to 8-bit. default false</li>
+<li><strong>AnyColor</strong> If set, the image is read in any possible color format.
+default false</li>
+<li><strong>Color</strong> If set, always convert image to the 3 channel BGR color image.
+default true</li>
+<li><strong>Grayscale</strong> If set, always convert image to the single channel grayscale
+image. default false</li>
+<li><strong>Flags</strong> Advanced option to directly set the flag specifying the depth
+and color type of a loaded image. Note that setting this integer flag
+overrides all the other flag options. Not set by default:<ul>
+<li><code>&gt;0</code>: Return a 3-channel color image. Note that in the current
+implementation the alpha channel, if any, is stripped from the
+output image. For example, a 4-channel RGBA image is loaded as
+RGB if <code>Flags &gt;= 0</code>.</li>
+<li><code>=0</code>: Return a grayscale image</li>
+<li><code>&lt;0</code>: Return the loaded image as is (with alpha channel if present).</li>
+</ul>
+</li>
+<li><strong>FlipChannels</strong> in case the output is color image, flips the color order
+from OpenCV's BGR/BGRA to MATLAB's RGB/RGBA order. default true</li>
 </ul>
 
-<pre><code>  &gt;0: Return a 3-channel color image
-  =0: Return a grayscale image
-  &lt;0: Return the loaded image as is. Note that in the current
-      implementation the alpha channel, if any, is stripped from the output
-      image. For example, a 4-channel RGBA image is loaded as RGB if
-      flags &gt;= 0.
-</code></pre>
-
 <p>The function reads an image from the specified buffer in the memory. If
-the buffer is too short or contains invalid data, the empty matrix/image
-is returned.</p>
+the buffer is too short or contains invalid data, an error is thrown.</p>
 
 <p>See <a href="imread.html">cv.imread</a> for the list of supported formats and flags description.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="imdecode.html">cv.imdecode</a> <a href="imread.html">cv.imread</a> <a href="imwrite.html">cv.imwrite</a></div>
+
+<h2> Note</h2>
+
+<p>In the case of color images, the decoded images will have the channels
+stored in BGR order. If <code>FlipChannels</code> is true, the order is flipped to
+RGB.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="imencode.html">cv.imencode</a>, <a href="imread.html">cv.imread</a></div>
    </body>
 </html>

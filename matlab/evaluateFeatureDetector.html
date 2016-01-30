@@ -1,0 +1,62 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.evaluateFeatureDetector</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.evaluateFeatureDetector</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.evaluateFeatureDetector</div>
+      <div class="helpcontent"><p>Evaluates a feature detector</p>
+
+<pre><code>[repeatability, correspCount] = <a href="evaluateFeatureDetector.html">cv.evaluateFeatureDetector</a>(img1, img2, H1to2, keypoints1, keypoints2)
+[...] = <a href="evaluateFeatureDetector.html">cv.evaluateFeatureDetector</a>(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>img1</strong> First image.</li>
+<li><strong>img2</strong> Second image.</li>
+<li><strong>H1to2</strong> 3x3 double matrix. Homography relating <code>img1</code> to <code>img2</code>.</li>
+<li><strong>keypoints1</strong> Keypoints detected in <code>img1</code></li>
+<li><strong>keypoints2</strong> Keypoints detected in <code>img2</code></li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>repeatability</strong> Repeatability (float value), between 0.0 and 1.0</li>
+<li><strong>correspCount</strong> Correspondences count (int value).</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Detector</strong> feature detector that finds keypoints in images. It can be
+specified as a string containing the type of feature detector, such as
+'ORB'. It can also be specified as a cell-array of the form
+<code>{fdetector, 'key',val, ...}</code>, where the first element is the type,
+and the remaining elements are optional parameters used to construct
+the specified feature detector. See <a href="FeatureDetector.html">cv.FeatureDetector</a> for possible
+types. Not set by default (i.e: you must supply pre-detected keypoints
+in the inputs).</li>
+</ul>
+
+<h2> Example:</h2>
+
+<pre><code>detector = <a href="FeatureDetector.html">cv.FeatureDetector</a>('SURF');
+kp1 = detector.detect(img1)
+kp2 = detector.detect(img2)
+[rep,corresp] = <a href="evaluateFeatureDetector.html">cv.evaluateFeatureDetector</a>(img1, img2, H1to2, kp1, kp2)</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="computeRecallPrecisionCurve.html">cv.computeRecallPrecisionCurve</a>, <a href="FeatureDetector.html">cv.FeatureDetector</a></div>
+   </body>
+</html>

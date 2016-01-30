@@ -17,42 +17,59 @@
       <div class="title">cv.groupRectangles</div>
       <div class="helpcontent"><p>Groups the object candidate rectangles</p>
 
-<pre><code>rects = <a href="groupRectangles.html">cv.groupRectangles</a>(rects, thresh)
+<pre><code>rects = <a href="groupRectangles.html">cv.groupRectangles</a>(rects)
+[rects,weights,levelWeights] = <a href="groupRectangles.html">cv.groupRectangles</a>(...)
 [...] = <a href="groupRectangles.html">cv.groupRectangles</a>(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>rects</strong> Cell array of rectangles, where each rectangle is represented
-as a 4-element vector [x,y,w,h].</li>
-<li><strong>thresh</strong> Minimum possible number of rectangles minus 1. The threshold
-is used in a group of rectangles to retain it.</li>
+<li><strong>rects</strong> Input cell array of rectangles, where each rectangle is
+represented as a 4-element vector <code>{[x,y,w,h], ...}</code>, or a numeric
+Nx4/Nx1x4/1xNx4 array.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>rects</strong> Cell array of grouped rectangles. the same format to the
-input.</li>
+<li><strong>rects</strong> Output array of retained and grouped rectangles. Same format as
+input <code>rects</code> (either Nx4 numeric array or cell array). Grouped
+rectangles are the average of all rectangles in that cluster.</li>
+<li><strong>weights</strong> optional output of filled/updated weights, with same length as
+output <code>rects</code>. See <code>Weights</code> option. Corresponding grouped weights
+are the maximum weights of all rectangles in that cluster.</li>
+<li><strong>levelWeights</strong> optional output of filled/updated level weights, with
+same length as output <code>rects</code>. See <code>LevelWeights</code> option.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
+<li><strong>Thresh</strong> Minimum possible number of rectangles in a group minus 1. The
+threshold is used in a group of rectangles to decide whether to retain
+it or not. If less than or equal to zero, no grouping is performed.
+default 1 (i.e only groups with two or more rectangles are kept).</li>
 <li><strong>EPS</strong> Relative difference between sides of the rectangles to merge
-them into a group.</li>
+them into a group. default 0.2</li>
+<li><strong>Weights</strong> optional vector of associated weights of same length as input
+<code>rects</code>. Not set by default</li>
+<li><strong>LevelWeights</strong> optional vector of doubles of same length as input
+<code>rects</code>. Not set by default</li>
 </ul>
 
-<p>The function clusters all the input rectangles using the rectangle
-equivalence criteria that combines rectangles with similar sizes and
-similar locations. The similarity is defined by eps. When <code>eps=0</code>, no
-clustering is done at all. If <code>eps-&gt;+inf</code>, all the rectangles are put in
-one cluster. Then, the small clusters containing less than or equal to
-<code>thresh</code> rectangles are rejected. In each other cluster, the
-average rectangle is computed and put into the output rectangle list.</p>
+<p>The function is a wrapper for the generic partition function. It clusters
+all the input rectangles using the rectangle equivalence criteria that
+combines rectangles with similar sizes and similar locations. The similarity
+is defined by <code>EPS</code>. When <code>EPS=0</code>, no clustering is done at all. If
+<code>EPS -&gt; +inf</code>, all the rectangles are put in one cluster. Then, the small
+clusters containing less than or equal to <code>Thresh</code> rectangles are rejected.
+In each other cluster, the average rectangle is computed and put into the
+output rectangle list. The function also filters out small rectangles inside
+larger ones that have more hits.</p>
 
 <p>The function is useful for non-max suppression of object detections.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="CascadeClassifier.html">cv.CascadeClassifier</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="CascadeClassifier.html">cv.CascadeClassifier</a>, <a href="HOGDescriptor.html">cv.HOGDescriptor</a>, <a href="SimilarRects.html">cv.SimilarRects</a>,
+    <a href="groupRectangles_meanshift.html">cv.groupRectangles_meanshift</a>, selectStrongestBbox</div>
    </body>
 </html>

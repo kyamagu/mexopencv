@@ -25,14 +25,14 @@
 <ul>
 <li><strong>image</strong> Input 8-bit 3-channel image.</li>
 <li><strong>marker</strong> Input 32-bit single-channel image (map) of markers. It
-should have the same size as image.</li>
+should have the same size as <code>image</code>.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
 <li><strong>marker</strong> Output 32-bit single-channel image (map) of markers. It has
-the same size as image.</li>
+the same size as <code>image</code>.</li>
 </ul>
 
 <p>The function implements one of the variants of watershed, non-parametric
@@ -42,18 +42,26 @@ marker-based segmentation algorithm, described in [Meyer92].</p>
 desired regions in the image markers with positive (&gt;0) indices. So, every
 region is represented as one or more connected components with the pixel
 values 1, 2, 3, and so on. Such markers can be retrieved from a binary mask
-using findContours() and drawContours() (see the watershed.cpp demo). The
-markers are seeds of the future image regions. All the other pixels in
-markers , whose relation to the outlined regions is not known and should be
-defined by the algorithm, should be set to 0's. In the function output, each
-pixel in markers is set to a value of the seed components or to -1 at
-boundaries between the regions.</p>
+using <a href="findContours.html">cv.findContours</a> and <a href="drawContours.html">cv.drawContours</a>. The markers are &quot;seeds&quot; of the
+future image regions. All the other pixels in markers, whose relation to the
+outlined regions is not known and should be defined by the algorithm, should
+be set to 0's. In the function output, each pixel in markers is set to a
+value of the &quot;seed&quot; components or to -1 at boundaries between the regions.</p>
 
 <h2> Note</h2>
 
 <p>Any two neighbor connected components are not necessarily separated by
-a watershed boundary (-1's pixels); for example, they can touch each other in
+a watershed boundary (-1 pixels); for example, they can touch each other in
 the initial marker image passed to the function.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="grabCut.html">cv.grabCut</a></div>
+
+<h2> References</h2>
+
+<p>[Meyer92]:</p>
+
+<blockquote>
+<p>Fernand Meyer. &quot;Color image segmentation&quot;. In Image Processing and its
+Applications, 1992, International Conference on, pages 303-306. IET, 1992.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="grabCut.html">cv.grabCut</a>, <a href="findContours.html">cv.findContours</a>, watershed</div>
    </body>
 </html>

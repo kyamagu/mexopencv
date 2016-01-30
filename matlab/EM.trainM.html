@@ -15,26 +15,36 @@
          </tr>
       </table>
       <div class="title">cv.EM/trainM</div>
-      <div class="helpcontent"><p>Trains the GMM, starting from the Maximization step</p>
+      <div class="helpcontent"><p>Estimate the Gaussian mixture parameters from a samples set, starting from the Maximization step</p>
 
-<pre><code>[ log_likelihoods labels probs ] = em.trainM(samples, probs0)
+<pre><code>[logLikelihoods, labels, probs] = model.trainM(samples, probs0)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><p><strong>samples</strong> Samples from which the Gaussian mixture model will be estimated. 
-It should be a one-channel matrix, each row of which is a sample. </p>
-</li>
-<li><p><strong>probs0</strong>  Initial probabilities p_i;k of sample i to belong to mixture component k. It is a
-one-channel floating-point matrix of nsamples x nclusters size</p>
-</li>
+<li><strong>samples</strong> Samples from which the Gaussian mixture model will
+be estimated. It should be a one-channel matrix, each row
+of which is a sample. If the matrix does not have <code>double</code>
+type it will be converted to the inner matrix of such type
+for the further computing.</li>
+<li><strong>probs0</strong> Initial probabilities <code>p_{i,k}</code> of sample <code>i</code> to
+belong to mixture component <code>k</code>. It is a one-channel
+floating-point matrix of <code>nsamples-by-ClustersNumber</code>
+size.</li>
 </ul>
 
 <h2> Output</h2>
 
-<p>see EM.train</p>
-</div><!--after help -->
+<ul>
+<li><strong>logLikelihoods</strong> See the <a href="EM.html">cv.EM</a>.trainEM method.</li>
+<li><strong>labels</strong> See the <a href="EM.html">cv.EM</a>.trainEM method.</li>
+<li><strong>probs</strong> See the <a href="EM.html">cv.EM</a>.trainEM method.</li>
+</ul>
+
+<p>This variation starts with Maximization step. You need to
+provide initial probabilities <code>p_{i,k}</code> to use this option.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="EM.trainE.html">cv.EM/trainE</a>, <a href="EM.trainEM.html">cv.EM/trainEM</a>, <a href="EM.train.html">cv.EM/train</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

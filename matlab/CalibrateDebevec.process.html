@@ -1,0 +1,56 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.CalibrateDebevec/process</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.CalibrateDebevec/process</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.CalibrateDebevec/process</div>
+      <div class="helpcontent"><p>Recovers inverse camera response</p>
+
+<pre><code>dst = obj.process(src, times)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> cell array of input images, all of the same size and
+<code>uint8</code> type.</li>
+<li><strong>times</strong> vector of exposure time values for each image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> 256x1xCN <code>single</code> matrix with inverse camera response
+function. It has the same number of channels as images
+<code>src{i}</code>.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="CalibrateDebevec.CalibrateDebevec.html">cv.CalibrateDebevec/CalibrateDebevec</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

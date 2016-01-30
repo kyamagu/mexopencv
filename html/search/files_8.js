@@ -1,13 +1,19 @@
 var searchData=
 [
+  ['illuminationchange_2ecpp',['illuminationChange.cpp',['../illumination_change_8cpp.html',1,'']]],
   ['imdecode_2ecpp',['imdecode.cpp',['../imdecode_8cpp.html',1,'']]],
   ['imencode_2ecpp',['imencode.cpp',['../imencode_8cpp.html',1,'']]],
   ['imread_2ecpp',['imread.cpp',['../imread_8cpp.html',1,'']]],
+  ['imreadmulti_2ecpp',['imreadmulti.cpp',['../imreadmulti_8cpp.html',1,'']]],
   ['imwrite_2ecpp',['imwrite.cpp',['../imwrite_8cpp.html',1,'']]],
   ['initcameramatrix2d_2ecpp',['initCameraMatrix2D.cpp',['../init_camera_matrix2_d_8cpp.html',1,'']]],
   ['initundistortrectifymap_2ecpp',['initUndistortRectifyMap.cpp',['../init_undistort_rectify_map_8cpp.html',1,'']]],
+  ['initwideangleprojmap_2ecpp',['initWideAngleProjMap.cpp',['../init_wide_angle_proj_map_8cpp.html',1,'']]],
   ['inpaint_2ecpp',['inpaint.cpp',['../inpaint_8cpp.html',1,'']]],
+  ['inpaint2_2ecpp',['inpaint2.cpp',['../inpaint2_8cpp.html',1,'']]],
+  ['inrange_2ecpp',['inRange.cpp',['../in_range_8cpp.html',1,'']]],
   ['integral_2ecpp',['integral.cpp',['../integral_8cpp.html',1,'']]],
+  ['intersectconvexconvex_2ecpp',['intersectConvexConvex.cpp',['../intersect_convex_convex_8cpp.html',1,'']]],
   ['invert_2ecpp',['invert.cpp',['../invert_8cpp.html',1,'']]],
   ['invertaffinetransform_2ecpp',['invertAffineTransform.cpp',['../invert_affine_transform_8cpp.html',1,'']]],
   ['iscontourconvex_2ecpp',['isContourConvex.cpp',['../is_contour_convex_8cpp.html',1,'']]]

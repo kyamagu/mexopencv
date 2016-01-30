@@ -18,11 +18,30 @@
       <div class="helpcontent"><p>Grabs, decodes and returns the next video frame</p>
 
 <pre><code>frame = cap.read()
+frame = cap.read('OptionName',optionValue, ...)
 </code></pre>
 
-<p>The method captures the next video frame and return it. If
-capturing fails, empty array will be returned instead.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="VideoCapture.html">cv.VideoCapture</a></div>
+<h2> Output</h2>
+
+<ul>
+<li><strong>frame</strong> output image</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>FlipChannels</strong> in case the output is color image, flips the
+color order from OpenCV's BGR to MATLAB's RGB order.
+default true</li>
+</ul>
+
+<p>The method combines <a href="VideoCapture.html">cv.VideoCapture</a>.grab and
+<a href="VideoCapture.html">cv.VideoCapture</a>.retrieve in one call. This is the most
+convenient method for reading video files or capturing data from
+decode and return the just grabbed frame. If no frames has been
+grabbed (camera has been disconnected, or there are no more
+frames in video file), the function return an empty matrix.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="VideoCapture.grab.html">cv.VideoCapture/grab</a>, <a href="VideoCapture.retrieve.html">cv.VideoCapture/retrieve</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

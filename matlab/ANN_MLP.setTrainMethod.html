@@ -1,0 +1,72 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.ANN_MLP/setTrainMethod</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.ANN_MLP/setTrainMethod</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.ANN_MLP/setTrainMethod</div>
+      <div class="helpcontent"><p>Sets training method and common parameters</p>
+
+<pre><code>model.setTrainMethod(method)
+model.setTrainMethod(method, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>method</strong> Available training methods:<ul>
+<li><strong>Backprop</strong> The back-propagation algorithm.</li>
+<li><strong>RProp</strong> (default) The RPROP algorithm. See [101]
+for details.</li>
+</ul>
+</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Param1</strong> sets <code>RpropDW0</code> property for 'RProp' and sets
+<code>BackpropWeightScale</code> property for 'Backprop'. default 0</li>
+<li><strong>Param2</strong> sets <code>RpropDWMin</code> property for 'RProp' and sets
+<code>BackpropMomentumScale</code> property for 'Backprop'. default 0</li>
+</ul>
+
+<h2> References</h2>
+
+<p>[101]:</p>
+
+<blockquote>
+<p>Martin Riedmiller and Heinrich Braun. &quot;A direct adaptive method
+for faster backpropagation learning: The rprop algorithm&quot;.
+In Neural Networks, 1993., IEEE International Conference on,
+pages 586-591. IEEE, 1993.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="ANN_MLP.TrainMethod.html">cv.ANN_MLP/TrainMethod</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

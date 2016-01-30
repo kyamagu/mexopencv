@@ -1,0 +1,53 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.spatialGradient</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.spatialGradient</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.spatialGradient</div>
+      <div class="helpcontent"><p>Calculates the first order image derivative in both x and y using a Sobel operator</p>
+
+<pre><code>[dx, dy] = <a href="spatialGradient.html">cv.spatialGradient</a>(src)
+[...] = <a href="spatialGradient.html">cv.spatialGradient</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> input image, 8-bit single-channel.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dx</strong> output <code>int16</code> image with first-order derivative in x.</li>
+<li><strong>dy</strong> output <code>int16</code> image with first-order derivative in y.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>KSize</strong> size of Sobel kernel. It must be 3 in the current
+implementation. default 3</li>
+<li><strong>BorderType</strong> Pixel extrapolation method, see <a href="copyMakeBorder.html">cv.copyMakeBorder</a>.
+Only 'Default', 'Reflect101', and 'Replicate' are supported.
+default 'Default'</li>
+</ul>
+
+<p>Equivalent to calling:</p>
+
+<pre><code>dx = <a href="Sobel.html">cv.Sobel</a>(src, 'DDepth','int16', 'XOrder',1, 'YOrder',0, 'KSize',3);
+dy = <a href="Sobel.html">cv.Sobel</a>(src, 'DDepth','int16', 'XOrder',0, 'YOrder',1, 'KSize',3);</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Sobel.html">cv.Sobel</a></div>
+   </body>
+</html>

@@ -15,35 +15,41 @@
          </tr>
       </table>
       <div class="title">cv.FeatureDetector/detect</div>
-      <div class="helpcontent"><p>Detects keypoints in an image</p>
+      <div class="helpcontent"><p>Detects keypoints in an image or image set.</p>
 
-<pre><code>keypoints = detector.detect(im)
-keypoints = detector.detect(im, 'Option', optionValue, ...)
+<pre><code>keypoints = obj.detect(img)
+keypoints = obj.detect(imgs)
+[...] = obj.detect(..., 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>im</strong> Image</li>
+<li><strong>img</strong> Image (first variant).</li>
+<li><strong>imgs</strong> Image set (second variant), cell array of images.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>keypoints</strong> The detected keypoints. A 1-by-N structure array.
-It has the following fields:<ul>
-<li><strong>pt</strong> coordinates of the keypoint [x,y]</li>
+<li><strong>keypoints</strong> The detected keypoints. In the first variant,
+a 1-by-N structure array. In the second variant of the
+method, <code>keypoints{i}</code> is a set of keypoints detected in
+<code>imgs{i}</code>. Each keypoint is a struct with the following
+fields:<ul>
+<li><strong>pt</strong> coordinates of the keypoint <code>[x,y]</code></li>
 <li><strong>size</strong> diameter of the meaningful keypoint neighborhood</li>
-<li><strong>angle</strong> computed orientation of the keypoint (-1 if not applicable).
-Its possible values are in a range [0,360) degrees. It is measured
-relative to image coordinate system (y-axis is directed downward),
-ie in clockwise.</li>
-<li><strong>response</strong> the response by which the most strong keypoints have been
-selected. Can be used for further sorting or subsampling.</li>
-<li><strong>octave</strong> octave (pyramid layer) from which the keypoint has been
-extracted.</li>
-<li><strong>class_id</strong> object id that can be used to clustered keypoints by an
-object they belong to.</li>
+<li><strong>angle</strong> computed orientation of the keypoint (-1 if not
+applicable); it's in [0,360) degrees and measured
+relative to image coordinate system (y-axis is
+directed downward), i.e in clockwise.</li>
+<li><strong>response</strong> the response by which the most strong
+keypoints have been selected. Can be used for further
+sorting or subsampling.</li>
+<li><strong>octave</strong> octave (pyramid layer) from which the keypoint
+has been extracted.</li>
+<li><strong>class_id</strong> object class (if the keypoints need to be
+clustered by an object they belong to).</li>
 </ul>
 </li>
 </ul>
@@ -51,11 +57,14 @@ object they belong to.</li>
 <h2> Options</h2>
 
 <ul>
-<li><strong>Mask</strong> Optional mask specifying where to look for keypoints.
-It must be a 8-bit integer matrix with non-zero values
-in the region of interest.</li>
+<li><strong>Mask</strong> A mask specifying where to look for keypoints
+(optional). It must be a logical or 8-bit integer matrix
+with non-zero values in the region of interest. In the
+second variant, it is a cell-array of masks for each input
+image, <code>masks{i}</code> is a mask for <code>imgs{i}</code>.
+Not set by default.</li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.html">cv.FeatureDetector</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.FeatureDetector.html">cv.FeatureDetector/FeatureDetector</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

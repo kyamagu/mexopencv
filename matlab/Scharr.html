@@ -18,36 +18,59 @@
       <div class="helpcontent"><p>Calculates the first x- or y- image derivative using Scharr operator</p>
 
 <pre><code>dst = <a href="Scharr.html">cv.Scharr</a>(src)
-dst = <a href="Scharr.html">cv.Scharr</a>(src, 'KSize', 5, ...)
+dst = <a href="Scharr.html">cv.Scharr</a>(src, 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>src</strong> Source image.</li>
+<li><strong>src</strong> input image.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Destination image of the same size and the same number of channels as
-src.</li>
+<li><strong>dst</strong> output image of the same size and the same number of channels as
+<code>src</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>XOrder</strong> Order of the derivative x.</li>
-<li><strong>YOrder</strong> Order of the derivative y.</li>
+<li><strong>XOrder</strong> Order of the derivative x. default 1</li>
+<li><strong>YOrder</strong> Order of the derivative y. default 0</li>
 <li><strong>Scale</strong> Optional scale factor for the computed Laplacian values. By
-default, no scaling is applied.</li>
+default, no scaling is applied (see <a href="getDerivKernels.html">cv.getDerivKernels</a> for details).
+default 1</li>
 <li><strong>Delta</strong> Optional delta value that is added to the results prior to
-storing them in dst .</li>
-<li><strong>BorderType</strong> Pixel extrapolation method.</li>
+storing them in <code>dst</code>. default 0</li>
+<li><strong>BorderType</strong> Pixel extrapolation method, see <a href="copyMakeBorder.html">cv.copyMakeBorder</a>.
+Default 'Default'</li>
+<li><strong>DDepth</strong> output image depth. default -1. When <code>DDepth=-1</code>, the output
+image will have the same depth as the source. The following
+combinations are supported:<ul>
+<li>SDepth = 'uint8'           --&gt; DDepth = -1, 'int16', 'single', 'double'</li>
+<li>SDepth = 'uint16', 'int16' --&gt; DDepth = -1, 'single', 'double'</li>
+<li>SDepth = 'single'          --&gt; DDepth = -1, 'single', 'double'</li>
+<li>SDepth = 'double'          --&gt; DDepth = -1, 'double'</li>
+</ul>
+</li>
 </ul>
 
 <p>The function computes the first x- or y- spatial image derivative using the
 Scharr operator.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Sobel.html">cv.Sobel</a></div>
+
+<p>The call:</p>
+
+<pre><code>dst = <a href="Scharr.html">cv.Scharr</a>(src, 'DDepth',ddepth, 'XOrder',dx, 'YOrder',dy, ...
+    'Scale',scale, 'Delta',delta, 'BorderType',borderType)
+</code></pre>
+
+<p>is equivalent to:</p>
+
+<pre><code>dst = <a href="Sobel.html">cv.Sobel</a>(src, 'DDepth',ddepth, 'XOrder',dx, 'YOrder',dy, ...
+    'KSize','Scharr', ...
+    'Scale',scale, 'Delta',delta, 'BorderType',borderType)</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Sobel.html">cv.Sobel</a>, cv.cartToPolar</div>
    </body>
 </html>

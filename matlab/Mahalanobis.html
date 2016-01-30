@@ -1,0 +1,48 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.Mahalanobis</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.Mahalanobis</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.Mahalanobis</div>
+      <div class="helpcontent"><p>Calculates the Mahalanobis distance between two vectors</p>
+
+<pre><code>d = <a href="Mahalanobis.html">cv.Mahalanobis</a>(v1, v2, icovar)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>v1</strong> first 1D input vector.</li>
+<li><strong>v2</strong> second 1D input vector.</li>
+<li><strong>icovar</strong> inverse covariance matrix.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>d</strong> Mahalanobis distance.</li>
+</ul>
+
+<p>The function Mahalanobis calculates and returns the weighted distance
+between two vectors:</p>
+
+<pre><code>d(v1,v2) = sqrt( sum_{i,j} [icovar(i,j) * (v1(I) - v2(I)) * (v1(j) - v2(j))] )
+</code></pre>
+
+<p>The covariance matrix may be calculated using the <a href="calcCovarMatrix.html">cv.calcCovarMatrix</a>
+function and then inverted using the <a href="invert.html">cv.invert</a> function (preferably using
+the 'SVD' method, as the most accurate).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calcCovarMatrix.html">cv.calcCovarMatrix</a>, <a href="invert.html">cv.invert</a>, cov</div>
+   </body>
+</html>

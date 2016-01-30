@@ -17,8 +17,8 @@
       <div class="title">cv.drawMatches</div>
       <div class="helpcontent"><p>Draws the found matches of keypoints from two images</p>
 
-<pre><code>im = <a href="drawMatches.html">cv.drawMatches</a>(im1, keypoints1, im2, keypoints2, matches1to2)
-im = <a href="drawMatches.html">cv.drawMatches</a>(..., 'OptionName', optionValue, ...)
+<pre><code>out = <a href="drawMatches.html">cv.drawMatches</a>(im1, keypoints1, im2, keypoints2, matches1to2)
+out = <a href="drawMatches.html">cv.drawMatches</a>(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
@@ -26,15 +26,15 @@ im = <a href="drawMatches.html">cv.drawMatches</a>(..., 'OptionName', optionValu
 <ul>
 <li><strong>im1</strong> First source image.</li>
 <li><strong>keypoints1</strong> Keypoints from the first source image.
-A 1-by-N structure array. It has the following fields:<ul>
-<li><strong>pt</strong> coordinates of the keypoint [x,y]</li>
+A 1-by-N structure array with the following fields:<ul>
+<li><strong>pt</strong> coordinates of the keypoint <code>[x,y]</code></li>
 <li><strong>size</strong> diameter of the meaningful keypoint neighborhood</li>
-<li><strong>angle</strong> computed orientation of the keypoint (-1 if not applicable).
-Its possible values are in a range [0,360) degrees. It is measured
-relative to image coordinate system (y-axis is directed downward),
-ie in clockwise.</li>
-<li><strong>response</strong> the response by which the most strong keypoints have been
-selected. Can be used for further sorting or subsampling.</li>
+<li><strong>angle</strong> computed orientation of the keypoint (-1 if not
+applicable). Its possible values are in a range [0,360) degrees.
+It is measured relative to image coordinate system (y-axis is
+directed downward), i.e in clockwise.</li>
+<li><strong>response</strong> the response by which the most strong keypoints have
+been selected. Can be used for further sorting or subsampling.</li>
 <li><strong>octave</strong> octave (pyramid layer) from which the keypoint has been
 extracted.</li>
 <li><strong>class_id</strong> object id that can be used to clustered keypoints by an
@@ -42,16 +42,24 @@ object they belong to.</li>
 </ul>
 </li>
 <li><strong>im2</strong> Second source image.</li>
-<li><strong>keypoints2</strong> Keypoints from the second source image. Same as <code>keypoints1</code></li>
+<li><strong>keypoints2</strong> Keypoints from the second source image. Same format as
+<code>keypoints1</code>.</li>
 <li><strong>matches1to2</strong> Matches from the first image to the second one, which
 means that <code>keypoints1(i)</code> has a corresponding point in
-<code>keypoints2(matches(i))</code></li>
+<code>keypoints2(matches(i))</code>.
+A 1-by-M structure array with the following fields:<ul>
+<li><strong>queryIdx</strong> query descriptor index (zero-based index)</li>
+<li><strong>trainIdx</strong> train descriptor index (zero-based index)</li>
+<li><strong>imgIdx</strong> train image index (zero-based index)</li>
+<li><strong>distance</strong> distance between descriptors (scalar)</li>
+</ul>
+</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>im</strong> Output image. Its content depends on the option values defining
+<li><strong>out</strong> Output image. Its content depends on the option values defining
 what is drawn in the output image. See possible options below.
 By default, the two source images, matches, and single
 keypoints will be drawn. For each keypoint, only the center point
@@ -62,18 +70,31 @@ keypoint size and orientation).</li>
 <h2> Options</h2>
 
 <ul>
-<li><strong>MatchColor</strong> Color of matches (lines and connected keypoints). If
-all -1, random colors are picked up. default [-1,-1,-1,-1].</li>
-<li><strong>SinglePointColor</strong> Color of single keypoints (circles), which means
-that keypoints do not have the matches. If all -1, random colors
-are picked up. default [-1,-1,-1,-1].</li>
-<li><strong>MatchesMask</strong> Mask determining which matches are drawn. If the mask
-is empty, all matches are drawn. default empty.</li>
-<li><strong>NotDrawSinglePoints</strong> Single keypoints will not be drawn. default
-false.</li>
-<li><strong>DrawRichKeypoints</strong> For each keypoint, the circle around keypoint
-with keypoint size and orientation will be drawn. default false.</li>
+<li><strong>MatchColor</strong> Color of matches (lines and connected keypoints). If all
+-1, the color is generated randomly. default [-1,-1,-1,-1].</li>
+<li><strong>SinglePointColor</strong> Color of single keypoints (circles), which means that
+keypoints do not have the matches. If all -1, the color is generated
+randomly. default [-1,-1,-1,-1].</li>
+<li><strong>MatchesMask</strong> Mask determining which matches are drawn. If the mask is
+empty, all matches are drawn. default empty.</li>
+<li><strong>NotDrawSinglePoints</strong> Single keypoints will not be drawn. default false</li>
+<li><strong>DrawRichKeypoints</strong> For each keypoint, the circle around keypoint with
+keypoint size and orientation will be drawn. default false.</li>
+<li><strong>OutImage</strong> If set, matches will be drawn on existing content of output
+image, otherwise source image is used instead. Default not set</li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="drawKeypoints.html">cv.drawKeypoints</a></div>
+
+<p>This function draws matches of keypoints from two images in the output
+image. Match is a line connecting two keypoints (circles).</p>
+
+<p>In pseudo-code, the function works as follows:</p>
+
+<pre><code>for m=1:numel(matches1to2)
+    if ~MatchesMask(m), continue, end
+    kp1 = keypoints1(matches1to2(m).queryIdx + 1);
+    kp2 = keypoints2(matches1to2(m).trainIdx + 1);
+    draw_match(kp1, kp2);
+end</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="drawKeypoints.html">cv.drawKeypoints</a>, showMatchedFeatures</div>
    </body>
 </html>

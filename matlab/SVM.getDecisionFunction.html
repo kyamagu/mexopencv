@@ -1,0 +1,66 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SVM/getDecisionFunction</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SVM/getDecisionFunction</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SVM/getDecisionFunction</div>
+      <div class="helpcontent"><p>Retrieves the decision function</p>
+
+<pre><code>[alpha,svidx,rho] = model.getDecisionFunction(index)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>index</strong> the index of the decision function (0-based). If
+the problem solved is regression, 1-class or 2-class
+classification, then there will be just one decision
+function and the index should always be 0. Otherwise, in
+the case of N-class classification, there will be
+<code>N(N-1)/2</code> decision functions.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>alpha</strong> the optional output vector for weights,
+corresponding to different support vectors. In the case of
+linear SVM all the alpha's will be 1's.</li>
+<li><strong>svidx</strong> the optional output vector of indices of support
+vectors within the matrix of support vectors (which can be
+retrieved by <a href="SVM.html">cv.SVM</a>.getSupportVectors. In the case of
+linear SVM each decision function consists of a single
+&quot;compressed&quot; support vector.</li>
+<li><strong>rho</strong> <code>rho</code> parameter of the decision function, a scalar
+subtracted from the weighted sum of kernel responses.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SVM.getSupportVectors.html">cv.SVM/getSupportVectors</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

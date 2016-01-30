@@ -17,44 +17,67 @@
       <div class="title">cv.grabCut</div>
       <div class="helpcontent"><p>Runs the GrabCut algorithm</p>
 
-<pre><code>[ trimap ] = <a href="grabCut.html">cv.grabCut</a>(img, bbox);
-[ trimap ] = <a href="grabCut.html">cv.grabCut</a>(img, trimap);
-[ trimap ] = <a href="grabCut.html">cv.grabCut</a>(img, trimap, 'OptionName', optionValue, ...);
-[ trimap, bgdmodel, fgdmodel ] = <a href="grabCut.html">cv.grabCut</a>(...);
+<pre><code>mask = <a href="grabCut.html">cv.grabCut</a>(img, rect);
+mask = <a href="grabCut.html">cv.grabCut</a>(img, mask);
+[mask, bgdmodel, fgdmodel] = <a href="grabCut.html">cv.grabCut</a>(...);
+[...] = <a href="grabCut.html">cv.grabCut</a>(..., 'OptionName', optionValue, ...);
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>img</strong> uint8 type H-by-W-by-3 RGB array</li>
-<li><strong>bbox</strong> 1-by-4 double array [x y w h]
-It will automatically create a trimap initialized with
-label 0 for background and label 3 for foreground (see trimap)</li>
-<li><strong>trimap</strong> uint8 H-by-W array of labels
-{0:bg, 1:fg, 2:probably-bg, 3:probably-fg}</li>
+<li><strong>img</strong> Input 8-bit 3-channel image.</li>
+<li><strong>rect</strong> ROI containing a segmented object. A 1-by-4 vector <code>[x y w h]</code>.
+It will automatically create the <code>mask</code>. The pixels outside of the ROI
+are marked as &quot;obvious background&quot; with label 0, and label 3 for
+foreground (see <code>mask</code>). Using this variant will set <code>Mode</code> to
+'InitWithRect'.</li>
+<li><strong>mask</strong> Input 8-bit single-channel mask of same size as <code>img</code> and type
+<code>uint8</code>. Its elements may have one of the following values:<ul>
+<li><strong>0</strong> an obvious background pixel</li>
+<li><strong>1</strong> an obvious foreground (object) pixel</li>
+<li><strong>2</strong> a possible background pixel</li>
+<li><strong>3</strong> a possible foreground pixel</li>
+</ul>
+</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>trimap</strong> uint8 H-by-W array with
-{0:bg, 1:fg, 2:probably-bg, 3:probably-fg}</li>
-<li><strong>bgdmodel</strong> background model to be used for next iteration.</li>
-<li><strong>fgdmodel</strong> foreground model to be used for next iteration.</li>
+<li><strong>mask</strong> output 8-bit single-channel updated mask. The mask is initialized
+by the function when <code>Mode</code> is set to 'InitWithRect' (see <code>rect</code>).</li>
+<li><strong>bgdmodel</strong> Output array for the background model, to be used for next
+iteration. Do not modify it while you are processing the same image.</li>
+<li><strong>fgdmodel</strong> Output array for the foreground model, to be used for next
+iteration. Do not modify it while you are processing the same image.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>BgdModel</strong> Initial background model from the output.</li>
-<li><strong>FgdModel</strong> Initial foreground model from the output.</li>
-<li><strong>Init</strong> Initialization method. One of the following. Default is
-automatically determined from the second argument.
-<strong>'Rect'</strong> Second argument is treated as a rectangle to start.
-<strong>'Mask'</strong> Second argument is treated as an initial trimap.
-<strong>'Eval'</strong> GrabCut algorithm should just resume.</li>
-<li><strong>MaxIter</strong> Specifies maximum number of iteration.</li>
+<li><strong>BgdModel</strong> Initial array for the background model. A 1x65 double vector.</li>
+<li><strong>FgdModel</strong> Initial array for the foreground model. A 1x65 double vector.</li>
+<li><strong>IterCount</strong> Number of iterations the algorithm should make before
+returning the result. Note that the result can be refined with further
+calls with <code>Mode</code> as 'InitWithMask' or 'Eval'. Default 10</li>
+<li><strong>Mode</strong> Operation mode, default 'Eval'. Could be one of the following:<ul>
+<li><strong>InitWithRect</strong> The function initializes the state and the mask
+using the provided rectangle. After that it runs <code>IterCount</code>
+iterations of the algorithm. This should only be used with the
+variant of the function that takes <code>rect</code> as input.</li>
+<li><strong>InitWithMask</strong> The function initializes the state using the
+provided <code>mask</code>. Then, all the pixels outside of the ROI are
+automatically initialized as background with label 0. This
+should only be used with the variant of the function that takes
+<code>mask</code> as input.</li>
+<li><strong>Eval</strong> The value means that the algorithm should just resume.</li>
 </ul>
+</li>
+</ul>
+
+<p>The function implements the GrabCut image segmentation algorithm.
+<a href="http://en.wikipedia.org/wiki/GrabCut">http://en.wikipedia.org/wiki/GrabCut</a></p>
 </div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="watershed.html">cv.watershed</a></div>
    </body>
 </html>

@@ -17,48 +17,63 @@
       <div class="title">cv.matchShapes</div>
       <div class="helpcontent"><p>Compares two shapes</p>
 
-<pre><code>d = <a href="matchShapes.html">cv.matchShapes</a>(object1, object2)
-d = <a href="matchShapes.html">cv.matchShapes</a>(object1, object2, 'OptionName', optionValue, ...)
+<pre><code>result = <a href="matchShapes.html">cv.matchShapes</a>(contour1, contour2)
+result = <a href="matchShapes.html">cv.matchShapes</a>(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>object1</strong> First contour or grayscale image. If it's contour, a cell array
-of 2-element vectors or 1-by-N-by-2 numeric array are accepted.</li>
-<li><strong>object2</strong> Second contour or grayscale image. If it's contour, a cell array
-of 2-element vectors or 1-by-N-by-2 numeric array are accepted.</li>
+<li><strong>contour1</strong> First contour or grayscale image. If it's contour, a cell
+array of 2-element vectors (of <code>int32</code> or <code>single</code> type) of the form
+<code>{[x,y], ...}</code>. In case of image, a single-channel 8-bit or
+floating-point 2D matrix.</li>
+<li><strong>contour2</strong> Second contour or grayscale image, with a similar type as the
+first contour.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>d</strong> Output score.</li>
+<li><strong>result</strong> Output score.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>Method</strong> Comparison method. One of {'I1','I2','I3'}. default I1.</li>
-<li><strong>Parameter</strong> Parameter value used in comparison.</li>
+<li><strong>Method</strong> Comparison method, default 'I1'. One of:<ul>
+<li><strong>I1</strong></li>
+<li><strong>I2</strong></li>
+<li><strong>I3</strong></li>
+</ul>
+</li>
+<li><strong>Parameter</strong> Method-specific parameter (not supported now). default 0</li>
 </ul>
 
-<p>The function compares two shapes. All three implemented methods use the Hu
-invariants (see HuMoments() ) as follows (<code>A</code> denotes object1,<code>B</code> denotes
-object2):</p>
+<p>The function compares two shapes. All three implemented methods use the
+Hu invariants (see cv.HuMoments).</p>
 
-<pre><code>'I1'    I_1(A,B) = \sum_{i=1,...,7} | 1/m_i^A - 1/m_i^B |
-'I2'    I_2(A,B) = \sum_{i=1,...,7} | m_i^A - m_i^B |
-'I3'    I_3(A,B) = \sum_{i=1,...,7} | m_i^A - m_i^B | / | m_i^A |
-</code></pre>
+<p>The following shape matching methods are available:</p>
 
-<p>where</p>
+<ul>
+<li><p><strong>I1</strong>:</p>
+<p>        I<em>1(A,B) = \sum</em>{i=1,...,7} | 1/m<em>i^A - 1/m</em>i^B |</p>
+</li>
+<li><p><strong>I2</strong>:</p>
+<p>        I<em>2(A,B) = \sum</em>{i=1,...,7} | m<em>i^A - m</em>i^B |</p>
+</li>
+<li><p><strong>I3</strong>:</p>
+<p>        I<em>3(A,B) = \max</em>{i=1,...,7} | m<em>i^A - m</em>i^B | / | m_i^A |</p>
+</li>
+</ul>
 
-<pre><code>       m_i^A = sign(h_i^A) log h_i^A
-       m_i^B = sign(h_i^B) log h_i^B
+<p>where <code>A</code> denotes <code>contour1</code>, <code>B</code> denotes <code>contour2</code>, and:</p>
+
+<pre><code>m_i^A = sign(h_i^A) * log(h_i^A)
+m_i^B = sign(h_i^B) * log(h_i^B)
 </code></pre>
 
 <p>and <code>h_i^A</code>, <code>h_i^B</code> are the Hu moments of <code>A</code> and <code>B</code>, respectively.</p>
-</div><!--after help -->
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="moments.html">cv.moments</a>, <a href="HuMoments.html">cv.HuMoments</a></div>
    </body>
 </html>

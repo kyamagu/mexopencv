@@ -18,21 +18,22 @@
       <div class="helpcontent"><p>Constructs the Gaussian pyramid for an image</p>
 
 <pre><code>dst = <a href="buildPyramid.html">cv.buildPyramid</a>(src)
-dst = <a href="buildPyramid.html">cv.buildPyramid</a>(src, 'MaxLevel', 5)
+dst = <a href="buildPyramid.html">cv.buildPyramid</a>(src, 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>src</strong> Source image.</li>
+<li><strong>src</strong> Source image. Check <a href="pyrDown.html">cv.pyrDown</a> for the list of supported types.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Destination vector of maxlevel+1 images of the same type as src.
-dst{1} will be the same as src . dst{2} is the next pyramid layer,
-a smoothed and down-sized src , and so on.</li>
+<li><strong>dst</strong> Destination vector of <code>Maxlevel+1</code> images of the same type as
+<code>src</code>. A cell array of images. <code>dst{1}</code> will be the same as <code>src</code>.
+<code>dst{2}</code> is the next pyramid layer, a smoothed and down-sized <code>src</code>,
+and so on.</li>
 </ul>
 
 <h2> Options</h2>
@@ -40,11 +41,13 @@ a smoothed and down-sized src , and so on.</li>
 <ul>
 <li><strong>MaxLevel</strong> 0-based index of the last (the smallest) pyramid layer. It
 must be non-negative. default 5</li>
+<li><strong>BorderType</strong> Pixel extrapolation method, ('Constant' isn't supported).
+See <a href="copyMakeBorder.html">cv.copyMakeBorder</a> for details. Default 'Default'</li>
 </ul>
 
-<p>The function constructs a vector of images and builds the Gaussian pyramid by
-recursively applying pyrDown() to the previously built pyramid layers,
-starting from dst{1}==src.</p>
-</div><!--after help -->
+<p>The function constructs a vector of images and builds the Gaussian pyramid
+by recursively applying <a href="pyrDown.html">cv.pyrDown</a> to the previously built pyramid layers,
+starting from <code>dst{1}==src</code>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="pyrDown.html">cv.pyrDown</a>, <a href="pyrUp.html">cv.pyrUp</a></div>
    </body>
 </html>

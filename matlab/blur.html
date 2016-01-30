@@ -18,34 +18,36 @@
       <div class="helpcontent"><p>Smoothes an image using the normalized box filter</p>
 
 <pre><code>dst = <a href="blur.html">cv.blur</a>(src)
-dst = <a href="blur.html">cv.blur</a>(src, 'KSize', [5,5], ...)
+dst = <a href="blur.html">cv.blur</a>(src, 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>src</strong> Source image.</li>
+<li><strong>src</strong> input image; it can have any number of channels, which are
+processed independently, but the depth should be <code>uint8</code>, <code>uint16</code>,
+<code>int16</code>, <code>single</code>, or <code>double</code>.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Destination image of the same size and type as src.</li>
+<li><strong>dst</strong> output image of the same size and type as <code>src</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>KSize</strong> Smoothing kernel size. default [5,5]</li>
-<li><strong>Anchor</strong> Anchor point. The default value Point(-1,-1) means that
+<li><strong>KSize</strong> blurring kernel size. default [5,5]</li>
+<li><strong>Anchor</strong> Anchor point <code>[x,y]</code>. The default value <code>[-1,-1]</code> means that
 the anchor is at the kernel center.</li>
 <li><strong>BorderType</strong> Border mode used to extrapolate pixels outside of the
-image. default 'Default'</li>
+image. See <a href="copyMakeBorder.html">cv.copyMakeBorder</a>. default 'Default'</li>
 </ul>
 
 <p>The function smoothes an image using the kernel:</p>
 
 <pre><code>K = ones(KSize) / prod(KSize)</code></pre>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="medianBlur.html">cv.medianBlur</a> <a href="GaussianBlur.html">cv.GaussianBlur</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="boxFilter.html">cv.boxFilter</a>, <a href="bilateralFilter.html">cv.bilateralFilter</a>, <a href="GaussianBlur.html">cv.GaussianBlur</a>, <a href="medianBlur.html">cv.medianBlur</a></div>
    </body>
 </html>

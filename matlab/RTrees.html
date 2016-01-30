@@ -17,59 +17,90 @@
       <div class="title">cv.RTrees</div>
       <div class="helpcontent"><p>Random Trees</p>
 
-<p>Random trees have been introduced by Leo Breiman and Adele Cutler:
-<a href="http://www.stat.berkeley.edu/users/breiman/RandomForests/">http://www.stat.berkeley.edu/users/breiman/RandomForests/</a> . The algorithm
-can deal with both classification and regression problems. Random trees is
-a collection (ensemble) of tree predictors that is called forest further
+<p>The class implements the random forest predictor.</p>
+
+<h2> Random Trees</h2>
+
+<p>Random trees have been introduced by [BreimanCutler]. The algorithm can
+deal with both classification and regression problems. Random trees is a
+collection (ensemble) of tree predictors that is called <em>forest</em> further
 in this section (the term has been also introduced by L. Breiman). The
 classification works as follows: the random trees classifier takes the
 input feature vector, classifies it with every tree in the forest, and
-outputs the class label that recieved the majority of votes.In case of
-a regression, the classifier response is the average of the responses over
+outputs the class label that recieved the majority of votes.In case of a
+regression, the classifier response is the average of the responses over
 all the trees in the forest.</p>
 
 <p>All the trees are trained with the same parameters but on different
 training sets. These sets are generated from the original training set
-using the bootstrap procedure: for each training set, you randomly select
-the same number of vectors as in the original set ( =N ). The vectors are
-chosen with replacement. That is, some vectors will occur more than once
-and some will be absent. At each node of each trained tree, not all the
-variables are used to find the best split, but a random subset of them.
-With each node a new subset is generated. However, its size is fixed for
-all the nodes and all the trees. It is a training parameter set to
-sqrt(#variables) by default. None of the built trees are pruned.</p>
+using the bootstrap procedure: for each training set, you randomly
+select the same number of vectors as in the original set (<code>=N</code>). The
+vectors are chosen with replacement. That is, some vectors will occur
+more than once and some will be absent. At each node of each trained
+tree, not all the variables are used to find the best split, but a
+random subset of them. With each node a new subset is generated.
+However, its size is fixed for all the nodes and all the trees. It is a
+training parameter set to <code>sqrt(#variables)</code> by default. None of the
+built trees are pruned.</p>
 
 <p>In random trees there is no need for any accuracy estimation procedures,
 such as cross-validation or bootstrap, or a separate test set to get an
 estimate of the training error. The error is estimated internally during
 the training. When the training set for the current tree is drawn by
-sampling with replacement, some vectors are left out (so-called oob
-(out-of-bag) data ). The size of oob data is about N/3 . The
+sampling with replacement, some vectors are left out (so-called
+<em>oob (out-of-bag)</em> data). The size of oob data is about <code>N/3</code>. The
 classification error is estimated by using this oob-data as follows:</p>
 
 <ol>
 <li>Get a prediction for each vector, which is oob relative to the i-th
 tree, using the very i-th tree.</li>
 <li>After all the trees have been trained, for each vector that has ever
-been oob, find the class-winner for it (the class that has got the
+been oob, find the <em>class-winner</em> for it (the class that has got the
 majority of votes in the trees where the vector was oob) and compare
 it to the ground-truth response.</li>
-<li><p>Compute the classification error estimate as a ratio of the number of
+<li>Compute the classification error estimate as a ratio of the number of
 misclassified oob vectors to all the vectors in the original data. In
 case of regression, the oob-error is computed as the squared error
-for oob vectors difference divided by the total number of vectors.</p>
-</li>
-<li><p>Machine Learning, Wald I, July 2002.
-<a href="http://stat-www.berkeley.edu/users/breiman/wald2002-1.pdf">http://stat-www.berkeley.edu/users/breiman/wald2002-1.pdf</a></p>
-</li>
-<li>Looking Inside the Black Box, Wald II, July 2002.
-<a href="http://stat-www.berkeley.edu/users/breiman/wald2002-2.pdf">http://stat-www.berkeley.edu/users/breiman/wald2002-2.pdf</a></li>
-<li>Software for the Masses, Wald III, July 2002.
-<a href="http://stat-www.berkeley.edu/users/breiman/wald2002-3.pdf">http://stat-www.berkeley.edu/users/breiman/wald2002-3.pdf</a></li>
-<li>And other articles from the web site
-<a href="http://www.stat.berkeley.edu/users/breiman/RandomForests/cc_home.htm">http://www.stat.berkeley.edu/users/breiman/RandomForests/cc_home.htm</a></li>
+for oob vectors difference divided by the total number of vectors.</li>
 </ol>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="RTrees.RTrees.html">cv.RTrees/RTrees</a> <a href="RTrees.train.html">cv.RTrees/train</a> <a href="RTrees.predict.html">cv.RTrees/predict</a></div>
+
+<h2> References</h2>
+
+<p>[BreimanCutler]:</p>
+
+<blockquote>
+<p>Leo Breiman and Adele Cutler:
+<a href="http://www.stat.berkeley.edu/users/breiman/RandomForests/">http://www.stat.berkeley.edu/users/breiman/RandomForests/</a></p>
+</blockquote>
+
+<p>[1]:</p>
+
+<blockquote>
+<p>Machine Learning, Wald I, July 2002.
+<a href="http://stat-www.berkeley.edu/users/breiman/wald2002-1.pdf">http://stat-www.berkeley.edu/users/breiman/wald2002-1.pdf</a></p>
+</blockquote>
+
+<p>[2]:</p>
+
+<blockquote>
+<p>Looking Inside the Black Box, Wald II, July 2002.
+<a href="http://stat-www.berkeley.edu/users/breiman/wald2002-2.pdf">http://stat-www.berkeley.edu/users/breiman/wald2002-2.pdf</a></p>
+</blockquote>
+
+<p>[3]:</p>
+
+<blockquote>
+<p>Software for the Masses, Wald III, July 2002.
+<a href="http://stat-www.berkeley.edu/users/breiman/wald2002-3.pdf">http://stat-www.berkeley.edu/users/breiman/wald2002-3.pdf</a></p>
+</blockquote>
+
+<p>[4]:</p>
+
+<blockquote>
+<p>And other articles from the web site
+<a href="http://www.stat.berkeley.edu/users/breiman/RandomForests/cc_home.htm">http://www.stat.berkeley.edu/users/breiman/RandomForests/cc_home.htm</a></p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="RTrees.RTrees.html">cv.RTrees/RTrees</a>, <a href="DTrees.html">cv.DTrees</a>, <a href="Boost.html">cv.Boost</a>, fitensemble</div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -92,7 +123,7 @@ for oob vectors difference divided by the total number of vectors.</p>
       <table class="summary-list">
          <tr class="summary-item">
             <td class="name"><a href="RTrees.RTrees.html">RTrees</a></td>
-            <td class="m-help">Random Trees classifier&nbsp;</td>
+            <td class="m-help">Creates/trains a new Random Trees model&nbsp;</td>
          </tr>
       </table>
       <!--Properties-->
@@ -100,16 +131,52 @@ for oob vectors difference divided by the total number of vectors.</p>
       </div>
       <table class="summary-list">
          <tr class="summary-item">
-            <td class="name"><a href="RTrees.ActiveVarMask.html">ActiveVarMask</a></td>
-            <td class="m-help">Mask of active variables&nbsp;</td>
+            <td class="name"><a href="RTrees.ActiveVarCount.html">ActiveVarCount</a></td>
+            <td class="m-help">The size of the randomly selected subset of features at each tree&nbsp;</td>
          </tr>
          <tr class="summary-item">
-            <td class="name"><a href="RTrees.Params.html">Params</a></td>
-            <td class="m-help">Object parameters&nbsp;</td>
+            <td class="name"><a href="RTrees.CVFolds.html">CVFolds</a></td>
+            <td class="m-help">If `CVFolds > 1` then algorithms prunes the built decision tree&nbsp;</td>
          </tr>
          <tr class="summary-item">
-            <td class="name"><a href="RTrees.TreeCount.html">TreeCount</a></td>
-            <td class="m-help">Number of trees&nbsp;</td>
+            <td class="name"><a href="RTrees.CalculateVarImportance.html">CalculateVarImportance</a></td>
+            <td class="m-help">Whether to compute variables importance.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="RTrees.MaxCategories.html">MaxCategories</a></td>
+            <td class="m-help">Cluster possible values of a categorical variable into&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="RTrees.MaxDepth.html">MaxDepth</a></td>
+            <td class="m-help">The maximum possible depth of the tree.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="RTrees.MinSampleCount.html">MinSampleCount</a></td>
+            <td class="m-help">If the number of samples in a node is less than this parameter then&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="RTrees.Priors.html">Priors</a></td>
+            <td class="m-help">The array of a priori class probabilities, sorted by the class label&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="RTrees.RegressionAccuracy.html">RegressionAccuracy</a></td>
+            <td class="m-help">Termination criteria for regression trees.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="RTrees.TermCriteria.html">TermCriteria</a></td>
+            <td class="m-help">The termination criteria that specifies when the training algorithm&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="RTrees.TruncatePrunedTree.html">TruncatePrunedTree</a></td>
+            <td class="m-help">If true then pruned branches are physically removed from the tree.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="RTrees.Use1SERule.html">Use1SERule</a></td>
+            <td class="m-help">If true then a pruning will be harsher.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="RTrees.UseSurrogates.html">UseSurrogates</a></td>
+            <td class="m-help">If true then surrogate splits will be built.&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="name"><a href="RTrees.id.html">id</a></td>
@@ -133,8 +200,16 @@ for oob vectors difference divided by the total number of vectors.</p>
                &nbsp;
                
             </td>
+            <td class="name"><a href="RTrees.calcError.html">calcError</a></td>
+            <td class="m-help">Computes error on the training or test dataset&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="RTrees.clear.html">clear</a></td>
-            <td class="m-help">Deallocates memory and resets the model state&nbsp;</td>
+            <td class="m-help">Clears the algorithm state&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -143,6 +218,14 @@ for oob vectors difference divided by the total number of vectors.</p>
             </td>
             <td class="name"><a href="RTrees.delete.html">delete</a></td>
             <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="RTrees.empty.html">empty</a></td>
+            <td class="m-help">Returns true if the algorithm is empty&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -181,6 +264,54 @@ for oob vectors difference divided by the total number of vectors.</p>
                &nbsp;
                
             </td>
+            <td class="name"><a href="RTrees.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="RTrees.getNodes.html">getNodes</a></td>
+            <td class="m-help">Returns all the nodes&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="RTrees.getRoots.html">getRoots</a></td>
+            <td class="m-help">GETROOS  Returns indices of root nodes&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="RTrees.getSplits.html">getSplits</a></td>
+            <td class="m-help">Returns all the splits&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="RTrees.getSubsets.html">getSubsets</a></td>
+            <td class="m-help">Returns all the bitsets for categorical splits&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="RTrees.getVarCount.html">getVarCount</a></td>
+            <td class="m-help">Returns the number of variables in training samples&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="RTrees.getVarImportance.html">getVarImportance</a></td>
             <td class="m-help">Returns the variable importance array&nbsp;</td>
          </tr>
@@ -189,32 +320,24 @@ for oob vectors difference divided by the total number of vectors.</p>
                &nbsp;
                
             </td>
-            <td class="name"><a href="RTrees.get_proximity.html">get_proximity</a></td>
-            <td class="m-help">Retrieves the proximity measure between two training samples&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="attributes">
-               &nbsp;
-               
-            </td>
-            <td class="name"><a href="RTrees.get_train_error.html">get_train_error</a></td>
-            <td class="m-help">Returns the training error&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="attributes">
-               &nbsp;
-               
-            </td>
-            <td class="name"><a href="RTrees.get_tree_count.html">get_tree_count</a></td>
-            <td class="m-help">Returns the number of trees in the constructed random forest&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="attributes">
-               &nbsp;
-               
-            </td>
             <td class="name"><a href="RTrees.gt.html">gt</a></td>
             <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="RTrees.isClassifier.html">isClassifier</a></td>
+            <td class="m-help">Returns true if the model is a classifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="RTrees.isTrained.html">isTrained</a></td>
+            <td class="m-help">Returns true if the model is trained&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">Sealed 
@@ -238,7 +361,7 @@ for oob vectors difference divided by the total number of vectors.</p>
                
             </td>
             <td class="name"><a href="RTrees.load.html">load</a></td>
-            <td class="m-help">Loads the model from a file&nbsp;</td>
+            <td class="m-help">Loads algorithm from a file or a string&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -270,15 +393,7 @@ for oob vectors difference divided by the total number of vectors.</p>
                
             </td>
             <td class="name"><a href="RTrees.predict.html">predict</a></td>
-            <td class="m-help">Predicts a response for an input sample&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="attributes">
-               &nbsp;
-               
-            </td>
-            <td class="name"><a href="RTrees.predict_prob.html">predict_prob</a></td>
-            <td class="m-help">Returns a fuzzy-predicted class label&nbsp;</td>
+            <td class="m-help">Predicts response(s) for the provided sample(s)&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -286,7 +401,7 @@ for oob vectors difference divided by the total number of vectors.</p>
                
             </td>
             <td class="name"><a href="RTrees.save.html">save</a></td>
-            <td class="m-help">Saves the model to a file&nbsp;</td>
+            <td class="m-help">Saves the algorithm parameters to a file or a string&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">

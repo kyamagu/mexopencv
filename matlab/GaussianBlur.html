@@ -18,39 +18,43 @@
       <div class="helpcontent"><p>Smoothes an image using a Gaussian filter</p>
 
 <pre><code>dst = <a href="GaussianBlur.html">cv.GaussianBlur</a>(src)
-dst = <a href="GaussianBlur.html">cv.GaussianBlur</a>(src, 'KSize', [5,5], ...)
+dst = <a href="GaussianBlur.html">cv.GaussianBlur</a>(src, 'OptionName',optionValue, ...)
 </code></pre>
-
-<p>The function convolves the source image with the specified Gaussian kernel.</p>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>src</strong> Source image.</li>
+<li><strong>src</strong> input image; the image can have any number of channels, which are
+processed independently, but the depth should be <code>uint8</code>, <code>uint16</code>,
+<code>int16</code>, <code>single</code> or <code>double</code>.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Destination image of the same size and type as src.</li>
+<li><strong>dst</strong> output image of the same size and type as <code>src</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>KSize</strong> Gaussian kernel size. ksize.width and ksize.height can differ
-but they both must be positive and odd. Or, they can be zeros.
-and then they are computed from sigma*. default [5,5]</li>
+<li><strong>KSize</strong> Gaussian kernel size. <code>KSize(1)</code> and <code>KSize(2)</code> can differ
+but they both must be positive and odd. Or, they can be zeros and they
+are computed from <code>SigmaX</code> and <code>SigmaY</code>. default [5,5]</li>
 <li><strong>SigmaX</strong> Gaussian kernel standard deviation in X direction. default 0</li>
-<li><strong>SigmaY</strong> Gaussian kernel standard deviation in Y direction. If sigmaY is
-zero, it is set to be equal to sigmaX . If both sigmas are
-zeros, they are computed from ksize.width and ksize.height,
-respectively. See getGaussianKernel() for details. To fully
-control the result regardless of possible future modifications
-of all this semantics, it is recommended to specify all of
-ksize, sigmaX, and sigmaY. default 0</li>
-<li><strong>BorderType</strong> Pixel extrapolation method. default 'Default'</li>
+<li><strong>SigmaY</strong> Gaussian kernel standard deviation in Y direction. If <code>SigmaY</code>
+is zero, it is set to be equal to <code>SigmaX</code>. If both sigmas are zeros,
+they are computed from <code>KSize(2)</code> and <code>KSize(1)</code>, respectively (see
+<a href="getGaussianKernel.html">cv.getGaussianKernel</a> for details). To fully control the result
+regardless of possible future modifications of all this semantics, it
+is recommended to specify all of <code>KSize</code>, <code>SigmaX</code>, and <code>SigmaY</code>.
+default 0</li>
+<li><strong>BorderType</strong> Pixel extrapolation method, see <a href="copyMakeBorder.html">cv.copyMakeBorder</a>.
+default 'Default'</li>
 </ul>
-</div><!--after help -->
+
+<p>The function convolves the source image with the specified Gaussian kernel.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="sepFilter2D.html">cv.sepFilter2D</a>, <a href="filter2D.html">cv.filter2D</a>, <a href="blur.html">cv.blur</a>, <a href="boxFilter.html">cv.boxFilter</a>,
+   <a href="bilateralFilter.html">cv.bilateralFilter</a>, <a href="medianBlur.html">cv.medianBlur</a></div>
    </body>
 </html>

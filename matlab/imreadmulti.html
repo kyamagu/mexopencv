@@ -1,0 +1,75 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.imreadmulti</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.imreadmulti</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.imreadmulti</div>
+      <div class="helpcontent"><p>Loads a multi-page image from a file</p>
+
+<pre><code>imgs = <a href="imreadmulti.html">cv.imreadmulti</a>(filename)
+imgs = <a href="imreadmulti.html">cv.imreadmulti</a>(filename, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>filename</strong> Name of file to be loaded.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>imgs</strong> A cell-array of images holding each page, if more than one. If
+If the image cannot be read (because of IO errors, improper
+permissions, unsupported or invalid format), the function throws an
+error.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Unchanged</strong> If set, return the loaded image as is (with alpha channel,
+otherwise it gets cropped). Both the depth and number of channels are
+unchanged as determined by the decoder. default false</li>
+<li><strong>AnyDepth</strong> If set, return 16-bit/32-bit image when the input has the
+corresponding depth, otherwise convert it to 8-bit. default false</li>
+<li><strong>AnyColor</strong> If set, the image is read in any possible color format.
+default true</li>
+<li><strong>Color</strong> If set, always convert image to the 3 channel BGR color image.
+default false</li>
+<li><strong>Grayscale</strong> If set, always convert image to the single channel grayscale
+image. default false</li>
+<li><strong>GDAL</strong> If set, use the gdal driver for loading the image. default false</li>
+<li><strong>Flags</strong> Advanced option to directly set the flag specifying the depth
+and color type of a loaded image. Note that setting this integer flag
+overrides all the other flag options. Not set by default:<ul>
+<li><code>&gt;0</code>: Return a 3-channel color image. Note that in the current
+implementation the alpha channel, if any, is stripped from the
+output image. For example, a 4-channel RGBA image is loaded as
+RGB if <code>Flags &gt;= 0</code>.</li>
+<li><code>=0</code>: Return a grayscale image</li>
+<li><code>&lt;0</code>: Return the loaded image as is (with alpha channel if present).</li>
+</ul>
+</li>
+<li><strong>FlipChannels</strong> in case the output is color image, flips the color order
+from OpenCV's BGR/BGRA to MATLAB's RGB/RGBA order. default true</li>
+</ul>
+
+<p>The function <a href="imreadmulti.html">cv.imreadmulti</a> loads a multi-page image from the specified file
+into a cell-array of matrices.</p>
+
+<p>See <a href="imread.html">cv.imread</a> for details.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="imread.html">cv.imread</a>, <a href="imread.html">imread</a></div>
+   </body>
+</html>

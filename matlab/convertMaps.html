@@ -17,28 +17,70 @@
       <div class="title">cv.convertMaps</div>
       <div class="helpcontent"><p>Converts image transformation maps from one representation to another</p>
 
-<pre><code>[map1, map2] = <a href="convertMaps.html">cv.convertMaps</a>(X, Y)
-[map1, map2] = <a href="convertMaps.html">cv.convertMaps</a>(XY)
+<pre><code>[dstmap1, dstmap2] = <a href="convertMaps.html">cv.convertMaps</a>(map1, map2)
+[dstmap1, dstmap2] = <a href="convertMaps.html">cv.convertMaps</a>(map1)
+[...] = <a href="convertMaps.html">cv.convertMaps</a>(..., 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>src</strong> Source image.</li>
-<li><strong>X</strong> x values of the transformation, M-by-N-by-1 array</li>
-<li><strong>Y</strong> y values of the transformation, M-by-N-by-1 array</li>
-<li><strong>XY</strong> (x,y) values of the transformation, M-by-N-by-2 array</li>
+<li><strong>map1</strong> The first input map of either (x,y) points or just x values of
+the transformation having the type <code>int16</code> (MxNx2), <code>single</code> (MxN), or
+<code>single</code> (MxNx2).</li>
+<li><strong>map2</strong> The second input map of y values of the transformation having the
+type <code>uint16</code> (MxN) or <code>single</code> (MxN), or none (empty map if <code>map1</code> is
+(x,y) points), respectively.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>map1</strong> The first map of the fixed-point representation, int16 type</li>
-<li><strong>map2</strong> The second map of the fixed-point representation, uint16 type</li>
+<li><strong>dstmap1</strong> The first output map that has the type specified by
+<code>DstMap1Type</code> and the same row/col size as <code>src</code>. See details below.</li>
+<li><strong>dstmap2</strong> The second output map. See details below.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>DstMap1Type</strong> Type of the first output map. The default value of -1
+chooses an appropriate type depending on the direction of conversion.
+So if <code>map1</code> is in fixed-point representation, the output type is
+'single2' (for combined floating-point representation), otherwise if
+<code>map1</code> is in floating-point representation, the output type is `int16'
+(for fixed-point representation). Accepted types are:<ul>
+<li><strong>int16</strong> first output map is a MxNx2 <code>int16</code> array</li>
+<li><strong>single1</strong> first output map is a MxNx1 <code>single</code> matrix</li>
+<li><strong>single2</strong> first output map is a MxNx2 <code>single</code> matrix</li>
+</ul>
+</li>
+<li><strong>NNInterpolation</strong> Flag indicating whether the fixed-point maps are used
+for the nearest-neighbor or for a more complex interpolation. If this
+flag is true, the second output will be empty. default false</li>
 </ul>
 
 <p>The function converts a pair of maps for <a href="remap.html">cv.remap</a> from one representation to
-another</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="remap.html">cv.remap</a></div>
+another. The following options <code>(map1, map2) -&gt; (dstmap1, dstmap2)</code> are
+supported (in terms of class and number of channels of maps):</p>
+
+<ul>
+<li><p><code>(single 1-cn, single 1-cn) -&gt; (int16 2-cn, uint16 1-cn)</code>: This is the
+most frequently used conversion operation, in which the original
+floating-point maps (see cv.remap) are converted to a more compact and
+much faster fixed-point representation. The first output array contains
+the rounded coordinates and the second array (created only when
+<code>NNInterpolation=false</code>) contains indices in the interpolation tables.</p>
+</li>
+<li><p><code>(single 2-cn, []) -&gt; (int16 2-cn, uint16 1-cn)</code>: The same as above but
+the original maps are stored in one 2-channel matrix.</p>
+</li>
+<li><p><code>(int16 2-cn, uint16 1-cn) -&gt; (single 1-cn, single 1-cn)</code> or
+<code>(int16 2-cn, uint16 1-cn) -&gt; (single 2-cn, [])</code>: Reverse conversion.
+Obviously, the reconstructed floating-point maps will not be exactly the
+same as the originals.</p>
+</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="remap.html">cv.remap</a>, <a href="undistort.html">cv.undistort</a>, <a href="initUndistortRectifyMap.html">cv.initUndistortRectifyMap</a></div>
    </body>
 </html>

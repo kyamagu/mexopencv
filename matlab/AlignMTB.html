@@ -1,0 +1,221 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.AlignMTB</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.AlignMTB</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.AlignMTB</div>
+      <div class="helpcontent"><p>Aligns images of the same scene with different exposures</p>
+
+<p>This algorithm converts images to median threshold bitmaps (1 for pixels
+brighter than median luminance and 0 otherwise) and than aligns the
+resulting bitmaps using bit operations.</p>
+
+<p>It is invariant to exposure, so exposure values and camera response are
+not necessary.</p>
+
+<p>In this implementation new image regions are filled with zeros.</p>
+
+<p>For more information see [GW03].</p>
+
+<h2> References</h2>
+
+<p>[GW03]:</p>
+
+<blockquote>
+<p>Greg Ward. &quot;Fast, robust image registration for compositing high
+dynamic range photographs from hand-held exposures&quot;.
+Journal of graphics tools, 8(2):17-30, 2003.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="AlignMTB.AlignMTB.html">cv.AlignMTB/AlignMTB</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="AlignMTB.AlignMTB.html">AlignMTB</a></td>
+            <td class="m-help">Creates AlignMTB object&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="AlignMTB.Cut.html">Cut</a></td>
+            <td class="m-help">if true cuts images, otherwise fills the new regions with zeros.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="AlignMTB.ExcludeRange.html">ExcludeRange</a></td>
+            <td class="m-help">range for exclusion bitmap that is constructed to suppress noise&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="AlignMTB.MaxBits.html">MaxBits</a></td>
+            <td class="m-help">logarithm to the base 2 of maximal shift in each dimension.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="AlignMTB.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AlignMTB.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AlignMTB.calculateShift.html">calculateShift</a></td>
+            <td class="m-help">Calculates shift between two images&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AlignMTB.computeBitmaps.html">computeBitmaps</a></td>
+            <td class="m-help">Computes median threshold and exclude bitmaps of given image&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AlignMTB.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AlignMTB.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AlignMTB.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AlignMTB.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AlignMTB.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AlignMTB.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AlignMTB.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AlignMTB.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AlignMTB.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AlignMTB.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AlignMTB.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AlignMTB.process.html">process</a></td>
+            <td class="m-help">Aligns images&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AlignMTB.shiftMat.html">shiftMat</a></td>
+            <td class="m-help">Helper function, that shift Mat filling new regions with zeros&nbsp;</td>
+         </tr>
+      </table>
+   </body>
+</html>

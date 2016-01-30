@@ -1,0 +1,94 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.TwoPassStabilizer/setMotionStabilizer</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.TwoPassStabilizer/setMotionStabilizer</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.TwoPassStabilizer/setMotionStabilizer</div>
+      <div class="helpcontent"><p>Set the motion stabilization algorithm for the video stabilizer</p>
+
+<pre><code>stab.setMotionStabilizer(motionStabType, ...)
+
+stab.setMotionStabilizer('InpaintingPipeline', {{motionStabType, ...}, {motionStabType, ...}, ...})
+stab.setMotionStabilizer('GaussianMotionFilter', 'OptionName',optionValue, ...)
+stab.setMotionStabilizer('LpMotionStabilizer', 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>motionStabType</strong> motion stabilization method. One of:<ul>
+<li><strong>MotionStabilizationPipeline</strong> A pipeline composed of
+other motion stabilizers, applied in sequence.</li>
+<li><strong>GaussianMotionFilter</strong></li>
+<li><strong>LpMotionStabilizer</strong> Note: To be able to use this
+method you must build OpenCV with CLP library
+support.</li>
+</ul>
+</li>
+</ul>
+
+<h2> Options</h2>
+
+<p>The following are options for the various algorithms:</p>
+
+<h3> <code>GaussianMotionFilter</code></h3>
+
+<ul>
+<li><strong>Radius</strong> default 15</li>
+<li><strong>Stdev</strong> If negative, uses <code>sqrt(Radius)</code>. default -1.0</li>
+</ul>
+
+<h3> <code>LpMotionStabilizer</code></h3>
+
+<ul>
+<li><strong>MotionModel</strong> Describes motion model between two point
+clouds. One of:<ul>
+<li><strong>Translation</strong></li>
+<li><strong>TranslationAndScale</strong></li>
+<li><strong>Rotation</strong></li>
+<li><strong>Rigid</strong></li>
+<li><strong>Similarity</strong> (default)</li>
+<li><strong>Affine</strong></li>
+<li><strong>Homography</strong></li>
+<li><strong>Unknown</strong></li>
+</ul>
+</li>
+<li><strong>FrameSize</strong> default [0,0]</li>
+<li><strong>TrimRatio</strong> default 0.1</li>
+<li><strong>Weight1</strong> default 1</li>
+<li><strong>Weight2</strong> default 10</li>
+<li><strong>Weight3</strong> default 100</li>
+<li><strong>Weight4</strong> default 100</li>
+</ul>
+
+<p>The class uses <code>GaussianMotionFilter</code> by default.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="TwoPassStabilizer.getMotionStabilizer.html">cv.TwoPassStabilizer/getMotionStabilizer</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

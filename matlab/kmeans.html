@@ -17,7 +17,7 @@
       <div class="title">cv.kmeans</div>
       <div class="helpcontent"><p>Finds centers of clusters and groups input samples around the clusters</p>
 
-<pre><code>labels = <a href="kmeans.html">cv.kmeans</a>(samples, k)
+<pre><code>labels = <a href="kmeans.html">cv.kmeans</a>(data, K)
 [labels, centers, compactness] = <a href="kmeans.html">cv.kmeans</a>(...)
 [...] = <a href="kmeans.html">cv.kmeans</a>(..., 'OptionName', optionValue, ...)
 </code></pre>
@@ -25,8 +25,11 @@
 <h2> Input</h2>
 
 <ul>
-<li><strong>samples</strong> Floating-point matrix of input samples, one row per sample.</li>
-<li><strong>k</strong> Number of clusters to split the set by.</li>
+<li><strong>data</strong> Data for clustering. An array of D-dimensional points with
+floating-point coordinates is needed. Examples of this matrix can be:
+NxD numeric matrix (one row per sample), or Nx1xD/1xNxD array
+(with dimensions across slices).</li>
+<li><strong>K</strong> Number of clusters to split the set by.</li>
 </ul>
 
 <h2> Output</h2>
@@ -36,7 +39,7 @@
 sample.</li>
 <li><strong>centers</strong> Output matrix of the cluster centers, one row per each
 cluster center.</li>
-<li><strong>comactness</strong> Measure of compactness. See below.</li>
+<li><strong>compactness</strong> Measure of compactness. See below.</li>
 </ul>
 
 <h2> Options</h2>
@@ -44,9 +47,10 @@ cluster center.</li>
 <ul>
 <li><strong>Criteria</strong> The algorithm termination criteria, that is, the maximum
 number of iterations and/or the desired accuracy. The accuracy is
-specified as criteria.epsilon. As soon as each of the cluster
-centers moves by less than criteria.epsilon on some iteration, the
-algorithm stops.</li>
+specified as <code>criteria.epsilon</code>. As soon as each of the cluster
+centers moves by less than <code>criteria.epsilon</code> on some iteration, the
+algorithm stops. default
+<code>struct('type','Count+EPS', 'maxCount',100, 'epsilon',eps('float'))</code></li>
 <li><strong>Attempts</strong> The number of times the algorithm is executed using
 different initial labelings. The algorithm returns the labels that
 yield the best compactness (see the last function parameter).
@@ -58,15 +62,19 @@ Vassilvitskii [Arthur2007].</li>
 </ul>
 </li>
 <li><strong>InitialLabels</strong> Integer array that stores the initial cluster indices
-for every sample.</li>
+for every sample. During the first (and possibly the only) attempt,
+kmeans uses the user-supplied labels instead of computing them from
+the initial centers. For the second and further attempts, it uses
+the random or semi-random centers. Use one of the <code>Initialization</code>
+methods to specify the exact method. Not set by default.</li>
 </ul>
 
-<p>The function kmeans implements a k-means algorithm that finds the centers
-of clusterCount clusters and groups the input samples around the
-clusters. As an output,  contains a 0-based cluster index for the sample
-stored in the  row of the samples matrix.</p>
+<p>The function <a href="kmeans.html">cv.kmeans</a> implements a k-means algorithm that finds the centers
+of <code>K</code> clusters and groups the input samples around the clusters. As an
+output, <code>labels(i)</code> contains a 0-based cluster index for the sample stored
+in the i-th row of the samples matrix.</p>
 
-<p>The function returns the compactness measure that is computed as</p>
+<p>The function returns the compactness measure that is computed as:</p>
 
 <pre><code>\sum_i || samples_i - centers_{labels_i} ||^2
 </code></pre>
@@ -75,8 +83,18 @@ stored in the  row of the samples matrix.</p>
 corresponding labels and the compactness value are returned by the
 function. Basically, you can use only the core of the function, set the
 number of attempts to 1, initialize labels each time using a custom
-algorithm, pass them with the 'InitialLabels' option, and then choose the
+algorithm, pass them with the <code>InitialLabels</code> option, and then choose the
 best (most-compact) clustering.</p>
-</div><!--after help -->
+
+<h2> References</h2>
+
+<p>[Arthur2007]:</p>
+
+<blockquote>
+<p>D. Arthur, S. Vassilvitskii: &quot;k-means++: the advantages of carefull seeding&quot;.
+In Proceedings of the eighteenth annual ACM-SIAM symposium
+on Discrete algorithms, 1027-1035, 2007.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> kmeans</div>
    </body>
 </html>

@@ -24,38 +24,42 @@ lines = <a href="HoughLines.html">cv.HoughLines</a>(..., 'OptionName', optionVal
 <h2> Input</h2>
 
 <ul>
-<li><strong>image</strong> 8-bit, single-channel, grayscale input image.</li>
+<li><strong>image</strong> 8-bit, single-channel binary source image.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>lines</strong> Output vector of lines. Each line is represented by a two-element
-vector (rho,theta). rho is the distance from the coordinate origin
-(0,0) (top-left corner of the image). theta is the line rotation angle
-in radians (0 ~ vertical line, PI/2 ~ horizontal line).</li>
+<li><strong>lines</strong> Output vector of lines. A cell-array of 2-element vectors
+<code>{[rho,theta], ...}</code>. <code>rho</code> is the distance from the coordinate origin
+<code>(0,0)</code> (top-left corner of the image). <code>theta</code> is the line rotation
+angle in radians (0 ~ vertical line, pi/2 ~ horizontal line).</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
 <li><strong>Rho</strong> Distance resolution of the accumulator in pixels. default 1.</li>
-<li><strong>Theta</strong> Angle resolution of the accumulator in radians. default PI/180.</li>
+<li><strong>Theta</strong> Angle resolution of the accumulator in radians. default pi/180.</li>
 <li><strong>Threshold</strong> Accumulator threshold parameter. Only those lines are
-returned that get enough votes (&gt;threshold). default 80.</li>
+returned that get enough votes (<code>&gt;Threshold</code>). default 80.</li>
 <li><strong>SRN</strong> For the multi-scale Hough transform, it is a divisor for the
-distance resolution rho . The coarse accumulator distance resolution
-is rho and the accurate accumulator resolution is rho/srn . If both
-srn=0 and stn=0, the classical Hough transform is used. Otherwise,
+distance resolution <code>Rho</code>. The coarse accumulator distance resolution
+is <code>Rho</code> and the accurate accumulator resolution is <code>Rho/SRN</code>. If both
+<code>SRN=0</code> and <code>STN=0</code>, the classical Hough transform is used. Otherwise,
 both these parameters should be positive. default 0.</li>
 <li><strong>STN</strong> For the multi-scale Hough transform, it is a divisor for the
-distance resolution theta. default 0.</li>
+distance resolution <code>Theta</code>. default 0.</li>
+<li><strong>MinTheta</strong> For standard and multi-scale Hough transform, minimum angle
+to check for lines. Must fall between 0 and <code>MaxTheta</code>. default 0</li>
+<li><strong>MaxTheta</strong> For standard and multi-scale Hough transform, maximum angle
+to check for lines. Must fall between <code>MinTheta</code> and pi. default pi</li>
 </ul>
 
 <p>The function implements the standard or standard multi-scale Hough transform
 algorithm for line detection. See
-<a href="http://homepages.inf.ed.ac.uk/rbf/HIPR2/hough.htm">http://homepages.inf.ed.ac.uk/rbf/HIPR2/hough.htm</a> for a good explanation of
-Hough transform.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HoughLinesP.html">cv.HoughLinesP</a></div>
+<a href="http://homepages.inf.ed.ac.uk/rbf/HIPR2/hough.htm">http://homepages.inf.ed.ac.uk/rbf/HIPR2/hough.htm</a>
+for a good explanation of Hough transform.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HoughLinesP.html">cv.HoughLinesP</a>, hough, houghpeaks, houghlines</div>
    </body>
 </html>

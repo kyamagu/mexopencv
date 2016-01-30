@@ -23,22 +23,28 @@
 <h2> Input</h2>
 
 <ul>
-<li><strong>X</strong> Vectors to be projected</li>
+<li><strong>X</strong> input vector(s); must have the same dimensionality and
+the same layout as the input data used at PCA phase, that
+is, if 'Row' was specified, then <code>size(X,2)==size(data,2)</code>
+(vector dimensionality) and <code>size(X,1)</code> is the number of
+vectors to project, and the same is true for the 'Col'
+case.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>Y</strong> PC coefficients</li>
+<li><strong>Y</strong> output vectors (PC coefficients); in case of 'Col', the
+output matrix has as many columns as the number of input
+vectors, this means that <code>size(Y,2)==size(X,2)</code> and the
+number of rows match the number of principal components
+(for example, <code>MaxComponents</code> parameter passed to the
+constructor).</li>
 </ul>
 
-<p>The methods project one or more vectors to the principal
+<p>The method project one or more vectors to the principal
 component subspace, where each vector projection is
-represented by coefficients in the principal component basis.
-The first form of the method returns the matrix that the
-second form writes to the result. So the first form can be
-used as a part of expression while the second form can be
-more efficient in a processing loop.</p>
+represented by coefficients in the principal component basis.</p>
 </div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="PCA.html">cv.PCA</a> <a href="PCA.backProject.html">cv.PCA/backProject</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>

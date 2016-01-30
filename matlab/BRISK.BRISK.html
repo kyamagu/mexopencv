@@ -1,0 +1,58 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.BRISK/BRISK</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.BRISK/BRISK</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.BRISK/BRISK</div>
+      <div class="helpcontent"><p>The BRISK constructor.</p>
+
+<pre><code>obj = <a href="BRISK.html">cv.BRISK</a>()
+obj = <a href="BRISK.html">cv.BRISK</a>(radiusList, numberList)
+obj = <a href="BRISK.html">cv.BRISK</a>(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>radiusList</strong> defines the radii (in pixels) where the samples
+around a keypoint are taken (for keypoint scale 1).</li>
+<li><strong>numberList</strong> defines the number of sampling points on the
+sampling circle. Must be the same size as <code>radiusList</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<p>Options accepted by first variant:</p>
+
+<ul>
+<li><strong>Threshold</strong> FAST/AGAST detection threshold score. default 30</li>
+<li><strong>Octaves</strong> detection octaves. Use 0 to do single scale.
+default 3</li>
+<li><strong>PatternScale</strong> apply this scale to the pattern used for
+sampling the neighbourhood of a keypoint. default 1.0</li>
+</ul>
+
+<p>Options accepted by second variant for a custom pattern:</p>
+
+<ul>
+<li><strong>DMax</strong> threshold for the short pairings used for descriptor
+formation (in pixels for keypoint scale 1). default 5.85</li>
+<li><strong>DMin</strong> threshold for the long pairings used for orientation
+determination (in pixels for keypoint scale 1). default 8.2</li>
+<li><strong>IndexChange</strong> index remapping of the bits.
+default empty vector.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BRISK.detectAndCompute.html">cv.BRISK/detectAndCompute</a></div>
+   </body>
+</html>

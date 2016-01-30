@@ -1,0 +1,56 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.rotatedRectangleIntersection</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.rotatedRectangleIntersection</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.rotatedRectangleIntersection</div>
+      <div class="helpcontent"><p>Finds out if there is any intersection between two rotated rectangles.</p>
+
+<pre><code>[intersectingRegion,result] = <a href="rotatedRectangleIntersection.html">cv.rotatedRectangleIntersection</a>(rect1, rect2)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>rect1</strong> First rectangle. Structure with the following fields:<ul>
+<li><strong>center</strong> The rectangle mass center <code>[x,y]</code>.</li>
+<li><strong>size</strong> Width and height of the rectangle <code>[w,h]</code>.</li>
+<li><strong>angle</strong> The rotation angle in a clockwise direction.
+When the angle is 0, 90, 180, 270 etc., the
+rectangle becomes an up-right rectangle.</li>
+</ul>
+</li>
+<li><strong>rect2</strong> Second rectangle. Similar struct to first.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>intersectingRegion</strong> The output array of the verticies of the
+intersecting region. It returns at most 8 vertices. A cell array of
+2D points <code>{[x,y], ...}</code></li>
+<li><strong>result</strong> types of intersection between rectangles. One of:<ul>
+<li><strong>None</strong> No intersection.</li>
+<li><strong>Partial</strong> There is a partial intersection.</li>
+<li><strong>Full</strong> One of the rectangle is fully enclosed in the other.</li>
+</ul>
+</li>
+</ul>
+
+<p>Finds out if there is any intersection between two rotated rectangles.
+If there is then the vertices of the interesecting region are returned as
+well.</p>
+</div><!--after help -->
+   </body>
+</html>

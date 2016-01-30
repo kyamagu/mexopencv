@@ -17,11 +17,25 @@
       <div class="title">cv.CascadeClassifier/load</div>
       <div class="helpcontent"><p>Loads a classifier from a file</p>
 
-<pre><code>S = classifier.load(filename)
+<pre><code>classifier.load(filename)
+status = classifier.load(filename)
 </code></pre>
 
-<p>S is a logical value indicating success of load when true</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="CascadeClassifier.html">cv.CascadeClassifier</a></div>
+<h2> Input</h2>
+
+<ul>
+<li><strong>filename</strong> Name of the file from which the classifier is
+loaded. The file may contain an old HAAR classifier
+trained by the <code>haartraining</code> application or a new cascade
+classifier trained by the <code>traincascade</code> application.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>status</strong> a logical value indicating success of load.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="CascadeClassifier.CascadeClassifier.html">cv.CascadeClassifier/CascadeClassifier</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

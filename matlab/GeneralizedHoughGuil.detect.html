@@ -1,0 +1,60 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.GeneralizedHoughGuil/detect</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.GeneralizedHoughGuil/detect</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.GeneralizedHoughGuil/detect</div>
+      <div class="helpcontent"><p>Find template on image</p>
+
+<pre><code>[positions,votes] = hough.detect(image)
+[positions,votes] = hough.detect(edges, dx, dy)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>image</strong> input image, 8-bit 1-channel image</li>
+<li><strong>edges</strong> image edges</li>
+<li><strong>dx</strong> image x-derivative of the same size as <code>edges</code> and
+single-precision floating type.</li>
+<li><strong>dy</strong> image y-derivate of the same size and type as <code>dx</code>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>positions</strong> Cell array of 4-element vectors, each of the
+form: <code>[posx, posy, scale, angle]</code></li>
+<li><strong>votes</strong> Cell array of 3-element vectors, of the same length
+as <code>positions</code>.</li>
+</ul>
+</div><!--after help -->
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

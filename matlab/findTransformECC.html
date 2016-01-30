@@ -1,0 +1,109 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.findTransformECC</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.findTransformECC</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.findTransformECC</div>
+      <div class="helpcontent"><p>Finds the geometric transform (warp) between two images in terms of the ECC criterion</p>
+
+<pre><code>warpMatrix = <a href="findTransformECC.html">cv.findTransformECC</a>(templateImage, inputImage)
+[warpMatrix,rho] = <a href="findTransformECC.html">cv.findTransformECC</a>(templateImage, inputImage)
+[...] = <a href="findTransformECC.html">cv.findTransformECC</a>(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>templateImage</strong> single-channel template image; <code>uint8</code> or <code>single</code> array.</li>
+<li><strong>inputImage</strong> single-channel input image which should be warped with the
+final <code>warpMatrix</code> in order to provide an image similar to
+<code>templateImage</code>, same type as <code>templateImage</code>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>warpMatrix</strong> floating-point 2x3 or 3x3 mapping matrix (warp).</li>
+<li><strong>rho</strong> correlation coefficient.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>MotionType</strong> parameter, specifying the type of motion:<ul>
+<li><strong>Translation</strong> sets a translational motion model; <code>warpMatrix</code> is
+2x3 with the first 2x2 part being the unity matrix and the rest
+two parameters being estimated.</li>
+<li><strong>Euclidean</strong> sets a Euclidean (rigid) transformation as motion
+model; three parameters are estimated; <code>warpMatrix</code> is 2x3.</li>
+<li><strong>Affine</strong> sets an affine motion model (DEFAULT); six parameters are
+estimated; <code>warpMatrix</code> is 2x3.</li>
+<li><strong>Homography</strong> sets a homography as a motion model; eight parameters
+are estimated; <code>warpMatrix</code> is 3x3.</li>
+</ul>
+</li>
+<li><strong>Criteria</strong> parameter, specifying the termination criteria of the ECC
+algorithm; <code>Criteria.epsilon</code> defines the threshold of the increment
+in the correlation coefficient between two iterations (a negative
+<code>Criteria.epsilon</code> makes <code>Criteria.maxcount</code> the only termination
+criterion). Default values are:
+<code>struct()</code></li>
+<li><strong>Mask</strong> An optional mask to indicate valid values of <code>inputImage</code>.
+Not set by default.</li>
+<li><strong>InputWarpMatrix</strong> Initial estimate for <code>warpMatrix</code>. Not set by default</li>
+</ul>
+
+<p>The function estimates the optimum transformation (<code>warpMatrix</code>) with
+respect to ECC criterion ([EP08]), that is:</p>
+
+<pre><code>warpMatrix = argmax_{W} ECC(templateImage(x,y), inputImage(x',y'))
+</code></pre>
+
+<p>where:</p>
+
+<pre><code>[x';y'] = W * [x;y;1]
+</code></pre>
+
+<p>(the equation holds with homogeneous coordinates for homography). It returns
+the final enhanced correlation coefficient, that is the correlation
+coefficient between the template image and the final warped input image.
+When a 3x3 matrix is given with <code>MotionType</code> being one of 'Translation',
+'Euclidean', or 'Affine', the third row is ignored.</p>
+
+<p>Unlike <a href="findHomography.html">cv.findHomography</a> and <a href="estimateRigidTransform.html">cv.estimateRigidTransform</a>, the function
+<a href="findTransformECC.html">cv.findTransformECC</a> implements an area-based alignment that builds on
+intensity similarities. In essence, the function updates the initial
+transformation that roughly aligns the images. If this information is
+missing, the identity warp (unity matrix) should be given as input. Note
+that if images undergo strong displacements/rotations, an initial
+transformation that roughly aligns the images is necessary (e.g., a simple
+euclidean/similarity transform that allows for the images showing the same
+image content approximately). Use inverse warping in the second image to
+take an image close to the first one, i.e. use the flag <code>WarpInverse</code> with
+<a href="warpAffine.html">cv.warpAffine</a> or <a href="warpPerspective.html">cv.warpPerspective</a>. Note that the function throws an
+exception if algorithm does not converges.</p>
+
+<h2> References</h2>
+
+<p>[EP08]:</p>
+
+<blockquote>
+<p>Georgios D Evangelidis and Emmanouil Z Psarakis. &quot;Parametric image
+alignment using enhanced correlation coefficient maximization&quot;.
+Pattern Analysis and Machine Intelligence, IEEE Transactions on,
+30(10):1858-1865, 2008.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="estimateRigidTransform.html">cv.estimateRigidTransform</a>, <a href="findHomography.html">cv.findHomography</a></div>
+   </body>
+</html>

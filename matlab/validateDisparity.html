@@ -1,0 +1,53 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.validateDisparity</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.validateDisparity</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.validateDisparity</div>
+      <div class="helpcontent"><p>Validates disparity using the left-right check</p>
+
+<pre><code>disparity = <a href="validateDisparity.html">cv.validateDisparity</a>(disparity, cost)
+disparity = <a href="validateDisparity.html">cv.validateDisparity</a>(disparity, cost, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>disparity</strong> disparity map, 1-channel 16-bit signed integer array.</li>
+<li><strong>cost</strong> Cost matrix computed by the stereo correspondence algorithm. An
+array of same size as <code>disparity</code> and 16-bit or 32-bit signed integer
+type.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>disparity</strong> validated disparity map.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>MinDisparity</strong> Minimum possible disparity value. Normally, it is zero
+but sometimes rectification algorithms can shift images, so this
+parameter needs to be adjusted accordingly. default 0</li>
+<li><strong>NumDisparities</strong> Maximum disparity minus minimum disparity. The value is
+always greater than zero. default 64</li>
+<li><strong>Disp12MaxDisp</strong> Maximum allowed difference (in integer pixel units) in
+the left-right disparity check. default 1</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="StereoBM.html">cv.StereoBM</a>, <a href="StereoSGBM.html">cv.StereoSGBM</a>, <a href="filterSpeckles.html">cv.filterSpeckles</a>,
+   <a href="getValidDisparityROI.html">cv.getValidDisparityROI</a>,</div>
+   </body>
+</html>

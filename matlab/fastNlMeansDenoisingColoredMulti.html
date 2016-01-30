@@ -1,0 +1,71 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.fastNlMeansDenoisingColoredMulti</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.fastNlMeansDenoisingColoredMulti</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.fastNlMeansDenoisingColoredMulti</div>
+      <div class="helpcontent"><p>Modification of fastNlMeansDenoisingMulti function for colored images sequences</p>
+
+<pre><code>dst = <a href="fastNlMeansDenoisingColoredMulti.html">cv.fastNlMeansDenoisingColoredMulti</a>(srcImgs, imgToDenoiseIndex, temporalWindowSize)
+dst = <a href="fastNlMeansDenoisingColoredMulti.html">cv.fastNlMeansDenoisingColoredMulti</a>(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>srcImgs</strong> Input 8-bit 3-channel images sequence. All images should have
+the same type and size.</li>
+<li><strong>imgToDenoiseIndex</strong> Target image to denoise index in <code>srcImgs</code> sequence
+(0-based index).</li>
+<li><strong>temporalWindowSize</strong> Number of surrounding images to use for target
+image denoising. Should be odd. Images from
+<code>imgToDenoiseIndex - temporalWindowSize/2</code> to
+<code>imgToDenoiseIndex + temporalWindowSize/2</code> from <code>srcImgs</code> will be used
+to denoise <code>srcImgs{imgToDenoiseIndex}</code> image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Output image with the same size and type as <code>srcImgs</code> images.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>H</strong> Parameter regulating filter strength for luminance component. Bigger
+<code>H</code> value perfectly removes noise but also removes image details,
+smaller <code>H</code> value preserves details but also preserves some noise.
+default 3</li>
+<li><strong>HColor</strong> The same as <code>H</code> but for color components. default 3</li>
+<li><strong>TemplateWindowSize</strong> Size in pixels of the template patch that is used
+to compute weights. Should be odd. Recommended value 7 pixels.
+default 7</li>
+<li><strong>SearchWindowSize</strong> Size in pixels of the window that is used to compute
+weighted average for given pixel. Should be odd. Affect performance
+linearly: greater <code>SearchWindowsSize</code> - greater denoising time.
+Recommended value 21 pixels. default 21</li>
+<li><strong>FlipChannels</strong> whether to flip the order of color channels in input
+<code>srcImgs{i}</code> and output <code>dst</code>, between MATLAB's RGB/RGBA order and
+OpenCV's BGR/BGRA (input: RGB/RGBA-&gt;BGR/BGRA,
+output: BGR/BGRA-&gt;RGB/RGBA). default true</li>
+</ul>
+
+<p>The function converts images to CIELAB colorspace and then separately
+denoise L and AB components with given <code>H</code> parameters using
+<a href="fastNlMeansDenoisingMulti.html">cv.fastNlMeansDenoisingMulti</a> function.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="fastNlMeansDenoising.html">cv.fastNlMeansDenoising</a>, <a href="fastNlMeansDenoisingColored.html">cv.fastNlMeansDenoisingColored</a>,
+   <a href="fastNlMeansDenoisingMulti.html">cv.fastNlMeansDenoisingMulti</a></div>
+   </body>
+</html>

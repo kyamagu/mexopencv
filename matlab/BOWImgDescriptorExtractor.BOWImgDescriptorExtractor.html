@@ -15,10 +15,10 @@
          </tr>
       </table>
       <div class="title">cv.BOWImgDescriptorExtractor/BOWImgDescriptorExtractor</div>
-      <div class="helpcontent"><p>Create a new BOWImgDescriptorExtractor</p>
+      <div class="helpcontent"><p>The constructor</p>
 
-<pre><code>extractor = <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a>(dextractor)
-extractor = <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a>(dextractor,dmatcher)
+<pre><code>extractor = <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a>(dextractor, dmatcher)
+extractor = <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a>({dextractor, 'key',val,...}, {dmatcher, 'key',val,...})
 </code></pre>
 
 <h2> Input</h2>
@@ -26,22 +26,41 @@ extractor = <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtracto
 <ul>
 <li><strong>dextractor</strong> Descriptor extractor that is used to compute
 descriptors for an input image and its keypoints. It can
-be spacified by a string specifying the type of
+be specified by a string containing the type of
 descriptor extractor, such as 'SIFT' or 'SURF'. See
-<a href="DescriptorExtractor.html">cv.DescriptorExtractor</a> for a possible type.</li>
+<a href="DescriptorExtractor.html">cv.DescriptorExtractor</a>.DescriptorExtractor for possible
+types.</li>
 <li><strong>dmatcher</strong> Descriptor matcher that is used to find the
 nearest word of the trained vocabulary for each keypoint
 descriptor of the image. It can be spacified by a string
 specifying the type of descriptor extractor, such as
-'BruteForce' or 'BruteForce-L1'. See <a href="DescriptorMatcher.html">cv.DescriptorMatcher</a>
-for a possible type. default 'BruteForce'</li>
+'BruteForce' or 'BruteForce-L1'. See
+<a href="DescriptorMatcher.html">cv.DescriptorMatcher</a>.DescriptorMatcher for possible types.
+default 'BruteForce'</li>
 </ul>
 
-<h2> Output</h2>
+<p>In the first variant, it creates descriptor extractor/matcher
+of the given types using default parameters (by calling the
+default constructors).</p>
 
-<ul>
-<li><strong>extractor</strong> Created BOWImgDescriptorExtractor object</li>
-</ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a></div>
+<p>In the second variant, it creates descriptor extractor/matcher
+of the given types using the specified options.
+Each algorithm type takes optional arguments. Each of the
+extractor/matcher are specified by a cell-array that starts
+with the type name followed by option arguments, as in:
+<code>{'Type', 'OptionName',optionValue, ...}</code>.
+Refer to the individual extractor/matcher functions to see a
+list of possible options of each algorithm.</p>
+
+<h2> Examples</h2>
+
+<pre><code>% first variant
+extractor = <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a>('ORB', 'BruteForce');
+
+% second variant
+extractor = <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a>(...
+    {'FastFeatureDetector', 'Threshold',10}, ...
+    {'BFMatcher', 'NormType','L2'});</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a>, <a href="DescriptorMatcher.html">cv.DescriptorMatcher</a></div>
    </body>
 </html>

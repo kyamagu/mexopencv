@@ -1,0 +1,84 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.EM/trainEM</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.EM/trainEM</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.EM/trainEM</div>
+      <div class="helpcontent"><p>Estimate the Gaussian mixture parameters from a samples set</p>
+
+<pre><code>[logLikelihoods, labels, probs] = model.trainEM(samples)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>samples</strong> Samples from which the Gaussian mixture model will
+be estimated. It should be a one-channel matrix, each row
+of which is a sample. If the matrix does not have <code>double</code>
+type it will be converted to the inner matrix of such type
+for the further computing.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>logLikelihoods</strong> The optional output matrix that contains a
+likelihood logarithm value for each sample. It has
+<code>nsamples-by-1</code> size and <code>double</code> type.</li>
+<li><strong>labels</strong> The optional output &quot;class label&quot; for each sample:
+<code>labels_i = argmax_{k}(p_{i,k}), i=1..N</code> (indices of the
+most probable mixture component for each sample). It has
+<code>nsamples-by-1</code> size and <code>single</code> type.</li>
+<li><strong>probs</strong> The optional output matrix that contains posterior
+probabilities of each Gaussian mixture component given the
+each sample. It has <code>nsamples-by-ClustersNumber</code> size and
+<code>double</code> type.</li>
+</ul>
+
+<p>This variation starts with Expectation step. Initial values of
+the model parameters will be estimated by the k-means algorithm.</p>
+
+<p>Unlike many of the ML models, EM is an unsupervised learning
+algorithm and it does not take <code>responses</code> (class labels or
+function values) as input. Instead, it computes the Maximum
+Likelihood Estimate of the Gaussian mixture parameters from an
+input sample set, stores all the parameters inside the
+structure: <code>p_{i,k}</code> in <code>probs</code>, <code>a_k</code> in <code>means</code> , <code>S_k</code> in
+<code>covs[k]</code>, <code>PI_k</code> in <code>weights</code>, and optionally computes the
+output &quot;class label&quot; for each sample:
+<code>labels_i = argmax_{k}(p_{i,k}), i=1..N</code> (indices of the most
+probable mixture component for each sample).</p>
+
+<p>The trained model can be used further for prediction, just like
+any other classifier. The trained model is similar to the
+<a href="NormalBayesClassifier.html">cv.NormalBayesClassifier</a>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="EM.trainE.html">cv.EM/trainE</a>, <a href="EM.trainM.html">cv.EM/trainM</a>, <a href="EM.train.html">cv.EM/train</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

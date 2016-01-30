@@ -15,45 +15,40 @@
          </tr>
       </table>
       <div class="title">cv.FeatureDetector/FeatureDetector</div>
-      <div class="helpcontent"><p>FeatureDetector constructors</p>
+      <div class="helpcontent"><p>Creates a feature detector by name.</p>
 
 <pre><code>detector = <a href="FeatureDetector.html">cv.FeatureDetector</a>(type)
+detector = <a href="FeatureDetector.html">cv.FeatureDetector</a>(type, 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>type</strong> Type of the detector. see below. default 'FAST'</li>
+<li><strong>type</strong> The following detector types are supported:<ul>
+<li><strong>BRISK</strong> see cv.BRISK</li>
+<li><strong>ORB</strong> see cv.ORB</li>
+<li><strong>MSER</strong> see cv.MSER</li>
+<li><strong>FastFeatureDetector</strong> see <a href="FastFeatureDetector.html">cv.FastFeatureDetector</a>
+(default)</li>
+<li><strong>GFTTDetector</strong> see cv.GFTTDetector</li>
+<li><strong>SimpleBlobDetector</strong> see cv.SimpleBlobDetector</li>
+<li><strong>KAZE</strong> see cv.KAZE</li>
+<li><strong>AKAZE</strong> see cv.AKAZE</li>
+<li><strong>AgastFeatureDetector</strong> see cv.AgastFeatureDetector</li>
+<li><strong>SIFT</strong> see <a href="SIFT.html">cv.SIFT</a> (requires <code>xfeatures2d</code> module)</li>
+<li><strong>SURF</strong> see <a href="SURF.html">cv.SURF</a> (requires <code>xfeatures2d</code> module)</li>
+<li><strong>StarDetector</strong> see <a href="StarDetector.html">cv.StarDetector</a> (requires
+<code>xfeatures2d</code> module)</li>
+<li><strong>MSDDetector</strong> see <a href="MSDDetector.html">cv.MSDDetector</a> (requires
+<code>xfeatures2d</code> module)</li>
+</ul>
+</li>
 </ul>
 
-<h2> Output</h2>
+<h2> Options</h2>
 
-<ul>
-<li><strong>detector</strong> New instance of the FeatureDetector</li>
-</ul>
-
-<p>The following detector types are supported:</p>
-
-<pre><code> 'FAST'       FastFeatureDetector
- 'STAR'       StarFeatureDetector
- 'SIFT'       SiftFeatureDetector
- 'SURF'       SurfFeatureDetector
- 'ORB'        OrbFeatureDetector
- 'MSER'       MserFeatureDetector
- 'GFTT'       GoodFeaturesToTrackDetector
- 'HARRIS'     GoodFeaturesToTrackDetector with Harris detector enabled
- 'Dense'      DenseFeatureDetector
- 'SimpleBlob' SimpleBlobDetector
-</code></pre>
-
-<p>Also a combined format with one of the following adaptor is
-supported</p>
-
-<pre><code> 'Grid'       GridAdaptedFeatureDetector
- 'Pyramid'    PyramidAdaptedFeatureDetector
-</code></pre>
-
-<p>for example: 'GridFAST', 'PyramidSTAR'.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.html">cv.FeatureDetector</a> <a href="FeatureDetector.write.html">cv.FeatureDetector/write</a></div>
+<p>Refer to the constructors of each feature detector for a
+list of supported options.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.detect.html">cv.FeatureDetector/detect</a></div>
    </body>
 </html>

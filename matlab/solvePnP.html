@@ -17,24 +17,22 @@
       <div class="title">cv.solvePnP</div>
       <div class="helpcontent"><p>Finds an object pose from 3D-2D point correspondences</p>
 
-<pre><code>[rvec, tvec] = <a href="solvePnP.html">cv.solvePnP</a>(objectPoints, imagePoints, cameraMatrix)
-[rvec, tvec] = <a href="solvePnP.html">cv.solvePnP</a>(objectPoints, imagePoints, cameraMatrix, distCoeffs)
-[...] = <a href="solvePnP.html">cv.solvePnP</a>(..., distCoeffs, 'OptionName', optionValue, ...)
+<pre><code>[rvec, tvec, success] = <a href="solvePnP.html">cv.solvePnP</a>(objectPoints, imagePoints, cameraMatrix)
+[...] = <a href="solvePnP.html">cv.solvePnP</a>(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
 <li><strong>objectPoints</strong> Array of object points in the object coordinate space,
-1xNx3/Nx1x3 or 3xN/Nx3 array, where N is the number of points, or
-cell array of 3-element vectors can be also passed here.</li>
+1xNx3/Nx1x3 or Nx3 array, where <code>N</code> is the number of points, or cell
+array of length <code>N</code> of 3-element vectors can be also passed here
+<code>{[x,y,z], ...}</code>.</li>
 <li><strong>imagePoints</strong> Array of corresponding image points, 1xNx2/Nx1x2 or
-2xN/Nx2 array, where N is the number of points, or cell array of
-2-element vectors can be also passed here.</li>
-<li><strong>cameraMatrix</strong> Input camera matrix <code>A = [fx,0,cx; 0,fy,cy; 0,0,1]</code>.</li>
-<li><strong>distCoeffs</strong> Input vector of distortion coefficients [k1,k2,p1,p2,k3,
-        k4,k5,k6] of 4, 5, or 8 elements. If the vector is empty, the
-zero distortion coefficients are assumed.</li>
+Nx2 array, where <code>N</code> is the number of points, or cell array of
+length <code>N</code> of 2-element vectors can be also passed here
+<code>{[x,y], ...}</code>.</li>
+<li><strong>cameraMatrix</strong> Input camera matrix <code>A = [fx 0 cx; 0 fy cy; 0 0 1]</code>.</li>
 </ul>
 
 <h2> Output</h2>
@@ -44,50 +42,86 @@ zero distortion coefficients are assumed.</li>
 <code>tvec</code>, brings points from the model coordinate system to the
 camera coordinate system.</li>
 <li><strong>tvec</strong> Output translation vector.</li>
+<li><strong>success</strong> success logical flag.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>Rvec</strong> Initial <code>rvec</code>. default empty.</li>
-<li><strong>Tvec</strong> Initial <code>tvec</code>. default empty.</li>
-<li><strong>UseExtrinsicGuess</strong> If true, the function uses the provided <code>rvec</code>
-and <code>tvec</code> values as initial approximations of the rotation and
-translation vectors, respectively, and further optimizes them.
-default false.</li>
-<li><strong>Flags</strong> Method for solving the PnP problem. One of the following:<ul>
+<li><strong>DistCoeffs</strong> Input vector of distortion coefficients
+<code>[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4,taux,tauy]</code> of 4, 5, 8, 12 or 14
+elements. If the vector is empty, the zero distortion coefficients are
+assumed. default empty.</li>
+<li><strong>Rvec</strong> Initial <code>rvec</code>. Not set by default.</li>
+<li><strong>Tvec</strong> Initial <code>tvec</code>. Not set by default.</li>
+<li><strong>UseExtrinsicGuess</strong> Parameter used for <code>Method='Iterative'</code>. If true,
+the function uses the provided <code>rvec</code> and <code>tvec</code> values as initial
+approximations of the rotation and translation vectors, respectively,
+and further optimizes them. default false.</li>
+<li><strong>Method</strong> Method for solving the PnP problem. One of the following:<ul>
 <li><strong>Iterative</strong> Iterative method is based on Levenberg-Marquardt
 optimization. In this case the function finds such a pose that
-minimizes reprojection error, that is the sum of squared distances
-between the observed projections <code>imagePoints</code> and the projected
-(using cv.projectPoints) <code>objectPoints</code>. This is the default.</li>
-<li><strong>P3P</strong> Method is based on the paper [1]. In this case the
-function requires exactly four object and image points.</li>
-<li><strong>EPnP</strong> Method has been introduced in the paper [2].</li>
+minimizes reprojection error, that is the sum of squared
+distances between the observed projections <code>imagePoints</code> and the
+projected (using cv.projectPoints) <code>objectPoints</code>. This is the
+default.</li>
+<li><strong>P3P</strong> Method is based on the paper [gao2003complete]. In this case
+the function requires exactly four object and image points.</li>
+<li><strong>EPnP</strong> Method has been introduced in the paper [morenoepnp] and
+[lepetit2009epnp].</li>
+<li><strong>DLS</strong> Method is based on the paper of [hesch2011direct].</li>
+<li><strong>UPnP</strong> Method is based on the paper of [penate2013exhaustive]. In
+this case the function also estimates the parameters <code>fx</code> and
+<code>fy</code> assuming that both have the same value. Then the
+<code>cameraMatrix</code> is updated with the estimated focal length.</li>
 </ul>
 </li>
 </ul>
 
-<h2> References</h2>
-
-<p>[1]:</p>
-
-<blockquote>
-<p>X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang; &quot;Complete Solution
-Classification for the Perspective-Three-Point Problem&quot;,
-IEEE Trans. on PAMI, vol. 25, No. 8, August 2003.</p>
-</blockquote>
-
-<p>[2]:</p>
-
-<blockquote>
-<p>F.Moreno-Noguer, V.Lepetit and P.Fua;
-&quot;EPnP: Efficient Perspective-n-Point Camera Pose Estimation&quot;.</p>
-</blockquote>
-
 <p>The function estimates the object pose given a set of object points,
 their corresponding image projections, as well as the camera matrix and
 the distortion coefficients.</p>
+
+<h2> References</h2>
+
+<p>[gao2003complete]:</p>
+
+<blockquote>
+<p>X.S. Gao, X.R. Hou, J. Tang, H.F. Chang; &quot;Complete Solution
+Classification for the Perspective-Three-Point Problem&quot;,
+IEEE Trans. on PAMI, vol. 25, No. 8, p. 930-943, August 2003.</p>
+</blockquote>
+
+<p>[morenoepnp]:</p>
+
+<blockquote>
+<p>F. Moreno-Noguer, V. Lepetit and P. Fua;
+&quot;EPnP: Efficient Perspective-n-Point Camera Pose Estimation&quot;.</p>
+</blockquote>
+
+<p>[lepetit2009epnp]:</p>
+
+<blockquote>
+<p>V. Lepetit, F. Moreno-Noguer, P. Fua;
+&quot;EPnP: An accurate O(n) solution to the PnP problem&quot;.
+IJCV, vol. 81, No. 2, p. 155-166, 2009</p>
+</blockquote>
+
+<p>[hesch2011direct]:</p>
+
+<blockquote>
+<p>Joel A. Hesch and Stergios I. Roumeliotis.
+&quot;A Direct Least-Squares (DLS) Method for PnP&quot;.
+IEEE International Conference on Computer Vision, p. 383-390, 2011.</p>
+</blockquote>
+
+<p>[penate2013exhaustive]:</p>
+
+<blockquote>
+<p>A. Penate-Sanchez, J. Andrade-Cetto, F. Moreno-Noguer; &quot;Exhaustive
+Linearization for Robust Camera Pose and Focal Length Estimation&quot;.
+IEEE Trans. on PAMI, vol. 35, No. 10, p. 2387-2400, 2013.</p>
+</blockquote>
 </div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="solvePnPRansac.html">cv.solvePnPRansac</a></div>
    </body>
 </html>

@@ -15,7 +15,9 @@
          </tr>
       </table>
       <div class="title">cv.NormalBayesClassifier</div>
-      <div class="helpcontent"><p>NormalBayesClassifier  Bayes classifier for normally distributed data</p>
+      <div class="helpcontent"><p>Bayes classifier for normally distributed data</p>
+
+<h2> Normal Bayes Classifier</h2>
 
 <p>This simple classification model assumes that feature vectors from
 each class are normally distributed (though, not necessarily
@@ -23,8 +25,18 @@ independently distributed). So, the whole data distribution function
 is assumed to be a Gaussian mixture, one component per class. Using
 the training data the algorithm estimates mean vectors and covariance
 matrices for every class, and then it uses them for prediction.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="NormalBayesClassifier.NormalBayesClassifier.html">cv.NormalBayesClassifier/NormalBayesClassifier</a>
-  <a href="NormalBayesClassifier.train.html">cv.NormalBayesClassifier/train</a> <a href="NormalBayesClassifier.predict.html">cv.NormalBayesClassifier/predict</a></div>
+
+<h2> References</h2>
+
+<p>[Fukunaga90]:</p>
+
+<blockquote>
+<p>K. Fukunaga. &quot;Introduction to Statistical Pattern Recognition&quot;, 2e.
+New York: Academic Press, 1990.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="NormalBayesClassifier.NormalBayesClassifier.html">cv.NormalBayesClassifier/NormalBayesClassifier</a>,
+   <a href="NormalBayesClassifier.train.html">cv.NormalBayesClassifier/train</a>, <a href="NormalBayesClassifier.predict.html">cv.NormalBayesClassifier/predict</a>,
+   fitcnb</div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -47,7 +59,7 @@ matrices for every class, and then it uses them for prediction.</p>
       <table class="summary-list">
          <tr class="summary-item">
             <td class="name"><a href="NormalBayesClassifier.NormalBayesClassifier.html">NormalBayesClassifier</a></td>
-            <td class="m-help">&nbsp;</td>
+            <td class="m-help">Creates/trains a new Bayes classifier model&nbsp;</td>
          </tr>
       </table>
       <!--Properties-->
@@ -56,7 +68,7 @@ matrices for every class, and then it uses them for prediction.</p>
       <table class="summary-list">
          <tr class="summary-item">
             <td class="name"><a href="NormalBayesClassifier.id.html">id</a></td>
-            <td class="m-help">&nbsp;</td>
+            <td class="m-help">Object ID&nbsp;</td>
          </tr>
       </table>
       <!--Methods-->
@@ -76,8 +88,16 @@ matrices for every class, and then it uses them for prediction.</p>
                &nbsp;
                
             </td>
+            <td class="name"><a href="NormalBayesClassifier.calcError.html">calcError</a></td>
+            <td class="m-help">Computes error on the training or test dataset&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="NormalBayesClassifier.clear.html">clear</a></td>
-            <td class="m-help">Deallocates memory and resets the model state&nbsp;</td>
+            <td class="m-help">Clears the algorithm state&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -86,6 +106,14 @@ matrices for every class, and then it uses them for prediction.</p>
             </td>
             <td class="name"><a href="NormalBayesClassifier.delete.html">delete</a></td>
             <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="NormalBayesClassifier.empty.html">empty</a></td>
+            <td class="m-help">Returns true if the algorithm is empty&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -124,8 +152,40 @@ matrices for every class, and then it uses them for prediction.</p>
                &nbsp;
                
             </td>
+            <td class="name"><a href="NormalBayesClassifier.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="NormalBayesClassifier.getVarCount.html">getVarCount</a></td>
+            <td class="m-help">Returns the number of variables in training samples&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="NormalBayesClassifier.gt.html">gt</a></td>
             <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="NormalBayesClassifier.isClassifier.html">isClassifier</a></td>
+            <td class="m-help">Returns true if the model is a classifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="NormalBayesClassifier.isTrained.html">isTrained</a></td>
+            <td class="m-help">Returns true if the model is trained&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">Sealed 
@@ -149,7 +209,7 @@ matrices for every class, and then it uses them for prediction.</p>
                
             </td>
             <td class="name"><a href="NormalBayesClassifier.load.html">load</a></td>
-            <td class="m-help">Loads the model from a file&nbsp;</td>
+            <td class="m-help">Loads algorithm from a file or a string&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -181,7 +241,15 @@ matrices for every class, and then it uses them for prediction.</p>
                
             </td>
             <td class="name"><a href="NormalBayesClassifier.predict.html">predict</a></td>
-            <td class="m-help">Predicts the response for a sample&nbsp;</td>
+            <td class="m-help">Predicts responses for input samples&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="NormalBayesClassifier.predictProb.html">predictProb</a></td>
+            <td class="m-help">Predicts the response for sample(s)&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -189,7 +257,7 @@ matrices for every class, and then it uses them for prediction.</p>
                
             </td>
             <td class="name"><a href="NormalBayesClassifier.save.html">save</a></td>
-            <td class="m-help">Saves the model to a file&nbsp;</td>
+            <td class="m-help">Saves the algorithm parameters to a file or a string&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -197,7 +265,7 @@ matrices for every class, and then it uses them for prediction.</p>
                
             </td>
             <td class="name"><a href="NormalBayesClassifier.train.html">train</a></td>
-            <td class="m-help">Trains the model&nbsp;</td>
+            <td class="m-help">Trains the statistical model&nbsp;</td>
          </tr>
       </table>
    </body>

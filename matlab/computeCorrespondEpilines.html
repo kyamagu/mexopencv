@@ -24,9 +24,9 @@
 <h2> Input</h2>
 
 <ul>
-<li><strong>points</strong> Input points. Nx1x2 or 1xNx2 array, or cell array of 2 element
-vectors.</li>
-<li><strong>F</strong> Fundamental matrix that can be estimated using
+<li><strong>points</strong> Input points. Nx2/Nx1x2/1xNx2 floating-point array, or cell
+array of 2-element vectors <code>{[x,y], ...}</code>.</li>
+<li><strong>F</strong> 3x3 Fundamental matrix that can be estimated using
 <a href="findFundamentalMat.html">cv.findFundamentalMat</a> or <a href="stereoRectify.html">cv.stereoRectify</a>.</li>
 </ul>
 
@@ -34,8 +34,9 @@ vectors.</li>
 
 <ul>
 <li><strong>lines</strong> Output vector of the epipolar lines corresponding to the points
-in the other image. Each line ax+by+c=0 is encoded by 3 numbers
-(a,b,c).</li>
+in the other image. Each line <code>ax + by + c = 0</code> is encoded by 3
+numbers <code>(a,b,c)</code>. Nx3/Nx1x3 numeric matrix or a cell-array of
+3-element vectors <code>{[a,b,c], ...}</code> depending on <code>points</code> format.</li>
 </ul>
 
 <h2> Options</h2>
@@ -49,19 +50,20 @@ default 1.</li>
 finds the equation of the corresponding epipolar line in the other image.</p>
 
 <p>From the fundamental matrix definition (see cv.findFundamentalMat), line
-l_i^(2) in the second image for the point p_i^(1) in the first image
-(when whichImage=1) is computed as:</p>
+<code>l_i^(2)</code> in the second image for the point <code>p_i^(1)</code> in the first image
+(when <code>WhichImage=1</code>) is computed as:</p>
 
 <pre><code>l_i^(2) = F * p_i^(1)
 </code></pre>
 
-<p>And vice versa, when whichImage=2, l_i^(1) is computed from p_i^(2) as:</p>
+<p>And vice versa, when <code>WhichImage=2</code>, <code>l_i^(1)</code> is computed from <code>p_i^(2)</code>
+as:</p>
 
-<pre><code>l_i^(2) = F^T * p_i^(1)
+<pre><code>l_i^(1) = F^T * p_i^(2)
 </code></pre>
 
 <p>Line coefficients are defined up to a scale. They are normalized so that
-a^2+b^2=1.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findFundamentalMat.html">cv.findFundamentalMat</a> <a href="stereoRectify.html">cv.stereoRectify</a></div>
+<code>a_i^2 + b_i^2 = 1</code>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findFundamentalMat.html">cv.findFundamentalMat</a>, <a href="stereoRectify.html">cv.stereoRectify</a>, epipolarLine</div>
    </body>
 </html>

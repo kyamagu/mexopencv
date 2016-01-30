@@ -24,39 +24,60 @@
 
 <ul>
 <li><strong>src</strong> Source array that must have as many channels (1 to 4) as columns
-of mtx or columns -1 of mtx</li>
+of <code>mtx</code> or columns-1 of <code>mtx</code></li>
 <li><strong>mtx</strong> floating-point transformation matrix.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Destination array of the same size and depth as src. It has as
-many channels as rows of mtx</li>
+<li><strong>dst</strong> Destination array of the same row/column size and depth as <code>src</code>.
+It has as many channels as rows of <code>mtx</code></li>
 </ul>
 
-<p>The function transform performs the matrix transformation of every
-element of the array src and stores the results in dst:</p>
+<p>The function <a href="transform.html">cv.transform</a> performs the matrix transformation of every
+element of the array <code>src</code> and stores the results in <code>dst</code>:</p>
 
-<pre><code>dst(I) = mtx * src(I)
-</code></pre>
+<ul>
+<li><p>when columns of <code>mtx</code> equal channels of <code>src</code>:</p>
+<p>        dst(I) = mtx * src(I)</p>
+</li>
+<li><p>when columns of <code>mtx</code> equal channels+1 of <code>src</code>:</p>
+<p>        dst(I) = mtx * [src(I); 1]</p>
+</li>
+</ul>
 
-<p>when columns of mtx = src channels, or</p>
-
-<pre><code>dst(I) = mtx * [src(I); 1]
-</code></pre>
-
-<p>when columns of mtx = src channels +1.</p>
-
-<p>Every element of the N -channel array src is interpreted as N -element
-vector that is transformed using the M x N or M x (N+1) matrix mtx to
+<p>Every element of the N-channel array <code>src</code> is interpreted as N-element
+vector that is transformed using the MxN or Mx(N+1) matrix <code>mtx</code> to
 M-element vector - the corresponding element of the destination array
-dst.</p>
+<code>dst</code>.</p>
 
-<p>The function may be used for geometrical transformation of N -dimensional
+<p>The function may be used for geometrical transformation of N-dimensional
 points, arbitrary linear color space transformation (such as various
 kinds of RGB to YUV transforms), shuffling the image channels, and so
 forth.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="warpAffine.html">cv.warpAffine</a> <a href="warpPerspective.html">cv.warpPerspective</a> <a href="perspectiveTransform.html">cv.perspectiveTransform</a></div>
+
+<h2> Example</h2>
+
+<p>This function is equivalent to the following MATLAB code:</p>
+
+<pre><code>function dst = my_transform(src, mtx)
+    % check sizes
+    [I,J,N] = size(src);
+    [MM,NN] = size(mtx);
+    assert(N==1 || N==2 || N==3 || N==4, '1 to 4 channels');
+    assert(N==NN || (N+1)==NN, 'Wrong dimensions');
+    if N ~= NN, src(:,:,end+1) = 1; end
+
+    % transform
+    dst = zeros([I,J,MM], class(src));
+    for i=1:I
+        for j=1:J
+            dst(i,j,:) = mtx * squeeze(src(i,j,:));
+        end
+    end
+end</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="perspectiveTransform.html">cv.perspectiveTransform</a>, <a href="getAffineTransform.html">cv.getAffineTransform</a>,
+   <a href="estimateRigidTransform.html">cv.estimateRigidTransform</a>, <a href="warpAffine.html">cv.warpAffine</a>, <a href="warpPerspective.html">cv.warpPerspective</a></div>
    </body>
 </html>

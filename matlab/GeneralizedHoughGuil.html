@@ -1,0 +1,293 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.GeneralizedHoughGuil</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.GeneralizedHoughGuil</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.GeneralizedHoughGuil</div>
+      <div class="helpcontent"><p>GeneralizedHoughGuil  Generalized Hough transform</p>
+
+<p>Finds arbitrary template in the grayscale image using
+Generalized Hough Transform.</p>
+
+<p>Detects position, translation and rotation.</p>
+
+<h2> References</h2>
+
+<blockquote>
+<p>Guil, N., Gonzalez-Linares, J.M. and Zapata, E.L. (1999).
+Bidimensional shape detection using an invariant approach.
+Pattern Recognition 32 (6): 1025-1038.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="GeneralizedHoughBallard.html">cv.GeneralizedHoughBallard</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.GeneralizedHoughGuil.html">GeneralizedHoughGuil</a></td>
+            <td class="m-help">Generalized Hough transform&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.AngleEpsilon.html">AngleEpsilon</a></td>
+            <td class="m-help">Maximal difference between angles that treated as equal. default 1.0&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.AngleStep.html">AngleStep</a></td>
+            <td class="m-help">Angle step in degrees. default 1.0&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.AngleThresh.html">AngleThresh</a></td>
+            <td class="m-help">Angle votes threshold. default 15000&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.CannyHighThresh.html">CannyHighThresh</a></td>
+            <td class="m-help">Canny high threshold. default 100&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.CannyLowThresh.html">CannyLowThresh</a></td>
+            <td class="m-help">Canny low threshold. default 50&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.Dp.html">Dp</a></td>
+            <td class="m-help">Inverse ratio of the accumulator resolution to the image resolution.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.Levels.html">Levels</a></td>
+            <td class="m-help">Feature table levels. default 360&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.MaxAngle.html">MaxAngle</a></td>
+            <td class="m-help">Maximal rotation angle to detect in degrees. default 360&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.MaxBufferSize.html">MaxBufferSize</a></td>
+            <td class="m-help">Maximal size of inner buffers. default 1000&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.MaxScale.html">MaxScale</a></td>
+            <td class="m-help">Maximal scale to detect. default 2.0&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.MinAngle.html">MinAngle</a></td>
+            <td class="m-help">Minimal rotation angle to detect in degrees. default 0.0&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.MinDist.html">MinDist</a></td>
+            <td class="m-help">Minimum distance between the centers of the detected objects.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.MinScale.html">MinScale</a></td>
+            <td class="m-help">Minimal scale to detect. default 0.5&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.PosThresh.html">PosThresh</a></td>
+            <td class="m-help">Position votes threshold. default 100&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.ScaleStep.html">ScaleStep</a></td>
+            <td class="m-help">Scale step. default 0.05&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.ScaleThresh.html">ScaleThresh</a></td>
+            <td class="m-help">Scale votes threshold. default 1000&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.Xi.html">Xi</a></td>
+            <td class="m-help">Angle difference in degrees between two points in feature.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="GeneralizedHoughGuil.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.clear.html">clear</a></td>
+            <td class="m-help">&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.delete.html">delete</a></td>
+            <td class="m-help">Delete a handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.detect.html">detect</a></td>
+            <td class="m-help">Find template on image&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.empty.html">empty</a></td>
+            <td class="m-help">&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.load.html">load</a></td>
+            <td class="m-help">&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.save.html">save</a></td>
+            <td class="m-help">&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="GeneralizedHoughGuil.setTemplate.html">setTemplate</a></td>
+            <td class="m-help">Set template to search&nbsp;</td>
+         </tr>
+      </table>
+   </body>
+</html>

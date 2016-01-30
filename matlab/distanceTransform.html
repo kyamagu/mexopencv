@@ -15,12 +15,11 @@
          </tr>
       </table>
       <div class="title">cv.distanceTransform</div>
-      <div class="helpcontent"><p>Calculates the distance to the closest zero pixel for
-each pixel of the source image</p>
+      <div class="helpcontent"><p>Calculates the distance to the closest zero pixel for each pixel of the source image</p>
 
 <pre><code> dst = <a href="distanceTransform.html">cv.distanceTransform</a>(src)
- dst = <a href="distanceTransform.html">cv.distanceTransform</a>(src, 'DistanceType', distanceType, ...)
- [dst, labels] = <a href="distanceTransform.html">cv.distanceTransform</a>(...)
+ [dst, labels] = <a href="distanceTransform.html">cv.distanceTransform</a>(src)
+ [...] = <a href="distanceTransform.html">cv.distanceTransform</a>(..., 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
@@ -32,63 +31,118 @@ each pixel of the source image</p>
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Output image with calculated distances. It is a 32-bit
-floating-point, single-channel image of the same size as src.</li>
-<li><strong>labels</strong> Optional output 2D array of labels (the discrete Voronoi diagram).
-It has the type int32 and the same size as src</li>
+<li><strong>dst</strong> Output image with calculated distances. It is a 8-bit or 32-bit
+floating-point, single-channel image of the same size as <code>src</code>.</li>
+<li><strong>labels</strong> Optional output 2D array of labels (the discrete Voronoi
+diagram). It has the type <code>int32</code> and the same size as <code>src</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>DistanceType</strong> Type of distance. It can be 'L1', 'L2' , or 'C'</li>
-<li><strong>MaskSize</strong> Size of the distance transform mask. It can be 3, 5, or
-'MaskPrecise' (the latter option is only supported by the
-first function). In case of the 'L1' or 'C' distance type, the
-parameter is forced to 3 because a 3 x 3 mask gives the same
-result as 5 x 5 or any larger aperture.</li>
+<li><strong>DistanceType</strong> Type of distance, default 'L2'. One of:<ul>
+<li><strong>L1</strong> <code>distance = |x1-x2| + |y1-y2|</code></li>
+<li><strong>L2</strong> the simple euclidean distance</li>
+<li><strong>C</strong> <code>distance = max(|x1-x2|,|y1-y2|)</code></li>
+</ul>
+</li>
+<li><strong>MaskSize</strong> Size of the distance transform mask. The 'Precise' option is
+not supported by the second variant with <code>labels</code> output. In case of
+the 'L1' or 'C' distance type, the parameter is forced to 3 because a
+3x3 mask gives the same result as 5x5 or any larger aperture. The
+following options are available:<ul>
+<li><strong>3</strong> approximate distance transform with 3x3 mask (default)</li>
+<li><strong>5</strong> approximate distance transform with 5x5 mask</li>
+<li><strong>Precise</strong> precise distance transform</li>
+</ul>
+</li>
+<li><strong>LabelType</strong> Type of the label array to build, default 'CComp'. Only
+supported by the second variant with <code>labels</code> output. One of:<ul>
+<li><strong>CComp</strong> each connected component of zeros in <code>src</code> (as well as all
+the non-zero pixels closest to the connected component) will be
+assigned the same label.</li>
+<li><strong>Pixel</strong> each zero pixel (and all the non-zero pixels closest to
+it) gets its own label.</li>
+</ul>
+</li>
+<li><strong>DstType</strong> Type of output image <code>dst</code>. It can be <code>uint8</code> or <code>single</code>.
+Only supported by the first variant without <code>labels</code> output. Type
+<code>uint8</code> can be used only for the first variant of the function and
+<code>DistanceType = 'L1'</code>, otherwise the default <code>single</code> is assumed.</li>
 </ul>
 
-<p>The functions distanceTransform calculate the approximate or precise distance
-from every binary image pixel to the nearest zero pixel. For zero image
-pixels, the distance will obviously be zero.</p>
+<p>The function <a href="distanceTransform.html">cv.distanceTransform</a> calculates the approximate or precise
+distance from every binary image pixel to the nearest zero pixel. For zero
+image pixels, the distance will obviously be zero.</p>
 
-<p>When MaskSize is 'MaskPrecise' and DistanceType is 'L2', the
-function runs the algorithm described in [Felzenszwalb04].</p>
+<p>When <code>MaskSize</code> is 'Precise' and <code>DistanceType</code> is 'L2', the function
+runs the algorithm described in [Felzenszwalb04]. This algorithm is
+parallelized with the TBB library.</p>
 
 <p>In other cases, the algorithm [Borgefors86] is used. This means that for a
 pixel the function finds the shortest path to the nearest zero pixel
 consisting of basic shifts: horizontal, vertical, diagonal, or knight's move
-(the latest is available for a  mask). The overall distance is calculated as
-a sum of these basic distances. Since the distance function should be
+(the latest is available for a 5x5 mask). The overall distance is calculated
+as a sum of these basic distances. Since the distance function should be
 symmetric, all of the horizontal and vertical shifts must have the same cost
-(denoted as a ), all the diagonal shifts must have the same cost (denoted as
-b ), and all knight's moves must have the same cost (denoted as c ). For the
-'C' and 'L1' types, the distance is calculated precisely, whereas for 'L2'
-(Euclidian distance) the distance can be calculated only with a relative
-error (a 5 x 5 mask gives more accurate results). For a, b, and c,
-OpenCV uses the values suggested in the original paper:</p>
+(denoted as <code>a</code>), all the diagonal shifts must have the same cost (denoted
+as <code>b</code>), and all knight's moves must have the same cost (denoted as <code>c</code>).
+For the 'C' and 'L1' types, the distance is calculated precisely, whereas
+for 'L2' (Euclidian distance) the distance can be calculated only with a
+relative error (a 5x5 mask gives more accurate results). For <code>a</code>, <code>b</code>, and
+<code>c</code>, OpenCV uses the values suggested in the original paper:</p>
 
-<pre><code> 'C'   3 x 3    a = 1,     b = 1
- 'L1'  3 x 3    a = 1,     b = 2
- 'L2'  3 x 3    a = 0.955, b = 1.3693
- 'L2'  5 x 5    a = 1,     b = 1.4,    c = 2.1969
-</code></pre>
+<ul>
+<li><strong>L1</strong><ul>
+<li>3x3: <code>a = 1,     b = 2</code></li>
+</ul>
+</li>
+<li><strong>L2</strong><ul>
+<li>3x3: <code>a = 0.955, b = 1.3693</code></li>
+<li>5x5: <code>a = 1,     b = 1.4,    c = 2.1969</code></li>
+</ul>
+</li>
+<li><strong>C</strong><ul>
+<li>3x3: <code>a = 1,     b = 1</code></li>
+</ul>
+</li>
+</ul>
 
-<p>Typically, for a fast, coarse distance estimation 'L2', a 3 x 3 mask is
-used. For a more accurate distance estimation 'L2', a 5 x 5 mask or the
-precise algorithm is used. Note that both the precise and the approximate
+<p>Typically, for a fast, coarse distance estimation 'L2', a 3x3 mask is used.
+For a more accurate distance estimation 'L2', a 5x5 mask or the precise
+algorithm is used. Note that both the precise and the approximate
 algorithms are linear on the number of pixels.</p>
 
 <p>The second variant of the function does not only compute the minimum distance
-for each pixel (x, y) but also identifies the nearest connected component
-consisting of zero pixels. Index of the component is stored in labels(x, y).
-The connected components of zero pixels are also found and marked by the
-function.</p>
+for each pixel <code>(x,y)</code> but also identifies the nearest connected component
+consisting of zero pixels (<code>LabelType='CComp'</code>) or the nearest zero pixel
+(<code>LabelType='Pixel'</code>). Index of the component/pixel is stored in
+<code>labels(x,y)</code>. When <code>LabelType</code> is 'CComp' the function automatically finds
+connected components of zero pixels in the input image and marks them with
+distinct labels. When <code>LabelType</code> is 'Pixel', the function scans through the
+input image and marks all the zero pixels with distinct labels.</p>
 
 <p>In this mode, the complexity is still linear. That is, the function provides
 a very fast way to compute the Voronoi diagram for a binary image. Currently,
-the second variant can use only the approximate distance transform algorithm.</p>
-</div><!--after help -->
+the second variant can use only the approximate distance transform algorithm,
+i.e. <code>MaskSize='Precise'</code> is not supported yet.</p>
+
+<h2> References</h2>
+
+<p>[Felzenszwalb04]:</p>
+
+<blockquote>
+<p>Pedro Felzenszwalb and Daniel Huttenlocher.
+&quot;Distance transforms of sampled functions&quot;.
+Technical report, Cornell University, 2004.</p>
+</blockquote>
+
+<p>[Borgefors86]:</p>
+
+<blockquote>
+<p>Gunilla Borgefors. &quot;Distance transformations in digital images&quot;.
+Computer vision, graphics, and image processing, 34(3):344-371, 1986.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> bwdist</div>
    </body>
 </html>

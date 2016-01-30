@@ -1,0 +1,88 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.applyColorMap</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.applyColorMap</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.applyColorMap</div>
+      <div class="helpcontent"><p>Applies a GNU Octave/MATLAB equivalent colormap on a given image</p>
+
+<pre><code>dst = <a href="applyColorMap.html">cv.applyColorMap</a>(src, colormap)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> The source image, grayscale or colored does not matter.</li>
+<li><strong>colormap</strong> The colormap to apply. A string, one of:<ul>
+<li><strong>Autumn</strong> Shades of red and yellow color map.</li>
+<li><strong>Bone</strong> Gray-scale with a tinge of blue color map.</li>
+<li><strong>Jet</strong> Variant of HSV.</li>
+<li><strong>Winter</strong> Shades of blue and green color map.</li>
+<li><strong>Rainbow</strong> Red-orange-yellow-green-blue-violet color map.</li>
+<li><strong>Ocean</strong> Black to white with shades of blue color map.</li>
+<li><strong>Summer</strong> Shades of green and yellow colormap.</li>
+<li><strong>Spring</strong> Shades of magenta and yellow color map.</li>
+<li><strong>Cool</strong> Shades of cyan and magenta color map.</li>
+<li><strong>Hsv</strong> Hue-saturation-value color map.</li>
+<li><strong>Pink</strong> Pastel shades of pink color map.</li>
+<li><strong>Hot</strong> Black-red-yellow-white color map.</li>
+<li><strong>Parula</strong> Blue-green-orange-yellow color map.</li>
+</ul>
+</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> The result is the colormapped source image. Same row/column size
+and same type as <code>src</code>.</li>
+</ul>
+
+<p>The human perception isn't built for observing fine changes in grayscale
+images. Human eyes are more sensitive to observing changes between colors,
+so you often need to recolor your grayscale images to get a clue about them.
+OpenCV now comes with various colormaps to enhance the visualization in your
+computer vision application.</p>
+
+<h2> Example</h2>
+
+<p>In OpenCV you only need <a href="applyColorMap.html">cv.applyColorMap</a> to apply a colormap on a given
+image. The following sample code takes an image and applies a Jet colormap
+on it and shows the result:</p>
+
+<pre><code>% We need an input image. (can be grayscale or color)
+img_in = im2uint8(mat2gray(peaks(500)));
+
+% Apply the colormap
+%img_color2 = ind2rgb(img_in, jet(256));
+img_color = <a href="applyColorMap.html">cv.applyColorMap</a>(img_in, 'Jet');
+
+% Show the result
+imshow(img_color)
+</code></pre>
+
+<h2> Example</h2>
+
+<pre><code>cmaps = {'Autumn', 'Bone', 'Jet', 'Winter', 'Rainbow', 'Ocean', ...
+    'Summer', 'Spring', 'Cool', 'Hsv', 'Pink', 'Hot', 'Parula'};
+img = cell2mat(cellfun(@(cmap) ...
+    <a href="applyColorMap.html">cv.applyColorMap</a>(repmat(uint8(0:255), 20, 1), cmap), cmaps(:), ...
+    'UniformOutput',false));
+image(img)
+set(gca, 'YTick', 10:20:20*numel(cmaps), 'YTickLabel',cmaps)
+title('Colormaps')</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> cv.LUT, ind2rgb, colormap, autumn, bone, jet, winter, summer,
+   spring, cool, hsv, pink, hot, parula</div>
+   </body>
+</html>

@@ -15,7 +15,10 @@
          </tr>
       </table>
       <div class="title">cv.StereoSGBM/compute</div>
-      <div class="helpcontent"><p>disparity = bm.compute(left, right)</p>
+      <div class="helpcontent"><p>Computes disparity map for the specified stereo pair</p>
+
+<pre><code>disparity = bm.compute(left, right)
+</code></pre>
 
 <h2> Input</h2>
 
@@ -28,17 +31,17 @@ the left one.</li>
 <h2> Output</h2>
 
 <ul>
-<li><strong>disparity</strong> Output disparity map. It is a 16-bit signed
-single-channel image of the same size as the input
-image. It contains disparity values scaled by 16. So,
-to get the floating-point disparity map, you need to
-divide each disp element by 16.</li>
+<li><strong>disparity</strong> Output disparity map. It has the same size as
+the input images. Some algorithms, like <a href="StereoBM.html">cv.StereoBM</a> or
+<a href="StereoSGBM.html">cv.StereoSGBM</a> compute 16-bit fixed-point disparity map
+(where each disparity value has 4 fractional bits),
+whereas other algorithms output 32-bit floating-point
+disparity map.</li>
 </ul>
 
 <p>The method executes the SGBM algorithm on a rectified stereo
-pair. See stereo_match.cpp OpenCV sample on how to prepare
-images and call the method.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="StereoSGBM.html">cv.StereoSGBM</a></div>
+pair.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="StereoSGBM.StereoSGBM.html">cv.StereoSGBM/StereoSGBM</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

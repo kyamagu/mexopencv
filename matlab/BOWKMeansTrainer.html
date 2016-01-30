@@ -17,21 +17,30 @@
       <div class="title">cv.BOWKMeansTrainer</div>
       <div class="helpcontent"><p>kmeans-based class to train visual vocabulary using the bag of visual words approach</p>
 
-<p>kmeans-based class for training the bag of visual words vocabulary
-from a set of descriptors. For details, see, for example, Visual
-Categorization with Bags of Keypoints by Gabriella Csurka,
-Christopher R. Dance, Lixin Fan, Jutta Willamowski, Cedric Bray,
-2004.</p>
+<p>kmeans-based class for training the <em>bag of visual words</em> vocabulary
+from a set of descriptors.</p>
 
-<p>The basic usage is the following:</p>
+<h2> Example</h2>
 
-<pre><code>trainer = <a href="BOWKMeansTrainer.html">cv.BOWKMeansTrainer</a>();
+<pre><code>% create bag of visual words
+trainer = <a href="BOWKMeansTrainer.html">cv.BOWKMeansTrainer</a>(K);
 dictionary = trainer.cluster(train_descs);
+
+% Compute histogram of visual word occurrences of an image
 extractor = <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a>('SIFT','BruteForce');
 extractor.setVocabulary(dictionary);
-descs = extractor.compute(im,keypoints);</code></pre>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BOWKMeansTrainer.BOWKMeansTrainer.html">cv.BOWKMeansTrainer/BOWKMeansTrainer</a>
-  <a href="BOWKMeansTrainer.cluster.html">cv.BOWKMeansTrainer/cluster</a> <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a></div>
+descs = extractor.compute(im, keypoints);
+</code></pre>
+
+<h2> References</h2>
+
+<blockquote>
+<p>&quot;Visual Categorization with Bags of Keypoints&quot; by
+Gabriella Csurka, Christopher R. Dance, Lixin Fan, Jutta Willamowski,
+Cedric Bray, 2004.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BOWKMeansTrainer.BOWKMeansTrainer.html">cv.BOWKMeansTrainer/BOWKMeansTrainer</a>,
+   <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a>, bagOfFeatures</div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -54,7 +63,7 @@ descs = extractor.compute(im,keypoints);</code></pre>
       <table class="summary-list">
          <tr class="summary-item">
             <td class="name"><a href="BOWKMeansTrainer.BOWKMeansTrainer.html">BOWKMeansTrainer</a></td>
-            <td class="m-help">Create a new BOWKMeansTrainer&nbsp;</td>
+            <td class="m-help">The constructor&nbsp;</td>
          </tr>
       </table>
       <!--Properties-->

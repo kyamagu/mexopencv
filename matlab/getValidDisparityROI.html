@@ -1,0 +1,54 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.getValidDisparityROI</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.getValidDisparityROI</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.getValidDisparityROI</div>
+      <div class="helpcontent"><p>Computes valid disparity ROI from the valid ROIs of the rectified images</p>
+
+<pre><code>r = <a href="getValidDisparityROI.html">cv.getValidDisparityROI</a>(roi1, roi2)
+r = <a href="getValidDisparityROI.html">cv.getValidDisparityROI</a>(roi1, roi2, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>roi1</strong>, <strong>roi2</strong> rectangles inside the rectified images where all the
+the pixels are valid <code>[x,y,w,h]</code> (as returned by cv.stereoRectify).</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>r</strong> computed rectangle inside the disparity of valid ROI <code>[x,y,w,h]</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>MinDisparity</strong> Minimum possible disparity value. Normally, it is zero
+but sometimes rectification algorithms can shift images, so this
+parameter needs to be adjusted accordingly. default 0</li>
+<li><strong>NumDisparities</strong> Maximum disparity minus minimum disparity. The value is
+always greater than zero. default 64</li>
+<li><strong>BlockSize</strong> the linear size of the matched block size. The size should
+be odd (as the block is centered at the current pixel). Larger block
+size implies smoother, though less accurate disparity map. Smaller
+block size gives more detailed disparity map, but there is is higher
+chance for algorithm to find a wrong correspondence. default 21.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="stereoRectify.html">cv.stereoRectify</a>, <a href="StereoBM.html">cv.StereoBM</a>, <a href="StereoSGBM.html">cv.StereoSGBM</a>, <a href="filterSpeckles.html">cv.filterSpeckles</a>,
+   <a href="validateDisparity.html">cv.validateDisparity</a></div>
+   </body>
+</html>

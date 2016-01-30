@@ -18,18 +18,22 @@
       <div class="helpcontent"><p>Calculates the up-right bounding rectangle of a point set</p>
 
 <pre><code>rct = <a href="boundingRect.html">cv.boundingRect</a>(points)
+rct = <a href="boundingRect.html">cv.boundingRect</a>(mask)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>points</strong> Input vector of a 2D point stored in numeric array or cell array.</li>
+<li><strong>points</strong> Input 2D point set, stored in numeric array
+(Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors (<code>{[x,y], ...}</code>).
+Supports integer (<code>int32</code>) and floating point (<code>single</code>) classes.</li>
+<li><strong>mask</strong> Binary mask, a 1-channel NxM 8-bit or logical matrix.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>rct</strong> Output rectangle.</li>
+<li><strong>rct</strong> Output rectangle <code>[x,y,w,h]</code>.</li>
 </ul>
 
 <p>The function calculates and returns the minimal up-right bounding rectangle

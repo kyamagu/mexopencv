@@ -15,18 +15,17 @@
          </tr>
       </table>
       <div class="title">cv.Boost/clear</div>
-      <div class="helpcontent"><p>Deallocates memory and resets the model state</p>
+      <div class="helpcontent"><p>Clears the algorithm state</p>
 
-<pre><code>classifier.clear()
+<pre><code>model.clear()
 </code></pre>
 
-<p>The method clear does the same job as the destructor: it 
+<p>The method clear does the same job as the destructor: it
 deallocates all the memory occupied by the class members. But
-the object itself is not destructed and can be reused
-further. This method is called from the destructor, from the
-train() methods of the derived classes, from the methods
-load(), or even explicitly by the user.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Boost.html">cv.Boost</a></div>
+the object itself is not destructed and can be reused further.
+This method is called from the destructor, from the train() and
+load() methods, or even explicitly by the user.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="Boost.empty.html">cv.Boost/empty</a>, <a href="Boost.load.html">cv.Boost/load</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

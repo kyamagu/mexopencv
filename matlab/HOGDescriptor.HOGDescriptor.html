@@ -15,45 +15,54 @@
          </tr>
       </table>
       <div class="title">cv.HOGDescriptor/HOGDescriptor</div>
-      <div class="helpcontent"><p>Create or load a new HOG descriptor object</p>
+      <div class="helpcontent"><p>Create a new or load an existing HOG descriptor and detector</p>
 
 <pre><code>hog = <a href="HOGDescriptor.html">cv.HOGDescriptor</a>()
-hog = <a href="HOGDescriptor.html">cv.HOGDescriptor</a>(filename)
 hog = <a href="HOGDescriptor.html">cv.HOGDescriptor</a>('PropertyName', propertyValue, ...)
+hog = <a href="HOGDescriptor.html">cv.HOGDescriptor</a>(filename)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>filename</strong> Filename of existing HOG descriptor config to load from</li>
+<li><strong>filename</strong> Filename of existing HOG descriptor config to
+load from (XML or YAML). This is handled by the load
+method.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>hog</strong> HOG descriptor object</li>
+<li><strong>hog</strong> HOG descriptor object.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>WinSize</strong> Detection window size. Align to block size and block
-stride. default [64,128]</li>
+<li><strong>WinSize</strong> Detection window size. Align to block size and
+block stride. default [64,128]</li>
 <li><strong>BlockSize</strong> Block size in pixels. Align to cell size.
 default [16,16]</li>
 <li><strong>BlockStride</strong> Block stride. It must be a multiple of cell
 size. default [8,8]</li>
 <li><strong>CellSize</strong> Cell size. default [8,8]</li>
 <li><strong>NBins</strong> Number of bins. default 9</li>
-<li><strong>DerivAperture</strong> default 1</li>
+<li><strong>DerivAperture</strong> Derivative of aperture. default 1</li>
 <li><strong>WinSigma</strong> Gaussian smoothing window parameter. default -1
 (corresponds to <code>sum(BlockSize)/8</code>)</li>
-<li><strong>HistogramNormType</strong> default 'L2Hys'</li>
-<li><strong>L2HysThreshold</strong> L2-Hys normalization method shrinkage. default 0.2</li>
-<li><strong>GammaCorrection</strong> Flag to specify whether the gamma correction
-preprocessing is required or not. default true</li>
-<li><strong>NLevels</strong> Maximum number of detection window increases. default 64</li>
+<li><strong>HistogramNormType</strong> Histogram normalization method.
+default 'L2Hys'</li>
+<li><strong>L2HysThreshold</strong> L2-Hys normalization method shrinkage.
+default 0.2</li>
+<li><strong>GammaCorrection</strong> Flag to specify whether the gamma
+correction preprocessing is required or not. default true</li>
+<li><strong>NLevels</strong> Maximum number of detection window increases.
+default 64</li>
+<li><strong>SignedGradient</strong> Flag to specify whether orientations range
+in 0-180 (false) or 0-360 (true) degrees. 0-180 mean that
+positive/negative directions count as the same histogram
+bin. default false</li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.html">cv.HOGDescriptor</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.load.html">cv.HOGDescriptor/load</a></div>
    </body>
 </html>

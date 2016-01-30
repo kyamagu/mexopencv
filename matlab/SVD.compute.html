@@ -3,52 +3,56 @@
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    
       <link rel="stylesheet" href="helpwin.css">
-      <title>MATLAB File Help: cv.SVD.compute</title>
+      <title>MATLAB File Help: cv.SVD/compute</title>
    </head>
    <body>
       <!--Single-page help-->
       <table border="0" cellspacing="0" width="100%">
          <tr class="subheader">
-            <td class="headertitle">MATLAB File Help: cv.SVD.compute</td>
+            <td class="headertitle">MATLAB File Help: cv.SVD/compute</td>
             <td class="subheader-left"></td>
             <td class="subheader-right"><a href="index.html">Index</a></td>
          </tr>
       </table>
-      <div class="title">cv.SVD.compute</div>
-      <div class="helpcontent"><p>Performs SVD of a matrix</p>
+      <div class="title">cv.SVD/compute</div>
+      <div class="helpcontent"><p>the operator that performs SVD</p>
 
-<pre><code>[w, u, vt] = <a href="SVD.html">cv.SVD</a>.compute(A)
-[...] = <a href="SVD.html">cv.SVD</a>.compute(..., 'OptionName', optionValue, ...)
+<pre><code>svd.compute(A)
+svd.compute(A, 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>A</strong> Decomposed matrix</li>
-</ul>
-
-<h2> Output</h2>
-
-<ul>
-<li><strong>w</strong> Computed singular values</li>
-<li><strong>u</strong> Computed left singular vectors</li>
-<li><strong>vt</strong> Transposed matrix of right singular vectors</li>
+<li><strong>A</strong> decomposed matrix, <code>A = u*diag(w)*vt</code></li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>NoUV</strong> Use only singular values. The algorithm does not
-compute u and vt matrices. default false</li>
-<li><strong>FullUV</strong> When the matrix is not square, by default the
-algorithm produces u and vt matrices of sufficiently
-large size for the further A reconstruction. If,
-however, the 'FullUV' flag is specified, u and vt are
+<li><strong>Flags</strong> operation flags. default 0</li>
+<li><strong>ModifyA</strong> allow the algorithm to modify the decomposed
+matrix; it can save space and speed up processing.
+currently ignored. default false</li>
+<li><strong>NoUV</strong> indicates that only a vector of singular values <code>w</code>
+is to be processed, while <code>u</code> and <code>vt</code> will be set to
+empty matrices. default false</li>
+<li><strong>FullUV</strong> when the matrix is not square, by default the
+algorithm produces <code>u</code> and <code>vt</code> matrices of sufficiently
+large size for the further <code>A</code> reconstruction; if,
+however, <code>FullUV</code> flag is specified, <code>u</code> and <code>vt</code> will be
 full-size square orthogonal matrices. default false</li>
 </ul>
 
-<p>The methods/functions perform SVD of matrix.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SVD.solveZ.html">cv.SVD.solveZ</a> <a href="SVD.backSubst.html">cv.SVD.backSubst</a></div>
+<p>The previously allocated <code>u</code>, <code>w</code> and <code>vt</code> are released.</p>
+
+<p>The operator performs the singular value decomposition of the
+supplied matrix. The <code>u</code>, <code>vt</code>, and the vector of singular
+values <code>w</code> are stored in the structure. The same SVD structure
+can be reused many times with different matrices. Each time, if
+needed, the previous <code>u</code>, <code>vt</code>, and <code>w</code> are reclaimed and the
+new matrices are created.</p>
+</div><!--after help -->
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">
@@ -62,7 +66,7 @@ full-size square orthogonal matrices. default false</li>
          </tr>
          <tr>
             <td class="class-detail-label">Static</td>
-            <td>true</td>
+            <td>false</td>
          </tr>
       </table>
    </body>

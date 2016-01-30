@@ -18,35 +18,26 @@
       <div class="helpcontent"><p>PCA constructors</p>
 
 <pre><code>pca = <a href="PCA.html">cv.PCA</a>()
-pca = <a href="PCA.html">cv.PCA</a>(X, 'OptionName', optionValue, ...)
+pca = <a href="PCA.html">cv.PCA</a>(data, 'OptionName', optionValue, ...)
 pca = <a href="PCA.html">cv.PCA</a>(S)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>X</strong> Vectors to be analyzed</li>
+<li><strong>data</strong> input samples stored as matrix rows or matrix columns</li>
 <li><strong>S</strong> A scalar struct to be imported</li>
 </ul>
 
 <h2> Options</h2>
 
-<ul>
-<li><strong>DataAs</strong> Data layout option. One of 'row' or 'col'.
-default 'row'.</li>
-<li><strong>MaxComponents</strong> Maximum number of components that PCA
-should retain. By default, all the components are
-retained.</li>
-<li><strong>Mean</strong> Optional mean value. By default, the mean is
-computed from the data.</li>
-</ul>
+<p>Same set of options as the <a href="PCA.html">cv.PCA</a>.compute method.</p>
 
-<p>The constructor creates an empty pca object without an
-argument. Use pca.compute to analyze data samples. The second
-form accepts data samples with the same argument to
-pca.compute. The third form create a new pca object from a
-scalar struct with 'eigenvectors', 'eigenvalues', and 'mean'
-fields.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="PCA.html">cv.PCA</a> <a href="PCA.compute.html">cv.PCA/compute</a></div>
+<p>The constructor creates an empty PCA object without an argument.
+Use <a href="PCA.html">cv.PCA</a>.compute to analyze data samples. The second form
+accepts data samples with the same arguments as <a href="PCA.html">cv.PCA</a>.compute.
+The third form create a new PCA object from a scalar struct with
+'eigenvectors', 'eigenvalues', and 'mean' fields.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="PCA.html">cv.PCA</a>, <a href="PCA.compute.html">cv.PCA/compute</a></div>
    </body>
 </html>

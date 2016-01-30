@@ -1,0 +1,62 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.RotatedRect.from3points</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.RotatedRect.from3points</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.RotatedRect.from3points</div>
+      <div class="helpcontent"><p>Create a rotated rectangle from 3 points</p>
+
+<pre><code>rrect = <a href="RotatedRect.html">cv.RotatedRect</a>.from3points(pt1, pt2, pt3)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>pt1</strong>, <strong>pt2</strong>, <strong>pt3</strong> Any 3 end points <code>[x,y]</code> of the
+rotated rectangle. They must be given in order (either
+clockwise or anticlockwise).</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>rrect</strong> output rotated rectangle. A structure with the
+following fields:<ul>
+<li><strong>center</strong> The rectangle mass center <code>[x,y]</code>.</li>
+<li><strong>size</strong> Width and height of the rectangle <code>[w,h]</code>.</li>
+<li><strong>angle</strong> The rotation angle in a clockwise direction.
+When the angle is 0, 90, 180, 270 etc., the
+rectangle becomes an up-right rectangle.</li>
+</ul>
+</li>
+</ul>
+</div><!--after help -->
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>true</td>
+         </tr>
+      </table>
+   </body>
+</html>

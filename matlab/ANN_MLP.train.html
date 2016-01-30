@@ -15,84 +15,171 @@
          </tr>
       </table>
       <div class="title">cv.ANN_MLP/train</div>
-      <div class="helpcontent"><p>Trains the model</p>
+      <div class="helpcontent"><p>Trains/updates the MLP</p>
 
-<pre><code>classifier.train(trainData, responses)
-classifier.train(trainData, responses, 'OptionName', optionValue, ...)
+<pre><code>status = model.train(samples, responses)
+status = model.train(csvFilename, [])
+[...] = model.train(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>trainData</strong> Row vectors of feature.</li>
-<li><strong>responses</strong>  Output of the corresponding feature vectors.</li>
+<li><strong>samples</strong> matrix of training samples. It should be
+floating-point type. By default, each row represents a sample
+(see the <code>Layout</code> option).</li>
+<li><strong>responses</strong>  Floating-point matrix of the corresponding
+output vectors, one vector per row.</li>
+<li><strong>csvFilename</strong> The input CSV file name from which to load
+dataset. In this variant, you should set the second
+argument to an empty array.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>status</strong> Success flag.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>TrainMethod</strong> Training method of the MLP. Possible values
-are shown below. default 'RProp'.<ul>
-<li>'BackProp' The back-propagation algorithm</li>
-<li>'RProp'    The RPROP algorithm</li>
-</ul>
-</li>
-<li><strong>SampleWeights</strong> (RProp only) Optional floating-point vector
-of weights for each sample. Some samples may be more
-important than others for training. You may want to raise
-the weight of certain classes to find the right balance
-between hit-rate and false-alarm rate, and so on.</li>
-<li><strong>SampleIdx</strong> Indicator samples of interest. Must have the
-the same size to responses.</li>
-<li><strong>UpdateWeights</strong> Algorithm updates the network weights, rather
-than computes them from scratch. In the latter case the
-weights are initialized using the Nguyen-Widrow algorithm.
-default false.</li>
-<li><strong>NoInputScale</strong> Algorithm does not normalize the input vectors.
-If this flag is not set, the training algorithm normalizes
-each input feature independently, shifting its mean value
-to 0 and making the standard deviation equal to 1. If the
-network is assumed to be updated frequently, the new
-training data could be much different from original one.
-In this case, you should take care of proper normalization.
-default false.</li>
+<li><strong>Data</strong> Training data options, specified as a cell array of
+key/value pairs of the form <code>{'key',val, ...}</code>. See below.</li>
+<li><strong>Flags</strong> The optional training flags, model-dependent. For
+convenience, you can set the individual flag options
+below, instead of directly setting bits here. default 0</li>
+<li><strong>UpdateWeights</strong> Algorithm updates the network weights,
+rather than computes them from scratch. In the latter case
+the weights are initialized using the Nguyen-Widrow
+algorithm. default false.</li>
+<li><strong>NoInputScale</strong> Algorithm does not normalize the input
+vectors. If this flag is not set, the training algorithm
+normalizes each input feature independently, shifting its
+mean value to 0 and making the standard deviation equal
+to 1. If the network is assumed to be updated frequently,
+the new training data could be much different from
+original one. In this case, you should take care of proper
+normalization. default false.</li>
 <li><strong>NoOutputScale</strong> Algorithm does not normalize the output
 vectors. If the flag is not set, the training algorithm
 normalizes each output feature independently, by
 transforming it to the certain range depending on the used
 activation function. default false.</li>
-<li><strong>TermCrit</strong> Termination criteria of the training algorithm.
-You can specify the maximum number of iterations
-(max_iter) and/or how much the error could change between
-the iterations to make the algorithm continue (epsilon).
-A struct with the following fields are accepted:<ul>
-<li>'type'      one of {'Count','EPS','Count+EPS'}</li>
-<li>'maxCount'  maximum number of iterations</li>
-<li>'epsilon'   tolerance value</li>
+</ul>
+
+<h3> Options for <code>Data</code> (first variant with samples and reponses)</h3>
+
+<ul>
+<li><strong>Layout</strong> Sample types. Default 'Row'. One of:<ul>
+<li><strong>Row</strong> each training sample is a row of samples.</li>
+<li><strong>Col</strong> each training sample occupies a column of
+samples.</li>
 </ul>
 </li>
-<li><strong>BpDwScale</strong> (BackProp only) Strength of the weight gradient
-term. The recommended value is about 0.1 (default)</li>
-<li><strong>BpMomentScale</strong> (BackProp only) Strength of the momentum
-term (the difference between weights on the 2 previous
-iterations). This parameter provides some inertia to
-smooth the random fluctuations of the weights. It can
-vary from 0 (the feature is disabled) to 1 and beyond.
-The value 0.1 (default) or so is good enough.</li>
-<li><strong>RpDw0</strong> Initial value Delta0 of update-values Delta_ij.
-default 0.1.</li>
-<li><strong>RpDwPlus</strong> Increase factor eta^+. It must be &gt;1. default 1.2</li>
-<li><strong>RpDwMinus</strong> Decrease factor eta^-. It must be &lt;1. default 0.5</li>
-<li><strong>RpDwMin</strong> Update-values lower limit Delta_min. It must be
-positive. default FLT_EPSILON</li>
-<li><strong>RpDwMax</strong> Update-values upper limit Delta_max. It must be</li>
+<li><strong>VarIdx</strong> vector specifying which variables to use for
+training. It can be an integer vector (<code>int32</code>) containing
+0-based variable indices or logical vector (<code>uint8</code> or
+<code>logical</code>) containing a mask of active variables. Not set
+by default, which uses all variables in the input data.</li>
+<li><strong>SampleIdx</strong> vector specifying which samples to use for
+training. It can be an integer vector (<code>int32</code>) containing
+0-based sample indices or logical vector (<code>uint8</code> or
+<code>logical</code>) containing a mask of training samples of
+interest. Not set by default, which uses all samples in
+the input data.</li>
+<li><strong>SampleWeights</strong> optional floating-point vector with weights
+for each sample. Some samples may be more important than
+others for training. You may want to raise the weight of
+certain classes to find the right balance between hit-rate
+and false-alarm rate, and so on. Not set by default, which
+effectively assigns an equal weight of 1 for all samples.</li>
+<li><strong>VarType</strong> optional vector of type <code>uint8</code> and size
+<code>&lt;num_of_vars_in_samples&gt; + &lt;num_of_vars_in_responses&gt;</code>,
+containing types of each input and output variable. By
+default considers all variables as numerical (both input
+and output variables). In case there is only one output
+variable of integer type, it is considered categorical.
+You can also specify a cell-array of strings (or as one
+string of single characters, e.g 'NNNC'). Possible values:<ul>
+<li><strong>Numerical</strong>, <strong>N</strong> same as 'Ordered'</li>
+<li><strong>Ordered</strong>, <strong>O</strong> ordered variables</li>
+<li><strong>Categorical</strong>, <strong>C</strong> categorical variables</li>
+</ul>
+</li>
+<li><strong>MissingMask</strong> Indicator mask for missing observation (not
+currently implemented). Not set by default</li>
+<li><strong>TrainTestSplitCount</strong> divides the dataset into train/test
+sets, by specifying number of samples to use for the test
+set. By default all samples are used for the training set.</li>
+<li><strong>TrainTestSplitRatio</strong> divides the dataset into train/test
+sets, by specifying ratio of samples to use for the test
+set. By default all samples are used for the training set.</li>
+<li><strong>TrainTestSplitShuffle</strong> when splitting dataset into
+train/test sets, specify whether to shuffle the samples.
+Otherwise samples are assigned sequentially (first train
+then test). default true</li>
 </ul>
 
-<pre><code> &gt;1. default 50
-</code></pre>
+<h3> Options for <code>Data</code> (second variant for loading CSV file)</h3>
 
-<p>The method trains the ANN_MLP model.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="ANN_MLP.html">cv.ANN_MLP</a> <a href="ANN_MLP.predict.html">cv.ANN_MLP/predict</a></div>
+<ul>
+<li><strong>HeaderLineCount</strong> The number of lines in the beginning to
+skip; besides the header, the function also skips empty
+lines and lines staring with '#'. default 1</li>
+<li><strong>ResponseStartIdx</strong> Index of the first output variable. If
+-1, the function considers the last variable as the
+response. If the dataset only contains input variables and
+no responses, use <code>ResponseStartIdx = -2</code> and
+<code>ResponseEndIdx = 0</code>, then the output variables vector
+will just contain zeros. default -1</li>
+<li><strong>ResponseEndIdx</strong> Index of the last output variable + 1. If
+-1, then there is single response variable at
+<code>ResponseStartIdx</code>. default -1</li>
+<li><strong>VarTypeSpec</strong> The optional text string that specifies the
+variables' types. It has the format
+<code>ord[n1-n2,n3,n4-n5,...]cat[n6,n7-n8,...]</code>. That is,
+variables from <code>n1</code> to <code>n2</code> (inclusive range), <code>n3</code>, <code>n4</code>
+to <code>n5</code> ... are considered ordered and <code>n6</code>, <code>n7</code> to
+<code>n8</code> ... are considered as categorical. The range
+<code>[n1..n2] + [n3] + [n4..n5] + ... + [n6] + [n7..n8]</code>
+should cover all the variables. If <code>VarTypeSpec</code> is not
+specified, then algorithm uses the following rules:<ul>
+<li>all input variables are considered ordered by default.
+If some column contains has non- numerical values, e.g.
+'apple', 'pear', 'apple', 'apple', 'mango', the
+corresponding variable is considered categorical.</li>
+<li>if there are several output variables, they are all
+considered as ordered. Errors are reported when
+non-numerical values are used.</li>
+<li>if there is a single output variable, then if its values
+are non-numerical or are all integers, then it's
+considered categorical. Otherwise, it's considered
+ordered.</li>
+</ul>
+</li>
+<li><strong>Delimiter</strong> The character used to separate values in each
+line. default ','</li>
+<li><strong>Missing</strong> The character used to specify missing
+measurements. It should not be a digit. Although it's a
+non-numerical value, it surely does not affect the
+decision of whether the variable ordered or categorical.
+default '?'</li>
+<li><strong>TrainTestSplitCount</strong> same as above.</li>
+<li><strong>TrainTestSplitRatio</strong> same as above.</li>
+<li><strong>TrainTestSplitShuffle</strong> same as above.</li>
+</ul>
+
+<p>This method applies the specified training algorithm to
+computing/adjusting the network weights.</p>
+
+<p>The RPROP training algorithm is parallelized with the TBB
+library.</p>
+
+<p>If you are using the default 'Sigmoid' activation function then
+the output should be in the range [-1,1], instead of [0,1], for
+optimal results.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="ANN_MLP.predict.html">cv.ANN_MLP/predict</a>, <a href="ANN_MLP.calcError.html">cv.ANN_MLP/calcError</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

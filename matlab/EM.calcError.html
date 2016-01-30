@@ -1,0 +1,77 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.EM/calcError</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.EM/calcError</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.EM/calcError</div>
+      <div class="helpcontent"><p>Computes error on the training or test dataset</p>
+
+<pre><code>err = model.calcError(samples, responses)
+err = model.calcError(csvFilename, [])
+[err,resp] = model.calcError(...)
+[...] = model.calcError(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>samples</strong> See the train method.</li>
+<li><strong>responses</strong> See the train method.</li>
+<li><strong>csvFilename</strong> See the train method.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>err</strong> computed error.</li>
+<li><strong>resp</strong> the optional output responses.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Data</strong> See the train method.</li>
+<li><strong>TestError</strong> if true, the error is computed over the test
+subset of the data, otherwise it's computed over the
+training subset of the data. Please note that if you
+loaded a completely different dataset to evaluate an
+already trained classifier, you will probably want not to
+set the test subset at all with <code>TrainTestSplitRatio</code> and
+specify <code>TestError=false</code>, so that the error is computed
+for the whole new set. Yes, this sounds a bit confusing.
+default false</li>
+</ul>
+
+<p>The method uses the predict method to compute the error. For
+regression models the error is computed as RMS, for classifiers
+as a percent of missclassified samples (0%-100%).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="EM.train.html">cv.EM/train</a>, <a href="EM.predict.html">cv.EM/predict</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

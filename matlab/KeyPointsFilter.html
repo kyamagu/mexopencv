@@ -1,0 +1,146 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.KeyPointsFilter</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.KeyPointsFilter</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.KeyPointsFilter</div>
+      <div class="helpcontent"><p>Methods to filter a vector of keypoints.</p>
+
+<p>A keypoint is a data structure for salient point detectors.</p>
+
+<p>The struct stores a keypoint, i.e. a point feature found by one of many
+available keypoint detectors, such as Harris corner detector, <a href="FAST.html">cv.FAST</a>,
+<a href="StarDetector.html">cv.StarDetector</a>, <a href="SURF.html">cv.SURF</a>, <a href="SIFT.html">cv.SIFT</a>, <a href="FeatureDetector.html">cv.FeatureDetector</a> etc.</p>
+
+<p>The keypoint is characterized by the 2D position, scale (proportional to
+the diameter of the neighborhood that needs to be taken into account),
+orientation and some other parameters. The keypoint neighborhood is then
+analyzed by another algorithm that builds a descriptor (usually
+represented as a feature vector). The keypoints representing the same
+object in different images can then be matched using
+<a href="DescriptorMatcher.html">cv.DescriptorMatcher</a> or another method.</p>
+
+<p>The keypoint struct contains the following fields:
+* <strong>pt</strong> coordinates of the keypoint <code>[x,y]</code>.
+* <strong>size</strong> diameter of the meaningful keypoint neighborhood.
+* <strong>angle</strong> computed orientation of the keypoint (-1 if not applicable);
+it's in [0,360) degrees and measured relative to image coordinate
+system, ie in clockwise.
+* <strong>response</strong> the response by which the most strong keypoints have been
+selected. Can be used for the further sorting or subsampling.
+* <strong>octave</strong> octave (pyramid layer) from which the keypoint has been
+extracted.
+* <strong>class_id</strong> object class (if the keypoints need to be clustered by an
+object they belong to).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.html">cv.FeatureDetector</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="KeyPointsFilter.KeyPointsFilter.html">KeyPointsFilter</a></td>
+            <td class="m-help">Methods to filter a vector of keypoints.&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">Static 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KeyPointsFilter.convertFromPoints.html">convertFromPoints</a></td>
+            <td class="m-help">Convert vector of points to vector of keypoints, where each keypoint is assigned the same size and the same orientation&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Static 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KeyPointsFilter.convertToPoints.html">convertToPoints</a></td>
+            <td class="m-help">Convert vector of keypoints to vector of points&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Static 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KeyPointsFilter.hash.html">hash</a></td>
+            <td class="m-help">Compute hash of a keypoint&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Static 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KeyPointsFilter.overlap.html">overlap</a></td>
+            <td class="m-help">Compute overlap for pair of keypoints&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Static 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KeyPointsFilter.removeDuplicated.html">removeDuplicated</a></td>
+            <td class="m-help">Remove duplicated keypoints.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Static 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KeyPointsFilter.retainBest.html">retainBest</a></td>
+            <td class="m-help">Retain the specified number of the best keypoints (according to the response).&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Static 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KeyPointsFilter.runByImageBorder.html">runByImageBorder</a></td>
+            <td class="m-help">Remove keypoints within borderPixels of an image edge.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Static 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KeyPointsFilter.runByKeypointSize.html">runByKeypointSize</a></td>
+            <td class="m-help">Remove keypoints of sizes out of range.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Static 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KeyPointsFilter.runByPixelsMask.html">runByPixelsMask</a></td>
+            <td class="m-help">Remove keypoints from some image by mask for pixels of this image.&nbsp;</td>
+         </tr>
+      </table>
+   </body>
+</html>

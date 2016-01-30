@@ -15,38 +15,36 @@
          </tr>
       </table>
       <div class="title">cv.DescriptorExtractor/DescriptorExtractor</div>
-      <div class="helpcontent"><p>DescriptorExtractor constructors</p>
+      <div class="helpcontent"><p>Creates a descriptor extractor by name.</p>
 
 <pre><code>extractor = <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a>(type)
+extractor = <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a>(type, 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>type</strong> Type of the detector. see below. default 'FAST'</li>
+<li><strong>type</strong> The following extractor types are supported:<ul>
+<li><strong>BRISK</strong> see cv.BRISK</li>
+<li><strong>ORB</strong> see <a href="ORB.html">cv.ORB</a> (default)</li>
+<li><strong>KAZE</strong> see cv.KAZE</li>
+<li><strong>AKAZE</strong> see cv.AKAZE</li>
+<li><strong>SIFT</strong> see <a href="SIFT.html">cv.SIFT</a> (requires <code>xfeatures2d</code> module)</li>
+<li><strong>SURF</strong> see <a href="SURF.html">cv.SURF</a> (requires <code>xfeatures2d</code> module)</li>
+<li><strong>FREAK</strong> see <a href="FREAK.html">cv.FREAK</a> (requires <code>xfeatures2d</code> module)</li>
+<li><strong>BriefDescriptorExtractor</strong> see <a href="BriefDescriptorExtractor.html">cv.BriefDescriptorExtractor</a>
+(requires <code>xfeatures2d</code> module)</li>
+<li><strong>LUCID</strong> see <a href="LUCID.html">cv.LUCID</a> (requires <code>xfeatures2d</code> module)</li>
+<li><strong>LATCH</strong> see <a href="LATCH.html">cv.LATCH</a> (requires <code>xfeatures2d</code> module)</li>
+<li><strong>DAISY</strong> see <a href="DAISY.html">cv.DAISY</a> (requires <code>xfeatures2d</code> module)</li>
+</ul>
+</li>
 </ul>
 
-<h2> Output</h2>
+<h2> Options</h2>
 
-<ul>
-<li><strong>extractor</strong> New instance of the DescriptorExtractor</li>
-</ul>
-
-<p>The following extractor types are supported:</p>
-
-<pre><code> 'SIFT'     SiftDescriptorExtractor
- 'SURF'     SurfDescriptorExtractor
- 'ORB'      OrbDescriptorExtractor
- 'BRIEF'    BriefDescriptorExtractor
-</code></pre>
-
-<p>Also a combined format with the following adaptor is
-supported</p>
-
-<pre><code> 'Opponent' OpponentColorDescriptorExtractor
-</code></pre>
-
-<p>for example: 'OpponentSIFT'.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a> <a href="DescriptorExtractor.write.html">cv.DescriptorExtractor/write</a></div>
+<p>Refer to the constructors of each descriptor extractor for a
+list of supported options.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DescriptorExtractor.compute.html">cv.DescriptorExtractor/compute</a></div>
    </body>
 </html>

@@ -15,7 +15,7 @@
          </tr>
       </table>
       <div class="title">cv.stereoCalibrate</div>
-      <div class="helpcontent"><p>Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern</p>
+      <div class="helpcontent"><p>Calibrates the stereo camera</p>
 
 <pre><code>S = <a href="stereoCalibrate.html">cv.stereoCalibrate</a>(objectPoints, imagePoints1, imagePoints2, imageSize)
 [...] = <a href="stereoCalibrate.html">cv.stereoCalibrate</a>(..., 'OptionName', optionValue, ...)
@@ -24,39 +24,37 @@
 <h2> Input</h2>
 
 <ul>
-<li><strong>objectPoints</strong> A cell array of cells of calibration pattern points in the
-calibration pattern coordinate space.</li>
+<li><strong>objectPoints</strong> A cell array of cells of calibration pattern points in
+the calibration pattern coordinate space  <code>{{[x,y,z], ..}, ...}</code>.</li>
 <li><strong>imagePoints1</strong> A cell array of cells of the projections of calibration
-pattern points, observed by the first camera.</li>
+pattern points <code>{{[x,y], ..}, ...}</code>, observed by the first camera.</li>
 <li><strong>imagePoints2</strong> A cell array of cells of the projections of calibration
-pattern points, observed by the second camera.</li>
-<li><strong>imageSize</strong> Size of the image used only to initialize the intrinsic camera
-matrix. [w,h].</li>
+pattern points <code>{{[x,y], ..}, ...}</code>, observed by the second camera.</li>
+<li><strong>imageSize</strong> Size of the image used only to initialize the intrinsic
+camera matrix <code>[w,h]</code>.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>S</strong> struct having the following fields:<ul>
-<li><strong>cameraMatrix1</strong> Input/output first camera matrix A = [fx, 0, cx; 0, 
-            fy, cy; 0, 0, 1]. If any of 'UseIntrinsicGuess' ,
-'FixAspectRatio' , 'FixIntrinsic' (default) , or
-'FixFocalLength' are specified, some or all of the matrix
-components must be initialized.</li>
-<li><strong>distCoeffs1</strong> vector of distortion coefficients [k1,k2,p1,p2,k3,k4,
-            k5,k6] of 4, 5, or 8 elements. The output vector length
-depends on the options.</li>
-<li><strong>cameraMatrix2</strong> second camera matrix. The parameter is similar to
-cameraMatrix1</li>
-<li><strong>distCoeffs2</strong> lens distortion coefficients for the second camera.
-The parameter is similar to distCoeffs1.</li>
-<li><strong>R</strong> rotation matrix between the 1st and the 2nd camera coordinate
-systems.</li>
-<li><strong>T</strong> translation vector between the coordinate systems of the
-cameras.</li>
-<li><strong>E</strong> essential matrix.</li>
-<li><strong>F</strong> fundamental matrix.</li>
-<li><strong>d</strong> Output final re-projection error.</li>
+<li><strong>S</strong> scalar struct having the following fields:<ul>
+<li><strong>cameraMatrix1</strong> output first camera matrix
+<code>A = [fx1 0 cx1; 0 fy1 cy1; 0 0 1]</code>.</li>
+<li><strong>distCoeffs1</strong> output vector of distortion coefficients
+<code>[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4,taux,tauy]</code> of 4, 5, 8, 12
+or 14 elements. The output vector length depends on the options.</li>
+<li><strong>cameraMatrix2</strong> output second camera matrix
+<code>A = [fx2 0 cx2; 0 fy2 cy2; 0 0 1]</code>. The parameter is similar to
+<code>cameraMatrix1</code>.</li>
+<li><strong>distCoeffs2</strong> output lens distortion coefficients for the second
+camera. The parameter is similar to <code>distCoeffs1</code>.</li>
+<li><strong>R</strong> output 3x3 rotation matrix between the 1st and the 2nd camera
+coordinate systems.</li>
+<li><strong>T</strong> output 3x1 translation vector between the coordinate systems
+of the cameras.</li>
+<li><strong>E</strong> output 3x3 essential matrix.</li>
+<li><strong>F</strong> output 3x3 fundamental matrix.</li>
+<li><strong>reprojErr</strong> output final re-projection error (scalar).</li>
 </ul>
 </li>
 </ul>
@@ -64,73 +62,100 @@ cameras.</li>
 <h2> Options</h2>
 
 <ul>
-<li><strong>CameraMatrix1</strong>, <strong>CameraMatrix2</strong>: Initial camera matrices.</li>
-<li><strong>DistCoeffs1</strong>, <strong>DistCoeffs2</strong>: Initial lens distortion coefficients.</li>
-<li><strong>TermCrit</strong> Termination criteria for the iterative optimization
-algorithm. struct with 'type', 'maxCount', 'epsilon' fields.</li>
-<li><strong>FixIntrinsic</strong> Fix cameraMatrixN and distCoeffsN so that only R, T,
-E , and F matrices are estimated. default true.</li>
+<li><strong>CameraMatrix1</strong>, <strong>CameraMatrix2</strong> Initial camera matrices. If any of
+'UseIntrinsicGuess', 'FixAspectRatio', 'FixIntrinsic' (default), or
+'FixFocalLength' are specified, some or all of the matrix components
+must be initialized. See the flags description for details.</li>
+<li><strong>DistCoeffs1</strong>, <strong>DistCoeffs2</strong> Initial lens distortion coefficients.</li>
+<li><strong>FixIntrinsic</strong> Fix <code>cameraMatrix1</code>,<code>cameraMatrix2</code> and <code>distCoeffs1</code>,
+<code>distCoeffs2</code> so that only <code>R</code>, <code>T</code>, <code>E</code>, and <code>F</code> matrices are
+estimated. default true.</li>
 <li><strong>UseIntrinsicGuess</strong> Optimize some or all of the intrinsic parameters
 according to the specified flags. Initial values are provided by
 the user. default false.</li>
 <li><strong>FixPrincipalPoint</strong> Fix the principal points during the optimization.
 default false.</li>
-<li><strong>FixFocalLength</strong> Fix fx and fy. default false</li>
-<li><strong>FixAspectRatio</strong> Optimize fy and fix the ratio fx/fy. default false.</li>
-<li><strong>SameFocalLength</strong> Enforce same fx and fy for two cameras. default
-false.</li>
+<li><strong>FixFocalLength</strong> Fix <code>fx1</code>,<code>fx2</code> and <code>fy1</code>,<code>fy2</code>. default false.</li>
+<li><strong>FixAspectRatio</strong> Optimize <code>fy1</code>,<code>fy2</code> and fix the ratio <code>fx1/fy1</code>,
+<code>fx2/fy2</code>. default false.</li>
+<li><strong>SameFocalLength</strong> Enforce same <code>fx1=fx2</code> and <code>fy1=fy2</code>. default false.</li>
 <li><strong>ZeroTangentDist</strong> Set tangential distortion coefficients for each
 camera to zeros and fix there. default false.</li>
-<li><strong>FixK1</strong>, <strong>FixK2</strong>, ..., <strong>FixK6</strong>: Do not change the corresponding
-radial distortion coefficient during the optimization. If
-<code>UseIntrinsicGuess</code> is set, the coefficient from the supplied
-distCoeffs matrix is used. Otherwise, it is set to 0. default false.</li>
-<li><strong>RationalModel</strong> Enable coefficients k4, k5, and k6. To provide the
-backward compatibility, this extra flag should be explicitly
-specified to make the calibration function use the rational model
-and return 8 coefficients. If the flag is not set, the function
-computes and returns only 5 distortion coefficients. default false.</li>
+<li><strong>FixK1</strong>, ..., <strong>FixK6</strong> Do not change the corresponding radial
+distortion coefficient during the optimization. If <code>UseIntrinsicGuess</code>
+is set, the coefficient from the supplied <code>DistCoeffs</code> matrix is used.
+Otherwise, it is set to 0. default false.</li>
+<li><strong>RationalModel</strong> Enable coefficients <code>k4</code>, <code>k5</code>, and <code>k6</code>. To provide the
+backward compatibility, this extra flag should be explicitly specified
+to make the calibration function use the rational model and return 8
+coefficients. If the flag is not set, the function computes and
+returns only 5 distortion coefficients. default false.</li>
+<li><strong>ThinPrismModel</strong> Coefficients <code>s1</code>, <code>s2</code>, <code>s3</code> and <code>s4</code> are enabled. To
+provide the backward compatibility, this extra flag should be
+explicitly specified to make the calibration function use the thin
+prism model and return 12 coefficients. If the flag is not set, the
+function computes and returns only 5 distortion coefficients.
+default false.</li>
+<li><strong>FixS1S2S3S4</strong> The thin prism distortion coefficients are not changed
+during the optimization. If 'UseIntrinsicGuess' is set, the
+coefficient from the supplied <code>DistCoeffs</code> matrix is used. Otherwise,
+it is set to 0. default false</li>
+<li><strong>TiltedModel</strong> Coefficients <code>tauX</code> and <code>tauY</code> are enabled. To provide the
+backward compatibility, this extra flag should be explicitly specified
+to make the calibration function use the tilted sensor model and
+return 14 coefficients. If the flag is not set, the function computes
+and returns only 5 distortion coefficients. default false.</li>
+<li><strong>FixTauXTauY</strong> The coefficients of the tilted sensor model are not
+changed during the optimization. If <code>UseIntrinsicGuess</code> is set, the
+coefficient from the supplied <code>DistCoeffs</code> matrix is used. Otherwise,
+it is set to 0. default false.</li>
+<li><strong>UseLU</strong> Use LU instead of SVD decomposition for solving. Much faster but
+potentially less precise. default false.</li>
+<li><strong>Criteria</strong> Termination criteria for the iterative optimization algorithm.
+default <code>struct('type','Count+EPS', 'maxCount',30, 'epsilon',1e-6)</code></li>
 </ul>
 
 <p>The function estimates transformation between two cameras making a stereo
 pair. If you have a stereo camera where the relative position and
-orientation of two cameras is fixed, and if you computed poses of an
-object relative to the first camera and to the second camera, (R1, T1)
-and (R2, T2), respectively (this can be done with cv.solvePnP), then
-those poses definitely relate to each other. This means that, given (R1,
-T1 ), it should be possible to compute (R2,T2). You only need to know the
-position and orientation of the second camera relative to the first
-camera. This is what the described function does. It computes (R,T) so
-that
-R2 = R * R1 T2 = R * T1 + T</p>
+orientation of two cameras is fixed, and if you computed poses of an object
+relative to the first camera and to the second camera, <code>(R1,T1)</code> and
+<code>(R2,T2)</code>, respectively (this can be done with cv.solvePnP), then those
+poses definitely relate to each other. This means that, given <code>(R1,T1)</code>, it
+should be possible to compute <code>(R2,T2)</code>. You only need to know the position
+and orientation of the second camera relative to the first camera. This is
+what the described function does. It computes <code>(R,T)</code> so that:</p>
 
-<p>Optionally, it computes the essential matrix E:</p>
-
-<pre><code>E = [0,-T2,T1;T2,0,-T0;-T1,T0,0] * R
+<pre><code>R2 = R * R1*T2 = R * T1 + T
 </code></pre>
 
-<p>where Ti are components of the translation vector T: T = [T0,T1,T2]^T.
-And the function can also compute the fundamental matrix F:</p>
+<p>Optionally, it computes the essential matrix <code>E</code>:</p>
 
-<pre><code>F = cameraMatrix2 ^T * E * cameraMatrix1^-1
+<pre><code>E = [ 0 -T2  T1;
+     T2   0 -T0;
+    -T1  T0   0] * R
 </code></pre>
 
-<p>Besides the stereo-related information, the function can also perform a
-full calibration of each of two cameras. However, due to the high
-dimensionality of the parameter space and noise in the input data, the
-function can diverge from the correct solution. If the intrinsic
-parameters can be estimated with high accuracy for each of the cameras
-individually (for example, using calibrateCamera() ), you are
-recommended to do so and then pass 'FixIntrinsic' flag to the
-function along with the computed intrinsic parameters. Otherwise, if all
-the parameters are estimated at once, it makes sense to restrict some
-parameters, for example, pass 'SameFocalLength' and 'ZeroTangentDist'
-flags, which is usually a reasonable assumption.</p>
+<p>where <code>Ti</code> are components of the translation vector <code>T</code>: <code>T = [T0,T1,T2]'</code>.
+And the function can also compute the fundamental matrix <code>F</code>:</p>
+
+<pre><code>F = inv(cameraMatrix2)' * E * inv(cameraMatrix1)
+</code></pre>
+
+<p>Besides the stereo-related information, the function can also perform a full
+calibration of each of two cameras. However, due to the high dimensionality
+of the parameter space and noise in the input data, the function can diverge
+from the correct solution. If the intrinsic parameters can be estimated with
+high accuracy for each of the cameras individually (for example, using
+cv.calibrateCamera), you are recommended to do so and then pass
+'FixIntrinsic' flag to the function along with the computed intrinsic
+parameters. Otherwise, if all the parameters are estimated at once, it makes
+sense to restrict some parameters, for example, pass 'SameFocalLength' and
+'ZeroTangentDist' flags, which is usually a reasonable assumption.</p>
 
 <p>Similarly to <a href="calibrateCamera.html">cv.calibrateCamera</a>, the function minimizes the total
-re-projection error for all the points in all the available views from
-both cameras. The function returns the final value of the re-projection
-error.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calibrateCamera.html">cv.calibrateCamera</a> <a href="solvePnP.html">cv.solvePnP</a> <a href="stereoRectify.html">cv.stereoRectify</a></div>
+re-projection error for all the points in all the available views from both
+cameras. The function returns the final value of the re-projection error.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calibrateCamera.html">cv.calibrateCamera</a>, <a href="solvePnP.html">cv.solvePnP</a>, <a href="stereoRectify.html">cv.stereoRectify</a>,
+   estimateCameraParameters, extrinsics</div>
    </body>
 </html>

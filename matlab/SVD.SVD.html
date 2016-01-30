@@ -15,17 +15,25 @@
          </tr>
       </table>
       <div class="title">cv.SVD/SVD</div>
-      <div class="helpcontent"><p>Class for computing Singular Value Decomposition of a floating-point matrix</p>
+      <div class="helpcontent"><p>Default constructor</p>
 
-<p>Class for computing Singular Value Decomposition of a floating-point
-matrix. The Singular Value Decomposition is used to solve
-least-square problems, under-determined linear systems, invert
-matrices, compute condition numbers, and so on.</p>
+<pre><code>svd = <a href="SVD.html">cv.SVD</a>()
+svd = <a href="SVD.html">cv.SVD</a>(src, 'OptionName', optionValue, ...)
+</code></pre>
 
-<p>If you want to compute a condition number of a matrix or an absolute
-value of its determinant, you do not need u and vt. You can pass
-'NoUV' flag. Another flag 'FullUV' indicates that full-size
-u and vt must be computed, which is not necessary most of the time.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SVD.compute.html">cv.SVD.compute</a></div>
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> decomposed matrix.</li>
+</ul>
+
+<h2> Options</h2>
+
+<p>Same option as <a href="SVD.html">cv.SVD</a>.compute() method.</p>
+
+<p>In the first form, it initializes an empty SVD structure.
+In the second form, it initializes an empty SVD structure and
+then calls <a href="SVD.html">cv.SVD</a>.compute().</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SVD.compute.html">cv.SVD/compute</a></div>
    </body>
 </html>

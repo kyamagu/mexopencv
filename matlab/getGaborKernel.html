@@ -1,0 +1,53 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.getGaborKernel</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.getGaborKernel</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.getGaborKernel</div>
+      <div class="helpcontent"><p>Returns Gabor filter coefficients</p>
+
+<pre><code>kernel = <a href="getGaborKernel.html">cv.getGaborKernel</a>('OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>kernel</strong> output kernel of the specified size and type.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>KSize</strong> Size of the filter returned <code>[w,h]</code>. default [21,21]</li>
+<li><strong>Sigma</strong> Standard deviation of the gaussian envelope. default 5.0</li>
+<li><strong>Theta</strong> Orientation of the normal to the parallel stripes of a Gabor
+function. default pi/4</li>
+<li><strong>Lambda</strong> Wavelength of the sinusoidal factor. default 10.0</li>
+<li><strong>Gamma</strong> Spatial aspect ratio. default 0.75</li>
+<li><strong>Psi</strong> Phase offset. default pi/2</li>
+<li><strong>KType</strong> Type of filter coefficients. It can be <code>single</code> or <code>double</code>.
+default <code>double</code>.</li>
+</ul>
+
+<p>For more details about gabor filter equations and parameters, see:
+<a href="http://en.wikipedia.org/wiki/Gabor_filter">http://en.wikipedia.org/wiki/Gabor_filter</a></p>
+
+<h2> Example</h2>
+
+<p>Try the gabor<em>filter</em>gui.m
+sample file to interact with the various parameters of the Gabor filter
+and visualize the result.</p>
+</div><!--after help -->
+   </body>
+</html>

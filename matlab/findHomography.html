@@ -15,10 +15,10 @@
          </tr>
       </table>
       <div class="title">cv.findHomography</div>
-      <div class="helpcontent"><p>Calculates a fundamental matrix from the corresponding points in two images</p>
+      <div class="helpcontent"><p>Finds a perspective transformation between two planes</p>
 
-<pre><code>F = <a href="findHomography.html">cv.findHomography</a>(srcPoints, dstPoints)
-[F, mask] = <a href="findHomography.html">cv.findHomography</a>(...)
+<pre><code>H = <a href="findHomography.html">cv.findHomography</a>(srcPoints, dstPoints)
+[H, mask] = <a href="findHomography.html">cv.findHomography</a>(...)
 [...] = <a href="findHomography.html">cv.findHomography</a>(..., 'OptionName', optionValue, ...)
 </code></pre>
 
@@ -26,50 +26,62 @@
 
 <ul>
 <li><strong>srcPoints</strong> Coordinates of the points in the original plane, a numeric
-array of size 1xNx2 or cell array of two-element vectors.</li>
-<li><strong>dstPoints</strong> Coordinates of the points in the target plane, a numeric
-array of size 1xNx2 or cell array of two-element vectors.</li>
+array of size Nx2/1xNx2/Nx1x2 or cell array of 2-elements vectors
+<code>{[x,y], ...}</code> (single floating-point precision).</li>
+<li><strong>dstPoints</strong> Coordinates of the points in the target plane, of same size
+and type as <code>srcPoints</code>.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>H</strong> Homography matrix.</li>
-<li><strong>mask</strong> Mask array.</li>
+<li><strong>H</strong> 3x3 Homography matrix.</li>
+<li><strong>mask</strong> Nx1 mask array of same length as input points, indicates inliers.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
 <li><strong>Method</strong> Method used to computed a homography matrix. The following
-methods are possible:</li>
+methods are possible:<ul>
 <li><strong>0</strong> a regular method using all the points. (default)</li>
 <li><strong>Ransac</strong> RANSAC-based robust method.</li>
 <li><strong>LMedS</strong> Least-Median robust method.</li>
+<li><strong>Rho</strong> PROSAC-based robust method.</li>
+</ul>
+</li>
 <li><strong>RansacReprojThreshold</strong> Maximum allowed reprojection error to treat a
-point pair as an inlier (used in the RANSAC method only). That is,
-if <code>|| dstPoints_i - convertPointsToHomogeneous(H*srcPoints_i) ||</code>
-<code>&gt; RansacReprojThreshold</code> then the point i is considered an outlier.
-If srcPoints and dstPoints are measured in pixels, it usually makes
-sense to set this parameter somewhere in the range of 1 to 10.
-default 3.0.</li>
+point pair as an inlier (used in the RANSAC and RHO methods only).
+That is, if
+<code>|| dstPoints_i - convertPointsToHomogeneous(H*srcPoints_i) || &gt; RansacReprojThreshold</code>
+then the point <code>i</code> is considered an outlier. If <code>srcPoints</code> and
+<code>dstPoints</code> are measured in pixels, it usually makes sense to set
+this parameter somewhere in the range of 1 to 10. default 3.0.</li>
+<li><strong>MaxIters</strong> The maximum number of RANSAC iterations, 2000 is the maximum
+it can be. default 2000</li>
+<li><strong>Confidence</strong> Confidence level, between 0 and 1. default 0.995</li>
 </ul>
 
-<p>The functions find and return the perspective transformation  between the
-source and the destination planes:</p>
+<p>The function finds and returns the perspective transformation <code>H</code> between
+the source and the destination planes:</p>
 
-<pre><code>s_i * [x_i'; y_i; 1] ~ H * [X_i; Y_i; 1]
+<pre><code>s_i * [x_i'; y_i'; 1] ~ H * [x_i; y_i; 1]
 </code></pre>
 
-<p>so that the back-projection error is minimized. If the parameter method
-is set to the default value 0, the function uses all the point pairs to
-compute an initial homography estimate with a simple least-squares
-scheme.</p>
+<p>so that the back-projection error:</p>
+
+<pre><code>\sum_{i} (x_i' - (h11*x_i + h12*y_i + h13)/(h31*x_i + h32*y_i + h33))^2 +
+         (y_i' - (h21*x_i + h22*y_i + h23)/(h31*x_i + h32*y_i + h33))^2
+</code></pre>
+
+<p>is minimized. If the parameter method is set to the default value 0, the
+function uses all the point pairs to compute an initial homography estimate
+with a simple least-squares scheme.</p>
 
 <p>However, if not all of the point pairs <code>(srcPoints_i, dstPoints_i)</code> fit the
 rigid perspective transformation (that is, there are some outliers), this
-initial estimate will be poor. In this case, you can use one of the two
-robust methods. Both methods, RANSAC and LMeDS , try many different
+initial estimate will be poor. In this case, you can use one of the three
+robust methods. The methods RANSAC, LMeDS and RHO try many different
 random subsets of the corresponding point pairs (of four pairs each),
 estimate the homography matrix using this subset and a simple
 least-square algorithm, and then compute the quality/goodness of the
@@ -83,16 +95,17 @@ is refined further (using inliers only in case of a robust method) with
 the Levenberg-Marquardt method to reduce the re-projection error even
 more.</p>
 
-<p>The method RANSAC can handle practically any ratio of outliers but it
-needs a threshold to distinguish inliers from outliers. The method LMeDS
+<p>The methods RANSAC and RHO handle practically any ratio of outliers but
+need a threshold to distinguish inliers from outliers. The method LMeDS
 does not need any threshold but it works correctly only when there are
 more than 50% of inliers. Finally, if there are no outliers and the noise
-is rather small, use the default method (method=0).</p>
+is rather small, use the default method (<code>Method=0</code>).</p>
 
 <p>The function is used to find initial intrinsic and extrinsic matrices.
 Homography matrix is determined up to a scale. Thus, it is normalized so
-that h33 = 1.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="getAffineTransform.html">cv.getAffineTransform</a> <a href="getPerspectiveTransform.html">cv.getPerspectiveTransform</a>
-  <a href="estimateRigidTransform.html">cv.estimateRigidTransform</a> <a href="warpPerspective.html">cv.warpPerspective</a> <a href="perspectiveTransform.html">cv.perspectiveTransform</a></div>
+that <code>h33 = 1</code>. Note that whenever an <code>H</code> matrix cannot be estimated, an
+empty one will be returned.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="getAffineTransform.html">cv.getAffineTransform</a>, <a href="getPerspectiveTransform.html">cv.getPerspectiveTransform</a>,
+  <a href="estimateRigidTransform.html">cv.estimateRigidTransform</a>, <a href="warpPerspective.html">cv.warpPerspective</a>, <a href="perspectiveTransform.html">cv.perspectiveTransform</a></div>
    </body>
 </html>

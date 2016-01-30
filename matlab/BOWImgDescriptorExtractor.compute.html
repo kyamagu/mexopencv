@@ -17,27 +17,32 @@
       <div class="title">cv.BOWImgDescriptorExtractor/compute</div>
       <div class="helpcontent"><p>Computes an image descriptor using the set visual vocabulary</p>
 
-<pre><code>[bow,idx] = extractor.compute(im, keypoints)
+<pre><code>[bow,idx,kptDescs] = extractor.compute(img, keypoints)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>im</strong> Image, for which the descriptor is computed.</li>
+<li><strong>img</strong> Image, for which the descriptor is computed.</li>
 <li><strong>keypoints</strong> Keypoints detected in the input image. It is
-a struct array that is returned by <a href="FeatureDetector.html">cv.FeatureDetector</a>.</li>
+a struct array that is returned by
+<a href="FeatureDetector.html">cv.FeatureDetector</a>.detect.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>bow</strong> Computed output image descriptor.</li>
-<li><strong>idx</strong> Indices of keypoints that belong to the cluster.
-This means that idx(i) are keypoint indices that belong
-to the i-th cluster (word of vocabulary).</li>
+<li><strong>bow</strong> Computed output image descriptor. A vector of the same
+length as the vocabulary dimension.</li>
+<li><strong>idx</strong> Indices of keypoints that belong to the cluster. A
+cell array of integer vectors. This means that <code>idx{i}</code>
+are keypoint indices that belong to the i-th cluster
+(word of vocabulary).</li>
+<li><strong>kptDescs</strong> Descriptors of the image keypoints, as returned
+by <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a>.compute.</li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a>
-  <a href="BOWImgDescriptorExtractor.setVocabulary.html">cv.BOWImgDescriptorExtractor/setVocabulary</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BOWImgDescriptorExtractor.compute2.html">cv.BOWImgDescriptorExtractor/compute2</a>,
+   <a href="BOWImgDescriptorExtractor.compute1.html">cv.BOWImgDescriptorExtractor/compute1</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

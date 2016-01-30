@@ -1,0 +1,74 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.LogisticRegression/predict</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.LogisticRegression/predict</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.LogisticRegression/predict</div>
+      <div class="helpcontent"><p>Predicts responses for input samples</p>
+
+<pre><code>[results,f] = model.predict(samples)
+[...] = model.predict(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>samples</strong> The input data for the prediction algorithm. <code>MxN</code>
+matrix, where each row contains variables (features) of
+one object being classified. Should have <code>single</code> data
+type.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>results</strong> Predicted labels as a column vector of <code>int32</code>
+type. In case <code>RawOutput</code> was set, it returns a <code>single</code>
+matrix of size <code>size(samples,1)-by-size(thetas,1)</code> which
+contains the raw output of the sigmoid function(s).</li>
+<li><strong>f</strong> The same as the response of the first sample, i.e
+<code>results(1)</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Flags</strong> The optional predict flags, model-dependent. For
+convenience, you can set the individual flag options
+below, instead of directly setting bits here. default 0</li>
+<li><strong>RawOutput</strong> makes the method return the raw results (the
+value of the sigmoid function), not the class label.
+default false</li>
+</ul>
+
+<p>TODO: <a href="https://github.com/Itseez/opencv/pull/5964">https://github.com/Itseez/opencv/pull/5964</a></p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="LogisticRegression.train.html">cv.LogisticRegression/train</a>, <a href="LogisticRegression.calcError.html">cv.LogisticRegression/calcError</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

@@ -18,7 +18,7 @@
       <div class="helpcontent"><p>Performs initial step of meanshift segmentation of an image</p>
 
 <pre><code>dst = <a href="pyrMeanShiftFiltering.html">cv.pyrMeanShiftFiltering</a>(src)
-dst = <a href="pyrMeanShiftFiltering.html">cv.pyrMeanShiftFiltering</a>(src, 'SP', 5, ...)
+dst = <a href="pyrMeanShiftFiltering.html">cv.pyrMeanShiftFiltering</a>(src, 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
@@ -31,7 +31,7 @@ dst = <a href="pyrMeanShiftFiltering.html">cv.pyrMeanShiftFiltering</a>(src, 'SP
 
 <ul>
 <li><strong>dst</strong> The destination image of the same format and the same size as the
-source.</li>
+source <code>src</code>.</li>
 </ul>
 
 <h2> Options</h2>
@@ -39,25 +39,34 @@ source.</li>
 <ul>
 <li><strong>SP</strong> The spatial window radius. default 5</li>
 <li><strong>SR</strong> The color window radius. default 10</li>
-<li><strong>MaxLevel</strong> Maximum level of the pyramid for the segmentation</li>
+<li><strong>MaxLevel</strong> Maximum level of the pyramid for the segmentation. default 1</li>
+<li><strong>Criteria</strong> Termination criteria: when to stop meanshift iterations.
+default <code>struct('type','Count+EPS', 'maxCount',5, 'epsilon',1.0)</code>.
+Struct with the following fields is accepted:<ul>
+<li><strong>type</strong> one of 'Count', 'EPS', or 'Count+EPS' to indicate which
+criteria to use.</li>
+<li><strong>maxCount</strong> maximum number of iterations</li>
+<li><strong>epsilon</strong></li>
+</ul>
+</li>
 </ul>
 
 <p>The function implements the filtering stage of meanshift segmentation, that
-is, the output of the function is the filtered posterized image with color
-gradients and fine-grain texture flattened. At every pixel (X,Y) of the input
-image (or down-sized input image, see below) the function executes meanshift
-iterations, that is, the pixel (X,Y) neighborhood in the joint space-color
-hyperspace is considered:</p>
+is, the output of the function is the filtered &quot;posterized&quot; image with color
+gradients and fine-grain texture flattened. At every pixel <code>(X,Y)</code> of the
+input image (or down-sized input image, see below) the function executes
+meanshift iterations, that is, the pixel <code>(X,Y)</code> neighborhood in the joint
+space-color hyperspace is considered:</p>
 
 <pre><code>(x,y): X-sp &lt;= x &lt;= X+sp, Y-sp &lt;= y &lt;= Y+sp, ||(R,G,B) - (r,g,b)|| &lt;= sr
 </code></pre>
 
-<p>where (R,G,B) and (r,g,b) are the vectors of color components at (X,Y) and
-(x,y), respectively (though, the algorithm does not depend on the color space
-used, so any 3-component color space can be used instead). Over the
-neighborhood the average spatial value (X',Y') and average color vector
-(R',G',B') are found and they act as the neighborhood center on the next
-iteration</p>
+<p>where <code>(R,G,B)</code> and <code>(r,g,b)</code> are the vectors of color components at <code>(X,Y)</code>
+and <code>(x,y)</code>, respectively (though, the algorithm does not depend on the
+color space used, so any 3-component color space can be used instead). Over
+the neighborhood the average spatial value <code>(X',Y')</code> and average color
+vector <code>(R',G',B')</code> are found and they act as the neighborhood center on the
+next iteration:</p>
 
 <pre><code>(X,Y) (X',Y'), (R,G,B) (R',G',B').
 </code></pre>
@@ -66,17 +75,17 @@ iteration</p>
 is, the pixel from where the iterations started) are set to the final value
 (average color at the last iteration):</p>
 
-<pre><code>I(X,Y) &lt; -(R*,G*,B*)
+<pre><code>I(X,Y) = (R*,G*,B*)
 </code></pre>
 
-<p>When maxLevel &gt; 0, the gaussian pyramid of maxLevel+1 levels is built, and
-the above procedure is run on the smallest layer first. After that, the
+<p>When <code>MaxLevel &gt; 0</code>, the gaussian pyramid of <code>MaxLevel+1</code> levels is built,
+and the above procedure is run on the smallest layer first. After that, the
 results are propagated to the larger layer and the iterations are run again
-only on those pixels where the layer colors differ by more than sr from the
-lower-resolution layer of the pyramid. That makes boundaries of color regions
-sharper. Note that the results will be actually different from the ones
-obtained by running the meanshift procedure on the whole original image (i.e.
-when maxLevel = 0)</p>
-</div><!--after help -->
+only on those pixels where the layer colors differ by more than <code>SR</code> from
+the lower-resolution layer of the pyramid. That makes boundaries of color
+regions sharper. Note that the results will be actually different from the
+ones obtained by running the meanshift procedure on the whole original image
+(i.e. when <code>MaxLevel = 0</code>).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="meanShift.html">cv.meanShift</a></div>
    </body>
 </html>

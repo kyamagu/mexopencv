@@ -1,0 +1,250 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.ConjGradSolver</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.ConjGradSolver</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.ConjGradSolver</div>
+      <div class="helpcontent"><p>Non-linear non-constrained minimization of a function with known gradient.</p>
+
+<p>defined on an <code>n</code>-dimensional Euclidean space, using the Nonlinear
+<strong>Conjugate Gradient</strong> method. The implementation was done based on the
+beautifully clear explanatory article:</p>
+
+<blockquote>
+<p>An Introduction to the Conjugate Gradient Method Without the Agonizing Pain
+<a href="http://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf">http://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf</a>
+by Jonathan Richard Shewchuk.</p>
+</blockquote>
+
+<p>The method can be seen as an adaptation of a standard Conjugate Gradient
+method (see, for example <a href="http://en.wikipedia.org/wiki/Conjugate_gradient_method">http://en.wikipedia.org/wiki/Conjugate_gradient_method</a>)
+for numerically solving the systems of linear equations.</p>
+
+<p>It should be noted, that this method, although deterministic, is rather
+a heuristic method and therefore may converge to a local minima, not
+necessary a global one. What is even more disastrous, most of its
+behaviour is ruled by gradient, therefore it essentially cannot
+distinguish between local minima and maxima. Therefore, if it starts
+sufficiently near to the local maximum, it may converge to it. Another
+obvious restriction is that it should be possible to compute the
+gradient of a function at any point, thus it is preferable to have
+analytic expression for gradient and computational burden should be born
+by the user.</p>
+
+<p>The latter responsibility is accompilished via the <code>getGradient</code> method of
+the function being optimized). This method takes point a point in
+<code>n</code>-dimensional space (input argument represents the array of
+coordinates of that point) and comput its gradient (it should be
+returned in the output as an array).</p>
+
+<p>NOTE: term criteria should meet one of the following conditions:</p>
+
+<ul>
+<li><code>type == 'Count+EPS' &amp;&amp; epsilon &gt; 0 &amp;&amp; maxCount &gt; 0</code></li>
+<li><code>type == 'Count' &amp;&amp; maxCount &gt; 0</code></li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DownhillSolver.html">cv.DownhillSolver</a>, fminunc</div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="ConjGradSolver.ConjGradSolver.html">ConjGradSolver</a></td>
+            <td class="m-help">Creates an ConjGradSolver object.&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="ConjGradSolver.ObjectiveFunction.html">ObjectiveFunction</a></td>
+            <td class="m-help">The optimized function represented by a structure with the&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="ConjGradSolver.TermCriteria.html">TermCriteria</a></td>
+            <td class="m-help">Terminal criteria for solver.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="ConjGradSolver.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.clear.html">clear</a></td>
+            <td class="m-help">Clears the algorithm state.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.empty.html">empty</a></td>
+            <td class="m-help">Returns true if the Algorithm is empty.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.load.html">load</a></td>
+            <td class="m-help">&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.minimize.html">minimize</a></td>
+            <td class="m-help">Runs the algorithm and performs the minimization.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="ConjGradSolver.save.html">save</a></td>
+            <td class="m-help">&nbsp;</td>
+         </tr>
+      </table>
+   </body>
+</html>

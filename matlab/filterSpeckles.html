@@ -17,19 +17,19 @@
       <div class="title">cv.filterSpeckles</div>
       <div class="helpcontent"><p>Filters off small noise blobs (speckles) in the disparity map</p>
 
-<pre><code>im = <a href="filterSpeckles.html">cv.filterSpeckles</a>(im, newVal, maxSpeckleSize, maxDiff)
+<pre><code>img = <a href="filterSpeckles.html">cv.filterSpeckles</a>(img, newVal, maxSpeckleSize, maxDiff)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>im</strong> The input 16-bit signed disparity image.</li>
-<li><strong>newVal</strong> The disparity value used to paint-off the speckles</li>
+<li><strong>img</strong> The input 1-channel 16-bit signed disparity image.</li>
+<li><strong>newVal</strong> The disparity value used to paint-off the speckles.</li>
 <li><strong>maxSpeckleSize</strong> The maximum speckle size to consider it a speckle.
 Larger blobs are not affected by the algorithm</li>
 <li><strong>maxDiff</strong> Maximum difference between neighbor disparity pixels to put
-them into the same blob. Note that since StereoBM, StereoSGBM and
-may be other algorithms return a fixed-point disparity map, where
+them into the same blob. Note that since <a href="StereoBM.html">cv.StereoBM</a>, <a href="StereoSGBM.html">cv.StereoSGBM</a>
+and may be other algorithms return a fixed-point disparity map, where
 disparity values are multiplied by 16, this scale factor should be
 taken into account when specifying this parameter value.</li>
 </ul>
@@ -37,8 +37,8 @@ taken into account when specifying this parameter value.</li>
 <h2> Output</h2>
 
 <ul>
-<li><strong>im</strong> Filtered disparity image.</li>
+<li><strong>img</strong> Filtered disparity image.</li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="StereoBM.html">cv.StereoBM</a> <a href="StereoSGBM.html">cv.StereoSGBM</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="StereoBM.html">cv.StereoBM</a>, <a href="StereoSGBM.html">cv.StereoSGBM</a></div>
    </body>
 </html>

@@ -1,0 +1,85 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.norm</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.norm</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.norm</div>
+      <div class="helpcontent"><p>Calculates an absolute array norm, an absolute difference norm, or a relative difference norm.</p>
+
+<pre><code>nrm = <a href="norm.html">cv.norm</a>(src1)
+nrm = <a href="norm.html">cv.norm</a>(src1, src2)
+nrm = <a href="norm.html">cv.norm</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src1</strong> first input array.</li>
+<li><strong>src2</strong> second input array of the same size and the same type as <code>src1</code>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>nrm</strong> the calculated norm.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>NormType</strong> type of the norm, default 'L2'. One of:<ul>
+<li><strong>Inf</strong></li>
+<li><strong>L1</strong></li>
+<li><strong>L2</strong></li>
+<li><strong>L2Sqr</strong></li>
+<li><strong>Hamming</strong></li>
+<li><strong>Hamming2</strong></li>
+</ul>
+</li>
+<li><strong>Relative</strong> if true, computes relative difference, otherwise
+absolute difference. default false</li>
+<li><strong>Mask</strong> optional operation mask; it must have the same size as <code>src1</code>
+and logical type. Not set by default.</li>
+</ul>
+
+<p>The functions norm calculate an absolute norm of <code>src1</code> (when there is
+no <code>src2</code>):</p>
+
+<pre><code>       { ||src1||_Linf = max(abs(src1(:)))     , if NormType='Inf'
+norm = { ||src1||_L1   = sum(abs(src1(:)))     , if NormType='L1'
+       { ||src1||_L2   = sqrt(sum(src1(:).^2)) , if NormType='L2'
+</code></pre>
+
+<p>or an absolute or relative difference norm if <code>src2</code> is there:</p>
+
+<pre><code>       { ||src1 - src2||_Linf = max(abs(src1(:) - src2(:)))       , if NormType='Inf'
+norm = { ||src1 - src2||_L1   = sum(abs(src1(:) - src2(:)))       , if NormType='L1'
+       { ||src1 - src2||_L2   = sqrt(sum((src1(:) - src2(:)).^2)) , if NormType='L2'
+</code></pre>
+
+<p>or:</p>
+
+<pre><code>       { ||src1 - src2||_Linf / ||src2||_Linf , if NormType='Inf' &amp;&amp; Relative=True
+norm = { ||src1 - src2||_L1 / ||src2||_L1     , if NormType='L1'  &amp;&amp; Relative=True
+       { ||src1 - src2||_L2 / ||src2||_L2     , if NormType='L2'  &amp;&amp; Relative=True
+</code></pre>
+
+<p>When the mask parameter is specified and it is not empty, the norm is
+calculated only over the region specified by the mask.</p>
+
+<p>A multi-channel input arrays are treated as a single-channel, that is, the
+results for all channels are combined.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="normalize.html">cv.normalize</a>, norm</div>
+   </body>
+</html>

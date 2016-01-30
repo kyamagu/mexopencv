@@ -15,17 +15,37 @@
          </tr>
       </table>
       <div class="title">cv.KNearest/load</div>
-      <div class="helpcontent"><p>Loads the model from a file</p>
+      <div class="helpcontent"><p>Loads algorithm from a file or a string</p>
 
-<pre><code>classifier.load(filename)
+<pre><code>model.load(filename)
+model.load(str, 'FromString',true)
+model.load(..., 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>filename</strong> name of the file.</li>
+<li><strong>filename</strong> Name of the file to read.</li>
+<li><strong>str</strong> String containing the serialized model you want to
+load.</li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KNearest.html">cv.KNearest</a></div>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>ObjName</strong> The optional name of the node to read (if empty,
+the first top-level node will be used). default empty</li>
+<li><strong>FromString</strong> Logical flag to indicate whether the input is
+a filename or a string containing the serialized model
+(switches between <code>Algorithm&lt;T&gt;::load()</code> and
+<code>Algorithm&lt;T&gt;::loadFromString()</code> C++ methods).
+default false</li>
+</ul>
+
+<p>This method loads the complete model state from the specified
+XML or YAML file (either from disk or serialized string). The
+previous model state is cleared.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KNearest.save.html">cv.KNearest/save</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

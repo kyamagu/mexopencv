@@ -1,0 +1,78 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SVM/Type</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SVM/Type</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SVM/Type</div>
+      <div class="helpcontent"><p>Type of a SVM formulation.</p>
+
+<p>Default value is 'C_SVC'. Possible values:</p>
+
+<ul>
+<li><strong>C_SVC</strong> C-Support Vector Classification. n-class classification
+(<code>n&gt;=2</code>), allows imperfect separation of classes with penalty
+multiplier <code>C</code> for outliers.</li>
+<li><strong>NU_SVC</strong> Nu-Support Vector Classification. n-class
+classification with possible imperfect separation. Parameter
+<code>Nu</code> (in the range 0..1, the larger the value, the smoother
+the decision boundary) is used instead of <code>C</code>.</li>
+<li><strong>ONE_CLASS</strong> Distribution Estimation (One-class SVM). All the
+training data are from the same class, SVM builds a boundary
+that separates the class from the rest of the feature space.</li>
+<li><strong>EPS_SVR</strong> P-Support Vector Regression. The distance between
+feature vectors from the training set and the fitting
+hyper-plane must be less than <code>P</code>. For outliers the penalty
+multiplier <code>C</code> is used.</li>
+<li><strong>NU_SVR</strong> Nu-Support Vector Regression. <code>Nu</code> is used instead of
+<code>P</code>. See [LibSVM] for details.</li>
+</ul>
+</div><!--after help -->
+      <!--Property-->
+      <div class="sectiontitle">Property Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Constant</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Dependent</td>
+            <td>true</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Transient</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">GetAccess</td>
+            <td>'public'</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">SetAccess</td>
+            <td>'public'</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">GetObservable</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">SetObservable</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

@@ -1,0 +1,55 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.decomposeEssentialMat</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.decomposeEssentialMat</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.decomposeEssentialMat</div>
+      <div class="helpcontent"><p>Decompose an essential matrix to possible rotations and translation</p>
+
+<pre><code>S = <a href="decomposeEssentialMat.html">cv.decomposeEssentialMat</a>(E)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>E</strong> The input essential matrix, 3x3.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>S</strong> Decomposed <code>E</code>. A scalar struct with the following fields:<ul>
+<li><strong>R1</strong> One possible rotation matrix, 3x3.</li>
+<li><strong>R2</strong> Another possible rotation matrix, 3x3.</li>
+<li><strong>t</strong> One possible translation, 3x1.</li>
+</ul>
+</li>
+</ul>
+
+<p>This function decompose an essential matrix <code>E</code> using SVD decomposition
+[HartleyZ00]. Generally 4 possible poses exists for a given <code>E</code>. They are
+<code>[R1,t]</code>, <code>[R1,-t]</code>, <code>[R2,t]</code>, <code>[R2,-t]</code>. By decomposing <code>E</code>, you can only
+get the direction of the translation, so the function returns unit <code>t</code>.</p>
+
+<h2> References</h2>
+
+<p>[HartleyZ00]:</p>
+
+<blockquote>
+<p>Richard Hartley and Andrew Zisserman. &quot;Multiple view geometry in computer
+vision&quot;. Cambridge university press, 2003.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findEssentialMat.html">cv.findEssentialMat</a>, <a href="SVD.html">cv.SVD</a></div>
+   </body>
+</html>

@@ -17,15 +17,22 @@
       <div class="title">cv.HOGDescriptor/getDescriptorSize</div>
       <div class="helpcontent"><p>Returns the number of coefficients required for the classification</p>
 
-<pre><code>s = hog.getDescriptorSize()
+<pre><code>sz = hog.getDescriptorSize()
 </code></pre>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>s</strong> a numeric value, descriptor size</li>
+<li><strong>sz</strong> a numeric value, descriptor size.</li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.html">cv.HOGDescriptor</a></div>
+
+<p>The desriptor size is computed in the following way:</p>
+
+<pre><code>cells_per_block = hog.BlockSize ./ hog.CellSize
+histsize_per_block = prod(cells_per_block) * hog.NBins
+blocks_per_window = (hog.WinSize - hog.BlockSize) ./ hog.BlockStride + 1
+descriptor_size = prod(blocks_per_window) * histsize_per_block</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.compute.html">cv.HOGDescriptor/compute</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

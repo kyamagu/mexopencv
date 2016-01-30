@@ -17,14 +17,17 @@
       <div class="title">cv.SVM</div>
       <div class="helpcontent"><p>Support Vector Machines</p>
 
-<p>Originally, support vector machines (SVM) was a technique for building an
-optimal binary (2-class) classifier. Later the technique was extended to
-regression and clustering problems. SVM is a partial case of kernel-based
-methods. It maps feature vectors into a higher-dimensional space using a
-kernel function and builds an optimal linear discriminating function in
-this space or an optimal hyper-plane that fits into the training data. In
-case of SVM, the kernel is not defined explicitly. Instead, a distance
-between any 2 points in the hyper-space needs to be defined.</p>
+<h2> Support Vector Machines</h2>
+
+<p>Originally, support vector machines (SVM) was a technique for building
+an optimal binary (2-class) classifier. Later the technique was extended
+to regression and clustering problems. SVM is a partial case of
+kernel-based methods. It maps feature vectors into a higher-dimensional
+space using a kernel function and builds an optimal linear
+discriminating function in this space or an optimal hyper-plane that
+fits into the training data. In case of SVM, the kernel is not defined
+explicitly. Instead, a distance between any 2 points in the hyper-space
+needs to be defined.</p>
 
 <p>The solution is optimal, which means that the margin between the
 separating hyper-plane and the nearest feature vectors from both classes
@@ -34,6 +37,11 @@ that the position of other vectors does not affect the hyper-plane (the
 decision function).</p>
 
 <p>SVM implementation in OpenCV is based on [LibSVM].</p>
+
+<p><a href="SVM.html">cv.SVM</a> implements the &quot;one-against-one&quot; approach for multi-class
+classification. If <code>N</code> is the number of classes, then <code>N*(N-1)/2</code>
+classifiers are constructed, each one trained with data from two classes
+for every pair of distinct classes (<code>N</code> choose 2).</p>
 
 <h2> References</h2>
 
@@ -52,7 +60,8 @@ ACM Transactions on Intelligent Systems and Technology, 2:27:1-27:27, 2011.
 Knowledge Discovery and Data Mining 2(2), 1998
 (<a href="http://citeseer.ist.psu.edu/burges98tutorial.html">http://citeseer.ist.psu.edu/burges98tutorial.html</a>)</p>
 </blockquote>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SVM.SVM.html">cv.SVM/SVM</a> <a href="SVM.train.html">cv.SVM/train</a> <a href="SVM.predict.html">cv.SVM/predict</a> <a href="SVM.train_auto.html">cv.SVM/train_auto</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SVM.SVM.html">cv.SVM/SVM</a>, <a href="SVM.train.html">cv.SVM/train</a>, <a href="SVM.predict.html">cv.SVM/predict</a>, <a href="SVM.trainAuto.html">cv.SVM/trainAuto</a>,
+   fitcsvm</div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -83,16 +92,44 @@ Knowledge Discovery and Data Mining 2(2), 1998
       </div>
       <table class="summary-list">
          <tr class="summary-item">
-            <td class="name"><a href="SVM.Params.html">Params</a></td>
-            <td class="m-help">SVM training parameters&nbsp;</td>
+            <td class="name"><a href="SVM.C.html">C</a></td>
+            <td class="m-help">Parameter `C` of a SVM optimization problem.&nbsp;</td>
          </tr>
          <tr class="summary-item">
-            <td class="name"><a href="SVM.SupportVectorCount.html">SupportVectorCount</a></td>
-            <td class="m-help">Number of support vectors&nbsp;</td>
+            <td class="name"><a href="SVM.ClassWeights.html">ClassWeights</a></td>
+            <td class="m-help">Optional weights in the 'C_SVC' problem, assigned to particular&nbsp;</td>
          </tr>
          <tr class="summary-item">
-            <td class="name"><a href="SVM.VarCount.html">VarCount</a></td>
-            <td class="m-help">Number of used features (variables count)&nbsp;</td>
+            <td class="name"><a href="SVM.Coef0.html">Coef0</a></td>
+            <td class="m-help">Parameter `coef0` of a kernel function.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="SVM.Degree.html">Degree</a></td>
+            <td class="m-help">Parameter `degree` of a kernel function.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="SVM.Gamma.html">Gamma</a></td>
+            <td class="m-help">Parameter `gamma` of a kernel function.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="SVM.KernelType.html">KernelType</a></td>
+            <td class="m-help">Type of a SVM kernel.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="SVM.Nu.html">Nu</a></td>
+            <td class="m-help">Parameter `nu` of a SVM optimization problem.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="SVM.P.html">P</a></td>
+            <td class="m-help">arameter `epsilon` of a SVM optimization problem.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="SVM.TermCriteria.html">TermCriteria</a></td>
+            <td class="m-help">Termination criteria.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="SVM.Type.html">Type</a></td>
+            <td class="m-help">of a SVM formulation.&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="name"><a href="SVM.id.html">id</a></td>
@@ -116,8 +153,16 @@ Knowledge Discovery and Data Mining 2(2), 1998
                &nbsp;
                
             </td>
+            <td class="name"><a href="SVM.calcError.html">calcError</a></td>
+            <td class="m-help">Computes error on the training or test dataset&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="SVM.clear.html">clear</a></td>
-            <td class="m-help">Deallocates memory and resets the model state&nbsp;</td>
+            <td class="m-help">Clears the algorithm state&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -126,6 +171,14 @@ Knowledge Discovery and Data Mining 2(2), 1998
             </td>
             <td class="name"><a href="SVM.delete.html">delete</a></td>
             <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.empty.html">empty</a></td>
+            <td class="m-help">Returns true if the algorithm is empty&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -164,8 +217,40 @@ Knowledge Discovery and Data Mining 2(2), 1998
                &nbsp;
                
             </td>
-            <td class="name"><a href="SVM.getSupportVector.html">getSupportVector</a></td>
-            <td class="m-help">Retrieve a particular support vector.&nbsp;</td>
+            <td class="name"><a href="SVM.getDecisionFunction.html">getDecisionFunction</a></td>
+            <td class="m-help">Retrieves the decision function&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.getSupportVectors.html">getSupportVectors</a></td>
+            <td class="m-help">Retrieves all the support vectors&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.getUncompressedSupportVectors.html">getUncompressedSupportVectors</a></td>
+            <td class="m-help">Retrieves all the uncompressed support vectors of a linear SVM&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.getVarCount.html">getVarCount</a></td>
+            <td class="m-help">Returns the number of variables in training samples&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -174,6 +259,22 @@ Knowledge Discovery and Data Mining 2(2), 1998
             </td>
             <td class="name"><a href="SVM.gt.html">gt</a></td>
             <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.isClassifier.html">isClassifier</a></td>
+            <td class="m-help">Returns true if the model is a classifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.isTrained.html">isTrained</a></td>
+            <td class="m-help">Returns true if the model is trained&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">Sealed 
@@ -197,7 +298,7 @@ Knowledge Discovery and Data Mining 2(2), 1998
                
             </td>
             <td class="name"><a href="SVM.load.html">load</a></td>
-            <td class="m-help">Loads the model from a file&nbsp;</td>
+            <td class="m-help">Loads algorithm from a file or a string&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -229,15 +330,7 @@ Knowledge Discovery and Data Mining 2(2), 1998
                
             </td>
             <td class="name"><a href="SVM.predict.html">predict</a></td>
-            <td class="m-help">Predicts the response for input samples.&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="attributes">
-               &nbsp;
-               
-            </td>
-            <td class="name"><a href="SVM.predict_all.html">predict_all</a></td>
-            <td class="m-help">Predicts the response for input samples.&nbsp;</td>
+            <td class="m-help">Predicts response(s) for the provided sample(s)&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -245,7 +338,15 @@ Knowledge Discovery and Data Mining 2(2), 1998
                
             </td>
             <td class="name"><a href="SVM.save.html">save</a></td>
-            <td class="m-help">Saves the model to a file&nbsp;</td>
+            <td class="m-help">Saves the algorithm parameters to a file or a string&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SVM.setCustomKernel.html">setCustomKernel</a></td>
+            <td class="m-help">Initialize with custom kernel&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -253,14 +354,14 @@ Knowledge Discovery and Data Mining 2(2), 1998
                
             </td>
             <td class="name"><a href="SVM.train.html">train</a></td>
-            <td class="m-help">Trains an SVM model&nbsp;</td>
+            <td class="m-help">Trains the statistical model&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
                &nbsp;
                
             </td>
-            <td class="name"><a href="SVM.train_auto.html">train_auto</a></td>
+            <td class="name"><a href="SVM.trainAuto.html">trainAuto</a></td>
             <td class="m-help">Trains an SVM with optimal parameters&nbsp;</td>
          </tr>
       </table>

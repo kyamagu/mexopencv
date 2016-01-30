@@ -1,0 +1,70 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.minEnclosingTriangle</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.minEnclosingTriangle</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.minEnclosingTriangle</div>
+      <div class="helpcontent"><p>Finds a triangle of minimum area enclosing a 2D point set and returns its area.</p>
+
+<pre><code>[triangle,area] = <a href="minEnclosingTriangle.html">cv.minEnclosingTriangle</a>(points)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>points</strong> Input vector of 2D points with depth <code>int32</code> or <code>single</code>,
+stored in numeric array (Nx2/Nx1x2/1xNx2) or cell array of 2-element
+vectors (<code>{[x,y], ...}</code>).</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>triangle</strong> Output vector of three 2D points defining the vertices of the
+triangle.</li>
+<li><strong>area</strong> triangle area</li>
+</ul>
+
+<p>The function finds a triangle of minimum area enclosing the given set of 2D
+points and returns its area.</p>
+
+<p>The implementation of the algorithm is based on O'Rourke's [ORourke86] and
+Klee and Laskowski's [KleeLaskowski85] papers. O'Rourke provides a
+<code>theta(n)</code> algorithm for finding the minimal enclosing triangle of a 2D
+convex polygon with <code>n</code> vertices. Since the <a href="minEnclosingTriangle.html">cv.minEnclosingTriangle</a> function
+takes a 2D point set as input an additional preprocessing step of computing
+the convex hull of the 2D point set is required. The complexity of the
+<a href="convexHull.html">cv.convexHull</a> function is <code>O(nlog(n))</code> which is higher than <code>theta(n)</code>.
+Thus the overall complexity of the function is <code>O(nlog(n))</code>.</p>
+
+<h2> References</h2>
+
+<p>[ORourke86]:</p>
+
+<blockquote>
+<p>Joseph O'Rourke, Alok Aggarwal, Sanjeev Maddila, and Michael Baldwin.
+&quot;An optimal algorithm for finding minimal enclosing triangles&quot;.
+Journal of Algorithms, 7(2):258-269, 1986.</p>
+</blockquote>
+
+<p>[KleeLaskowski85]:</p>
+
+<blockquote>
+<p>Victor Klee and Michael C Laskowski.
+&quot;Finding the smallest triangles containing a given convex polygon&quot;.
+Journal of Algorithms, 6(3):359-375, 1985.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="minEnclosingCircle.html">cv.minEnclosingCircle</a>, <a href="convexHull.html">cv.convexHull</a></div>
+   </body>
+</html>

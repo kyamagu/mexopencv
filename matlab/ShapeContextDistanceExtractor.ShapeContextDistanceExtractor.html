@@ -1,0 +1,60 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.ShapeContextDistanceExtractor/ShapeContextDistanceExtractor</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.ShapeContextDistanceExtractor/ShapeContextDistanceExtractor</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.ShapeContextDistanceExtractor/ShapeContextDistanceExtractor</div>
+      <div class="helpcontent"><p>Constructor</p>
+
+<pre><code>obj = <a href="ShapeContextDistanceExtractor.html">cv.ShapeContextDistanceExtractor</a>()
+obj = <a href="ShapeContextDistanceExtractor.html">cv.ShapeContextDistanceExtractor</a>('OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>AngularBins</strong> see
+<a href="ShapeContextDistanceExtractor.html">cv.ShapeContextDistanceExtractor</a>.AngularBins, default 12</li>
+<li><strong>RadialBins</strong> see
+<a href="ShapeContextDistanceExtractor.html">cv.ShapeContextDistanceExtractor</a>.RadialBins, default 4</li>
+<li><strong>InnerRadius</strong> see
+<a href="ShapeContextDistanceExtractor.html">cv.ShapeContextDistanceExtractor</a>.InnerRadius, default 0.2</li>
+<li><strong>OuterRadius</strong> see
+<a href="ShapeContextDistanceExtractor.html">cv.ShapeContextDistanceExtractor</a>.OuterRadius, default 2</li>
+<li><strong>Iterations</strong> see
+<a href="ShapeContextDistanceExtractor.html">cv.ShapeContextDistanceExtractor</a>.Iterations, default 3</li>
+<li><strong>CostExtractor</strong> an algorithm that defines the cost matrix
+between descriptors, specified as
+<code>{comparerType, 'OptionName',optionValue, ...}</code>.
+See <a href="ShapeContextDistanceExtractor.html">cv.ShapeContextDistanceExtractor</a>.setCostExtractor,
+where <code>comparerType</code> is one of:<ul>
+<li><strong>NormHistogramCostExtractor</strong></li>
+<li><strong>EMDHistogramCostExtractor</strong></li>
+<li><strong>ChiHistogramCostExtractor</strong> (default)</li>
+<li><strong>EMDL1HistogramCostExtractor</strong></li>
+</ul>
+</li>
+<li><strong>TransformAlgorithm</strong> an algorithm that defines the aligning
+transformation, specified as
+<code>{transformerType, 'OptionName',optionValue, ...}</code>.
+See <a href="ShapeContextDistanceExtractor.html">cv.ShapeContextDistanceExtractor</a>.setTransformAlgorithm,
+where <code>transformerType</code> is one of:<ul>
+<li><strong>ThinPlateSplineShapeTransformer</strong> (default)</li>
+<li><strong>AffineTransformer</strong></li>
+</ul>
+</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="ShapeContextDistanceExtractor.computeDistance.html">cv.ShapeContextDistanceExtractor/computeDistance</a></div>
+   </body>
+</html>

@@ -24,14 +24,16 @@ approxCurve = <a href="approxPolyDP.html">cv.approxPolyDP</a>(curve, 'OptionName
 <h2> Input</h2>
 
 <ul>
-<li><strong>curve</strong> Input vector of a 2D point stored in numeric array or cell array.</li>
+<li><strong>curve</strong> Input vector of 2D points stored in numeric array
+(Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors (<code>{[x,y], ...}</code>).
+Supports integer (<code>int32</code>) and floating point (<code>single</code>) classes.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>approxCurve</strong> Result of the approximation. The type should match the type
-of the input curve.</li>
+<li><strong>approxCurve</strong> Result of the approximation. The type should match the
+type of the input curve.</li>
 </ul>
 
 <h2> Options</h2>
@@ -41,10 +43,10 @@ of the input curve.</li>
 maximum distance between the original curve and its approximation.
 default 2.0</li>
 <li><strong>Closed</strong> If true, the approximated curve is closed (its first and last
-vertices are connected). Otherwise, it is not closed.</li>
+vertices are connected). Otherwise, it is not closed. default true</li>
 </ul>
 
-<p>The functions approxPolyDP approximate a curve or a polygon with another
+<p>The functions <a href="approxPolyDP.html">cv.approxPolyDP</a> approximate a curve or a polygon with another
 curve/polygon with less vertices so that the distance between them is less
 or equal to the specified precision. It uses the Douglas-Peucker algorithm
 <a href="http://en.wikipedia.org/wiki/Ramer-Douglas-Peucker_algorithm">http://en.wikipedia.org/wiki/Ramer-Douglas-Peucker_algorithm</a>.</p>

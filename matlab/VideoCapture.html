@@ -15,27 +15,37 @@
          </tr>
       </table>
       <div class="title">cv.VideoCapture</div>
-      <div class="helpcontent"><p>VideoCapture wrapper class</p>
+      <div class="helpcontent"><p>Class for video capturing from video files or cameras</p>
 
-<p>Class for video capturing from video files or cameras. The class
-provides Matlab API for capturing video from cameras or for reading
-video files. Here is how the class can be used:</p>
+<p>The class provides an API for capturing video from cameras or for
+reading video files and image sequences.</p>
 
-<pre><code>cap = <a href="VideoCapture.html">cv.VideoCapture</a>;
-pause(3); % Note below
-for t = 1:30
-   imshow(cap.read);
+<h2> Example</h2>
+
+<p>Here is how the class can be used:</p>
+
+<pre><code>cap = <a href="VideoCapture.html">cv.VideoCapture</a>(0);        % open the default camera
+pause(3);                        % see note below
+if ~cap.isOpened()               % check if we succeeded
+    error('camera failed to initialized');
+end
+for t=1:30
+   frame = cap.read();           % get a new frame from camera
+   imshow(frame);
    pause(0.1);
 end
+% the camera will be deinitialized automatically in destructor
+% when &quot;cap&quot; goes out of scope
 </code></pre>
 
 <h2> Note</h2>
 
-<p>In some environment, there is a concurrency issue during camera
-initialization. To avoid unexpected crash, pause for seconds after
-the initialization of VideoCapture object.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="VideoCapture.VideoCapture.html">cv.VideoCapture/VideoCapture</a> <a href="VideoCapture.read.html">cv.VideoCapture/read</a>
-  <a href="VideoCapture.get.html">cv.VideoCapture/get</a> <a href="VideoCapture.set.html">cv.VideoCapture/set</a></div>
+<p>In some environments, there is a concurrency issue during camera
+initialization. To avoid unexpected crash, pause for a few seconds after
+the initialization of <a href="VideoCapture.html">cv.VideoCapture</a> object.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="VideoCapture.VideoCapture.html">cv.VideoCapture/VideoCapture</a>, <a href="VideoCapture.read.html">cv.VideoCapture/read</a>
+    VideoReader, mmreader, aviread, webcam, videoinput, imaq.VideoDevice,
+    vision.VideoFileReader</div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -66,6 +76,78 @@ the initialization of VideoCapture object.</p>
       </div>
       <table class="summary-list">
          <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.Brightness.html">Brightness</a></td>
+            <td class="m-help">of the image (only for cameras).&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.Contrast.html">Contrast</a></td>
+            <td class="m-help">of the image (only for cameras).&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.ConvertRGB.html">ConvertRGB</a></td>
+            <td class="m-help">Boolean flags indicating whether images should be converted to RGB.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.Exposure.html">Exposure</a></td>
+            <td class="m-help">(only for cameras).&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.FPS.html">FPS</a></td>
+            <td class="m-help">Frame rate.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.Format.html">Format</a></td>
+            <td class="m-help">of the frames returned by cv.VideoCapture.retrieve.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.FourCC.html">FourCC</a></td>
+            <td class="m-help">4-character code of codec.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.FrameCount.html">FrameCount</a></td>
+            <td class="m-help">Number of frames in the video file.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.FrameHeight.html">FrameHeight</a></td>
+            <td class="m-help">Height of the frames in the video stream.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.FrameWidth.html">FrameWidth</a></td>
+            <td class="m-help">Width of the frames in the video stream.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.Gain.html">Gain</a></td>
+            <td class="m-help">of the image (only for cameras).&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.Hue.html">Hue</a></td>
+            <td class="m-help">of the image (only for cameras).&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.Mode.html">Mode</a></td>
+            <td class="m-help">Backend-specific value indicating the current capture mode.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.PosAviRatio.html">PosAviRatio</a></td>
+            <td class="m-help">Relative position of the video file:&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.PosFrames.html">PosFrames</a></td>
+            <td class="m-help">0-based index of the frame to be decoded/captured next.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.PosMsec.html">PosMsec</a></td>
+            <td class="m-help">Current position of the video file in milliseconds or video capture&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.Rectification.html">Rectification</a></td>
+            <td class="m-help">Currently unsupported&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="VideoCapture.Saturation.html">Saturation</a></td>
+            <td class="m-help">of the image (only for cameras).&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
             <td class="name"><a href="VideoCapture.id.html">id</a></td>
             <td class="m-help">Object ID&nbsp;</td>
          </tr>
@@ -88,7 +170,7 @@ the initialization of VideoCapture object.</p>
                
             </td>
             <td class="name"><a href="VideoCapture.delete.html">delete</a></td>
-            <td class="m-help">Destructor of VideoCapture object&nbsp;</td>
+            <td class="m-help">Destructor&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -135,8 +217,24 @@ the initialization of VideoCapture object.</p>
                &nbsp;
                
             </td>
+            <td class="name"><a href="VideoCapture.grab.html">grab</a></td>
+            <td class="m-help">Grabs the next frame from video file or capturing device&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="VideoCapture.gt.html">gt</a></td>
             <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="VideoCapture.isOpened.html">isOpened</a></td>
+            <td class="m-help">Returns true if video capturing has been initialized already&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">Sealed 
@@ -183,6 +281,14 @@ the initialization of VideoCapture object.</p>
                &nbsp;
                
             </td>
+            <td class="name"><a href="VideoCapture.open.html">open</a></td>
+            <td class="m-help">Open video file or a capturing device for video capturing&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="VideoCapture.read.html">read</a></td>
             <td class="m-help">Grabs, decodes and returns the next video frame&nbsp;</td>
          </tr>
@@ -191,8 +297,24 @@ the initialization of VideoCapture object.</p>
                &nbsp;
                
             </td>
+            <td class="name"><a href="VideoCapture.release.html">release</a></td>
+            <td class="m-help">Closes video file or capturing device&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="VideoCapture.retrieve.html">retrieve</a></td>
+            <td class="m-help">Decodes and returns the grabbed video frame&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="VideoCapture.set.html">set</a></td>
-            <td class="m-help">Sets a property in the VideoCapture.&nbsp;</td>
+            <td class="m-help">Sets a property in the VideoCapture&nbsp;</td>
          </tr>
       </table>
    </body>

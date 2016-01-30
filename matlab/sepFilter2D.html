@@ -17,22 +17,23 @@
       <div class="title">cv.sepFilter2D</div>
       <div class="helpcontent"><p>Applies a separable linear filter to an image</p>
 
-<pre><code>dst = <a href="sepFilter2D.html">cv.sepFilter2D</a>(src, rowKernel, columnKernel)
-dst = <a href="sepFilter2D.html">cv.sepFilter2D</a>(src, rowKernel, columnKernel, 'Anchor', [0,1], ...)
+<pre><code>dst = <a href="sepFilter2D.html">cv.sepFilter2D</a>(src, kernelX, kernelY)
+dst = <a href="sepFilter2D.html">cv.sepFilter2D</a>(..., 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
 <li><strong>src</strong> Source image.</li>
-<li><strong>rowKernel</strong> Coefficients for filtering each row.</li>
-<li><strong>columnKernel</strong> Coefficients for filtering each column.</li>
+<li><strong>kernelX</strong> Coefficients for filtering each row.</li>
+<li><strong>kernelY</strong> Coefficients for filtering each column.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Destination image of the same size and the same number of channels as src.</li>
+<li><strong>dst</strong> Destination image of the same size and the same number of channels
+as <code>src</code>.</li>
 </ul>
 
 <h2> Options</h2>
@@ -40,9 +41,16 @@ dst = <a href="sepFilter2D.html">cv.sepFilter2D</a>(src, rowKernel, columnKernel
 <ul>
 <li><strong>Anchor</strong> Anchor position within the kernel. The default value (-1,-1)
 means that the anchor is at the kernel center.</li>
-<li><strong>Delta</strong> Value added to the filtered results before storing them.</li>
-<li><strong>BorderType</strong> Pixel extrapolation method</li>
+<li><strong>Delta</strong> Value added to the filtered results before storing them.
+default 0</li>
+<li><strong>BorderType</strong> Pixel extrapolation method. default 'Default'</li>
+<li><strong>DDepth</strong> Destination image depth, see <a href="filter2D.html">cv.filter2D</a>. default -1</li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="filter2D.html">cv.filter2D</a></div>
+
+<p>The function applies a separable linear filter to the image. That is, first,
+every row of <code>src</code> is filtered with the 1D kernel <code>kernelX</code>. Then, every
+column of the result is filtered with the 1D kernel <code>kernelY</code>. The final
+result shifted by delta is stored in <code>dst</code>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="filter2D.html">cv.filter2D</a>, <a href="Sobel.html">cv.Sobel</a>, <a href="GaussianBlur.html">cv.GaussianBlur</a>, <a href="boxFilter.html">cv.boxFilter</a>, <a href="blur.html">cv.blur</a></div>
    </body>
 </html>

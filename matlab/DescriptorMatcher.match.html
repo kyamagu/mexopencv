@@ -22,13 +22,6 @@ matches = matcher.match(queryDescriptors)
 [...] = matcher.match(..., 'OptionName', optionValue, ...)
 </code></pre>
 
-<p>In the first variant of this method, the train descriptors are passed
-as an input argument. In the second variant of the method, train
-descriptors collection that was set by <code>DescriptorMatcher.add()</code> is used.
-Optional mask (or masks) can be passed to specify which query and
-training descriptors can be matched. Namely, <code>queryDescriptors(i,:)</code> can
-be matched with <code>trainDescriptors(j,:)</code> only if <code>mask(i,j)</code> is non-zero.</p>
-
 <h2> Input</h2>
 
 <ul>
@@ -41,10 +34,10 @@ class object.</li>
 <h2> Output</h2>
 
 <ul>
-<li><strong>matches</strong> Matches. If a query descriptor is masked out in <code>Mask</code>,
-no match is added for this descriptor. So, <code>matches</code> size may
-be smaller than the query descriptors count.
-A 1-by-N structure array, it has the following fields:<ul>
+<li><strong>matches</strong> Matches. If a query descriptor is masked out in
+<code>Mask</code>, no match is added for this descriptor. So,
+<code>matches</code> size may be smaller than the query descriptors
+count. A 1-by-N structure array with the following fields:<ul>
 <li><strong>queryIdx</strong> query descriptor index (zero-based index)</li>
 <li><strong>trainIdx</strong> train descriptor index (zero-based index)</li>
 <li><strong>imgIdx</strong> train image index (zero-based index)</li>
@@ -59,16 +52,27 @@ A 1-by-N structure array, it has the following fields:<ul>
 <li><strong>Mask</strong> default empty<ul>
 <li>In the first form, mask specifying permissible matches
 between an input query and train matrices of descriptors.
-Matrix of size <code>[size(queryDescriptors,1),size(trainDescriptors,1)]</code></li>
-<li>In the second form, set of masks. Each <code>masks{i}</code> specifies
-permissible matches between the input query descriptors and
-stored train descriptors from the i-th image <code>trainDescCollection{i}</code>.
-Cell array of length <code>length(trainDescriptors)</code>, each a matrix
-of size <code>[size(queryDescriptors,1),size(trainDescriptors{i},1)]</code></li>
+Matrix of size
+<code>[size(queryDescriptors,1),size(trainDescriptors,1)]</code>.</li>
+<li>In the second form, set of masks. Each <code>masks{i}</code>
+specifies permissible matches between the input query
+descriptors and stored train descriptors from the i-th
+image <code>trainDescCollection{i}</code>. Cell array of length
+<code>length(trainDescriptors)</code>, each a matrix of size
+<code>[size(queryDescriptors,1),size(trainDescriptors{i},1)]</code>.</li>
 </ul>
 </li>
 </ul>
-</div><!--after help -->
+
+<p>In the first variant of this method, the train descriptors are
+passed as an input argument. In the second variant of the
+method, train descriptors collection that was set by
+<a href="DescriptorMatcher.html">cv.DescriptorMatcher</a>.add() is used. Optional mask (or masks) can
+be passed to specify which query and training descriptors can be
+matched. Namely, <code>queryDescriptors(i,:)</code> can be matched with
+<code>trainDescriptors(j,:)</code> only if <code>mask(i,j)</code> is non-zero.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DescriptorMatcher.knnMatch.html">cv.DescriptorMatcher/knnMatch</a>,
+   <a href="DescriptorMatcher.radiusMatch.html">cv.DescriptorMatcher/radiusMatch</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

@@ -1,0 +1,223 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.BackgroundSubtractorKNN</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.BackgroundSubtractorKNN</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.BackgroundSubtractorKNN</div>
+      <div class="helpcontent"><p>K-nearest neigbours based Background/Foreground Segmentation Algorithm</p>
+
+<p>The class implements the K-nearest neigbours background subtraction
+described in [Zivkovic2006]. Very efficient if number of foreground
+pixels is low.</p>
+
+<h2> References</h2>
+
+<p>[Zivkovic2006]:</p>
+
+<blockquote>
+<p>Zoran Zivkovic and Ferdinand van der Heijden. &quot;Efficient adaptive
+density estimation per image pixel for the task of background
+subtraction&quot;. Pattern recognition letters, 27(7):773-780, 2006.</p>
+</blockquote>
+
+<p>[Prati03detectingmoving]:</p>
+
+<blockquote>
+<p>Andrea Prati, Ivana Mikic, Mohan M. Trivedi, Rita Cucchiara.
+&quot;Detecting Moving Shadows: Algorithms and Evaluation&quot;, IEEE PAMI, 2003.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BackgroundSubtractorKNN.BackgroundSubtractorKNN.html">cv.BackgroundSubtractorKNN/BackgroundSubtractorKNN</a>,
+   <a href="BackgroundSubtractorKNN.apply.html">cv.BackgroundSubtractorKNN/apply</a>,
+   <a href="BackgroundSubtractorKNN.getBackgroundImage.html">cv.BackgroundSubtractorKNN/getBackgroundImage</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorKNN.BackgroundSubtractorKNN.html">BackgroundSubtractorKNN</a></td>
+            <td class="m-help">Creates KNN Background Subtractor&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorKNN.DetectShadows.html">DetectShadows</a></td>
+            <td class="m-help">The shadow detection flag.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorKNN.Dist2Threshold.html">Dist2Threshold</a></td>
+            <td class="m-help">The threshold on the squared distance between the pixel and the&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorKNN.History.html">History</a></td>
+            <td class="m-help">The number of last frames that affect the background model.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorKNN.KNNSamples.html">KNNSamples</a></td>
+            <td class="m-help">The number of neighbours, the k in the kNN.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorKNN.NSamples.html">NSamples</a></td>
+            <td class="m-help">The number of data samples in the background model.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorKNN.ShadowThreshold.html">ShadowThreshold</a></td>
+            <td class="m-help">The shadow threshold.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorKNN.ShadowValue.html">ShadowValue</a></td>
+            <td class="m-help">Shadow value is the value used to mark shadows in the foreground&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorKNN.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorKNN.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorKNN.apply.html">apply</a></td>
+            <td class="m-help">Updates the background model and computes the foreground mask&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorKNN.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorKNN.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorKNN.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorKNN.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorKNN.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorKNN.getBackgroundImage.html">getBackgroundImage</a></td>
+            <td class="m-help">Computes a foreground mask&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorKNN.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorKNN.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorKNN.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorKNN.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorKNN.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorKNN.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+      </table>
+   </body>
+</html>

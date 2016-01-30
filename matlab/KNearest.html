@@ -15,22 +15,38 @@
          </tr>
       </table>
       <div class="title">cv.KNearest</div>
-      <div class="helpcontent"><p>KNearest  The class implements K-Nearest Neighbors model</p>
+      <div class="helpcontent"><p>The class implements K-Nearest Neighbors model</p>
 
-<p>The algorithm caches all training samples and predicts the response for a
-new sample by analyzing a certain number (K) of the nearest neighbors of
-the sample using voting, calculating weighted sum, and so on. The method
-is sometimes referred to as &quot;learning by example&quot; because for prediction
-it looks for the feature vector with a known response that is closest to
-the given vector.</p>
+<h2> K-Nearest Neighbors</h2>
 
-<pre><code>Xtrain = [randn(20,4)+1;randn(20,4)-1]; % training samples
-Ytrain = [ones(20,1);zeros(20,1)];      % training labels
-kn = <a href="KNearest.html">cv.KNearest</a>(Xtrain,Ytrain);
-Xtest = randn(50,4);                    % testing samples
-Ytest = kn.predict(Xtest);              % predictions</code></pre>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KNearest.KNearest.html">cv.KNearest/KNearest</a>
-  <a href="KNearest.train.html">cv.KNearest/train</a> <a href="KNearest.find_nearest.html">cv.KNearest/find_nearest</a></div>
+<p>The algorithm caches all training samples and predicts the response for
+a new sample by analyzing a certain number (<code>K</code>) of the nearest
+neighbors of the sample using voting, calculating weighted sum, and so
+on. The method is sometimes referred to as &quot;learning by example&quot; because
+for prediction it looks for the feature vector with a known response
+that is closest to the given vector.</p>
+
+<h2> Example</h2>
+
+<pre><code>Xtrain = [randn(20,4)+1; randn(20,4)-1];    % training samples
+Ytrain = int32([ones(20,1); zeros(20,1)]);  % training labels
+knn = <a href="KNearest.html">cv.KNearest</a>(Xtrain, Ytrain);
+Xtest = randn(50,4);                        % testing samples
+Ytest = knn.predict(Xtest);                 % predictions
+</code></pre>
+
+<h2> References</h2>
+
+<p>[BEIS97]:</p>
+
+<blockquote>
+<p>J.S. Beis and D.G. Lowe. &quot;Shape indexing using approximate
+nearest-neighbor search in highdimensional spaces&quot;. In Proc. IEEE
+Conf. Comp. Vision Patt. Recog., pp 1000-1006, 1997.
+<a href="http://citeseer.ist.psu.edu/beis97shape.html">http://citeseer.ist.psu.edu/beis97shape.html</a></p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KNearest.KNearest.html">cv.KNearest/KNearest</a>, <a href="KNearest.train.html">cv.KNearest/train</a>,
+   <a href="KNearest.findNearest.html">cv.KNearest/findNearest</a>, fitcknn</div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -53,7 +69,7 @@ Ytest = kn.predict(Xtest);              % predictions</code></pre>
       <table class="summary-list">
          <tr class="summary-item">
             <td class="name"><a href="KNearest.KNearest.html">KNearest</a></td>
-            <td class="m-help">K-Nearest Neighbors constructor&nbsp;</td>
+            <td class="m-help">Creates/trains a K-Nearest Neighbors model&nbsp;</td>
          </tr>
       </table>
       <!--Properties-->
@@ -61,20 +77,20 @@ Ytest = kn.predict(Xtest);              % predictions</code></pre>
       </div>
       <table class="summary-list">
          <tr class="summary-item">
-            <td class="name"><a href="KNearest.IsRegression.html">IsRegression</a></td>
-            <td class="m-help">Logical flag to indicate regression problem&nbsp;</td>
+            <td class="name"><a href="KNearest.AlgorithmType.html">AlgorithmType</a></td>
+            <td class="m-help">Algorithm type.&nbsp;</td>
          </tr>
          <tr class="summary-item">
-            <td class="name"><a href="KNearest.MaxK.html">MaxK</a></td>
-            <td class="m-help">Maximum number of K&nbsp;</td>
+            <td class="name"><a href="KNearest.DefaultK.html">DefaultK</a></td>
+            <td class="m-help">Default number of neighbors to use in predict method.&nbsp;</td>
          </tr>
          <tr class="summary-item">
-            <td class="name"><a href="KNearest.SampleCount.html">SampleCount</a></td>
-            <td class="m-help">Sample count&nbsp;</td>
+            <td class="name"><a href="KNearest.Emax.html">Emax</a></td>
+            <td class="m-help">Parameter for 'KDTree' implementation.&nbsp;</td>
          </tr>
          <tr class="summary-item">
-            <td class="name"><a href="KNearest.VarCount.html">VarCount</a></td>
-            <td class="m-help">Variable count&nbsp;</td>
+            <td class="name"><a href="KNearest.IsClassifier.html">IsClassifier</a></td>
+            <td class="m-help">Whether classification or regression model should be trained.&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="name"><a href="KNearest.id.html">id</a></td>
@@ -98,8 +114,16 @@ Ytest = kn.predict(Xtest);              % predictions</code></pre>
                &nbsp;
                
             </td>
+            <td class="name"><a href="KNearest.calcError.html">calcError</a></td>
+            <td class="m-help">Computes error on the training or test dataset&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="KNearest.clear.html">clear</a></td>
-            <td class="m-help">Deallocates memory and resets the model state&nbsp;</td>
+            <td class="m-help">Clears the algorithm state&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -114,6 +138,14 @@ Ytest = kn.predict(Xtest);              % predictions</code></pre>
                &nbsp;
                
             </td>
+            <td class="name"><a href="KNearest.empty.html">empty</a></td>
+            <td class="m-help">Returns true if the algorithm is empty&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="KNearest.eq.html">eq</a></td>
             <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
          </tr>
@@ -122,7 +154,7 @@ Ytest = kn.predict(Xtest);              % predictions</code></pre>
                &nbsp;
                
             </td>
-            <td class="name"><a href="KNearest.find_nearest.html">find_nearest</a></td>
+            <td class="name"><a href="KNearest.findNearest.html">findNearest</a></td>
             <td class="m-help">Finds the neighbors and predicts responses for input vectors&nbsp;</td>
          </tr>
          <tr class="summary-item">
@@ -154,8 +186,40 @@ Ytest = kn.predict(Xtest);              % predictions</code></pre>
                &nbsp;
                
             </td>
+            <td class="name"><a href="KNearest.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.getVarCount.html">getVarCount</a></td>
+            <td class="m-help">Returns the number of variables in training samples&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="KNearest.gt.html">gt</a></td>
             <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.isClassifier.html">isClassifier</a></td>
+            <td class="m-help">Returns true if the model is a classifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="KNearest.isTrained.html">isTrained</a></td>
+            <td class="m-help">Returns true if the model is trained&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">Sealed 
@@ -179,7 +243,7 @@ Ytest = kn.predict(Xtest);              % predictions</code></pre>
                
             </td>
             <td class="name"><a href="KNearest.load.html">load</a></td>
-            <td class="m-help">Loads the model from a file&nbsp;</td>
+            <td class="m-help">Loads algorithm from a file or a string&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -211,7 +275,7 @@ Ytest = kn.predict(Xtest);              % predictions</code></pre>
                
             </td>
             <td class="name"><a href="KNearest.predict.html">predict</a></td>
-            <td class="m-help">Predicts the response for a sample&nbsp;</td>
+            <td class="m-help">Predicts response(s) for the provided sample(s)&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -219,7 +283,7 @@ Ytest = kn.predict(Xtest);              % predictions</code></pre>
                
             </td>
             <td class="name"><a href="KNearest.save.html">save</a></td>
-            <td class="m-help">Saves the model to a file&nbsp;</td>
+            <td class="m-help">Saves the algorithm parameters to a file or a string&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">

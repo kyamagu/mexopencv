@@ -1,0 +1,69 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.boxFilter</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.boxFilter</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.boxFilter</div>
+      <div class="helpcontent"><p>Blurs an image using the box filter</p>
+
+<pre><code>dst = <a href="boxFilter.html">cv.boxFilter</a>(src)
+dst = <a href="boxFilter.html">cv.boxFilter</a>(src, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> input image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> output image of the same size and type as <code>src</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>DDepth</strong> the output image depth (-1 to use <code>class(src)</code>). Default -1.
+See <a href="filter2D.html">cv.filter2D</a> for details.</li>
+<li><strong>KSize</strong> blurring kernel size. Default [5,5]</li>
+<li><strong>Anchor</strong> anchor point <code>[x,y]</code>; default value [-1,-1] means that the
+anchor is at the kernel center.</li>
+<li><strong>Normalize</strong> flag, specifying whether the kernel is normalized by its
+area or not. default true</li>
+<li><strong>BorderType</strong> border mode used to extrapolate pixels outside of the
+image. See <a href="copyMakeBorder.html">cv.copyMakeBorder</a>. Default 'Default'</li>
+</ul>
+
+<p>The function smoothes an image using the kernel:</p>
+
+<pre><code>K = alpha * ones(KSize)
+</code></pre>
+
+<p>where:</p>
+
+<pre><code>        | 1/prod(KSize)  when Normalize=true
+alpha = |
+        | 1              otherwise
+</code></pre>
+
+<p>Unnormalized box filter is useful for computing various integral
+characteristics over each pixel neighborhood, such as covariance matrices
+of image derivatives (used in dense optical flow algorithms, and so on). If
+you need to compute pixel sums over variable-size windows, use <a href="integral.html">cv.integral</a>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="blur.html">cv.blur</a>, <a href="bilateralFilter.html">cv.bilateralFilter</a>, <a href="GaussianBlur.html">cv.GaussianBlur</a>, <a href="medianBlur.html">cv.medianBlur</a>,
+   <a href="integral.html">cv.integral</a>, <a href="sqrBoxFilter.html">cv.sqrBoxFilter</a></div>
+   </body>
+</html>

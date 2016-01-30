@@ -1,0 +1,54 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.DownhillSolver/DownhillSolver</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.DownhillSolver/DownhillSolver</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.DownhillSolver/DownhillSolver</div>
+      <div class="helpcontent"><p>Creates a DownhillSolver object.</p>
+
+<pre><code>solver = <a href="DownhillSolver.html">cv.DownhillSolver</a>()
+solver = <a href="DownhillSolver.html">cv.DownhillSolver</a>('OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Function</strong> Objective function that will be minimized,
+specified as a structure with the following fields:<ul>
+<li><strong>dims</strong> Number of dimensions</li>
+<li><strong>fun</strong> string, name of M-file that implements the
+<code>calc()</code> method. It should receive a vector of the
+specified dimension, and return a scalar value of
+the objective function evaluated at that point.</li>
+</ul>
+</li>
+<li><strong>InitStep</strong> Initial step, that will be used to construct the
+initial simplex. default <code>[1, 1, 0.0]</code>.</li>
+<li><strong>TermCriteria</strong> Terminal criteria to the algorithm. default
+<code>struct('type','Count+EPS', 'maxCount',5000, 'epsilon',1e-6)</code></li>
+</ul>
+
+<p>All the parameters are optional, so this procedure can be called
+even without parameters at all. In this case, the default values
+will be used. As default value for terminal criteria are the
+only sensible ones, <code>ObjectiveFunction</code> and <code>InitStep</code> should be
+set upon the obtained object, if the respective parameters were
+not given in the constructor. Otherwise, the two ways (give them
+to ctor or miss them out and set the <code>ObjectiveFunction</code> and
+<code>InitStep</code> properties) are absolutely equivalent (and will drop
+the same errors in the same way, should invalid input be
+detected).</p>
+</div><!--after help -->
+   </body>
+</html>

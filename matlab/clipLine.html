@@ -24,11 +24,10 @@
 <h2> Input</h2>
 
 <ul>
-<li><strong>imgSize</strong> Image size. The image rectangle is Rect(0, 0, imgSize.width,
-imgSize.height).</li>
-<li><strong>imgRect</strong> Image rectangle.</li>
-<li><strong>pt1</strong> First line point.</li>
-<li><strong>pt2</strong> Second line point.</li>
+<li><strong>imgSize</strong> Image size <code>[w,h]</code>. The image rectangle is <code>[0, 0, w, h]</code>.</li>
+<li><strong>imgRect</strong> Image rectangle <code>[x, y, w, h]</code>.</li>
+<li><strong>pt1</strong> First line point <code>[x1,y1]</code>.</li>
+<li><strong>pt2</strong> Second line point <code>[x2,y2]</code>.</li>
 </ul>
 
 <h2> Output</h2>
@@ -39,7 +38,7 @@ imgSize.height).</li>
 <li><strong>pt2</strong> Second line point.</li>
 </ul>
 
-<p>The functions clipLine calculate a part of the line segment that is
+<p>The functions <a href="clipLine.html">cv.clipLine</a> calculate a part of the line segment that is
 entirely within the specified rectangle. They return false if the line
 segment is completely outside the rectangle. Otherwise, they return true.</p>
 </div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="line.html">cv.line</a></div>

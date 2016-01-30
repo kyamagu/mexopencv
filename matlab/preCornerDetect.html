@@ -30,21 +30,32 @@ dst = <a href="preCornerDetect.html">cv.preCornerDetect</a>(src, 'OptionName', o
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Output image that has the single type and the same size as src .</li>
+<li><strong>dst</strong> Output image that has the <code>single</code> type and the same size as <code>src</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>ApertureSize</strong> Aperture parameter for the Sobel() operator. default 3.</li>
-<li><strong>BorderType</strong> Border mode used to extrapolate pixels outside of the
-image. default 'Default'</li>
+<li><strong>KSize</strong> Aperture size of the <a href="Sobel.html">cv.Sobel</a> operator. default 3.</li>
+<li><strong>BorderType</strong> Pixel extrapolation method. default 'Default'</li>
 </ul>
 
 <p>The function calculates the complex spatial derivative-based function of the
 source image.</p>
 
-<p>The corners can be found as local maximums of the functions.</p>
-</div><!--after help -->
+<pre><code>dst = (Dx*src)^2*Dyy*src + (Dy*src)^2*Dxx*src - 2*Dx*src*Dy*src*Dxy*src
+</code></pre>
+
+<p>where <code>Dx</code>, <code>Dy</code> are the first image derivatives, <code>Dxx</code>, <code>Dyy</code> are the
+second image derivatives, and <code>Dxy</code> is the mixed derivative.</p>
+
+<p>The corners can be found as local maximums of the functions, as shown below:</p>
+
+<pre><code>corners = <a href="preCornerDetect.html">cv.preCornerDetect</a>(image, 'KSize',3);
+
+% dilation with 3x3 rectangular structuring element
+dilated_corners = <a href="dilate.html">cv.dilate</a>(corners);
+corner_mask = (corners == dilated_corners);</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="cornerMinEigenVal.html">cv.cornerMinEigenVal</a></div>
    </body>
 </html>

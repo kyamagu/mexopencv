@@ -1,0 +1,61 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.buildOpticalFlowPyramid</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.buildOpticalFlowPyramid</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.buildOpticalFlowPyramid</div>
+      <div class="helpcontent"><p>Constructs the image pyramid which can be passed to cv.calcOpticalFlowPyrLK</p>
+
+<pre><code>pyramid = <a href="buildOpticalFlowPyramid.html">cv.buildOpticalFlowPyramid</a>(img)
+[pyramid,maxLvl] = <a href="buildOpticalFlowPyramid.html">cv.buildOpticalFlowPyramid</a>(img)
+pyramid = <a href="buildOpticalFlowPyramid.html">cv.buildOpticalFlowPyramid</a>(img, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>img</strong> 8-bit input image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>pyramid</strong> output pyramid. A cell-array of matrices (pyramid levels),
+interleaved with corresponding gradients if <code>WithDerivatives</code> flag
+is true. Each gradient is a matrix of type <code>int16</code> of same size as
+pyramid at that level with 2-channels.</li>
+<li><strong>maxLvl</strong> number of levels in constructed pyramid. Can be less than
+<code>MaxLevel</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>WinSize</strong> window size of optical flow algorithm. Must be not less than
+<code>WinSize</code> argument of <a href="calcOpticalFlowPyrLK.html">cv.calcOpticalFlowPyrLK</a>. It is needed to
+calculate required padding for pyramid levels. default [21,21]</li>
+<li><strong>MaxLevel</strong> 0-based maximal pyramid level number. default 3</li>
+<li><strong>WithDerivatives</strong> set to precompute gradients for the every pyramid
+level. If pyramid is constructed without the gradients then
+<a href="calcOpticalFlowPyrLK.html">cv.calcOpticalFlowPyrLK</a> will calculate them internally. default true</li>
+<li><strong>PyrBorder</strong> the border mode for pyramid layers. See <a href="copyMakeBorder.html">cv.copyMakeBorder</a>.
+default 'Reflect101'</li>
+<li><strong>DerivBorder</strong> the border mode for gradients. See <a href="copyMakeBorder.html">cv.copyMakeBorder</a>.
+default 'Constant'</li>
+<li><strong>TryReuseInputImage</strong> put ROI of input image into the pyramid if
+possible. You can pass false to force data copying. default true</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calcOpticalFlowPyrLK.html">cv.calcOpticalFlowPyrLK</a>, <a href="buildPyramid.html">cv.buildPyramid</a></div>
+   </body>
+</html>

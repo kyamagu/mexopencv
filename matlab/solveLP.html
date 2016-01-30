@@ -1,0 +1,84 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.solveLP</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.solveLP</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.solveLP</div>
+      <div class="helpcontent"><p>Solve given (non-integer) linear programming problem using the Simplex Algorithm.</p>
+
+<pre><code>[z, res] = <a href="solveLP.html">cv.solveLP</a>(Func, Constr)
+[...] = <a href="solveLP.html">cv.solveLP</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>Func</strong> This row-vector corresponds to <code>c</code> in the LP problem formulation
+(see below). It should contain 32- or 64-bit floating point numbers.
+As a convenience, column-vector may be also submitted, in the latter
+case it is understood to correspond to <code>c'</code>.</li>
+<li><strong>Constr</strong> m-by-n+1 matrix, whose rightmost column corresponds to <code>b</code> in
+formulation above and the remaining to <code>A</code>. It should containt 32- or
+64-bit floating point numbers.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>z</strong> The solution will be returned here as a column-vector - it
+corresponds to <code>x</code> in the formulation above. It will contain 64-bit
+floating point numbers.</li>
+<li><strong>res</strong> Return code. One of:<ul>
+<li><strong>Unbounded</strong> problem is unbounded (target function can achieve
+arbitrary high values)</li>
+<li><strong>Unfeasible</strong> problem is unfeasible (there are no points that
+satisfy all the constraints imposed)</li>
+<li><strong>Single</strong> there is only one maximum for target function</li>
+<li><strong>Multi</strong> there are multiple maxima for target function - the
+arbitrary one is returned</li>
+</ul>
+</li>
+</ul>
+
+<p>What we mean here by &quot;linear programming problem&quot; (or LP problem, for short)
+can be formulated as:</p>
+
+<pre><code> Maximize c*x
+  subject to  A*x &lt;= b
+              x &gt;= 0
+</code></pre>
+
+<p>Where <code>c</code> is fixed 1-by-n row-vector, <code>A</code> is fixed m-by-n matrix, <code>b</code> is
+fixed m-by-1 column vector and <code>x</code> is an arbitrary n-by-1 column vector,
+which satisfies the constraints.</p>
+
+<p>Simplex algorithm is one of many algorithms that are designed to handle this
+sort of problems efficiently. Although it is not optimal in theoretical
+sense (there exist algorithms that can solve any problem written as above in
+polynomial type, while simplex method degenerates to exponential time for
+some special cases), it is well-studied, easy to implement and is shown to
+work well for real-life purposes.</p>
+
+<p>The particular implementation is taken almost verbatim from:</p>
+
+<blockquote>
+<p>Introduction to Algorithms, 3rd edition
+by T. H. Cormen, C. E. Leiserson, R. L. Rivest and Clifford Stein.</p>
+</blockquote>
+
+<p>In particular, the Bland's rule <a href="http://en.wikipedia.org/wiki/Bland%27s_rule">http://en.wikipedia.org/wiki/Bland%27s_rule</a>
+is used to prevent cycling.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> linprog</div>
+   </body>
+</html>

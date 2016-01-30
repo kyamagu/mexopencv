@@ -1,0 +1,53 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.LogisticRegression/getLearntThetas</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.LogisticRegression/getLearntThetas</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.LogisticRegression/getLearntThetas</div>
+      <div class="helpcontent"><p>Returns the trained paramters</p>
+
+<pre><code>thetas = model.getLearntThetas()
+</code></pre>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>thetas</strong> It returns learnt paramters of the Logistic
+Regression as a matrix of type <code>single</code> arranged across
+rows. For a two-class classifcation problem, it returns a
+single row matrix.</li>
+</ul>
+
+<p><code>thetas</code> is a matrix of size <code>nclasses-by-model.getVarCount()</code>
+if <code>nclasses&gt;2</code>, otherwise <code>1-by-model.getVarCount()</code> if
+<code>nclasses=2</code>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="LogisticRegression.train.html">cv.LogisticRegression/train</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

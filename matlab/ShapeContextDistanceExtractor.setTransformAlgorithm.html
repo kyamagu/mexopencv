@@ -1,0 +1,82 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.ShapeContextDistanceExtractor/setTransformAlgorithm</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.ShapeContextDistanceExtractor/setTransformAlgorithm</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.ShapeContextDistanceExtractor/setTransformAlgorithm</div>
+      <div class="helpcontent"><p>Set the algorithm used for aligning the shapes</p>
+
+<pre><code>obj.setTransformAlgorithm(transformerType)
+obj.setTransformAlgorithm(transformerType, 'OptionName',optionValue,...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>transformerType</strong> an algorithm that defines the aligning
+transformation. One of:<ul>
+<li><strong>ThinPlateSplineShapeTransformer</strong> Definition of the
+transformation occupied in the paper [Bookstein89].</li>
+<li><strong>AffineTransformer</strong> Wrapper class for the OpenCV
+Affine Transformation algorithm.
+See cv.estimateRigidTransform</li>
+</ul>
+</li>
+</ul>
+
+<h2> Options</h2>
+
+<p>The following are options for the various algorithms:</p>
+
+<h3> <code>ThinPlateSplineShapeTransformer</code></h3>
+
+<ul>
+<li><strong>RegularizationParameter</strong> The regularization parameter for
+relaxing the exact interpolation requirements of the TPS
+algorithm. default 0</li>
+</ul>
+
+<h3> <code>AffineTransformer</code></h3>
+
+<ul>
+<li><strong>FullAffine</strong> see <a href="estimateRigidTransform.html">cv.estimateRigidTransform</a>, default true</li>
+</ul>
+
+<h2> References</h2>
+
+<p>[Bookstein89]:</p>
+
+<blockquote>
+<p>&quot;Principal Warps: Thin-Plate Splines and Decomposition of
+Deformations&quot;, by F.L. Bookstein (PAMI 1989)</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="ShapeContextDistanceExtractor.getTransformAlgorithm.html">cv.ShapeContextDistanceExtractor/getTransformAlgorithm</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

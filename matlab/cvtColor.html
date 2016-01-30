@@ -18,29 +18,111 @@
       <div class="helpcontent"><p>Converts an image from one color space to another</p>
 
 <pre><code>dst = <a href="cvtColor.html">cv.cvtColor</a>(src, code)
-dst = <a href="cvtColor.html">cv.cvtColor</a>(src, code, 'DstCn', 1)
+dst = <a href="cvtColor.html">cv.cvtColor</a>(src, code, 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>src</strong> Source image: 8-bit unsigned, 16-bit unsigned (CV_16UC...), or
+<li><strong>src</strong> Input image: 8-bit unsigned, 16-bit unsigned, or
 single-precision floating-point.</li>
-<li><strong>code</strong> Color space conversion code string. e.g., 'RGB2GRAY'</li>
+<li><strong>code</strong> Color space conversion code string, e.g., 'RGB2GRAY'.
+The following codes are supported:<ul>
+<li><strong>BGR2BGRA</strong>, <strong>RGB2RGBA</strong>: add alpha channel to RGB and BGR image</li>
+<li><strong>BGRA2BGR</strong>, <strong>RGBA2RGB</strong>: remove alpha channel from RGB and BGR
+image</li>
+<li><strong>BGR2RGBA</strong>, <strong>RGB2BGRA</strong>, <strong>RGBA2BGR</strong>, <strong>BGRA2RGB</strong>, <strong>BGR2RGB</strong>,
+<strong>RGB2BGR</strong>, <strong>BGRA2RGBA</strong>, <strong>RGBA2BGRA</strong>: convert between RGB and
+BGR color spaces (with or without alpha channel)</li>
+<li><strong>BGR2GRAY</strong>, <strong>RGB2GRAY</strong>, <strong>GRAY2BGR</strong>, <strong>GRAY2RGB</strong>,
+<strong>GRAY2BGRA</strong>, <strong>GRAY2RGBA</strong>, <strong>BGRA2GRAY</strong>, <strong>RGBA2GRAY</strong>: convert
+between RGB/BGR and grayscale</li>
+<li><strong>BGR2BGR565</strong>, <strong>RGB2BGR565</strong>, <strong>BGR5652BGR</strong>, <strong>BGR5652RGB</strong>,
+<strong>BGRA2BGR565</strong>, <strong>RGBA2BGR565</strong>, <strong>BGR5652BGRA</strong>, <strong>BGR5652RGBA</strong>:
+convert between RGB/BGR and BGR565 (16-bit images)</li>
+<li><strong>GRAY2BGR565</strong>, <strong>BGR5652GRAY</strong>: convert between grayscale and
+BGR565 (16-bit images)</li>
+<li><strong>BGR2BGR555</strong>, <strong>RGB2BGR555</strong>, <strong>BGR5552BGR</strong>, <strong>BGR5552RGB</strong>,
+<strong>BGRA2BGR555</strong>, <strong>RGBA2BGR555</strong>, <strong>BGR5552BGRA</strong>, <strong>BGR5552RGBA</strong>:
+convert between RGB/BGR and BGR555 (16-bit images)</li>
+<li><strong>GRAY2BGR555</strong>, <strong>BGR5552GRAY</strong>: convert between grayscale and
+BGR555 (16-bit images)</li>
+<li><strong>BGR2XYZ</strong>, <strong>RGB2XYZ</strong>, <strong>XYZ2BGR</strong>, <strong>XYZ2RGB</strong>: convert between
+RGB/BGR and CIE XYZ</li>
+<li><strong>BGR2YCrCb</strong>, <strong>RGB2YCrCb</strong>, <strong>YCrCb2BGR</strong>, <strong>YCrCb2RGB</strong>: convert
+between RGB/BGR and luma-chroma (aka YCC)</li>
+<li><strong>BGR2YUV</strong>, <strong>RGB2YUV</strong>, <strong>YUV2BGR</strong>, <strong>YUV2RGB</strong>: convert between
+RGB/BGR and YUV</li>
+<li><strong>BGR2HSV</strong>, <strong>RGB2HSV</strong>, <strong>HSV2BGR</strong>, <strong>HSV2RGB</strong>, <strong>BGR2HSV_FULL</strong>,
+<strong>RGB2HSV_FULL</strong>, <strong>HSV2BGR_FULL</strong>, <strong>HSV2RGB_FULL</strong>: convert between
+RGB/BGR and HSV (hue saturation value)</li>
+<li><strong>BGR2HLS</strong>, <strong>RGB2HLS</strong>, <strong>HLS2BGR</strong>, <strong>HLS2RGB</strong>, <strong>BGR2HLS_FULL</strong>,
+<strong>RGB2HLS_FULL</strong>, <strong>HLS2BGR_FULL</strong>, <strong>HLS2RGB_FULL</strong>: convert between
+RGB/BGR and HLS (hue lightness saturation)</li>
+<li><strong>BGR2Lab</strong>, <strong>RGB2Lab</strong>, <strong>Lab2BGR</strong>, <strong>Lab2RGB</strong>, <strong>LBGR2Lab</strong>,
+<strong>LRGB2Lab</strong>, <strong>Lab2LBGR</strong>, <strong>Lab2LRGB</strong>: convert between RGB/BGR
+and CIE Lab</li>
+<li><strong>BGR2Luv</strong>, <strong>RGB2Luv</strong>, <strong>Luv2BGR</strong>, <strong>Luv2RGB</strong>, <strong>LBGR2Luv</strong>,
+<strong>LRGB2Luv</strong>, <strong>Luv2LBGR</strong>, <strong>Luv2LRGB</strong>: convert between RGB/BGR
+and CIE Luv</li>
+<li><strong>YUV2RGB_NV12</strong>, <strong>YUV2BGR_NV12</strong>, <strong>YUV2RGB_NV21</strong>,
+<strong>YUV2BGR_NV21</strong>, <strong>YUV420sp2RGB</strong>, <strong>YUV420sp2BGR</strong>,
+<strong>YUV2RGBA_NV12</strong>, <strong>YUV2BGRA_NV12</strong>, <strong>YUV2RGBA_NV21</strong>,
+<strong>YUV2BGRA_NV21</strong>, <strong>YUV420sp2RGBA</strong>, <strong>YUV420sp2BGRA</strong>,
+<strong>YUV2RGB_YV12</strong>, <strong>YUV2BGR_YV12</strong>, <strong>YUV2RGB_IYUV</strong>,
+<strong>YUV2BGR_IYUV</strong>, <strong>YUV2RGB_I420</strong>, <strong>YUV2BGR_I420</strong>,
+<strong>YUV420p2RGB</strong>, <strong>YUV420p2BGR</strong>, <strong>YUV2RGBA_YV12</strong>,
+<strong>YUV2BGRA_YV12</strong>, <strong>YUV2RGBA_IYUV</strong>, <strong>YUV2BGRA_IYUV</strong>,
+<strong>YUV2RGBA_I420</strong>, <strong>YUV2BGRA_I420</strong>, <strong>YUV420p2RGBA</strong>,
+<strong>YUV420p2BGRA</strong>, <strong>YUV2GRAY_420</strong>, <strong>YUV2GRAY_NV21</strong>,
+<strong>YUV2GRAY_NV12</strong>, <strong>YUV2GRAY_YV12</strong>, <strong>YUV2GRAY_IYUV</strong>,
+<strong>YUV2GRAY_I420</strong>, <strong>YUV420sp2GRAY</strong>, <strong>YUV420p2GRAY</strong>:
+YUV 4:2:0 family to RGB</li>
+<li><strong>YUV2RGB_UYVY</strong>, <strong>YUV2BGR_UYVY</strong>, <strong>YUV2RGB_Y422</strong>,
+<strong>YUV2BGR_Y422</strong>, <strong>YUV2RGB_UYNV</strong>, <strong>YUV2BGR_UYNV</strong>,
+<strong>YUV2RGBA_UYVY</strong>, <strong>YUV2BGRA_UYVY</strong>, <strong>YUV2RGBA_Y422</strong>,
+<strong>YUV2BGRA_Y422</strong>, <strong>YUV2RGBA_UYNV</strong>, <strong>YUV2BGRA_UYNV</strong>,
+<strong>YUV2RGB_YUY2</strong>, <strong>YUV2BGR_YUY2</strong>, <strong>YUV2RGB_YVYU</strong>,
+<strong>YUV2BGR_YVYU</strong>, <strong>YUV2RGB_YUYV</strong>, <strong>YUV2BGR_YUYV</strong>,
+<strong>YUV2RGB_YUNV</strong>, <strong>YUV2BGR_YUNV</strong>, <strong>YUV2RGBA_YUY2</strong>,
+<strong>YUV2BGRA_YUY2</strong>, <strong>YUV2RGBA_YVYU</strong>, <strong>YUV2BGRA_YVYU</strong>,
+<strong>YUV2RGBA_YUYV</strong>, <strong>YUV2BGRA_YUYV</strong>, <strong>YUV2RGBA_YUNV</strong>,
+<strong>YUV2BGRA_YUNV</strong>, <strong>YUV2GRAY_UYVY</strong>, <strong>YUV2GRAY_YUY2</strong>,
+<strong>YUV2GRAY_Y422</strong>, <strong>YUV2GRAY_UYNV</strong>, <strong>YUV2GRAY_YVYU</strong>,
+<strong>YUV2GRAY_YUYV</strong>, <strong>YUV2GRAY_YUNV</strong>: YUV 4:2:2 family to RGB</li>
+<li><strong>RGBA2mRGBA</strong>, <strong>mRGBA2RGBA</strong>: alpha premultiplication</li>
+<li><strong>RGB2YUV_I420</strong>, <strong>BGR2YUV_I420</strong>, <strong>RGB2YUV_IYUV</strong>,
+<strong>BGR2YUV_IYUV</strong>, <strong>RGBA2YUV_I420</strong>, <strong>BGRA2YUV_I420</strong>,
+<strong>RGBA2YUV_IYUV</strong>, <strong>BGRA2YUV_IYUV</strong>, <strong>RGB2YUV_YV12</strong>,
+<strong>BGR2YUV_YV12</strong>, <strong>RGBA2YUV_YV12</strong>, <strong>BGRA2YUV_YV12</strong>:
+RGB to YUV 4:2:0 family</li>
+<li><strong>BayerBG2BGR</strong>, <strong>BayerGB2BGR</strong>, <strong>BayerRG2BGR</strong>, <strong>BayerGR2BGR</strong>,
+<strong>BayerBG2RGB</strong>, <strong>BayerGB2RGB</strong>, <strong>BayerRG2RGB</strong>, <strong>BayerGR2RGB</strong>,
+<strong>BayerBG2GRAY</strong>, <strong>BayerGB2GRAY</strong>, <strong>BayerRG2GRAY</strong>,
+<strong>BayerGR2GRAY</strong>: Demosaicing</li>
+<li><strong>BayerBG2BGR_VNG</strong>, <strong>BayerGB2BGR_VNG</strong>, <strong>BayerRG2BGR_VNG</strong>,
+<strong>BayerGR2BGR_VNG</strong>, <strong>BayerBG2RGB_VNG</strong>, <strong>BayerGB2RGB_VNG</strong>,
+<strong>BayerRG2RGB_VNG</strong>, <strong>BayerGR2RGB_VNG</strong>: Demosaicing using
+Variable Number of Gradients</li>
+<li><strong>BayerBG2BGR_EA</strong>, <strong>BayerGB2BGR_EA</strong>, <strong>BayerRG2BGR_EA</strong>,
+<strong>BayerGR2BGR_EA</strong>, <strong>BayerBG2RGB_EA</strong>, <strong>BayerGB2RGB_EA</strong>,
+<strong>BayerRG2RGB_EA</strong>, <strong>BayerGR2RGB_EA</strong>: Edge-Aware Demosaicing</li>
+</ul>
+</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>dst</strong> Destination image of the same size and depth as src.</li>
+<li><strong>dst</strong> Output image of the same row/column size and depth as <code>src</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
 <li><strong>DstCn</strong> Number of channels in the destination image. If the parameter is
-0, the number of the channels is derived automatically from src
-and code.</li>
+0, the number of the channels is derived automatically from
+<code>src</code> and <code>code</code>.</li>
 </ul>
 
 <p>The function converts an input image from one color space to another. In case
@@ -54,26 +136,252 @@ be Red. The fourth, fifth, and sixth bytes would then be the second pixel
 
 <p>The conventional ranges for R, G, and B channel values are:</p>
 
-<pre><code> 0 to 255 for uint8 images
- 0 to 65535 for uint16 images
- 0 to 1 for float images
-</code></pre>
+<ul>
+<li>0 to 255 for <code>uint8</code> images</li>
+<li>0 to 65535 for <code>uint16</code> images</li>
+<li>0 to 1 for floating-point images (<code>single</code> and <code>double</code>)</li>
+</ul>
 
 <p>In case of linear transformations, the range does not matter. But in case of
 a non-linear transformation, an input RGB image should be normalized to the
-proper value range to get the correct results, for example, for RGB L*u*v*
-transformation. For example, if you have a 32-bit floating-point image
-directly converted from an 8-bit image without any scaling, then it will have
-the 0..255 value range instead of 0..1 assumed by the function. So, before
-calling cvtColor, you need first to scale the image down:</p>
+proper value range to get the correct results, for example, for <code>RGB</code> to
+<code>L*u*v*</code> transformation. For example, if you have a 32-bit floating-point
+image directly converted from an 8-bit image without any scaling, then it
+will have the 0..255 value range instead of 0..1 assumed by the function.
+So, before calling <a href="cvtColor.html">cv.cvtColor</a>, you need first to scale the image down:</p>
 
-<pre><code> img = cvtColor(img/255, 'BGR2Luv');
+<pre><code> img = cvtColor(img./255, 'BGR2Luv');
 </code></pre>
 
-<p>If you use cvtColor with 8-bit images, the conversion will have some
+<p>If you use <a href="cvtColor.html">cv.cvtColor</a> with 8-bit images, the conversion will have some
 information lost. For many applications, this will not be noticeable but it
 is recommended to use 32-bit images in applications that need the full range
-of colors or that convert an image before an operation and then convert back.</p>
-</div><!--after help -->
+of colors or that convert an image before an operation and then convert
+back.</p>
+
+<p>If conversion adds the alpha channel, its value will set to the maximum of
+corresponding channel range: 255 for <code>uint8</code>, 65535 for <code>uint16</code>, and 1 for
+<code>single</code>.</p>
+
+<hr/>
+
+<h1> Color Conversions</h1>
+
+<h2> RGB &amp;#8660; GRAY</h2>
+
+<p>Transformations within RGB space like adding/removing the alpha channel,
+reversing the channel order, conversion to/from 16-bit RGB color (<code>R5:G6:B5</code>
+or <code>R5:G5:B5</code>), as well as conversion to/from grayscale using:</p>
+
+<pre><code>RGB[A] to Gray: Y = 0.299*R + 0.587*G + 0.114*B
+</code></pre>
+
+<p>and</p>
+
+<pre><code>Gray to RGB[A]: R = Y, G = Y, B = Y, A = max(ChannelRange)
+</code></pre>
+
+<p>The conversion from a RGB image to gray is done with:</p>
+
+<pre><code>bwsrc = <a href="cvtColor.html">cv.cvtColor</a>(src, 'RGB2GRAY');
+</code></pre>
+
+<p>More advanced channel reordering can also be done with <a href="mixChannels.html">cv.mixChannels</a>.</p>
+
+<p>See also: 'BGR2GRAY', 'RGB2GRAY', 'GRAY2BGR', 'GRAY2RGB'</p>
+
+<h2> RGB &amp;#8660; CIE XYZ.Rec 709 with D65 white point</h2>
+
+<pre><code>[X;Y;Z] = [0.412453, 0.357580, 0.180423;
+           0.212671, 0.715160, 0.072169;
+           0.019334, 0.119193, 0.950227] * [R;G;B]
+
+[R;G;B] = [3.240479, -1.53715, -0.498535;
+          -0.969256,  1.875991, 0.041556;
+           0.055648, -0.204043, 1.057311] * [X;Y;Z]
+</code></pre>
+
+<p><code>X</code>, <code>Y</code>, and <code>Z</code> cover the whole value range (in case of floating-point
+images, <code>Z</code> may exceed 1).</p>
+
+<p>See also: 'BGR2XYZ', 'RGB2XYZ', 'XYZ2BGR', 'XYZ2RGB'</p>
+
+<h2> RGB &amp;#8660; YCrCb JPEG (or YCC)</h2>
+
+<pre><code>Y = 0.299*R + 0.587G + 0.114B
+Cb = (R-Y)*0.713 + delta
+Cr = (B-Y)*0.564 + delta
+R = Y + 1.403*(Cr-delta)
+G = Y - 0.714*(Cr-delta) - 0.344*(Cb-delta)
+B = Y + 1.773*(Cb-delta)
+</code></pre>
+
+<p>where</p>
+
+<pre><code>        / 128    for 8-bit images
+delta = | 32768  for 16-bit images
+        \ 0.5    for floating-point images
+</code></pre>
+
+<p><code>Y</code>, <code>Cr</code>, and <code>Cb</code> cover the whole value range.</p>
+
+<p>See also: 'BGR2YCrCb', 'RGB2YCrCb', 'YCrCb2BGR', 'YCrCb2RGB'</p>
+
+<h2> RGB &amp;#8660; HSV</h2>
+
+<p>In case of 8-bit and 16-bit images, <code>R</code>, <code>G</code>, and <code>B</code> are converted to the
+floating-point format and scaled to fit the 0 to 1 range.</p>
+
+<pre><code>V = max(R,G,B)
+S = / (V - min(R,G,B)) / V               if V != 0
+    \ 0                                  otherwise
+    / 60*(G-B) / (V - min(R,G,B))        if V=R
+H = | 120 + 60*(B-R) / (V - min(R,G,B))  if V=G
+    \ 240 + 60*(R-G) / (V - min(R,G,B))  if V=B
+</code></pre>
+
+<p>If <code>H&lt;0</code> then <code>H=H+360</code>. On output <code>0&lt;=V&lt;=1</code>, <code>0&lt;=S&lt;=1</code>, <code>0&lt;=H&lt;=360</code>.</p>
+
+<p>The values are then converted to the destination data type:</p>
+
+<ul>
+<li>8-bit images: <code>V=255*V</code>, <code>S=255*S</code>, <code>H=H/2</code> (to fit to 0 to 255)</li>
+<li>16-bit images: (currently not supported) <code>V=65535*V</code>, <code>S=65535*S</code>, <code>H=H</code></li>
+<li>32-bit images: <code>H</code>, <code>S</code>, and <code>V</code> are left as is</li>
+</ul>
+
+<p>See also: 'BGR2HSV', 'RGB2HSV', 'HSV2BGR', 'HSV2RGB'</p>
+
+<h2> RGB &amp;#8660; HLS</h2>
+
+<p>In case of 8-bit and 16-bit images, <code>R</code>, <code>G</code>, and <code>B</code> are converted to the
+floating-point format and scaled to fit the 0 to 1 range.</p>
+
+<pre><code>Vmax = max(R,G,B)
+Vmin = min(R,G,B)
+L = (Vmax + Vmin)/2
+S = / (Vmax - Vmin)/(Vmax + Vmin)      if L &lt;  0.5
+    \ (Vmax - Vmin)/(2-(Vmax + Vmin))  if L &gt;= 0.5
+    / 60*(G-B) / (Vmax - Vmin)         if Vmax=R
+H = | 120 + 60*(B-R) / (Vmax - Vmin)   if Vmax=G
+    \ 240 + 60*(R-G) / (Vmax - Vmin)   if Vmax=B
+</code></pre>
+
+<p>If <code>H&lt;0</code> then <code>H=H+360</code>. On output <code>0&lt;=L&lt;=1</code>, <code>0&lt;=S&lt;=1</code>, <code>0&lt;=H&lt;=360</code>.</p>
+
+<p>The values are then converted to the destination data type:</p>
+
+<ul>
+<li>8-bit images: <code>L=255*L</code>, <code>S=255*S</code>, <code>H=H/2</code> (to fit to 0 to 255)</li>
+<li>16-bit images: (currently not supported) <code>L=65535*L</code>, <code>S=65535*S</code>, <code>H=H</code></li>
+<li>32-bit images: <code>H</code>, <code>S</code>, and <code>L</code> are left as is</li>
+</ul>
+
+<p>See also: 'BGR2HLS', 'RGB2HLS', 'HLS2BGR', 'HLS2RGB'</p>
+
+<h2> RGB &amp;#8660; CIE L<em>a</em>b*</h2>
+
+<p>In case of 8-bit and 16-bit images, <code>R</code>, <code>G</code>, and <code>B</code> are converted to the
+floating-point format and scaled to fit the 0 to 1 range.</p>
+
+<pre><code>[X;Y;Z] = [0.412453, 0.357580, 0.180423;
+           0.212671, 0.715160, 0.072169;
+           0.019334, 0.119193, 0.950227] * [R;G;B]
+
+X = X/Xn, where Xn = 0.950456
+Z = Z/Zn, where Zn = 1.088754
+
+L = / 116 * Y^(1/3) - 16   for Y &gt;  0.008856
+    \ 903.3 * Y            for Y &lt;= 0.008856
+
+a = 500*(f(X) - f(Y)) + delta
+b = 200*(f(Y) - f(Z)) + delta
+</code></pre>
+
+<p>where</p>
+
+<pre><code>f(t) = / t^(1/3)           for t &lt;  0.008856
+       \ 7.787*t + 16/116  for t &gt;= 0.008856
+</code></pre>
+
+<p>and</p>
+
+<pre><code>delta = / 128  for 8-bit images
+        \ 0    for floating-point images
+</code></pre>
+
+<p>This outputs <code>0&lt;=L&lt;=100</code>, <code>-127&lt;=a&lt;=127</code>, <code>-127&lt;=b&lt;=127</code>. The values are
+then converted to the destination data type:</p>
+
+<ul>
+<li>8-bit images: <code>L=L*255/100</code>, <code>a=a+128</code>, <code>b=b+128</code></li>
+<li>16-bit images: (currently not supported)</li>
+<li>32-bit images: <code>L</code>, <code>a</code>, and <code>b</code> are left as is</li>
+</ul>
+
+<p>See also: 'BGR2Lab', 'RGB2Lab', 'Lab2BGR', 'Lab2RGB'</p>
+
+<h2> RGB &amp;#8660; CIE L<em>u</em>v*</h2>
+
+<p>In case of 8-bit and 16-bit images, <code>R</code>, <code>G</code>, and <code>B</code> are converted to the
+floating-point format and scaled to fit 0 to 1 range.</p>
+
+<pre><code>[X;Y;Z] = [0.412453, 0.357580, 0.180423;
+           0.212671, 0.715160, 0.072169;
+           0.019334, 0.119193, 0.950227] * [R;G;B]
+
+L = / 116 * Y^(1/3) - 16   for Y &gt;  0.008856
+    \ 903.3 * Y            for Y &lt;= 0.008856
+
+u' = 4*X/(X + 15*Y + 32*Z)
+v' = 9*Y/(X + 15*Y + 32*Z)
+
+u = 13*L*(u' - un), where un = 0.19793943
+v = 13*L*(v' - vn), where vn = 0.46831096
+</code></pre>
+
+<p>This outputs <code>0&lt;=L&lt;=100</code>, <code>-134&lt;=u&lt;=220</code>, <code>-140&lt;=v&lt;=122</code>.</p>
+
+<p>The values are then converted to the destination data type:</p>
+
+<ul>
+<li>8-bit images: <code>L=255/100*L</code>, <code>u=255/354*(u+134), </code>v=255/262*(v+140)`</li>
+<li>16-bit images: (currently not supported)</li>
+<li>32-bit images: <code>L</code>, <code>u</code>, and <code>v</code> are left as is</li>
+</ul>
+
+<p>The above formulae for converting RGB to/from various color spaces have been
+taken from multiple sources on the web, primarily from the Charles Poynton
+site <a href="http://www.poynton.com/ColorFAQ.html">http://www.poynton.com/ColorFAQ.html</a></p>
+
+<p>See also: 'BGR2Luv', 'RGB2Luv', 'Luv2BGR', 'Luv2RGB'</p>
+
+<h2> Bayer &amp;#8660; RGB</h2>
+
+<p>The Bayer pattern is widely used in CCD and CMOS cameras. It enables you to
+get color pictures from a single plane where <code>R</code>, <code>G</code>, and <code>B</code> pixels
+(sensors of a particular component) are interleaved as follows:</p>
+
+<pre><code>R   G   R   G   R
+G  (B) (G)  B   G
+R   G   R   G   R
+G   B   G   B   G
+R   G   R   G   R
+</code></pre>
+
+<p>The output RGB components of a pixel are interpolated from 1, 2, or 4
+neighbors of the pixel having the same color. There are several
+modifications of the above pattern that can be achieved by shifting the
+pattern one pixel left and/or one pixel up. The two letters <code>C1</code> and <code>C2</code> in
+the conversion constants <code>Bayer(C1)(C2)2BGR</code> and <code>Bayer(C1)(C2)2RGB</code>
+indicate the particular pattern type. These are components from the second
+row, second and third columns, respectively. For example, the above pattern
+has a very popular &quot;BG&quot; type.</p>
+
+<p>See also: 'BayerBG2BGR', 'BayerGB2BGR', 'BayerRG2BGR', 'BayerGR2BGR',
+'BayerBG2RGB', 'BayerGB2RGB', 'BayerRG2RGB', 'BayerGR2RGB'</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> rgb2gray, rgb2hsv, rgb2lab, rgb2ntsc, rgb2xyz, rgb2ycbcr,
+   hsv2rgb, lab2rgb, lab2xyz, xyz2lab, xyz2rgb, ycbcr2rgb, ntsc2rgb,
+   makecform, applycform, <a href="demosaicing.html">cv.demosaicing</a></div>
    </body>
 </html>

@@ -1,0 +1,64 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.KAZE/load</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.KAZE/load</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.KAZE/load</div>
+      <div class="helpcontent"><p>Loads algorithm from a file or a string</p>
+
+<pre><code>obj.load(fname)
+obj.load(str, 'FromString',true)
+obj.load(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>fname</strong> Name of the file to read.</li>
+<li><strong>str</strong> String containing the serialized model you want to
+load.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>ObjName</strong> The optional name of the node to read (if empty,
+the first top-level node will be used). default empty</li>
+<li><strong>FromString</strong> Logical flag to indicate whether the input is
+a filename or a string containing the serialized model.
+default false</li>
+</ul>
+
+<p>This method reads algorithm parameters from the specified XML or
+YAML file (either from disk or serialized string). The previous
+algorithm state is discarded.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KAZE.save.html">cv.KAZE/save</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

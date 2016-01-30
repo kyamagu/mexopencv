@@ -25,40 +25,70 @@ corners = <a href="cornerSubPix.html">cv.cornerSubPix</a>(im, corners, 'OptionNa
 
 <ul>
 <li><strong>im</strong> Input single-channel image.</li>
-<li><strong>corners</strong> Initial coordinates of the input corners. Cell array of
-2-element arrays <code>{[x,y], ...}</code></li>
+<li><strong>corners</strong> Initial coordinates of the input corners, stored in numeric
+array (Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors
+(<code>{[x,y], ...}</code>). Supports single floating-point class.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>corners</strong> Output refined coordinates. Cell array of the same size as
-the input <code>corners</code>.</li>
+<li><strong>corners</strong> Output refined coordinates, of the same size and type as the
+input <code>corners</code> (numeric or cell matching the input format).</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
 <li><strong>WinSize</strong> Half of the side length of the search window. For example, if
-<code>WinSize=[3,3]</code>, then a <code>(3 * 2 + 1) x (3 * 2 + 1) = 7 x 7</code> search
+<code>WinSize=[5,5]</code>, then a <code>(5 * 2 + 1) x (5 * 2 + 1) = 11 x 11</code> search
 window is used. default [3, 3].</li>
 <li><strong>ZeroZone</strong> Half of the size of the dead region in the middle of the
 search zone over which the summation in the formula below is not done.
 It is used sometimes to avoid possible singularities of the
-autocorrelation matrix. The value of [-1,-1] indicates that there is
-no such a size. default [-1,-1].</li>
+autocorrelation matrix. The value of <code>[-1,-1]</code> indicates that there
+is no such a size. default [-1,-1].</li>
 <li><strong>Criteria</strong> Criteria for termination of the iterative process of corner
 refinement. That is, the process of corner position refinement stops
 either after <code>criteria.maxCount</code> iterations or when the corner position
-moves by less than <code>criteria.epsilon</code> on some iteration.
-Struct with <code>{'type','maxCount','epsilon'}</code> fields is accepted. The
-type field should have one of 'Count', 'EPS', or 'Count+EPS' to
-indicate which criteria to use. Default to
-<code>struct('type','Count+EPS', 'maxCount',50, 'epsilon',0.001)</code>.</li>
+moves by less than <code>criteria.epsilon</code> on some iteration. Default to
+<code>struct('type','Count+EPS', 'maxCount',50, 'epsilon',0.001)</code>.
+Struct with the following fields is accepted:<ul>
+<li><strong>type</strong> one of 'Count', 'EPS', or 'Count+EPS' to indicate which
+criteria to use.</li>
+<li><strong>maxCount</strong> maximum number of iterations</li>
+<li><strong>epsilon</strong> minimum difference in corner position</li>
+</ul>
+</li>
 </ul>
 
 <p>The function iterates to find the sub-pixel accurate location of corners or
 radial saddle points.</p>
-</div><!--after help -->
+
+<p>Sub-pixel accurate corner locator is based on the observation that every
+vector from the center <code>q</code> to a point <code>p</code> located within a neighborhood of
+<code>q</code> is orthogonal to the image gradient at <code>p</code> subject to image and
+measurement noise. Consider the expression:</p>
+
+<pre><code>epsilon_i = DI_p_i' * (q - p_i)
+</code></pre>
+
+<p>where <code>DI_p_i</code> is an image gradient at one of the points <code>p_i</code> in a
+neighborhood of <code>q</code>. The value of <code>q</code> is to be found so that <code>epsilon_i</code> is
+minimized. A system of equations may be set up with <code>epsilon_i</code> set to zero:</p>
+
+<pre><code>Sigma_i(DI_p_i * DI_p_i') - Sigma_i(DI_p_i * DI_p_i' * p_i)
+</code></pre>
+
+<p>where the gradients are summed within a neighborhood (&quot;search window&quot;) of
+<code>q</code>. Calling the first gradient term <code>G</code> and the second gradient term <code>b</code>
+gives:</p>
+
+<pre><code>q = inv(G) * b
+</code></pre>
+
+<p>The algorithm sets the center of the neighborhood window at this new center
+<code>q</code> and then iterates until the center stays within a set threshold.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="find4QuadCornerSubpix.html">cv.find4QuadCornerSubpix</a></div>
    </body>
 </html>

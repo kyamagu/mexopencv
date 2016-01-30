@@ -1,0 +1,63 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.drawMarker</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.drawMarker</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.drawMarker</div>
+      <div class="helpcontent"><p>Draws a marker on a predefined position in an image</p>
+
+<pre><code>img = <a href="drawMarker.html">cv.drawMarker</a>(img, pos)
+img = <a href="drawMarker.html">cv.drawMarker</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>img</strong> Input image.</li>
+<li><strong>pos</strong> The point where the crosshair is positioned <code>[x,y]</code>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>img</strong> Output image.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Color</strong> Line color. Default is a black color.</li>
+<li><strong>MarkerType</strong> The specific type of marker you want to use. One of:<ul>
+<li><strong>Cross</strong> (<code>+</code>) (default) A crosshair marker shape.</li>
+<li><strong>TiltedCross</strong> (<code>x</code>) A 45 degree tilted crosshair marker shape.</li>
+<li><strong>Star</strong> (<code>*</code>) A star marker shape, combination of cross and tilted
+cross.</li>
+<li><strong>Diamond</strong> (<code>d</code>) A diamond marker shape.</li>
+<li><strong>Square</strong> (<code>s</code>) A square marker shape.</li>
+<li><strong>TriangleUp</strong> (<code>^</code>) An upwards pointing triangle marker shape.</li>
+<li><strong>TriangleDown</strong> (<code>v</code>) A downwards pointing triangle marker shape.</li>
+</ul>
+</li>
+<li><strong>MarkerSize</strong> The length of the marker axis. Default is 20 pixels.</li>
+<li><strong>Thickness</strong> Line thickness. default 1</li>
+<li><strong>LineType</strong> Type of the line. One of 8,4,'AA' (Anti-aliased line).
+default 8.</li>
+</ul>
+
+<p>The function <a href="drawMarker.html">cv.drawMarker</a> draws a marker on a given position in the image.
+For the moment several marker types are supported, see <code>MarkerType</code> for more
+information.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="line.html">cv.line</a>, <a href="circle.html">cv.circle</a></div>
+   </body>
+</html>

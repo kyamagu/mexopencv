@@ -1,0 +1,77 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.seamlessClone</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.seamlessClone</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.seamlessClone</div>
+      <div class="helpcontent"><p>Seamless Cloning</p>
+
+<pre><code>blend = <a href="seamlessClone.html">cv.seamlessClone</a>(src, dst, mask, p)
+blend = <a href="seamlessClone.html">cv.seamlessClone</a>(src, dst, mask, p, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Input 8-bit 3-channel image.</li>
+<li><strong>dst</strong> Input 8-bit 3-channel image.</li>
+<li><strong>mask</strong> Input 8-bit 1 or 3-channel image.</li>
+<li><strong>p</strong> Point <code>[x,y]</code> in <code>dst</code> image where object is placed.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>blend</strong> Output image with the same size and type as <code>dst</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Method</strong> Cloning method that could be one of the following:<ul>
+<li><strong>NormalClone</strong> (default) The power of the method is fully expressed
+when inserting objects with complex outlines into a new
+background.</li>
+<li><strong>MixedClone</strong> The classic method, color-based selection and alpha
+masking might be time consuming and often leaves an undesirable
+halo. Seamless cloning, even averaged with the original image,
+is not effective. Mixed seamless cloning based on a loose
+selection proves effective.</li>
+<li><strong>MonochromeTransfer</strong> Feature exchange allows the user to easily
+replace certain features of one object by alternative features.</li>
+</ul>
+</li>
+<li><strong>FlipChannels</strong> whether to flip the order of color channels in inputs
+<code>src</code> and <code>mask</code> and output <code>dst</code>, between MATLAB's RGB order and
+OpenCV's BGR (input: RGB-&gt;BGR, output: BGR-&gt;RGB). default true</li>
+</ul>
+
+<p>Image editing tasks concern either global changes (color/intensity
+corrections, filters, deformations) or local changes concerned to a
+selection. Here we are interested in achieving local changes, ones that are
+restricted to a region manually selected (ROI), in a seamless and effortless
+manner. The extent of the changes ranges from slight distortions to complete
+replacement by novel content [PM03].</p>
+
+<h2> References</h2>
+
+<p>[PM03]:</p>
+
+<blockquote>
+<p>Patrick Perez, Michel Gangnet, and Andrew Blake. &quot;Poisson image editing&quot;.
+In ACM Transactions on Graphics (TOG), volume 22, pages 313-318. ACM, 2003.</p>
+</blockquote>
+</div><!--after help -->
+   </body>
+</html>

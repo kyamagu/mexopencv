@@ -17,16 +17,74 @@
       <div class="title">cv.VideoCapture/VideoCapture</div>
       <div class="helpcontent"><p>Create a new VideoCapture object</p>
 
-<pre><code>cap = <a href="VideoCapture.html">cv.VideoCapture</a>
-cap = <a href="VideoCapture.html">cv.VideoCapture</a>(devid)
+<pre><code>cap = <a href="VideoCapture.html">cv.VideoCapture</a>(index)
 cap = <a href="VideoCapture.html">cv.VideoCapture</a>(filename)
+cap = <a href="VideoCapture.html">cv.VideoCapture</a>(..., 'API',apiPreference)
 </code></pre>
 
-<p>VideoCapture create a new instance. With no argument, it
+<h2> Input</h2>
+
+<ul>
+<li><strong>index</strong> id of the video capturing device to open. If there
+is a single camera connected, just pass 0.</li>
+<li><strong>filename</strong> name of the opened video file (eg. <code>video.avi</code>)
+or image sequence (eg. <code>img_%02d.jpg</code>, which will read
+samples like <code>img_00.jpg</code>, <code>img_01.jpg</code>, <code>img_02.jpg</code>, ...)</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>API</strong> preferred capture API to use. Can be used to enforce a
+specific reader implementation if multiple are available:
+e.g. 'FFMPEG' 'Images'. Available implementations:<ul>
+<li><strong>Any</strong> autodetect. This is the default.</li>
+<li><strong>VfW</strong> platform native.</li>
+<li><strong>V4L</strong> platform native.</li>
+<li><strong>V4L2</strong> platform native.</li>
+<li><strong>FireWare</strong> IEEE 1394 drivers.</li>
+<li><strong>FireWire</strong> IEEE 1394 drivers.</li>
+<li><strong>IEEE1394</strong> IEEE 1394 drivers.</li>
+<li><strong>DC1394</strong> IEEE 1394 drivers.</li>
+<li><strong>CMU1394</strong> IEEE 1394 drivers.</li>
+<li><strong>QuickTime</strong> QuickTime.</li>
+<li><strong>Unicap</strong> Unicap drivers.</li>
+<li><strong>DirectShow</strong> DirectShow (via videoInput).</li>
+<li><strong>PvAPI</strong> PvAPI, Prosilica GigE SDK.</li>
+<li><strong>OpenNI</strong> OpenNI (for Kinect).</li>
+<li><strong>OpenNIAsus</strong> OpenNI (for Asus Xtion).</li>
+<li><strong>Android</strong> Android - not used.</li>
+<li><strong>XIMEA</strong> XIMEA Camera API.</li>
+<li><strong>AVFoundation</strong> AVFoundation framework for iOS
+(OS X Lion will have the same API).</li>
+<li><strong>Giganetix</strong> Smartek Giganetix GigEVisionSDK.</li>
+<li><strong>MediaFoundation</strong> Microsoft Media Foundation
+(via videoInput).</li>
+<li><strong>WinRT</strong> Microsoft Windows Runtime using Media
+Foundation.</li>
+<li><strong>IntelPerC</strong> Intel Perceptual Computing SDK.</li>
+<li><strong>OpenNI2</strong> OpenNI2 (for Kinect).</li>
+<li><strong>OpenNI2Asus</strong> OpenNI2 (for Asus Xtion and
+Occipital Structure sensors).</li>
+<li><strong>gPhoto2</strong> gPhoto2 connection.</li>
+<li><strong>GStreamer</strong> GStreamer.</li>
+<li><strong>FFMPEG</strong> FFMPEG.</li>
+<li><strong>Images</strong> OpenCV Image Sequence (e.g. <code>img_%02d.jpg</code>).</li>
+</ul>
+</li>
+</ul>
+
+<p>Creates a new video capture instance. With no argument, it
 connects to the default camera device found in the system.
-You can specify camera devices by devid, an integer value
-starting from 0. You can also specify a filename to open a
+You can specify camera devices by <code>index</code>, an integer value
+starting from 0. You can also specify a <code>filename</code> to open a
 video file.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="VideoCapture.html">cv.VideoCapture</a></div>
+
+<h2> Example</h2>
+
+<p>To open camera 1 using the MS Media Foundation API:</p>
+
+<pre><code>cap = <a href="VideoCapture.html">cv.VideoCapture</a>(1, 'API','MediaFoundation')</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="VideoCapture.open.html">cv.VideoCapture/open</a></div>
    </body>
 </html>

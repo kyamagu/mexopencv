@@ -1,0 +1,45 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SimilarRects</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SimilarRects</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SimilarRects</div>
+      <div class="helpcontent"><p>Class for grouping object candidates, detected by Cascade Classifier, HOG etc.</p>
+
+<pre><code>b = <a href="SimilarRects.html">cv.SimilarRects</a>(r1, r2)
+b = <a href="SimilarRects.html">cv.SimilarRects</a>(r1, r2, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>r1</strong> First input rectangle, 4-element vector <code>[x,y,w,h]</code>.</li>
+<li><strong>r2</strong> Second input rectangle.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>b</strong> logical output indicate whether rectangles are similar.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>EPS</strong> Relative difference between sides of the rectangles to consider
+similar. default 0.2</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="groupRectangles.html">cv.groupRectangles</a>, <a href="groupRectangles_meanshift.html">cv.groupRectangles_meanshift</a></div>
+   </body>
+</html>

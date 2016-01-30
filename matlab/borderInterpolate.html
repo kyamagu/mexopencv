@@ -1,0 +1,62 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.borderInterpolate</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.borderInterpolate</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.borderInterpolate</div>
+      <div class="helpcontent"><p>Computes the source location of an extrapolated pixel.</p>
+
+<pre><code>loc = <a href="borderInterpolate.html">cv.borderInterpolate</a>(p, len)
+[...] = <a href="borderInterpolate.html">cv.borderInterpolate</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>p</strong> 0-based coordinate of the extrapolated pixel along one of the axes,
+likely <code>p &lt; 0</code> or <code>p &gt;= len</code>.</li>
+<li><strong>len</strong> Length of the array along the corresponding axis.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>loc</strong> Pixel coordinate along the specified axis.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>BorderType</strong> Border type, one of:<ul>
+<li><strong>Constant</strong> <code>iiiiii|abcdefgh|iiiiiii</code> with some specified <code>i</code></li>
+<li><strong>Replicate</strong> <code>aaaaaa|abcdefgh|hhhhhhh</code></li>
+<li><strong>Reflect</strong> <code>fedcba|abcdefgh|hgfedcb</code></li>
+<li><strong>Reflect101</strong> <code>gfedcb|abcdefgh|gfedcba</code></li>
+<li><strong>Wrap</strong> <code>cdefgh|abcdefgh|abcdefg</code></li>
+<li><strong>Default</strong> same as 'Reflect101' (default)
+When <code>BorderType=='Constant'</code>, the function always returns -1,
+regardless of <code>p</code> and <code>len</code>.</li>
+</ul>
+</li>
+</ul>
+
+<p>The function computes and returns the coordinate of a donor pixel
+corresponding to the specified extrapolated pixel when using the specified
+extrapolation border mode.</p>
+
+<p>Normally, the function is not called directly. It is used inside filtering
+functions and also in <a href="copyMakeBorder.html">cv.copyMakeBorder</a>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="copyMakeBorder.html">cv.copyMakeBorder</a></div>
+   </body>
+</html>

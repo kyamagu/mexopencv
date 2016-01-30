@@ -1,0 +1,62 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.DownhillSolver/minimize</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.DownhillSolver/minimize</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.DownhillSolver/minimize</div>
+      <div class="helpcontent"><p>Runs the algorithm and performs the minimization.</p>
+
+<pre><code>[x,fx] = solver.minimize(x0)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>x0</strong> The initial point, that will become a centroid of an
+initial simplex.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>x</strong> After the algorithm will terminate, it will be setted
+to the point where the algorithm stops, the point of
+possible minimum.</li>
+<li><strong>fx</strong> The value of a function at the point found.</li>
+</ul>
+
+<p>The sole input parameter determines the centroid of the starting
+simplex (roughly, it tells where to start), all the others
+(terminal criteria, initial step, function to be minimized) are
+supposed to be set via the setters before the call to this
+method or the default values (not always sensible) will be used.</p>
+</div><!--after help -->
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

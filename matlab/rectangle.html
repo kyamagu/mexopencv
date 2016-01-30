@@ -26,32 +26,33 @@ img = <a href="rectangle.html">cv.rectangle</a>(img, rect)
 
 <ul>
 <li><strong>img</strong> Image.</li>
-<li><strong>pt1</strong> Vertex of the rectangle. [x1,y1].</li>
-<li><strong>pt2</strong> Vertex of the recangle opposite to pt1. [x2,y2]</li>
-<li><strong>rect</strong> Alternative specification of the drawn rectangle. [x,y,w,h]</li>
+<li><strong>pt1</strong> Vertex of the rectangle <code>[x1,y1]</code>.</li>
+<li><strong>pt2</strong> Vertex of the recangle opposite to <code>pt1</code>, <code>[x2,y2]</code>.</li>
+<li><strong>rect</strong> Alternative specification of the drawn rectangle <code>[x,y,w,h]</code>.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>img</strong> Output image.</li>
+<li><strong>img</strong> Output image, same size and type as input <code>img</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>Color</strong> 3-element floating point vector specifying line color.</li>
+<li><strong>Color</strong> Rectangle color or brightness (grayscale image). default zeros</li>
 <li><strong>Thickness</strong> Thickness of lines that make up the rectangle. Negative
-values, mean that the function has to draw a filled rectangle.
-default 1.</li>
+values (like -1) or the string 'Filled', mean that the function has
+to draw a filled rectangle. default 1.</li>
 <li><strong>LineType</strong> Type of the line boundary. One of 8,4,'AA' (Anti-aliased
 line). default 8.</li>
 <li><strong>Shift</strong> Number of fractional bits in the point coordinates. default 0</li>
 </ul>
 
-<p>The function rectangle draws a rectangle outline or a filled rectangle
-whose two opposite corners are pt1 and pt2, or r.tl() and
-r.br()-Point(1,1).</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="circle.html">cv.circle</a> <a href="ellipse.html">cv.ellipse</a> <a href="line.html">cv.line</a> <a href="polylines.html">cv.polylines</a></div>
+<p>The function <a href="rectangle.html">cv.rectangle</a> draws a rectangle outline or a filled rectangle
+whose two opposite corners are <code>pt1</code> and <code>pt2</code>, or <code>[x,y]</code> and
+<code>[x+w-1,y+h-1]</code> (top-left and bottom-right corners of rectange used in the
+second variant of the function).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="circle.html">cv.circle</a>, <a href="ellipse.html">cv.ellipse</a>, <a href="line.html">cv.line</a>, <a href="polylines.html">cv.polylines</a></div>
    </body>
 </html>

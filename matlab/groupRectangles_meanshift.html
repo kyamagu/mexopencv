@@ -1,0 +1,51 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.groupRectangles_meanshift</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.groupRectangles_meanshift</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.groupRectangles_meanshift</div>
+      <div class="helpcontent"><p>Groups the object candidate rectangles using meanshift</p>
+
+<pre><code>[rects, weights] = <a href="groupRectangles_meanshift.html">cv.groupRectangles_meanshift</a>(rects, weights, scales)
+[...] = <a href="groupRectangles_meanshift.html">cv.groupRectangles_meanshift</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>rects</strong> Input cell array of rectangles, where each rectangle is
+represented as a 4-element vector <code>{[x,y,w,h], ...}</code>, or a numeric
+Nx4/Nx1x4/1xNx4 array.</li>
+<li><strong>weights</strong> Input vector of associated weights.</li>
+<li><strong>scales</strong> Input vector of corresponding rectangles scales.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>rects</strong> Output array of retained and grouped rectangles. Same format as
+input <code>rects</code> (either Nx4 numeric array or cell array).</li>
+<li><strong>weights</strong> Output updated weights.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>DetectThreshold</strong> detection threshold (weight) above which resulting
+modes are kept. default 0.0</li>
+<li><strong>WinDetSize</strong> window size <code>[w,h]</code>. default [64,128]</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="groupRectangles.html">cv.groupRectangles</a>, <a href="SimilarRects.html">cv.SimilarRects</a></div>
+   </body>
+</html>

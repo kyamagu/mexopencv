@@ -18,30 +18,53 @@
       <div class="helpcontent"><p>Gaussian Mixture-based Backbround/Foreground Segmentation Algorithm</p>
 
 <p>The class implements the Gaussian mixture model background subtraction
-described in:</p>
-
-<p>Z.Zivkovic
-Improved adaptive Gausian mixture model for background subtraction,
-International Conference Pattern Recognition, UK, August, 2004,
-<a href="http://www.zoranz.net/Publications/zivkovic2004ICPR.pdf">http://www.zoranz.net/Publications/zivkovic2004ICPR.pdf</a>.</p>
+described in [Zivkovic2004] and [Zivkovic2006].</p>
 
 <p>The code is very fast and performs also shadow detection. Number of
 Gausssian components is adapted per pixel.</p>
 
-<p>Z.Zivkovic, F. van der Heijden,
-Efficient Adaptive Density Estimapion per Image Pixel for the Task of
-Background Subtraction,
-Pattern Recognition Letters, vol. 27, no. 7, pages 773-780, 2006.</p>
-
 <p>The algorithm similar to the standard Stauffer&amp;Grimson algorithm with
-additional selection of the number of the Gaussian components based on:</p>
+additional selection of the number of the Gaussian components based on
+[Zivkovic04recursiveunsupervised].</p>
 
-<p>Z.Zivkovic, F.van der Heijden,
-Recursive unsupervised learning of finite mixture models,
-IEEE Trans. on Pattern Analysis and Machine Intelligence, vol.26, no.5, pages 651-656, 2004.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BackgroundSubtractorMOG2.BackgroundSubtractorMOG2.html">cv.BackgroundSubtractorMOG2/BackgroundSubtractorMOG2</a>
-  <a href="BackgroundSubtractorMOG2.apply.html">cv.BackgroundSubtractorMOG2/apply</a>
-  <a href="BackgroundSubtractorMOG2.getBackgroundImage.html">cv.BackgroundSubtractorMOG2/getBackgroundImage</a></div>
+<h2> References</h2>
+
+<p>[Zivkovic2004]:</p>
+
+<blockquote>
+<p>Zoran Zivkovic. &quot;Improved adaptive gaussian mixture model for
+background subtraction&quot;. In Pattern Recognition, 2004. ICPR 2004.
+Proceedings of the 17th International Conference on, volume 2,
+pages 28-31. IEEE, 2004.
+<a href="http://www.zoranz.net/Publications/zivkovic2004ICPR.pdf">http://www.zoranz.net/Publications/zivkovic2004ICPR.pdf</a>.</p>
+</blockquote>
+
+<p>[Zivkovic2006]:</p>
+
+<blockquote>
+<p>Zoran Zivkovic and Ferdinand van der Heijden. &quot;Efficient adaptive
+density estimation per image pixel for the task of background
+subtraction&quot;. Pattern recognition letters, 27(7):773-780, 2006.</p>
+</blockquote>
+
+<p>[Zivkovic04recursiveunsupervised]:</p>
+
+<blockquote>
+<p>Zoran Zivkovic and Ferdinand van der Heijden, &quot;Recursive unsupervised
+learning of finite mixture models&quot;, IEEE Trans. on Pattern Analysis
+and Machine Intelligence, vol.26, no.5, pages 651-656, 2004.</p>
+</blockquote>
+
+<p>[Prati03detectingmoving]:</p>
+
+<blockquote>
+<p>Andrea Prati, Ivana Mikic, Mohan M. Trivedi, Rita Cucchiara.
+&quot;Detecting Moving Shadows: Algorithms and Evaluation&quot;, IEEE PAMI, 2003.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BackgroundSubtractorMOG2.BackgroundSubtractorMOG2.html">cv.BackgroundSubtractorMOG2/BackgroundSubtractorMOG2</a>,
+   <a href="BackgroundSubtractorMOG2.apply.html">cv.BackgroundSubtractorMOG2/apply</a>,
+   <a href="BackgroundSubtractorMOG2.getBackgroundImage.html">cv.BackgroundSubtractorMOG2/getBackgroundImage</a>,
+   vision.ForegroundDetector</div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -64,7 +87,7 @@ IEEE Trans. on Pattern Analysis and Machine Intelligence, vol.26, no.5, pages 65
       <table class="summary-list">
          <tr class="summary-item">
             <td class="name"><a href="BackgroundSubtractorMOG2.BackgroundSubtractorMOG2.html">BackgroundSubtractorMOG2</a></td>
-            <td class="m-help">BACKGROUNDSUBTRACTORMOG  BackgroundSubtractorMOG2 constructor&nbsp;</td>
+            <td class="m-help">Creates MOG2 Background Subtractor&nbsp;</td>
          </tr>
       </table>
       <!--Properties-->
@@ -72,32 +95,56 @@ IEEE Trans. on Pattern Analysis and Machine Intelligence, vol.26, no.5, pages 65
       </div>
       <table class="summary-list">
          <tr class="summary-item">
-            <td class="name"><a href="BackgroundSubtractorMOG2.backgroundRatio.html">backgroundRatio</a></td>
-            <td class="m-help">Ratio of the background (not accessible >= 2.4.0)&nbsp;</td>
+            <td class="name"><a href="BackgroundSubtractorMOG2.BackgroundRatio.html">BackgroundRatio</a></td>
+            <td class="m-help">The "background ratio" parameter of the algorithm.&nbsp;</td>
          </tr>
          <tr class="summary-item">
-            <td class="name"><a href="BackgroundSubtractorMOG2.frameSize.html">frameSize</a></td>
-            <td class="m-help">Size of the frame (not accessible >= 2.4.0)&nbsp;</td>
+            <td class="name"><a href="BackgroundSubtractorMOG2.ComplexityReductionThreshold.html">ComplexityReductionThreshold</a></td>
+            <td class="m-help">The complexity reduction threshold.&nbsp;</td>
          </tr>
          <tr class="summary-item">
-            <td class="name"><a href="BackgroundSubtractorMOG2.history.html">history</a></td>
-            <td class="m-help">History&nbsp;</td>
+            <td class="name"><a href="BackgroundSubtractorMOG2.DetectShadows.html">DetectShadows</a></td>
+            <td class="m-help">The shadow detection flag.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG2.History.html">History</a></td>
+            <td class="m-help">The number of last frames that affect the background model.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG2.NMixtures.html">NMixtures</a></td>
+            <td class="m-help">The number of gaussian components in the background model.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG2.ShadowThreshold.html">ShadowThreshold</a></td>
+            <td class="m-help">The shadow threshold.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG2.ShadowValue.html">ShadowValue</a></td>
+            <td class="m-help">The shadow value.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG2.VarInit.html">VarInit</a></td>
+            <td class="m-help">The initial variance of each gaussian component.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG2.VarMax.html">VarMax</a></td>
+            <td class="m-help">&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG2.VarMin.html">VarMin</a></td>
+            <td class="m-help">&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG2.VarThreshold.html">VarThreshold</a></td>
+            <td class="m-help">The variance threshold for the pixel-model match.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG2.VarThresholdGen.html">VarThresholdGen</a></td>
+            <td class="m-help">The variance threshold for the pixel-model match used for new&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="name"><a href="BackgroundSubtractorMOG2.id.html">id</a></td>
             <td class="m-help">Object ID&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="name"><a href="BackgroundSubtractorMOG2.nframes.html">nframes</a></td>
-            <td class="m-help">Number of frames  (not accessible >= 2.4.0)&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="name"><a href="BackgroundSubtractorMOG2.nmixtures.html">nmixtures</a></td>
-            <td class="m-help">Number of mixture components (not accessible >= 2.4.0)&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="name"><a href="BackgroundSubtractorMOG2.varThreshold.html">varThreshold</a></td>
-            <td class="m-help">Threshold value&nbsp;</td>
          </tr>
       </table>
       <!--Methods-->

@@ -1,0 +1,99 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SVM/setCustomKernel</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SVM/setCustomKernel</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SVM/setCustomKernel</div>
+      <div class="helpcontent"><p>Initialize with custom kernel</p>
+
+<pre><code>model.setCustomKernel(kernelFunc)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>kernelFunc</strong> string, name of an M-function that implements a
+kernel function. See example below.</li>
+</ul>
+
+<h2> Note</h2>
+
+<p>Parts of <code>cv::ml::SVM</code> implementation are thread-parallelized
+(for example <code>SVM::predict</code> runs a <code>ParallelLoopBody</code>). By using
+a custom kernel, we would be calling a MATLAB function
+from C++ code using the MEX-API (<code>mexCallMATLAB</code>), which is not
+thread-safe. This can cause MATLAB to crash. It is therefore
+necessary to tempoararily disable threading in OpenCV when using
+a custom SVM kernel (see <a href="Utils.html">cv.Utils</a>.setNumThreads and
+<a href="Utils.html">cv.Utils</a>.getNumThreads).</p>
+
+<h2> Example</h2>
+
+<p>The following MATLAB function implements a simple linear kernel.
+The function must be saved in a separate M-file, and placed on
+the MATLAB path. It receives an Nxd matrix of samples (each row
+is a sample vector), and another sample 1xd (row vector), and
+should return a vector Nx1  of inner products between every
+sample in &quot;vecs&quot; against &quot;another&quot;. It will be called during
+training and prediction by the SVM class.</p>
+
+<pre><code>function results = my_custom_kernel(vecs, another)
+    [vcount,n] = size(vecs);
+    results = zeros(vcount, 1, 'single');
+    for i=1:vcount
+        results(i) = dot(vecs(i,:), another);
+    end
+
+    % or computed in a vectorized manner as
+    %results = sum(bsxfun(@times, vecs, another), 2);
+
+    % or simply written as matrix-vector product
+    %results = vecs * another.';
+end
+</code></pre>
+
+<p>We use the custom kernel in the following manner:</p>
+
+<pre><code>% load some data for classification
+load fisheriris
+samples = meas;
+responses = int32(grp2idx(species));
+
+<a href="Utils.html">cv.Utils</a>.setNumThreads(1)  % see above note
+
+model = <a href="SVM.html">cv.SVM</a>();
+model.setCustomKernel('my_custom_kernel');
+model.train(samples, responses)
+nnz(model.predict(samples) == responses)
+
+<a href="Utils.html">cv.Utils</a>.setNumThreads(<a href="Utils.html">cv.Utils</a>.getNumberOfCPUs())</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SVM.KernelType.html">cv.SVM/KernelType</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

@@ -15,29 +15,30 @@
          </tr>
       </table>
       <div class="title">cv.DescriptorMatcher</div>
-      <div class="helpcontent"><p>DescriptorMatcher class</p>
+      <div class="helpcontent"><p>Common interface for matching keypoint descriptors.</p>
 
-<p>Descriptor matcher class. Basic usage is the following:</p>
+<p>Class for matching keypoint descriptors.</p>
+
+<p>Matchers of keypoint descriptors in OpenCV have wrappers with a common
+interface that enables you to easily switch between different algorithms
+solving the same problem. This section is devoted to matching
+descriptors that are represented as vectors in a multidimensional space.
+All objects that implement vector descriptor matchers inherit the
+DescriptorMatcher interface.</p>
+
+<p>It has two groups of match methods: for matching descriptors of an image
+with another image or with an image set.</p>
+
+<h2> Example</h2>
 
 <pre><code>X = rand(100,10);
 Y = rand(100,10);
 matcher = <a href="DescriptorMatcher.html">cv.DescriptorMatcher</a>('BruteForce');
 matcher.add(X);
-matcher.train(); % Optional for BruteForce matcher
-matches = matcher.match(Y);
-</code></pre>
-
-<p>The following matcher types are supported:</p>
-
-<pre><code> 'BruteForce'             L2 distance
- 'BruteForce-L1'          L1 distance
- 'BruteForce-Hamming'     Hamming distance
- 'BruteForce-HammingLUT'  Hamming distance lookup table
- 'FlannBased'             Flann-based indexing
-</code></pre>
-
-<p>See the constructor help for a detail of how to specify types.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DescriptorMatcher.DescriptorMatcher.html">cv.DescriptorMatcher/DescriptorMatcher</a> <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a></div>
+matcher.train();  % Optional for BruteForce matcher
+matches = matcher.match(Y);</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a>, <a href="FeatureDetector.html">cv.FeatureDetector</a>, <a href="drawMatches.html">cv.drawMatches</a>,
+   matchFeatures</div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -60,7 +61,7 @@ matches = matcher.match(Y);
       <table class="summary-list">
          <tr class="summary-item">
             <td class="name"><a href="DescriptorMatcher.DescriptorMatcher.html">DescriptorMatcher</a></td>
-            <td class="m-help">DescriptorMatcher constructors&nbsp;</td>
+            <td class="m-help">Creates a descriptor matcher by name.&nbsp;</td>
          </tr>
       </table>
       <!--Properties-->
@@ -68,12 +69,12 @@ matches = matcher.match(Y);
       </div>
       <table class="summary-list">
          <tr class="summary-item">
-            <td class="name"><a href="DescriptorMatcher.id.html">id</a></td>
-            <td class="m-help">Object ID&nbsp;</td>
+            <td class="name"><a href="DescriptorMatcher.Type.html">Type</a></td>
+            <td class="m-help">Type of the matcher&nbsp;</td>
          </tr>
          <tr class="summary-item">
-            <td class="name"><a href="DescriptorMatcher.type.html">type</a></td>
-            <td class="m-help">of the detector&nbsp;</td>
+            <td class="name"><a href="DescriptorMatcher.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
          </tr>
       </table>
       <!--Methods-->
@@ -110,7 +111,7 @@ matches = matcher.match(Y);
                
             </td>
             <td class="name"><a href="DescriptorMatcher.delete.html">delete</a></td>
-            <td class="m-help">DescriptorMatcher destructor&nbsp;</td>
+            <td class="m-help">Destructor&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -151,6 +152,14 @@ matches = matcher.match(Y);
             </td>
             <td class="name"><a href="DescriptorMatcher.ge.html">ge</a></td>
             <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="DescriptorMatcher.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -205,6 +214,14 @@ matches = matcher.match(Y);
                &nbsp;
                
             </td>
+            <td class="name"><a href="DescriptorMatcher.load.html">load</a></td>
+            <td class="m-help">Loads algorithm from a file or a string&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="DescriptorMatcher.lt.html">lt</a></td>
             <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
          </tr>
@@ -245,8 +262,8 @@ matches = matcher.match(Y);
                &nbsp;
                
             </td>
-            <td class="name"><a href="DescriptorMatcher.read.html">read</a></td>
-            <td class="m-help">Reads a descriptor matcher object from a file&nbsp;</td>
+            <td class="name"><a href="DescriptorMatcher.save.html">save</a></td>
+            <td class="m-help">Saves the algorithm parameters to a file&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -261,8 +278,8 @@ matches = matcher.match(Y);
                &nbsp;
                
             </td>
-            <td class="name"><a href="DescriptorMatcher.write.html">write</a></td>
-            <td class="m-help">Writes a descriptor matcher object to a file&nbsp;</td>
+            <td class="name"><a href="DescriptorMatcher.typeid.html">typeid</a></td>
+            <td class="m-help">Name of the C++ type (RTTI)&nbsp;</td>
          </tr>
       </table>
    </body>

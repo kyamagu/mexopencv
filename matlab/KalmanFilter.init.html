@@ -17,7 +17,8 @@
       <div class="title">cv.KalmanFilter/init</div>
       <div class="helpcontent"><p>Re-initializes Kalman filter. The previous content is destroyed</p>
 
-<pre><code>kf.init(dynamParams, measureParams, 'OptionName', optionValue, ...)
+<pre><code>kf.init(dynamParams, measureParams)
+kf.init(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
@@ -30,9 +31,12 @@
 <h2> Options</h2>
 
 <ul>
-<li><strong>ControlParams</strong> Dimensionality of the control vector.</li>
+<li><strong>ControlParams</strong> Dimensionality of the control vector.
+default 0</li>
+<li><strong>Type</strong> Type of the created matrices that should be <code>single</code>
+or <code>double</code> (default).</li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KalmanFilter.html">cv.KalmanFilter</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="KalmanFilter.KalmanFilter.html">cv.KalmanFilter/KalmanFilter</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

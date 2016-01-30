@@ -22,11 +22,6 @@ matches = matcher.knnMatch(queryDescriptors, k)
 [...] = matcher.knnMatch(..., 'OptionName', optionValue, ...)
 </code></pre>
 
-<p>These extended variants of <code>DescriptorMatcher.match()</code> methods find
-several best matches for each query descriptor. The matches are
-returned in the distance increasing order. See <code>DescriptorMatcher.match()</code>
-for the details about query and train descriptors.</p>
-
 <h2> Input</h2>
 
 <ul>
@@ -34,16 +29,16 @@ for the details about query and train descriptors.</p>
 <li><strong>trainDescriptors</strong> Train set of descriptors. This set is not
 added to the train descriptors collection stored in the
 class object.</li>
-<li><strong>k</strong> Count of best matches found per each query descriptor or less
-if a query descriptor has less than k possible matches in
-total</li>
+<li><strong>k</strong> Count of best matches found per each query descriptor or
+less if a query descriptor has less than <code>k</code> possible
+matches in total.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>matches</strong> Matches. Each <code>matches{i}</code> is k or less matches for the
-same query descriptor. A cell array of length
+<li><strong>matches</strong> Matches. Each <code>matches{i}</code> is <code>k</code> or less matches
+for the same query descriptor. A cell array of length
 <code>size(queryDescriptors,1)</code>, each cell is a 1-by-(k or less)
 structure array that has the following fields:<ul>
 <li><strong>queryIdx</strong> query descriptor index (zero-based index)</li>
@@ -60,21 +55,31 @@ structure array that has the following fields:<ul>
 <li><strong>Mask</strong> default empty<ul>
 <li>In the first form, mask specifying permissible matches
 between an input query and train matrices of descriptors.
-Matrix of size <code>[size(queryDescriptors,1),size(trainDescriptors,1)]</code></li>
-<li>In the second form, set of masks. Each <code>masks{i}</code> specifies
-permissible matches between the input query descriptors and
-stored train descriptors from the i-th image <code>trainDescCollection{i}</code>.
-Cell array of length <code>length(trainDescriptors)</code>, each a matrix
-of size <code>[size(queryDescriptors,1),size(trainDescriptors{i},1)]</code></li>
+Matrix of size
+<code>[size(queryDescriptors,1),size(trainDescriptors,1)]</code>.</li>
+<li>In the second form, set of masks. Each <code>masks{i}</code>
+specifies permissible matches between the input query
+descriptors and stored train descriptors from the i-th
+image <code>trainDescCollection{i}</code>. Cell array of length
+<code>length(trainDescriptors)</code>, each a matrix of size
+<code>[size(queryDescriptors,1),size(trainDescriptors{i},1)]</code>.</li>
 </ul>
 </li>
-<li><strong>CompactResult</strong> Parameter used when the mask (or masks) is not
-empty. If <code>compactResult</code> is false, the <code>matches</code> vector has the
-same size as <code>queryDescriptors</code> rows. If <code>compactResult</code> is
-true, the matches vector does not contain matches for fully
-masked-out query descriptors. default false</li>
+<li><strong>CompactResult</strong> Parameter used when the mask (or masks) is
+not empty. If <code>CompactResult</code> is false, the <code>matches</code>
+vector has the same size as <code>queryDescriptors</code> rows. If
+<code>CompactResult</code> is true, the matches vector does not
+contain matches for fully masked-out query descriptors.
+default false</li>
 </ul>
-</div><!--after help -->
+
+<p>This extended variant of <a href="DescriptorMatcher.html">cv.DescriptorMatcher</a>.match() method
+finds several best matches for each query descriptor. The
+matches are returned in the distance increasing order. See
+<a href="DescriptorMatcher.html">cv.DescriptorMatcher</a>.match() for the details about query and
+train descriptors.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DescriptorMatcher.match.html">cv.DescriptorMatcher/match</a>,
+   <a href="DescriptorMatcher.radiusMatch.html">cv.DescriptorMatcher/radiusMatch</a>, <a href="batchDistance.html">cv.batchDistance</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

@@ -1,0 +1,68 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.initWideAngleProjMap</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.initWideAngleProjMap</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.initWideAngleProjMap</div>
+      <div class="helpcontent"><p>initializes maps for <a href="remap.html">cv.remap</a> for wide-angle</p>
+
+<pre><code>[map1, map2] = <a href="initWideAngleProjMap.html">cv.initWideAngleProjMap</a>(cameraMatrix, distCoeffs, imageSize, destImageWidth)
+[map1, map2, scale] = <a href="initWideAngleProjMap.html">cv.initWideAngleProjMap</a>(cameraMatrix, distCoeffs, imageSize, destImageWidth)
+[...] = <a href="initWideAngleProjMap.html">cv.initWideAngleProjMap</a>(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>cameraMatrix</strong> Input camera matrix <code>A = [f_x 0 c_x; 0 f_y c_y; 0 0 1]</code></li>
+<li><strong>distCoeffs</strong> Input vector of distortion coefficients
+<code>[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4,taux,tauy]</code> of 4, 5, 8, 12 or 14
+elements. If the vector is empty, the zero distortion coefficients are
+assumed.</li>
+<li><strong>imageSize</strong> image size <code>[w,h]</code>.</li>
+<li><strong>destImageWidth</strong></li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>map1</strong> The first output map. See <code>M1Type</code>.</li>
+<li><strong>map2</strong> The second output map. See <code>M1Type</code>.</li>
+<li><strong>scale</strong></li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>M1Type</strong> Type of the first output map, default <code>single2</code>. See
+<a href="convertMaps.html">cv.convertMaps</a>. Accepted types are:<ul>
+<li><strong>int16</strong> first output map is a MxNx2 <code>int16</code> array, second output
+map is MxNx1 <code>uint16</code> (fixed-point representation).</li>
+<li><strong>single1</strong> first output map is a MxNx1 <code>single</code> matrix, second
+output map is MxNx1 <code>single</code> (separate floating-point
+representation).</li>
+<li><strong>single2</strong> first output map is a MxNx2 <code>single</code> matrix, second
+output map is empty (combined floating-point representation).</li>
+</ul>
+</li>
+<li><strong>ProjType</strong> projection type, default 'EqRect'. One of:<ul>
+<li><strong>Ortho</strong></li>
+<li><strong>EqRect</strong></li>
+</ul>
+</li>
+<li><strong>Alpha</strong> default 0</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="initUndistortRectifyMap.html">cv.initUndistortRectifyMap</a>, <a href="remap.html">cv.remap</a>, <a href="convertMaps.html">cv.convertMaps</a></div>
+   </body>
+</html>

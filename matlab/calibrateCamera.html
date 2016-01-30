@@ -17,125 +17,169 @@
       <div class="title">cv.calibrateCamera</div>
       <div class="helpcontent"><p>Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern</p>
 
-<pre><code>cameraMatrix = <a href="calibrateCamera.html">cv.calibrateCamera</a>(objectPoints, imagePts, imageSize)
-[cameraMatrix, distCoeffs, d, rvecs, tvecs] = <a href="calibrateCamera.html">cv.calibrateCamera</a>(...)
+<pre><code>[cameraMatrix, distCoeffs, reprojErr] = <a href="calibrateCamera.html">cv.calibrateCamera</a>(objectPoints, imagePts, imageSize)
+[cameraMatrix, distCoeffs, reprojErr, rvecs, tvecs] = <a href="calibrateCamera.html">cv.calibrateCamera</a>(...)
 [...] = <a href="calibrateCamera.html">cv.calibrateCamera</a>(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>objectPoints</strong> A cell array of cells of calibration pattern points in the
-calibration pattern coordinate space. The outer vector contains as many
-elements as the number of the pattern views. If the same calibration
-pattern is shown in each view and it is fully visible, all the vectors
-will be the same. Although, it is possible to use partially occluded
-patterns, or even different patterns in different views. Then, the
-vectors will be different. The points are 3D, but since they are in a
-pattern coordinate system, then, if the rig is planar, it may make
-sense to put the model to a XY coordinate plane so that Z-coordinate of
-each input object point is 0.</li>
+<li><strong>objectPoints</strong> A cell array of cells of calibration pattern points in
+the calibration pattern coordinate space <code>{{[x,y,z], ..}, ...}</code>. The
+outer vector contains as many elements as the number of the pattern
+views. If the same calibration pattern is shown in each view and it is
+fully visible, all the vectors will be the same. Although, it is
+possible to use partially occluded patterns, or even different
+patterns in different views. Then, the vectors will be different. The
+points are 3D, but since they are in a pattern coordinate system,
+then, if the rig is planar, it may make sense to put the model to a XY
+coordinate plane so that Z-coordinate of each input object point is 0.</li>
 <li><strong>imagePoints</strong> A cell array of cells of the projections of calibration
-pattern points. size(imagePoints) and size(objectPoints) and
-size(imagePoints{i}) must be equal to size(objectPoints{i}) for each i.</li>
-<li><strong>imageSize</strong> Size of the image used only to initialize the intrinsic camera
-matrix. [w,h].</li>
+pattern points <code>{{[x,y], ..}, ...}</code>. <code>numel(imagePoints)</code> and
+<code>numel(objectPoints)</code> must be equal, and <code>numel(imagePoints{i})</code> must
+be equal to <code>numel(objectPoints{i})</code> for each <code>i</code>.</li>
+<li><strong>imageSize</strong> Size of the image used only to initialize the intrinsic
+camera matrix <code>[w,h]</code>.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>cameraMatrix</strong> Output 3x3 floating-point camera matrix A = [fx, 0, cx; 0, 
-        fy, cy; 0, 0, 1]</li>
-<li><strong>distCoeffs</strong> Output vector of distortion coefficients [k1,k2,p1,p2,k3,k4,k5,
-        k6] of 4, 5, or 8 elements.</li>
-<li><strong>d</strong> Output final re-projection error.</li>
-<li><strong>rvecs</strong> Output vector of rotation vectors estimated for each pattern view.
-That is, each k-th rotation vector together with the corresponding k-th
-translation vector (see the next output parameter description) brings
-the calibration pattern from the model coordinate space (in which
-object points are specified) to the world coordinate space, that is, a
-real position of the calibration pattern in the k-th pattern view
-(k=0 ... M-1).</li>
-<li><strong>tvecs</strong> Output vector of translation vectors estimated for each pattern
-view.</li>
+<li><strong>cameraMatrix</strong> Output 3x3 floating-point camera matrix
+<code>A = [fx 0 cx; 0 fy cy; 0 0 1]</code></li>
+<li><strong>distCoeffs</strong> Output vector of distortion coefficients
+<code>[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4,taux,tauy]</code> of 4, 5, 8, 12 or 14
+elements.</li>
+<li><strong>reprojErr</strong> Output final re-projection error.</li>
+<li><strong>rvecs</strong> Output cell array of rotation vectors (see cv.Rodrigues)
+estimated for each pattern view (cell array of 3-element vectors).
+That is, each k-th rotation vector together with the corresponding
+k-th translation vector (see the next output parameter description)
+brings the calibration pattern from the model coordinate space (in
+which object points are specified) to the world coordinate space,
+that is, a real position of the calibration pattern in the k-th
+pattern view (<code>k=1:M</code>)</li>
+<li><strong>tvecs</strong> Output cell array of translation vectors estimated for each
+pattern view (cell array of 3-element vectors).</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>CameraMatrix</strong> Input 3x3 floating-point camera matrix. If
-'UseIntrinsicGuess' and/or 'FixAspectRatio' are specified, some or all
-of fx, fy, cx, cy must be initialized before calling the function.</li>
-<li><strong>DistCoeffs</strong> Input 4, 5, or 8 elements vector used as an initial values of
-distCoeffs.</li>
-<li><strong>UseIntrinsicGuess</strong> Logical flag. When true, cameraMatrix contains valid
-initial values of fx, fy, cx, cy that are optimized further. Otherwise,
-(cx, cy) is initially set to the image center ( imageSize is used), and
-focal distances are computed in a least-squares fashion. Note, that if
-intrinsic parameters are known, there is no need to use this function
-just to estimate extrinsic parameters. Use solvePnP() instead. default
-false.</li>
+<li><strong>CameraMatrix</strong> Input 3x3 camera matrix used as initial value for
+<code>cameraMatrix</code>. If 'UseIntrinsicGuess' and/or 'FixAspectRatio' are
+specified, some or all of <code>fx</code>, <code>fy</code>, <code>cx</code>, <code>cy</code> must be initialized
+before calling the function. Not set by default (uses <code>eye(3)</code>).</li>
+<li><strong>DistCoeffs</strong> Input 4, 5, 8, 12 or 14 elements vector used as an initial
+values of <code>distCoeffs</code>. Not set by default (uses <code>zeros(1,14)</code>).</li>
+<li><strong>UseIntrinsicGuess</strong> Logical flag. When true, <code>CameraMatrix</code> contains
+valid initial values of <code>fx</code>, <code>fy</code>, <code>cx</code>, <code>cy</code> that are optimized
+further. Otherwise, <code>(cx,cy)</code> is initially set to the image center
+(<code>imageSize</code> is used), and focal distances are computed in a
+least-squares fashion. Note, that if intrinsic parameters are known,
+there is no need to use this function just to estimate extrinsic
+parameters. Use <a href="solvePnP.html">cv.solvePnP</a> instead. default false.</li>
 <li><strong>FixPrincipalPoint</strong> Logical flag. The principal point is not changed
 during the global optimization. It stays at the center or at a
 different location specified when 'UseIntrinsicGuess' is set too.
 default false.</li>
-<li><strong>FixAspectRatio</strong> Logical flag. The functions considers only fy as a free
-parameter. The ratio fx/fy stays the same as in the input cameraMatrix.
-When 'UseIntrinsicGuess' is not set, the actual input values of fx and
-fy are ignored, only their ratio is computed and used further. default
-false.</li>
-<li><strong>ZeroTangentDist</strong> Logical flag. Tangential distortion coefficients p1, p2
-are set to zeros and stay zero. default false.
-'FixK1', 'FixK2', ..., 'FixK6': Logical flag. The corresponding radial
+<li><strong>FixAspectRatio</strong> Logical flag. The functions considers only <code>fy</code> as a
+free parameter. The ratio <code>fx/fy</code> stays the same as in the input
+<code>CameraMatrix</code>. When 'UseIntrinsicGuess' is not set, the actual input
+values of <code>fx</code> and <code>fy</code> are ignored, only their ratio is computed and
+used further. default false.</li>
+<li><strong>ZeroTangentDist</strong> Logical flag. Tangential distortion coefficients
+<code>p1</code> and <code>p2</code> are set to zeros and stay zero. default false.</li>
+<li><strong>FixK1</strong>, ..., <strong>FixK6</strong> Logical flag. The corresponding radial
 distortion coefficient is not changed during the optimization. If
 'UseIntrinsicGuess' is set, the coefficient from the supplied
-distCoeffs matrix is used. Otherwise, it is set to 0. default false.</li>
-<li><strong>RationalModel</strong> Logical flag. Coefficients k4, k5, and k6 are enabled. To
-provide the backward compatibility, this extra flag should be
-explicitly specified to make the calibration function use the rational
-model and return 8 coefficients. If the flag is not set, the function
-computes and returns only 5 distortion coefficients. default false.</li>
+<code>DistCoeffs</code> matrix is used. Otherwise, it is set to 0. default false.</li>
+<li><strong>RationalModel</strong> Logical flag. Coefficients <code>k4</code>, <code>k5</code>, and <code>k6</code> are
+enabled. To provide the backward compatibility, this extra flag should
+be explicitly specified to make the calibration function use the
+rational model and return 8 coefficients. If the flag is not set, the
+function computes and returns only 5 distortion coefficients.
+default false.</li>
+<li><strong>ThinPrismModel</strong> Logical flag. Coefficients <code>s1</code>, <code>s2</code>, <code>s3</code> and <code>s4</code>
+are enabled. To provide the backward compatibility, this extra flag
+should be explicitly specified to make the calibration function use
+the thin prism model and return 12 coefficients. If the flag is not
+set, the function computes and returns only 5 distortion coefficients.
+default false.</li>
+<li><strong>FixS1S2S3S4</strong> Logical flag. The thin prism distortion coefficients are
+not changed during the optimization. If 'UseIntrinsicGuess' is set,
+the coefficient from the supplied <code>DistCoeffs</code> matrix is used.
+Otherwise, it is set to 0. default false.</li>
+<li><strong>TiltedModel</strong> Coefficients <code>tauX</code> and <code>tauY</code> are enabled. To provide the
+backward compatibility, this extra flag should be explicitly specified
+to make the calibration function use the tilted sensor model and
+return 14 coefficients. If the flag is not set, the function computes
+and returns only 5 distortion coefficients. default false.</li>
+<li><strong>FixTauXTauY</strong> The coefficients of the tilted sensor model are not
+changed during the optimization. If <code>UseIntrinsicGuess</code> is set, the
+coefficient from the supplied <code>DistCoeffs</code> matrix is used. Otherwise,
+it is set to 0. default false.</li>
+<li><strong>UseLU</strong> Use LU instead of SVD decomposition for solving. Much faster but
+potentially less precise. default false.</li>
+<li><strong>Criteria</strong> Termination criteria for the iterative optimization algorithm.
+default <code>struct('type','Count+EPS', 'maxCount',30, 'epsilon',eps)</code></li>
 </ul>
 
 <p>The function estimates the intrinsic camera parameters and extrinsic
 parameters for each of the views. The algorithm is based on [Zhang2000] and
-[BoughuetMCT]. The coordinates of 3D object points and their corresponding 2D
-projections in each view must be specified. That may be achieved by using an
-object with a known geometry and easily detectable feature points. Such an
-object is called a calibration rig or calibration pattern, and OpenCV has
+[BoughuetMCT]. The coordinates of 3D object points and their corresponding
+2D projections in each view must be specified. That may be achieved by using
+an object with a known geometry and easily detectable feature points. Such
+an object is called a calibration rig or calibration pattern, and OpenCV has
 built-in support for a chessboard as a calibration rig (see
 cv.findChessboardCorners). Currently, initialization of intrinsic parameters
 (when 'UseIntrinsicGuess' is not set) is only implemented for planar
 calibration patterns (where Z-coordinates of the object points must be all
-zeros). 3D calibration rigs can also be used as long as initial cameraMatrix
-is provided.</p>
+zeros). 3D calibration rigs can also be used as long as initial
+<code>CameraMatrix</code> is provided.</p>
 
 <p>The algorithm performs the following steps:</p>
 
 <ol>
 <li>Compute the initial intrinsic parameters (the option only available for
-planar calibration patterns) or read them from the input parameters. The
-distortion coefficients are all set to zeros initially unless some of
-'FixKN' are specified.</li>
-<li>Estimate the initial camera pose as if the intrinsic parameters have been
-already known. This is done using <a href="solvePnP.html">cv.solvePnP</a>.</li>
-<li>Run the global Levenberg-Marquardt optimization algorithm to minimize the
-reprojection error, that is, the total sum of squared distances between
-the observed feature points imagePoints and the projected (using the
-current estimates for camera parameters and the poses) object points
-objectPoints. See <a href="projectPoints.html">cv.projectPoints</a> for details.</li>
+planar calibration patterns) or read them from the input parameters.
+The distortion coefficients are all set to zeros initially unless some
+of 'FixK?' are specified.</li>
+<li>Estimate the initial camera pose as if the intrinsic parameters have
+been already known. This is done using <a href="solvePnP.html">cv.solvePnP</a>.</li>
+<li>Run the global Levenberg-Marquardt optimization algorithm to minimize
+the reprojection error, that is, the total sum of squared distances
+between the observed feature points <code>imagePoints</code> and the projected
+(using the current estimates for camera parameters and the poses)
+object points <code>objectPoints</code>. See <a href="projectPoints.html">cv.projectPoints</a> for details.</li>
 </ol>
 
 <h2> Note</h2>
 
 <p>If you use a non-square (=non-NxN) grid and <a href="findChessboardCorners.html">cv.findChessboardCorners</a> for
-calibration, and calibrateCamera returns bad values (zero distortion
-coefficients, an image center very far from (w/2-0.5,h/2-0.5), and/or large
-differences between fx and fy (ratios of 10:1 or more)), then you have
-probably used patternSize=[rows,cols] instead of using patternSize=[cols,rows]
-in <a href="findChessboardCorners.html">cv.findChessboardCorners</a>.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findChessboardCorners.html">cv.findChessboardCorners</a> <a href="solvePnP.html">cv.solvePnP</a> <a href="initCameraMatrix2D.html">cv.initCameraMatrix2D</a>
-  <a href="stereoCalibrate.html">cv.stereoCalibrate</a> <a href="undistort.html">cv.undistort</a></div>
+calibration, and <a href="calibrateCamera.html">cv.calibrateCamera</a> returns bad values (zero distortion
+coefficients, an image center very far from <code>(w/2-0.5,h/2-0.5)</code>, and/or
+large differences between <code>fx</code> and <code>fy</code> (ratios of 10:1 or more), then you
+have probably used <code>patternSize=[rows,cols]</code> instead of using
+<code>patternSize=[cols,rows]</code> in <a href="findChessboardCorners.html">cv.findChessboardCorners</a>.</p>
+
+<h2> References</h2>
+
+<p>[Zhang2000]:</p>
+
+<blockquote>
+<p>Zhengyou Zhang. &quot;A flexible new technique for camera calibration&quot;.
+Pattern Analysis and Machine Intelligence, IEEE Transactions on,
+22(11):1330-1334, 2000.</p>
+</blockquote>
+
+<p>[BoughuetMCT]:</p>
+
+<blockquote>
+<p>Jean-Yves Bouguet. &quot;Camera calibration toolbox for matlab&quot; [eb/ol], 2004.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findChessboardCorners.html">cv.findChessboardCorners</a>, <a href="solvePnP.html">cv.solvePnP</a>, <a href="initCameraMatrix2D.html">cv.initCameraMatrix2D</a>,
+   <a href="stereoCalibrate.html">cv.stereoCalibrate</a>, <a href="undistort.html">cv.undistort</a>, estimateCameraParameters, extrinsics</div>
    </body>
 </html>

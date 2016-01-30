@@ -1,0 +1,68 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.getDefaultNewCameraMatrix</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.getDefaultNewCameraMatrix</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.getDefaultNewCameraMatrix</div>
+      <div class="helpcontent"><p>Returns the default new camera matrix</p>
+
+<pre><code>newCameraMatrix = <a href="getDefaultNewCameraMatrix.html">cv.getDefaultNewCameraMatrix</a>(cameraMatrix)
+[...] = <a href="getDefaultNewCameraMatrix.html">cv.getDefaultNewCameraMatrix</a>(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>cameraMatrix</strong> Input camera matrix, a 3x3 double matrix.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>newCameraMatrix</strong> Output camera matrix, same size and type as input.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>ImgSize</strong> Camera view image size in pixels <code>[w,h]</code>. Default [0,0]</li>
+<li><strong>CenterPrincipalPoint</strong> Location of the principal point in the new camera
+matrix. The parameter indicates whether this location should be at the
+image center or not. default false</li>
+</ul>
+
+<p>The function returns the camera matrix that is either an exact copy of the
+input <code>cameraMatrix</code> (when <code>CenterPrinicipalPoint=false</code>), or the modified
+one (when <code>CenterPrincipalPoint=true</code>).</p>
+
+<p>In the latter case, the new camera matrix will be:</p>
+
+<pre><code>[ fx,   0,  (ImgSize(1)-1)*0.5 ;
+   0,  fy,  (ImgSize(2)-1)*0.5 ;
+   0,   0,                   1 ]
+</code></pre>
+
+<p>where <code>fx</code> and <code>fy</code> are (0,0) and (1,1) elements of <code>cameraMatrix</code>,
+respectively.</p>
+
+<p>By default, the undistortion functions in OpenCV (see <a href="undistort.html">cv.undistort</a>,
+cv.initUndistortRectifyMap) do not move the principal point. However, when
+you work with stereo, it is important to move the principal points in both
+views to the same y-coordinate (which is required by most of stereo
+correspondence algorithms), and may be to the same x-coordinate too. So, you
+can form the new camera matrix for each view where the principal points are
+located at the center.</p>
+</div><!--after help -->
+   </body>
+</html>

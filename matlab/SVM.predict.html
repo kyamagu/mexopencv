@@ -15,46 +15,45 @@
          </tr>
       </table>
       <div class="title">cv.SVM/predict</div>
-      <div class="helpcontent"><p>Predicts the response for input samples.</p>
+      <div class="helpcontent"><p>Predicts response(s) for the provided sample(s)</p>
 
-<pre><code>results = classifier.predict(samples)
+<pre><code>[results,f] = model.predict(samples)
+[...] = model.predict(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>samples</strong> Input sample(s) for prediction.</li>
+<li><strong>samples</strong> The input samples, floating-point matrix.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>results</strong> Output prediction responses for corresponding samples.</li>
+<li><strong>results</strong> The output matrix of results.</li>
+<li><strong>f</strong> If you pass one sample then prediction result is
+returned here, otherwise unused and returns 0. If you want
+to get responses for several samples then <code>results</code> stores
+all response predictions for corresponding samples.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>ReturnDFVal</strong> Specifies a type of the return value. If
-true and the problem is 2-class classification then
-the method returns the decision function value that
-is signed distance to the margin, else the function
-returns a class label (classification) or estimated
-function value (regression).</li>
+<li><strong>Flags</strong> The optional predict flags, model-dependent. For
+convenience, you can set the individual flag options
+below, instead of directly setting bits here. default 0</li>
+<li><strong>RawOutput</strong> makes the method return the raw results (the
+sum), not the class label. This flag specifies the type of
+the return value. If true and the problem is 2-class
+classification then the method returns the decision
+function value that is signed distance to the margin, else
+the function returns a class label (classification) or
+estimated function value (regression). default false</li>
 </ul>
 
-<p>The method estimates the most probable classes for input vectors.
-Input vectors (one or more) are stored as rows of the matrix
-samples.</p>
-
-<p>The method is used to predict the response for a new sample. In case of a
-classification, the method returns the class label. In case of a regression,
-the method returns the output function value. The input sample must have as
-many components as the <code>trainData</code> passed to <code>train()</code> contains. If the
-<code>Varidx</code> parameter is passed to <code>train()</code>, it is remembered and then is used
-to extract only the necessary components from the input sample in the method
-<code>predict</code>.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SVM.html">cv.SVM</a> <a href="SVM.predict_all.html">cv.SVM/predict_all</a></div>
+<p>The function is parallelized with the TBB library.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SVM.train.html">cv.SVM/train</a>, <a href="SVM.calcError.html">cv.SVM/calcError</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

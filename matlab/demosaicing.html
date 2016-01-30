@@ -1,0 +1,76 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.demosaicing</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.demosaicing</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.demosaicing</div>
+      <div class="helpcontent"><p>Demosaicing algorithm</p>
+
+<pre><code>dst = <a href="demosaicing.html">cv.demosaicing</a>(src, code)
+dst = <a href="demosaicing.html">cv.demosaicing</a>(..., 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> source image, 1-channel, <code>uint8</code> or <code>uint16</code> depth.</li>
+<li><strong>code</strong> color conversion code. The following strings are supported:<ul>
+<li>For Bayer-&gt;Gray demosaicing:<ul>
+<li><strong>BayerBG2GRAY</strong></li>
+<li><strong>BayerGB2GRAY</strong></li>
+<li><strong>BayerRG2GRAY</strong></li>
+<li><strong>BayerGR2GRAY</strong></li>
+</ul>
+</li>
+<li>For Bayer-&gt;RGB demosaicing:<ul>
+<li><strong>BayerBG2BGR</strong>, <strong>BayerBG2RGB</strong></li>
+<li><strong>BayerGB2BGR</strong>, <strong>BayerGB2RGB</strong></li>
+<li><strong>BayerRG2BGR</strong>, <strong>BayerRG2RGB</strong></li>
+<li><strong>BayerGR2BGR</strong>, <strong>BayerGR2RGB</strong></li>
+</ul>
+</li>
+<li>For Bayer-&gt;RGB demosaicing using Variable Number of Gradients:<ul>
+<li><strong>BayerBG2BGR_VNG</strong>, <strong>BayerBG2RGB_VNG</strong></li>
+<li><strong>BayerGB2BGR_VNG</strong>, <strong>BayerGB2RGB_VNG</strong></li>
+<li><strong>BayerRG2BGR_VNG</strong>, <strong>BayerRG2RGB_VNG</strong></li>
+<li><strong>BayerGR2BGR_VNG</strong>, <strong>BayerGR2RGB_VNG</strong></li>
+</ul>
+</li>
+<li>For Bayer-&gt;RGB Edge-Aware demosaicing:<ul>
+<li><strong>BayerBG2BGR_EA</strong>, <strong>BayerBG2RGB_EA</strong></li>
+<li><strong>BayerGB2BGR_EA</strong>, <strong>BayerGB2RGB_EA</strong></li>
+<li><strong>BayerRG2BGR_EA</strong>, <strong>BayerRG2RGB_EA</strong></li>
+<li><strong>BayerGR2BGR_EA</strong>, <strong>BayerGR2RGB_EA</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> output image of same row-/col- size and depth as <code>src</code>, and of
+specified number of channels (see <code>Channels</code> option).</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Channels</strong> Number of channels. If &lt;= 0, automatically determined based
+on <code>code</code>. default 0</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="cvtColor.html">cv.cvtColor</a>, demosaic</div>
+   </body>
+</html>

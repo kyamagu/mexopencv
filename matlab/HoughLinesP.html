@@ -24,24 +24,24 @@ lines = <a href="HoughLinesP.html">cv.HoughLinesP</a>(..., 'OptionName', optionV
 <h2> Input</h2>
 
 <ul>
-<li><strong>image</strong> 8-bit, single-channel, grayscale input image.</li>
+<li><strong>image</strong> 8-bit, single-channel binary source image.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>lines</strong> Output vector of lines. Each line is represented by a 4-element
-vector (x1,y1,x2,y2), where (x1,y1) and (x2,y2) are the ending points
-of each detected line segment</li>
+<li><strong>lines</strong> Output vector of lines. A cell-array of 4-element vectors
+<code>{[x1,y1,x2,y2], ...}</code>, where <code>(x1,y1)</code> and <code>(x2,y2)</code> are the ending
+points of each detected line segment.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
 <li><strong>Rho</strong> Distance resolution of the accumulator in pixels. default 1.</li>
-<li><strong>Theta</strong> Angle resolution of the accumulator in radians. default PI/180.</li>
+<li><strong>Theta</strong> Angle resolution of the accumulator in radians. default pi/180.</li>
 <li><strong>Threshold</strong> Accumulator threshold parameter. Only those lines are
-returned that get enough votes (&gt;threshold). default 80.</li>
+returned that get enough votes (<code>&gt;Threshold</code>). default 80.</li>
 <li><strong>MinLineLength</strong> Minimum line length. Line segments shorter than that are
 rejected. default 0.</li>
 <li><strong>MaxLineGap</strong> Maximum allowed gap between points on the same line to link
@@ -50,6 +50,16 @@ them. default 0.</li>
 
 <p>The function implements the probabilistic Hough transform algorithm for line
 detection, described in [Matas00].</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HoughLines.html">cv.HoughLines</a></div>
+
+<h2> References</h2>
+
+<p>[Matas00]:</p>
+
+<blockquote>
+<p>Jiri Matas, Charles Galambos, and Josef Kittler.
+Robust detection of lines using the progressive probabilistic hough transform.
+Computer Vision and Image Understanding, 78(1):119-137, 2000.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HoughLines.html">cv.HoughLines</a>, <a href="LineSegmentDetector.html">cv.LineSegmentDetector</a>, <a href="HoughLines.html">HoughLines</a></div>
    </body>
 </html>

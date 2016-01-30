@@ -24,40 +24,47 @@ im = <a href="drawContours.html">cv.drawContours</a>(im, contours, 'OptionName',
 <h2> Input</h2>
 
 <ul>
-<li><strong>im</strong> Image to be drawn contours.</li>
-<li><strong>contours</strong> All the input contours. Each contour is stored as a point vector.</li>
+<li><strong>im</strong> Image on which to draw contours.</li>
+<li><strong>contours</strong> All the input contours. Each contour is stored as a 2D point
+vector (integer points). A cell array of cell arrays of the form:
+<code>{{[x,y],[x,y],...}, ...}</code>, or a cell array of Nx2 matrices.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>im</strong> Destination image.</li>
+<li><strong>im</strong> Destination image, same size and type as input <code>im</code>.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>ContourIdx</strong> Parameter indicating a contour to draw. If it is negative,
-all the contours are drawn.</li>
-<li><strong>Color</strong> Color of the contours.</li>
+<li><strong>ContourIdx</strong> Parameter indicating a contour to draw. A zero-based index
+in the range <code>[0,length(contours)-1]</code>. If it is negative, all the
+contours are drawn. default -1</li>
+<li><strong>Color</strong> Color of the contours. default is white color.</li>
 <li><strong>Thickness</strong> Thickness of lines the contours are drawn with. If it is
-negative (for example, thickness=CV_FILLED ), the contour interiors
-are drawn.</li>
-<li><strong>LineType</strong> Line connectivity.</li>
+negative (for example, -1 or the string 'Filled'), the contour
+interiors are drawn. default 1</li>
+<li><strong>LineType</strong> Line connectivity. One of 4,8,'AA' (Anti-aliased line).
+default 8</li>
 <li><strong>Hierarchy</strong> Optional information about hierarchy. It is only needed if
-you want to draw only some of the contours (see MaxLevel).</li>
+you want to draw only some of the contours (see <code>MaxLevel</code>).
+A cell array of 4-element vectors for each contour of the form
+<code>{[next,prev,child,parent], ...}</code>, or a Nx4/Nx1x4/1xNx4 numeric
+matrix of integers. default empty</li>
 <li><strong>MaxLevel</strong> Maximal level for drawn contours. If it is 0, only the
 specified contour is drawn. If it is 1, the function draws the
 contour(s) and all the nested contours. If it is 2, the function draws
 the contours, all the nested contours, all the nested-to-nested
 contours, and so on. This parameter is only taken into account when
-there is hierarchy available.</li>
+there is <code>Hierarchy</code> available. default <code>intmax('int32')</code></li>
 <li><strong>Offset</strong> Optional contour shift parameter. Shift all the drawn contours
-by the specified offset (dx,dy).</li>
+by the specified <code>offset = (dx,dy)</code>. default [0,0]</li>
 </ul>
 
-<p>The function draws contour outlines in the image if thickness &gt;= 0 or or fills
-the area bounded by the contours if thickness &lt; 0.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findContours.html">cv.findContours</a></div>
+<p>The function draws contour outlines in the image if <code>Thickness &gt;= 0</code> or
+fills the area bounded by the contours if <code>Thickness &lt; 0</code>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="findContours.html">cv.findContours</a>, visboundaries, bwlabel</div>
    </body>
 </html>

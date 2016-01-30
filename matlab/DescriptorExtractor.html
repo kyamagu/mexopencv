@@ -15,34 +15,31 @@
          </tr>
       </table>
       <div class="title">cv.DescriptorExtractor</div>
-      <div class="helpcontent"><p>DescriptorExtractor class</p>
+      <div class="helpcontent"><p>Common interface of 2D image Descriptor Extractors.</p>
 
-<p>Descriptor extractor class. Here is how to use:</p>
+<p>Class for computing descriptors for image keypoints.</p>
 
-<pre><code>detector = <a href="FeatureDetector.html">cv.FeatureDetector</a>('SURF');
-keypoints = detector.detect(im);
-extractor = <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a>('SURF');
-descriptors = extractor.compute(im, keypoints);
-</code></pre>
+<p>Extractors of keypoint descriptors in OpenCV have wrappers with a common
+interface that enables you to easily switch between different algorithms
+solving the same problem. This section is devoted to computing
+descriptors represented as vectors in a multidimensional space. All
+objects that implement the vector descriptor extractors inherit the
+DescriptorExtractor interface.</p>
 
-<p>The following extractor types are supported:</p>
+<p>In this interface, a keypoint descriptor can be represented as a dense,
+fixed-dimension vector of a basic type. Most descriptors follow this
+pattern as it simplifies computing distances between descriptors.
+Therefore, a collection of descriptors is represented as a matrix,
+where each row is a keypoint descriptor.</p>
 
-<pre><code> 'SIFT'     SiftDescriptorExtractor
- 'SURF'     SurfDescriptorExtractor
- 'ORB'      OrbDescriptorExtractor
- 'BRIEF'    BriefDescriptorExtractor
-</code></pre>
+<h2> Example</h2>
 
-<p>Also a combined format with the following adaptor is
-supported</p>
-
-<pre><code> 'Opponent' OpponentColorDescriptorExtractor
-</code></pre>
-
-<p>for example: 'OpponentSIFT'.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DescriptorExtractor.DescriptorExtractor.html">cv.DescriptorExtractor/DescriptorExtractor</a>
-  <a href="DescriptorExtractor.compute.html">cv.DescriptorExtractor/compute</a> <a href="FeatureDetector.html">cv.FeatureDetector</a>
-  <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a></div>
+<pre><code>detector = <a href="FeatureDetector.html">cv.FeatureDetector</a>('ORB');
+keypoints = detector.detect(img);
+extractor = <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a>('ORB');
+descriptors = extractor.compute(img, keypoints);</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.html">cv.FeatureDetector</a>, <a href="DescriptorMatcher.html">cv.DescriptorMatcher</a>,
+   <a href="BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</a>, extractFeatures</div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -65,7 +62,7 @@ supported</p>
       <table class="summary-list">
          <tr class="summary-item">
             <td class="name"><a href="DescriptorExtractor.DescriptorExtractor.html">DescriptorExtractor</a></td>
-            <td class="m-help">DescriptorExtractor constructors&nbsp;</td>
+            <td class="m-help">Creates a descriptor extractor by name.&nbsp;</td>
          </tr>
       </table>
       <!--Properties-->
@@ -73,16 +70,12 @@ supported</p>
       </div>
       <table class="summary-list">
          <tr class="summary-item">
+            <td class="name"><a href="DescriptorExtractor.Type.html">Type</a></td>
+            <td class="m-help">Type of the extractor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
             <td class="name"><a href="DescriptorExtractor.id.html">id</a></td>
             <td class="m-help">Object ID&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="name"><a href="DescriptorExtractor.size.html">size</a></td>
-            <td class="m-help">of the DescriptorExtractor&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="name"><a href="DescriptorExtractor.type.html">type</a></td>
-            <td class="m-help">of the extractor&nbsp;</td>
          </tr>
       </table>
       <!--Methods-->
@@ -102,8 +95,24 @@ supported</p>
                &nbsp;
                
             </td>
+            <td class="name"><a href="DescriptorExtractor.clear.html">clear</a></td>
+            <td class="m-help">Clears the algorithm state&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="DescriptorExtractor.compute.html">compute</a></td>
-            <td class="m-help">Computes the descriptors for a set of keypoints detected in an image&nbsp;</td>
+            <td class="m-help">Computes the descriptors for a set of keypoints detected in an image or image set.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="DescriptorExtractor.defaultNorm.html">defaultNorm</a></td>
+            <td class="m-help">Returns the default norm type&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -111,7 +120,31 @@ supported</p>
                
             </td>
             <td class="name"><a href="DescriptorExtractor.delete.html">delete</a></td>
-            <td class="m-help">DescriptorExtractor destructor&nbsp;</td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="DescriptorExtractor.descriptorSize.html">descriptorSize</a></td>
+            <td class="m-help">Returns the descriptor size in bytes&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="DescriptorExtractor.descriptorType.html">descriptorType</a></td>
+            <td class="m-help">Returns the descriptor type&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="DescriptorExtractor.empty.html">empty</a></td>
+            <td class="m-help">Checks if detector object is empty.&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -150,6 +183,14 @@ supported</p>
                &nbsp;
                
             </td>
+            <td class="name"><a href="DescriptorExtractor.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
             <td class="name"><a href="DescriptorExtractor.gt.html">gt</a></td>
             <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
          </tr>
@@ -168,6 +209,14 @@ supported</p>
             </td>
             <td class="name"><a href="DescriptorExtractor.le.html">le</a></td>
             <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="DescriptorExtractor.load.html">load</a></td>
+            <td class="m-help">Loads algorithm from a file or a string&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
@@ -198,16 +247,16 @@ supported</p>
                &nbsp;
                
             </td>
-            <td class="name"><a href="DescriptorExtractor.read.html">read</a></td>
-            <td class="m-help">Reads a descriptor extractor object from a file&nbsp;</td>
+            <td class="name"><a href="DescriptorExtractor.save.html">save</a></td>
+            <td class="m-help">Saves the algorithm parameters to a file&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">
                &nbsp;
                
             </td>
-            <td class="name"><a href="DescriptorExtractor.write.html">write</a></td>
-            <td class="m-help">Writes a descriptor extractor object to a file&nbsp;</td>
+            <td class="name"><a href="DescriptorExtractor.typeid.html">typeid</a></td>
+            <td class="m-help">Name of the C++ type (RTTI)&nbsp;</td>
          </tr>
       </table>
    </body>

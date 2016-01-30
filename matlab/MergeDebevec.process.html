@@ -1,0 +1,61 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.MergeDebevec/process</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.MergeDebevec/process</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.MergeDebevec/process</div>
+      <div class="helpcontent"><p>Merges images</p>
+
+<pre><code>dst = obj.process(src, times)
+dst = obj.process(src, times, response)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> vector of input images, all of the same size and
+<code>uint8</code> type.</li>
+<li><strong>times</strong> vector of exposure time values for each image.</li>
+<li><strong>response</strong> 256x1xCN <code>single</code> matrix with inverse camera
+response function (CRF) for each pixel value, it should
+have the same number of channels as images <code>src{i}</code>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> result image, same size as <code>src{i}</code> and <code>single</code> type.</li>
+</ul>
+
+<p>The function has a short version, that doesn't take the extra
+<code>response</code> argument.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="MergeDebevec.MergeDebevec.html">cv.MergeDebevec/MergeDebevec</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

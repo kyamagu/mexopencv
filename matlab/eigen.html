@@ -1,0 +1,48 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.eigen</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.eigen</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.eigen</div>
+      <div class="helpcontent"><p>Calculates eigenvalues and eigenvectors of a symmetric matrix</p>
+
+<pre><code>eigenvalues = <a href="eigen.html">cv.eigen</a>(src)
+[eigenvalues,eigenvectors,b] = <a href="eigen.html">cv.eigen</a>(src)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> input matrix that must have single or double type, square size
+and be symmetrical (<code>src' == src</code>).</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>eigenvalues</strong> output vector of eigenvalues of the same type as <code>src</code>;
+the eigenvalues are stored in the descending order.</li>
+<li><strong>eigenvectors</strong> output matrix of eigenvectors; it has the same size and
+type as <code>src</code>; the eigenvectors are stored as subsequent matrix rows,
+in the same order as the corresponding <code>eigenvalues</code>.</li>
+<li><strong>b</strong> bool return value</li>
+</ul>
+
+<p>The functions <a href="eigen.html">cv.eigen</a> calculate just eigenvalues, or eigenvalues and
+eigenvectors of the symmetric matrix <code>src</code>:</p>
+
+<pre><code>src*eigenvectors(i,:)' = eigenvalues(i)*eigenvectors(i,:)'</code></pre>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="PCA.html">cv.PCA</a>, eig</div>
+   </body>
+</html>

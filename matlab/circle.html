@@ -25,7 +25,7 @@
 
 <ul>
 <li><strong>img</strong> Image where the circle is drawn.</li>
-<li><strong>center</strong> Center of the circle.</li>
+<li><strong>center</strong> Center of the circle <code>[x,y]</code>.</li>
 <li><strong>radius</strong> Radius of the circle.</li>
 </ul>
 
@@ -38,17 +38,19 @@
 <h2> Options</h2>
 
 <ul>
-<li><strong>Color</strong> 3-element floating point vector specifying circle color.</li>
+<li><strong>Color</strong> 3-element floating point vector specifying circle color.
+default is a black color</li>
 <li><strong>Thickness</strong> Thickness of the circle outline, if positive. Negative
-thickness means that a filled circle is to be drawn. default 1.</li>
+thickness means that a filled circle is to be drawn (-1 or the string
+'Filled'). default 1.</li>
 <li><strong>LineType</strong> Type of the circle boundary. One of 8,4,'AA' (Anti-aliased
 line). default 8.</li>
 <li><strong>Shift</strong> Number of fractional bits in the coordinates of the center
 and in the radius value. default 0.</li>
 </ul>
 
-<p>The function circle draws a simple or filled circle with a given center
+<p>The function <a href="circle.html">cv.circle</a> draws a simple or filled circle with a given center
 and radius.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="line.html">cv.line</a> <a href="ellipse.html">cv.ellipse</a> <a href="rectangle.html">cv.rectangle</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="line.html">cv.line</a>, <a href="ellipse.html">cv.ellipse</a>, <a href="rectangle.html">cv.rectangle</a></div>
    </body>
 </html>

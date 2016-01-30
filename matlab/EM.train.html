@@ -15,35 +15,163 @@
          </tr>
       </table>
       <div class="title">cv.EM/train</div>
-      <div class="helpcontent"><p>Trains the GMM</p>
+      <div class="helpcontent"><p>Estimates the Gaussian mixture parameters from a samples set</p>
 
-<pre><code>[ log_likelihoods labels probs ] = em.train(samples)
+<pre><code>status = model.train(samples)
+status = model.train(csvFilename)
+[...] = model.train(..., 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>samples</strong> Samples from which the Gaussian mixture model will be estimated. 
-It should be a one-channel matrix, each row of which is a sample. </li>
+<li><strong>samples</strong> Samples from which the Gaussian mixture model will
+be estimated. It should be a floating-point matrix, each
+row of which is a sample (see the <code>Layout</code> option).
+Internally the computations are performed in <code>double</code>
+precision type.</li>
+<li><strong>csvFilename</strong> The input CSV file name from which to load
+dataset. In this variant, you should set the second
+argument to an empty array.</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><p><strong>log</strong>likelihoods__ The optional output matrix that contains a likelihood logarithm 
-value for each sample. It has nsamples x 1 size.</p>
-</li>
-<li><p><strong>labels</strong>          The optional output &quot;class label&quot; for each sample
-(indices of the most probable mixture component for each sample):
-labels<em>i = arg max k(p</em>i; k); i = 1::N 
-It has nsamples x 1 size.</p>
-</li>
-<li><p><strong>probs</strong>           The optional output matrix that contains posterior probabilities 
-of each Gaussian mixture component given the each sample. 
-It has nsamples x nclusters size.</p>
-</li>
+<li><strong>status</strong> The method returns true if the Gaussian mixture
+model was trained successfully, otherwise it returns
+false.</li>
 </ul>
-</div><!--after help -->
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Data</strong> Training data options, specified as a cell array of
+key/value pairs of the form <code>{'key',val, ...}</code>. See below.</li>
+<li><strong>Flags</strong> The optional training flags, model-dependent.
+Not used. default 0</li>
+</ul>
+
+<h3> Options for <code>Data</code> (first variant with samples and reponses)</h3>
+
+<ul>
+<li><strong>Layout</strong> Sample types. Default 'Row'. One of:<ul>
+<li><strong>Row</strong> each training sample is a row of samples.</li>
+<li><strong>Col</strong> each training sample occupies a column of
+samples.</li>
+</ul>
+</li>
+<li><strong>VarIdx</strong> vector specifying which variables to use for
+training. It can be an integer vector (<code>int32</code>) containing
+0-based variable indices or logical vector (<code>uint8</code> or
+<code>logical</code>) containing a mask of active variables. Not set
+by default, which uses all variables in the input data.</li>
+<li><strong>SampleIdx</strong> vector specifying which samples to use for
+training. It can be an integer vector (<code>int32</code>) containing
+0-based sample indices or logical vector (<code>uint8</code> or
+<code>logical</code>) containing a mask of training samples of
+interest. Not set by default, which uses all samples in
+the input data.</li>
+<li><strong>SampleWeights</strong> optional floating-point vector with weights
+for each sample. Some samples may be more important than
+others for training. You may want to raise the weight of
+certain classes to find the right balance between hit-rate
+and false-alarm rate, and so on. Not set by default, which
+effectively assigns an equal weight of 1 for all samples.</li>
+<li><strong>VarType</strong> optional vector of type <code>uint8</code> and size
+<code>&lt;num_of_vars_in_samples&gt; + &lt;num_of_vars_in_responses&gt;</code>,
+containing types of each input and output variable. By
+default considers all variables as numerical (both input
+and output variables). In case there is only one output
+variable of integer type, it is considered categorical.
+You can also specify a cell-array of strings (or as one
+string of single characters, e.g 'NNNC'). Possible values:<ul>
+<li><strong>Numerical</strong>, <strong>N</strong> same as 'Ordered'</li>
+<li><strong>Ordered</strong>, <strong>O</strong> ordered variables</li>
+<li><strong>Categorical</strong>, <strong>C</strong> categorical variables</li>
+</ul>
+</li>
+<li><strong>MissingMask</strong> Indicator mask for missing observation (not
+currently implemented). Not set by default</li>
+<li><strong>TrainTestSplitCount</strong> divides the dataset into train/test
+sets, by specifying number of samples to use for the test
+set. By default all samples are used for the training set.</li>
+<li><strong>TrainTestSplitRatio</strong> divides the dataset into train/test
+sets, by specifying ratio of samples to use for the test
+set. By default all samples are used for the training set.</li>
+<li><strong>TrainTestSplitShuffle</strong> when splitting dataset into
+train/test sets, specify whether to shuffle the samples.
+Otherwise samples are assigned sequentially (first train
+then test). default true</li>
+</ul>
+
+<h3> Options for <code>Data</code> (second variant for loading CSV file)</h3>
+
+<ul>
+<li><strong>HeaderLineCount</strong> The number of lines in the beginning to
+skip; besides the header, the function also skips empty
+lines and lines staring with '#'. default 1</li>
+<li><strong>ResponseStartIdx</strong> Index of the first output variable. If
+-1, the function considers the last variable as the
+response. If the dataset only contains input variables and
+no responses, use <code>ResponseStartIdx = -2</code> and
+<code>ResponseEndIdx = 0</code>, then the output variables vector
+will just contain zeros. default -1</li>
+<li><strong>ResponseEndIdx</strong> Index of the last output variable + 1. If
+-1, then there is single response variable at
+<code>ResponseStartIdx</code>. default -1</li>
+<li><strong>VarTypeSpec</strong> The optional text string that specifies the
+variables' types. It has the format
+<code>ord[n1-n2,n3,n4-n5,...]cat[n6,n7-n8,...]</code>. That is,
+variables from <code>n1</code> to <code>n2</code> (inclusive range), <code>n3</code>, <code>n4</code>
+to <code>n5</code> ... are considered ordered and <code>n6</code>, <code>n7</code> to
+<code>n8</code> ... are considered as categorical. The range
+<code>[n1..n2] + [n3] + [n4..n5] + ... + [n6] + [n7..n8]</code>
+should cover all the variables. If <code>VarTypeSpec</code> is not
+specified, then algorithm uses the following rules:<ul>
+<li>all input variables are considered ordered by default.
+If some column contains has non- numerical values, e.g.
+'apple', 'pear', 'apple', 'apple', 'mango', the
+corresponding variable is considered categorical.</li>
+<li>if there are several output variables, they are all
+considered as ordered. Errors are reported when
+non-numerical values are used.</li>
+<li>if there is a single output variable, then if its values
+are non-numerical or are all integers, then it's
+considered categorical. Otherwise, it's considered
+ordered.</li>
+</ul>
+</li>
+<li><strong>Delimiter</strong> The character used to separate values in each
+line. default ','</li>
+<li><strong>Missing</strong> The character used to specify missing
+measurements. It should not be a digit. Although it's a
+non-numerical value, it surely does not affect the
+decision of whether the variable ordered or categorical.
+default '?'</li>
+<li><strong>TrainTestSplitCount</strong> same as above.</li>
+<li><strong>TrainTestSplitRatio</strong> same as above.</li>
+<li><strong>TrainTestSplitShuffle</strong> same as above.</li>
+</ul>
+
+<p>The method is an alias for <a href="EM.html">cv.EM</a>.trainEM.</p>
+
+<p>There are three versions of the training method that differ in
+the initialization of Gaussian mixture model parameters and
+start step:</p>
+
+<ul>
+<li><strong>trainEM</strong> Starts with Expectation step. Initial values of
+the model parameters will be estimated by the k-means
+algorithm.</li>
+<li><strong>trainE</strong> Starts with Expectation step. You need to provide
+initial means <code>a_k</code> of mixture components. Optionally you
+can pass initial weights <code>PI_k</code> and covariance matrices
+<code>S_k</code> of mixture components.</li>
+<li><strong>trainM</strong> Starts with Maximization step. You need to provide
+initial probabilities <code>p_{i,k}</code> to use this option.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="EM.predict.html">cv.EM/predict</a>, <a href="EM.trainE.html">cv.EM/trainE</a>, <a href="EM.trainM.html">cv.EM/trainM</a>, <a href="EM.trainEM.html">cv.EM/trainEM</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

@@ -17,21 +17,29 @@
       <div class="title">cv.HOGDescriptor/load</div>
       <div class="helpcontent"><p>Loads a HOG descriptor config from a file</p>
 
-<pre><code>S = hog.load(filename)
+<pre><code>status = hog.load(filename)
+status = obj.load(filename, 'OptionName',optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>filename</strong> HOG descriptor config filename</li>
+<li><strong>filename</strong> HOG descriptor config filename (XML or YAML).</li>
 </ul>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>S</strong> a logical value indicating success of load when true</li>
+<li><strong>status</strong> a logical value indicating success of load.</li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.html">cv.HOGDescriptor</a></div>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>ObjName</strong> The optional name of the node to read (if empty,
+the first top-level node will be used). default empty</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HOGDescriptor.save.html">cv.HOGDescriptor/save</a>, <a href="HOGDescriptor.readALTModel.html">cv.HOGDescriptor/readALTModel</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">
