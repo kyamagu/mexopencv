@@ -20,10 +20,10 @@
 %       next layer is twice smaller than the previous one. default 0.5.
 % * __Levels__ Number of pyramid layers including the initial image.
 %       `Levels=1` means that no extra layers are created and only the
-%       original images are used. default 1.
+%       original images are used. default 5.
 % * __WinSize__ Averaging window size. Larger values increase the algorithm
 %       robustness to image noise and give more chances for fast motion
-%       detection, but yield more blurred motion field. default 3.
+%       detection, but yield more blurred motion field. default 13.
 % * __Iterations__ Number of iterations the algorithm does at each pyramid
 %       level. default 10.
 % * __PolyN__ Size of the pixel neighborhood used to find polynomial expansion

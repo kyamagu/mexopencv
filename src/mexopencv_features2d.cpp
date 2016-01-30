@@ -2,7 +2,7 @@
  * @file mexopencv_features2d.cpp
  * @author Amro
  * @date 2015
-*/
+ */
 
 #include "mexopencv_features2d.hpp"
 using std::vector;
@@ -607,6 +607,51 @@ Ptr<DAISY> createDAISY(
     return DAISY::create(radius, q_radius, q_theta, q_hist,
         norm, H, interpolation, use_orientation);
 }
+
+Ptr<MSDDetector> createMSDDetector(
+    vector<MxArray>::const_iterator first,
+    vector<MxArray>::const_iterator last)
+{
+    if (((last-first) % 2) != 0)
+        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    int patch_radius = 3;
+    int search_area_radius = 5;
+    int nms_radius = 5;
+    int nms_scale_radius = 0;
+    float th_saliency = 250.0f;
+    int kNN = 4;
+    float scale_factor = 1.25f;
+    int n_scales = -1;
+    bool compute_orientation = false;
+    for (; first != last; first += 2) {
+        string key((*first).toString());
+        const MxArray& val = *(first + 1);
+        if (key == "PatchRadius")
+            patch_radius = val.toInt();
+        else if (key == "SearchAreaRadius")
+            search_area_radius = val.toInt();
+        else if (key == "NMSRadius")
+            nms_radius = val.toInt();
+        else if (key == "NMSScaleRadius")
+            nms_scale_radius = val.toInt();
+        else if (key == "ThSaliency")
+            th_saliency = val.toFloat();
+        else if (key == "KNN")
+            kNN = val.toInt();
+        else if (key == "ScaleFactor")
+            scale_factor = val.toFloat();
+        else if (key == "NScales")
+            n_scales = val.toInt();
+        else if (key == "ComputeOrientation")
+            compute_orientation = val.toBool();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
+    return MSDDetector::create(patch_radius, search_area_radius, nms_radius,
+        nms_scale_radius, th_saliency, kNN, scale_factor, n_scales,
+        compute_orientation);
+}
 #endif
 
 Ptr<FeatureDetector> createFeatureDetector(
@@ -640,6 +685,8 @@ Ptr<FeatureDetector> createFeatureDetector(
         p = createSURF(first, last);
     else if (type == "StarDetector")
         p = createStarDetector(first, last);
+    else if (type == "MSDDetector")
+        p = createMSDDetector(first, last);
 #endif
     else
         mexErrMsgIdAndTxt("mexopencv:error",

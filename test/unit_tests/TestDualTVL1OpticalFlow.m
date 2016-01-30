@@ -21,6 +21,8 @@ classdef TestDualTVL1OpticalFlow
             im2 = circshift(im1, [0 1]);
             alg = cv.DualTVL1OpticalFlow();
             flow = alg.calc(im1, im2);
+            validateattributes(flow, {'single'}, ...
+                {'3d', 'size',[size(im1,1) size(im1,2) 2]});
         end
 
         function test_2
