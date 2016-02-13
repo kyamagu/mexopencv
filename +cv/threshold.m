@@ -18,8 +18,8 @@
 %
 % ## Options
 % * __MaxValue__ Maximum value to use with the 'Binary' and 'BinaryInv'
-%       thresholding types. default 1.0
-% * __Method__ Thresholding type, default 'Trunc'. One of:
+%       thresholding types. default 255
+% * __Type__ Thresholding type, default 'Binary'. One of:
 %       * __Binary__    `dst(x,y) = (src(x,y) > thresh) ? maxVal : 0`
 %       * __BinaryInv__ `dst(x,y) = (src(x,y) > thresh) ? 0 : maxVal`
 %       * __Trunc__     `dst(x,y) = (src(x,y) > thresh) ? thresh : src(x,y)`
@@ -31,7 +31,7 @@
 % grayscale image (cv.compare could be also used for this purpose) or for
 % removing a noise, that is, filtering out pixels with too small or too large
 % values. There are several types of thresholding supported by the function.
-% They are determined by `Method` parameter.
+% They are determined by `Type` parameter.
 %
 % When `thresh` is set 'Otsu' or 'Triangle', the function determines the
 % optimal threshold value using the Otsu's or Triangle algorithm. The function
