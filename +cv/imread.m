@@ -23,7 +23,7 @@
 %       image. default false
 % * __GDAL__ If set, use the gdal driver for loading the image. default false
 % * __ReduceScale__ Loads the image reduced by a scale factor (JPEG library
-%	    natively supports direct image scaling, other formats are resized
+%       natively supports direct image scaling, other formats are resized
 %       after loading). One of:
 %       * `1`: no scaling (default).
 %       * `2`: image scaled by 1/2 factor.

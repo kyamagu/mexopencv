@@ -1,7 +1,7 @@
 mexopencv
 =========
-[![Travis](https://img.shields.io/travis/kyamagu/mexopencv.svg)](https://travis-ci.org/kyamagu/mexopencv)
-[![AppVeyor](https://img.shields.io/appveyor/ci/kyamagu/mexopencv.svg)](https://ci.appveyor.com/project/kyamagu/mexopencv)
+[![Travis](https://img.shields.io/travis/kyamagu/mexopencv/master.svg)](https://travis-ci.org/kyamagu/mexopencv)
+[![AppVeyor](https://img.shields.io/appveyor/ci/kyamagu/mexopencv/master.svg)](https://ci.appveyor.com/project/kyamagu/mexopencv)
 [![License](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg)](LICENSE)
 
 Collection and a development kit of MATLAB MEX functions for OpenCV library.

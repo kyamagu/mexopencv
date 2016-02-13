@@ -146,7 +146,7 @@ MxArray toStruct(cv::Ptr<cv::videostab::WobbleSuppressorBase> p);
 // ==================== XXX ====================
 
 /** Create an instance of ILog of the specified type
-  * @param type logger type, one of:
+ * @param type logger type, one of:
  *    - "LogToMATLAB"
  *    - "LogToStdout" (Note: output wont show in MATLAB)
  *    - "NullLog"
@@ -164,7 +164,7 @@ cv::Ptr<cv::videostab::VideoFileSource> createVideoFileSource(
     std::vector<MxArray>::const_iterator last);
 
 /** Create an instance of IFrameSource using options in arguments
-  * @param type frame source type, one of:
+ * @param type frame source type, one of:
  *    - "VideoFileSource"
  *    - "NullFrameSource"
  * @param first iterator at the beginning of the vector range
@@ -186,7 +186,7 @@ cv::Ptr<cv::videostab::WeightingDeblurer> createWeightingDeblurer(
     std::vector<MxArray>::const_iterator last);
 
 /** Create an instance of DeblurerBase using options in arguments
-  * @param type deblurer type, one of:
+ * @param type deblurer type, one of:
  *    - "WeightingDeblurer"
  *    - "NullDeblurer"
  * @param first iterator at the beginning of the vector range
@@ -217,7 +217,7 @@ cv::Ptr<cv::videostab::MotionEstimatorRansacL2> createMotionEstimatorRansacL2(
     std::vector<MxArray>::const_iterator last);
 
 /** Create an instance of MotionEstimatorBase using options in arguments
-  * @param type motion estimator type, one of:
+ * @param type motion estimator type, one of:
  *    - "MotionEstimatorL1" (requires CLP library)
  *    - "MotionEstimatorRansacL2"
  * @param first iterator at the beginning of the vector range
@@ -240,7 +240,7 @@ cv::Ptr<cv::videostab::SparsePyrLkOptFlowEstimator> createSparsePyrLkOptFlowEsti
     std::vector<MxArray>::const_iterator last);
 
 /** Create an instance of ISparseOptFlowEstimator using options in arguments
-  * @param type sparse optical flow estimator type, one of:
+ * @param type sparse optical flow estimator type, one of:
  *    - "SparsePyrLkOptFlowEstimator"
  *    - "SparsePyrLkOptFlowEstimatorGpu" (requires CUDA)
  * @param first iterator at the beginning of the vector range
@@ -253,7 +253,7 @@ cv::Ptr<cv::videostab::ISparseOptFlowEstimator> createISparseOptFlowEstimator(
     std::vector<MxArray>::const_iterator last);
 
 /** Create an instance of IDenseOptFlowEstimator using options in arguments
-  * @param type dense optical flow estimator type, one of:
+ * @param type dense optical flow estimator type, one of:
  *    - "DensePyrLkOptFlowEstimatorGpu" (requires CUDA)
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
@@ -275,7 +275,7 @@ cv::Ptr<cv::videostab::TranslationBasedLocalOutlierRejector> createTranslationBa
     std::vector<MxArray>::const_iterator last);
 
 /** Create an instance of IOutlierRejector using options in arguments
-  * @param type outlier rejector type, one of:
+ * @param type outlier rejector type, one of:
  *    - "TranslationBasedLocalOutlierRejector"
  *    - "NullOutlierRejector"
  * @param first iterator at the beginning of the vector range
@@ -316,7 +316,7 @@ cv::Ptr<cv::videostab::ToFileMotionWriter> createToFileMotionWriter(
     std::vector<MxArray>::const_iterator last);
 
 /** Create an instance of ImageMotionEstimatorBase using options in arguments
-  * @param type image motion estimator type, one of:
+ * @param type image motion estimator type, one of:
  *    - "KeypointBasedMotionEstimator"
  *    - "FromFileMotionReader"
  *    - "ToFileMotionWriter"
@@ -375,7 +375,7 @@ cv::Ptr<cv::videostab::InpaintingPipeline> createInpaintingPipeline(
     std::vector<MxArray>::const_iterator last);
 
 /** Create an instance of InpainterBase using options in arguments
-  * @param type inpainter type, one of:
+ * @param type inpainter type, one of:
  *    - "NullInpainter"
  *    - "InpaintingPipeline"
  *    - "ConsistentMosaicInpainter"
@@ -401,7 +401,7 @@ cv::Ptr<cv::videostab::GaussianMotionFilter> createGaussianMotionFilter(
     std::vector<MxArray>::const_iterator last);
 
 /** Create an instance of MotionFilterBase using options in arguments
-  * @param type motion filter type, one of:
+ * @param type motion filter type, one of:
  *    - "GaussianMotionFilter"
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
@@ -432,7 +432,7 @@ cv::Ptr<cv::videostab::MotionStabilizationPipeline> createMotionStabilizationPip
     std::vector<MxArray>::const_iterator last);
 
 /** Create an instance of IMotionStabilizer using options in arguments
-  * @param type motion stabilizer type, one of:
+ * @param type motion stabilizer type, one of:
  *    - "MotionStabilizationPipeline"
  *    - "GaussianMotionFilter"
  *    - "LpMotionStabilizer" (requires CLP library)
@@ -456,7 +456,7 @@ cv::Ptr<cv::videostab::MoreAccurateMotionWobbleSuppressor> createMoreAccurateMot
     std::vector<MxArray>::const_iterator last);
 
 /** Create an instance of WobbleSuppressorBase using options in arguments
-  * @param type wobble suppressor type, one of:
+ * @param type wobble suppressor type, one of:
  *    - "NullWobbleSuppressor"
  *    - "MoreAccurateMotionWobbleSuppressor"
  * @param first iterator at the beginning of the vector range

@@ -33,7 +33,7 @@
 %       compressed output even if it is not set appropriately. One of:
 %       * __Default__ (default) Use this value for normal data.
 %       * __Filtered__ Use this value for data produced by a filter (or
-%	          predictor). Filtered data consists mostly of small values with a
+%             predictor). Filtered data consists mostly of small values with a
 %             somewhat random distribution. In this case, the compression
 %             algorithm is tuned to compress them better. The effect of
 %             `Filtered` is to force more Huffman coding and less string
