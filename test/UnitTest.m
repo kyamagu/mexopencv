@@ -14,7 +14,7 @@ classdef UnitTest
         TESTDIR1 = fullfile(mexopencv.root(),'test','unit_tests');
         TESTDIR2 = fullfile(mexopencv.root(),'opencv_contrib','test','unit_tests');
 
-        % Tests to skip due to bugs in Octave
+        %TODO: Tests to skip due to bugs in Octave
         SKIP = {
             % local functions in M-classes
             'TestConjGradSolver'
@@ -33,6 +33,10 @@ classdef UnitTest
             'TestStereoRectify'
             'TestStereoRectifyUncalibrated'
             'TestSuperResolution'
+            'TestDPMDetector'
+            'TestStructuredEdgeDetection'
+            'TestMotionSaliencyBinWangApr2014'
+            'TestObjectnessBING'
             % codecs
             'TestVideoWriter'
         };

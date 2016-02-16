@@ -129,14 +129,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             //vector<Mat> images(rhs[2].toVector<Mat>());
             vector<Mat> images, descriptors;
             {
-	            vector<MxArray> arr(rhs[2].toVector<MxArray>());
-	            images.reserve(arr.size());
-	            for (vector<MxArray>::const_iterator it = arr.begin(); it != arr.end(); ++it) {
-	                Mat img(it->toMat(CV_8U));
-	                if (img.channels() == 1)
-	                    cvtColor(img, img, cv::COLOR_GRAY2BGR);
-	                images.push_back(img);
-	            }
+                vector<MxArray> arr(rhs[2].toVector<MxArray>());
+                images.reserve(arr.size());
+                for (vector<MxArray>::const_iterator it = arr.begin(); it != arr.end(); ++it) {
+                    Mat img(it->toMat(CV_8U));
+                    if (img.channels() == 1)
+                        cvtColor(img, img, cv::COLOR_GRAY2BGR);
+                    images.push_back(img);
+                }
             }
             vector<vector<KeyPoint> > keypoints(rhs[3].toVector(
                 const_mem_fun_ref_t<vector<KeyPoint>, MxArray>(

@@ -62,7 +62,7 @@ struct OptionsParser
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-    };
+    }
 };
 }  // anonymous namespace
 

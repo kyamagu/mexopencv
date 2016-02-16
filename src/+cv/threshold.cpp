@@ -32,29 +32,30 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
-    double maxVal = 1.0;
-    int thresholdType = cv::THRESH_TRUNC;
+    double maxval = 255;
+    int type = cv::THRESH_BINARY;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="MaxValue")
-            maxVal = rhs[i+1].toDouble();
-        else if (key=="Method")
-            thresholdType = ThreshType[rhs[i+1].toString()];
+        if (key == "MaxValue")
+            maxval = rhs[i+1].toDouble();
+        else if (key == "Type")
+            type = ThreshType[rhs[i+1].toString()];
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
 
     // Second argument
     double thresh = 0;
     if (rhs[1].isChar())
-        thresholdType |= AutoThresholdTypesMap[rhs[1].toString()];
+        type |= AutoThresholdTypesMap[rhs[1].toString()];
     else
         thresh = rhs[1].toDouble();
 
     // Process
     Mat src(rhs[0].toMat(rhs[0].isUint8() ? CV_8U :
         (rhs[0].isInt16() ? CV_16S : CV_32F))), dst;
-    thresh = threshold(src, dst, thresh, maxVal, thresholdType);
+    thresh = threshold(src, dst, thresh, maxval, type);
     plhs[0] = MxArray(dst);
     if (nlhs>1)
         plhs[1] = MxArray(thresh);

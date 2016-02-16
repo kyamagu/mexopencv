@@ -74,7 +74,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
-    Mat from(rhs[0].toMat(CV_8U)), to(rhs[1].toMat(CV_8U)), flow;
+    Mat from(rhs[0].toMat(CV_8U)),
+        to(rhs[1].toMat(CV_8U)),
+        flow;
+    if (from.channels()!=3 || to.channels()!=3)
+        mexErrMsgIdAndTxt("mexopencv:error", "3-channel images expected");
     calcOpticalFlowSF(from, to, flow,
         layers, averaging_block_size, max_flow,
         sigma_dist, sigma_color, postprocess_window, sigma_dist_fix,

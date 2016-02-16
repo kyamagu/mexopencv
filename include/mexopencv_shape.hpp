@@ -69,7 +69,7 @@ cv::Ptr<cv::HistogramCostExtractor> create_EMDL1HistogramCostExtractor(
     std::vector<MxArray>::const_iterator last);
 
 /** Create an instance of HistogramCostExtractor using options in arguments
-  * @param type histogram cost extractor type, one of:
+ * @param type histogram cost extractor type, one of:
  *    - "NormHistogramCostExtractor"
  *    - "EMDHistogramCostExtractor"
  *    - "ChiHistogramCostExtractor"
@@ -102,7 +102,7 @@ cv::Ptr<cv::ThinPlateSplineShapeTransformer> create_ThinPlateSplineShapeTransfor
     std::vector<MxArray>::const_iterator last);
 
 /** Create an instance of ShapeTransformer using options in arguments
-  * @param type shape transformer type, one of:
+ * @param type shape transformer type, one of:
  *    - "AffineTransformer"
  *    - "ThinPlateSplineShapeTransformer"
  * @param first iterator at the beginning of the vector range

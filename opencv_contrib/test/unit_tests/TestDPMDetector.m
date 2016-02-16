@@ -1,12 +1,14 @@
 classdef TestDPMDetector
     %TestDPMDetector
     properties (Constant)
+        %xmlfile = fullfile(mexopencv.root(),'test','inriaperson.xml');
         xmlfile = fullfile(mexopencv.root(),'test','cat.xml');
         im = fullfile(mexopencv.root(),'test','cat.jpg');
     end
 
     methods (Static)
-        function test_1
+        function test_cat
+            download_cascade_model(TestDPMDetector.xmlfile);
             detector = cv.DPMDetector(TestDPMDetector.xmlfile);
             assert(~detector.isEmpty());
             assert(detector.getClassCount() == 1);
@@ -25,7 +27,7 @@ classdef TestDPMDetector
             end
         end
 
-        function test_2
+        function test_multiple_models
             %TODO: Octave throws error:
             % (out of memory or dimension too large for Octave's index type)
             if mexopencv.isOctave()
@@ -54,4 +56,15 @@ classdef TestDPMDetector
         end
     end
 
+end
+
+function download_cascade_model(fname)
+    if ~exist(fname, 'file')
+        [~, f, ext] = fileparts(fname);
+        assert(strcmpi(ext, '.xml'), 'Not an XML cascade model');
+        % attempt to download cascade model from GitHub
+        disp('Downloading cascade model...')
+        url = 'https://cdn.rawgit.com/Itseez/opencv_extra/3.1.0/testdata/cv/dpm/VOC2007_Cascade/';
+        urlwrite(strrep(fullfile(url,[f ext]),'\','/'), fname);
+    end
 end

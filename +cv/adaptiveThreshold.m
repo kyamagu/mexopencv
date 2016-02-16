@@ -1,18 +1,18 @@
 %ADAPTIVETHRESHOLD  Applies an adaptive threshold to an array
 %
-%    dst = cv.adaptiveThreshold(src, maxValue)
-%    dst = cv.adaptiveThreshold(src, maxValue, 'OptionName',optionValue, ...)
+%    dst = cv.adaptiveThreshold(src)
+%    dst = cv.adaptiveThreshold(src, 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __src__ Source 8-bit single-channel `uint8` image.
-% * __maxValue__ Non-zero value assigned to the pixels for which the condition
-%        is satisfied. See the details below.
 %
 % ## Output
 % * __dst__ Destination image of the same size and the same type as `src`.
 %
 % ## Options
-% * __AdaptiveMethod__ Adaptive thresholding algorithm to use, default 'Mean'.
+% * __MaxValue__ Non-zero value assigned to the pixels for which the condition
+%        is satisfied. See the details below. default 255
+% * __Method__ Adaptive thresholding algorithm to use, default 'Mean'.
 %       One of:
 %       * __Mean__ the threshold value `T(x,y)` is a mean of the
 %             `BlockSize x BlockSize` neighborhood of `(x,y)` minus `C`
@@ -21,7 +21,7 @@
 %             `BlockSize x BlockSize` neighborhood of `(x,y)` minus `C`.
 %             The default sigma (standard deviation) is used for the specified
 %             `BlockSize`. See cv.getGaussianKernel
-% * __ThresholdType__ Thresholding type, default 'Binary'. One of:
+% * __Type__ Thresholding type, default 'Binary'. One of:
 %       * __Binary__    `dst(x,y) = (src(x,y) > thresh) ? maxValue : 0`
 %       * __BinaryInv__ `dst(x,y) = (src(x,y) > thresh) ? 0 : maxValue`
 % * __BlockSize__ Size of a pixel neighborhood that is used to calculate a
@@ -45,7 +45,7 @@
 %                   | maxValue, otherwise
 %
 % where `T(x,y)` is a threshold calculated individually for each pixel (see
-% `AdaptiveMethod` parameter).
+% `Method` parameter).
 %
 % See also: cv.threshold, cv.blur, cv.GaussianBlur
 %

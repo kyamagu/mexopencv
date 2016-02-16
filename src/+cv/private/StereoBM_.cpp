@@ -18,11 +18,90 @@ map<int,Ptr<StereoBM> > obj_;
 
 /// Option values for StereoBM PreFilterType
 const ConstMap<string, int> PreFilerTypeMap = ConstMap<string, int>
-    ("NormalizedResponse", StereoBM::PREFILTER_NORMALIZED_RESPONSE)
-    ("XSobel",             StereoBM::PREFILTER_XSOBEL);
+    ("NormalizedResponse", cv::StereoBM::PREFILTER_NORMALIZED_RESPONSE)
+    ("XSobel",             cv::StereoBM::PREFILTER_XSOBEL);
 const ConstMap<int, string> InvPreFilerTypeMap = ConstMap<int, string>
-    (StereoBM::PREFILTER_NORMALIZED_RESPONSE, "NormalizedResponse")
-    (StereoBM::PREFILTER_XSOBEL,              "XSobel");
+    (cv::StereoBM::PREFILTER_NORMALIZED_RESPONSE, "NormalizedResponse")
+    (cv::StereoBM::PREFILTER_XSOBEL,              "XSobel");
+
+/** Create an instance of StereoBM using options in arguments
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to created StereoBM
+ */
+Ptr<StereoBM> create_StereoBM(
+    vector<MxArray>::const_iterator first,
+    vector<MxArray>::const_iterator last)
+{
+    ptrdiff_t len = std::distance(first, last);
+    nargchk((len%2)==0);
+    int numDisparities = 0;
+    int blockSize = 21;
+    int minDisparity = 0;
+    int speckleWindowSize = 0;
+    int speckleRange = 0;
+    int disp12MaxDiff = -1;
+    int preFilterType = cv::StereoBM::PREFILTER_XSOBEL;
+    int preFilterSize = 9;
+    int preFilterCap = 31;
+    int textureThreshold = 10;
+    int uniquenessRatio = 15;
+    int smallerBlockSize = 0;
+    Rect roi1;
+    Rect roi2;
+    for (; first != last; first += 2) {
+        string key(first->toString());
+        const MxArray& val = *(first + 1);
+        if (key == "NumDisparities")
+            numDisparities = val.toInt();
+        else if (key == "BlockSize")
+            blockSize = val.toInt();
+        else if (key == "MinDisparity")
+            minDisparity = val.toInt();
+        else if (key == "SpeckleWindowSize")
+            speckleWindowSize = val.toInt();
+        else if (key == "SpeckleRange")
+            speckleRange = val.toInt();
+        else if (key == "Disp12MaxDiff")
+            disp12MaxDiff = val.toInt();
+        else if (key == "PreFilterType")
+            preFilterType = (val.isChar() ?
+                PreFilerTypeMap[val.toString()] : val.toInt());
+        else if (key == "PreFilterSize")
+            preFilterSize = val.toInt();
+        else if (key == "PreFilterCap")
+            preFilterCap = val.toInt();
+        else if (key == "TextureThreshold")
+            textureThreshold = val.toInt();
+        else if (key == "UniquenessRatio")
+            uniquenessRatio = val.toInt();
+        else if (key == "SmallerBlockSize")
+            smallerBlockSize = val.toInt();
+        else if (key == "ROI1")
+            roi1 = val.toRect();
+        else if (key == "ROI2")
+            roi2 = val.toRect();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
+    Ptr<StereoBM> p = StereoBM::create(numDisparities, blockSize);
+    if (p.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Failed to create StereoBM");
+    p->setMinDisparity(minDisparity);
+    p->setSpeckleWindowSize(speckleWindowSize);
+    p->setSpeckleRange(speckleRange);
+    p->setDisp12MaxDiff(disp12MaxDiff);
+    p->setPreFilterType(preFilterType);
+    p->setPreFilterSize(preFilterSize);
+    p->setPreFilterCap(preFilterCap);
+    p->setTextureThreshold(textureThreshold);
+    p->setUniquenessRatio(uniquenessRatio);
+    p->setSmallerBlockSize(smallerBlockSize);
+    p->setROI1(roi1);
+    p->setROI2(roi2);
+    return p;
+}
 }
 
 /**
@@ -44,19 +123,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Constructor is called. Create a new object from argument
     if (method == "new") {
-        nargchk((nrhs%2)==0 && nlhs<=1);
-        int numDisparities = 0;
-        int blockSize = 21;
-        for (int i=2; i<nrhs; i+=2) {
-            string key(rhs[i].toString());
-            if (key=="NumDisparities")
-                numDisparities = rhs[i+1].toInt();
-            else if (key=="BlockSize")
-                blockSize = rhs[i+1].toInt();
-            else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
-        }
-        obj_[++last_id] = StereoBM::create(numDisparities, blockSize);
+        nargchk(nrhs>=2 && nlhs<=1);
+        obj_[++last_id] = create_StereoBM(rhs.begin() + 2, rhs.end());
         plhs[0] = MxArray(last_id);
         return;
     }
@@ -111,71 +179,73 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "get") {
         nargchk(nrhs==3 && nlhs<=1);
         string prop(rhs[2].toString());
-        if (prop == "PreFilterCap")
-            plhs[0] = MxArray(obj->getPreFilterCap());
-        else if (prop == "PreFilterSize")
-            plhs[0] = MxArray(obj->getPreFilterSize());
+        if (prop == "NumDisparities")
+            plhs[0] = MxArray(obj->getNumDisparities());
+        else if (prop == "BlockSize")
+            plhs[0] = MxArray(obj->getBlockSize());
+        else if (prop == "MinDisparity")
+            plhs[0] = MxArray(obj->getMinDisparity());
+        else if (prop == "SpeckleWindowSize")
+            plhs[0] = MxArray(obj->getSpeckleWindowSize());
+        else if (prop == "SpeckleRange")
+            plhs[0] = MxArray(obj->getSpeckleRange());
+        else if (prop == "Disp12MaxDiff")
+            plhs[0] = MxArray(obj->getDisp12MaxDiff());
         else if (prop == "PreFilterType")
             plhs[0] = MxArray(InvPreFilerTypeMap[obj->getPreFilterType()]);
-        else if (prop == "ROI1")
-            plhs[0] = MxArray(obj->getROI1());
-        else if (prop == "ROI2")
-            plhs[0] = MxArray(obj->getROI2());
-        else if (prop == "SmallerBlockSize")
-            plhs[0] = MxArray(obj->getSmallerBlockSize());
+        else if (prop == "PreFilterSize")
+            plhs[0] = MxArray(obj->getPreFilterSize());
+        else if (prop == "PreFilterCap")
+            plhs[0] = MxArray(obj->getPreFilterCap());
         else if (prop == "TextureThreshold")
             plhs[0] = MxArray(obj->getTextureThreshold());
         else if (prop == "UniquenessRatio")
             plhs[0] = MxArray(obj->getUniquenessRatio());
-        else if (prop == "BlockSize")
-            plhs[0] = MxArray(obj->getBlockSize());
-        else if (prop == "Disp12MaxDiff")
-            plhs[0] = MxArray(obj->getDisp12MaxDiff());
-        else if (prop == "MinDisparity")
-            plhs[0] = MxArray(obj->getMinDisparity());
-        else if (prop == "NumDisparities")
-            plhs[0] = MxArray(obj->getNumDisparities());
-        else if (prop == "SpeckleRange")
-            plhs[0] = MxArray(obj->getSpeckleRange());
-        else if (prop == "SpeckleWindowSize")
-            plhs[0] = MxArray(obj->getSpeckleWindowSize());
+        else if (prop == "SmallerBlockSize")
+            plhs[0] = MxArray(obj->getSmallerBlockSize());
+        else if (prop == "ROI1")
+            plhs[0] = MxArray(obj->getROI1());
+        else if (prop == "ROI2")
+            plhs[0] = MxArray(obj->getROI2());
         else
             mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property");
     }
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
         string prop(rhs[2].toString());
-        if (prop == "PreFilterCap")
-            obj->setPreFilterCap(rhs[3].toInt());
+        if (prop == "NumDisparities")
+            obj->setNumDisparities(rhs[3].toInt());
+        else if (prop == "BlockSize")
+            obj->setBlockSize(rhs[3].toInt());
+        else if (prop == "MinDisparity")
+            obj->setMinDisparity(rhs[3].toInt());
+        else if (prop == "SpeckleWindowSize")
+            obj->setSpeckleWindowSize(rhs[3].toInt());
+        else if (prop == "SpeckleRange")
+            obj->setSpeckleRange(rhs[3].toInt());
+        else if (prop == "Disp12MaxDiff")
+            obj->setDisp12MaxDiff(rhs[3].toInt());
+        else if (prop == "PreFilterType")
+            obj->setPreFilterType(rhs[3].isChar() ?
+                PreFilerTypeMap[rhs[3].toString()] : rhs[3].toInt());
         else if (prop == "PreFilterSize")
             obj->setPreFilterSize(rhs[3].toInt());
-        else if (prop == "PreFilterType")
-            obj->setPreFilterType(PreFilerTypeMap[rhs[3].toString()]);
-        else if (prop == "ROI1")
-            obj->setROI1(rhs[3].toRect());
-        else if (prop == "ROI2")
-            obj->setROI2(rhs[3].toRect());
-        else if (prop == "SmallerBlockSize")
-            obj->setSmallerBlockSize(rhs[3].toInt());
+        else if (prop == "PreFilterCap")
+            obj->setPreFilterCap(rhs[3].toInt());
         else if (prop == "TextureThreshold")
             obj->setTextureThreshold(rhs[3].toInt());
         else if (prop == "UniquenessRatio")
             obj->setUniquenessRatio(rhs[3].toInt());
-        else if (prop == "BlockSize")
-            obj->setBlockSize(rhs[3].toInt());
-        else if (prop == "Disp12MaxDiff")
-            obj->setDisp12MaxDiff(rhs[3].toInt());
-        else if (prop == "MinDisparity")
-            obj->setMinDisparity(rhs[3].toInt());
-        else if (prop == "NumDisparities")
-            obj->setNumDisparities(rhs[3].toInt());
-        else if (prop == "SpeckleRange")
-            obj->setSpeckleRange(rhs[3].toInt());
-        else if (prop == "SpeckleWindowSize")
-            obj->setSpeckleWindowSize(rhs[3].toInt());
+        else if (prop == "SmallerBlockSize")
+            obj->setSmallerBlockSize(rhs[3].toInt());
+        else if (prop == "ROI1")
+            obj->setROI1(rhs[3].toRect());
+        else if (prop == "ROI2")
+            obj->setROI2(rhs[3].toRect());
         else
             mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property");
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unrecognized operation %s", method.c_str());
 }

@@ -7,31 +7,14 @@ classdef TestAdaptiveThreshold
     methods (Static)
         function test_1
             img = cv.imread(TestAdaptiveThreshold.im, 'Grayscale',true);
-            out = cv.adaptiveThreshold(img, 255);
+            out = cv.adaptiveThreshold(img);
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
         function test_2
             img = cv.imread(TestAdaptiveThreshold.im, 'Grayscale',true);
-            out = cv.adaptiveThreshold(img, 255, 'AdaptiveMethod','Gaussian');
-            validateattributes(out, {class(img)}, {'size',size(img)});
-        end
-
-        function test_3
-            img = cv.imread(TestAdaptiveThreshold.im, 'Grayscale',true);
-            out = cv.adaptiveThreshold(img, 255, 'ThresholdType','BinaryInv');
-            validateattributes(out, {class(img)}, {'size',size(img)});
-        end
-
-        function test_4
-            img = cv.imread(TestAdaptiveThreshold.im, 'Grayscale',true);
-            out = cv.adaptiveThreshold(img, 255, 'BlockSize',7);
-            validateattributes(out, {class(img)}, {'size',size(img)});
-        end
-
-        function test_5
-            img = cv.imread(TestAdaptiveThreshold.im, 'Grayscale',true);
-            out = cv.adaptiveThreshold(img, 255, 'C',1);
+            out = cv.adaptiveThreshold(img, 'Method','Gaussian', ...
+                'Type','BinaryInv', 'BlockSize',7, 'C',1, 'MaxValue',255);
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 

@@ -10,3 +10,12 @@
 *.obj
 *.pdb
 *.idb
+
+# downloaded files
+/test/768x576.avi
+/test/car.avi
+/test/haarcascade_frontalface_default.xml
+/test/lbpcascade_frontalface.xml
+/test/inriaperson.xml
+/test/model.yml.gz
+/test/ObjectnessTrainedModel/
