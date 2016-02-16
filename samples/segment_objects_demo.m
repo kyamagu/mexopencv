@@ -9,18 +9,20 @@
 % <https://github.com/Itseez/opencv/blob/master/samples/cpp/segment_objects.cpp>
 %
 
-%% Set up camera
-%cap = cv.VideoCapture('768x576.avi');
-cap = cv.VideoCapture(0);
-pause(2);
-if ~cap.isOpened()
-    error('Can not open camera');
+%% Set up video source: video file or camera
+fname = fullfile(mexopencv.root(),'test','768x576.avi');
+if ~exist(fname, 'file')
+    % download video from Github
+    disp('Downloading video...')
+    url = 'https://cdn.rawgit.com/Itseez/opencv/3.1.0/samples/data/768x576.avi';
+    urlwrite(url, fname);
 end
+cap = cv.VideoCapture(fname);
+%cap = cv.VideoCapture(0); pause(2);
+assert(cap.isOpened(), 'Cannot open video source');
 
 frame = cap.read();
-if isempty(frame)
-    error('Can not read data from the video source');
-end
+assert(~isempty(frame), 'Cannot read data from the video source');
 
 %% Create a background subtractor
 bgsubtractor = cv.BackgroundSubtractorMOG2();
