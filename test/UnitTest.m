@@ -35,6 +35,8 @@ classdef UnitTest
             'TestSuperResolution'
             'TestDPMDetector'
             'TestStructuredEdgeDetection'
+            'TestMotionSaliencyBinWangApr2014'
+            'TestObjectnessBING'
             % codecs
             'TestVideoWriter'
         };
