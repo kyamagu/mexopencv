@@ -25,7 +25,7 @@ map<int,CascadeClassifier> obj_;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-    if (nrhs<1 || nlhs != 1 && nlhs != 3)
+    if (nrhs<1 || nlhs>1 && nlhs != 3)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
     // Determine argument format between (filename,...) or (id,method,...)
