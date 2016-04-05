@@ -65,7 +65,7 @@ classdef CascadeClassifier < handle
             status = CascadeClassifier_(this.id, 'load', filename);
         end
         
-        function boxes = detect(this, im, varargin)
+        function varargout = detect(this, im, varargin)
             %DETECT Detects objects of different sizes in the input image.
             %
             %    boxes = classifier.detect(im, 'Option', optionValue, ...)
@@ -92,7 +92,9 @@ classdef CascadeClassifier < handle
             %
             % See also cv.CascadeClassifier
             %
-            boxes = CascadeClassifier_(this.id, 'detectMultiScale', im, varargin{:});
+            assert(nargout == 1 || nargout == 3, 'CascadeClassifier:InvalidInput', 'Wrong number of output arguments.');
+            varargout = cell(1,nargout);
+            [varargout{:}] = CascadeClassifier_(this.id, 'detectMultiScale', im, varargin{:});
         end
     end
     

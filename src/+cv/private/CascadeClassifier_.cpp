@@ -25,7 +25,7 @@ map<int,CascadeClassifier> obj_;
 void mexFunction( int nlhs, mxArray *plhs[],
                   int nrhs, const mxArray *prhs[] )
 {
-    if (nrhs<1 || nlhs>1)
+    if (nrhs<1 || nlhs>1 && nlhs != 3)
         mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
     
     // Determine argument format between (filename,...) or (id,method,...)
@@ -57,12 +57,12 @@ void mexFunction( int nlhs, mxArray *plhs[],
         obj_.erase(id);
     }
     else if (method == "empty") {
-        if (nrhs!=2)
+        if (nrhs!=2 || nlhs != 1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         plhs[0] = MxArray(obj.empty());
     }
     else if (method == "load") {
-        if (nrhs!=3)
+        if (nrhs!=3 || nlhs != 1)
             mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
         plhs[0] = MxArray(obj.load(rhs[2].toString()));
     }
@@ -93,8 +93,17 @@ void mexFunction( int nlhs, mxArray *plhs[],
         // Run
         Mat image(rhs[2].toMat());
         vector<Rect> objects;
-        obj.detectMultiScale(image, objects, scaleFactor, minNeighbors, flags,
-                             minSize, maxSize);
+		if (nlhs == 1) {
+			obj.detectMultiScale(image, objects, scaleFactor, minNeighbors, flags,
+								 minSize, maxSize);	
+		} else if (nlhs == 3) {
+			vector<int> reject_levels;
+			vector<double> level_weights;
+			obj.detectMultiScale(image, objects, reject_levels, level_weights, 
+							     scaleFactor, minNeighbors, flags, minSize, maxSize, true);
+			plhs[1] = MxArray(reject_levels);
+			plhs[2] = MxArray(level_weights);
+		}        
         plhs[0] = MxArray(objects);
     }
     else
