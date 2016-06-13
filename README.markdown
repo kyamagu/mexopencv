@@ -63,22 +63,28 @@ Build
 
 Prerequisite:
 
- * Unix: MATLAB or Octave (>= 4.0.0), OpenCV (>= 3.0.0), g++, make, pkg-config
+ * Linux: MATLAB or Octave (>= 4.0.0), OpenCV (>= 3.0.0), g++, make, pkg-config
+ * OS X: MATLAB or Octave (>= 4.0.0), OpenCV (>= 3.0.0), Xcode Command Line Tools, pkg-config
  * Windows: MATLAB or Octave (>= 4.0.0), OpenCV (>= 3.0.0), supported compiler
 
 Currently, mexopencv targets the final 3.1.0 stable version of OpenCV. You
 must build it against this exact version, rather than using the bleeding-edge
-dev-version of `opencv` or `opencv_contrib`.
+dev-version of `opencv` or `opencv_contrib`. UNIX users should consider using a package manager to install OpenCV.
 
-Unix
-----
+Linux
+-----
 
 First make sure you have OpenCV installed in the system. If not, install the
 package available in your package manager (e.g., `libopencv-dev` in
-Debian/Ubuntu, `opencv-devel` in Fedora, `opencv` in Macports), or install the
+Debian/Ubuntu, `opencv-devel` in Fedora), or install the
 source package from http://opencv.org/ . Make sure `pkg-config` command can
-identify OpenCV path. If you have all the prerequisite, go to the mexopencv
-directory and type:
+identify OpenCV path. Currently, Ubuntu 16.04 LTS or earlier users have options
+to:
+
+  * [install OpenCV 3.1 from source](http://opencv.org) and set up `PKG_CONFIG_PATH` environmental variable to use `pkg-config`, or
+  * install `libopencv-dev` apt package and use the [v2.4 release](https://github.com/kyamagu/mexopencv/releases/tag/v2.4.11) of mexopencv.
+
+If you have all the prerequisite, go to the mexopencv directory and type:
 
     $ make
 
@@ -86,7 +92,7 @@ This will build and place all MEX functions inside `+cv/`.
 Specify your MATLAB directory if you install MATLAB other than
 `/usr/local/matlab`,
 
-    $ make MATLABDIR=/Applications/MATLAB_R2012a.app
+    $ make MATLABDIR=/opt/local/MATLAB/R2016a
 
 Optionally you can test the library functionality.
 
@@ -124,6 +130,20 @@ and within MATLAB to one of the compiled MEX-files. For example,
 If the output of the `ldd` command gives you different line, that library is
 likely to be causing the conflict. Try to preload such a library before
 launching MATLAB. On Mac, you can use `otool -L` command instead.
+
+OS X
+----
+
+Currently, the recommended approach to install OpenCV in OS X is [Homebrew](http://brew.sh/). Install Homebrew first, and do the following to install OpenCV 3.
+
+    $ brew install pkg-config homebrew/science/opencv3
+    $ brew link opencv3
+
+If you have all the prerequisite, go to the mexopencv directory and type:
+
+    $ make MATLABDIR=/Applications/MATLAB_R2016a.app PKG_CONFIG_MATLAB=opencv3 LDFLAGS=/usr/local/share/OpenCV/3rdparty/lib -j2
+
+Replace the path to Matlab with your version. This will build and place all MEX functions inside `+cv/`.
 
 Windows
 -------
