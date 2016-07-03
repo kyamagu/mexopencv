@@ -141,7 +141,7 @@ Currently, the recommended approach to install OpenCV in OS X is [Homebrew](http
 
 If you have all the prerequisite, go to the mexopencv directory and type:
 
-    $ make MATLABDIR=/Applications/MATLAB_R2016a.app PKG_CONFIG_MATLAB=opencv3 LDFLAGS=/usr/local/share/OpenCV/3rdparty/lib -j2
+    $ make MATLABDIR=/Applications/MATLAB_R2016a.app PKG_CONFIG_MATLAB=opencv3 LDFLAGS=-L/usr/local/share/OpenCV/3rdparty/lib -j2
 
 Replace the path to Matlab with your version. This will build and place all MEX functions inside `+cv/`.
 
