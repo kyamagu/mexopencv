@@ -6,6 +6,7 @@ classdef MDoc < handle
     % create an instance of this class:
     %
     %    addpath('utils');
+    %    addpath('opencv_contrib');
     %    MDoc;
     %
     % Once you run this command, you can find html documentation under
@@ -43,7 +44,10 @@ classdef MDoc < handle
             this.process_index();
 
             % Get a list of functions
-            list = dir(fullfile(mexopencv.root(),'+cv','*.m'));
+            list = [...
+                dir(fullfile(mexopencv.root(),'+cv','*.m')); ...
+                dir(fullfile(mexopencv.root(),'opencv_contrib','+cv','*.m')) ...
+                ];
             this.yet = strrep({list.name},'.m','');
             while ~isempty(this.yet)
                 fname = this.yet{1};
