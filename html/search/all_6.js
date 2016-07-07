@@ -20,6 +20,8 @@ var searchData=
   ['glob_2ecpp',['glob.cpp',['../glob_8cpp.html',1,'']]],
   ['goodfeaturestotrack_2ecpp',['goodFeaturesToTrack.cpp',['../good_features_to_track_8cpp.html',1,'']]],
   ['grabcut_2ecpp',['grabCut.cpp',['../grab_cut_8cpp.html',1,'']]],
+  ['graphsegmentation_5f_2ecpp',['GraphSegmentation_.cpp',['../_graph_segmentation___8cpp.html',1,'']]],
   ['grouprectangles_2ecpp',['groupRectangles.cpp',['../group_rectangles_8cpp.html',1,'']]],
-  ['grouprectangles_5fmeanshift_2ecpp',['groupRectangles_meanshift.cpp',['../group_rectangles__meanshift_8cpp.html',1,'']]]
+  ['grouprectangles_5fmeanshift_2ecpp',['groupRectangles_meanshift.cpp',['../group_rectangles__meanshift_8cpp.html',1,'']]],
+  ['guidedfilter_5f_2ecpp',['GuidedFilter_.cpp',['../_guided_filter___8cpp.html',1,'']]]
 ];

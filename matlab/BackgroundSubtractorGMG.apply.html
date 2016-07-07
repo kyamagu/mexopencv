@@ -1,0 +1,64 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.BackgroundSubtractorGMG/apply</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.BackgroundSubtractorGMG/apply</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.BackgroundSubtractorGMG/apply</div>
+      <div class="helpcontent"><p>Updates the background model and computes the foreground mask</p>
+
+<pre><code>fgmask = bs.apply(im)
+fgmask = bs.apply(im, 'OptionName', optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>im</strong> Next video frame.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>fgmask</strong> The output foreground mask as a binary image.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>LearningRate</strong> The value between 0 and 1 that indicates how
+fast the background model is learnt. Negative parameter
+value makes the algorithm to use some automatically chosen
+learning rate. 0 means that the background model is not
+updated at all, 1 means that the background model is
+completely reinitialized from the last frame. default -1</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BackgroundSubtractorGMG.getBackgroundImage.html">cv.BackgroundSubtractorGMG/getBackgroundImage</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

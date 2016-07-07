@@ -1,0 +1,38 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.LATCH/LATCH</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.LATCH/LATCH</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.LATCH/LATCH</div>
+      <div class="helpcontent"><p>Constructor</p>
+
+<pre><code>obj = <a href="LATCH.html">cv.LATCH</a>()
+obj = <a href="LATCH.html">cv.LATCH</a>(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Bytes</strong> the size of the descriptor. Can be 64, 32, 16, 8, 4,
+2 or 1. default 32</li>
+<li><strong>RotationInvariance</strong> whether or not the descriptor should
+compansate for orientation changes. default true</li>
+<li><strong>HalfSize</strong> the size of half of the mini-patches size. For
+example, if we would like to compare triplets of patches of
+size 7x7x then the <code>half_ssd_size</code> should be <code>(7-1)/2 = 3</code>.
+default 3</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="LATCH.compute.html">cv.LATCH/compute</a></div>
+   </body>
+</html>

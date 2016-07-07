@@ -1,0 +1,60 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.DisparityWLSFilter.computeMSE</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.DisparityWLSFilter.computeMSE</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.DisparityWLSFilter.computeMSE</div>
+      <div class="helpcontent"><p>Function for computing mean square error for disparity maps</p>
+
+<pre><code>mse = <a href="DisparityWLSFilter.html">cv.DisparityWLSFilter</a>.computeMSE(GT, src)
+mse = <a href="DisparityWLSFilter.html">cv.DisparityWLSFilter</a>.computeMSE(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>GT</strong> ground truth disparity map (<code>int16</code>).</li>
+<li><strong>src</strong> disparity map to evaluate (<code>int16</code>).</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>mse</strong> returns mean square error between <code>GT</code> and <code>src</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>ROI</strong> region of interest <code>[x,y,w,h]</code>. Not set by default.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DisparityWLSFilter.computeBadPixelPercent.html">cv.DisparityWLSFilter.computeBadPixelPercent</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>true</td>
+         </tr>
+      </table>
+   </body>
+</html>

@@ -15,24 +15,21 @@
          </tr>
       </table>
       <div class="title">cv.BackgroundSubtractorMOG/BackgroundSubtractorMOG</div>
-      <div class="helpcontent"><p>BackgroundSubtractorMOG constructor</p>
+      <div class="helpcontent"><p>Creates mixture-of-gaussian background subtractor</p>
 
 <pre><code>bs = <a href="BackgroundSubtractorMOG.html">cv.BackgroundSubtractorMOG</a>()
-bs = <a href="BackgroundSubtractorMOG.html">cv.BackgroundSubtractorMOG</a>(history, nmixtures, backgroundRatio, 'OptionName', optionValue, ...)
+bs = <a href="BackgroundSubtractorMOG.html">cv.BackgroundSubtractorMOG</a>('OptionName', optionValue, ...)
 </code></pre>
-
-<h2> Input</h2>
-
-<ul>
-<li><strong>history</strong> Length of the history.</li>
-<li><strong>nmixtures</strong> Number of Gaussian mixtures.</li>
-<li><strong>backgroundRatio</strong> Background ratio.</li>
-</ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>NoiseSigma</strong> Noise strength.</li>
+<li><strong>History</strong> Length of the history. default 200</li>
+<li><strong>NMixtures</strong> Number of Gaussian mixtures. default 5</li>
+<li><strong>BackgroundRatio</strong> Background ratio. default 0.7</li>
+<li><strong>NoiseSigma</strong> Noise strength (standard deviation of the
+brightness or each color channel). 0 means some automatic
+value. default 0</li>
 </ul>
 
 <p>Default constructor sets all parameters to default values.</p>

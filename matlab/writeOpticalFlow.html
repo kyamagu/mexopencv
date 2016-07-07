@@ -1,0 +1,46 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.writeOpticalFlow</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.writeOpticalFlow</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.writeOpticalFlow</div>
+      <div class="helpcontent"><p>Write a .flo to disk</p>
+
+<pre><code><a href="writeOpticalFlow.html">cv.writeOpticalFlow</a>(path, flow)
+success = <a href="writeOpticalFlow.html">cv.writeOpticalFlow</a>(path, flow)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>path</strong> Path to the file to be written.</li>
+<li><strong>flow</strong> Flow field to be stored.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>success</strong> true on success, false otherwise.</li>
+</ul>
+
+<p>Function for writing .flo files in &quot;Middlebury&quot; format, see:
+<a href="http://vision.middlebury.edu/flow/code/flow-code/README.txt">http://vision.middlebury.edu/flow/code/flow-code/README.txt</a></p>
+
+<p>The function stores a flow field in a file, returns true on success, false
+otherwise. The flow field must be a 2-channel, <code>single</code> floating-point
+matrix. First channel corresponds to the flow in the horizontal direction
+(<code>u</code>), second - vertical (<code>v</code>).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="readOpticalFlow.html">cv.readOpticalFlow</a></div>
+   </body>
+</html>

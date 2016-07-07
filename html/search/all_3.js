@@ -14,6 +14,7 @@ var searchData=
   ['detailenhance_2ecpp',['detailEnhance.cpp',['../detail_enhance_8cpp.html',1,'']]],
   ['dilate_2ecpp',['dilate.cpp',['../dilate_8cpp.html',1,'']]],
   ['dims',['dims',['../class_mx_array.html#aff4e9a0a157a07a2ab1928d615574b3d',1,'MxArray']]],
+  ['disparitywlsfilter_5f_2ecpp',['DisparityWLSFilter_.cpp',['../_disparity_w_l_s_filter___8cpp.html',1,'']]],
   ['distancetransform_2ecpp',['distanceTransform.cpp',['../distance_transform_8cpp.html',1,'']]],
   ['disttype',['DistType',['../mexopencv_8hpp.html#a9e21369cd3329a2eafe1e8a530eeda9f',1,'mexopencv.hpp']]],
   ['disttypeinv',['DistTypeInv',['../mexopencv_8hpp.html#a5e5fb2d27925392256c45e739f06c4fb',1,'mexopencv.hpp']]],
@@ -24,6 +25,7 @@ var searchData=
   ['drawkeypoints_2ecpp',['drawKeypoints.cpp',['../draw_keypoints_8cpp.html',1,'']]],
   ['drawmarker_2ecpp',['drawMarker.cpp',['../draw_marker_8cpp.html',1,'']]],
   ['drawmatches_2ecpp',['drawMatches.cpp',['../draw_matches_8cpp.html',1,'']]],
+  ['dtfilter_5f_2ecpp',['DTFilter_.cpp',['../_d_t_filter___8cpp.html',1,'']]],
   ['dtrees_5f_2ecpp',['DTrees_.cpp',['../_d_trees___8cpp.html',1,'']]],
   ['dualtvl1opticalflow_5f_2ecpp',['DualTVL1OpticalFlow_.cpp',['../_dual_t_v_l1_optical_flow___8cpp.html',1,'']]]
 ];

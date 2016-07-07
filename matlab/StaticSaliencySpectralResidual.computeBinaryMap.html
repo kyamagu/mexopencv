@@ -1,0 +1,68 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.StaticSaliencySpectralResidual/computeBinaryMap</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.StaticSaliencySpectralResidual/computeBinaryMap</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.StaticSaliencySpectralResidual/computeBinaryMap</div>
+      <div class="helpcontent"><p>This function perform a binary map of given saliency map</p>
+
+<pre><code>binaryMap = obj.computeBinaryMap(saliencyMap)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>saliencyMap</strong> the saliency map obtained through one of the
+specialized algorithms, <code>single</code> matrix.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>binaryMap</strong> the binary map, <code>uint8</code> matrix with either 0 or
+255 values.</li>
+</ul>
+
+<p>This is obtained in this way:
+In a first step, to improve the definition of interest areas and
+facilitate identification of targets, a segmentation by
+clustering is performed, using <em>K-means algorithm</em>. Then, to
+gain a binary representation of clustered saliency map, since
+values of the map can vary according to the characteristics of
+frame under analysis, it is not convenient to use a fixed
+threshold. So, <em>Otsu's algorithm</em> is used, which assumes that
+the image to be thresholded contains two classes of pixels or
+bi-modal histograms (e.g. foreground and back-ground pixels);
+later on, the algorithm calculates the optimal threshold
+separating those two classes, so that their intra-class variance
+is minimal.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="StaticSaliencySpectralResidual.computeSaliency.html">cv.StaticSaliencySpectralResidual/computeSaliency</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

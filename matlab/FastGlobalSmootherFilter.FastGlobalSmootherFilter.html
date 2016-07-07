@@ -1,0 +1,58 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.FastGlobalSmootherFilter/FastGlobalSmootherFilter</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.FastGlobalSmootherFilter/FastGlobalSmootherFilter</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.FastGlobalSmootherFilter/FastGlobalSmootherFilter</div>
+      <div class="helpcontent"><p>Factory method, create instance of FastGlobalSmootherFilter and execute the initialization routines</p>
+
+<pre><code>obj = <a href="FastGlobalSmootherFilter.html">cv.FastGlobalSmootherFilter</a>(guide)
+obj = <a href="FastGlobalSmootherFilter.html">cv.FastGlobalSmootherFilter</a>(guide, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>guide</strong> image serving as guide for filtering. It should have
+8-bit depth and either 1 or 3 channels.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Lambda</strong> parameter defining the amount of regularization.
+default 100.0</li>
+<li><strong>SigmaColor</strong> parameter, that is similar to color space sigma
+in <a href="bilateralFilter.html">cv.bilateralFilter</a>. default 5.0</li>
+<li><strong>LambdaAttenuation</strong> internal parameter, defining how much
+lambda decreases after each iteration. Normally, it should
+be 0.25. Setting it to 1.0 may lead to streaking artifacts.
+default 0.25</li>
+<li><strong>NumIter</strong> number of iterations used for filtering, 3 is
+usually enough. default 3</li>
+</ul>
+
+<p>For more details about Fast Global Smoother parameters, see the
+original paper [Min2014]. However, please note that there are
+several differences. Lambda attenuation described in the paper
+is implemented a bit differently so do not expect the results to
+be identical to those from the paper; <code>SigmaColor</code> values from
+the paper should be multiplied by 255.0 to achieve the same
+effect. Also, in case of image filtering where source and guide
+image are the same, authors propose to dynamically update the
+guide image after each iteration. To maximize the performance
+this feature was not implemented here.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FastGlobalSmootherFilter.filter.html">cv.FastGlobalSmootherFilter/filter</a></div>
+   </body>
+</html>

@@ -1,0 +1,79 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.calcOpticalFlowSF</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.calcOpticalFlowSF</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.calcOpticalFlowSF</div>
+      <div class="helpcontent"><p>Calculate an optical flow using &quot;SimpleFlow&quot; algorithm</p>
+
+<pre><code>flow = <a href="calcOpticalFlowSF.html">cv.calcOpticalFlowSF</a>(from, to)
+flow = <a href="calcOpticalFlowSF.html">cv.calcOpticalFlowSF</a>(from, to, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>from</strong> First 8-bit 3-channel image.</li>
+<li><strong>to</strong> Second 8-bit 3-channel image of the same size as <code>from</code>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>flow</strong> computed flow image that has the same size as <code>from</code> and type
+<code>single</code> (2-channels). Flow for <code>(x,y)</code> is stored in the third
+dimension.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Layers</strong> Number of layers. default 3</li>
+<li><strong>AveragingBlockSize</strong> Size of block through which we sum up when
+calculate cost function for pixel. default 2</li>
+<li><strong>MaxFlow</strong> maximal flow that we search at each level. default 4</li>
+<li><strong>SigmaDist</strong> vector smooth spatial sigma parameter. default 4.1</li>
+<li><strong>SigmaColor</strong> vector smooth color sigma parameter. default 25.5</li>
+<li><strong>PostprocessWindow</strong> window size for postprocess cross bilateral filter.
+default 18</li>
+<li><strong>SigmaDistFix</strong> spatial sigma for postprocess cross bilateralf filter.
+default 55.0</li>
+<li><strong>SigmaColorFix</strong> color sigma for postprocess cross bilateral filter.
+default 25.5</li>
+<li><strong>OccThr</strong> threshold for detecting occlusions. default 0.35</li>
+<li><strong>UpscaleAveragingRadius</strong> window size for bilateral upscale operation.
+default 18</li>
+<li><strong>UpscaleSigmaDist</strong> spatial sigma for bilateral upscale operation.
+default 55.0</li>
+<li><strong>UpscaleSigmaColor</strong> color sigma for bilateral upscale operation.
+default 25.5</li>
+<li><strong>SpeedUpThr</strong> threshold to detect point with irregular flow - where flow
+should be recalculated after upscale. default 10</li>
+</ul>
+
+<p>See [Tao2012]. And site of project:
+<a href="http://graphics.berkeley.edu/papers/Tao-SAN-2012-05/">http://graphics.berkeley.edu/papers/Tao-SAN-2012-05/</a>.</p>
+
+<h2> References</h2>
+
+<p>[Tao2012]:</p>
+
+<blockquote>
+<p>Michael Tao, Jiamin Bai, Pushmeet Kohli, and Sylvain Paris. &quot;Simpleflow: A
+non-iterative, sublinear optical flow algorithm&quot;. In Computer Graphics
+Forum, volume 31, pages 345-353. Wiley Online Library, 2012.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calcOpticalFlowDF.html">cv.calcOpticalFlowDF</a>, <a href="calcOpticalFlowFarneback.html">cv.calcOpticalFlowFarneback</a></div>
+   </body>
+</html>

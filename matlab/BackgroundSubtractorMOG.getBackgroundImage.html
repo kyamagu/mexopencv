@@ -17,16 +17,20 @@
       <div class="title">cv.BackgroundSubtractorMOG/getBackgroundImage</div>
       <div class="helpcontent"><p>Computes a foreground mask</p>
 
-<pre><code>im = bs.getBackgroundImage()
-
+<pre><code>bgImg = bs.getBackgroundImage()
 </code></pre>
 
 <h2> Output</h2>
 
 <ul>
-<li><strong>im</strong> The output background image.</li>
+<li><strong>bgImg</strong> The output background image.</li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BackgroundSubtractorMOG.html">cv.BackgroundSubtractorMOG</a></div>
+
+<h2> Note</h2>
+
+<p>Sometimes the background image can be very blurry, as it contain
+the average background statistics.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BackgroundSubtractorMOG.apply.html">cv.BackgroundSubtractorMOG/apply</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

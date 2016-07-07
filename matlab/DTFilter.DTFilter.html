@@ -1,0 +1,56 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.DTFilter/DTFilter</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.DTFilter/DTFilter</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.DTFilter/DTFilter</div>
+      <div class="helpcontent"><p>Factory method, create instance of DTFilter and produce initialization routines</p>
+
+<pre><code>obj = <a href="DTFilter.html">cv.DTFilter</a>(guide)
+obj = <a href="DTFilter.html">cv.DTFilter</a>(guide, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>guide</strong> guided image (used to build transformed distance,
+which describes edge structure of guided image).</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>SigmaSpatial</strong> <code>sigma_H</code> parameter in the original article,
+it's similar to the sigma in the coordinate space into
+<a href="bilateralFilter.html">cv.bilateralFilter</a>. default 10.0</li>
+<li><strong>SigmaColor</strong> <code>sigma_r</code> parameter in the original article,
+it's similar to the sigma in the color space into
+<a href="bilateralFilter.html">cv.bilateralFilter</a>. default 25.0</li>
+<li><strong>Mode</strong> one form three modes which corresponds to three modes
+for filtering 2D signals in the article. default 'NC':<ul>
+<li><strong>NC</strong> Normalized Convolution (NC).</li>
+<li><strong>IC</strong> Interpolated Convolution (IC).</li>
+<li><strong>RF</strong> Recursive Filtering (RF).</li>
+</ul>
+</li>
+<li><strong>NumIters</strong> optional number of iterations used for filtering,
+3 is quite enough. default 3</li>
+</ul>
+
+<p>For more details about Domain Transform filter parameters, see
+the original article [Gastal11] and Domain Transform filter
+homepage: <a href="http://www.inf.ufrgs.br/~eslgastal/DomainTransform/">http://www.inf.ufrgs.br/~eslgastal/DomainTransform/</a></p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DTFilter.filter.html">cv.DTFilter/filter</a></div>
+   </body>
+</html>

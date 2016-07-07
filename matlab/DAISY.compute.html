@@ -1,0 +1,68 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.DAISY/compute</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.DAISY/compute</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.DAISY/compute</div>
+      <div class="helpcontent"><p>Computes the descriptors for a set of keypoints detected in an image or image set.</p>
+
+<pre><code>[descriptors, keypoints] = obj.compute(img, keypoints)
+[descriptors, keypoints] = obj.compute(imgs, keypoints)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>img</strong> Image (first variant), 8-bit grayscale image. Input
+image is internally converted to 32-bit floating-point in
+[0,1] range.</li>
+<li><strong>imgs</strong> Image set (second variant), cell array of images.</li>
+<li><strong>keypoints</strong> Input collection of keypoints. Keypoints for
+which a descriptor cannot be computed are removed.
+Sometimes new keypoints can be added, for example: <a href="SIFT.html">cv.SIFT</a>
+duplicates keypoint with several dominant orientations
+(for each orientation). In the first variant, this is a
+struct-array of detected keypoints. In the second variant,
+it is a cell-array, where <code>keypoints{i}</code> is a set of keypoints
+detected in <code>images{i}</code> (a struct-array like before).</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>descriptors</strong> Computed descriptors. In the second variant of
+the method <code>descriptors{i}</code> are descriptors computed for a
+<code>keypoints{i}</code>. Row <code>j</code> in <code>descriptors</code> (or
+<code>descriptors{i}</code>) is the descriptor for <code>j</code>-th keypoint.</li>
+<li><strong>keypoints</strong> Optional output with possibly updated keypoints.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DAISY.DAISY.html">cv.DAISY/DAISY</a>, <a href="DAISY.compute_all.html">cv.DAISY/compute_all</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

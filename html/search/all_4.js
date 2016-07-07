@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['edgeawareinterpolator_5f_2ecpp',['EdgeAwareInterpolator_.cpp',['../_edge_aware_interpolator___8cpp.html',1,'']]],
   ['edgepreservingfilter_2ecpp',['edgePreservingFilter.cpp',['../edge_preserving_filter_8cpp.html',1,'']]],
   ['eigen_2ecpp',['eigen.cpp',['../eigen_8cpp.html',1,'']]],
   ['ellipse_2ecpp',['ellipse.cpp',['../ellipse_8cpp.html',1,'']]],

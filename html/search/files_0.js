@@ -4,6 +4,7 @@ var searchData=
   ['accumulateproduct_2ecpp',['accumulateProduct.cpp',['../accumulate_product_8cpp.html',1,'']]],
   ['accumulatesquare_2ecpp',['accumulateSquare.cpp',['../accumulate_square_8cpp.html',1,'']]],
   ['accumulateweighted_2ecpp',['accumulateWeighted.cpp',['../accumulate_weighted_8cpp.html',1,'']]],
+  ['adaptivemanifoldfilter_5f_2ecpp',['AdaptiveManifoldFilter_.cpp',['../_adaptive_manifold_filter___8cpp.html',1,'']]],
   ['adaptivethreshold_2ecpp',['adaptiveThreshold.cpp',['../adaptive_threshold_8cpp.html',1,'']]],
   ['agast_2ecpp',['AGAST.cpp',['../_a_g_a_s_t_8cpp.html',1,'']]],
   ['agastfeaturedetector_5f_2ecpp',['AgastFeatureDetector_.cpp',['../_agast_feature_detector___8cpp.html',1,'']]],

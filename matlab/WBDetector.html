@@ -1,0 +1,220 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.WBDetector</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.WBDetector</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.WBDetector</div>
+      <div class="helpcontent"><p>WaldBoost detector</p>
+
+<p>Class for object detection using WaldBoost from [Sochman05].</p>
+
+<h2> Example</h2>
+
+<p>The basic usage is the following:</p>
+
+<pre><code>% train
+detector = <a href="WBDetector.html">cv.WBDetector</a>();
+detector.train('/path/to/pos/', '/path/to/neg/');
+detector.write('model.xml');
+
+% detect
+detector = <a href="WBDetector.html">cv.WBDetector</a>();
+detector.read('model.xml');
+img = <a href="imread.html">cv.imread</a>('image.png', 'Grayscale',true);
+[bboxes,conf] = detector.detect(img);
+for i=1:numel(bboxes)
+    img = <a href="rectangle.html">cv.rectangle</a>(img, bboxes{i}, 'Color',[0 255 0]);
+end
+imshow(img)
+</code></pre>
+
+<h2> References</h2>
+
+<p>[Sochman05]:</p>
+
+<blockquote>
+<p>J. Sochman and J. Matas. &quot;WaldBoost - Learning for Time Constrained
+Sequential Detection&quot;, IEEE Conference on CVPR 2005, Vol 2, p. 150-156
+<a href="https://dspace.cvut.cz/bitstream/handle/10467/9494/2005-Waldboost-learning-for-time-constrained-sequential-detection.pdf?sequence=1">https://dspace.cvut.cz/bitstream/handle/10467/9494/2005-Waldboost-learning-for-time-constrained-sequential-detection.pdf?sequence=1</a></p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="WBDetector.WBDetector.html">cv.WBDetector/WBDetector</a>, <a href="WBDetector.detect.html">cv.WBDetector/detect</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="WBDetector.WBDetector.html">WBDetector</a></td>
+            <td class="m-help">Create instance of WBDetector&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="WBDetector.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="WBDetector.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="WBDetector.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="WBDetector.detect.html">detect</a></td>
+            <td class="m-help">Detect objects on image using WaldBoost detector&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="WBDetector.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="WBDetector.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="WBDetector.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="WBDetector.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="WBDetector.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="WBDetector.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="WBDetector.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="WBDetector.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="WBDetector.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="WBDetector.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="WBDetector.read.html">read</a></td>
+            <td class="m-help">Read detector from file&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="WBDetector.train.html">train</a></td>
+            <td class="m-help">Train WaldBoost detector&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="WBDetector.write.html">write</a></td>
+            <td class="m-help">Write detector to file&nbsp;</td>
+         </tr>
+      </table>
+   </body>
+</html>

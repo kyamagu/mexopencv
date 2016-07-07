@@ -1,0 +1,61 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.calcOpticalFlowSparseToDense</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.calcOpticalFlowSparseToDense</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.calcOpticalFlowSparseToDense</div>
+      <div class="helpcontent"><p>Fast dense optical flow based on PyrLK sparse matches interpolation</p>
+
+<pre><code>flow = <a href="calcOpticalFlowSparseToDense.html">cv.calcOpticalFlowSparseToDense</a>(from, to)
+flow = <a href="calcOpticalFlowSparseToDense.html">cv.calcOpticalFlowSparseToDense</a>(from, to, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>from</strong> first 8-bit 3-channel or 1-channel image.</li>
+<li><strong>to</strong> second 8-bit 3-channel or 1-channel image of the same size as
+<code>from</code>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>flow</strong> computed flow image that has the same size as <code>from</code> and type
+<code>single</code> (2-channels). Flow for <code>(x,y)</code> is stored in the third
+dimension.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>GridStep</strong> stride used in sparse match computation. Lower values usually
+result in higher quality but slow down the algorithm. default 8</li>
+<li><strong>K</strong> number of nearest-neighbor matches considered, when fitting a
+locally affine model. Lower values can make the algorithm noticeably
+faster at the cost of some quality degradation. default 128</li>
+<li><strong>Sigma</strong> parameter defining how fast the weights decrease in the
+locally-weighted affine fitting. Higher values can help preserve fine
+details, lower values can help to get rid of the noise in the output
+flow. default 0.05</li>
+<li><strong>UsePostProcessing</strong> defines whether the <a href="fastGlobalSmootherFilter.html">cv.fastGlobalSmootherFilter</a> is
+used for post-processing after interpolation. default true</li>
+<li><strong>FGSLambda</strong> see the respective parameter of <a href="fastGlobalSmootherFilter.html">cv.fastGlobalSmootherFilter</a>,
+default 500.0</li>
+<li><strong>FGSSigma</strong> see the respective parameter of <a href="fastGlobalSmootherFilter.html">cv.fastGlobalSmootherFilter</a>,
+default 1.5</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calcOpticalFlowPyrLK.html">cv.calcOpticalFlowPyrLK</a></div>
+   </body>
+</html>

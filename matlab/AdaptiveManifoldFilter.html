@@ -1,0 +1,269 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.AdaptiveManifoldFilter</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.AdaptiveManifoldFilter</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.AdaptiveManifoldFilter</div>
+      <div class="helpcontent"><p>Interface for Adaptive Manifold Filter realizations</p>
+
+<p>For more details about this filter see [Gastal12] and References.</p>
+
+<p>Below listed optional parameters which may be set up:</p>
+
+<ul>
+<li><code>SigmaS = 16.0</code> Spatial standard deviation.</li>
+<li><code>SigmaR = 0.2</code> Color space standard deviation.</li>
+<li><code>TreeHeight = -1</code> Height of the manifold tree
+(default = -1 : automatically computed).</li>
+<li><code>PCAIterations = 1</code> Number of iterations to computed the eigenvector.</li>
+<li><code>AdjustOutliers = false</code> Specify adjust outliers using Eq. 9 or not.</li>
+<li><code>UseRNG = true</code> Specify use random number generator to compute
+eigenvector or not.</li>
+</ul>
+
+<h2> References</h2>
+
+<p>[Gastal12]:</p>
+
+<blockquote>
+<p>Eduardo SL Gastal and Manuel M Oliveira. &quot;Adaptive manifolds for
+real-time high-dimensional filtering&quot;. ACM Transactions on Graphics
+(TOG), 31(4):33, 2012.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="AdaptiveManifoldFilter.AdaptiveManifoldFilter.html">cv.AdaptiveManifoldFilter/AdaptiveManifoldFilter</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="AdaptiveManifoldFilter.AdaptiveManifoldFilter.html">AdaptiveManifoldFilter</a></td>
+            <td class="m-help">Factory method, create instance of AdaptiveManifoldFilter and produce some initialization routines&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="AdaptiveManifoldFilter.AdjustOutliers.html">AdjustOutliers</a></td>
+            <td class="m-help">Specify adjust outliers using Eq. 9 or not.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="AdaptiveManifoldFilter.PCAIterations.html">PCAIterations</a></td>
+            <td class="m-help">Number of iterations to computed the eigenvector.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="AdaptiveManifoldFilter.SigmaR.html">SigmaR</a></td>
+            <td class="m-help">Color space standard deviation.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="AdaptiveManifoldFilter.SigmaS.html">SigmaS</a></td>
+            <td class="m-help">Spatial standard deviation.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="AdaptiveManifoldFilter.TreeHeight.html">TreeHeight</a></td>
+            <td class="m-help">Height of the manifold tree.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="AdaptiveManifoldFilter.UseRNG.html">UseRNG</a></td>
+            <td class="m-help">Specify use random number generator to compute eigenvector or not.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="AdaptiveManifoldFilter.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Static 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.amFilter.html">amFilter</a></td>
+            <td class="m-help">Simple one-line Adaptive Manifold Filter call&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.clear.html">clear</a></td>
+            <td class="m-help">Clears the algorithm state&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.collectGarbage.html">collectGarbage</a></td>
+            <td class="m-help">Collect garbage&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.empty.html">empty</a></td>
+            <td class="m-help">Checks if detector object is empty.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.filter.html">filter</a></td>
+            <td class="m-help">Apply high-dimensional filtering using adaptive manifolds&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.load.html">load</a></td>
+            <td class="m-help">Loads algorithm from a file or a string&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="AdaptiveManifoldFilter.save.html">save</a></td>
+            <td class="m-help">Saves the algorithm parameters to a file&nbsp;</td>
+         </tr>
+      </table>
+   </body>
+</html>

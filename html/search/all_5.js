@@ -2,6 +2,8 @@ var searchData=
 [
   ['fast_2ecpp',['FAST.cpp',['../_f_a_s_t_8cpp.html',1,'']]],
   ['fastfeaturedetector_5f_2ecpp',['FastFeatureDetector_.cpp',['../_fast_feature_detector___8cpp.html',1,'']]],
+  ['fastglobalsmootherfilter_5f_2ecpp',['FastGlobalSmootherFilter_.cpp',['../_fast_global_smoother_filter___8cpp.html',1,'']]],
+  ['fasthoughtransform_2ecpp',['FastHoughTransform.cpp',['../_fast_hough_transform_8cpp.html',1,'']]],
   ['fastnlmeansdenoising_2ecpp',['fastNlMeansDenoising.cpp',['../fast_nl_means_denoising_8cpp.html',1,'']]],
   ['fastnlmeansdenoisingcolored_2ecpp',['fastNlMeansDenoisingColored.cpp',['../fast_nl_means_denoising_colored_8cpp.html',1,'']]],
   ['fastnlmeansdenoisingcoloredmulti_2ecpp',['fastNlMeansDenoisingColoredMulti.cpp',['../fast_nl_means_denoising_colored_multi_8cpp.html',1,'']]],

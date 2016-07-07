@@ -1,0 +1,59 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SuperpixelSLIC/SuperpixelSLIC</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SuperpixelSLIC/SuperpixelSLIC</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SuperpixelSLIC/SuperpixelSLIC</div>
+      <div class="helpcontent"><p>Class implementing the SLIC (Simple Linear Iterative Clustering) superpixels</p>
+
+<pre><code>obj = <a href="SuperpixelSLIC.html">cv.SuperpixelSLIC</a>(img)
+obj = <a href="SuperpixelSLIC.html">cv.SuperpixelSLIC</a>(img, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>img</strong> Image to segment.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Algorithm</strong> Chooses the algorithm variant to use:<ul>
+<li><strong>SLIC</strong>segments image using a desired <code>RegionSize</code>
+and compactness factor <code>Ruler</code> (the same compactnes
+for all superpixels in the image).</li>
+<li><strong>SLICO</strong> segments image using a desired <code>RegionSize</code>,
+and in addition will choose an adaptive compactness
+factor for each superpixel differently. This is the
+default.</li>
+</ul>
+</li>
+<li><strong>RegionSize</strong> Chooses an average superpixel size measured in
+pixels. default 10</li>
+<li><strong>Ruler</strong> Chooses the enforcement of superpixel smoothness
+factor of superpixel. Only considered for SLIC, has no
+effect on SLICO. default 10.0</li>
+</ul>
+
+<p>The function initializes a SuperpixelSLIC object for the input
+image. It sets the parameters of choosed superpixel algorithm,
+which are: <code>RegionSize</code> and <code>Ruler</code>. It preallocate some buffers
+for future computing iterations over the given image. An example
+of SLIC versus SLICO is ilustrated in the following picture.</p>
+
+<p>&lt;&lt;<a href="http://docs.opencv.org/3.1.0/slic_slico_kermit.png">http://docs.opencv.org/3.1.0/slic_slico_kermit.png</a>&gt;&gt;</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SuperpixelSLIC.iterate.html">cv.SuperpixelSLIC/iterate</a></div>
+   </body>
+</html>

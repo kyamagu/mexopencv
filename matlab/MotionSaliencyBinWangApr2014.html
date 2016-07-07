@@ -1,0 +1,286 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.MotionSaliencyBinWangApr2014</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.MotionSaliencyBinWangApr2014</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.MotionSaliencyBinWangApr2014</div>
+      <div class="helpcontent"><p>A Fast Self-tuning Background Subtraction Algorithm for Motion Saliency</p>
+
+<p>Implementation of MotionSaliencyBinWangApr2014 for Motion Saliency.</p>
+
+<h2> Saliency API</h2>
+
+<p>Many computer vision applications may benefit from understanding where
+humans focus given a scene. Other than cognitively understanding the way
+human perceive images and scenes, finding salient regions and objects in
+the images helps various tasks such as speeding up object detection,
+object recognition, object tracking and content-aware image editing.</p>
+
+<p>About the saliency, there is a rich literature but the development is
+very fragmented. The principal purpose of this API is to give a unique
+interface, a unique framework for use and plug sever saliency
+algorithms, also with very different nature and methodology, but they
+share the same purpose, organizing algorithms into three main
+categories:</p>
+
+<ul>
+<li>Static Saliency</li>
+<li>Motion Saliency</li>
+<li>Objectness</li>
+</ul>
+
+<p>Saliency UML diagram: &lt;&lt;<a href="http://docs.opencv.org/3.1.0/saliency.png">http://docs.opencv.org/3.1.0/saliency.png</a>&gt;&gt;</p>
+
+<p>To see how API works, try tracker demo: <code>computeSaliency_demo.m</code>.</p>
+
+<h2> Motion Saliency Algorithms</h2>
+
+<p>Algorithms belonging to this category, are particularly focused to
+detect salient objects over time (hence also over frame), then there is
+a temporal component sealing cosider that allows to detect &quot;moving&quot;
+objects as salient, meaning therefore also the more general sense of
+detection the changes in the scene.</p>
+
+<p>Presently, the Fast Self-tuning Background Subtraction Algorithm
+[BinWangApr2014] has been implemented.</p>
+
+<h2> References</h2>
+
+<p>[BinWangApr2014]:</p>
+
+<blockquote>
+<p>Bin Wang and Piotr Dudek. &quot;A Fast Self-tuning Background Subtraction
+Algorithm&quot;. In Computer Vision and Pattern Recognition Workshops
+(CVPRW), 2014 IEEE Conference on, pages 401-404. IEEE, 2014.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="StaticSaliencySpectralResidual.html">cv.StaticSaliencySpectralResidual</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.MotionSaliencyBinWangApr2014.html">MotionSaliencyBinWangApr2014</a></td>
+            <td class="m-help">Constructor, creates a specialized saliency algorithm of this type&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.ImageHeight.html">ImageHeight</a></td>
+            <td class="m-help">Height of input image.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.ImageWidth.html">ImageWidth</a></td>
+            <td class="m-help">Width of input image.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.clear.html">clear</a></td>
+            <td class="m-help">Clears the algorithm state&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.computeSaliency.html">computeSaliency</a></td>
+            <td class="m-help">Compute the saliency&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.empty.html">empty</a></td>
+            <td class="m-help">Checks if detector object is empty.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.getClassName.html">getClassName</a></td>
+            <td class="m-help">Get the name of the specific saliency type&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.init.html">init</a></td>
+            <td class="m-help">This function allows the correct initialization of all data structures that will be used by the algorithm&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.load.html">load</a></td>
+            <td class="m-help">Loads algorithm from a file or a string&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.save.html">save</a></td>
+            <td class="m-help">Saves the algorithm parameters to a file&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="MotionSaliencyBinWangApr2014.setImagesize.html">setImagesize</a></td>
+            <td class="m-help">This is a utility function that allows to set the correct size (taken from the input image) in the corresponding variables
+               that will be used to size the data structures of the algorithm.&nbsp;
+            </td>
+         </tr>
+      </table>
+   </body>
+</html>

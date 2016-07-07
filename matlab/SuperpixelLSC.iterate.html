@@ -1,0 +1,58 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SuperpixelLSC/iterate</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SuperpixelLSC/iterate</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SuperpixelLSC/iterate</div>
+      <div class="helpcontent"><p>Calculates the superpixel segmentation on a given image with the initialized parameters in the object</p>
+
+<pre><code>obj.iterate()
+obj.iterate('OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>NumIterations</strong> Number of iterations. Higher number improves
+the result. default 10</li>
+</ul>
+
+<p>The function computes the superpixels segmentation of an image
+with the parameters initialized with the constructor. The
+algorithms starts from a grid of superpixels and then refines
+the boundaries by proposing updates of edges boundaries.</p>
+
+<p>This function can be called again without the need of
+initializing the algorithm with the constructor This save the
+computational cost of allocating memory for all the structures
+of the algorithm.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SuperpixelLSC.getLabels.html">cv.SuperpixelLSC/getLabels</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

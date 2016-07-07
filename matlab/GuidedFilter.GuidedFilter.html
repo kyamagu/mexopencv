@@ -1,0 +1,44 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.GuidedFilter/GuidedFilter</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.GuidedFilter/GuidedFilter</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.GuidedFilter/GuidedFilter</div>
+      <div class="helpcontent"><p>Factory method, create instance of GuidedFilter and produce initialization routines</p>
+
+<pre><code>obj = <a href="GuidedFilter.html">cv.GuidedFilter</a>(guide)
+obj = <a href="GuidedFilter.html">cv.GuidedFilter</a>(guide, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>guide</strong> guided image with up to 3 channels, if it have more
+then 3 channels then only first 3 channels will be used.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Radius</strong> radius of Guided Filter. default 7</li>
+<li><strong>EPS</strong> regularization term of Guided Filter. <code>eps^2</code> is
+similar to the sigma in the color space into
+<a href="bilateralFilter.html">cv.bilateralFilter</a>. default 500.0</li>
+</ul>
+
+<p>For more details about Guided Filter parameters, see the
+original article [Kaiming10].</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="GuidedFilter.filter.html">cv.GuidedFilter/filter</a></div>
+   </body>
+</html>

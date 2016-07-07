@@ -15,77 +15,270 @@
          </tr>
       </table>
       <div class="title">cv.SURF</div>
-      <div class="helpcontent"><p>Detects keypoints and computes SURF descriptors for them</p>
+      <div class="helpcontent"><p>Class for extracting Speeded Up Robust Features from an image.</p>
 
-<pre><code>keypoints = <a href="SURF.html">cv.SURF</a>(im)
-keypoints = <a href="SURF.html">cv.SURF</a>(im, 'OptionName', optionValue, ...)
-[keypoints, descriptors] = <a href="SURF.html">cv.SURF</a>(...)
+<h2> References:</h2>
 
-descriptorSize = <a href="SURF.html">cv.SURF</a>('DescriptorSize')   % descriptor size (64,128)
-</code></pre>
-
-<h2> Input</h2>
-
-<ul>
-<li><strong>im</strong> Input 8-bit grayscale image.</li>
-</ul>
-
-<h2> Output</h2>
-
-<ul>
-<li><strong>keypoints</strong> The output vector of keypoints. A 1-by-N structure array.
-It has the following fields:<ul>
-<li><strong>pt</strong> coordinates of the keypoint [x,y]</li>
-<li><strong>size</strong> diameter of the meaningful keypoint neighborhood</li>
-<li><strong>angle</strong> computed orientation of the keypoint (-1 if not applicable).
-Its possible values are in a range [0,360) degrees. It is measured
-relative to image coordinate system (y-axis is directed downward),
-ie in clockwise.</li>
-<li><strong>response</strong> the response by which the most strong keypoints have been
-selected. Can be used for further sorting or subsampling.</li>
-<li><strong>octave</strong> octave (pyramid layer) from which the keypoint has been
-extracted.</li>
-<li><strong>class_id</strong> object id that can be used to clustered keypoints by an
-object they belong to.</li>
-</ul>
-</li>
-<li><strong>descriptors</strong> The output concatenated vectors of descriptors. Each descriptor
-is 64- or 128-element vector, as returned by <code>SURF::descriptorSize()</code>. So
-the total size of descriptors will be <code>keypoints.size()*descriptorSize()</code>.
-A matrix of size N-by-(64/128) of class <code>single</code>, one row per keypoint.</li>
-</ul>
-
-<h2> Options</h2>
-
-<ul>
-<li><strong>Extended</strong> 0 means that the basic descriptors (64 elements each) shall be
-computed, 1 means that the extended descriptors (128 elements each)
-shall be computed. Default 1</li>
-<li><strong>UpRight</strong> 0 means that detector computes orientation of each feature.
-1 means that the orientation is not computed (which is much, much faster).
-For example, if you match images from a stereo pair, or do image stitching,
-the matched features likely have very similar angles, and you can speed up
-feature extraction by setting upright=1. Default 0</li>
-<li><strong>HessianThreshold</strong> Threshold for the keypoint detector. Only features,
-whose hessian is larger than hessianThreshold are retained by the
-detector. Therefore, the larger the value, the less keypoints you will
-get. A good default value could be from 300 to 500, depending from the
-image contrast. Default 100</li>
-<li><strong>NOctaves</strong> The number of a gaussian pyramid octaves that the detector uses.
-It is set to 4 by default. If you want to get very large features, use
-the larger value. If you want just small features, decrease it.</li>
-<li><strong>NOctaveLayers</strong> The number of images within each octave of a gaussian
-pyramid. It is set to 2 by default.</li>
-<li><strong>Mask</strong> Optional input mask that marks the regions where we should detect
-features</li>
-</ul>
-
-<p>Extracts Speeded Up Robust Features (SURF) from an image:</p>
+<p>[Bay06]:</p>
 
 <blockquote>
-<p>Bay, H. and Tuytelaars, T. and Van Gool, L. &quot;SURF: Speeded Up Robust Features&quot;,
-9th European Conference on Computer Vision, 2006</p>
+<p>Herbert Bay, Tinne Tuytelaars, and Luc Van Gool.
+&quot;SURF: Speeded Up Robust Features&quot;.
+Computer Vision-ECCV 2006, pages 404-417, 2006.
+<a href="http://www.vision.ee.ethz.ch/~surf/eccv06.pdf">http://www.vision.ee.ethz.ch/~surf/eccv06.pdf</a></p>
 </blockquote>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.html">cv.FeatureDetector</a> <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.html">cv.FeatureDetector</a>, <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a>,
+   detectSURFFeatures, extractFeatures</div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="SURF.SURF.html">SURF</a></td>
+            <td class="m-help">Constructor&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="SURF.Extended.html">Extended</a></td>
+            <td class="m-help">Basic or Extended descriptors.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="SURF.HessianThreshold.html">HessianThreshold</a></td>
+            <td class="m-help">Threshold for the keypoint detector.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="SURF.NOctaveLayers.html">NOctaveLayers</a></td>
+            <td class="m-help">The number of images within each octave of a gaussian pyramid.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="SURF.NOctaves.html">NOctaves</a></td>
+            <td class="m-help">The number of a gaussian pyramid octaves that the detector uses.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="SURF.Upright.html">Upright</a></td>
+            <td class="m-help">Up-right or rotated features.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="SURF.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.clear.html">clear</a></td>
+            <td class="m-help">Clears the algorithm state&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.compute.html">compute</a></td>
+            <td class="m-help">Computes the descriptors for a set of keypoints detected in an image or image set.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.defaultNorm.html">defaultNorm</a></td>
+            <td class="m-help">Returns the default norm type&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.descriptorSize.html">descriptorSize</a></td>
+            <td class="m-help">Returns the descriptor size in floats&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.descriptorType.html">descriptorType</a></td>
+            <td class="m-help">Returns the descriptor type&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.detect.html">detect</a></td>
+            <td class="m-help">Detects keypoints in an image or image set.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.detectAndCompute.html">detectAndCompute</a></td>
+            <td class="m-help">Detects keypoints and computes their descriptors&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.empty.html">empty</a></td>
+            <td class="m-help">Checks if detector object is empty.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.load.html">load</a></td>
+            <td class="m-help">Loads algorithm from a file or a string&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.save.html">save</a></td>
+            <td class="m-help">Saves the algorithm parameters to a file&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SURF.typeid.html">typeid</a></td>
+            <td class="m-help">Name of the C++ type (RTTI)&nbsp;</td>
+         </tr>
+      </table>
    </body>
 </html>

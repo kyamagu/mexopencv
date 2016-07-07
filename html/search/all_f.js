@@ -1,17 +1,16 @@
 var searchData=
 [
-  ['randmvnormal_2ecpp',['randMVNormal.cpp',['../rand_m_v_normal_8cpp.html',1,'']]],
-  ['readopticalflow_2ecpp',['readOpticalFlow.cpp',['../read_optical_flow_8cpp.html',1,'']]],
-  ['recoverpose_2ecpp',['recoverPose.cpp',['../recover_pose_8cpp.html',1,'']]],
-  ['rectangle_2ecpp',['rectangle.cpp',['../rectangle_8cpp.html',1,'']]],
-  ['rectify3collinear_2ecpp',['rectify3Collinear.cpp',['../rectify3_collinear_8cpp.html',1,'']]],
-  ['remap_2ecpp',['remap.cpp',['../remap_8cpp.html',1,'']]],
-  ['reprojectimageto3d_2ecpp',['reprojectImageTo3D.cpp',['../reproject_image_to3_d_8cpp.html',1,'']]],
-  ['resize_2ecpp',['resize.cpp',['../resize_8cpp.html',1,'']]],
-  ['rodrigues_2ecpp',['Rodrigues.cpp',['../_rodrigues_8cpp.html',1,'']]],
-  ['rotatedrect_5f_2ecpp',['RotatedRect_.cpp',['../_rotated_rect___8cpp.html',1,'']]],
-  ['rotatedrectangleintersection_2ecpp',['rotatedRectangleIntersection.cpp',['../rotated_rectangle_intersection_8cpp.html',1,'']]],
-  ['rows',['rows',['../class_mx_array.html#a2803abb662ecdf6b8178700cf1a7479e',1,'MxArray']]],
-  ['rqdecomp3x3_2ecpp',['RQDecomp3x3.cpp',['../_r_q_decomp3x3_8cpp.html',1,'']]],
-  ['rtrees_5f_2ecpp',['RTrees_.cpp',['../_r_trees___8cpp.html',1,'']]]
+  ['pca_5f_2ecpp',['PCA_.cpp',['../_p_c_a___8cpp.html',1,'']]],
+  ['pencilsketch_2ecpp',['pencilSketch.cpp',['../pencil_sketch_8cpp.html',1,'']]],
+  ['perspectivetransform_2ecpp',['perspectiveTransform.cpp',['../perspective_transform_8cpp.html',1,'']]],
+  ['phasecorrelate_2ecpp',['phaseCorrelate.cpp',['../phase_correlate_8cpp.html',1,'']]],
+  ['pointpolygontest_2ecpp',['pointPolygonTest.cpp',['../point_polygon_test_8cpp.html',1,'']]],
+  ['polylines_2ecpp',['polylines.cpp',['../polylines_8cpp.html',1,'']]],
+  ['precornerdetect_2ecpp',['preCornerDetect.cpp',['../pre_corner_detect_8cpp.html',1,'']]],
+  ['projectpoints_2ecpp',['projectPoints.cpp',['../project_points_8cpp.html',1,'']]],
+  ['psnr_2ecpp',['PSNR.cpp',['../_p_s_n_r_8cpp.html',1,'']]],
+  ['puttext_2ecpp',['putText.cpp',['../put_text_8cpp.html',1,'']]],
+  ['pyrdown_2ecpp',['pyrDown.cpp',['../pyr_down_8cpp.html',1,'']]],
+  ['pyrmeanshiftfiltering_2ecpp',['pyrMeanShiftFiltering.cpp',['../pyr_mean_shift_filtering_8cpp.html',1,'']]],
+  ['pyrup_2ecpp',['pyrUp.cpp',['../pyr_up_8cpp.html',1,'']]]
 ];

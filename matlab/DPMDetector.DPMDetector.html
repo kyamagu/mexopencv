@@ -1,0 +1,49 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.DPMDetector/DPMDetector</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.DPMDetector/DPMDetector</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.DPMDetector/DPMDetector</div>
+      <div class="helpcontent"><p>Load and create a new detector</p>
+
+<pre><code>detector = <a href="DPMDetector.html">cv.DPMDetector</a>(filenames)
+detector = <a href="DPMDetector.html">cv.DPMDetector</a>(filenames, classnames)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>filenames</strong> A set of filenames storing the trained detectors
+(models). Each file contains one model.<ul>
+<li><strong>classnames</strong> (optional) A set of trained models names. If
+it's empty then the name of each model will be
+constructed from the name of file containing the model.
+E.g. the model stored in &quot;/home/user/cat.xml&quot; will get
+the name &quot;cat&quot;.</li>
+</ul>
+</li>
+</ul>
+
+<p>Load the trained models from given .xml files and return a new
+DPMDetector detector.</p>
+
+<p><code>filenames</code> is a string or a cell array of strings specifying
+the location of model files. Optionally the method takes class
+names as a cell array of strings that has the same size to
+filenames. By default, <code>classnames</code> are set to the name of the
+file without xml extension.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DPMDetector.html">cv.DPMDetector</a>, <a href="DPMDetector.detect.html">cv.DPMDetector/detect</a>,
+   <a href="DPMDetector.mat2opencvxml.html">cv.DPMDetector.mat2opencvxml</a></div>
+   </body>
+</html>

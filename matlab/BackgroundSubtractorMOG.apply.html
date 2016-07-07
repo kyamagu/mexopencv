@@ -15,9 +15,10 @@
          </tr>
       </table>
       <div class="title">cv.BackgroundSubtractorMOG/apply</div>
-      <div class="helpcontent"><p>Computes a foreground mask</p>
+      <div class="helpcontent"><p>Updates the background model and computes the foreground mask</p>
 
-<pre><code>fgmask = bs.apply(im, 'OptionName', optionValue, ...)
+<pre><code>fgmask = bs.apply(im)
+fgmask = bs.apply(im, 'OptionName', optionValue, ...)
 </code></pre>
 
 <h2> Input</h2>
@@ -29,15 +30,20 @@
 <h2> Output</h2>
 
 <ul>
-<li><strong>results</strong> The output foreground mask as an 8-bit binary image.</li>
+<li><strong>fgmask</strong> The output foreground mask as a binary image.</li>
 </ul>
 
 <h2> Options</h2>
 
 <ul>
-<li><strong>LearningRate</strong> default 0.</li>
+<li><strong>LearningRate</strong> The value between 0 and 1 that indicates how
+fast the background model is learnt. Negative parameter
+value makes the algorithm to use some automatically chosen
+learning rate. 0 means that the background model is not
+updated at all, 1 means that the background model is
+completely reinitialized from the last frame. default -1</li>
 </ul>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BackgroundSubtractorMOG.html">cv.BackgroundSubtractorMOG</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BackgroundSubtractorMOG.getBackgroundImage.html">cv.BackgroundSubtractorMOG/getBackgroundImage</a></div>
       <!--Method-->
       <div class="sectiontitle">Method Details</div>
       <table class="class-details">

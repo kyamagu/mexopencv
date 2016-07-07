@@ -1,0 +1,101 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.FastHoughTransform</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.FastHoughTransform</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.FastHoughTransform</div>
+      <div class="helpcontent"><p>Calculates 2D Fast Hough transform of an image</p>
+
+<pre><code>dst = <a href="FastHoughTransform.html">cv.FastHoughTransform</a>(src)
+dst = <a href="FastHoughTransform.html">cv.FastHoughTransform</a>(src, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> The source (input) image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> The destination image, result of transformation.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>DDepth</strong> The depth of destination image. Default <code>int32</code>.</li>
+<li><strong>Op</strong> The operation to be applied.
+This specifies binary operations, that is such ones which involve two
+operands. Formally, a binary operation <code>f</code> on a set <code>S</code> is a binary
+relation that maps elements of the Cartesian product <code>SxS</code> to <code>S</code>:
+<code>f: SxS -&gt; S</code>. Default 'Addition'. One of<ul>
+<li><strong>Minimum</strong> Binary minimum operation. The constant specifies the
+binary minimum operation <code>f</code> that is defined as follows:
+<code>f(x, y) = min(x, y)</code>.</li>
+<li><strong>Maximum</strong> Binary maximum operation. The constant specifies the
+binary maximum operation <code>f</code> that is defined as follows:
+<code>f(x, y) = max(x, y)</code>.</li>
+<li><strong>Addition</strong> Binary addition operation. The constant specifies the
+binary addition operation <code>f</code> that is defined as follows:
+<code>f(x, y) = x + y</code>.</li>
+<li><strong>Average</strong> Binary average operation. The constant specifies the
+binary average operation <code>f</code> that is defined as follows:
+<code>f(x, y) = (x + y)/2</code>.</li>
+</ul>
+</li>
+<li><strong>AngleRange</strong> The part of Hough space to calculate.
+This specifies the part of Hough space to calculate. Each member
+specifies primarily direction of lines (horizontal or vertical) and
+the direction of angle changes. Direction of angle changes is from
+multiples of 90 to odd multiples of 45. The image considered to be
+written top-down and left-to-right. Angles are started from vertical
+line and go clockwise. Separate quarters and halves are written in
+orientation they should be in full Hough space. Default 'ARO<em>315</em>135'.
+One of:<ul>
+<li><strong>ARO_0_45</strong> Vertical primarily direction and clockwise angle
+changes.</li>
+<li><strong>ARO_45_90</strong> Horizontal primarily direction and counterclockwise
+angle changes.</li>
+<li><strong>ARO_90_135</strong> Horizontal primarily direction and clockwise angle
+changes.</li>
+<li><strong>ARO_315_0</strong> Vertical primarily direction and counterclockwise
+angle changes.</li>
+<li><strong>ARO_315_45</strong> Vertical primarily direction.</li>
+<li><strong>ARO_45_135</strong> Horizontal primarily direction.</li>
+<li><strong>ARO_315_135</strong> Full set of directions.</li>
+<li><strong>ARO_CTR_HOR</strong> <code>90 +/- atan(0.5)</code>, interval approximately from
+<code>64.5</code> to <code>116.5</code> degrees. It is used for calculating Fast Hough
+Transform for images skewed by <code>atan(0.5)</code>.</li>
+<li><strong>ARO_CTR_VER</strong> <code>0 +/- atan(0.5)</code>, interval approximately from
+<code>333.5</code> (<code>-26.5</code>) to <code>26.5</code> degrees. It is used for calculating
+Fast Hough Transform for images skewed by <code>atan(0.5)</code>.</li>
+</ul>
+</li>
+<li><strong>MakeSkew</strong> Specifies to do or not to do skewing of Hough transform
+image. The enum specifies to do or not to do skewing of Hough
+transform image so it would be no cycling in Hough transform image
+through borders of image. Default 'Deskew'. One of:<ul>
+<li><strong>Raw</strong> Use raw cyclic image.</li>
+<li><strong>Deskew</strong> Prepare deskewed image.</li>
+</ul>
+</li>
+</ul>
+
+<p>The function calculates the fast Hough transform for full, half or quarter
+range of angles.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="HoughPoint2Line.html">cv.HoughPoint2Line</a>, <a href="HoughLines.html">cv.HoughLines</a>, hough, <a href="HoughLines.html">HoughLines</a>, houghpeaks</div>
+   </body>
+</html>

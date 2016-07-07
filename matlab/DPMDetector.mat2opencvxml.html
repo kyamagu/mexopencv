@@ -1,0 +1,69 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.DPMDetector.mat2opencvxml</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.DPMDetector.mat2opencvxml</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.DPMDetector.mat2opencvxml</div>
+      <div class="helpcontent"><p>Convert DPM 2007 model (MAT) to cascade model (XML)</p>
+
+<pre><code><a href="DPMDetector.html">cv.DPMDetector</a>.mat2opencvxml(matpath, xmlpath)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>matpath</strong> input MAT filename, path to the DPM VOC 2007
+model.</li>
+<li><strong>xmlpath</strong> output XML filename, path to the OpenCV file
+storage model.</li>
+</ul>
+
+<p>The method converts [Felzenszwalb2010] model files to xml
+format specified by OpenCV's implementation. The usage is the
+following:</p>
+
+<pre><code>matpath = 'VOC2007/cat_final.mat';
+xmlpath = 'cat.xml';
+<a href="DPMDetector.html">cv.DPMDetector</a>.mat2opencvxml(matpath, xmlpath);
+</code></pre>
+
+<p>Check the latest models in:</p>
+
+<ul>
+<li><a href="http://www.cs.brown.edu/~pff/latent/">http://www.cs.brown.edu/~pff/latent/</a></li>
+<li><a href="http://www.cs.berkeley.edu/~rbg/latent/index.html">http://www.cs.berkeley.edu/~rbg/latent/index.html</a></li>
+<li><a href="https://github.com/rbgirshick/voc-dpm">https://github.com/rbgirshick/voc-dpm</a></li>
+</ul>
+
+<p>This <code>mat2opencvxml</code> utility is taken from:
+<a href="https://github.com/Itseez/opencv_extra/blob/3.1.0/testdata/cv/dpm/mat2opencvxml.m">https://github.com/Itseez/opencv_extra/blob/3.1.0/testdata/cv/dpm/mat2opencvxml.m</a></p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DPMDetector.html">cv.DPMDetector</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>true</td>
+         </tr>
+      </table>
+   </body>
+</html>

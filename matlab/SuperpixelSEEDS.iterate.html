@@ -1,0 +1,73 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SuperpixelSEEDS/iterate</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SuperpixelSEEDS/iterate</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SuperpixelSEEDS/iterate</div>
+      <div class="helpcontent"><p>Calculates the superpixel segmentation on a given image with the initialized parameters in the object</p>
+
+<pre><code>obj.iterate(img)
+obj.iterate(img, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>img</strong> Input image. Supported formats: <code>uint8</code>, <code>uint16</code>,
+<code>single</code>. Image size &amp; number of channels must match with
+the initialized image size &amp; channels with the
+constructor. It should be in HSV or Lab color space. Lab
+is a bit better, but also slower.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>NumIterations</strong> Number of iterations. Higher number improves
+the result. default 4</li>
+</ul>
+
+<p>The function computes the superpixels segmentation of an image
+with the parameters initialized with the constructor. The
+algorithms starts from a grid of superpixels and then refines
+the boundaries by proposing updates of blocks of pixels that lie
+at the boundaries from large to smaller size, finalizing with
+proposing pixel updates. An illustrative example can be seen
+below.</p>
+
+<p>&lt;&lt;<a href="http://docs.opencv.org/3.1.0/superpixels_blocks2.png">http://docs.opencv.org/3.1.0/superpixels_blocks2.png</a>&gt;&gt;</p>
+
+<p>This function can be called again for other images without the
+need of initializing the algorithm with constructor. This save
+the computational cost of allocating memory for all the
+structures of the algorithm.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SuperpixelSEEDS.getLabels.html">cv.SuperpixelSEEDS/getLabels</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

@@ -1,0 +1,55 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.balanceWhite</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.balanceWhite</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.balanceWhite</div>
+      <div class="helpcontent"><p>The function implements different algorithm of automatic white balance</p>
+
+<pre><code>dst = <a href="balanceWhite.html">cv.balanceWhite</a>(src)
+dst = <a href="balanceWhite.html">cv.balanceWhite</a>(src, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> input image (RGB or gray), integer or floating point image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> output image, same size and type as input <code>src</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Type</strong> various white balance algorithms. One of:<ul>
+<li><strong>Simple</strong> (default) perform smart histogram adjustments (ignoring
+4% pixels with minimal and maximal values) for each channel.</li>
+<li><strong>GrayWorld</strong> currently not implemented!</li>
+</ul>
+</li>
+<li><strong>InputMin</strong> minimum value in the input image, default 0.0</li>
+<li><strong>InputMax</strong> maximum value in the input image, default 255.0</li>
+<li><strong>OutputMin</strong> minimum value in the output image, default 0.0</li>
+<li><strong>OutputMax</strong> maximum value in the output image, default 255.0</li>
+</ul>
+
+<p>The function tries to map image's white color to perceptual white (this can
+be violated due to specific illumination or camera settings).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="cvtColor.html">cv.cvtColor</a>, <a href="equalizeHist.html">cv.equalizeHist</a></div>
+   </body>
+</html>

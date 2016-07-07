@@ -1,0 +1,63 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.autowbGrayworld</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.autowbGrayworld</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.autowbGrayworld</div>
+      <div class="helpcontent"><p>Implements a simple grayworld white balance algorithm</p>
+
+<pre><code>dst = <a href="autowbGrayworld.html">cv.autowbGrayworld</a>(src)
+dst = <a href="autowbGrayworld.html">cv.autowbGrayworld</a>(src, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Input array. Currently only works on color images of type <code>uint8</code>
+(3-channels).</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Output array of the same size and type as <code>src</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Thresh</strong> Maximum saturation for a pixel to be included in the gray-world
+assumption. default 0.5</li>
+</ul>
+
+<p>The function <a href="autowbGrayworld.html">cv.autowbGrayworld</a> scales the values of pixels based on a
+gray-world assumption which states that the average of all channels
+should result in a gray image.</p>
+
+<p>This function adds a modification which thresholds pixels based on their
+saturation value and only uses pixels below the provided threshold in
+finding average pixel values.</p>
+
+<p>Saturation is calculated using the following for a 3-channel RGB image per
+pixel <code>I</code> and is in the range <code>[0,1]</code>:</p>
+
+<pre><code> Saturation[I] = (max(R,G,B) - min(R,G,B)) / max(R,G,B)
+</code></pre>
+
+<p>A threshold of 1 means that all pixels are used to white-balance, while a
+threshold of 0 means no pixels are used. Lower thresholds are useful in
+white-balancing saturated images.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="balanceWhite.html">cv.balanceWhite</a></div>
+   </body>
+</html>

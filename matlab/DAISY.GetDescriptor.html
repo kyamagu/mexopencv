@@ -1,0 +1,64 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.DAISY/GetDescriptor</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.DAISY/GetDescriptor</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.DAISY/GetDescriptor</div>
+      <div class="helpcontent"><p>Compute descriptor for the specified position.</p>
+
+<pre><code>descriptor = obj.GetDescriptor(y, x, orientation)
+[...] = obj.GetDescriptor(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>y</strong> position y on image.</li>
+<li><strong>x</strong> position x on image.</li>
+<li><strong>orientation</strong> orientation on image (0-&gt;360).</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>descriptor</strong> Output descriptor array computed at pixel.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>H</strong> optional 3x3 homography matrix for warped grid.
+Not set by default</li>
+<li><strong>Unnormalized</strong> set to return the unnormalized descriptor.
+default false</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DAISY.compute.html">cv.DAISY/compute</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

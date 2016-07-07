@@ -1,0 +1,62 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.rollingGuidanceFilter</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.rollingGuidanceFilter</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.rollingGuidanceFilter</div>
+      <div class="helpcontent"><p>Applies the rolling guidance filter to an image</p>
+
+<pre><code>dst = <a href="rollingGuidanceFilter.html">cv.rollingGuidanceFilter</a>(src)
+dst = <a href="rollingGuidanceFilter.html">cv.rollingGuidanceFilter</a>(src, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Source 8-bit or floating-point, 1-channel or 3-channel image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Destination image of the same size and type as <code>src</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Diameter</strong> Diameter of each pixel neighborhood that is used during
+filtering. If it is non-positive, it is computed from <code>SigmaSpace</code>.
+default -1</li>
+<li><strong>SigmaColor</strong> Filter sigma in the color space. A larger value of the
+parameter means that farther colors within the pixel neighborhood (see
+<code>SigmaSpace</code>) will be mixed together, resulting in larger areas of
+semi-equal color. default 25.0</li>
+<li><strong>SigmaSpace</strong> Filter sigma in the coordinate space. A larger value of the
+parameter means that farther pixels will influence each other as long
+as their colors are close enough (see <code>SigmaColor</code>). When <code>Diameter&gt;0</code>,
+it specifies the neighborhood size regardless of <code>SigmaSpace</code>.
+Otherwise, <code>Diameter</code> is proportional to <code>SigmaSpace</code>. default 3.0</li>
+<li><strong>NumIter</strong> Number of iterations of joint edge-preserving filtering
+applied on the source image. default 4</li>
+<li><strong>BorderType</strong> Border mode used to extrapolate pixels outside of the
+image. See <a href="copyMakeBorder.html">cv.copyMakeBorder</a>. default 'Default'</li>
+</ul>
+
+<p>Note that <a href="rollingGuidanceFilter.html">cv.rollingGuidanceFilter</a> uses <a href="jointBilateralFilter.html">cv.jointBilateralFilter</a> as the
+edge-preserving filter.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="jointBilateralFilter.html">cv.jointBilateralFilter</a>, <a href="bilateralFilter.html">cv.bilateralFilter</a>,
+   <a href="AdaptiveManifoldFilter.amFilter.html">cv.AdaptiveManifoldFilter.amFilter</a></div>
+   </body>
+</html>

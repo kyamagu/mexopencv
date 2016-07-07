@@ -1,0 +1,76 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.niBlackThreshold</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.niBlackThreshold</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.niBlackThreshold</div>
+      <div class="helpcontent"><p>Applies Niblack thresholding to input image</p>
+
+<pre><code>dst = <a href="niBlackThreshold.html">cv.niBlackThreshold</a>(src, delta)
+dst = <a href="niBlackThreshold.html">cv.niBlackThreshold</a>(src, delta, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> Source 8-bit single-channel image.</li>
+<li><strong>delta</strong> Constant multiplied with the standard deviation and subtracted
+from the mean (<code>mean + k * std</code>). Normally, it is taken to be a real
+number between 0 and 1.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> Destination image of the same size and the same type as <code>src</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>MaxValue</strong> Non-zero value assigned to the pixels for which the condition
+is satisfied, used with the <code>Binary</code> and <code>BinaryInv</code> thresholding
+types. default 255</li>
+<li><strong>Type</strong> Thresholding type, default 'Binary'. One of:<ul>
+<li><strong>Binary</strong>    <code>dst(x,y) = (src(x,y) &gt; thresh) ? maxValue : 0</code></li>
+<li><strong>BinaryInv</strong> <code>dst(x,y) = (src(x,y) &gt; thresh) ? 0 : maxValue</code></li>
+</ul>
+</li>
+<li><strong>BlockSize</strong> Size of a pixel neighborhood that is used to calculate a
+threshold value for the pixel: 3, 5, 7, and so on. default 5</li>
+</ul>
+
+<p>The function transforms a grayscale image to a binary image according to the
+formulae:</p>
+
+<ul>
+<li><p><strong>Binary</strong></p>
+<p>                   | maxValue, if src(x,y) &gt; T(x,y)
+dst(x,y) = |
+| 0, otherwise</p>
+</li>
+<li><p><strong>BinaryInv</strong></p>
+<p>                   | 0, if src(x,y) &gt; T(x,y)
+dst(x,y) = |
+| maxValue, otherwise</p>
+</li>
+</ul>
+
+<p>where <code>T(x,y)</code> is a threshold calculated individually for each pixel.</p>
+
+<p>The threshold value <code>T(x,y)</code> is the mean minus <code>delta</code> times standard
+deviation of <code>BlockSize x BlockSize</code> neighborhood of <code>(x,y)</code>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="threshold.html">cv.threshold</a>, <a href="adaptiveThreshold.html">cv.adaptiveThreshold</a></div>
+   </body>
+</html>

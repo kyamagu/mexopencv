@@ -1,0 +1,51 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SuperpixelLSC/SuperpixelLSC</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SuperpixelLSC/SuperpixelLSC</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SuperpixelLSC/SuperpixelLSC</div>
+      <div class="helpcontent"><p>Class implementing the LSC (Linear Spectral Clustering) superpixels</p>
+
+<pre><code>obj = <a href="SuperpixelLSC.html">cv.SuperpixelLSC</a>(img)
+obj = <a href="SuperpixelLSC.html">cv.SuperpixelLSC</a>(img, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>img</strong> Image to segment.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>RegionSize</strong> Chooses an average superpixel size measured in
+pixels. default 10</li>
+<li><strong>Ratio</strong> Chooses the enforcement of superpixel compactness
+factor of superpixel. default 0.075</li>
+</ul>
+
+<p>The function initializes a SuperpixelLSC object for the input
+image. It sets the parameters of superpixel algorithm, which
+are: <code>RegionSize</code> and <code>Ratio</code>. It preallocate some buffers for
+future computing iterations over the given image. An example of
+LSC is ilustrated in the following picture.
+For enanched results it is recommended for color images to
+preprocess image with little gaussian blur with a small 3x3
+kernel and additional conversion into CieLAB color space.</p>
+
+<p>&lt;&lt;<a href="http://docs.opencv.org/3.1.0/superpixels_lsc.png">http://docs.opencv.org/3.1.0/superpixels_lsc.png</a>&gt;&gt;</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SuperpixelLSC.iterate.html">cv.SuperpixelLSC/iterate</a></div>
+   </body>
+</html>

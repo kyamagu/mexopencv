@@ -1,0 +1,63 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.DisparityWLSFilter.computeBadPixelPercent</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.DisparityWLSFilter.computeBadPixelPercent</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.DisparityWLSFilter.computeBadPixelPercent</div>
+      <div class="helpcontent"><p>Function for computing the percent of &quot;bad&quot; pixels in the disparity map</p>
+
+<pre><code>prcnt = <a href="DisparityWLSFilter.html">cv.DisparityWLSFilter</a>.computeBadPixelPercent(GT, src)
+prcnt = <a href="DisparityWLSFilter.html">cv.DisparityWLSFilter</a>.computeBadPixelPercent(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>GT</strong> ground truth disparity map (<code>int16</code>).</li>
+<li><strong>src</strong> disparity map to evaluate (<code>int16</code>).</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>prcnt</strong> returns percent of &quot;bad&quot; pixels between <code>GT</code> and
+<code>src</code> (pixels where error is higher than a specified
+threshold).</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>ROI</strong> region of interest <code>[x,y,w,h]</code>. Not set by default.</li>
+<li><strong>Thresh</strong> threshold used to determine &quot;bad&quot; pixels. default 24</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DisparityWLSFilter.computeMSE.html">cv.DisparityWLSFilter.computeMSE</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>true</td>
+         </tr>
+      </table>
+   </body>
+</html>

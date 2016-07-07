@@ -1,0 +1,54 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.DisparityWLSFilter/DisparityWLSFilter</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.DisparityWLSFilter/DisparityWLSFilter</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.DisparityWLSFilter/DisparityWLSFilter</div>
+      <div class="helpcontent"><p>Factory method to create instance of DisparityWLSFilter</p>
+
+<pre><code>obj = <a href="DisparityWLSFilter.html">cv.DisparityWLSFilter</a>(matcher_left)
+obj = <a href="DisparityWLSFilter.html">cv.DisparityWLSFilter</a>(use_confidence)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>matcher_left</strong> stereo matcher instance that will be used
+with the filter. An object of one of the following
+classes:<ul>
+<li><strong>cv.StereoBM</strong> stereo correspondence using the block
+matching algorithm.</li>
+<li><strong>cv.StereoSGBM</strong> stereo correspondence using the
+semi-global block matching algorithm.</li>
+</ul>
+</li>
+<li><strong>use_confidence</strong> Boolean. Filtering with confidence requires
+two disparity maps (for the left and right views) and is
+approximately two times slower. However, quality is
+typically significantly better.</li>
+</ul>
+
+<p>The first variant is a convenience factory method that creates
+an instance of DisparityWLSFilter and sets up all the relevant
+filter parameters automatically based on the matcher instance.
+Currently supports only <a href="StereoBM.html">cv.StereoBM</a> and <a href="StereoSGBM.html">cv.StereoSGBM</a>.</p>
+
+<p>The second variant is a more generic factory method, that create
+instance of DisparityWLSFilter and execute basic initialization
+routines. When using this method you will need to set-up the
+ROI, matchers and other parameters by yourself.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DisparityWLSFilter.filter.html">cv.DisparityWLSFilter/filter</a>,
+   <a href="DisparityWLSFilter.createRightMatcher.html">cv.DisparityWLSFilter.createRightMatcher</a></div>
+   </body>
+</html>

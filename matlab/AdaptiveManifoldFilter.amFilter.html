@@ -1,0 +1,75 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.AdaptiveManifoldFilter.amFilter</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.AdaptiveManifoldFilter.amFilter</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.AdaptiveManifoldFilter.amFilter</div>
+      <div class="helpcontent"><p>Simple one-line Adaptive Manifold Filter call</p>
+
+<pre><code>dst = <a href="AdaptiveManifoldFilter.html">cv.AdaptiveManifoldFilter</a>.amFilter(src, joint)
+dst = <a href="AdaptiveManifoldFilter.html">cv.AdaptiveManifoldFilter</a>.amFilter(src, joint, 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> filtering image with any numbers of channels.</li>
+<li><strong>joint</strong> joint (also called as guided) image or array of
+images with any numbers of channels.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> output image.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>SigmaS</strong> spatial standard deviation. default 16.0</li>
+<li><strong>SigmaR</strong> color space standard deviation, it is similar to
+the sigma in the color space into <a href="bilateralFilter.html">cv.bilateralFilter</a>.
+default 0.2</li>
+<li><strong>AdjustOutliers</strong> optional, specify perform outliers adjust
+operation or not, (Eq. 9) in the original paper.
+default false</li>
+</ul>
+
+<h2> Note</h2>
+
+<p>Joint images with <code>uint8</code> and <code>uint16</code> depth converted to images
+with <code>single</code> depth and [0; 1] color range before processing.
+Hence color space <code>SigmaR</code> must be in [0; 1] range, unlike same
+sigmas in <a href="bilateralFilter.html">cv.bilateralFilter</a> and <a href="DTFilter.html">cv.DTFilter</a>.dtFilter functions.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="AdaptiveManifoldFilter.filter.html">cv.AdaptiveManifoldFilter/filter</a>, <a href="bilateralFilter.html">cv.bilateralFilter</a>,
+   <a href="DTFilter.DTFilter.html">cv.DTFilter/DTFilter</a>, <a href="GuidedFilter.GuidedFilter.html">cv.GuidedFilter/GuidedFilter</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>true</td>
+         </tr>
+      </table>
+   </body>
+</html>

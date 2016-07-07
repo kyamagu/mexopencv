@@ -1,0 +1,63 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.DPMDetector/detect</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.DPMDetector/detect</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.DPMDetector/detect</div>
+      <div class="helpcontent"><p>Detects objects</p>
+
+<pre><code>objects = detector.detect(img)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>img</strong> An image where objects are to be detected
+(8-bit integer or 64-bit floating-point color image).</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>objects</strong> The detections. A struct array of detected objects
+with the following fields:<ul>
+<li><strong>rect</strong> rectangle <code>[x,y,w,h]</code> of the object</li>
+<li><strong>score</strong> score of the detection</li>
+<li><strong>class</strong> name of the object class</li>
+</ul>
+</li>
+</ul>
+
+<p>Find rectangular regions in the given image that are likely to
+contain objects of loaded classes (models) and corresponding
+confidence levels.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DPMDetector.DPMDetector.html">cv.DPMDetector/DPMDetector</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

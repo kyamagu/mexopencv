@@ -1,0 +1,55 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SuperpixelLSC/enforceLabelConnectivity</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SuperpixelLSC/enforceLabelConnectivity</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SuperpixelLSC/enforceLabelConnectivity</div>
+      <div class="helpcontent"><p>Enforce label connectivity</p>
+
+<pre><code>obj.enforceLabelConnectivity()
+obj.enforceLabelConnectivity('OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>MinElementSize</strong> The minimum element size in percents that
+should be absorbed into a bigger superpixel. Given
+resulted average superpixel size valid value should be in
+0-100 range, 25 means that less then a quarter sized
+superpixel should be absorbed, this is default. default 20</li>
+</ul>
+
+<p>The function merge component that is too small, assigning the
+previously found adjacent label to this component. Calling this
+function may change the final number of superpixels.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SuperpixelLSC.iterate.html">cv.SuperpixelLSC/iterate</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

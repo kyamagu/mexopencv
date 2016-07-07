@@ -1,0 +1,68 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.StructuredEdgeDetection/StructuredEdgeDetection</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.StructuredEdgeDetection/StructuredEdgeDetection</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.StructuredEdgeDetection/StructuredEdgeDetection</div>
+      <div class="helpcontent"><p>The only constructor</p>
+
+<pre><code>obj = <a href="StructuredEdgeDetection.html">cv.StructuredEdgeDetection</a>(model)
+obj = <a href="StructuredEdgeDetection.html">cv.StructuredEdgeDetection</a>(model, howToGetFeatures)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>model</strong> name of the file where the model is stored.</li>
+<li><strong>howToGetFeatures</strong> optional name of MATLAB M-function that
+implements custom feature extractor. A helper function for
+training part of: &quot;P. Dollar and C. L. Zitnick. Structured
+Forests for Fast Edge Detection, 2013&quot;. You need it only
+if you would like to train your own forest, otherwise
+leave it unspecified for the default implementation. See
+example below.</li>
+</ul>
+
+<h2> Example</h2>
+
+<p>The following is an example of a custom feature extractor
+MATLAB function:</p>
+
+<pre><code>% This function extracts feature channels from src. The
+% StructureEdgeDetection uses this feature space to detect
+% edges.
+function features = myRFFeatureGetter(src, opts)
+    % src: source image to extract features
+    % features: output n-channel floating-point feature matrix
+    % opts: struct of options
+    gnrmRad = opts.gradientNormalizationRadius;
+    gsmthRad = opts.gradientSmoothingRadius;
+    shrink = opts.shrinkNumber;
+    outNum = opts.numberOfOutputChannels;
+    gradNum = opts.numberOfGradientOrientations;
+
+    nsize = [size(src,1) size(src,2)] ./ shrink;
+    features = zeros([nsize outNum], 'single');
+    % ... here your feature extraction code
+end
+</code></pre>
+
+<p>TODO: Custom extractor is not internally used in the current
+<a href="StructuredEdgeDetection.html">cv.StructuredEdgeDetection</a> implementation. See
+<a href="http://docs.opencv.org/3.1.0/d2/d59/tutorial_ximgproc_training.html">http://docs.opencv.org/3.1.0/d2/d59/tutorial_ximgproc_training.html</a>
+for more information about training your own structured forest
+(it uses an external MATLAB toolbox for the training part).</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="StructuredEdgeDetection.detectEdges.html">cv.StructuredEdgeDetection/detectEdges</a></div>
+   </body>
+</html>

@@ -1,0 +1,69 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.covarianceEstimation</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.covarianceEstimation</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.covarianceEstimation</div>
+      <div class="helpcontent"><p>Computes the estimated covariance matrix of an image using the sliding window forumlation</p>
+
+<pre><code>dst = <a href="covarianceEstimation.html">cv.covarianceEstimation</a>(src, windowSize)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>src</strong> The source image. Input image must be of a complex type
+and floating-point type. Input should be arranged as a 2-channels
+matrix <code>size(src,3)==2</code> (corresponding to real and imaginary parts).</li>
+<li><strong>windowSize</strong> The number of rows and cols in the window
+<code>[windowRows,windowCols]</code>.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>dst</strong> The destination estimated covariance matrix. Output matrix will be
+of size <code>[windowRows*windowCols, windowRows*windowCols, 2]</code> (channels
+correspond to real and imaginary parts).</li>
+</ul>
+
+<p>The window size parameters control the accuracy of the estimation. The
+sliding window moves over the entire image from the top-left corner to the
+bottom right corner. Each location of the window represents a sample. If the
+window is the size of the image, then this gives the exact covariance
+matrix. For all other cases, the sizes of the window will impact the number
+of samples and the number of elements in the estimated covariance matrix.</p>
+
+<p>Algorithmic details of this algorithm can be found at [1].
+A previous and less efficient version of the algorithm can be found [2].</p>
+
+<h2> References</h2>
+
+<p>[1]:</p>
+
+<blockquote>
+<p>O. Green, Y. Birk, &quot;A Computationally Efficient Algorithm for the 2D
+Covariance Method&quot;, ACM/IEEE International Conference on High Performance
+Computing, Networking, Storage and Analysis, Denver, Colorado, 2013</p>
+</blockquote>
+
+<p>[2]:</p>
+
+<blockquote>
+<p>O. Green, L. David, A. Galperin, Y. Birk, &quot;Efficient parallel computation
+of the estimated covariance matrix&quot;, arXiv, 2013</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="calcCovarMatrix.html">cv.calcCovarMatrix</a></div>
+   </body>
+</html>

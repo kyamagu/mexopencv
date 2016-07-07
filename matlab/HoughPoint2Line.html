@@ -1,0 +1,69 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.HoughPoint2Line</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.HoughPoint2Line</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.HoughPoint2Line</div>
+      <div class="helpcontent"><p>Calculates coordinates of line segment corresponded by point in Hough space</p>
+
+<pre><code>line = <a href="HoughPoint2Line.html">cv.HoughPoint2Line</a>(houghPoint, srcImgInfo)
+line = <a href="HoughPoint2Line.html">cv.HoughPoint2Line</a>(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>houghPoint</strong> Point in Hough space <code>[x,y]</code>.</li>
+<li><strong>srcImgInfo</strong> The source (input) image of Hough transform.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>line</strong> Coordinates of line segment corresponded by point in Hough space,
+a 4-element integer vector <code>[vx,vy, ux,uy]</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>AngleRange</strong> The part of Hough space where point is situated. See
+<a href="FastHoughTransform.html">cv.FastHoughTransform</a>, default 'ARO<em>315</em>135'.</li>
+<li><strong>MakeSkew</strong> Specifies to do or not to do image skewing. See
+<a href="FastHoughTransform.html">cv.FastHoughTransform</a>, default 'Deskew'.</li>
+<li><strong>Rules</strong> Specifies strictness of line segment calculating. This specifies
+the degree of rules validation. This can be used, for example, to
+choose a proper way of input arguments validation.
+Default 'IgnoreBorders'. One of:<ul>
+<li><strong>Strict</strong> Validate each rule in a proper way.</li>
+<li><strong>IgnoreBorders</strong> Skip validations of image borders.</li>
+</ul>
+</li>
+</ul>
+
+<p>The function calculates coordinates of line segment corresponded by point in
+Hough space.</p>
+
+<h2> Notes</h2>
+
+<ul>
+<li>If <code>Rules</code> parameter set to 'Strict' then returned line cut along the
+border of source image.</li>
+<li>If <code>Rules</code> parameter set to 'IgnoreBorders' then in case of point, which
+belongs the incorrect part of Hough image, returned line will not
+intersect source image.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FastHoughTransform.html">cv.FastHoughTransform</a>, <a href="HoughLines.html">cv.HoughLines</a>, hough, <a href="HoughLines.html">HoughLines</a>, houghpeaks</div>
+   </body>
+</html>

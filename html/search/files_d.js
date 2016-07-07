@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['onepassstabilizer_5f_2ecpp',['OnePassStabilizer_.cpp',['../_one_pass_stabilizer___8cpp.html',1,'']]],
-  ['orb_5f_2ecpp',['ORB_.cpp',['../_o_r_b___8cpp.html',1,'']]]
+  ['niblackthreshold_2ecpp',['niBlackThreshold.cpp',['../ni_black_threshold_8cpp.html',1,'']]],
+  ['norm_2ecpp',['norm.cpp',['../norm_8cpp.html',1,'']]],
+  ['normalbayesclassifier_5f_2ecpp',['NormalBayesClassifier_.cpp',['../_normal_bayes_classifier___8cpp.html',1,'']]],
+  ['normalize_2ecpp',['normalize.cpp',['../normalize_8cpp.html',1,'']]]
 ];

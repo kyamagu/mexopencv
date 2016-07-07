@@ -1,0 +1,59 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.SuperpixelSLIC/getLabelContourMask</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.SuperpixelSLIC/getLabelContourMask</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.SuperpixelSLIC/getLabelContourMask</div>
+      <div class="helpcontent"><p>Returns the mask of the superpixel segmentation stored in object</p>
+
+<pre><code>img = obj.getLabelContourMask()
+img = obj.getLabelContourMask('OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>img</strong> Return <code>logical</code> image mask where 1 indicates that the
+pixel is a superpixel border, and 0 otherwise.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>ThickLine</strong> If false, the border is only one pixel wide,
+otherwise all pixels at the border are masked.
+default true</li>
+</ul>
+
+<p>The function return the boundaries of the superpixel
+segmentation.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="SuperpixelSLIC.iterate.html">cv.SuperpixelSLIC/iterate</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

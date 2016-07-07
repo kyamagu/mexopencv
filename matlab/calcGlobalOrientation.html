@@ -17,17 +17,17 @@
       <div class="title">cv.calcGlobalOrientation</div>
       <div class="helpcontent"><p>Calculates a global motion orientation in a selected region</p>
 
-<pre><code>o = <a href="calcGlobalOrientation.html">cv.calcGlobalOrientation</a>(orientation, mask, mhi, timestamp, duration)
+<pre><code>orient = <a href="calcGlobalOrientation.html">cv.calcGlobalOrientation</a>(orientation, mask, mhi, timestamp, duration)
 </code></pre>
 
 <h2> Input</h2>
 
 <ul>
-<li><strong>orientation</strong> Motion gradient orientation image calculated by the function
-cv.calcMotionGradient</li>
-<li><strong>mask</strong> Mask image. It may be a conjunction of a valid gradient mask, also
-calculated by <a href="calcMotionGradient.html">cv.calcMotionGradient</a>, and the mask of a region whose
-direction needs to be calculated.</li>
+<li><strong>orientation</strong> Motion gradient orientation image calculated by the
+function cv.calcMotionGradient</li>
+<li><strong>mask</strong> Mask image. It may be a conjunction of a valid gradient mask,
+also calculated by <a href="calcMotionGradient.html">cv.calcMotionGradient</a>, and the mask of a region
+whose direction needs to be calculated.</li>
 <li><strong>mhi</strong> Motion history image calculated by <a href="updateMotionHistory.html">cv.updateMotionHistory</a>.</li>
 <li><strong>timestamp</strong> Timestamp passed to <a href="updateMotionHistory.html">cv.updateMotionHistory</a>.</li>
 <li><strong>duration</strong> Maximum duration of a motion track in milliseconds, passed to
@@ -37,14 +37,14 @@ direction needs to be calculated.</li>
 <h2> Output</h2>
 
 <ul>
-<li><strong>o</strong> Output global orientation.</li>
+<li><strong>orient</strong> Output global orientation.</li>
 </ul>
 
 <p>The function calculates an average motion direction in the selected region
-and returns the angle between 0 degrees and 360 degrees. The average direction
-is computed from the weighted orientation histogram, where a recent motion has
-a larger weight and the motion occurred in the past has a smaller weight, as
-recorded in mhi.</p>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="updateMotionHistory.html">cv.updateMotionHistory</a> <a href="calcMotionGradient.html">cv.calcMotionGradient</a></div>
+and returns the angle between 0 degrees and 360 degrees. The average
+direction is computed from the weighted orientation histogram, where a
+recent motion has a larger weight and the motion occurred in the past has a
+smaller weight, as recorded in <code>mhi</code>.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="updateMotionHistory.html">cv.updateMotionHistory</a>, <a href="calcMotionGradient.html">cv.calcMotionGradient</a></div>
    </body>
 </html>

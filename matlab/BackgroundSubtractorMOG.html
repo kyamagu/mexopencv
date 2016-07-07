@@ -17,16 +17,21 @@
       <div class="title">cv.BackgroundSubtractorMOG</div>
       <div class="helpcontent"><p>Gaussian Mixture-based Backbround/Foreground Segmentation Algorithm</p>
 
-<p>The class implements the algorithm described in:</p>
+<p>The class implements the algorithm described in [KB2001].</p>
 
-<p>P. KadewTraKuPong and R. Bowden,
-An improved adaptive background mixture model for real-time tracking with
-shadow detection, Proc. 2nd European Workshp on Advanced Video-Based
-Surveillance Systems, 2001.</p>
+<h2> References</h2>
 
-<a href="http://personal.ee.surrey.ac.uk/Personal/R.Bowden/publications/avbs01/avbs01.pdf">http://personal.ee.surrey.ac.uk/Personal/R.Bowden/publications/avbs01/avbs01.pdf</a></div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BackgroundSubtractorMOG.BackgroundSubtractorMOG.html">cv.BackgroundSubtractorMOG/BackgroundSubtractorMOG</a>
-  <a href="BackgroundSubtractorMOG.apply.html">cv.BackgroundSubtractorMOG/apply</a>
-  <a href="BackgroundSubtractorMOG.getBackgroundImage.html">cv.BackgroundSubtractorMOG/getBackgroundImage</a></div>
+<p>[KB2001]:</p>
+
+<blockquote>
+<p>Pakorn KaewTraKulPong and Richard Bowden. &quot;An improved adaptive
+background mixture model for real-time tracking with shadow detection&quot;.
+In Video-Based Surveillance Systems, pages 135-144. Springer, 2002.
+<a href="http://personal.ee.surrey.ac.uk/Personal/R.Bowden/publications/avbs01/avbs01.pdf">http://personal.ee.surrey.ac.uk/Personal/R.Bowden/publications/avbs01/avbs01.pdf</a></p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BackgroundSubtractorMOG.BackgroundSubtractorMOG.html">cv.BackgroundSubtractorMOG/BackgroundSubtractorMOG</a>,
+   <a href="BackgroundSubtractorMOG.apply.html">cv.BackgroundSubtractorMOG/apply</a>,
+   <a href="BackgroundSubtractorMOG.getBackgroundImage.html">cv.BackgroundSubtractorMOG/getBackgroundImage</a></div>
       <!--Class-->
       <div class="sectiontitle">Class Details</div>
       <table class="class-details">
@@ -49,7 +54,7 @@ Surveillance Systems, 2001.</p>
       <table class="summary-list">
          <tr class="summary-item">
             <td class="name"><a href="BackgroundSubtractorMOG.BackgroundSubtractorMOG.html">BackgroundSubtractorMOG</a></td>
-            <td class="m-help">BackgroundSubtractorMOG constructor&nbsp;</td>
+            <td class="m-help">Creates mixture-of-gaussian background subtractor&nbsp;</td>
          </tr>
       </table>
       <!--Properties-->
@@ -57,36 +62,24 @@ Surveillance Systems, 2001.</p>
       </div>
       <table class="summary-list">
          <tr class="summary-item">
-            <td class="name"><a href="BackgroundSubtractorMOG.backgroundRatio.html">backgroundRatio</a></td>
-            <td class="m-help">Ratio of the background&nbsp;</td>
+            <td class="name"><a href="BackgroundSubtractorMOG.BackgroundRatio.html">BackgroundRatio</a></td>
+            <td class="m-help">The "background ratio" parameter of the algorithm.&nbsp;</td>
          </tr>
          <tr class="summary-item">
-            <td class="name"><a href="BackgroundSubtractorMOG.frameSize.html">frameSize</a></td>
-            <td class="m-help">Size of the frame (not accessible >= 2.4.0)&nbsp;</td>
+            <td class="name"><a href="BackgroundSubtractorMOG.History.html">History</a></td>
+            <td class="m-help">The number of last frames that affect the background model.&nbsp;</td>
          </tr>
          <tr class="summary-item">
-            <td class="name"><a href="BackgroundSubtractorMOG.history.html">history</a></td>
-            <td class="m-help">History&nbsp;</td>
+            <td class="name"><a href="BackgroundSubtractorMOG.NMixtures.html">NMixtures</a></td>
+            <td class="m-help">The number of gaussian components in the background model.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorMOG.NoiseSigma.html">NoiseSigma</a></td>
+            <td class="m-help">Sigma of noise&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="name"><a href="BackgroundSubtractorMOG.id.html">id</a></td>
             <td class="m-help">Object ID&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="name"><a href="BackgroundSubtractorMOG.nframes.html">nframes</a></td>
-            <td class="m-help">Number of frames (not accessible >= 2.4.0)&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="name"><a href="BackgroundSubtractorMOG.nmixtures.html">nmixtures</a></td>
-            <td class="m-help">Number of mixture components&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="name"><a href="BackgroundSubtractorMOG.noiseSigma.html">noiseSigma</a></td>
-            <td class="m-help">Sigma of noise&nbsp;</td>
-         </tr>
-         <tr class="summary-item">
-            <td class="name"><a href="BackgroundSubtractorMOG.varThreshold.html">varThreshold</a></td>
-            <td class="m-help">Threshold value (not accessible >= 2.4.0)&nbsp;</td>
          </tr>
       </table>
       <!--Methods-->
@@ -107,7 +100,7 @@ Surveillance Systems, 2001.</p>
                
             </td>
             <td class="name"><a href="BackgroundSubtractorMOG.apply.html">apply</a></td>
-            <td class="m-help">Computes a foreground mask&nbsp;</td>
+            <td class="m-help">Updates the background model and computes the foreground mask&nbsp;</td>
          </tr>
          <tr class="summary-item">
             <td class="attributes">

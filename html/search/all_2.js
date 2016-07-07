@@ -50,6 +50,7 @@ var searchData=
   ['cornermineigenval_2ecpp',['cornerMinEigenVal.cpp',['../corner_min_eigen_val_8cpp.html',1,'']]],
   ['cornersubpix_2ecpp',['cornerSubPix.cpp',['../corner_sub_pix_8cpp.html',1,'']]],
   ['correctmatches_2ecpp',['correctMatches.cpp',['../correct_matches_8cpp.html',1,'']]],
+  ['covarianceestimation_2ecpp',['covarianceEstimation.cpp',['../covariance_estimation_8cpp.html',1,'']]],
   ['create_5faffinetransformer',['create_AffineTransformer',['../mexopencv__shape_8hpp.html#af0144562ed702ab409a2333f72009a03',1,'mexopencv_shape.hpp']]],
   ['create_5fchihistogramcostextractor',['create_ChiHistogramCostExtractor',['../mexopencv__shape_8hpp.html#a4fb9d56aef6e598b79dccc394d026e05',1,'mexopencv_shape.hpp']]],
   ['create_5femdhistogramcostextractor',['create_EMDHistogramCostExtractor',['../mexopencv__shape_8hpp.html#a55a4bde23a3556e5827fc3197a651553',1,'mexopencv_shape.hpp']]],

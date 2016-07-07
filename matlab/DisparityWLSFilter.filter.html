@@ -1,0 +1,76 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.DisparityWLSFilter/filter</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.DisparityWLSFilter/filter</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.DisparityWLSFilter/filter</div>
+      <div class="helpcontent"><p>Apply filtering to the disparity map</p>
+
+<pre><code>filtered_disparity_map = obj.filter(disparity_map_left, disparity_map_right, left_view)
+filtered_disparity_map = obj.filter(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>disparity_map_left</strong> disparity map of the left view,
+1 channel <code>int16</code> type. Implicitly assumes that disparity
+values are scaled by 16 (one-pixel disparity corresponds
+to the value of 16 in the disparity map). Disparity map
+can have any resolution, it will be automatically resized
+to fit <code>left_view</code> resolution.</li>
+<li><strong>disparity_map_right</strong> optional argument, some
+implementations might also use the disparity map of the
+right view to compute confidence maps, for instance.
+Pass an empty matrix <code>[]</code> if not used.</li>
+<li><strong>left_view</strong> left view of the original stereo-pair to guide
+the filtering process, 8-bit single-channel or
+three-channel image.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>filtered_disparity_map</strong> output disparity map.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>ROI</strong> region of the disparity map to filter. Optional,
+usually it should be set automatically. Not set by
+default.</li>
+<li><strong>RightView</strong> optional argument, some implementations might
+also use the right view of the original stereo-pair. Not
+set by default.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="DisparityWLSFilter.DisparityWLSFilter.html">cv.DisparityWLSFilter/DisparityWLSFilter</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

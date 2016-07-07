@@ -1,0 +1,69 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.StarDetector/detect</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.StarDetector/detect</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.StarDetector/detect</div>
+      <div class="helpcontent"><p>Detects keypoints in an image or image set.</p>
+
+<pre><code>keypoints = obj.detect(img)
+keypoints = obj.detect(imgs)
+[...] = obj.detect(..., 'OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Input</h2>
+
+<ul>
+<li><strong>img</strong> Image (first variant), 8-bit/16-bit grayscale image.</li>
+<li><strong>imgs</strong> Image set (second variant), cell array of images.</li>
+</ul>
+
+<h2> Output</h2>
+
+<ul>
+<li><strong>keypoints</strong> The detected keypoints. In the first variant,
+a 1-by-N structure array. In the second variant of the
+method, <code>keypoints{i}</code> is a set of keypoints detected in
+<code>imgs{i}</code>.</li>
+</ul>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>Mask</strong> A mask specifying where to look for keypoints
+(optional). It must be a logical or 8-bit integer matrix
+with non-zero values in the region of interest. In the
+second variant, it is a cell-array of masks for each input
+image, <code>masks{i}</code> is a mask for <code>imgs{i}</code>.
+Not set by default.</li>
+</ul>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="StarDetector.StarDetector.html">cv.StarDetector/StarDetector</a></div>
+      <!--Method-->
+      <div class="sectiontitle">Method Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Access</td>
+            <td>public</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Static</td>
+            <td>false</td>
+         </tr>
+      </table>
+   </body>
+</html>

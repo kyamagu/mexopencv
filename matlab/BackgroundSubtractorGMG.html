@@ -1,0 +1,231 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.BackgroundSubtractorGMG</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.BackgroundSubtractorGMG</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.BackgroundSubtractorGMG</div>
+      <div class="helpcontent"><p>Background Subtractor module</p>
+
+<p>Background Subtractor module based on the algorithm given in [Gold2012].</p>
+
+<p>Takes a series of images and returns a sequence of mask <code>uint8</code> images
+of the same size, where 255 indicates Foreground and 0 represents
+Background. This class implements an algorithm described in [Gold2012].</p>
+
+<h2> References</h2>
+
+<p>[Gold2012]:</p>
+
+<blockquote>
+<p>Andrew B Godbehere, Akihiro Matsukawa, and Ken Goldberg. &quot;Visual
+Tracking of Human Visitors under Variable-Lighting Conditions for a
+Responsive Audio Art Installation&quot;. In American Control Conference
+(ACC), Montreal, 2012, pages 4305-4312. IEEE, June 2012.</p>
+</blockquote>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="BackgroundSubtractorGMG.BackgroundSubtractorGMG.html">cv.BackgroundSubtractorGMG/BackgroundSubtractorGMG</a>,
+   <a href="BackgroundSubtractorGMG.apply.html">cv.BackgroundSubtractorGMG/apply</a>,
+   <a href="BackgroundSubtractorGMG.getBackgroundImage.html">cv.BackgroundSubtractorGMG/getBackgroundImage</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorGMG.BackgroundSubtractorGMG.html">BackgroundSubtractorGMG</a></td>
+            <td class="m-help">Creates a GMG Background Subtractor&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorGMG.BackgroundPrior.html">BackgroundPrior</a></td>
+            <td class="m-help">The prior probability that each individual pixel is a background&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorGMG.DecisionThreshold.html">DecisionThreshold</a></td>
+            <td class="m-help">The value of decision threshold.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorGMG.DefaultLearningRate.html">DefaultLearningRate</a></td>
+            <td class="m-help">The learning rate of the algorithm.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorGMG.MaxFeatures.html">MaxFeatures</a></td>
+            <td class="m-help">Total number of distinct colors to maintain in histogram.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorGMG.MaxVal.html">MaxVal</a></td>
+            <td class="m-help">The maximum value taken on by pixels in image sequence.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorGMG.MinVal.html">MinVal</a></td>
+            <td class="m-help">The minimum value taken on by pixels in image sequence. Usually 0.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorGMG.NumFrames.html">NumFrames</a></td>
+            <td class="m-help">The number of frames used to initialize background model.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorGMG.QuantizationLevels.html">QuantizationLevels</a></td>
+            <td class="m-help">The parameter used for quantization of color-space.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorGMG.SmoothingRadius.html">SmoothingRadius</a></td>
+            <td class="m-help">The kernel radius used for morphological operations.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorGMG.UpdateBackgroundModel.html">UpdateBackgroundModel</a></td>
+            <td class="m-help">The status of background model update.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="name"><a href="BackgroundSubtractorGMG.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorGMG.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorGMG.apply.html">apply</a></td>
+            <td class="m-help">Updates the background model and computes the foreground mask&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorGMG.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorGMG.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorGMG.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorGMG.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorGMG.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorGMG.getBackgroundImage.html">getBackgroundImage</a></td>
+            <td class="m-help">Computes a foreground mask&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorGMG.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorGMG.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorGMG.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorGMG.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorGMG.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="BackgroundSubtractorGMG.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+      </table>
+   </body>
+</html>

@@ -41,6 +41,7 @@ var searchData=
   ['cornermineigenval_2ecpp',['cornerMinEigenVal.cpp',['../corner_min_eigen_val_8cpp.html',1,'']]],
   ['cornersubpix_2ecpp',['cornerSubPix.cpp',['../corner_sub_pix_8cpp.html',1,'']]],
   ['correctmatches_2ecpp',['correctMatches.cpp',['../correct_matches_8cpp.html',1,'']]],
+  ['covarianceestimation_2ecpp',['covarianceEstimation.cpp',['../covariance_estimation_8cpp.html',1,'']]],
   ['createconcentricspherestestset_2ecpp',['createConcentricSpheresTestSet.cpp',['../create_concentric_spheres_test_set_8cpp.html',1,'']]],
   ['createhanningwindow_2ecpp',['createHanningWindow.cpp',['../create_hanning_window_8cpp.html',1,'']]],
   ['cvtcolor_2ecpp',['cvtColor.cpp',['../cvt_color_8cpp.html',1,'']]]

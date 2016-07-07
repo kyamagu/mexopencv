@@ -1,0 +1,47 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" href="helpwin.css">
+      <title>MATLAB File Help: cv.AdaptiveManifoldFilter/AdaptiveManifoldFilter</title>
+   </head>
+   <body>
+      <!--Single-page help-->
+      <table border="0" cellspacing="0" width="100%">
+         <tr class="subheader">
+            <td class="headertitle">MATLAB File Help: cv.AdaptiveManifoldFilter/AdaptiveManifoldFilter</td>
+            <td class="subheader-left"></td>
+            <td class="subheader-right"><a href="index.html">Index</a></td>
+         </tr>
+      </table>
+      <div class="title">cv.AdaptiveManifoldFilter/AdaptiveManifoldFilter</div>
+      <div class="helpcontent"><p>Factory method, create instance of AdaptiveManifoldFilter and produce some initialization routines</p>
+
+<pre><code>obj = <a href="AdaptiveManifoldFilter.html">cv.AdaptiveManifoldFilter</a>()
+obj = <a href="AdaptiveManifoldFilter.html">cv.AdaptiveManifoldFilter</a>('OptionName',optionValue, ...)
+</code></pre>
+
+<h2> Options</h2>
+
+<ul>
+<li><strong>SigmaS</strong> spatial standard deviation. default 16.0</li>
+<li><strong>SigmaR</strong> color space standard deviation, it is similar to
+the sigma in the color space into <a href="bilateralFilter.html">cv.bilateralFilter</a>.
+default 0.2</li>
+<li><strong>AdjustOutliers</strong> optional, specify perform outliers adjust
+operation or not, (Eq. 9) in the original paper.
+default false</li>
+</ul>
+
+<p>For more details about Adaptive Manifold Filter parameters, see
+the original article [Gastal12].</p>
+
+<h2> Note</h2>
+
+<p>Joint images with <code>uint8</code> and <code>uint16</code> depth converted to images
+with <code>single</code> depth and [0; 1] color range before processing.
+Hence color space <code>SigmaR</code> must be in [0; 1] range, unlike same
+sigmas in <a href="bilateralFilter.html">cv.bilateralFilter</a> and <a href="DTFilter.html">cv.DTFilter</a>.dtFilter functions.</p>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="AdaptiveManifoldFilter.filter.html">cv.AdaptiveManifoldFilter/filter</a></div>
+   </body>
+</html>

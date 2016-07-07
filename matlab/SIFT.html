@@ -15,75 +15,250 @@
          </tr>
       </table>
       <div class="title">cv.SIFT</div>
-      <div class="helpcontent"><p>Detects keypoints and computes SIFT descriptors for them</p>
+      <div class="helpcontent"><p>Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform (SIFT).</p>
 
-<pre><code>keypoints = <a href="SIFT.html">cv.SIFT</a>(im)
-keypoints = <a href="SIFT.html">cv.SIFT</a>(im, 'OptionName', optionValue, ...)
-[keypoints, descriptors] = <a href="SIFT.html">cv.SIFT</a>(...)
+<p>Algorithm by D. Lowe [Lowe04].</p>
 
-descriptorSize = <a href="SIFT.html">cv.SIFT</a>('DescriptorSize')   % descriptor size (128)
-</code></pre>
+<h2> References:</h2>
 
-<h2> Input</h2>
-
-<ul>
-<li><strong>im</strong> Input 8-bit grayscale image.</li>
-</ul>
-
-<h2> Output</h2>
-
-<ul>
-<li><strong>keypoints</strong> The output vector of keypoints, a 1-by-N structure array.
-It has the following fields:<ul>
-<li><strong>pt</strong> coordinates of the keypoint [x,y]</li>
-<li><strong>size</strong> diameter of the meaningful keypoint neighborhood</li>
-<li><strong>angle</strong> computed orientation of the keypoint (-1 if not applicable).
-Its possible values are in a range [0,360) degrees. It is measured
-relative to image coordinate system (y-axis is directed downward),
-ie in clockwise.</li>
-<li><strong>response</strong> the response by which the most strong keypoints have been
-selected. Can be used for further sorting or subsampling.</li>
-<li><strong>octave</strong> octave (pyramid layer) from which the keypoint has been
-extracted.</li>
-<li><strong>class_id</strong> object id that can be used to clustered keypoints by an
-object they belong to.</li>
-</ul>
-</li>
-<li><strong>descriptors</strong> The output concatenated vectors of descriptors. Each descriptor
-is a 128-element vector, as returned by <code>SIFT::descriptorSize()</code>. So
-the total size of descriptors will be <code>keypoints.size()*descriptorSize()</code>.
-A matrix of size N-by-128 of class <code>single</code>, one row per keypoint.</li>
-</ul>
-
-<h2> Options</h2>
-
-<ul>
-<li><strong>NFeatures</strong> The number of best features to retain. The features are ranked by
-their scores (measured in SIFT algorithm as the local contrast). Default 0</li>
-<li><strong>NOctaveLayers</strong> The number of layers in each octave. 3 is the value used in
-D. Lowe paper. The number of octaves is computed automatically from the
-image resolution. Default 3</li>
-<li><strong>ConstrastThreshold</strong> The contrast threshold used to filter out weak features
-in semi-uniform (low-contrast) regions. The larger the threshold, the less
-features are produced by the detector. Default 0.04</li>
-<li><strong>EdgeThreshold</strong> The threshold used to filter out edge-like features.
-Note that the its meaning is different from the <code>contrastThreshold</code>, i.e. the
-larger the <code>edgeThreshold</code>, the less features are filtered out (more features
-are retained). Default 10</li>
-<li><strong>Sigma</strong> The sigma of the Gaussian applied to the input image at the octave #0.
-If your image is captured with a weak camera with soft lenses, you might
-want to reduce the number. Default 1.6</li>
-<li><strong>Mask</strong> Optional input mask that marks the regions where we should detect
-features</li>
-</ul>
-
-<p>Extracts keypoints and computes descriptors using the Scale Invariant
-Feature Transform (SIFT) algorithm by D. Lowe:</p>
+<p>[Lowe04]:</p>
 
 <blockquote>
-<p>Lowe, D. G., &quot;Distinctive Image Features from Scale-Invariant Keypoints&quot;,
-International Journal of Computer Vision, 60, 2, pp. 91-110, 2004.</p>
+<p>David G Lowe.
+&quot;Distinctive Image Features from Scale-Invariant Keypoints&quot;.
+International Journal of Computer Vision, 60(2):91-110, 2004.</p>
 </blockquote>
-</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.html">cv.FeatureDetector</a> <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a></div>
+</div><!--after help --><!--seeAlso--><div class="footerlinktitle">See also</div><div class="footerlink"> <a href="FeatureDetector.html">cv.FeatureDetector</a>, <a href="DescriptorExtractor.html">cv.DescriptorExtractor</a></div>
+      <!--Class-->
+      <div class="sectiontitle">Class Details</div>
+      <table class="class-details">
+         <tr>
+            <td class="class-detail-label">Superclasses</td>
+            <td>handle</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Sealed</td>
+            <td>false</td>
+         </tr>
+         <tr>
+            <td class="class-detail-label">Construct on load</td>
+            <td>false</td>
+         </tr>
+      </table>
+      <!--Constructors-->
+      <div class="sectiontitle"><a name="constructors"></a>Constructor Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="SIFT.SIFT.html">SIFT</a></td>
+            <td class="m-help">Constructor&nbsp;</td>
+         </tr>
+      </table>
+      <!--Properties-->
+      <div class="sectiontitle"><a name="properties"></a>Property Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="name"><a href="SIFT.id.html">id</a></td>
+            <td class="m-help">Object ID&nbsp;</td>
+         </tr>
+      </table>
+      <!--Methods-->
+      <div class="sectiontitle"><a name="methods"></a>Method Summary
+      </div>
+      <table class="summary-list">
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.addlistener.html">addlistener</a></td>
+            <td class="m-help">Add listener for event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.clear.html">clear</a></td>
+            <td class="m-help">Clears the algorithm state&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.compute.html">compute</a></td>
+            <td class="m-help">Computes the descriptors for a set of keypoints detected in an image or image set.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.defaultNorm.html">defaultNorm</a></td>
+            <td class="m-help">Returns the default norm type&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.delete.html">delete</a></td>
+            <td class="m-help">Destructor&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.descriptorSize.html">descriptorSize</a></td>
+            <td class="m-help">Returns the descriptor size in floats&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.descriptorType.html">descriptorType</a></td>
+            <td class="m-help">Returns the descriptor type&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.detect.html">detect</a></td>
+            <td class="m-help">Detects keypoints in an image or image set.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.detectAndCompute.html">detectAndCompute</a></td>
+            <td class="m-help">Detects keypoints and computes their descriptors&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.empty.html">empty</a></td>
+            <td class="m-help">Checks if detector object is empty.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.eq.html">eq</a></td>
+            <td class="m-help">== (EQ)   Test handle equality.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.findobj.html">findobj</a></td>
+            <td class="m-help">Find objects matching specified conditions.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.findprop.html">findprop</a></td>
+            <td class="m-help">Find property of MATLAB handle object.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.ge.html">ge</a></td>
+            <td class="m-help">>= (GE)   Greater than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.getDefaultName.html">getDefaultName</a></td>
+            <td class="m-help">Returns the algorithm string identifier&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.gt.html">gt</a></td>
+            <td class="m-help">> (GT)   Greater than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">Sealed 
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.isvalid.html">isvalid</a></td>
+            <td class="m-help">Test handle validity.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.le.html">le</a></td>
+            <td class="m-help"><= (LE)   Less than or equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.load.html">load</a></td>
+            <td class="m-help">Loads algorithm from a file or a string&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.lt.html">lt</a></td>
+            <td class="m-help">< (LT)   Less than relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.ne.html">ne</a></td>
+            <td class="m-help">~= (NE)   Not equal relation for handles.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.notify.html">notify</a></td>
+            <td class="m-help">Notify listeners of event.&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.save.html">save</a></td>
+            <td class="m-help">Saves the algorithm parameters to a file&nbsp;</td>
+         </tr>
+         <tr class="summary-item">
+            <td class="attributes">
+               &nbsp;
+               
+            </td>
+            <td class="name"><a href="SIFT.typeid.html">typeid</a></td>
+            <td class="m-help">Name of the C++ type (RTTI)&nbsp;</td>
+         </tr>
+      </table>
    </body>
 </html>
