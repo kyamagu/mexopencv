@@ -37,6 +37,8 @@ classdef UnitTest
             'TestStructuredEdgeDetection'
             'TestMotionSaliencyBinWangApr2014'
             'TestObjectnessBING'
+            'TestBasicFaceRecognizer'
+            'TestLBPHFaceRecognizer'
             % codecs
             'TestVideoWriter'
         };
