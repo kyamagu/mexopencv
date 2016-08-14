@@ -13,7 +13,7 @@ classdef TestComputeRecallPrecisionCurve
             matcher = cv.DescriptorMatcher('BruteForce-Hamming');
             matches1to2 = matcher.radiusMatch(feat1, feat2, 100);
 
-            %TODO: fake correct matches (see cv::evaluateGenericDescriptorMatcher)
+            %HACK: fake correct matches (see cv::evaluateGenericDescriptorMatcher)
             % Ideally we would look into the thresold overlap mask matrix
             correctMatches1to2Mask = cell(size(matches1to2));
             for i=1:numel(matches1to2)

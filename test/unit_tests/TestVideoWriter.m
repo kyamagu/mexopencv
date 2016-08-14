@@ -28,8 +28,8 @@ classdef TestVideoWriter
             assert(~isempty(f) && f.bytes>0, 'Failed to create video');
 
             % verify video
-            %TODO: MMFILEINFO not yet implemented in Octave
             if ~mexopencv.isOctave()
+                %HACK: MMFILEINFO not yet implemented in Octave
                 info = mmfileinfo(filename);
                 assert(info.Video.Width == w && info.Video.Height == h);
             end

@@ -9,10 +9,11 @@
 % ## Options
 % * __Shape__ Element shape, default 'Rect'. Could be one of:
 %       * __Rect__ a rectangular structuring element: `E(i,j)=1`
-%       * __Ellipse__ a cross-shaped structuring element: `E(i,j)=1` if
+%       * __Cross__ a cross-shaped structuring element: `E(i,j)=1` if
 %             `i=Anchor(2)` or `j=Anchor(1)`, `E(i,j)=0` otherwise.
-%       * __Cross__ an elliptic structuring element, that is, a filled ellipse
-%             inscribed into the rectangle `[0, 0, KSize(1), KSize(2)]`.
+%       * __Ellipse__ an elliptic structuring element, that is, a filled
+%             ellipse inscribed into the rectangle
+%             `[0, 0, KSize(1), KSize(2)]`.
 % * __KSize__ Size of the structuring element `[w,h]`. default [3,3].
 % * __Anchor__ Anchor position within the element. The default value (-1,-1)
 %       means that the anchor is at the center. Note that only the shape of a

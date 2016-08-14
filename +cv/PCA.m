@@ -109,7 +109,7 @@ classdef PCA < handle
         end
 
         function read(this, filename, varargin)
-            %READ  Read PCA from file
+            %READ  Read PCA objects from file
             %
             %    obj.read(filename)
             %    obj.read(str, 'FromString',true)
@@ -124,18 +124,24 @@ classdef PCA < handle
             %       a filename or a string containing the serialized object.
             %       default false
             %
+            % Loads `eigenvalues`, `eigenvectors` and `mean` from specified
+            % storage.
+            %
             % See also: cv.PCA.write
             %
             PCA_(this.id, 'read', filename, varargin{:});
         end
 
         function write(this, filename)
-            %WRITE  Write PCA to file
+            %WRITE  Write PCA objects to file
             %
             %    obj.write(filename)
             %
             % ## Input
             % * __filename__ Name of the file to write to.
+            %
+            % Writes `eigenvalues`, `eigenvectors` and `mean` to the specified
+            % file.
             %
             % See also: cv.PCA.read
             %
@@ -175,11 +181,11 @@ classdef PCA < handle
             % to reuse the same PCA structure for multiple datasets. That
             % is, if the structure has been previously used with another
             % dataset, the existing internal data is reclaimed and the new
-            % eigenvalues, eigenvectors, and mean are allocated and
+            % `eigenvalues`, `eigenvectors` and `mean` are allocated and
             % computed.
             %
-            % The computed eigenvalues are sorted from the largest to the
-            % smallest and the corresponding eigenvectors are stored as
+            % The computed `eigenvalues` are sorted from the largest to the
+            % smallest and the corresponding `eigenvectors` are stored as
             % cv.PCA.eigenvectors rows.
             %
             % See also: cv.PCA.PCA, cv.PCA.project, cv.PCA.backProject

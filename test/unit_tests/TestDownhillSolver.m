@@ -72,7 +72,10 @@ classdef TestDownhillSolver
                 'Function', struct('dims',2, 'fun','bealeFcn'));
             [x,f] = solver.minimize([2, 0]);
             etalon_x = [3, 0.5];
-            %assert(norm(x-etalon_x) < 1e-2); % TODO: fails to find solution
+            if false
+                %TODO: fails to find solution
+                assert(norm(x-etalon_x) < 1e-2);
+            end
         end
 
         function test_error_1

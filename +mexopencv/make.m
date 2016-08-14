@@ -105,7 +105,7 @@ else      % Windows
         if ~mexopencv.isOctave()
             cancellation = {'CreateCancelBtn','setappdata(gcbf,''cancel'',true)'};
         else
-            %TODO: https://savannah.gnu.org/bugs/?45364
+            %HACK: https://savannah.gnu.org/bugs/?45364
             cancellation = {};
         end
         hWait = waitbar(0, 'Compiling MEX files...', ...

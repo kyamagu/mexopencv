@@ -39,5 +39,5 @@
 % scale and rotation-invariant template matching, for object tracking and so
 % forth.
 %
-% See also: cv.linearPolar
+% See also: cv.linearPolar, cv.remap
 %

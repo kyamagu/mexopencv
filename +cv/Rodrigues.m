@@ -31,5 +31,6 @@
 % optimization procedures like cv.calibrateCamera, cv.stereoCalibrate, or
 % cv.solvePnP.
 %
-% See also cv.calibrateCamera cv.stereoCalibrate cv.solvePnP
+% See also: cv.calibrateCamera, cv.stereoCalibrate, cv.solvePnP,
+%  rotationMatrixToVector, rotationVectorToMatrix
 %

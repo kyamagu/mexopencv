@@ -12,8 +12,11 @@ classdef TestConvertMaps
             validateattributes(XX, {'int16'}, {'size',[r c 2]});
             validateattributes(YY, {'uint16'}, {'size',[r c]});
 
-            XY = cv.convertMaps(XX, YY);      %TODO: contains NaN?
-            %assert(isequal(XY, cat(3,X,Y)));
+            XY = cv.convertMaps(XX, YY);
+            if false
+                %TODO: contains NaN?
+                assert(isequal(XY, cat(3,X,Y)));
+            end
             validateattributes(XY, {'single'}, {'size',[r c 2]});
 
             [X2,Y2] = cv.convertMaps(XX, YY, 'DstMap1Type','single1');

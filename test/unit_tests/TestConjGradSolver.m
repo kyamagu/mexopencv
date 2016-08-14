@@ -86,7 +86,10 @@ classdef TestConjGradSolver
                 struct('dims',2, 'fun','bealeFcn', 'gradfun','bealeGrad'));
             [x,f] = solver.minimize([2, 0]);
             etalon_x = [3, 0.5];
-            %assert(norm(x-etalon_x) < 1e-6); %TODO: fails to find solution
+            if false
+                %TODO: fails to find solution
+                assert(norm(x-etalon_x) < 1e-6);
+            end
         end
 
         function test_error_1

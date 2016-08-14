@@ -1,5 +1,5 @@
 %% Generalized Hough transform demo
-% This program demonstrates arbitary object finding with the Generalized
+% This program demonstrates arbitrary object finding with the Generalized
 % Hough transform.
 %
 % <https://github.com/Itseez/opencv/blob/master/samples/gpu/generalized_hough.cpp>
@@ -7,8 +7,8 @@
 
 %% Input images
 % Image to search
-image = cv.imread(fullfile(mexopencv.root(),'test','pic1.png'), 'Flags',0);
-imshow(image), title('Image')
+img = cv.imread(fullfile(mexopencv.root(),'test','pic1.png'), 'Flags',0);
+imshow(img), title('Image')
 snapnow
 
 %%
@@ -28,10 +28,10 @@ end
 hough.setTemplate(templ);
 
 %% Detect the template in the image
-[positions,votes] = hough.detect(image);
+[positions,votes] = hough.detect(img);
 
 %% Show results
-out = cv.cvtColor(image, 'GRAY2RGB');
+out = cv.cvtColor(img, 'GRAY2RGB');
 for i=1:numel(positions)
     pos = positions{i}(1:2);
     scale = positions{i}(3);

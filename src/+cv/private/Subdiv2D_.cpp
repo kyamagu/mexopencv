@@ -87,7 +87,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "locate") {
         nargchk(nrhs==3 && nlhs<=3);
         Point2f pt(rhs[2].toPoint2f());
-        int edge, vertex;
+        int edge = 0, vertex = 0;
         int location = obj->locate(pt, edge, vertex);
         plhs[0] = MxArray(PointLocationInvMap[location]);
         if (nlhs > 1)

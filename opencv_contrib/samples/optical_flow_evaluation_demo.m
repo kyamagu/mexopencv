@@ -1,6 +1,7 @@
 %% Optical flow evaluation demo
 %
-% Computes flow field between two images using various methods and display it.
+% Computes flow field between two images using various methods and display it
+% (deepflow, simpleflow, sparsetodenseflow, Farneback, TV-L1).
 %
 % <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/optflow/samples/optical_flow_evaluation.cpp>
 %

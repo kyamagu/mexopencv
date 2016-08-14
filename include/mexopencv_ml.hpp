@@ -1,6 +1,7 @@
 /**
  * @file mexopencv_ml.hpp
  * @brief Common definitions for the ml module
+ * @ingroup ml
  * @author Amro
  * @date 2015
  *

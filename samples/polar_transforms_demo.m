@@ -10,8 +10,10 @@
 % Set up camera
 camera = cv.VideoCapture();
 pause(1); % Necessary in some environment. See help cv.VideoCapture
+assert(camera.isOpened(), 'Camera failed to initialize');
 
 im = camera.read();
+assert(~isempty(im), 'Failed to capture frames');
 [r,c,~] = size(im);
 
 disp('Polar transforms demo. Press any key when done.');
@@ -19,16 +21,15 @@ disp('Polar transforms demo. Press any key when done.');
 %%
 % Set up display window, and start the main loop
 
-window = figure('KeyPressFcn',@(obj,evt)setappdata(obj,'flag',true));
-setappdata(window,'flag',false);
+window = figure('KeyPressFcn',@(obj,evt) setappdata(obj, 'flag',true));
+setappdata(window, 'flag',false);
 
-hImg = zeros(1,3);
-subplot(131), hImg(1) = imshow(im); title('Log-Polar')
-subplot(132), hImg(2) = imshow(im); title('Linear-Polar')
 subplot(133), hImg(3) = imshow(im); title('Recovered image')
+subplot(132), hImg(2) = imshow(im); title('Linear-Polar')
+subplot(131), hImg(1) = imshow(im); title('Log-Polar')
 
 % Start main loop
-while true
+while ishghandle(window)
     % Grab an image
     im = camera.read();
     if isempty(im), break; end
@@ -51,8 +52,8 @@ while true
     set(hImg(3), 'CData',recovered_img);
 
     % Terminate if any user input
-    flag = getappdata(window,'flag');
-    if isempty(flag)||flag, break; end
+    flag = getappdata(window, 'flag');
+    if isempty(flag) || flag, break; end
     pause(0.1);
 end
 

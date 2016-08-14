@@ -1,5 +1,6 @@
 /** Implementation of mexopencv_ml.
  * @file mexopencv_ml.cpp
+ * @ingroup ml
  * @author Amro
  * @date 2015
  */

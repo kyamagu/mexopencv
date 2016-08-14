@@ -71,7 +71,7 @@ Ptr<Retina> create_Retina(
 }
 
 /** Create an instance of OPLandIplParvoParameters using options in arguments
- * @param[in,out] OPLandIplParvoParameters struct to fill
+ * @param[in,out] OPLandIplParvo OPLandIplParvoParameters struct to fill
  * @param[in] first iterator at the beginning of the vector range
  * @param[in] last iterator at the end of the vector range
  */
@@ -110,7 +110,7 @@ void createOPLandIplParvoParameters(
 }
 
 /** Create an instance of IplMagnoParameters using options in arguments
- * @param[in,out] IplMagnoParameters struct to fill
+ * @param[in,out] IplMagno IplMagnoParameters struct to fill
  * @param[in] first iterator at the beginning of the vector range
  * @param[in] last iterator at the end of the vector range
  */
@@ -147,7 +147,7 @@ void createIplMagnoParameters(
 }
 
 /** Create an instance of RetinaParameters using options in arguments
- * @param[in,out] RetinaParameters struct to fill
+ * @param[in,out] params RetinaParameters struct to fill
  * @param[in] first iterator at the beginning of the vector range
  * @param[in] last iterator at the end of the vector range
  */

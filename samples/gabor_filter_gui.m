@@ -97,14 +97,14 @@ function h = buildGUI(ksize)
         'NumberTitle','off', 'Menubar','none', 'Resize','off', ...
         'Position',[200 200 sz(2) sz(1)+129]);
     if ~mexopencv.isOctave()
-        %TODO: not implemented in Octave
+        %HACK: not implemented in Octave
         movegui(h.fig, 'center');
     end
     h.ax = axes('Parent',h.fig, 'Units','pixels', 'Position',[1 130 sz(2) sz(1)]);
     if ~mexopencv.isOctave()
         h.img = imshow(zeros(sz), 'Parent',h.ax);
     else
-        %TODO: https://savannah.gnu.org/bugs/index.php?45473
+        %HACK: https://savannah.gnu.org/bugs/index.php?45473
         axes(h.ax);
         h.img = imshow(zeros(sz));
     end

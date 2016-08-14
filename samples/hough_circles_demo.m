@@ -7,7 +7,9 @@
 %
 
 %% Input image
-img = cv.imread(which('coins.png'), 'Flags',1);
+fname = which('coins.png');
+assert(~isempty(fname), 'Image not found');
+img = cv.imread(fname, 'Flags',1);
 
 imshow(img), title('circles')
 snapnow

@@ -7,7 +7,9 @@
 %
 
 %% Input image
-src = imread('gantrycrane.png');
+fname = which('gantrycrane.png');
+assert(~isempty(fname), 'Image not found');
+src = imread(fname);
 
 imshow(src), title('Source')
 snapnow

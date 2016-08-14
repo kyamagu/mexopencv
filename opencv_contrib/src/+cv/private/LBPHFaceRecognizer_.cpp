@@ -24,10 +24,10 @@ class CustomPredictCollector : public cv::face::PredictCollector
 {
 public:
     /** Constructor
-     * @param threshhold threshold on distance
+     * @param threshold threshold on distance
      */
-    explicit CustomPredictCollector(double threshhold = DBL_MAX)
-    : PredictCollector(threshhold)
+    explicit CustomPredictCollector(double threshold = DBL_MAX)
+    : PredictCollector(threshold)
     {}
 
     /** Initialization called once at start of recognition
@@ -75,7 +75,7 @@ public:
     }
 
     /** Factory function
-     * @param threshhold threshold on distance
+     * @param threshold threshold on distance
      * @return smart pointer to newly created instance
      */
     static Ptr<CustomPredictCollector> create(double threshold = DBL_MAX)

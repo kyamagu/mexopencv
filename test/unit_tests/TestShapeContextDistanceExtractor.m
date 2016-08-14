@@ -24,7 +24,7 @@ classdef TestShapeContextDistanceExtractor
             validateattributes(im1, {class(img1)}, {'size',size(img1)});
             validateattributes(im2, {class(img2)}, {'size',size(img2)});
             if false
-                %TODO: https://github.com/Itseez/opencv/issues/5643
+                %HACK: https://github.com/Itseez/opencv/issues/5643
                 assert(isequal(im1, img1));
                 assert(isequal(im2, img2));
             end

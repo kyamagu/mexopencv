@@ -19,7 +19,7 @@ int last_id = 0;
 map<int,Ptr<TransientAreasSegmentationModule> > obj_;
 
 /** Create an instance of SegmentationParameters using options in arguments
- * @param[in,out] SegmentationParameters struct to fill
+ * @param[in,out] params SegmentationParameters struct to fill
  * @param[in] first iterator at the beginning of the vector range
  * @param[in] last iterator at the end of the vector range
  */

@@ -27,8 +27,15 @@
 % * __BorderType__ Border mode used to extrapolate pixels outside of the
 %       image. See cv.copyMakeBorder. default 'Default'
 %
+% For more details, please see [zhang2014rolling].
+%
 % Note that cv.rollingGuidanceFilter uses cv.jointBilateralFilter as the
 % edge-preserving filter.
+%
+% ## References
+% [zhang2014rolling]:
+% > Qi Zhang, Xiaoyong Shen, Li Xu, and Jiaya Jia. "Rolling guidance filter".
+% > In Computer Vision-ECCV 2014, pages 815-830. Springer, 2014.
 %
 % See also: cv.jointBilateralFilter, cv.bilateralFilter,
 %  cv.AdaptiveManifoldFilter.amFilter

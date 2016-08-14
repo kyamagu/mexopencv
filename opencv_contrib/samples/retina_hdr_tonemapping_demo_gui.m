@@ -262,7 +262,7 @@ function h = buildGUI(img, retina, opts)
         'NumberTitle','off', 'Menubar','none', 'Resize','off', ...
         'Position',[200 200 sz(2)*4 sz(1)+105+20+5+35-1]);
     if ~mexopencv.isOctave()
-        %TODO: not implemented in Octave
+        %HACK: not implemented in Octave
         movegui(h.fig, 'center');
     end
     titles = {
@@ -281,7 +281,7 @@ function h = buildGUI(img, retina, opts)
         if ~mexopencv.isOctave()
             h.img(i) = imshow(img, 'Parent',h.ax(i));
         else
-            %TODO: https://savannah.gnu.org/bugs/index.php?45473
+            %HACK: https://savannah.gnu.org/bugs/index.php?45473
             axes(h.ax(i)); h.img(i) = imshow(img);
         end
         title(titles{i}, 'FontSize',10)

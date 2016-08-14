@@ -32,7 +32,8 @@ classdef TestEM
 
             covs = model.getCovs();
             validateattributes(covs, {'cell'}, {'vector'});
-            if ~mexopencv.isOctave()  %TODO: https://savannah.gnu.org/bugs/index.php?46328
+            if ~mexopencv.isOctave()
+                %HACK: https://savannah.gnu.org/bugs/index.php?46328
                 cellfun(@(covar) validateattributes(covar, {'numeric'}, ...
                     {'square', 'diag', 'size',[d d]}), covs);
             end

@@ -34,5 +34,5 @@
 %    rho = (size(src,2) / maxRadius) * sqrt(x^2 + y^2)
 %    phi = atan(y/x)
 %
-% See also: cv.logPolar
+% See also: cv.logPolar, cv.remap
 %

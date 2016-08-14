@@ -1,6 +1,8 @@
 /**
  * @file mexopencv_features2d.hpp
  * @brief Common definitions for the features2d and xfeatures2d modules
+ * @ingroup features2d
+ * @ingroup xfeatures2d
  * @author Amro
  * @date 2015
  *

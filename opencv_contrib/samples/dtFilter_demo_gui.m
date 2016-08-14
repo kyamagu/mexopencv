@@ -74,7 +74,7 @@ function h = buildGUI(img)
         'NumberTitle','off', 'Menubar','none', 'Resize','off', ...
         'Position',[200 200 sz(2)*2 sz(1)+155-1]);
     if ~mexopencv.isOctave()
-        %TODO: not implemented in Octave
+        %HACK: not implemented in Octave
         movegui(h.fig, 'center');
     end
     h.ax(1) = axes('Parent',h.fig, 'Units','pixels', 'Position',[1 155 sz(2) sz(1)]);
@@ -83,7 +83,7 @@ function h = buildGUI(img)
         imshow(img, 'Parent',h.ax(1));
         h.img = imshow(img, 'Parent',h.ax(2));
     else
-        %TODO: https://savannah.gnu.org/bugs/index.php?45473
+        %HACK: https://savannah.gnu.org/bugs/index.php?45473
         axes(h.ax(1)); imshow(img);
         axes(h.ax(2)); h.img = imshow(img);
     end

@@ -1,6 +1,7 @@
 /**
  * @file mexopencv_videostab.hpp
  * @brief Common definitions for the videostab module
+ * @ingroup videostab
  * @author Amro
  * @date 2016
  *

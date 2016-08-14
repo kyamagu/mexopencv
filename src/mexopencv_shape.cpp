@@ -1,5 +1,6 @@
 /** Implementation of mexopencv_shape.
  * @file mexopencv_shape.cpp
+ * @ingroup shape
  * @author Amro
  * @date 2015
  */

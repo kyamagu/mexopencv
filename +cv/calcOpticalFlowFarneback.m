@@ -52,5 +52,5 @@
 % > expansion". In Image Analysis, pages 363-370. Springer, 2003.
 %
 % See also: cv.calcOpticalFlowPyrLK, opticalFlowLK, opticalFlowHS,
-%  vision.OpticalFlow
+%  opticalFlowFarneback, vision.OpticalFlow
 %

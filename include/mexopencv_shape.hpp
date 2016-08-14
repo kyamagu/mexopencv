@@ -1,6 +1,7 @@
 /**
  * @file mexopencv_shape.hpp
  * @brief Common definitions for the shape module
+ * @ingroup shape
  * @author Amro
  * @date 2015
  *

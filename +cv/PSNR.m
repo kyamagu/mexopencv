@@ -11,3 +11,5 @@
 %
 % See http://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio for details.
 %
+% See also: psnr
+%
