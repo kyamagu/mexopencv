@@ -39,6 +39,19 @@ classdef TestLDA
             assert(size(lda.eigenvectors,2) == 2);
         end
 
+        function test_3
+            X = randn(100,4);
+            k = 3;
+            mn = mean(X);
+            [V,~] = eig(cov(bsxfun(@minus,X,mn)));
+
+            P = cv.LDA.subspaceProject(V(:,1:k), mn, X);
+            validateattributes(P, {'double'}, {'size',[100 k]});
+
+            R = cv.LDA.subspaceReconstruct(V(:,1:k), mn, P);
+            validateattributes(R, {'double'}, {'size',[100 4]});
+        end
+
         function test_error_1
             try
                 cv.LDA('foobar');

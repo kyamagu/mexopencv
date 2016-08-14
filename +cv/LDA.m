@@ -129,6 +129,48 @@ classdef LDA < handle
         end
     end
 
+    methods (Static)
+        function dst = subspaceProject(W, mn, src)
+            %SUBSPACEPROJECT  Projects samples.
+            %
+            %    dst = cv.LDA.subspaceProject(W, mn, src)
+            %
+            % ## Input
+            % * __W__ eigenvectors.
+            % * __mn__ mean vector.
+            % * __src__ data sampels.
+            %
+            % ## Output
+            % * __dst__ projected data
+            %
+            % Projects data as `Y = (X-mean)*W`.
+            %
+            % See also: cv.LDA.subspaceReconstruct, cv.LDA,project
+            %
+            dst = LDA_(0, 'subspaceProject', W, mn, src);
+        end
+
+        function dst = subspaceReconstruct(W, mn, src)
+            %SUBSPACERECONSTRUCT  Reconstructs projections.
+            %
+            %    dst = cv.LDA.subspaceReconstruct(W, mn, src)
+            %
+            % ## Input
+            % * __W__ eigenvectors.
+            % * __mn__ mean vector.
+            % * __src__ projected data.
+            %
+            % ## Output
+            % * __dst__ reconstructed data
+            %
+            % Reconstructs data as `X = Y*W' + mean`.
+            %
+            % See also: cv.LDA.subspaceProject, cv.LDA,reconstruct
+            %
+            dst = LDA_(0, 'subspaceReconstruct', W, mn, src);
+        end
+    end
+
     methods
         function ev = get.eigenvalues(this)
             ev = LDA_(this.id, 'get', 'eigenvalues');
