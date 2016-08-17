@@ -131,7 +131,7 @@ install:
   - sudo cmake --build . --target install
   - popd
 
-  #
+  # finish OpenCV installation
   - export PATH=$PATH:$INSTALL_PREFIX/bin
   - export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$INSTALL_PREFIX/lib/pkgconfig
   - sudo sh -c 'echo "$INSTALL_PREFIX/lib" > /etc/ld.so.conf.d/opencv.conf'
