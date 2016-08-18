@@ -12,9 +12,10 @@ MATLAB's native data type and OpenCV data types. The package is suitable for
 fast prototyping of OpenCV application in MATLAB, use of OpenCV as an external
 toolbox in MATLAB, and development of a custom MEX function.
 
-The latest version of mexopencv (master branch) is compatible with OpenCV 3.x.
-For older OpenCV versions, please checkout the corresponding 2.x branches in
-([v2.4](https://github.com/kyamagu/mexopencv/tree/v2.4),
+The latest version of mexopencv (master branch) is compatible with OpenCV 3.1.
+For older OpenCV versions, please checkout the corresponding releases or branches
+([v3.0](https://github.com/kyamagu/mexopencv/releases/tag/v3.0.0),
+[v2.4](https://github.com/kyamagu/mexopencv/releases/tag/v2.4.11),
 [v2.3](https://github.com/kyamagu/mexopencv/tree/v2.3), and
 [v2.1](https://github.com/kyamagu/mexopencv/tree/v2.1)).
 
