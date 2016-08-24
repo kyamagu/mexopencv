@@ -88,14 +88,14 @@ endif
 
 # compiler/linker flags
 ifndef WITH_OCTAVE
-override CFLAGS  += -largeArrayDims -cxx
+MX_CFLAGS := -largeArrayDims -cxx
 else
+MX_CFLAGS := -O2 -s -fpermissive
 # -flto
 # -fdata-sections -ffunction-sections -Wl,--gc-sections
-override CFLAGS  += -O2 -s -fpermissive
 endif
-override CFLAGS  += -Iinclude $(CV_CFLAGS)
-override LDFLAGS += -Llib -lMxArray $(CV_LDFLAGS)
+override CFLAGS  := $(MX_CFLAGS) -Iinclude $(CV_CFLAGS) $(CFLAGS)
+override LDFLAGS := -Llib -lMxArray $(CV_LDFLAGS) $(LDFLAGS)
 
 # mexopencv files and targets
 HEADERS  := $(wildcard include/*.hpp)
