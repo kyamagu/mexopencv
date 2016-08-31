@@ -26,7 +26,7 @@ classdef TestLBPHFaceRecognizer
             assert(ismember(lbl, unique(labels(:))));
             validateattributes(dist, {'numeric'}, {'scalar', 'real'});
 
-            [lbl,dist] = model.predictCustom(img);
+            [lbl,dist] = model.predict_collect(img);
             validateattributes(lbl, {'numeric'}, ...
                 {'vector', 'integer', 'numel',N});
             validateattributes(dist, {'numeric'}, ...

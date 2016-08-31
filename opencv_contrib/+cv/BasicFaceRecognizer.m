@@ -380,10 +380,10 @@ classdef BasicFaceRecognizer < handle
             [label, confidence] = BasicFaceRecognizer_(this.id, 'predict', src);
         end
 
-        function [labels, dists] = predictCustom(this, src)
-            %PREDICTCUSTOM  send all result of prediction to collector for custom result handling
+        function [labels, dists] = predict_collect(this, src)
+            %PREDICT_COLLECT  send all result of prediction to collector for custom result handling
             %
-            %    [labels, dists] = obj.predictCustom(src)
+            %    [labels, dists] = obj.predict_collect(src)
             %
             % ## Input
             % * __src__ Sample image to get a prediction from.
@@ -395,7 +395,7 @@ classdef BasicFaceRecognizer < handle
             %
             % See also: cv.BasicFaceRecognizer.predict
             %
-            [labels, dists] = BasicFaceRecognizer_(this.id, 'predictCustom', src);
+            [labels, dists] = BasicFaceRecognizer_(this.id, 'predict_collect', src);
         end
 
         function setLabelInfo(this, label, strInfo)

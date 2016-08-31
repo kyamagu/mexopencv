@@ -207,7 +207,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             label = obj->predict(src);
         plhs[0] = MxArray(label);
     }
-    else if (method == "predictCustom") {
+    else if (method == "predict_collect") {
         nargchk(nrhs==3 && nlhs<=2);
         Mat src(rhs[2].toMat());
         Ptr<CustomPredictCollector> collector =
