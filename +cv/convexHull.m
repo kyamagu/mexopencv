@@ -28,7 +28,7 @@
 %       top-left corner, x axis is oriented to the right, and y axis is
 %       oriented downwards. default false
 %
-% The functions find the convex hull of a 2D point set using the Sklansky's
+% The function finds the convex hull of a 2D point set using the Sklansky's
 % algorithm [Sklansky82] that has `O(N logN)` complexity in the current
 % implementation.
 %

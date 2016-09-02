@@ -228,7 +228,7 @@ classdef MSER < handle
             %
             % ## Input
             % * __image__ Input 8-bit grayscale or color image (supports
-            %       1/3/4-channels).
+            %       1/3/4-channels). Must be greater or equal than 3x3.
             %
             % ## Output
             % * __msers__ The output vector of connected points (list of

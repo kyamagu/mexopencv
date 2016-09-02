@@ -10,7 +10,7 @@
 % ## Output
 % * __d__ Mahalanobis distance.
 %
-% The function Mahalanobis calculates and returns the weighted distance
+% The function cv.Mahalanobis calculates and returns the weighted distance
 % between two vectors:
 %
 %    d(v1,v2) = sqrt( sum_{i,j} [icovar(i,j) * (v1(I) - v2(I)) * (v1(j) - v2(j))] )

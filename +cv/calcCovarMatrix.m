@@ -46,7 +46,7 @@
 %       default false
 % * __CType__ type of the matrix. default is 'double'
 %
-% The functions cv.calcCovarMatrix calculate the covariance matrix and,
+% The function cv.calcCovarMatrix calculates the covariance matrix and,
 % optionally, the mean vector of the set of input vectors.
 %
 % See also: cv.PCA, cov, mean

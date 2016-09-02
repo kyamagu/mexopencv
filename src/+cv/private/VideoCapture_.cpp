@@ -35,7 +35,7 @@ const ConstMap<string,int> CapProp = ConstMap<string,int>
     ("Gain",          cv::CAP_PROP_GAIN)
     ("Exposure",      cv::CAP_PROP_EXPOSURE)
     ("ConvertRGB",    cv::CAP_PROP_CONVERT_RGB)
-    //("WhiteBalance",  cv::CAP_PROP_WHITE_BALANCE)
+    //("WhiteBalanceBlue",  cv::CAP_PROP_WHITE_BALANCE_BLUE_U)
     ("Rectification", cv::CAP_PROP_RECTIFICATION)
     //TODO: other undocumented properties
     ("Monochrome",    cv::CAP_PROP_MONOCHROME)
@@ -45,6 +45,7 @@ const ConstMap<string,int> CapProp = ConstMap<string,int>
     ("Temperature",   cv::CAP_PROP_TEMPERATURE)
     ("Trigger",       cv::CAP_PROP_TRIGGER)
     ("TriggerDelay",  cv::CAP_PROP_TRIGGER_DELAY)
+    //("WhiteBalanceRed",  cv::CAP_PROP_WHITE_BALANCE_RED_V)
     ("Zoom",          cv::CAP_PROP_ZOOM)
     ("Focus",         cv::CAP_PROP_FOCUS)
     ("GUID",          cv::CAP_PROP_GUID)

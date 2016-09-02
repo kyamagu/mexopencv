@@ -9,11 +9,12 @@
 %       matrix. Each row stores the point weight followed by the point
 %       coordinates `[w,x1,x2,...,xn]`. The matrix is allowed to have a single
 %       column (weights only) if the user-defined `Cost` matrix is used.
-%       Weights can not be negative and must not all be zeros.
+%       The weights must be non-negative and have at least one non-zero value.
 % * __signature2__ Second signature `size2-by-(dims+1)` of the same format as
 %       `signature1`, though the number of rows may be different. The total
 %       weights may be different. In this case an extra "dummy" point is added
-%       to either `signature1` or `signature2`.
+%       to either `signature1` or `signature2`. The weights must be
+%       non-negative and have at least one non-zero value.
 %
 % ## Output
 % * __d__ Output distance value.

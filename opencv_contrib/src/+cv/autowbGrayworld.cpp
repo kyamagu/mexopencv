@@ -38,7 +38,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
-    Mat src(rhs[0].toMat()),
+    Mat src(rhs[0].toMat(CV_8U)),
         dst;
     autowbGrayworld(src, dst, thresh);
     plhs[0] = MxArray(dst);

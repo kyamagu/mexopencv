@@ -27,7 +27,7 @@
 % * __Dest__ initial array used for output. This can initialize `dst` when
 %       `Mask` is used. Not set by default.
 %
-% The functions cv.normalize scale and shift the input array elements so that:
+% The function cv.normalize scales and shifts the input array elements so that:
 %
 %    ||dst||_Lp = alpha
 %

@@ -19,7 +19,7 @@
 % * __Closed__ If true, the approximated curve is closed (its first and last
 %       vertices are connected). Otherwise, it is not closed. default true
 %
-% The functions cv.approxPolyDP approximate a curve or a polygon with another
+% The function cv.approxPolyDP approximates a curve or a polygon with another
 % curve/polygon with less vertices so that the distance between them is less
 % or equal to the specified precision. It uses the Douglas-Peucker algorithm
 % http://en.wikipedia.org/wiki/Ramer-Douglas-Peucker_algorithm.

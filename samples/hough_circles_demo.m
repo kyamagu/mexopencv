@@ -15,10 +15,11 @@ imshow(img), title('circles')
 snapnow
 
 %% Processing
+% convert to grayscale
 gray = cv.cvtColor(img, 'RGB2GRAY');
 
 %%
-% smooth it, otherwise a lot of false circles may be detected
+% reduce noise, otherwise a lot of false circles may be detected
 %gray = cv.GaussianBlur(gray, 'KSize',[7,7], 'SigmaX',0.9, 'SigmaY',0.9);
 gray = cv.medianBlur(gray, 'KSize',5);
 

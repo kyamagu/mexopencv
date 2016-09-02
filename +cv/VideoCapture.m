@@ -50,7 +50,7 @@ classdef VideoCapture < handle
         FrameHeight
         % Frame rate.
         FPS
-        % 4-character code of codec.
+        % 4-character code of codec. See cv.VideoWriter.open.
         FourCC
         % Number of frames in the video file.
         FrameCount
@@ -72,8 +72,6 @@ classdef VideoCapture < handle
         Exposure
         % Boolean flags indicating whether images should be converted to RGB.
         ConvertRGB
-        % Currently unsupported
-        %WhiteBalance
         % Rectification flag for stereo cameras
         % (note: only supported by DC1394 v2.x backend currently)
         Rectification
@@ -99,14 +97,14 @@ classdef VideoCapture < handle
             %       specific reader implementation if multiple are available:
             %       e.g. 'FFMPEG' 'Images'. Available implementations:
             %       * __Any__ autodetect. This is the default.
-            %       * __VfW__ platform native.
-            %       * __V4L__ platform native.
-            %       * __V4L2__ platform native.
-            %       * __FireWare__ IEEE 1394 drivers.
+            %       * __VfW__ Video For Windows (platform native).
+            %       * __V4L__ V4L/V4L2 capturing support via libv4l.
+            %       * __V4L2__ Same as V4L.
             %       * __FireWire__ IEEE 1394 drivers.
-            %       * __IEEE1394__ IEEE 1394 drivers.
-            %       * __DC1394__ IEEE 1394 drivers.
-            %       * __CMU1394__ IEEE 1394 drivers.
+            %       * __FireWare__ Same as FireWire.
+            %       * __IEEE1394__ Same as FireWire.
+            %       * __DC1394__ Same as FireWire.
+            %       * __CMU1394__ Same as FireWire.
             %       * __QuickTime__ QuickTime.
             %       * __Unicap__ Unicap drivers.
             %       * __DirectShow__ DirectShow (via videoInput).
@@ -136,6 +134,13 @@ classdef VideoCapture < handle
             % You can specify camera devices by `index`, an integer value
             % starting from 0. You can also specify a `filename` to open a
             % video file.
+            %
+            % ## Note
+            % Backends are available only if they have been built with your
+            % OpenCV binaries.
+            % Check your build to know which APIs are currently available.
+            % To enable/disable APIs, you have to re-configure OpenCV using
+            % the appropriates CMake switches and recompile OpenCV itself.
             %
             % ## Example
             % To open camera 1 using the MS Media Foundation API:

@@ -17,7 +17,7 @@
 % * __FullAffine__ If true, the function finds an optimal affine transformation
 %       with no additional resrictions (6 degrees of freedom). Otherwise, the
 %       class of transformations to choose from is limited to combinations of
-%       translation, rotation, and uniform scaling (5 degrees of freedom).
+%       translation, rotation, and uniform scaling (4 degrees of freedom).
 %
 % The function finds an optimal affine transform `[A|b]` (a 2x3 floating-point
 % matrix) that approximates best the affine transformation between:

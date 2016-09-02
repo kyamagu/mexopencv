@@ -33,7 +33,7 @@
 % * __Shift__ Number of fractional bits in the coordinates of the center and
 %       values of axes. default 0.
 %
-% The first variant of the cv.ellipse function draw an ellipse outline, a
+% The first variant of the cv.ellipse function draws an ellipse outline, a
 % filled ellipse, an elliptic arc, or a filled ellipse sector. A piecewise-
 % linear curve is used to approximate the elliptic arc boundary. If you need
 % more control of the ellipse rendering, you can retrieve the curve using

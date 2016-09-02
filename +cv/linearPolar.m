@@ -1,4 +1,4 @@
-%LINEARPOLAR  Remaps an image to polar space
+%LINEARPOLAR  Remaps an image to polar coordinates space
 %
 %    dst = cv.linearPolar(src, center, maxRadius)
 %    dst = cv.linearPolar(..., 'OptionName',optionValue, ...)
@@ -6,10 +6,11 @@
 % ## Input
 % * __src__ Source image.
 % * __center__ The transformation center.
-% * __maxRadius__ Inverse magnitude scale parameter.
+% * __maxRadius__ The radius of the bounding circle to transform. It
+%       determines the inverse magnitude scale parameter too.
 %
 % ## Output
-% * __dst__ Destination image, same size and type as `src`.
+% * __dst__ Destination image. It will have same size and type as `src`.
 %
 % ## Options
 % * __Interpolation__ Interpolation method, default 'Linear'. One of:
@@ -22,17 +23,31 @@
 %       zero. default true
 % * __InverseMap__ flag, inverse transformation, default false. For example,
 %       polar transforms:
-%       * flag is not set: Forward transformation `dst(phi,rho) = src(x,y)`
-%       * flag is set: Inverse transformation `dst(x,y) = src(phi,rho)`
+%       * flag is not set: Forward transformation `dst(rho,phi) = src(x,y)`
+%       * flag is set: Inverse transformation `dst(x,y) = src(rho,phi)`
 %
-% Transforms the source image using the following transformation:
+% Transform the source image using the following transformation:
 %
-%    dst(phi,rho) = src(x,y)
+%    dst(rho,phi) = src(x,y)
+%    size(dst) <- size(src)
 %
 % where:
 %
-%    rho = (size(src,2) / maxRadius) * sqrt(x^2 + y^2)
-%    phi = atan(y/x)
+%    I = (dx,dy) = (x-center(2), y-center(1))
+%    rho = Kx * magnitude(I)
+%    phi = Ky * angle(I)_{0..360 deg}
+%
+% and:
+%
+%    Kx = size(src,2) / maxRadius
+%    Ky = size(src,1) / 360
+%
+% Polar remaps reference:
+% <http://docs.opencv.org/trunk/polar_remap_doc.png>
+%
+% Note: To calculate magnitude and angle in degrees, cv.cartToPolar is used
+% internally thus angles are measured from 0 to 360 with accuracy about
+% 0.3 degrees.
 %
 % See also: cv.logPolar, cv.remap
 %

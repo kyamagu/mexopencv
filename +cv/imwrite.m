@@ -25,7 +25,7 @@
 %       default is 0 (don't use).
 % * __PngCompression__ For PNG, it can be the compression level from 0 to 9.
 %       A higher value means a smaller size and longer compression time.
-%       Default value is 3.
+%       Default value is 3. Also strategy is changed to `Default`.
 % * __PngStrategy__ For PNG; used to tune the compression algorithm. These
 %       flags will be modify the way of PNG image compression and will be
 %       passed to the underlying zlib processing stage. The strategy parameter

@@ -15,7 +15,7 @@
 %       in the same order as the corresponding `eigenvalues`.
 % * __b__ bool return value
 %
-% The functions cv.eigen calculate just eigenvalues, or eigenvalues and
+% The function cv.eigen calculates just eigenvalues, or eigenvalues and
 % eigenvectors of the symmetric matrix `src`:
 %
 %    src*eigenvectors(i,:)' = eigenvalues(i)*eigenvectors(i,:)'

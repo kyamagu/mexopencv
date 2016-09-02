@@ -13,7 +13,8 @@
 % ## Options
 % * __MaxCorners__ Maximum number of corners to return. If there are more
 %       corners than are found, the strongest of them is returned.
-%       default 1000.
+%       default 1000. `MaxCorners <= 0` implies that no limit on the maximum
+%       is set and all detected corners are returned.
 % * __QualityLevel__ Parameter characterizing the minimal accepted quality of
 %       image corners. The parameter value is multiplied by the best corner
 %       quality measure, which is the minimal eigenvalue (see
