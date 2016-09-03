@@ -725,7 +725,7 @@ MxArray toStruct_TRACK_vot(const vector<Ptr<Object> >& objs)
  * @param klass dataset class
  * @return struct-array MxArray object
  */
-MxArray toStruct(const vector<Ptr<Object>>& objs, const string& klass)
+MxArray toStruct(const vector<Ptr<Object> >& objs, const string& klass)
 {
     if (klass == "AR_hmdb")
         return toStruct_AR_hmdb(objs);
