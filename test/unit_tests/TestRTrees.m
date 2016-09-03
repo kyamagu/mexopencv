@@ -136,21 +136,21 @@ classdef TestRTrees
                 'Data',{'VarIdx',[true,false,true]});
             Yhat = model.predict(TestRTrees.X(:,[true,false,true]));
 
-            %TODO: throws C++ exception
-            %{
-            model.clear();
-            model.train(TestRTrees.X, TestRTrees.Y, ...
-                'Data',{'SampleIdx',[1:20 51:70]-1});
-            Yhat = model.predict(TestRTrees.X);
-            %}
+            if false
+                %TODO: throws C++ exception
+                model.clear();
+                model.train(TestRTrees.X, TestRTrees.Y, ...
+                    'Data',{'SampleIdx',[1:20 51:70]-1});
+                Yhat = model.predict(TestRTrees.X);
+            end
 
-            %TODO: throws C++ exception
-            %{
-            model.clear();
-            model.train(TestRTrees.X, TestRTrees.Y, ...
-                'Data',{'SampleIdx',rand(N,1)>0.5});
-            Yhat = model.predict(TestRTrees.X);
-            %}
+            if false
+                %TODO: throws C++ exception
+                model.clear();
+                model.train(TestRTrees.X, TestRTrees.Y, ...
+                    'Data',{'SampleIdx',rand(N,1)>0.5});
+                Yhat = model.predict(TestRTrees.X);
+            end
         end
 
         function test_data_options2

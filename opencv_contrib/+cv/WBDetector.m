@@ -1,7 +1,9 @@
 classdef WBDetector < handle
-    %WBDETECTOR  WaldBoost detector
+    %WBDETECTOR  WaldBoost detector: Object Detection using Boosted Features
     %
     % Class for object detection using WaldBoost from [Sochman05].
+    % Uses a Waldboost cascade and local binary patterns computed as integral
+    % features for 2D object detection.
     %
     % ## Example
     % The basic usage is the following:
@@ -27,7 +29,8 @@ classdef WBDetector < handle
     % > Sequential Detection", IEEE Conference on CVPR 2005, Vol 2, p. 150-156
     % > https://dspace.cvut.cz/bitstream/handle/10467/9494/2005-Waldboost-learning-for-time-constrained-sequential-detection.pdf?sequence=1
     %
-    % See also: cv.WBDetector.WBDetector, cv.WBDetector.detect
+    % See also: cv.WBDetector.WBDetector, cv.WBDetector.detect,
+    %  detectPeopleACF
     %
 
     properties (SetAccess = private)

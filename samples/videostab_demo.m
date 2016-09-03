@@ -189,15 +189,15 @@ opts.logger = 'NullLog';
 
 %%
 % override options
-opts.inputPath = which('shaky_car.avi');  %TODO: we're using a video from CVST
+opts.inputPath = which('shaky_car.avi');  %NOTE: we're using a video from CVST
 %opts.model = 'Translation';
 %opts.min_inlier_ratio = 0.01;
 %opts.nkps = 500;
 %opts.local_outlier_rejection = true;
 %opts.radius = 150;
 %opts.deblur = true;
-opts.est_trim = false;                    %TODO: otherwise corrupts frames!
-opts.trim_ratio = 0;                      %TODO: otherwise corrupts frames!
+opts.est_trim = false;                    %HACK: otherwise corrupts frames!
+opts.trim_ratio = 0;                      %HACK: otherwise corrupts frames!
 %opts.border_mode = 'Constant';
 %opts.mosaic = true;
 %opts.color_inpaint = 'telea';
@@ -419,12 +419,12 @@ while true
         drawnow
     end
 
-    %TODO: break early, processing of few last frames is slow!
-    %--{
-    if nframes > (vid.Count - ceil(opts.radius))
-        break;
+    if true
+        %HACK: break early, processing of few last frames is slow!
+        if nframes > (vid.Count - ceil(opts.radius))
+            break;
+        end
     end
-    %--}
 end
 clear writer
 fprintf('processed frames: %d\n', nframes);

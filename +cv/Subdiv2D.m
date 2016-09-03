@@ -1,6 +1,21 @@
 classdef Subdiv2D < handle
     %SUBDIV2D  Delaunay triangulation and Voronoi tesselation
     %
+    % ## Planar Subdivision
+    %
+    % The cv.Subdiv2D class described in this section is used to perform
+    % various planar subdivision on a set of 2D points (represented as vector
+    % of 2D-points `[x,y]`). OpenCV subdivides a plane into triangles using
+    % the Delaunay's algorithm, which corresponds to the dual graph of the
+    % Voronoi diagram. In the figure below, the Delaunay's triangulation is
+    % marked with black lines and the Voronoi diagram with red lines.
+    %
+    % <<https://github.com/Itseez/opencv/blob/master/modules/imgproc/doc/pics/delaunay_voronoi.png>>
+    %
+    % The subdivisions can be used for the 3D piece-wise transformation of a
+    % plane, morphing, fast location of points on the plane, building special
+    % graphs (such as NNG,RNG), and so forth.
+    %
     % See also: delaunay, DelaunayTri, delaunayTriangulation,
     %    voronoi, TriRep, triangulation,
     %    triplot, dsearchn, tsearchn
@@ -18,10 +33,17 @@ classdef Subdiv2D < handle
             %    obj = cv.Subdiv2D(rect)
             %
             % ## Input
-            % * __rect__ `[x,y,w,h]`
+            % * __rect__ Rectangle `[x,y,w,h]` that includes all of the 2D
+            %       points that are to be added to the subdivision.
             %
+            % Creates an empty Delaunay subdivision object.
             % The second form is equivalent to creating an empty object, then
             % calling the `initDelaunay` method.
+            %
+            % This creates an empty Delaunay subdivision where 2D points can
+            % be added using the function cv.Subdiv2D.insert. All of the
+            % points to be added must be within the specified rectangle,
+            % otherwise a runtime error is raised.
             %
             % See also: cv.Subdiv2D.initDelaunay
             %
@@ -42,7 +64,8 @@ classdef Subdiv2D < handle
             %    obj.initDelaunay(rect)
             %
             % ## Input
-            % * __rect__ `[x,y,w,h]`
+            % * __rect__ Rectangle `[x,y,w,h]` that includes all of the 2D
+            %       points that are to be added to the subdivision.
             %
             % See also: cv.Subdiv2D.Subdiv2D
             %
@@ -50,18 +73,28 @@ classdef Subdiv2D < handle
         end
 
         function varargout = insert(this, pt)
-            %INSERT  Insert point or points
+            %INSERT  Insert a single point or multiple points into a Delaunay triangulation
             %
             %    obj.insert(pt)
             %    curr_point = obj.insert(pt)
             %    obj.insert(pts)
             %
             % ## Input
-            % * __pt__ point `[x,y]`
-            % * __pts__ vector of points.
+            % * __pt__ Point to insert `[x,y]`
+            % * __pts__ vector of points to insert `{[x,y], ...}`.
             %
             % ## Output
-            % * **curr_point**
+            % * **curr_point** the ID of the point.
+            %
+            % The function inserts a single point or a vector of points into a
+            % subdivision and modifies the subdivision topology appropriately.
+            % If a point with the same coordinates exists already, no new
+            % point is added.
+            %
+            % NOTE: If the point is outside of the triangulation specified
+            % `rect` a runtime error is raised.
+            %
+            % See also: cv.Subdiv2D.Subdiv2D, cv.Subdiv2D.initDelaunay
             %
             if nargout > 0
                 varargout{1} = Subdiv2D_(this.id, 'insert', pt);
@@ -71,48 +104,77 @@ classdef Subdiv2D < handle
         end
 
         function [location, edge, vertex] = locate(this, pt)
-            %LOCATE  Locate point (triangulate)
+            %LOCATE  Returns the location of a point within a Delaunay triangulation
             %
             %    [location, edge, vertex] = obj.locate(pt)
             %
             % ## Input
-            % * __pt__ `[x,y]`
+            % * __pt__ Point `[x,y]` to locate.
             %
             % ## Output
-            % * __location__ One of:
-            %       * __Error__
-            %       * __OutsideRect__
-            %       * __Inside__
-            %       * __Vertex__
-            %       * __OnEdge__
-            % * __edge__
-            % * __vertex__
+            % * __location__ a string which specifoes one of the following five cases for point location:
+            %       * __Inside__ The point falls into some facet. The function
+            %             returns 'Inside' and edge will contain one of edges
+            %             of the facet.
+            %       * __OnEdge__ The point falls onto the edge. The function
+            %             returns 'OnEdge' and edge will contain this edge.
+            %       * __Vertex__ The point coincides with one of the
+            %             subdivision vertices. The function returns 'Vertex'
+            %             and vertex will contain a pointer to the vertex.
+            %       * __OutsideRect__ The point is outside the subdivision
+            %             reference rectangle. The function returns
+            %             'OutsideRect' and no other outputs are filled.
+            %       * __Error__ Point location error. One of input arguments
+            %             is invalid. A runtime error is raised or, if silent
+            %             or "parent" error processing mode is selected,
+            %             'Error' is returnd.
+            % * __edge__ Output edge that the point belongs to or is located
+            %       to the right of it.
+            % * __vertex__ Optional output vertex the input point coincides
+            %       with.
+            %
+            % The function locates the input point within the subdivision and gives one of the triangle edges or vertices.
+            %
+            % See also: cv.Subdiv2D.findNearest
             %
             [location, edge, vertex] = Subdiv2D_(this.id, 'locate', pt);
         end
 
         function [vertex, nearestPt] = findNearest(this, pt)
-            %FINDNEAREST  Find nearest vertex to a query point
+            %FINDNEAREST  Finds the subdivision vertex closest to the given point
             %
             %    [vertex, nearestPt] = obj.findNearest(pt)
             %
             % ## Input
-            % * __pt__ `[x,y]`
+            % * __pt__ Input point `[x,y]`
             %
             % ## Output
-            % * __vertex__
-            % * __nearestPt__ `[x,y]`
+            % * __vertex__ vertex ID.
+            % * __nearestPt__ Output subdivision vertex point `[x,y]`.
+            %
+            % The function is another function that locates the input point
+            % within the subdivision. It finds the subdivision vertex that is
+            % the closest to the input point. It is not necessarily one of
+            % vertices of the facet containing the input point, though the
+            % facet (located using cv.Subdiv2D.locate) is used as a starting
+            % point.
+            %
+            % See also: cv.Subdiv2D.locate
             %
             [vertex, nearestPt] = Subdiv2D_(this.id, 'findNearest', pt);
         end
 
         function edgeList = getEdgeList(this)
-            %GETEDGELIST  Return edges list
+            %GETEDGELIST  Returns a list of all edges
             %
             %    edgeList = obj.getEdgeList()
             %
             % ## Output
-            % * __edgeList__ `{[p1x,p1y, p2x,p2y], ...}`
+            % * __edgeList__ Output vector `{[p1x,p1y, p2x,p2y], ...}`.
+            %
+            % The function gives each edge as a 4 numbers vector, where each
+            % two are one of the edge vertices. i.e. `org_x = v[0]`,
+            % `org_y = v[1]`, `dst_x = v[2]`, `dst_y = v[3]`.
             %
             % See also: cv.Subdiv2D.getTriangleList
             %
@@ -120,12 +182,18 @@ classdef Subdiv2D < handle
         end
 
         function triangleList = getTriangleList(this)
-            %GETTRIANGLELIST  Return triangles list
+            %GETTRIANGLELIST  Returns a list of all triangles
             %
             %    triangleList = obj.getTriangleList()
             %
             % ## Output
-            % * __triangleList__ `{[p1x,p1y, p2x,p2y, p3x,p3y], ...}`
+            % * __triangleList__ Output vector
+            %       `{[p1x,p1y, p2x,p2y, p3x,p3y], ...}`.
+            %
+            % The function gives each triangle as a 6 numbers vector, where
+            % each two are one of the triangle vertices. i.e. `p1_x = v[0]`,
+            % `p1_y = v[1]`, `p2_x = v[2]`, `p2_y = v[3]`, `p3_x = v[4]`,
+            % `p3_y = v[5]`.
             %
             % See also: cv.Subdiv2D.getEdgeList
             %
@@ -133,16 +201,19 @@ classdef Subdiv2D < handle
         end
 
         function [facetList, facetCenters] = getVoronoiFacetList(this, idx)
-            %GETVORONOIFACETLIST  Return Voronoi facets
+            %GETVORONOIFACETLIST  Returns a list of all Voroni facets
             %
             %    [facetList, facetCenters] = obj.getVoronoiFacetList(idx)
             %
             % ## Input
-            % * __idx__ vector of integers
+            % * __idx__ Vector of vertices IDs to consider. For all vertices
+            %       you can pass empty vector.
             %
             % ## Output
-            % * __facetList__ array of array of points `{{[x,y], ...}, ...}`
-            % * __facetCenters__ vector of points `{[x,y], ...}`
+            % * __facetList__ Output vector of the Voroni facets, an array of
+            %       array of points `{{[x,y], ...}, ...}`.
+            % * __facetCenters__ Output vector of the Voroni facets center
+            %       points, a vector of points `{[x,y], ...}`.
             %
             % See also: cv.Subdiv2D.getEdgeList, cv.Subdiv2D.getTriangleList
             %
@@ -150,16 +221,17 @@ classdef Subdiv2D < handle
         end
 
         function [pt, firstEdge] = getVertex(this, vertex)
-            %getVertex  Return point by vertex index
+            %GETVERTEX  Returns vertex location from vertex ID
             %
             %    [pt, firstEdge] = obj.getVertex(vertex)
             %
             % ## Input
-            % * __vertex__
+            % * __vertex__ vertex ID.
             %
             % ## Output
-            % * __pt__ `[x,y]`
-            % * __firstEdge__
+            % * __pt__ vertex `[x,y]`.
+            % * __firstEdge__ Optional. The first edge ID which is connected
+            %       to the vertex.
             %
             % See also: cv.Subdiv2D.getEdge
             %
@@ -167,24 +239,34 @@ classdef Subdiv2D < handle
         end
 
         function e = getEdge(this, edge, nextEdgeType)
-            %GETEDGE  Get edge
+            %GETEDGE  Returns one of the edges related to the given edge
             %
             %    e = obj.getEdge(edge, nextEdgeType)
             %
             % ## Input
-            % * __edge__
-            % * __nextEdgeType__ One of:
-            %       * __NextAroundOrg__
-            %       * __NextAroundDst__
-            %       * __PrevAroundOrg__
-            %       * __PrevAroundDst__
-            %       * __NextAroundLeft__
-            %       * __NextAroundRight__
-            %       * __PrevAroundLeft__
-            %       * __PrevAroundRight__
+            % * __edge__ Subdivision edge ID.
+            % * __nextEdgeType__ Parameter specifying which of the related edges to return. The following edge type navigation values are possible:
+            %       * __NextAroundOrg__ next around the edge origin (`eOnext`
+            %             on the picture below if `e` is the input edge).
+            %       * __NextAroundDst__ next around the edge vertex (`eDnext`).
+            %       * __PrevAroundOrg__ previous around the edge origin
+            %             (reversed `eRnext`).
+            %       * __PrevAroundDst__ previous around the edge destination
+            %             (reversed `eLnext`).
+            %       * __NextAroundLeft__ next around the left facet (`eLnext`).
+            %       * __NextAroundRight__ next around the right facet
+            %             (`eRnext`).
+            %       * __PrevAroundLeft__ previous around the left facet
+            %             (reversed `eOnext`).
+            %       * __PrevAroundRight__ previous around the right facet
+            %             (reversed `eDnext`).
             %
             % ## Output
-            % * __e__
+            % * __e__  edge ID related to the input edge.
+            %
+            % A sample output is shown below:
+            %
+            % <<https://github.com/Itseez/opencv/blob/master/modules/imgproc/doc/pics/quadedge.png>>
             %
             % See also: cv.Subdiv2D.getVertex
             %
@@ -192,15 +274,16 @@ classdef Subdiv2D < handle
         end
 
         function e = nextEdge(this, edge)
-            %NEXTEDGE  Get next edge
+            %NEXTEDGE  Returns next edge around the edge origin
             %
             %    e = obj.nextEdge(edge)
             %
             % ## Input
-            % * __edge__
+            % * __edge__ Subdivision edge ID.
             %
             % ## Output
-            % * __e__
+            % * __e__ an integer which is next edge ID around the edge origin
+            %       (`eOnext` on the picture shown if `e` is the input edge).
             %
             % See also: cv.Subdiv2D.getEdge
             %
@@ -208,16 +291,25 @@ classdef Subdiv2D < handle
         end
 
         function e = rotateEdge(this, edge, rotate)
-            %ROTATEEDGE  Rotate edge
+            %ROTATEEDGE  Returns another edge of the same quad-edge
             %
             %    e = obj.rotateEdge(edge, rotate)
             %
             % ## Input
-            % * __edge__
-            % * __rotate__
+            % * __edge__ Subdivision edge ID.
+            % * __rotate__ Parameter specifying which of the edges of the same
+            %       quad-edge as the input one to return. The following values
+            %       are possible:
+            %       * __0__ the input edge (`e` on the picture shown if `e` is
+            %             the input edge).
+            %       * __1__ the rotated edge (`eRot`).
+            %       * __2__ the reversed edge (reversed `e` (in green)).
+            %       * __3__ the reversed rotated edge (reversed `eRot`
+            %             (in green)).
             %
             % ## Output
-            % * __e__
+            % * __e__ one of the edges ID of the same quad-edge as the input
+            %       edge.
             %
             % See also: cv.Subdiv2D.getEdge
             %
@@ -230,7 +322,7 @@ classdef Subdiv2D < handle
             %    e = obj.symEdge(edge)
             %
             % ## Input
-            % * __edge__
+            % * __edge__ Subdivision edge ID.
             %
             % ## Output
             % * __e__
@@ -241,16 +333,16 @@ classdef Subdiv2D < handle
         end
 
         function [e, orgpt] = edgeOrg(this, edge)
-            %EDGEORG  Edge origin
+            %EDGEORG  Returns the edge origin
             %
             %    [e, orgpt] = obj.edgeOrg(edge)
             %
             % ## Input
-            % * __edge__
+            % * __edge__ Subdivision edge ID.
             %
             % ## Output
-            % * __e__
-            % * __orgpt__ `[x,y]`
+            % * __e__ vertex ID.
+            % * __orgpt__ Output vertex location `[x,y]`.
             %
             % See also: cv.Subdiv2D.edgeDst
             %
@@ -258,16 +350,16 @@ classdef Subdiv2D < handle
         end
 
         function [e, dstpt] = edgeDst(this, edge)
-            %EDGEDST  Edge destination
+            %EDGEDST  Returns the edge destination
             %
             %    [e, dstpt] = obj.edgeDst(edge)
             %
             % ## Input
-            % * __edge__
+            % * __edge__ Subdivision edge ID.
             %
             % ## Output
-            % * __e__
-            % * __dstpt__ `[x,y]`
+            % * __e__ vertex ID.
+            % * __dstpt__ Output vertex location `[x,y]`.
             %
             % See also: cv.Subdiv2D.edgeOrg
             %

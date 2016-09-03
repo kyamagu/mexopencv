@@ -14,7 +14,7 @@ classdef UnitTest
         TESTDIR1 = fullfile(mexopencv.root(),'test','unit_tests');
         TESTDIR2 = fullfile(mexopencv.root(),'opencv_contrib','test','unit_tests');
 
-        %TODO: Tests to skip due to bugs in Octave
+        %HACK: Tests to skip due to bugs in Octave
         SKIP = {
             % local functions in M-classes
             'TestConjGradSolver'
@@ -37,6 +37,8 @@ classdef UnitTest
             'TestStructuredEdgeDetection'
             'TestMotionSaliencyBinWangApr2014'
             'TestObjectnessBING'
+            'TestBasicFaceRecognizer'
+            'TestLBPHFaceRecognizer'
             % codecs
             'TestVideoWriter'
         };

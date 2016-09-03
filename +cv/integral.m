@@ -22,7 +22,7 @@
 % * __SQDepth__ desired depth of the integral image of squared pixel values,
 %       `single` or `double`. default -1
 %
-% The functions calculate one or more integral images for the source image as
+% The function calculates one or more integral images for the source image as
 % follows:
 %
 %     s(X,Y) = \sum_{x<X,y<Y} src(x,y)

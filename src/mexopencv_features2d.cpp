@@ -1,5 +1,7 @@
 /** Implementation of mexopencv_features2d.
  * @file mexopencv_features2d.cpp
+ * @ingroup features2d
+ * @ingroup xfeatures2d
  * @author Amro
  * @date 2015
  */

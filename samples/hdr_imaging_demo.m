@@ -49,7 +49,7 @@ if isempty(files), error('Failed to find images'); end
 files = cellfun(@(f) fullfile(fpath,f), sort({files.name}), 'Uniform',false);
 
 images = cell(size(files));
-times = zeros(size(files));
+etimes = zeros(size(files));
 for i=1:numel(files)
     % read image
     images{i} = imread(files{i});
@@ -57,7 +57,7 @@ for i=1:numel(files)
     if ~use_memorial
         % read exposure times from EXIF tags
         info = imfinfo(files{i});
-        times(i) = info.DigitalCamera.ExposureTime;
+        etimes(i) = info.DigitalCamera.ExposureTime;
         %info.DigitalCamera.FNumber;    % same f-stop number
     end
 end
@@ -68,8 +68,8 @@ if use_memorial
     C = textscan(fid, '%s %f');
     fclose(fid);
     [~,ord] = sort(C{1});
-    times = C{2}(ord);
-    times = 1 ./ times;
+    etimes = C{2}(ord);
+    etimes = 1 ./ etimes;
 end
 
 montage(cat(4,images{:}))
@@ -79,13 +79,13 @@ montage(cat(4,images{:}))
 % construction algorithms. We use one of the calibration algorithms to
 % estimate inverse CRF for all 256 pixel values.
 calibrate = cv.CalibrateDebevec();
-response = calibrate.process(images, times);
+response = calibrate.process(images, etimes);
 
 %% Make HDR image
 % We use Debevec's weighting scheme to construct HDR image using response
 % calculated in the previous item.
 merge = cv.MergeDebevec();
-hdr = merge.process(images, times, response);
+hdr = merge.process(images, etimes, response);
 
 %% Tonemap HDR image
 % Since we want to see our results on common LDR display we have to map our
@@ -120,7 +120,7 @@ end
 
 %% Compare against MATLAB's implementation
 %hdr2 = hdrread(which('office.hdr'));
-%hdr2 = makehdr(files, 'RelativeExposure',times./times(1));
-hdr2 = makehdr(files, 'ExposureValues',times);
+%hdr2 = makehdr(files, 'RelativeExposure',etimes./etimes(1));
+hdr2 = makehdr(files, 'ExposureValues',etimes);
 ldr2 = tonemap(hdr2);
 imshow(ldr2)

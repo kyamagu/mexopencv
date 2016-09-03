@@ -509,14 +509,17 @@ classdef EM < handle
             %
             % See also: cv.EM/predict2, cv.EM/train, cv.EM/calcError
             %
-            [~, labels, results] = this.predict2(samples);
-            if ~isempty(labels)
-                f = labels(1);
+            if false
+                [results,f] = EM_(this.id, 'predict', samples, varargin{:});
             else
-                f = 0;
+                %HACK: https://github.com/Itseez/opencv/issues/5443
+                [~, labels, results] = this.predict2(samples);
+                if ~isempty(labels)
+                    f = labels(1);
+                else
+                    f = 0;
+                end
             end
-            %TODO: https://github.com/Itseez/opencv/issues/5443
-            %[results,f] = EM_(this.id, 'predict', samples, varargin{:});
         end
     end
 

@@ -14,9 +14,9 @@
 % * __pt1__ First line point.
 % * __pt2__ Second line point.
 %
-% The functions cv.clipLine calculate a part of the line segment that is
-% entirely within the specified rectangle. They return false if the line
-% segment is completely outside the rectangle. Otherwise, they return true.
+% The function cv.clipLine calculates a part of the line segment that is
+% entirely within the specified rectangle. It returns false if the line
+% segment is completely outside the rectangle. Otherwise, it returns true.
 %
 % See also: cv.line
 %

@@ -49,6 +49,27 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         plhs[0] = MxArray(last_id);
         return;
     }
+    // static method calls
+    else if (method == "subspaceProject") {
+        nargchk(nrhs==5 && nlhs<=1);
+        Mat W(rhs[2].toMat(CV_64F)),
+            mean(rhs[3].toMat(CV_64F)),
+            src(rhs[4].toMat(CV_64F)),
+            dst;
+        dst = LDA::subspaceProject(W, mean, src);
+        plhs[0] = MxArray(dst);
+        return;
+    }
+    else if (method == "subspaceReconstruct") {
+        nargchk(nrhs==5 && nlhs<=1);
+        Mat W(rhs[2].toMat(CV_64F)),
+            mean(rhs[3].toMat(CV_64F)),
+            src(rhs[4].toMat(CV_64F)),
+            dst;
+        dst = LDA::subspaceReconstruct(W, mean, src);
+        plhs[0] = MxArray(dst);
+        return;
+    }
 
     // Big operation switch
     Ptr<LDA> obj = obj_[id];

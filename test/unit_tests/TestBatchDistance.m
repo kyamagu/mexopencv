@@ -14,7 +14,7 @@ classdef TestBatchDistance
             [D,nidx] = cv.batchDistance(X, Y, 'NormType','L1');
             assert(isequal(size(D), [100 50]));
             if ~mexopencv.isOctave()
-                % TODO: https://savannah.gnu.org/bugs/index.php?45319
+                %HACK: https://savannah.gnu.org/bugs/index.php?45319
                 assert(isempty(nidx))
             end
         end

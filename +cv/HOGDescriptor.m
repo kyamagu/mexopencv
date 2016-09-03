@@ -62,7 +62,7 @@ classdef HOGDescriptor < handle
     %
     % See also: cv.HOGDescriptor.HOGDescriptor, cv.HOGDescriptor.compute,
     %  cv.HOGDescriptor.detect, cv.HOGDescriptor.detectMultiScale,
-    %  extractHOGFeatures
+    %  extractHOGFeatures, vision.PeopleDetector
     %
 
     properties (SetAccess = private)

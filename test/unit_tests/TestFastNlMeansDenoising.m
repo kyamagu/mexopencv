@@ -31,6 +31,27 @@ classdef TestFastNlMeansDenoising
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
+        function test_3
+            % requires Image Processing Toolbox
+            if mexopencv.isOctave()
+                img_lic = 'image';
+                img_ver = img_lic;
+            else
+                img_lic = 'image_toolbox';
+                img_ver = 'images';
+            end
+            if ~license('test', img_lic) || isempty(ver(img_ver))
+                disp('SKIP');
+                return;
+            end
+
+            img = cv.imread(TestFastNlMeansDenoising.im, 'Grayscale',true);
+            img = imnoise(img, 'gaussian');
+            img = im2uint16(img);
+            out = cv.fastNlMeansDenoising(img, 'H',5000, 'NormType','L1');
+            validateattributes(out, {class(img)}, {'size',size(img)});
+        end
+
         function test_error_1
             try
                 cv.fastNlMeansDenoising();

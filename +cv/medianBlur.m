@@ -20,5 +20,5 @@
 % processed independently.
 %
 % See also: cv.bilateralFilter, cv.blur, cv.boxFilter, cv.GaussianBlur,
-% medfilt2
+%  medfilt2
 %

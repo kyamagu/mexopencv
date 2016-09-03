@@ -19,10 +19,10 @@
 %       * __Cholesky__ Cholesky decomposion. The matrix must be symmetrical
 %             and positively defined.
 %
-% The function invert inverts the matrix `src` and stores the result in `dst`.
-% When the matrix `src` is singular or non-square, the function computes the
-% pseudo-inverse matrix (the `dst` matrix) so that `norm(src*dst - I)` is
-% minimal, where `I` is an identity matrix.
+% The function cv.invert inverts the matrix `src` and stores the result in
+% `dst`. When the matrix `src` is singular or non-square, the function
+% computes the pseudo-inverse matrix (the `dst` matrix) so that
+% `norm(src*dst - I)` is minimal, where `I` is an identity matrix.
 %
 % In case of the `'LU'` method, the function returns non-zero value if the
 % inverse has been successfully calculated and 0 if `src` is singular.

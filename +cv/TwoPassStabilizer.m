@@ -3,9 +3,9 @@ classdef TwoPassStabilizer < handle
     %
     % The video stabilization module contains a set of functions and classes
     % that can be used to solve the problem of video stabilization. There are
-    % a few methods implemented, most of them are descibed in the papers
+    % a few methods implemented, most of them are described in the papers
     % [OF06] and [G11]. However, there are some extensions and deviations from
-    % the orginal paper methods.
+    % the original paper methods.
     %
     % The video stabilization module contains a set of functions and classes
     % for global motion estimation between point clouds or between images. In

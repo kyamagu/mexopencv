@@ -223,11 +223,11 @@ classdef DTrees < handle
             % See also: cv.DTrees, cv.DTrees.train
             %
             this.id = DTrees_(0, 'new');
-            % --
-            %TODO: https://github.com/Itseez/opencv/issues/5070
-            this.MaxDepth = 10;  % avoid std::length_error exception!
-            this.CVFolds = 0;    % avoid segfault in train
-            % --
+            if true
+                %HACK: https://github.com/Itseez/opencv/issues/5070
+                this.MaxDepth = 10;  % avoid std::length_error exception!
+                this.CVFolds = 0;    % avoid segfault in train
+            end
             if nargin > 0
                 this.train(varargin{:});
             end

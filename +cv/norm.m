@@ -24,7 +24,7 @@
 % * __Mask__ optional operation mask; it must have the same size as `src1`
 %       and logical type. Not set by default.
 %
-% The functions norm calculate an absolute norm of `src1` (when there is
+% The function cv.norm calculates an absolute norm of `src1` (when there is
 % no `src2`):
 %
 %           { ||src1||_Linf = max(abs(src1(:)))     , if NormType='Inf'

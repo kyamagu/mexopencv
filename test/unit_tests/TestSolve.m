@@ -7,7 +7,7 @@ classdef TestSolve
             b = ones(5,1);
             x = A\b;
             if ~mexopencv.isOctave()
-                %TODO: http://savannah.gnu.org/bugs/?45212
+                %HACK: http://savannah.gnu.org/bugs/?45212
                 x = linsolve(A, b);
             end
             [x,ret] = cv.solve(A, b);

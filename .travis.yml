@@ -55,11 +55,11 @@ install:
   - sudo add-apt-repository -y ppa:kalakris/cmake
   - sudo apt-get update -qq
 
-  # install Octave 4.0.0
+  # install Octave 4.0.2
   - sudo apt-get install -y octave liboctave-dev
   # install image and statistics packages used by some tests
-  - if [ "$OCT_STATS" = "yes" ]; then octave $OCTAVE_OPTS --eval "try, pkg install -forge -local io statistics, end" ; fi
-  - if [ "$OCT_IMAGE" = "yes" ]; then octave $OCTAVE_OPTS --eval "try, pkg install -forge -local image, end" ; fi
+  - if [ "$OCT_STATS" = "yes" ]; then octave-cli $OCTAVE_OPTS --eval "try, pkg install -forge -local io statistics, end" ; fi
+  - if [ "$OCT_IMAGE" = "yes" ]; then octave-cli $OCTAVE_OPTS --eval "try, pkg install -forge -local image, end" ; fi
 
   # install build tools (CMake, Ninja, pkg-config, Doxygen)
   - sudo apt-get install -y cmake pkg-config
@@ -76,8 +76,8 @@ install:
   - cmake --version
   - pkg-config --version
   - dpkg -s octave liboctave-dev
-  - octave $OCTAVE_OPTS --version
-  - octave $OCTAVE_OPTS --eval "pkg list"
+  - octave-cli $OCTAVE_OPTS --version
+  - octave-cli $OCTAVE_OPTS --eval "pkg list"
   - if [ "$DOXY" = "yes" ]; then doxygen --version ; fi
 
   # install some dependencies for OpenCV
@@ -94,36 +94,34 @@ install:
   - unzip opencv_contrib.zip > /dev/null
   - mkdir build && cd build
   - cmake -G "$CMAKE_GEN" -Wno-dev
-      -DWITH_CUDA:BOOL=OFF
-      -DWITH_CUFFT:BOOL=OFF
-      -DWITH_OPENCL:BOOL=OFF
-      -DWITH_VTK:BOOL=OFF
-      -DINSTALL_C_EXAMPLES:BOOL=OFF
-      -DINSTALL_PYTHON_EXAMPLES:BOOL=OFF
       -DBUILD_DOCS:BOOL=OFF
       -DBUILD_EXAMPLES:BOOL=OFF
       -DBUILD_PACKAGE:BOOL=OFF
       -DBUILD_PERF_TESTS:BOOL=OFF
       -DBUILD_TESTS:BOOL=OFF
+      -DINSTALL_C_EXAMPLES:BOOL=OFF
+      -DINSTALL_PYTHON_EXAMPLES:BOOL=OFF
+      -DWITH_CUDA:BOOL=OFF
+      -DWITH_CUFFT:BOOL=OFF
+      -DWITH_OPENCL:BOOL=OFF
+      -DWITH_VTK:BOOL=OFF
       -DBUILD_opencv_apps:BOOL=OFF
       -DBUILD_opencv_cuda:BOOL=OFF
       -DBUILD_opencv_java:BOOL=OFF
       -DBUILD_opencv_python2:BOOL=OFF
       -DBUILD_opencv_python3:BOOL=OFF
       -DBUILD_opencv_ts:BOOL=OFF
+      -DBUILD_opencv_viz:BOOL=OFF
       -DBUILD_opencv_world:BOOL=OFF
       -DBUILD_opencv_contrib_world:BOOL=OFF
+      -DBUILD_opencv_matlab:BOOL=OFF
       -DBUILD_opencv_aruco:BOOL=OFF
       -DBUILD_opencv_ccalib:BOOL=OFF
       -DBUILD_opencv_cvv:BOOL=OFF
-      -DBUILD_opencv_datasets:BOOL=OFF
-      -DBUILD_opencv_dnn:BOOL=OFF
       -DBUILD_opencv_hdf:BOOL=OFF
-      -DBUILD_opencv_matlab:BOOL=OFF
       -DBUILD_opencv_sfm:BOOL=OFF
       -DBUILD_opencv_structured_light:BOOL=OFF
       -DBUILD_opencv_surface_matching:BOOL=OFF
-      -DBUILD_opencv_tracking:BOOL=OFF
       -DCMAKE_BUILD_TYPE:STRING=RELEASE
       -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_PREFIX
       -DOPENCV_EXTRA_MODULES_PATH:PATH=$HOME/cv/opencv_contrib-3.1.0/modules $HOME/cv/opencv-3.1.0
@@ -131,7 +129,7 @@ install:
   - sudo cmake --build . --target install
   - popd
 
-  #
+  # finish OpenCV installation
   - export PATH=$PATH:$INSTALL_PREFIX/bin
   - export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$INSTALL_PREFIX/lib/pkgconfig
   - sudo sh -c 'echo "$INSTALL_PREFIX/lib" > /etc/ld.so.conf.d/opencv.conf'
@@ -143,12 +141,13 @@ install:
 
 before_script:
   # create .octaverc file (where we setup path and load required packages on start)
-  # (due to bug in Octave, we must also add private directories on path)
+  #TODO: http://savannah.gnu.org/bugs/?45444, we also add private directories on path
   - touch $OCTAVERC
   - echo "crash_dumps_octave_core(false);" >> $OCTAVERC
   - echo "more off" >> $OCTAVERC
   - if [ "$OCT_STATS" = "yes" ]; then echo "try, pkg load statistics, end" >> $OCTAVERC ; fi
   - if [ "$OCT_IMAGE" = "yes" ]; then echo "try, pkg load image, end" >> $OCTAVERC ; fi
+  - echo "warning('off', 'Octave:GraphicsMagic-Quantum-Depth');" >> $OCTAVERC
   - echo "cd('$MCV_ROOT');" >> $OCTAVERC
   - echo "addpath('$MCV_ROOT');" >> $OCTAVERC
   - echo "addpath(fullfile('$MCV_ROOT','+cv','private'));" >> $OCTAVERC
@@ -165,7 +164,7 @@ script:
   - if [ "$DOXY" = "yes" ]; then make $MAKE_OPTS doc ; fi
 
   # print cv build info
-  - octave $OCTAVE_OPTS --eval "path, disp(cv.getBuildInformation())"
+  - octave-cli $OCTAVE_OPTS --eval "path, disp(cv.getBuildInformation())"
 
   # run test suite
   - make $MAKE_OPTS test

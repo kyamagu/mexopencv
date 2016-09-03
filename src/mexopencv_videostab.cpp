@@ -1,5 +1,6 @@
 /** Implementation of mexopencv_videostab.
  * @file mexopencv_videostab.cpp
+ * @ingroup videostab
  * @author Amro
  * @date 2016
  */
@@ -22,7 +23,7 @@ const ConstMap<string,int> InpaintingAlgMap = ConstMap<string,int>
     ("NS",    cv::INPAINT_NS)
     ("Telea", cv::INPAINT_TELEA);
 
-// NOTE: mexPrintf doesn't correctly handle "%s" formatted messages when
+// HACK: mexPrintf doesn't correctly handle "%s" formatted messages when
 // directly passing variadic to it. So we use vsnprintf first with a buffer,
 // then pass the buffer to mexPrintf.
 void LogToMATLAB::print(const char *format, ...)

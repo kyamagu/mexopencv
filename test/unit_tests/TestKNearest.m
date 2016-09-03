@@ -50,7 +50,10 @@ classdef TestKNearest
             K = 5;  % number of nearest neighbors
             model = cv.KNearest();
             model.DefaultK = K;
-            %model.AlgorithmType = 'KDTree';  % TODO: hangs!
+            if false
+                %TODO: hangs!
+                model.AlgorithmType = 'KDTree';
+            end
             model.IsClassifier = true;
 
             model.train(X(trainIdx,:), Y(trainIdx));

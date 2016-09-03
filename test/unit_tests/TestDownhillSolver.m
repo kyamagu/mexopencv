@@ -72,7 +72,7 @@ classdef TestDownhillSolver
                 'Function', struct('dims',2, 'fun','bealeFcn'));
             [x,f] = solver.minimize([2, 0]);
             etalon_x = [3, 0.5];
-            %assert(norm(x-etalon_x) < 1e-2); % TODO: fails to find solution
+            assert(norm(x-etalon_x) < 1e-2);
         end
 
         function test_error_1
@@ -126,7 +126,7 @@ end
 
 % Beale's function
 function f = bealeFcn(x)
-    f = (1.5 - x(1) - x(1)*x(2))^2 + ...
+    f = (1.5 - x(1) + x(1)*x(2))^2 + ...
         (2.25 - x(1) + x(1)*x(2)^2)^2 + ...
         (2.625 - x(1) + x(1)*x(2)^3)^2;
 end

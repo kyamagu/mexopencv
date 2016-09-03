@@ -86,7 +86,7 @@ classdef TestConjGradSolver
                 struct('dims',2, 'fun','bealeFcn', 'gradfun','bealeGrad'));
             [x,f] = solver.minimize([2, 0]);
             etalon_x = [3, 0.5];
-            %assert(norm(x-etalon_x) < 1e-6); %TODO: fails to find solution
+            assert(norm(x-etalon_x) < 1e-6);
         end
 
         function test_error_1
@@ -162,19 +162,19 @@ end
 
 % Beale's function
 %  syms f x y
-%  f(x,y) = (1.5-x-x*y)^2 + (2.25-x+x*y^2)^2 + (2.625-x+x*y^3)^2
-%  [diff(f,x), diff(f,y)]
+%  f(x,y) = (1.5-x+x*y)^2 + (2.25-x+x*y^2)^2 + (2.625-x+x*y^3)^2
+%  g(x,y) = gradient(f)
 function f = bealeFcn(x)
-    f = (1.5 - x(1) - x(1)*x(2))^2 + ...
+    f = (1.5 - x(1) + x(1)*x(2))^2 + ...
         (2.25 - x(1) + x(1)*x(2)^2)^2 + ...
         (2.625 - x(1) + x(1)*x(2)^3)^2;
 end
 function grad = bealeGrad(x)
     grad = [
-        2*(x(2) + 1)*(x(1) + x(1)*x(2) - 1.5) + ...
+        2*(x(2) - 1)*(x(1)*x(2) - x(1) + 1.5) + ...
         2*(x(2)^2 - 1)*(x(1)*x(2)^2 - x(1) + 2.25) + ...
         2*(x(2)^3 - 1)*(x(1)*x(2)^3 - x(1) + 2.625), ...
-        2*x(1)*(x(1) + x(1)*x(2) - 1.5) + ...
+        2*x(1)*(x(1)*x(2) - x(1) + 1.5) + ...
         4*x(1)*x(2)*(x(1)*x(2)^2 - x(1) + 2.25) + ...
         6*x(1)*x(2)^2*(x(1)*x(2)^3 - x(1) + 2.625)
     ];
