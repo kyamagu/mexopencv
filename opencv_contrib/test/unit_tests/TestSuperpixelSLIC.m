@@ -3,6 +3,12 @@ classdef TestSuperpixelSLIC
 
     methods (Static)
         function test_1
+            %TODO: sometimes causes random crashes similar to TestSuperpixelLSC
+            if true
+                disp('SKIP');
+                return;
+            end
+
             img = cv.imread(fullfile(mexopencv.root(),'test','fruits.jpg'), ...
                 'Color',true, 'ReduceScale',2);
             lab = cv.cvtColor(img, 'RGB2Lab');
