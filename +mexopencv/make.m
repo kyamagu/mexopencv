@@ -71,6 +71,12 @@ else      % Windows
         return;
     end
 
+    % in Octave, set "more off" locally for this function
+    if mexopencv.isOctave()
+        page_output_immediately(true, 'local');  % auto flush output
+        page_screen_output(false, 'local');      % no pager
+    end
+
     % mex build options
     mex_flags = mex_options(opts);
 
