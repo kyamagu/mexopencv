@@ -33,17 +33,17 @@
 % object, it does, up to a translation vector, if the proper `R` is specified.
 %
 %    % (u,v) is the input point, (up, vp) is the output point
-%    % camera_matrix = [fx 0 cx; 0 fy cy; 0 0 1]
+%    % cameraMatrix = [fx 0 cx; 0 fy cy; 0 0 1]
 %    % P = [fxp 0 cxp tx; 0 fyp cyp ty; 0 0 tz]
 %    xpp = (u - cx)/fx
 %    ypp = (v - cy)/fy
-%    (xp,yp) = cv.undistort(xpp, ypp, dist_coeffs)
+%    (xp,yp) = undistort(xpp, ypp, distCoeffs)
 %    [X,Y,W]' = R*[xp yp 1]'
 %    x = X/W, y = Y/W
 %    up = x*fxp + cxp
 %    vp = y*fyp + cyp
 %
-% where cv.undistort is an approximate iterative algorithm that estimates the
+% where `undistort` is an approximate iterative algorithm that estimates the
 % normalized original point coordinates out of the normalized distorted point
 % coordinates ("normalized" means that the coordinates do not depend on the
 % camera matrix).
