@@ -40,7 +40,7 @@ environment:
   # whether to run mexopencv.make() in Octave or use external makefile
   WITH_MAKE: yes
   # options in case of makefile (the quotes around the path are needed here!)
-  MAKE_OPTS: NO_CV_PKGCONFIG_HACK=1 TEST_CONTRIB=true WITH_OCTAVE=1 MATLABDIR='/c/dev/octave-4.0.3'
+  MAKE_OPTS: MATLABDIR='/c/dev/octave-4.0.3' WITH_OCTAVE=true WITH_CONTRIB=true NO_CV_PKGCONFIG_HACK=true
   # Extra make arguments like number of parallel jobs (NPROC+1 is recommended).
   # Note that GNU Make 3.81 bundled with Octave has poor parallel jobs support
   # (make -jN freezes, make -j has no limit creating way too many processes!).
