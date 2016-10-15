@@ -39,6 +39,18 @@ classdef UnitTest
             'TestObjectnessBING'
             'TestBasicFaceRecognizer'
             'TestLBPHFaceRecognizer'
+            'TestDetectMarkers'
+            'TestRefineDetectedMarkers'
+            'TestDetectCharucoDiamond'
+            'TestInterpolateCornersCharuco'
+            'TestDrawDetectedMarkers'
+            'TestDrawDetectedDiamonds'
+            'TestDrawDetectedCornersCharuco'
+            'TestEstimatePoseSingleMarkers'
+            'TestEstimatePoseBoard'
+            'TestEstimatePoseCharucoBoard'
+            'TestCalibrateCameraAruco'
+            'TestCalibrateCameraCharuco'
             % codecs
             'TestVideoWriter'
         };
