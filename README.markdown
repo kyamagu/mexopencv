@@ -19,8 +19,8 @@ For older OpenCV versions, please checkout the corresponding releases or branche
 [v2.3](https://github.com/kyamagu/mexopencv/tree/v2.3), and
 [v2.1](https://github.com/kyamagu/mexopencv/tree/v2.1)).
 
-- [OpenCV](https://github.com/Itseez/opencv)
-- [OpenCV extra modules](https://github.com/Itseez/opencv_contrib)
+- [OpenCV](https://github.com/opencv/opencv)
+- [OpenCV extra modules](https://github.com/opencv/opencv_contrib)
 
 Table of Contents
 =================

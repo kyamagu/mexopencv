@@ -115,7 +115,6 @@ install:
       -DBUILD_opencv_world:BOOL=OFF
       -DBUILD_opencv_contrib_world:BOOL=OFF
       -DBUILD_opencv_matlab:BOOL=OFF
-      -DBUILD_opencv_aruco:BOOL=OFF
       -DBUILD_opencv_ccalib:BOOL=OFF
       -DBUILD_opencv_cvv:BOOL=OFF
       -DBUILD_opencv_hdf:BOOL=OFF
