@@ -11,8 +11,8 @@
  * as functions for creating instances of Features2D-derived classes from
  * parsed arguments.
  */
-#ifndef __MEXOPENCV_FEATURES2D_HPP__
-#define __MEXOPENCV_FEATURES2D_HPP__
+#ifndef MEXOPENCV_FEATURES2D_HPP
+#define MEXOPENCV_FEATURES2D_HPP
 
 #include "mexopencv.hpp"
 

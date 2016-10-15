@@ -3,8 +3,8 @@
  * @author Kota Yamaguchi
  * @date 2012
  */
-#ifndef __MXARRAY_HPP__
-#define __MXARRAY_HPP__
+#ifndef MXARRAY_HPP
+#define MXARRAY_HPP
 
 #include <functional>
 #include <map>
@@ -1849,4 +1849,4 @@ std::vector<cv::KeyPoint> MxArray::toVector() const;
 template <>
 std::vector<cv::DMatch> MxArray::toVector() const;
 
-#endif // __MXARRAY_HPP__
+#endif // MXARRAY_HPP

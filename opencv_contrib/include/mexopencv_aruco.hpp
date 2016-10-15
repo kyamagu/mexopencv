@@ -9,8 +9,8 @@
  * This file includes maps for option processing, as well as functions for
  * creating instances of classes from parsed arguments.
  */
-#ifndef __MEXOPENCV_ARUCO_HPP__
-#define __MEXOPENCV_ARUCO_HPP__
+#ifndef MEXOPENCV_ARUCO_HPP
+#define MEXOPENCV_ARUCO_HPP
 
 #include "mexopencv.hpp"
 #include "opencv2/aruco.hpp"

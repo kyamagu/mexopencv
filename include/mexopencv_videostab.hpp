@@ -9,8 +9,8 @@
  * This file includes maps for option processing, as well as functions for
  * creating instances of cv::videostab:: classes from parsed arguments.
  */
-#ifndef __MEXOPENCV_VIDEOSTAB_HPP__
-#define __MEXOPENCV_VIDEOSTAB_HPP__
+#ifndef MEXOPENCV_VIDEOSTAB_HPP
+#define MEXOPENCV_VIDEOSTAB_HPP
 
 #include "mexopencv.hpp"
 #include "mexopencv_features2d.hpp"

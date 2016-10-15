@@ -9,8 +9,8 @@
  * This file includes maps for option processing, as well as functions for
  * creating instances of classes from parsed arguments.
  */
-#ifndef __MEXOPENCV_ML_HPP__
-#define __MEXOPENCV_ML_HPP__
+#ifndef MEXOPENCV_ML_HPP
+#define MEXOPENCV_ML_HPP
 
 #include "mexopencv.hpp"
 #include "opencv2/ml.hpp"
