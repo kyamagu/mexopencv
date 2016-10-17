@@ -36,7 +36,7 @@ env:
     - OCT_STATS=yes
     - OCT_IMAGE=no
     # common options for make
-    - MAKE_OPTS="NO_CV_PKGCONFIG_HACK=1 TEST_CONTRIB=true WITH_OCTAVE=1"
+    - MAKE_OPTS="WITH_OCTAVE=true WITH_CONTRIB=true NO_CV_PKGCONFIG_HACK=true"
     # Extra make arguments
     # (avoid using too many parallel jobs, as it could starve memory!)
     - MAKE_EXTRA=-j2
@@ -88,8 +88,8 @@ install:
 
   # build OpenCV 3.1.0 from source (opencv + opencv_contrib)
   - mkdir $HOME/cv && pushd $HOME/cv
-  - wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.1.0.zip
-  - wget -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/3.1.0.zip
+  - wget -O opencv.zip https://github.com/opencv/opencv/archive/3.1.0.zip
+  - wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/3.1.0.zip
   - unzip opencv.zip > /dev/null
   - unzip opencv_contrib.zip > /dev/null
   - mkdir build && cd build
@@ -115,7 +115,6 @@ install:
       -DBUILD_opencv_world:BOOL=OFF
       -DBUILD_opencv_contrib_world:BOOL=OFF
       -DBUILD_opencv_matlab:BOOL=OFF
-      -DBUILD_opencv_aruco:BOOL=OFF
       -DBUILD_opencv_ccalib:BOOL=OFF
       -DBUILD_opencv_cvv:BOOL=OFF
       -DBUILD_opencv_hdf:BOOL=OFF

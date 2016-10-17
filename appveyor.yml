@@ -40,7 +40,7 @@ environment:
   # whether to run mexopencv.make() in Octave or use external makefile
   WITH_MAKE: yes
   # options in case of makefile (the quotes around the path are needed here!)
-  MAKE_OPTS: NO_CV_PKGCONFIG_HACK=1 TEST_CONTRIB=true WITH_OCTAVE=1 MATLABDIR='/c/dev/octave-4.0.3'
+  MAKE_OPTS: MATLABDIR='/c/dev/octave-4.0.3' WITH_OCTAVE=true WITH_CONTRIB=true NO_CV_PKGCONFIG_HACK=true
   # Extra make arguments like number of parallel jobs (NPROC+1 is recommended).
   # Note that GNU Make 3.81 bundled with Octave has poor parallel jobs support
   # (make -jN freezes, make -j has no limit creating way too many processes!).
@@ -69,26 +69,22 @@ install:
   # download and install dependencies
   - if not exist "c:\dev" ( mkdir "c:\dev" )
   - cd "c:\dev"
-  - if "%DOXY%" == "yes" ( choco install doxygen.portable -y )
-  - echo Installing GNU Make ...
-  - ps: Start-FileDownload "ftp://ftp.equation.com/make/32/make.exe" -FileName mingw32-make.exe
+  - if "%DOXY%" == "yes" ( choco install doxygen.portable -y > nul )
+  - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.1.0/mingw32-make.exe" -FileName mingw32-make.exe
   - set "PATH=c:\dev;%PATH%"
-  - echo Installing OpenCV ...
   - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.1.0/cv310_x86_gcc493.7z" -FileName cv310_x86_gcc493.7z
   - 7z x "c:\dev\cv310_x86_gcc493.7z" -o"c:\dev\build" -y > nul
   - set "PATH=%OPENCV_DIR%\x86\mingw\bin;%PATH%"
-  - echo Installing Octave ...
   - ps: Start-FileDownload "https://ftp.gnu.org/gnu/octave/windows/octave-4.0.3.zip" -FileName octave-4.0.3.zip
   - 7z x "c:\dev\octave-4.0.3.zip" -o"c:\dev" -y > nul
   - copy /y "%OCTAVE_HOME%\bin\libopenblas.dll" "%OCTAVE_HOME%\bin\libblas.dll" > nul
   - set "PATH=%OCTAVE_HOME%\bin;%PATH%"
-  - echo Installing Octave packages ...
   - call %OCTAVE% --eval "try, pkg('rebuild', '-noauto'); end"
-  - dir "c:\dev"
   # show info about build tools
-  - set
-  - ver
-  - systeminfo
+  #- dir "c:\dev"
+  #- set
+  #- ver
+  #- systeminfo
   - mingw32-make --version
   - g++ --version
   - call %OCTAVE% --version
@@ -136,7 +132,7 @@ build_script:
 
 after_build:
   # package all built MEX-files in a zip file
-  - pushd "%MCV_ROOT%" && 7z a -t7z "%APPVEYOR_BUILD_FOLDER%\mexopencv.7z" *.mex -r -y && popd
+  - pushd "%MCV_ROOT%" && 7z a -t7z "%APPVEYOR_BUILD_FOLDER%\mexopencv.7z" *.mex -r -y > nul && popd
   - appveyor PushArtifact "%APPVEYOR_BUILD_FOLDER%\mexopencv.7z" -DeploymentName "binaries_octave_x86"
   # package HTML docs
   - if "%DOXY%" == "yes" ( 7z a -t7z "%APPVEYOR_BUILD_FOLDER%\mexopencv_doc.7z" "%MCV_ROOT%\doc\html\" -y > nul )

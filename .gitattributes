@@ -1,6 +1,8 @@
 # dont add to archives when exporting
 .gitignore     export-ignore
 .gitattributes export-ignore
+.travis.yml    export-ignore
+appveyor.xml   export-ignore
 
 # autodetect all text files to be EOL-normalized
 # (on checkin, set EOL to LF; on checkout, set EOL to OS native)
@@ -13,18 +15,27 @@
 *.h         text diff=cpp
 *.hpp       text diff=cpp
 *.html      text diff=html
+*.css       text diff=css
 *.xml       text
 *.dox       text
 *.markdown  text
 *.md        text
 *.txt       text
+*.sh        text
+*.yml       text
+*.json      text
 
 # binary files (no EOL conversion whatsoever): checkin/checkout as is
 *.jpg       binary
 *.png       binary
 *.tiff      binary
 *.bmp       binary
+*.gif       binary
+*.hdr       binary
+*.avi       binary
 *.jar       binary
+*.zip       binary
+*.gz        binary
 
 # some XML models contain binary data
 test/*.xml  binary

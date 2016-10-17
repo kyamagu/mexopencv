@@ -19,8 +19,8 @@
 # PKG_CONFIG_OPENCV     Name of OpenCV 3.x pkg-config package. Default opencv.
 # CFLAGS                Extra flags passed to the C/C++ MEX compiler.
 # LDFLAGS               Extra flags passed to the linker by the compiler.
-# TEST_CONTRIB          true/false to enable/disable opencv_contrib tests in
-#                       addition to the base opencv tests. Default false.
+# WITH_CONTRIB          If set, enables opencv_contrib modules in addition
+#                       to main opencv modules.
 #
 # The above settings can be defined as shell environment variables and/or
 # specified on the command line as arguments to make:
@@ -44,31 +44,33 @@
 # ============================================================================
 
 # programs
-ifndef WITH_OCTAVE
-MATLABDIR ?= /usr/local/matlab
-MEX       ?= $(MATLABDIR)/bin/mex
-MATLAB    ?= $(MATLABDIR)/bin/matlab -nodisplay -noFigureWindows -nosplash
-else
+ifdef WITH_OCTAVE
 MATLABDIR ?= /usr
 MEX       ?= $(MATLABDIR)/bin/mkoctfile --mex
 MATLAB    ?= $(MATLABDIR)/bin/octave-cli --no-gui --no-window-system --quiet
+else
+MATLABDIR ?= /usr/local/matlab
+MEX       ?= $(MATLABDIR)/bin/mex
+MATLAB    ?= $(MATLABDIR)/bin/matlab -nodisplay -noFigureWindows -nosplash
 endif
 DOXYGEN   ?= doxygen
-
-# options
-PKG_CONFIG_OPENCV ?= opencv
-TEST_CONTRIB      ?= false
 
 # file extensions
 OBJEXT ?= o
 LIBEXT ?= a
-ifndef WITH_OCTAVE
-MEXEXT ?= $(shell $(MATLABDIR)/bin/mexext)
-else
+ifdef WITH_OCTAVE
 MEXEXT ?= mex
+else
+MEXEXT ?= $(shell $(MATLABDIR)/bin/mexext)
 endif
 ifeq ($(MEXEXT),)
     $(error "MEX extension not set")
+endif
+
+# options
+PKG_CONFIG_OPENCV ?= opencv
+ifneq (,$(findstring contrib,$(MAKECMDGOALS)))
+WITH_CONTRIB       = true
 endif
 
 # OpenCV flags
@@ -87,48 +89,63 @@ CV_LDFLAGS := $(filter-out $(LIB_SUFFIX),$(CV_LDFLAGS)) \
 endif
 
 # compiler/linker flags
-ifndef WITH_OCTAVE
-MX_CFLAGS := -largeArrayDims -cxx
-else
-MX_CFLAGS := -O2 -s -fpermissive
+ifdef WITH_OCTAVE
 # -flto
 # -fdata-sections -ffunction-sections -Wl,--gc-sections
+MX_CFLAGS  := -O2 -s -fpermissive
+else
+MX_CFLAGS  := -largeArrayDims -cxx
 endif
-override CFLAGS  := $(MX_CFLAGS) -Iinclude $(CV_CFLAGS) $(CFLAGS)
-override LDFLAGS := -Llib -lMxArray $(CV_LDFLAGS) $(LDFLAGS)
+MX_CFLAGS  += -Iinclude
+ifdef WITH_CONTRIB
+MX_CFLAGS  += -Iopencv_contrib/include
+endif
+MX_LDFLAGS := -Llib -lMxArray
+override CFLAGS  := $(MX_CFLAGS) $(CV_CFLAGS) $(CFLAGS)
+override LDFLAGS := $(MX_LDFLAGS) $(CV_LDFLAGS) $(LDFLAGS)
 
 # mexopencv files and targets
 HEADERS  := $(wildcard include/*.hpp)
 SRCS0    := $(wildcard src/*.cpp)
+ifdef WITH_CONTRIB
+HEADERS  += $(wildcard opencv_contrib/include/*.hpp)
+SRCS0    += $(wildcard opencv_contrib/src/*.cpp)
+endif
 SRCS1    := $(wildcard src/+cv/*.cpp) \
             $(wildcard src/+cv/private/*.cpp) \
             $(wildcard src/+cv/+test/private/*.cpp)
 SRCS2    := $(wildcard opencv_contrib/src/+cv/*.cpp) \
             $(wildcard opencv_contrib/src/+cv/private/*.cpp)
-OBJECTS0 := $(subst src, lib, $(SRCS0:.cpp=.$(OBJEXT)))
+OBJECTS0 := $(subst src,lib,$(SRCS0:.cpp=.$(OBJEXT)))
 TARGETS0 := lib/libMxArray.$(LIBEXT)
-TARGETS1 := $(subst src/+cv, +cv, $(SRCS1:.cpp=.$(MEXEXT)))
-TARGETS2 := $(subst opencv_contrib/src/+cv, opencv_contrib/+cv, $(SRCS2:.cpp=.$(MEXEXT)))
+TARGETS1 := $(subst src/+cv,+cv,$(SRCS1:.cpp=.$(MEXEXT)))
+TARGETS2 := $(subst opencv_contrib/src/+cv,opencv_contrib/+cv,$(SRCS2:.cpp=.$(MEXEXT)))
 
 # search path for prerequisites of pattern rules
 # Note that VPATH/vpath are designed to find sources, not targets!
 # (http://make.mad-scientist.net/papers/how-not-to-use-vpath/)
+vpath %.cpp src
 vpath %.cpp src/+cv
 vpath %.cpp src/+cv/private
 vpath %.cpp src/+cv/+test/private
+ifdef WITH_CONTRIB
+vpath %.cpp opencv_contrib/src
 vpath %.cpp opencv_contrib/src/+cv
 vpath %.cpp opencv_contrib/src/+cv/private
+endif
 
 # special targets
 .PHONY : all contrib clean doc test
 .SUFFIXES: .cpp .$(OBJEXT) .$(LIBEXT) .$(MEXEXT)
 
 # MxArray objects
-lib/%.$(OBJEXT): src/%.cpp $(HEADERS)
-ifndef WITH_OCTAVE
-	$(MEX) -c $(CFLAGS) -outdir lib $<
-else
+lib/%.$(OBJEXT) \
+opencv_contrib/lib/%.$(OBJEXT) \
+: %.cpp $(HEADERS)
+ifdef WITH_OCTAVE
 	$(MEX) -c $(CFLAGS) -o $@ $<
+else
+	$(MEX) -c $(CFLAGS) -outdir $(dir $@) $<
 endif
 
 # MxArray library
@@ -142,11 +159,11 @@ $(TARGETS0): $(OBJECTS0)
 opencv_contrib/+cv/%.$(MEXEXT) \
 opencv_contrib/+cv/private/%.$(MEXEXT) \
 : %.cpp $(TARGETS0)
-ifndef WITH_OCTAVE
-	$(MEX) $(CFLAGS) -output ${@:.$(MEXEXT)=} $< $(LDFLAGS)
-else
+ifdef WITH_OCTAVE
 	$(MEX) $(CFLAGS) -o ${@:.$(MEXEXT)=} $< $(LDFLAGS)
 	$(RM) ./$(notdir $(<:.cpp=.$(OBJEXT)))
+else
+	$(MEX) $(CFLAGS) -output ${@:.$(MEXEXT)=} $< $(LDFLAGS)
 endif
 
 # targets
@@ -160,6 +177,7 @@ clean:
         +cv/*.$(MEXEXT) \
         +cv/private/*.$(MEXEXT) \
         +cv/+test/private/*.$(MEXEXT) \
+        opencv_contrib/lib/*.$(OBJEXT) \
         opencv_contrib/+cv/*.$(MEXEXT) \
         opencv_contrib/+cv/private/*.$(MEXEXT)
 
@@ -170,8 +188,8 @@ doc:
 # we can't always trust Octave's exit code on Windows! It throws 0xC0000005
 # on exit (access violation), even when it runs just fine.
 test:
-ifndef WITH_OCTAVE
-	$(MATLAB) -r "addpath(pwd);cd test;try,UnitTest($(TEST_CONTRIB));catch e,disp(e.getReport);end;exit;"
+ifdef WITH_OCTAVE
+	$(MATLAB) --eval "addpath(pwd);cd test;try,UnitTest($(WITH_CONTRIB));catch e,disp(e);exit(1);end;exit(0);" || echo "Exit code: $$?"
 else
-	$(MATLAB) --eval "addpath(pwd);cd test;try,UnitTest($(TEST_CONTRIB));catch e,disp(e);exit(1);end;exit(0);" || echo "Exit code: $$?"
+	$(MATLAB) -r "addpath(pwd);cd test;try,UnitTest($(WITH_CONTRIB));catch e,disp(e.getReport);end;exit;"
 endif

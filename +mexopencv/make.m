@@ -81,14 +81,12 @@ else      % Windows
     mex_flags = mex_options(opts);
 
     % Compile MxArray and any other shared sources into OBJs (compile-only)
-    files = prepare_source_files(...
-        fullfile(mexopencv.root(),'src'), 'cpp', ...
-        fullfile(mexopencv.root(),'lib'), objext());
+    files = collect_mxarray_files(opts);
     for i=1:numel(files)
         if compile_needed(files(i).src, files(i).dst, opts)
             if ~mexopencv.isOctave()
                 cmd = sprintf('mex %s -c ''%s'' -outdir ''%s''', ...
-                    mex_flags, files(i).src, fullfile(mexopencv.root(),'lib'));
+                    mex_flags, files(i).src, fileparts(files(i).out));
             else
                 cmd = sprintf('mex %s -c ''%s'' -o ''%s''', ...
                     mex_flags, files(i).src, files(i).dst);
@@ -165,30 +163,28 @@ function makefile_unix(opts)
     %MAKEFILE_UNIX  Builds using a makefile on Unix platforms
     %
 
-    options = {};
-    if opts.dryrun         , options = [options '--dry-run']; end
-    if opts.force          , options = [options '--always-make']; end
-    if opts.verbose < 1    , options = [options '--silent']; end
-    if opts.verbose > 1    , options = [options 'CFLAGS+=-v']; end
-    if opts.debug          , options = [options 'CFLAGS+=-g']; end
-    if ~isempty(opts.extra), options = [options opts.extra]; end
-
-    if mexopencv.isOctave()
-        options = ['WITH_OCTAVE=1' options];
-    end
-    if opts.test && opts.opencv_contrib
-        options = ['TEST_CONTRIB=true' options];
-    end
+    options = {
+        sprintf('MATLABDIR="%s"', matlabroot)
+        ['MEXEXT=' mexext]
+    };
+    if mexopencv.isOctave(), options{end+1} = 'WITH_OCTAVE=true'; end
+    if opts.opencv_contrib , options{end+1} = 'WITH_CONTRIB=true'; end
+    if opts.dryrun         , options{end+1} = '--dry-run'; end
+    if opts.force          , options{end+1} = '--always-make'; end
+    if opts.verbose < 1    , options{end+1} = '--silent'; end
+    if opts.verbose > 1    , options{end+1} = 'CFLAGS+=-v'; end
+    if opts.debug          , options{end+1} = 'CFLAGS+=-g'; end
+    if ~isempty(opts.extra), options{end+1} = opts.extra; end
+    options = strtrim(sprintf(' %s', options{:}));
 
     targets = {'all'};
     if opts.clean          , targets = ['clean' targets]; end
-    if opts.opencv_contrib , targets = [targets 'contrib']; end
-    if opts.test           , targets = [targets 'test']; end
+    if opts.opencv_contrib , targets{end+1} = 'contrib'; end
+    if opts.test           , targets{end+1} = 'test'; end
+    targets = strtrim(sprintf(' %s', targets{:}));
 
     % call Makefile
-    cmd = sprintf('make MATLABDIR="%s" MEXEXT=%s %s %s', ...
-        matlabroot, mexext, ...
-        sprintf(' %s', options{:}), sprintf(' %s', targets{:}));
+    cmd = sprintf('make %s %s', options, targets);
     if opts.verbose > 0, disp(cmd); end
     system(cmd);
 end
@@ -215,6 +211,7 @@ function target_clean(opts)
         fullfile('lib', '*.obj') ;
         fullfile('lib', '*.o') ;
         fullfile('lib', '*.lib') ;
+        fullfile('lib', '*.a') ;
         fullfile('lib', '*.pdb') ;
         fullfile('lib', '*.idb')
     };
@@ -256,9 +253,8 @@ function mex_flags = mex_options(opts)
     % compiler/linker flags
     [cv_cflags, cv_libs] = pkg_config(opts);
     [comp_flags, link_flags] = compilation_flags(opts);
-    mex_flags = sprintf('%s %s -I''%s'' %s %s',...
-        comp_flags, link_flags, fullfile(mexopencv.root(),'include'), ...
-        cv_cflags, cv_libs);
+    mex_flags = sprintf('%s %s %s %s %s',...
+        comp_flags, link_flags, include_dirs(opts), cv_cflags, cv_libs);
 
     % large-array-handling API for 64-bit platforms
     if ~mexopencv.isOctave()
@@ -284,6 +280,24 @@ function mex_flags = mex_options(opts)
             mex_flags = ['-O2 ' mex_flags];
         end
     end
+end
+
+function cflags = include_dirs(opts)
+    %INCLUDE_DIRS  constructs compiler flag for mexopencv include directories
+    %
+
+    I_path = {};
+
+    % MCVROOT\include\*.hpp
+    I_path{end+1} = fullfile(mexopencv.root(),'include');
+
+    % MCVROOT\opencv_contrib\include\*.hpp
+    if opts.opencv_contrib
+        I_path{end+1} = fullfile(mexopencv.root(),'opencv_contrib','include');
+    end
+
+    % all combined as string in "-Idir1 -Idir2" format
+    cflags = strtrim(sprintf(' -I''%s''', I_path{:}));
 end
 
 function [cflags,libs] = pkg_config(opts)
@@ -522,6 +536,28 @@ function files = prepare_source_files(dir_src, src_ext, dir_dst, dst_ext)
 
     % return structure
     files = struct('name',names, 'src',srcs, 'dst',dsts, 'out',outs);
+end
+
+function files = collect_mxarray_files(opts)
+    %COLLECT_MXARRAY_FILES  Collect all source files for MxArray library
+    %
+
+    files = {};
+
+    % MCVROOT\src\*.cpp
+    files{end+1} = prepare_source_files(...
+        fullfile(mexopencv.root(),'src'), 'cpp', ...
+        fullfile(mexopencv.root(),'lib'), objext());
+
+    if opts.opencv_contrib
+        % MCVROOT\opencv_contrib\src\*.cpp
+        files{end+1} = prepare_source_files(...
+            fullfile(mexopencv.root(),'opencv_contrib','src'), 'cpp', ...
+            fullfile(mexopencv.root(),'opencv_contrib','lib'), objext());
+    end
+
+    % all combined as an array of structs
+    files = [files{:}];
 end
 
 function files = collect_mex_files(opts)

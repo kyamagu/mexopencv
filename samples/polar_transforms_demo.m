@@ -64,5 +64,4 @@ end
 
 % Close
 snapnow
-close(window);
 clear camera

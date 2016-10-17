@@ -19,6 +19,9 @@
 % `KSize x KSize` aperture. Each channel of a multi-channel image is
 % processed independently.
 %
+% Note: The median filter uses `BorderType=Replicate` internally to cope with
+% border pixels. See cv.copyMakeBorder.
+%
 % See also: cv.bilateralFilter, cv.blur, cv.boxFilter, cv.GaussianBlur,
 %  medfilt2
 %

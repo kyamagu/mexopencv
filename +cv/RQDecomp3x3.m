@@ -23,7 +23,7 @@
 % It optionally returns three rotation matrices, one for each axis, and the
 % three Euler angles (as the return value) that could be used in OpenGL. Note,
 % there is always more than one sequence of rotations about the three
-% principle axes that results in the same orientation of an object, eg. see
+% principal axes that results in the same orientation of an object, eg. see
 % [Slabaugh]. Returned tree rotation matrices and corresponding three Euler
 % angules are only one of the possible solutions.
 %
