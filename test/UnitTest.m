@@ -51,6 +51,7 @@ classdef UnitTest
             'TestEstimatePoseCharucoBoard'
             'TestCalibrateCameraAruco'
             'TestCalibrateCameraCharuco'
+            'TestNet'
             % codecs
             'TestVideoWriter'
         };
