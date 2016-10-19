@@ -2,7 +2,7 @@
 % This program demonstrates arbitrary object finding with the Generalized
 % Hough transform.
 %
-% <https://github.com/Itseez/opencv/blob/master/samples/gpu/generalized_hough.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/gpu/generalized_hough.cpp>
 %
 
 %% Input images

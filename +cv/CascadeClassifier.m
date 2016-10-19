@@ -38,7 +38,7 @@ classdef CascadeClassifier < handle
     % 2. Line features
     % 3. Center-surround features
     %
-    % See image: <http://docs.opencv.org/3.0.0/haarfeatures.png>
+    % See image: <http://docs.opencv.org/3.1.0/haarfeatures.png>
     %
     % The feature used in a particular classifier is specified by its shape
     % (1a, 2b etc.), position within the region of interest and the scale

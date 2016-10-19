@@ -1,7 +1,7 @@
 classdef TestRandGaussMixture
     %TestRandGaussMixture
 
-    %TODO: https://github.com/Itseez/opencv/issues/5466
+    %TODO: https://github.com/opencv/opencv/issues/5466
 
     methods (Static)
         function test_1

@@ -66,7 +66,7 @@ classdef TestDenoise_TVL1
     end
 end
 
-% https://github.com/Itseez/opencv/blob/master/modules/photo/test/test_denoise_tvl1.cpp
+% https://github.com/opencv/opencv/blob/3.1.0/modules/photo/test/test_denoise_tvl1.cpp
 
 function noisy = make_noisy(img, sigma, pepper_salt_ratio)
     noise = uint8(randn(size(img))*sigma + 128);

@@ -2,7 +2,7 @@
 % In this tutorial you will learn how to use the disparity map post-filtering
 % to improve the results of StereoBM and StereoSGBM algorithms.
 %
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/ximgproc/samples/disparity_filtering.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/ximgproc/samples/disparity_filtering.cpp>
 % <http://docs.opencv.org/3.1.0/d3/d14/tutorial_ximgproc_disparity_filtering.html>
 %
 

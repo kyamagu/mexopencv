@@ -6,7 +6,8 @@
 % cluster centers and uses kmeans to move those cluster centers to their
 % representitive location.
 %
-% <https://github.com/Itseez/opencv/blob/master/samples/cpp/kmeans.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/kmeans.cpp>
+%
 
 %% Initialization
 

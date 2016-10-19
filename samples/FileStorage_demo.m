@@ -1,7 +1,8 @@
 %% FileStorage demo
 % Demonstration of reading/writing from/to XML and YAML file storages.
 %
-% <https://github.com/Itseez/opencv/blob/master/modules/core/include/opencv2/core/persistence.hpp>
+% <http://docs.opencv.org/3.1.0/d4/da4/group__core__xml.html>
+%
 
 %% Data
 % First we create some different variables to save.

@@ -1,7 +1,7 @@
 %% Filtering Demo
 % This program demonstrates Domain Transform filtering using cv.DTFilter
 %
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/ximgproc/samples/live_demo.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/ximgproc/samples/live_demo.cpp>
 %
 
 function varargout = dtFilter_demo_gui(im)

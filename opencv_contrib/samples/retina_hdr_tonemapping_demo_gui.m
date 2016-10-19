@@ -21,8 +21,8 @@
 % * local logarithmic luminance compression allows details to be enhanced in
 %   low light conditions
 %
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/bioinspired/samples/cpp/OpenEXRimages_HDR_Retina_toneMapping.cpp>
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/bioinspired/samples/cpp/OpenEXRimages_HDR_Retina_toneMapping_video.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/bioinspired/samples/cpp/OpenEXRimages_HDR_Retina_toneMapping.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/bioinspired/samples/cpp/OpenEXRimages_HDR_Retina_toneMapping_video.cpp>
 %
 
 function varargout = retina_hdr_tonemapping_demo_gui()

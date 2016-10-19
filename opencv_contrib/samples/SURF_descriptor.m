@@ -13,8 +13,8 @@
 % * Use the function <matlab:doc('cv.drawMatches') cv.drawMatches> to draw the
 %   detected matches.
 %
-% <http://docs.opencv.org/3.0.0/d5/dde/tutorial_feature_description.html>
-% <http://docs.opencv.org/3.0.0/d5/d6f/tutorial_feature_flann_matcher.html>
+% <http://docs.opencv.org/3.1.0/d5/dde/tutorial_feature_description.html>
+% <http://docs.opencv.org/3.1.0/d5/d6f/tutorial_feature_flann_matcher.html>
 %
 
 %% Images

@@ -3,7 +3,7 @@
 %
 % This program demonstrates circle finding with the Hough transform.
 %
-% <https://github.com/Itseez/opencv/blob/master/samples/cpp/houghcircles.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/houghcircles.cpp>
 %
 
 %% Input image

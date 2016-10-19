@@ -56,7 +56,7 @@ classdef DPMDetector < handle
     % [Felzenszwalb2010a] using cv.DPMDetector.mat2opencvxml method.
     %
     % You can find examples of pre-trained models here:
-    % https://github.com/Itseez/opencv_extra/tree/3.1.0/testdata/cv/dpm/VOC2007_Cascade/
+    % https://github.com/opencv/opencv_extra/tree/3.1.0/testdata/cv/dpm/VOC2007_Cascade/
     %
     % ## References
     % [Felzenszwalb2010a]:
@@ -216,7 +216,7 @@ classdef DPMDetector < handle
             % * https://github.com/rbgirshick/voc-dpm
             %
             % This `mat2opencvxml` utility is taken from:
-            % https://github.com/Itseez/opencv_extra/blob/3.1.0/testdata/cv/dpm/mat2opencvxml.m
+            % https://github.com/opencv/opencv_extra/blob/3.1.0/testdata/cv/dpm/mat2opencvxml.m
             %
             % See also: cv.DPMDetector
             %

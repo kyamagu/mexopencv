@@ -1,7 +1,7 @@
 %% Line descriptors radius matching demo
 % This example shows the functionalities of radius matching.
 %
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/line_descriptor/samples/radius_matching.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/line_descriptor/samples/radius_matching.cpp>
 %
 
 %% Querying internal database

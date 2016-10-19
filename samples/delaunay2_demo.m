@@ -5,7 +5,7 @@
 % It draws a random set of points in an image and then
 % delaunay triangulates them.
 %
-% <https://github.com/Itseez/opencv/blob/master/samples/cpp/delaunay2.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/delaunay2.cpp>
 %
 
 function delaunay2_demo()

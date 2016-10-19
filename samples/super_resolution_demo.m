@@ -1,7 +1,7 @@
 %% Super Resolution demo
 % This sample demonstrates Super Resolution algorithms for video sequence.
 %
-% <https://github.com/Itseez/opencv/blob/3.0.0/samples/gpu/super_resolution.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/gpu/super_resolution.cpp>
 %
 
 %%
@@ -24,7 +24,7 @@ end
 inputVideoName = fullfile(mexopencv.root(),'test','car.avi');
 if ~exist(inputVideoName, 'file')
     % download video from Github
-    url = 'https://cdn.rawgit.com/Itseez/opencv_extra/3.0.0/testdata/superres/car.avi';
+    url = 'https://cdn.rawgit.com/opencv/opencv_extra/3.1.0/testdata/superres/car.avi';
     disp('Downloading video...')
     urlwrite(url, inputVideoName);
 end

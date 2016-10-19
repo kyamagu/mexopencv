@@ -5,7 +5,7 @@
 %  P. Felzenszwalb, D. Huttenlocher, "Efficient Graph-Based Image Segmentation"
 %  International Journal of Computer Vision, Vol. 59, No. 2, September 2004
 %
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/ximgproc/samples/cpp/graphsegmentation_demo.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/ximgproc/samples/cpp/graphsegmentation_demo.cpp>
 %
 
 %% Load image

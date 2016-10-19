@@ -10,10 +10,10 @@
 % See this page for a complete tutorial:
 % http://docs.opencv.org/3.1.0/da/d60/tutorial_face_main.html
 %
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_demo.cpp>
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_eigenfaces.cpp>
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_fisherfaces.cpp>
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_lbph.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_demo.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_eigenfaces.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_fisherfaces.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_lbph.cpp>
 %
 
 %% Options
@@ -59,6 +59,7 @@ P = 0.1;
 % download/extract files if needed
 ATTFolder = fullfile(mexopencv.root(),'test','att_faces');
 if ~exist(ATTFolder, 'dir')
+    mkdir(ATTFolder);
     zipFile = fullfile(mexopencv.root(),'test','att_faces.zip');
     if exist(zipFile, 'file') ~= 2
         url = 'http://www.cl.cam.ac.uk/Research/DTG/attarchive/pub/data/att_faces.zip';

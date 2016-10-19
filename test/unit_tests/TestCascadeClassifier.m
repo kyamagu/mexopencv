@@ -96,7 +96,7 @@ end
 function download_classifier_xml(fname)
     if ~exist(fname, 'file')
         % attempt to download trained Haar/LBP/HOG classifier from Github
-        url = 'https://cdn.rawgit.com/Itseez/opencv/3.0.0/data/';
+        url = 'https://cdn.rawgit.com/opencv/opencv/3.1.0/data/';
         [~, f, ext] = fileparts(fname);
         if strncmpi(f, 'haarcascade_', length('haarcascade_'))
             url = fullfile(url, 'haarcascades');
