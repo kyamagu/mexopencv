@@ -1,12 +1,12 @@
 %% Contours demo
 % The example below shows how to retrieve connected components from a binary
 % image and label them.
+%
 
 %% Input Image
 % some binary (black-n-white) image, i.e class(src) = logical
 src = imread(fullfile(mexopencv.root(),'test','bw.png'));
 imshow(src), title('Source')
-snapnow
 
 %% Connected Components
 [contours, hierarchy] = cv.findContours(src, ...
@@ -28,4 +28,3 @@ end
 %%
 % show result
 imshow(dst), title('Components')
-snapnow

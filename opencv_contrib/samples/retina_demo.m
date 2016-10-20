@@ -17,8 +17,8 @@
 % |RetinaDefaultParameters.xml|. You can use this to fine tune parameters and
 % load them if you save to file |RetinaSpecificParameters.xml|
 %
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/bioinspired/samples/basicRetina.cpp>
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/bioinspired/samples/cpp/retinaDemo.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/bioinspired/samples/basicRetina.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/bioinspired/samples/cpp/retinaDemo.cpp>
 %
 
 %% Webcam

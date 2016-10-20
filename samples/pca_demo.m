@@ -9,7 +9,8 @@
 % The author recommends using the first 15 faces of the AT&T face data set:
 % http://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html
 %
-% <https://github.com/Itseez/opencv/blob/master/samples/cpp/pca.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/pca.cpp>
+%
 
 %% Input images
 
@@ -63,4 +64,3 @@ imshow(reconstruction)
 title('Reconstruction')
 xlabel(sprintf('Retained Variance: %d%%, # of PCs: %d', ...
     retVar, size(pca.eigenvectors,1)))
-snapnow

@@ -10,8 +10,8 @@
 %   the detected keypoints.
 %
 % See also:
-% <http://docs.opencv.org/3.0.0/d7/d66/tutorial_feature_detection.html>,
-% <http://docs.opencv.org/3.0.0/df/dd2/tutorial_py_surf_intro.html>
+% <http://docs.opencv.org/3.1.0/d7/d66/tutorial_feature_detection.html>,
+% <http://docs.opencv.org/3.1.0/df/dd2/tutorial_py_surf_intro.html>
 %
 
 %%

@@ -2,20 +2,18 @@
 % This program demonstrates arbitrary object finding with the Generalized
 % Hough transform.
 %
-% <https://github.com/Itseez/opencv/blob/master/samples/gpu/generalized_hough.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/gpu/generalized_hough.cpp>
 %
 
 %% Input images
 % Image to search
 img = cv.imread(fullfile(mexopencv.root(),'test','pic1.png'), 'Flags',0);
 imshow(img), title('Image')
-snapnow
 
 %%
 % Template
 templ = cv.imread(fullfile(mexopencv.root(),'test','templ.png'), 'Flags',0);
 imshow(templ), title('Template')
-snapnow
 
 %% Create Generalized Hough transform object
 if true
@@ -58,4 +56,3 @@ for i=1:numel(positions)
 end
 
 imshow(out), title('Detection')
-snapnow

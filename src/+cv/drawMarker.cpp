@@ -9,7 +9,7 @@
 using namespace std;
 using namespace cv;
 
-//TODO: https://github.com/Itseez/opencv/issues/5905
+//TODO: https://github.com/opencv/opencv/issues/5905
 
 namespace {
 /// Marker types for option processing

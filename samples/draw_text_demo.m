@@ -1,5 +1,6 @@
 %% Draw text demo
 % Demonstration of text drawing functions
+%
 
 %% Text Parameters
 txt = 'Funny text inside the box';
@@ -37,4 +38,3 @@ img = cv.putText(img, txt, textOrg, 'Color',[255,255,255], ...
 %%
 % finally show the resulting image
 imshow(img, 'InitialMagnification',100, 'Border','tight')
-snapnow

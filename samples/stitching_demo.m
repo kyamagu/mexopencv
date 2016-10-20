@@ -1,7 +1,7 @@
 %% Rotation model images stitcher
 % A basic example on image stitching.
 %
-% <https://github.com/Itseez/opencv/blob/3.1.0/samples/cpp/stitching.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/stitching.cpp>
 %
 
 %% Input images (two or more)

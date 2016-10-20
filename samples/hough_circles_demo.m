@@ -3,7 +3,7 @@
 %
 % This program demonstrates circle finding with the Hough transform.
 %
-% <https://github.com/Itseez/opencv/blob/master/samples/cpp/houghcircles.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/houghcircles.cpp>
 %
 
 %% Input image
@@ -12,7 +12,6 @@ assert(~isempty(fname), 'Image not found');
 img = cv.imread(fname, 'Flags',1);
 
 imshow(img), title('circles')
-snapnow
 
 %% Processing
 % convert to grayscale
@@ -45,4 +44,3 @@ for i=1:numel(circles)
 end
 
 imshow(img), title('detected circles')
-snapnow

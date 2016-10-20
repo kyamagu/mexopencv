@@ -6,7 +6,7 @@
 % When the program starts, it begins learning the background.
 % You can toggle background learning on and off using the checkbox.
 %
-% <https://github.com/Itseez/opencv/blob/master/samples/cpp/segment_objects.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/segment_objects.cpp>
 %
 
 %% Set up video source: video file or camera
@@ -14,7 +14,7 @@ fname = fullfile(mexopencv.root(),'test','768x576.avi');
 if ~exist(fname, 'file')
     % download video from Github
     disp('Downloading video...')
-    url = 'https://cdn.rawgit.com/Itseez/opencv/3.1.0/samples/data/768x576.avi';
+    url = 'https://cdn.rawgit.com/opencv/opencv/3.1.0/samples/data/768x576.avi';
     urlwrite(url, fname);
 end
 cap = cv.VideoCapture(fname);

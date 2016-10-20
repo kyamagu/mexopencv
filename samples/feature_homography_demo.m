@@ -9,8 +9,8 @@
 % * Use the function <matlab:doc('cv.perspectiveTransform') cv.perspectiveTransform>
 %   to map the points.
 %
-% <http://docs.opencv.org/3.0.0/d7/dff/tutorial_feature_homography.html>,
-% <http://docs.opencv.org/3.0.0/d1/de0/tutorial_py_feature_homography.html>
+% <http://docs.opencv.org/3.1.0/d7/dff/tutorial_feature_homography.html>,
+% <http://docs.opencv.org/3.1.0/d1/de0/tutorial_py_feature_homography.html>
 %
 
 %% Input images

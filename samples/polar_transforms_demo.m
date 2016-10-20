@@ -3,7 +3,7 @@
 %
 % This program illustrates Linear-Polar and Log-Polar image transforms.
 %
-% <https://github.com/Itseez/opencv/blob/master/samples/cpp/polar_transforms.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/polar_transforms.cpp>
 %
 
 %%
@@ -63,5 +63,4 @@ while ishghandle(window)
 end
 
 % Close
-snapnow
-clear camera
+camera.release();

@@ -10,7 +10,7 @@ classdef Subdiv2D < handle
     % Voronoi diagram. In the figure below, the Delaunay's triangulation is
     % marked with black lines and the Voronoi diagram with red lines.
     %
-    % <<https://github.com/Itseez/opencv/blob/master/modules/imgproc/doc/pics/delaunay_voronoi.png>>
+    % <<https://github.com/opencv/opencv/blob/master/modules/imgproc/doc/pics/delaunay_voronoi.png>>
     %
     % The subdivisions can be used for the 3D piece-wise transformation of a
     % plane, morphing, fast location of points on the plane, building special
@@ -266,7 +266,7 @@ classdef Subdiv2D < handle
             %
             % A sample output is shown below:
             %
-            % <<https://github.com/Itseez/opencv/blob/master/modules/imgproc/doc/pics/quadedge.png>>
+            % <<https://github.com/opencv/opencv/blob/master/modules/imgproc/doc/pics/quadedge.png>>
             %
             % See also: cv.Subdiv2D.getVertex
             %

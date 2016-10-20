@@ -13,8 +13,8 @@
 % * Use the function <matlab:doc('cv.drawMatches') cv.drawMatches> to draw the
 %   detected matches.
 %
-% <http://docs.opencv.org/3.0.0/d5/dde/tutorial_feature_description.html>
-% <http://docs.opencv.org/3.0.0/d5/d6f/tutorial_feature_flann_matcher.html>
+% <http://docs.opencv.org/3.1.0/d5/dde/tutorial_feature_description.html>
+% <http://docs.opencv.org/3.1.0/d5/d6f/tutorial_feature_flann_matcher.html>
 %
 
 %% Images
@@ -22,7 +22,6 @@
 im1 = imread(fullfile(mexopencv.root(),'test','box.png'));
 im2 = imread(fullfile(mexopencv.root(),'test','box_in_scene.png'));
 imshowpair(im1, im2, 'montage'), title('box + box-in-scene')
-snapnow, close
 
 % some parameters
 do_filtering = true;
@@ -43,6 +42,7 @@ keypoints2 = detector.detect(im2, 'Mask',mask);
 
 %%
 % Show distribution of keypoint sizes
+figure
 histogram([keypoints1.size]), hold on
 histogram([keypoints2.size])
 xlabel('Keypoint sizes'), ylabel('Count')
@@ -97,7 +97,6 @@ matches = [matches{:}];
 % Show distribution of match distances
 histogram([matches.distance])
 xlabel('Match distances'), ylabel('Count')
-snapnow
 
 % Filter matches by distance ("good" matches)
 if do_filtering

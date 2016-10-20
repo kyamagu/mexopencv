@@ -8,7 +8,7 @@
 % them a descriptor |cv.BinaryDescriptor|. Finally, we can then match line
 % segments using the |cv.BinaryDescriptorMatcher| class.
 %
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/line_descriptor/samples/matching.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/line_descriptor/samples/matching.cpp>
 %
 
 %% Matching among descriptors

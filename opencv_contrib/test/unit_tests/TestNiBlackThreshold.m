@@ -6,7 +6,7 @@ classdef TestNiBlackThreshold
 
     methods (Static)
         function test_1
-            %TODO: https://github.com/Itseez/opencv_contrib/pull/542
+            %TODO: https://github.com/opencv/opencv_contrib/pull/542
             if true
                 disp('SKIP');
                 return;
@@ -17,7 +17,7 @@ classdef TestNiBlackThreshold
         end
 
         function test_2
-            %TODO: https://github.com/Itseez/opencv_contrib/pull/542
+            %TODO: https://github.com/opencv/opencv_contrib/pull/542
             if true
                 disp('SKIP');
                 return;

@@ -3,7 +3,7 @@
 %
 % This program demonstrates line finding with the Hough transform.
 %
-% <https://github.com/Itseez/opencv/blob/master/samples/cpp/houghlines.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/houghlines.cpp>
 %
 
 %% Input image
@@ -12,7 +12,6 @@ assert(~isempty(fname), 'Image not found');
 src = imread(fname);
 
 imshow(src), title('Source')
-snapnow
 
 %% Processing
 % Edge Detection
@@ -43,7 +42,6 @@ for i=1:numel(lines)
 end
 
 imshow(color_dst), title('Detected Lines')
-snapnow
 
 %% HoughLinesP
 tic
@@ -58,4 +56,3 @@ for i=1:numel(lines)
 end
 
 imshow(color_dst2), title('Detected Line Segments')
-snapnow

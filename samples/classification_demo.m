@@ -2,6 +2,7 @@
 % This demonstrates an example of machine learning algorithms in a simple
 % classification problem. It compares different classifiers using the same
 % data samples.
+%
 
 %%
 % Prepare data: there are two normal distributions

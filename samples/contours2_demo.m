@@ -2,7 +2,8 @@
 % This program illustrates the use of findContours and drawContours.
 % The original image is put up along with the image of drawn contours.
 %
-% <https://github.com/Itseez/opencv/blob/master/samples/cpp/contours2.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/contours2.cpp>
+%
 
 %% Draw faces
 w = 500;
@@ -42,7 +43,6 @@ end
 
 % show the face
 imshow(img), title('image')
-snapnow
 
 %% Contours
 % extract the contours
@@ -63,4 +63,3 @@ cnt_img = cv.drawContours(cnt_img, contours, ...
     'ContourIdx',idx, 'Hierarchy',hierarchy, 'MaxLevel',abs(levels), ...
     'Color',[128,255,255], 'Thickness',3, 'LineType','AA');
 imshow(cnt_img), title('contours')
-snapnow

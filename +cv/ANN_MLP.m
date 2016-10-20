@@ -18,7 +18,7 @@ classdef ANN_MLP < handle
     % next layer. The example below represents a 3-layer perceptron with three
     % inputs, two outputs, and the hidden layer including five neurons:
     %
-    % <<http://docs.opencv.org/3.0.0/mlp.png>>
+    % <<http://docs.opencv.org/3.1.0/mlp.png>>
     %
     % All the neurons in MLP are similar. Each of them has several input links
     % (it takes the output values from several neurons in the previous layer
@@ -28,7 +28,7 @@ classdef ANN_MLP < handle
     % bias  term. The sum is transformed using the activation function `f`
     % that may be also different for different neurons.
     %
-    % <<http://docs.opencv.org/3.0.0/neuron_model.png>>
+    % <<http://docs.opencv.org/3.1.0/neuron_model.png>>
     %
     % In other words, given the outputs `x_j` of the layer `n`, the outputs
     % `y_i` of the layer `n+1` are computed as:
@@ -45,7 +45,7 @@ classdef ANN_MLP < handle
     % * __Gaussian__: Gaussian function, which is not completely supported at
     %   the moment `f(x) = beta * exp(-alpha*x*x)`
     %
-    % <<http://docs.opencv.org/3.0.0/sigmoid_bipolar.png>>
+    % <<http://docs.opencv.org/3.1.0/sigmoid_bipolar.png>>
     %
     % In ML, all the neurons have the same activation functions, with the
     % same free parameters (`alpha`, `beta`) that are specified by user and

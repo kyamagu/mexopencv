@@ -15,7 +15,7 @@
 % * cv.filterSpeckles
 % * cv.reprojectImageTo3D
 %
-% <https://github.com/Itseez/opencv/blob/3.0.0/samples/cpp/stereo_calib.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/stereo_calib.cpp>
 %
 % See also: StereoCalibrationAndSceneReconstructionExample
 %

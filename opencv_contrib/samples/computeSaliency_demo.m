@@ -1,7 +1,7 @@
 %% Saliency algorithms demo
 % This example shows the functionality of "Saliency"
 %
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/saliency/samples/computeSaliency.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/saliency/samples/computeSaliency.cpp>
 %
 
 %% Options
@@ -15,7 +15,7 @@ start_frame = 0;  % index of starting frame
 if ~exist(video_name, 'file')
     % download video from Github
     disp('Downloading video...')
-    url = 'https://cdn.rawgit.com/Itseez/opencv/3.1.0/samples/data/768x576.avi';
+    url = 'https://cdn.rawgit.com/opencv/opencv/3.1.0/samples/data/768x576.avi';
     urlwrite(url, video_name);
 end
 
@@ -37,7 +37,7 @@ if strcmp(alg, 'BING') && ~exist(training_path, 'dir')
     disp('Downloading trained models...');
     mkdir(training_path);
     for i=1:numel(files)
-        url = 'https://cdn.rawgit.com/Itseez/opencv_contrib/3.1.0/modules/saliency/samples/ObjectnessTrainedModel/';
+        url = 'https://cdn.rawgit.com/opencv/opencv_contrib/3.1.0/modules/saliency/samples/ObjectnessTrainedModel/';
         urlwrite([url files{i}], fullfile(training_path,files{i}));
     end
 end

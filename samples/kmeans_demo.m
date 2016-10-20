@@ -6,7 +6,8 @@
 % cluster centers and uses kmeans to move those cluster centers to their
 % representitive location.
 %
-% <https://github.com/Itseez/opencv/blob/master/samples/cpp/kmeans.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/kmeans.cpp>
+%
 
 %% Initialization
 
@@ -48,7 +49,6 @@ L = repelem(1:(numel(idx)-1), diff(idx));
 gscatter(points(:,1), points(:,2), L)
 axis square equal ij
 axis([1 sz(2) 1 sz(1)])
-snapnow
 
 %% Clustering
 % shuffle points

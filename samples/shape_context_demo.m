@@ -3,9 +3,9 @@
 % Context.
 %
 % We use 20 sample images from OpenCV:
-% https://github.com/Itseez/opencv/tree/3.0.0/samples/data/shape_sample/*.png
+% https://github.com/opencv/opencv/tree/3.1.0/samples/data/shape_sample/*.png
 %
-% <https://github.com/Itseez/opencv/blob/3.0.0/samples/cpp/shape_example.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/shape_example.cpp>
 %
 
 %%

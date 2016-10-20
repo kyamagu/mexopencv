@@ -199,7 +199,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                     "Unrecognized option %s", key.c_str());
         }
         //HACK: we must do this one sample at a time to avoid incorrect outputProbs
-        //TODO: https://github.com/Itseez/opencv/issues/5911
+        //TODO: https://github.com/opencv/opencv/issues/5911
         Mat inputs(rhs[2].toMat(CV_32F));
         Mat outputs(inputs.rows, 1, CV_32S),
             outputProbs;

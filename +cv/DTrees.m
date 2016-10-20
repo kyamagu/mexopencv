@@ -224,7 +224,7 @@ classdef DTrees < handle
             %
             this.id = DTrees_(0, 'new');
             if true
-                %HACK: https://github.com/Itseez/opencv/issues/5070
+                %HACK: https://github.com/opencv/opencv/issues/5070
                 this.MaxDepth = 10;  % avoid std::length_error exception!
                 this.CVFolds = 0;    % avoid segfault in train
             end

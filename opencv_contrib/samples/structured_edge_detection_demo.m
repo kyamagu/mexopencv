@@ -1,7 +1,7 @@
 %% Structured Edge Detection demo
 % This sample demonstrates structured forests for fast edge detection.
 %
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/ximgproc/samples/structured_edge_detection.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/ximgproc/samples/structured_edge_detection.cpp>
 %
 
 %% Load image
@@ -17,7 +17,7 @@ img = im2single(img);
 modelFilename = fullfile(mexopencv.root(),'test','model.yml.gz');
 if exist(modelFilename, 'file') ~= 2
     % download model from GitHub
-    url = 'https://cdn.rawgit.com/Itseez/opencv_extra/3.1.0/testdata/cv/ximgproc/model.yml.gz';
+    url = 'https://cdn.rawgit.com/opencv/opencv_extra/3.1.0/testdata/cv/ximgproc/model.yml.gz';
     disp('Downloading model...')
     urlwrite(url, modelFilename);
 end

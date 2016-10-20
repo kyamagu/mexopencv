@@ -13,8 +13,8 @@ fast prototyping of OpenCV application in MATLAB, use of OpenCV as an external
 toolbox in MATLAB, and development of a custom MEX function.
 
 The latest version of mexopencv (master branch) is compatible with OpenCV 3.1.
-For older OpenCV versions, please checkout the corresponding releases or branches
-([v3.0](https://github.com/kyamagu/mexopencv/releases/tag/v3.0.0),
+For older OpenCV versions, please checkout the corresponding releases or
+branches ([v3.0](https://github.com/kyamagu/mexopencv/releases/tag/v3.0.0),
 [v2.4](https://github.com/kyamagu/mexopencv/releases/tag/v2.4.11),
 [v2.3](https://github.com/kyamagu/mexopencv/tree/v2.3), and
 [v2.1](https://github.com/kyamagu/mexopencv/tree/v2.1)).
@@ -65,12 +65,14 @@ Build
 Prerequisite:
 
  * Linux: MATLAB or Octave (>= 4.0.0), OpenCV (>= 3.0.0), g++, make, pkg-config
- * OS X: MATLAB or Octave (>= 4.0.0), OpenCV (>= 3.0.0), Xcode Command Line Tools, pkg-config
+ * OS X: MATLAB or Octave (>= 4.0.0), OpenCV (>= 3.0.0), Xcode Command Line
+   Tools, pkg-config
  * Windows: MATLAB or Octave (>= 4.0.0), OpenCV (>= 3.0.0), supported compiler
 
 Currently, mexopencv targets the final 3.1.0 stable version of OpenCV. You
 must build it against this exact version, rather than using the bleeding-edge
-dev-version of `opencv` or `opencv_contrib`. UNIX users should consider using a package manager to install OpenCV.
+dev-version of `opencv` or `opencv_contrib`. UNIX users should consider using
+a package manager to install OpenCV.
 
 Linux
 -----
@@ -82,8 +84,11 @@ source package from http://opencv.org/ . Make sure `pkg-config` command can
 identify OpenCV path. Currently, Ubuntu 16.04 LTS or earlier users have options
 to:
 
-  * [install OpenCV 3.1 from source](http://opencv.org) and set up `PKG_CONFIG_PATH` environmental variable to use `pkg-config`, or
-  * install `libopencv-dev` apt package and use the [v2.4 release](https://github.com/kyamagu/mexopencv/releases/tag/v2.4.11) of mexopencv.
+  * [install OpenCV 3.1 from source](http://opencv.org) and set up
+    `PKG_CONFIG_PATH` environmental variable to use `pkg-config`, or
+  * install `libopencv-dev` apt package and use the
+    [v2.4 release](https://github.com/kyamagu/mexopencv/releases/tag/v2.4.11)
+    of mexopencv.
 
 If you have all the prerequisite, go to the mexopencv directory and type:
 
@@ -135,7 +140,9 @@ launching MATLAB. On Mac, you can use `otool -L` command instead.
 OS X
 ----
 
-Currently, the recommended approach to install OpenCV in OS X is [Homebrew](http://brew.sh/). Install Homebrew first, and do the following to install OpenCV 3.
+Currently, the recommended approach to install OpenCV in OS X is
+[Homebrew](http://brew.sh/). Install Homebrew first, and do the following to
+install OpenCV 3.
 
     $ brew install pkg-config homebrew/science/opencv3
     $ brew link opencv3
@@ -144,7 +151,8 @@ If you have all the prerequisite, go to the mexopencv directory and type:
 
     $ make MATLABDIR=/Applications/MATLAB_R2016a.app PKG_CONFIG_MATLAB=opencv3 LDFLAGS=-L/usr/local/share/OpenCV/3rdparty/lib -j2
 
-Replace the path to Matlab with your version. This will build and place all MEX functions inside `+cv/`.
+Replace the path to Matlab with your version. This will build and place all
+MEX functions inside `+cv/`.
 
 Windows
 -------

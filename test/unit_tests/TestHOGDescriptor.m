@@ -193,7 +193,7 @@ function fname = get_pedestrian_video()
     fname = fullfile(mexopencv.root(),'test','768x576.avi');
     if ~exist(fname, 'file')
         % download video from Github
-        url = 'https://cdn.rawgit.com/Itseez/opencv/3.1.0/samples/data/768x576.avi';
+        url = 'https://cdn.rawgit.com/opencv/opencv/3.1.0/samples/data/768x576.avi';
         disp('Downloading video...')
         urlwrite(url, fname);
     end

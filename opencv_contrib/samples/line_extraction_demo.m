@@ -8,9 +8,9 @@
 %   in |KeyLine| objects
 % * use the same interface to compute descriptors for every extracted line
 %
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/line_descriptor/samples/lsd_lines_extraction.cpp>
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/line_descriptor/samples/lines_extraction.cpp>
-% <https://github.com/Itseez/opencv_contrib/blob/3.1.0/modules/line_descriptor/samples/compute_descriptors.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/line_descriptor/samples/lsd_lines_extraction.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/line_descriptor/samples/lines_extraction.cpp>
+% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/line_descriptor/samples/compute_descriptors.cpp>
 %
 
 %% Lines extraction and descriptors computation

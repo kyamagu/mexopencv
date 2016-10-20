@@ -512,7 +512,7 @@ classdef EM < handle
             if false
                 [results,f] = EM_(this.id, 'predict', samples, varargin{:});
             else
-                %HACK: https://github.com/Itseez/opencv/issues/5443
+                %HACK: https://github.com/opencv/opencv/issues/5443
                 [~, labels, results] = this.predict2(samples);
                 if ~isempty(labels)
                     f = labels(1);

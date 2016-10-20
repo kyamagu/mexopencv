@@ -506,7 +506,7 @@ classdef LogisticRegression < handle
             %       value of the sigmoid function), not the class label.
             %       default false
             %
-            % TODO: https://github.com/Itseez/opencv/pull/5964
+            % TODO: https://github.com/opencv/opencv/pull/5964
             %
             % See also: cv.LogisticRegression.train, cv.LogisticRegression.calcError
             %
