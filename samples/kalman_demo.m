@@ -1,4 +1,5 @@
 %% Kalman filter example
+%
 % Tracking of rotating point.
 % Rotation speed is constant.
 % Both state and measurements vectors are 1D (a point angle),

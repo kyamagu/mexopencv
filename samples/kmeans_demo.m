@@ -49,7 +49,6 @@ L = repelem(1:(numel(idx)-1), diff(idx));
 gscatter(points(:,1), points(:,2), L)
 axis square equal ij
 axis([1 sz(2) 1 sz(1)])
-snapnow
 
 %% Clustering
 % shuffle points

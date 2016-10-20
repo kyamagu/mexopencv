@@ -9,13 +9,11 @@
 % Image to search
 img = cv.imread(fullfile(mexopencv.root(),'test','pic1.png'), 'Flags',0);
 imshow(img), title('Image')
-snapnow
 
 %%
 % Template
 templ = cv.imread(fullfile(mexopencv.root(),'test','templ.png'), 'Flags',0);
 imshow(templ), title('Template')
-snapnow
 
 %% Create Generalized Hough transform object
 if true
@@ -58,4 +56,3 @@ for i=1:numel(positions)
 end
 
 imshow(out), title('Detection')
-snapnow

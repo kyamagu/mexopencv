@@ -12,7 +12,6 @@ assert(~isempty(fname), 'Image not found');
 img = cv.imread(fname, 'Flags',1);
 
 imshow(img), title('circles')
-snapnow
 
 %% Processing
 % convert to grayscale
@@ -45,4 +44,3 @@ for i=1:numel(circles)
 end
 
 imshow(img), title('detected circles')
-snapnow

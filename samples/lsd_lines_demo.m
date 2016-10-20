@@ -26,16 +26,13 @@ tic, lines2 = lsd2.detect(gray); toc
 % Show found lines with standard refinement
 drawnLines1 = lsd1.drawSegments(gray, lines1);
 imshow(drawnLines1), title('Standard refinement')
-snapnow
 
 %% Result 2
 % Show found lines with no refinement
 drawnLines2 = lsd2.drawSegments(gray, lines2);
 imshow(drawnLines2), title('No refinement')
-snapnow
 
 %% Compare
 [h,w,~] = size(img);
 [comparison,mis_count] = lsd1.compareSegments([w,h], lines1, lines2);
 imshow(comparison), title(sprintf('Mismatch = %d', mis_count))
-snapnow

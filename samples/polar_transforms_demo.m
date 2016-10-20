@@ -63,5 +63,4 @@ while ishghandle(window)
 end
 
 % Close
-snapnow
-clear camera
+camera.release();

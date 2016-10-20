@@ -64,4 +64,3 @@ imshow(reconstruction)
 title('Reconstruction')
 xlabel(sprintf('Retained Variance: %d%%, # of PCs: %d', ...
     retVar, size(pca.eigenvectors,1)))
-snapnow

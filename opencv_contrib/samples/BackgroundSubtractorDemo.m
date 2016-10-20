@@ -1,5 +1,6 @@
 %% Background Subtractor Demo
-% demonstration of BackgroundSubtractor
+% Demonstration of BackgroundSubtractor.
+%
 
 %%
 % Set up camera
@@ -57,6 +58,4 @@ while true
 end
 
 % Close
-snapnow
-close(window);
-clear camera
+camera.release();

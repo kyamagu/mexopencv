@@ -52,14 +52,12 @@ function delaunay2_demo()
         if isempty(flag) || flag, break; end
     end
     fprintf('\nGenerated %d random points.\n', i);
-    snapnow
 
     % draw the Voronoi diagram
     img(:) = 0;
     img = paint_voronoi(img, subdiv);
     %img = draw_subdiv(img, subdiv, delaunay_color);
-    imshow(img), title('Voronoi diagram')
-    snapnow
+    figure, imshow(img), title('Voronoi diagram')
 
 end
 
