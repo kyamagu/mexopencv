@@ -427,11 +427,12 @@ classdef DisparityWLSFilter < handle
             end
 
             % object properties (as name/value pairs)
-            %p = properties(matcher);  % HACK: Octave doesnt like this, throws syntax error!
+            %p = properties(matcher);  %HACK: Octave doesnt like this, throws syntax error!
             mc = metaclass(matcher);
             if ~mexopencv.isOctave() && isprop(mc, 'PropertyList')
                 p = {mc.PropertyList.Name};
             else
+                %HACK: backward-compatible and Octave
                 p = cellfun(@(x) x.Name, mc.Properties, 'UniformOutput',false);
             end
             for i=1:numel(p)

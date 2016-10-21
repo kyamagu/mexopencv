@@ -88,6 +88,7 @@ else      % Windows
                 cmd = sprintf('mex %s -c ''%s'' -outdir ''%s''', ...
                     mex_flags, files(i).src, fileparts(files(i).out));
             else
+                %HACK: Octave uses different mex option names
                 cmd = sprintf('mex %s -c ''%s'' -o ''%s''', ...
                     mex_flags, files(i).src, files(i).dst);
             end
@@ -130,6 +131,7 @@ else      % Windows
                 cmd = sprintf('mex %s ''%s'' %s -output ''%s''',...
                     mex_flags, files(i).src, objs, files(i).out);
             else
+                %HACK: Octave uses different mex option names
                 cmd = sprintf('mex %s ''%s'' %s -o ''%s''',...
                     mex_flags, files(i).src, objs, files(i).dst);
             end
@@ -143,7 +145,7 @@ else      % Windows
         end
     end
 
-    % Octave mex command leaves behind temporary obj files in current dir
+    %HACK: Octave mex command leaves behind temporary obj files in current dir
     if ~opts.dryrun && mexopencv.isOctave()
         delete(fullfile(mexopencv.root(),'*.o'));
     end
@@ -353,6 +355,7 @@ function s = compiler_str()
     %
 
     if mexopencv.isOctave()
+        %NOTE: Octave for Windows is cross-compiled using MinGW
         s = 'mingw';
     else
         s = '';
@@ -453,8 +456,8 @@ function [comp_flags,link_flags] = compilation_flags(opts)
         if ~mexopencv.isOctave()
             comp_flags = ['COMPFLAGS="$COMPFLAGS ' comp_flags '"'];
         else
-            % mex/mkoctfile in Octave do not support directly passing options
-            % to compiler/linker, instead we use environment variables
+            %HACK: mex/mkoctfile in Octave do not support directly passing
+            % options to compiler/linker, instead we use environment variables
             setenv('CFLAGS',   comp_flags);
             setenv('CXXFLAGS', comp_flags);
             comp_flags = '';
@@ -464,6 +467,7 @@ function [comp_flags,link_flags] = compilation_flags(opts)
         if ~mexopencv.isOctave()
             link_flags = ['LINKFLAGS="$LINKFLAGS ' link_flags '"'];
         else
+            %HACK
             setenv('LDFLAGS',  link_flags);
             link_flags = '';
         end

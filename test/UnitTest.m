@@ -97,13 +97,14 @@ classdef UnitTest
                 klass = strrep(d(i).name, '.m', '');
                 fprintf('== %s ==\n', klass);
                 if mexopencv.isOctave() && any(strcmp(klass, UnitTest.SKIP))
+                    %HACK: skip tests due to Octave bugs/incompatibilities
                     disp('SKIP');
                     continue;
                 end
                 numtests = UnitTest.all(klass);
                 ntests = ntests + numtests;
 
-                % avoid out-of-memory errors (especially for CI)
+                %HACK: avoid out-of-memory errors (especially for CI)
                 if mod(i,25)==0
                     if mexopencv.isOctave()
                         %clear -classes
@@ -163,6 +164,7 @@ classdef UnitTest
             if ~mexopencv.isOctave() && isprop(mc,'MethodList')
                 mt = {mc.MethodList.Name};
             else
+                %HACK: backward-compatible and Octave
                 mt = cellfun(@(x) x.Name, mc.Methods, 'UniformOutput',false);
             end
             mt = sort(mt(:))';
@@ -181,6 +183,7 @@ classdef UnitTest
                     if ~mexopencv.isOctave()
                         feval(fname);
                     else
+                        %HACK: Octave doesnt support feval of a "Class.Method"
                         eval(fname);
                     end
                     disp('PASS');
@@ -206,6 +209,7 @@ classdef UnitTest
             %
             % See also: MException.getReport
             %
+
             if ~mexopencv.isOctave()
                 str = getReport(ME, 'extended');
             else

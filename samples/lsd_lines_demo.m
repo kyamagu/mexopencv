@@ -1,5 +1,5 @@
 %% Line Segment Detector demo
-% An example using the LineSegmentDetector.
+% An example using the |cv.LineSegmentDetector| class.
 %
 % <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/lsd_lines.cpp>
 %

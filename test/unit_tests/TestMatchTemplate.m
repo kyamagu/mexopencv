@@ -65,8 +65,8 @@ classdef TestMatchTemplate
             end
 
             try
-                img = cv.imread('peppers.png', 'Grayscale',true);
-                tmpl = cv.imread('onion.png', 'Grayscale',true);
+                img = cv.imread(which('peppers.png'), 'Grayscale',true);
+                tmpl = cv.imread(which('onion.png'), 'Grayscale',true);
             catch ME
                 img = cv.imread(fullfile(mexopencv.root(),'test','pic1.png'), 'Grayscale',true);
                 tmpl = cv.imread(fullfile(mexopencv.root(),'test','templ.png'), 'Grayscale',true);

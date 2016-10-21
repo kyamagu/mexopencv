@@ -9,6 +9,7 @@
 %
 % <http://docs.opencv.org/3.1.0/db/df6/tutorial_erosion_dilatation.html>
 % <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ImgProc/Morphology_1.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/morphology2.cpp>
 %
 
 function varargout = morphology_demo_gui1(im)

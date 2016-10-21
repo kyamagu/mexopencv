@@ -1,5 +1,5 @@
 %% Flood-filling in an image
-% An example using the FloodFill technique
+% An example using the Flood-Fill technique
 %
 % In this sample you will learn how to use the following OpenCV functions:
 %

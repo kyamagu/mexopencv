@@ -243,7 +243,7 @@ classdef BasicFaceRecognizer < handle
             %
             % The following source code snippet shows you how to learn a
             % Fisherfaces model on a given set of images. The images are read
-            % with imread and pushed into a cell array. The labels of each
+            % with cv.imread and pushed into a cell array. The labels of each
             % image are stored within an integer vector. Think of the label as
             % the subject (the person) this image belongs to, so same subjects
             % (persons) should have the same label. For the available
@@ -363,7 +363,7 @@ classdef BasicFaceRecognizer < handle
             %
             %    % Do your initialization here (create the FaceRecognizer model) ...
             %    % Read in a sample image:
-            %    img = imread('person1/3.jpg', 'Grayscale',true);
+            %    img = cv.imread('person1/3.jpg', 'Grayscale',true);
             %    % And get a prediction from the FaceRecognizer:
             %    predicted = model.predict(img);
             %
@@ -371,7 +371,7 @@ classdef BasicFaceRecognizer < handle
             % distance):
             %
             %    % Do your initialization here (create the FaceRecognizer model) ...
-            %    img = imread('person1/3.jpg', 'Grayscale',true);
+            %    img = cv.imread('person1/3.jpg', 'Grayscale',true);
             %    % Get the prediction and associated confidence from the model
             %    [predicted_label, predicted_confidence] = model.predict(img);
             %

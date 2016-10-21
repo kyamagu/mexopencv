@@ -134,6 +134,7 @@ end
 %% workarounds for older MATLAB versions, to work with ndims>2
 % (FLIP was introduced in R2013b)
 % (FLIPUD/FLIPLR/ROT90 started supporting ND-arrays in R2014a)
+%HACK
 
 function Y = flipud_(X)
     if ~mexopencv.isOctave() && verLessThan('matlab','8.2')

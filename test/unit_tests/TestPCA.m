@@ -39,8 +39,8 @@ classdef TestPCA
         end
 
         function test_4
+            %TODO: load/save of objects to MAT-file in Octave
             if mexopencv.isOctave()
-                % TODO: load/save of objects to MAT-file in Octave
                 disp('SKIP');
                 return
             end
