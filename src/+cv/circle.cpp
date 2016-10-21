@@ -47,8 +47,25 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Process
     Mat img(rhs[0].toMat());
-    Point center(rhs[1].toPoint());
-    int radius = rhs[2].toInt();
-    circle(img, center, radius, color, thickness, lineType, shift);
+    if (rhs[1].isNumeric() && rhs[1].numel() == 2) {
+        Point center(rhs[1].toPoint());
+        int radius = rhs[2].toInt();
+        circle(img, center, radius, color, thickness, lineType, shift);
+    }
+    else {
+        vector<Point> centers(rhs[1].toVector<Point>());
+        if (rhs[2].isNumeric() && rhs[2].numel() == 1) {
+            int radius = rhs[2].toInt();
+            for (size_t i = 0; i < centers.size(); ++i)
+                circle(img, centers[i], radius, color, thickness, lineType, shift);
+        }
+        else {
+            vector<int> radii(rhs[2].toVector<int>());
+            if (centers.size() != radii.size())
+                mexErrMsgIdAndTxt("mexopencv:error", "Length mismatch");
+            for (size_t i = 0; i < centers.size(); ++i)
+                circle(img, centers[i], radii[i], color, thickness, lineType, shift);
+        }
+    }
     plhs[0] = MxArray(img);
 }
