@@ -17,15 +17,8 @@ classdef TestInRange
         end
 
         function test_grayscale_image
-            % requires Image Processing Toolbox
-            if mexopencv.isOctave()
-                img_lic = 'image';
-                img_pkg = img_lic;
-            else
-                img_lic = 'image_toolbox';
-                img_pkg = 'images';
-            end
-            if ~license('test', img_lic) || isempty(ver(img_pkg))
+            % we use GRAYTHRESH/IM2BW from Image Processing Toolbox
+            if ~mexopencv.require('images')
                 disp('SKIP');
                 return;
             end

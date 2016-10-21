@@ -12,15 +12,8 @@ classdef TestFastNlMeansDenoising
         end
 
         function test_2
-            % requires Image Processing Toolbox
-            if mexopencv.isOctave()
-                img_lic = 'image';
-                img_ver = img_lic;
-            else
-                img_lic = 'image_toolbox';
-                img_ver = 'images';
-            end
-            if ~license('test', img_lic) || isempty(ver(img_ver))
+            % we use IMNOISE from Image Processing Toolbox
+            if ~mexopencv.require('images')
                 disp('SKIP');
                 return;
             end
@@ -32,15 +25,8 @@ classdef TestFastNlMeansDenoising
         end
 
         function test_3
-            % requires Image Processing Toolbox
-            if mexopencv.isOctave()
-                img_lic = 'image';
-                img_ver = img_lic;
-            else
-                img_lic = 'image_toolbox';
-                img_ver = 'images';
-            end
-            if ~license('test', img_lic) || isempty(ver(img_ver))
+            % we use IMNOISE from Image Processing Toolbox
+            if ~mexopencv.require('images')
                 disp('SKIP');
                 return;
             end

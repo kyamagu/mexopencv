@@ -46,7 +46,7 @@ classdef TestANN_MLP
 
         function test_classification3
             % we load data from Neural Network toolbox
-            if ~license('test', 'Neural_Network_Toolbox') || isempty(ver('nnet'))
+            if mexopencv.isOctave() || ~mexopencv.require('nnet')
                 disp('SKIP');
                 return;
             end
@@ -84,7 +84,7 @@ classdef TestANN_MLP
 
         function test_regression2
             % we load data from Neural Network toolbox
-            if ~license('test', 'Neural_Network_Toolbox') || isempty(ver('nnet'))
+            if mexopencv.isOctave() || ~mexopencv.require('nnet')
                 disp('SKIP');
                 return;
             end

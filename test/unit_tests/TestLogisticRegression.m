@@ -33,7 +33,7 @@ classdef TestLogisticRegression
 
         function test_classification2
             % we load data from Statistics Toolbox
-            if ~license('test', 'statistics_toolbox') || isempty(ver('stats'))
+            if mexopencv.isOctave() || ~mexopencv.require('stats')
                 disp('SKIP');
                 return;
             end

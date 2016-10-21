@@ -13,14 +13,7 @@ classdef TestFitLine
 
         function test_2
             % we use MVNRND from Statistics Toolbox
-            if mexopencv.isOctave()
-                stat_lic = 'statistics';
-                stat_pkg = stat_lic;
-            else
-                stat_lic = 'statistics_toolbox';
-                stat_pkg = 'stats';
-            end
-            if ~license('test', stat_lic) || isempty(ver(stat_pkg))
+            if ~mexopencv.require('stats')
                 disp('SKIP');
                 return;
             end
