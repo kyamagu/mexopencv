@@ -63,6 +63,7 @@ classdef FeatureDetector < handle
             %
             % See also cv.FeatureDetector
             %
+            if isempty(this.id), return; end
             FeatureDetector_(this.id, 'delete');
         end
 

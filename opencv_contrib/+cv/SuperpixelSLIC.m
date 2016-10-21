@@ -72,6 +72,7 @@ classdef SuperpixelSLIC < handle
             %
             % See also: cv.SuperpixelSLIC
             %
+            if isempty(this.id), return; end
             SuperpixelSLIC_(this.id, 'delete');
         end
     end

@@ -76,6 +76,7 @@ classdef ObjectnessBING < handle
             %
             % See also: cv.ObjectnessBING
             %
+            if isempty(this.id), return; end
             ObjectnessBING_(this.id, 'delete');
         end
 

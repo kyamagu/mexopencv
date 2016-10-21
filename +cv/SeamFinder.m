@@ -57,6 +57,7 @@ classdef SeamFinder < handle
             %
             % See also: cv.SeamFinder
             %
+            if isempty(this.id), return; end
             SeamFinder_(this.id, 'delete');
         end
 

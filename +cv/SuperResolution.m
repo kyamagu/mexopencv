@@ -102,6 +102,7 @@ classdef SuperResolution < handle
             %
             % See also: cv.SuperResolution
             %
+            if isempty(this.id), return; end
             SuperResolution_(this.id, 'delete');
         end
 

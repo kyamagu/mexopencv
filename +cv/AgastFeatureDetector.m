@@ -61,6 +61,7 @@ classdef AgastFeatureDetector < handle
             %
             % See also: cv.AgastFeatureDetector
             %
+            if isempty(this.id), return; end
             AgastFeatureDetector_(this.id, 'delete');
         end
 

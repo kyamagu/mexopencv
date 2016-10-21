@@ -56,6 +56,7 @@ classdef GeneralizedHoughBallard < handle
             %
             % See also cv.GeneralizedHoughBallard
             %
+            if isempty(this.id), return; end
             GeneralizedHoughBallard_(this.id, 'delete');
         end
     end

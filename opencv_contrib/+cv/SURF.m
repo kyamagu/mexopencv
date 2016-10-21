@@ -83,6 +83,7 @@ classdef SURF < handle
             %
             % See also: cv.SURF
             %
+            if isempty(this.id), return; end
             SURF_(this.id, 'delete');
         end
 

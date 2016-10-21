@@ -232,6 +232,7 @@ classdef Boost < handle
             %
             % See also: cv.Boost
             %
+            if isempty(this.id), return; end
             Boost_(this.id, 'delete');
         end
     end

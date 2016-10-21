@@ -58,6 +58,7 @@ classdef MergeMertens < handle
             %
             % See also cv.MergeMertens
             %
+            if isempty(this.id), return; end
             MergeMertens_(this.id, 'delete');
         end
     end

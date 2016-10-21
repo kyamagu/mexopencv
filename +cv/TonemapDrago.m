@@ -73,6 +73,7 @@ classdef TonemapDrago < handle
             %
             % See also cv.TonemapDrago
             %
+            if isempty(this.id), return; end
             TonemapDrago_(this.id, 'delete');
         end
     end

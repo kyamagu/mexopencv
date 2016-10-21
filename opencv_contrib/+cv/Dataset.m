@@ -535,6 +535,7 @@ classdef Dataset < handle
             %
             % See also: cv.Dataset
             %
+            if isempty(this.id), return; end
             Dataset_(this.id, 'delete', this.klass);
         end
 

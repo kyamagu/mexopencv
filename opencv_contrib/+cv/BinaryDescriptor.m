@@ -149,6 +149,7 @@ classdef BinaryDescriptor < handle
             %
             % See also: cv.BinaryDescriptor
             %
+            if isempty(this.id), return; end
             BinaryDescriptor_(this.id, 'delete');
         end
     end

@@ -55,6 +55,7 @@ classdef SVD < handle
         function delete(this)
             %DELETE  Destructor
             %
+            if isempty(this.id), return; end
             SVD_(this.id, 'delete');
         end
 

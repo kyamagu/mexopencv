@@ -51,6 +51,7 @@ classdef TransientAreasSegmentationModule < handle
             %
             % See also: cv.TransientAreasSegmentationModule
             %
+            if isempty(this.id), return; end
             TransientAreasSegmentationModule_(this.id, 'delete');
         end
     end

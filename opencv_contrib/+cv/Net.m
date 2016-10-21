@@ -46,6 +46,7 @@ classdef Net < handle
             %
             % See also: cv.Net
             %
+            if isempty(this.id), return; end
             Net_(this.id, 'delete');
         end
     end

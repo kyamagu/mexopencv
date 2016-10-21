@@ -49,6 +49,7 @@ classdef FeaturesFinder < handle
             %
             % See also: cv.FeaturesFinder
             %
+            if isempty(this.id), return; end
             FeaturesFinder_(this.id, 'delete');
         end
 

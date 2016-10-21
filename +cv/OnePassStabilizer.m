@@ -58,6 +58,7 @@ classdef OnePassStabilizer < handle
             %
             % See also cv.OnePassStabilizer
             %
+            if isempty(this.id), return; end
             OnePassStabilizer_(this.id, 'delete');
         end
     end

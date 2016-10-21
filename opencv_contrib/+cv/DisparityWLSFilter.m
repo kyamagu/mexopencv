@@ -88,6 +88,7 @@ classdef DisparityWLSFilter < handle
             %
             % See also: cv.DisparityWLSFilter
             %
+            if isempty(this.id), return; end
             DisparityWLSFilter_(this.id, 'delete');
         end
     end

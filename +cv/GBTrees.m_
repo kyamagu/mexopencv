@@ -225,6 +225,7 @@ classdef GBTrees < handle
             %
             % See also: cv.GBTrees
             %
+            if isempty(this.id), return; end
             GBTrees_(this.id, 'delete');
         end
     end

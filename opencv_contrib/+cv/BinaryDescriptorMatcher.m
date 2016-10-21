@@ -77,6 +77,7 @@ classdef BinaryDescriptorMatcher < handle
             %
             % See also: cv.BinaryDescriptorMatcher
             %
+            if isempty(this.id), return; end
             BinaryDescriptorMatcher_(this.id, 'delete');
         end
     end

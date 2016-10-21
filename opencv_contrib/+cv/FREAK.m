@@ -53,6 +53,7 @@ classdef FREAK < handle
             %
             % See also: cv.FREAK
             %
+            if isempty(this.id), return; end
             FREAK_(this.id, 'delete');
         end
 

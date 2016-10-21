@@ -83,6 +83,7 @@ classdef SimpleBlobDetector < handle
             %
             % See also: cv.SimpleBlobDetector
             %
+            if isempty(this.id), return; end
             SimpleBlobDetector_(this.id, 'delete');
         end
 

@@ -77,6 +77,7 @@ classdef AdaptiveManifoldFilter < handle
             %
             % See also: cv.AdaptiveManifoldFilter
             %
+            if isempty(this.id), return; end
             AdaptiveManifoldFilter_(this.id, 'delete');
         end
     end

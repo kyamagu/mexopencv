@@ -39,6 +39,7 @@ classdef Tonemap < handle
             %
             % See also cv.Tonemap
             %
+            if isempty(this.id), return; end
             Tonemap_(this.id, 'delete');
         end
     end

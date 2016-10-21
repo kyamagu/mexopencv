@@ -52,6 +52,7 @@ classdef FeaturesMatcher < handle
             %
             % See also: cv.FeaturesMatcher
             %
+            if isempty(this.id), return; end
             FeaturesMatcher_(this.id, 'delete');
         end
 

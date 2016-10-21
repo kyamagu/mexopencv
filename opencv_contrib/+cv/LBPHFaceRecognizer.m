@@ -134,6 +134,7 @@ classdef LBPHFaceRecognizer < handle
             %
             % See also: cv.LBPHFaceRecognizer
             %
+            if isempty(this.id), return; end
             LBPHFaceRecognizer_(this.id, 'delete');
         end
 

@@ -60,6 +60,7 @@ classdef BRISK < handle
             %
             % See also: cv.BRISK
             %
+            if isempty(this.id), return; end
             BRISK_(this.id, 'delete');
         end
 

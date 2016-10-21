@@ -159,6 +159,7 @@ classdef EM < handle
             %
             % See also: cv.EM
             %
+            if isempty(this.id), return; end
             EM_(this.id, 'delete');
         end
     end

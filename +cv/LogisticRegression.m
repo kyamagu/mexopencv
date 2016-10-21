@@ -166,6 +166,7 @@ classdef LogisticRegression < handle
             %
             % See also: cv.LogisticRegression
             %
+            if isempty(this.id), return; end
             LogisticRegression_(this.id, 'delete');
         end
     end

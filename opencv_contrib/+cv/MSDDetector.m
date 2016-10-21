@@ -62,6 +62,7 @@ classdef MSDDetector < handle
             %
             % See also: cv.MSDDetector
             %
+            if isempty(this.id), return; end
             MSDDetector_(this.id, 'delete');
         end
 

@@ -51,6 +51,7 @@ classdef CalibrateRobertson < handle
             %
             % See also cv.CalibrateRobertson
             %
+            if isempty(this.id), return; end
             CalibrateRobertson_(this.id, 'delete');
         end
 

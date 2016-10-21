@@ -127,6 +127,7 @@ classdef BackgroundSubtractorMOG2 < handle
             %
             % See also cv.BackgroundSubtractorMOG2
             %
+            if isempty(this.id), return; end
             BackgroundSubtractorMOG2_(this.id, 'delete');
         end
 

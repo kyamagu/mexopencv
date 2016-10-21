@@ -66,6 +66,7 @@ classdef VideoWriter < handle
             %
             % See also: cv.VideoWriter.release
             %
+            if isempty(this.id), return; end
             VideoWriter_(this.id, 'delete');
         end
 

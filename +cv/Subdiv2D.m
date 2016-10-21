@@ -55,6 +55,7 @@ classdef Subdiv2D < handle
             %
             % See also: cv.Subdiv2D
             %
+            if isempty(this.id), return; end
             Subdiv2D_(this.id, 'delete');
         end
 

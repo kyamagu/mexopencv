@@ -92,6 +92,7 @@ classdef KalmanFilter < handle
             %
             % See also cv.KalmanFilter
             %
+            if isempty(this.id), return; end
             KalmanFilter_(this.id, 'delete');
         end
 

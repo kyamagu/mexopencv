@@ -56,6 +56,7 @@ classdef CalibrateDebevec < handle
             %
             % See also cv.CalibrateDebevec
             %
+            if isempty(this.id), return; end
             CalibrateDebevec_(this.id, 'delete');
         end
     end

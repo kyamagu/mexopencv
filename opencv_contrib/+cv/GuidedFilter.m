@@ -45,6 +45,7 @@ classdef GuidedFilter < handle
             %
             % See also: cv.GuidedFilter
             %
+            if isempty(this.id), return; end
             GuidedFilter_(this.id, 'delete');
         end
     end

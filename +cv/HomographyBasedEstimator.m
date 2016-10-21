@@ -35,6 +35,7 @@ classdef HomographyBasedEstimator < handle
             %
             % See also: cv.HomographyBasedEstimator
             %
+            if isempty(this.id), return; end
             HomographyBasedEstimator_(this.id, 'delete');
         end
 

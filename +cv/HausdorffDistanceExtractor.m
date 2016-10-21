@@ -53,6 +53,7 @@ classdef HausdorffDistanceExtractor < handle
             %
             % See also: cv.HausdorffDistanceExtractor
             %
+            if isempty(this.id), return; end
             HausdorffDistanceExtractor_(this.id, 'delete');
         end
     end

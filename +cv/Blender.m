@@ -53,6 +53,7 @@ classdef Blender < handle
             %
             % See also: cv.Blender
             %
+            if isempty(this.id), return; end
             Blender_(this.id, 'delete');
         end
 

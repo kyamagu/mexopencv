@@ -105,6 +105,7 @@ classdef PCA < handle
             %
             % See also cv.PCA
             %
+            if isempty(this.id), return; end
             PCA_(this.id, 'delete');
         end
 

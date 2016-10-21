@@ -60,6 +60,7 @@ classdef DAISY < handle
             %
             % See also: cv.DAISY
             %
+            if isempty(this.id), return; end
             DAISY_(this.id, 'delete');
         end
 

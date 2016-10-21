@@ -137,6 +137,7 @@ classdef BasicFaceRecognizer < handle
             %
             % See also: cv.BasicFaceRecognizer
             %
+            if isempty(this.id), return; end
             BasicFaceRecognizer_(this.id, 'delete');
         end
 

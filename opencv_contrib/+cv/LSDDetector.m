@@ -52,6 +52,7 @@ classdef LSDDetector < handle
             %
             % See also: cv.LSDDetector
             %
+            if isempty(this.id), return; end
             LSDDetector_(this.id, 'delete');
         end
     end

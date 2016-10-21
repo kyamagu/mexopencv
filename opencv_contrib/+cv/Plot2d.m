@@ -71,6 +71,7 @@ classdef Plot2d < handle
             %
             % See also: cv.Plot2d
             %
+            if isempty(this.id), return; end
             Plot2d_(this.id, 'delete');
         end
 

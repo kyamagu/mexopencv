@@ -32,6 +32,7 @@ classdef Timelapser < handle
             %
             % See also: cv.Timelapser
             %
+            if isempty(this.id), return; end
             Timelapser_(this.id, 'delete');
         end
 

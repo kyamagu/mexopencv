@@ -73,6 +73,7 @@ classdef TonemapDurand < handle
             %
             % See also cv.TonemapDurand
             %
+            if isempty(this.id), return; end
             TonemapDurand_(this.id, 'delete');
         end
     end

@@ -40,6 +40,7 @@ classdef BriefDescriptorExtractor < handle
             %
             % See also: cv.BriefDescriptorExtractor
             %
+            if isempty(this.id), return; end
             BriefDescriptorExtractor_(this.id, 'delete');
         end
 

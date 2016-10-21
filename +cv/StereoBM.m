@@ -98,6 +98,7 @@ classdef StereoBM < handle
             %
             % See also cv.StereoBM
             %
+            if isempty(this.id), return; end
             StereoBM_(this.id, 'delete');
         end
 

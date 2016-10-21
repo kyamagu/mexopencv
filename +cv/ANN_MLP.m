@@ -211,6 +211,7 @@ classdef ANN_MLP < handle
             %
             % See also: cv.ANN_MLP
             %
+            if isempty(this.id), return; end
             ANN_MLP_(this.id, 'delete');
         end
     end

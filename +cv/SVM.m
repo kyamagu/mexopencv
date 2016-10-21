@@ -165,6 +165,7 @@ classdef SVM < handle
             %
             % See also: cv.SVM
             %
+            if isempty(this.id), return; end
             SVM_(this.id, 'delete');
         end
     end

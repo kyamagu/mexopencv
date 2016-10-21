@@ -76,6 +76,7 @@ classdef GeneralizedHoughGuil < handle
             %
             % See also cv.GeneralizedHoughGuil
             %
+            if isempty(this.id), return; end
             GeneralizedHoughGuil_(this.id, 'delete');
         end
     end

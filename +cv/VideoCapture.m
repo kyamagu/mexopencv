@@ -158,6 +158,7 @@ classdef VideoCapture < handle
             %
             % See also: cv.VideoCapture.release
             %
+            if isempty(this.id), return; end
             VideoCapture_(this.id, 'delete');
         end
 

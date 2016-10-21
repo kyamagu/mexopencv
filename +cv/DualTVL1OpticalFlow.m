@@ -97,6 +97,7 @@ classdef DualTVL1OpticalFlow < handle
             %
             % See also cv.DualTVL1OpticalFlow
             %
+            if isempty(this.id), return; end
             DualTVL1OpticalFlow_(this.id, 'delete');
         end
 

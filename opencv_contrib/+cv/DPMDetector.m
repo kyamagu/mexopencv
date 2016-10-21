@@ -118,6 +118,7 @@ classdef DPMDetector < handle
             %
             % See also: cv.DPMDetector
             %
+            if isempty(this.id), return; end
             DPMDetector_(this.id, 'delete');
         end
 

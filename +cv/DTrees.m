@@ -238,6 +238,7 @@ classdef DTrees < handle
             %
             % See also: cv.DTrees
             %
+            if isempty(this.id), return; end
             DTrees_(this.id, 'delete');
         end
     end

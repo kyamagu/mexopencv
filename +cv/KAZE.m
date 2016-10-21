@@ -76,6 +76,7 @@ classdef KAZE < handle
             %
             % See also: cv.KAZE
             %
+            if isempty(this.id), return; end
             KAZE_(this.id, 'delete');
         end
 

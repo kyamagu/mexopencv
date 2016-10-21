@@ -214,6 +214,7 @@ classdef RTrees < handle
             %
             % See also: cv.RTrees
             %
+            if isempty(this.id), return; end
             RTrees_(this.id, 'delete');
         end
     end
