@@ -121,6 +121,7 @@ classdef ShapeContextDistanceExtractor < handle
             %
             % See also: cv.ShapeContextDistanceExtractor
             %
+            if isempty(this.id), return; end
             ShapeContextDistanceExtractor_(this.id, 'delete');
         end
 

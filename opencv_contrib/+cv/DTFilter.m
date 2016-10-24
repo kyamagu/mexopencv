@@ -56,6 +56,7 @@ classdef DTFilter < handle
             %
             % See also: cv.DTFilter
             %
+            if isempty(this.id), return; end
             DTFilter_(this.id, 'delete');
         end
     end

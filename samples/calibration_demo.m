@@ -30,9 +30,7 @@ N = numel(files_l);
 patternSize = [9,6];
 
 %{
-if ~license('test', 'video_and_image_blockset')
-    error('CVST not found');
-end
+assert(~mexopencv.isOctave() && mexopencv.require('vision'), 'CVST required');
 %fpath = fullfile(matlabroot,'toolbox','vision','visiondata','calibration','stereoWebcams');
 fpath = fullfile(matlabroot,'toolbox','vision','visiondata','calibration','stereo');
 files_l = dir(fullfile(fpath, 'left', 'left*.png'));

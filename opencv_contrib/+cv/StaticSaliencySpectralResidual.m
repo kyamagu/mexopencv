@@ -83,6 +83,7 @@ classdef StaticSaliencySpectralResidual < handle
             %
             % See also: cv.StaticSaliencySpectralResidual
             %
+            if isempty(this.id), return; end
             StaticSaliencySpectralResidual_(this.id, 'delete');
         end
     end

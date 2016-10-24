@@ -17,6 +17,8 @@ octave-workspace
 /test/car.avi
 /test/haarcascade_frontalface_default.xml
 /test/lbpcascade_frontalface.xml
+/test/haarcascade_frontalface_alt.xml
+/test/haarcascade_eye_tree_eyeglasses.xml
 /test/inriaperson.xml
 /test/model.yml.gz
 /test/ObjectnessTrainedModel/

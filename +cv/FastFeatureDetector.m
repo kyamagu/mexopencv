@@ -59,6 +59,7 @@ classdef FastFeatureDetector < handle
             %
             % See also: cv.FastFeatureDetector
             %
+            if isempty(this.id), return; end
             FastFeatureDetector_(this.id, 'delete');
         end
 

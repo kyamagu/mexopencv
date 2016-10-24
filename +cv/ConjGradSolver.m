@@ -114,6 +114,7 @@ classdef ConjGradSolver < handle
             %
             %    solver.delete()
             %
+            if isempty(this.id), return; end
             ConjGradSolver_(this.id, 'delete');
         end
 

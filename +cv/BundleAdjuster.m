@@ -62,6 +62,7 @@ classdef BundleAdjuster < handle
             %
             % See also: cv.BundleAdjuster
             %
+            if isempty(this.id), return; end
             BundleAdjuster_(this.id, 'delete');
         end
 

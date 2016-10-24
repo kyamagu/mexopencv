@@ -26,7 +26,7 @@ classdef TestFindFundamentalMat
 
         function test_2
             % we load data from CVST toolbox
-            if ~license('test', 'video_and_image_blockset') || isempty(ver('vision'))
+            if mexopencv.isOctave() || ~mexopencv.require('vision')
                 disp('SKIP');
                 return;
             end

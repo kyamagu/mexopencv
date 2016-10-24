@@ -93,6 +93,7 @@ classdef GFTTDetector < handle
             %
             % See also: cv.GFTTDetector
             %
+            if isempty(this.id), return; end
             GFTTDetector_(this.id, 'delete');
         end
 

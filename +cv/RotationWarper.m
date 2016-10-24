@@ -62,6 +62,7 @@ classdef RotationWarper < handle
             %
             % See also: cv.RotationWarper
             %
+            if isempty(this.id), return; end
             RotationWarper_(this.id, 'delete');
         end
 

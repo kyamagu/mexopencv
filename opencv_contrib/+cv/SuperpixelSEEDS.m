@@ -82,6 +82,7 @@ classdef SuperpixelSEEDS < handle
             %
             % See also: cv.SuperpixelSEEDS
             %
+            if isempty(this.id), return; end
             SuperpixelSEEDS_(this.id, 'delete');
         end
     end

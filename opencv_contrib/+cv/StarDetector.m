@@ -46,6 +46,7 @@ classdef StarDetector < handle
             %
             % See also: cv.StarDetector
             %
+            if isempty(this.id), return; end
             StarDetector_(this.id, 'delete');
         end
 

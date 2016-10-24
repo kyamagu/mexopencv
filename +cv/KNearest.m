@@ -95,6 +95,7 @@ classdef KNearest < handle
             %
             % See also: cv.KNearest
             %
+            if isempty(this.id), return; end
             KNearest_(this.id, 'delete');
         end
     end

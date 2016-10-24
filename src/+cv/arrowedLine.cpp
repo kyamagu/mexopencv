@@ -50,8 +50,19 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Process
     Mat img(rhs[0].toMat());
-    Point pt1(rhs[1].toPoint()),
-          pt2(rhs[2].toPoint());
-    arrowedLine(img, pt1, pt2, color, thickness, lineType, shift, tipLength);
+    if (rhs[1].isNumeric() && rhs[1].numel() == 2) {
+        Point pt1(rhs[1].toPoint()),
+              pt2(rhs[2].toPoint());
+        arrowedLine(img, pt1, pt2, color, thickness, lineType, shift, tipLength);
+    }
+    else {
+        vector<Point> pt1(rhs[1].toVector<Point>()),
+                      pt2(rhs[2].toVector<Point>());
+        if (pt1.size() != pt2.size())
+            mexErrMsgIdAndTxt("mexopencv:error", "Length mismatch");
+        for (size_t i = 0; i < pt1.size(); ++i)
+            arrowedLine(img, pt1[i], pt2[i],
+                color, thickness, lineType, shift, tipLength);
+    }
     plhs[0] = MxArray(img);
 }

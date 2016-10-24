@@ -37,6 +37,7 @@ classdef MergeRobertson < handle
             %
             % See also cv.MergeRobertson
             %
+            if isempty(this.id), return; end
             MergeRobertson_(this.id, 'delete');
         end
     end

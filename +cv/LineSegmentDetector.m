@@ -56,6 +56,7 @@ classdef LineSegmentDetector < handle
             %
             % See also: cv.LineSegmentDetector
             %
+            if isempty(this.id), return; end
             LineSegmentDetector_(this.id, 'delete');
         end
     end

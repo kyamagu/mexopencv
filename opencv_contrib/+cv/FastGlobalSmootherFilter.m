@@ -67,6 +67,7 @@ classdef FastGlobalSmootherFilter < handle
             %
             % See also: cv.FastGlobalSmootherFilter
             %
+            if isempty(this.id), return; end
             FastGlobalSmootherFilter_(this.id, 'delete');
         end
     end

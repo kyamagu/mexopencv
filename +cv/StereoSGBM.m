@@ -151,6 +151,7 @@ classdef StereoSGBM < handle
             %
             % See also cv.StereoSGBM
             %
+            if isempty(this.id), return; end
             StereoSGBM_(this.id, 'delete');
         end
 

@@ -114,6 +114,7 @@ classdef ORB < handle
             %
             % See also: cv.ORB
             %
+            if isempty(this.id), return; end
             ORB_(this.id, 'delete');
         end
 

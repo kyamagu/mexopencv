@@ -70,6 +70,7 @@ classdef DescriptorExtractor < handle
             %
             % See also cv.DescriptorExtractor
             %
+            if isempty(this.id), return; end
             DescriptorExtractor_(this.id, 'delete');
         end
 

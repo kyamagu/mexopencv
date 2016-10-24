@@ -70,6 +70,7 @@ classdef TonemapReinhard < handle
             %
             % See also cv.TonemapReinhard
             %
+            if isempty(this.id), return; end
             TonemapReinhard_(this.id, 'delete');
         end
     end

@@ -66,6 +66,7 @@ classdef BOWKMeansTrainer < handle
             %
             % See also: cv.BOWKMeansTrainer
             %
+            if isempty(this.id), return; end
             BOWKMeansTrainer_(this.id, 'delete');
         end
 

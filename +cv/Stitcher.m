@@ -72,6 +72,7 @@ classdef Stitcher < handle
             %
             % See also: cv.Stitcher
             %
+            if isempty(this.id), return; end
             Stitcher_(this.id, 'delete');
         end
     end

@@ -121,6 +121,7 @@ classdef CascadeClassifier < handle
             %
             % See also cv.CascadeClassifier
             %
+            if isempty(this.id), return; end
             CascadeClassifier_(this.id, 'delete');
         end
 

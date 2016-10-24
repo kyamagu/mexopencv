@@ -53,6 +53,7 @@ classdef NormalBayesClassifier < handle
             %
             % See also: cv.NormalBayesClassifier
             %
+            if isempty(this.id), return; end
             NormalBayesClassifier_(this.id, 'delete');
         end
     end

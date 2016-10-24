@@ -36,6 +36,7 @@ classdef MergeDebevec < handle
             %
             % See also cv.MergeDebevec
             %
+            if isempty(this.id), return; end
             MergeDebevec_(this.id, 'delete');
         end
     end

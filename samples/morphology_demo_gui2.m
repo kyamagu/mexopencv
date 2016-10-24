@@ -12,6 +12,7 @@
 %
 % <http://docs.opencv.org/3.1.0/d3/dbe/tutorial_opening_closing_hats.html>
 % <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ImgProc/Morphology_2.cpp>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/morphology2.cpp>
 %
 
 function varargout = morphology_demo_gui2(im)

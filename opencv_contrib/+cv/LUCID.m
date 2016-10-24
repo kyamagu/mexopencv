@@ -48,6 +48,7 @@ classdef LUCID < handle
             %
             % See also: cv.LUCID
             %
+            if isempty(this.id), return; end
             LUCID_(this.id, 'delete');
         end
 

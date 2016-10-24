@@ -96,6 +96,7 @@ classdef StructuredEdgeDetection < handle
             %
             % See also: cv.StructuredEdgeDetection
             %
+            if isempty(this.id), return; end
             StructuredEdgeDetection_(this.id, 'delete');
         end
     end

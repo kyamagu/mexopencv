@@ -96,6 +96,7 @@ classdef BOWImgDescriptorExtractor < handle
             %
             % See also: cv.BOWImgDescriptorExtractor
             %
+            if isempty(this.id), return; end
             BOWImgDescriptorExtractor_(this.id, 'delete');
         end
 

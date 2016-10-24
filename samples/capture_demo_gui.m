@@ -3,6 +3,7 @@
 % adjusting basic video color properties.
 %
 % <http://docs.opencv.org/3.1.0/dd/d43/tutorial_py_video_display.html>
+% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/starter_video.cpp>
 %
 
 function varargout = capture_demo_gui()
@@ -26,6 +27,22 @@ function varargout = capture_demo_gui()
         % display
         set(h.img, 'CData',frame);
         drawnow;
+    end
+end
+
+function onType(~,e,h)
+    %ONTYPE  Event handler for key press on figure
+
+    % handle keys
+    switch e.Key
+        case {'q', 'escape'}
+            close(h.fig);
+
+        case {'c', 's', 'space', 'enter'}
+            frame = h.cap.retrieve();
+            filename = sprintf('capture_%s.jpg', datestr(now,'yyyymmddTHHMMSS'));
+            cv.imwrite(filename, frame);
+            disp(['Saved ' filename]);
     end
 end
 
@@ -97,6 +114,7 @@ function h = buildGUI()
         'Min',0, 'Max',100, 'SliderStep',[1 10]./(100-0));
 
     % hook event handlers
-    set(h.slid, 'Callback',{@onChange,h}, ...
-        'Interruptible','off', 'BusyAction','cancel');
+    opts = {'Interruptible','off', 'BusyAction','cancel'};
+    set(h.slid, 'Callback',{@onChange,h}, opts{:});
+    set(h.fig, 'WindowKeyPressFcn',{@onType,h}, opts{:});
 end

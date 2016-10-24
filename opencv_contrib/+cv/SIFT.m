@@ -54,6 +54,7 @@ classdef SIFT < handle
             %
             % See also: cv.SIFT
             %
+            if isempty(this.id), return; end
             SIFT_(this.id, 'delete');
         end
 

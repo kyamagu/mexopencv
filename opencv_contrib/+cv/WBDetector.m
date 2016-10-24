@@ -54,6 +54,7 @@ classdef WBDetector < handle
             %
             % See also: cv.WBDetector
             %
+            if isempty(this.id), return; end
             WBDetector_(this.id, 'delete');
         end
 

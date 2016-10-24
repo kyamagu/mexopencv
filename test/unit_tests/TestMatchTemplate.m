@@ -51,22 +51,15 @@ classdef TestMatchTemplate
         end
 
         function test_compare_normxcorr2
-            % requires Image Processing Toolbox
-            if mexopencv.isOctave()
-                img_lic = 'image';
-                img_pkg = img_lic;
-            else
-                img_lic = 'image_toolbox';
-                img_pkg = 'images';
-            end
-            if ~license('test', img_lic) || isempty(ver(img_pkg))
+            % we use NORMXCORR2 from Image Processing Toolbox
+            if ~mexopencv.require('images')
                 disp('SKIP');
                 return;
             end
 
             try
-                img = cv.imread('peppers.png', 'Grayscale',true);
-                tmpl = cv.imread('onion.png', 'Grayscale',true);
+                img = cv.imread(which('peppers.png'), 'Grayscale',true);
+                tmpl = cv.imread(which('onion.png'), 'Grayscale',true);
             catch ME
                 img = cv.imread(fullfile(mexopencv.root(),'test','pic1.png'), 'Grayscale',true);
                 tmpl = cv.imread(fullfile(mexopencv.root(),'test','templ.png'), 'Grayscale',true);

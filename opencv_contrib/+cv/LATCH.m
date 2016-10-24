@@ -49,6 +49,7 @@ classdef LATCH < handle
             %
             % See also: cv.LATCH
             %
+            if isempty(this.id), return; end
             LATCH_(this.id, 'delete');
         end
 

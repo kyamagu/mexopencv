@@ -84,6 +84,7 @@ classdef BackgroundSubtractorKNN < handle
             %
             % See also cv.BackgroundSubtractorKNN
             %
+            if isempty(this.id), return; end
             BackgroundSubtractorKNN_(this.id, 'delete');
         end
 

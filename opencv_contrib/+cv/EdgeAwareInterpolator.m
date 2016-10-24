@@ -67,6 +67,7 @@ classdef EdgeAwareInterpolator < handle
             %
             % See also: cv.EdgeAwareInterpolator
             %
+            if isempty(this.id), return; end
             EdgeAwareInterpolator_(this.id, 'delete');
         end
     end

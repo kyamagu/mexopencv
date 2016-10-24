@@ -61,6 +61,7 @@ classdef AlignMTB < handle
             %
             % See also cv.AlignMTB
             %
+            if isempty(this.id), return; end
             AlignMTB_(this.id, 'delete');
         end
 

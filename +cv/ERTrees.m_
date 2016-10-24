@@ -169,6 +169,7 @@ classdef ERTrees < handle
             %
             % See also: cv.ERTrees
             %
+            if isempty(this.id), return; end
             ERTrees_(this.id, 'delete');
         end
     end

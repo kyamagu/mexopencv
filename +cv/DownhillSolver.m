@@ -113,6 +113,7 @@ classdef DownhillSolver < handle
             %
             %    solver.delete()
             %
+            if isempty(this.id), return; end
             DownhillSolver_(this.id, 'delete');
         end
 

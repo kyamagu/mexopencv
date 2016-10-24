@@ -88,6 +88,7 @@ classdef MSER < handle
             %
             % See also: cv.MSER
             %
+            if isempty(this.id), return; end
             MSER_(this.id, 'delete');
         end
 

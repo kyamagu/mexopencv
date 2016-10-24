@@ -79,6 +79,7 @@ classdef BackgroundSubtractorGMG < handle
             %
             % See also cv.BackgroundSubtractorGMG
             %
+            if isempty(this.id), return; end
             BackgroundSubtractorGMG_(this.id, 'delete');
         end
 

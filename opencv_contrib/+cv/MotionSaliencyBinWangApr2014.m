@@ -73,6 +73,7 @@ classdef MotionSaliencyBinWangApr2014 < handle
             %
             % See also: cv.MotionSaliencyBinWangApr2014
             %
+            if isempty(this.id), return; end
             MotionSaliencyBinWangApr2014_(this.id, 'delete');
         end
 

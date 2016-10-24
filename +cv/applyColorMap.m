@@ -39,7 +39,7 @@
 %    img_in = im2uint8(mat2gray(peaks(500)));
 %
 %    % Apply the colormap
-%    %img_color2 = ind2rgb(img_in, jet(256));
+%    %img_color2 = im2uint8(ind2rgb(img_in, jet(256)));
 %    img_color = cv.applyColorMap(img_in, 'Jet');
 %
 %    % Show the result

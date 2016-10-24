@@ -157,6 +157,7 @@ classdef HOGDescriptor < handle
             %
             % See also cv.HOGDescriptor
             %
+            if isempty(this.id), return; end
             HOGDescriptor_(this.id, 'delete');
         end
 

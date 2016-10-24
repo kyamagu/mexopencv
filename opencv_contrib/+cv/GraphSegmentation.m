@@ -47,6 +47,7 @@ classdef GraphSegmentation < handle
             %
             % See also: cv.GraphSegmentation
             %
+            if isempty(this.id), return; end
             GraphSegmentation_(this.id, 'delete');
         end
     end

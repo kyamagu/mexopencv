@@ -1,5 +1,5 @@
 %%  Polar Transforms demo
-% An example using the cv.linearPolar and cv.logPolar operations.
+% An example using the |cv.linearPolar| and |cv.logPolar| operations.
 %
 % This program illustrates Linear-Polar and Log-Polar image transforms.
 %

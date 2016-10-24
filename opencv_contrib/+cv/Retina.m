@@ -538,6 +538,7 @@ classdef Retina < handle
             %
             % See also: cv.Retina
             %
+            if isempty(this.id), return; end
             Retina_(this.id, 'delete');
         end
     end

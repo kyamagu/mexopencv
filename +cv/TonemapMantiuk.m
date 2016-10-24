@@ -64,6 +64,7 @@ classdef TonemapMantiuk < handle
             %
             % See also cv.TonemapMantiuk
             %
+            if isempty(this.id), return; end
             TonemapMantiuk_(this.id, 'delete');
         end
     end

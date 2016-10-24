@@ -59,35 +59,118 @@ classdef GeneralizedHoughGuil < handle
         PosThresh
     end
 
+    %% GeneralizedHoughGuil
     methods
         function this = GeneralizedHoughGuil()
+            %GENERALIZEDHOUGHGUIL  Constructor
+            %
+            %    obj = cv.GeneralizedHoughGuil()
+            %
+            % See also: cv.GeneralizedHoughGuil.detect
+            %
             this.id = GeneralizedHoughGuil_(0, 'new');
         end
 
         function delete(this)
+            %DELETE  Destructor
+            %
+            % See also cv.GeneralizedHoughGuil
+            %
+            if isempty(this.id), return; end
             GeneralizedHoughGuil_(this.id, 'delete');
         end
+    end
 
+    %% Algorithm
+    methods (Hidden)
         function clear(this)
+            %CLEAR  Clears the algorithm state
+            %
+            %    obj.clear()
+            %
+            % See also: cv.GeneralizedHoughGuil.empty,
+            %  cv.GeneralizedHoughGuil.load
+            %
             GeneralizedHoughGuil_(this.id, 'clear');
         end
 
         function load(this, filename, varargin)
+            %LOAD  Loads algorithm from a file or a string
+            %
+            %    obj.load(fname)
+            %    obj.load(str, 'FromString',true)
+            %    obj.load(..., 'OptionName',optionValue, ...)
+            %
+            % ## Input
+            % * __fname__ Name of the file to read.
+            % * __str__ String containing the serialized model you want to
+            %       load.
+            %
+            % ## Options
+            % * __ObjName__ The optional name of the node to read (if empty,
+            %       the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is
+            %       a filename or a string containing the serialized model.
+            %       default false
+            %
+            % This method reads algorithm parameters from the specified XML or
+            % YAML file (either from disk or serialized string). The previous
+            % algorithm state is discarded.
+            %
+            % See also: cv.GeneralizedHoughGuil.save
+            %
             GeneralizedHoughGuil_(this.id, 'load', filename, varargin{:});
         end
 
         function save(this, filename)
+            %SAVE  Saves the algorithm parameters to a file
+            %
+            %    obj.save(filename)
+            %
+            % ## Input
+            % * __filename__ Name of the file to save to.
+            %
+            % This method stores the algorithm parameters in the specified
+            % XML or YAML file.
+            %
+            % See also: cv.GeneralizedHoughGuil.load
+            %
             GeneralizedHoughGuil_(this.id, 'save', filename);
         end
 
         function b = empty(this)
+            %EMPTY  Returns true if the Algorithm is empty
+            %
+            %    b = obj.empty()
+            %
+            % ## Output
+            % * __b__ Returns true if the object is empty (e.g in the
+            %       very beginning or after unsuccessful read).
+            %
+            % See also: cv.GeneralizedHoughGuil.clear,
+            %  cv.GeneralizedHoughGuil.load
+            %
             b = GeneralizedHoughGuil_(this.id, 'empty');
         end
 
         function name = getDefaultName(this)
+            %GETDEFAULTNAME  Returns the algorithm string identifier
+            %
+            %    name = obj.getDefaultName()
+            %
+            % ## Output
+            % * __name__ This string is used as top level XML/YML node tag
+            %       when the object is saved to a file or string.
+            %
+            % See also: cv.GeneralizedHoughGuil.save,
+            %  cv.GeneralizedHoughGuil.load
+            %
             name = GeneralizedHoughGuil_(this.id, 'getDefaultName');
         end
+    end
 
+    %% GeneralizedHough
+    methods
         function [positions,votes] = detect(this, varargin)
             %DETECT  Find template on image
             %
@@ -136,6 +219,7 @@ classdef GeneralizedHoughGuil < handle
         end
     end
 
+    %% Getters/Setters
     methods
         function value = get.CannyHighThresh(this)
             value = GeneralizedHoughGuil_(this.id, 'get', 'CannyHighThresh');

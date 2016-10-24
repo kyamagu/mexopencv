@@ -63,6 +63,7 @@ classdef ExposureCompensator < handle
             %
             % See also: cv.ExposureCompensator
             %
+            if isempty(this.id), return; end
             ExposureCompensator_(this.id, 'delete');
         end
 

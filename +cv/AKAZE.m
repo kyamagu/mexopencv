@@ -87,6 +87,7 @@ classdef AKAZE < handle
             %
             % See also: cv.AKAZE
             %
+            if isempty(this.id), return; end
             AKAZE_(this.id, 'delete');
         end
 

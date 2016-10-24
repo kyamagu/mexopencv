@@ -61,6 +61,7 @@ classdef SuperpixelLSC < handle
             %
             % See also: cv.SuperpixelLSC
             %
+            if isempty(this.id), return; end
             SuperpixelLSC_(this.id, 'delete');
         end
     end

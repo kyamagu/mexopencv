@@ -244,6 +244,7 @@ classdef DescriptorMatcher < handle
             %
             % See also: cv.DescriptorMatcher
             %
+            if isempty(this.id), return; end
             DescriptorMatcher_(this.id, 'delete');
         end
 

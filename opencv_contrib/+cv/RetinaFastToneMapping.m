@@ -66,6 +66,7 @@ classdef RetinaFastToneMapping < handle
             %
             % See also: cv.RetinaFastToneMapping
             %
+            if isempty(this.id), return; end
             RetinaFastToneMapping_(this.id, 'delete');
         end
     end

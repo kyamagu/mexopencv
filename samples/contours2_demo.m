@@ -1,5 +1,5 @@
 %% Contours Demo
-% This program illustrates the use of findContours and drawContours.
+% This program illustrates the use of |cv.findContours| and |cv.drawContours|.
 % The original image is put up along with the image of drawn contours.
 %
 % <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/contours2.cpp>

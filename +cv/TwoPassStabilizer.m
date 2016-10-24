@@ -60,6 +60,7 @@ classdef TwoPassStabilizer < handle
             %
             % See also cv.TwoPassStabilizer
             %
+            if isempty(this.id), return; end
             TwoPassStabilizer_(this.id, 'delete');
         end
     end
