@@ -11,14 +11,14 @@ function varargout = watershed_demo_gui(im)
     % load an image
     if nargin < 1
         src = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
-    elseif ischar(im)
-        src = imread(im);
-    elseif isscalar(im) && im == 0
+    elseif isempty(im)
         fmts = imformats;
         filtspec = strjoin(strcat('*.', [fmts.ext]), ';');
         [fn,fp] = uigetfile(filtspec, 'Select an image');
         if fp==0, error('No file selected'); end
         src = imread(fullfile(fp,fn));
+    elseif ischar(im)
+        src = imread(im);
     else
         src = im;
     end
@@ -106,7 +106,7 @@ function varargout = watershed_demo_gui(im)
         % paint the watershed image
         % (-1: boudaries, 0: unlabeled, 1~N: labeled regions)
         colorTab = [1 1 1; 0 0 0; rand([compCount 3])];
-        wshed = im2uint8(ind2rgb(uint8(markers+1), colorTab));
+        wshed = uint8(ind2rgb(double(markers+2), colorTab) * 255);
 
         % show result
         wshed = imlincomb(0.5, wshed, 0.5, app.imgGray, 'uint8');

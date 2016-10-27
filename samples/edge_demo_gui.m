@@ -29,7 +29,7 @@ function onChange(~,~,h)
 
     % Run the edge detector on grayscale
     bwEdge = cv.Canny(h.gray, thresh*[1 3], 'ApertureSize',3);
-    cEdge = immultiply(h.src, repmat(logical(bwEdge), [1 1 3]));
+    cEdge = bsxfun(@times, h.src, uint8(bwEdge~=0));
 
     % show result
     set(h.img, 'CData',cEdge);

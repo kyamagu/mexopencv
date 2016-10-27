@@ -7,9 +7,12 @@
 %
 
 %% Input image
-fname = which('gantrycrane.png');
-assert(~isempty(fname), 'Image not found');
-src = imread(fname);
+if false
+    src = imread('gantrycrane.png');
+else
+    src = imread(fullfile(mexopencv.root(), 'test', 'detect_blob.png'));
+    src = rot90(src);
+end
 
 imshow(src), title('Source')
 

@@ -7,8 +7,12 @@
 %
 
 %% Input image
-fname = which('coins.png');
-assert(~isempty(fname), 'Image not found');
+if true
+    fname = which('coins.png');
+    assert(~isempty(fname), 'Image not found');
+else
+    fname = fullfile(mexopencv.root(), 'test', 'detect_blob.png');
+end
 img = cv.imread(fname, 'Flags',1);
 
 imshow(img), title('circles')

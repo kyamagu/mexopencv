@@ -6,7 +6,7 @@
 % <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/laplace.cpp>
 %
 
-function varargout = laplace_demo_gui(im)
+function varargout = laplace_demo_gui()
     % setup video capture
     cap = cv.VideoCapture();
     assert(cap.isOpened(), 'Could not initialize capturing');
@@ -62,7 +62,6 @@ function h = buildGUI(img)
     %BUILDGUI  Creates the UI
 
     % parameters
-    smoothType = 'Gaussian';
     sigma = 3;
     max_sig = 15;
     sz = size(img);

@@ -22,7 +22,7 @@
 
 %% Images
 images = {
-    which('cameraman.tif')
+    fullfile(mexopencv.root(),'test','stuff.jpg')
     fullfile(mexopencv.root(),'test','blox.jpg')
     fullfile(mexopencv.root(),'test','books_left.jpg')
     fullfile(mexopencv.root(),'test','books_right.jpg')

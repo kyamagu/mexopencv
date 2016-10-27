@@ -10,7 +10,7 @@ img = cv.imread(fullfile(mexopencv.root(),'test','balloon.jpg'), 'Color',true);
 assert(~isempty(img), 'Cannot read image file');
 
 % convert to floating point in [0,1] range
-img = im2single(img);
+img = single(img) / 255;
 
 %% Create object
 % we load a pre-trained model
@@ -29,8 +29,10 @@ toc
 %% Detect edges
 tic
 edges = pDollar.detectEdges(img);
-edges = im2uint8(edges);  % convert grayscale [0,1] float image to 8-bit
 toc
+
+% convert grayscale [0,1] float image to 8-bit
+edges = uint8(edges * 255);
 
 %% Display result
 subplot(211), imshow(img), title('image')

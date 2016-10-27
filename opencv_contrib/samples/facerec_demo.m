@@ -103,7 +103,7 @@ end
 
 %%
 % show the full dataset (40 people with 10 views each)
-if true
+try
     % each column is a different person, with different views across rows
     im = reshape(images,[10 40])';
     montage(cat(4,im{:}), 'Size',[10 40]);

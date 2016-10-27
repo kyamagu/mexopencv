@@ -187,7 +187,7 @@ function dst = filterDetailsEnhancement(frame8u, opts)
     cDetails2 = 2.0 - opts.detailsLevel / 100.0;
 
     % Generate lightness
-    meanLigtness = mean2(frameLab(:,:,1));
+    meanLigtness = mean(mean(frameLab(:,:,1)));
     frameLab(:,:,1) = cBase*(layer2 - meanLigtness) + meanLigtness;  % fit contrast of base (most blurred) layer
     frameLab(:,:,1) = frameLab(:,:,1) + cDetails1*detailLayer1;  % add weighted sum of detail layers to new lightness
     frameLab(:,:,1) = frameLab(:,:,1) + cDetails2*detailLayer2;

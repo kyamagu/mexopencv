@@ -32,14 +32,15 @@ toc
 minWeight = 255 * 0.3 * min(size(img));
 maxCount = 50;
 
-points = houghpeaks(double(hough), maxCount, 'Threshold',minWeight);
-%{
-localExtr = imextendedmax(hough, minWeight);  % local extremum (logical)
-[rows,cols,vals] = find(immultiply(hough, localExtr));
-[~,idx] = sort(vals, 'descend');  % sort by strongest hough values
-idx(maxCount+1:end) = [];         % keep best N
-points = [rows(idx) cols(idx)];
-%}
+if true
+    points = houghpeaks(double(hough), maxCount, 'Threshold',minWeight);
+else
+    localExtr = imextendedmax(hough, minWeight);  % local extremum (logical)
+    [rows,cols,vals] = find(immultiply(hough, localExtr));
+    [~,idx] = sort(vals, 'descend');  % sort by strongest hough values
+    idx(maxCount+1:end) = [];         % keep best N
+    points = [rows(idx) cols(idx)];
+end
 
 %% Build line segments
 lines = zeros(size(points,1), 4, 'int32');

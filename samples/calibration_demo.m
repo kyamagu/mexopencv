@@ -21,26 +21,26 @@
 %
 
 %% Stereo Images
-files_l = dir(fullfile(mexopencv.root(),'test','left*.jpg'));
-files_r = dir(fullfile(mexopencv.root(),'test','right*.jpg'));
-files_l = strcat(fullfile(mexopencv.root(),'test'), filesep, {files_l.name});
-files_r = strcat(fullfile(mexopencv.root(),'test'), filesep, {files_r.name});
-assert(numel(files_l) == numel(files_r));
-N = numel(files_l);
-patternSize = [9,6];
-
-%{
-assert(~mexopencv.isOctave() && mexopencv.require('vision'), 'CVST required');
-%fpath = fullfile(matlabroot,'toolbox','vision','visiondata','calibration','stereoWebcams');
-fpath = fullfile(matlabroot,'toolbox','vision','visiondata','calibration','stereo');
-files_l = dir(fullfile(fpath, 'left', 'left*.png'));
-files_r = dir(fullfile(fpath, 'right', 'right*.png'));
-files_l = strcat(fullfile(fpath, 'left'), filesep, {files_l.name});
-files_r = strcat(fullfile(fpath, 'right'), filesep, {files_r.name});
-assert(numel(files_l) == numel(files_r));
-N = numel(files_l);
-patternSize = [7,6];
-%}
+if true
+    files_l = dir(fullfile(mexopencv.root(),'test','left*.jpg'));
+    files_r = dir(fullfile(mexopencv.root(),'test','right*.jpg'));
+    files_l = strcat(fullfile(mexopencv.root(),'test'), filesep, {files_l.name});
+    files_r = strcat(fullfile(mexopencv.root(),'test'), filesep, {files_r.name});
+    assert(numel(files_l) == numel(files_r));
+    N = numel(files_l);
+    patternSize = [9,6];
+else
+    assert(~mexopencv.isOctave() && mexopencv.require('vision'), 'CVST required');
+    %fpath = fullfile(matlabroot,'toolbox','vision','visiondata','calibration','stereoWebcams');
+    fpath = fullfile(matlabroot,'toolbox','vision','visiondata','calibration','stereo');
+    files_l = dir(fullfile(fpath, 'left', 'left*.png'));
+    files_r = dir(fullfile(fpath, 'right', 'right*.png'));
+    files_l = strcat(fullfile(fpath, 'left'), filesep, {files_l.name});
+    files_r = strcat(fullfile(fpath, 'right'), filesep, {files_r.name});
+    assert(numel(files_l) == numel(files_r));
+    N = numel(files_l);
+    patternSize = [7,6];
+end
 
 info = imfinfo(files_l{1});
 imgSiz = [info.Width, info.Height];

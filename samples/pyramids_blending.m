@@ -35,7 +35,7 @@
 % is called an Octave. The same pattern continues as we go upper in pyramid
 % (ie, resolution decreases). Similarly while expanding, area becomes 4 times
 % in each level. We can find Gaussian pyramids using cv.pyrDown() and
-% cv.pyrUp() functions. 
+% cv.pyrUp() functions.
 %
 % Below is the 4 levels in an image pyramid:
 %

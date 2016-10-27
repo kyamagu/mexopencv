@@ -21,7 +21,8 @@
 % Prepare a pair of images
 im1 = imread(fullfile(mexopencv.root(),'test','box.png'));
 im2 = imread(fullfile(mexopencv.root(),'test','box_in_scene.png'));
-imshowpair(im1, im2, 'montage'), title('box + box-in-scene')
+subplot(121), imshow(im1), title('box')
+subplot(122), imshow(im2), title('box-in-scene')
 
 % some parameters
 do_filtering = true;

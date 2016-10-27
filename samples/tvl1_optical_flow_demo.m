@@ -8,7 +8,7 @@ frame0 = cv.imread(fullfile(mexopencv.root(),'test','basketball1.png'), 'Graysca
 frame1 = cv.imread(fullfile(mexopencv.root(),'test','basketball2.png'), 'Grayscale',true);
 assert(isequal(size(frame0), size(frame1)), 'Images should be of equal sizes');
 
-implay(cat(4,frame0,frame1), 5)
+try, implay(cat(4,frame0,frame1), 5); end
 
 %% Compute optical flow
 tvl1 = cv.DualTVL1OpticalFlow();
