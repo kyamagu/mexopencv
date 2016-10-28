@@ -79,14 +79,15 @@ result(cat(3,zr,zr,mask)) = 255;
 
 % retrieve the segmentation result
 labels = superpix.getLabels();
-%{
-% use the last x bits to determine the color. Note that this does not
-% guarantee that 2 neighboring superpixels have different colors.
-bits = 2;
-L = bitand(labels, bitshift(1,bits)-1) * bitshift(1,16-bits);
-L = double(L) ./ double(max(L(:)));
-%}
-L = label2rgb(labels+1, jet(npix), 'k', 'shuffle');
+if false
+    % use the last x bits to determine the color. Note that this does not
+    % guarantee that 2 neighboring superpixels have different colors.
+    bits = 2;
+    L = bitand(labels, bitshift(1,bits)-1) * bitshift(1,16-bits);
+    L = double(L) ./ double(max(L(:)));
+else
+    L = label2rgb(labels+1, jet(npix), 'k', 'shuffle');
+end
 
 %% display output
 subplot(221), imshow(src), title('image')

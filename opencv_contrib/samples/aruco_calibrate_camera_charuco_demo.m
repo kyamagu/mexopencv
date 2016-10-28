@@ -205,5 +205,5 @@ if showChessboardCorners
         end
     end
     outImgs = cat(4, outImgs{:});
-    implay(immovie(outImgs), 1)
+    try, implay(immovie(outImgs), 1); end
 end

@@ -37,7 +37,7 @@ display(images)
 % Reshape and stack images into a row Matrix
 data = zeros(numel(images), numel(images{1}));
 for i=1:numel(images)
-    data(i,:) = im2double(images{i}(:));
+    data(i,:) = double(images{i}(:)) / 255;
 end
 
 %%
@@ -57,7 +57,8 @@ reconstruction = pca.backProject(point);
 reconstruction = reshape(reconstruction, size(images{1}));
 
 % re-scale for displaying purposes
-reconstruction = im2uint8((reconstruction - min(reconstruction(:))) ./ range(reconstruction(:)));
+reconstruction = (reconstruction - min(reconstruction(:))) ./ range(reconstruction(:));
+reconstruction = uint8(reconstruction * 255);
 
 % display result
 imshow(reconstruction)

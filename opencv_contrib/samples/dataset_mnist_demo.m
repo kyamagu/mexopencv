@@ -69,7 +69,6 @@ whos dtrain dtest
 
 %% Display
 % show one instance from each train/test sets
-figure(1)
 subplot(121), imshow(dtrain(1).image)
 title(sprintf('label = %d',dtrain(1).label))
 subplot(122), imshow(dtest(1).image)
@@ -79,4 +78,4 @@ title(sprintf('label = %d',dtest(1).label))
 % show a sample of the first 100 train images corresponding to digit 8
 idx = find([dtrain.label] == 8);
 idx(101:end) = [];
-figure(2), montage(cat(4, dtrain(idx).image))
+figure, montage(cat(4, dtrain(idx).image))

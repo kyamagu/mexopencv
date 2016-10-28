@@ -11,14 +11,14 @@ function varargout = grabcut_demo_gui(im)
     % load an image
     if nargin < 1
         src = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
-    elseif ischar(im)
-        src = imread(im);
-    elseif isscalar(im) && im == 0
+    elseif isempty(im)
         fmts = imformats;
         filtspec = strjoin(strcat('*.', [fmts.ext]), ';');
         [fn,fp] = uigetfile(filtspec, 'Select an image');
         if fp==0, error('No file selected'); end
         src = imread(fullfile(fp,fn));
+    elseif ischar(im)
+        src = imread(im);
     else
         src = im;
     end
@@ -221,7 +221,7 @@ function varargout = grabcut_demo_gui(im)
     end
 
     function setRectInMask()
-        % convert rectangle to binary mask, and
+        % convert rectangle to binary mask
         rect_mask = poly2mask(app.rectxy(:,1), app.rectxy(:,2), ...
             app.sz(1), app.sz(2));
 

@@ -189,7 +189,9 @@ opts.logger = 'NullLog';
 
 %%
 % override options
-opts.inputPath = which('shaky_car.avi');  %NOTE: we're using a video from CVST
+if mexopencv.require('vision')
+    opts.inputPath = which('shaky_car.avi');
+end
 %opts.model = 'Translation';
 %opts.min_inlier_ratio = 0.01;
 %opts.nkps = 500;

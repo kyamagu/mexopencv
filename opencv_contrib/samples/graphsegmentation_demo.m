@@ -30,12 +30,13 @@ nb_segs = numel(unique(out(:)));
 fprintf('%d segments\n', nb_segs);
 
 %% Show result
-%{
-res = zeros([size(out) 3], 'double');
-res(:,:,1) = mod(double(out) * 0.618033988749895 + 0.24443434, 1.2) * 360;
-res(:,:,2) = 0.95;
-res(:,:,3) = 0.80;
-res = uint8(255 * cv.cvtColor(res, 'HSV2RGB'));
-%}
-res = label2rgb(out+1, jet(nb_segs), 'k', 'shuffle');
+if false
+    res = zeros([size(out) 3], 'double');
+    res(:,:,1) = mod(double(out) * 0.618033988749895 + 0.24443434, 1.2) * 360;
+    res(:,:,2) = 0.95;
+    res(:,:,3) = 0.80;
+    res = uint8(255 * cv.cvtColor(res, 'HSV2RGB'));
+else
+    res = label2rgb(out+1, jet(nb_segs), 'k', 'shuffle');
+end
 imshow(res)

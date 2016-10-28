@@ -29,17 +29,23 @@
 %% Images
 
 % load images
-%img1 = cv.imread(fullfile(mexopencv.root(),'test','box.png'), 'Color',true);
-%img2 = cv.imread(fullfile(mexopencv.root(),'test','box_in_scene.png'), 'Color',true);
-img1 = cv.imread(which('cameraman.tif'), 'Color',true);
-M = cv.getRotationMatrix2D(round([size(img1,2) size(img1,1)]./2), -20, 0.9);
-img2 = cv.warpAffine(img1, M);
+if false
+    img1 = cv.imread(fullfile(mexopencv.root(),'test','books_left.jpg'), 'Color',true);
+    img2 = cv.imread(fullfile(mexopencv.root(),'test','books_right.jpg'), 'Color',true);
+else
+    im = which('cameraman.tif');
+    if isempty(im), im = fullfile(mexopencv.root(),'test','blox.jpg'); end
+    img1 = cv.imread(im, 'Color',true);
+    M = cv.getRotationMatrix2D(round([size(img1,2) size(img1,1)]./2), -20, 0.9);
+    img2 = cv.warpAffine(img1, M);
+end
 
 % create binary masks
 mask1 = ones(size(img1,1), size(img1,2), 'uint8');
 mask2 = ones(size(img2,1), size(img2,2), 'uint8');
 
-imshowpair(img1, img2, 'montage')
+subplot(121), imshow(img1)
+subplot(122), imshow(img2)
 whos img1 img2 mask1 mask2
 
 %% BinaryDescriptor: Detect and Compute
@@ -77,7 +83,7 @@ fprintf('number of good matches = %d\n', nnz(good_matches));
 % plot matches
 outImg = cv.drawLineMatches(img1, keylines1, img2, keylines2, matches, ...
     'MatchesMask',good_matches);
-figure(1), imshow(outImg)
+figure, imshow(outImg)
 title('Matches in octave 0')
 
 %% LSDDetector: Detect and Compute
@@ -118,5 +124,5 @@ img1 = cv.resize(img1, 0.5, 0.5);
 img2 = cv.resize(img2, 0.5, 0.5);
 outImg = cv.drawLineMatches(img1, keylines1, img2, keylines2, matches, ...
     'MatchesMask',good_matches);
-figure(2), imshow(outImg)
+figure, imshow(outImg)
 title('LSD Matches in octave 1')

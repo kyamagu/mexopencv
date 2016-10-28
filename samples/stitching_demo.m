@@ -7,7 +7,9 @@
 %% Input images (two or more)
 im1 = imread(fullfile(mexopencv.root(),'test','b1.jpg'));
 im2 = imread(fullfile(mexopencv.root(),'test','b2.jpg'));
-imshowpair(im1, im2, 'montage')
+%imshow(cat(2, im1, im2))
+subplot(121), imshow(im1)
+subplot(122), imshow(im2)
 
 %% Stitch
 stitcher = cv.Stitcher('TryUseGPU',false);
@@ -16,4 +18,5 @@ pano = stitcher.stitch({im1, im2});
 toc
 
 %% Panorama result
+figure
 imshow(pano)

@@ -40,10 +40,13 @@ function onChange(~,~,h)
     [labels, nLabels] = cv.connectedComponents(bw);
 
     % labels color-coded
-    %dst = label2rgb(labels, 'hsv', 'k');
-    clr = hsv(nLabels);
-    clr(1,:) = 0;  % background
-    dst = uint8(255 * ind2rgb(labels, clr));
+    if false
+        dst = label2rgb(labels, 'hsv', 'k');
+    else
+        clr = hsv(nLabels);
+        clr(1,:) = 0;  % background
+        dst = uint8(255 * ind2rgb(labels, clr));
+    end
 
     % show result
     set(h.img(2), 'CData',dst);
