@@ -159,12 +159,10 @@ void write(FileStorage& fs, const MxArray& x, bool root=false)
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
-    // Check arguments
-    if (!(nrhs>=2&&nlhs==0)&&!(nrhs==1&&nlhs<=1))
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    // Check the number of arguments
+    nargchk((nrhs>=2 && nlhs==0) || (nrhs==1 && nlhs<=1));
 
     string filename(MxArray(prhs[0]).toString());
     if (nrhs==1) {

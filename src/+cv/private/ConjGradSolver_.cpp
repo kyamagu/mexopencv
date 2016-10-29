@@ -264,7 +264,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (prop == "TermCriteria")
             plhs[0] = MxArray(obj->getTermCriteria());
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property %s", prop.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
     }
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
@@ -274,8 +275,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (prop == "TermCriteria")
             obj->setTermCriteria(rhs[3].toTermCriteria());
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property %s", prop.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unrecognized operation %s", method.c_str());
 }

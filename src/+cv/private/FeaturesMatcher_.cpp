@@ -108,7 +108,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             if (key == "Mask")
                 mask = rhs[i+1].toMat(CV_8U);
             else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         vector<ImageFeatures> features(MxArrayToVectorImageFeatures(rhs[2]));
         vector<MatchesInfo> pairwise_matches;

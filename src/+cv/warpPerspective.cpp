@@ -46,7 +46,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (key=="BorderValue")
             borderValue = rhs[i+1].toScalar();
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     flags |= (warp_inverse ? cv::WARP_INVERSE_MAP : 0);
     if (!dst.empty())

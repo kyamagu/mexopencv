@@ -38,7 +38,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (key == "LowerBound")
             lowerBound = rhs[i+1].toFloat();
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     if (distType==cv::DIST_USER && cost.empty())
         mexErrMsgIdAndTxt("mexopencv:error",

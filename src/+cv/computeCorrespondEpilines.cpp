@@ -31,7 +31,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if (key=="WhichImage")
             whichImage = rhs[i+1].toInt();
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     if (whichImage!=1 && whichImage!=2)
         mexErrMsgIdAndTxt("mexopencv:error","Invalid WhichImage");

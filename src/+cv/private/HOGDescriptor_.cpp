@@ -182,7 +182,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             if (key == "ObjName")
                 objname = rhs[i+1].toString();
             else
-                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         string filename = rhs[2].toString();
         bool success = obj->load(filename, objname);
@@ -196,7 +197,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             if (key == "ObjName")
                 objname = rhs[i+1].toString();
             else
-                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         string filename = rhs[2].toString();
         obj->save(filename, objname);
@@ -411,7 +413,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (prop == "SvmDetector")
             plhs[0] = MxArray(obj->svmDetector);
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
     }
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
@@ -457,7 +460,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             obj->setSVMDetector(detector);
         }
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error",

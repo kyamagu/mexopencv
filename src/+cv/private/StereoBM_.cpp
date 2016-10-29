@@ -154,7 +154,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             else if (key=="FromString")
                 loadFromString = rhs[i+1].toBool();
             else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         obj_[id] = (loadFromString ?
             Algorithm::loadFromString<StereoBM>(rhs[2].toString(), objname) :
@@ -208,7 +209,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (prop == "ROI2")
             plhs[0] = MxArray(obj->getROI2());
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
     }
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
@@ -243,7 +245,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (prop == "ROI2")
             obj->setROI2(rhs[3].toRect());
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error",

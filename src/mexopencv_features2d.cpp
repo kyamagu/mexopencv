@@ -24,8 +24,7 @@ Ptr<BRISK> createBRISK(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     // second variant for custom patterns
     if ((last-first) >= 2 && !first->isChar()) {
         vector<float> radiusList(first->toVector<float>()); ++first;
@@ -73,8 +72,7 @@ Ptr<ORB> createORB(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     int nfeatures = 500;
     float scaleFactor = 1.2f;
     int nlevels = 8;
@@ -117,8 +115,7 @@ Ptr<MSER> createMSER(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     int delta = 5;
     int min_area = 60;
     int max_area = 14400;
@@ -162,8 +159,7 @@ Ptr<FastFeatureDetector> createFastFeatureDetector(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     int threshold = 10;
     bool nonmaxSuppression = true;
     int type = FastFeatureDetector::TYPE_9_16;
@@ -187,8 +183,7 @@ Ptr<GFTTDetector> createGFTTDetector(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     int maxCorners = 1000;
     double qualityLevel = 0.01;
     double minDistance = 1;
@@ -222,8 +217,7 @@ Ptr<SimpleBlobDetector> createSimpleBlobDetector(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     SimpleBlobDetector::Params parameters;
     for (; first != last; first += 2) {
         string key((*first).toString());
@@ -277,8 +271,7 @@ Ptr<KAZE> createKAZE(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     bool extended = false;
     bool upright = false;
     float threshold = 0.001f;
@@ -312,8 +305,7 @@ Ptr<AKAZE> createAKAZE(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     int descriptor_type = AKAZE::DESCRIPTOR_MLDB;
     int descriptor_size = 0;
     int descriptor_channels = 3;
@@ -350,8 +342,7 @@ Ptr<AgastFeatureDetector> createAgastFeatureDetector(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     int threshold = 10;
     bool nonmaxSuppression = true;
     int type = AgastFeatureDetector::OAST_9_16;
@@ -376,8 +367,7 @@ Ptr<SIFT> createSIFT(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     int nfeatures = 0;
     int nOctaveLayers = 3;
     double contrastThreshold = 0.04;
@@ -408,8 +398,7 @@ Ptr<SURF> createSURF(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     double hessianThreshold = 100;
     int nOctaves = 4;
     int nOctaveLayers = 3;
@@ -440,8 +429,7 @@ Ptr<FREAK> createFREAK(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     bool orientationNormalized = true;
     bool scaleNormalized = true;
     float patternScale = 22.0f;
@@ -472,8 +460,7 @@ Ptr<StarDetector> createStarDetector(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     int maxSize = 45;
     int responseThreshold = 30;
     int lineThresholdProjected = 10;
@@ -504,8 +491,7 @@ Ptr<BriefDescriptorExtractor> createBriefDescriptorExtractor(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     int bytes = 32;
     bool use_orientation = false;
     for (; first != last; first += 2) {
@@ -526,8 +512,7 @@ Ptr<LUCID> createLUCID(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     int lucid_kernel = 1;
     int blur_kernel = 2;
     for (; first != last; first += 2) {
@@ -548,8 +533,7 @@ Ptr<LATCH> createLATCH(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     int bytes = 32;
     bool rotationInvariance = true;
     int half_ssd_size = 3;
@@ -573,8 +557,7 @@ Ptr<DAISY> createDAISY(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     float radius = 15;
     int q_radius = 3;
     int q_theta = 8;
@@ -614,8 +597,7 @@ Ptr<MSDDetector> createMSDDetector(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     int patch_radius = 3;
     int search_area_radius = 5;
     int nms_radius = 5;
@@ -760,17 +742,14 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
 {
     Ptr<flann::IndexParams> p;
     vector<MxArray> rhs(m.toVector<MxArray>());
-    if (rhs.empty())
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(!rhs.empty());
     string type(rhs[0].toString());
     if (type == "Linear") {
-        if (rhs.size() != 1)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(rhs.size() == 1);
         p = makePtr<flann::LinearIndexParams>();
     }
     else if (type == "KDTree") {
-        if ((rhs.size() % 2) == 0)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk((rhs.size() % 2) == 1);
         int trees = 4;
         for (size_t i = 1; i<rhs.size(); i += 2) {
             string key(rhs[i].toString());
@@ -783,8 +762,7 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
         p = makePtr<flann::KDTreeIndexParams>(trees);
     }
     else if (type == "KMeans") {
-        if ((rhs.size() % 2) == 0)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk((rhs.size() % 2) == 1);
         int branching = 32;
         int iterations = 11;
         cvflann::flann_centers_init_t centers_init = cvflann::FLANN_CENTERS_RANDOM;
@@ -807,8 +785,7 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
             branching, iterations, centers_init, cb_index);
     }
     else if (type == "Composite") {
-        if ((rhs.size() % 2) == 0)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk((rhs.size() % 2) == 1);
         int trees = 4;
         int branching = 32;
         int iterations = 11;
@@ -834,8 +811,7 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
             trees, branching, iterations, centers_init, cb_index);
     }
     else if (type == "LSH") {
-        if ((rhs.size() % 2) == 0)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk((rhs.size() % 2) == 1);
         int table_number = 20;
         int key_size = 15;
         int multi_probe_level = 0;
@@ -855,8 +831,7 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
             table_number, key_size, multi_probe_level);
     }
     else if (type == "Autotuned") {
-        if ((rhs.size() % 2) == 0)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk((rhs.size() % 2) == 1);
         float target_precision = 0.8f;
         float build_weight = 0.01f;
         float memory_weight = 0;
@@ -879,14 +854,12 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
             target_precision, build_weight, memory_weight, sample_fraction);
     }
     else if (type == "Saved") {
-        if(rhs.size() != 2)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk(rhs.size() == 2);
         string filename(rhs[1].toString());
         p = makePtr<flann::SavedIndexParams>(filename);
     }
     else if (type == "HierarchicalClustering") {
-        if ((rhs.size() % 2) == 0)
-            mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+        nargchk((rhs.size() % 2) == 1);
         int branching = 32;
         cvflann::flann_centers_init_t centers_init = cvflann::FLANN_CENTERS_RANDOM;
         int trees = 4;
@@ -922,8 +895,7 @@ Ptr<flann::IndexParams> toIndexParams(const MxArray& m)
 Ptr<flann::SearchParams> toSearchParams(const MxArray& m)
 {
     vector<MxArray> rhs(m.toVector<MxArray>());
-    if ((rhs.size() % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk((rhs.size() % 2) == 0);
     int checks = 32;
     float eps = 0;
     bool sorted = true;
@@ -946,8 +918,7 @@ Ptr<FlannBasedMatcher> createFlannBasedMatcher(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     Ptr<flann::IndexParams> indexParams;
     Ptr<flann::SearchParams> searchParams;
     for (; first != last; first += 2) {
@@ -972,8 +943,7 @@ Ptr<BFMatcher> createBFMatcher(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    if (((last-first) % 2) != 0)
-        mexErrMsgIdAndTxt("mexopencv:error", "Wrong number of arguments");
+    nargchk(((last-first) % 2) == 0);
     int normType = cv::NORM_L2;
     bool crossCheck = false;
     for (; first != last; first += 2) {

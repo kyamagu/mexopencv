@@ -37,7 +37,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (key=="CenterPrincipalPoint")
             centerPrincipalPoint = rhs[i+1].toBool();
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     // Process
     Mat cameraMatrix(rhs[0].toMat(rhs[0].isSingle() ? CV_32F : CV_64F)),

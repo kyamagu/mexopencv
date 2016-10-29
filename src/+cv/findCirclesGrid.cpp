@@ -48,7 +48,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
         }
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     int flags = (symmetricGrid ? cv::CALIB_CB_SYMMETRIC_GRID :
                                  cv::CALIB_CB_ASYMMETRIC_GRID) |
