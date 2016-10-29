@@ -34,5 +34,5 @@
 % > Fernand Meyer. "Color image segmentation". In Image Processing and its
 % > Applications, 1992, International Conference on, pages 303-306. IET, 1992.
 %
-% See also: cv.grabCut, cv.findContours, watershed
+% See also: cv.grabCut, cv.findContours, watershed, boundarymask
 %

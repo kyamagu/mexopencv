@@ -22,7 +22,7 @@ classdef SuperpixelSLIC < handle
     % > Report no. 149300, June 2010.
     %
     % See also: cv.SuperpixelSLIC.SuperpixelSLIC, cv.SuperpixelLSC,
-    %  cv.SuperpixelSEEDS
+    %  cv.SuperpixelSEEDS, superpixels
     %
 
     properties (SetAccess = private)
@@ -242,7 +242,7 @@ classdef SuperpixelSLIC < handle
             % The function return the boundaries of the superpixel
             % segmentation.
             %
-            % See also: cv.SuperpixelSLIC.iterate
+            % See also: cv.SuperpixelSLIC.iterate, boundarymask
             %
             img = SuperpixelSLIC_(this.id, 'getLabelContourMask', varargin{:});
             img = (img == -1);  % fg:int8(-1), bg:int8(1)

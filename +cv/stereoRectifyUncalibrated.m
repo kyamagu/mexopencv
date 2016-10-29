@@ -51,5 +51,6 @@
 % > International Journal of Computer Vision, 35(2):115-127, 1999.
 %
 % See also: cv.stereoCalibrate, cv.stereoRectify, cv.calibrateCamera,
-%  cv.undistort, cv.undistortPoints, estimateUncalibratedRectification
+%  cv.undistort, cv.undistortPoints, estimateUncalibratedRectification,
+%  rectifyStereoImages
 %

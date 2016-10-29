@@ -28,5 +28,5 @@
 % Corners in the image can be found as the local maxima of this response map.
 %
 % See also: cv.cornerEigenValsAndVecs, cv.cornerMinEigenVal,
-%  corner, cornermetric, detectHARRISFeatures
+%  corner, cornermetric, detectHARRISFeatures, cornerPoints
 %

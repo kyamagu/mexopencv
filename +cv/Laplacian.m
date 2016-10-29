@@ -34,5 +34,5 @@
 %
 %    [0, 1, 0; 1,-4, 1; 0, 1, 0]
 %
-% See also: cv.Sobel, cv.Scharr
+% See also: cv.Sobel, cv.Scharr, imfilter, fspecial
 %

@@ -11,7 +11,7 @@ classdef StereoBM < handle
     %    disparity = bm.compute(left, right);
     %
     % See also: cv.StereoBM.StereoBM, cv.StereoBM.compute, cv.StereoSGBM,
-    %  disparity
+    %  disparity, stereoAnaglyph
     %
 
     properties (SetAccess = private)

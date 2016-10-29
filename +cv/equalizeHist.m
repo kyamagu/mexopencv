@@ -26,5 +26,5 @@
 % The algorithm normalizes the brightness and increases the contrast of the
 % image.
 %
-% See also: cv.calcHist, cv.integral, histeq
+% See also: cv.calcHist, cv.integral, histeq, imhistmatch
 %

@@ -86,7 +86,8 @@ classdef CascadeClassifier < handle
     % > pp. 900-903, Sep. 2002.
     %
     % See also: cv.CascadeClassifier.CascadeClassifier,
-    %  cv.CascadeClassifier.detect, vision.CascadeObjectDetector
+    %  cv.CascadeClassifier.detect, vision.CascadeObjectDetector,
+    %  trainCascadeObjectDetector
     %
 
     properties (SetAccess = private)

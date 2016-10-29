@@ -29,5 +29,5 @@
 % The function convolves the source image with the specified Gaussian kernel.
 %
 % See also: cv.sepFilter2D, cv.filter2D, cv.blur, cv.boxFilter,
-%  cv.bilateralFilter, cv.medianBlur
+%  cv.bilateralFilter, cv.medianBlur, imfilter, fspecial, imgaussfilt
 %

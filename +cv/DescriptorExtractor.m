@@ -24,7 +24,7 @@ classdef DescriptorExtractor < handle
     %    descriptors = extractor.compute(img, keypoints);
     %
     % See also: cv.FeatureDetector, cv.DescriptorMatcher,
-    %  cv.BOWImgDescriptorExtractor, extractFeatures
+    %  cv.BOWImgDescriptorExtractor, extractFeatures, binaryFeatures
     %
 
     properties (SetAccess = private)

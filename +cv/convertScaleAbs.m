@@ -24,5 +24,5 @@
 % by calling the `Mat::convertTo` method (or by using matrix expressions) and
 % then by calculating an absolute value of the result.
 %
-% See also: abs, uint8, cast
+% See also: abs, uint8, cast, im2uint8
 %

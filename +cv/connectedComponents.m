@@ -36,5 +36,6 @@
 %
 % The last two optional output arguments are only computed if requested.
 %
-% See also: cv.findContours, bwconncomp, labelmatrix, regionprops
+% See also: cv.findContours, bwconncomp, bwlabel, labelmatrix, regionprops,
+%  vision.BlobAnalysis, bwareafilt, bwpropfilt
 %

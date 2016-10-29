@@ -24,7 +24,7 @@ classdef BOWImgDescriptorExtractor < handle
     %
     % See also: cv.BOWImgDescriptorExtractor.BOWImgDescriptorExtractor,
     %  cv.BOWKMeansTrainer, bagOfFeatures, trainImageCategoryClassifier,
-    %  indexImages, retrieveImages
+    %  imageCategoryClassifier, indexImages, retrieveImages
     %
 
     properties (SetAccess = private)

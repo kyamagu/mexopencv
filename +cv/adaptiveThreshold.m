@@ -47,5 +47,5 @@
 % where `T(x,y)` is a threshold calculated individually for each pixel (see
 % `Method` parameter).
 %
-% See also: cv.threshold, cv.blur, cv.GaussianBlur
+% See also: cv.threshold, cv.blur, cv.GaussianBlur, adaptthresh
 %

@@ -28,5 +28,5 @@
 % and columns and then convolves the result with the same kernel as in
 % cv.pyrDown multiplied by 4.
 %
-% See also: cv.pyrDown, cv.buildPyramid
+% See also: cv.pyrDown, cv.buildPyramid, impyramid
 %

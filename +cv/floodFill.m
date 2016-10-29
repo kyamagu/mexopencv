@@ -98,5 +98,5 @@
 % **Note:** Since the mask is larger than the filled image, a pixel `(x,y)` in
 % image corresponds to the pixel `(x+1,y+1)` in the mask.
 %
-% See also: cv.findContours, imfill
+% See also: cv.findContours, imfill, grayconnected, bwselect, roicolor
 %

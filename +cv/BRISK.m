@@ -11,7 +11,7 @@ classdef BRISK < handle
     % > pages 2548-2555. IEEE, 2011.
     %
     % See also: cv.BRISK.BRISK, cv.FeatureDetector, cv.DescriptorExtractor,
-    %  detectBRISKFeatures, extractFeatures
+    %  detectBRISKFeatures, extractFeatures, BRISKPoints
     %
 
     properties (SetAccess = private)

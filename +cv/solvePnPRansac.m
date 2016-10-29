@@ -51,5 +51,5 @@
 % cv.projectPoints) `objectPoints`. The use of RANSAC makes the function
 % resistant to outliers.
 %
-% See also: cv.solvePnP
+% See also: cv.solvePnP, estimateWorldCameraPose
 %

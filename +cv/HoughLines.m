@@ -34,5 +34,5 @@
 % http://homepages.inf.ed.ac.uk/rbf/HIPR2/hough.htm
 % for a good explanation of Hough transform.
 %
-% See also: cv.HoughLinesP, hough, houghpeaks, houghlines
+% See also: cv.HoughLinesP, hough, houghpeaks, houghlines, vision.HoughLines
 %

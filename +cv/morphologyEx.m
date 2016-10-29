@@ -43,5 +43,5 @@
 % In case of multi-channel images, each channel is processed independently.
 %
 % See also: cv.dilate, cv.erode, cv.getStructuringElement, imopen, imclose,
-%  imtophat, imbothat
+%  imtophat, imbothat, bwmorph
 %

@@ -26,7 +26,7 @@ classdef MSER < handle
     % > doi: 10.1109/CVPR.2007.383120
     % > http://www.cs.ubc.ca/~perfo/papers/forssen_cvpr07.pdf
     %
-    % See also: cv.FeatureDetector, detectMSERFeatures
+    % See also: cv.FeatureDetector, detectMSERFeatures, MSERRegions
     %
 
     properties (SetAccess = private)

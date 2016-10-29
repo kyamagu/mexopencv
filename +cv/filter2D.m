@@ -47,5 +47,6 @@
 % The function uses the DFT-based algorithm in case of sufficiently large
 % kernels (~`11x11` or larger) and the direct algorithm for small kernels.
 %
-% See also: cv.sepFilter2D, cv.dft, cv.matchTemplate, imfilter, conv2
+% See also: cv.sepFilter2D, cv.dft, cv.matchTemplate, imfilter, conv2,
+%  roifilt2, vision.Convolver
 %

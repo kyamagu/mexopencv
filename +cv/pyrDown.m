@@ -33,5 +33,5 @@
 %
 % Then, it downsamples the image by rejecting even rows and columns.
 %
-% See also: cv.pyrUp, cv.buildPyramid
+% See also: cv.pyrUp, cv.buildPyramid, impyramid
 %

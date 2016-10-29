@@ -35,3 +35,5 @@
 % > Alexandru Telea. "An image inpainting technique based on the fast marching
 % > method". Journal of graphics tools, 9(1):23-34, 2004.
 %
+% See also: roifill, regionfill
+%

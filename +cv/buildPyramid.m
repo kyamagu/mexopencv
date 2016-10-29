@@ -22,5 +22,5 @@
 % by recursively applying cv.pyrDown to the previously built pyramid layers,
 % starting from `dst{1}==src`.
 %
-% See also: cv.pyrDown, cv.pyrUp
+% See also: cv.pyrDown, cv.pyrUp, vision.Pyramid, impyramid
 %

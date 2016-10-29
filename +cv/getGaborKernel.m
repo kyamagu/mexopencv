@@ -24,3 +24,5 @@
 % sample file to interact with the various parameters of the Gabor filter
 % and visualize the result.
 %
+% See also: gabor, imgaborfilt
+%

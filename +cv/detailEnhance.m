@@ -16,3 +16,5 @@
 %       `src` and output `dst`, between MATLAB's RGB order and OpenCV's BGR
 %       (input: RGB->BGR, output: BGR->RGB). default true
 %
+% See also: locallapfilt, localcontrast
+%

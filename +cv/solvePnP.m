@@ -78,5 +78,5 @@
 % > Linearization for Robust Camera Pose and Focal Length Estimation".
 % > IEEE Trans. on PAMI, vol. 35, No. 10, p. 2387-2400, 2013.
 %
-% See also: cv.solvePnPRansac
+% See also: cv.solvePnPRansac, estimateWorldCameraPose
 %
