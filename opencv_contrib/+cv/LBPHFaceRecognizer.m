@@ -176,14 +176,19 @@ classdef LBPHFaceRecognizer < handle
             b = LBPHFaceRecognizer_(this.id, 'empty');
         end
 
-        function save(this, filename)
+        function varargout = save(this, filename)
             %SAVE  Saves a FaceRecognizer and its model state
             %
             %    obj.save(filename)
+            %    str = obj.save(filename)
             %
             % ## Input
             % * __filename__ The filename to store this FaceRecognizer to
             %       (either XML/YAML).
+            %
+            % ## Output
+            % * __str__ optional output. If requested, the model is persisted
+            %       to a string in memory instead of writing to disk.
             %
             % Saves this model to a given filename, either as XML or YAML.
             %
@@ -191,23 +196,31 @@ classdef LBPHFaceRecognizer < handle
             %
             % See also: cv.LBPHFaceRecognizer.load
             %
-            LBPHFaceRecognizer_(this.id, 'save', filename);
+            [varargout{1:nargout}] = LBPHFaceRecognizer_(this.id, 'save', filename);
         end
 
-        function load(this, filename)
+        function load(this, fname_or_str, varargin)
             %LOAD  Loads a FaceRecognizer and its model state
             %
             %    obj.load(filename)
+            %    obj.load(str, 'FromString',true)
             %
             % ## Input
             % * __filename__ The filename to load this FaceRecognizer from
             %       (either XML/YAML).
+            % * __str__ String containing the serialized model you want to
+            %       load.
+            %
+            % ## Options
+            % * __FromString__ Logical flag to indicate whether the input is
+            %       a filename or a string containing the serialized model.
+            %       default false
             %
             % Loads a persisted model and state from a given XML or YAML file.
             %
             % See also: cv.LBPHFaceRecognizer.save
             %
-            LBPHFaceRecognizer_(this.id, 'load', filename);
+            LBPHFaceRecognizer_(this.id, 'load', fname_or_str, varargin{:});
         end
 
         function name = getDefaultName(this)

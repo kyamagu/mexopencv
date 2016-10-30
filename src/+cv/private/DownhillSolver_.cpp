@@ -164,12 +164,26 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         obj->clear();
     }
     else if (method == "load") {
-        //TODO
-        nargchk(false);
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
+        string objname;
+        bool loadFromString = false;
+        for (int i=3; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key == "ObjName")
+                objname = rhs[i+1].toString();
+            else if (key == "FromString")
+                loadFromString = rhs[i+1].toBool();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
+        }
+        obj_[id] = (loadFromString ?
+            Algorithm::loadFromString<DownhillSolver>(rhs[2].toString(), objname) :
+            Algorithm::load<DownhillSolver>(rhs[2].toString(), objname));
     }
     else if (method == "save") {
-        //TODO
-        nargchk(false);
+        nargchk(nrhs==3 && nlhs==0);
+        obj->save(rhs[2].toString());
     }
     else if (method == "empty") {
         nargchk(nrhs==2 && nlhs<=1);

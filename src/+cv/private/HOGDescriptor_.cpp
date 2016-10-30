@@ -177,20 +177,32 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "load") {
         nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
         string objname;
+        bool loadFromString = false;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key == "ObjName")
                 objname = rhs[i+1].toString();
+            else if (key == "FromString")
+                loadFromString = rhs[i+1].toBool();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        string filename = rhs[2].toString();
-        bool success = obj->load(filename, objname);
+        bool success = false;
+        string fname(rhs[2].toString());
+        if (loadFromString) {
+            FileStorage fs(fname, FileStorage::READ + FileStorage::MEMORY);
+            if (!fs.isOpened())
+                mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
+            success = obj->read(objname.empty() ?
+                fs.getFirstTopLevelNode() : fs[objname]);
+        }
+        else
+            success = obj->load(fname, objname);
         plhs[0] = MxArray(success);
     }
     else if (method == "save") {
-        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
         string objname;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
@@ -200,8 +212,19 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        string filename = rhs[2].toString();
-        obj->save(filename, objname);
+        string fname(rhs[2].toString());
+        if (nlhs > 0) {
+            // write to memory, and return string
+            FileStorage fs(fname, FileStorage::WRITE + FileStorage::MEMORY);
+            if (!fs.isOpened())
+                mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
+            obj->write(fs, objname.empty() ?
+                FileStorage::getDefaultObjectName(fname) : objname);
+            plhs[0] = MxArray(fs.releaseAndGetString());
+        }
+        else
+            // write to disk
+            obj->save(fname, objname);
     }
     else if (method == "compute") {
         nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);

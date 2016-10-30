@@ -50,30 +50,42 @@ classdef LDA < handle
             LDA_(this.id, 'delete');
         end
 
-        function load(this, filename)
+        function load(this, fname_or_str, varargin)
             %LOAD  Deserializes this object from a given filename.
             %
             %    lda.load(filename)
+            %    lda.load(str, 'FromString',true)
             %
             % ## Input
             % * __filename__ name of file to load
+            % * __str__ String containing serialized object you want to load.
+            %
+            % ## Options
+            % * __FromString__ Logical flag to indicate whether the input is
+            %       a filename or a string containing the serialized object.
+            %       default false
             %
             % See also: cv.LDA.save
             %
-            LDA_(this.id, 'load', filename);
+            LDA_(this.id, 'load', fname_or_str, varargin{:});
         end
 
-        function save(this, filename)
+        function varargout = save(this, filename)
             %SAVE  Serializes this object to a given filename.
             %
             %    lda.save(filename)
+            %    str = lda.save(filename)
             %
             % ## Input
             % * __filename__ name of file to save
             %
+            % ## Output
+            % * __str__ optional output. If requested, the object is persisted
+            %       to a string in memory instead of writing to disk.
+            %
             % See also: cv.LDA.load
             %
-            LDA_(this.id, 'save', filename);
+            [varargout{1:nargout}] = LDA_(this.id, 'save', filename);
         end
 
         function compute(this, src, labels)

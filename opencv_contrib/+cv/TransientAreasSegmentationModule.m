@@ -243,18 +243,24 @@ classdef TransientAreasSegmentationModule < handle
             str = TransientAreasSegmentationModule_(this.id, 'printSetup');
         end
 
-        function write(this, fs)
+        function varargout = write(this, fs)
             %WRITE  write xml/yml formated parameters information
             %
             %    obj.write(fs)
+            %    str = obj.write(fs)
             %
             % ## Input
             % * __fs__ the filename of the xml file that will be open and
             %       writen with formatted parameters information.
             %
+            % ## Output
+            % * __str__ optional output. If requested, the parameters are
+            %        persisted to a string in memory instead of writing to
+            %        disk.
+            %
             % See also: cv.TransientAreasSegmentationModule.setup
             %
-            TransientAreasSegmentationModule_(this.id, 'write', fs);
+            [varargout{1:nargout}] = TransientAreasSegmentationModule_(this.id, 'write', fs);
         end
 
         function run(this, inputToSegment)

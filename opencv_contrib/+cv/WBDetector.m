@@ -58,30 +58,43 @@ classdef WBDetector < handle
             WBDetector_(this.id, 'delete');
         end
 
-        function read(this, filename)
+        function read(this, fname_or_str, varargin)
             %READ  Read detector from file
             %
             %    detector.read(filename)
+            %    detector.read(str, 'FromString',true)
+            %    detector.read(..., 'OptionName', optionValue, ...)
             %
             % ## Input
             % * __filename__ Name of the file to read from.
+            % * __str__ String containing serialized detector you want to load.
+            %
+            % ## Options
+            % * __FromString__ Logical flag to indicate whether the input is
+            %       a filename or a string containing the serialized detector.
+            %       default false
             %
             % See also: cv.WBDetector.write
             %
-            WBDetector_(this.id, 'read', filename);
+            WBDetector_(this.id, 'read', fname_or_str, varargin{:});
         end
 
-        function write(this, filename)
+        function varargout = write(this, filename)
             %WRITE  Write detector to file
             %
             %    detector.write(filename)
+            %    str = detector.write(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
             %
+            % ## Output
+            % * __str__ optional output. If requested, the object is persisted
+            %       to a string in memory instead of writing to disk.
+            %
             % See also: cv.WBDetector.read
             %
-            WBDetector_(this.id, 'write', filename);
+            [varargout{1:nargout}] = WBDetector_(this.id, 'write', filename);
         end
 
         function train(this, pos_samples, neg_imgs)
