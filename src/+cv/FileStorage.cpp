@@ -185,38 +185,50 @@ void write(FileStorage& fs, const MxArray& x, bool root=false)
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    nargchk((nrhs>=2 && nlhs==0) || (nrhs==1 && nlhs<=1));
+    nargchk(nrhs>=1 && nlhs<=2);
 
-    string filename(MxArray(prhs[0]).toString());
-    if (nrhs==1) {
+    // Argument vector
+    vector<MxArray> rhs(prhs, prhs+nrhs);
+
+    string filename(rhs[0].toString());
+    if (nrhs == 1) {
         // Read
-        FileStorage fs(filename, FileStorage::READ);
-        FileNode node = fs.root();
+        FileStorage fs(filename, FileStorage::READ +
+            ((nlhs > 1) ? FileStorage::MEMORY : 0));
+        if (!fs.isOpened())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
         MxArray s = MxArray::Struct();
-        read(fs, s, node);
+        read(fs, s, fs.root());
         plhs[0] = s;
+        if (nlhs > 1)
+            plhs[1] = MxArray(true);  // dummy output
     }
     else {
         // Write
-        vector<MxArray> rhs(prhs+1,prhs+nrhs);
-        FileStorage fs(filename, FileStorage::WRITE);
-        if (rhs[0].isStruct() && rhs[0].numel()==1)
+        nargchk(nrhs>=2 && nlhs<=1);
+        FileStorage fs(filename, FileStorage::WRITE +
+            ((nlhs > 0) ? FileStorage::MEMORY : 0));
+        if (!fs.isOpened())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
+        if (nrhs==2 && rhs[1].isStruct() && rhs[1].numel()==1)
             // Write a scalar struct
-            write(fs, rhs[0], true);
+            write(fs, rhs[1], true);
         else {
             // Create a temporary scalar struct and write
             string nodeName(FileStorage::getDefaultObjectName(filename));
             MxArray s = MxArray::Struct();
-            if (rhs.size()==1)
-                s.set(nodeName, rhs[0].clone());
+            if (nrhs == 2)
+                s.set(nodeName, rhs[1].clone());
             else {
-                MxArray cell = MxArray::Cell(rhs.size());
-                for (int i=0; i<rhs.size(); ++i)
-                    cell.set(i, rhs[i].clone());
+                MxArray cell = MxArray::Cell(nrhs-1);
+                for (int i=0; i<nrhs-1; ++i)
+                    cell.set(i, rhs[i+1].clone());
                 s.set(nodeName, cell);
             }
             write(fs, s, true);
             s.destroy();
         }
+        if (nlhs > 0)
+            plhs[0] = MxArray(fs.releaseAndGetString());
     }
 }
