@@ -231,6 +231,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if (nlhs > 0) {
             // write to memory, and return string
             FileStorage fs(fname, FileStorage::WRITE + FileStorage::MEMORY);
+            if (!fs.isOpened())
+                mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
             fs << obj->getDefaultName() << "{";
             fs << "format" << 3;
             obj->write(fs);
