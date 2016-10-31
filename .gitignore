@@ -27,3 +27,4 @@ octave-workspace
 /test/mnist/
 /test/dnn/
 /test/cloning/
+/test/data01.xml
