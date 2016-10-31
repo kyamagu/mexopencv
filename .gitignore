@@ -19,6 +19,7 @@ octave-workspace
 /test/lbpcascade_frontalface.xml
 /test/haarcascade_frontalface_alt.xml
 /test/haarcascade_eye_tree_eyeglasses.xml
+/test/haarcascade_smile.xml
 /test/inriaperson.xml
 /test/model.yml.gz
 /test/ObjectnessTrainedModel/
