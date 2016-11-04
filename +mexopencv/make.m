@@ -255,8 +255,8 @@ function mex_flags = mex_options(opts)
     % compiler/linker flags
     [cv_cflags, cv_libs] = pkg_config(opts);
     [comp_flags, link_flags] = compilation_flags(opts);
-    mex_flags = sprintf('%s %s %s %s %s',...
-        comp_flags, link_flags, include_dirs(opts), cv_cflags, cv_libs);
+    mex_flags = sprintf('%s %s %s %s %s %s',...
+        comp_flags, link_flags, include_dirs(opts), cv_cflags, cv_libs, opts.extra);
 
     % large-array-handling API for 64-bit platforms
     if ~mexopencv.isOctave()
