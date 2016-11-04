@@ -279,7 +279,7 @@ function mex_flags = mex_options(opts)
         if ~mexopencv.isOctave()
             mex_flags = ['-O ' mex_flags];
         else
-            mex_flags = ['-O2 ' mex_flags];
+            mex_flags = ['-O2 -s ' mex_flags];
         end
     end
 end
