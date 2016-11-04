@@ -151,6 +151,19 @@ Windows
 Refer to [the wiki][16] for detailed instructions on how to compile OpenCV
 on Windows, and build mexopencv against it.
 
+In a nutshell, execute the following in MATLAB to compile mexopencv:
+
+    >> addpath('C:\path\to\mexopencv')
+    >> mexopencv.make('opencv_path','C:\OpenCV\build')
+
+Replace the path above with the location where OpenCV binaries are installed
+(i.e location specified in `CMAKE_INSTALL_PREFIX` while building OpenCV).
+
+Contrib modules are enabled as:
+
+    >> addpath('C:\path\to\mexopencv\opencv_contrib')
+    >> mexopencv.make(..., 'opencv_contrib',true)
+
 Usage
 =====
 

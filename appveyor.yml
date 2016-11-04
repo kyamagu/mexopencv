@@ -101,6 +101,7 @@ before_build:
         try, pkg load statistics, end
         try, pkg load image, end
         warning('off', 'Octave:GraphicsMagic-Quantum-Depth');
+        warning('off', 'Octave:shadowed-function');
         cd(getenv('MCV_ROOT'));
         addpath(getenv('MCV_ROOT'));
         addpath(fullfile(getenv('MCV_ROOT'),'+cv','private'));
