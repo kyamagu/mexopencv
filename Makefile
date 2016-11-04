@@ -160,8 +160,8 @@ opencv_contrib/+cv/%.$(MEXEXT) \
 opencv_contrib/+cv/private/%.$(MEXEXT) \
 : %.cpp $(TARGETS0)
 ifdef WITH_OCTAVE
-	$(MEX) $(CFLAGS) -o ${@:.$(MEXEXT)=} $< $(LDFLAGS)
-	$(RM) ./$(notdir $(<:.cpp=.$(OBJEXT)))
+	$(MEX) $(CFLAGS) -o ${@:.$(MEXEXT)=} $< $(LDFLAGS) && \
+        $(RM) ./$(notdir $(<:.cpp=.$(OBJEXT)))
 else
 	$(MEX) $(CFLAGS) -output ${@:.$(MEXEXT)=} $< $(LDFLAGS)
 endif
