@@ -125,7 +125,6 @@ void write(FileStorage& fs, const MxArray& x, bool root=false)
     mxClassID classid = x.classID();
     switch (classid) {
         case mxUNKNOWN_CLASS:
-        case mxVOID_CLASS:
         case mxFUNCTION_CLASS:
             mexErrMsgIdAndTxt("mexopencv:error", "Invalid MxArray");
             break;
