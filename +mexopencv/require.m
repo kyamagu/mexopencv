@@ -53,19 +53,22 @@ end
 
 function toolboxes = get_toolboxes()
     % List of toolboxes/packages we recognize (both MATLAB and Octave)
-    %   id         m_version  m_license                  o_version    o_license
-    % -------------------------------------------------------------------------
+    %   id         m_version  m_license                  o_version        o_license
+    % -----------------------------------------------------------------------------
     toolboxes = {
-        'matlab'   'matlab'   'matlab'                   ''           ''
-        'octave'   ''         ''                         'octave'     'octave'
-        'curvefit' 'curvefit' 'curve_fitting_toolbox'    ''           ''
-        'images'   'images'   'image_toolbox'            'image'      'image'
-        'nnet'     'nnet'     'neural_network_toolbox'   ''           ''
-        'optim'    'optim'    'optimization_toolbox'     'optim'      'optim'
-        'signal'   'signal'   'signal_toolbox'           'signal'     'signal'
-        'stats'    'stats'    'statistics_toolbox'       'statistics' 'statistics'
-        'symbolic' 'symbolic' 'symbolic_toolbox'         ''           ''
-        'vision'   'vision'   'video_and_image_blockset' ''           ''
+        'matlab'   'matlab'   'matlab'                   ''               ''
+        'octave'   ''         ''                         'octave'         'octave'
+        'comm'     'comm'     'communication_toolbox'    'communications' 'communications'
+        'control'  'control'  'control_toolbox'          'control'        'control'
+        'curvefit' 'curvefit' 'curve_fitting_toolbox'    ''               ''
+        'finance'  'finance'  'financial_toolbox'        'financial'      'financial'
+        'images'   'images'   'image_toolbox'            'image'          'image'
+        'nnet'     'nnet'     'neural_network_toolbox'   ''               ''
+        'optim'    'optim'    'optimization_toolbox'     'optim'          'optim'
+        'signal'   'signal'   'signal_toolbox'           'signal'         'signal'
+        'stats'    'stats'    'statistics_toolbox'       'statistics'     'statistics'
+        'symbolic' 'symbolic' 'symbolic_toolbox'         'symbolic'       'symbolic'
+        'vision'   'vision'   'video_and_image_blockset' ''               ''
     };
 end
 
