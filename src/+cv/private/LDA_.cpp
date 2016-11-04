@@ -43,7 +43,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             if (key=="NumComponents")
                 num_components = rhs[i+1].toInt();
             else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         obj_[++last_id] = makePtr<LDA>(num_components);
         plhs[0] = MxArray(last_id);
@@ -78,12 +79,40 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         obj_.erase(id);
     }
     else if (method == "load") {
-        nargchk(nrhs==3 && nlhs==0);
-        obj->load(rhs[2].toString());
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
+        bool loadFromString = false;
+        for (int i=3; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key == "FromString")
+                loadFromString = rhs[i+1].toBool();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
+        }
+        string fname(rhs[2].toString());
+        if (loadFromString) {
+            FileStorage fs(fname, FileStorage::READ + FileStorage::MEMORY);
+            if (!fs.isOpened())
+                mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
+            obj->load(fs);
+        }
+        else
+            obj->load(fname);
     }
     else if (method == "save") {
-        nargchk(nrhs==3 && nlhs==0);
-        obj->save(rhs[2].toString());
+        nargchk(nrhs==3 && nlhs<=1);
+        string fname(rhs[2].toString());
+        if (nlhs > 0) {
+            // write to memory, and return string
+            FileStorage fs(fname, FileStorage::WRITE + FileStorage::MEMORY);
+            if (!fs.isOpened())
+                mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
+            obj->save(fs);
+            plhs[0] = MxArray(fs.releaseAndGetString());
+        }
+        else
+            // write to disk
+            obj->save(fname);
     }
     else if (method == "compute") {
         nargchk(nrhs==4 && nlhs==0);
@@ -115,8 +144,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (prop == "eigenvectors")
             plhs[0] = MxArray(obj->eigenvectors());
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unrecognized operation %s", method.c_str());
 }

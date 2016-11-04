@@ -231,7 +231,7 @@ classdef SuperpixelLSC < handle
             % The function return the boundaries of the superpixel
             % segmentation.
             %
-            % See also: cv.SuperpixelLSC.iterate
+            % See also: cv.SuperpixelLSC.iterate, boundarymask
             %
             img = SuperpixelLSC_(this.id, 'getLabelContourMask', varargin{:});
             img = (img == -1);  % fg:int8(-1), bg:int8(1)

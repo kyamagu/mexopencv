@@ -24,5 +24,5 @@
 % Keep in mind that all input data should be of float type in order for
 % this function to work (`single` or `double`).
 %
-% See also: cv.reprojectImageTo3D
+% See also: cv.reprojectImageTo3D, triangulate
 %

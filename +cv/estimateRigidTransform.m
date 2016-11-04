@@ -41,5 +41,6 @@
 %
 % when `FullAffine=false`.
 %
-% See also: cv.getAffineTransform, cv.getPerspectiveTransform, cv.findHomography
+% See also: cv.getAffineTransform, cv.getPerspectiveTransform,
+%  cv.findHomography, imregtform
 %

@@ -43,7 +43,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             m1type = (rhs[i+1].isChar()) ?
                 M1Type[rhs[i+1].toString()] : rhs[i+1].toInt();
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
 
     // Process

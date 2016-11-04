@@ -70,7 +70,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             if (key == "FlipChannels")
                 flip = rhs[i+1].toBool();
             else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         Mat frame = obj->nextFrame();
         if (flip && (frame.channels() == 3 || frame.channels() == 4)) {

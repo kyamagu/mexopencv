@@ -21,5 +21,5 @@
 % that is, `min(lambda_1,lambda_2)` in terms of the formulae in the
 % cv.cornerEigenValsAndVecs description.
 %
-% See also: cv.cornerEigenValsAndVecs, detectMinEigenFeatures
+% See also: cv.cornerEigenValsAndVecs, detectMinEigenFeatures, cornerPoints
 %

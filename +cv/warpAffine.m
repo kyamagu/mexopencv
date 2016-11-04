@@ -51,5 +51,5 @@
 % instead of `M`.
 %
 % See also: cv.warpPerspective, cv.remap, cv.resize, cv.getRectSubPix,
-%  cv.transform, imtransform, imwarp
+%  cv.transform, imtransform, imwarp, imtranslate, imrotate
 %

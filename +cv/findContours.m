@@ -78,5 +78,5 @@
 % > digital curves". Pattern Analysis and Machine Intelligence, IEEE
 % > Transactions on, 11(8):859-872, 1989.
 %
-% See also: cv.drawContours, bwboundaries, bwconncomp
+% See also: cv.drawContours, bwboundaries, bwconncomp, bwtraceboundary
 %

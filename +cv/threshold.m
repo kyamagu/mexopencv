@@ -39,5 +39,5 @@
 % methods are implemented only for 8-bit images.
 %
 % See also: cv.adaptiveThreshold, cv.findContours, cv.compare,
-%  im2bw, graythresh, multithresh
+%  im2bw, graythresh, multithresh, imbinarize, otsuthresh, grayslice
 %

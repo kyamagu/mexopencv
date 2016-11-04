@@ -39,7 +39,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (key=="Value")
             value = rhs[i+1].toScalar();
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     borderType |= (isolated ? cv::BORDER_ISOLATED : 0);
 

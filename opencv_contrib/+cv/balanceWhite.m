@@ -22,5 +22,5 @@
 % The function tries to map image's white color to perceptual white (this can
 % be violated due to specific illumination or camera settings).
 %
-% See also: cv.cvtColor, cv.equalizeHist
+% See also: cv.cvtColor, cv.equalizeHist, imadjust
 %

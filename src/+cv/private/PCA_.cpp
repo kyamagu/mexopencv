@@ -58,21 +58,27 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         bool loadFromString = false;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="FromString")
+            if (key == "FromString")
                 loadFromString = rhs[i+1].toBool();
             else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         FileStorage fs(rhs[2].toString(), FileStorage::READ +
             (loadFromString ? FileStorage::MEMORY : 0));
         if (!fs.isOpened())
-            mexErrMsgIdAndTxt("mexopencv:error","Failed to open file");
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
         obj->read(fs.root());
     }
     else if (method == "write") {
-        nargchk(nrhs==3 && nlhs==0);
-        FileStorage fs(rhs[2].toString(), FileStorage::WRITE);
+        nargchk(nrhs==3 && nlhs<=1);
+        FileStorage fs(rhs[2].toString(), FileStorage::WRITE +
+            ((nlhs > 0) ? FileStorage::MEMORY : 0));
+        if (!fs.isOpened())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
         obj->write(fs);
+        if (nlhs > 0)
+            plhs[0] = MxArray(fs.releaseAndGetString());
     }
     else if (method == "compute") {
         nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
@@ -94,7 +100,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 use_second_variant = true;
             }
             else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         Mat data(rhs[2].toMat());
         if (use_second_variant)
@@ -120,7 +127,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (prop == "mean")
             plhs[0] = MxArray(obj->mean);
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
     }
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
@@ -132,8 +140,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (prop == "mean")
             obj->mean = rhs[3].toMat();
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unrecognized operation %s", method.c_str());
 }

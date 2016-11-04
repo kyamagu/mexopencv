@@ -109,7 +109,7 @@ classdef PCA < handle
             PCA_(this.id, 'delete');
         end
 
-        function read(this, filename, varargin)
+        function read(this, fname_or_str, varargin)
             %READ  Read PCA objects from file
             %
             %    obj.read(filename)
@@ -130,23 +130,28 @@ classdef PCA < handle
             %
             % See also: cv.PCA.write
             %
-            PCA_(this.id, 'read', filename, varargin{:});
+            PCA_(this.id, 'read', fname_or_str, varargin{:});
         end
 
-        function write(this, filename)
+        function varargout = write(this, filename)
             %WRITE  Write PCA objects to file
             %
             %    obj.write(filename)
+            %    str = obj.write(filename)
             %
             % ## Input
             % * __filename__ Name of the file to write to.
+            %
+            % ## Output
+            % * __str__ optional output. If requested, the object is persisted
+            %       to a string in memory instead of writing to disk.
             %
             % Writes `eigenvalues`, `eigenvectors` and `mean` to the specified
             % file.
             %
             % See also: cv.PCA.read
             %
-            PCA_(this.id, 'write', filename);
+            [varargout{1:nargout}] = PCA_(this.id, 'write', filename);
         end
 
         function compute(this, data, varargin)

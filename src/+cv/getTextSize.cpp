@@ -41,7 +41,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             thickness = (rhs[i+1].isChar()) ?
                 ThicknessType[rhs[i+1].toString()] : rhs[i+1].toInt();
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
     fontFace |= fontStyle;
 

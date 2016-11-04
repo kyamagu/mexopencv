@@ -63,7 +63,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             else if (key=="FromString")
                 loadFromString = rhs[i+1].toBool();
             else
-                mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized option %s", key.c_str());
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         /*
         obj_[id] = (loadFromString ?
@@ -74,9 +75,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         // HACK: workaround for missing GeneralizedHoughGuil::create()
         FileStorage fs(rhs[2].toString(), FileStorage::READ +
             (loadFromString ? FileStorage::MEMORY : 0));
+        if (!fs.isOpened())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
         obj->read(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
-        if (obj.empty())
-            mexErrMsgIdAndTxt("mexopencv:error", "Failed to load algorithm");
         //*/
     }
     else if (method == "save") {
@@ -118,7 +119,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             if (key=="Center")
                 templCenter = rhs[i+1].toPoint();
             else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         if (edges_variant) {
             Mat edges(rhs[2].toMat(CV_8U)),
@@ -169,7 +171,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (prop == "Xi")
             plhs[0] = MxArray(obj->getXi());
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property %s", prop.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
     }
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
@@ -209,8 +212,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (prop == "Xi")
             obj->setXi(rhs[3].toDouble());
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Unrecognized property %s", prop.c_str());
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unrecognized operation %s", method.c_str());
 }

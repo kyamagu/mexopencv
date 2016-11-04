@@ -72,5 +72,6 @@
 % channel. That is, the function can take a color template and a color image.
 % The result will still be a single-channel image, which is easier to analyze.
 %
-% See also: normxcorr2, xcorr2, conv2, filter2, vision.TemplateMatcher
+% See also: normxcorr2, xcorr2, conv2, filter2, vision.TemplateMatcher,
+%  vision.Crosscorrelator
 %

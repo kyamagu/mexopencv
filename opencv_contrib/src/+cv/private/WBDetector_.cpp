@@ -51,17 +51,32 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         obj_.erase(id);
     }
     else if (method == "read") {
-        nargchk(nrhs==3 && nlhs==0);
-        FileStorage fs(rhs[2].toString(), FileStorage::READ);
-        obj->read(fs.getFirstTopLevelNode());
-        if (obj.empty())
-            mexErrMsgIdAndTxt("mexopencv:error", "Failed to read detector");
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
+        bool loadFromString = false;
+        for (int i=3; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key == "FromString")
+                loadFromString = rhs[i+1].toBool();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
+        }
+        FileStorage fs(rhs[2].toString(), FileStorage::READ +
+            (loadFromString ? FileStorage::MEMORY : 0));
+        if (!fs.isOpened())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
+        obj->read(fs.getFirstTopLevelNode());  //TODO: fs.root() ?
     }
     else if (method == "write") {
-        nargchk(nrhs==3 && nlhs==0);
-        FileStorage fs(rhs[2].toString(), FileStorage::WRITE);
+        nargchk(nrhs==3 && nlhs<=1);
+        FileStorage fs(rhs[2].toString(), FileStorage::WRITE +
+            ((nlhs > 0) ? FileStorage::MEMORY : 0));
+        if (!fs.isOpened())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
         fs << "waldboost";
         obj->write(fs);
+        if (nlhs > 0)
+            plhs[0] = MxArray(fs.releaseAndGetString());
     }
     else if (method == "train") {
         nargchk(nrhs==4 && nlhs==0);

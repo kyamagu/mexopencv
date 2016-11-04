@@ -64,5 +64,5 @@
 % > 26(6):756-770, 2004.
 %
 % See also: cv.findEssentialMat, cv.decomposeEssentialMat,
-%  cv.triangulatePoints
+%  cv.triangulatePoints, relativeCameraPose
 %

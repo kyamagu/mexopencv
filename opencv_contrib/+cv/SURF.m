@@ -9,7 +9,7 @@ classdef SURF < handle
     % > http://www.vision.ee.ethz.ch/~surf/eccv06.pdf
     %
     % See also: cv.FeatureDetector, cv.DescriptorExtractor,
-    %  detectSURFFeatures, extractFeatures
+    %  detectSURFFeatures, extractFeatures, SURFPoints
     %
 
     properties (SetAccess = private)

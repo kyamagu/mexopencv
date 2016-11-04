@@ -67,5 +67,5 @@
 % grouping and ordering algorithm fails.
 %
 % See also: cv.drawChessboardCorners, cv.calibrateCamera,
-%  detectCheckerboardPoints
+%  detectCheckerboardPoints, generateCheckerboardPoints
 %

@@ -48,5 +48,5 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error",
-            "Unrecognized method %s", method.c_str());
+            "Unrecognized operation %s", method.c_str());
 }

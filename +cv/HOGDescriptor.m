@@ -161,14 +161,17 @@ classdef HOGDescriptor < handle
             HOGDescriptor_(this.id, 'delete');
         end
 
-        function status = load(this, filename, varargin)
-            %LOAD  Loads a HOG descriptor config from a file
+        function status = load(this, fname_or_str, varargin)
+            %LOAD  Loads a HOG descriptor config from a file or a string
             %
             %    status = hog.load(filename)
-            %    status = obj.load(filename, 'OptionName',optionValue, ...)
+            %    status = hog.load(str, 'FromString',true)
+            %    status = hog.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __filename__ HOG descriptor config filename (XML or YAML).
+            % * __str__ String containing the serialized HOG descriptor you
+            %       want to load.
             %
             % ## Output
             % * __status__ a logical value indicating success of load.
@@ -176,20 +179,28 @@ classdef HOGDescriptor < handle
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
             %       the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is
+            %       a filename or a string containing the serialized model.
+            %       default false
             %
             % See also: cv.HOGDescriptor.save, cv.HOGDescriptor.readALTModel
             %
-            status = HOGDescriptor_(this.id, 'load', filename, varargin{:});
+            status = HOGDescriptor_(this.id, 'load', fname_or_str, varargin{:});
         end
 
-        function save(this, filename, varargin)
+        function varargout = save(this, filename, varargin)
             %SAVE  Saves a HOG descriptor config to a file
             %
             %     hog.save(filename)
             %     hog.save(filename, 'OptionName',optionValue, ...)
+            %     str = hog.save(...)
             %
             % ## Input
             % * __filename__ HOG descriptor config filename (XML or YAML).
+            %
+            % ## Output
+            % * __str__ optional output. If requested, the HOG descriptor is
+            %       persisted to a string in memory instead of writing to disk.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to write (if empty,
@@ -197,7 +208,7 @@ classdef HOGDescriptor < handle
             %
             % See also: cv.HOGDescriptor.load
             %
-            HOGDescriptor_(this.id, 'save', filename, varargin{:});
+            [varargout{1:nargout}] = HOGDescriptor_(this.id, 'save', filename, varargin{:});
         end
 
         function readALTModel(this, modelfile)

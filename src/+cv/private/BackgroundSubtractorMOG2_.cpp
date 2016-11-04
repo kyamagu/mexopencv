@@ -50,7 +50,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             else if (key=="DetectShadows")
                 detectShadows = rhs[i+1].toBool();
             else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         obj_[++last_id] = createBackgroundSubtractorMOG2(
             history, varThreshold, detectShadows);
@@ -83,7 +84,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             else if (key=="FromString")
                 loadFromString = rhs[i+1].toBool();
             else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         /*
         obj_[id] = (loadFromString ?
@@ -94,9 +96,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         // HACK: workaround for missing BackgroundSubtractorMOG2::create()
         FileStorage fs(rhs[2].toString(), FileStorage::READ +
             (loadFromString ? FileStorage::MEMORY : 0));
+        if (!fs.isOpened())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
         obj->read(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
-        if (obj.empty())
-            mexErrMsgIdAndTxt("mexopencv:error", "Failed to load algorithm");
         //*/
     }
     else if (method == "empty") {
@@ -115,7 +117,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             if (key=="LearningRate")
                 learningRate = rhs[i+1].toDouble();
             else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         Mat image(rhs[2].toMat()), fgmask;
         obj->apply(image, fgmask, learningRate);
@@ -155,7 +158,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (prop == "VarThresholdGen")
             plhs[0] = MxArray(obj->getVarThresholdGen());
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized property");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
     }
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
@@ -185,8 +189,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (prop == "VarThresholdGen")
             obj->setVarThresholdGen(rhs[3].toDouble());
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized property");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unrecognized operation %s", method.c_str());
 }

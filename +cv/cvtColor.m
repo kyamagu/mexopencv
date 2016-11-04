@@ -331,5 +331,5 @@
 %
 % See also: rgb2gray, rgb2hsv, rgb2lab, rgb2ntsc, rgb2xyz, rgb2ycbcr,
 %  hsv2rgb, lab2rgb, lab2xyz, xyz2lab, xyz2rgb, ycbcr2rgb, ntsc2rgb,
-%  makecform, applycform, cv.demosaicing
+%  makecform, applycform, cv.demosaicing, imapplymatrix
 %

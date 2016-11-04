@@ -134,7 +134,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             else if (key=="FromString")
                 loadFromString = rhs[i+1].toBool();
             else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         /*
         obj_[id] = (loadFromString ?
@@ -145,9 +146,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         // HACK: workaround because StereoSGBM::create() doesnt accept zero arguments
         FileStorage fs(rhs[2].toString(), FileStorage::READ +
             (loadFromString ? FileStorage::MEMORY : 0));
+        if (!fs.isOpened())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
         obj->read(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
-        if (obj.empty())
-            mexErrMsgIdAndTxt("mexopencv:error", "Failed to load algorithm");
         //*/
     }
     else if (method == "empty") {

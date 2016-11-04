@@ -22,5 +22,6 @@
 %
 %    K = ones(KSize) / prod(KSize)
 %
-% See also: cv.boxFilter, cv.bilateralFilter, cv.GaussianBlur, cv.medianBlur
+% See also: cv.boxFilter, cv.bilateralFilter, cv.GaussianBlur, cv.medianBlur,
+%  imfilter, fspecial
 %

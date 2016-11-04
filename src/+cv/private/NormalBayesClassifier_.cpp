@@ -78,6 +78,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if (nlhs > 0) {
             // write to memory, and return string
             FileStorage fs(fname, FileStorage::WRITE + FileStorage::MEMORY);
+            if (!fs.isOpened())
+                mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
             fs << obj->getDefaultName() << "{";
             fs << "format" << 3;
             obj->write(fs);
@@ -225,5 +227,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             plhs[2] = MxArray(f);
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unrecognized operation %s", method.c_str());
 }

@@ -54,7 +54,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (key=="Gaussian")
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::OPTFLOW_FARNEBACK_GAUSSIAN);
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
 
     // Process

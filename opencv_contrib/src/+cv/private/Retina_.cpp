@@ -293,9 +293,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         // HACK: workaround for missing Retina::create()
         FileStorage fs(rhs[2].toString(), FileStorage::READ +
             (loadFromString ? FileStorage::MEMORY : 0));
+        if (!fs.isOpened())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
         obj->read(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
-        if (obj.empty())
-            mexErrMsgIdAndTxt("mexopencv:error", "Failed to load algorithm");
         //*/
     }
     else if (method == "save") {
@@ -393,8 +393,17 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         plhs[0] = MxArray(obj->printSetup());
     }
     else if (method == "write") {
-        nargchk(nrhs==3 && nlhs==0);
-        obj->write(rhs[2].toString());
+        nargchk(nrhs==3 && nlhs<=1);
+        string fname(rhs[2].toString());
+        if (nlhs > 0) {
+            FileStorage fs(fname, FileStorage::WRITE + FileStorage::MEMORY);
+            if (!fs.isOpened())
+                mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
+            obj->write(fs);
+            plhs[0] = MxArray(fs.releaseAndGetString());
+        }
+        else
+            obj->write(fname);
     }
     else if (method == "run") {
         nargchk(nrhs==3 && nlhs==0);

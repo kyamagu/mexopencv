@@ -55,7 +55,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 flags = KmeansInitMap[rhs[i+1].toString()];
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
-                    "Unknown option %s",key.c_str());
+                    "Unrecognized option %s",key.c_str());
         }
         obj_[++last_id] = makePtr<BOWKMeansTrainer>(
             clusterCount, criteria, attempts, flags);

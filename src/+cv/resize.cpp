@@ -37,7 +37,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if (key=="Interpolation")
             interpolation = InterpType[rhs[i+1].toString()];
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
     }
 
     // Decide size/scale arguments

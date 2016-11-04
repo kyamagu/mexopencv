@@ -269,7 +269,7 @@ classdef SuperpixelSEEDS < handle
             %
             % <<http://docs.opencv.org/3.1.0/superpixels_demo.png>>
             %
-            % See also: cv.SuperpixelSEEDS.iterate
+            % See also: cv.SuperpixelSEEDS.iterate, boundarymask
             %
             img = SuperpixelSEEDS_(this.id, 'getLabelContourMask', varargin{:});
             img = (img == 255);  % fg:uint8(255), bg:uint8(0)

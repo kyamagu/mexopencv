@@ -144,5 +144,7 @@
 % > Jean-Yves Bouguet. "Camera calibration toolbox for matlab" [eb/ol], 2004.
 %
 % See also: cv.findChessboardCorners, cv.solvePnP, cv.initCameraMatrix2D,
-%  cv.stereoCalibrate, cv.undistort, estimateCameraParameters, extrinsics
+%  cv.stereoCalibrate, cv.undistort, estimateCameraParameters,
+%  cameraParameters, extrinsics, plotCamera, showExtrinsics,
+%  showReprojectionErrors
 %

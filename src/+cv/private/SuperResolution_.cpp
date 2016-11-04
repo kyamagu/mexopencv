@@ -404,9 +404,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         // HACK: workaround for missing SuperResolution::create()
         FileStorage fs(rhs[2].toString(), FileStorage::READ +
             (loadFromString ? FileStorage::MEMORY : 0));
+        if (!fs.isOpened())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
         obj->read(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
-        if (obj.empty())
-            mexErrMsgIdAndTxt("mexopencv:error", "Failed to load algorithm");
         //*/
     }
     else if (method == "save") {
@@ -433,7 +433,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             if (key == "FlipChannels")
                 flip = rhs[i+1].toBool();
             else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         Mat frame;
         obj->nextFrame(frame);

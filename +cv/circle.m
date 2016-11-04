@@ -25,5 +25,5 @@
 % The function cv.circle draws a simple or filled circle with a given center
 % and radius.
 %
-% See also: cv.line, cv.ellipse, cv.rectangle
+% See also: cv.line, cv.ellipse, cv.rectangle, viscircles
 %

@@ -125,5 +125,5 @@
 % cameras. The function returns the final value of the re-projection error.
 %
 % See also: cv.calibrateCamera, cv.solvePnP, cv.stereoRectify,
-%  estimateCameraParameters, extrinsics
+%  estimateCameraParameters, stereoParameters, extrinsics
 %

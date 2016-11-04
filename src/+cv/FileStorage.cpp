@@ -29,73 +29,86 @@ bool isa(const FileNode& _node, const string& _type_name)
  */
 void read(FileStorage& fs, MxArray& x, const FileNode& node)
 {
-    if (node.type()==FileNode::SEQ) {
-        int n = node.size();
+    if (node.type() == FileNode::SEQ) {
+        size_t n = node.size();
         vector<MxArray> v(n, MxArray(static_cast<mxArray*>(NULL)));
-        for (int i=0; i<n; ++i) {
+        for (size_t i=0; i<n; ++i) {
             const FileNode& elem = node[i];
-            int type = elem.type();
-            if (type==FileNode::INT)
-                v[i] = MxArray(static_cast<int>(elem));
-            else if (type==FileNode::REAL)
-                v[i] = MxArray(static_cast<double>(elem));
-            else if (type==FileNode::STR)
-                v[i] = MxArray(static_cast<string>(elem));
-            else if (type==FileNode::SEQ) {
-                MxArray y(static_cast<mxArray*>(NULL));
-                read(fs, y, elem);
-                v[i] = y;
-            }
-            else if (type==FileNode::MAP) {
-                if (isa(elem,"opencv-matrix")) {
-                    Mat m;
-                    elem >> m;
-                    v[i] = MxArray(m);
-                }
-                else if (isa(elem,"opencv-nd-matrix")) {
-                    MatND m;
-                    elem >> m;
-                    v[i] = MxArray(m);
-                }
-                else {
-                    MxArray y = MxArray::Struct();
+            switch (elem.type()) {
+                case FileNode::INT:
+                    v[i] = MxArray(static_cast<int>(elem));
+                    break;
+                case FileNode::REAL:
+                    v[i] = MxArray(static_cast<double>(elem));
+                    break;
+                case FileNode::STR:
+                    v[i] = MxArray(static_cast<string>(elem));
+                    break;
+                case FileNode::SEQ: {
+                    MxArray y(static_cast<mxArray*>(NULL));
                     read(fs, y, elem);
                     v[i] = y;
+                    break;
+                }
+                case FileNode::MAP: {
+                    if (isa(elem, "opencv-matrix")) {
+                        Mat m;
+                        elem >> m;
+                        v[i] = MxArray(m);
+                    }
+                    else if (isa(elem, "opencv-nd-matrix")) {
+                        MatND m;
+                        elem >> m;
+                        v[i] = MxArray(m);
+                    }
+                    else {
+                        MxArray y = MxArray::Struct();
+                        read(fs, y, elem);
+                        v[i] = y;
+                    }
+                    break;
                 }
             }
         }
         x = MxArray(v);
     }
-    else if (node.type()==FileNode::MAP) {
+    else if (node.type() == FileNode::MAP) {
         for (FileNodeIterator it=node.begin(); it!=node.end(); ++it) {
             const FileNode& elem = (*it);
-            int type = elem.type();
-            if (type==FileNode::INT)
-                x.set(elem.name(), static_cast<int>(elem));
-            else if (type==FileNode::REAL)
-                x.set(elem.name(), static_cast<double>(elem));
-            else if (type==FileNode::STR)
-                x.set(elem.name(), static_cast<string>(elem));
-            else if (type==FileNode::SEQ) {
-                MxArray y(static_cast<mxArray*>(NULL));
-                read(fs, y, elem);
-                x.set(elem.name(), y);
-            }
-            else if (type==FileNode::MAP) {
-                if (isa(elem,"opencv-matrix")) {
-                    Mat m;
-                    elem >> m;
-                    x.set(elem.name(), m);
-                }
-                else if (isa(elem,"opencv-nd-matrix")) {
-                    MatND m;
-                    elem >> m;
-                    x.set(elem.name(), m);
-                }
-                else {
-                    MxArray y = MxArray::Struct();
+            string name(elem.name());
+            switch (elem.type()) {
+                case FileNode::INT:
+                    x.set(name, static_cast<int>(elem));
+                    break;
+                case FileNode::REAL:
+                    x.set(name, static_cast<double>(elem));
+                    break;
+                case FileNode::STR:
+                    x.set(name, static_cast<string>(elem));
+                    break;
+                case FileNode::SEQ: {
+                    MxArray y(static_cast<mxArray*>(NULL));
                     read(fs, y, elem);
-                    x.set(elem.name(), y);
+                    x.set(name, y);
+                    break;
+                }
+                case FileNode::MAP: {
+                    if (isa(elem, "opencv-matrix")) {
+                        Mat m;
+                        elem >> m;
+                        x.set(name, m);
+                    }
+                    else if (isa(elem, "opencv-nd-matrix")) {
+                        MatND m;
+                        elem >> m;
+                        x.set(name, m);
+                    }
+                    else {
+                        MxArray y = MxArray::Struct();
+                        read(fs, y, elem);
+                        x.set(name, y);
+                    }
+                    break;
                 }
             }
         }
@@ -110,47 +123,56 @@ void read(FileStorage& fs, MxArray& x, const FileNode& node)
 void write(FileStorage& fs, const MxArray& x, bool root=false)
 {
     mxClassID classid = x.classID();
-    if (classid == mxFUNCTION_CLASS || classid==mxUNKNOWN_CLASS)
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid MxArray");
-    if (classid == mxSTRUCT_CLASS) {
-        int n = x.numel();
-        vector<string> fields(x.fieldnames());
-        if (n>1) fs << "[";
-        for (int i=0; i<n; ++i) {
-            if (!root) fs << "{";
-            for (vector<string>::iterator it=fields.begin(); it<fields.end(); ++it) {
-                fs << *it;
-                write(fs, MxArray(x.at(*it,i)));
+    switch (classid) {
+        case mxUNKNOWN_CLASS:
+        case mxFUNCTION_CLASS:
+            mexErrMsgIdAndTxt("mexopencv:error", "Invalid MxArray");
+            break;
+        case mxSTRUCT_CLASS: {
+            mwSize n = x.numel();
+            vector<string> fields(x.fieldnames());
+            if (n>1) fs << "[";
+            for (mwIndex i=0; i<n; ++i) {
+                if (!root) fs << "{";
+                for (vector<string>::const_iterator it=fields.begin(); it!=fields.end(); ++it) {
+                    fs << *it;
+                    write(fs, MxArray(x.at(*it,i)));
+                }
+                if (!root) fs << "}";
             }
-            if (!root) fs << "}";
+            if (n>1) fs << "]";
+            break;
         }
-        if (n>1) fs << "]";
-    }
-    else if (classid == mxCELL_CLASS) {
-        vector<MxArray> array(x.toVector<MxArray>());
-        fs << "[";
-        for (vector<MxArray>::iterator it=array.begin(); it<array.end(); ++it)
-            write(fs,*it);
-        fs << "]";
-    }
-    else if (classid == mxCHAR_CLASS) {
-        string s(x.toString());
-        fs << s;
-    }
-    else {
-        if (x.numel()==1) {
-            if (x.isDouble() || x.isSingle())
-                fs << x.toDouble();
+        case mxCELL_CLASS: {
+            vector<MxArray> arr(x.toVector<MxArray>());
+            fs << "[";
+            for (vector<MxArray>::const_iterator it=arr.begin(); it!=arr.end(); ++it)
+                write(fs, *it);
+            fs << "]";
+            break;
+        }
+        case mxCHAR_CLASS:
+            fs << x.toString();
+            break;
+        default:  // x.isNumeric() or x.isLogical()
+            if (x.numel()==1) {
+                switch (classid) {
+                    case mxDOUBLE_CLASS:
+                        fs << x.toDouble();
+                        break;
+                    case mxSINGLE_CLASS:
+                        fs << x.toFloat();
+                        break;
+                    default:
+                        fs << x.toInt();
+                        break;
+                }
+            }
             else
-                fs << x.toInt();
-        }
-        else {
-            Mat y(x.toMat());
-            fs << y;
-        }
+                fs << x.toMat();
     }
 }
-}
+}  // anonymous namespace
 
 /**
  * Main entry called from Matlab
@@ -159,43 +181,53 @@ void write(FileStorage& fs, const MxArray& x, bool root=false)
  * @param nrhs number of right-hand-side arguments
  * @param prhs pointers to mxArrays in the right-hand-side
  */
-void mexFunction( int nlhs, mxArray *plhs[],
-                  int nrhs, const mxArray *prhs[] )
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
-    // Check arguments
-    if (!(nrhs>=2&&nlhs==0)&&!(nrhs==1&&nlhs<=1))
-        mexErrMsgIdAndTxt("mexopencv:error","Wrong number of arguments");
+    // Check the number of arguments
+    nargchk(nrhs>=1 && nlhs<=2);
 
-    string filename(MxArray(prhs[0]).toString());
-    if (nrhs==1) {
+    // Argument vector
+    vector<MxArray> rhs(prhs, prhs+nrhs);
+
+    string filename(rhs[0].toString());
+    if (nrhs == 1) {
         // Read
-        FileStorage fs(filename, FileStorage::READ);
-        FileNode node = fs.root();
+        FileStorage fs(filename, FileStorage::READ +
+            ((nlhs > 1) ? FileStorage::MEMORY : 0));
+        if (!fs.isOpened())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
         MxArray s = MxArray::Struct();
-        read(fs, s, node);
+        read(fs, s, fs.root());
         plhs[0] = s;
+        if (nlhs > 1)
+            plhs[1] = MxArray(true);  // dummy output
     }
     else {
         // Write
-        vector<MxArray> rhs(prhs+1,prhs+nrhs);
-        FileStorage fs(filename, FileStorage::WRITE);
-        if (rhs[0].isStruct() && rhs[0].numel()==1)
+        nargchk(nrhs>=2 && nlhs<=1);
+        FileStorage fs(filename, FileStorage::WRITE +
+            ((nlhs > 0) ? FileStorage::MEMORY : 0));
+        if (!fs.isOpened())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
+        if (nrhs==2 && rhs[1].isStruct() && rhs[1].numel()==1)
             // Write a scalar struct
-            write(fs, rhs[0], true);
+            write(fs, rhs[1], true);
         else {
             // Create a temporary scalar struct and write
             string nodeName(FileStorage::getDefaultObjectName(filename));
             MxArray s = MxArray::Struct();
-            if (rhs.size()==1)
-                s.set(nodeName, rhs[0].clone());
+            if (nrhs == 2)
+                s.set(nodeName, rhs[1].clone());
             else {
-                MxArray cell = MxArray::Cell(rhs.size());
-                for (int i=0; i<rhs.size(); ++i)
-                    cell.set(i, rhs[i].clone());
+                MxArray cell = MxArray::Cell(nrhs-1);
+                for (int i=0; i<nrhs-1; ++i)
+                    cell.set(i, rhs[i+1].clone());
                 s.set(nodeName, cell);
             }
             write(fs, s, true);
             s.destroy();
         }
+        if (nlhs > 0)
+            plhs[0] = MxArray(fs.releaseAndGetString());
     }
 }

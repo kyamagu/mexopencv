@@ -71,5 +71,5 @@
 % [SteweniusCFS]:
 % > Henrik Stewenius. "Calibrated fivepoint solver".
 %
-% See also: cv.findFundamentalMat, cv.recoverPose
+% See also: cv.findFundamentalMat, cv.recoverPose, estimateEssentialMatrix
 %

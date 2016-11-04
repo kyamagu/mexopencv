@@ -73,7 +73,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             else if (key=="FullUV")
                 UPDATE_FLAG(flags, rhs[i+1].toBool(), SVD::FULL_UV);
             else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         Mat src(rhs[2].toMat()), w, u, vt;
         SVD::compute(src, w, u, vt, flags);
@@ -105,7 +106,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             else if (key=="FullUV")
                 UPDATE_FLAG(flags, rhs[i+1].toBool(), SVD::FULL_UV);
             else
-                mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
         }
         Mat src(rhs[2].toMat());
         obj->operator()(src, flags);
@@ -126,7 +128,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (prop == "w")
             plhs[0] = MxArray(obj->w);
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
     }
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
@@ -138,8 +141,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (prop == "w")
             obj->w = rhs[3].toMat();
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Unrecognized option");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Unrecognized operation");
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unrecognized operation %s", method.c_str());
 }

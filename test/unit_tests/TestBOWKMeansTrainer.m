@@ -11,15 +11,15 @@ classdef TestBOWKMeansTrainer
         end
 
         function test_2
-            K = 2;    % number of clusters
+            K = 2;           % number of clusters
             trainer = cv.BOWKMeansTrainer(K);
 
-            dim = 3;  % dimensionality
-            N = [];   % number of samples added
-            for i=1:5
+            dim = 3;         % dimensionality
+            N = zeros(1,5);  % number of samples added
+            for i=1:numel(N)
                 desc = [randn(50,dim)-1; randn(50,dim)+1];
                 trainer.add(desc);
-                N(end+1) = size(desc,1);
+                N(i) = size(desc,1);
             end
 
             assert(trainer.descriptorsCount() == sum(N));

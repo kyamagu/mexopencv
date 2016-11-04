@@ -105,5 +105,6 @@
 % The green rectangles are `roi1` and `roi2`. You see that their interiors are
 % all valid pixels.
 %
-% See also: cv.stereoCalibrate, cv.stereoRectifyUncalibrated
+% See also: cv.stereoCalibrate, cv.stereoRectifyUncalibrated,
+%  rectifyStereoImages
 %

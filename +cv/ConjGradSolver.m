@@ -118,47 +118,6 @@ classdef ConjGradSolver < handle
             ConjGradSolver_(this.id, 'delete');
         end
 
-        function clear(this)
-            %CLEAR  Clears the algorithm state.
-            %
-            %    solver.clear()
-            %
-            ConjGradSolver_(this.id, 'clear');
-        end
-
-        function b = empty(this)
-            %EMPTY  Returns true if the Algorithm is empty.
-            %
-            %    solver.empty()
-            %
-            % (e.g. in the very beginning or after unsuccessful read).
-            %
-            b = ConjGradSolver_(this.id, 'empty');
-        end
-
-        function name = getDefaultName(this)
-            %GETDEFAULTNAME  Returns the algorithm string identifier.
-            %
-            %    solver.getDefaultName()
-            %
-            % This string is used as top level xml/yml node tag when the
-            % object is saved to a file or string.
-            %
-            name = ConjGradSolver_(this.id, 'getDefaultName');
-        end
-
-        function save(this, filename)
-            %SAVE
-            %
-            ConjGradSolver_(this.id, 'save', filename);
-        end
-
-        function load(this, filename)
-            %LOAD
-            %
-            ConjGradSolver_(this.id, 'load', filename);
-        end
-
         function [x,fx] = minimize(this, x0)
             %MINIMIZE  Runs the algorithm and performs the minimization.
             %
@@ -184,6 +143,90 @@ classdef ConjGradSolver < handle
         end
     end
 
+    %% Algorithm
+    methods (Hidden)
+        function clear(this)
+            %CLEAR  Clears the algorithm state.
+            %
+            %    solver.clear()
+            %
+            % See also: cv.ConjGradSolver.empty
+            %
+            ConjGradSolver_(this.id, 'clear');
+        end
+
+        function b = empty(this)
+            %EMPTY  Returns true if the algorithm is empty.
+            %
+            %    b = solver.empty()
+            %
+            % ## Output
+            % * __b__ returns true of the algorithm is empty
+            %       (e.g. in the very beginning or after unsuccessful read).
+            %
+            % See also: cv.ConjGradSolver.clear
+            %
+            b = ConjGradSolver_(this.id, 'empty');
+        end
+
+        function name = getDefaultName(this)
+            %GETDEFAULTNAME  Returns the algorithm string identifier.
+            %
+            %    name = solver.getDefaultName()
+            %
+            % ## Output
+            % * __name__ This string is used as top level xml/yml node tag
+            %       when the object is saved to a file or string.
+            %
+            % See also: cv.ConjGradSolver.save, cv.ConjGradSolver.load
+            %
+            name = ConjGradSolver_(this.id, 'getDefaultName');
+        end
+
+        function save(this, filename)
+            %SAVE  Saves the algorithm to a file.
+            %
+            %    obj.save(filename)
+            %
+            % ## Input
+            % * __filename__ Name of the file to save to.
+            %
+            % This method stores the algorithm parameters in a file storage.
+            %
+            % See also: cv.ConjGradSolver.load
+            %
+            ConjGradSolver_(this.id, 'save', filename);
+        end
+
+        function load(this, fname_or_str)
+            %LOAD  Loads algorithm from a file or a string.
+            %
+            %    obj.load(filename)
+            %    obj.load(str, 'FromString',true)
+            %    obj.load(..., 'OptionName',optionValue, ...)
+            %
+            % ## Input
+            % * __filename__ Name of the file to read.
+            % * __str__ String containing the serialized model you want to
+            %       load.
+            %
+            % ## Options
+            % * __ObjName__ The optional name of the node to read (if empty,
+            %       the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is
+            %       a filename or a string containing the serialized model.
+            %       default false
+            %
+            % This method reads algorithm parameters from a file storage.
+            % The previous model state is discarded.
+            %
+            % See also: cv.ConjGradSolver.save
+            %
+            ConjGradSolver_(this.id, 'load', fname_or_str);
+        end
+    end
+
+    %% Getters/Setters
     methods
         function value = get.ObjectiveFunction(this)
             value = ConjGradSolver_(this.id, 'get', 'Function');

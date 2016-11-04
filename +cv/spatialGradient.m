@@ -22,5 +22,5 @@
 %    dx = cv.Sobel(src, 'DDepth','int16', 'XOrder',1, 'YOrder',0, 'KSize',3);
 %    dy = cv.Sobel(src, 'DDepth','int16', 'XOrder',0, 'YOrder',1, 'KSize',3);
 %
-% See also: cv.Sobel
+% See also: cv.Sobel, imgradientxy, imgradient
 %

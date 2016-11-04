@@ -5,7 +5,7 @@
 %
 % <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/create_mask.cpp>
 %
-% See also: impoly, getline
+% See also: impoly, getline, roipoly
 %
 
 % load an image, and display it

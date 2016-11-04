@@ -74,11 +74,19 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
+        /*
+        obj_[id] = (loadFromString ?
+            Algorithm::loadFromString<FeatureDetector>(rhs[2].toString(), objname) :
+            Algorithm::load<FeatureDetector>(rhs[2].toString(), objname));
+        */
+        ///*
+        // HACK: workaround for missing FeatureDetector::create()
         FileStorage fs(rhs[2].toString(), FileStorage::READ +
             (loadFromString ? FileStorage::MEMORY : 0));
+        if (!fs.isOpened())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
         obj->read(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
-        if (obj.empty())
-            mexErrMsgIdAndTxt("mexopencv:error", "Failed to load algorithm");
+        //*/
     }
     else if (method == "save") {
         nargchk(nrhs==3 && nlhs==0);

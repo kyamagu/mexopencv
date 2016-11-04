@@ -36,5 +36,5 @@
 % you need to compute pixel sums over variable-size windows, use cv.integral.
 %
 % See also: cv.blur, cv.bilateralFilter, cv.GaussianBlur, cv.medianBlur,
-%  cv.integral, cv.sqrBoxFilter
+%  cv.integral, cv.sqrBoxFilter, imfilter, imboxfilt
 %
