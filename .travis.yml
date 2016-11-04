@@ -147,6 +147,7 @@ before_script:
   - if [ "$OCT_STATS" = "yes" ]; then echo "try, pkg load statistics, end" >> $OCTAVERC ; fi
   - if [ "$OCT_IMAGE" = "yes" ]; then echo "try, pkg load image, end" >> $OCTAVERC ; fi
   - echo "warning('off', 'Octave:GraphicsMagic-Quantum-Depth');" >> $OCTAVERC
+  - echo "warning('off', 'Octave:shadowed-function');" >> $OCTAVERC
   - echo "cd('$MCV_ROOT');" >> $OCTAVERC
   - echo "addpath('$MCV_ROOT');" >> $OCTAVERC
   - echo "addpath(fullfile('$MCV_ROOT','+cv','private'));" >> $OCTAVERC
