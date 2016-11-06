@@ -30,10 +30,11 @@
 %       in the correlation coefficient between two iterations (a negative
 %       `Criteria.epsilon` makes `Criteria.maxcount` the only termination
 %       criterion). Default values are:
-%       `struct()`
+%       `struct('type','Count+EPS', 'maxCount',50, 'epsilon',0.001)`
 % * __Mask__ An optional mask to indicate valid values of `inputImage`.
 %       Not set by default.
-% * __InputWarpMatrix__ Initial estimate for `warpMatrix`. Not set by default
+% * __InputWarp__ Initial estimate for `warpMatrix`. See the notes
+%       below. Default `eye(2,3)`
 %
 % The function estimates the optimum transformation (`warpMatrix`) with
 % respect to ECC criterion ([EP08]), that is:
