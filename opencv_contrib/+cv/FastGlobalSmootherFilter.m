@@ -65,6 +65,8 @@ classdef FastGlobalSmootherFilter < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.FastGlobalSmootherFilter
             %
             if isempty(this.id), return; end
@@ -193,7 +195,7 @@ classdef FastGlobalSmootherFilter < handle
             %       signed 16-bit or floating-point 32-bit depth and up to 4
             %       channels.
             % * __guide__ image serving as guide for filtering. It should have
-            %        8-bit depth and either 1 or 3 channels.
+            %       8-bit depth and either 1 or 3 channels.
             %
             % ## Output
             % * __dst__ destination image.

@@ -57,7 +57,7 @@
 %
 % The function cv.remap transforms the source image using the specified map:
 %
-%     dst(x,y) = src(mapX(x,y), mapY(x,y))
+%    dst(x,y) = src(mapX(x,y), mapY(x,y))
 %
 % where values of pixels with non-integer coordinates are computed using one
 % of available interpolation methods. `mapX` and `mapY` can be encoded as

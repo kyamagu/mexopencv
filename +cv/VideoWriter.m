@@ -62,7 +62,9 @@ classdef VideoWriter < handle
         end
 
         function delete(this)
-            %DELETE  VideoWriter destructor
+            %DELETE  Destructor
+            %
+            %    vid.delete()
             %
             % See also: cv.VideoWriter.release
             %
@@ -115,12 +117,12 @@ classdef VideoWriter < handle
             %
             % ## References
             % [FOURCC]:
-            % > "Video Codecs by FOURCC", http://www.fourcc.org/codecs.php
+            % > Video Codecs by [FOURCC](http://www.fourcc.org/codecs.php)
             %
             % [ObjectType]:
-            % > http://www.mp4ra.org/codecs.html
+            % > [Codecs](http://www.mp4ra.org/codecs.html)
             %
-            % See also: cv.VideoWriter.VideoWriter cv.VideoWriter.isOpened
+            % See also: cv.VideoWriter.VideoWriter, cv.VideoWriter.isOpened
             %
             retval = VideoWriter_(this.id, 'open', filename, frameSize, varargin{:});
         end

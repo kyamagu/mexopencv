@@ -47,6 +47,8 @@ classdef LATCH < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.LATCH
             %
             if isempty(this.id), return; end

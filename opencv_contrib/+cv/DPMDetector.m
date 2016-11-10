@@ -56,7 +56,7 @@ classdef DPMDetector < handle
     % [Felzenszwalb2010a] using cv.DPMDetector.mat2opencvxml method.
     %
     % You can find examples of pre-trained models here:
-    % https://github.com/opencv/opencv_extra/tree/3.1.0/testdata/cv/dpm/VOC2007_Cascade/
+    % [DPM](https://github.com/opencv/opencv_extra/tree/3.1.0/testdata/cv/dpm/VOC2007_Cascade/)
     %
     % ## References
     % [Felzenszwalb2010a]:
@@ -64,14 +64,14 @@ classdef DPMDetector < handle
     % > "Object Detection with Discriminatively Trained Part Based Models".
     % > IEEE Transactions on Pattern Analysis and Machine Intelligence,
     % > Vol. 32, No. 9, pages 1627-1645, Sep. 2010.
-    % > http://www.cs.berkeley.edu/~rbg/papers/Object-Detection-with-Discriminatively-Trained-Part-Based-Models--Felzenszwalb-Girshick-McAllester-Ramanan.pdf
+    % > [PDF](http://www.cs.berkeley.edu/~rbg/papers/Object-Detection-with-Discriminatively-Trained-Part-Based-Models--Felzenszwalb-Girshick-McAllester-Ramanan.pdf)
     %
     % [Felzenszwalb2010b]:
     % > Pedro F. Felzenszwalb, Ross B. Girshick, and David McAllester.
     % > "Cascade Object Detection with Deformable Part Models".
     % > IEEE Conference on Computer Vision and Pattern Recognition (CVPR),
     % > 2010, pages 2241-2248.
-    % > http://www.cs.berkeley.edu/~rbg/papers/Cascade-Object-Detection-with-Deformable-Part-Models--Felzenszwalb-Girshick-McAllester.pdf
+    % > [PDF](http://www.cs.berkeley.edu/~rbg/papers/Cascade-Object-Detection-with-Deformable-Part-Models--Felzenszwalb-Girshick-McAllester.pdf)
     %
     % See also: cv.DPMDetector.DPMDetector, cv.DPMDetector.detect
     %
@@ -91,12 +91,11 @@ classdef DPMDetector < handle
             % ## Input
             % * __filenames__ A set of filenames storing the trained detectors
             %       (models). Each file contains one model.
-            %
-            %  * __classnames__ (optional) A set of trained models names. If
-            %        it's empty then the name of each model will be
-            %        constructed from the name of file containing the model.
-            %        E.g. the model stored in "/home/user/cat.xml" will get
-            %        the name "cat".
+            % * __classnames__ (optional) A set of trained models names. If
+            %       it's empty then the name of each model will be
+            %       constructed from the name of file containing the model.
+            %       E.g. the model stored in "/home/user/cat.xml" will get
+            %       the name "cat".
             %
             % Load the trained models from given .xml files and return a new
             % DPMDetector detector.
@@ -114,7 +113,9 @@ classdef DPMDetector < handle
         end
 
         function delete(this)
-            %DELETE Destructor
+            %DELETE  Destructor
+            %
+            %    detector.delete()
             %
             % See also: cv.DPMDetector
             %
@@ -212,12 +213,12 @@ classdef DPMDetector < handle
             %
             % Check the latest models in:
             %
-            % * http://www.cs.brown.edu/~pff/latent/
-            % * http://www.cs.berkeley.edu/~rbg/latent/index.html
-            % * https://github.com/rbgirshick/voc-dpm
+            % * [Brown](http://www.cs.brown.edu/~pff/latent/)
+            % * [Berkeley](http://www.cs.berkeley.edu/~rbg/latent/index.html)
+            % * [GitHub](https://github.com/rbgirshick/voc-dpm)
             %
             % This `mat2opencvxml` utility is taken from:
-            % https://github.com/opencv/opencv_extra/blob/3.1.0/testdata/cv/dpm/mat2opencvxml.m
+            % [mat2opencvxml.m](https://github.com/opencv/opencv_extra/blob/3.1.0/testdata/cv/dpm/mat2opencvxml.m)
             %
             % See also: cv.DPMDetector
             %

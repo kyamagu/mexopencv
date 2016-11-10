@@ -71,7 +71,9 @@ classdef TonemapDurand < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.TonemapDurand
+            %    obj.delete()
+            %
+            % See also: cv.TonemapDurand
             %
             if isempty(this.id), return; end
             TonemapDurand_(this.id, 'delete');
@@ -111,7 +113,7 @@ classdef TonemapDurand < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the Algorithm is empty
+            %EMPTY  Returns true if the algorithm is empty
             %
             %    b = obj.empty()
             %

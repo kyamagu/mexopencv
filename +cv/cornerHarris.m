@@ -23,7 +23,7 @@
 % `BlockSize x BlockSize` neighborhood. Then, it computes the following
 % characteristic:
 %
-%     dst(x,y) = det(M(x,y)) - k * (trace(M(x,y)))^2
+%    dst(x,y) = det(M(x,y)) - k * (trace(M(x,y)))^2
 %
 % Corners in the image can be found as the local maxima of this response map.
 %

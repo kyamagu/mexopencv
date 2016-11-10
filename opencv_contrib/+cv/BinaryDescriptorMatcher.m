@@ -67,13 +67,15 @@ classdef BinaryDescriptorMatcher < handle
             % The BinaryDescriptorMatcher constructed is able to store and
             % manage 256-bits long entries.
             %
-            % See also cv.BinaryDescriptorMatcher
+            % See also: cv.BinaryDescriptorMatcher
             %
             this.id = BinaryDescriptorMatcher_(0, 'new');
         end
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    matcher.delete()
             %
             % See also: cv.BinaryDescriptorMatcher
             %

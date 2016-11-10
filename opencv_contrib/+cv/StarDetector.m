@@ -1,7 +1,7 @@
 classdef StarDetector < handle
     %STARDETECTOR  The class implements the Star keypoint detector.
     %
-    % ## References:
+    % ## References
     % [Agrawal08]:
     % > Motilal Agrawal, Kurt Konolige, and Morten Rufus Blas.
     % > "Censure: Center surround extremas for realtime feature detection and matching".
@@ -43,6 +43,8 @@ classdef StarDetector < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.StarDetector
             %

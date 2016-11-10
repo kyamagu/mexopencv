@@ -56,7 +56,9 @@ classdef MergeMertens < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.MergeMertens
+            %    obj.delete()
+            %
+            % See also: cv.MergeMertens
             %
             if isempty(this.id), return; end
             MergeMertens_(this.id, 'delete');
@@ -96,7 +98,7 @@ classdef MergeMertens < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the Algorithm is empty
+            %EMPTY  Returns true if the algorithm is empty
             %
             %    b = obj.empty()
             %

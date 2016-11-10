@@ -3,7 +3,7 @@ classdef DAISY < handle
     %
     % As described in [Tola10].
     %
-    % ## References:
+    % ## References
     % [Tola10]:
     % > E. Tola, V. Lepetit, and P. Fua.
     % > "DAISY: An Efficient Dense Descriptor Applied to Wide Baseline Stereo".
@@ -57,6 +57,8 @@ classdef DAISY < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.DAISY
             %

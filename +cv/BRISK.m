@@ -3,7 +3,7 @@ classdef BRISK < handle
     %
     % As described in [LCS11].
     %
-    % ## References:
+    % ## References
     % [LCS11]:
     % > Stefan Leutenegger, Margarita Chli, and Roland Yves Siegwart.
     % > "BRISK: Binary Robust Invariant Scalable Keypoints".
@@ -57,6 +57,8 @@ classdef BRISK < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.BRISK
             %

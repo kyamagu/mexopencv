@@ -14,8 +14,9 @@
 %
 % This function computes a Hanning window coefficients in two dimensions.
 %
-% See (http://en.wikipedia.org/wiki/Hann_function) and
-% (http://en.wikipedia.org/wiki/Window_function) for more information.
+% See [Hann function](http://en.wikipedia.org/wiki/Hann_function) and
+% [Window function](http://en.wikipedia.org/wiki/Window_function) for more
+% information.
 %
 % See also: hann, hanning
 %

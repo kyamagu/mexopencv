@@ -38,7 +38,9 @@ classdef CascadeClassifier < handle
     % 2. Line features
     % 3. Center-surround features
     %
-    % See image: <http://docs.opencv.org/3.1.0/haarfeatures.png>
+    % See image:
+    %
+    % ![image](http://docs.opencv.org/3.1.0/haarfeatures.png)
     %
     % The feature used in a particular classifier is specified by its shape
     % (1a, 2b etc.), position within the region of interest and the scale
@@ -78,7 +80,7 @@ classdef CascadeClassifier < handle
     % [Viola01]:
     % > Paul Viola and Michael Jones. "Rapid Object Detection using a Boosted
     % > Cascade of Simple Features". IEEE CVPR, 2001, Vol 1, pages I-511.
-    % > http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.10.6807
+    % > [CiteSeerX](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.10.6807)
     %
     % [Lienhart02]:
     % > Rainer Lienhart and Jochen Maydt. "An Extended Set of Haar-like
@@ -120,7 +122,9 @@ classdef CascadeClassifier < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.CascadeClassifier
+            %    classifier.delete()
+            %
+            % See also: cv.CascadeClassifier
             %
             if isempty(this.id), return; end
             CascadeClassifier_(this.id, 'delete');
@@ -234,7 +238,7 @@ classdef CascadeClassifier < handle
             %    boxes = classifier.detect(im)
             %    [boxes, numDetections] = classifier.detect(im)
             %    [boxes, rejectLevels, levelWeights] = classifier.detect(im)
-            %    [...] = classifier.detect(im, 'Option', optionValue, ...)
+            %    [...] = classifier.detect(im, 'OptionName', optionValue, ...)
             %
             % ## Input
             % * __im__ Matrix of the type `uint8` containing an image where

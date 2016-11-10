@@ -4,8 +4,8 @@
 %    dst = cv.cvtColor(src, code, 'OptionName',optionValue, ...)
 %
 % ## Input
-% * __src__ Input image: 8-bit unsigned, 16-bit unsigned, or
-%          single-precision floating-point.
+% * __src__ Input image: 8-bit unsigned, 16-bit unsigned, or single-precision
+%       floating-point.
 % * __code__ Color space conversion code string, e.g., 'RGB2GRAY'.
 %       The following codes are supported:
 %       * __BGR2BGRA__, __RGB2RGBA__: add alpha channel to RGB and BGR image
@@ -92,9 +92,9 @@
 % * __dst__ Output image of the same row/column size and depth as `src`.
 %
 % ## Options
-% * __DstCn__ Number of channels in the destination image. If the parameter is
-%             0, the number of the channels is derived automatically from
-%             `src` and `code`.
+% * __DstCn__ Number of channels in the destination image. If the parameter
+%       is 0, the number of the channels is derived automatically from `src`
+%       and `code`.
 %
 % The function converts an input image from one color space to another. In case
 % of a transformation to-from RGB color space, the order of the channels should
@@ -119,7 +119,7 @@
 % will have the 0..255 value range instead of 0..1 assumed by the function.
 % So, before calling cv.cvtColor, you need first to scale the image down:
 %
-%     img = cvtColor(img./255, 'BGR2Luv');
+%    img = cvtColor(img./255, 'BGR2Luv');
 %
 % If you use cv.cvtColor with 8-bit images, the conversion will have some
 % information lost. For many applications, this will not be noticeable but it
@@ -151,7 +151,7 @@
 %
 %    bwsrc = cv.cvtColor(src, 'RGB2GRAY');
 %
-%  More advanced channel reordering can also be done with cv.mixChannels.
+% More advanced channel reordering can also be done with cv.mixChannels.
 %
 % See also: 'BGR2GRAY', 'RGB2GRAY', 'GRAY2BGR', 'GRAY2RGB'
 %
@@ -299,8 +299,8 @@
 % * 32-bit images: `L`, `u`, and `v` are left as is
 %
 % The above formulae for converting RGB to/from various color spaces have been
-% taken from multiple sources on the web, primarily from the Charles Poynton
-% site http://www.poynton.com/ColorFAQ.html
+% taken from multiple sources on the web, primarily from the
+% [Charles Poynton site](http://www.poynton.com/ColorFAQ.html).
 %
 % See also: 'BGR2Luv', 'RGB2Luv', 'Luv2BGR', 'Luv2RGB'
 %

@@ -18,7 +18,7 @@ classdef ANN_MLP < handle
     % next layer. The example below represents a 3-layer perceptron with three
     % inputs, two outputs, and the hidden layer including five neurons:
     %
-    % <<http://docs.opencv.org/3.1.0/mlp.png>>
+    % ![image](http://docs.opencv.org/3.1.0/mlp.png)
     %
     % All the neurons in MLP are similar. Each of them has several input links
     % (it takes the output values from several neurons in the previous layer
@@ -28,7 +28,7 @@ classdef ANN_MLP < handle
     % bias  term. The sum is transformed using the activation function `f`
     % that may be also different for different neurons.
     %
-    % <<http://docs.opencv.org/3.1.0/neuron_model.png>>
+    % ![image](http://docs.opencv.org/3.1.0/neuron_model.png)
     %
     % In other words, given the outputs `x_j` of the layer `n`, the outputs
     % `y_i` of the layer `n+1` are computed as:
@@ -41,11 +41,11 @@ classdef ANN_MLP < handle
     %
     % * __Identity__: Identity function `f(x) = y`
     % * __Sigmoid__: Symmetrical sigmoid, which is the default choice for MLP
-    %   `f(x) = beta * (1-exp(-alpha*x)) / (1+exp(-alpha*x))`
+    %       `f(x) = beta * (1-exp(-alpha*x)) / (1+exp(-alpha*x))`
     % * __Gaussian__: Gaussian function, which is not completely supported at
-    %   the moment `f(x) = beta * exp(-alpha*x*x)`
+    %       the moment `f(x) = beta * exp(-alpha*x*x)`
     %
-    % <<http://docs.opencv.org/3.1.0/sigmoid_bipolar.png>>
+    % ![image](http://docs.opencv.org/3.1.0/sigmoid_bipolar.png)
     %
     % In ML, all the neurons have the same activation functions, with the
     % same free parameters (`alpha`, `beta`) that are specified by user and
@@ -93,8 +93,7 @@ classdef ANN_MLP < handle
     %
     % ## References
     % [BackPropWikipedia]:
-    % > http://en.wikipedia.org/wiki/Backpropagation.
-    % > Wikipedia article about the back-propagation algorithm.
+    % > [Back-propagation algorithm](http://en.wikipedia.org/wiki/Backpropagation)
     %
     % [LeCun98]:
     % > LeCun, L. Bottou, G.B. Orr and K.-R. Muller, "Efficient backprop",
@@ -197,17 +196,18 @@ classdef ANN_MLP < handle
             %
             %    model = cv.ANN_MLP()
             %
-            % Use cv.ANN_MLP.train to train the model, or cv.ANN_MLP.load to
-            % load a pre-trained model. Note that the train method has
-            % optional flags.
+            % Use `train` to train the model, or `load` to load a pre-trained
+            % model. Note that the train method has optional flags.
             %
-            % See also: cv.ANN_MLP, cv.ANN_MLP.train
+            % See also: cv.ANN_MLP, cv.ANN_MLP.train, cv.ANN_MLP.load
             %
             this.id = ANN_MLP_(0, 'new');
         end
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    model.delete()
             %
             % See also: cv.ANN_MLP
             %
@@ -226,8 +226,8 @@ classdef ANN_MLP < handle
             % The method clear does the same job as the destructor: it
             % deallocates all the memory occupied by the class members. But
             % the object itself is not destructed and can be reused further.
-            % This method is called from the destructor, from the train() and
-            % load() methods, or even explicitly by the user.
+            % This method is called from the destructor, from the `train` and
+            % `load` methods, or even explicitly by the user.
             %
             % See also: cv.ANN_MLP.empty, cv.ANN_MLP.load
             %
@@ -626,7 +626,7 @@ classdef ANN_MLP < handle
             %    model.setActivationFunction(ftype, 'OptionName', optionValue, ...)
             %
             % ## Input
-            % * __ftype__: The type of activation function. default 'Sigmoid'.
+            % * __ftype__ The type of activation function. default 'Sigmoid'.
             %       Possible activation functions:
             %       * __Identity__ Identity function: `f(x) = x`
             %       * __Sigmoid__ Symmetrical sigmoid:

@@ -23,7 +23,7 @@ classdef KNearest < handle
     % > J.S. Beis and D.G. Lowe. "Shape indexing using approximate
     % > nearest-neighbor search in highdimensional spaces". In Proc. IEEE
     % > Conf. Comp. Vision Patt. Recog., pp 1000-1006, 1997.
-    % > http://citeseer.ist.psu.edu/beis97shape.html
+    % > [CiteSeerX](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.126.1046)
     %
     % See also: cv.KNearest.KNearest, cv.KNearest.train,
     %  cv.KNearest.findNearest, fitcknn
@@ -93,6 +93,8 @@ classdef KNearest < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    model.delete()
+            %
             % See also: cv.KNearest
             %
             if isempty(this.id), return; end
@@ -110,8 +112,8 @@ classdef KNearest < handle
             % The method clear does the same job as the destructor: it
             % deallocates all the memory occupied by the class members. But
             % the object itself is not destructed and can be reused further.
-            % This method is called from the destructor, from the train() and
-            % load() methods, or even explicitly by the user.
+            % This method is called from the destructor, from the `train` and
+            % `load` methods, or even explicitly by the user.
             %
             % See also: cv.KNearest.empty, cv.KNearest.load
             %

@@ -41,5 +41,5 @@
 %
 % ## References
 % [CVonline]:
-% > http://www.dai.ed.ac.uk/CVonline/LOCAL_COPIES/MANDUCHI1/Bilateral_Filtering.html
+% > [CVonline](http://www.dai.ed.ac.uk/CVonline/LOCAL_COPIES/MANDUCHI1/Bilateral_Filtering.html)
 %

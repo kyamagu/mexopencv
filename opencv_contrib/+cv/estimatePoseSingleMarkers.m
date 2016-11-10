@@ -30,10 +30,10 @@
 % The coordinates of the four corners of the marker in its own coordinate
 % system are:
 %
-%     (-markerLength/2, markerLength/2, 0),
-%     (markerLength/2, markerLength/2, 0),
-%     (markerLength/2, -markerLength/2, 0),
-%     (-markerLength/2, -markerLength/2, 0)
+%    (-markerLength/2, markerLength/2, 0),
+%    (markerLength/2, markerLength/2, 0),
+%    (markerLength/2, -markerLength/2, 0),
+%    (-markerLength/2, -markerLength/2, 0)
 %
 % See also: cv.detectMarkers, cv.estimatePoseBoard, cv.Rodrigues, cv.solvePnP
 %

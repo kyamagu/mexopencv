@@ -43,6 +43,8 @@ classdef GuidedFilter < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.GuidedFilter
             %
             if isempty(this.id), return; end

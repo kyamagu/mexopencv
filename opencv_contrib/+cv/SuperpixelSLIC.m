@@ -60,7 +60,7 @@ classdef SuperpixelSLIC < handle
             % for future computing iterations over the given image. An example
             % of SLIC versus SLICO is ilustrated in the following picture.
             %
-            % <<http://docs.opencv.org/3.1.0/slic_slico_kermit.png>>
+            % ![image](https://github.com/opencv/opencv_contrib/raw/3.1.0/modules/ximgproc/doc/pics/slic-slico-kermit.png)
             %
             % See also: cv.SuperpixelSLIC.iterate
             %
@@ -69,6 +69,8 @@ classdef SuperpixelSLIC < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.SuperpixelSLIC
             %

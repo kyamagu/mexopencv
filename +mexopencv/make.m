@@ -20,18 +20,18 @@ function make(varargin)
 % * __force__ Unconditionally build all files. default `false`
 % * __verbose__ output verbosity. The higher the number, the more output
 %       is shown. default 1
-%      * __0__ no output at all
-%      * __1__ echo commands and information messages only
-%      * __2__ verbose output from mex
-%      * __3__ enables all compiler warnings
-%      * __4__ enables verbose compiler/linker output
+%       * __0__ no output at all
+%       * __1__ echo commands and information messages only
+%       * __2__ verbose output from mex
+%       * __3__ enables all compiler warnings
+%       * __4__ enables verbose compiler/linker output
 % * __progress__ show a progress bar GUI during compilation (Windows only).
 %       default `true`
 % * __debug__ Produce binaries with debugging information, linked against
 %       the debug version of OpenCV libraries. default false
 % * __extra__ extra arguments passed to Unix make command. default `''`
 %
-% ## Examples
+% ## Example
 %
 %    mexopencv.make('opencv_path', pathname)      % Windows only
 %    mexopencv.make(..., 'opencv_contrib', true)  % build with contrib modules

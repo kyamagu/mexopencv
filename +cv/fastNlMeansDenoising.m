@@ -26,9 +26,10 @@
 %       * __L2__ (default)
 %       * __L1__
 %
-% Perform image denoising using Non-local Means Denoising algorithm
-% http://www.ipol.im/pub/algo/bcm_non_local_means_denoising/ with several
-% computational optimizations. Noise expected to be a gaussian white noise.
+% Perform image denoising using Non-local Means Denoising
+% [algorithm](http://www.ipol.im/pub/algo/bcm_non_local_means_denoising/)
+% with several computational optimizations. Noise expected to be a gaussian
+% white noise.
 %
 % This function expected to be applied to grayscale images. For colored images
 % look at cv.fastNlMeansDenoisingColored. Advanced usage of this functions can

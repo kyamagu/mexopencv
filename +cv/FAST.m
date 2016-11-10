@@ -24,10 +24,10 @@
 %
 % ## Options
 % * __Threshold__ Threshold on difference between intensity of the central
-%        pixel and pixels on a circle around this pixel. See the algorithm
-%        description [Rosten06]. default 10.
+%       pixel and pixels on a circle around this pixel. See the algorithm
+%       description [Rosten06]. default 10.
 % * __NonmaxSuppression__ If it is true, non-maximum supression is applied
-%        to detected corners (keypoints). default true.
+%       to detected corners (keypoints). default true.
 % * __Type__ one of the three neighborhoods as defined in the paper:
 %       * **TYPE_9_16** (default)
 %       * **TYPE_7_12**

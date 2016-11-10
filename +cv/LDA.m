@@ -46,6 +46,10 @@ classdef LDA < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    lda.delete()
+            %
+            % See also: cv.LDA
+            %
             if isempty(this.id), return; end
             LDA_(this.id, 'delete');
         end

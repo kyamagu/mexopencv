@@ -19,7 +19,7 @@
 %    dst(i,j) = { src(i,size(src,2)-j-1)                if flipCode > 0
 %               { src(size(src,1)-i-1,size(src,2)-j-1)  if flipCode < 0
 %
-%  The example scenarios of using the function are the following:
+% The example scenarios of using the function are the following:
 %
 % * Vertical flipping of the image (`flipCode == 0`) to switch between
 %   top-left and bottom-left image origin. This is a typical operation in

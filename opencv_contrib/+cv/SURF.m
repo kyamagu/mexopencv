@@ -1,12 +1,12 @@
 classdef SURF < handle
     %SURF  Class for extracting Speeded Up Robust Features from an image.
     %
-    % ## References:
+    % ## References
     % [Bay06]:
     % > Herbert Bay, Tinne Tuytelaars, and Luc Van Gool.
     % > "SURF: Speeded Up Robust Features".
     % > Computer Vision-ECCV 2006, pages 404-417, 2006.
-    % > http://www.vision.ee.ethz.ch/~surf/eccv06.pdf
+    % > [PDF](http://www.vision.ee.ethz.ch/~surf/eccv06.pdf)
     %
     % See also: cv.FeatureDetector, cv.DescriptorExtractor,
     %  detectSURFFeatures, extractFeatures, SURFPoints
@@ -80,6 +80,8 @@ classdef SURF < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.SURF
             %

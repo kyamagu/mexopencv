@@ -68,7 +68,9 @@ classdef TonemapReinhard < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.TonemapReinhard
+            %    obj.delete()
+            %
+            % See also: cv.TonemapReinhard
             %
             if isempty(this.id), return; end
             TonemapReinhard_(this.id, 'delete');
@@ -108,7 +110,7 @@ classdef TonemapReinhard < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the Algorithm is empty
+            %EMPTY  Returns true if the algorithm is empty
             %
             %    b = obj.empty()
             %

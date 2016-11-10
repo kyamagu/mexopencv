@@ -44,7 +44,7 @@
 % The function cv.warpAffine transforms the source image using the specified
 % matrix:
 %
-%     dst(x,y) = src(M_11*x + M_12*y + M_13, M_21*x + M_22*y + M_23)
+%    dst(x,y) = src(M_11*x + M_12*y + M_13, M_21*x + M_22*y + M_23)
 %
 % when the `WarpInverse` option is true. Otherwise, the transformation is first
 % inverted with cv.invertAffineTransform and then put in the formula above

@@ -13,7 +13,7 @@
 %
 % ## Options
 % * __AngleRange__ The part of Hough space where point is situated. See
-%       cv.FastHoughTransform, default 'ARO_315_135'.
+%       cv.FastHoughTransform, default `ARO_315_135`.
 % * __MakeSkew__ Specifies to do or not to do image skewing. See
 %       cv.FastHoughTransform, default 'Deskew'.
 % * __Rules__ Specifies strictness of line segment calculating. This specifies

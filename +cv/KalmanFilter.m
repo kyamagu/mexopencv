@@ -1,10 +1,10 @@
 classdef KalmanFilter < handle
     %KALMANFILTER  Kalman filter class
     %
-    % The class implements a standard Kalman filter
-    % http://en.wikipedia.org/wiki/Kalman_filter, [Welch95]. However, you can
-    % modify `transitionMatrix`, `controlMatrix`, and `measurementMatrix` to
-    % get an extended Kalman filter functionality.
+    % The class implements a standard
+    % [Kalman filter](http://en.wikipedia.org/wiki/Kalman_filter), [Welch95].
+    % However, you can modify `transitionMatrix`, `controlMatrix`, and
+    % `measurementMatrix` to get an extended Kalman filter functionality.
     %
     % ## Example
     %
@@ -25,10 +25,10 @@ classdef KalmanFilter < handle
     % ## References
     % [Welch95]:
     % > Greg Welch and Gary Bishop. An introduction to the kalman filter, 1995.
-    % > http://www.cs.unc.edu/~welch/media/pdf/kalman_intro.pdf
+    % > [PDF](http://www.cs.unc.edu/~welch/media/pdf/kalman_intro.pdf)
     %
     % See also: cv.KalmanFilter.init, cv.KalmanFilter.predict,
-    %   cv.KalmanFilter.correct, vision.KalmanFilter
+    %  cv.KalmanFilter.correct, vision.KalmanFilter
     %
 
     properties (SetAccess = private)
@@ -90,7 +90,9 @@ classdef KalmanFilter < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.KalmanFilter
+            %    kf.delete()
+            %
+            % See also: cv.KalmanFilter
             %
             if isempty(this.id), return; end
             KalmanFilter_(this.id, 'delete');

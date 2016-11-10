@@ -17,7 +17,7 @@ classdef BackgroundSubtractorMOG2 < handle
     % > background subtraction". In Pattern Recognition, 2004. ICPR 2004.
     % > Proceedings of the 17th International Conference on, volume 2,
     % > pages 28-31. IEEE, 2004.
-    % > http://www.zoranz.net/Publications/zivkovic2004ICPR.pdf.
+    % > [PDF](http://www.zoranz.net/Publications/zivkovic2004ICPR.pdf).
     %
     % [Zivkovic2006]:
     % > Zoran Zivkovic and Ferdinand van der Heijden. "Efficient adaptive
@@ -125,7 +125,9 @@ classdef BackgroundSubtractorMOG2 < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.BackgroundSubtractorMOG2
+            %    bs.delete()
+            %
+            % See also: cv.BackgroundSubtractorMOG2
             %
             if isempty(this.id), return; end
             BackgroundSubtractorMOG2_(this.id, 'delete');
@@ -187,11 +189,13 @@ classdef BackgroundSubtractorMOG2 < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the Algorithm is empty.
+            %EMPTY  Returns true if the algorithm is empty
             %
-            %    obj.empty()
+            %    b = obj.empty()
             %
-            % (e.g. in the very beginning or after unsuccessful read).
+            % ## Output
+            % * __b__ Returns true if the algorithm is empty (e.g. in the very
+            %       beginning or after unsuccessful read).
             %
             % See also: cv.BackgroundSubtractorMOG2.clear
             %

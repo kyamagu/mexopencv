@@ -1,8 +1,8 @@
 %DISTANCETRANSFORM  Calculates the distance to the closest zero pixel for each pixel of the source image
 %
-%     dst = cv.distanceTransform(src)
-%     [dst, labels] = cv.distanceTransform(src)
-%     [...] = cv.distanceTransform(..., 'OptionName',optionValue, ...)
+%    dst = cv.distanceTransform(src)
+%    [dst, labels] = cv.distanceTransform(src)
+%    [...] = cv.distanceTransform(..., 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __src__ 8-bit, single-channel (binary) source image.

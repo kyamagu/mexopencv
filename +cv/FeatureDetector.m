@@ -51,7 +51,7 @@ classdef FeatureDetector < handle
             % Refer to the constructors of each feature detector for a
             % list of supported options.
             %
-            % See also cv.FeatureDetector.detect
+            % See also: cv.FeatureDetector.detect
             %
             if nargin < 1, detectorType = 'FastFeatureDetector'; end
             this.Type = detectorType;
@@ -61,7 +61,9 @@ classdef FeatureDetector < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.FeatureDetector
+            %    obj.delete()
+            %
+            % See also: cv.FeatureDetector
             %
             if isempty(this.id), return; end
             FeatureDetector_(this.id, 'delete');

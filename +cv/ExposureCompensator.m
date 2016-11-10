@@ -61,6 +61,8 @@ classdef ExposureCompensator < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.ExposureCompensator
             %
             if isempty(this.id), return; end

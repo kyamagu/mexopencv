@@ -27,7 +27,7 @@ classdef WBDetector < handle
     % [Sochman05]:
     % > J. Sochman and J. Matas. "WaldBoost - Learning for Time Constrained
     % > Sequential Detection", IEEE Conference on CVPR 2005, Vol 2, p. 150-156
-    % > https://dspace.cvut.cz/bitstream/handle/10467/9494/2005-Waldboost-learning-for-time-constrained-sequential-detection.pdf?sequence=1
+    % > [PDF](https://dspace.cvut.cz/bitstream/handle/10467/9494/2005-Waldboost-learning-for-time-constrained-sequential-detection.pdf?sequence=1)
     %
     % See also: cv.WBDetector.WBDetector, cv.WBDetector.detect,
     %  detectPeopleACF
@@ -51,6 +51,8 @@ classdef WBDetector < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    detector.delete()
             %
             % See also: cv.WBDetector
             %

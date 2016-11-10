@@ -26,9 +26,9 @@
 %
 % The function calculates a gradient orientation at each pixel `(x,y)` as:
 %
-%     orientation(x,y) = arctan((dmhi / dy) / (dmhi / dx))
+%    orientation(x,y) = arctan((dmhi / dy) / (dmhi / dx))
 %
-% In fact, fastAtan2() and phase() are used so that the computed angle is
+% In fact, `fastAtan2` and `phase` are used so that the computed angle is
 % measured in degrees and covers the full range 0..360. Also, the mask is
 % filled to indicate pixels where the computed angle is valid.
 %

@@ -99,7 +99,7 @@
 % `R2`, can then be passed to cv.initUndistortRectifyMap to initialize the
 % rectification map for each camera.
 %
-% See the output of the calibration_demo.m sample. Some red horizontal lines
+% See the output of the `calibration_demo.m` sample. Some red horizontal lines
 % pass through the corresponding image regions. This means that the images are
 % well rectified, which is what most stereo correspondence algorithms rely on.
 % The green rectangles are `roi1` and `roi2`. You see that their interiors are

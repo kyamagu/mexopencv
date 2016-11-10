@@ -49,23 +49,23 @@ classdef RTrees < handle
     % ## References
     % [BreimanCutler]:
     % > Leo Breiman and Adele Cutler:
-    % > http://www.stat.berkeley.edu/users/breiman/RandomForests/
+    % > [Random Forests](http://www.stat.berkeley.edu/users/breiman/RandomForests/)
     %
     % [1]:
     % > Machine Learning, Wald I, July 2002.
-    % > http://stat-www.berkeley.edu/users/breiman/wald2002-1.pdf
+    % > [PDF](http://www.stat.berkeley.edu/users/breiman/wald2002-1.pdf)
     %
     % [2]:
     % > Looking Inside the Black Box, Wald II, July 2002.
-    % > http://stat-www.berkeley.edu/users/breiman/wald2002-2.pdf
+    % > [PDF](http://www.stat.berkeley.edu/users/breiman/wald2002-2.pdf)
     %
     % [3]:
     % > Software for the Masses, Wald III, July 2002.
-    % > http://stat-www.berkeley.edu/users/breiman/wald2002-3.pdf
+    % > [PDF](http://www.stat.berkeley.edu/users/breiman/wald2002-3.pdf)
     %
     % [4]:
-    % > And other articles from the web site
-    % > http://www.stat.berkeley.edu/users/breiman/RandomForests/cc_home.htm
+    % > And other articles from the
+    % > [web site](http://www.stat.berkeley.edu/users/breiman/RandomForests/cc_home.htm)
     %
     % See also: cv.RTrees.RTrees, cv.DTrees, cv.Boost, fitensemble
     %
@@ -212,6 +212,8 @@ classdef RTrees < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    model.delete()
+            %
             % See also: cv.RTrees
             %
             if isempty(this.id), return; end
@@ -229,8 +231,8 @@ classdef RTrees < handle
             % The method clear does the same job as the destructor: it
             % deallocates all the memory occupied by the class members. But
             % the object itself is not destructed and can be reused further.
-            % This method is called from the destructor, from the train() and
-            % load() methods, or even explicitly by the user.
+            % This method is called from the destructor, from the `train` and
+            % `load` methods, or even explicitly by the user.
             %
             % See also: cv.RTrees.empty, cv.RTrees.load
             %
@@ -568,7 +570,7 @@ classdef RTrees < handle
             %       set then it picks `PredictSum`, otherwise it picks
             %       `PredictMaxVote` by default). default true
             % * __PredictSum__ If true then return sum of votes instead of the
-            %         class label. default false
+            %       class label. default false
             % * __PredictMaxVote__ If true then return the class label with
             %       the max vote. default false
             %
@@ -600,7 +602,7 @@ classdef RTrees < handle
         end
 
         function roots = getRoots(this)
-            %GETROOS  Returns indices of root nodes
+            %GETROOTS  Returns indices of root nodes
             %
             %    roots = classifier.getRoots()
             %

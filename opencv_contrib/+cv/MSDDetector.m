@@ -16,7 +16,7 @@ classdef MSDDetector < handle
     % detectors of corner-like interest points, thereby achieving enhanced
     % repeatability, distinctiveness and localization accuracy.
     %
-    % ## References:
+    % ## References
     % [Tombari14]:
     % > Federico Tombari and Luigi Di Stefano.
     % > "Interest Points via Maximal Self-Dissimilarities".
@@ -59,6 +59,8 @@ classdef MSDDetector < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.MSDDetector
             %

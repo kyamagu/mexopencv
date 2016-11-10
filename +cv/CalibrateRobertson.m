@@ -49,7 +49,9 @@ classdef CalibrateRobertson < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.CalibrateRobertson
+            %    obj.delete()
+            %
+            % See also: cv.CalibrateRobertson
             %
             if isempty(this.id), return; end
             CalibrateRobertson_(this.id, 'delete');
@@ -104,7 +106,7 @@ classdef CalibrateRobertson < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the Algorithm is empty
+            %EMPTY  Returns true if the algorithm is empty
             %
             %    b = obj.empty()
             %

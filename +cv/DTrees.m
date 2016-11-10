@@ -236,6 +236,8 @@ classdef DTrees < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    model.delete()
+            %
             % See also: cv.DTrees
             %
             if isempty(this.id), return; end
@@ -253,8 +255,8 @@ classdef DTrees < handle
             % The method clear does the same job as the destructor: it
             % deallocates all the memory occupied by the class members. But
             % the object itself is not destructed and can be reused further.
-            % This method is called from the destructor, from the train() and
-            % load() methods, or even explicitly by the user.
+            % This method is called from the destructor, from the `train` and
+            % `load` methods, or even explicitly by the user.
             %
             % See also: cv.DTrees.empty, cv.DTrees.load
             %
@@ -593,7 +595,7 @@ classdef DTrees < handle
             %       set then it picks `PredictSum`, otherwise it picks
             %       `PredictMaxVote` by default). default true
             % * __PredictSum__ If true then return sum of votes instead of the
-            %         class label. default false
+            %       class label. default false
             % * __PredictMaxVote__ If true then return the class label with
             %       the max vote. default false
             %
@@ -610,7 +612,7 @@ classdef DTrees < handle
     %% DTrees
     methods
         function roots = getRoots(this)
-            %GETROOS  Returns indices of root nodes
+            %GETROOTS  Returns indices of root nodes
             %
             %    roots = classifier.getRoots()
             %

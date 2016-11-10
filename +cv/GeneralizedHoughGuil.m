@@ -74,7 +74,9 @@ classdef GeneralizedHoughGuil < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.GeneralizedHoughGuil
+            %    obj.delete()
+            %
+            % See also: cv.GeneralizedHoughGuil
             %
             if isempty(this.id), return; end
             GeneralizedHoughGuil_(this.id, 'delete');
@@ -139,7 +141,7 @@ classdef GeneralizedHoughGuil < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the Algorithm is empty
+            %EMPTY  Returns true if the algorithm is empty
             %
             %    b = obj.empty()
             %
@@ -186,9 +188,9 @@ classdef GeneralizedHoughGuil < handle
             %
             % ## Output
             % * __positions__ Cell array of 4-element vectors, each of the
-            %        form: `[posx, posy, scale, angle]`
+            %       form: `[posx, posy, scale, angle]`
             % * __votes__ Cell array of 3-element vectors, of the same length
-            %        as `positions`.
+            %       as `positions`.
             %
             [positions,votes] = GeneralizedHoughGuil_(this.id, 'detect', varargin{:});
         end

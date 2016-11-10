@@ -13,32 +13,32 @@
 %
 % ## Output
 % * __labels__ Integer array that stores the cluster indices for every
-%        sample.
+%       sample.
 % * __centers__ Output matrix of the cluster centers, one row per each
-%        cluster center.
+%       cluster center.
 % * __compactness__ Measure of compactness. See below.
 %
 % ## Options
 % * __Criteria__ The algorithm termination criteria, that is, the maximum
-%        number of iterations and/or the desired accuracy. The accuracy is
-%        specified as `criteria.epsilon`. As soon as each of the cluster
-%        centers moves by less than `criteria.epsilon` on some iteration, the
-%        algorithm stops. default
-%        `struct('type','Count+EPS', 'maxCount',100, 'epsilon',eps('float'))`
+%       number of iterations and/or the desired accuracy. The accuracy is
+%       specified as `criteria.epsilon`. As soon as each of the cluster
+%       centers moves by less than `criteria.epsilon` on some iteration, the
+%       algorithm stops. default
+%       `struct('type','Count+EPS', 'maxCount',100, 'epsilon',eps('float'))`
 % * __Attempts__ The number of times the algorithm is executed using
-%        different initial labelings. The algorithm returns the labels that
-%        yield the best compactness (see the last function parameter).
-%        default 10.
+%       different initial labelings. The algorithm returns the labels that
+%       yield the best compactness (see the last function parameter).
+%       default 10.
 % * __Initialization__ Method to initialize seeds. One of the followings:
-%     * 'Random'  Select random initial centers in each attempt. (default)
-%     * 'PP'      Use kmeans++ center initialization by Arthur and
-%                  Vassilvitskii [Arthur2007].
+%       * __Random__ Select random initial centers in each attempt. (default)
+%       * __PP__ Use kmeans++ center initialization by Arthur and
+%             Vassilvitskii [Arthur2007].
 % * __InitialLabels__ Integer array that stores the initial cluster indices
-%        for every sample. During the first (and possibly the only) attempt,
-%        kmeans uses the user-supplied labels instead of computing them from
-%        the initial centers. For the second and further attempts, it uses
-%        the random or semi-random centers. Use one of the `Initialization`
-%        methods to specify the exact method. Not set by default.
+%       for every sample. During the first (and possibly the only) attempt,
+%       kmeans uses the user-supplied labels instead of computing them from
+%       the initial centers. For the second and further attempts, it uses
+%       the random or semi-random centers. Use one of the `Initialization`
+%       methods to specify the exact method. Not set by default.
 %
 % The function cv.kmeans implements a k-means algorithm that finds the centers
 % of `K` clusters and groups the input samples around the clusters. As an

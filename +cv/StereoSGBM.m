@@ -98,8 +98,8 @@ classdef StereoSGBM < handle
             %       The value is always greater than zero. In the current
             %       implementation, this parameter must be divisible by 16.
             %       default 64
-            % * __BlockSize__ Matched block size. It must be an odd number
-            %       >=1. Normally, it should be somewhere in the 3..11 range.
+            % * __BlockSize__ Matched block size. It must be an odd number >=1.
+            %       Normally, it should be somewhere in the 3..11 range.
             %       default 7
             % * __P1__ The first parameter controlling the disparity
             %       smoothness. See `P2`. default 0 (which uses 2).
@@ -149,7 +149,9 @@ classdef StereoSGBM < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.StereoSGBM
+            %    bm.delete()
+            %
+            % See also: cv.StereoSGBM
             %
             if isempty(this.id), return; end
             StereoSGBM_(this.id, 'delete');

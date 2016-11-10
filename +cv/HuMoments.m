@@ -3,13 +3,13 @@
 %    hu = cv.HuMoments(mo)
 %
 % ## Input
-% * __mo__ Input moments computed with cv.moments().
+% * __mo__ Input moments computed with cv.moments
 %
 % ## Output
 % * __hu__ Output Hu invariants, a vector of length 7.
 %
 % The function calculates seven Hu invariants (introduced in [Hu62]; see also
-% http://en.wikipedia.org/wiki/Image_moment), defined as:
+% [Image moment](http://en.wikipedia.org/wiki/Image_moment)), defined as:
 %
 %    hu[0] =  eta_20 + eta_02
 %    hu[1] = (eta_20 - eta_02)^2 + 4*eta_11^2

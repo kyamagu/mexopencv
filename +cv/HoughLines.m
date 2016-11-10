@@ -31,8 +31,8 @@
 %
 % The function implements the standard or standard multi-scale Hough transform
 % algorithm for line detection. See
-% http://homepages.inf.ed.ac.uk/rbf/HIPR2/hough.htm
-% for a good explanation of Hough transform.
+% [this](http://homepages.inf.ed.ac.uk/rbf/HIPR2/hough.htm) for a good
+% explanation of Hough transform.
 %
 % See also: cv.HoughLinesP, hough, houghpeaks, houghlines, vision.HoughLines
 %

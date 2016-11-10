@@ -1,5 +1,5 @@
 classdef TransientAreasSegmentationModule < handle
-    %TRANSIENTAREASSEGMENTATIONMODULE  class which provides a transient/moving areas segmentation module
+    %TRANSIENTAREASSEGMENTATIONMODULE  Class which provides a transient/moving areas segmentation module
     %
     % A transient areas (spatio-temporal events) segmentation tool to use at
     % the output of the Retina.
@@ -49,6 +49,8 @@ classdef TransientAreasSegmentationModule < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.TransientAreasSegmentationModule
             %
             if isempty(this.id), return; end
@@ -63,7 +65,8 @@ classdef TransientAreasSegmentationModule < handle
             %
             %    obj.clear()
             %
-            % See also: cv.TransientAreasSegmentationModule.empty, cv.TransientAreasSegmentationModule.load
+            % See also: cv.TransientAreasSegmentationModule.empty,
+            %  cv.TransientAreasSegmentationModule.load
             %
             TransientAreasSegmentationModule_(this.id, 'clear');
         end
@@ -77,7 +80,8 @@ classdef TransientAreasSegmentationModule < handle
             % * __b__ Returns true if the detector object is empty (e.g in the
             %       very beginning or after unsuccessful read).
             %
-            % See also: cv.TransientAreasSegmentationModule.clear, cv.TransientAreasSegmentationModule.load
+            % See also: cv.TransientAreasSegmentationModule.clear,
+            %  cv.TransientAreasSegmentationModule.load
             %
             b = TransientAreasSegmentationModule_(this.id, 'empty');
         end
@@ -135,7 +139,8 @@ classdef TransientAreasSegmentationModule < handle
             % * __name__ This string is used as top level XML/YML node tag
             %       when the object is saved to a file or string.
             %
-            % See also: cv.TransientAreasSegmentationModule.save, cv.TransientAreasSegmentationModule.load
+            % See also: cv.TransientAreasSegmentationModule.save,
+            %  cv.TransientAreasSegmentationModule.load
             %
             name = TransientAreasSegmentationModule_(this.id, 'getDefaultName');
         end
@@ -144,7 +149,7 @@ classdef TransientAreasSegmentationModule < handle
     %% TransientAreasSegmentationModule
     methods
         function sz = getSize(this)
-            %GETINPUTSIZE  return the size of the manage input and output images
+            %GETSIZE  Return the size of the manage input and output images
             %
             %    sz = obj.getSize()
             %
@@ -157,7 +162,7 @@ classdef TransientAreasSegmentationModule < handle
         end
 
         function setup(this, segmentationParameterFile, varargin)
-            %SETUP  try to open an XML segmentation parameters file to adjust current segmentation instance setup
+            %SETUP  Try to open an XML segmentation parameters file to adjust current segmentation instance setup
             %
             %    obj.setup(segmentationParameterFile)
             %    obj.setup(segmentationParameterFile, 'OptionName',optionValue, ...)
@@ -216,7 +221,7 @@ classdef TransientAreasSegmentationModule < handle
         end
 
         function params = getParameters(this)
-            %GETPARAMETERS  return the current parameters setup
+            %GETPARAMETERS  Return the current parameters setup
             %
             %    params = obj.getParameters()
             %
@@ -230,7 +235,7 @@ classdef TransientAreasSegmentationModule < handle
         end
 
         function str = printSetup(this)
-            %PRINTSETUP  parameters setup display method
+            %PRINTSETUP  Parameters setup display method
             %
             %    str = obj.printSetup()
             %
@@ -244,7 +249,7 @@ classdef TransientAreasSegmentationModule < handle
         end
 
         function varargout = write(this, fs)
-            %WRITE  write xml/yml formated parameters information
+            %WRITE  Write xml/yml formated parameters information
             %
             %    obj.write(fs)
             %    str = obj.write(fs)
@@ -255,8 +260,8 @@ classdef TransientAreasSegmentationModule < handle
             %
             % ## Output
             % * __str__ optional output. If requested, the parameters are
-            %        persisted to a string in memory instead of writing to
-            %        disk.
+            %       persisted to a string in memory instead of writing to
+            %       disk.
             %
             % See also: cv.TransientAreasSegmentationModule.setup
             %
@@ -264,7 +269,7 @@ classdef TransientAreasSegmentationModule < handle
         end
 
         function run(this, inputToSegment)
-            %RUN  main processing method
+            %RUN  Main processing method
             %
             %    obj.run(inputToSegment)
             %    obj.run(inputToSegment, 'OptionName',optionValue, ...)
@@ -287,7 +292,7 @@ classdef TransientAreasSegmentationModule < handle
         end
 
         function transientAreas = getSegmentationPicture(this)
-            %GETSEGMENTATIONPICTURE  access function
+            %GETSEGMENTATIONPICTURE  Access function
             %
             %    transientAreas = obj.getSegmentationPicture()
             %
@@ -302,7 +307,7 @@ classdef TransientAreasSegmentationModule < handle
         end
 
         function clearAllBuffers(this)
-            %CLEARALLBUFFERS  cleans all the buffers of the instance
+            %CLEARALLBUFFERS  Cleans all the buffers of the instance
             %
             %    obj.clearAllBuffers()
             %

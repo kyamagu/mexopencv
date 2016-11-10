@@ -11,15 +11,15 @@
 % The function equalizes the histogram of the input image using the following
 % algorithm:
 %
-%   1. Calculate the histogram `H` for `src`.
+% 1. Calculate the histogram `H` for `src`.
 %
-%   2. Normalize the histogram so that the sum of histogram bins is 255.
+% 2. Normalize the histogram so that the sum of histogram bins is 255.
 %
-%   3. Compute the integral of the histogram:
+% 3. Compute the integral of the histogram:
 %
 %        Hp(i) = sum_{0 <= j < i} H(j)
 %
-%   4. Transform the image using `Hp` as a look-up table:
+% 4. Transform the image using `Hp` as a look-up table:
 %
 %        dst(x,y) = Hp(src(x,y))
 %

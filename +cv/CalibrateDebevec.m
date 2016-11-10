@@ -54,7 +54,9 @@ classdef CalibrateDebevec < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.CalibrateDebevec
+            %    obj.delete()
+            %
+            % See also: cv.CalibrateDebevec
             %
             if isempty(this.id), return; end
             CalibrateDebevec_(this.id, 'delete');
@@ -97,7 +99,7 @@ classdef CalibrateDebevec < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the Algorithm is empty
+            %EMPTY  Returns true if the algorithm is empty
             %
             %    b = obj.empty()
             %

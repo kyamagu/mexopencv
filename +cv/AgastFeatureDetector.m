@@ -3,12 +3,12 @@ classdef AgastFeatureDetector < handle
     %
     % Detects corners using the AGAST algorithm by [mair2010].
     %
-    % ## References:
+    % ## References
     % [mair2010]:
     % > E. Mair, G. D. Hager, D. Burschka, M. Suppa, and G. Hirzinger.
     % > "Adaptive and generic corner detection based on the accelerated segment test".
     % > In "European Conference on Computer Vision (ECCV'10)", Sept 2010.
-    % > (http://www6.in.tum.de/Main/ResearchAgast)
+    % > [Link](http://www6.in.tum.de/Main/ResearchAgast).
     %
     % See also: cv.AGAST, cv.FAST, cv.FeatureDetector
     %
@@ -49,7 +49,7 @@ classdef AgastFeatureDetector < handle
             %       default 10
             % * __NonmaxSuppression__ See
             %       cv.AgastFeatureDetector.NonmaxSuppression, default true
-            % * __Type__ See cv.AgastFeatureDetector.Type, default 'OAST_9_16'
+            % * __Type__ See cv.AgastFeatureDetector.Type, default `OAST_9_16`
             %
             % See also: cv.AgastFeatureDetector.detect
             %
@@ -58,6 +58,8 @@ classdef AgastFeatureDetector < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.AgastFeatureDetector
             %

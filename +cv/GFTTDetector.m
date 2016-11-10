@@ -4,18 +4,18 @@ classdef GFTTDetector < handle
     % The function finds the most prominent corners in the image or in the
     % specified image region, as described in [Shi94]:
     %
-    %  1. Function calculates the corner quality measure at every source image
-    %     pixel using the cv.cornerMinEigenVal or cv.cornerHarris.
-    %  2. Function performs a non-maximum suppression (the local maximums in
-    %     `3x3` neighborhood are retained).
-    %  3. The corners with the minimal eigenvalue less than
-    %     `QualityLevel * max_{x,y}(qualityMeasureMap(x,y))` are rejected.
-    %  4. The remaining corners are sorted by the quality measure in the
-    %     descending order.
-    %  5. Function throws away each corner for which there is a stronger
-    %     corner at a distance less than `maxDistance`.
+    % 1. Function calculates the corner quality measure at every source image
+    %    pixel using the cv.cornerMinEigenVal or cv.cornerHarris.
+    % 2. Function performs a non-maximum suppression (the local maximums in
+    %    `3x3` neighborhood are retained).
+    % 3. The corners with the minimal eigenvalue less than
+    %    `QualityLevel * max_{x,y}(qualityMeasureMap(x,y))` are rejected.
+    % 4. The remaining corners are sorted by the quality measure in the
+    %    descending order.
+    % 5. Function throws away each corner for which there is a stronger
+    %    corner at a distance less than `maxDistance`.
     %
-    % ## References:
+    % ## References
     % [Shi94]:
     % > Jianbo Shi and Carlo Tomasi. "Good features to track".
     % > In Computer Vision and Pattern Recognition, 1994. Proceedings CVPR'94.,
@@ -90,6 +90,8 @@ classdef GFTTDetector < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.GFTTDetector
             %

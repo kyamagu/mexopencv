@@ -44,7 +44,7 @@ classdef DTFilter < handle
             %
             % For more details about Domain Transform filter parameters, see
             % the original article [Gastal11] and Domain Transform filter
-            % homepage: http://www.inf.ufrgs.br/~eslgastal/DomainTransform/
+            % [homepage](http://www.inf.ufrgs.br/~eslgastal/DomainTransform/).
             %
             % See also: cv.DTFilter.filter
             %
@@ -53,6 +53,8 @@ classdef DTFilter < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.DTFilter
             %

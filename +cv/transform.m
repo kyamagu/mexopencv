@@ -4,12 +4,12 @@
 %
 % ## Input
 % * __src__ Source array that must have as many channels (1 to 4) as columns
-%        of `mtx` or columns-1 of `mtx`
+%       of `mtx` or columns-1 of `mtx`
 % * __mtx__ floating-point transformation matrix.
 %
 % ## Output
 % * __dst__ Destination array of the same row/column size and depth as `src`.
-%        It has as many channels as rows of `mtx`
+%       It has as many channels as rows of `mtx`
 %
 % The function cv.transform performs the matrix transformation of every
 % element of the array `src` and stores the results in `dst`:

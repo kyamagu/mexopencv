@@ -39,7 +39,7 @@ classdef SuperpixelSEEDS < handle
             % * **num_superpixels** Desired number of superpixels. Note that
             %       the actual number may be smaller due to restrictions
             %       (depending on the image size and `num_levels`). Use
-            %       cv.SuperpixelSEEDS.getNumberOfSuperpixels() to get the
+            %       cv.SuperpixelSEEDS.getNumberOfSuperpixels to get the
             %       actual number.
             % * **num_levels** Number of block levels. The more levels, the
             %       more accurate is the segmentation, but needs more memory
@@ -69,7 +69,7 @@ classdef SuperpixelSEEDS < handle
             % level. An example of initialization of 4 block levels is
             % illustrated in the following figure.
             %
-            % <<http://docs.opencv.org/3.1.0/superpixels_blocks.png>>
+            % ![image](http://docs.opencv.org/3.1.0/superpixels_blocks.png)
             %
             % See also: cv.SuperpixelSEEDS.iterate
             %
@@ -79,6 +79,8 @@ classdef SuperpixelSEEDS < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.SuperpixelSEEDS
             %
@@ -215,7 +217,7 @@ classdef SuperpixelSEEDS < handle
             % proposing pixel updates. An illustrative example can be seen
             % below.
             %
-            % <<http://docs.opencv.org/3.1.0/superpixels_blocks2.png>>
+            % ![image](http://docs.opencv.org/3.1.0/superpixels_blocks2.png)
             %
             % This function can be called again for other images without the
             % need of initializing the algorithm with constructor. This save
@@ -267,7 +269,7 @@ classdef SuperpixelSEEDS < handle
             % The function return the boundaries of the superpixel
             % segmentation.
             %
-            % <<http://docs.opencv.org/3.1.0/superpixels_demo.png>>
+            % ![image](http://docs.opencv.org/3.1.0/superpixels_demo.png)
             %
             % See also: cv.SuperpixelSEEDS.iterate, boundarymask
             %

@@ -62,7 +62,9 @@ classdef TonemapMantiuk < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.TonemapMantiuk
+            %    obj.delete()
+            %
+            % See also: cv.TonemapMantiuk
             %
             if isempty(this.id), return; end
             TonemapMantiuk_(this.id, 'delete');
@@ -102,7 +104,7 @@ classdef TonemapMantiuk < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the Algorithm is empty
+            %EMPTY  Returns true if the algorithm is empty
             %
             %    b = obj.empty()
             %

@@ -9,7 +9,8 @@
 % ## Output
 % * __psnr__ Computed signal-to-noise ratio
 %
-% See http://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio for details.
+% See [PSNR](http://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio] for
+% details.
 %
 % See also: psnr, immse, ssim
 %

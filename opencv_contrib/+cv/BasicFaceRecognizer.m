@@ -9,12 +9,12 @@ classdef BasicFaceRecognizer < handle
     %
     % Every `FaceRecognizer` supports the:
     %
-    % * **Training** of a face recognizer with `train` on a given set of
+    % * __Training__ of a face recognizer with `train` on a given set of
     %   images (your face database!).
-    % * **Prediction** of a given sample image, that means a face. The image
+    % * __Prediction__ of a given sample image, that means a face. The image
     %   is given as a matrix.
-    % * **Loading/Saving** the model state from/to a given XML or YAML.
-    % * **Setting/Getting labels info**, that is stored as a string. String
+    % * __Loading/Saving__ the model state from/to a given XML or YAML.
+    % * __Setting/Getting labels info__, that is stored as a string. String
     %   labels info is useful for keeping names of the recognized people.
     %
     % ### Setting the Thresholds
@@ -116,12 +116,12 @@ classdef BasicFaceRecognizer < handle
             %       distance to the nearest neighbor is larger than the
             %       threshold, the prediction returns -1. default `realmax`
             %
-            % ### Notes:
+            % ### Notes
             %
             % - Training and prediction must be done on grayscale images, use
             %   cv.cvtColor to convert between the color spaces.
-            % - **THE EIGENFACES/FISHERFACES METHOD MAKES THE ASSUMPTION, THAT
-            %   THE TRAINING AND TEST IMAGES ARE OF EQUAL SIZE.** (caps-lock,
+            % - THE EIGENFACES/FISHERFACES METHOD MAKES THE ASSUMPTION, THAT
+            %   THE TRAINING AND TEST IMAGES ARE OF EQUAL SIZE. (caps-lock,
             %   because I got so many mails asking for this). You have to make
             %   sure your input data has the correct shape, else a meaningful
             %   exception is thrown. Use cv.resize to resize the images.
@@ -134,6 +134,8 @@ classdef BasicFaceRecognizer < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.BasicFaceRecognizer
             %

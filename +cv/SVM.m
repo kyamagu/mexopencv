@@ -31,12 +31,12 @@ classdef SVM < handle
     % [LibSVM]:
     % > C.-C. Chang and C.-J. Lin. "LIBSVM: a library for support vector machines",
     % > ACM Transactions on Intelligent Systems and Technology, 2:27:1-27:27, 2011.
-    % > (http://www.csie.ntu.edu.tw/~cjlin/papers/libsvm.pdf)
+    % > [PDF](http://www.csie.ntu.edu.tw/~cjlin/papers/libsvm.pdf)
     %
     % [Burges98]:
     % > C. Burges. "A tutorial on support vector machines for pattern recognition",
     % > Knowledge Discovery and Data Mining 2(2), 1998
-    % > (http://citeseer.ist.psu.edu/burges98tutorial.html)
+    % > [CiteSeerX](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.117.3731)
     %
     % See also: cv.SVM.SVM, cv.SVM.train, cv.SVM.predict, cv.SVM.trainAuto,
     %  fitcsvm
@@ -50,7 +50,7 @@ classdef SVM < handle
     properties (Dependent)
         % Type of a SVM formulation.
         %
-        % Default value is 'C_SVC'. Possible values:
+        % Default value is `C_SVC`. Possible values:
         %
         % * **C_SVC** C-Support Vector Classification. n-class classification
         %       (`n>=2`), allows imperfect separation of classes with penalty
@@ -104,17 +104,17 @@ classdef SVM < handle
         Coef0
         % Parameter `C` of a SVM optimization problem.
         %
-        % For 'C_SVC', 'EPS_SVR', or 'NU_SVR'. Default 1
+        % For `C_SVC`, `EPS_SVR`, or `NU_SVR`. Default 1
         C
         % Parameter `nu` of a SVM optimization problem.
         %
-        % For 'NU_SVC', 'ONE_CLASS' or 'NU_SVR'. Default value is 0.
+        % For `NU_SVC`, `ONE_CLASS` or `NU_SVR`. Default value is 0.
         Nu
         % Parameter `epsilon` of a SVM optimization problem.
         %
-        % For 'EPS_SVR'. Default value is 0.
+        % For `EPS_SVR`. Default value is 0.
         P
-        % Optional weights in the 'C_SVC' problem, assigned to particular
+        % Optional weights in the `C_SVC` problem, assigned to particular
         % classes.
         %
         % They are multiplied by `C` so the parameter `C` of class `i` becomes
@@ -163,6 +163,8 @@ classdef SVM < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    model.delete()
+            %
             % See also: cv.SVM
             %
             if isempty(this.id), return; end
@@ -180,8 +182,8 @@ classdef SVM < handle
             % The method clear does the same job as the destructor: it
             % deallocates all the memory occupied by the class members. But
             % the object itself is not destructed and can be reused further.
-            % This method is called from the destructor, from the train() and
-            % load() methods, or even explicitly by the user.
+            % This method is called from the destructor, from the `train` and
+            % `load` methods, or even explicitly by the user.
             %
             % See also: cv.SVM.empty, cv.SVM.load
             %
@@ -305,9 +307,9 @@ classdef SVM < handle
             %    b = model.isClassifier()
             %
             % ## Output
-            % * __b__ Returns true if the model is a classifier ('C_SVC',
-            %       'NU_SVC', or 'ONE_CLASS'), false if the model is a
-            %       regressor ('EPS_SVR', 'NU_SVR').
+            % * __b__ Returns true if the model is a classifier (`C_SVC`,
+            %       `NU_SVC`, or `ONE_CLASS`), false if the model is a
+            %       regressor (`EPS_SVR`, `NU_SVR`).
             %
             % See also: cv.SVM.isTrained
             %
@@ -533,12 +535,12 @@ classdef SVM < handle
             %       convenience, you can set the individual flag options
             %       below, instead of directly setting bits here. default 0
             % * __RawOutput__ makes the method return the raw results (the
-            %      sum), not the class label. This flag specifies the type of
-            %      the return value. If true and the problem is 2-class
-            %      classification then the method returns the decision
-            %      function value that is signed distance to the margin, else
-            %      the function returns a class label (classification) or
-            %      estimated function value (regression). default false
+            %       sum), not the class label. This flag specifies the type of
+            %       the return value. If true and the problem is 2-class
+            %       classification then the method returns the decision
+            %       function value that is signed distance to the margin, else
+            %       the function returns a class label (classification) or
+            %       estimated function value (regression). default false
             %
             % The function is parallelized with the TBB library.
             %

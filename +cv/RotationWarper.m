@@ -60,6 +60,8 @@ classdef RotationWarper < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.RotationWarper
             %
             if isempty(this.id), return; end

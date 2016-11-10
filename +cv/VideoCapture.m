@@ -25,9 +25,9 @@ classdef VideoCapture < handle
     % initialization. To avoid unexpected crash, pause for a few seconds after
     % the initialization of cv.VideoCapture object.
     %
-    % See also: cv.VideoCapture.VideoCapture, cv.VideoCapture.read
-    %   VideoReader, mmreader, aviread, webcam, videoinput, imaq.VideoDevice,
-    %   vision.VideoFileReader
+    % See also: cv.VideoCapture.VideoCapture, cv.VideoCapture.read,
+    %  VideoReader, mmreader, aviread, webcam, videoinput, imaq.VideoDevice,
+    %  vision.VideoFileReader
     %
 
     properties (SetAccess = private)
@@ -155,6 +155,8 @@ classdef VideoCapture < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    cap.delete()
             %
             % See also: cv.VideoCapture.release
             %

@@ -13,19 +13,20 @@
 %
 % ## Options
 % * __Method__ solution (matrix inversion) method, default 'LU'. One of the
-%     following matrix decomposition types:
-%     * __LU__ Gaussian elimination with the optimal pivot element chosen.
-%     * __SVD__ singular value decomposition (SVD) method; the system can be
-%           over-defined and/or the matrix `src1` can be singular
-%     * __EIG__ eigenvalue decomposition; the matrix `src1` must be symmetrical
-%     * __Cholesky__ Cholesky LLT factorization; the matrix `src1` must be
-%           symmetrical and positively defined
-%     * __QR__ QR factorization; the system can be over-defined and/or the
-%           matrix `src1` can be singular
-% * __IsNormal__ this flag can be used together with any of the previous methods;
-%       it means that the normal equations `src1' * src1 * dst = src1' * src2`
-%       are solved instead of the original system `src1 * dst = src2`.
-%       defaul false
+%       following matrix decomposition types:
+%       * __LU__ Gaussian elimination with the optimal pivot element chosen.
+%       * __SVD__ singular value decomposition (SVD) method; the system can be
+%             over-defined and/or the matrix `src1` can be singular.
+%       * __EIG__ eigenvalue decomposition; the matrix `src1` must be
+%             symmetrical.
+%       * __Cholesky__ Cholesky LLT factorization; the matrix `src1` must be
+%             symmetrical and positively defined.
+%       * __QR__ QR factorization; the system can be over-defined and/or the
+%             matrix `src1` can be singular.
+% * __IsNormal__ this flag can be used together with any of the previous
+%       methods; it means that the normal equations
+%       `src1' * src1 * dst = src1' * src2` are solved instead of the original
+%       system `src1 * dst = src2`. defaul false
 %
 % The function cv.solve solves a linear system or least-squares problem (the
 % latter is possible with 'SVD' or 'QR' methods, or by specifying the flag

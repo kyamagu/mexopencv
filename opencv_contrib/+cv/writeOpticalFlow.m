@@ -11,7 +11,7 @@
 % * __success__ true on success, false otherwise.
 %
 % Function for writing .flo files in "Middlebury" format, see:
-% http://vision.middlebury.edu/flow/code/flow-code/README.txt
+% [Middlebury](http://vision.middlebury.edu/flow/code/flow-code/README.txt)
 %
 % The function stores a flow field in a file, returns true on success, false
 % otherwise. The flow field must be a 2-channel, `single` floating-point

@@ -1,6 +1,6 @@
 %CONVEXITYDEFECTS  Finds the convexity defects of a contour
 %
-%    defects = cv.convexityDefects(contour, convexhull);
+%    defects = cv.convexityDefects(contour, convexhull)
 %
 % ## Input
 % * __contour__ Input contour. 2D point set, stored in numeric array

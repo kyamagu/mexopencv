@@ -6,7 +6,7 @@
 %
 % ## Input
 % * __probImage__ Back projection of the object histogram. See
-%        cv.calcBackProject for details.
+%       cv.calcBackProject for details.
 % * __window__ Initial search window `[x,y,w,h]`.
 %
 % ## Output
@@ -31,5 +31,5 @@
 % > Gary R Bradski. Computer vision face tracking for use in a perceptual
 % > user interface. 1998.
 %
-% See also: cv.meanShift. cv.calcBackProject, vision.HistogramBasedTracker
+% See also: cv.meanShift, cv.calcBackProject, vision.HistogramBasedTracker
 %

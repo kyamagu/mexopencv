@@ -1,4 +1,4 @@
-%INITWIDEANGLEPROJMAP  initializes maps for cv.remap for wide-angle
+%INITWIDEANGLEPROJMAP  Initializes maps for cv.remap for wide-angle
 %
 %    [map1, map2] = cv.initWideAngleProjMap(cameraMatrix, distCoeffs, imageSize, destImageWidth)
 %    [map1, map2, scale] = cv.initWideAngleProjMap(cameraMatrix, distCoeffs, imageSize, destImageWidth)

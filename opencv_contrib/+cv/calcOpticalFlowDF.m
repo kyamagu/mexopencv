@@ -12,7 +12,8 @@
 %       dimension.
 %
 % The class implements the DeepFlow optical flow algorithm described in
-% [Weinzaepfel2013]. See also http://lear.inrialpes.fr/src/deepmatching/ .
+% [Weinzaepfel2013]. See also
+% [DeepMatching](http://lear.inrialpes.fr/src/deepmatching/).
 % Parameters - class fields - are:
 %
 % * __Alpha__ Smoothness assumption weight. default 1.0

@@ -15,7 +15,7 @@
 %       * __Custom__ `{'Custom', nMarkers, markerSize, 'BaseDictionary',baseDict}`.
 %             Generates a new customizable marker dictionary. This creates a
 %             new dictionary composed by `nMarkers` markers and each markers
-% 		      composed by `markerSize*markerSize` bits. If `BaseDictionary` is
+%             composed by `markerSize*markerSize` bits. If `BaseDictionary` is
 %             provided, its markers are directly included and the rest are
 %             generated based on them. If the size of `baseDict` is higher
 %             than `nMarkers`, only the first `nMarkers` in `baseDict` are
@@ -38,58 +38,59 @@
 %
 % ## Options
 % * __DetectorParameters__ marker detection parameters. A struct of
-%     parameters for the detection process, with the following fields:
-%     * __adaptiveThreshWinSizeMin__ minimum window size for adaptive
-%         thresholding before finding contours (default 3).
-%     * __adaptiveThreshWinSizeMax__ maximum window size for adaptive
-%         thresholding before finding contours (default 23).
-%     * __adaptiveThreshWinSizeStep__ increments from
-%         `AdaptiveThreshWinSizeMin` to `AdaptiveThreshWinSizeMax` during the
-%         thresholding (default 10).
-%     * __adaptiveThreshConstant__ constant for adaptive thresholding before
-%         finding contours (default 7)
-%     * __minMarkerPerimeterRate__ determine minimum perimeter for marker
-%         contour to be detected. This is defined as a rate respect to the
-%         maximum dimension of the input image (default 0.03).
-%     * __maxMarkerPerimeterRate__ determine maximum perimeter for marker
-%         contour to be detected. This is defined as a rate respect to the
-%         maximum dimension of the input image (default 4.0).
-%     * __polygonalApproxAccuracyRate__ minimum accuracy during the polygonal
-%         approximation process to determine which contours are squares
-%         (default 0.03).
-%     * __minCornerDistanceRate__ minimum distance between corners for
-%         detected markers relative to its perimeter (default 0.05)
-%     * __minDistanceToBorder__ minimum distance of any corner to the image
-%         border for detected markers (in pixels) (default 3)
-%     * __minMarkerDistanceRate__ minimum mean distance beetween two marker
-%         corners to be considered similar, so that the smaller one is removed.
-%         The rate is relative to the smaller perimeter of the two markers
-%         (default 0.05).
-%     * __doCornerRefinement__ do subpixel refinement or not (default false).
-%     * __cornerRefinementWinSize__ window size for the corner refinement
-%         process (in pixels) (default 5).
-%     * __cornerRefinementMaxIterations__ maximum number of iterations for
-%         stop criteria of the corner refinement process (default 30).
-%     * __cornerRefinementMinAccuracy__ minimum error for the stop cristeria
-%         of the corner refinement process (default 0.1)
-%     * __markerBorderBits__ number of bits of the marker border, i.e. marker
-%         border width (default 1).
-%     * __perpectiveRemovePixelPerCell__ number of bits (per dimension) for
-%         each cell of the marker when removing the perspective (default 4).
-%     * __perspectiveRemoveIgnoredMarginPerCell__ width of the margin of pixels
-%         on each cell not considered for the determination of the cell bit.
-%         Represents the rate respect to the total size of the cell, i.e.
-%         `PerpectiveRemovePixelPerCell` (default 0.13)
-%     * __maxErroneousBitsInBorderRate__ maximum number of accepted erroneous
-%         bits in the border (i.e. number of allowed white bits in the border).
-%         Represented as a rate respect to the total number of bits per marker
-%         (default 0.35).
-%     * __minOtsuStdDev__ minimun standard deviation in pixels values during
-%         the decodification step to apply Otsu thresholding (otherwise, all
-%         the bits are set to 0 or 1 depending on mean higher than 128 or not)
-%         (default 5.0)
-%     * __errorCorrectionRate__error correction rate respect to the maximun
-%         error correction capability for each dictionary. (default 0.6).
+%       parameters for the detection process, with the following fields:
+%       * __adaptiveThreshWinSizeMin__ minimum window size for adaptive
+%             thresholding before finding contours (default 3).
+%       * __adaptiveThreshWinSizeMax__ maximum window size for adaptive
+%             thresholding before finding contours (default 23).
+%       * __adaptiveThreshWinSizeStep__ increments from
+%             `AdaptiveThreshWinSizeMin` to `AdaptiveThreshWinSizeMax` during
+%             the thresholding (default 10).
+%       * __adaptiveThreshConstant__ constant for adaptive thresholding before
+%             finding contours (default 7)
+%       * __minMarkerPerimeterRate__ determine minimum perimeter for marker
+%             contour to be detected. This is defined as a rate respect to the
+%             maximum dimension of the input image (default 0.03).
+%       * __maxMarkerPerimeterRate__ determine maximum perimeter for marker
+%             contour to be detected. This is defined as a rate respect to the
+%             maximum dimension of the input image (default 4.0).
+%       * __polygonalApproxAccuracyRate__ minimum accuracy during the
+%             polygonal approximation process to determine which contours are
+%             squares (default 0.03).
+%       * __minCornerDistanceRate__ minimum distance between corners for
+%             detected markers relative to its perimeter (default 0.05)
+%       * __minDistanceToBorder__ minimum distance of any corner to the image
+%             border for detected markers (in pixels) (default 3)
+%       * __minMarkerDistanceRate__ minimum mean distance beetween two marker
+%             corners to be considered similar, so that the smaller one is
+%             removed. The rate is relative to the smaller perimeter of the
+%             two markers (default 0.05).
+%       * __doCornerRefinement__ do subpixel refinement or not (default false).
+%       * __cornerRefinementWinSize__ window size for the corner refinement
+%             process (in pixels) (default 5).
+%       * __cornerRefinementMaxIterations__ maximum number of iterations for
+%             stop criteria of the corner refinement process (default 30).
+%       * __cornerRefinementMinAccuracy__ minimum error for the stop cristeria
+%             of the corner refinement process (default 0.1)
+%       * __markerBorderBits__ number of bits of the marker border, i.e.
+%             marker border width (default 1).
+%       * __perpectiveRemovePixelPerCell__ number of bits (per dimension) for
+%             each cell of the marker when removing the perspective
+%             (default 4).
+%       * __perspectiveRemoveIgnoredMarginPerCell__ width of the margin of
+%             pixels on each cell not considered for the determination of the
+%             cell bit. Represents the rate respect to the total size of the
+%             cell, i.e. `PerpectiveRemovePixelPerCell` (default 0.13)
+%       * __maxErroneousBitsInBorderRate__ maximum number of accepted
+%             erroneous bits in the border (i.e. number of allowed white bits
+%             in the border). Represented as a rate respect to the total
+%             number of bits per marker (default 0.35).
+%       * __minOtsuStdDev__ minimun standard deviation in pixels values during
+%             the decodification step to apply Otsu thresholding (otherwise,
+%             all the bits are set to 0 or 1 depending on mean higher than 128
+%             or not) (default 5.0)
+%       * __errorCorrectionRate__error correction rate respect to the maximum
+%             error correction capability for each dictionary. (default 0.6).
 %
 % ## Inputs for Predefined Dictionary
 % * __name__ name of predefined markers dictionaries/sets. Each dictionary
@@ -103,7 +104,7 @@
 %       * `7x7_50`, `7x7_100`, `7x7_250`, `7x7_1000`: 7x7 bits with
 %         (50|100|250|1000) markers.
 %       * `ArucoOriginal`: standard ArUco Library Markers.
-%            1024 markers, 5x5 bits, 0 minimum distance.
+%         1024 markers, 5x5 bits, 0 minimum distance.
 %
 % ## Inputs for Custom Dictionary
 % * __nMarkers__ number of markers in the dictionary.
@@ -152,13 +153,15 @@
 % project for Google Summer of Code 2015 (GSoC 15).
 %
 % ## References
-% [1]: S. Garrido-Jurado, R. Munoz-Salinas, F. J. Madrid-Cuevas, and
-% M. J. Marin-Jimenez. 2014. "Automatic generation and detection of highly
-% reliable fiducial markers under occlusion". Pattern Recogn. 47, 6
-% (June 2014), 2280-2292. DOI=10.1016/j.patcog.2014.01.005
+% [1]:
+% > S. Garrido-Jurado, R. Munoz-Salinas, F. J. Madrid-Cuevas, and
+% > M. J. Marin-Jimenez. 2014. "Automatic generation and detection of highly
+% > reliable fiducial markers under occlusion". Pattern Recogn. 47, 6
+% > (June 2014), 2280-2292. DOI=10.1016/j.patcog.2014.01.005
 %
-% [2]: ArUco: a minimal library for Augmented Reality applications
-% based on OpenCV, http://www.uco.es/investiga/grupos/ava/node/26
+% [2]:
+% > ArUco: a minimal library for Augmented Reality applications
+% > based on OpenCV, [ArUco](http://www.uco.es/investiga/grupos/ava/node/26)
 %
 % See also: cv.estimatePoseSingleMarkers, cv.estimatePoseBoard,
 %  cv.refineDetectedMarkers, cv.drawDetectedMarkers, cv.adaptiveThreshold,

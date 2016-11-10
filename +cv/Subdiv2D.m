@@ -10,15 +10,14 @@ classdef Subdiv2D < handle
     % Voronoi diagram. In the figure below, the Delaunay's triangulation is
     % marked with black lines and the Voronoi diagram with red lines.
     %
-    % <<https://github.com/opencv/opencv/blob/master/modules/imgproc/doc/pics/delaunay_voronoi.png>>
+    % ![image](https://github.com/opencv/opencv/raw/master/modules/imgproc/doc/pics/delaunay_voronoi.png)
     %
     % The subdivisions can be used for the 3D piece-wise transformation of a
     % plane, morphing, fast location of points on the plane, building special
     % graphs (such as NNG,RNG), and so forth.
     %
-    % See also: delaunay, DelaunayTri, delaunayTriangulation,
-    %    voronoi, TriRep, triangulation,
-    %    triplot, dsearchn, tsearchn
+    % See also: delaunay, DelaunayTri, delaunayTriangulation, voronoi, TriRep,
+    %  triangulation, triplot, dsearchn, tsearchn
     %
 
     properties (SetAccess = private)
@@ -52,6 +51,8 @@ classdef Subdiv2D < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.Subdiv2D
             %
@@ -267,7 +268,7 @@ classdef Subdiv2D < handle
             %
             % A sample output is shown below:
             %
-            % <<https://github.com/opencv/opencv/blob/master/modules/imgproc/doc/pics/quadedge.png>>
+            % ![image](https://github.com/opencv/opencv/raw/master/modules/imgproc/doc/pics/quadedge.png)
             %
             % See also: cv.Subdiv2D.getVertex
             %

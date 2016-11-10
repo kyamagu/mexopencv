@@ -77,7 +77,9 @@ classdef BackgroundSubtractorGMG < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.BackgroundSubtractorGMG
+            %    bs.delete()
+            %
+            % See also: cv.BackgroundSubtractorGMG
             %
             if isempty(this.id), return; end
             BackgroundSubtractorGMG_(this.id, 'delete');
@@ -139,11 +141,13 @@ classdef BackgroundSubtractorGMG < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the Algorithm is empty.
+            %EMPTY  Returns true if the algorithm is empty
             %
-            %    obj.empty()
+            %    b = obj.empty()
             %
-            % (e.g. in the very beginning or after unsuccessful read).
+            % ## Output
+            % * __b__ Returns true if the algorithm is empty (e.g. in the very
+            %       beginning or after unsuccessful read).
             %
             % See also: cv.BackgroundSubtractorGMG.clear
             %

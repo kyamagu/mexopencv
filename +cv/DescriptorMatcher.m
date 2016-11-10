@@ -78,13 +78,13 @@ classdef DescriptorMatcher < handle
             %       * `L1` and `L2` norms are preferable choices for cv.SIFT
             %         and cv.SURF descriptors.
             %       * `Hamming` should be used with cv.ORB, cv.BRISK and
-            %         cv.BRIEF.
+            %         cv.BriefDescriptorExtractor.
             %       * `Hamming2` should be used with cv.ORB when `WTA_K`
             %         equals 3 or 4 (see cv.ORB.WTA_K description).
             % * __CrossCheck__ If it is false, this is will be default
             %       `BFMatcher` behaviour when it finds the `k` nearest
             %       neighbors for each query descriptor. If `CrossCheck==true`,
-            %       then the cv.DescriptorMatcher.knnMatch() method with `k=1`
+            %       then the cv.DescriptorMatcher.knnMatch method with `k=1`
             %       will only return pairs `(i,j)` such that for i-th query
             %       descriptor the j-th descriptor in the matcher's collection
             %       is the nearest and vice versa, i.e. the `BFMatcher` will
@@ -101,29 +101,29 @@ classdef DescriptorMatcher < handle
             %       options below). You can specify the indexer by a cell
             %       array that starts from the type name followed by option
             %       arguments: `{'Type', 'OptionName',optionValue, ...}`.
-            %       * __'Linear'__     Brute-force matching, linear search
-            %       * __'KDTree'__     Randomized kd-trees, parallel search
-            %       * __'KMeans'__     Hierarchical k-means tree
+            %       * __'Linear'__ Brute-force matching, linear search
+            %       * __'KDTree'__ Randomized kd-trees, parallel search
+            %       * __'KMeans'__ Hierarchical k-means tree
             %       * __'HierarchicalClustering'__ Hierarchical index
-            %       * __'Composite'__  Combination of KDTree and KMeans
-            %       * __'LSH'__        multi-probe LSH
-            %       * __'Autotuned'__  Automatic tuning to one of the above
-            %                          (`Linear`, `KDTree`, `KMeans`)
-            %       * __'Saved'__      Load saved index from a file
+            %       * __'Composite'__ Combination of KDTree and KMeans
+            %       * __'LSH'__  Multi-probe LSH
+            %       * __'Autotuned'__ Automatic tuning to one of the above
+            %             (`Linear`, `KDTree`, `KMeans`)
+            %       * __'Saved'__ Load saved index from a file
             %
             % * __Search__ Option in matching operation. Takes a cell
             %       array of option pairs:
-            %     * __Checks__ The number of times the tree(s) in the index
-            %           should be recursively traversed. A higher value for
-            %           this parameter would give better search precision, but
-            %           also take more time. If automatic configuration was
-            %           used when the index was created, the number of checks
-            %           required to achieve the specified precision was also
-            %           computed, in which case this parameter is ignored.
-            %           -1 for unlimited. default 32
-            %     * __EPS__ search for eps-approximate neighbours. default 0
-            %     * __Sorted__ only for radius search, require neighbours
-            %           sorted by distance. default true
+            %       * __Checks__ The number of times the tree(s) in the index
+            %             should be recursively traversed. A higher value for
+            %             this parameter would give better search precision,
+            %             but also take more time. If automatic configuration
+            %             was used when the index was created, the number of
+            %             checks required to achieve the specified precision
+            %             was also computed, in which case this parameter is
+            %             ignored. -1 for unlimited. default 32
+            %       * __EPS__ search for eps-approximate neighbours. default 0
+            %       * __Sorted__ only for radius search, require neighbours
+            %             sorted by distance. default true
             %
             % ## IndexParams Options for `FlannBasedMatcher`
             %
@@ -218,8 +218,7 @@ classdef DescriptorMatcher < handle
             %    matcher = cv.DescriptorMatcher('FlannBasedMatcher', ...
             %        'Index', {'Saved', '/path/to/saved/index.xml'})
             %
-            % ## References:
-            %
+            % ## References
             % [ArthurKmeansPP2007]:
             % > Arthur and S. Vassilvitskii
             % > *"k-means++: the advantages of careful seeding"*,
@@ -232,7 +231,7 @@ classdef DescriptorMatcher < handle
             % > Proceedings of the 33rd International Conference on
             % > Very Large Data Bases (VLDB). Vienna, Austria. September 2007
             %
-            % See also cv.DescriptorMatcher
+            % See also: cv.DescriptorMatcher
             %
             if nargin < 1, matcherType = 'BruteForce'; end
             this.Type = matcherType;
@@ -241,6 +240,8 @@ classdef DescriptorMatcher < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.DescriptorMatcher
             %
@@ -365,7 +366,7 @@ classdef DescriptorMatcher < handle
         function descriptors = getTrainDescriptors(this)
             %GETTRAINDESCRIPTORS  Returns the train descriptor collection
             %
-            %    descriptors = matcher.getTrainDescriptors();
+            %    descriptors = matcher.getTrainDescriptors()
             %
             % ## Outpt
             % * __descriptors__ Set of train descriptors. A cell array of
@@ -401,7 +402,7 @@ classdef DescriptorMatcher < handle
             %    matcher.train()
             %
             % Trains a descriptor matcher (for example, the flann index). In all
-            % methods to match, the method `train()` is run every time before
+            % methods to match, the method `train` is run every time before
             % matching. Some descriptor matchers (for example,
             % `BruteForceMatcher`) have an empty implementation of this method.
             % Other matchers really train their inner structures (for example,
@@ -449,7 +450,7 @@ classdef DescriptorMatcher < handle
             % In the first variant of this method, the train descriptors are
             % passed as an input argument. In the second variant of the
             % method, train descriptors collection that was set by
-            % cv.DescriptorMatcher.add() is used. Optional mask (or masks) can
+            % cv.DescriptorMatcher.add is used. Optional mask (or masks) can
             % be passed to specify which query and training descriptors can be
             % matched. Namely, `queryDescriptors(i,:)` can be matched with
             % `trainDescriptors(j,:)` only if `mask(i,j)` is non-zero.
@@ -505,10 +506,10 @@ classdef DescriptorMatcher < handle
             %       contain matches for fully masked-out query descriptors.
             %       default false
             %
-            % This extended variant of cv.DescriptorMatcher.match() method
+            % This extended variant of cv.DescriptorMatcher.match method
             % finds several best matches for each query descriptor. The
             % matches are returned in the distance increasing order. See
-            % cv.DescriptorMatcher.match() for the details about query and
+            % cv.DescriptorMatcher.match for the details about query and
             % train descriptors.
             %
             % See also: cv.DescriptorMatcher.match,

@@ -33,6 +33,8 @@ classdef HomographyBasedEstimator < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.HomographyBasedEstimator
             %
             if isempty(this.id), return; end

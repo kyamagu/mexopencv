@@ -35,7 +35,9 @@ classdef MergeRobertson < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.MergeRobertson
+            %    obj.delete()
+            %
+            % See also: cv.MergeRobertson
             %
             if isempty(this.id), return; end
             MergeRobertson_(this.id, 'delete');
@@ -83,7 +85,7 @@ classdef MergeRobertson < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the Algorithm is empty
+            %EMPTY  Returns true if the algorithm is empty
             %
             %    b = obj.empty()
             %

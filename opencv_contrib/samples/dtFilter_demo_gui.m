@@ -126,20 +126,20 @@ function h = buildGUI(img)
 end
 
 function dst = filterDoNothing(frame, ~)
-    %FILTERDONOTHING  trivial filter
+    %FILTERDONOTHING  Trivial filter
 
     dst = frame;
 end
 
 function dst = filterBlurring(frame, opts)
-    %FILTERBLURRING  simple edge-aware blurring
+    %FILTERBLURRING  Simple edge-aware blurring
 
     dst = cv.DTFilter.dtFilter(frame, frame, 'Mode','RF', ...
         'SigmaSpatial',opts.sigmaSpatial, 'SigmaColor',opts.sigmaColor);
 end
 
 function dst = filterStylizing(frame, opts)
-    %FILTERSTYLIZING  stylizing filter
+    %FILTERSTYLIZING  Stylizing filter
 
     % blur frame
     filtered = cv.DTFilter.dtFilter(frame, frame, 'Mode','NC', ...
@@ -164,7 +164,7 @@ function dst = filterStylizing(frame, opts)
 end
 
 function dst = filterDetailsEnhancement(frame8u, opts)
-    %FILTERDETAILSENHANCEMENT  details enhancement filter
+    %FILTERDETAILSENHANCEMENT  Details enhancement filter
 
     frame = single(frame8u) / 255;
 

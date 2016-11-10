@@ -35,8 +35,8 @@
 % * __SpeedUpThr__ threshold to detect point with irregular flow - where flow
 %       should be recalculated after upscale. default 10
 %
-% See [Tao2012]. And site of project:
-% http://graphics.berkeley.edu/papers/Tao-SAN-2012-05/.
+% See [Tao2012], and site of
+% [project](http://graphics.berkeley.edu/papers/Tao-SAN-2012-05/).
 %
 % ## References
 % [Tao2012]:

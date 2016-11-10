@@ -51,6 +51,8 @@ classdef Blender < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.Blender
             %
             if isempty(this.id), return; end

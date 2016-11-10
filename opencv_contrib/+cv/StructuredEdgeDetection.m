@@ -9,18 +9,18 @@ classdef StructuredEdgeDetection < handle
     % algorithms, i.e. algorithms which somehow takes into account pixel
     % affinities in natural images.
     %
-    % <<http://docs.opencv.org/3.1.0/01.jpg>>
-    % <<http://docs.opencv.org/3.1.0/02.jpg>>
-    % <<http://docs.opencv.org/3.1.0/03.jpg>>
-    % <<http://docs.opencv.org/3.1.0/04.jpg>>
-    % <<http://docs.opencv.org/3.1.0/05.jpg>>
-    % <<http://docs.opencv.org/3.1.0/06.jpg>>
-    % <<http://docs.opencv.org/3.1.0/07.jpg>>
-    % <<http://docs.opencv.org/3.1.0/08.jpg>>
-    % <<http://docs.opencv.org/3.1.0/09.jpg>>
-    % <<http://docs.opencv.org/3.1.0/10.jpg>>
-    % <<http://docs.opencv.org/3.1.0/11.jpg>>
-    % <<http://docs.opencv.org/3.1.0/12.jpg>>
+    % ![image01](http://docs.opencv.org/3.1.0/01.jpg)
+    % ![image02](http://docs.opencv.org/3.1.0/02.jpg)
+    % ![image03](http://docs.opencv.org/3.1.0/03.jpg)
+    % ![image04](http://docs.opencv.org/3.1.0/04.jpg)
+    % ![image05](http://docs.opencv.org/3.1.0/05.jpg)
+    % ![image06](http://docs.opencv.org/3.1.0/06.jpg)
+    % ![image07](http://docs.opencv.org/3.1.0/07.jpg)
+    % ![image08](http://docs.opencv.org/3.1.0/08.jpg)
+    % ![image09](http://docs.opencv.org/3.1.0/09.jpg)
+    % ![image10](http://docs.opencv.org/3.1.0/10.jpg)
+    % ![image11](http://docs.opencv.org/3.1.0/11.jpg)
+    % ![image12](http://docs.opencv.org/3.1.0/12.jpg)
     %
     % ## References
     % [Dollar2013]:
@@ -81,8 +81,8 @@ classdef StructuredEdgeDetection < handle
             %    end
             %
             % TODO: Custom extractor is not internally used in the current
-            % cv.StructuredEdgeDetection implementation. See
-            % http://docs.opencv.org/3.1.0/d2/d59/tutorial_ximgproc_training.html
+            % cv.StructuredEdgeDetection implementation. See this
+            % [tutorial](http://docs.opencv.org/3.1.0/d2/d59/tutorial_ximgproc_training.html)
             % for more information about training your own structured forest
             % (it uses an external MATLAB toolbox for the training part).
             %
@@ -93,6 +93,8 @@ classdef StructuredEdgeDetection < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.StructuredEdgeDetection
             %

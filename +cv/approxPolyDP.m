@@ -21,6 +21,6 @@
 %
 % The function cv.approxPolyDP approximates a curve or a polygon with another
 % curve/polygon with less vertices so that the distance between them is less
-% or equal to the specified precision. It uses the Douglas-Peucker algorithm
-% http://en.wikipedia.org/wiki/Ramer-Douglas-Peucker_algorithm.
+% or equal to the specified precision. It uses the
+% [Douglas-Peucker algorithm](http://en.wikipedia.org/wiki/Ramer-Douglas-Peucker_algorithm).
 %

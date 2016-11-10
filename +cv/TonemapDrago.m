@@ -71,7 +71,9 @@ classdef TonemapDrago < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.TonemapDrago
+            %    obj.delete()
+            %
+            % See also: cv.TonemapDrago
             %
             if isempty(this.id), return; end
             TonemapDrago_(this.id, 'delete');
@@ -111,7 +113,7 @@ classdef TonemapDrago < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the Algorithm is empty
+            %EMPTY  Returns true if the algorithm is empty
             %
             %    b = obj.empty()
             %

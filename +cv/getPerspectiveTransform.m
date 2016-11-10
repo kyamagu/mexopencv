@@ -14,11 +14,11 @@
 %
 % The function calculates the 3x3 matrix of a perspective transform so that:
 %
-%     t_i * [X_i; Y_i; 1] = T * [x_i; y_i; 1]
+%    t_i * [X_i; Y_i; 1] = T * [x_i; y_i; 1]
 %
-% where
+% where:
 %
-%     dst(i,:) = [X_i, Y_i], src(i,:) = [x_i, y_i]  for i=1,2,3
+%    dst(i,:) = [X_i, Y_i], src(i,:) = [x_i, y_i]  for i=1,2,3
 %
 % See also: cv.findHomography, cv.warpPerspective, cv.perspectiveTransform,
 %  cp2tform, fitgeotrans, estimateGeometricTransform

@@ -5,14 +5,14 @@ classdef KAZE < handle
     %
     % Note: AKAZE descriptors can only be used with KAZE or AKAZE keypoints.
     %
-    % ## References:
+    % ## References
     % [ABD12]:
     % > Pablo Fernandez Alcantarilla, Adrien Bartoli, and Andrew J Davison.
     % > "Kaze features". In European Conference on Computer Vision (ECCV),
     % > Fiorenze, Italy, Oct 2012.
     %
     % See also: cv.KAZE.KAZE, cv.AKAZE, cv.FeatureDetector,
-    %   cv.DescriptorExtractor
+    %  cv.DescriptorExtractor
     %
 
     properties (SetAccess = private)
@@ -44,8 +44,8 @@ classdef KAZE < handle
         %
         % One of:
         %
-        % * __PM_G1__
-        % * __PM_G2__ (default)
+        % * **PM_G1**
+        % * **PM_G2** (default)
         % * __WEICKERT__
         % * __CHARBONNIER__
         Diffusivity
@@ -64,7 +64,7 @@ classdef KAZE < handle
             % * __Threshold__ See cv.KAZE.Threshold, default 0.001
             % * __NOctaves__ See cv.KAZE.NOctaves, default 4
             % * __NOctaveLayers__ See cv.KAZE.NOctaveLayers, default 4
-            % * __Diffusivity__ See cv.KAZE.Diffusivity, default 'PM_G2'
+            % * __Diffusivity__ See cv.KAZE.Diffusivity, default `PM_G2`
             %
             % See also: cv.KAZE.detectAndCompute
             %
@@ -73,6 +73,8 @@ classdef KAZE < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.KAZE
             %

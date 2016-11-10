@@ -6,7 +6,7 @@ classdef GeneralizedHoughBallard < handle
     %
     % Detects position only without translation and rotation.
     %
-    % ## References:
+    % ## References
     % > Ballard, D.H. (1981). Generalizing the Hough transform to detect
     % > arbitrary shapes. Pattern Recognition 13 (2): 111-122.
     %
@@ -54,7 +54,9 @@ classdef GeneralizedHoughBallard < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.GeneralizedHoughBallard
+            %    obj.delete()
+            %
+            % See also: cv.GeneralizedHoughBallard
             %
             if isempty(this.id), return; end
             GeneralizedHoughBallard_(this.id, 'delete');
@@ -119,7 +121,7 @@ classdef GeneralizedHoughBallard < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the Algorithm is empty
+            %EMPTY  Returns true if the algorithm is empty
             %
             %    b = obj.empty()
             %
@@ -166,9 +168,9 @@ classdef GeneralizedHoughBallard < handle
             %
             % ## Output
             % * __positions__ Cell array of 4-element vectors, each of the
-            %        form: `[posx, posy, scale, angle]`
+            %       form: `[posx, posy, scale, angle]`
             % * __votes__ Cell array of 3-element vectors, of the same length
-            %        as `positions`.
+            %       as `positions`.
             %
             [positions,votes] = GeneralizedHoughBallard_(this.id, 'detect', varargin{:});
         end

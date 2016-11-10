@@ -54,7 +54,7 @@ function varargout = retina_hdr_tonemapping_demo_gui()
 end
 
 function [inputImage, gammaTransformedImage] = loadImage(opts)
-    %LOADIMAGE  load HDR image
+    %LOADIMAGE  Load HDR image
 
     % load retina input image
     inputImage = cv.imread(opts.fname, 'Flags',-1);
@@ -71,7 +71,7 @@ function [inputImage, gammaTransformedImage] = loadImage(opts)
 end
 
 function retina = createRetina(sz, opts)
-    %CREATERETINA  create retina instance
+    %CREATERETINA  Create retina instance
 
     if ~opts.useLogSampling
         % allocate "classical" retina
@@ -101,7 +101,7 @@ function retina = createRetina(sz, opts)
 end
 
 function outputMat = rescaleGrayLevelMat(inputMat, histClipLimit)
-    %RESCALEGRAYLEVELMAT  get the gray level map of the input image and rescale it to the range [0-255]
+    %RESCALEGRAYLEVELMAT  Get the gray level map of the input image and rescale it to the range [0-255]
 
     % adjust output matrix wrt the input size but single channel
     disp('Input image rescaling with histogram edges cutting')
@@ -159,7 +159,7 @@ function outputMat = rescaleGrayLevelMat(inputMat, histClipLimit)
 end
 
 function curveImg = drawPlot(curve, lowerLimit, upperLimit)
-    %DRAWPLOT  simple procedure for 1D curve tracing
+    %DRAWPLOT  Simple procedure for 1D curve tracing
 
     curveImg = 255 * ones([200 size(curve,1)], 'uint8');  % white background
     curveNormalized = cv.normalize(curveImg, ...

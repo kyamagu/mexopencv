@@ -28,7 +28,7 @@
 %       * flag is set: Inverse transformation `dst(x,y) = src(rho,phi)`
 %
 % Transform the source image using the following transformation
-% (See <http://docs.opencv.org/trunk/polar_remap_doc.png> reference image):
+% (See reference image in cv.linearPolar function):
 %
 %    dst(rho,phi) = src(x,y)
 %    size(dst) <- size(src)

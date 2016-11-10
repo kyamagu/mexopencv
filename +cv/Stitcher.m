@@ -6,7 +6,7 @@ classdef Stitcher < handle
     % stability and quality of the final images at least being familiar with
     % the theory is recommended.
     %
-    % <<http://docs.opencv.org/3.1.0/StitchingPipeline.jpg>>
+    % ![image](http://docs.opencv.org/3.1.0/StitchingPipeline.jpg)
     %
     % This figure illustrates the stitching module pipeline implemented in the
     % cv.Stitcher class. Using that class it's possible to configure/remove
@@ -70,6 +70,8 @@ classdef Stitcher < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.Stitcher
             %
             if isempty(this.id), return; end
@@ -97,9 +99,9 @@ classdef Stitcher < handle
             %       function throws an error if the operation fails. A string
             %       one of:
             %       * __OK__
-            %       * __ERR_NEED_MORE_IMGS__
-            %       * __ERR_HOMOGRAPHY_EST_FAIL__
-            %       * __ERR_CAMERA_PARAMS_ADJUST_FAIL__
+            %       * **ERR_NEED_MORE_IMGS**
+            %       * **ERR_HOMOGRAPHY_EST_FAIL**
+            %       * **ERR_CAMERA_PARAMS_ADJUST_FAIL**
             %
             % The function throws an error if the stitch function returns
             % a non-OK status code.
@@ -128,9 +130,9 @@ classdef Stitcher < handle
             %       function throws an error if the operation fails. A string
             %       one of:
             %       * __OK__
-            %       * __ERR_NEED_MORE_IMGS__
-            %       * __ERR_HOMOGRAPHY_EST_FAIL__
-            %       * __ERR_CAMERA_PARAMS_ADJUST_FAIL__
+            %       * **ERR_NEED_MORE_IMGS**
+            %       * **ERR_HOMOGRAPHY_EST_FAIL**
+            %       * **ERR_CAMERA_PARAMS_ADJUST_FAIL**
             %
             % This function tries to match the given images and to estimate
             % rotations of each camera.
@@ -159,9 +161,9 @@ classdef Stitcher < handle
             %       function throws an error if the operation fails. A string
             %       one of:
             %       * __OK__
-            %       * __ERR_NEED_MORE_IMGS__
-            %       * __ERR_HOMOGRAPHY_EST_FAIL__
-            %       * __ERR_CAMERA_PARAMS_ADJUST_FAIL__
+            %       * **ERR_NEED_MORE_IMGS**
+            %       * **ERR_HOMOGRAPHY_EST_FAIL**
+            %       * **ERR_CAMERA_PARAMS_ADJUST_FAIL**
             %
             % This function tries to compose the given images (or images
             % stored internally from the other function calls) into the final

@@ -60,6 +60,8 @@ classdef BundleAdjuster < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.BundleAdjuster
             %
             if isempty(this.id), return; end
@@ -78,7 +80,7 @@ classdef BundleAdjuster < handle
     %% Estimator
     methods
         function [cameras,success] = refine(this, features, pairwise_matches, cameras)
-            %ESTIMATE  Refine camera parameters
+            %REFINE  Refine camera parameters
             %
             %    cameras = obj.refine(features, pairwise_matches, cameras)
             %    [cameras,success] = obj.refine(...)

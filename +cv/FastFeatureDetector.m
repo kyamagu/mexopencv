@@ -3,7 +3,7 @@ classdef FastFeatureDetector < handle
     %
     % Detects corners using the FAST algorithm by [Rosten06].
     %
-    % ## References:
+    % ## References
     % [Rosten06]:
     % > Edward Rosten and Tom Drummond.
     % > "Machine Learning for High-speed Corner Detection".
@@ -47,7 +47,7 @@ classdef FastFeatureDetector < handle
             %       default 10
             % * __NonmaxSuppression__ See
             %       cv.FastFeatureDetector.NonmaxSuppression, default true
-            % * __Type__ See cv.FastFeatureDetector.Type, default 'TYPE_9_16'
+            % * __Type__ See cv.FastFeatureDetector.Type, default `TYPE_9_16`
             %
             % See also: cv.FastFeatureDetector.detect
             %
@@ -56,6 +56,8 @@ classdef FastFeatureDetector < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.FastFeatureDetector
             %

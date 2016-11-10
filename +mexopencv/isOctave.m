@@ -1,5 +1,5 @@
 function retval = isOctave()
-    %ISOCTAVE  return true if the environment is Octave
+    %ISOCTAVE  Return true if the environment is Octave
     %
     %    retval = mexopencv.isOctave()
     %

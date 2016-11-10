@@ -45,8 +45,8 @@
 % The function cv.warpPerspective transforms the source image using the
 % specified matrix:
 %
-%     dst(x,y) = src((M_11*x + M_12*y + M_13) / (M_31*x + M_32*y + M_33),
-%                    (M_21*x + M_22*y + M_23) / (M_31*x + M_32*y + M_33))
+%    dst(x,y) = src((M_11*x + M_12*y + M_13) / (M_31*x + M_32*y + M_33),
+%                   (M_21*x + M_22*y + M_23) / (M_31*x + M_32*y + M_33))
 %
 % when the `WarpInverse` option is true. Otherwise, the transformation is
 % first inverted with cv.invert and then put in the formula above instead of

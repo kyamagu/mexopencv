@@ -23,7 +23,7 @@
 %
 % The function computes and returns the filter coefficients for spatial image
 % derivatives. When `KSize='Scharr'`, the Scharr 3x3 kernels are generated
-%(see cv.Scharr). Otherwise, Sobel kernels are generated (see cv.Sobel). The
+% (see cv.Scharr). Otherwise, Sobel kernels are generated (see cv.Sobel). The
 % filters are normally passed to cv.sepFilter2D.
 %
 % See also: cv.sepFilter2D, cv.getDerivKernels, cv.getStructuringElement

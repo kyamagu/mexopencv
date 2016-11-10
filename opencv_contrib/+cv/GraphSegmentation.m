@@ -45,6 +45,8 @@ classdef GraphSegmentation < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.GraphSegmentation
             %
             if isempty(this.id), return; end
