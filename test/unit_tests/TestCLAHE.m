@@ -1,7 +1,7 @@
 classdef TestCLAHE
     %TestCLAHE
     properties (Constant)
-        fname = fullfile(mexopencv.root,'test','img001.jpg');
+        fname = fullfile(mexopencv.root(),'test','img001.jpg');
     end
 
     methods (Static)

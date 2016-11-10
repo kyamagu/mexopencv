@@ -41,7 +41,7 @@ classdef TestCascadeClassifier
         end
 
         function test_convet_formats
-            filename = [tempname '.xml'];
+            filename = [tempname() '.xml'];
             cObj = onCleanup(@() deleteFile(filename));
 
             b = cv.CascadeClassifier.convert(TestCascadeClassifier.xmlfile, filename);

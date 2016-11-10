@@ -38,7 +38,7 @@ clear cap
 
 %%
 % Output video
-outputVideoName = [tempname '.avi'];
+outputVideoName = [tempname() '.avi'];
 writer = cv.VideoWriter();
 
 %%

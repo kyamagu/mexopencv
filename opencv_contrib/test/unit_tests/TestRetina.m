@@ -55,7 +55,7 @@ classdef TestRetina
             img = cv.imread(TestRetina.filename, 'Color',true);
             retina = cv.Retina([size(img,2) size(img,1)]);
 
-            fname = [tempname '.xml'];
+            fname = [tempname() '.xml'];
             cObj = onCleanup(@() TestRetina.deleteFile(fname));
             retina.write(fname);
             retina.setup(fname);

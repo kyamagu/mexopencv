@@ -3,8 +3,8 @@ classdef TestBlendLinear
 
     methods (Static)
         function test_1
-            src1 = imread(fullfile(mexopencv.root,'test','left01.jpg'));
-            src2 = imread(fullfile(mexopencv.root,'test','right01.jpg'));
+            src1 = imread(fullfile(mexopencv.root(),'test','left01.jpg'));
+            src2 = imread(fullfile(mexopencv.root(),'test','right01.jpg'));
             assert(isequal(size(src1), size(src2)));
 
             [rows,cols,~] = size(src1);

@@ -30,9 +30,9 @@ hold off
 
 %% Write optical flow to file
 % .flo is a binary file format for flow data specified here:
-% http://vision.middlebury.edu/flow/data/
-writeOpticalFlowToFile(flow, 'flow.flo');
-dir *.flo
+% <http://vision.middlebury.edu/flow/data/>
+fileName = fullfile(tempdir(), 'flow.flo')
+writeOpticalFlowToFile(flow, fileName);
 
 %% Helper functions
 function [X,Y,U,V] = drawVelocities(flow, steps)
@@ -90,10 +90,9 @@ end
 
 function cmap = colorWheel()
     if false
-        % relative lengths of color transitions:
-        % these are chosen based on perceptual similarity
-        % (e.g. one can distinguish more shades between red and yellow
-        %  than between yellow and green)
+        % relative lengths of color transitions. These are chosen based on
+        % perceptual similarity (e.g. one can distinguish more shades between
+        % red and yellow than between yellow and green)
         steps = [15 6 4 11 13 6];
         cmap = zeros(0,3,'uint8');
         for i=1:numel(steps)

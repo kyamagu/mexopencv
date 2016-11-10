@@ -7,7 +7,7 @@
 %
 % The program takes as input a list of images.
 % The author recommends using the first 15 faces of the AT&T face data set:
-% http://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html
+% <http://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html>
 %
 % <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/pca.cpp>
 %

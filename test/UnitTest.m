@@ -10,8 +10,9 @@ classdef UnitTest
     %
 
     properties (Constant)
-        % tests root directories
+        % root directory for opencv tests
         TESTDIR1 = fullfile(mexopencv.root(),'test','unit_tests');
+        % root directory for contrib tests
         TESTDIR2 = fullfile(mexopencv.root(),'opencv_contrib','test','unit_tests');
 
         %HACK: Tests to skip due to bugs in Octave
@@ -61,6 +62,13 @@ classdef UnitTest
         function obj = UnitTest(opencv_contrib)
             %UNITTEST  Execute all unit tests
             %
+            %    UnitTest()
+            %    UnitTest(opencv_contrib)
+            %
+            % ## Input
+            % * **opencv_contrib** boolean, whether to enable contrib tests.
+            %       default false.
+            %
             % See also: UnitTest.all
             %
 
@@ -74,7 +82,7 @@ classdef UnitTest
             end
 
             % log output to timestamped file in current directory
-            diary(sprintf('UnitTest_%s.log', datestr(now,'yyyymmddTHHMMSS')));
+            diary(sprintf('UnitTest_%s.log', datestr(now(),'yyyymmddTHHMMSS')));
             cObj = onCleanup(@() diary('off'));  % turn off logging when done
 
             if ~mexopencv.isOctave()
@@ -128,6 +136,9 @@ classdef UnitTest
         function varargout = all(klass)
             %ALL  Execute all test methods in specified test class
             %
+            %    UnitTest.all(klass)
+            %    numtests = UnitTest.all(klass)
+            %
             % ## Input
             % * __klass__ Test class to run. This can be specified as:
             %       * name of class as a string
@@ -148,7 +159,7 @@ classdef UnitTest
             %
 
             % get class metadata
-            if nargin < 1, klass = mfilename; end
+            if nargin < 1, klass = mfilename(); end
             if ischar(klass)
                 mc = meta.class.fromName(klass);
             elseif isa(klass, 'meta.class')
@@ -203,9 +214,13 @@ classdef UnitTest
         function str = getReportException(ME)
             %GETREPORTEXCEPTION  Get error message for exception.
             %
-            % Returns a formatted error message from a caught exception,
-            % along with stack trace.
-            % Handles both MATLAB and Octave.
+            %    str = UnitTest.getReportException(ME)
+            %
+            % ## Input
+            % * __ME__ exception caught. Handles both MATLAB and Octave.
+            %
+            % ## Output
+            % * __str__ a formatted error message, along with stack trace.
             %
             % See also: MException.getReport
             %

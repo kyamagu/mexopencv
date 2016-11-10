@@ -166,8 +166,8 @@ function makefile_unix(opts)
     %
 
     options = {
-        sprintf('MATLABDIR="%s"', matlabroot)
-        ['MEXEXT=' mexext]
+        sprintf('MATLABDIR="%s"', matlabroot())
+        ['MEXEXT=' mexext()]
     };
     if mexopencv.isOctave(), options{end+1} = 'WITH_OCTAVE=true'; end
     if opts.opencv_contrib , options{end+1} = 'WITH_CONTRIB=true'; end
@@ -201,13 +201,13 @@ function target_clean(opts)
 
     % files to delete
     del_cmds = {
-        fullfile('+cv', ['*.' mexext]) ;
+        fullfile('+cv', ['*.' mexext()]) ;
         fullfile('+cv', '*.pdb') ;
         fullfile('+cv', '*.idb') ;
-        fullfile('+cv', 'private', ['*.' mexext]) ;
+        fullfile('+cv', 'private', ['*.' mexext()]) ;
         fullfile('+cv', 'private', '*.pdb') ;
         fullfile('+cv', 'private', '*.idb') ;
-        fullfile('+cv', '+test', 'private', ['*.' mexext]) ;
+        fullfile('+cv', '+test', 'private', ['*.' mexext()]) ;
         fullfile('+cv', '+test', 'private', '*.pdb') ;
         fullfile('+cv', '+test', 'private', '*.idb') ;
         fullfile('lib', '*.obj') ;
@@ -219,10 +219,10 @@ function target_clean(opts)
     };
     if opts.opencv_contrib
         del_cmds = [del_cmds ; ...
-            fullfile('opencv_contrib', '+cv', ['*.' mexext]) ; ...
+            fullfile('opencv_contrib', '+cv', ['*.' mexext()]) ; ...
             fullfile('opencv_contrib', '+cv', '*.pdb') ; ...
             fullfile('opencv_contrib', '+cv', '*.idb') ; ...
-            fullfile('opencv_contrib', '+cv', 'private', ['*.' mexext]) ; ...
+            fullfile('opencv_contrib', '+cv', 'private', ['*.' mexext()]) ; ...
             fullfile('opencv_contrib', '+cv', 'private', '*.pdb') ; ...
             fullfile('opencv_contrib', '+cv', 'private', '*.idb') ...
         ];
@@ -573,28 +573,28 @@ function files = collect_mex_files(opts)
     % MCVROOT\src\+cv\*.cpp
     files{end+1} = prepare_source_files(...
         fullfile(mexopencv.root(),'src','+cv'), 'cpp', ...
-        fullfile(mexopencv.root(),'+cv'), mexext);
+        fullfile(mexopencv.root(),'+cv'), mexext());
 
     % MCVROOT\src\+cv\private\*.cpp
     files{end+1} = prepare_source_files(...
         fullfile(mexopencv.root(),'src','+cv','private'), 'cpp', ...
-        fullfile(mexopencv.root(),'+cv','private'), mexext);
+        fullfile(mexopencv.root(),'+cv','private'), mexext());
 
     % MCVROOT\src\+cv\+test\private\*.cpp
     files{end+1} = prepare_source_files(...
         fullfile(mexopencv.root(),'src','+cv','+test','private'), 'cpp', ...
-        fullfile(mexopencv.root(),'+cv','+test','private'), mexext);
+        fullfile(mexopencv.root(),'+cv','+test','private'), mexext());
 
     if opts.opencv_contrib
         % MCVROOT\opencv_contrib\src\+cv\*.cpp
         files{end+1} = prepare_source_files(...
             fullfile(mexopencv.root(),'opencv_contrib','src','+cv'), 'cpp', ...
-            fullfile(mexopencv.root(),'opencv_contrib','+cv'), mexext);
+            fullfile(mexopencv.root(),'opencv_contrib','+cv'), mexext());
 
         % MCVROOT\opencv_contrib\src\+cv\private\*.cpp
         files{end+1} = prepare_source_files(...
             fullfile(mexopencv.root(),'opencv_contrib','src','+cv','private'), 'cpp', ...
-            fullfile(mexopencv.root(),'opencv_contrib','+cv','private'), mexext);
+            fullfile(mexopencv.root(),'opencv_contrib','+cv','private'), mexext());
     end
 
     % all combined as an array of structs

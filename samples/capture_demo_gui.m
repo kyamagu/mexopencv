@@ -40,7 +40,7 @@ function onType(~,e,h)
 
         case {'c', 's', 'space', 'enter'}
             frame = h.cap.retrieve();
-            filename = sprintf('capture_%s.jpg', datestr(now,'yyyymmddTHHMMSS'));
+            filename = sprintf('capture_%s.jpg', datestr(now(),'yyyymmddTHHMMSS'));
             cv.imwrite(filename, frame);
             disp(['Saved ' filename]);
     end

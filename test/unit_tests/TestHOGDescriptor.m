@@ -158,7 +158,7 @@ classdef TestHOGDescriptor
         function test_save_load
             hog = cv.HOGDescriptor();
             hog.GammaCorrection = false;
-            filename = [tempname '.xml'];
+            filename = [tempname() '.xml'];
             cObj = onCleanup(@() deleteFile(filename));
             hog.save(filename);
 

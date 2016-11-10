@@ -1,10 +1,10 @@
 %% The MNIST dataset of handwritten digits
-% Demonstrates loading the MNIST dataset.
+% Demonstrates loading the <http://yann.lecun.com/exdb/mnist/ MNIST dataset>.
 %
 % <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/datasets/samples/or_mnist.cpp>
 %
 
-%% MNIST dataset (http://yann.lecun.com/exdb/mnist/)
+%% MNIST dataset
 % download/extract files if needed
 dirMNIST = fullfile(mexopencv.root(), 'test', 'mnist');
 if ~exist(dirMNIST, 'dir')

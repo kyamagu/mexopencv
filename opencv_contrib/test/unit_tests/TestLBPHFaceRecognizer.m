@@ -48,7 +48,7 @@ classdef TestLBPHFaceRecognizer
             model = cv.LBPHFaceRecognizer();
             model.train(images, labels);
 
-            filename = [tempname '.xml'];
+            filename = [tempname() '.xml'];
             cObj = onCleanup(@() deleteFile(filename));
             model.save(filename);
             assert(exist(filename,'file')==2);

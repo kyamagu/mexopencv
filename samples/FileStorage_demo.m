@@ -10,7 +10,7 @@
 % and a custom structure "feature" (struct-array), which includes feature
 % coordinates and LBP (local binary pattern) value.
 frameCount = int32(5);
-calibrationDate = datestr(now);
+calibrationDate = datestr(now());
 cameraMatrix = [1000, 0, 320; 0, 1000, 240; 0, 0, 1];
 distCoeffs = [0.1; 0.01; -0.001; 0; 0];
 features = struct('x',cell(1,3), 'y',cell(1,3), 'lbp',cell(1,3));
@@ -34,7 +34,7 @@ display(S.features)
 
 %% Save
 % next we save them to XML/YML files
-fname = tempname;
+fname = tempname();
 cv.FileStorage([fname '.xml'], S)
 cv.FileStorage([fname '.yml'], S)
 

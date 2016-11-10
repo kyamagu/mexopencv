@@ -98,7 +98,7 @@ function varargout = create_mask_demo_gui(im)
             case 'h'
                 onHelp([],[]);
             case 's'
-                fname = [tempname '.png'];
+                fname = [tempname() '.png'];
                 imwrite(out, fname);
                 fprintf('Output saved as "%s"\n', fname);
             case 'p'
@@ -161,8 +161,8 @@ function varargout = create_mask_demo_gui(im)
         if ~isempty(pts)
             mask = cv.fillPoly(mask, pts, 'Color',[255 255 255]);
         end
-        cv.imwrite(fullfile(tempdir, 'mask.png'), mask);
-        disp(['Mask saved: ' fullfile(tempdir, 'mask.png')]);
+        cv.imwrite(fullfile(tempdir(), 'mask.png'), mask);
+        disp(['Mask saved: ' fullfile(tempdir(), 'mask.png')]);
 
         % apply mask on image
         out = bsxfun(@times, uint8(mask~=0), src);

@@ -9,7 +9,7 @@ classdef TestVideoWriter
                 return
             end
 
-            filename = [tempname '.avi'];
+            filename = [tempname() '.avi'];
             cObj = onCleanup(@() TestVideoWriter.deleteFile(filename));
 
             w = 640; h = 480;
@@ -57,7 +57,7 @@ classdef TestVideoWriter
             };
             w = 640; h = 480;
             for i=1:size(codecs,1)
-                fname = [tempname codecs{i,2}];
+                fname = [tempname() codecs{i,2}];
                 cObj = onCleanup(@() TestVideoWriter.deleteFile(fname));
                 try
                     vid = cv.VideoWriter(fname, [w h], 'FourCC',codecs{i,1});

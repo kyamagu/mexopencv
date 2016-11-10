@@ -34,7 +34,7 @@ function onChange(~,~,h)
 
     % brightness/contrast adjusted image
     % algorithm by Werner D. Streidt
-    % (http://visca.com/ffactory/archives/5-99/msg00021.html)
+    % <http://visca.com/ffactory/archives/5-99/msg00021.html>
     if contrast > 0
         delta = 127 * contrast/100;
         a = 255 / (255 - delta*2);

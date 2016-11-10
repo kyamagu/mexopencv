@@ -24,7 +24,7 @@ classdef TestPCA
         end
 
         function test_3
-            fname = [tempname '.xml'];
+            fname = [tempname() '.xml'];
             cleanObj = onCleanup(@() delete(fname));
 
             X = randn(100,10);
@@ -45,7 +45,7 @@ classdef TestPCA
                 return
             end
 
-            fname = [tempname '.mat'];
+            fname = [tempname() '.mat'];
             cleanObj = onCleanup(@() delete(fname));
 
             pca = cv.PCA(rand(100,5));
