@@ -16,7 +16,7 @@
 # DOXYGEN               Doxygen executable used to generate documentation.
 # NO_CV_PKGCONFIG_HACK  If set, disables fixing the output of pkg-config with
 #                       OpenCV. Not set by default, meaning hack is applied.
-# PKG_CONFIG_OPENCV     Name of OpenCV 3.x pkg-config package. Default opencv.
+# PKG_CONFIG_OPENCV     Name of OpenCV 3 pkg-config package. Default opencv.
 # CFLAGS                Extra flags passed to the C/C++ MEX compiler.
 # LDFLAGS               Extra flags passed to the linker by the compiler.
 # WITH_CONTRIB          If set, enables opencv_contrib modules in addition
@@ -75,7 +75,7 @@ endif
 
 # OpenCV flags
 ifneq ($(shell pkg-config --exists --atleast-version=3 $(PKG_CONFIG_OPENCV); echo $$?), 0)
-    $(error "OpenCV 3.x package was not found in pkg-config search path")
+    $(error "OpenCV 3 package was not found in pkg-config search path")
 endif
 CV_CFLAGS  := $(shell pkg-config --cflags $(PKG_CONFIG_OPENCV))
 CV_LDFLAGS := $(shell pkg-config --libs $(PKG_CONFIG_OPENCV))
@@ -135,8 +135,12 @@ vpath %.cpp opencv_contrib/src/+cv/private
 endif
 
 # special targets
-.PHONY : all contrib clean doc test
+.PHONY: all contrib clean doc test
 .SUFFIXES: .cpp .$(OBJEXT) .$(LIBEXT) .$(MEXEXT)
+
+# main targets
+all: $(TARGETS1)
+contrib: $(TARGETS2)
 
 # MxArray objects
 lib/%.$(OBJEXT) \
@@ -166,10 +170,7 @@ else
 	$(MEX) $(CFLAGS) -output ${@:.$(MEXEXT)=} $< $(LDFLAGS)
 endif
 
-# targets
-all: $(TARGETS1)
-contrib: $(TARGETS2)
-
+# other targets
 clean:
 	$(RM) -r \
         *.$(OBJEXT) \
