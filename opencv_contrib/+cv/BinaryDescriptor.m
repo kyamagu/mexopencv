@@ -147,6 +147,8 @@ classdef BinaryDescriptor < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.BinaryDescriptor
             %
             if isempty(this.id), return; end

@@ -1,5 +1,5 @@
 classdef SeamFinder < handle
-    %SEAMFINDER  class for all seam estimators
+    %SEAMFINDER  Class for all seam estimators
     %
     % See also: cv.Stitcher
     %
@@ -54,6 +54,8 @@ classdef SeamFinder < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.SeamFinder
             %

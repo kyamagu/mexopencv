@@ -49,7 +49,7 @@ classdef SuperpixelLSC < handle
             % preprocess image with little gaussian blur with a small 3x3
             % kernel and additional conversion into CieLAB color space.
             %
-            % <<http://docs.opencv.org/3.1.0/superpixels_lsc.png>>
+            % ![image](http://docs.opencv.org/3.1.0/superpixels_lsc.png)
             %
             % See also: cv.SuperpixelLSC.iterate
             %
@@ -58,6 +58,8 @@ classdef SuperpixelLSC < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.SuperpixelLSC
             %

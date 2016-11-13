@@ -95,14 +95,16 @@ classdef DualTVL1OpticalFlow < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.DualTVL1OpticalFlow
+            %    obj.delete()
+            %
+            % See also: cv.DualTVL1OpticalFlow
             %
             if isempty(this.id), return; end
             DualTVL1OpticalFlow_(this.id, 'delete');
         end
 
         function flow = calc(this, I0, I1, varargin)
-            %CALL  Calculates an optical flow
+            %CALC  Calculates an optical flow
             %
             %    flow = obj.calc(I0, I1)
             %    flow = obj.calc(I0, I1, 'OptionName',optionValue, ...)
@@ -146,11 +148,13 @@ classdef DualTVL1OpticalFlow < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the Algorithm is empty.
+            %EMPTY  Returns true if the algorithm is empty
             %
-            %    obj.empty()
+            %    b = obj.empty()
             %
-            % (e.g. in the very beginning or after unsuccessful read).
+            % ## Output
+            % * __b__ Returns true if the algorithm is empty (e.g. in the very
+            %       beginning or after unsuccessful read).
             %
             % See also: cv.DualTVL1OpticalFlow.clear
             %

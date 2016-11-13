@@ -37,13 +37,13 @@
 % * __DetectorParameters__ marker detection parameters.
 %
 % This function tries to find markers that were not detected in the basic
-% cv.detecMarkers function. First, based on the current detected marker and
+% cv.detectMarkers function. First, based on the current detected marker and
 % the board layout, the function interpolates the position of the missing
 % markers. Then it tries to find correspondence between the reprojected
 % markers and the rejected candidates based on the `minRepDistance` and
 % `errorCorrectionRate` parameters. If camera parameters and distortion
 % coefficients are provided, missing markers are reprojected using
-% cv.projectPoint function. If not, missing marker projections are
+% cv.projectPoints function. If not, missing marker projections are
 % interpolated using global homography, and all the marker corners in the
 % board must have the same Z coordinate.
 %

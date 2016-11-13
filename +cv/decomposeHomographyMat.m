@@ -1,4 +1,4 @@
-%DECOMPOSEESSENTIALMAT  Decompose a homography matrix to rotation(s), translation(s) and plane normal(s)
+%DECOMPOSEHOMOGRAPHYMAT  Decompose a homography matrix to rotation(s), translation(s) and plane normal(s)
 %
 %    [motions, nsols] = cv.decomposeHomographyMat(H, K)
 %

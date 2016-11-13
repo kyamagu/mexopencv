@@ -75,6 +75,8 @@ classdef AdaptiveManifoldFilter < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.AdaptiveManifoldFilter
             %
             if isempty(this.id), return; end

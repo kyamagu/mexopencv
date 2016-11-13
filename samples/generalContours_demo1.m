@@ -40,7 +40,7 @@ boundRect = cell(size(contours));
 center = cell(size(contours));
 radius = zeros(size(contours));
 for i=1:numel(contours)
-    % approximate to polygon with accuracy +-3 where curve must me closed
+    % approximate to polygon with accuracy +/- 3 where curve must me closed
     contours_poly{i} = cv.approxPolyDP(contours{i}, ...
         'Epsilon',3, 'Closed',true);
     % find a bounding rect for polygon

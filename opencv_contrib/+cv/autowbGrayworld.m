@@ -25,7 +25,7 @@
 % Saturation is calculated using the following for a 3-channel RGB image per
 % pixel `I` and is in the range `[0,1]`:
 %
-%     Saturation[I] = (max(R,G,B) - min(R,G,B)) / max(R,G,B)
+%    Saturation[I] = (max(R,G,B) - min(R,G,B)) / max(R,G,B)
 %
 % A threshold of 1 means that all pixels are used to white-balance, while a
 % threshold of 0 means no pixels are used. Lower thresholds are useful in

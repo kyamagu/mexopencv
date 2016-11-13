@@ -50,6 +50,8 @@ classdef LSDDetector < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.LSDDetector
             %
             if isempty(this.id), return; end

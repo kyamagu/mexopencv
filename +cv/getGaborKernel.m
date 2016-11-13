@@ -16,13 +16,12 @@
 % * __KType__ Type of filter coefficients. It can be `single` or `double`.
 %       default `double`.
 %
-% For more details about gabor filter equations and parameters, see:
-% http://en.wikipedia.org/wiki/Gabor_filter
+% For more details about gabor filter equations and parameters, see
+% [Gabor filter](http://en.wikipedia.org/wiki/Gabor_filter).
 %
 % ## Example
-% Try the <a href="matlab:edit('gabor_filter_gui')">gabor_filter_gui.m</a>
-% sample file to interact with the various parameters of the Gabor filter
-% and visualize the result.
+% Try the `gabor_filter_gui.m` sample file to interact with the various
+% parameters of the Gabor filter and visualize the result.
 %
 % See also: gabor, imgaborfilt
 %

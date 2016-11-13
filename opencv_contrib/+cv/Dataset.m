@@ -74,7 +74,7 @@ classdef Dataset < handle
             % ### HMDB: A Large Human Motion Database
             %
             % Implements loading dataset: "HMDB: A Large Human Motion Database"
-            % <http://serre-lab.clps.brown.edu/resource/hmdb-a-large-human-motion-database/>
+            % [Link](http://serre-lab.clps.brown.edu/resource/hmdb-a-large-human-motion-database/)
             %
             % Usage:
             %
@@ -103,12 +103,12 @@ classdef Dataset < handle
             % ### Sports-1M Dataset
             %
             % Implements loading dataset: "Sports-1M Dataset"
-            % <http://cs.stanford.edu/people/karpathy/deepvideo/>
+            % [Link](http://cs.stanford.edu/people/karpathy/deepvideo/)
             %
             % Usage:
             %
-            % - From link above download dataset files
-            %   (https://code.google.com/p/sports-1m-dataset/).
+            % - From link above download dataset
+            %   [files](https://code.google.com/p/sports-1m-dataset/).
             % - To load data run:
             %
             %        ds = cv.Dataset('AR_sports');
@@ -117,7 +117,7 @@ classdef Dataset < handle
             % ### Adience
             %
             % Implements loading dataset: "Adience"
-            % <http://www.openu.ac.il/home/hassner/Adience/data.html>
+            % [Link](http://www.openu.ac.il/home/hassner/Adience/data.html)
             %
             % Usage:
             %
@@ -136,7 +136,7 @@ classdef Dataset < handle
             % ### Labeled Faces in the Wild
             %
             % Implements loading dataset: "Labeled Faces in the Wild"
-            % <http://vis-www.cs.umass.edu/lfw/>
+            % [Link](http://vis-www.cs.umass.edu/lfw/)
             %
             % Usage:
             %
@@ -154,24 +154,24 @@ classdef Dataset < handle
             % Benchmark:
             %
             % - For this dataset was implemented benchmark with accuracy:
-            %   0.623833 +- 0.005223 (train split: `pairsDevTrain.txt`,
+            %   0.623833 +/- 0.005223 (train split: `pairsDevTrain.txt`,
             %   dataset: lfwa)
             %
             % ### ChaLearn Looking at People
             %
             % Implements loading dataset: "ChaLearn Looking at People"
-            % <http://gesture.chalearn.org/>
+            % [Link](http://gesture.chalearn.org/)
             %
             % Usage
             %
             % - Follow instruction from site above, download files for dataset
             %   "Track 3: Gesture Recognition": `Train1.zip`-`Train5.zip`,
-            %   `Validation1.zip`-`Validation3.zip` (Register on site:
-            %   www.codalab.org and accept the terms and conditions of competition:
-            %   <https://www.codalab.org/competitions/991#learn_the_details>
-            %   There are three mirrors for downloading dataset files. When I
-            %   downloaded data only mirror: "Universitat Oberta de Catalunya"
-            %   works).
+            %   `Validation1.zip`-`Validation3.zip` (Register on
+            %   [site](http://codalab.org/) and accept the
+            %   [terms](http://www.codalab.org/competitions/991#learn_the_details)
+            %   and conditions of competition. There are three mirrors for
+            %   downloading dataset files. When I downloaded data only mirror:
+            %   "Universitat Oberta de Catalunya" works).
             % - Unpack train archives `Train1.zip`-`Train5.zip` to folder
             %   `Train/`, validation archives
             %   `Validation1.zip`-`Validation3.zip` to folder `Validation/`
@@ -186,7 +186,7 @@ classdef Dataset < handle
             % ### Sheffield Kinect Gesture Dataset
             %
             % Implements loading dataset: "Sheffield Kinect Gesture Dataset"
-            % <http://lshao.staff.shef.ac.uk/data/SheffieldKinectGesture.htm>
+            % [Link](http://lshao.staff.shef.ac.uk/data/SheffieldKinectGesture.htm)
             %
             % Usage:
             %
@@ -202,7 +202,7 @@ classdef Dataset < handle
             % ### HumanEva Dataset
             %
             % Implements loading dataset: "HumanEva Dataset"
-            % <http://humaneva.is.tue.mpg.de>
+            % [Link](http://humaneva.is.tue.mpg.de)
             %
             % Usage:
             %
@@ -217,7 +217,7 @@ classdef Dataset < handle
             % ### PARSE Dataset
             %
             % Implements loading dataset: "PARSE Dataset"
-            % <http://www.ics.uci.edu/~dramanan/papers/parse/>
+            % [Link](http://www.ics.uci.edu/~dramanan/papers/parse/)
             %
             % Usage:
             %
@@ -231,7 +231,7 @@ classdef Dataset < handle
             % ### Affine Covariant Regions Datasets
             %
             % Implements loading dataset: "Affine Covariant Regions Datasets"
-            % <http://www.robots.ox.ac.uk/~vgg/data/data-aff.html>
+            % [Link](http://www.robots.ox.ac.uk/~vgg/data/data-aff.html)
             %
             % Usage:
             %
@@ -246,7 +246,7 @@ classdef Dataset < handle
             % ### Robot Data Set
             %
             % Implements loading dataset: "Robot Data Set, Point Feature Data Set - 2010"
-            % <http://roboimagedata.compute.dtu.dk/?page_id=24>
+            % [Link](http://roboimagedata.compute.dtu.dk/?page_id=24)
             %
             % Usage:
             %
@@ -261,7 +261,7 @@ classdef Dataset < handle
             % ### The Berkeley Segmentation Dataset and Benchmark
             %
             % Implements loading dataset: "The Berkeley Segmentation Dataset and Benchmark"
-            % <https://www.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/>
+            % [Link](https://www.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/)
             %
             % Usage:
             %
@@ -276,7 +276,7 @@ classdef Dataset < handle
             % ### Weizmann Segmentation Evaluation Database
             %
             % Implements loading dataset: "Weizmann Segmentation Evaluation Database"
-            % <http://www.wisdom.weizmann.ac.il/~vision/Seg_Evaluation_DB/>
+            % [Link](http://www.wisdom.weizmann.ac.il/~vision/Seg_Evaluation_DB/)
             %
             % Usage:
             %
@@ -291,7 +291,7 @@ classdef Dataset < handle
             % ### EPFL Multi-View Stereo
             %
             % Implements loading dataset: "EPFL Multi-View Stereo"
-            % <http://cvlab.epfl.ch/data/strechamvs>
+            % [Link](http://cvlab.epfl.ch/data/strechamvs)
             %
             % Usage:
             %
@@ -311,7 +311,7 @@ classdef Dataset < handle
             % ### Stereo - Middlebury Computer Vision
             %
             % Implements loading dataset: "Stereo - Middlebury Computer Vision"
-            % <http://vision.middlebury.edu/mview/>
+            % [Link](http://vision.middlebury.edu/mview/)
             %
             % Usage:
             %
@@ -326,7 +326,7 @@ classdef Dataset < handle
             % ### ImageNet
             %
             % Implements loading dataset: "ImageNet"
-            % <http://www.image-net.org/>
+            % [Link](http://www.image-net.org/)
             %
             % Usage:
             %
@@ -364,7 +364,7 @@ classdef Dataset < handle
             % ### MNIST
             %
             % Implements loading dataset: "MNIST"
-            % <http://yann.lecun.com/exdb/mnist/>
+            % [Link](http://yann.lecun.com/exdb/mnist/)
             %
             % Usage:
             %
@@ -380,7 +380,7 @@ classdef Dataset < handle
             % ### SUN Database
             %
             % Implements loading dataset: "SUN Database, Scene Recognition Benchmark. SUN397"
-            % <http://vision.cs.princeton.edu/projects/2010/SUN/>
+            % [Link](http://vision.cs.princeton.edu/projects/2010/SUN/)
             %
             % Usage:
             %
@@ -396,7 +396,7 @@ classdef Dataset < handle
             % ### Caltech Pedestrian Detection Benchmark
             %
             % Implements loading dataset: "Caltech Pedestrian Detection Benchmark"
-            % <http://www.vision.caltech.edu/Image_Datasets/CaltechPedestrians/>
+            % [Link](http://www.vision.caltech.edu/Image_Datasets/CaltechPedestrians/)
             %
             % Usage:
             %
@@ -419,7 +419,7 @@ classdef Dataset < handle
             % ### KITTI Vision Benchmark
             %
             % Implements loading dataset: "KITTI Vision Benchmark"
-            % <http://www.cvlibs.net/datasets/kitti/eval_odometry.php>
+            % [Link](http://www.cvlibs.net/datasets/kitti/eval_odometry.php)
             %
             % Usage:
             %
@@ -443,7 +443,7 @@ classdef Dataset < handle
             % ### TUMindoor Dataset
             %
             % Implements loading dataset: "TUMindoor Dataset"
-            % <http://www.navvis.lmt.ei.tum.de/dataset/>
+            % [Link](http://www.navvis.lmt.ei.tum.de/dataset/)
             %
             % Usage:
             %
@@ -465,7 +465,7 @@ classdef Dataset < handle
             % ### The Chars74K Dataset
             %
             % Implements loading dataset: "The Chars74K Dataset"
-            % <http://www.ee.surrey.ac.uk/CVSSP/demos/chars74k/>
+            % [Link](http://www.ee.surrey.ac.uk/CVSSP/demos/chars74k/)
             %
             % Usage:
             %
@@ -483,7 +483,7 @@ classdef Dataset < handle
             % ### The Street View Text Dataset
             %
             % Implements loading dataset: "The Street View Text Dataset"
-            % <http://vision.ucsd.edu/~kai/svt/>
+            % [Link](http://vision.ucsd.edu/~kai/svt/)
             %
             % Usage:
             %
@@ -502,7 +502,7 @@ classdef Dataset < handle
             % ### VOT 2015 Database
             %
             % Implements loading dataset: VOT 2015
-            % <http://box.vicos.si/vot/vot2015.zip>
+            % [Link](http://box.vicos.si/vot/vot2015.zip)
             %
             % VOT 2015 dataset comprises 60 short sequences showing various
             % objects in challenging backgrounds. The sequences were chosen
@@ -532,6 +532,8 @@ classdef Dataset < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    ds.delete()
             %
             % See also: cv.Dataset
             %

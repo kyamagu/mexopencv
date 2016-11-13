@@ -1,5 +1,5 @@
 classdef BOWKMeansTrainer < handle
-    %BOWKMEANSTRAINER  kmeans-based class to train visual vocabulary using the bag of visual words approach
+    %BOWKMEANSTRAINER  KMeans-based class to train visual vocabulary using the bag of visual words approach
     %
     % kmeans-based class for training the *bag of visual words* vocabulary
     % from a set of descriptors.
@@ -64,6 +64,8 @@ classdef BOWKMeansTrainer < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    trainer.delete()
+            %
             % See also: cv.BOWKMeansTrainer
             %
             if isempty(this.id), return; end
@@ -84,7 +86,7 @@ classdef BOWKMeansTrainer < handle
         end
 
         function count = descriptorsCount(this)
-            %DESCRIPTORSCOUNT Returns the count of all descriptors stored in the training set
+            %DESCRIPTORSCOUNT  Returns the count of all descriptors stored in the training set
             %
             %    count = trainer.descriptorsCount()
             %
@@ -131,8 +133,8 @@ classdef BOWKMeansTrainer < handle
             %
             % ## Input
             % * __descs__ Descriptors to cluster. Each row of the
-            %     descriptors matrix is a descriptor. Descriptors are not
-            %     added to the inner train descriptor set.
+            %       descriptors matrix is a descriptor. Descriptors are not
+            %       added to the inner train descriptor set.
             %
             % ## Output
             % * __centers__ Row vectors of vocabulary descriptors.

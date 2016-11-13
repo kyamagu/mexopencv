@@ -3,7 +3,7 @@ classdef LineSegmentDetector < handle
     %
     % Following the algorithm described at [Rafael12].
     %
-    % ## References:
+    % ## References
     % [Rafael12]:
     % > Rafael Grompone von Gioi, Jeremie Jakubowicz, Jean-Michel Morel,
     % > and Gregory Randall. Lsd: a line segment detector. 2012.
@@ -53,6 +53,8 @@ classdef LineSegmentDetector < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.LineSegmentDetector
             %

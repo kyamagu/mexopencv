@@ -20,8 +20,7 @@
 % [YSDCT11]:
 % > Guoshen Yu and Guillermo Sapiro. "DCT image denoising: a simple and
 % > effective image denoising algorithm", Image Processing On Line, 1 (2011).
-% > http://dx.doi.org/10.5201/ipol.2011.ys-dct
-% > http://www.ipol.im/pub/art/2011/ys-dct/
+% > [DOI](http://dx.doi.org/10.5201/ipol.2011.ys-dct)
 %
 % See also: cv.fastNlMeansDenoising
 %

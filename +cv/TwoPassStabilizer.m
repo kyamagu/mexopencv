@@ -11,7 +11,7 @@ classdef TwoPassStabilizer < handle
     % for global motion estimation between point clouds or between images. In
     % the last case features are extracted and matched internally.
     %
-    % ## References:
+    % ## References
     % [OF06]:
     % > Yasuyuki Matsushita, Eyal Ofek, Weina Ge, Xiaoou Tang, Heung-Yeung Shum.
     % > "Full-frame video stabilization with motion inpainting".
@@ -58,7 +58,9 @@ classdef TwoPassStabilizer < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.TwoPassStabilizer
+            %    obj.delete()
+            %
+            % See also: cv.TwoPassStabilizer
             %
             if isempty(this.id), return; end
             TwoPassStabilizer_(this.id, 'delete');
@@ -87,7 +89,7 @@ classdef TwoPassStabilizer < handle
         end
 
         function reset(this)
-            %RESET Reset the frame source
+            %RESET  Reset the frame source
             %
             %    obj.reset()
             %
@@ -456,7 +458,7 @@ classdef TwoPassStabilizer < handle
             %             support.
             %
             % ## Options
-            %  The following are options for the various algorithms:
+            % The following are options for the various algorithms:
             %
             % ### `GaussianMotionFilter`
             % * __Radius__ default 15
@@ -500,7 +502,7 @@ classdef TwoPassStabilizer < handle
         end
 
         function setWobbleSuppressor(this, wobbleSuppressType, varargin)
-            %SETMOTIONSTABILIZER  Set the wobble suppressing algorithm for the video stabilizer
+            %SETWOBBLESUPPRESSOR  Set the wobble suppressing algorithm for the video stabilizer
             %
             %    stab.setWobbleSuppressor(wobbleSuppressType, ...)
             %

@@ -1,6 +1,6 @@
 %BLENDLINEAR  Performs linear blending of two images.
 %
-%  dst = cv.blendLinear(src1, src2, weights1, weights2)
+%    dst = cv.blendLinear(src1, src2, weights1, weights2)
 %
 % ## Input
 % * __src1__ First image, either `uint8` or `single` depth.

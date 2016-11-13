@@ -8,7 +8,7 @@
 %
 % ## Output
 % * __dst__ output image of the same size and the same number of channels as
-%         `src`.
+%       `src`.
 %
 % ## Options
 % * __KSize__ size of the extended Sobel kernel. Aperture size used to compute
@@ -64,5 +64,5 @@
 %    [-1 -2 -1; 0 0 0; 1 2 1]
 %
 % See also: cv.Scharr, cv.Laplacian, cv.sepFilter2D, cv.filter2D,
-%    cv.GaussianBlur, cv.cartToPolar, edge, imfilter, fspecial
+%  cv.GaussianBlur, cv.cartToPolar, edge, imfilter, fspecial
 %

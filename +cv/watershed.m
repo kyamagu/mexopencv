@@ -5,11 +5,11 @@
 % ## Input
 % * __image__ Input 8-bit 3-channel image.
 % * __marker__ Input 32-bit single-channel image (map) of markers. It
-%     should have the same size as `image`.
+%       should have the same size as `image`.
 %
 % ## Output
 % * __marker__ Output 32-bit single-channel image (map) of markers. It has
-%     the same size as `image`.
+%       the same size as `image`.
 %
 % The function implements one of the variants of watershed, non-parametric
 % marker-based segmentation algorithm, described in [Meyer92].

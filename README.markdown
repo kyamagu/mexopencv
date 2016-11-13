@@ -57,11 +57,17 @@ Build
 
 Prerequisite: [MATLAB][8] or [Octave][9] (>= 4.0.0), [OpenCV][10] (3.1.0).
 
-Depending on your platform, you also need:
+Depending on your platform, you also need the following build tools:
 
 - Linux: g++, make, pkg-config
 - OS X: Xcode Command Line Tools, pkg-config
 - Windows: supported Visual Studio compiler
+
+Refer to the `Makefile` and `make.m` scripts for a complete list of
+options accepted for building mexopencv across supported platforms.
+
+OpenCV
+------
 
 Currently, mexopencv targets the final **3.1.0** stable version of OpenCV. You
 must build it against this exact version, rather than using the bleeding-edge
@@ -71,8 +77,8 @@ a package manager to install OpenCV if available.
 - [OpenCV][11]
 - [OpenCV contributed modules][12]
 
-Refer to the `Makefile` and `make.m` scripts for a complete list set of
-options accepted for building mexopencv across supported platforms.
+**DO NOT use the "master" branch of `opencv`/`opencv_contrib`!**
+**Only the 3.1.0 release is supported by mexopencv.**
 
 Linux
 -----
@@ -114,7 +120,7 @@ To enable support for contributed modules, you must build OpenCV from both
 [`opencv`][11] and [`opencv_contrib`][12] sources. You can then compile
 mexopencv as:
 
-    $ make WITH_CONTRIB=true
+    $ make all contrib
 
 Optionally you can test mexopencv functionality:
 
@@ -124,7 +130,7 @@ Developer documentation can be generated with Doxygen if installed:
 
     $ make doc
 
-This will create HTML and LaTeX files under `doc/`.
+This will create HTML files under `doc/`.
 
 OS X
 ----
@@ -138,7 +144,7 @@ OpenCV 3:
 
 Otherwise, you can build OpenCV from [source][11], similar to the Linux case.
 
-If you have all the prerequisite, go to the mexopencv directory and type:
+If you have all the prerequisites, go to the mexopencv directory and type:
 
     $ make MATLABDIR=/Applications/MATLAB_R2016a.app PKG_CONFIG_MATLAB=opencv3 LDFLAGS=-L/usr/local/share/OpenCV/3rdparty/lib -j2
 
@@ -238,8 +244,8 @@ The code may be redistributed under the [BSD 3-Clause license](LICENSE).
 [8]: https://www.mathworks.com/products/matlab/
 [9]: https://www.gnu.org/software/octave/
 [10]: http://opencv.org/
-[11]: https://github.com/opencv/opencv
-[12]: https://github.com/opencv/opencv_contrib
+[11]: https://github.com/opencv/opencv/releases/tag/3.1.0
+[12]: https://github.com/opencv/opencv_contrib/releases/tag/3.1.0
 [13]: http://packages.ubuntu.com/zesty/libopencv-dev
 [14]: https://people.freedesktop.org/~dbn/pkg-config-guide.html
 [15]: http://brew.sh/

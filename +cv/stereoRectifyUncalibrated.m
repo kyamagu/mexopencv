@@ -46,7 +46,7 @@
 % with cv.undistortPoints.
 %
 % ## References
-% [Hartley99]
+% [Hartley99]:
 % > Richard I Hartley. "Theory and practice of projective rectification".
 % > International Journal of Computer Vision, 35(2):115-127, 1999.
 %

@@ -21,4 +21,4 @@ markerImg = cv.drawMarkerAruco(dictionary, markerId, markerSize, ...
 imshow(markerImg), title('Marker')
 
 % save image
-imwrite(markerImg, fullfile(tempdir,'Marker.png'));
+imwrite(markerImg, fullfile(tempdir(),'Marker.png'));

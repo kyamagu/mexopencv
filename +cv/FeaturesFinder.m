@@ -47,6 +47,8 @@ classdef FeaturesFinder < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.FeaturesFinder
             %
             if isempty(this.id), return; end

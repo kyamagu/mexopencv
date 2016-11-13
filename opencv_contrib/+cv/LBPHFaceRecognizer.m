@@ -9,12 +9,12 @@ classdef LBPHFaceRecognizer < handle
     %
     % Every `FaceRecognizer` supports the:
     %
-    % * **Training** of a face recognizer with `train` on a given set of
+    % * __Training__ of a face recognizer with `train` on a given set of
     %   images (your face database!).
-    % * **Prediction** of a given sample image, that means a face. The image
+    % * __Prediction__ of a given sample image, that means a face. The image
     %   is given as a matrix.
-    % * **Loading/Saving** the model state from/to a given XML or YAML.
-    % * **Setting/Getting labels info**, that is stored as a string. String
+    % * __Loading/Saving__ the model state from/to a given XML or YAML.
+    % * __Setting/Getting labels info__, that is stored as a string. String
     %   labels info is useful for keeping names of the recognized people.
     %
     % ### Setting the Thresholds
@@ -117,7 +117,7 @@ classdef LBPHFaceRecognizer < handle
             % creation. `GridX` and `GridY` control the grid size of the
             % spatial histograms.
             %
-            % ### Notes:
+            % ### Notes
             %
             % - The Circular Local Binary Patterns (used in training and
             %   prediction) expect the data given as grayscale images, use
@@ -131,6 +131,8 @@ classdef LBPHFaceRecognizer < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.LBPHFaceRecognizer
             %

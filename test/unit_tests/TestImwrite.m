@@ -8,7 +8,7 @@ classdef TestImwrite
         function test_write
             frmts = TestImwrite.getFormats();
             for i=1:numel(frmts)
-                filename = [tempname frmts(i).ext];
+                filename = [tempname() frmts(i).ext];
                 cObj = onCleanup(@() TestImwrite.deleteFile(filename));
                 try
                     cv.imwrite(filename, TestImwrite.im, frmts(i).opts{:});
@@ -23,7 +23,7 @@ classdef TestImwrite
         end
 
         function test_verify_lossless_png
-            filename = [tempname '.png'];
+            filename = [tempname() '.png'];
             cObj = onCleanup(@() TestImwrite.deleteFile(filename));
 
             % write image to PNG file (lossless)
@@ -38,8 +38,8 @@ classdef TestImwrite
         end
 
         function test_flip_channels
-            filename1 = [tempname '.png'];
-            filename2 = [tempname '.png'];
+            filename1 = [tempname() '.png'];
+            filename2 = [tempname() '.png'];
             cObj1 = onCleanup(@() TestImwrite.deleteFile(filename1));
             cObj2 = onCleanup(@() TestImwrite.deleteFile(filename2));
 

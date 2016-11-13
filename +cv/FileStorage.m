@@ -10,7 +10,7 @@
 %
 % ## Input
 % * __fileName__ Name of the XML/YAML file. The file name should have either
-%        `.xml` or `.yml` extension.
+%       `.xml` or `.yml` extension.
 % * __S__ Scalar struct to be written to file.
 % * __X1__, __X2__, __...__ objects to be written to file.
 %

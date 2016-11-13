@@ -82,10 +82,11 @@
 % `OPENCV_BUILD_3RDPARTY_LIBS` flag in CMake.
 %
 % In the case you set `WITH_GDAL` flag to true in CMake and `GDAL` option to
-% load the image, then GDAL driver (http://www.gdal.org) will be used in order
-% to decode the image by supporting the following formats:
-% Raster (http://www.gdal.org/formats_list.html),
-% Vector (http://www.gdal.org/ogr_formats.html).
+% load the image, then [GDAL driver](http://www.gdal.org) will be used in
+% order to decode the image by supporting the following formats:
+%
+% * [Raster](http://www.gdal.org/formats_list.html),
+% * [Vector](http://www.gdal.org/ogr_formats.html).
 %
 % See also: cv.imwrite, cv.imdecode, imread, imfinfo, imformats
 %

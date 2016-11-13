@@ -29,7 +29,7 @@ classdef TestTransientAreasSegmentationModule
             img = cv.imread(TestTransientAreasSegmentationModule.filename, 'Color',true);
             seg = cv.TransientAreasSegmentationModule([size(img,2) size(img,1)]);
 
-            fname = [tempname '.xml'];
+            fname = [tempname() '.xml'];
             cObj = onCleanup(@() TestTransientAreasSegmentationModule.deleteFile(fname));
             seg.write(fname);
             seg.setup(fname);

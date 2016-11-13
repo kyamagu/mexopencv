@@ -11,7 +11,7 @@ classdef OnePassStabilizer < handle
     % for global motion estimation between point clouds or between images. In
     % the last case features are extracted and matched internally.
     %
-    % ## References:
+    % ## References
     % [OF06]:
     % > Yasuyuki Matsushita, Eyal Ofek, Weina Ge, Xiaoou Tang, Heung-Yeung Shum.
     % > "Full-frame video stabilization with motion inpainting".
@@ -56,7 +56,9 @@ classdef OnePassStabilizer < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.OnePassStabilizer
+            %    obj.delete()
+            %
+            % See also: cv.OnePassStabilizer
             %
             if isempty(this.id), return; end
             OnePassStabilizer_(this.id, 'delete');
@@ -85,7 +87,7 @@ classdef OnePassStabilizer < handle
         end
 
         function reset(this)
-            %RESET Reset the frame source
+            %RESET  Reset the frame source
             %
             %    obj.reset()
             %

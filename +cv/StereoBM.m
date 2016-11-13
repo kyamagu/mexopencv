@@ -96,7 +96,9 @@ classdef StereoBM < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.StereoBM
+            %    bm.delete()
+            %
+            % See also: cv.StereoBM
             %
             if isempty(this.id), return; end
             StereoBM_(this.id, 'delete');

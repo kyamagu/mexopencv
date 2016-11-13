@@ -11,7 +11,7 @@
 %
 % ## Options
 % * __MaxValue__ Non-zero value assigned to the pixels for which the condition
-%        is satisfied. See the details below. default 255
+%       is satisfied. See the details below. default 255
 % * __Method__ Adaptive thresholding algorithm to use, default 'Mean'.
 %       One of:
 %       * __Mean__ the threshold value `T(x,y)` is a mean of the
@@ -25,9 +25,9 @@
 %       * __Binary__    `dst(x,y) = (src(x,y) > thresh) ? maxValue : 0`
 %       * __BinaryInv__ `dst(x,y) = (src(x,y) > thresh) ? 0 : maxValue`
 % * __BlockSize__ Size of a pixel neighborhood that is used to calculate a
-%        threshold value for the pixel: 3, 5, 7, and so on. Default 3
+%       threshold value for the pixel: 3, 5, 7, and so on. Default 3
 % * __C__ Constant subtracted from the mean or weighted mean. Normally, it
-%        is positive but may be zero or negative as well. Default 5
+%       is positive but may be zero or negative as well. Default 5
 %
 % The function transforms a grayscale image to a binary image according to
 % the formulae:

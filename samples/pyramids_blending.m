@@ -4,10 +4,7 @@
 %
 % * We will learn about Image Pyramids
 % * We will use Image pyramids to create a new fruit, "Orapple"
-% * We will see these functions:
-%    <matlab:doc('cv.pyrUp') cv.pyrUp>,
-%    <matlab:doc('cv.pyrDown') cv.pyrDown>,
-%    <matlab:doc('cv.buildPyramid') cv.buildPyramid>
+% * We will see these functions: |cv.pyrUp|, |cv.pyrDown|, |cv.buildPyramid|
 %
 % <http://docs.opencv.org/3.1.0/dc/dff/tutorial_py_pyramids.html>
 %
@@ -34,8 +31,8 @@
 % becomes |M/2xN/2| image. So area reduces to one-fourth of original area. It
 % is called an Octave. The same pattern continues as we go upper in pyramid
 % (ie, resolution decreases). Similarly while expanding, area becomes 4 times
-% in each level. We can find Gaussian pyramids using cv.pyrDown() and
-% cv.pyrUp() functions.
+% in each level. We can find Gaussian pyramids using |cv.pyrDown| and
+% |cv.pyrUp| functions.
 %
 % Below is the 4 levels in an image pyramid:
 %
@@ -57,7 +54,7 @@ end
 imshow(dst)
 
 %%
-% Now you can go down the image pyramid with cv.pyrUp() function.
+% Now you can go down the image pyramid with |cv.pyrUp| function.
 %
 % Remember, |higher_reso2| is not equal to |higher_reso|, because once you
 % decrease the resolution, you loose the information.

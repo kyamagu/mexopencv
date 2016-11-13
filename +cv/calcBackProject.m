@@ -44,16 +44,16 @@
 % distribution represented by the histogram. See how, for example, you can
 % find and track a bright-colored object in a scene:
 %
-%  1. Before tracking, show the object to the camera so that it covers almost
-%     the whole frame. Calculate a hue histogram. The histogram may have
-%     strong maximums, corresponding to the dominant colors in the object.
-%  2. When tracking, calculate a back projection of a hue plane of each input
-%     video frame using that pre-computed histogram. Threshold the back
-%     projection to suppress weak colors. It may also make sense to suppress
-%     pixels with non-sufficient color saturation and too dark or too bright
-%     pixels.
-%  3. Find connected components in the resulting picture and choose, for
-%     example, the largest component.
+% 1. Before tracking, show the object to the camera so that it covers almost
+%    the whole frame. Calculate a hue histogram. The histogram may have
+%    strong maximums, corresponding to the dominant colors in the object.
+% 2. When tracking, calculate a back projection of a hue plane of each input
+%    video frame using that pre-computed histogram. Threshold the back
+%    projection to suppress weak colors. It may also make sense to suppress
+%    pixels with non-sufficient color saturation and too dark or too bright
+%    pixels.
+% 3. Find connected components in the resulting picture and choose, for
+%    example, the largest component.
 %
 % This is an approximate algorithm of the cv.CamShift color object tracker.
 %

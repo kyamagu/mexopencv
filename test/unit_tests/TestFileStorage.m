@@ -54,7 +54,7 @@ classdef TestFileStorage
             [S2,~] = cv.FileStorage(str);
             S2 = S2.dummy;  % unwrap
             S2 = [S2{:}];   % cell array of structs to 1xN struct array
-            assert(isequal(S(:), S2(:)));
+            assert(isequaln(S(:), S2(:)));
         end
 
         function test_struct

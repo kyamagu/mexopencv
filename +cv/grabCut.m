@@ -1,9 +1,9 @@
 %GRABCUT  Runs the GrabCut algorithm
 %
-%    mask = cv.grabCut(img, rect);
-%    mask = cv.grabCut(img, mask);
-%    [mask, bgdmodel, fgdmodel] = cv.grabCut(...);
-%    [...] = cv.grabCut(..., 'OptionName', optionValue, ...);
+%    mask = cv.grabCut(img, rect)
+%    mask = cv.grabCut(img, mask)
+%    [mask, bgdmodel, fgdmodel] = cv.grabCut(...)
+%    [...] = cv.grabCut(..., 'OptionName', optionValue, ...)
 %
 % ## Input
 % * __img__ Input 8-bit 3-channel image.
@@ -45,8 +45,8 @@
 %             `mask` as input.
 %       * __Eval__ The value means that the algorithm should just resume.
 %
-% The function implements the GrabCut image segmentation algorithm.
-% http://en.wikipedia.org/wiki/GrabCut
+% The function implements the GrabCut image segmentation algorithm:
+% [GrabCut](http://en.wikipedia.org/wiki/GrabCut).
 %
 % See also: cv.watershed
 %

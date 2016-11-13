@@ -65,6 +65,8 @@ classdef EdgeAwareInterpolator < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.EdgeAwareInterpolator
             %
             if isempty(this.id), return; end

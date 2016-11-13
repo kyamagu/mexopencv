@@ -28,7 +28,7 @@
 % What we mean here by "linear programming problem" (or LP problem, for short)
 % can be formulated as:
 %
-%     Maximize c*x
+%    Maximize c*x
 %      subject to  A*x <= b
 %                  x >= 0
 %
@@ -48,7 +48,7 @@
 % > Introduction to Algorithms, 3rd edition
 % > by T. H. Cormen, C. E. Leiserson, R. L. Rivest and Clifford Stein.
 %
-% In particular, the Bland's rule http://en.wikipedia.org/wiki/Bland%27s_rule
+% In particular, the [Bland's rule](http://en.wikipedia.org/wiki/Bland%27s_rule)
 % is used to prevent cycling.
 %
 % See also: linprog

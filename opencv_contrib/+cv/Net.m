@@ -44,6 +44,8 @@ classdef Net < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    net.delete()
+            %
             % See also: cv.Net
             %
             if isempty(this.id), return; end
@@ -72,7 +74,8 @@ classdef Net < handle
             % between them.
             %
             % ## References
-            % [1]: http://caffe.berkeleyvision.org
+            % [1]:
+            % > [Caffe](http://caffe.berkeleyvision.org)
             %
             % See also: cv.importTorch
             %
@@ -123,8 +126,11 @@ classdef Net < handle
             % fbcunn may be successfully imported.
             %
             % ## References
-            % [1]: http://torch.ch
-            % [2]: https://github.com/torch/nn/blob/master/doc/module.md
+            % [1]:
+            % > [Torch](http://torch.ch)
+            %
+            % [2]:
+            % > [nn.Module](https://github.com/torch/nn/blob/master/doc/module.md)
             %
             % See also: cv.importCaffe
             %
@@ -268,7 +274,7 @@ classdef Net < handle
             % * __toLayer__ layer name or layer id.
             %
             % Makes forward only those layers which weren't changed after
-            % previous cv.Net.forward().
+            % previous cv.Net.forward.
             %
             % Warning: Not yet implemented.
             %
@@ -339,7 +345,7 @@ classdef Net < handle
         end
 
         function deleteLayer(this, layer)
-            %GETLAYERID  Delete layer for the network (not implemented yet)
+            %DELETELAYER  Delete layer for the network (not implemented yet)
             %
             %    net.deleteLayer(layer)
             %

@@ -7,7 +7,7 @@ classdef ORB < handle
     % the descriptors using BRIEF (where the coordinates of random point pairs
     % (or k-tuples) are rotated according to the measured orientation).
     %
-    % ## References:
+    % ## References
     % [RRKB11]:
     % > Ethan Rublee, Vincent Rabaud, Kurt Konolige, and Gary Bradski.
     % > "ORB: An efficient alternative to SIFT or SURF".
@@ -111,6 +111,8 @@ classdef ORB < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.ORB
             %

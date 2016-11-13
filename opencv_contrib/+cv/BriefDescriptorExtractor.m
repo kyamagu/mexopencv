@@ -3,7 +3,7 @@ classdef BriefDescriptorExtractor < handle
     %
     % As described in [calon2010].
     %
-    % ## References:
+    % ## References
     % [calon2010]:
     % > Michael Calonder, Vincent Lepetit, Christoph Strecha, and Pascal Fua.
     % > "Brief: Binary robust independent elementary features".
@@ -37,6 +37,8 @@ classdef BriefDescriptorExtractor < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.BriefDescriptorExtractor
             %

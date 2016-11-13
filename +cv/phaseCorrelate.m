@@ -25,17 +25,17 @@
 % The operation takes advantage of the Fourier shift theorem for detecting the
 % translational shift in the frequency domain. It can be used for fast image
 % registration as well as motion estimation. For more information please see
-% http://en.wikipedia.org/wiki/Phase_correlation
+% [Phase correlation](http://en.wikipedia.org/wiki/Phase_correlation).
 %
 % Calculates the cross-power spectrum of two supplied source arrays. The
 % arrays are padded if needed with cv.getOptimalDFTSize.
 %
 % The function performs the following equations:
 %
-% * First it applies a Hanning window (see
-%   http://en.wikipedia.org/wiki/Hann_function) to each image to remove
-%   possible edge effects. This window is cached until the array size changes
-%   to speed up processing time.
+% * First it applies a
+%   [Hanning window](http://en.wikipedia.org/wiki/Hann_function) to each image
+%   to remove possible edge effects. This window is cached until the array
+%   size changes to speed up processing time.
 %
 % * Next it computes the forward DFTs of each source array:
 %

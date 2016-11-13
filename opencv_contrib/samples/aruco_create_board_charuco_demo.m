@@ -29,4 +29,4 @@ boardImage = cv.drawCharucoBoard(board, fliplr(imageSize), ...
 imshow(boardImage), title('CharucoBoard')
 
 % save image
-imwrite(boardImage, fullfile(tempdir,'CharucoBoard.png'));
+imwrite(boardImage, fullfile(tempdir(),'CharucoBoard.png'));

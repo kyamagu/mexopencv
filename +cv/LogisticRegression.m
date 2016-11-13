@@ -65,15 +65,15 @@ classdef LogisticRegression < handle
     %
     % ## References
     % [LogRegWiki]:
-    % > http://en.wikipedia.org/wiki/Logistic_regression
+    % > [Logistic regression](http://en.wikipedia.org/wiki/Logistic_regression)
     %
     % [BatchDesWiki]:
-    % > http://en.wikipedia.org/wiki/Gradient_descent_optimization
+    % > [Gradient descent optimization](http://en.wikipedia.org/wiki/Gradient_descent_optimization)
     %
     % [LogRegTomMitch]:
     % > "Generative and Discriminative Classifiers: Naive Bayes and Logistic
     % > Regression" in Machine Learning, Tom Mitchell.
-    % > http://www.cs.cmu.edu/~tom/NewChapters.html
+    % > [Machine Learning](http://www.cs.cmu.edu/~tom/NewChapters.html)
     %
     % [RenMalik2003]:
     % > "Learning a Classification Model for Segmentation". Proc. CVPR, Nice,
@@ -164,6 +164,8 @@ classdef LogisticRegression < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    model.delete()
+            %
             % See also: cv.LogisticRegression
             %
             if isempty(this.id), return; end
@@ -181,8 +183,8 @@ classdef LogisticRegression < handle
             % The method clear does the same job as the destructor: it
             % deallocates all the memory occupied by the class members. But
             % the object itself is not destructed and can be reused further.
-            % This method is called from the destructor, from the train() and
-            % load() methods, or even explicitly by the user.
+            % This method is called from the destructor, from the `train` and
+            % `load` methods, or even explicitly by the user.
             %
             % See also: cv.LogisticRegression.empty, cv.LogisticRegression.load
             %

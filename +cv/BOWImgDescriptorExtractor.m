@@ -3,13 +3,13 @@ classdef BOWImgDescriptorExtractor < handle
     %
     % Such a computation consists of the following steps:
     %
-    %  1. Compute descriptors for a given image and its keypoints set.
-    %  2. Find the nearest visual words from the vocabulary for each keypoint
-    %     descriptor.
-    %  3. Compute the bag-of-words image descriptor as is a normalized
-    %     histogram of vocabulary words encountered in the image. The i-th bin
-    %     of the histogram is a frequency of i-th word of the vocabulary in
-    %     the given image.
+    % 1. Compute descriptors for a given image and its keypoints set.
+    % 2. Find the nearest visual words from the vocabulary for each keypoint
+    %    descriptor.
+    % 3. Compute the bag-of-words image descriptor as is a normalized
+    %    histogram of vocabulary words encountered in the image. The i-th bin
+    %    of the histogram is a frequency of i-th word of the vocabulary in
+    %    the given image.
     %
     % ## Example
     %
@@ -75,7 +75,7 @@ classdef BOWImgDescriptorExtractor < handle
             % Refer to the individual extractor/matcher functions to see a
             % list of possible options of each algorithm.
             %
-            % ## Examples
+            % ## Example
             %
             %    % first variant
             %    extractor = cv.BOWImgDescriptorExtractor('ORB', 'BruteForce');
@@ -93,6 +93,8 @@ classdef BOWImgDescriptorExtractor < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    extractor.delete()
             %
             % See also: cv.BOWImgDescriptorExtractor
             %

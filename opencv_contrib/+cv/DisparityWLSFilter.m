@@ -86,6 +86,8 @@ classdef DisparityWLSFilter < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.DisparityWLSFilter
             %
             if isempty(this.id), return; end
@@ -304,7 +306,7 @@ classdef DisparityWLSFilter < handle
             %       class as `matcher_left`.
             %
             % See also: cv.DisparityWLSFilter.DisparityWLSFilter,
-            %   cv.StereoBM, cv.StereoSGBM
+            %  cv.StereoBM, cv.StereoSGBM
             %
             props_left = cv.DisparityWLSFilter.StereoMatcher2Cell(matcher_left);
             props_right = DisparityWLSFilter_(0, 'createRightMatcher', props_left);

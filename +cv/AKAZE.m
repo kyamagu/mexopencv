@@ -5,14 +5,14 @@ classdef AKAZE < handle
     %
     % Note: AKAZE descriptors can only be used with KAZE or AKAZE keypoints.
     %
-    % ## References:
+    % ## References
     % [ANB13]:
     % > "Fast Explicit Diffusion for Accelerated Features in Nonlinear Scale Spaces".
     % > Pablo F. Alcantarilla, Jesus Nuevo and Adrien Bartoli.
     % > In British Machine Vision Conference (BMVC), Bristol, UK, Sept 2013.
     %
     % See also: cv.AKAZE.AKAZE, cv.KAZE, cv.FeatureDetector,
-    %   cv.DescriptorExtractor
+    %  cv.DescriptorExtractor
     %
 
     properties (SetAccess = private)
@@ -53,8 +53,8 @@ classdef AKAZE < handle
         %
         % One of:
         %
-        % * __PM_G1__
-        % * __PM_G2__ (default)
+        % * **PM_G1**
+        % * **PM_G2** (default)
         % * __WEICKERT__
         % * __CHARBONNIER__
         Diffusivity
@@ -75,7 +75,7 @@ classdef AKAZE < handle
             % * __Threshold__ See cv.AKAZE.Threshold, default 0.001
             % * __NOctaves__ See cv.AKAZE.NOctaves, default 4
             % * __NOctaveLayers__ See cv.AKAZE.NOctaveLayers, default 4
-            % * __Diffusivity__ See cv.AKAZE.Diffusivity, default 'PM_G2'
+            % * __Diffusivity__ See cv.AKAZE.Diffusivity, default `PM_G2`
             %
             % See also: cv.AKAZE.detectAndCompute
             %
@@ -84,6 +84,8 @@ classdef AKAZE < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.AKAZE
             %

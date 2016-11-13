@@ -7,9 +7,9 @@
 %
 % ## Output
 % * __s__ Output struct with the following fields:
-%     * __objPoints__
-%     * __dictionary__
-%     * __ids__
+%       * __objPoints__
+%       * __dictionary__
+%       * __ids__
 %
 % See also: cv.estimatePoseBoard, cv.dictionaryDump
 %

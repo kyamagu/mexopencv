@@ -1,7 +1,5 @@
 classdef Boost < handle
-    %BOOST  Boosting
-    %
-    % Boosted tree classifier derived from cv.DTrees.
+    %BOOST  Boosted tree classifier derived from cv.DTrees.
     %
     % ## Boosting
     %
@@ -230,6 +228,8 @@ classdef Boost < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    model.delete()
+            %
             % See also: cv.Boost
             %
             if isempty(this.id), return; end
@@ -247,8 +247,8 @@ classdef Boost < handle
             % The method clear does the same job as the destructor: it
             % deallocates all the memory occupied by the class members. But
             % the object itself is not destructed and can be reused further.
-            % This method is called from the destructor, from the train() and
-            % load() methods, or even explicitly by the user.
+            % This method is called from the destructor, from the `train` and
+            % `load` methods, or even explicitly by the user.
             %
             % See also: cv.Boost.empty, cv.Boost.load
             %
@@ -588,7 +588,7 @@ classdef Boost < handle
             %       set then it picks `PredictSum`, otherwise it picks
             %       `PredictMaxVote` by default). default true
             % * __PredictSum__ If true then return sum of votes instead of the
-            %         class label. default false
+            %       class label. default false
             % * __PredictMaxVote__ If true then return the class label with
             %       the max vote. default false
             %
@@ -604,7 +604,7 @@ classdef Boost < handle
     %% Boost
     methods
         function roots = getRoots(this)
-            %GETROOS  Returns indices of root nodes
+            %GETROOTS  Returns indices of root nodes
             %
             %    roots = classifier.getRoots()
             %

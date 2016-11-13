@@ -22,7 +22,9 @@ classdef MotionSaliencyBinWangApr2014 < handle
     % * Motion Saliency
     % * Objectness
     %
-    % Saliency UML diagram: <<http://docs.opencv.org/3.1.0/saliency.png>>
+    % Saliency UML diagram:
+    %
+    % ![image](http://docs.opencv.org/3.1.0/saliency.png)
     %
     % To see how API works, try tracker demo: `computeSaliency_demo.m`.
     %
@@ -70,6 +72,8 @@ classdef MotionSaliencyBinWangApr2014 < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.MotionSaliencyBinWangApr2014
             %

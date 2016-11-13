@@ -8,7 +8,7 @@
 % * Local Binary Patterns Histograms
 %
 % See this page for a complete tutorial:
-% http://docs.opencv.org/3.1.0/da/d60/tutorial_face_main.html
+% <http://docs.opencv.org/3.1.0/da/d60/tutorial_face_main.html>
 %
 % <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_demo.cpp>
 % <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_eigenfaces.cpp>
@@ -52,7 +52,7 @@ P = 0.1;
 % where Y is the image number for that subject (between 1 and 10).
 %
 % A copy of the database can be retrieved from:
-% http://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html
+% <http://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html>
 %
 
 %%

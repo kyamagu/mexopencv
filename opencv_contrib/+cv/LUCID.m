@@ -4,7 +4,7 @@ classdef LUCID < handle
     % As described in [LUCID].
     %
     % An image descriptor that can be computed very fast, while being about as
-    % robust as, for example, cv.SURF or cv.BRIEF.
+    % robust as, for example, cv.SURF or cv.BriefDescriptorExtractor.
     %
     % LUCID is a simple description method based on linear time permutation
     % distances between the ordering of RGB values of two image patches.
@@ -45,6 +45,8 @@ classdef LUCID < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.LUCID
             %

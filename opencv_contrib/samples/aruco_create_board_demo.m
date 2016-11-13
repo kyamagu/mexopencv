@@ -31,4 +31,4 @@ boardImage = cv.drawPlanarBoard(board, fliplr(imageSize), ...
 imshow(boardImage), title('GridBoard')
 
 % save image
-imwrite(boardImage, fullfile(tempdir,'GridBoard.png'));
+imwrite(boardImage, fullfile(tempdir(),'GridBoard.png'));

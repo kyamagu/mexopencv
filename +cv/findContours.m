@@ -51,7 +51,7 @@
 %     * __Simple__ compresses horizontal, vertical, and diagonal segments and
 %           leaves only their end points. For example, an up-right rectangular
 %           contour is encoded with 4 points.
-%     * __TC89_L1__, __TC89_KCOS__ applies one of the flavors of the Teh-Chin
+%     * **TC89_L1**, **TC89_KCOS** applies one of the flavors of the Teh-Chin
 %           chain approximation algorithm [TehChin89] (1-curvature or
 %           k-cosine curvature).
 % * __Offset__ Optional offset by which every contour point is shifted. This

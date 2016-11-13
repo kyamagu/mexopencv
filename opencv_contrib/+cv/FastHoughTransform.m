@@ -35,7 +35,7 @@
 %       multiples of 90 to odd multiples of 45. The image considered to be
 %       written top-down and left-to-right. Angles are started from vertical
 %       line and go clockwise. Separate quarters and halves are written in
-%       orientation they should be in full Hough space. Default 'ARO_315_135'.
+%       orientation they should be in full Hough space. Default `ARO_315_135`.
 %       One of:
 %       * **ARO_0_45** Vertical primarily direction and clockwise angle
 %             changes.

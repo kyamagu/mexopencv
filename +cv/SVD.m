@@ -42,7 +42,7 @@ classdef SVD < handle
             %
             % In the first form, it initializes an empty SVD structure.
             % In the second form, it initializes an empty SVD structure and
-            % then calls cv.SVD.compute().
+            % then calls cv.SVD.compute.
             %
             % See also: cv.SVD.compute
             %
@@ -55,12 +55,16 @@ classdef SVD < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    svd.delete()
+            %
+            % See also: cv.SVD
+            %
             if isempty(this.id), return; end
             SVD_(this.id, 'delete');
         end
 
         function compute(this, A, varargin)
-            %COMPUTE  the operator that performs SVD
+            %COMPUTE  The operator that performs SVD
             %
             %    svd.compute(A)
             %    svd.compute(A, 'OptionName', optionValue, ...)
@@ -95,7 +99,7 @@ classdef SVD < handle
         end
 
         function dst = backSubst(this, src)
-            %BACKSUBST  performs a singular value back substitution
+            %BACKSUBST  Performs a singular value back substitution
             %
             %    dst = svd.backSubst(src)
             %
@@ -172,12 +176,12 @@ classdef SVD < handle
             %
             % ## Options
             % * __NoUV__ Use only singular values `w`. The algorithm does not
-            %        compute `u` and `vt` matrices. default false
+            %       compute `u` and `vt` matrices. default false
             % * __FullUV__ When the matrix is not square, by default the
-            %        algorithm produces `u` and `vt` matrices of sufficiently
-            %        large size for the further `A` reconstruction. If,
-            %        however, the 'FullUV' flag is specified, `u` and `vt` are
-            %        full-size square orthogonal matrices. default false
+            %       algorithm produces `u` and `vt` matrices of sufficiently
+            %       large size for the further `A` reconstruction. If,
+            %       however, the 'FullUV' flag is specified, `u` and `vt` are
+            %       full-size square orthogonal matrices. default false
             %
             % The function perform SVD of matrix. Unlike the cv.SVD.compute()
             % method, it returns the results in the output matrices.
@@ -197,8 +201,8 @@ classdef SVD < handle
             % * __u__ Left singular vectors
             % * __vt__ Transposed matrix of right singular vectors
             % * __src__ Right-hand side of a linear system `(u*w*v')*dst = src`
-            %        to be solved, where `A` has been previously decomposed
-            %        into `u`, `w`, and `vt` (passed arguments).
+            %       to be solved, where `A` has been previously decomposed
+            %       into `u`, `w`, and `vt` (passed arguments).
             %
             % ## Output
             % * __dst__ Found solution of the system.

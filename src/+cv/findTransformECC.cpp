@@ -37,7 +37,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int motionType = cv::MOTION_AFFINE;
     TermCriteria criteria(TermCriteria::COUNT+TermCriteria::EPS, 50, 0.001);
     Mat inputMask;
-    Mat warpMatrix;
+    Mat warpMatrix = Mat::eye(2, 3, CV_32F);
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "MotionType")

@@ -100,6 +100,8 @@ classdef SuperResolution < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.SuperResolution
             %
             if isempty(this.id), return; end
@@ -248,7 +250,7 @@ classdef SuperResolution < handle
         end
 
         function reset(this)
-            %RESET Reset the frame source
+            %RESET  Reset the frame source
             %
             %    obj.reset()
             %

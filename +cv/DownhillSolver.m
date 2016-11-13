@@ -3,7 +3,8 @@ classdef DownhillSolver < handle
     %
     % defined on an `n`-dimensional Euclidean space, using the **Nelder-Mead**
     % method, also known as downhill simplex method. The basic idea about the
-    % method can be obtained from http://en.wikipedia.org/wiki/Nelder-Mead_method.
+    % method can be obtained from
+    % [Nelder-Mead method](http://en.wikipedia.org/wiki/Nelder-Mead_method).
     %
     % It should be noted, that this method, although deterministic, is rather
     % a heuristic and therefore may converge to a local minima, not necessary
@@ -86,11 +87,11 @@ classdef DownhillSolver < handle
             %       specified as a structure with the following fields:
             %       * __dims__ Number of dimensions
             %       * __fun__ string, name of M-file that implements the
-            %             `calc()` method. It should receive a vector of the
+            %             `calc` method. It should receive a vector of the
             %             specified dimension, and return a scalar value of
             %             the objective function evaluated at that point.
             % * __InitStep__ Initial step, that will be used to construct the
-            %        initial simplex. default `[1, 1, 0.0]`.
+            %       initial simplex. default `[1, 1, 0.0]`.
             % * __TermCriteria__ Terminal criteria to the algorithm. default
             %       `struct('type','Count+EPS', 'maxCount',5000, 'epsilon',1e-6)`
             %
@@ -112,6 +113,8 @@ classdef DownhillSolver < handle
             %DELETE  Destructor
             %
             %    solver.delete()
+            %
+            % See also: cv.DownhillSolver
             %
             if isempty(this.id), return; end
             DownhillSolver_(this.id, 'delete');
@@ -155,7 +158,7 @@ classdef DownhillSolver < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the algorithm is empty.
+            %EMPTY  Returns true if the algorithm is empty
             %
             %    b = solver.empty()
             %

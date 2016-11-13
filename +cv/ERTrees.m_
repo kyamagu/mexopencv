@@ -19,7 +19,7 @@ classdef ERTrees < handle
     % [ERT06]:
     % > Pierre Geurts, Damien Ernst and Louis Wehenkel.
     % > "Extremely randomized trees", 2006
-    % > http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.65.7485&rep=rep1&type=pdf
+    % > [CiteSeerX](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.65.7485)
     %
     % See also: cv.ERTrees.ERTrees, cv.RTrees, cv.DTrees, cv.Boost, fitensemble
     %
@@ -167,6 +167,8 @@ classdef ERTrees < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    model.delete()
+            %
             % See also: cv.ERTrees
             %
             if isempty(this.id), return; end
@@ -184,8 +186,8 @@ classdef ERTrees < handle
             % The method clear does the same job as the destructor: it
             % deallocates all the memory occupied by the class members. But
             % the object itself is not destructed and can be reused further.
-            % This method is called from the destructor, from the train() and
-            % load() methods, or even explicitly by the user.
+            % This method is called from the destructor, from the `train` and
+            % `load` methods, or even explicitly by the user.
             %
             % See also: cv.ERTrees.empty, cv.ERTrees.load
             %
@@ -456,12 +458,12 @@ classdef ERTrees < handle
             %    [err,resp] = model.calcError(...)
             %    [...] = model.calcError(..., 'OptionName', optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __samples__ See the train method.
             % * __responses__ See the train method.
             % * __csvFilename__ See the train method.
             %
-            % ## Outputs
+            % ## Output
             % * __err__ computed error.
             % * __resp__ the optional output responses.
             %
@@ -523,7 +525,7 @@ classdef ERTrees < handle
             %       set then it picks `PredictSum`, otherwise it picks
             %       `PredictMaxVote` by default). default true
             % * __PredictSum__ If true then return sum of votes instead of the
-            %         class label. default false
+            %       class label. default false
             % * __PredictMaxVote__ If true then return the class label with
             %       the max vote. default false
             %
@@ -555,7 +557,7 @@ classdef ERTrees < handle
         end
 
         function roots = getRoots(this)
-            %GETROOS  Returns indices of root nodes
+            %GETROOTS  Returns indices of root nodes
             %
             %    roots = classifier.getRoots()
             %

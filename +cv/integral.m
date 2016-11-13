@@ -25,16 +25,16 @@
 % The function calculates one or more integral images for the source image as
 % follows:
 %
-%     s(X,Y) = \sum_{x<X,y<Y} src(x,y)
-%     sqsum(X,Y) = \sum_{x<X,y<Y} src(x,y)^2
-%     tilted(X,Y) = \sum_{y<Y,abs(x-X+1)<=Y-y-1} src(x,y)
+%    s(X,Y) = \sum_{x<X,y<Y} src(x,y)
+%    sqsum(X,Y) = \sum_{x<X,y<Y} src(x,y)^2
+%    tilted(X,Y) = \sum_{y<Y,abs(x-X+1)<=Y-y-1} src(x,y)
 %
 % Using these integral images, you can calculate sum, mean, and standard
 % deviation over a specific up-right or rotated rectangular region of the
 % image in a constant time, for example:
 %
-%     \sum_{x_1 <= x < x_2, y_1 <= y < y_2} src(x,y)
-%       = s(x_2, y_2) - s(x_1, y_2) - s(x_2, y_1) + s(x_1, y_1)
+%    \sum_{x_1 <= x < x_2, y_1 <= y < y_2} src(x,y)
+%      = s(x_2, y_2) - s(x_1, y_2) - s(x_2, y_1) + s(x_1, y_1)
 %
 % It makes possible to do a fast blurring or fast block correlation with a
 % variable window size, for example. In case of multi-channel images, sums for

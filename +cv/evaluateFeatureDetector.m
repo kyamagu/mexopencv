@@ -24,7 +24,7 @@
 %       types. Not set by default (i.e: you must supply pre-detected keypoints
 %       in the inputs).
 %
-% ## Example:
+% ## Example
 %
 %    detector = cv.FeatureDetector('SURF');
 %    kp1 = detector.detect(img1)

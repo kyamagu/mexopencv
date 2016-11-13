@@ -3,14 +3,10 @@ classdef ConjGradSolver < handle
     %
     % defined on an `n`-dimensional Euclidean space, using the Nonlinear
     % **Conjugate Gradient** method. The implementation was done based on the
-    % beautifully clear explanatory article:
+    % beautifully clear explanatory article [1].
     %
-    % > An Introduction to the Conjugate Gradient Method Without the Agonizing Pain
-    % > http://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf
-    % > by Jonathan Richard Shewchuk.
-    %
-    % The method can be seen as an adaptation of a standard Conjugate Gradient
-    % method (see, for example http://en.wikipedia.org/wiki/Conjugate_gradient_method)
+    % The method can be seen as an adaptation of a standard
+    % [Conjugate Gradient method](http://en.wikipedia.org/wiki/Conjugate_gradient_method)
     % for numerically solving the systems of linear equations.
     %
     % It should be noted, that this method, although deterministic, is rather
@@ -34,6 +30,12 @@ classdef ConjGradSolver < handle
     %
     % * `type == 'Count+EPS' && epsilon > 0 && maxCount > 0`
     % * `type == 'Count' && maxCount > 0`
+    %
+    % ## References
+    % [1]:
+    % > An Introduction to the Conjugate Gradient Method Without the Agonizing Pain
+    % > [PDF](http://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf)
+    % > by Jonathan Richard Shewchuk.
     %
     % See also: cv.DownhillSolver, fminunc
     %
@@ -81,11 +83,11 @@ classdef ConjGradSolver < handle
             %       (`gradfun` and `gradeps` are optional fields):
             %       * __dims__ Number of dimensions
             %       * __fun__ string, name of M-file that implements the
-            %             `calc()` method. It should receive a vector of the
+            %             `calc` method. It should receive a vector of the
             %             specified dimension, and return a scalar value of
             %             the objective function evaluated at that point.
             %       * __gradfun__ string, name of M-file that implements the
-            %             `getGradient()` method. It should receive an `ndims`
+            %             `getGradient` method. It should receive an `ndims`
             %             vector, and return a vector of partial derivatives.
             %             If an empty string is specified (default), the
             %             gradient is approximated using finite difference
@@ -113,6 +115,8 @@ classdef ConjGradSolver < handle
             %DELETE  Destructor
             %
             %    solver.delete()
+            %
+            % See also: cv.ConjGradSolver
             %
             if isempty(this.id), return; end
             ConjGradSolver_(this.id, 'delete');
@@ -156,7 +160,7 @@ classdef ConjGradSolver < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the algorithm is empty.
+            %EMPTY  Returns true if the algorithm is empty
             %
             %    b = solver.empty()
             %

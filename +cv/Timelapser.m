@@ -30,6 +30,8 @@ classdef Timelapser < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.Timelapser
             %
             if isempty(this.id), return; end

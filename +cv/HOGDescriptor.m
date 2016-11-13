@@ -58,7 +58,7 @@ classdef HOGDescriptor < handle
     % [Dalal2005]:
     % > Navneet Dalal and Bill Triggs. "Histogram of oriented gradients for
     % > human detection". CVPR 2005.
-    % > http://lear.inrialpes.fr/pubs/2005/DT05/
+    % > [Link](http://lear.inrialpes.fr/pubs/2005/DT05/).
     %
     % See also: cv.HOGDescriptor.HOGDescriptor, cv.HOGDescriptor.compute,
     %  cv.HOGDescriptor.detect, cv.HOGDescriptor.detectMultiScale,
@@ -155,7 +155,9 @@ classdef HOGDescriptor < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.HOGDescriptor
+            %    hog.delete()
+            %
+            % See also: cv.HOGDescriptor
             %
             if isempty(this.id), return; end
             HOGDescriptor_(this.id, 'delete');
@@ -191,9 +193,9 @@ classdef HOGDescriptor < handle
         function varargout = save(this, filename, varargin)
             %SAVE  Saves a HOG descriptor config to a file
             %
-            %     hog.save(filename)
-            %     hog.save(filename, 'OptionName',optionValue, ...)
-            %     str = hog.save(...)
+            %    hog.save(filename)
+            %    hog.save(filename, 'OptionName',optionValue, ...)
+            %    str = hog.save(...)
             %
             % ## Input
             % * __filename__ HOG descriptor config filename (XML or YAML).
@@ -283,7 +285,7 @@ classdef HOGDescriptor < handle
             %COMPUTE  Returns HOG block descriptors computed for the whole image
             %
             %    descs = hog.compute(im)
-            %    descs = hog.compute(im, 'Option', optionValue, ...)
+            %    descs = hog.compute(im, 'OptionName', optionValue, ...)
             %
             % ## Input
             % * __im__ 8-bit 1- or 3-channel source image.
@@ -325,7 +327,7 @@ classdef HOGDescriptor < handle
             % INRIA Object Detection and Localization Toolkit
             % (http://pascal.inrialpes.fr/soft/olt/).
             %
-            % See also cv.HOGDescriptor.computeGradient
+            % See also: cv.HOGDescriptor.computeGradient
             %
             descs = HOGDescriptor_(this.id, 'compute', im, varargin{:});
         end
@@ -334,7 +336,7 @@ classdef HOGDescriptor < handle
             %COMPUTEGRADIENT  Computes gradient
             %
             %    [grad, angleOfs] = hog.computeGradient(im)
-            %    [...] = hog.computeGradient(im, 'Option', optionValue, ...)
+            %    [...] = hog.computeGradient(im, 'OptionName', optionValue, ...)
             %
             % ## Input
             % * __im__ 8-bit 1- or 3-channel source image.
@@ -359,7 +361,7 @@ classdef HOGDescriptor < handle
             %DETECT  Performs object detection without a multi-scale window
             %
             %    [pts, weights] = hog.detect(im)
-            %    [...] = hog.detect(im, 'Option', optionValue, ...)
+            %    [...] = hog.detect(im, 'OptionName', optionValue, ...)
             %
             % ## Input
             % * __im__ 8-bit 1- or 3-channel image where objects are detected.
@@ -397,7 +399,7 @@ classdef HOGDescriptor < handle
             %DETECTMULTISCALE  Performs object detection with a multi-scale window
             %
             %    [rcts, weights] = hog.detectMultiScale(im)
-            %    [...] = hog.detectMultiScale(im, 'Option', optionValue, ...)
+            %    [...] = hog.detectMultiScale(im, 'OptionName', optionValue, ...)
             %
             % ## Input
             % * __im__ 8-bit 1- or 3-channel image where objects are detected.
@@ -426,10 +428,10 @@ classdef HOGDescriptor < handle
             %       cv.groupRectangles. default 2.0
             % * __UseMeanshiftGrouping__ Flag to use meanshift grouping or the
             %       default grouping based on merging overlapped rectangles.
-            %       When false, cv.HOGDes.groupRectangles is performed and the
-            %       value of `FinalThreshold` is used for `GroupThreshold`.
-            %       When true, cv.groupRectangles_meanshift is performed
-            %       instead, and `FinalThreshold` is used for the
+            %       When false, cv.HOGDescriptor.groupRectangles is performed
+            %       and the value of `FinalThreshold` is used for
+            %       `GroupThreshold`. When true, cv.groupRectangles_meanshift
+            %       is performed instead, and `FinalThreshold` is used for the
             %       `DetectThreshold` option. default false
             %
             % `SvmDetector` should be set before calling this method.

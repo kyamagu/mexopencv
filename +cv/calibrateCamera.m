@@ -114,17 +114,17 @@
 %
 % The algorithm performs the following steps:
 %
-%   1. Compute the initial intrinsic parameters (the option only available for
-%      planar calibration patterns) or read them from the input parameters.
-%      The distortion coefficients are all set to zeros initially unless some
-%      of 'FixK?' are specified.
-%   2. Estimate the initial camera pose as if the intrinsic parameters have
-%      been already known. This is done using cv.solvePnP.
-%   3. Run the global Levenberg-Marquardt optimization algorithm to minimize
-%      the reprojection error, that is, the total sum of squared distances
-%      between the observed feature points `imagePoints` and the projected
-%      (using the current estimates for camera parameters and the poses)
-%      object points `objectPoints`. See cv.projectPoints for details.
+% 1. Compute the initial intrinsic parameters (the option only available for
+%    planar calibration patterns) or read them from the input parameters.
+%    The distortion coefficients are all set to zeros initially unless some
+%    of 'FixK?' are specified.
+% 2. Estimate the initial camera pose as if the intrinsic parameters have
+%    been already known. This is done using cv.solvePnP.
+% 3. Run the global Levenberg-Marquardt optimization algorithm to minimize
+%    the reprojection error, that is, the total sum of squared distances
+%    between the observed feature points `imagePoints` and the projected
+%    (using the current estimates for camera parameters and the poses)
+%    object points `objectPoints`. See cv.projectPoints for details.
 %
 % ## Note
 % If you use a non-square (=non-NxN) grid and cv.findChessboardCorners for

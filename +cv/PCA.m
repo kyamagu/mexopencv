@@ -17,7 +17,7 @@ classdef PCA < handle
     % space with a much shorter vector consisting of the projected vector's
     % coordinates in the subspace. Such a transformation is also known as
     % Karhunen-Loeve Transform, or KLT. See
-    % http://en.wikipedia.org/wiki/Principal_component_analysis
+    % [PCA](http://en.wikipedia.org/wiki/Principal_component_analysis).
     %
     % ## Example
     % The following shows a quick example of how to reduce dimensionality
@@ -39,7 +39,7 @@ classdef PCA < handle
     %    load out.mat
     %    disp(pca)
     %
-    % See also cv.PCA.PCA
+    % See also: cv.PCA.PCA
     %
 
     properties (SetAccess = private)
@@ -101,9 +101,11 @@ classdef PCA < handle
         end
 
         function delete(this)
-            %DELETE  PCA destructor
+            %DELETE  Destructor
             %
-            % See also cv.PCA
+            %    obj.delete()
+            %
+            % See also: cv.PCA
             %
             if isempty(this.id), return; end
             PCA_(this.id, 'delete');
@@ -229,7 +231,7 @@ classdef PCA < handle
             % component subspace, where each vector projection is
             % represented by coefficients in the principal component basis.
             %
-            % See also cv.PCA cv.PCA.backProject
+            % See also: cv.PCA, cv.PCA.backProject
             %
             Y = PCA_(this.id, 'project', X);
         end
@@ -308,7 +310,7 @@ classdef PCA < handle
             % ## Output
             % * __S__ output struct array
             %
-            % See also cv.PCA
+            % See also: cv.PCA
             %
             S = struct('eigenvectors',{this.eigenvectors},...
                        'eigenvalues', {this.eigenvalues},...
@@ -318,7 +320,7 @@ classdef PCA < handle
         function S = saveobj(this)
             %SAVEOBJ  Serialization before save
             %
-            % See also cv.PCA.loadobj
+            % See also: cv.PCA.loadobj
             %
             S = struct(this);
         end

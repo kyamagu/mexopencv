@@ -3,7 +3,7 @@ classdef TestReadOpticalFlow
 
     methods (Static)
         function test_1
-            filename = [tempname '.flo'];
+            filename = [tempname() '.flo'];
             cObj = onCleanup(@() TestReadOpticalFlow.deleteFile(filename));
             flow = rand([100 100 2], 'single');
             success = cv.writeOpticalFlow(filename, flow);

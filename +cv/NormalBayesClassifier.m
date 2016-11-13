@@ -51,6 +51,8 @@ classdef NormalBayesClassifier < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    model.delete()
+            %
             % See also: cv.NormalBayesClassifier
             %
             if isempty(this.id), return; end
@@ -68,8 +70,8 @@ classdef NormalBayesClassifier < handle
             % The method clear does the same job as the destructor: it
             % deallocates all the memory occupied by the class members. But
             % the object itself is not destructed and can be reused further.
-            % This method is called from the destructor, from the train() and
-            % load() methods, or even explicitly by the user.
+            % This method is called from the destructor, from the `train` and
+            % `load` methods, or even explicitly by the user.
             %
             % See also: cv.NormalBayesClassifier.empty, cv.NormalBayesClassifier.load
             %
@@ -408,8 +410,8 @@ classdef NormalBayesClassifier < handle
             % * __RawOutput__ makes the method return the raw results (class
             %       index without mapping to class labels). default false
             %
-            % The method is an alias for cv.KNearest.predictProb, without
-            % returning the probabilities.
+            % The method is an alias for cv.NormalBayesClassifier.predictProb,
+            % without returning the probabilities.
             %
             % See also: cv.NormalBayesClassifier.train, cv.NormalBayesClassifier.predictProb
             %

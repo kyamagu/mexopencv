@@ -34,7 +34,9 @@ classdef MergeDebevec < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.MergeDebevec
+            %    obj.delete()
+            %
+            % See also: cv.MergeDebevec
             %
             if isempty(this.id), return; end
             MergeDebevec_(this.id, 'delete');
@@ -82,7 +84,7 @@ classdef MergeDebevec < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the Algorithm is empty
+            %EMPTY  Returns true if the algorithm is empty
             %
             %    b = obj.empty()
             %

@@ -15,7 +15,7 @@ classdef BackgroundSubtractorKNN < handle
     % > Andrea Prati, Ivana Mikic, Mohan M. Trivedi, Rita Cucchiara.
     % > "Detecting Moving Shadows: Algorithms and Evaluation", IEEE PAMI, 2003.
     %
-    % See also cv.BackgroundSubtractorKNN.BackgroundSubtractorKNN,
+    % See also: cv.BackgroundSubtractorKNN.BackgroundSubtractorKNN,
     %  cv.BackgroundSubtractorKNN.apply,
     %  cv.BackgroundSubtractorKNN.getBackgroundImage
     %
@@ -82,7 +82,9 @@ classdef BackgroundSubtractorKNN < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.BackgroundSubtractorKNN
+            %    bs.delete()
+            %
+            % See also: cv.BackgroundSubtractorKNN
             %
             if isempty(this.id), return; end
             BackgroundSubtractorKNN_(this.id, 'delete');
@@ -144,11 +146,13 @@ classdef BackgroundSubtractorKNN < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the Algorithm is empty.
+            %EMPTY  Returns true if the algorithm is empty
             %
-            %    obj.empty()
+            %    b = obj.empty()
             %
-            % (e.g. in the very beginning or after unsuccessful read).
+            % ## Output
+            % * __b__ Returns true if the algorithm is empty (e.g. in the very
+            %       beginning or after unsuccessful read).
             %
             % See also: cv.BackgroundSubtractorKNN.clear
             %

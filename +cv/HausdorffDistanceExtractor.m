@@ -51,6 +51,8 @@ classdef HausdorffDistanceExtractor < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.HausdorffDistanceExtractor
             %
             if isempty(this.id), return; end

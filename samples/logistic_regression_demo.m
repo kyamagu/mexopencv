@@ -75,6 +75,6 @@ fprintf('accuracy: %.2f%%\n', acc);
 
 %%
 % save the classfier
-fname = fullfile(tempdir,'NewLR_Trained.xml');
+fname = fullfile(tempdir(),'NewLR_Trained.xml');
 lr.save(fname);
 disp(['classifier saved to: ' fname]);

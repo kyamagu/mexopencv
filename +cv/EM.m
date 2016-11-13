@@ -77,7 +77,7 @@ classdef EM < handle
     % > Science Institute and Computer Science Division, University of
     % > California at Berkeley, April 1998.
     %
-    % See also: cv.EM/EM, cv.EM/train, cv.EM/predict, cv.kmeans, fitgmdist
+    % See also: cv.EM.EM, cv.EM.train, cv.EM.predict, cv.kmeans, fitgmdist
     %
 
     properties (SetAccess = private)
@@ -146,7 +146,7 @@ classdef EM < handle
             % * __filename__ Name of XML or YML file, containing
             %       previously saved model
             %
-            % See also: cv.EM, cv.EM/train, cv.EM/load
+            % See also: cv.EM, cv.EM.train, cv.EM.load
             %
             this.id = EM_(0, 'new');
             if nargin > 0
@@ -156,6 +156,8 @@ classdef EM < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    model.delete()
             %
             % See also: cv.EM
             %
@@ -174,10 +176,10 @@ classdef EM < handle
             % The method clear does the same job as the destructor: it
             % deallocates all the memory occupied by the class members. But
             % the object itself is not destructed and can be reused further.
-            % This method is called from the destructor, from the train() and
-            % load() methods, or even explicitly by the user.
+            % This method is called from the destructor, from the `train` and
+            % `load` methods, or even explicitly by the user.
             %
-            % See also: cv.EM/empty, cv.EM/load
+            % See also: cv.EM.empty, cv.EM.load
             %
             EM_(this.id, 'clear');
         end
@@ -191,7 +193,7 @@ classdef EM < handle
             % * __b__ Returns true if the algorithm is empty (e.g. in the very
             %       beginning or after unsuccessful read).
             %
-            % See also: cv.EM/clear, cv.EM/load
+            % See also: cv.EM.clear, cv.EM.load
             %
             b = EM_(this.id, 'empty');
         end
@@ -215,7 +217,7 @@ classdef EM < handle
             % XML or YAML file (or to a string in memory, based on the number
             % of output arguments).
             %
-            % See also: cv.EM/load
+            % See also: cv.EM.load
             %
             [varargout{1:nargout}] = EM_(this.id, 'save', filename);
         end
@@ -245,7 +247,7 @@ classdef EM < handle
             % XML or YAML file (either from disk or serialized string). The
             % previous model state is cleared.
             %
-            % See also: cv.EM/save
+            % See also: cv.EM.save
             %
             EM_(this.id, 'load', fname_or_str, varargin{:});
         end
@@ -259,7 +261,7 @@ classdef EM < handle
             % * __name__ This string is used as top level XML/YML node tag
             %       when the object is saved to a file or string.
             %
-            % See also: cv.EM/save, cv.EM/load
+            % See also: cv.EM.save, cv.EM.load
             %
             name = EM_(this.id, 'getDefaultName');
         end
@@ -275,7 +277,7 @@ classdef EM < handle
             % ## Output
             % * __count__ number of variables in training samples.
             %
-            % See also: cv.EM/train
+            % See also: cv.EM.train
             %
             count = EM_(this.id, 'getVarCount');
         end
@@ -288,7 +290,7 @@ classdef EM < handle
             % ## Output
             % * __b__ Returns true if the model is trained, false otherwise.
             %
-            % See also: cv.EM/empty, cv.EM/train
+            % See also: cv.EM.empty, cv.EM.train
             %
             b = EM_(this.id, 'isTrained');
         end
@@ -304,7 +306,7 @@ classdef EM < handle
             %
             % Always true for EM.
             %
-            % See also: cv.EM/isTrained
+            % See also: cv.EM.isTrained
             %
             b = EM_(this.id, 'isClassifier');
         end
@@ -443,7 +445,7 @@ classdef EM < handle
             % * __trainM__ Starts with Maximization step. You need to provide
             %       initial probabilities `p_{i,k}` to use this option.
             %
-            % See also: cv.EM/predict, cv.EM/trainE, cv.EM/trainM, cv.EM/trainEM
+            % See also: cv.EM.predict, cv.EM.trainE, cv.EM.trainM, cv.EM.trainEM
             %
             status = EM_(this.id, 'train', samples, varargin{:});
         end
@@ -481,7 +483,7 @@ classdef EM < handle
             % regression models the error is computed as RMS, for classifiers
             % as a percent of missclassified samples (0%-100%).
             %
-            % See also: cv.EM/train, cv.EM/predict
+            % See also: cv.EM.train, cv.EM.predict
             %
             [err,resp] = EM_(this.id, 'calcError', samples, responses, varargin{:});
         end
@@ -508,7 +510,7 @@ classdef EM < handle
             % * __Flags__ The optional predict flags, model-dependent.
             %       Not used. default 0
             %
-            % See also: cv.EM/predict2, cv.EM/train, cv.EM/calcError
+            % See also: cv.EM.predict2, cv.EM.train, cv.EM.calcError
             %
             if false
                 [results,f] = EM_(this.id, 'predict', samples, varargin{:});
@@ -537,7 +539,7 @@ classdef EM < handle
             % Returns vector with the number of elements equal to the number
             % of mixtures.
             %
-            % See also: cv.EM/getMeans, cv.EM/getCovs
+            % See also: cv.EM.getMeans, cv.EM.getCovs
             %
             weights = EM_(this.id, 'getWeights');
         end
@@ -554,7 +556,7 @@ classdef EM < handle
             % mixtures and number of columns equal to the space
             % dimensionality.
             %
-            % See also: cv.EM/getCovs, cv.EM/getWeights
+            % See also: cv.EM.getCovs, cv.EM.getWeights
             %
             means = EM_(this.id, 'getMeans');
         end
@@ -572,7 +574,7 @@ classdef EM < handle
             % floating-point matrix `NxN`, where `N` is the space
             % dimensionality.
             %
-            % See also: cv.EM/getMeans, cv.EM/getWeights
+            % See also: cv.EM.getMeans, cv.EM.getWeights
             %
             covs = EM_(this.id, 'getCovs');
         end
@@ -620,7 +622,7 @@ classdef EM < handle
             % any other classifier. The trained model is similar to the
             % cv.NormalBayesClassifier.
             %
-            % See also: cv.EM/trainE, cv.EM/trainM, cv.EM/train
+            % See also: cv.EM.trainE, cv.EM.trainM, cv.EM.train
             %
             [logLikelihoods, labels, probs] = EM_(this.id, 'trainEM', samples);
         end
@@ -662,7 +664,7 @@ classdef EM < handle
             % pass initial weights `PI_k` and covariance matrices `S_k` of
             % mixture components.
             %
-            % See also: cv.EM/trainM, cv.EM/trainEM, cv.EM/train
+            % See also: cv.EM.trainM, cv.EM.trainEM, cv.EM.train
             %
             [logLikelihoods, labels, probs] = EM_(this.id, 'trainE', samples, means0, varargin{:});
         end
@@ -691,7 +693,7 @@ classdef EM < handle
             % This variation starts with Maximization step. You need to
             % provide initial probabilities `p_{i,k}` to use this option.
             %
-            % See also: cv.EM/trainE, cv.EM/trainEM, cv.EM/train
+            % See also: cv.EM.trainE, cv.EM.trainEM, cv.EM.train
             %
             [logLikelihoods, labels, probs] = EM_(this.id, 'trainM', samples, probs0);
         end
@@ -719,7 +721,7 @@ classdef EM < handle
             %       It has `nsamples-by-ClustersNumber` size and `double`
             %       type.
             %
-            % See also: cv.EM/predict
+            % See also: cv.EM.predict
             %
             [results, probs] = EM_(this.id, 'predict2', samples);
             logLikelihoods = results(:,1);

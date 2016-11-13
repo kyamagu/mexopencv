@@ -38,7 +38,7 @@
 % consequtive images have been captured in small period of time. For example
 % video. This version of the function is for grayscale images or for manual
 % manipulation with colorspaces. For more details see:
-% http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.131.6394
+% [CiteSeerX](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.131.6394)
 %
 % See also: cv.fastNlMeansDenoising, cv.fastNlMeansDenoisingColored,
 %  cv.fastNlMeansDenoisingColoredMulti

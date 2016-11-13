@@ -14,11 +14,11 @@
 %
 % The function calculates the 2x3 matrix of an affine transform so that:
 %
-%     [X_i; X_i] = T * [x_i; y_i; 1]
+%    [X_i; X_i] = T * [x_i; y_i; 1]
 %
-% where
+% where:
 %
-%     dst(i,:) = [X_i, Y_i], src(i,:) = [x_i, y_i]  for i=1,2,3
+%    dst(i,:) = [X_i, Y_i], src(i,:) = [x_i, y_i]  for i=1,2,3
 %
 % See also: cv.warpAffine, cv.transform, cp2tform, fitgeotrans,
 %  estimateGeometricTransform

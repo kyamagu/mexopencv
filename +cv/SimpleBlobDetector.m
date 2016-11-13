@@ -81,6 +81,8 @@ classdef SimpleBlobDetector < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.SimpleBlobDetector
             %
             if isempty(this.id), return; end

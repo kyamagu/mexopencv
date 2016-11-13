@@ -44,5 +44,5 @@
 % The function is useful for non-max suppression of object detections.
 %
 % See also: cv.CascadeClassifier, cv.HOGDescriptor, cv.SimilarRects,
-%   cv.groupRectangles_meanshift, selectStrongestBbox
+%  cv.groupRectangles_meanshift, selectStrongestBbox
 %

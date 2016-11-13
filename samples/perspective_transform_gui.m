@@ -55,7 +55,7 @@ function onDrag(newpos, handles)
 end
 
 function redraw(handles, H)
-    %REDRAW  warp and repaint image
+    %REDRAW  Warp and repaint image
 
     % apply the perspective transformation on the source image
     img2 = cv.warpPerspective(handles.img, H);

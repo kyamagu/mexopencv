@@ -78,7 +78,7 @@ classdef GBTrees < handle
     % ## References
     % [JFGBT]:
     % > Jerome Friedman:
-    % > http://www.salfordsystems.com/doc/GreedyFuncApproxSS.pdf
+    % > [PDF](http://www.salfordsystems.com/doc/GreedyFuncApproxSS.pdf)
     %
     % See also: cv.GBTrees.GBTrees, cv.DTrees, cv.Boost, fitensemble
     %
@@ -223,6 +223,8 @@ classdef GBTrees < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    model.delete()
+            %
             % See also: cv.GBTrees
             %
             if isempty(this.id), return; end
@@ -240,8 +242,8 @@ classdef GBTrees < handle
             % The method clear does the same job as the destructor: it
             % deallocates all the memory occupied by the class members. But
             % the object itself is not destructed and can be reused further.
-            % This method is called from the destructor, from the train() and
-            % load() methods, or even explicitly by the user.
+            % This method is called from the destructor, from the `train` and
+            % `load` methods, or even explicitly by the user.
             %
             % See also: cv.GBTrees.empty, cv.GBTrees.load
             %
@@ -511,12 +513,12 @@ classdef GBTrees < handle
             %    [err,resp] = model.calcError(...)
             %    [...] = model.calcError(..., 'OptionName', optionValue, ...)
             %
-            % ## Inputs
+            % ## Input
             % * __samples__ See the train method.
             % * __responses__ See the train method.
             % * __csvFilename__ See the train method.
             %
-            % ## Outputs
+            % ## Output
             % * __err__ computed error.
             % * __resp__ the optional output responses.
             %
@@ -596,7 +598,7 @@ classdef GBTrees < handle
         end
 
         function roots = getRoots(this)
-            %GETROOS  Returns indices of root nodes
+            %GETROOTS  Returns indices of root nodes
             %
             %    roots = classifier.getRoots()
             %

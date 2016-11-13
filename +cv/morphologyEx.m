@@ -20,8 +20,8 @@
 %       * __Blackhat__ "black hat"
 %             `dst = blackhat(src,element) = close(src,element) - src`
 %       * __HitMiss__ "hit and miss". Only supported for `uint8` 1-channel
-%             binary images. Tutorial can be found in this page
-%             https://web.archive.org/web/20160316070407/http://opencv-code.com/tutorials/hit-or-miss-transform-in-opencv/
+%             binary images. Tutorial can be found in this
+%             [page](https://web.archive.org/web/20160316070407/http://opencv-code.com/tutorials/hit-or-miss-transform-in-opencv/).
 %
 % ## Output
 % * __dst__ Destination image of the same size and type as source image.

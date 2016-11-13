@@ -13,13 +13,13 @@
 %
 % The function calculates the following matrix:
 %
-%     [ a, b, (1-a)*center(1) - b*center(2) ;
-%      -b, a, b*center(1) + (1-a)*center(2) ]
+%    [ a, b, (1-a)*center(1) - b*center(2) ;
+%     -b, a, b*center(1) + (1-a)*center(2) ]
 %
-% where
+% where:
 %
-%     a = scale * cos(angle)
-%     b = scale * sin(angle)
+%    a = scale * cos(angle)
+%    b = scale * sin(angle)
 %
 % The transformation maps the rotation center to itself. If this is not the
 % target, adjust the shift.

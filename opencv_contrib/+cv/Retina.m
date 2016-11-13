@@ -114,7 +114,7 @@ classdef Retina < handle
     % backlight problems. Here is the considered input...
     % *"Well,i could see more with my eyes than what i captured with my camera..."*
     %
-    % <<http://docs.opencv.org/3.1.0/retinaInput.jpg>>
+    % ![image](http://docs.opencv.org/3.1.0/retinaInput.jpg)
     %
     % Below, the retina foveal model applied on the entire image with default
     % parameters. Details are enforced whatever the local luminance is. Here
@@ -123,7 +123,7 @@ classdef Retina < handle
     % parameters discussion below and increase `HorizontalCellsGain` near 1 to
     % remove them.
     %
-    % <<http://docs.opencv.org/3.1.0/retinaOutput_default.jpg>>
+    % ![image](http://docs.opencv.org/3.1.0/retinaOutput_default.jpg)
     %
     % Below, a second retina foveal model output applied on the entire image
     % with a parameters setup focused on naturalness perception.
@@ -140,7 +140,7 @@ classdef Retina < handle
     % - `HorizontalCellsGain = 0.3`
     % - `PhotoreceptorsLocalAdaptationSensitivity = GanglioncellsSensitivity = 0.89`.
     %
-    % <<http://docs.opencv.org/3.1.0/retinaOutput_realistic.jpg>>
+    % ![image](http://docs.opencv.org/3.1.0/retinaOutput_realistic.jpg)
     %
     % As observed in this preliminary demo, the retina can be settled up with
     % various parameters, by default, as shown on the figure above, the retina
@@ -186,16 +186,16 @@ classdef Retina < handle
     % 2 image samples.
     %
     % - HDR image tone mapping example with generic parameters.
-    %   Original image comes from http://openexr.com/ samples
+    %   Original image comes from [OpenEXR](http://openexr.com/) samples
     %   (`openexr-images-1.7.0/ScanLines/CandleGlass.exr`)
     %
-    %     <<http://docs.opencv.org/3.1.0/HDRtoneMapping_candleSample.jpg>>
+    %   ![image](http://docs.opencv.org/3.1.0/HDRtoneMapping_candleSample.jpg)
     %
     % - HDR image tone mapping example with the same generic parameters.
     %   Original image comes from
-    %   http://www.pauldebevec.com/Research/HDR/memorial.exr
+    %   [memorial.exr](http://www.pauldebevec.com/Research/HDR/memorial.exr)
     %
-    %     <<http://docs.opencv.org/3.1.0/HDRtoneMapping_memorialSample.jpg>>
+    %   ![image](http://docs.opencv.org/3.1.0/HDRtoneMapping_memorialSample.jpg)
     %
     % #### Motion and event detection using the Magnocellular pathway (magno retina output)
     %
@@ -212,8 +212,8 @@ classdef Retina < handle
     % transient areas.
     %
     % We present here some illustrations of the retina outputs on some
-    % examples taken from http://changedetection.net/ with RGB and thermal
-    % videos.
+    % examples taken from [CDNET](http://changedetection.net/) with RGB and
+    % thermal videos.
     %
     % NOTE: here, we use the default retina setup that generates halos around
     % strong edges. Note that temporal constants allow a temporal effect to be
@@ -226,20 +226,20 @@ classdef Retina < handle
     % it using cv.Retina.getMagnoRAW getter instead.
     %
     % - Retina processing on RGB image sequence: example from
-    %   http://changedetection.net/ (baseline/PETS2006).
+    %   [CDNET](http://changedetection.net/) (baseline/PETS2006).
     %   Parvo enforces static signals but smooths moving persons since they do
     %   not remain static from its point of view.
     %   Magno channel highligths moving persons, observe the energy mapping on
     %   the one on top, partly behind a dark glass.
     %
-    %     <<http://docs.opencv.org/3.1.0/VideoDemo_RGB_PETS2006.jpg>>
+    %   ![image](http://docs.opencv.org/3.1.0/VideoDemo_RGB_PETS2006.jpg)
     %
     % - Retina processing on gray levels image sequence: example from
-    %   http://changedetection.net/ (thermal/park).
+    %   [CDNET](http://changedetection.net/) (thermal/park).
     %   On such grayscale images, parvo channel enforces contrasts while mango
     %   strongly reacts on moving pedestrians
     %
-    %     <<http://docs.opencv.org/3.1.0/VideoDemo_thermal_park.jpg>>
+    %   ![image](http://docs.opencv.org/3.1.0/VideoDemo_thermal_park.jpg)
     %
     % ### Literature
     %
@@ -268,8 +268,8 @@ classdef Retina < handle
     %
     % ## Retina programming interfaces
     %
-    % The proposed class allows the Gipsa (http://www.gipsa-lab.inpg.fr)
-    % (preliminary work) / Listic (http://www.listic.univ-savoie.fr) labs
+    % The proposed class allows the [Gipsa](http://www.gipsa-lab.inpg.fr)
+    % (preliminary work) / [Listic](http://www.listic.univ-savoie.fr) labs
     % retina model to be used. It can be applied on still images, images
     % sequences and video sequences.
     %
@@ -316,10 +316,10 @@ classdef Retina < handle
     %
     % The simplest parameters are as follows:
     %
-    % - __ColorMode__: let the retina process color information (if 1) or gray
+    % * __ColorMode__: let the retina process color information (if 1) or gray
     %   scale images (if 0). In that last case, only the first channels of the
     %   input will be processed.
-    % - __NormaliseOutput__: each channel has such parameter: if the value is
+    % * __NormaliseOutput__: each channel has such parameter: if the value is
     %   set to 1, then the considered channel's output is rescaled between 0
     %   and 255. Be aware at this case of the Magnocellular output level
     %   (motion/transient channel detection). Residual noise will also be
@@ -340,19 +340,19 @@ classdef Retina < handle
     % thus, leads to improving details extraction and high frequency noise
     % canceling.
     %
-    % - __PhotoreceptorsLocalAdaptationSensitivity__ between 0 and 1. Values
+    % * __PhotoreceptorsLocalAdaptationSensitivity__ between 0 and 1. Values
     %   close to 1 allow high luminance log compression's effect at the
     %   photo-receptors level. Values closer to 0 provide a more linear
     %   sensitivity. Increased alone, it can burn the *Parvo (details channel)*
     %   output image. If adjusted in collaboration with
     %   `GanglionCellsSensitivity`, images can be very contrasted whatever the
     %   local luminance there is at the cost of a naturalness decrease.
-    % - __PhotoreceptorsTemporalConstant__ this setups the temporal constant
+    % * __PhotoreceptorsTemporalConstant__ this setups the temporal constant
     %   of the low pass filter effect at the entry of the retina. High value
     %   leads to strong temporal smoothing effect: moving objects are blurred
     %   and can disappear while static object are favored. But when starting
     %   the retina processing, stable state is reached later.
-    % - __PhotoreceptorsSpatialConstant__ specifies the spatial constant
+    % * __PhotoreceptorsSpatialConstant__ specifies the spatial constant
     %   related to photo-receptors' lowpass filter's effect. Those parameters
     %   specify the minimum value of the spatial signal period allowed in what
     %   follows. Typically, this filter should cut high frequency noise. On
@@ -371,18 +371,18 @@ classdef Retina < handle
     % (part of the spatial band pass effect thus favoring visual details
     % enhancement).
     %
-    % - __HorizontalCellsGain__ here is a critical parameter! If you are not
+    % * __HorizontalCellsGain__ here is a critical parameter! If you are not
     %   interested with the mean luminance and want just to focus on details
     %   enhancement, then, set this parameterto zero. However, if you want to
     %   keep some environment luminance's data, let some low spatial
     %   frequencies pass into the system and set a higher value (<1).
-    % - __HCellsTemporalConstant__ similar to photo-receptors, this parameter
+    % * __HCellsTemporalConstant__ similar to photo-receptors, this parameter
     %   acts on the temporal constant of a low pass temporal filter that
     %   smoothes input data. Here, a high value generates a high retina after
     %   effect while a lower value makes the retina more reactive. This value
     %   should be lower than `PhotoreceptorsTemporalConstant` to limit strong
     %   retina after effects.
-    % - __HCellsSpatialConstant__ is the spatial constant of these cells
+    % * __HCellsSpatialConstant__ is the spatial constant of these cells
     %   filter's low pass one. It specifies the lowest spatial frequency
     %   allowed in what follows. Visually, a high value leads to very low
     %   spatial frequencies processing and leads to salient halo effects.
@@ -397,7 +397,7 @@ classdef Retina < handle
     %
     % #### Parvo (details channel) dedicated parameter
     %
-    % - __GanglionCellsSensitivity__ specifies the strength of the final local
+    % * __GanglionCellsSensitivity__ specifies the strength of the final local
     %   adaptation occurring at the output of this details' dedicated channel.
     %   Parameter values remain between 0 and 1. Low value tend to give a
     %   linear response while higher values enforce the remaining low
@@ -414,22 +414,22 @@ classdef Retina < handle
     % extracted transient data while a final logarithmic compression enhances
     % low transient events thus enhancing event sensitivity.
     %
-    % - __ParasolCellsBeta__ generally set to zero, can be considered as an
+    % * __ParasolCellsBeta__ generally set to zero, can be considered as an
     %   amplifier gain at the entry point of this processing stage. Generally
     %   set to 0.
-    % - __ParasolCellsTau__ the temporal smoothing effect that can be added
-    % - __ParasolCellsK__ the spatial constant of the spatial filtering
+    % * __ParasolCellsTau__ the temporal smoothing effect that can be added
+    % * __ParasolCellsK__ the spatial constant of the spatial filtering
     %   effect, set it at a high value to favor low spatial frequency signals
     %   that are lower subject for residual noise.
-    % - __AmacrinCellsTemporalCutFrequency__ specifies the temporal constant
+    % * __AmacrinCellsTemporalCutFrequency__ specifies the temporal constant
     %   of the high pass filter. High values let slow transient events to be
     %   selected.
-    % - __V0CompressionParameter__ specifies the strength of the log
+    % * __V0CompressionParameter__ specifies the strength of the log
     %   compression. Similar behaviors to previous description but here
     %   enforces sensitivity of transient events.
-    % - __LocalAdaptintegrationTau__ generally set to 0, has no real use
+    % * __LocalAdaptintegrationTau__ generally set to 0, has no real use
     %   actually in here.
-    % - __LocalAdaptintegrationK__ specifies the size of the area on which
+    % * __LocalAdaptintegrationK__ specifies the size of the area on which
     %   local adaptation is performed. Low values lead to short range local
     %   adaptation (higher sensitivity to noise), high values secure log
     %   compression.
@@ -465,7 +465,7 @@ classdef Retina < handle
     % > Benoit A., Caplier A., Durette B., Herault, J.; "Using Human Visual
     % > System Modeling For Bio-inspired Low Level Image Processing", Elsevier,
     % > Computer Vision and Image Understanding 114 (2010), pp. 758-773,
-    % > DOI: http://dx.doi.org/10.1016/j.cviu.2010.01.011
+    % > [DOI](http://dx.doi.org/10.1016/j.cviu.2010.01.011)
     %
     % [Benoit2014]:
     % > Strat S.T., Benoit A., Lambert P.; "Retina enhanced bag of words
@@ -535,6 +535,8 @@ classdef Retina < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.Retina
             %
@@ -912,8 +914,8 @@ classdef Retina < handle
             %
             % ## Output
             % * __str__ optional output. If requested, the parameters are
-            %        persisted to a string in memory instead of writing to
-            %        disk.
+            %       persisted to a string in memory instead of writing to
+            %       disk.
             %
             % See also: cv.Retina.setup
             %

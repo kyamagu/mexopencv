@@ -58,7 +58,7 @@ classdef DescriptorExtractor < handle
             % Refer to the constructors of each descriptor extractor for a
             % list of supported options.
             %
-            % See also cv.DescriptorExtractor.compute
+            % See also: cv.DescriptorExtractor.compute
             %
             if nargin < 1, extractorType = 'ORB'; end
             this.Type = extractorType;
@@ -68,7 +68,9 @@ classdef DescriptorExtractor < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.DescriptorExtractor
+            %    extractor.delete()
+            %
+            % See also: cv.DescriptorExtractor
             %
             if isempty(this.id), return; end
             DescriptorExtractor_(this.id, 'delete');
@@ -262,7 +264,7 @@ classdef DescriptorExtractor < handle
             %       `descriptors{i}`) is the descriptor for `j`-th keypoint.
             % * __keypoints__ Optional output with possibly updated keypoints.
             %
-            % See also cv.DescriptorExtractor.DescriptorExtractor
+            % See also: cv.DescriptorExtractor.DescriptorExtractor
             %
             [descriptors, keypoints] = DescriptorExtractor_(this.id, 'compute', img, keypoints);
         end

@@ -69,6 +69,8 @@ classdef Plot2d < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.Plot2d
             %
             if isempty(this.id), return; end

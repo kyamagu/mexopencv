@@ -3,7 +3,7 @@ classdef SIFT < handle
     %
     % Algorithm by D. Lowe [Lowe04].
     %
-    % ## References:
+    % ## References
     % [Lowe04]:
     % > David G Lowe.
     % > "Distinctive Image Features from Scale-Invariant Keypoints".
@@ -51,6 +51,8 @@ classdef SIFT < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.SIFT
             %

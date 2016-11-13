@@ -64,7 +64,7 @@ classdef TestBasicFaceRecognizer
             model = cv.BasicFaceRecognizer('Eigenfaces');
             model.train(images, labels);
 
-            filename = [tempname '.xml'];
+            filename = [tempname() '.xml'];
             cObj = onCleanup(@() deleteFile(filename));
             model.save(filename);
             assert(exist(filename,'file')==2);

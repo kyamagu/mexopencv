@@ -1,5 +1,5 @@
 classdef RetinaFastToneMapping < handle
-    %RETINAFASTTONEMAPPING  a wrapper class which allows the tone mapping algorithm of Meylan&al(2007) to be used with OpenCV
+    %RETINAFASTTONEMAPPING  Class with tone mapping algorithm of Meylan&al(2007)
     %
     % High Dynamic Range (HDR >8bit images) tone mapping to (conversion to
     % 8bit) use case of the retina.
@@ -33,7 +33,7 @@ classdef RetinaFastToneMapping < handle
     % > Benoit A., Caplier A., Durette B., Herault, J.; "Using Human Visual
     % > System Modeling For Bio-inspired Low Level Image Processing", Elsevier,
     % > Computer Vision and Image Understanding 114 (2010), pp. 758-773,
-    % > DOI: http://dx.doi.org/10.1016/j.cviu.2010.01.011
+    % > [DOI](http://dx.doi.org/10.1016/j.cviu.2010.01.011)
     %
     % [Herault2010]:
     % > Jeanny Herault; "Vision: Images, Signals and Neural Networks: Models
@@ -63,6 +63,8 @@ classdef RetinaFastToneMapping < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.RetinaFastToneMapping
             %
@@ -159,7 +161,7 @@ classdef RetinaFastToneMapping < handle
     %% RetinaFastToneMapping
     methods
         function setup(this, varargin)
-            %SETUP  updates tone mapping behaviors by adjusing the local luminance computation area
+            %SETUP  Updates tone mapping behaviors by adjusing the local luminance computation area
             %
             %    obj.setup('OptionName',optionValue, ...)
             %
@@ -178,7 +180,7 @@ classdef RetinaFastToneMapping < handle
         end
 
         function outputToneMappedImage = applyFastToneMapping(this, inputImage)
-            %APPLYFASTTONEMAPPING  applies a luminance correction (initially High Dynamic Range (HDR) tone mapping)
+            %APPLYFASTTONEMAPPING  Applies a luminance correction (initially High Dynamic Range (HDR) tone mapping)
             %
             %    outputToneMappedImage = obj.applyFastToneMapping(inputImage)
             %

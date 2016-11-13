@@ -43,7 +43,8 @@
 %    Ky = size(src,1) / 360
 %
 % Polar remaps reference:
-% <http://docs.opencv.org/trunk/polar_remap_doc.png>
+%
+% ![image](http://docs.opencv.org/trunk/polar_remap_doc.png)
 %
 % Note: To calculate magnitude and angle in degrees, cv.cartToPolar is used
 % internally thus angles are measured from 0 to 360 with accuracy about

@@ -119,6 +119,8 @@ classdef ShapeContextDistanceExtractor < handle
         function delete(this)
             %DELETE  Destructor
             %
+            %    obj.delete()
+            %
             % See also: cv.ShapeContextDistanceExtractor
             %
             if isempty(this.id), return; end
@@ -131,10 +133,10 @@ classdef ShapeContextDistanceExtractor < handle
             %    obj.setImages(image1, image2)
             %
             % ## Input
-            % __image1__ Image corresponding to the shape defined by
-            %     `contours1`.
-            % __image2__ Image corresponding to the shape defined by
-            %     `contours2`.
+            % * __image1__ Image corresponding to the shape defined by
+            %       `contours1`.
+            % * __image2__ Image corresponding to the shape defined by
+            %       `contours2`.
             %
             % See also: cv.ShapeContextDistanceExtractor.getImages
             %
@@ -151,7 +153,7 @@ classdef ShapeContextDistanceExtractor < handle
             % * __comparerType__ an algorithm that defines the cost matrix
             %       between descriptors. One of:
             %       * __NormHistogramCostExtractor__ A norm based cost
-            %           extraction. See cv.norm
+            %             extraction. See cv.norm
             %       * __EMDHistogramCostExtractor__ An EMD based cost
             %             extraction. See cv.EMD
             %       * __ChiHistogramCostExtractor__ An Chi based cost
@@ -219,10 +221,10 @@ classdef ShapeContextDistanceExtractor < handle
             %    [image1, image2] = obj.getImages()
             %
             % ## Output
-            % __image1__ Image corresponding to the shape defined by
-            %     `contours1`.
-            % __image2__ Image corresponding to the shape defined by
-            %     `contours2`.
+            % * __image1__ Image corresponding to the shape defined by
+            %       `contours1`.
+            % * __image2__ Image corresponding to the shape defined by
+            %       `contours2`.
             %
             % See also: cv.ShapeContextDistanceExtractor.setImages
             %

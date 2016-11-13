@@ -7,12 +7,12 @@
 % * __image__ Image where the search is running.  It must be 8-bit integer or
 %       32-bit floating-point.
 % * __tmpl__ Searched template. It must be not greater than the source `image`
-%         and have the same data type.
+%       and have the same data type.
 %
 % ## Output
 % * __result__ Map of comparison results. It is single-channel 32-bit
-%         floating-point. If `image` is `W x H` and `templ` is `w x h`, then
-%         result is `(W-w+1) x (H-h+1)`.
+%       floating-point. If `image` is `W x H` and `templ` is `w x h`, then
+%       result is `(W-w+1) x (H-h+1)`.
 %
 % ## Options
 % * __Method__ Parameter specifying the comparison method, default 'SqDiff'.
@@ -24,7 +24,7 @@
 %       * __CCoeff__        Cosine coefficient
 %       * __CCoeffNormed__  Normalized cosine coefficient
 % * __Mask__ Mask of searched template. It must have the same datatype and
-%         size with `templ`. It is not set by default.
+%       size with `templ`. It is not set by default.
 %
 % The function slides through `image`, compares the overlapped patches of size
 % `w x h` against `templ` using the specified method and stores the comparison

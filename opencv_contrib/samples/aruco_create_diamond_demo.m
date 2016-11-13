@@ -23,4 +23,4 @@ markerImg = cv.drawCharucoDiamond(dictionary, ids, ...
 imshow(markerImg), title('DiamondMarker')
 
 % save image
-imwrite(markerImg, fullfile(tempdir,'DiamondMarker.png'));
+imwrite(markerImg, fullfile(tempdir(),'DiamondMarker.png'));

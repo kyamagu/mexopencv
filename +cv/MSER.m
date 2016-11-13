@@ -13,18 +13,18 @@ classdef MSER < handle
     %
     % ## References
     % [WikiArticle]:
-    % > http://en.wikipedia.org/wiki/Maximally_stable_extremal_regions
+    % > [MSER](http://en.wikipedia.org/wiki/Maximally_stable_extremal_regions)
     %
     % [Nister08]:
     % > David Nister and Henrik Stewenius. "Linear Time Maximally Stable
     % > Extremal Regions". In Proceedings of the 10th ECCV '08, pp 183-196.
-    % > doi: 10.1007/978-3-540-88688-4_14
+    % > [DOI](http://dx.doi.org/10.1007/978-3-540-88688-4_14)
     %
     % [Forssen07]:
     % > Per-Erik Forssen. "Maximally Stable Colour Regions for Recognition and
     % > Matching". in CVPR '07. IEEE Conference on , pp.1-8, 17-22 June 2007
     % > doi: 10.1109/CVPR.2007.383120
-    % > http://www.cs.ubc.ca/~perfo/papers/forssen_cvpr07.pdf
+    % > [PDF](http://www.cs.ubc.ca/~perfo/papers/forssen_cvpr07.pdf)
     %
     % See also: cv.FeatureDetector, detectMSERFeatures, MSERRegions
     %
@@ -85,6 +85,8 @@ classdef MSER < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %    obj.delete()
             %
             % See also: cv.MSER
             %

@@ -8,9 +8,9 @@ classdef BackgroundSubtractorMOG < handle
     % > Pakorn KaewTraKulPong and Richard Bowden. "An improved adaptive
     % > background mixture model for real-time tracking with shadow detection".
     % > In Video-Based Surveillance Systems, pages 135-144. Springer, 2002.
-    % > http://personal.ee.surrey.ac.uk/Personal/R.Bowden/publications/avbs01/avbs01.pdf
+    % > [PDF](http://personal.ee.surrey.ac.uk/Personal/R.Bowden/publications/avbs01/avbs01.pdf)
     %
-    % See also cv.BackgroundSubtractorMOG.BackgroundSubtractorMOG,
+    % See also: cv.BackgroundSubtractorMOG.BackgroundSubtractorMOG,
     %  cv.BackgroundSubtractorMOG.apply,
     %  cv.BackgroundSubtractorMOG.getBackgroundImage
     %
@@ -61,7 +61,9 @@ classdef BackgroundSubtractorMOG < handle
         function delete(this)
             %DELETE  Destructor
             %
-            % See also cv.BackgroundSubtractorMOG
+            %    bs.delete()
+            %
+            % See also: cv.BackgroundSubtractorMOG
             %
             if isempty(this.id), return; end
             BackgroundSubtractorMOG_(this.id, 'delete');
@@ -123,11 +125,13 @@ classdef BackgroundSubtractorMOG < handle
         end
 
         function b = empty(this)
-            %EMPTY  Returns true if the Algorithm is empty.
+            %EMPTY  Returns true if the algorithm is empty
             %
-            %    obj.empty()
+            %    b = obj.empty()
             %
-            % (e.g. in the very beginning or after unsuccessful read).
+            % ## Output
+            % * __b__ Returns true if the algorithm is empty (e.g. in the very
+            %       beginning or after unsuccessful read).
             %
             % See also: cv.BackgroundSubtractorMOG.clear
             %

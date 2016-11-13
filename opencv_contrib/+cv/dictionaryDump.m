@@ -7,10 +7,10 @@
 %
 % ## Output
 % * __s__ Output struct with the following fields:
-%     * __bytesList__
-%     * __markerSize__
-%     * __maxCorrectionBits__
-%     * __bits__
+%       * __bytesList__
+%       * __markerSize__
+%       * __maxCorrectionBits__
+%       * __bits__
 %
 % See also: cv.detectMarkers, cv.boardDump
 %

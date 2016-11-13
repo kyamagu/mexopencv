@@ -17,9 +17,9 @@
 %
 % The function updates the motion history image as follows:
 %
-%                | timestamp  if silhouette(x,y) != 0
-%     mhi(x,y) = | 0          if silhouette(x,y) == 0 and mhi < (timestamp < duration)
-%                | mhi(x,y)   otherwise
+%               | timestamp  if silhouette(x,y) != 0
+%    mhi(x,y) = | 0          if silhouette(x,y) == 0 and mhi < (timestamp < duration)
+%               | mhi(x,y)   otherwise
 %
 % That is, `mhi` pixels where the motion occurs are set to the current
 % timestamp, while the pixels where the motion happened last time a long time
