@@ -45,7 +45,7 @@ if ~exist(dirRoot, 'dir')
             for j=1:N
                 f = fullfile(d, imgs{j});
                 if ~exist(f, 'file')
-                    url = strrep(fullfile(baseURL, dirs{i}, imgs{j}), '\', '/');
+                    url = [baseURL, dirs{i}, '/', imgs{j}]
                     urlwrite(url, f);
                 end
             end

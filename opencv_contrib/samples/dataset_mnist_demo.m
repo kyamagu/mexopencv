@@ -21,7 +21,7 @@ if ~exist(dirMNIST, 'dir')
     for i=1:numel(files)
         gzFile = fullfile(dirMNIST, files{i});
         if ~exist(gzFile, 'file')
-            url = strrep(fullfile(baseURL, files{i}), '\', '/');
+            url = [baseURL, files{i}];
             urlwrite(url, gzFile);
         end
         %HACK: unfortunately MATLAB's gunzip (with Java's GZIPInputStream)

@@ -158,16 +158,16 @@ function download_classifier_xml(fname)
         url = 'https://cdn.rawgit.com/opencv/opencv/3.1.0/data/';
         [~, f, ext] = fileparts(fname);
         if strncmpi(f, 'haarcascade_', length('haarcascade_'))
-            url = fullfile(url, 'haarcascades');
+            url = [url, 'haarcascades/'];
         elseif strncmpi(f, 'lbpcascade_', length('lbpcascade_'))
-            url = fullfile(url, 'lbpcascades');
+            url = [url, 'lbpcascades/'];
         elseif strncmpi(f, 'hogcascade_', length('hogcascade_'))
-            url = fullfile(url, 'hogcascades');
+            url = [url, 'hogcascades/'];
         else
             error('File not found');
         end
         fprintf('Downloading cascade classifier "%s"...\n', [f ext]);
-        url = strrep(fullfile(url, [f ext]), '\', '/');
+        url = [url f ext];
         urlwrite(url, fname);
     end
 end
