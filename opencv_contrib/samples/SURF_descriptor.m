@@ -35,20 +35,23 @@ keypoints1 = detector.detect(im1)
 keypoints2 = detector.detect(im2)
 
 % specify a mask where to look for keypoints
-%{
-mask = false(size(im2));
-mask(100:350,100:350) = true;
-keypoints2 = detector.detect(im2, 'Mask',mask);
-%}
+if false
+    mask = false(size(im2));
+    mask(100:350,100:350) = true;
+    keypoints2 = detector.detect(im2, 'Mask',mask);
+end
 
 %%
 % Show distribution of keypoint sizes
-figure
-histogram([keypoints1.size]), hold on
-histogram([keypoints2.size])
-xlabel('Keypoint sizes'), ylabel('Count')
-legend('keypoints1', 'keypoints2')
-hold off
+if ~mexopencv.isOctave()
+    %HACK: HISTOGRAM not implemented in Octave
+    figure
+    histogram([keypoints1.size]), hold on
+    histogram([keypoints2.size])
+    xlabel('Keypoint sizes'), ylabel('Count')
+    legend('keypoints1', 'keypoints2')
+    hold off
+end
 
 % Filter keypoints by size
 if do_filtering
@@ -58,11 +61,14 @@ end
 
 %%
 % Show distribution of keypoint responses
-histogram([keypoints1.response]), hold on
-histogram([keypoints2.response])
-xlabel('Keypoint responses'), ylabel('Count')
-legend('keypoints1', 'keypoints2')
-hold off
+if ~mexopencv.isOctave()
+    %HACK: HISTOGRAM not implemented in Octave
+    histogram([keypoints1.response]), hold on
+    histogram([keypoints2.response])
+    xlabel('Keypoint responses'), ylabel('Count')
+    legend('keypoints1', 'keypoints2')
+    hold off
+end
 
 % Filter keypoints by responses
 if do_filtering
@@ -71,8 +77,9 @@ if do_filtering
 end
 
 %%
-imshow(cv.drawKeypoints(im1, keypoints1))
-imshow(cv.drawKeypoints(im2, keypoints2))
+figure
+subplot(121), imshow(cv.drawKeypoints(im1, keypoints1))
+subplot(122), imshow(cv.drawKeypoints(im2, keypoints2))
 
 %% Compute
 % Calculate descriptors (feature vectors) using SURF
@@ -87,30 +94,34 @@ whos descriptors*
 matcher = cv.DescriptorMatcher('BruteForce');
 matches = matcher.match(descriptors1, descriptors2)
 
-%{
-% Match descriptor vectors using FLANN matcher
-matcher = cv.DescriptorMatcher('FlannBased');
-matches = matcher.radiusMatch(descriptors1, descriptors2, 0.22);
-matches = [matches{:}];
-%}
+if false
+    % Match descriptor vectors using FLANN matcher
+    matcher = cv.DescriptorMatcher('FlannBased');
+    matches = matcher.radiusMatch(descriptors1, descriptors2, 0.22);
+    matches = [matches{:}];
+end
 
 %%
 % Show distribution of match distances
-histogram([matches.distance])
-xlabel('Match distances'), ylabel('Count')
+if ~mexopencv.isOctave()
+    %HACK: HISTOGRAM not implemented in Octave
+    figure
+    histogram([matches.distance])
+    xlabel('Match distances'), ylabel('Count')
+end
 
 % Filter matches by distance ("good" matches)
 if do_filtering
     [~,idx] = sort([matches.distance]);
     idx = idx(1:min(50,end));
     matches = matches(idx);
-    %{
-    min_dist = min([matches.distance]);
-    matches = matches([matches.distance] <= max(3*min_dist, 0.22));
-    %}
+    if false
+        min_dist = min([matches.distance]);
+        matches = matches([matches.distance] <= max(3*min_dist, 0.22));
+    end
 end
 
 %%
 % Draw matches
 out = cv.drawMatches(im1, keypoints1, im2, keypoints2, matches);
-imshow(out);
+figure, imshow(out);

@@ -103,7 +103,7 @@ end
 
 %%
 % show the full dataset (40 people with 10 views each)
-try
+if mexopencv.require('images')
     % each column is a different person, with different views across rows
     im = reshape(images,[10 40])';
     montage(cat(4,im{:}), 'Size',[10 40]);
@@ -120,7 +120,14 @@ img2vec = @(img) reshape(img.', 1, []);
 % split the images into train/test sets by holding out a part for testing
 % (this is done so that the train and test data do not overlap)
 C = cvpartition(labels, 'HoldOut',P)
-%tabulate(labels(C.test))
+if mexopencv.isOctave()
+    %HACK: Octave's CVPARTITION implemented using old class OOP (pre classdef)
+    % which doesn't expose properties but accessor methods
+    CTestSize = get(C, 'TestSize');
+else
+    CTestSize = C.TestSize;
+end
+%tabulate(labels(test(C)))
 
 %% Create face recognizer
 % create an model for face recognition
@@ -143,7 +150,7 @@ end
 %% Train
 % train model with images/labels read
 fprintf('Training... '); tic
-model.train(images(C.training), labels(C.training));
+model.train(images(training(C)), labels(training(C)));
 toc
 
 %%
@@ -157,24 +164,24 @@ end
 %% Predict
 % predict the label of given test images
 fprintf('Predicting... '); tic
-labelsHat = zeros(1, C.TestSize);
-confidences = zeros(1, C.TestSize);
-testInd = find(C.test);  % indices of test images
-for i=1:C.TestSize
+labelsHat = zeros(1, CTestSize);
+confidences = zeros(1, CTestSize);
+testInd = find(test(C));  % indices of test images
+for i=1:CTestSize
     [labelsHat(i), confidences(i)] = model.predict(images{testInd(i)});
 end
 toc
 
 %% Evaluation
-acc = nnz(labels(C.test) == labelsHat) ./ C.TestSize;
+acc = nnz(labels(test(C)) == labelsHat) ./ CTestSize;
 fprintf('Accuracy = %.2f%%\n', acc*100);
 if false
-    cm = confusionmat(labels(C.test), labelsHat);
+    cm = confusionmat(labels(test(C)), labelsHat);
     disp('Confusion Matrix:'); disp(cm);
 end
 
 disp('Misclassifications:');
-ind = find(labels(C.test) ~= labelsHat);  % indices of misclassification
+ind = find(labels(test(C)) ~= labelsHat);  % indices of misclassification
 for i=1:numel(ind)
     fprintf('  Predicted = %2d (%3s), Actual = %2d (%3s) [Conf/Dist = %g]\n', ...
         labelsHat(ind(i)), model.getLabelInfo(labelsHat(ind(i))), ...

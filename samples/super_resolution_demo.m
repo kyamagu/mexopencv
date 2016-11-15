@@ -66,8 +66,13 @@ while true
     % display it
     if i == 1
         set(hFig, 'Position',[200 200 sz(2) sz(1)]);
-        movegui(hFig, 'center');
-        hImg = imshow(frame, 'InitialMagnification',100, 'Border','tight');
+        if mexopencv.isOctave()
+            %HACK: not all IMSHOW options are implemented in Octave
+            hImg = imshow(frame);
+        else
+            movegui(hFig, 'center');
+            hImg = imshow(frame, 'InitialMagnification',100, 'Border','tight');
+        end
     else
         set(hImg, 'CData',frame);
     end
@@ -76,12 +81,13 @@ while true
     % Terminate if any user input
     flag = getappdata(hFig, 'flag');
     if isempty(flag)||flag, break; end
-    drawnow
+    drawnow;
 end
 
 %%
 % release output video, and open it in external player
 writer.release();
-if ispc
+if ispc && ~mexopencv.isOctave()
+    %HACK: WINOPEN not implemented in Octave
     winopen(outputVideoName)
 end

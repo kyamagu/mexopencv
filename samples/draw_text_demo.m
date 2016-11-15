@@ -37,4 +37,9 @@ img = cv.putText(img, txt, textOrg, 'Color',[255,255,255], ...
 
 %%
 % finally show the resulting image
-imshow(img, 'InitialMagnification',100, 'Border','tight')
+if mexopencv.isOctave()
+    %HACK: not all IMSHOW options are implemented in Octave
+    imshow(img)
+else
+    imshow(img, 'InitialMagnification',100, 'Border','tight')
+end

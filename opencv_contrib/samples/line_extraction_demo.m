@@ -27,7 +27,12 @@
 %% Image
 
 % load image
-img = cv.imread(which('cameraman.tif'), 'Color',true);
+if mexopencv.isOctave()
+    im = fullfile(mexopencv.root(),'test','blox.jpg');
+else
+    im = which('cameraman.tif');
+end
+img = cv.imread(im, 'Color',true);
 
 % create binary mask
 mask = ones(size(img,1), size(img,2), 'uint8');

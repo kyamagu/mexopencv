@@ -214,9 +214,13 @@ C = reshape(im2double(im_l), [], 3); % corresponding color
 scatter3(X(:), Y(:), Z(:), 6, C, '.')
 axis tight; daspect([1 1 3]);
 title('Point Cloud'); xlabel X; ylabel Y; zlabel Z;
+
 % set camera for a better scene look
-%cameratoolbar
-campos([-15 -15 70]*100)
-camtarget([2 5 10]*100)
-camup([-1 1 -5])
-camva(15)
+if ~mexopencv.isOctave()
+    %HACK: CAM* not implemented in Octave
+    campos([-15 -15 70]*100)
+    camtarget([2 5 10]*100)
+    camup([-1 1 -5])
+    camva(15)
+    %cameratoolbar
+end

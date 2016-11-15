@@ -7,11 +7,11 @@
 %
 
 %% Input image
-if true
+if mexopencv.isOctave()
+    fname = fullfile(mexopencv.root(), 'test', 'detect_blob.png');
+else
     fname = which('coins.png');
     assert(~isempty(fname), 'Image not found');
-else
-    fname = fullfile(mexopencv.root(), 'test', 'detect_blob.png');
 end
 img = cv.imread(fname, 'Flags',1);
 

@@ -50,13 +50,16 @@ fprintf('Min dist = %f\nMax dist = %f\nCutoff = %f\n', ...
 whos m
 
 % show original and filtered distances
-clf
-hh = histogram(dist); hold on
-histogram([m.distance], hh.BinEdges)
-line([cutoff cutoff] + hh.BinWidth/2, ylim(), 'LineWidth',2, 'Color','r')
-hold off
-title('Distribution of match distances')
-legend({'All', 'Good', 'cutoff'})
+if ~mexopencv.isOctave()
+    %HACK: HISTOGRAM not implemented in Octave
+    figure
+    hh = histogram(dist); hold on
+    histogram([m.distance], hh.BinEdges)
+    line([cutoff cutoff] + hh.BinWidth/2, ylim(), 'LineWidth',2, 'Color','r')
+    hold off
+    title('Distribution of match distances')
+    legend({'All', 'Good', 'cutoff'})
+end
 
 %%
 % Get the keypoints from the good matches
@@ -94,5 +97,5 @@ imgMatches = cv.drawMatches(imgObj, keyObj, imgScene, keyScene, m, ...
 p(:,1) = p(:,1) + w;  % shift points for the montage image
 imgMatches = cv.polylines(imgMatches, {num2cell(p,2)}, 'Closed',true, ...
     'Color',[0 255 0], 'Thickness',4, 'LineType','AA');
-imshow(imgMatches)
+figure, imshow(imgMatches)
 title('Good Matches & Object detection')

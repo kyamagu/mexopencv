@@ -38,7 +38,7 @@
 %
 
 % compute Gaussian pyramid
-img = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
+img = cv.imread(fullfile(mexopencv.root(),'test','fruits.jpg'), 'ReduceScale',2);
 p = cv.buildPyramid(img, 'MaxLevel',4);
 
 % combine all levels in one image
@@ -51,7 +51,7 @@ c_end = [cols(1) cols(1)+cols(2:end)];
 for i=1:numel(p)
     dst(r_start(i):r_end(i), c_start(i):c_end(i), :) = p{i};
 end
-imshow(dst)
+figure, imshow(dst)
 
 %%
 % Now you can go down the image pyramid with |cv.pyrUp| function.
@@ -63,7 +63,7 @@ imshow(dst)
 higher_reso = img;
 lower_reso = cv.pyrDown(higher_reso);
 higher_reso2 = cv.pyrUp(lower_reso);
-imshow(cat(2, higher_reso, higher_reso2))
+figure, imshow(cat(2, higher_reso, higher_reso2))
 
 %%
 % Laplacian Pyramids are formed from the Gaussian Pyramids. There is no
@@ -89,7 +89,7 @@ c_end = [cols(1) cumsum(cols(2:end))];
 for i=1:numel(p)-1
     dst(r_start(i):r_end(i),  c_start(i):c_end(i), :) = uint8(p{i});
 end
-imshow(dst)
+figure, imshow(dst)
 %imshow(cv.CLAHE(rgb2gray(dst)))
 
 %% Image Blending using Pyramids
@@ -149,6 +149,7 @@ D = B;
 D(:,1:idx,:) = A(:,1:idx,:);
 
 % show images
+figure
 subplot(221), imshow(A), title('Apple')
 subplot(222), imshow(B), title('Orange')
 subplot(223), imshow(C), title('Pyramid Blending')

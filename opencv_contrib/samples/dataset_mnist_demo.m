@@ -76,6 +76,8 @@ title(sprintf('label = %d',dtest(1).label))
 
 %% Display
 % show a sample of the first 100 train images corresponding to digit 8
-idx = find([dtrain.label] == 8);
-idx(101:end) = [];
-figure, montage(cat(4, dtrain(idx).image))
+if mexopencv.require('images')
+    idx = find([dtrain.label] == 8);
+    idx(101:end) = [];
+    figure, montage(cat(4, dtrain(idx).image))
+end

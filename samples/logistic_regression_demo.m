@@ -64,7 +64,8 @@ toc
 disp('original vs predicted:');
 disp([labels_test(:) responses(:)]);
 
-if mexopencv.require('stats')  % CONFUSIONMAT
+if ~mexopencv.isOctave() && mexopencv.require('stats')
+    %HACK: CONFUSIONMAT not implemented in Octave
     cm = confusionmat(labels_test, responses);
     disp('confusion matrix');
     display(cm);
