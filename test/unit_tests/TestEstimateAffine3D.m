@@ -19,7 +19,7 @@ classdef TestEstimateAffine3D
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.estimateAffine3D();
                 throw('UnitTest:Fail');

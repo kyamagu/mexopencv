@@ -1,5 +1,6 @@
 classdef TestCalcBackProject
     %TestCalcBackProject
+
     properties (Constant)
         img = fullfile(mexopencv.root(),'test','img001.jpg');
     end
@@ -77,7 +78,7 @@ classdef TestCalcBackProject
             validateattributes(B, {'single'}, {'size',[h,w]});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.calcBackProject();
                 throw('UnitTest:Fail');

@@ -43,7 +43,7 @@ classdef TestReprojectImageTo3D
             validateattributes(im3d, {'single'}, {'size',[size(D) 3]});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.reprojectImageTo3D();
                 throw('UnitTest:Fail');

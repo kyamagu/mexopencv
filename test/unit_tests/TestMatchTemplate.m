@@ -1,5 +1,6 @@
 classdef TestMatchTemplate
     %TestMatchTemplate
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','img001.jpg');
     end
@@ -76,7 +77,7 @@ classdef TestMatchTemplate
             %assert(isequal(row1,row2) && isequal(col1,col2));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.matchTemplate();
                 throw('UnitTest:Fail');

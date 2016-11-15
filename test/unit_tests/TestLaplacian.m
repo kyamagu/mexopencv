@@ -1,5 +1,6 @@
 classdef TestLaplacian
     %TestLaplacian
+
     properties (Constant)
         img = uint8([...
             0 0 0 0 0 0 0 0 0 0;...
@@ -35,7 +36,7 @@ classdef TestLaplacian
                 {'size',size(TestLaplacian.img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.Laplacian();
                 throw('UnitTest:Fail');

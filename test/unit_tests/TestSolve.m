@@ -36,7 +36,7 @@ classdef TestSolve
             x = cv.solve(A, b, 'Method','QR');
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.solve();
                 throw('UnitTest:Fail');

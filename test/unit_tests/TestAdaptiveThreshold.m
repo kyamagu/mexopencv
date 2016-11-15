@@ -1,5 +1,6 @@
 classdef TestAdaptiveThreshold
     %TestAdaptiveThreshold
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','sudoku.jpg');
     end
@@ -18,7 +19,7 @@ classdef TestAdaptiveThreshold
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.adaptiveThreshold();
                 throw('UnitTest:Fail');

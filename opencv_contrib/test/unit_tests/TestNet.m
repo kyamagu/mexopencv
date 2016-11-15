@@ -1,5 +1,6 @@
 classdef TestNet
     %TestNet
+
     properties (Constant)
         im1 = fullfile(mexopencv.root(), 'test', 'cat.jpg');
         im2 = fullfile(mexopencv.root(), 'test', 'space_shuttle.jpg');

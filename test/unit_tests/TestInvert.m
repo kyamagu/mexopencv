@@ -35,7 +35,7 @@ classdef TestInvert
             [B,c] = cv.invert(A, 'Method','SVD');
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.invert();
                 throw('UnitTest:Fail');

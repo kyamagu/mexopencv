@@ -18,7 +18,7 @@ classdef TestCalcCovarMatrix
             [c,m] = cv.calcCovarMatrix(X, 'Mean',mean(X));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.calcCovarMatrix();
                 throw('UnitTest:Fail');

@@ -1,5 +1,6 @@
 classdef TestImwrite
     %TestImwrite
+
     properties (Constant)
         im = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
     end

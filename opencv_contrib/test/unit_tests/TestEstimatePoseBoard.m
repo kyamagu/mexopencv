@@ -15,7 +15,7 @@ classdef TestEstimatePoseBoard
                 {'scalar', 'integer', 'nonnegative'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.estimatePoseBoard();
                 throw('UnitTest:Fail');
@@ -24,6 +24,7 @@ classdef TestEstimatePoseBoard
             end
         end
     end
+
 end
 
 function [img, board] = get_image_markers()

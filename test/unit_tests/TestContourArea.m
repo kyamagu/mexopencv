@@ -16,7 +16,7 @@ classdef TestContourArea
                 'cv.contourArea', 'a');
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.contourArea();
                 throw('UnitTest:Fail');

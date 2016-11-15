@@ -1,5 +1,6 @@
 classdef TestDilate
     %TestDilate
+
     properties (Constant)
         img = uint8([...
             0 0 0 0 0 0 0 0 0 0;...
@@ -29,7 +30,7 @@ classdef TestDilate
                 {'size',size(TestDilate.img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.dilate();
                 throw('UnitTest:Fail');

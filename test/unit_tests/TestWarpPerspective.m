@@ -1,5 +1,6 @@
 classdef TestWarpPerspective
     %TestWarpPerspective
+
     properties (Constant)
         img = fullfile(mexopencv.root(),'test','img001.jpg');
     end
@@ -32,7 +33,7 @@ classdef TestWarpPerspective
             validateattributes(dst, {class(im)}, {'size',size(im)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.warpPerspective();
                 throw('UnitTest:Fail');

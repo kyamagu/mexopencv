@@ -14,7 +14,7 @@ classdef TestBlendLinear
             validateattributes(dst, {class(src1)}, {'size',size(src1)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.blendLinear();
                 throw('UnitTest:Fail');

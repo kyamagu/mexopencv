@@ -1,5 +1,6 @@
 classdef TestFeaturesFinder
     %TestFeaturesFinder
+
     properties (Constant)
         fields = {'img_idx', 'img_size', 'keypoints', 'descriptors'};
         kfields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};

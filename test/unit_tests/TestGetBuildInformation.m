@@ -7,7 +7,7 @@ classdef TestGetBuildInformation
             assert(ischar(info) && ~isempty(info));
         end
 
-        function test_error
+        function test_error_1
             try
                 cv.getBuildInformation([]);
                 throw('UnitTest:Fail');
@@ -16,4 +16,5 @@ classdef TestGetBuildInformation
             end
         end
     end
+
 end

@@ -28,7 +28,7 @@ classdef TestCalibrateCameraCharuco
                 {'vector', 'numel',3}), tvecs);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.calibrateCameraCharuco();
                 throw('UnitTest:Fail');
@@ -37,6 +37,7 @@ classdef TestCalibrateCameraCharuco
             end
         end
     end
+
 end
 
 function [cornersCH, idsCH, imgSize, board] = get_markers(i)

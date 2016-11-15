@@ -1,5 +1,6 @@
 classdef TestBundleAdjuster
     %TestBundleAdjuster
+
     properties (Constant)
         fields = {'aspect', 'focal', 'ppx', 'ppy', 'R', 't', 'K'};
     end

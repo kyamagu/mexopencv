@@ -1,5 +1,6 @@
 classdef TestLATCH
     %TestLATCH
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
     end

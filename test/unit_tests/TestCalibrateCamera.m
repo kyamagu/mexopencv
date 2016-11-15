@@ -52,7 +52,7 @@ classdef TestCalibrateCamera
             validateattributes(err, {'numeric'}, {'scalar'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.calibrateCamera();
                 throw('UnitTest:Fail');

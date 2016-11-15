@@ -39,7 +39,7 @@ classdef TestTriangulatePoints
             validateattributes(points4D, {'numeric'}, {'size',[4 N]});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.triangulatePoints();
                 throw('UnitTest:Fail');

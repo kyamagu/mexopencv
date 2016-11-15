@@ -8,7 +8,7 @@ classdef TestBoxPoints
             assert(isnumeric(pts) && ismatrix(pts) && isequal(size(pts), [4 2]));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.boxPoints();
                 throw('UnitTest:Fail');

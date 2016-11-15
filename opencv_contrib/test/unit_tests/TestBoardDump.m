@@ -69,7 +69,7 @@ classdef TestBoardDump
             assert(isequal(b1, b2));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.boardDump();
                 throw('UnitTest:Fail');
@@ -78,4 +78,5 @@ classdef TestBoardDump
             end
         end
     end
+
 end

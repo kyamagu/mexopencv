@@ -1,5 +1,6 @@
 classdef TestPyrDown
     %TestPyrDown
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','img001.jpg');
     end
@@ -36,7 +37,7 @@ classdef TestPyrDown
             assert(isequal(imgP{4},img4))
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.pyrDown();
                 throw('UnitTest:Fail');

@@ -29,7 +29,7 @@ classdef TestCalibrateCameraAruco
                 {'vector', 'numel',3}), tvecs);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.calibrateCameraAruco();
                 throw('UnitTest:Fail');
@@ -38,6 +38,7 @@ classdef TestCalibrateCameraAruco
             end
         end
     end
+
 end
 
 function [corners, ids, imgSize, board] = get_markers(i)

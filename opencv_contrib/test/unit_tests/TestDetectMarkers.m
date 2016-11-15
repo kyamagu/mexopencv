@@ -24,7 +24,7 @@ classdef TestDetectMarkers
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.detectMarkers();
                 throw('UnitTest:Fail');
@@ -33,6 +33,7 @@ classdef TestDetectMarkers
             end
         end
     end
+
 end
 
 function [img, d] = get_image_markers()

@@ -10,7 +10,7 @@ classdef TestDecolor
             validateattributes(clrBoosted, {'uint8'}, {'3d', 'size',sz});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.decolor();
                 throw('UnitTest:Fail');
@@ -19,4 +19,5 @@ classdef TestDecolor
             end
         end
     end
+
 end

@@ -30,7 +30,7 @@ classdef TestAccumulateWeighted
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.accumulateWeighted();
                 throw('UnitTest:Fail');
@@ -39,4 +39,5 @@ classdef TestAccumulateWeighted
             end
         end
     end
+
 end

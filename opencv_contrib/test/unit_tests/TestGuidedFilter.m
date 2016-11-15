@@ -1,5 +1,6 @@
 classdef TestGuidedFilter
     %TestGuidedFilter
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','lena.jpg');
     end

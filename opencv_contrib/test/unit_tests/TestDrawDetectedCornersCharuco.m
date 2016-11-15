@@ -12,7 +12,7 @@ classdef TestDrawDetectedCornersCharuco
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.drawDetectedCornersCharuco();
                 throw('UnitTest:Fail');
@@ -21,6 +21,7 @@ classdef TestDrawDetectedCornersCharuco
             end
         end
     end
+
 end
 
 function [img, board] = get_image_markers()

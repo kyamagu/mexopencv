@@ -1,5 +1,6 @@
 classdef TestPreCornerDetect
     %TestPreCornerDetect
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','img001.jpg');
     end
@@ -19,7 +20,7 @@ classdef TestPreCornerDetect
                 {'real', '2d', 'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.preCornerDetect();
                 throw('UnitTest:Fail');

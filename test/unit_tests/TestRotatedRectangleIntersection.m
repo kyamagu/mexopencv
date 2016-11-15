@@ -84,7 +84,7 @@ classdef TestRotatedRectangleIntersection
             assert(strcmp(result, 'None'));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.rotatedRectangleIntersection();
                 throw('UnitTest:Fail');

@@ -1,5 +1,6 @@
 classdef TestDescriptorMatcher
     %TestDescriptorMatcher
+
     properties (Constant)
         fields = {'queryIdx', 'trainIdx', 'imgIdx', 'distance'};
     end

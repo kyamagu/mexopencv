@@ -33,4 +33,5 @@ classdef TestShapeContextDistanceExtractor
             validateattributes(d, {'numeric'}, {'scalar', 'real'});
         end
     end
+
 end

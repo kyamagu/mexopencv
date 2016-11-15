@@ -1,5 +1,6 @@
 classdef TestBlur
     %TestBlur
+
     properties (Constant)
         img = [...
             0 0 0 0 0 0 0 0 0 0;...
@@ -46,7 +47,7 @@ classdef TestBlur
             validateattributes(result, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.blur();
                 throw('UnitTest:Fail');

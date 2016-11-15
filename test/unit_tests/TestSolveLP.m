@@ -56,7 +56,7 @@ classdef TestSolveLP
             assert(abs(dot(A,z)-1) < 1e-12);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.solveLP();
                 throw('UnitTest:Fail');
@@ -65,4 +65,5 @@ classdef TestSolveLP
             end
         end
     end
+
 end

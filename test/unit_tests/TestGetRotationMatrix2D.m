@@ -12,7 +12,7 @@ classdef TestGetRotationMatrix2D
             assert(all(abs(M(:) - ref(:)) < 1e-5));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.getRotationMatrix2D();
                 throw('UnitTest:Fail');

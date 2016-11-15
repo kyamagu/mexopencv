@@ -60,7 +60,7 @@ classdef TestFilter2D
             validateattributes(result, {class(A)}, {'size',size(A)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.filter2D();
                 throw('UnitTest:Fail');

@@ -24,7 +24,7 @@ classdef TestEigen
             assert(norm(V - evecs) < 1e-6);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.eigen();
                 throw('UnitTest:Fail');

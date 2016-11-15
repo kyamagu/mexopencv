@@ -1,5 +1,6 @@
 classdef TestL0Smooth
     %TestL0Smooth
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','lena.jpg');
     end
@@ -11,7 +12,7 @@ classdef TestL0Smooth
             validateattributes(dst, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.l0Smooth();
                 throw('UnitTest:Fail');

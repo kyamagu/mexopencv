@@ -18,7 +18,7 @@ classdef TestCamShift
             validateattributes(win2, {'numeric'}, {'vector', 'numel',4});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.CamShift();
                 throw('UnitTest:Fail');

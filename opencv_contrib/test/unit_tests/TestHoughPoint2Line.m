@@ -1,5 +1,6 @@
 classdef TestHoughPoint2Line
     %TestHoughPoint2Line
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','building.jpg');
     end
@@ -21,7 +22,7 @@ classdef TestHoughPoint2Line
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.HoughPoint2Line();
                 throw('UnitTest:Fail');

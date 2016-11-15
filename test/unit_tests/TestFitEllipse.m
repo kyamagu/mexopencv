@@ -19,7 +19,7 @@ classdef TestFitEllipse
             assert(all(ismember({'center','size','angle'}, fieldnames(rct))));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.fitEllipse();
                 throw('UnitTest:Fail');

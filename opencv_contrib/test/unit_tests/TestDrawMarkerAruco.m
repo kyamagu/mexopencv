@@ -12,7 +12,7 @@ classdef TestDrawMarkerAruco
             validateattributes(img, {'uint8'}, {'size',[60 60]});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.drawMarkerAruco();
                 throw('UnitTest:Fail');
@@ -21,4 +21,5 @@ classdef TestDrawMarkerAruco
             end
         end
     end
+
 end

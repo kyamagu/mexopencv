@@ -16,4 +16,5 @@ classdef TestMergeMertens
             %TODO: output LDR is not always in [0,1] range
         end
     end
+
 end

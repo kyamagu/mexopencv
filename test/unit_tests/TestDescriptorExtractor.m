@@ -1,5 +1,6 @@
 classdef TestDescriptorExtractor
     %TestDescriptorExtractor
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
         extractors = { ...

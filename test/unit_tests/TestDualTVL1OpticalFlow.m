@@ -1,5 +1,6 @@
 classdef TestDualTVL1OpticalFlow
     %TestDualTVL1OpticalFlow
+
     properties (Constant)
         im = 255*uint8([...
             0 0 0 0 0 0 0 0 0 0;...

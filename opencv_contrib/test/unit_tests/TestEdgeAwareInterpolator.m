@@ -1,5 +1,6 @@
 classdef TestEdgeAwareInterpolator
     %TestEdgeAwareInterpolator
+
     properties (Constant)
         imL = fullfile(mexopencv.root(),'test','RubberWhale1.png');
         imR = fullfile(mexopencv.root(),'test','RubberWhale2.png');

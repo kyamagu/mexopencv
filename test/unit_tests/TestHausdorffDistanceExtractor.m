@@ -20,4 +20,5 @@ classdef TestHausdorffDistanceExtractor
             validateattributes(d, {'numeric'}, {'scalar', 'real'});
         end
     end
+
 end

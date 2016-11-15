@@ -1,5 +1,6 @@
 classdef TestWarpAffine
     %TestWarpAffine
+
     properties (Constant)
         img = fullfile(mexopencv.root(),'test','img001.jpg');
     end
@@ -30,7 +31,7 @@ classdef TestWarpAffine
             validateattributes(dst, {class(im)}, {'size',size(im)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.warpAffine();
                 throw('UnitTest:Fail');

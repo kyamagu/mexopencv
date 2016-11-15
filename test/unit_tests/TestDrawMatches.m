@@ -1,5 +1,6 @@
 classdef TestDrawMatches
     %TestDrawMatches
+
     properties (Constant)
         img1 = fullfile(mexopencv.root(),'test','left01.jpg');
         img2 = fullfile(mexopencv.root(),'test','right01.jpg');
@@ -41,7 +42,7 @@ classdef TestDrawMatches
                 [max(size(im1,1),size(im2,1)), size(im1,2)+size(im2,2), 3]});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.drawMatches();
                 throw('UnitTest:Fail');
@@ -50,4 +51,5 @@ classdef TestDrawMatches
             end
         end
     end
+
 end

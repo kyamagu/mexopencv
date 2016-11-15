@@ -32,7 +32,7 @@ classdef TestCopyMakeBorder
             dst = cv.copyMakeBorder(src, [1 2 3 4]);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.copyMakeBorder();
                 throw('UnitTest:Fail');

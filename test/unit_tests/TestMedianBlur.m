@@ -1,5 +1,6 @@
 classdef TestMedianBlur
     %TestMedianBlur
+
     properties (Constant)
         img = uint8([...
             0 0 0 0 0 0 0 0 0 0;...
@@ -34,7 +35,7 @@ classdef TestMedianBlur
             validateattributes(result, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.medianBlur();
                 throw('UnitTest:Fail');

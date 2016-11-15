@@ -1,5 +1,6 @@
 classdef TestCornerEigenValsAndVecs
     %TestCornerEigenValsAndVecs
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','img001.jpg');
     end
@@ -19,7 +20,7 @@ classdef TestCornerEigenValsAndVecs
                 {'ndims',3, 'size',[size(img) 6]});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.cornerEigenValsAndVecs();
                 throw('UnitTest:Fail');

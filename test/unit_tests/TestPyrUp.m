@@ -1,5 +1,6 @@
 classdef TestPyrUp
     %TestPyrUp
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','img001.jpg');
     end
@@ -24,7 +25,7 @@ classdef TestPyrUp
             result = cv.pyrUp(img, 'DstSize',sz);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.pyrUp();
                 throw('UnitTest:Fail');

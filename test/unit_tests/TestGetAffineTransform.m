@@ -20,7 +20,7 @@ classdef TestGetAffineTransform
             assert(isequal(t,ref));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.getAffineTransform();
                 throw('UnitTest:Fail');

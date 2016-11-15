@@ -30,7 +30,7 @@ classdef TestFindHomography
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.findHomography();
                 throw('UnitTest:Fail');

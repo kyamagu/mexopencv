@@ -1,5 +1,6 @@
 classdef TestGoodFeaturesToTrack
     %TestGoodFeaturesToTrack
+
     properties (Constant)
         img = 255 * uint8([...
             0 0 0 0 0 0 0 0 0 0 0 0 0;...
@@ -39,7 +40,7 @@ classdef TestGoodFeaturesToTrack
                 'Mask',mask);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.goodFeaturesToTrack();
                 throw('UnitTest:Fail');

@@ -26,7 +26,7 @@ classdef TestClipLine
             validateattributes(p2, {'numeric'}, {'vector', 'numel',2});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.clipLine();
                 throw('UnitTest:Fail');

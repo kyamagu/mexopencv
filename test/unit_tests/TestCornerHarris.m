@@ -1,5 +1,6 @@
 classdef TestCornerHarris
     %TestCornerHarris
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','img001.jpg');
     end
@@ -17,7 +18,7 @@ classdef TestCornerHarris
             validateattributes(result, {'single'}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.cornerHarris();
                 throw('UnitTest:Fail');

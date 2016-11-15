@@ -75,7 +75,7 @@ classdef TestDownhillSolver
             assert(norm(x-etalon_x) < 1e-2);
         end
 
-        function test_error_1
+        function test_error_unrecognized_option
             try
                 cv.DownhillSolver('foo', 'bar');
                 throw('UnitTest:Fail');
@@ -84,7 +84,7 @@ classdef TestDownhillSolver
             end
         end
 
-        function test_error_2
+        function test_error_undefined_function
             solver = cv.DownhillSolver();
             solver.InitStep = ones(1,2);
             solver.ObjectiveFunction = struct('dims',2, 'fun','foo_bar_baz');
@@ -95,6 +95,7 @@ classdef TestDownhillSolver
             end
         end
     end
+
 end
 
 %%

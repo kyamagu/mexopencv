@@ -22,7 +22,7 @@ classdef TestConvexityDefects
                 {'vector', 'numel',4, 'integer'}), defects);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.convexHull();
                 throw('UnitTest:Fail');

@@ -14,7 +14,7 @@ classdef TestCreateConcentricSpheresTestSet
             %gscatter(samples(:,1), samples(:,2), sampIDX)
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.createConcentricSpheresTestSet();
                 throw('UnitTest:Fail');
@@ -23,4 +23,5 @@ classdef TestCreateConcentricSpheresTestSet
             end
         end
     end
+
 end

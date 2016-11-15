@@ -1,5 +1,6 @@
 classdef TestCascadeClassifier
     %TestCascadeClassifier
+
     properties (Constant)
         xmlfile = fullfile(mexopencv.root(),'test','haarcascade_frontalface_alt2.xml');
     end

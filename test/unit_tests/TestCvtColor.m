@@ -1,5 +1,6 @@
 classdef TestCvtColor
     %TestCvtColor
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','img001.jpg');
     end
@@ -36,7 +37,7 @@ classdef TestCvtColor
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.cvtColor();
                 throw('UnitTest:Fail');

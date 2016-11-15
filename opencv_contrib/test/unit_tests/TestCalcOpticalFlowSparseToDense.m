@@ -1,5 +1,6 @@
 classdef TestCalcOpticalFlowSparseToDense
     %TestCalcOpticalFlowSparseToDense
+
     properties (Constant)
         im = 255*uint8([...
             0 0 0 0 0 0 0 0 0 0;...
@@ -32,7 +33,7 @@ classdef TestCalcOpticalFlowSparseToDense
                 {'3d', 'size',[size(prevImg,1) size(prevImg,2) 2]});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.calcOpticalFlowSparseToDense();
                 throw('UnitTest:Fail');

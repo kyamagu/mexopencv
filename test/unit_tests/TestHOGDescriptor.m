@@ -1,5 +1,6 @@
 classdef TestHOGDescriptor
     %TestHOGDescriptor
+
     properties (Constant)
         fields = {'scale', 'locations', 'confidences'};  % DetectionROI
     end

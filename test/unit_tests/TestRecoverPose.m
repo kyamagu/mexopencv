@@ -35,7 +35,7 @@ classdef TestRecoverPose
                 {'vector', 'numel',size(matchedPoints1,1), 'binary'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.recoverPose();
                 throw('UnitTest:Fail');

@@ -1,5 +1,6 @@
 classdef TestGrabCut
     %TestGrabCut
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','img001.jpg');
     end
@@ -38,7 +39,7 @@ classdef TestGrabCut
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.grabCut();
                 throw('UnitTest:Fail');
@@ -47,7 +48,7 @@ classdef TestGrabCut
             end
         end
 
-        function test_error_2
+        function test_error_invalid_arg
             img = imread(TestGrabCut.im);
             mask = zeros(size(img,1),size(img,2),'uint8');
             try
@@ -58,7 +59,7 @@ classdef TestGrabCut
             end
         end
 
-        function test_error_3
+        function test_error_unrecognized_option
             img = imread(TestGrabCut.im);
             mask = zeros(size(img,1),size(img,2),'uint8');
             try
@@ -69,7 +70,7 @@ classdef TestGrabCut
             end
         end
 
-        function test_error_4
+        function test_error_invalid_option_value_1
             img = imread(TestGrabCut.im);
             mask = zeros(size(img,1),size(img,2),'uint8');
             try
@@ -80,7 +81,7 @@ classdef TestGrabCut
             end
         end
 
-        function test_error_5
+        function test_error_invalid_option_value_2
             img = imread(TestGrabCut.im);
             mask = zeros(size(img,1),size(img,2),'uint8');
             try
@@ -90,6 +91,6 @@ classdef TestGrabCut
                 assert(strcmp(e.identifier,'mexopencv:error'));
             end
         end
-
     end
+
 end

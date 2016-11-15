@@ -1,5 +1,6 @@
 classdef TestLineSegmentDetector
     %TestLineSegmentDetector
+
     properties (Constant)
         fname = fullfile(mexopencv.root(),'test','img001.jpg');
     end

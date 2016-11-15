@@ -1,5 +1,6 @@
 classdef TestCornerMinEigenVal
     %TestCornerMinEigenVal
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','img001.jpg');
     end
@@ -17,7 +18,7 @@ classdef TestCornerMinEigenVal
             validateattributes(result, {'single'}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.cornerMinEigenVal();
                 throw('UnitTest:Fail');

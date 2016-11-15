@@ -1,5 +1,6 @@
 classdef TestDPMDetector
     %TestDPMDetector
+
     properties (Constant)
         %xmlfile = fullfile(mexopencv.root(),'test','inriaperson.xml');
         xmlfile = fullfile(mexopencv.root(),'test','cat.xml');

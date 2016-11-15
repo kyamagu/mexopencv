@@ -1,5 +1,6 @@
 classdef TestCanny
     %TestCanny
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','img001.jpg');
     end
@@ -23,7 +24,7 @@ classdef TestCanny
             result = cv.Canny(img, 192, 'ApertureSize',5, 'L2Gradient',true);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.Canny();
                 throw('UnitTest:Fail');

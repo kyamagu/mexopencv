@@ -89,7 +89,7 @@ classdef TestConjGradSolver
             assert(norm(x-etalon_x) < 1e-6);
         end
 
-        function test_error_1
+        function test_error_unrecognized_option
             try
                 cv.ConjGradSolver('foo', 'bar');
                 throw('UnitTest:Fail');
@@ -98,7 +98,7 @@ classdef TestConjGradSolver
             end
         end
 
-        function test_error_2
+        function test_error_undefined_function
             solver = cv.ConjGradSolver();
             solver.ObjectiveFunction = struct('dims',2, 'fun','foo_bar_baz');
             try
@@ -108,6 +108,7 @@ classdef TestConjGradSolver
             end
         end
     end
+
 end
 
 %%

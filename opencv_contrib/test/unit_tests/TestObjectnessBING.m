@@ -1,5 +1,6 @@
 classdef TestObjectnessBING
     %TestObjectnessBING
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','balloon.jpg');
     end

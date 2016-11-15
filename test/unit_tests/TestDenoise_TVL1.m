@@ -1,5 +1,6 @@
 classdef TestDenoise_TVL1
     %TestDenoise_TVL1
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','lena.jpg');
     end
@@ -48,7 +49,7 @@ classdef TestDenoise_TVL1
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.denoise_TVL1();
                 throw('UnitTest:Fail');
@@ -57,6 +58,7 @@ classdef TestDenoise_TVL1
             end
         end
     end
+
 end
 
 % https://github.com/opencv/opencv/blob/3.1.0/modules/photo/test/test_denoise_tvl1.cpp

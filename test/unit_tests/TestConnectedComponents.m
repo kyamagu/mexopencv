@@ -1,5 +1,6 @@
 classdef TestConnectedComponents
     %TestConnectedComponents
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','bw.png');
     end
@@ -25,7 +26,7 @@ classdef TestConnectedComponents
             assert(all(unique(L(:)) == (0:N-1)'));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.connectedComponents();
                 throw('UnitTest:Fail');

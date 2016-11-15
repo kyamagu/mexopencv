@@ -8,7 +8,7 @@ classdef TestConvertScaleAbs
             validateattributes(B, {'uint8'}, {'size',size(A)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.convertScaleAbs();
                 throw('UnitTest:Fail');
@@ -17,4 +17,5 @@ classdef TestConvertScaleAbs
             end
         end
     end
+
 end

@@ -1,5 +1,6 @@
 classdef TestGaussianBlur
     %TestGaussianBlur
+
     properties (Constant)
         img = uint8([...
             0 0 0 0 0 0 0 0 0 0;...
@@ -35,7 +36,7 @@ classdef TestGaussianBlur
                 {'size',size(TestGaussianBlur.img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.GaussianBlur();
                 throw('UnitTest:Fail');

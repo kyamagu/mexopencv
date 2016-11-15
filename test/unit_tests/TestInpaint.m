@@ -1,5 +1,6 @@
 classdef TestInpaint
     %TestInpaint
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','lena.jpg');
     end
@@ -50,7 +51,7 @@ classdef TestInpaint
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.inpaint();
                 throw('UnitTest:Fail');

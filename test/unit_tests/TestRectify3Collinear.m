@@ -1,5 +1,6 @@
 classdef TestRectify3Collinear
     %TestRectify3Collinear
+
     properties (Constant)
         fields = {'R1', 'R2', 'R3', 'P1', 'P2', 'P3', 'Q', ...
         'roi1', 'roi2', 'ratio'};
@@ -37,7 +38,7 @@ classdef TestRectify3Collinear
             validateattributes(S.ratio, {'numeric'}, {'scalar'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.rectify3Collinear();
                 throw('UnitTest:Fail');

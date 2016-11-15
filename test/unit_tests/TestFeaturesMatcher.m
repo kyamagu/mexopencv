@@ -1,5 +1,6 @@
 classdef TestFeaturesMatcher
     %TestFeaturesMatcher
+
     properties (Constant)
         fields = {'src_img_idx', 'dst_img_idx', 'matches', 'inliers_mask', ...
             'num_inliers', 'H', 'confidence'};

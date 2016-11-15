@@ -1,5 +1,6 @@
 classdef TestFastHoughTransform
     %TestFastHoughTransform
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','building.jpg');
     end
@@ -15,7 +16,7 @@ classdef TestFastHoughTransform
                 {'2d', 'nonempty', 'nonnegative'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.FastHoughTransform();
                 throw('UnitTest:Fail');

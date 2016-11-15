@@ -1,5 +1,6 @@
 classdef TestSobel
     %TestSobel
+
     properties (Constant)
         img = uint8([...
             0 0 0 0 0 0 0 0 0 0;...
@@ -30,7 +31,7 @@ classdef TestSobel
                 {'size',size(TestSobel.img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.Sobel();
                 throw('UnitTest:Fail');

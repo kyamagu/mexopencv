@@ -1,5 +1,6 @@
 classdef TestSqrBoxFilter
     %TestSqrBoxFilter
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','fruits.jpg');
     end
@@ -24,7 +25,7 @@ classdef TestSqrBoxFilter
             validateattributes(out, {'single'}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.sqrBoxFilter();
                 throw('UnitTest:Fail');
@@ -33,4 +34,5 @@ classdef TestSqrBoxFilter
             end
         end
     end
+
 end

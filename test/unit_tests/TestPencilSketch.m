@@ -17,7 +17,7 @@ classdef TestPencilSketch
             validateattributes(out2, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.pencilSketch();
                 throw('UnitTest:Fail');
@@ -26,4 +26,5 @@ classdef TestPencilSketch
             end
         end
     end
+
 end
