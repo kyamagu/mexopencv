@@ -6,18 +6,18 @@ classdef TestPyrUp
     end
 
     methods (Static)
-        function test_1
+        function test_uint8_img
             img = imread(TestPyrUp.im);
             result = cv.pyrUp(img);
         end
 
-        function test_2
+        function test_double_img
             img = imread(TestPyrUp.im);
             img = double(img) ./ 255;
             result = cv.pyrUp(img);
         end
 
-        function test_3
+        function test_custom_size
             img = imread(TestPyrUp.im);
             img = img(1:400,1:512);
             [h,w,~] = size(img);

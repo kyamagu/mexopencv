@@ -6,18 +6,18 @@ classdef TestPyrDown
     end
 
     methods (Static)
-        function test_1
+        function test_uint8_img
             img = imread(TestPyrDown.im);
             result = cv.pyrDown(img);
         end
 
-        function test_2
+        function test_double_img
             img = imread(TestPyrDown.im);
             img = double(img) ./ 255;
             result = cv.pyrDown(img);
         end
 
-        function test_3
+        function test_custom_size
             img = imread(TestPyrDown.im);
             img = img(1:400,1:512);
             [h,w,~] = size(img);
@@ -25,16 +25,16 @@ classdef TestPyrDown
             result = cv.pyrDown(img, 'DstSize',sz);
         end
 
-        function test_4
+        function test_pyramid
             img = imread(TestPyrDown.im);
-            img2 = cv.pyrDown(img);
-            img3 = cv.pyrDown(img2);
-            img4 = cv.pyrDown(img3);
-            imgP = cv.buildPyramid(img, 'MaxLevel',3);
-            assert(isequal(imgP{1},img))
-            assert(isequal(imgP{2},img2))
-            assert(isequal(imgP{3},img3))
-            assert(isequal(imgP{4},img4))
+            mxLvl = 3;
+            imgD = cell(1,mxLvl+1);
+            imgD{1} = img;
+            for i=2:mxLvl+1
+                imgD{i} = cv.pyrDown(imgD{i-1});
+            end
+            imgP = cv.buildPyramid(img, 'MaxLevel',mxLvl);
+            assert(isequal(imgP(:), imgD(:)));
         end
 
         function test_error_argnum

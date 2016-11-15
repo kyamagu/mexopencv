@@ -58,10 +58,10 @@ classdef TestMatchTemplate
                 return;
             end
 
-            try
+            if ~mexopencv.isOctave()
                 img = cv.imread(which('peppers.png'), 'Grayscale',true);
                 tmpl = cv.imread(which('onion.png'), 'Grayscale',true);
-            catch ME
+            else
                 img = cv.imread(fullfile(mexopencv.root(),'test','pic1.png'), 'Grayscale',true);
                 tmpl = cv.imread(fullfile(mexopencv.root(),'test','templ.png'), 'Grayscale',true);
             end

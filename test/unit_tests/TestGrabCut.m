@@ -63,7 +63,7 @@ classdef TestGrabCut
             img = imread(TestGrabCut.im);
             mask = zeros(size(img,1),size(img,2),'uint8');
             try
-                cv.grabCut(img, mask, 'foo', 'bar');
+                cv.grabCut(img, mask, 'foo','bar');
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

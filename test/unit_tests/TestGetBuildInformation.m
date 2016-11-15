@@ -9,7 +9,7 @@ classdef TestGetBuildInformation
 
         function test_error_1
             try
-                cv.getBuildInformation([]);
+                cv.getBuildInformation('foobar');
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

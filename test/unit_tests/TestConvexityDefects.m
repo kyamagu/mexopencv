@@ -24,7 +24,7 @@ classdef TestConvexityDefects
 
         function test_error_argnum
             try
-                cv.convexHull();
+                cv.convexityDefects();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

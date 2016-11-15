@@ -1,5 +1,5 @@
 classdef TestLDA
-    %TESTLDA
+    %TestLDA
 
     methods (Static)
         function test_1

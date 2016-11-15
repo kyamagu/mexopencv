@@ -31,14 +31,14 @@ classdef TestObjectnessBING
 end
 
 function deleteDir(fname)
-    if exist(fname, 'dir')
+    if isdir(fname)
         rmdir(fname, 's');
     end
 end
 
 function training_path = get_training_path()
     training_path = fullfile(mexopencv.root(),'test','ObjectnessTrainedModel');
-    if ~exist(training_path, 'dir')
+    if ~isdir(training_path)
         % download from GitHub
         files = {
             'ObjNessB2W8HSV.idx.yml.gz'

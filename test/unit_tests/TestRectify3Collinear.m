@@ -3,7 +3,7 @@ classdef TestRectify3Collinear
 
     properties (Constant)
         fields = {'R1', 'R2', 'R3', 'P1', 'P2', 'P3', 'Q', ...
-        'roi1', 'roi2', 'ratio'};
+            'roi1', 'roi2', 'ratio'};
     end
 
     methods (Static)

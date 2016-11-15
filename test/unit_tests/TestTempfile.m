@@ -15,7 +15,7 @@ classdef TestTempfile
 
         function test_error_unrecognized_option
             try
-                cv.tempfile('Foo','bar');
+                cv.tempfile('foo','bar');
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

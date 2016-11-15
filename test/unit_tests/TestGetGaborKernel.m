@@ -14,9 +14,9 @@ classdef TestGetGaborKernel
             validateattributes(kernel, {'double'}, {'2d', 'size',[21 19]});
         end
 
-        function test_error_1
+        function test_error_unrecognized_option
             try
-                cv.getGaborKernel('foo');
+                cv.getGaborKernel('foo','bar');
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

@@ -5,7 +5,6 @@ classdef TestLineSegmentDetector
         fname = fullfile(mexopencv.root(),'test','img001.jpg');
     end
 
-
     methods (Static)
         function test_1
             img = cv.imread(TestLineSegmentDetector.fname, 'Flags',0);

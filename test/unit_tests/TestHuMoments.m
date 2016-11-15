@@ -1,5 +1,5 @@
 classdef TestHuMoments
-    %TestMoments
+    %TestHuMoments
 
     methods (Static)
         function test_1
