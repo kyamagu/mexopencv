@@ -7,7 +7,7 @@
 %% MNIST dataset
 % download/extract files if needed
 dirMNIST = fullfile(mexopencv.root(), 'test', 'mnist');
-if ~exist(dirMNIST, 'dir')
+if ~isdir(dirMNIST)
     % download
     baseURL = 'http://yann.lecun.com/exdb/mnist/';
     files = {

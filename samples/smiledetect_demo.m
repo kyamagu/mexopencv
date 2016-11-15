@@ -44,11 +44,11 @@ else
     % prepare video input
     cap = cv.VideoCapture();
     pause(1);
-    assert(cap.isOpened());
+    assert(cap.isOpened(), 'Failed to initialize camera capture');
 
     % prepare figure
     frame = cap.read();
-    assert(~isempty(frame));
+    assert(~isempty(frame), 'Failed to read frame');
     hImg = imshow(frame);
 
     % video feed

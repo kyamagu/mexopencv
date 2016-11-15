@@ -58,7 +58,7 @@ P = 0.1;
 %%
 % download/extract files if needed
 ATTFolder = fullfile(mexopencv.root(),'test','att_faces');
-if ~exist(ATTFolder, 'dir')
+if ~isdir(ATTFolder)
     mkdir(ATTFolder);
     zipFile = fullfile(mexopencv.root(),'test','att_faces.zip');
     if exist(zipFile, 'file') ~= 2

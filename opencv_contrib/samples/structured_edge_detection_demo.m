@@ -9,7 +9,7 @@
 img = cv.imread(fullfile(mexopencv.root(),'test','balloon.jpg'), 'Color',true);
 assert(~isempty(img), 'Cannot read image file');
 
-% convert to floating point in [0,1] range
+% convert to floating-point in [0,1] range
 img = single(img) / 255;
 
 %% Create object

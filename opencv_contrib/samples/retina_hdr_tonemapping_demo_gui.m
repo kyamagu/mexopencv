@@ -107,7 +107,7 @@ function outputMat = rescaleGrayLevelMat(inputMat, histClipLimit)
     disp('Input image rescaling with histogram edges cutting')
     disp('(in order to eliminate bad pixels in HDR image creation):');
 
-    % rescale between 0-255, keeping floating point values
+    % rescale between 0-255, keeping floating-point values
     outputMat = cv.normalize(inputMat, ...
         'Alpha',0, 'Beta',255, 'NormType','MinMax');
 

@@ -195,7 +195,9 @@ D = bm.compute(rgb2gray(im_l), rgb2gray(im_r));
 toc
 
 %D = cv.filterSpeckles(D, 0, 200, 4); % remove small blobs
-D = min(D, 2000);                     % truncate values
+%D = min(D, 2000);                    % truncate values
+D = single(D) / 16;
+
 imshow(D,[]), title('Disparity Map')
 colormap gray; colorbar;
 
@@ -211,16 +213,17 @@ toc
 [X,Y] = ndgrid(1:size(D,1), 1:size(D,2));
 Z = D(:);                            % XYZ-coords of point cloud
 C = reshape(im2double(im_l), [], 3); % corresponding color
-scatter3(X(:), Y(:), Z(:), 6, C, '.')
-axis tight; daspect([1 1 3]);
+scatter3(X(:), Y(:), Z(:), 6, C, '.'); axis tight;
 title('Point Cloud'); xlabel X; ylabel Y; zlabel Z;
 
-% set camera for a better scene look
+if false
+    pct = pointCloud([X(:) Y(:) Z(:)], 'Color',C);
+    pcshow(pct);
+end
+
+% manipulate camera for a better scene look
 if ~mexopencv.isOctave()
     %HACK: CAM* not implemented in Octave
-    campos([-15 -15 70]*100)
-    camtarget([2 5 10]*100)
-    camup([-1 1 -5])
-    camva(15)
-    %cameratoolbar
+    cameratoolbar
+    cameramenu
 end

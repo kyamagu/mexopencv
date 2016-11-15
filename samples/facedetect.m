@@ -13,7 +13,7 @@ classifier = cv.CascadeClassifier(xml_file);
 %%
 % Set up camera
 camera = cv.VideoCapture();
-pause(3); % Necessary in some environment. See help cv.VideoCapture
+pause(2); % Necessary in some environment. See help cv.VideoCapture
 assert(camera.isOpened(), 'Camera failed to initialize');
 
 disp('Face detection demo. Press any key when done.');

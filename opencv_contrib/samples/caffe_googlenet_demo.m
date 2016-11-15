@@ -22,7 +22,7 @@ dirDNN = fullfile(mexopencv.root(), 'test', 'dnn');
 modelLabels = fullfile(dirDNN, 'synset_words.txt');
 modelTxt = fullfile(dirDNN, 'bvlc_googlenet.prototxt');
 modelBin = fullfile(dirDNN, 'bvlc_googlenet.caffemodel');
-if ~exist(dirDNN, 'dir')
+if ~isdir(dirDNN)
     mkdir(dirDNN);
 end
 if ~exist(modelLabels, 'file')
