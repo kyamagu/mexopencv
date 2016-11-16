@@ -1,5 +1,5 @@
 classdef DownhillSolver < handle
-    %DOWNHILLSOLVER  Non-linear non-constrained minimization of a function.
+    %DOWNHILLSOLVER  Non-linear non-constrained minimization of a function
     %
     % defined on an `n`-dimensional Euclidean space, using the **Nelder-Mead**
     % method, also known as downhill simplex method. The basic idea about the
@@ -77,7 +77,7 @@ classdef DownhillSolver < handle
 
     methods
         function this = DownhillSolver(varargin)
-            %DOWNHILLSOLVER  Creates a DownhillSolver object.
+            %DOWNHILLSOLVER  Creates a DownhillSolver object
             %
             %    solver = cv.DownhillSolver()
             %    solver = cv.DownhillSolver('OptionName', optionValue, ...)
@@ -121,7 +121,7 @@ classdef DownhillSolver < handle
         end
 
         function [x,fx] = minimize(this, x0)
-            %MINIMIZE  Runs the algorithm and performs the minimization.
+            %MINIMIZE  Runs the algorithm and performs the minimization
             %
             %    [x,fx] = solver.minimize(x0)
             %
@@ -148,7 +148,7 @@ classdef DownhillSolver < handle
     %% Algorithm
     methods (Hidden)
         function clear(this)
-            %CLEAR  Clears the algorithm state.
+            %CLEAR  Clears the algorithm state
             %
             %    solver.clear()
             %
@@ -172,7 +172,7 @@ classdef DownhillSolver < handle
         end
 
         function name = getDefaultName(this)
-            %GETDEFAULTNAME  Returns the algorithm string identifier.
+            %GETDEFAULTNAME  Returns the algorithm string identifier
             %
             %    name = solver.getDefaultName()
             %
@@ -186,7 +186,7 @@ classdef DownhillSolver < handle
         end
 
         function save(this, filename)
-            %SAVE  Saves the algorithm to a file.
+            %SAVE  Saves the algorithm to a file
             %
             %    obj.save(filename)
             %
@@ -201,7 +201,7 @@ classdef DownhillSolver < handle
         end
 
         function load(this, fname_or_str)
-            %LOAD  Loads algorithm from a file or a string.
+            %LOAD  Loads algorithm from a file or a string
             %
             %    obj.load(filename)
             %    obj.load(str, 'FromString',true)

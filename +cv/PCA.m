@@ -167,8 +167,7 @@ classdef PCA < handle
             %       matrix columns
             %
             % ## Options
-            % * __DataAs__ Data layout option. One of 'Row' or 'Col'.
-            %       default 'Row':
+            % * __DataAs__ Data layout option. Default 'Row'. One of:
             %       * __Row__ indicates that the input samples are stored as
             %             matrix rows.
             %       * __Col__ indicates that the input samples are stored as
@@ -320,7 +319,14 @@ classdef PCA < handle
         function S = saveobj(this)
             %SAVEOBJ  Serialization before save
             %
-            % See also: cv.PCA.loadobj
+            %    S = obj.saveobj()
+            %
+            % ## Output
+            % * __S__ output struct.
+            %
+            % Called by the `save` function, when saving object to a MAT-file.
+            %
+            % See also: cv.PCA.loadobj, saveobj, loadobj
             %
             S = struct(this);
         end
@@ -330,7 +336,15 @@ classdef PCA < handle
         function this = loadobj(S)
             %LOADOBJ  Deserialization after load
             %
-            % See also: cv.PCA.PCA, cv.PCA.saveobj
+            %    obj = loadobj(S)
+            %
+            % ## Input
+            % * __S__ input struct.
+            %
+            % Called by the `load` function, when loading object from a
+            % MAT-file.
+            %
+            % See also: cv.PCA.PCA, cv.PCA.saveobj, saveobj, loadobj
             %
             this = cv.PCA(S);
         end

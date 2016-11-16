@@ -1,4 +1,4 @@
-%BLENDLINEAR  Performs linear blending of two images.
+%BLENDLINEAR  Performs linear blending of two images
 %
 %    dst = cv.blendLinear(src1, src2, weights1, weights2)
 %

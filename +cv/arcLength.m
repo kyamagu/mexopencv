@@ -8,7 +8,7 @@
 %       (Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors (`{[x,y], ...}`).
 %
 % ## Output
-% * __len__ Output length.
+% * __len__ Output length/perimeter.
 %
 % ## Options
 % * __Closed__ Flag indicating whether the curve is closed or not.

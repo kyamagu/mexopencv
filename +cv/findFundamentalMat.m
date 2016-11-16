@@ -21,7 +21,7 @@
 %       * __7Point__ for a 7-point algorithm. `N = 7`.
 %       * __8Point__ for an 8-point algorithm. `N >= 8`.
 %       * __Ransac__ for the RANSAC algorithm. `N >= 8`. (default)
-%       * __LMedS__ for the LMedS algorithm. `N >= 8`.
+%       * __LMedS__ for the LMedS least-median-of-squares algorithm. `N >= 8`.
 % * __Param1__ Parameter used for RANSAC. It is the maximum distance from a
 %       point to an epipolar line in pixels, beyond which the point is
 %       considered an outlier and is not used for computing the final

@@ -35,10 +35,10 @@
 % * __Scale__ Optional scale factor for the output back projection. default 1
 %
 % The function cv.calcBackProject calculates the back project of the
-% histogram. That is, similarly to cv.calcHist, at each location (x, y) the
+% histogram. That is, similarly to cv.calcHist, at each location `(x,y)` the
 % function collects the values from the selected channels in the input images
 % and finds the corresponding histogram bin. But instead of incrementing it,
-% the function reads the bin value, scales it by scale, and stores in
+% the function reads the bin value, scales it by `Scale`, and stores in
 % `backProject(x,y)`. In terms of statistics, the function computes
 % probability of each element value in respect with the empirical probability
 % distribution represented by the histogram. See how, for example, you can
@@ -57,5 +57,5 @@
 %
 % This is an approximate algorithm of the cv.CamShift color object tracker.
 %
-% See also: cv.calcHist, cv.compareHist
+% See also: cv.calcHist, cv.compareHist, cv.meanShift, cv.CamShift
 %

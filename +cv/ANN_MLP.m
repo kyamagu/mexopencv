@@ -119,8 +119,8 @@ classdef ANN_MLP < handle
         %
         % Default 'RProp'. Possible values are:
         %
-        % * __'Backprop'__ The back-propagation algorithm.
-        % * __'RProp'__ (default) The RPROP algorithm. See [101] for details.
+        % * __Backprop__ The back-propagation algorithm.
+        % * __RProp__ (default) The RPROP algorithm. See [101] for details.
         %
         % See also: cv.ANN_MLP.setTrainMethod
         TrainMethod

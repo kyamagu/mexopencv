@@ -1,5 +1,5 @@
 classdef KAZE < handle
-    %KAZE  Class implementing the KAZE keypoint detector and descriptor extractor.
+    %KAZE  Class implementing the KAZE keypoint detector and descriptor extractor
     %
     % As described in [ABD12].
     %
@@ -53,7 +53,7 @@ classdef KAZE < handle
 
     methods
         function this = KAZE(varargin)
-            %KAZE  The KAZE constructor.
+            %KAZE  The KAZE constructor
             %
             %    obj = cv.KAZE()
             %    obj = cv.KAZE(..., 'OptionName',optionValue, ...)
@@ -107,7 +107,7 @@ classdef KAZE < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -232,7 +232,7 @@ classdef KAZE < handle
         end
 
         function keypoints = detect(this, img, varargin)
-            %DETECT  Detects keypoints in an image or image set.
+            %DETECT  Detects keypoints in an image or image set
             %
             %    keypoints = obj.detect(img)
             %    keypoints = obj.detect(imgs)
@@ -262,7 +262,7 @@ classdef KAZE < handle
         end
 
         function [descriptors, keypoints] = compute(this, img, keypoints)
-            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set.
+            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set
             %
             %    [descriptors, keypoints] = obj.compute(img, keypoints)
             %    [descriptors, keypoints] = obj.compute(imgs, keypoints)

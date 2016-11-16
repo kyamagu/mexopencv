@@ -1,5 +1,5 @@
 classdef FeatureDetector < handle
-    %FEATUREDETECTOR  Common interface of 2D image Feature Detectors.
+    %FEATUREDETECTOR  Common interface of 2D image Feature Detectors
     %
     % Class for detecting keypoints in images.
     %
@@ -23,7 +23,7 @@ classdef FeatureDetector < handle
 
     methods
         function this = FeatureDetector(detectorType, varargin)
-            %FEATUREDETECTOR  Creates a feature detector by name.
+            %FEATUREDETECTOR  Creates a feature detector by name
             %
             %    detector = cv.FeatureDetector(type)
             %    detector = cv.FeatureDetector(type, 'OptionName',optionValue, ...)
@@ -94,7 +94,7 @@ classdef FeatureDetector < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -169,7 +169,7 @@ classdef FeatureDetector < handle
     %% Features2D
     methods
         function keypoints = detect(this, img, varargin)
-            %DETECT  Detects keypoints in an image or image set.
+            %DETECT  Detects keypoints in an image or image set
             %
             %    keypoints = obj.detect(img)
             %    keypoints = obj.detect(imgs)

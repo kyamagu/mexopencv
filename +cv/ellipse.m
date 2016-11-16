@@ -24,12 +24,14 @@
 % * __Angle__ Ellipse rotation angle in degrees. default 0.
 % * __StartAngle__ Starting angle of the elliptic arc in degrees. default 0
 % * __EndAngle__ Ending angle of the elliptic arc in degrees. default 360
-% * __Color__ 3-element floating point vector specifying ellipse color.
+% * __Color__ 3-element floating-point vector specifying ellipse color.
 % * __Thickness__ Thickness of the ellipse arc outline, if positive.
 %       Otherwise, this indicates that a filled ellipse sector is to be drawn
 %       (-1 or the string 'Filled'). default 1.
-% * __LineType__ Type of the ellipse boundary. One of 8,4,'AA' (Anti-aliased
-%       line). default 8.
+% * __LineType__ Type of the ellipse boundary. One of:
+%       * __4__ 4-connected line
+%       * __8__ 8-connected line (default)
+%       * __AA__ anti-aliased line
 % * __Shift__ Number of fractional bits in the coordinates of the center and
 %       values of axes. default 0.
 %

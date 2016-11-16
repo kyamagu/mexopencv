@@ -23,8 +23,10 @@
 %       * __TriangleDown__ (`v`) A downwards pointing triangle marker shape.
 % * __MarkerSize__ The length of the marker axis. Default is 20 pixels.
 % * __Thickness__ Line thickness. default 1
-% * __LineType__ Type of the line. One of 8,4,'AA' (Anti-aliased line).
-%       default 8.
+% * __LineType__ Type of the line. One of:
+%       * __4__ 4-connected line
+%       * __8__ 8-connected line (default)
+%       * __AA__ anti-aliased line
 %
 % The function cv.drawMarker draws a marker on a given position in the image.
 % For the moment several marker types are supported, see `MarkerType` for more

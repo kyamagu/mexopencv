@@ -76,7 +76,7 @@ classdef DTFilter < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -176,7 +176,7 @@ classdef DTFilter < handle
 
     methods (Static)
         function dst = dtFilter(src, guide, varargin)
-            %DTFILTER  Simple one-line Domain Transform filter call.
+            %DTFILTER  Simple one-line Domain Transform filter call
             %
             %    dst = cv.DTFilter.dtFilter(src, guide)
             %    dst = cv.DTFilter.dtFilter(src, guide, 'OptionName',optionValue, ...)

@@ -40,8 +40,8 @@
 %
 % so that the back-projection error:
 %
-%    \sum_{i} (x_i' - (h11*x_i + h12*y_i + h13)/(h31*x_i + h32*y_i + h33))^2 +
-%             (y_i' - (h21*x_i + h22*y_i + h23)/(h31*x_i + h32*y_i + h33))^2
+%    sum_{i} (x_i' - (h11*x_i + h12*y_i + h13)/(h31*x_i + h32*y_i + h33))^2 +
+%            (y_i' - (h21*x_i + h22*y_i + h23)/(h31*x_i + h32*y_i + h33))^2
 %
 % is minimized. If the parameter method is set to the default value 0, the
 % function uses all the point pairs to compute an initial homography estimate

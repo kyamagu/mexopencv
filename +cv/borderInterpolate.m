@@ -1,4 +1,4 @@
-%BORDERINTERPOLATE  Computes the source location of an extrapolated pixel.
+%BORDERINTERPOLATE  Computes the source location of an extrapolated pixel
 %
 %    loc = cv.borderInterpolate(p, len)
 %    [...] = cv.borderInterpolate(..., 'OptionName', optionValue, ...)

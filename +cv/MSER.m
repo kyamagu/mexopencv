@@ -119,7 +119,7 @@ classdef MSER < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -194,7 +194,7 @@ classdef MSER < handle
     %% Features2D: FeatureDetector
     methods
         function keypoints = detect(this, img, varargin)
-            %DETECT  Detects keypoints in an image or image set.
+            %DETECT  Detects keypoints in an image or image set
             %
             %    keypoints = obj.detect(img)
             %    keypoints = obj.detect(imgs)
@@ -226,11 +226,13 @@ classdef MSER < handle
 
     %% MSER
     methods
-        function [msers, bboxes] = detectRegions(this, image)
+        function [msers, bboxes] = detectRegions(this, img)
             %DETECTREGIONS  Maximally stable extremal region extractor
             %
+            %    [msers, bboxes] = obj.detectRegions(img)
+            %
             % ## Input
-            % * __image__ Input 8-bit grayscale or color image (supports
+            % * __img__ Input 8-bit grayscale or color image (supports
             %       1/3/4-channels). Must be greater or equal than 3x3.
             %
             % ## Output
@@ -246,7 +248,7 @@ classdef MSER < handle
             %
             % See also: cv.MSER.detect
             %
-            [msers, bboxes] = MSER_(this.id, 'detectRegions', image);
+            [msers, bboxes] = MSER_(this.id, 'detectRegions', img);
         end
     end
 

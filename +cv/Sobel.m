@@ -21,7 +21,8 @@
 %       details). default 1
 % * __Delta__ Optional delta value that is added to the results prior to
 %       storing them in `dst`. default 0
-% * __BorderType__ Pixel extrapolation method. default 'Default'
+% * __BorderType__ Pixel extrapolation method. See cv.copyMakeBorder.
+%       default 'Default'
 % * __DDepth__ output image depth, see combinations below; in the case of
 %       8-bit input images it will result in truncated derivatives.
 %       When `DDepth=-1` (default), the output image will have the same depth

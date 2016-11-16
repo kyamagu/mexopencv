@@ -1,7 +1,7 @@
 %MEDIANBLUR  Blurs an image using the median filter
 %
 %    dst = cv.medianBlur(src)
-%    dst = cv.medianBlur(src, 'KSize',ksize)
+%    dst = cv.medianBlur(src, 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __src__ Input 1-, 3-, or 4-channel image. When `KSize` is 3 or 5, the

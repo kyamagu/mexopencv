@@ -21,7 +21,7 @@
 %
 % In case of multi-channel arrays, the function processes each channel
 % independently. When the output is not 8-bit, the operation can be emulated
-% by calling the `Mat::convertTo` method (or by using matrix expressions) and
+% by calling the cv.convertTo function (or by using matrix expressions) and
 % then by calculating an absolute value of the result.
 %
 % See also: abs, uint8, cast, im2uint8

@@ -20,15 +20,21 @@
 %
 % ## Options
 % * __DistType__ Distance used by the M-estimator (see explanation below).
-%       One of: 'L2' (default), 'L1', 'L12', 'Fair', 'Welsch', 'Huber'.
+%       Default 'L2'. One of:
+%       * __L2__
+%       * __L1__
+%       * __L12__
+%       * __Fair__
+%       * __Welsch__
+%       * __Huber__
 % * __Param__ Numerical parameter (`C`) for some types of distances. If it is
 %       0, an optimal value is chosen. default 0.
 % * __RadiusEps__ Sufficient accuracy for the radius (distance between the
 %       coordinate origin and the line). default 0.01
 % * __AngleEps__ Sufficient accuracy for the angle. default 0.01
 %
-% The function fitLine fits a line to a 2D or 3D point set by minimizing
-% `\sum_i rho(r_i)` where `r_i` is a distance between the i-th point and the
+% The function cv.fitLine fits a line to a 2D or 3D point set by minimizing
+% `sum_{i}(rho(r_i))` where `r_i` is a distance between the i-th point and the
 % line, and `rho(r)` is a distance function, one of the following:
 %
 % * __L2__
@@ -56,7 +62,6 @@
 %                 | r^2/2          if r<C
 %        rho(r) = |                          , where C = 1.345
 %                 | C * (r - C/2)  otherwise
-%
 %
 % The algorithm is based on the
 % [M-estimator](http://en.wikipedia.org/wiki/M-estimator) technique that

@@ -1,4 +1,4 @@
-%SOLVE  Solves one or more linear systems or least-squares problems.
+%SOLVE  Solves one or more linear systems or least-squares problems
 %
 %    [dst,ret] = cv.solve(src1, src2)
 %    [...] = cv.solve(..., 'OptionName', optionValue, ...)

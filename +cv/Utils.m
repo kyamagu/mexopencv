@@ -1,5 +1,7 @@
 classdef Utils
-    %UTILS  Utility and system information functions.
+    %UTILS  Utility and system information functions
+    %
+    % See also: maxNumCompThreads, feature, ippl
     %
 
     methods (Static)

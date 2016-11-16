@@ -15,7 +15,8 @@
 %       cv.cornerEigenValsAndVecs). default 5.
 % * __KSize__ Aperture parameter for the cv.Sobel operator. default 3.
 % * __K__ Harris detector free parameter. See the formula below. default 0.04
-% * __BorderType__ Pixel extrapolation method. default 'Default'
+% * __BorderType__ Pixel extrapolation method. See cv.copyMakeBorder.
+%       default 'Default'
 %
 % The function runs the Harris corner detector on the image. Similarly to
 % cv.cornerMinEigenVal and cv.cornerEigenValsAndVecs, for each pixel `(x,y)`

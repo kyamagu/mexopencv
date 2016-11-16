@@ -1,5 +1,5 @@
 classdef KeyPointsFilter
-    %KEYPOINTSFILTER  Methods to filter a vector of keypoints.
+    %KEYPOINTSFILTER  Methods to filter a vector of keypoints
     %
     % A keypoint is a data structure for salient point detectors.
     %
@@ -34,7 +34,7 @@ classdef KeyPointsFilter
     %% KeyPointsFilter
     methods (Static)
         function keypoints = runByImageBorder(keypoints, imgSize, borderSize)
-            %RUNBYIMAGEBORDER  Remove keypoints within borderPixels of an image edge.
+            %RUNBYIMAGEBORDER  Remove keypoints within borderPixels of an image edge
             %
             %    keypoints = cv.KeyPointsFilter.runByImageBorder(keypoints, imgSize, borderSize)
             %
@@ -50,7 +50,7 @@ classdef KeyPointsFilter
         end
 
         function keypoints = runByKeypointSize(keypoints, minSize, maxSize)
-            %RUNBYKEYPOINTSIZE  Remove keypoints of sizes out of range.
+            %RUNBYKEYPOINTSIZE  Remove keypoints of sizes out of range
             %
             %    keypoints = cv.KeyPointsFilter.runByKeypointSize(keypoints, minSize, maxSize)
             %
@@ -66,7 +66,7 @@ classdef KeyPointsFilter
         end
 
         function keypoints = runByPixelsMask(keypoints, mask)
-            %RUNBYPIXELSMASK  Remove keypoints from some image by mask for pixels of this image.
+            %RUNBYPIXELSMASK  Remove keypoints from some image by mask for pixels of this image
             %
             %    keypoints = cv.KeyPointsFilter.runByPixelsMask(keypoints, mask)
             %
@@ -81,7 +81,7 @@ classdef KeyPointsFilter
         end
 
         function keypoints = removeDuplicated(keypoints)
-            %REMOVEDUPLICATED  Remove duplicated keypoints.
+            %REMOVEDUPLICATED  Remove duplicated keypoints
             %
             %    keypoints = cv.KeyPointsFilter.removeDuplicated(keypoints)
             %
@@ -95,7 +95,7 @@ classdef KeyPointsFilter
         end
 
         function keypoints = retainBest(keypoints, npoints)
-            %RETAINBEST  Retain the specified number of the best keypoints (according to the response).
+            %RETAINBEST  Retain the specified number of the best keypoints (according to the response)
             %
             %    keypoints = cv.KeyPointsFilter.retainBest(keypoints, npoints)
             %

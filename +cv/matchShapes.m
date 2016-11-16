@@ -28,15 +28,15 @@
 %
 % * __I1__:
 %
-%        I_1(A,B) = \sum_{i=1,...,7} | 1/m_i^A - 1/m_i^B |
+%        I_1(A,B) = sum_{i=1,...,7} | 1/m_i^A - 1/m_i^B |
 %
 % * __I2__:
 %
-%        I_2(A,B) = \sum_{i=1,...,7} | m_i^A - m_i^B |
+%        I_2(A,B) = sum_{i=1,...,7} | m_i^A - m_i^B |
 %
 % * __I3__:
 %
-%        I_3(A,B) = \max_{i=1,...,7} | m_i^A - m_i^B | / | m_i^A |
+%        I_3(A,B) = max_{i=1,...,7} | m_i^A - m_i^B | / | m_i^A |
 %
 % where `A` denotes `contour1`, `B` denotes `contour2`, and:
 %

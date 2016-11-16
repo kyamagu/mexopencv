@@ -4,7 +4,7 @@
 %    dst = cv.accumulateSquare(src, dst, 'OptionName',optionValue, ...)
 %
 % ## Input
-% * __src__ Input image as 1- or 3-channel, 8-bit or 32-bit floating point.
+% * __src__ Input image as 1- or 3-channel, 8-bit or 32-bit floating-point.
 % * __dst__ Input accumulator image with the same number of channels as input
 %       image, 32-bit or 64-bit floating-point.
 %

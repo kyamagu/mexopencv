@@ -30,7 +30,7 @@
 % In case of point sets, the problem is formulated as follows: you need to
 % find a 2x2 matrix `A` and 2x1 vector `b` so that:
 %
-%    [A*|b*] = argmin_{[A|b]} \sum_i || dst{i} - A*src{i}' - b ||^2
+%    [A*|b*] = argmin_{[A|b]} sum_{i}(|| dst{i} - A*src{i}' - b ||^2)
 %
 % where `src{i}` and `dst{i}` are the i-th points in `src` and `dst`,
 % respectively. `[A|b]` can be either arbitrary (when `FullAffine=true`) or

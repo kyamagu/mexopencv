@@ -7,7 +7,7 @@
 % * __src__ Source image, 8-bit integer or 32-bit floating-point, 1- or
 %       3-channels.
 % * __patchSize__ Size of the extracted patch `[w,h]`.
-% * __center__ Floating point coordinates of the center of the extracted
+% * __center__ Floating-point coordinates of the center of the extracted
 %       rectangle within the source image. The center `[x,y]` must be inside
 %       the image.
 %

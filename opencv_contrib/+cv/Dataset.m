@@ -670,6 +670,8 @@ classdef Dataset < handle
         function elems = split(s, delim)
             %SPLIT  Split string by delimiter
             %
+            %    elems = cv.Dataset.split(s, delim)
+            %
             % ## Input
             % * __s__ string.
             % * __delim__ delimiter character.

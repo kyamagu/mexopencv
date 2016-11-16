@@ -72,7 +72,7 @@ classdef LSDDetector < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -147,7 +147,7 @@ classdef LSDDetector < handle
     %% FeatureDetector
     methods
         function keylines = detect(this, img, varargin)
-            %DETECT  Detect lines inside an image or image set.
+            %DETECT  Detect lines inside an image or image set
             %
             %    keylines = obj.detect(img)
             %    keylines = obj.detect(imgs)

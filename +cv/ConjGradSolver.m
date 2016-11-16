@@ -1,5 +1,5 @@
 classdef ConjGradSolver < handle
-    %CONJGRADSOLVER  Non-linear non-constrained minimization of a function with known gradient.
+    %CONJGRADSOLVER  Non-linear non-constrained minimization of a function with known gradient
     %
     % defined on an `n`-dimensional Euclidean space, using the Nonlinear
     % **Conjugate Gradient** method. The implementation was done based on the
@@ -72,7 +72,7 @@ classdef ConjGradSolver < handle
 
     methods
         function this = ConjGradSolver(varargin)
-            %CONJGRADSOLVER  Creates an ConjGradSolver object.
+            %CONJGRADSOLVER  Creates an ConjGradSolver object
             %
             %    solver = cv.ConjGradSolver()
             %    solver = cv.ConjGradSolver('OptionName', optionValue, ...)
@@ -123,7 +123,7 @@ classdef ConjGradSolver < handle
         end
 
         function [x,fx] = minimize(this, x0)
-            %MINIMIZE  Runs the algorithm and performs the minimization.
+            %MINIMIZE  Runs the algorithm and performs the minimization
             %
             %    [x,fx] = solver.minimize(x0)
             %
@@ -150,7 +150,7 @@ classdef ConjGradSolver < handle
     %% Algorithm
     methods (Hidden)
         function clear(this)
-            %CLEAR  Clears the algorithm state.
+            %CLEAR  Clears the algorithm state
             %
             %    solver.clear()
             %
@@ -174,7 +174,7 @@ classdef ConjGradSolver < handle
         end
 
         function name = getDefaultName(this)
-            %GETDEFAULTNAME  Returns the algorithm string identifier.
+            %GETDEFAULTNAME  Returns the algorithm string identifier
             %
             %    name = solver.getDefaultName()
             %
@@ -188,7 +188,7 @@ classdef ConjGradSolver < handle
         end
 
         function save(this, filename)
-            %SAVE  Saves the algorithm to a file.
+            %SAVE  Saves the algorithm to a file
             %
             %    obj.save(filename)
             %
@@ -203,7 +203,7 @@ classdef ConjGradSolver < handle
         end
 
         function load(this, fname_or_str)
-            %LOAD  Loads algorithm from a file or a string.
+            %LOAD  Loads algorithm from a file or a string
             %
             %    obj.load(filename)
             %    obj.load(str, 'FromString',true)
