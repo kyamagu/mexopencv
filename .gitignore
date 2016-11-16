@@ -1,18 +1,36 @@
+# temp files
 *~
 .DS_Store
-*.o
-*.mex*
 *.autosave
 *.asv
 *.bak
 octave-workspace
 
-# MS Visual Studio
+# compiled outputs and binaries
+*.mex*
+*.a
+*.o
+*.lib
 *.obj
 *.pdb
 *.idb
+*.ilk
+*.exp
+*.dll
+*.so
+*.dylib
+*.exe
 
-# downloaded files
+# generated docs
+/doc/html/
+/doc/latex/
+/doc/matlab/
+
+# published samples
+/samples/html/
+/opencv_contrib/samples/html/
+
+# downloaded files for samples and tests
 /test/768x576.avi
 /test/car.avi
 /test/haarcascade_frontalface_default.xml
