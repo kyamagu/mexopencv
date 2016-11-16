@@ -307,12 +307,12 @@ function [cflags,libs] = pkg_config(opts)
     %
 
     I_path = fullfile(opts.opencv_path, 'include');
-    if ~exist(I_path,'dir')
+    if ~isdir(I_path)
         error('mexopencv:make', 'OpenCV include path not found: %s', I_path);
     end
 
     L_path = fullfile(opts.opencv_path, arch_str(), compiler_str(), 'lib');
-    if ~exist(L_path,'dir')
+    if ~isdir(L_path)
         error('mexopencv:make', 'OpenCV library path not found: %s', L_path);
     end
 
@@ -602,7 +602,7 @@ function files = collect_mex_files(opts)
 end
 
 function check_path_opencv(opts)
-    %CHECK_PATH_OPENCV  check OpenCV bin folder is on the system PATH env. var.
+    %CHECK_PATH_OPENCV  check OpenCV bin folder is on the system PATH environment variable
     %
     % See also: getenv, setenv
     %

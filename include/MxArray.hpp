@@ -105,7 +105,7 @@ template<> struct MxTypes<bool> {
     static const mxClassID type = mxLOGICAL_CLASS;
 };
 
-/** Cutom error callback to be invoked by cv::error(), CV_Assert, etc...
+/** Cutom error callback to be invoked by cv::error(), CV_Assert, etc.
  * @param status status code.
  * @param func_name function name.
  * @param err_msg error message.
@@ -787,7 +787,7 @@ class MxArray
      *
      * In MATLAB, this is equivalent to getting:
      * @code
-     * value = arr(dim1Sub, dim2Sub, ,dim3Sub, ...)
+     * value = arr(dim1Sub, dim2Sub, dim3Sub, ...)
      * @endcode
      */
     template <typename T> T at(const std::vector<mwIndex>& si) const;
@@ -844,7 +844,7 @@ class MxArray
      *
      * In MATLAB, this is equivalent to setting:
      * @code
-     * arr(dim1Sub, dim2Sub, ,dim3Sub, ...) = value
+     * arr(dim1Sub, dim2Sub, dim3Sub, ...) = value
      * @endcode
      */
     template <typename T> void set(const std::vector<mwIndex>& si,
@@ -944,12 +944,12 @@ class ConstMap
     const U& operator[] (const T& key) const
     {
         typename std::map<T,U>::const_iterator it = m_.find(key);
-        if (it==m_.end())
+        if (it == m_.end())
             mexErrMsgIdAndTxt("mexopencv:error", "ConstMap: Value not found");
-        return (*it).second;
+        return it->second;
     }
   private:
-    //// private map object
+    /// private map object
     std::map<T,U> m_;
 };
 
@@ -1241,7 +1241,7 @@ std::vector<T> MxArray::toVector(std::const_mem_fun_ref_t<T,MxArray> f) const
     const std::vector<MxArray> v(toVector<MxArray>());
     std::vector<T> vt;
     vt.reserve(v.size());
-    for (std::vector<MxArray>::const_iterator it=v.begin(); it!=v.end(); ++it)
+    for (std::vector<MxArray>::const_iterator it = v.begin(); it != v.end(); ++it)
         vt.push_back(f(*it));
     return vt;
 }

@@ -1056,4 +1056,3 @@ Ptr<WobbleSuppressorBase> createWobbleSuppressorBase(
             "Failed to create WobbleSuppressorBase");
     return p;
 }
-

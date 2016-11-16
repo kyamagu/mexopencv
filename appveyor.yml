@@ -23,6 +23,10 @@ branches:
 environment:
   MCV_ROOT: c:\projects\mexopencv
   OPENCV_DIR: c:\dev\build\install
+  #NOTE: it's important to set OCTAVE_HOME environment variable because it is
+  # queried by mkoctfile.exe/octave-config.exe to alter compile and link paths
+  # (otherwise some wrong hardcoded paths from cross-compiling are used)
+  # http://savannah.gnu.org/bugs/?48671
   OCTAVE_HOME: c:\dev\octave-4.0.3
   #TODO: https://savannah.gnu.org/bugs/?41699
   # we use octave-cli.exe here instead of octave.exe because of a bug
