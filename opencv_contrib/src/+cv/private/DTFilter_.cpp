@@ -89,6 +89,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         obj_[++last_id] = createDTFilter(guide,
             opts.sigmaSpatial, opts.sigmaColor, opts.mode, opts.numIters);
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
     // static method call
@@ -106,9 +107,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Big operation switch
     Ptr<DTFilter> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "clear") {
         nargchk(nrhs==2 && nlhs==0);

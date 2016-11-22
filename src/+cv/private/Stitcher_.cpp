@@ -55,14 +55,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         //Stitcher::createDefault(try_use_gpu);
         obj_[++last_id] = createStitcher(try_use_gpu);
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
 
     // Big operation switch
     Ptr<Stitcher> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "stitch") {
         nargchk((nrhs==3 || nrhs==4) && nlhs<=2);
