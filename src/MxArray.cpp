@@ -708,6 +708,8 @@ cv::SparseMat MxArray::toSparseMat(int depth) const
 
 cv::Moments MxArray::toMoments(mwIndex index) const
 {
+    if (!isStruct())
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not struct");
     // the muXX and nuXX are computed from mXX
     return cv::Moments(
         (isField("m00")) ? at("m00", index).toDouble() : 0,
@@ -725,6 +727,8 @@ cv::Moments MxArray::toMoments(mwIndex index) const
 
 cv::KeyPoint MxArray::toKeyPoint(mwIndex index) const
 {
+    if (!isStruct())
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not struct");
     return cv::KeyPoint(
         at("pt",   index).toPoint2f(),
         at("size", index).toFloat(),
@@ -737,6 +741,8 @@ cv::KeyPoint MxArray::toKeyPoint(mwIndex index) const
 
 cv::DMatch MxArray::toDMatch(mwIndex index) const
 {
+    if (!isStruct())
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not struct");
     return cv::DMatch(
         (isField("queryIdx")) ? at("queryIdx", index).toInt()    : 0,
         (isField("trainIdx")) ? at("trainIdx", index).toInt()    : 0,
@@ -759,6 +765,8 @@ cv::Range MxArray::toRange() const
 
 cv::RotatedRect MxArray::toRotatedRect(mwIndex index) const
 {
+    if (!isStruct())
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not struct");
     cv::RotatedRect rr;
     if (isField("center")) rr.center = at("center", index).toPoint_<float>();
     if (isField("size"))   rr.size   = at("size",   index).toSize_<float>();
@@ -768,6 +776,8 @@ cv::RotatedRect MxArray::toRotatedRect(mwIndex index) const
 
 cv::TermCriteria MxArray::toTermCriteria(mwIndex index) const
 {
+    if (!isStruct())
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not struct");
     const MxArray _type(at("type", index));
     return cv::TermCriteria(
         (_type.isChar()) ? TermCritType[_type.toString()] : _type.toInt(),
