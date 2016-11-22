@@ -61,7 +61,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 "Unrecognized option %s", key.c_str());
     }
 
-    // Execute function
+    // Process
     Mat src(rhs[0].toMat()), dst;
     Sobel(src, dst, ddepth, dx, dy, ksize, scale, delta, borderType);
     plhs[0] = MxArray(dst);

@@ -22,7 +22,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     nargchk(nrhs==0 && nlhs<=1);
 
     // Process
-    string info = getBuildInformation();
+    string info(getBuildInformation());
     if (nlhs > 0)
         plhs[0] = MxArray(info);
     else

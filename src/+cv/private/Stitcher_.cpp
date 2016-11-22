@@ -205,12 +205,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "component") {
         nargchk(nrhs==2 && nlhs<=1);
-        vector<int> indices = obj->component();
+        vector<int> indices(obj->component());
         plhs[0] = MxArray(indices);
     }
     else if (method == "cameras") {
         nargchk(nrhs==2 && nlhs<=1);
-        vector<CameraParams> params = obj->cameras();
+        vector<CameraParams> params(obj->cameras());
         plhs[0] = toStruct(params);
     }
     else if (method == "workScale") {
@@ -220,7 +220,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "getMatchingMask") {
         nargchk(nrhs==2 && nlhs<=1);
-        Mat mask = obj->matchingMask().getMat(ACCESS_READ);
+        Mat mask(obj->matchingMask().getMat(ACCESS_READ));
         plhs[0] = MxArray(mask);
     }
     else if (method == "setMatchingMask") {

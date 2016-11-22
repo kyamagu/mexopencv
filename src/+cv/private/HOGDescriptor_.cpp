@@ -175,7 +175,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "readALTModel") {
         nargchk(nrhs==3 && nlhs==0);
-        string modelfile = rhs[2].toString();
+        string modelfile(rhs[2].toString());
         obj->readALTModel(modelfile);
     }
     else if (method == "load") {

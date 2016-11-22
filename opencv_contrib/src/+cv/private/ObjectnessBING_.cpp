@@ -115,7 +115,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "getobjectnessValues") {
         nargchk(nrhs==2 && nlhs<=1);
-        vector<float> objectnessValues = obj->getobjectnessValues();
+        vector<float> objectnessValues(obj->getobjectnessValues());
         plhs[0] = MxArray(objectnessValues);
     }
     else if (method == "setTrainingPath") {

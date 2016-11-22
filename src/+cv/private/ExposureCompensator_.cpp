@@ -93,7 +93,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if (p.empty())
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Method only supported for GainCompensator");
-        vector<double> g = p->gains();
+        vector<double> g(p->gains());
         plhs[0] = MxArray(g);
     }
     else

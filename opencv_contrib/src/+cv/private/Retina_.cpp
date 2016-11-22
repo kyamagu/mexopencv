@@ -435,7 +435,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "getParvoRAW2") {
         nargchk(nrhs==2 && nlhs<=1);
-        Mat retinaOutput_parvo = obj->getParvoRAW();
+        Mat retinaOutput_parvo(obj->getParvoRAW());
         plhs[0] = MxArray(retinaOutput_parvo);
     }
     else if (method == "getMagno") {
@@ -452,7 +452,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "getMagnoRAW2") {
         nargchk(nrhs==2 && nlhs<=1);
-        Mat retinaOutput_magno = obj->getMagnoRAW();
+        Mat retinaOutput_magno(obj->getMagnoRAW());
         plhs[0] = MxArray(retinaOutput_magno);
     }
     else if (method == "setColorSaturation") {

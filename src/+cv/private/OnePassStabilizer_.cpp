@@ -77,7 +77,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat frame = obj->nextFrame();
+        Mat frame(obj->nextFrame());
         if (flip && (frame.channels() == 3 || frame.channels() == 4)) {
             // OpenCV's default is BGR/BGRA while MATLAB's is RGB/RGBA
             cvtColor(frame, frame, (frame.channels()==3 ?

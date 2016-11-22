@@ -252,19 +252,19 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "setLabelInfo") {
         nargchk(nrhs==4 && nlhs==0);
         int label = rhs[2].toInt();
-        string strInfo = rhs[3].toString();
+        string strInfo(rhs[3].toString());
         obj->setLabelInfo(label, strInfo);
     }
     else if (method == "getLabelInfo") {
         nargchk(nrhs==3 && nlhs<=1);
         int label = rhs[2].toInt();
-        string strInfo = obj->getLabelInfo(label);
+        string strInfo(obj->getLabelInfo(label));
         plhs[0] = MxArray(strInfo);
     }
     else if (method == "getLabelsByString") {
         nargchk(nrhs==3 && nlhs<=1);
-        string str = rhs[2].toString();
-        vector<int> labels = obj->getLabelsByString(str);
+        string str(rhs[2].toString());
+        vector<int> labels(obj->getLabelsByString(str));
         plhs[0] = MxArray(labels);
     }
     else if (method == "getHistograms") {

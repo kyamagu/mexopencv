@@ -51,7 +51,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 "Unrecognized option %s", key.c_str());
     }
 
-    // Execute function
+    // Process
     Mat src(rhs[0].toMat()), dst;
     Scharr(src, dst, ddepth, dx, dy, scale, delta, borderType);
     plhs[0] = MxArray(dst);

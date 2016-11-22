@@ -35,8 +35,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
-    Mat distCoeffs;
-    Mat rvec, tvec;
+    Mat distCoeffs, rvec, tvec;
     bool useExtrinsicGuess = false;
     int iterationsCount = 100;
     float reprojectionError = 8.0f;
