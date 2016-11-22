@@ -113,7 +113,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             dist = obj->computeDistance(contour1, contour2);
         }
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
+            mexErrMsgIdAndTxt("mexopencv:error", "Invalid contour argument");
         plhs[0] = MxArray(dist);
     }
     else if (method == "setImages") {

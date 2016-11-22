@@ -55,7 +55,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             (nlhs>3 ? mask : noArray()));
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error", "Invalid input");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
     plhs[0] = MxArray(R);
     if (nlhs > 1)
         plhs[1] = MxArray(t);

@@ -37,6 +37,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         T = getPerspectiveTransform(src, dst);
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
     plhs[0] = MxArray(T);
 }

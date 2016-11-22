@@ -46,6 +46,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         d = arcLength(curve, closed);
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error", "Invalid input");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
     plhs[0] = MxArray(d);
 }

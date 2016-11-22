@@ -50,6 +50,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         M = estimateRigidTransform(src, dst, fullAffine);
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
     plhs[0] = MxArray(M);
 }

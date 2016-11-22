@@ -60,6 +60,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         result = matchShapes(contour1, contour2, method, parameter);
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid contour argument");
     plhs[0] = MxArray(result);
 }

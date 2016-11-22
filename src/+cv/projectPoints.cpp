@@ -60,7 +60,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         plhs[0] = MxArray(imagePoints);
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
     if (nlhs>1)
         plhs[1] = MxArray(jacobian);
 }

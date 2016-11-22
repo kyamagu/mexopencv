@@ -50,7 +50,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 args[0].toString(), args.begin() + 1, args.end());
         }
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Invalid arguments");
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Invalid extractor arguments");
         // matcher
         Ptr<DescriptorMatcher> matcher;
         if (rhs[3].isChar())
@@ -62,7 +63,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 args[0].toString(), args.begin() + 1, args.end());
         }
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Invalid arguments");
+            mexErrMsgIdAndTxt("mexopencv:error", "Invalid matcher arguments");
         obj_[++last_id] = makePtr<BOWImgDescriptorExtractor>(
             extractor, matcher);
         plhs[0] = MxArray(last_id);

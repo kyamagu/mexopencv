@@ -72,7 +72,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             minEigThreshold);
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid image argument");
     plhs[0] = MxArray(nextPts);
     if (nlhs>1)
         plhs[1] = MxArray(status);

@@ -61,9 +61,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             fitLine(points, line, distType, param, reps, aeps);
         }
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
+            mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
     plhs[0] = MxArray(line);
 }

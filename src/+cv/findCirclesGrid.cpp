@@ -45,7 +45,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                     args.begin() + 1, args.end());
             }
             else
-                mexErrMsgIdAndTxt("mexopencv:error","Invalid arguments");
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Invalid detector arguments");
         }
         else
             mexErrMsgIdAndTxt("mexopencv:error",

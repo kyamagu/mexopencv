@@ -54,5 +54,5 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         plhs[0] = MxArray(corners);
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error", "Invalid input");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid corners argument");
 }

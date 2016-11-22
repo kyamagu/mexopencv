@@ -47,6 +47,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         result = pointPolygonTest(contour, pt, measureDist);
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error", "Invalid input");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid contour argument");
     plhs[0] = MxArray(result);
 }

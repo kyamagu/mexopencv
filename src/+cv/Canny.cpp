@@ -50,7 +50,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         threshold2 = s[1];
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid threshold argument");
 
     // Process
     Mat image(rhs[0].toMat(CV_8U)), edges;
