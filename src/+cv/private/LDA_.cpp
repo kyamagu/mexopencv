@@ -40,7 +40,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         int num_components = 0;
         for (int i=2; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="NumComponents")
+            if (key == "NumComponents")
                 num_components = rhs[i+1].toInt();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",

@@ -40,14 +40,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double confidence = 0.995;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Method")
+        if (key == "Method")
             method = (rhs[i+1].isChar()) ?
                 Method[rhs[i+1].toString()] : rhs[i+1].toInt();
-        else if (key=="RansacReprojThreshold")
+        else if (key == "RansacReprojThreshold")
             ransacReprojThreshold = rhs[i+1].toDouble();
-        else if (key=="MaxIters")
+        else if (key == "MaxIters")
             maxIters = rhs[i+1].toInt();
-        else if (key=="Confidence")
+        else if (key == "Confidence")
             confidence = rhs[i+1].toDouble();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

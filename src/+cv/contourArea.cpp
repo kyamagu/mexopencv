@@ -28,7 +28,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     bool oriented = false;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Oriented")
+        if (key == "Oriented")
             oriented = rhs[i+1].toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

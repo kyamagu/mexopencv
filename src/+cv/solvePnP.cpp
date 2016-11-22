@@ -41,15 +41,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int flags = cv::SOLVEPNP_ITERATIVE;
     for (int i=3; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="DistCoeffs")
+        if (key == "DistCoeffs")
             distCoeffs = rhs[i+1].toMat(CV_64F);
-        else if (key=="UseExtrinsicGuess")
+        else if (key == "UseExtrinsicGuess")
             useExtrinsicGuess = rhs[i+1].toBool();
-        else if (key=="Rvec")
+        else if (key == "Rvec")
             rvec = rhs[i+1].toMat(CV_64F);
-        else if (key=="Tvec")
+        else if (key == "Tvec")
             tvec = rhs[i+1].toMat(CV_64F);
-        else if (key=="Method")
+        else if (key == "Method")
             flags = PnPMethod[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error",

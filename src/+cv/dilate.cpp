@@ -32,15 +32,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Scalar borderValue = morphologyDefaultBorderValue();
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Element")
+        if (key == "Element")
             kernel = rhs[i+1].toMat(CV_8U);
-        else if (key=="Anchor")
+        else if (key == "Anchor")
             anchor = rhs[i+1].toPoint();
-        else if (key=="Iterations")
+        else if (key == "Iterations")
             iterations = rhs[i+1].toInt();
-        else if (key=="BorderType")
+        else if (key == "BorderType")
             borderType = BorderType[rhs[i+1].toString()];
-        else if (key=="BorderValue")
+        else if (key == "BorderValue")
             borderValue = rhs[i+1].toScalar();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

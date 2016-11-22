@@ -37,9 +37,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int m1type = -1;  // (nlhs>1) ? CV_32FC1 : CV_32FC2
     for (int i=4; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="R")
+        if (key == "R")
             R = rhs[i+1].toMat(CV_64F);
-        else if (key=="M1Type")
+        else if (key == "M1Type")
             m1type = (rhs[i+1].isChar()) ?
                 M1Type[rhs[i+1].toString()] : rhs[i+1].toInt();
         else

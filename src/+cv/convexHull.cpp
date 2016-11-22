@@ -29,9 +29,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     bool returnPoints = true;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Clockwise")
+        if (key == "Clockwise")
             clockwise = rhs[i+1].toBool();
-        else if (key=="ReturnPoints")
+        else if (key == "ReturnPoints")
             returnPoints = rhs[i+1].toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

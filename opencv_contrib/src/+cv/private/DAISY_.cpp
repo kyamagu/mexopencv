@@ -159,9 +159,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         Matx33d H;
         for (int i=5; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="Unnormalized")
+            if (key == "Unnormalized")
                 unnormalized = rhs[i+1].toBool();
-            else if (key=="H") {
+            else if (key == "H") {
                 H = rhs[i+1].toMatx<double,3,3>();
                 useHomography = true;
             }

@@ -239,11 +239,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         vector<Point> locations;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="WinStride")
+            if (key == "WinStride")
                 winStride = rhs[i+1].toSize();
-            else if (key=="Padding")
+            else if (key == "Padding")
                 padding = rhs[i+1].toSize();
-            else if (key=="Locations")
+            else if (key == "Locations")
                 locations = rhs[i+1].toVector<Point>();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
@@ -262,9 +262,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         Size paddingBR;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="PaddingTL")
+            if (key == "PaddingTL")
                 paddingTL = rhs[i+1].toSize();
-            else if (key=="PaddingBR")
+            else if (key == "PaddingBR")
                 paddingBR = rhs[i+1].toSize();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
@@ -285,13 +285,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         vector<Point> searchLocations;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="HitThreshold")
+            if (key == "HitThreshold")
                 hitThreshold = rhs[i+1].toDouble();
-            else if (key=="WinStride")
+            else if (key == "WinStride")
                 winStride = rhs[i+1].toSize();
-            else if (key=="Padding")
+            else if (key == "Padding")
                 padding = rhs[i+1].toSize();
-            else if (key=="Locations")
+            else if (key == "Locations")
                 searchLocations = rhs[i+1].toVector<Point>();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
@@ -316,17 +316,17 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         bool useMeanshiftGrouping = false;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="HitThreshold")
+            if (key == "HitThreshold")
                 hitThreshold = rhs[i+1].toDouble();
-            else if (key=="WinStride")
+            else if (key == "WinStride")
                 winStride = rhs[i+1].toSize();
-            else if (key=="Padding")
+            else if (key == "Padding")
                 padding = rhs[i+1].toSize();
-            else if (key=="Scale")
+            else if (key == "Scale")
                 scale = rhs[i+1].toDouble();
-            else if (key=="FinalThreshold")
+            else if (key == "FinalThreshold")
                 finalThreshold = rhs[i+1].toDouble();
-            else if (key=="UseMeanshiftGrouping")
+            else if (key == "UseMeanshiftGrouping")
                 useMeanshiftGrouping = rhs[i+1].toBool();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
@@ -348,11 +348,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         Size padding;
         for (int i=4; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="HitThreshold")
+            if (key == "HitThreshold")
                 hitThreshold = rhs[i+1].toDouble();
-            else if (key=="WinStride")
+            else if (key == "WinStride")
                 winStride = rhs[i+1].toSize();
-            else if (key=="Padding")
+            else if (key == "Padding")
                 padding = rhs[i+1].toSize();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
@@ -374,9 +374,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         int groupThreshold = 0;
         for (int i=4; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="HitThreshold")
+            if (key == "HitThreshold")
                 hitThreshold = rhs[i+1].toDouble();
-            else if (key=="GroupThreshold")
+            else if (key == "GroupThreshold")
                 groupThreshold = rhs[i+1].toInt();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",

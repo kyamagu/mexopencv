@@ -29,10 +29,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     bool handleMissingValues = false;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Depth")
+        if (key == "Depth")
             ddepth = (rhs[i+1].isChar()) ?
                 ClassNameMap[rhs[i+1].toString()] : rhs[i+1].toInt();
-        else if (key=="HandleMissingValues")
+        else if (key == "HandleMissingValues")
             handleMissingValues = rhs[i+1].toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

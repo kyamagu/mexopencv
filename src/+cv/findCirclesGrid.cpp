@@ -31,11 +31,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Ptr<FeatureDetector> blobDetector;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="SymmetricGrid")
+        if (key == "SymmetricGrid")
             symmetricGrid = rhs[i+1].toBool();
-        else if (key=="Clustering")
+        else if (key == "Clustering")
             clustering = rhs[i+1].toBool();
-        else if (key=="BlobDetector") {
+        else if (key == "BlobDetector") {
             if (rhs[i+1].isChar())
                 blobDetector = createFeatureDetector(rhs[i+1].toString(),
                     rhs.end(), rhs.end());

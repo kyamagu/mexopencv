@@ -30,31 +30,31 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int ctype = CV_64F;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Mean") {
+        if (key == "Mean") {
             mean = rhs[i+1].toMat();
             flags |= cv::COVAR_USE_AVG;
         }
-        else if (key=="Flags")
+        else if (key == "Flags")
             flags = rhs[i+1].toInt();
-        else if (key=="Scrambled") {
+        else if (key == "Scrambled") {
             //UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::COVAR_SCRAMBLED);
             UPDATE_FLAG(flags, !rhs[i+1].toBool(), cv::COVAR_NORMAL);
         }
-        else if (key=="Normal")
+        else if (key == "Normal")
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::COVAR_NORMAL);
-        else if (key=="UseAvg")
+        else if (key == "UseAvg")
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::COVAR_USE_AVG);
-        else if (key=="Scale")
+        else if (key == "Scale")
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::COVAR_SCALE);
-        else if (key=="Rows") {
+        else if (key == "Rows") {
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::COVAR_ROWS);
             UPDATE_FLAG(flags, !rhs[i+1].toBool(), cv::COVAR_COLS);
         }
-        else if (key=="Cols") {
+        else if (key == "Cols") {
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::COVAR_COLS);
             UPDATE_FLAG(flags, !rhs[i+1].toBool(), cv::COVAR_ROWS);
         }
-        else if (key=="CType")
+        else if (key == "CType")
             ctype = (rhs[i+1].isChar()) ?
                 ClassNameMap[rhs[i+1].toString()] : rhs[i+1].toInt();
         else

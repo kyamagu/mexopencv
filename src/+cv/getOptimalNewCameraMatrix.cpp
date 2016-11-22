@@ -30,11 +30,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     bool centerPrincipalPoint = false;
     for (int i=3; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Alpha")
+        if (key == "Alpha")
             alpha = rhs[i+1].toDouble();
-        else if (key=="NewImageSize")
+        else if (key == "NewImageSize")
             newImageSize = rhs[i+1].toSize();
-        else if (key=="CenterPrincipalPoint")
+        else if (key == "CenterPrincipalPoint")
             centerPrincipalPoint = rhs[i+1].toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

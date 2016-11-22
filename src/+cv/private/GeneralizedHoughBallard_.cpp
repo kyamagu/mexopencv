@@ -62,9 +62,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         bool loadFromString = false;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="ObjName")
+            if (key == "ObjName")
                 objname = rhs[i+1].toString();
-            else if (key=="FromString")
+            else if (key == "FromString")
                 loadFromString = rhs[i+1].toBool();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
@@ -120,7 +120,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         Point templCenter(-1,-1);
         for (int i=(edges_variant ? 5 : 3); i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="Center")
+            if (key == "Center")
                 templCenter = rhs[i+1].toPoint();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",

@@ -40,10 +40,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Mat mask;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Method")
+        if (key == "Method")
             method = (rhs[i+1].isChar() ?
                 MatchMethod[rhs[i+1].toString()] : rhs[i+1].toInt());
-        else if (key=="Mask")
+        else if (key == "Mask")
             mask = rhs[i+1].toMat(CV_8U);
         else
             mexErrMsgIdAndTxt("mexopencv:error",

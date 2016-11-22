@@ -31,13 +31,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int thickness = 1;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="FontFace")
+        if (key == "FontFace")
             fontFace = FontFace[rhs[i+1].toString()];
-        else if (key=="FontStyle")
+        else if (key == "FontStyle")
             fontStyle = FontStyle[rhs[i+1].toString()];
-        else if (key=="FontScale")
+        else if (key == "FontScale")
             fontScale = rhs[i+1].toDouble();
-        else if (key=="Thickness")
+        else if (key == "Thickness")
             thickness = (rhs[i+1].isChar()) ?
                 ThicknessType[rhs[i+1].toString()] : rhs[i+1].toInt();
         else

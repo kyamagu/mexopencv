@@ -30,11 +30,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     TermCriteria criteria(TermCriteria::COUNT+TermCriteria::EPS, 50, 0.001);
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="WinSize")
+        if (key == "WinSize")
             winSize = rhs[i+1].toSize();
-        else if (key=="ZeroZone")
+        else if (key == "ZeroZone")
             zeroZone = rhs[i+1].toSize();
-        else if (key=="Criteria")
+        else if (key == "Criteria")
             criteria = rhs[i+1].toTermCriteria();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

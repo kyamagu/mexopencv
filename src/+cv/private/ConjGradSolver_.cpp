@@ -206,9 +206,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         TermCriteria termcrit(TermCriteria::MAX_ITER+TermCriteria::EPS, 5000, 1e-6);
         for (int i=2; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="Function")
+            if (key == "Function")
                 f = MatlabFunction::create(rhs[i+1]);
-            else if (key=="TermCriteria")
+            else if (key == "TermCriteria")
                 termcrit = rhs[i+1].toTermCriteria();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",

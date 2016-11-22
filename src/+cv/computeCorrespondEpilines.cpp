@@ -28,7 +28,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int whichImage = 1;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="WhichImage")
+        if (key == "WhichImage")
             whichImage = rhs[i+1].toInt();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

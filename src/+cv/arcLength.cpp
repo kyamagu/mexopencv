@@ -28,7 +28,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     bool closed = false;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Closed")
+        if (key == "Closed")
             closed = rhs[i+1].toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

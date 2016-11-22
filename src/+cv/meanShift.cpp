@@ -28,7 +28,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     TermCriteria criteria(TermCriteria::COUNT+TermCriteria::EPS, 100, 1.0);
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Criteria")
+        if (key == "Criteria")
             criteria = rhs[i+1].toTermCriteria();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

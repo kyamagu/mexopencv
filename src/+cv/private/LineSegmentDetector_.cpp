@@ -53,21 +53,21 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         int n_bins = 1024;
         for (int i=2; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="Refine")
+            if (key == "Refine")
                 refine = LineSegmentDetectorModesMap[rhs[i+1].toString()];
-            else if (key=="Scale")
+            else if (key == "Scale")
                 scale = rhs[i+1].toDouble();
-            else if (key=="SigmaScale")
+            else if (key == "SigmaScale")
                 sigma_scale = rhs[i+1].toDouble();
-            else if (key=="QuantError")
+            else if (key == "QuantError")
                 quant = rhs[i+1].toDouble();
-            else if (key=="AngleTol")
+            else if (key == "AngleTol")
                 ang_th = rhs[i+1].toDouble();
-            else if (key=="DetectionThreshold")
+            else if (key == "DetectionThreshold")
                 log_eps = rhs[i+1].toDouble();
-            else if (key=="MinDensity")
+            else if (key == "MinDensity")
                 density_th = rhs[i+1].toDouble();
-            else if (key=="NBins")
+            else if (key == "NBins")
                 n_bins = rhs[i+1].toInt();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
@@ -99,9 +99,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         bool loadFromString = false;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="ObjName")
+            if (key == "ObjName")
                 objname = rhs[i+1].toString();
-            else if (key=="FromString")
+            else if (key == "FromString")
                 loadFromString = rhs[i+1].toBool();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
@@ -163,7 +163,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         Mat image;
         for (int i=5; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="Image")
+            if (key == "Image")
                 image = rhs[i+1].toMat();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",

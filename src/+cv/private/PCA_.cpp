@@ -93,13 +93,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         bool use_second_variant = false;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="Mean")
+            if (key == "Mean")
                 mean = rhs[i+1].toMat();
-            else if (key=="DataAs")
+            else if (key == "DataAs")
                 flags = DataAs[rhs[i+1].toString()];
-            else if (key=="MaxComponents")
+            else if (key == "MaxComponents")
                 maxComponents = rhs[i+1].toInt();
-            else if (key=="RetainedVariance") {
+            else if (key == "RetainedVariance") {
                 retainedVariance = rhs[i+1].toDouble();
                 use_second_variant = true;
             }

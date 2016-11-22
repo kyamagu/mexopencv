@@ -33,18 +33,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     bool crosscheck = false;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="DType")
+        if (key == "DType")
             dtype = (rhs[i+1].isChar()) ?
                 ClassNameMap[rhs[i+1].toString()] : rhs[i+1].toInt();
-        else if (key=="NormType")
+        else if (key == "NormType")
             normType = NormType[rhs[i+1].toString()];
-        else if (key=="K")
+        else if (key == "K")
             K = rhs[i+1].toInt();
-        else if (key=="Mask")
+        else if (key == "Mask")
             mask = rhs[i+1].toMat(CV_8U);
-        else if (key=="Update")
+        else if (key == "Update")
             update = rhs[i+1].toInt();
-        else if (key=="CrossCheck")
+        else if (key == "CrossCheck")
             crosscheck = rhs[i+1].toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

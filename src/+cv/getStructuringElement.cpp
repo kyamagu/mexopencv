@@ -38,11 +38,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Point anchor(-1,-1);
     for (int i=0; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Shape")
+        if (key == "Shape")
             shape = MorphShape[rhs[i+1].toString()];
-        else if (key=="KSize")
+        else if (key == "KSize")
             ksize = rhs[i+1].toSize();
-        else if (key=="Anchor")
+        else if (key == "Anchor")
             anchor = rhs[i+1].toPoint();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

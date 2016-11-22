@@ -31,13 +31,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     TermCriteria termcrit(TermCriteria::MAX_ITER+TermCriteria::EPS, 5, 1);
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="SP")
+        if (key == "SP")
             sp = rhs[i+1].toDouble();
-        else if (key=="SR")
+        else if (key == "SR")
             sr = rhs[i+1].toDouble();
-        else if (key=="MaxLevel")
+        else if (key == "MaxLevel")
             maxLevel = rhs[i+1].toInt();
-        else if (key=="Criteria")
+        else if (key == "Criteria")
             termcrit = rhs[i+1].toTermCriteria();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

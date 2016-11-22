@@ -28,7 +28,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     bool binaryImage = false;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="BinaryImage")
+        if (key == "BinaryImage")
             binaryImage = rhs[i+1].toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

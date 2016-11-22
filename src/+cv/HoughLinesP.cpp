@@ -32,15 +32,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double maxLineGap = 0;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Rho")
+        if (key == "Rho")
             rho = rhs[i+1].toDouble();
-        else if (key=="Theta")
+        else if (key == "Theta")
             theta = rhs[i+1].toDouble();
-        else if (key=="Threshold")
+        else if (key == "Threshold")
             threshold = rhs[i+1].toInt();
-        else if (key=="MinLineLength")
+        else if (key == "MinLineLength")
             minLineLength = rhs[i+1].toDouble();
-        else if (key=="MaxLineGap")
+        else if (key == "MaxLineGap")
             maxLineGap = rhs[i+1].toDouble();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

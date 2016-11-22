@@ -29,9 +29,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double confidence = 0.99;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="RansacThreshold")
+        if (key == "RansacThreshold")
             ransacThreshold = rhs[i+1].toDouble();
-        else if (key=="Confidence")
+        else if (key == "Confidence")
             confidence = rhs[i+1].toDouble();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

@@ -32,11 +32,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Scalar value;
     for (int i=(vect_variant ? 2 : 5); i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="BorderType")
+        if (key == "BorderType")
             borderType = BorderType[rhs[i+1].toString()];
-        else if (key=="Isolated")
+        else if (key == "Isolated")
             isolated = rhs[i+1].toBool();
-        else if (key=="Value")
+        else if (key == "Value")
             value = rhs[i+1].toScalar();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

@@ -39,11 +39,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double param2 = 0.99;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Method")
+        if (key == "Method")
             method = FMMethod[rhs[i+1].toString()];
-        else if (key=="Param1")
+        else if (key == "Param1")
             param1 = rhs[i+1].toDouble();
-        else if (key=="Param2")
+        else if (key == "Param2")
             param2 = rhs[i+1].toDouble();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

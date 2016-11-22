@@ -60,9 +60,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         int type = CV_64F;
         for (int i=4; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="ControlParams")
+            if (key == "ControlParams")
                 controlParams = rhs[i+1].toInt();
-            else if (key=="Type")
+            else if (key == "Type")
                 type = (rhs[i+1].isChar()) ?
                     ClassNameMap[rhs[i+1].toString()] : rhs[i+1].toInt();
             else
@@ -76,7 +76,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         Mat control;
         for (int i=2; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="Control")
+            if (key == "Control")
                 control = rhs[i+1].toMat();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
