@@ -37,15 +37,28 @@ const ConstMap<string,int> ColormapTypesMap = ConstMap<string,int>
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    nargchk(nrhs==2 && nlhs<=1);
+    nargchk(nrhs>=2 && (nrhs%2)==0 && nlhs<=1);
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);
+
+    // Option processing
+    bool flip = true;
+    for (int i=2; i<nrhs; i+=2) {
+        string key(rhs[i].toString());
+        if (key == "FlipChannels")
+            flip = rhs[i+1].toBool();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
 
     // Process
     Mat src(rhs[0].toMat(CV_8U)), dst;
     int colormap = ColormapTypesMap[rhs[1].toString()];
     applyColorMap(src, dst, colormap);
-    cvtColor(dst, dst, cv::COLOR_BGR2RGB);  // flip 3rd dim
+    // OpenCV's default is BGR while MATLAB's is RGB
+    if (flip && dst.channels() == 3)
+        cvtColor(dst, dst, cv::COLOR_BGR2RGB);  // flip 3rd dim
     plhs[0] = MxArray(dst);
 }
