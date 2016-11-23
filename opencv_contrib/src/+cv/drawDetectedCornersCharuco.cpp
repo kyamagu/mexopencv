@@ -34,7 +34,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if (key == "IDs")
             charucoIds = rhs[i+1].toVector<int>();
         else if (key == "CornerColor")
-            cornerColor = rhs[i+1].toScalar();
+            cornerColor = (rhs[i+1].isChar()) ?
+                ColorType[rhs[i+1].toString()] : rhs[i+1].toScalar();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());

@@ -128,15 +128,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (prop == "PlotLineWidth")
             obj->setPlotLineWidth(rhs[3].toInt());
         else if (prop == "PlotLineColor")
-            obj->setPlotLineColor(rhs[3].toScalar());
+            obj->setPlotLineColor((rhs[3].isChar()) ?
+                ColorType[rhs[3].toString()] : rhs[3].toScalar());
         else if (prop == "PlotBackgroundColor")
-            obj->setPlotBackgroundColor(rhs[3].toScalar());
+            obj->setPlotBackgroundColor((rhs[3].isChar()) ?
+                ColorType[rhs[3].toString()] : rhs[3].toScalar());
         else if (prop == "PlotAxisColor")
-            obj->setPlotAxisColor(rhs[3].toScalar());
+            obj->setPlotAxisColor((rhs[3].isChar()) ?
+                ColorType[rhs[3].toString()] : rhs[3].toScalar());
         else if (prop == "PlotGridColor")
-            obj->setPlotGridColor(rhs[3].toScalar());
+            obj->setPlotGridColor((rhs[3].isChar()) ?
+                ColorType[rhs[3].toString()] : rhs[3].toScalar());
         else if (prop == "PlotTextColor")
-            obj->setPlotTextColor(rhs[3].toScalar());
+            obj->setPlotTextColor((rhs[3].isChar()) ?
+                ColorType[rhs[3].toString()] : rhs[3].toScalar());
         else if (prop == "PlotSize") {
             Size sz(rhs[3].toSize());
             obj->setPlotSize(sz.width, sz.height);
