@@ -16,5 +16,7 @@
 % * __ShadeFactor__ Range between 0 to 0.1. default 0.02
 % * __FlipChannels__ whether to flip the order of color channels in input
 %       `src` and output `dst2`, between MATLAB's RGB order and OpenCV's BGR
-%       (input: RGB->BGR, output: BGR->RGB). default true
+%       (input: RGB->BGR, output: BGR->RGB). default false
+%
+% See also: cv.stylization
 %

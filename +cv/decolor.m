@@ -16,7 +16,7 @@
 % ## Options
 % * __FlipChannels__ whether to flip the order of color channels in input
 %       `src` and output `color_boost`, between MATLAB's RGB order and
-%       OpenCV's BGR (input: RGB->BGR, output: BGR->RGB). default true
+%       OpenCV's BGR (input: RGB->BGR, output: BGR->RGB). default false
 %
 % It is a basic tool in digital printing, stylized black-and-white photograph
 % rendering, and in many single channel image processing applications [CL12].

@@ -401,7 +401,7 @@ if ~opts.quiet
 end
 while true
     % for each stabilized frame
-    frame = stab.nextFrame();
+    frame = stab.nextFrame('FlipChannels',true);
     if isempty(frame), break; end
     nframes = nframes + 1;
 

@@ -52,7 +52,7 @@ while true
     % get next frame
     i = i + 1;
     fprintf('[%3d] : ', i);
-    tic, frame = superRes.nextFrame(); toc
+    tic, frame = superRes.nextFrame('FlipChannels',true); toc
     if isempty(frame), break; end
     sz = size(frame);
 

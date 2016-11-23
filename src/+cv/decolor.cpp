@@ -26,7 +26,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
-    bool flip = true;
+    bool flip = false;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "FlipChannels")

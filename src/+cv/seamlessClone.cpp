@@ -35,7 +35,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Option processing
     int flags = cv::NORMAL_CLONE;
-    bool flip = true;
+    bool flip = false;
     for (int i=4; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "Method")
@@ -54,12 +54,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         blend;
     Point p(rhs[3].toPoint());
     // MATLAB's default is RGB while OpenCV's is BGR
-    if (flip && src.channels() == 3)
-        cvtColor(src, src, cv::COLOR_RGB2BGR);
-    if (flip && dst.channels() == 3)
-        cvtColor(dst, dst, cv::COLOR_RGB2BGR);
-    if (flip && mask.channels() == 3)
-        cvtColor(mask, mask, cv::COLOR_RGB2BGR);
+    if (flip) {
+        if (src.channels() == 3)
+            cvtColor(src, src, cv::COLOR_RGB2BGR);
+        if (dst.channels() == 3)
+            cvtColor(dst, dst, cv::COLOR_RGB2BGR);
+        if (mask.channels() == 3)
+            cvtColor(mask, mask, cv::COLOR_RGB2BGR);
+    }
     seamlessClone(src, dst, mask, p, blend, flags);
     // OpenCV's default is BGR while MATLAB's is RGB
     if (flip && blend.channels() == 3)

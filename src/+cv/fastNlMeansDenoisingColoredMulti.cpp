@@ -30,7 +30,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     float hColor = 3;
     int templateWindowSize = 7;
     int searchWindowSize = 21;
-    bool flip = true;
+    bool flip = false;
     for (int i=3; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "H")
@@ -56,11 +56,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         for (vector<MxArray>::const_iterator it = arr.begin(); it != arr.end(); ++it)
             srcImgs.push_back(it->toMat(CV_8U));
     }
-    for (vector<Mat>::iterator it = srcImgs.begin(); it != srcImgs.end(); ++it) {
-        if (flip && (it->channels() == 3 || it->channels() == 4)) {
-            // MATLAB's default is RGB/RGBA while OpenCV's is BGR/BGRA
-            cvtColor(*it, *it, (it->channels()==3 ?
-                cv::COLOR_BGR2RGB : cv::COLOR_BGRA2RGBA));
+    if (flip) {
+        for (vector<Mat>::iterator it = srcImgs.begin(); it != srcImgs.end(); ++it) {
+            if (it->channels() == 3 || it->channels() == 4) {
+                // MATLAB's default is RGB/RGBA while OpenCV's is BGR/BGRA
+                cvtColor(*it, *it, (it->channels()==3 ?
+                    cv::COLOR_BGR2RGB : cv::COLOR_BGRA2RGBA));
+            }
         }
     }
     int imgToDenoiseIndex = rhs[1].toInt();

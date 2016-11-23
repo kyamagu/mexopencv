@@ -26,7 +26,7 @@
 %             replace certain features of one object by alternative features.
 % * __FlipChannels__ whether to flip the order of color channels in inputs
 %       `src` and `mask` and output `dst`, between MATLAB's RGB order and
-%       OpenCV's BGR (input: RGB->BGR, output: BGR->RGB). default true
+%       OpenCV's BGR (input: RGB->BGR, output: BGR->RGB). default false
 %
 % Image editing tasks concern either global changes (color/intensity
 % corrections, filters, deformations) or local changes concerned to a
@@ -39,4 +39,6 @@
 % [PM03]:
 % > Patrick Perez, Michel Gangnet, and Andrew Blake. "Poisson image editing".
 % > In ACM Transactions on Graphics (TOG), volume 22, pages 313-318. ACM, 2003.
+%
+% See also: cv.colorChange, cv.illuminationChange, cv.textureFlattening
 %
