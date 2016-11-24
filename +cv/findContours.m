@@ -29,7 +29,7 @@
 %       vectors of the form `{[next,prev,child,parent], ...}`.
 %
 % ## Options
-% * __Mode__ Contour retrieval mode,  default is 'External'. One of:
+% * __Mode__ Contour retrieval mode,  default is 'List'. One of:
 %     * __External__ retrieves only the extreme outer contours. It sets
 %           `hierarchy{i}(3)=hierarchy{i}(4)=-1` for all the contours.
 %     * __List__ retrieves all of the contours without establishing any
@@ -44,7 +44,7 @@
 %           hierarchy of nested contours
 %     * __FloodFill__ connected components of a multi-level image (only valid
 %           for 32-bit integer images).
-% * __Method__ Contour approximation method, default is 'None'. One of:
+% * __Method__ Contour approximation method, default is 'Simple'. One of:
 %     * __None__ stores absolutely all the contour points. That is, any 2
 %           subsequent points `(x1,y1)` and `(x2,y2)` of the contour will be
 %           either horizontal, vertical or diagonal neighbors, that is,

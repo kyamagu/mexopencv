@@ -44,8 +44,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
-    int mode = cv::RETR_EXTERNAL;
-    int method = cv::CHAIN_APPROX_NONE;
+    int mode = cv::RETR_LIST;
+    int method = cv::CHAIN_APPROX_SIMPLE;
     Point offset;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
