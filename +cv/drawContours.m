@@ -41,5 +41,31 @@
 % The function draws contour outlines in the image if `Thickness >= 0` or
 % fills the area bounded by the contours if `Thickness < 0`.
 %
+% ## Example
+% The example below shows how to retrieve connected components from a binary
+% image and label them:
+%
+%    % binary (black-n-white) image
+%    src = cv.imread('bw.png', 'Flags',0);
+%    src = logical(src > 0);
+%
+%    [contours,hierarchy] = cv.findContours(src, 'Mode','CComp', ...
+%        'Method','Simple');
+%
+%    % iterate through all the top-level contours,
+%    % draw each connected component with its own random color
+%    dst = zeros([size(src),3], 'uint8');
+%    idx = 0;
+%    while idx >= 0
+%        color = randi(255, [1 3], 'uint8');
+%        dst = cv.drawContours(dst, contours, 'ContourIdx',idx, ...
+%            'Color',color, 'Thickness','Filled', 'LineType',8, ...
+%            'Hierarchy',hierarchy);
+%        idx = hierarchy{idx+1}(1);
+%    end
+%
+%    subplot(121), imshow(src), title('Source')
+%    subplot(122), imshow(dst), title('Components')
+%
 % See also: cv.findContours, visboundaries, bwlabel
 %
