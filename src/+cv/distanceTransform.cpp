@@ -14,6 +14,7 @@ namespace {
 const ConstMap<string,int> DistMask = ConstMap<string,int>
     ("3",       cv::DIST_MASK_3)
     ("5",       cv::DIST_MASK_5)
+    ("0",       cv::DIST_MASK_PRECISE)
     ("Precise", cv::DIST_MASK_PRECISE);
 
 /// distance transform label types
