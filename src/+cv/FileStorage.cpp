@@ -11,15 +11,15 @@ using namespace cv;
 
 namespace {
 /** Check if the node is of a user-defined type
- * @param _node node.
- * @param _type_name type name. e.g., "opencv-matrix"
+ * @param node node to test.
+ * @param type_name type name. e.g., "opencv-matrix"
  * @return flag
  */
-bool isa(const FileNode& _node, const string& _type_name)
+bool isa(const FileNode& node, const string& type_name)
 {
-    if (_node.node->info && _node.node->info->type_name)
-        return string(_node.node->info->type_name) == _type_name;
-    return false;
+    const CvFileNode* pnode = (*node);
+    return (pnode && pnode->info && pnode->info->type_name) ?
+        (string(pnode->info->type_name) == type_name) : false;
 }
 
 /** Recursive function to output to a file storage
@@ -73,7 +73,7 @@ void read(FileStorage& fs, MxArray& x, const FileNode& node)
         x = MxArray(v);
     }
     else if (node.type() == FileNode::MAP) {
-        for (FileNodeIterator it=node.begin(); it!=node.end(); ++it) {
+        for (FileNodeIterator it = node.begin(); it != node.end(); ++it) {
             const FileNode& elem = (*it);
             string name(elem.name());
             switch (elem.type()) {
@@ -134,7 +134,7 @@ void write(FileStorage& fs, const MxArray& x, bool root=false)
             if (n>1) fs << "[";
             for (mwIndex i=0; i<n; ++i) {
                 if (!root) fs << "{";
-                for (vector<string>::const_iterator it=fields.begin(); it!=fields.end(); ++it) {
+                for (vector<string>::const_iterator it = fields.begin(); it != fields.end(); ++it) {
                     fs << *it;
                     write(fs, MxArray(x.at(*it,i)));
                 }
@@ -146,7 +146,7 @@ void write(FileStorage& fs, const MxArray& x, bool root=false)
         case mxCELL_CLASS: {
             vector<MxArray> arr(x.toVector<MxArray>());
             fs << "[";
-            for (vector<MxArray>::const_iterator it=arr.begin(); it!=arr.end(); ++it)
+            for (vector<MxArray>::const_iterator it = arr.begin(); it != arr.end(); ++it)
                 write(fs, *it);
             fs << "]";
             break;
