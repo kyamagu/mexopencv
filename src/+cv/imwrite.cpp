@@ -132,6 +132,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             cv::COLOR_RGB2BGR : cv::COLOR_RGBA2BGRA));
     }
     bool success = imwrite(filename, img, params);
-    if (!success)
+    if (nlhs > 0)
+        plhs[0] = MxArray(success);
+    else if (!success)
         mexErrMsgIdAndTxt("mexopencv:error", "imwrite failed");
 }

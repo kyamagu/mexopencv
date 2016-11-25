@@ -2,6 +2,7 @@
 %
 %    buf = cv.imencode(ext, img)
 %    buf = cv.imencode(ext, img, 'OptionName', optionValue, ...)
+%    [buf, success] = cv.imencode(...)
 %
 % ## Input
 % * __ext__ File extension that defines the output format. For example:
@@ -12,6 +13,8 @@
 % * __buf__ Output buffer of the compressed image. A row vector of type
 %       `uint8` that contains encoded image as an array of bytes.
 %       If the image cannot be encoded, the function throws an error.
+% * __success__ optional output flag, true on success, false otherwise. If not
+%       requested, the function throws an error on fail.
 %
 % ## Options
 % * __FlipChannels__ in case the input is color image, flips the color order

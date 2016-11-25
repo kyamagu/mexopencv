@@ -133,7 +133,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     vector<uchar> buf;
     bool success = imencode(ext, img, buf, params);
-    if (!success)
+    if (nlhs > 1)
+        plhs[1] = MxArray(success);
+    else if (!success)
         mexErrMsgIdAndTxt("mexopencv:error", "imencode failed");
     plhs[0] = MxArray(Mat(buf), mxUINT8_CLASS, false);
 }
