@@ -53,6 +53,17 @@ classdef UnitTest
             'TestCalibrateCameraAruco'
             'TestCalibrateCameraCharuco'
             'TestNet'
+            'TestAdd'
+            'TestSubtract'
+            'TestMultiply'
+            'TestDivide'
+            'TestAddWeighted'
+            'TestAbsDiff'
+            'TestCompare'
+            'TestBitwiseAnd'
+            'TestBitwiseOr'
+            'TestBitwiseXor'
+            'TestBitwiseNot'
             % codecs
             'TestVideoWriter'
         };
