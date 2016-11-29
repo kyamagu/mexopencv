@@ -14,10 +14,12 @@
 % * __SigmaR__ Range between 0 to 1. default 0.45
 % * __FlipChannels__ whether to flip the order of color channels in input
 %       `src` and output `dst`, between MATLAB's RGB order and OpenCV's BGR
-%       (input: RGB->BGR, output: BGR->RGB). default true
+%       (input: RGB->BGR, output: BGR->RGB). default false
 %
 % Stylization aims to produce digital imagery with a wide variety of effects
 % not focused on photorealism. Edge-aware filters are ideal for stylization,
 % as they can abstract regions of low contrast while preserving, or enhancing,
 % high-contrast features.
+%
+% See also: cv.pencilSketch
 %

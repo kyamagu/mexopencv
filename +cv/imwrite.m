@@ -2,10 +2,15 @@
 %
 %    cv.imwrite(filename, img)
 %    cv.imwrite(filename, img, 'OptionName', optionValue, ...)
+%    success = cv.imwrite(...)
 %
 % ## Input
 % * __filename__ Name of the file.
 % * __img__ Image to be saved.
+%
+% ## Output
+% * __success__ optional output flag, true on success, false otherwise. If not
+%       requested, the function throws an error on fail.
 %
 % ## Options
 % * __FlipChannels__ in case the input is color image, flips the color order

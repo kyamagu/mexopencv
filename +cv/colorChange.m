@@ -16,10 +16,12 @@
 % * __B__ B-channel multiply factor. default 1.0
 % * __FlipChannels__ whether to flip the order of color channels in inputs
 %       `src` and `mask` and output `dst`, between MATLAB's RGB order and
-%       OpenCV's BGR (input: RGB->BGR, output: BGR->RGB). default true
+%       OpenCV's BGR (input: RGB->BGR, output: BGR->RGB). default false
 %
 % Given an original color image, two differently colored versions of this
 % image can be mixed seamlessly.
 %
 % Multiplication factors are between 0.5 to 2.5
+%
+% See also: cv.decolor
 %

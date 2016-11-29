@@ -33,9 +33,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     for (int i=5; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "MatchColor")
-            matchColor = rhs[i+1].toScalar();
+            matchColor = (rhs[i+1].isChar()) ?
+                ColorType[rhs[i+1].toString()] : rhs[i+1].toScalar();
         else if (key == "SinglePointColor")
-            singlePointColor = rhs[i+1].toScalar();
+            singlePointColor = (rhs[i+1].isChar()) ?
+                ColorType[rhs[i+1].toString()] : rhs[i+1].toScalar();
         else if (key == "MatchesMask")
             rhs[i+1].toMat(CV_8S).reshape(1,1).copyTo(matchesMask);
         else if (key == "NotDrawSinglePoints")

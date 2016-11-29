@@ -431,7 +431,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "nextFrame") {
         nargchk(nrhs>=2 && (nrhs%2)==0 && nlhs<=1);
-        bool flip = true;
+        bool flip = false;
         for (int i=2; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key == "FlipChannels")

@@ -1,6 +1,7 @@
 %APPLYCOLORMAP  Applies a GNU Octave/MATLAB equivalent colormap on a given image
 %
 %    dst = cv.applyColorMap(src, colormap)
+%    dst = cv.applyColorMap(..., 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __src__ The source image, 8-bit grayscale or color.
@@ -22,6 +23,10 @@
 % ## Output
 % * __dst__ The result is the colormapped source image. Same row/column size
 %       and same type as `src`.
+%
+% ## Options
+% * __FlipChannels__ whether to flip the order of color channels in output
+%       `dst`, from OpenCV's BGR to between MATLAB's RGB. default true
 %
 % The human perception isn't built for observing fine changes in grayscale
 % images. Human eyes are more sensitive to observing changes between colors,

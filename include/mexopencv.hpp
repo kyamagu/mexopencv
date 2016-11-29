@@ -48,6 +48,20 @@ const ConstMap<int,std::string> ClassNameInvMap = ConstMap<int,std::string>
     (CV_32F, "single")
     (CV_64F, "double");
 
+/** Translates MATLAB color names (see \c ColorSpec) into OpenCV scalars.
+ * @param name short name of MATLAB colors. One of eight predefined colors.
+ * @return BGR triplet as an OpenCV Scalar.
+ */
+const ConstMap<std::string,cv::Scalar> ColorType = ConstMap<std::string,cv::Scalar>
+    ("r", cv::Scalar(  0,  0,255))
+    ("g", cv::Scalar(  0,255,  0))
+    ("b", cv::Scalar(255,  0,  0))
+    ("c", cv::Scalar(255,255,  0))
+    ("m", cv::Scalar(255,  0,255))
+    ("y", cv::Scalar(  0,255,255))
+    ("k", cv::Scalar(  0,  0,  0))
+    ("w", cv::Scalar(255,255,255));
+
 /// Border type map for option processing
 const ConstMap<std::string,int> BorderType = ConstMap<std::string,int>
     ("Constant",    cv::BORDER_CONSTANT)    // iiiiii|abcdefgh|iiiiiii for some i

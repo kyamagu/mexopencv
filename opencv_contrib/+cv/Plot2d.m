@@ -77,15 +77,23 @@ classdef Plot2d < handle
             Plot2d_(this.id, 'delete');
         end
 
-        function plotResult = render(this)
+        function plotResult = render(this, varargin)
             %RENDER  Renders the plot to a matrix
             %
             %    plotResult = obj.render()
+            %    plotResult = obj.render('OptionName',optionValue, ...)
             %
             % ## Output
             % * __plotResult__ Plot result, 8-bit 3-channel image.
             %
-            plotResult = Plot2d_(this.id, 'render');
+            % ## Options
+            % * __FlipChannels__ whether to flip the order of color channels
+            %       in output, from OpenCV's BGR to between MATLAB's RGB.
+            %       default true
+            %
+            % See also: plot, getframe, print
+            %
+            plotResult = Plot2d_(this.id, 'render', varargin{:});
         end
     end
 

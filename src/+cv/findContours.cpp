@@ -16,10 +16,12 @@ const ConstMap<string,int> ContourMode = ConstMap<string,int>
     ("List",      cv::RETR_LIST)       // retrieve all the contours without any hierarchical information
     ("CComp",     cv::RETR_CCOMP)      // retrieve the connected components (that can possibly be nested)
     ("Tree",      cv::RETR_TREE)       // retrieve all the contours and the whole hierarchy
-    ("FloodFill", cv::RETR_FLOODFILL);
+    ("FloodFill", cv::RETR_FLOODFILL); // connected components of a multi-level image (only for CV_32SC1)
 
 /// Type of the contour approximation algorithm for option processing
 const ConstMap<string,int> ContourType = ConstMap<string,int>
+    //("ChainCode", CV_CHAIN_CODE)
+    //("LinkRuns",  CV_LINK_RUNS)
     ("None",      cv::CHAIN_APPROX_NONE)
     ("Simple",    cv::CHAIN_APPROX_SIMPLE)
     ("TC89_L1",   cv::CHAIN_APPROX_TC89_L1)
@@ -42,8 +44,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
-    int mode = cv::RETR_EXTERNAL;
-    int method = cv::CHAIN_APPROX_NONE;
+    int mode = cv::RETR_LIST;
+    int method = cv::CHAIN_APPROX_SIMPLE;
     Point offset;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());

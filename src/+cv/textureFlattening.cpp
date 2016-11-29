@@ -29,7 +29,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     float low_threshold = 30;
     float high_threshold = 45;
     int kernel_size = 3;
-    bool flip = true;
+    bool flip = false;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "LowThreshold")
@@ -50,10 +50,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         mask(rhs[1].toMat(CV_8U)),
         dst;
     // MATLAB's default is RGB while OpenCV's is BGR
-    if (flip && src.channels() == 3)
-        cvtColor(src, src, cv::COLOR_RGB2BGR);
-    if (flip && mask.channels() == 3)
-        cvtColor(mask, mask, cv::COLOR_RGB2BGR);
+    if (flip) {
+        if (src.channels() == 3)
+            cvtColor(src, src, cv::COLOR_RGB2BGR);
+        if (mask.channels() == 3)
+            cvtColor(mask, mask, cv::COLOR_RGB2BGR);
+    }
     textureFlattening(src, mask, dst, low_threshold, high_threshold, kernel_size);
     // OpenCV's default is BGR while MATLAB's is RGB
     if (flip && dst.channels() == 3)

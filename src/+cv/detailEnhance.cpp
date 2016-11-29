@@ -28,7 +28,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Option processing
     float sigma_s = 10;
     float sigma_r = 0.15f;
-    bool flip = true;
+    bool flip = false;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "SigmaS")
