@@ -33,25 +33,25 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int borderType = cv::BORDER_DEFAULT;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="DDepth")
+        if (key == "DDepth")
             ddepth = (rhs[i+1].isChar()) ?
                 ClassNameMap[rhs[i+1].toString()] : rhs[i+1].toInt();
-        else if (key=="XOrder")
+        else if (key == "XOrder")
             dx = rhs[i+1].toInt();
-        else if (key=="YOrder")
+        else if (key == "YOrder")
             dy = rhs[i+1].toInt();
-        else if (key=="Scale")
+        else if (key == "Scale")
             scale = rhs[i+1].toDouble();
-        else if (key=="Delta")
+        else if (key == "Delta")
             delta = rhs[i+1].toDouble();
-        else if (key=="BorderType")
+        else if (key == "BorderType")
             borderType = BorderType[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
     }
 
-    // Execute function
+    // Process
     Mat src(rhs[0].toMat()), dst;
     Scharr(src, dst, ddepth, dx, dy, scale, delta, borderType);
     plhs[0] = MxArray(dst);

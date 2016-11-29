@@ -30,12 +30,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int flags = DrawMatchesFlags::DEFAULT;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Color")
+        if (key == "Color")
             color = rhs[i+1].toScalar();
-        else if (key=="DrawRichKeypoints")
+        else if (key == "DrawRichKeypoints")
             UPDATE_FLAG(flags, rhs[i+1].toBool(),
                 DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
-        else if (key=="OutImage") {
+        else if (key == "OutImage") {
             outImg = rhs[i+1].toMat(CV_8U);
             flags |= DrawMatchesFlags::DRAW_OVER_OUTIMG;
         }

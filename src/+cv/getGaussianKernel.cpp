@@ -30,11 +30,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int ktype = CV_64F;
     for (int i=0; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="KSize")
+        if (key == "KSize")
             ksize = rhs[i+1].toInt();
-        else if (key=="Sigma")
+        else if (key == "Sigma")
             sigma = rhs[i+1].toDouble();
-        else if (key=="KType")
+        else if (key == "KType")
             ktype = (rhs[i+1].isChar()) ?
                 ClassNameMap[rhs[i+1].toString()] : rhs[i+1].toInt();
         else

@@ -29,9 +29,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     bool closed = true;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Epsilon")
+        if (key == "Epsilon")
             epsilon = rhs[i+1].toDouble();
-        else if (key=="Closed")
+        else if (key == "Closed")
             closed = rhs[i+1].toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
@@ -58,5 +58,5 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         }
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error", "Invalid input");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
 }

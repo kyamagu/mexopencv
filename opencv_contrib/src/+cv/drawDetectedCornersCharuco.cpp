@@ -37,7 +37,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             cornerColor = rhs[i+1].toScalar();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
-                "Unrecognized option %s",key.c_str());
+                "Unrecognized option %s", key.c_str());
     }
 
     // Process

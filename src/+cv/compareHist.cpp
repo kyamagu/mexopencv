@@ -40,7 +40,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int method = cv::HISTCMP_CORREL;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Method")
+        if (key == "Method")
             method = (rhs[i+1].isChar()) ?
                 HistComp[rhs[i+1].toString()] : rhs[i+1].toInt();
         else

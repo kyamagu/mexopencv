@@ -28,7 +28,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int borderType = cv::BORDER_DEFAULT;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="BorderType")
+        if (key == "BorderType")
             borderType = BorderType[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error",

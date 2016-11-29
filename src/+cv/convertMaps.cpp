@@ -41,10 +41,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     bool nninterpolation = false;
     for (int i=(separate_variant ? 2 : 1); i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="DstMap1Type")
+        if (key == "DstMap1Type")
             dstmap1type = (rhs[i+1].isChar()) ?
                 DstM1Type[rhs[i+1].toString()] : rhs[i+1].toInt();
-        else if (key=="NNInterpolation")
+        else if (key == "NNInterpolation")
             nninterpolation = rhs[i+1].toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

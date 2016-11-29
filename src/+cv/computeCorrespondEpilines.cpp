@@ -28,14 +28,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int whichImage = 1;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="WhichImage")
+        if (key == "WhichImage")
             whichImage = rhs[i+1].toInt();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
     }
     if (whichImage!=1 && whichImage!=2)
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid WhichImage");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid WhichImage value");
 
     // Process
     Mat F(rhs[1].toMat(CV_64F));
@@ -54,5 +54,5 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         plhs[0] = MxArray(lines);  // {[a,b,c], ...}
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
 }

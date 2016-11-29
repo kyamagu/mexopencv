@@ -29,9 +29,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Size tileGridSize(8,8);
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="ClipLimit")
+        if (key == "ClipLimit")
             clipLimit = rhs[i+1].toDouble();
-        else if (key=="TileGridSize")
+        else if (key == "TileGridSize")
             tileGridSize = rhs[i+1].toSize();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

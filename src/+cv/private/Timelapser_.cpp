@@ -48,14 +48,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         string type(rhs[2].toString());
         obj_[++last_id] = Timelapser::createDefault(TimelapserTypesMap[type]);
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
 
     // Big operation switch
     Ptr<Timelapser> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "typeid") {
         nargchk(nrhs==2 && nlhs<=1);
@@ -76,7 +80,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "getDst") {
         nargchk(nrhs==2 && nlhs<=1);
-        Mat dst = obj->getDst().getMat(ACCESS_READ);
+        Mat dst(obj->getDst().getMat(ACCESS_READ));
         plhs[0] = MxArray(dst);
     }
     else

@@ -40,13 +40,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int mode = cv::GC_EVAL;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="BgdModel")
+        if (key == "BgdModel")
             bgdModel = rhs[i+1].toMat(CV_64F);
-        else if (key=="FgdModel")
+        else if (key == "FgdModel")
             fgdModel = rhs[i+1].toMat(CV_64F);
-        else if (key=="IterCount")
+        else if (key == "IterCount")
             iterCount = rhs[i+1].toInt();
-        else if (key=="Mode")
+        else if (key == "Mode")
             mode = GrabCutType[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error",

@@ -35,15 +35,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Scalar borderValue;
     for (int i=(separate_variant ? 3 : 2); i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Dst")
+        if (key == "Dst")
             dst = rhs[i+1].toMat();
-        else if (key=="Interpolation")
+        else if (key == "Interpolation")
             interpolation = (rhs[i+1].isChar()) ?
                 InterpType[rhs[i+1].toString()] : rhs[i+1].toInt();
-        else if (key=="BorderType")
+        else if (key == "BorderType")
             borderMode = (rhs[i+1].isChar()) ?
                 BorderType[rhs[i+1].toString()] : rhs[i+1].toInt();
-        else if (key=="BorderValue")
+        else if (key == "BorderValue")
             borderValue = rhs[i+1].toScalar();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

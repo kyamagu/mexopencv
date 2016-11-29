@@ -43,6 +43,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         obj_[++last_id] = createFeaturesMatcher(
             rhs[2].toString(), rhs.begin() + 3, rhs.end());
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
     // static methods
@@ -57,8 +58,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             ss << "img" << (i+1);
             pathes.push_back(ss.str());
         }
-        string str = matchesGraphAsString(
-            pathes, pairwise_matches, conf_threshold);
+        string str(matchesGraphAsString(
+            pathes, pairwise_matches, conf_threshold));
         plhs[0] = MxArray(str);
         return;
     }
@@ -67,17 +68,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         vector<ImageFeatures> features(MxArrayToVectorImageFeatures(rhs[2]));
         vector<MatchesInfo> pairwise_matches(MxArrayToVectorMatchesInfo(rhs[3]));
         float conf_threshold = rhs[4].toFloat();
-        vector<int> indices = leaveBiggestComponent(
-            features, pairwise_matches, conf_threshold);
+        vector<int> indices(leaveBiggestComponent(
+            features, pairwise_matches, conf_threshold));
         plhs[0] = MxArray(indices);
         return;
     }
 
     // Big operation switch
     Ptr<FeaturesMatcher> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "typeid") {
         nargchk(nrhs==2 && nlhs<=1);

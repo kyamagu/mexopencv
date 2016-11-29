@@ -875,6 +875,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==3 && nlhs<=1);
         obj_[++last_id] = create_Dataset(klass);
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
     // static methods calls
@@ -904,9 +905,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Big operation switch
     Ptr<Dataset> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==3 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "typeid") {
         nargchk(nrhs==3 && nlhs<=1);

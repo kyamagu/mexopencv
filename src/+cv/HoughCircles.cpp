@@ -45,19 +45,19 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int maxRadius = 0;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Method")
+        if (key == "Method")
             method = HoughModesMap[rhs[i+1].toString()];
-        else if (key=="DP")
+        else if (key == "DP")
             dp = rhs[i+1].toDouble();
-        else if (key=="MinDist")
+        else if (key == "MinDist")
             minDist = rhs[i+1].toDouble();
-        else if (key=="Param1")
+        else if (key == "Param1")
             param1 = rhs[i+1].toDouble();
-        else if (key=="Param2")
+        else if (key == "Param2")
             param2 = rhs[i+1].toDouble();
-        else if (key=="MinRadius")
+        else if (key == "MinRadius")
             minRadius = rhs[i+1].toInt();
-        else if (key=="MaxRadius")
+        else if (key == "MaxRadius")
             maxRadius = rhs[i+1].toInt();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

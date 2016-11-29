@@ -28,7 +28,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double threshold = 5;
     for (int i=4; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Threshold")
+        if (key == "Threshold")
             threshold = rhs[i+1].toDouble();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

@@ -28,7 +28,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int ksize = 5;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="KSize")
+        if (key == "KSize")
             ksize = rhs[i+1].toInt();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

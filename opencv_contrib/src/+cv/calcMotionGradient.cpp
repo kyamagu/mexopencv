@@ -30,7 +30,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int apertureSize = 3;
     for (int i=3; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="ApertureSize")
+        if (key == "ApertureSize")
             apertureSize = rhs[i+1].toInt();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

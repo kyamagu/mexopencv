@@ -31,14 +31,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int borderType = cv::BORDER_DEFAULT;
     for (int i=3; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Anchor")
+        if (key == "Anchor")
             anchor = rhs[i+1].toPoint();
-        else if (key=="DDepth")
+        else if (key == "DDepth")
             ddepth = (rhs[i+1].isChar()) ?
                 ClassNameMap[rhs[i+1].toString()] : rhs[i+1].toInt();
-        else if (key=="Delta")
+        else if (key == "Delta")
             delta = rhs[i+1].toDouble();
-        else if (key=="BorderType")
+        else if (key == "BorderType")
             borderType = BorderType[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error",

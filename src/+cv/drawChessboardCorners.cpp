@@ -47,6 +47,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         drawChessboardCorners(image, patternSize, corners, patternWasFound);
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid corners argument");
     plhs[0] = MxArray(image);
 }

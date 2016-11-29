@@ -38,16 +38,16 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int ktype = CV_32F;
     for (int i=0; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Dx")
+        if (key == "Dx")
             dx = rhs[i+1].toInt();
-        else if (key=="Dy")
+        else if (key == "Dy")
             dy = rhs[i+1].toInt();
-        else if (key=="KSize")
+        else if (key == "KSize")
             ksize = (rhs[i+1].isChar()) ?
                 KSizeMap[rhs[i+1].toString()] : rhs[i+1].toInt();
-        else if (key=="Normalize")
+        else if (key == "Normalize")
             normalize = rhs[i+1].toBool();
-        else if (key=="KType")
+        else if (key == "KType")
             ktype = (rhs[i+1].isChar()) ?
                 ClassNameMap[rhs[i+1].toString()] : rhs[i+1].toInt();
         else

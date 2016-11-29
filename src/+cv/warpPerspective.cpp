@@ -33,17 +33,17 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Scalar borderValue;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Dst")
+        if (key == "Dst")
             dst = rhs[i+1].toMat();
-        else if (key=="DSize")
+        else if (key == "DSize")
             dsize = rhs[i+1].toSize();
-        else if (key=="Interpolation")
+        else if (key == "Interpolation")
             flags = InterpType[rhs[i+1].toString()];
-        else if (key=="WarpInverse")
+        else if (key == "WarpInverse")
             warp_inverse = rhs[i+1].toBool();
-        else if (key=="BorderType")
+        else if (key == "BorderType")
             borderMode = BorderType[rhs[i+1].toString()];
-        else if (key=="BorderValue")
+        else if (key == "BorderValue")
             borderValue = rhs[i+1].toScalar();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

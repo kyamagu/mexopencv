@@ -52,8 +52,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             //plhs[0] = MxArray(Mat(dst, false).reshape(1, 0));  // N-by-4 numeric matrix
         }
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
+            mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
 }

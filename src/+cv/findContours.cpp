@@ -47,11 +47,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Point offset;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Mode")
+        if (key == "Mode")
             mode = ContourMode[rhs[i+1].toString()];
-        else if (key=="Method")
+        else if (key == "Method")
             method = ContourType[rhs[i+1].toString()];
-        else if (key=="Offset")
+        else if (key == "Offset")
             offset = rhs[i+1].toPoint();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

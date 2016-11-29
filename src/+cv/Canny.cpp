@@ -29,9 +29,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     bool L2gradient = false;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="ApertureSize")
+        if (key == "ApertureSize")
             apertureSize = rhs[i+1].toInt();
-        else if (key=="L2Gradient")
+        else if (key == "L2Gradient")
             L2gradient = rhs[i+1].toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
@@ -50,7 +50,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         threshold2 = s[1];
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid threshold argument");
 
     // Process
     Mat image(rhs[0].toMat(CV_8U)), edges;

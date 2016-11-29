@@ -34,19 +34,19 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int maskVal = 0x00;
     for (int i=3; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Mask")
+        if (key == "Mask")
             mask = rhs[i+1].toMat(CV_8U);
-        else if (key=="LoDiff")
+        else if (key == "LoDiff")
             loDiff = rhs[i+1].toScalar();
-        else if (key=="UpDiff")
+        else if (key == "UpDiff")
             upDiff = rhs[i+1].toScalar();
-        else if (key=="Connectivity")
+        else if (key == "Connectivity")
             connectivity = rhs[i+1].toInt();
-        else if (key=="FixedRange")
+        else if (key == "FixedRange")
             fixedRange = rhs[i+1].toBool();
-        else if (key=="MaskOnly")
+        else if (key == "MaskOnly")
             maskOnly = rhs[i+1].toBool();
-        else if (key=="MaskFillValue")
+        else if (key == "MaskFillValue")
             maskVal = rhs[i+1].toInt();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

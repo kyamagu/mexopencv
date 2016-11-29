@@ -39,14 +39,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==2 && nlhs<=1);
         obj_[++last_id] = makePtr<KalmanFilter>();
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
 
     // Big operation switch
     Ptr<KalmanFilter> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "init") {
         nargchk(nrhs>=4 && (nrhs%2)==0 && nlhs==0);
@@ -56,9 +60,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         int type = CV_64F;
         for (int i=4; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="ControlParams")
+            if (key == "ControlParams")
                 controlParams = rhs[i+1].toInt();
-            else if (key=="Type")
+            else if (key == "Type")
                 type = (rhs[i+1].isChar()) ?
                     ClassNameMap[rhs[i+1].toString()] : rhs[i+1].toInt();
             else
@@ -72,7 +76,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         Mat control;
         for (int i=2; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="Control")
+            if (key == "Control")
                 control = rhs[i+1].toMat();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",

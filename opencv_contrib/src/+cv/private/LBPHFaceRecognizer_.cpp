@@ -149,14 +149,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         obj_[++last_id] = create_LBPHFaceRecognizer(
             rhs.begin() + 2, rhs.end());
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
 
     // Big operation switch
     Ptr<LBPHFaceRecognizer> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "typeid") {
         nargchk(nrhs==2 && nlhs<=1);
@@ -248,19 +252,19 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "setLabelInfo") {
         nargchk(nrhs==4 && nlhs==0);
         int label = rhs[2].toInt();
-        string strInfo = rhs[3].toString();
+        string strInfo(rhs[3].toString());
         obj->setLabelInfo(label, strInfo);
     }
     else if (method == "getLabelInfo") {
         nargchk(nrhs==3 && nlhs<=1);
         int label = rhs[2].toInt();
-        string strInfo = obj->getLabelInfo(label);
+        string strInfo(obj->getLabelInfo(label));
         plhs[0] = MxArray(strInfo);
     }
     else if (method == "getLabelsByString") {
         nargchk(nrhs==3 && nlhs<=1);
-        string str = rhs[2].toString();
-        vector<int> labels = obj->getLabelsByString(str);
+        string str(rhs[2].toString());
+        vector<int> labels(obj->getLabelsByString(str));
         plhs[0] = MxArray(labels);
     }
     else if (method == "getHistograms") {

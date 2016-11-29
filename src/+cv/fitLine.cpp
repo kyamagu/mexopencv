@@ -31,13 +31,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double aeps = 0.01;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="DistType")
+        if (key == "DistType")
             distType = DistType[rhs[i+1].toString()];
-        else if (key=="Param")
+        else if (key == "Param")
             param = rhs[i+1].toDouble();
-        else if (key=="RadiusEps")
+        else if (key == "RadiusEps")
             reps = rhs[i+1].toDouble();
-        else if (key=="AngleEps")
+        else if (key == "AngleEps")
             aeps = rhs[i+1].toDouble();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
@@ -61,9 +61,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             fitLine(points, line, distType, param, reps, aeps);
         }
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
+            mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
     plhs[0] = MxArray(line);
 }

@@ -109,7 +109,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         }
         else if (key == "Params") {
             // append to parameters by directly passing a vector of integers
-            vector<int> pvec = rhs[i+1].toVector<int>();
+            vector<int> pvec(rhs[i+1].toVector<int>());
             if ((pvec.size()%2) != 0)
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Params vectors must contain pairs of id/value.");

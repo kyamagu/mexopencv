@@ -31,13 +31,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int delta = 5;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Angle")
+        if (key == "Angle")
             angle = rhs[i+1].toInt();
-        else if (key=="StartAngle")
+        else if (key == "StartAngle")
             arcStart = rhs[i+1].toInt();
-        else if (key=="EndAngle")
+        else if (key == "EndAngle")
             arcEnd = rhs[i+1].toInt();
-        else if (key=="Delta")
+        else if (key == "Delta")
             delta = rhs[i+1].toInt();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

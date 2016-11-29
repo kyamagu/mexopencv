@@ -44,14 +44,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==2 && nlhs<=1);
         obj_[++last_id] = makePtr<PCA>();
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
 
     // Big operation switch
     Ptr<PCA> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "read") {
         nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
@@ -89,13 +93,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         bool use_second_variant = false;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="Mean")
+            if (key == "Mean")
                 mean = rhs[i+1].toMat();
-            else if (key=="DataAs")
+            else if (key == "DataAs")
                 flags = DataAs[rhs[i+1].toString()];
-            else if (key=="MaxComponents")
+            else if (key == "MaxComponents")
                 maxComponents = rhs[i+1].toInt();
-            else if (key=="RetainedVariance") {
+            else if (key == "RetainedVariance") {
                 retainedVariance = rhs[i+1].toDouble();
                 use_second_variant = true;
             }

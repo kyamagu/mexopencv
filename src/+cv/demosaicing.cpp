@@ -68,7 +68,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int dcn = 0;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Channels")
+        if (key == "Channels")
             dcn = rhs[i+1].toInt();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

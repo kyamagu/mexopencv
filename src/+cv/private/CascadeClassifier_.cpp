@@ -118,6 +118,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==2 && nlhs<=1);
         obj_[++last_id] = makePtr<CascadeClassifier>();
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
     else if (method == "convert") {
@@ -134,9 +135,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Big operation switch
     Ptr<CascadeClassifier> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "empty") {
         nargchk(nrhs==2 && nlhs<=1);
@@ -195,29 +199,29 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         bool outputRejectLevels = false;
         for (int i=3; i<rhs.size(); i+=2) {
             string key(rhs[i].toString());
-            if (key=="ScaleFactor")
+            if (key == "ScaleFactor")
                 scaleFactor = rhs[i+1].toDouble();
-            else if (key=="MinNeighbors")
+            else if (key == "MinNeighbors")
                 minNeighbors = rhs[i+1].toInt();
-            else if (key=="DoCannyPruning")
+            else if (key == "DoCannyPruning")
                 UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CASCADE_DO_CANNY_PRUNING);
-            else if (key=="ScaleImage")
+            else if (key == "ScaleImage")
                 UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CASCADE_SCALE_IMAGE);
-            else if (key=="FindBiggestObject")
+            else if (key == "FindBiggestObject")
                 UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CASCADE_FIND_BIGGEST_OBJECT);
-            else if (key=="DoRoughSearch")
+            else if (key == "DoRoughSearch")
                 UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CASCADE_DO_ROUGH_SEARCH);
-            else if (key=="Flags")
+            else if (key == "Flags")
                 flags = rhs[i+1].toInt();
-            else if (key=="MinSize")
+            else if (key == "MinSize")
                 minSize = rhs[i+1].toSize();
-            else if (key=="MaxSize")
+            else if (key == "MaxSize")
                 maxSize = rhs[i+1].toSize();
-            else if (key=="OutputRejectLevels")
+            else if (key == "OutputRejectLevels")
                 outputRejectLevels = rhs[i+1].toBool();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
-                    "Unrecognized option %s",key.c_str());
+                    "Unrecognized option %s", key.c_str());
         }
         // choose from one of the 3 variants based on nargout
         Mat image(rhs[2].toMat(CV_8U));

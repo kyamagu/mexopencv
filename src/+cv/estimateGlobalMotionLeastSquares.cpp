@@ -64,7 +64,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         M = estimateGlobalMotionLeastSquares(points0, points1, model, &rmse);
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
     plhs[0] = MxArray(M);
     if (nlhs > 1)
         plhs[1] = MxArray(rmse);
