@@ -32,20 +32,20 @@ imgs = {
     'mask.png'
     'destination1.png'
 };
-if ~exist(dirRoot, 'dir')
+if ~isdir(dirRoot)
     mkdir(dirRoot);
     disp('Downloading images...')
     baseURL = 'https://cdn.rawgit.com/opencv/opencv_extra/3.1.0/testdata/cv/cloning/';
     for i=1:numel(dirs)
         d = fullfile(dirRoot, dirs{i});
-        if ~exist(d, 'dir')
+        if ~isdir(d)
             mkdir(d);
             N = numel(imgs);
             if i > 3, N = N - 1; end
             for j=1:N
                 f = fullfile(d, imgs{j});
                 if ~exist(f, 'file')
-                    url = strrep(fullfile(baseURL, dirs{i}, imgs{j}), '\', '/');
+                    url = [baseURL, dirs{i}, '/', imgs{j}]
                     urlwrite(url, f);
                 end
             end

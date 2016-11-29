@@ -19,7 +19,7 @@ classdef TestDrawMarker
             validateattributes(img, {'uint8'}, {'size',[100 400 3]});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.drawMarker();
                 throw('UnitTest:Fail');

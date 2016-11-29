@@ -25,7 +25,7 @@
 %       following options are available:
 %       * __3__ approximate distance transform with 3x3 mask (default)
 %       * __5__ approximate distance transform with 5x5 mask
-%       * __Precise__ precise distance transform
+%       * __Precise__, __0__ precise distance transform
 % * __LabelType__ Type of the label array to build, default 'CComp'. Only
 %       supported by the second variant with `labels` output. One of:
 %       * __CComp__ each connected component of zeros in `src` (as well as all

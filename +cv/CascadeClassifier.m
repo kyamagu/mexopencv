@@ -233,7 +233,7 @@ classdef CascadeClassifier < handle
         end
 
         function [boxes, varargout] = detect(this, im, varargin)
-            %DETECT  Detects objects of different sizes in the input image.
+            %DETECT  Detects objects of different sizes in the input image
             %
             %    boxes = classifier.detect(im)
             %    [boxes, numDetections] = classifier.detect(im)

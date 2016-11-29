@@ -1,5 +1,6 @@
 classdef TestFloodFill
     %TestFloodFill
+
     properties (Constant)
         img = fullfile(mexopencv.root(),'test','img001.jpg');
     end
@@ -50,7 +51,7 @@ classdef TestFloodFill
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.floodFill();
                 throw('UnitTest:Fail');

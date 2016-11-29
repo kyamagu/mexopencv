@@ -102,7 +102,7 @@ classdef SuperpixelSEEDS < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -235,12 +235,12 @@ classdef SuperpixelSEEDS < handle
             %    labels = obj.getLabels()
             %
             % ## Output
-            % * __labels__ Return a `uint32` integer array containing the
+            % * __labels__ Return a `int32` integer array containing the
             %       labels of the superpixel segmentation. The labels are in
             %       the range `[0, obj.getNumberOfSuperpixels()]`.
             %
-            % The function returns an image with ssthe labels of the
-            % superpixel segmentation. The labels are in the range
+            % The function returns an image with the labels of the superpixel
+            % segmentation. The labels are in the range
             % `[0, obj.getNumberOfSuperpixels()]`.
             %
             % Each label represents a superpixel, and each pixel is assigned

@@ -1,5 +1,6 @@
 classdef TestCornerSubPix
     %TestCornerSubPix
+
     properties (Constant)
         img = 255 * uint8([...
             0 0 0 0 0 0 0 0 0 0 0 0 0;...
@@ -46,7 +47,7 @@ classdef TestCornerSubPix
             validateattributes(result, {'numeric'}, {'size',size(corners)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.cornerSubPix();
                 throw('UnitTest:Fail');

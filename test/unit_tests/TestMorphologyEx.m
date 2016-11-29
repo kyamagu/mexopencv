@@ -1,5 +1,6 @@
 classdef TestMorphologyEx
     %TestMorphologyEx
+
     properties (Constant)
         img = uint8([...
             0 0 0 0 0 0 0 0 0 0;...
@@ -30,7 +31,7 @@ classdef TestMorphologyEx
                 {'size',size(TestMorphologyEx.img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.morphologyEx();
                 throw('UnitTest:Fail');

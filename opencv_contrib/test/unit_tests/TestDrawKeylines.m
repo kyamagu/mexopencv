@@ -1,5 +1,6 @@
 classdef TestDrawKeylines
     %TestDrawKeylines
+
     properties (Constant)
         img = fullfile(mexopencv.root(),'test','building.jpg');
     end
@@ -22,7 +23,7 @@ classdef TestDrawKeylines
             validateattributes(out, {class(im)}, {'size',size(im)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.drawKeylines();
                 throw('UnitTest:Fail');
@@ -31,4 +32,5 @@ classdef TestDrawKeylines
             end
         end
     end
+
 end

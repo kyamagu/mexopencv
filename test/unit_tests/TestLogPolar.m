@@ -8,7 +8,7 @@ classdef TestLogPolar
             validateattributes(dst, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.logPolar();
                 throw('UnitTest:Fail');
@@ -17,4 +17,5 @@ classdef TestLogPolar
             end
         end
     end
+
 end

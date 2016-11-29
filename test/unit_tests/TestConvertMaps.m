@@ -59,7 +59,7 @@ classdef TestConvertMaps
             validateattributes(YY, {'uint16'}, {'size',[r c]});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.convertMaps();
                 throw('UnitTest:Fail');
@@ -68,4 +68,5 @@ classdef TestConvertMaps
             end
         end
     end
+
 end

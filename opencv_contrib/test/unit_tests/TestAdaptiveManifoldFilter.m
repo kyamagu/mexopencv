@@ -1,5 +1,6 @@
 classdef TestAdaptiveManifoldFilter
     %TestAdaptiveManifoldFilter
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','lena.jpg');
     end

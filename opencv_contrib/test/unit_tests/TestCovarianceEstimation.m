@@ -21,7 +21,7 @@ classdef TestCovarianceEstimation
             C = complex(C(:,:,1), C(:,:,2));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.covarianceEstimation();
                 throw('UnitTest:Fail');

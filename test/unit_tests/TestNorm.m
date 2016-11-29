@@ -28,7 +28,7 @@ classdef TestNorm
             assert(isscalar(n) && isa(n,'double'));
         end
 
-        function test_error
+        function test_error_argnum
             try
                 cv.norm();
                 throw('UnitTest:Fail');

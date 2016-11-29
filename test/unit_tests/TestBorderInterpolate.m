@@ -10,7 +10,7 @@ classdef TestBorderInterpolate
             val = img(r+1, c+1, :);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.borderInterpolate();
                 throw('UnitTest:Fail');

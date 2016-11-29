@@ -19,7 +19,7 @@ classdef TestPhaseCorrelate
             pshift = cv.phaseCorrelate(im1, im2, 'Window',win);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.phaseCorrelate();
                 throw('UnitTest:Fail');
@@ -28,4 +28,5 @@ classdef TestPhaseCorrelate
             end
         end
     end
+
 end

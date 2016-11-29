@@ -9,7 +9,7 @@ classdef TestGlob
             assert(iscellstr(files));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.glob();
                 throw('UnitTest:Fail');
@@ -18,4 +18,5 @@ classdef TestGlob
             end
         end
     end
+
 end

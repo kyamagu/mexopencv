@@ -234,7 +234,7 @@ classdef BinaryDescriptorMatcher < handle
         end
 
         function matches = knnMatch(this, queryDescriptors, varargin)
-            %KNNMATCH  For every input query descriptor, retrieve the best k matching ones from a dataset provided from user or from the one internal to class.
+            %KNNMATCH  For every input query descriptor, retrieve the best k matching ones from a dataset provided from user or from the one internal to class
             %
             %    matches = matcher.knnMatch(queryDescriptors, trainDescriptors, k)
             %    matches = matcher.knnMatch(queryDescriptors, k)

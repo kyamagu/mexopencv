@@ -21,7 +21,9 @@
 %       * __HersheyComplexSmall__
 %       * __HersheyScriptSimplex__
 %       * __HersheyScriptComplex__
-% * __FontStyle__ Font style. One of 'Regular' (default) or 'Italic'
+% * __FontStyle__ Font style. One of:
+%       * __Regular__ (default)
+%       * __Italic__
 % * __FontScale__ Font scale factor that is multiplied by the
 %       font-specific base size. default 1.0
 % * __Thickness__ Thickness of lines used to render the text. default 1

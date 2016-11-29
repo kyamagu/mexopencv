@@ -23,7 +23,7 @@ classdef Retina < handle
     % - using the `getMagno` method output matrix: motion analysis also with
     %   the previously cited properties
     %
-    % For more information, reer to the following papers [Benoit2010] and
+    % For more information, refer to the following papers [Benoit2010] and
     % [Herault2010].
     %
     % ## Retina class overview
@@ -558,7 +558,7 @@ classdef Retina < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -684,7 +684,7 @@ classdef Retina < handle
         end
 
         function setupParameters(this, varargin)
-            %SETUPPARAMETERS  Pass retina parameters to adjust current retina instance setup.
+            %SETUPPARAMETERS  Pass retina parameters to adjust current retina instance setup
             %
             %    obj.setupParameters('OptionName',optionValue, ...)
             %
@@ -941,7 +941,7 @@ classdef Retina < handle
         end
 
         function outputToneMappedImage = applyFastToneMapping(this, inputImage)
-            %APPLYFASTTONEMAPPING  Method which processes an image in the aim to correct its luminance correct backlight problems, enhance details in shadows.
+            %APPLYFASTTONEMAPPING  Method which processes an image in the aim to correct its luminance correct backlight problems, enhance details in shadows
             %
             %    outputToneMappedImage = obj.applyFastToneMapping(inputImage)
             %

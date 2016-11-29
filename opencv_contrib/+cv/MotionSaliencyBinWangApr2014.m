@@ -82,7 +82,7 @@ classdef MotionSaliencyBinWangApr2014 < handle
         end
 
         function setImagesize(this, W, H)
-            %SETIMAGESIZE  This is a utility function that allows to set the correct size (taken from the input image) in the corresponding variables that will be used to size the data structures of the algorithm.
+            %SETIMAGESIZE  This is a utility function that allows to set the correct size (taken from the input image) in the corresponding variables that will be used to size the data structures of the algorithm
             %
             %    obj.setImagesize(W, H)
             %
@@ -120,7 +120,7 @@ classdef MotionSaliencyBinWangApr2014 < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %

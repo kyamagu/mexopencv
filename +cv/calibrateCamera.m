@@ -1,6 +1,6 @@
 %CALIBRATECAMERA  Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern
 %
-%    [cameraMatrix, distCoeffs, reprojErr] = cv.calibrateCamera(objectPoints, imagePts, imageSize)
+%    [cameraMatrix, distCoeffs, reprojErr] = cv.calibrateCamera(objectPoints, imagePoints, imageSize)
 %    [cameraMatrix, distCoeffs, reprojErr, rvecs, tvecs] = cv.calibrateCamera(...)
 %    [...] = cv.calibrateCamera(..., 'OptionName', optionValue, ...)
 %
@@ -15,6 +15,7 @@
 %       points are 3D, but since they are in a pattern coordinate system,
 %       then, if the rig is planar, it may make sense to put the model to a XY
 %       coordinate plane so that Z-coordinate of each input object point is 0.
+%       Requires at least 4 points per view.
 % * __imagePoints__ A cell array of cells of the projections of calibration
 %       pattern points `{{[x,y], ..}, ...}`. `numel(imagePoints)` and
 %       `numel(objectPoints)` must be equal, and `numel(imagePoints{i})` must
@@ -142,6 +143,7 @@
 %
 % [BoughuetMCT]:
 % > Jean-Yves Bouguet. "Camera calibration toolbox for matlab" [eb/ol], 2004.
+% > [Camera Calibration Toolbox](http://www.vision.caltech.edu/bouguetj/calib_doc/)
 %
 % See also: cv.findChessboardCorners, cv.solvePnP, cv.initCameraMatrix2D,
 %  cv.stereoCalibrate, cv.undistort, estimateCameraParameters,

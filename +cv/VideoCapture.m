@@ -299,6 +299,8 @@ classdef VideoCapture < handle
         function value = get(this, prop)
             %GET  Returns the specified VideoCapture property
             %
+            %    value = cap.get(prop)
+            %
             % ## Input
             % * __prop__ Property identifier. It can be specified as a string
             %       (one of the recognized properties), or directly as its
@@ -324,6 +326,8 @@ classdef VideoCapture < handle
 
         function set(this, prop, value)
             %SET  Sets a property in the VideoCapture
+            %
+            %    cap.set(prop, value)
             %
             % ## Input
             % * __prop__ Property identifier. It can be specified as a string

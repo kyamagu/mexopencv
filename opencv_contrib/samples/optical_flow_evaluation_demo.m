@@ -12,7 +12,10 @@ im1 = imread(fullfile(mexopencv.root(),'test','RubberWhale1.png'));
 im2 = imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'));
 assert(isequal(size(im1), size(im2)), ...
     'Dimension mismatch between input images');
-imshowpair(im1, im2)
+if ~mexopencv.isOctave() && mexopencv.require('images')
+    %HACK: IMSHOWPAIR not implemented in Octave
+    imshowpair(im1, im2);
+end
 
 %% Compare the different methods
 algorithms = {'farneback', 'simpleflow', 'tvl1', 'deepflow', 'sparsetodenseflow'};
@@ -53,7 +56,12 @@ for i=1:numel(algorithms)
 
     % display the flow
     [ang, mag] = cart2pol(flow(:,:,1), flow(:,:,2));
-    ang = rad2deg(ang + pi);
+    if mexopencv.isOctave()
+        %HACK: RAD2DEG not implemented in Octave
+        ang = (ang + pi) * (180 / pi);
+    else
+        ang = rad2deg(ang + pi);
+    end
     mag = cv.normalize(mag, 'Alpha',0, 'Beta',1, 'NormType','MinMax');
     hsv = cat(3, ang, ones(size(ang),class(ang)), mag);
     rgb = cv.cvtColor(hsv, 'HSV2RGB');

@@ -26,7 +26,7 @@ classdef TestGetRectSubPix
             validateattributes(dst, {'uint8'}, {'3d', 'size',[sz(2) sz(1) 3]});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.getRectSubPix();
                 throw('UnitTest:Fail');

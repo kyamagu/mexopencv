@@ -18,7 +18,7 @@ classdef TestDetectCharucoDiamond
             assert(isequal(numel(diamondCorners),numel(diamondIds)));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.detectCharucoDiamond();
                 throw('UnitTest:Fail');
@@ -27,6 +27,7 @@ classdef TestDetectCharucoDiamond
             end
         end
     end
+
 end
 
 function [img, d] = get_image_markers()

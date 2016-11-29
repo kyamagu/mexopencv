@@ -71,7 +71,7 @@ classdef TestDictionaryDump
             assert(isequal(d1,d2));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.dictionaryDump();
                 throw('UnitTest:Fail');
@@ -80,4 +80,5 @@ classdef TestDictionaryDump
             end
         end
     end
+
 end

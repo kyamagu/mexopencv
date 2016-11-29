@@ -19,7 +19,7 @@
 %       [-1, -1] means that the anchor is at the element center.
 % * __Iterations__ Number of times erosion is applied. default 1
 % * __BorderType__ Border mode used to extrapolate pixels outside of the
-%       image. default 'Constant'
+%       image. See cv.copyMakeBorder. default 'Constant'
 % * __BorderValue__ Border value in case of a constant border. The default
 %       value has a special meaning which gets automatically translated to the
 %       maximum value of the image class type (`intmax(class(img))` for

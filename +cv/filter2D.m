@@ -6,9 +6,9 @@
 % ## Input
 % * __img__ input image.
 % * __kernel__ Convolution kernel (or rather a correlation kernel), a
-%       single-channel floating point matrix. If you want to apply different kernels to
-%       different channels, split the image into separate color planes and
-%       process them individually.
+%       single-channel floating-point matrix. If you want to apply different
+%       kernels to different channels, split the image into separate color
+%       planes and process them individually.
 %
 % ## Output
 % * __result__ output image of the same size and the same number of channels
@@ -37,7 +37,7 @@
 %
 % The function does actually compute correlation, not the convolution:
 %
-%    dst(x,y) = \sum_{0 <= xp <= size(kernel,2), 0 <= yp <= size(kernel,1)}
+%    dst(x,y) = sum_{0 <= xp <= size(kernel,2), 0 <= yp <= size(kernel,1)}
 %               kernel(xp,yp) * src(x + xp - anchor(1), y + yp - anchor(2))
 %
 % That is, the kernel is not mirrored around the anchor point. If you need a

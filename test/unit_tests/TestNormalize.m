@@ -55,7 +55,7 @@ classdef TestNormalize
             validateattributes(I, {class(img)}, {'size',size(img)});
         end
 
-        function test_error
+        function test_error_argnum
             try
                 cv.normalize();
                 throw('UnitTest:Fail');

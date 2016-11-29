@@ -169,7 +169,7 @@ classdef BinaryDescriptor < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -297,7 +297,7 @@ classdef BinaryDescriptor < handle
         end
 
         function keylines = detect(this, img, varargin)
-            %DETECT  Requires line detection.
+            %DETECT  Requires line detection
             %
             %    keylines = obj.detect(img)
             %    keylines = obj.detect(imgs)

@@ -40,6 +40,7 @@ function onChange(~,~,h)
     [labels, nLabels] = cv.connectedComponents(bw);
 
     % labels color-coded
+    labels = double(labels) + 1;  % cast as float-type with one-based indexing
     if false
         dst = label2rgb(labels, 'hsv', 'k');
     else

@@ -1,4 +1,4 @@
-%MINENCLOSINGTRIANGLE  Finds a triangle of minimum area enclosing a 2D point set and returns its area.
+%MINENCLOSINGTRIANGLE  Finds a triangle of minimum area enclosing a 2D point set and returns its area
 %
 %    [triangle,area] = cv.minEnclosingTriangle(points)
 %

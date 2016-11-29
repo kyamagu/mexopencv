@@ -11,7 +11,8 @@
 %
 % ## Options
 % * __KSize__ Aperture size of the cv.Sobel operator. default 3.
-% * __BorderType__ Pixel extrapolation method. default 'Default'
+% * __BorderType__ Pixel extrapolation method. See cv.copyMakeBorder.
+%       default 'Default'
 %
 % The function calculates the complex spatial derivative-based function of the
 % source image.

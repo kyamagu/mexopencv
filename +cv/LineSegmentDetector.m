@@ -1,5 +1,5 @@
 classdef LineSegmentDetector < handle
-    %LINESEGMENTDETECTOR  Line segment detector class.
+    %LINESEGMENTDETECTOR  Line segment detector class
     %
     % Following the algorithm described at [Rafael12].
     %
@@ -15,7 +15,7 @@ classdef LineSegmentDetector < handle
 
     methods
         function this = LineSegmentDetector(varargin)
-            %LINESEGMENTDETECTOR  Creates a LineSegmentDetector object and initializes it.
+            %LINESEGMENTDETECTOR  Creates a LineSegmentDetector object and initializes it
             %
             %    lsd = cv.LineSegmentDetector()
             %    lsd = cv.LineSegmentDetector('OptionName', optionValue, ...)
@@ -65,7 +65,7 @@ classdef LineSegmentDetector < handle
 
     methods
         function clear(this)
-            %CLEAR  Clears the algorithm state.
+            %CLEAR  Clears the algorithm state
             %
             %    obj.clear()
             %
@@ -75,7 +75,7 @@ classdef LineSegmentDetector < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if algorithm object is empty.
+            %EMPTY  Checks if algorithm object is empty
             %
             %    b = obj.empty()
             %
@@ -89,7 +89,7 @@ classdef LineSegmentDetector < handle
         end
 
         function name = getDefaultName(this)
-            %GETDEFAULTNAME  Returns the algorithm string identifier.
+            %GETDEFAULTNAME  Returns the algorithm string identifier
             %
             %    name = obj.getDefaultName()
             %
@@ -103,7 +103,7 @@ classdef LineSegmentDetector < handle
         end
 
         function save(this, filename)
-            %SAVE  Saves the algorithm to a file.
+            %SAVE  Saves the algorithm to a file
             %
             %    obj.save(filename)
             %
@@ -118,7 +118,7 @@ classdef LineSegmentDetector < handle
         end
 
         function load(this, fname_or_str, varargin)
-            %LOAD  Loads algorithm from a file or a string.
+            %LOAD  Loads algorithm from a file or a string
             %
             %    obj.load(fname)
             %    obj.load(str, 'FromString',true)
@@ -147,7 +147,7 @@ classdef LineSegmentDetector < handle
 
     methods
         function [lines, width, prec, nfa] = detect(this, img)
-            %DETECT  Finds lines in the input image.
+            %DETECT  Finds lines in the input image
             %
             %    lines = lsd.detect(img)
             %    [lines, width, prec, nfa] = lsd.detect(img)
@@ -177,7 +177,7 @@ classdef LineSegmentDetector < handle
         end
 
         function img = drawSegments(this, img, lines)
-            %DRAWSEGMENTS  Draws the line segments on a given image.
+            %DRAWSEGMENTS  Draws the line segments on a given image
             %
             %    img = lsd.drawSegments(img, lines)
             %
@@ -195,7 +195,7 @@ classdef LineSegmentDetector < handle
         end
 
         function [img, count] = compareSegments(this, sz, lines1, lines2, varargin)
-            %COMPARESEGMENTS  Draws two groups of lines in blue and red, counting the non overlapping (mismatching) pixels.
+            %COMPARESEGMENTS  Draws two groups of lines in blue and red, counting the non overlapping (mismatching) pixels
             %
             %    [img, count] = lsd.compareSegments(sz, lines1, lines2)
             %    [...] = lsd.compareSegments(..., 'OptionName', optionValue, ...)

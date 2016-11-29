@@ -22,7 +22,15 @@ for i=1:K
     samples{i} = bsxfun(@plus, bsxfun(@times, randn([N 2]), sig), mu);
 end
 samples = single(cat(1, samples{:}));  % 2D points (nsamples-by-2)
-groups = int32(repelem((1:K)', N));    % true labels (nsamples-by-1)
+
+%%
+% true labels (nsamples-by-1)
+if mexopencv.isOctave()
+    %HACK: http://savannah.gnu.org/bugs/?45497
+    groups = int32(repelems(1:K, [1:K; repmat(N,1,K)]))';
+else
+    groups = int32(repelem((1:K)', N));
+end
 
 %% EM Cluster
 % cluster the data
@@ -74,7 +82,12 @@ figure
 image([1 W], [1 H], reshape(double(response), [H W]))
 colormap(clrBG)
 hold on
-gscatter(samples(:,1), samples(:,2), groups, clrFG)
+if mexopencv.isOctave()
+    %HACK: GSCATTER not implemented in Octave
+    scatter(samples(:,1), samples(:,2), [], double(groups))
+else
+    gscatter(samples(:,1), samples(:,2), groups, clrFG)
+end
 hold off
 axis equal ij, axis([1 W 1 H]), grid on
 title('Original Samples'), xlabel('X'), ylabel('Y')

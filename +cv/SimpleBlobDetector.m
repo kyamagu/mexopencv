@@ -1,5 +1,5 @@
 classdef SimpleBlobDetector < handle
-    %SIMPLEBLOBDETECTOR  Class for extracting blobs from an image.
+    %SIMPLEBLOBDETECTOR  Class for extracting blobs from an image
     %
     % The class implements a simple algorithm for extracting blobs from an
     % image:
@@ -115,7 +115,7 @@ classdef SimpleBlobDetector < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -191,7 +191,7 @@ classdef SimpleBlobDetector < handle
     %% Features2D: FeatureDetector
     methods
         function keypoints = detect(this, img, varargin)
-            %DETECT  Detects keypoints in an image or image set.
+            %DETECT  Detects keypoints in an image or image set
             %
             %    keypoints = obj.detect(img)
             %    keypoints = obj.detect(imgs)

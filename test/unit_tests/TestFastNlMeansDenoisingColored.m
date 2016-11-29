@@ -21,7 +21,7 @@ classdef TestFastNlMeansDenoisingColored
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.fastNlMeansDenoisingColored();
                 throw('UnitTest:Fail');
@@ -30,4 +30,5 @@ classdef TestFastNlMeansDenoisingColored
             end
         end
     end
+
 end

@@ -28,7 +28,7 @@ classdef TestComputeCorrespondEpilines
                 {'vector', 'numel',3}), lines);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.computeCorrespondEpilines();
                 throw('UnitTest:Fail');

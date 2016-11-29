@@ -33,7 +33,8 @@
 % * __Anchor__ Position of the anchor within the element. The default value
 %       [-1,-1] means that the anchor is at the element center.
 % * __Iterations__ Number of times erosion and dilation are applied. default 1
-% * __BorderType__ Pixel extrapolation method. default 'Constant'
+% * __BorderType__ Pixel extrapolation method. See cv.copyMakeBorder.
+%       default 'Constant'
 % * __BorderValue__ Border value in case of a constant border. The default
 %       value has a special meaning. See cv.dilate and cv.erode for details.
 %

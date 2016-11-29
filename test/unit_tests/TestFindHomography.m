@@ -23,14 +23,14 @@ classdef TestFindHomography
                     'Method',estMethods{i}, 'MaxIters',2000, ...
                     'RansacReprojThreshold',3.0, 'Confidence',0.995);
                 validateattributes(HH, {'single' 'double'}, {'size',[3 3]});
-                validateattributes(mask, {'uint8'}, ...
+                validateattributes(mask, {'uint8','logical'}, ...
                     {'vector', 'numel',N, 'binary'});
                 err = norm(H-HH);
                 %if i>1, assert(mask(1)==0); end
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.findHomography();
                 throw('UnitTest:Fail');

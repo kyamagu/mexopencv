@@ -1,5 +1,6 @@
 classdef TestDrawContours
     %TestDrawContours
+
     properties (Constant)
         img = uint8([...
             0 0 0 0 0 0 0 0 0 0;...
@@ -42,7 +43,7 @@ classdef TestDrawContours
             validateattributes(im, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.drawContours();
                 throw('UnitTest:Fail');

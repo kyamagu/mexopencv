@@ -1,5 +1,5 @@
 classdef Boost < handle
-    %BOOST  Boosted tree classifier derived from cv.DTrees.
+    %BOOST  Boosted tree classifier derived from cv.DTrees
     %
     % ## Boosting
     %

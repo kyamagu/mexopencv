@@ -4,7 +4,7 @@
 %    dst = cv.balanceWhite(src, 'OptionName',optionValue, ...)
 %
 % ## Input
-% * __src__ input image (RGB or gray), integer or floating point image.
+% * __src__ input image (RGB or gray), integer or floating-point image.
 %
 % ## Output
 % * __dst__ output image, same size and type as input `src`.

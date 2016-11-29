@@ -17,7 +17,7 @@ classdef TestRandGaussMixture
                 {'vector', 'numel',nsamples, 'integer', 'nonnegative' '<',k});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.randGaussMixture();
                 throw('UnitTest:Fail');
@@ -26,4 +26,5 @@ classdef TestRandGaussMixture
             end
         end
     end
+
 end

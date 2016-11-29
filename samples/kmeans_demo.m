@@ -26,7 +26,7 @@ sz = [200 300];  % height/width, rows/cols
 img = zeros([sz, 3], 'uint8');
 
 % seed RNG for reproducible results
-rng('default')
+try, rng('default'); end
 
 %% Data
 % choose number of samples and clusters
@@ -39,14 +39,21 @@ points = zeros([sampleCount,2], 'single');
 idx = fix(linspace(1, sampleCount+1, clusterCount+1));
 for i=1:numel(idx)-1
     center = [randi([0, sz(2)]) randi([0, sz(1)])];
-    sigma = [sz(2) sz(1)].*0.4;
+    sigma = diag([sz(2) sz(1)]).*0.4;
     points(idx(i):idx(i+1)-1,:) = mvnrnd(center, sigma, idx(i+1)-idx(i));
 end
 
 %%
 % show true labels
-L = repelem(1:(numel(idx)-1), diff(idx));
-gscatter(points(:,1), points(:,2), L)
+if mexopencv.isOctave()
+    %HACK: http://savannah.gnu.org/bugs/?45497
+    L = repelems(1:(numel(idx)-1), [1:(numel(idx)-1); diff(idx)]);
+    %HACK: GSCATTER not implemented in Octave
+    scatter(points(:,1), points(:,2), [], L)
+else
+    L = repelem(1:(numel(idx)-1), diff(idx));
+    gscatter(points(:,1), points(:,2), L)
+end
 axis square equal ij
 axis([1 sz(2) 1 sz(1)])
 
@@ -70,4 +77,4 @@ for i=1:sampleCount
         'Color',colorTab(clusterIdx,:), ...
         'Thickness','Filled', 'LineType','AA');
 end
-imshow(img), title('clusters')
+figure, imshow(img), title('clusters')

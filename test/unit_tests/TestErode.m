@@ -1,5 +1,6 @@
 classdef TestErode
     %TestErode
+
     properties (Constant)
         img = uint8([...
             0 0 0 0 0 0 0 0 0 0;...
@@ -29,7 +30,7 @@ classdef TestErode
                 {'size',size(TestErode.img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.erode();
                 throw('UnitTest:Fail');

@@ -22,7 +22,7 @@ dirDNN = fullfile(mexopencv.root(), 'test', 'dnn');
 modelLabels = fullfile(dirDNN, 'synset_words.txt');
 modelTxt = fullfile(dirDNN, 'bvlc_googlenet.prototxt');
 modelBin = fullfile(dirDNN, 'bvlc_googlenet.caffemodel');
-if ~exist(dirDNN, 'dir')
+if ~isdir(dirDNN)
     mkdir(dirDNN);
 end
 if ~exist(modelLabels, 'file')
@@ -41,7 +41,7 @@ if ~exist(modelBin, 'file')
     urlwrite(url, modelBin);
 
     % verify checksum of downloaded file
-    if true
+    if ~mexopencv.isOctave()
         sha1 = '405fc5acd08a3bb12de8ee5e23a96bec22f08204';
         md = java.security.MessageDigest.getInstance('SHA-1');
         fid = fopen(modelBin, 'rb');
@@ -58,10 +58,16 @@ end
 
 %% Load class labels
 fid = fopen(modelLabels, 'rt');
-C = textscan(fid, '%s %[^\n]');
+if mexopencv.isOctave()
+    %HACK: %[] format specifier not implemented in Octave
+    C = textscan(fid, '%s', 'Delimiter','\n');
+    labels = regexprep(C{1}, '^\w+\s*', '', 'once');
+else
+    C = textscan(fid, '%s %[^\n]');
+    labels = C{2};
+end
 fclose(fid);
 
-labels = C{2};
 fprintf('%d classes\n', numel(labels));
 
 %% Read input image
@@ -105,14 +111,17 @@ toc
 p = net.getBlob('prob');       % vector of length 1000
 [~,ord] = sort(p, 'descend');  % ordered by maximum probability
 
-%% Print results
-t = table(labels(:), p(:), 'VariableNames',{'Class','Probability'});
-t = sortrows(t, 'Probability', 'descend');
-disp('Top 5 predictions')
-disp(t(1:5,:))
+%% Show predictions
+if ~mexopencv.isOctave()
+    %HACK: TABLE not implemented in Octave
+    t = table(labels(:), p(:), 'VariableNames',{'Label','Probability'});
+    t = sortrows(t, 'Probability', 'descend');
+    disp('Top 5 predictions');
+    disp(t(1:5,:));
+end
 
 subplot(3,1,1:2), imshow(flip(img,3)), title('cat.jpg')
-subplot(3,1,3), barh(1:5, t.Probability(1:5)*100)
-set(gca, 'YTickLabels',t.Class(1:5), 'YDir','reverse')
+subplot(3,1,3), barh(1:5, p(ord(1:5))*100)
+set(gca, 'YTickLabel',labels(ord(1:5)), 'YDir','reverse')
 axis([0 100 0 6]), grid on
 title('Top-5 Predictions'), xlabel('Probability (%)')

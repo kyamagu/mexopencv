@@ -18,7 +18,7 @@ classdef TestEstimatePoseSingleMarkers
             assert(isequal(numel(rvecs),numel(tvecs)));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.estimatePoseSingleMarkers();
                 throw('UnitTest:Fail');
@@ -27,6 +27,7 @@ classdef TestEstimatePoseSingleMarkers
             end
         end
     end
+
 end
 
 function [img, d] = get_image_markers()

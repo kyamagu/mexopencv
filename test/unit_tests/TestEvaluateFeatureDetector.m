@@ -1,5 +1,6 @@
 classdef TestEvaluateFeatureDetector
     %TestEvaluateFeatureDetector
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','fruits.jpg');
     end
@@ -27,7 +28,7 @@ classdef TestEvaluateFeatureDetector
             validateattributes(correspCount, {'numeric'}, {'scalar', 'integer'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.evaluateFeatureDetector();
                 throw('UnitTest:Fail');

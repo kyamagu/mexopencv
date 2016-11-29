@@ -13,7 +13,7 @@ classdef TestRandMVNormal
             cov(samples);   % should be close to sigma
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.randMVNormal();
                 throw('UnitTest:Fail');
@@ -22,4 +22,5 @@ classdef TestRandMVNormal
             end
         end
     end
+
 end

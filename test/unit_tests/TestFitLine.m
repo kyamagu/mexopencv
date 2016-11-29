@@ -24,7 +24,7 @@ classdef TestFitLine
             validateattributes(lin, {'numeric'}, {'vector', 'real', 'numel',6});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.fitLine();
                 throw('UnitTest:Fail');

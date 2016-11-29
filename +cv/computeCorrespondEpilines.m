@@ -5,7 +5,7 @@
 %
 % ## Input
 % * __points__ Input points. Nx2/Nx1x2/1xNx2 floating-point array, or cell
-%       array of 2-element vectors `{[x,y], ...}`.
+%       array of length N of 2-element vectors `{[x,y], ...}`.
 % * __F__ 3x3 Fundamental matrix that can be estimated using
 %       cv.findFundamentalMat or cv.stereoRectify.
 %
@@ -23,15 +23,15 @@
 % finds the equation of the corresponding epipolar line in the other image.
 %
 % From the fundamental matrix definition (see cv.findFundamentalMat), line
-% `l_i^(2)` in the second image for the point `p_i^(1)` in the first image
+% `lines2{i}` in the second image for the point `points1{i}` in the first image
 % (when `WhichImage=1`) is computed as:
 %
-%    l_i^(2) = F * p_i^(1)
+%    lines2{i} = F * points1{i}
 %
-% And vice versa, when `WhichImage=2`, `l_i^(1)` is computed from `p_i^(2)`
+% And vice versa, when `WhichImage=2`, `lines1{i}` is computed from `points2{i}`
 % as:
 %
-%    l_i^(1) = F^T * p_i^(2)
+%    lines1{i} = F^T * points2{i}
 %
 % Line coefficients are defined up to a scale. They are normalized so that
 % `a_i^2 + b_i^2 = 1`.

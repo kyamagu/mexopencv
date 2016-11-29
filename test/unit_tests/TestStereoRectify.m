@@ -1,5 +1,6 @@
 classdef TestStereoRectify
     %TestStereoRectify
+
     properties (Constant)
         fields = {'R1', 'R2', 'P1', 'P2', 'Q', 'roi1', 'roi2'};
     end
@@ -47,7 +48,7 @@ classdef TestStereoRectify
                 {'vector', 'numel',4, 'integer'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.stereoRectify();
                 throw('UnitTest:Fail');

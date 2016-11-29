@@ -40,4 +40,5 @@ classdef TestAlignMTB
             validateattributes(eb, {class(img)}, {'size',size(img)});
         end
     end
+
 end

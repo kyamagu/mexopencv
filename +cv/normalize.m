@@ -21,7 +21,7 @@
 %       * __MinMax__
 % * __DType__ when negative, the output array has the same type as `src`;
 %       otherwise, it has the same number of channels as `src` and the
-%       specified depth (a numeric class name: 'uint8', 'double', etc...).
+%       specified depth (a numeric class name: 'uint8', 'double', etc.).
 %       default -1
 % * __Mask__ optional operation mask. Not set by default.
 % * __Dest__ initial array used for output. This can initialize `dst` when
@@ -40,7 +40,7 @@
 % specifies a sub-array to be normalized. This means that the norm or min-max
 % are calculated over the sub-array, and then this sub-array is modified to be
 % normalized. If you want to only use the mask to calculate the norm or
-% min-max but modify the whole array, you can use cv.norm and Mat::convertTo.
+% min-max but modify the whole array, you can use cv.norm and cv.convertTo.
 %
 % ## Example
 % Possible usage with some positive example data:

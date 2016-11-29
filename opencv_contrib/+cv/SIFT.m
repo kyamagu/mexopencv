@@ -1,5 +1,5 @@
 classdef SIFT < handle
-    %SIFT  Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform (SIFT).
+    %SIFT  Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform (SIFT)
     %
     % Algorithm by D. Lowe [Lowe04].
     %
@@ -85,7 +85,7 @@ classdef SIFT < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -211,7 +211,7 @@ classdef SIFT < handle
         end
 
         function keypoints = detect(this, img, varargin)
-            %DETECT  Detects keypoints in an image or image set.
+            %DETECT  Detects keypoints in an image or image set
             %
             %    keypoints = obj.detect(img)
             %    keypoints = obj.detect(imgs)
@@ -241,7 +241,7 @@ classdef SIFT < handle
         end
 
         function [descriptors, keypoints] = compute(this, img, keypoints)
-            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set.
+            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set
             %
             %    [descriptors, keypoints] = obj.compute(img, keypoints)
             %    [descriptors, keypoints] = obj.compute(imgs, keypoints)

@@ -132,7 +132,7 @@ function handles = buildGUI(img)
     handles.hImg = imshow(handles.img);
     handles.hTxt = text(10, 10, mat2str_latex(eye(3)), ...
         'Interpreter','latex', 'FontSize',20, 'Color','y', ...
-        'HorizontalAlign','left', 'VerticalAlign','top');
+        'HorizontalAlignment','left', 'VerticalAlignment','top');
 
     % create draggable polygon
     handles.hPoly = impoly(get(handles.hImg,'Parent'), handles.pos, 'Closed',true);

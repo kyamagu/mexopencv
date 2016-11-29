@@ -34,7 +34,7 @@ classdef TestInRange
             assert(isequal(BW1,BW2))
         end
 
-        function test_error
+        function test_error_argnum
             try
                 cv.inRange();
                 throw('UnitTest:Fail');

@@ -14,11 +14,13 @@ src = cv.imread(fullfile(mexopencv.root(),'test','test1.png'), 'Color',true);
 assert(~isempty(src), 'Could not open image');
 src = cv.resize(src, 0.5, 0.5, 'Interpolation','Area');
 
+%%
 % smooth image a bit
 if true
     src = cv.GaussianBlur(src, 'KSize',[3 3]);
 end
 
+%%
 % convert to LAB color space
 if true
     converted = cv.cvtColor(src, 'RGB2Lab');
@@ -69,6 +71,7 @@ npix = superpix.getNumberOfSuperpixels();
 fprintf('%s segmentation with %d superpixels\n', ALG, npix);
 toc
 
+%%
 % get the contours for displaying
 mask = superpix.getLabelContourMask('ThickLine',true);
 zr = false(size(mask));
@@ -77,6 +80,7 @@ result(cat(3,mask,zr,zr)) = 0;
 result(cat(3,zr,mask,zr)) = 0;
 result(cat(3,zr,zr,mask)) = 255;
 
+%%
 % retrieve the segmentation result
 labels = superpix.getLabels();
 if false
@@ -86,10 +90,11 @@ if false
     L = bitand(labels, bitshift(1,bits)-1) * bitshift(1,16-bits);
     L = double(L) ./ double(max(L(:)));
 else
-    L = label2rgb(labels+1, jet(npix), 'k', 'shuffle');
+    labels = double(labels) + 1;
+    L = label2rgb(labels, jet(npix), 'k', 'shuffle');
 end
 
-%% display output
+%% Display output
 subplot(221), imshow(src), title('image')
 subplot(222), imshow(result), title('superpixel contours')
 subplot(223), imshow(mask), title('mask')

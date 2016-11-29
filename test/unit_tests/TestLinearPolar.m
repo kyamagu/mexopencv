@@ -8,7 +8,7 @@ classdef TestLinearPolar
             validateattributes(dst, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.linearPolar();
                 throw('UnitTest:Fail');
@@ -17,4 +17,5 @@ classdef TestLinearPolar
             end
         end
     end
+
 end

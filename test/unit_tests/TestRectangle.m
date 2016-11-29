@@ -49,7 +49,7 @@ classdef TestRectangle
             end
         end
 
-        function test_error_nonexistant_option
+        function test_error_unrecognized_option
             try
                 cv.rectangle(zeros(100), [20,20,20,20], 'foo','bar');
                 throw('UnitTest:Fail');

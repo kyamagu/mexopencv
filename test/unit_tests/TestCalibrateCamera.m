@@ -52,7 +52,7 @@ classdef TestCalibrateCamera
             validateattributes(err, {'numeric'}, {'scalar'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.calibrateCamera();
                 throw('UnitTest:Fail');
@@ -95,5 +95,30 @@ function [opts, ipts, imgSize] = getPointsFake(~)
     ipts = ipts + randn(size(ipts));
     M = [cv.getRotationMatrix2D(imgSize./2, -10, 1.9); rand(1,2)*1e-3 1];
     ipts = cv.perspectiveTransform(ipts, M);
+end
+%}
+
+%{
+% same number of points per view
+function [opts, ipts, imgSize] = getPointsRandom(nPerView, nView)
+    opts = rand([nPerView,3,nView], 'single');
+    opts(:,3,:) = 0;    % planar rig
+    opts = num2cell(reshape(num2cell(opts, 2), [nPerView nView]), 1);
+
+    ipts = rand([nPerView,2,nView], 'single') * 100;
+    ipts = num2cell(reshape(num2cell(ipts, 2), [nPerView nView]), 1);
+    imgSize = [100 100];
+end
+
+% different number of points per view
+function [opts, ipts, imgSize] = getPointsRandom2(nPerView, nView)
+    opts = cell(1,nView);
+    ipts = cell(1,nView);
+    for v=1:nView
+        N = randi([4 nPerView]);
+        opts{v} = num2cell(rand(N,3,'single'), 2);
+        ipts{v} = num2cell(rand(N,2,'single')*100, 2);
+    end
+    imgSize = [100 100];
 end
 %}

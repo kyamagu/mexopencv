@@ -10,7 +10,7 @@ classdef TestWriteOpticalFlow
             assert(success && exist(filename,'file')==2, 'Failed to write flow');
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.writeOpticalFlow();
                 throw('UnitTest:Fail');

@@ -12,13 +12,13 @@
 % * __img__ Output image, same size and type as input `img`.
 %
 % ## Options
-% * __Color__ 3-element floating point vector specifying line color.
+% * __Color__ 3-element floating-point vector specifying line color.
 %       default zeros
 % * __Thickness__ Line thickness. default 1.
 % * __LineType__ Type of the line boundary. One of:
-%       * 8: 8-connected line (default)
-%       * 4: 4-connected line
-%       * 'AA': anti-aliased line
+%       * __4__ 4-connected line
+%       * __8__ 8-connected line (default)
+%       * __AA__ anti-aliased line
 % * __Shift__ Number of fractional bits in the point coordinates. default 0
 %
 % The function cv.line draws the line segment between `pt1` and `pt2` points

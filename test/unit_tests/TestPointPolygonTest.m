@@ -25,7 +25,7 @@ classdef TestPointPolygonTest
             assert(b == 0 || b == 1 || b == -1);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.pointPolygonTest();
                 throw('UnitTest:Fail');

@@ -28,7 +28,7 @@ classdef LDA < handle
 
     methods
         function this = LDA(varargin)
-            %LDA  Constructor, initializes a LDA object.
+            %LDA  Constructor, initializes a LDA object
             %
             %    lda = cv.LDA()
             %    lda = cv.LDA('OptionName', optionValue, ...)
@@ -55,7 +55,7 @@ classdef LDA < handle
         end
 
         function load(this, fname_or_str, varargin)
-            %LOAD  Deserializes this object from a given filename.
+            %LOAD  Deserializes this object from a given filename
             %
             %    lda.load(filename)
             %    lda.load(str, 'FromString',true)
@@ -75,7 +75,7 @@ classdef LDA < handle
         end
 
         function varargout = save(this, filename)
-            %SAVE  Serializes this object to a given filename.
+            %SAVE  Serializes this object to a given filename
             %
             %    lda.save(filename)
             %    str = lda.save(filename)
@@ -93,7 +93,7 @@ classdef LDA < handle
         end
 
         function compute(this, src, labels)
-            %COMPUTE  Compute the discriminants for data and labels.
+            %COMPUTE  Compute the discriminants for data and labels
             %
             %    lda.compute(src, labels)
             %
@@ -114,7 +114,7 @@ classdef LDA < handle
         end
 
         function m = project(this, src)
-            %PROJECT  Projects samples into the LDA subspace.
+            %PROJECT  Projects samples into the LDA subspace
             %
             %    m = lda.project(src)
             %
@@ -130,7 +130,7 @@ classdef LDA < handle
         end
 
         function m = reconstruct(this, src)
-            %RECONSTRUCT  Reconstructs projections from the LDA subspace.
+            %RECONSTRUCT  Reconstructs projections from the LDA subspace
             %
             %    m = lda.reconstruct(src)
             %
@@ -148,7 +148,7 @@ classdef LDA < handle
 
     methods (Static)
         function dst = subspaceProject(W, mn, src)
-            %SUBSPACEPROJECT  Projects samples.
+            %SUBSPACEPROJECT  Projects samples
             %
             %    dst = cv.LDA.subspaceProject(W, mn, src)
             %
@@ -168,7 +168,7 @@ classdef LDA < handle
         end
 
         function dst = subspaceReconstruct(W, mn, src)
-            %SUBSPACERECONSTRUCT  Reconstructs projections.
+            %SUBSPACERECONSTRUCT  Reconstructs projections
             %
             %    dst = cv.LDA.subspaceReconstruct(W, mn, src)
             %

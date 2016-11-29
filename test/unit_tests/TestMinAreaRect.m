@@ -1,5 +1,6 @@
 classdef TestMinAreaRect
     %TestMinAreaRect
+
     properties (Constant)
         pts = [0 0; 1 0; 2 2; 3 3; 3 4];
     end
@@ -17,7 +18,7 @@ classdef TestMinAreaRect
             assert(all(ismember({'center','size','angle'}, fieldnames(box))));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.minAreaRect();
                 throw('UnitTest:Fail');

@@ -1,5 +1,6 @@
 classdef TestRemap
     %TestRemap
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','fruits.jpg');
     end
@@ -119,7 +120,7 @@ classdef TestRemap
             isequal(dst, [img(:,1:100,:) flipud_(img(:,101:end,:))]);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.remap();
                 throw('UnitTest:Fail');

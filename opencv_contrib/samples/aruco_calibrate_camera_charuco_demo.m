@@ -77,7 +77,7 @@ allCorners = {};
 allIds = {};
 allImgs = {};
 imgSize = [];
-hImg = gobjects(0); hFig = gobjects(0);
+hImg = []; hFig = [];
 while true
     % grab frame
     img = vid.read();
@@ -189,7 +189,7 @@ if calibrationFlags{4}, fprintf('Aspect Ratio: %f\n', aspectRatio); end
 disp('Camera Matrix:'); disp(camMatrix)
 disp('Distortion Coefficients:'); disp(distCoeffs)
 fprintf('Reprojection Error: Charuco = %f, Aruco = %f\n', repError, arucoRepErr);
-save camera_parameters.mat camMatrix distCoeffs
+save camera_parameters.mat -mat camMatrix distCoeffs
 
 % show interpolated charuco corners for debugging
 if showChessboardCorners
@@ -204,6 +204,8 @@ if showChessboardCorners
             outImgs{end+1} = img;
         end
     end
-    outImgs = cat(4, outImgs{:});
-    try, implay(immovie(outImgs), 1); end
+    if ~mexopencv.isOctave() && mexopencv.require('images')
+        %HACK: IMPLAY not implemented in Octave
+        implay(cat(4, outImgs{:}), 1);
+    end
 end

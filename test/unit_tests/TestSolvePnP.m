@@ -68,7 +68,7 @@ classdef TestSolvePnP
             validateattributes(success, {'logical'}, {'scalar'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.solvePnP();
                 throw('UnitTest:Fail');

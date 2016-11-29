@@ -1,5 +1,6 @@
 classdef TestEstimateRigidTransform
     %TestEstimateRigidTransform
+
     properties (Constant)
         im = 255*uint8([...
             0 0 0 0 0 0 0 0 0 0;...
@@ -41,7 +42,7 @@ classdef TestEstimateRigidTransform
             norm(M - aff);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.estimateRigidTransform();
                 throw('UnitTest:Fail');

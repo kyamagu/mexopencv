@@ -35,7 +35,7 @@ classdef TestCompareHist
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.compareHist();
                 throw('UnitTest:Fail');

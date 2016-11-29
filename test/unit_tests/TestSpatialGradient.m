@@ -1,5 +1,6 @@
 classdef TestSpatialGradient
     %TestSpatialGradient
+
     properties (Constant)
         img = uint8([...
             0 0 0 0 0 0 0 0 0 0 ; ...
@@ -43,7 +44,7 @@ classdef TestSpatialGradient
             assert(isequal(dy, dy_ref))
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.spatialGradient();
                 throw('UnitTest:Fail');

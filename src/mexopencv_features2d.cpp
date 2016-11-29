@@ -982,4 +982,3 @@ Ptr<DescriptorMatcher> createDescriptorMatcher(
             "Failed to create DescriptorMatcher of type %s", type.c_str());
     return p;
 }
-

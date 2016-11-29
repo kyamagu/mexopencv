@@ -325,7 +325,7 @@ classdef HOGDescriptor < handle
             %
             % The computed feature vectors are compatible with the
             % INRIA Object Detection and Localization Toolkit
-            % (http://pascal.inrialpes.fr/soft/olt/).
+            % [OLT](http://pascal.inrialpes.fr/soft/olt/).
             %
             % See also: cv.HOGDescriptor.computeGradient
             %

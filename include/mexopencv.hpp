@@ -4,7 +4,7 @@
  * @author Kota Yamaguchi
  * @date 2012
  *
- * The header file for a MATLAB MEX-function that uses OpenCV library.
+ * Header file for MATLAB MEX-functions that use OpenCV library.
  * The file includes definition of MxArray class that converts between mxArray
  * and a couple of std:: and cv:: data types including cv::Mat.
  */

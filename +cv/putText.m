@@ -21,13 +21,17 @@
 %       * __HersheyComplexSmall__
 %       * __HersheyScriptSimplex__
 %       * __HersheyScriptComplex__
-% * __FontStyle__ Font style. One of 'Regular' (default) or 'Italic'
+% * __FontStyle__ Font style. One of:
+%       * __Regular__ (default)
+%       * __Italic__
 % * __FontScale__ Font scale factor that is multiplied by the font-specific
 %       base size. default 1.0
-% * __Color__ 3-element floating point vector specifying text color.
+% * __Color__ 3-element floating-point vector specifying text color.
 % * __Thickness__ Thickness of the lines used to draw a text. default 1.
-% * __LineType__ Line type. One of 8,4,'AA' (Anti-aliased line). See cv.line
-%       for details. default 8.
+% * __LineType__ Line type (see cv.line). One of:
+%       * __4__ 4-connected line
+%       * __8__ 8-connected line (default)
+%       * __AA__ anti-aliased line
 % * __BottomLeftOrigin__ When true, the image data origin is at the
 %       bottom-left corner. Otherwise, it is at the top-left corner.
 %       default false.

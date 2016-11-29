@@ -34,7 +34,7 @@ classdef TestBoundingRect
             validateattributes(rct, {'numeric'}, {'vector', 'numel',4});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.boundingRect();
                 throw('UnitTest:Fail');

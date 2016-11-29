@@ -20,7 +20,7 @@ classdef TestGetPerspectiveTransform
             assert(all(abs(t(:)-ref(:)) < 1e-10));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.getPerspectiveTransform();
                 throw('UnitTest:Fail');

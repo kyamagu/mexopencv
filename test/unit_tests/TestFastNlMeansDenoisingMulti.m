@@ -1,5 +1,6 @@
 classdef TestFastNlMeansDenoisingMulti
     %TestFastNlMeansDenoisingMulti
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','lena.jpg');
     end
@@ -38,7 +39,7 @@ classdef TestFastNlMeansDenoisingMulti
             validateattributes(out, {class(imgs{1})}, {'size',size(imgs{1})});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.fastNlMeansDenoisingMulti();
                 throw('UnitTest:Fail');
@@ -47,4 +48,5 @@ classdef TestFastNlMeansDenoisingMulti
             end
         end
     end
+
 end

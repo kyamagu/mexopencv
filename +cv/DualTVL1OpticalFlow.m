@@ -138,7 +138,7 @@ classdef DualTVL1OpticalFlow < handle
     %% Algorithm
     methods (Hidden)
         function clear(this)
-            %CLEAR  Clears the algorithm state.
+            %CLEAR  Clears the algorithm state
             %
             %    obj.clear()
             %
@@ -162,7 +162,7 @@ classdef DualTVL1OpticalFlow < handle
         end
 
         function name = getDefaultName(this)
-            %GETDEFAULTNAME  Returns the algorithm string identifier.
+            %GETDEFAULTNAME  Returns the algorithm string identifier
             %
             %    name = obj.getDefaultName()
             %
@@ -176,7 +176,7 @@ classdef DualTVL1OpticalFlow < handle
         end
 
         function save(this, filename)
-            %SAVE  Saves the algorithm to a file.
+            %SAVE  Saves the algorithm to a file
             %
             %    obj.save(filename)
             %
@@ -191,7 +191,7 @@ classdef DualTVL1OpticalFlow < handle
         end
 
         function load(this, fname_or_str, varargin)
-            %LOAD  Loads algorithm from a file or a string.
+            %LOAD  Loads algorithm from a file or a string
             %
             %    obj.load(fname)
             %    obj.load(str, 'FromString',true)

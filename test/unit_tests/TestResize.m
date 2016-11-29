@@ -27,7 +27,7 @@ classdef TestResize
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.resize();
                 throw('UnitTest:Fail');

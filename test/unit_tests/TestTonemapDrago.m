@@ -13,4 +13,5 @@ classdef TestTonemapDrago
                 {'size',size(hdr), 'nonnegative'});
         end
     end
+
 end

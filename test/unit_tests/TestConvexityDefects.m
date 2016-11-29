@@ -22,9 +22,9 @@ classdef TestConvexityDefects
                 {'vector', 'numel',4, 'integer'}), defects);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
-                cv.convexHull();
+                cv.convexityDefects();
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

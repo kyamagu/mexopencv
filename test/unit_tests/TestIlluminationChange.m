@@ -11,7 +11,7 @@ classdef TestIlluminationChange
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.illuminationChange();
                 throw('UnitTest:Fail');
@@ -20,4 +20,5 @@ classdef TestIlluminationChange
             end
         end
     end
+
 end

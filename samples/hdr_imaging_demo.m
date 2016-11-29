@@ -72,7 +72,9 @@ if use_memorial
     etimes = 1 ./ etimes;
 end
 
-montage(cat(4,images{:}))
+if mexopencv.require('images')
+    montage(cat(4,images{:}))
+end
 
 %% Estimate camera response
 % It is necessary to know camera response function (CRF) for a lot of HDR
@@ -119,8 +121,11 @@ if false
 end
 
 %% Compare against MATLAB's implementation
-%hdr2 = hdrread(which('office.hdr'));
-%hdr2 = makehdr(files, 'RelativeExposure',etimes./etimes(1));
-hdr2 = makehdr(files, 'ExposureValues',etimes);
-ldr2 = tonemap(hdr2);
-imshow(ldr2)
+if ~mexopencv.isOctave() && mexopencv.require('images')
+    %HACK: HDRREAD/MAKEHDR/TONEMAP not implemented in Octave
+    %hdr2 = hdrread(which('office.hdr'));
+    %hdr2 = makehdr(files, 'RelativeExposure',etimes./etimes(1));
+    hdr2 = makehdr(files, 'ExposureValues',etimes);
+    ldr2 = tonemap(hdr2);
+    imshow(ldr2)
+end

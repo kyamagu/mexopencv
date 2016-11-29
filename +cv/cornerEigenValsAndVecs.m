@@ -14,15 +14,16 @@
 % ## Options
 % * __BlockSize__ Neighborhood size (see details below). default 5.
 % * __KSize__ Aperture parameter for the cv.Sobel operator. default 3.
-% * __BorderType__ Pixel extrapolation method. default 'Default'
+% * __BorderType__ Pixel extrapolation method. See cv.copyMakeBorder.
+%       default 'Default'
 %
 % For every pixel `p`, the function cv.cornerEigenValsAndVecs considers a
 % `blockSize x blockSize` neigborhood `S(p)`. It calculates the covariation
 % matrix of derivatives over the neighborhood as:
 %
 %    M = [
-%        \sum_{S(p)}(dI/dx)^2        \sum_{S(p)}(dI/dx * dI/dy)
-%        \sum_{S(p)}(dI/dx * dI/dy)  \sum_{S(p)}(dI/dy)^2
+%        sum_{S(p)}(dI/dx)^2        sum_{S(p)}(dI/dx * dI/dy)
+%        sum_{S(p)}(dI/dx * dI/dy)  sum_{S(p)}(dI/dy)^2
 %    ]
 %
 % where the derivatives are computed using the Sobel operator.

@@ -19,4 +19,5 @@ classdef TestCalibrateDebevec
                 {'size',[256 1 size(imgs{1},3)], 'real'});
         end
     end
+
 end

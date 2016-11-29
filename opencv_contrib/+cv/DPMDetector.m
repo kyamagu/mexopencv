@@ -8,10 +8,11 @@ classdef DPMDetector < handle
     % Dalal-Triggs detector that uses a single filter on histogram of
     % oriented gradients (HOG) features to represent an object category.
     % This detector uses a sliding window approach, where a filter is
-    % applied at all positions and scales of an image. The first innovation
-    % is enriching the Dalal-Triggs model using a star-structured
-    % part-based model defined by a "root" filter (analogous to the
-    % Dalal-Triggs filter) plus a set of parts filters and associated
+    % applied at all positions and scales of an image.
+    %
+    % The first innovation is enriching the Dalal-Triggs model using a
+    % star-structured part-based model defined by a "root" filter (analogous
+    % to the Dalal-Triggs filter) plus a set of parts filters and associated
     % deformation models. The score of one of star models at a particular
     % position and scale within an image is the score of the root filter at
     % the given location plus the sum over parts of the maximum, over
@@ -20,6 +21,7 @@ classdef DPMDetector < handle
     % ideal location relative to the root. Both root and part filter scores
     % are defined by the dot product between a filter (a set of weights)
     % and a subwindow of a feature pyramid computed from the input image.
+    %
     % Another improvement is a representation of the class of models by a
     % mixture of star models. The score of a mixture model at a particular
     % position and scale is the maximum over components, of the score of
@@ -153,7 +155,7 @@ classdef DPMDetector < handle
         end
 
         function count = getClassCount(this)
-            %GETCLASSCOUNT  Return a count of loaded models (classes).
+            %GETCLASSCOUNT  Return a count of loaded models (classes)
             %
             %    count = detector.getClassCount()
             %

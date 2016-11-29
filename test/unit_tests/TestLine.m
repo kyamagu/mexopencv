@@ -15,7 +15,7 @@ classdef TestLine
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.line();
                 throw('UnitTest:Fail');

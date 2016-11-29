@@ -18,7 +18,7 @@ classdef TestEstimateGlobalMotionRansac
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.estimateGlobalMotionRansac();
                 throw('UnitTest:Fail');
@@ -27,4 +27,5 @@ classdef TestEstimateGlobalMotionRansac
             end
         end
     end
+
 end

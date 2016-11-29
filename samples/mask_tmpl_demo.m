@@ -5,7 +5,7 @@
 %
 
 %% Load Images
-if false
+if mexopencv.isOctave()
     img = cv.imread(fullfile(mexopencv.root(),'test','lena_tmpl.jpg'));
     tmpl = cv.imread(fullfile(mexopencv.root(),'test','tmpl.png'));
     mask = cv.imread(fullfile(mexopencv.root(),'test','mask.png'), 'Color',true);

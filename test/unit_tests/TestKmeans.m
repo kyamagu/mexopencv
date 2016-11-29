@@ -22,7 +22,7 @@ classdef TestKmeans
             [labels,centers] = cv.kmeans(X, 2, 'InitialLabels',labels0);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.kmeans();
                 throw('UnitTest:Fail');

@@ -17,7 +17,7 @@ classdef TestFindFundamentalMat
                             {'real', 'size',[NaN 3]});
                         assert(size(F,1)==3 || size(F,1)==6 || size(F,1)==9);
                     end
-                    validateattributes(mask, {'numeric','logical'}, ...
+                    validateattributes(mask, {'uint8','logical'}, ...
                         {'vector', 'numel',N, 'binary'});
                     %if i>2, assert(mask(1)==0); end
                 end
@@ -36,7 +36,7 @@ classdef TestFindFundamentalMat
             validateattributes(F, {'numeric'}, {'real', 'size',[3 3]});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.findFundamentalMat();
                 throw('UnitTest:Fail');

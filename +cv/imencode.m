@@ -5,7 +5,7 @@
 %
 % ## Input
 % * __ext__ File extension that defines the output format. For example:
-%       '.bmp', '.jpg', '.png', '.tif', etc...
+%       '.bmp', '.jpg', '.png', '.tif', etc.
 % * __img__ Image to be encoded.
 %
 % ## Output

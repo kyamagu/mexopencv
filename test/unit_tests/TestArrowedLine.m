@@ -15,7 +15,7 @@ classdef TestArrowedLine
             validateattributes(a, {class(im)}, {'size',size(im)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.arrowedLine();
                 throw('UnitTest:Fail');

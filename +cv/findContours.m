@@ -33,7 +33,8 @@
 %     * __External__ retrieves only the extreme outer contours. It sets
 %           `hierarchy{i}(3)=hierarchy{i}(4)=-1` for all the contours.
 %     * __List__ retrieves all of the contours without establishing any
-%           hierarchical relationships.
+%           hierarchical relationships. It also sets
+%           `hierarchy{i}(3)=hierarchy{i}(4)=-1` for all the contours.
 %     * __CComp__ retrieves all of the contours and organizes them into a
 %           two-level hierarchy. At the top level, there are external
 %           boundaries of the components. At the second level, there are

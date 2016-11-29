@@ -14,7 +14,7 @@ classdef TestWatershed
             validateattributes(markers, {'int32'}, {'2d', 'size',[H W], '>=',-1});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.watershed();
                 throw('UnitTest:Fail');

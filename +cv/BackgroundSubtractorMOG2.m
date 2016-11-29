@@ -82,9 +82,11 @@ classdef BackgroundSubtractorMOG2 < handle
         % mask. Default value is 127. Value 0 in the mask always means
         % background, 255 means foreground.
         ShadowValue
-        % The initial variance of each gaussian component.
+        % The initial variance of gaussian components. default 15
         VarInit
+        % Maximum variance. default 5*15
         VarMax
+        % Minimmum variance. default 4
         VarMin
         % The variance threshold for the pixel-model match used for new
         % mixture component generation.
@@ -179,7 +181,7 @@ classdef BackgroundSubtractorMOG2 < handle
     %% Algorithm
     methods (Hidden)
         function clear(this)
-            %CLEAR  Clears the algorithm state.
+            %CLEAR  Clears the algorithm state
             %
             %    obj.clear()
             %
@@ -203,7 +205,7 @@ classdef BackgroundSubtractorMOG2 < handle
         end
 
         function name = getDefaultName(this)
-            %GETDEFAULTNAME  Returns the algorithm string identifier.
+            %GETDEFAULTNAME  Returns the algorithm string identifier
             %
             %    name = obj.getDefaultName()
             %
@@ -217,7 +219,7 @@ classdef BackgroundSubtractorMOG2 < handle
         end
 
         function save(this, filename)
-            %SAVE  Saves the algorithm to a file.
+            %SAVE  Saves the algorithm to a file
             %
             %    obj.save(filename)
             %
@@ -232,7 +234,7 @@ classdef BackgroundSubtractorMOG2 < handle
         end
 
         function load(this, fname_or_str, varargin)
-            %LOAD  Loads algorithm from a file or a string.
+            %LOAD  Loads algorithm from a file or a string
             %
             %    obj.load(fname)
             %    obj.load(str, 'FromString',true)

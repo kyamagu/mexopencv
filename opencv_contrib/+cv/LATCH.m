@@ -1,5 +1,5 @@
 classdef LATCH < handle
-    %LATCH  Class for computing the LATCH descriptor.
+    %LATCH  Class for computing the LATCH descriptor
     %
     % LATCH is a binary descriptor based on learned comparisons of triplets of
     % image patches.
@@ -80,7 +80,7 @@ classdef LATCH < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -205,7 +205,7 @@ classdef LATCH < handle
         end
 
         function [descriptors, keypoints] = compute(this, img, keypoints)
-            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set.
+            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set
             %
             %    [descriptors, keypoints] = obj.compute(img, keypoints)
             %    [descriptors, keypoints] = obj.compute(imgs, keypoints)

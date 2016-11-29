@@ -21,7 +21,7 @@ end
 
 % path to trained Objectness model (for BING algorithm)
 training_path = fullfile(mexopencv.root(),'test','ObjectnessTrainedModel');
-if strcmp(alg, 'BING') && ~exist(training_path, 'dir')
+if strcmp(alg, 'BING') && ~isdir(training_path)
     % download from GitHub
     files = {
         'ObjNessB2W8HSV.idx.yml.gz'

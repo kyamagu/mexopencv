@@ -16,4 +16,5 @@ classdef TestTonemapDurand
             %TODO: output HDR is not always in [0,1] range
         end
     end
+
 end

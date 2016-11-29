@@ -44,7 +44,7 @@ function varargout = create_mask_demo_gui(im)
             %HACK: not implemented in Octave
             movegui(h.fig, 'center');
         end
-        h.ax = axes(h.fig, 'Units','normalized', 'Position',[0 0 1 1]);
+        h.ax = axes('Parent',h.fig, 'Units','normalized', 'Position',[0 0 1 1]);
         if ~mexopencv.isOctave()
             h.img = imshow(src, 'Parent',h.ax);
         else

@@ -12,7 +12,7 @@ classdef TestCreateHanningWindow
             validateattributes(dst, {'double'}, {'size',[20 10]});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.createHanningWindow();
                 throw('UnitTest:Fail');
@@ -21,4 +21,5 @@ classdef TestCreateHanningWindow
             end
         end
     end
+
 end

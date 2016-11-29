@@ -37,7 +37,7 @@ classdef TestFindEssentialMat
             validateattributes(E, {'numeric'}, {'real', 'size',[3 3]});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.findEssentialMat();
                 throw('UnitTest:Fail');

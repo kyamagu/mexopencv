@@ -566,6 +566,10 @@ cv::Mat MxArray::toMat(int depth, bool transpose) const
             mxGetElementSize(p_)*subs(si));      // ptr to i-th channel data
         const cv::Mat m(ndims, &d[0], type, pd); // only creates Mat headers
         // Read from mxArray through m, writing into channels[i]
+        // (Note that saturate_cast<> is applied, so values are clipped
+        // rather than wrap-around in a two's complement sense. In
+        // floating-point to integer conversion, numbers are first rounded
+        // to nearest integer then clamped).
         m.convertTo(channels[i], CV_MAKETYPE(depth, 1));
         // transpose cv::Mat if needed. We do this inside the loop on each 2d
         // 1-cn slice to avoid cv::transpose limitation on number of channels
@@ -872,7 +876,7 @@ std::vector<cv::Mat> MxArray::toVector() const
     std::vector<cv::Mat> vm;
     vm.reserve(v.size());
     for (std::vector<MxArray>::const_iterator it = v.begin(); it != v.end(); ++it)
-        vm.push_back((*it).toMat());
+        vm.push_back(it->toMat());
     return vm;
 }
 

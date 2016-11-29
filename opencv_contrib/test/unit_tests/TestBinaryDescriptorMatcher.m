@@ -1,5 +1,6 @@
 classdef TestBinaryDescriptorMatcher
     %TestBinaryDescriptorMatcher
+
     properties (Constant)
         fields = {'queryIdx', 'trainIdx', 'imgIdx', 'distance'};
     end

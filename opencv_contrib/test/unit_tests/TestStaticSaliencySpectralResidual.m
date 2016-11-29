@@ -1,5 +1,6 @@
 classdef TestStaticSaliencySpectralResidual
     %TestStaticSaliencySpectralResidual
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','balloon.jpg');
     end

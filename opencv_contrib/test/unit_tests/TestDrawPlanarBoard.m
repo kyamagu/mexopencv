@@ -9,7 +9,7 @@ classdef TestDrawPlanarBoard
             validateattributes(img, {'uint8'}, {'size',fliplr(imgSz)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.drawPlanarBoard();
                 throw('UnitTest:Fail');
@@ -18,4 +18,5 @@ classdef TestDrawPlanarBoard
             end
         end
     end
+
 end

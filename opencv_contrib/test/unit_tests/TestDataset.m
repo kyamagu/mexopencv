@@ -19,8 +19,8 @@ classdef TestDataset
 
         function test_mnist
             % see: dataset_mnist_demo.m
-            dirMNIST = fullfile(mexopencv.root(), 'test', 'mnist', filesep);
-            if ~exist(dirMNIST, 'dir')
+            dirMNIST = fullfile(mexopencv.root(), 'test', 'mnist', filesep());
+            if ~isdir(dirMNIST)
                 disp('SKIP');
                 return;
             end

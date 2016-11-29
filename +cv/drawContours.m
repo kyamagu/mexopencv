@@ -20,8 +20,10 @@
 % * __Thickness__ Thickness of lines the contours are drawn with. If it is
 %       negative (for example, -1 or the string 'Filled'), the contour
 %       interiors are drawn. default 1
-% * __LineType__ Line connectivity. One of 4,8,'AA' (Anti-aliased line).
-%       default 8
+% * __LineType__ Line connectivity. One of:
+%       * __4__ 4-connected line
+%       * __8__ 8-connected line (default)
+%       * __AA__ anti-aliased line
 % * __Hierarchy__ Optional information about hierarchy. It is only needed if
 %       you want to draw only some of the contours (see `MaxLevel`).
 %       A cell array of 4-element vectors for each contour of the form

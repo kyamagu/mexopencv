@@ -14,7 +14,8 @@
 % * __BlockSize__ Neighborhood size (see the details on
 %       cv.cornerEigenValsAndVecs). default 5.
 % * __KSize__ Aperture parameter for the cv.Sobel operator. default 3.
-% * __BorderType__ Pixel extrapolation method. default 'Default'
+% * __BorderType__ Pixel extrapolation method. See cv.copyMakeBorder.
+%       default 'Default'
 %
 % The function is similar to cv.cornerEigenValsAndVecs but it calculates and
 % stores only the minimal eigenvalue of the covariance matrix of derivatives,

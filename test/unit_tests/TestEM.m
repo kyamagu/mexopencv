@@ -1,5 +1,6 @@
 classdef TestEM
     %TestEM
+
     properties (Constant)
         X = [randn(50,3)+1; randn(50,3)-1; randn(50,3)-2];
     end

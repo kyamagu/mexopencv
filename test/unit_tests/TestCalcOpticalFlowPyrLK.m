@@ -1,5 +1,6 @@
 classdef TestCalcOpticalFlowPyrLK
     %TestCalcOpticalFlowPyrLK
+
     properties (Constant)
         im = 255*uint8([...
             0 0 0 0 0 0 0 0 0 0;...
@@ -48,7 +49,7 @@ classdef TestCalcOpticalFlowPyrLK
                 {'vector', 'numel',numel(prevPts)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.calcOpticalFlowPyrLK();
                 throw('UnitTest:Fail');

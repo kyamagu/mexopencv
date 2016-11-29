@@ -1,5 +1,6 @@
 classdef TestCalcHist
     %TestCalcHist
+
     properties (Constant)
         img = fullfile(mexopencv.root(),'test','img001.jpg');
     end
@@ -90,7 +91,7 @@ classdef TestCalcHist
             assert(isequal(sum(H(:)), h*w));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.calcHist();
                 throw('UnitTest:Fail');

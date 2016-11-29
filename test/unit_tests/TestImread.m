@@ -1,5 +1,6 @@
 classdef TestImread
     %TestImread
+
     properties (Constant)
         filename = fullfile(mexopencv.root(),'test','RubberWhale1.png');
     end

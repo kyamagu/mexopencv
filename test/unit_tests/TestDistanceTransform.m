@@ -83,7 +83,7 @@ classdef TestDistanceTransform
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.distanceTransform();
                 throw('UnitTest:Fail');

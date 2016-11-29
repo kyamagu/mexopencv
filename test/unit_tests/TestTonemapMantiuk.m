@@ -13,4 +13,5 @@ classdef TestTonemapMantiuk
                 {'size',size(hdr), 'nonnegative'});
         end
     end
+
 end

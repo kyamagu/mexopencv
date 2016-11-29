@@ -1,5 +1,6 @@
 classdef TestCalibrationMatrixValues
     %TestCalibrationMatrixValues
+
     properties (Constant)
         fields = {'fovx', 'fovy', 'focalLength', 'principalPoint', 'aspectRatio'};
     end
@@ -16,7 +17,7 @@ classdef TestCalibrationMatrixValues
                 {'vector', 'numel',2});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.calibrationMatrixValues();
                 throw('UnitTest:Fail');

@@ -10,7 +10,7 @@ classdef TestInvertAffineTransform
             assert(all(abs(dst(:) - ref(:)) < 1e-5));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.invertAffineTransform();
                 throw('UnitTest:Fail');

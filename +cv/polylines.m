@@ -16,11 +16,13 @@
 % * __Closed__ Flag indicating whether the drawn polylines are closed or not.
 %       If they are closed, the function draws a line from the last vertex of
 %       each curve to its first vertex. default true.
-% * __Color__ 3-element floating point vector specifying polyline color.
+% * __Color__ 3-element floating-point vector specifying polyline color.
 %       default zeros
 % * __Thickness__ Thickness of the polyline edges. default 1.
-% * __LineType__ Type of the line segments. One of 8,4,'AA' (Anti-aliased
-%       line). default 8.
+% * __LineType__ Type of the line segments. One of:
+%       * __4__ 4-connected line
+%       * __8__ 8-connected line (default)
+%       * __AA__ anti-aliased line
 % * __Shift__ Number of fractional bits in the vertex coordinates. default 0.
 %
 % The function cv.polylines draws one or more polygonal curves.
