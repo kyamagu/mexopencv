@@ -4,8 +4,9 @@
 
 %%
 % Set up camera
-camera = cv.VideoCapture;
-pause(3); % Necessary in some environment. See help cv.VideoCapture
+camera = cv.VideoCapture();
+pause(2); % Necessary in some environment. See help cv.VideoCapture
+assert(camera.isOpened(), 'camera failed to initialized');
 
 %%
 % Create a bg subtractor
@@ -19,7 +20,8 @@ disp('Keep out of the frame.');
 % Learn initial background model for a while
 for t = 1:bs.History
     % Get an image
-    im = camera.read;
+    im = camera.read();
+    assert(~isempty(im), 'Failed to read frame');
     im = cv.resize(im,0.5,0.5);
     imshow(im);
     title(num2str(t));
@@ -42,7 +44,8 @@ setappdata(window,'flag',false);
 % Start main loop
 while true
     % Get an image
-    im = camera.read;
+    im = camera.read();
+    if isempty(im), break; end
     im = cv.resize(im,0.5,0.5);
 
     % detect and show foreground

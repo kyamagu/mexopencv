@@ -15,7 +15,7 @@ classdef TestEMDL1
             validateattributes(d, {'numeric'}, {'scalar', 'real'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.EMDL1();
                 throw('UnitTest:Fail');
@@ -24,4 +24,5 @@ classdef TestEMDL1
             end
         end
     end
+
 end

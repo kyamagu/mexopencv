@@ -2,7 +2,7 @@ classdef TestCalcMotionGradient
     %TestCalcMotionGradient
 
     methods (Static)
-        function test_error_1
+        function test_error_argnum
             try
                 cv.calcMotionGradient();
                 throw('UnitTest:Fail');

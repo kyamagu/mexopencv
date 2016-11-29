@@ -1,5 +1,6 @@
 classdef TestDTFilter
     %TestDTFilter
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','lena.jpg');
     end

@@ -1,5 +1,6 @@
 classdef TestHomographyBasedEstimator
     %TestHomographyBasedEstimator
+
     properties (Constant)
         fields = {'aspect', 'focal', 'ppx', 'ppy', 'R', 't', 'K'};
     end

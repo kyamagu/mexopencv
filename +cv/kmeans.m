@@ -47,7 +47,7 @@
 %
 % The function returns the compactness measure that is computed as:
 %
-%    \sum_i || samples_i - centers_{labels_i} ||^2
+%    sum_{i} (|| samples_i - centers_{labels_i} ||^2)
 %
 % after every attempt. The best (minimum) value is chosen and the
 % corresponding labels and the compactness value are returned by the

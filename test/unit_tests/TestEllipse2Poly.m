@@ -17,7 +17,7 @@ classdef TestEllipse2Poly
                 {'vector', 'numel',2, 'integer'}), pts);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.ellipse2Poly();
                 throw('UnitTest:Fail');

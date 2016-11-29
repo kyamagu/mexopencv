@@ -53,7 +53,7 @@ classdef TestPerspectiveTransform
                 {'vector', 'numel',3}), dst);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.perspectiveTransform();
                 throw('UnitTest:Fail');

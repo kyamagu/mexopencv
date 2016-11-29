@@ -48,7 +48,7 @@ classdef TestCorrectMatches
                 {'vector', 'numel',2}), newPts2);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.correctMatches();
                 throw('UnitTest:Fail');

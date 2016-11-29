@@ -1,5 +1,5 @@
 classdef TestGetGaussianKernel
-    %TestScharr
+    %TestGetGaussianKernel
 
     methods (Static)
         function test_1
@@ -13,9 +13,9 @@ classdef TestGetGaussianKernel
             validateattributes(kernel, {'double'}, {'vector', 'numel',5});
         end
 
-        function test_error_1
+        function test_error_unrecognized_option
             try
-                cv.getGaussianKernel('foo');
+                cv.getGaussianKernel('foo','bar');
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

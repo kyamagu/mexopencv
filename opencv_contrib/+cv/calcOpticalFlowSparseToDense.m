@@ -23,12 +23,13 @@
 %       locally-weighted affine fitting. Higher values can help preserve fine
 %       details, lower values can help to get rid of the noise in the output
 %       flow. default 0.05
-% * __UsePostProcessing__ defines whether the cv.fastGlobalSmootherFilter is
-%       used for post-processing after interpolation. default true
-% * __FGSLambda__ see the respective parameter of cv.fastGlobalSmootherFilter,
-%       default 500.0
-% * __FGSSigma__ see the respective parameter of cv.fastGlobalSmootherFilter,
-%       default 1.5
+% * __UsePostProcessing__ defines whether the
+%       cv.FastGlobalSmootherFilter.fastGlobalSmootherFilter is used for
+%       post-processing after interpolation. default true
+% * __FGSLambda__ see the respective parameter of
+%       cv.FastGlobalSmootherFilter.fastGlobalSmootherFilter, default 500.0
+% * __FGSSigma__ see the respective parameter of
+%       cv.FastGlobalSmootherFilter.fastGlobalSmootherFilter, default 1.5
 %
 % See also: cv.calcOpticalFlowPyrLK
 %

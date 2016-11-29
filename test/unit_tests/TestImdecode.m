@@ -1,5 +1,6 @@
 classdef TestImdecode
     %TestImdecode
+
     properties (Constant)
         filename = fullfile(mexopencv.root(),'test','RubberWhale1.png');
     end

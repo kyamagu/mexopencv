@@ -1,5 +1,6 @@
 classdef TestDisparityWLSFilter
     %TestDisparityWLSFilter
+
     properties (Constant)
         imL = fullfile(mexopencv.root(),'test','aloeL.jpg');
         imR = fullfile(mexopencv.root(),'test','aloeR.jpg');

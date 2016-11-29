@@ -35,23 +35,23 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int flags = 0;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="InitialFlow") {
+        if (key == "InitialFlow") {
             flow = rhs[i+1].toMat(CV_32F);
             flags |= cv::OPTFLOW_USE_INITIAL_FLOW;
         }
-        else if (key=="PyrScale")
+        else if (key == "PyrScale")
             pyrScale = rhs[i+1].toDouble();
-        else if (key=="Levels")
+        else if (key == "Levels")
             levels = rhs[i+1].toInt();
-        else if (key=="WinSize")
+        else if (key == "WinSize")
             winsize = rhs[i+1].toInt();
-        else if (key=="Iterations")
+        else if (key == "Iterations")
             iterations = rhs[i+1].toInt();
-        else if (key=="PolyN")
+        else if (key == "PolyN")
             polyN = rhs[i+1].toInt();
-        else if (key=="PolySigma")
+        else if (key == "PolySigma")
             polySigma = rhs[i+1].toDouble();
-        else if (key=="Gaussian")
+        else if (key == "Gaussian")
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::OPTFLOW_FARNEBACK_GAUSSIAN);
         else
             mexErrMsgIdAndTxt("mexopencv:error",

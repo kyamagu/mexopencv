@@ -1,5 +1,6 @@
 classdef TestUndistortPoints
     %TestUndistortPoints
+
     properties (Constant)
         pts = [0 0; 0 1; 3 4; 5 6];
     end
@@ -41,7 +42,7 @@ classdef TestUndistortPoints
             assert(isequal(result, pts));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.undistortPoints();
                 throw('UnitTest:Fail');

@@ -1,5 +1,6 @@
 classdef TestIntersectConvexConvex
     %TestIntersectConvexConvex
+
     properties (Constant)
         p1 = [0 0; 0 1; 1 1; 1 0];
         p2 = [-0.5 0.2; 0.5 1.2; 1.2 0.3];
@@ -31,7 +32,7 @@ classdef TestIntersectConvexConvex
                 'HandleNested',false);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.intersectConvexConvex();
                 throw('UnitTest:Fail');

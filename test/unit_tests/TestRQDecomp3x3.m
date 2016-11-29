@@ -1,5 +1,6 @@
 classdef TestRQDecomp3x3
     %TestRQDecomp3x3
+
     properties (Constant)
         fields = {'Qx', 'Qy', 'Qz', 'eulerAngles'};
     end
@@ -24,7 +25,7 @@ classdef TestRQDecomp3x3
                 {'vector', 'numel',3});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.RQDecomp3x3();
                 throw('UnitTest:Fail');

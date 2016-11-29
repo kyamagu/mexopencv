@@ -41,6 +41,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==2 && nlhs<=1);
         obj_[++last_id] = makePtr<TwoPassStabilizer>();
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
     // static methods
@@ -54,9 +55,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Big operation switch
     Ptr<TwoPassStabilizer> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "reset") {
         nargchk(nrhs==2 && nlhs==0);
@@ -64,7 +68,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "nextFrame") {
         nargchk(nrhs>=2 && (nrhs%2)==0 && nlhs<=1);
-        bool flip = true;
+        bool flip = false;
         for (int i=2; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key == "FlipChannels")
@@ -73,7 +77,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat frame = obj->nextFrame();
+        Mat frame(obj->nextFrame());
         if (flip && (frame.channels() == 3 || frame.channels() == 4)) {
             // OpenCV's default is BGR/BGRA while MATLAB's is RGB/RGBA
             cvtColor(frame, frame, (frame.channels()==3 ?

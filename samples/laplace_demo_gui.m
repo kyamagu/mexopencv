@@ -9,6 +9,7 @@
 function varargout = laplace_demo_gui()
     % setup video capture
     cap = cv.VideoCapture();
+    pause(1);
     assert(cap.isOpened(), 'Could not initialize capturing');
     frame = cap.read();
     assert(~isempty(frame), 'Could not read frame');

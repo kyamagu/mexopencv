@@ -115,12 +115,13 @@ classdef TestBOWImgDescriptorExtractor
             acc = nnz(Yhat == labels(testIdx)) / numel(testIdx);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
-                cv.BOWImgDescriptorExtractor('foo', 'bar');
+                cv.BOWImgDescriptorExtractor();
                 throw('UnitTest:Fail');
-            catch e
-                assert(strcmp(e.identifier,'mexopencv:error'));
+            catch ME
+                %TODO: MATLAB/Octave specific error id
+                %assert(strcmp(ME.identifier, 'MATLAB:minrhs'));
             end
         end
     end

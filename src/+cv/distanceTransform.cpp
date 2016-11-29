@@ -14,6 +14,7 @@ namespace {
 const ConstMap<string,int> DistMask = ConstMap<string,int>
     ("3",       cv::DIST_MASK_3)
     ("5",       cv::DIST_MASK_5)
+    ("0",       cv::DIST_MASK_PRECISE)
     ("Precise", cv::DIST_MASK_PRECISE);
 
 /// distance transform label types
@@ -45,14 +46,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int dstType = CV_32F;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="DistanceType")
+        if (key == "DistanceType")
             distanceType = DistType[rhs[i+1].toString()];
-        else if (key=="MaskSize")
+        else if (key == "MaskSize")
             maskSize = (rhs[i+1].isChar()) ?
                 DistMask[rhs[i+1].toString()] : rhs[i+1].toInt();
-        else if (with_labels && key=="LabelType")
+        else if (with_labels && key == "LabelType")
             labelType = DistLabelTypes[rhs[i+1].toString()];
-        else if (!with_labels && key=="DstType")
+        else if (!with_labels && key == "DstType")
             dstType = ClassNameMap[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error",

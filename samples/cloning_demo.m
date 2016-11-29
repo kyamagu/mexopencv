@@ -32,20 +32,20 @@ imgs = {
     'mask.png'
     'destination1.png'
 };
-if ~exist(dirRoot, 'dir')
+if ~isdir(dirRoot)
     mkdir(dirRoot);
     disp('Downloading images...')
     baseURL = 'https://cdn.rawgit.com/opencv/opencv_extra/3.1.0/testdata/cv/cloning/';
     for i=1:numel(dirs)
         d = fullfile(dirRoot, dirs{i});
-        if ~exist(d, 'dir')
+        if ~isdir(d)
             mkdir(d);
             N = numel(imgs);
             if i > 3, N = N - 1; end
             for j=1:N
                 f = fullfile(d, imgs{j});
                 if ~exist(f, 'file')
-                    url = strrep(fullfile(baseURL, dirs{i}, imgs{j}), '\', '/');
+                    url = [baseURL, dirs{i}, '/', imgs{j}]
                     urlwrite(url, f);
                 end
             end
@@ -53,13 +53,15 @@ if ~exist(dirRoot, 'dir')
     end
 end
 
+opts = {'FlipChannels',true};
+
 %% Normal Cloning
 src = imread(fullfile(dirRoot, dirs{1}, imgs{1}));
 dst = imread(fullfile(dirRoot, dirs{1}, imgs{3}));
 mask = imread(fullfile(dirRoot, dirs{1}, imgs{2}));
 
 p = [400 100];
-result = cv.seamlessClone(src, dst, mask, p, 'Method','NormalClone');
+result = cv.seamlessClone(src, dst, mask, p, 'Method','NormalClone', opts{:});
 
 figure('Name','Normal Cloning')
 subplot(221), imshow(src), title('source')
@@ -73,7 +75,7 @@ dst = imread(fullfile(dirRoot, dirs{2}, imgs{3}));
 mask = imread(fullfile(dirRoot, dirs{2}, imgs{2}));
 
 p = [size(dst,2) size(dst,1)]/2;
-result = cv.seamlessClone(src, dst, mask, p, 'Method','MixedClone');
+result = cv.seamlessClone(src, dst, mask, p, 'Method','MixedClone', opts{:});
 
 figure('Name','Mixed Cloning')
 subplot(221), imshow(src), title('source')
@@ -87,7 +89,8 @@ dst = imread(fullfile(dirRoot, dirs{3}, imgs{3}));
 mask = imread(fullfile(dirRoot, dirs{3}, imgs{2}));
 
 p = [size(dst,2) size(dst,1)]/2;
-result = cv.seamlessClone(src, dst, mask, p, 'Method','MonochromeTransfer');
+result = cv.seamlessClone(src, dst, mask, p, ...
+    'Method','MonochromeTransfer', opts{:});
 
 figure('Name','Monochrome Transfer')
 subplot(221), imshow(src), title('source')
@@ -99,7 +102,7 @@ subplot(224), imshow(result), title('cloned')
 src = imread(fullfile(dirRoot, dirs{4}, imgs{1}));
 mask = imread(fullfile(dirRoot, dirs{4}, imgs{2}));
 
-result = cv.colorChange(src, mask, 'R',1.5, 'G',0.5, 'B',0.5);
+result = cv.colorChange(src, mask, 'R',1.5, 'G',0.5, 'B',0.5, opts{:});
 
 figure('Name','Color Change')
 subplot(221), imshow(src), title('source')
@@ -110,7 +113,7 @@ subplot(224), imshow(result), title('cloned')
 src = imread(fullfile(dirRoot, dirs{5}, imgs{1}));
 mask = imread(fullfile(dirRoot, dirs{5}, imgs{2}));
 
-result = cv.illuminationChange(src, mask, 'Alpha',0.2, 'Beta',0.4);
+result = cv.illuminationChange(src, mask, 'Alpha',0.2, 'Beta',0.4, opts{:});
 
 figure('Name','Illumination change')
 subplot(221), imshow(src), title('source')
@@ -122,7 +125,7 @@ src = imread(fullfile(dirRoot, dirs{6}, imgs{1}));
 mask = imread(fullfile(dirRoot, dirs{6}, imgs{2}));
 
 result = cv.textureFlattening(src, mask, ...
-    'LowThreshold',30, 'HighThreshold',45, 'KernelSize',3);
+    'LowThreshold',30, 'HighThreshold',45, 'KernelSize',3, opts{:});
 
 figure('Name','Texture Flattening')
 subplot(221), imshow(src), title('source')

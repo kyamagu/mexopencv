@@ -34,19 +34,19 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double max_theta = CV_PI;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Rho")
+        if (key == "Rho")
             rho = rhs[i+1].toDouble();
-        else if (key=="Theta")
+        else if (key == "Theta")
             theta = rhs[i+1].toDouble();
-        else if (key=="Threshold")
+        else if (key == "Threshold")
             threshold = rhs[i+1].toInt();
-        else if (key=="SRN")
+        else if (key == "SRN")
             srn = rhs[i+1].toDouble();
-        else if (key=="STN")
+        else if (key == "STN")
             stn = rhs[i+1].toDouble();
-        else if (key=="MinTheta")
+        else if (key == "MinTheta")
             min_theta = rhs[i+1].toDouble();
-        else if (key=="MaxTheta")
+        else if (key == "MaxTheta")
             max_theta = rhs[i+1].toDouble();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

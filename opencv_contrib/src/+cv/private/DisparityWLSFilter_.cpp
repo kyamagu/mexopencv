@@ -268,6 +268,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             obj_[++last_id] = createDisparityWLSFilter(matcher_left);
         }
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
     // static methods calls
@@ -351,9 +352,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Big operation switch
     Ptr<DisparityWLSFilter> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "clear") {
         nargchk(nrhs==2 && nlhs==0);

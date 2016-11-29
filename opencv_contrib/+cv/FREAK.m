@@ -1,5 +1,5 @@
 classdef FREAK < handle
-    %FREAK  Class implementing the FREAK (Fast Retina Keypoint) keypoint descriptor.
+    %FREAK  Class implementing the FREAK (Fast Retina Keypoint) keypoint descriptor
     %
     % As described in [AOV12].
     %
@@ -84,7 +84,7 @@ classdef FREAK < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -210,7 +210,7 @@ classdef FREAK < handle
         end
 
         function [descriptors, keypoints] = compute(this, img, keypoints)
-            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set.
+            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set
             %
             %    [descriptors, keypoints] = obj.compute(img, keypoints)
             %    [descriptors, keypoints] = obj.compute(imgs, keypoints)

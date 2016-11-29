@@ -257,14 +257,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs>=2 && nlhs<=1);
         obj_[++last_id] = create_Retina(rhs.begin() + 2, rhs.end());
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
 
     // Big operation switch
     Ptr<Retina> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "clear") {
         nargchk(nrhs==2 && nlhs==0);
@@ -431,7 +435,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "getParvoRAW2") {
         nargchk(nrhs==2 && nlhs<=1);
-        Mat retinaOutput_parvo = obj->getParvoRAW();
+        Mat retinaOutput_parvo(obj->getParvoRAW());
         plhs[0] = MxArray(retinaOutput_parvo);
     }
     else if (method == "getMagno") {
@@ -448,7 +452,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "getMagnoRAW2") {
         nargchk(nrhs==2 && nlhs<=1);
-        Mat retinaOutput_magno = obj->getMagnoRAW();
+        Mat retinaOutput_magno(obj->getMagnoRAW());
         plhs[0] = MxArray(retinaOutput_magno);
     }
     else if (method == "setColorSaturation") {

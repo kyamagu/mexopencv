@@ -28,7 +28,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     bool measureDist = false;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="MeasureDist")
+        if (key == "MeasureDist")
             measureDist = rhs[i+1].toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
@@ -47,6 +47,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         result = pointPolygonTest(contour, pt, measureDist);
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error", "Invalid input");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid contour argument");
     plhs[0] = MxArray(result);
 }

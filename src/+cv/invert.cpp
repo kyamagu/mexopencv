@@ -37,7 +37,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int method = cv::DECOMP_LU;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Method")
+        if (key == "Method")
             method = InvMethods[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error",

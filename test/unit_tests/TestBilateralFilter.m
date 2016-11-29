@@ -1,5 +1,6 @@
 classdef TestBilateralFilter
     %TestBilateralFilter
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','img001.jpg');
     end

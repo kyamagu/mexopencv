@@ -1,5 +1,5 @@
 classdef ORB < handle
-    %ORB  Class implementing the ORB (oriented BRIEF) keypoint detector and descriptor extractor.
+    %ORB  Class implementing the ORB (oriented BRIEF) keypoint detector and descriptor extractor
     %
     % As described in [RRKB11]. The algorithm uses FAST in pyramids to detect
     % stable keypoints, selects the strongest features using FAST or Harris
@@ -88,7 +88,7 @@ classdef ORB < handle
 
     methods
         function this = ORB(varargin)
-            %ORB  The ORB constructor.
+            %ORB  The ORB constructor
             %
             %    obj = cv.ORB()
             %    obj = cv.ORB(..., 'OptionName',optionValue, ...)
@@ -145,7 +145,7 @@ classdef ORB < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -271,7 +271,7 @@ classdef ORB < handle
         end
 
         function keypoints = detect(this, img, varargin)
-            %DETECT  Detects keypoints in an image or image set.
+            %DETECT  Detects keypoints in an image or image set
             %
             %    keypoints = obj.detect(img)
             %    keypoints = obj.detect(imgs)
@@ -301,7 +301,7 @@ classdef ORB < handle
         end
 
         function [descriptors, keypoints] = compute(this, img, keypoints)
-            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set.
+            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set
             %
             %    [descriptors, keypoints] = obj.compute(img, keypoints)
             %    [descriptors, keypoints] = obj.compute(imgs, keypoints)

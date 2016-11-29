@@ -1,5 +1,5 @@
 classdef TestHuMoments
-    %TestMoments
+    %TestHuMoments
 
     methods (Static)
         function test_1
@@ -16,7 +16,7 @@ classdef TestHuMoments
             validateattributes(hu, {'double'}, {'vector', 'numel',7});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.HuMoments();
                 throw('UnitTest:Fail');

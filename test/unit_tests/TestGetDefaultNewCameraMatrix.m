@@ -13,7 +13,7 @@ classdef TestGetDefaultNewCameraMatrix
             validateattributes(newcammat, {'double'}, {'size',[3 3]});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.getDefaultNewCameraMatrix();
                 throw('UnitTest:Fail');
@@ -22,4 +22,5 @@ classdef TestGetDefaultNewCameraMatrix
             end
         end
     end
+
 end

@@ -1,5 +1,6 @@
 classdef TestBalanceWhite
     %TestBalanceWhite
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','lena.jpg');
     end
@@ -36,7 +37,7 @@ classdef TestBalanceWhite
             validateattributes(dst, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.balanceWhite();
                 throw('UnitTest:Fail');
@@ -45,4 +46,5 @@ classdef TestBalanceWhite
             end
         end
     end
+
 end

@@ -22,4 +22,5 @@ classdef TestCalibrateRobertson
             validateattributes(R, {'single'}, {'size',size(imgs{1})});
         end
     end
+
 end

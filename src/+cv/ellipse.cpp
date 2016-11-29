@@ -38,21 +38,22 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int shift = 0;
     for (int i=(rrect_variant ? 2 : 3); i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Angle" && !rrect_variant)
+        if (key == "Angle" && !rrect_variant)
             angle = rhs[i+1].toDouble();
-        else if (key=="StartAngle" && !rrect_variant)
+        else if (key == "StartAngle" && !rrect_variant)
             startAngle = rhs[i+1].toDouble();
-        else if (key=="EndAngle" && !rrect_variant)
+        else if (key == "EndAngle" && !rrect_variant)
             endAngle = rhs[i+1].toDouble();
-        else if (key=="Color")
-            color = rhs[i+1].toScalar();
-        else if (key=="Thickness")
+        else if (key == "Color")
+            color = (rhs[i+1].isChar()) ?
+                ColorType[rhs[i+1].toString()] : rhs[i+1].toScalar();
+        else if (key == "Thickness")
             thickness = (rhs[i+1].isChar()) ?
                 ThicknessType[rhs[i+1].toString()] : rhs[i+1].toInt();
-        else if (key=="LineType")
+        else if (key == "LineType")
             lineType = (rhs[i+1].isChar()) ?
                 LineType[rhs[i+1].toString()] : rhs[i+1].toInt();
-        else if (key=="Shift" && !rrect_variant)
+        else if (key == "Shift" && !rrect_variant)
             shift = rhs[i+1].toInt();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

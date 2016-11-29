@@ -15,9 +15,9 @@ classdef TestGetStructuringElement
             end
         end
 
-        function test_error_1
+        function test_error_unrecognized_option
             try
-                cv.getStructuringElement(1);
+                cv.getStructuringElement('foo','bar');
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

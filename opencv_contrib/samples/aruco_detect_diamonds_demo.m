@@ -16,7 +16,7 @@ showRejected = false;      % Show rejected candidates too
 estimatePose = false;      % Wheather to estimate pose or not
 if estimatePose
     % calibrated camera parameters
-    load camera_parameters.mat camMatrix distCoeffs
+    load camera_parameters.mat -mat camMatrix distCoeffs
     %camMatrix = eye(3);
     %distCoeffs = zeros(1,5);
 else
@@ -68,7 +68,7 @@ if ~vid.isOpened(), error('failed to initialize VideoCapture'); end
 %% Main loop
 totalTime = 0;
 totalIterations = 0;
-hImg = gobjects(0);
+hImg = [];
 while true
     % grab frame
     img = vid.read();

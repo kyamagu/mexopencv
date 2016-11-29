@@ -36,33 +36,33 @@
 %
 % * __SqDiff__:
 %
-%        R(x,y) = \sum_{x',y'} (T(x',y') - I(x+x',y+y'))^2
+%        R(x,y) = sum_{x',y'} (T(x',y') - I(x+x',y+y'))^2
 %
 % * __SqDiffNormed__:
 %
-%        R(x,y) = \sum_{x',y'} (T(x',y') - I(x+x',y+y'))^2 /
-%                 sqrt(\sum_{x',y'} (T(x',y')^2) * sum_{x',y'} (I(x+x',y+y')^2))
+%        R(x,y) = sum_{x',y'} (T(x',y') - I(x+x',y+y'))^2 /
+%                 sqrt(sum_{x',y'} (T(x',y')^2) * sum_{x',y'} (I(x+x',y+y')^2))
 %
 % * __CCorr__:
 %
-%        R(x,y) = \sum_{x',y'} (T(x',y') * I(x+x',y+y'))
+%        R(x,y) = sum_{x',y'} (T(x',y') * I(x+x',y+y'))
 %
 % * __CCorrNormed__:
 %
-%        R(x,y) = \sum_{x',y'} (T(x',y') * I(x+x',y+y')) /
-%                 sqrt(\sum_{x',y'} (T(x',y')^2) * sum_{x',y'} (I(x+x',y+y')^2))
+%        R(x,y) = sum_{x',y'} (T(x',y') * I(x+x',y+y')) /
+%                 sqrt(sum_{x',y'} (T(x',y')^2) * sum_{x',y'} (I(x+x',y+y')^2))
 %
 % * __CCoeff__:
 %
-%        R(x,y) = \sum_{x',y'} (T'(x',y') * I'(x+x',y+y')), where
+%        R(x,y) = sum_{x',y'} (T'(x',y') * I'(x+x',y+y')), where
 %
-%        T'(x',y') = T(x',y') - 1 / (w*h) * \sum_{x'',y''} T(x'',y'')
-%        I'(x+x',y+y') = I(x+x',y+y') - 1 / (w*h) * \sum_{x'',y''} I(x+x'',y+y'')
+%        T'(x',y') = T(x',y') - 1 / (w*h) * sum_{x'',y''} T(x'',y'')
+%        I'(x+x',y+y') = I(x+x',y+y') - 1 / (w*h) * sum_{x'',y''} I(x+x'',y+y'')
 %
 % * __CCoeffNormed__:
 %
-%        R(x,y) = \sum_{x',y'} (T'(x',y') * I'(x+x',y+y')) /
-%                 sqrt(\sum_{x',y'} (T'(x',y')^2) * sum_{x',y'} (I'(x+x',y+y')^2))
+%        R(x,y) = sum_{x',y'} (T'(x',y') * I'(x+x',y+y')) /
+%                 sqrt(sum_{x',y'} (T'(x',y')^2) * sum_{x',y'} (I'(x+x',y+y')^2))
 %
 % After the function finishes the comparison, the best matches can be found as
 % global minimums (when 'SqDiff' was used) or maximums (when 'CCorr' or

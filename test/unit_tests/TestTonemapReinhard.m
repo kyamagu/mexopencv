@@ -14,4 +14,5 @@ classdef TestTonemapReinhard
                 {'size',size(hdr), 'nonnegative'});
         end
     end
+
 end

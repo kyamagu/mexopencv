@@ -71,14 +71,18 @@ classdef StereoSGBM < handle
 
         % Truncation value for prefiltering image pixels, default 0
         PreFilterCap
-        % uniqueness ratio, default 0
+        % uniqueness ratio, Decides when to accept the computed disparity in
+        % post-filtering, default 0
         UniquenessRatio
         % first parameter controlling the disparity smoothness, default 0
         P1
         % second parameter controlling the disparity smoothness, default 0
         P2
-        % one of 'SGBM' (default), 'SGBM3Way', or 'HH' (runs the full-scale
-        % two-pass dynamic programming algorithm).
+        % Algorithm Mode, default 'SGBM'
+        %
+        % * __SGBM__
+        % * __SGBM3Way__
+        % * __HH__ runs the full-scale two-pass dynamic programming algorithm
         Mode
     end
 
@@ -187,7 +191,7 @@ classdef StereoSGBM < handle
     %% Algorithm
     methods
         function clear(this)
-            %CLEAR  Clears the algorithm state.
+            %CLEAR  Clears the algorithm state
             %
             %    obj.clear()
             %
@@ -197,7 +201,7 @@ classdef StereoSGBM < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if algorithm object is empty.
+            %EMPTY  Checks if algorithm object is empty
             %
             %    b = obj.empty()
             %
@@ -211,7 +215,7 @@ classdef StereoSGBM < handle
         end
 
         function name = getDefaultName(this)
-            %GETDEFAULTNAME  Returns the algorithm string identifier.
+            %GETDEFAULTNAME  Returns the algorithm string identifier
             %
             %    name = obj.getDefaultName()
             %
@@ -225,7 +229,7 @@ classdef StereoSGBM < handle
         end
 
         function save(this, filename)
-            %SAVE  Saves the algorithm to a file.
+            %SAVE  Saves the algorithm to a file
             %
             %    obj.save(filename)
             %
@@ -240,7 +244,7 @@ classdef StereoSGBM < handle
         end
 
         function load(this, fname_or_str, varargin)
-            %LOAD  Loads algorithm from a file or a string.
+            %LOAD  Loads algorithm from a file or a string
             %
             %    obj.load(fname)
             %    obj.load(str, 'FromString',true)

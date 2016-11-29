@@ -17,7 +17,7 @@ classdef TestHoughLinesP
                 'MinLineLength',0, 'MaxLineGap',0);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.HoughLinesP();
                 throw('UnitTest:Fail');

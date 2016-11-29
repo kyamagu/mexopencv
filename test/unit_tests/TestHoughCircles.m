@@ -12,7 +12,7 @@ classdef TestHoughCircles
                 {'vector', 'numel',3, 'real'}), circles);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.HoughCircles();
                 throw('UnitTest:Fail');

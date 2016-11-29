@@ -1,5 +1,5 @@
 classdef DescriptorExtractor < handle
-    %DESCRIPTOREXTRACTOR  Common interface of 2D image Descriptor Extractors.
+    %DESCRIPTOREXTRACTOR  Common interface of 2D image Descriptor Extractors
     %
     % Class for computing descriptors for image keypoints.
     %
@@ -34,7 +34,7 @@ classdef DescriptorExtractor < handle
 
     methods
         function this = DescriptorExtractor(extractorType, varargin)
-            %DESCRIPTOREXTRACTOR  Creates a descriptor extractor by name.
+            %DESCRIPTOREXTRACTOR  Creates a descriptor extractor by name
             %
             %    extractor = cv.DescriptorExtractor(type)
             %    extractor = cv.DescriptorExtractor(type, 'OptionName',optionValue, ...)
@@ -102,7 +102,7 @@ classdef DescriptorExtractor < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = extractor.empty()
             %
@@ -226,7 +226,7 @@ classdef DescriptorExtractor < handle
         end
 
         function [descriptors, keypoints] = compute(this, img, keypoints)
-            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set.
+            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set
             %
             %    [descriptors, keypoints] = extractor.compute(img, keypoints)
             %    [descriptors, keypoints] = extractor.compute(imgs, keypoints)
@@ -235,13 +235,14 @@ classdef DescriptorExtractor < handle
             % * __img__ Image (first variant).
             % * __imgs__ Image set (second variant), cell array of images.
             % * __keypoints__ Input collection of keypoints. Keypoints for
-            %       which a descriptor cannot be computed are removed.
-            %       Sometimes new keypoints can be added, for example: cv.SIFT
-            %       duplicates keypoint with several dominant orientations
-            %       (for each orientation). In the first variant, this is a
-            %       struct-array of detected keypoints. In the second variant,
-            %       it is a cell-array, where `keypoints{i}` is a set of keypoints
-            %       detected in `images{i}` (a struct-array like before).
+            %       which a descriptor cannot be computed are removed and the
+            %       remaining ones may be reordered. Sometimes new keypoints
+            %       can be added, for example: cv.SIFT duplicates keypoint
+            %       with several dominant orientations (for each orientation).
+            %       In the first variant, this is a struct-array of detected
+            %       keypoints. In the second variant, it is a cell-array,
+            %       where `keypoints{i}` is a set of keypoints detected in
+            %       `images{i}` (a struct-array like before).
             %       Each keypoint is a struct with the following fields:
             %       * __pt__ coordinates of the keypoint `[x,y]`
             %       * __size__ diameter of the meaningful keypoint neighborhood

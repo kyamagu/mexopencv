@@ -39,14 +39,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==2 && nlhs<=1);
         obj_[++last_id] = createGeneralizedHoughGuil();
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
 
     // Big operation switch
     Ptr<GeneralizedHoughGuil> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "clear") {
         nargchk(nrhs==2 && nlhs==0);
@@ -58,9 +62,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         bool loadFromString = false;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="ObjName")
+            if (key == "ObjName")
                 objname = rhs[i+1].toString();
-            else if (key=="FromString")
+            else if (key == "FromString")
                 loadFromString = rhs[i+1].toBool();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
@@ -116,7 +120,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         Point templCenter(-1,-1);
         for (int i=(edges_variant ? 5 : 3); i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="Center")
+            if (key == "Center")
                 templCenter = rhs[i+1].toPoint();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",

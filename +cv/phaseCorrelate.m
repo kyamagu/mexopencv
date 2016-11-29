@@ -5,9 +5,9 @@
 %    [...] = cv.phaseCorrelate(..., 'OptionName',optionValue, ...)
 %
 % ## Input
-% * __src1__ First source floating point array (single-channel `single` or
+% * __src1__ First source floating-point array (single-channel `single` or
 %       `double`).
-% * __src2__ Second source floating point array (single-channel `single` or
+% * __src2__ Second source floating-point array (single-channel `single` or
 %       `double`), of same size and type as `src1`.
 %
 % ## Output
@@ -16,7 +16,7 @@
 %       0 and 1 (optional).
 %
 % ## Options
-% * __Window__ Floating point array with windowing coefficients to reduce edge
+% * __Window__ Floating-point array with windowing coefficients to reduce edge
 %       effects (optional). Not set by default.
 %
 % The function is used to detect translational shifts that occur between two

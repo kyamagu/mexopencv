@@ -2,7 +2,7 @@
 %
 %    dst = cv.resize(src, dsize)
 %    dst = cv.resize(src, fx, fy)
-%    dst = cv.resize(..., 'Interpolation', interpolation)
+%    dst = cv.resize(..., 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __src__ input image.

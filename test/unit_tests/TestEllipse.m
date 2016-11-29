@@ -64,7 +64,7 @@ classdef TestEllipse
             end
         end
 
-        function test_error_nonexistant_option
+        function test_error_unrecognized_option
             try
                 cv.ellipse(zeros(100), [50,50], [10,20], 'foo','bar');
                 throw('UnitTest:Fail');

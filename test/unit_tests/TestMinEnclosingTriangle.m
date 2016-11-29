@@ -1,5 +1,6 @@
 classdef TestMinEnclosingTriangle
     %TestMinEnclosingTriangle
+
     properties (Constant)
         p = [0 0; 1 0; 2 2; 3 3; 3 4];
     end
@@ -19,7 +20,7 @@ classdef TestMinEnclosingTriangle
             validateattributes(a, {'numeric'}, {'scalar'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.minEnclosingTriangle();
                 throw('UnitTest:Fail');

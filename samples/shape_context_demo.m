@@ -73,9 +73,12 @@ close(hWait)
 
 %%
 % show all distances (sorted)
-t = array2table(dist(:), 'VariableNames',{'Distance'}, ...
-    'RowNames',cellstr(num2str((1:numel(dist))')));
-display(sortrows(t))
+if ~mexopencv.isOctave()
+    %HACK: not implemented in Octave
+    t = array2table(dist(:), 'VariableNames',{'Distance'}, ...
+        'RowNames',cellstr(num2str((1:numel(dist))')));
+    display(sortrows(t))
+end
 
 %%
 % show best 3 image matches

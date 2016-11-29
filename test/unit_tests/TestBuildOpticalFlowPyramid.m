@@ -1,5 +1,6 @@
 classdef TestBuildOpticalFlowPyramid
     %TestBuildOpticalFlowPyramid
+
     properties (Constant)
         img = fullfile(mexopencv.root(),'test','fruits.jpg');
     end
@@ -32,7 +33,7 @@ classdef TestBuildOpticalFlowPyramid
                 {'2d'}), pyramid);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.buildOpticalFlowPyramid();
                 throw('UnitTest:Fail');
@@ -41,4 +42,5 @@ classdef TestBuildOpticalFlowPyramid
             end
         end
     end
+
 end

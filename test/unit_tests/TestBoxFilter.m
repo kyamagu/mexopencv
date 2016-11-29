@@ -1,5 +1,6 @@
 classdef TestBoxFilter
     %TestBoxFilter
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','fruits.jpg');
     end
@@ -24,7 +25,7 @@ classdef TestBoxFilter
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.boxFilter();
                 throw('UnitTest:Fail');
@@ -33,4 +34,5 @@ classdef TestBoxFilter
             end
         end
     end
+
 end

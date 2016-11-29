@@ -11,7 +11,7 @@ classdef TestBuildPyramid
             assert(isequal(pyr{1}, img));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.buildPyramid();
                 throw('UnitTest:Fail');

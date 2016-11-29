@@ -40,14 +40,16 @@ classdef EdgeAwareInterpolator < handle
         %
         % Should be in the range of 0 to 1000.
         Lambda
-        % Sets whether the cv.fastGlobalSmootherFilter post-processing is
-        % employed.
+        % Sets whether the cv.FastGlobalSmootherFilter.fastGlobalSmootherFilter
+        % post-processing is employed.
         %
         % It is turned on by default.
         UsePostProcessing
-        % Sets the respective cv.fastGlobalSmootherFilter parameter.
+        % Sets the respective
+        % cv.FastGlobalSmootherFilter.fastGlobalSmootherFilter parameter.
         FGSLambda
-        % Sets the respective cv.fastGlobalSmootherFilter parameter.
+        % Sets the respective
+        % cv.FastGlobalSmootherFilter.fastGlobalSmootherFilter parameter.
         FGSSigma
     end
 
@@ -88,7 +90,7 @@ classdef EdgeAwareInterpolator < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %

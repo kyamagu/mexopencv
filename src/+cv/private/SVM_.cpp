@@ -91,8 +91,11 @@ ParamGrid toParamGrid(const MxArray& m)
     // SVM::trainAuto permits setting step<=1 if we want to disable optimizing
     // a certain paramter, in which case the value is taken from the props.
     // Besides the check is done by function itself, so its not needed here.
-    //if (!g.check())
-    //    mexErrMsgIdAndTxt("mexopencv:error","Invalid argument to grid parameter");
+    /*
+    if (!g.check())
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Invalid argument to grid parameter");
+    */
     return g;
 }
 
@@ -194,14 +197,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==2 && nlhs<=1);
         obj_[++last_id] = SVM::create();
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
 
     // Big operation switch
     Ptr<SVM> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "clear") {
         nargchk(nrhs==2 && nlhs==0);

@@ -2,7 +2,7 @@
 % Demonstrates how to use cv.floodFill
 %
 
-%% Input image
+%% Input image and mask
 % some color image with defined connected components (as squares)
 img = zeros([256,256,3],'uint8');
 img(:,:,1) = 255;
@@ -16,7 +16,7 @@ imshow(img)
 % seed starting point
 seed = [200 100];
 
-%% Mask
+%%
 % mask: zeros allowed to change, non-zeros are not changed
 % (must be 2 pixels taller/wider)
 mask = zeros(size(img,1), size(img,2), 'uint8');
@@ -27,23 +27,17 @@ imshow(mask)
 
 %%
 % Alternative images
-%{
-img = imread(fullfile(mexopencv.root(),'test','pic3.png'));
-seed = [200 200];
-
-mask = zeros(size(img,1)+2, size(img,2)+2, 'uint8');
-mask(:,290:end) = 128;
-%}
-
-%%
-% Alternative images
-%{
-img = imread(fullfile(mexopencv.root(),'test','pic5.png'));
-seed = [300 200];
-
-mask = zeros(size(img,1)+2, size(img,2)+2, 'uint8');
-mask(230:end,:) = 128;
-%}
+if false
+    img = imread(fullfile(mexopencv.root(),'test','pic3.png'));
+    seed = [200 200];
+    mask = zeros(size(img,1)+2, size(img,2)+2, 'uint8');
+    mask(:,290:end) = 128;
+elseif false
+    img = imread(fullfile(mexopencv.root(),'test','pic5.png'));
+    seed = [300 200];
+    mask = zeros(size(img,1)+2, size(img,2)+2, 'uint8');
+    mask(230:end,:) = 128;
+end
 
 %% Flood-Filling without masking
 % we specify 8-connectivity, a floating range, and max lower/uppder diffs

@@ -70,14 +70,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             DPMDetector::create(rhs[2].toVector<string>(),
                 rhs[3].toVector<string>());
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
 
     // Big operation switch
     Ptr<DPMDetector> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "isEmpty") {
         nargchk(nrhs==2 && nlhs<=1);

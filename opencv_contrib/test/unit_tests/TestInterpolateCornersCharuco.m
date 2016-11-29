@@ -18,7 +18,7 @@ classdef TestInterpolateCornersCharuco
             assert(isequal(num,numel(charucoIds)));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.interpolateCornersCharuco();
                 throw('UnitTest:Fail');
@@ -27,6 +27,7 @@ classdef TestInterpolateCornersCharuco
             end
         end
     end
+
 end
 
 function [img, board] = get_image_markers()

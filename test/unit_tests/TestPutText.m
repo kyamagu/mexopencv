@@ -16,7 +16,7 @@ classdef TestPutText
             validateattributes(out, {class(im)}, {'size',size(im)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.putText();
                 throw('UnitTest:Fail');

@@ -44,4 +44,5 @@ classdef TestStitcher
             validateattributes(wscale, {'numeric'}, {'scalar'});
         end
     end
+
 end

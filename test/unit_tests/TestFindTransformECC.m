@@ -1,5 +1,6 @@
 classdef TestFindTransformECC
     %TestFindTransformECC
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','fruits.jpg');
     end
@@ -71,7 +72,7 @@ classdef TestFindTransformECC
             assert(norm(mapHomography - homoGround) < 0.1, 'Accuracy error');
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.findTransformECC();
                 throw('UnitTest:Fail');
@@ -80,4 +81,5 @@ classdef TestFindTransformECC
             end
         end
     end
+
 end

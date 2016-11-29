@@ -4,7 +4,7 @@
 % This program demonstrates the use of |cv.FileStorage| for serialization in
 % OpenCV. FileStorage allows you to serialize to various formats specified by
 % the file end type. You should try using different file extensions
-% (e.g. |.yaml|, |.yml|, |.xml|, |.xml.gz|, |.yaml.gz|, etc...)
+% (e.g. |.yaml|, |.yml|, |.xml|, |.xml.gz|, |.yaml.gz|, etc.)
 %
 % <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/filestorage.cpp>
 %

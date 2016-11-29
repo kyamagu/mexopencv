@@ -34,21 +34,22 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     bool bottomLeftOrigin = false;
     for (int i=3; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="FontFace")
+        if (key == "FontFace")
             fontFace = FontFace[rhs[i+1].toString()];
-        else if (key=="FontStyle")
+        else if (key == "FontStyle")
             fontStyle = FontStyle[rhs[i+1].toString()];
-        else if (key=="FontScale")
+        else if (key == "FontScale")
             fontScale = rhs[i+1].toDouble();
-        else if (key=="Color")
-            color = rhs[i+1].toScalar();
-        else if (key=="Thickness")
+        else if (key == "Color")
+            color = (rhs[i+1].isChar()) ?
+                ColorType[rhs[i+1].toString()] : rhs[i+1].toScalar();
+        else if (key == "Thickness")
             thickness = (rhs[i+1].isChar()) ?
                 ThicknessType[rhs[i+1].toString()] : rhs[i+1].toInt();
-        else if (key=="LineType")
+        else if (key == "LineType")
             lineType = (rhs[i+1].isChar()) ?
                 LineType[rhs[i+1].toString()] : rhs[i+1].toInt();
-        else if (key=="BottomLeftOrigin")
+        else if (key == "BottomLeftOrigin")
             bottomLeftOrigin = rhs[i+1].toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

@@ -1,5 +1,6 @@
 classdef TestStereoCalibrate
     %TestStereoCalibrate
+
     properties (Constant)
         fields = {'cameraMatrix1', 'distCoeffs1', ...
             'cameraMatrix2', 'distCoeffs2', 'R', 'T', 'E', 'F', 'reprojErr'};
@@ -68,7 +69,7 @@ classdef TestStereoCalibrate
             validateattributes(S.reprojErr, {'numeric'}, {'scalar'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.stereoCalibrate();
                 throw('UnitTest:Fail');

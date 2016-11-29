@@ -1,5 +1,6 @@
 classdef TestFastGlobalSmootherFilter
     %TestFastGlobalSmootherFilter
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','lena.jpg');
     end

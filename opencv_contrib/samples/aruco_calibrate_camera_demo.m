@@ -76,7 +76,7 @@ if ~vid.isOpened(), error('failed to initialize VideoCapture'); end
 allCorners = {};
 allIds = {};
 imgSize = [];
-hImg = gobjects(0); hFig = gobjects(0);
+hImg = []; hFig = [];
 while true
     % grab frame
     img = vid.read();
@@ -152,4 +152,4 @@ if calibrationFlags{4}, fprintf('Aspect Ratio: %f\n', aspectRatio); end
 disp('Camera Matrix:'); disp(camMatrix)
 disp('Distortion Coefficients:'); disp(distCoeffs)
 fprintf('Average Reprojection Error = %f\n', repError);
-save camera_parameters.mat camMatrix distCoeffs
+save camera_parameters.mat -mat camMatrix distCoeffs

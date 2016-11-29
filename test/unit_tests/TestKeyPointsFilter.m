@@ -1,5 +1,6 @@
 classdef TestKeyPointsFilter
     %TestKeyPointsFilter
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','cat.jpg');
         fields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};

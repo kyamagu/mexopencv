@@ -7,7 +7,7 @@
 %% MNIST dataset
 % download/extract files if needed
 dirMNIST = fullfile(mexopencv.root(), 'test', 'mnist');
-if ~exist(dirMNIST, 'dir')
+if ~isdir(dirMNIST)
     % download
     baseURL = 'http://yann.lecun.com/exdb/mnist/';
     files = {
@@ -21,7 +21,7 @@ if ~exist(dirMNIST, 'dir')
     for i=1:numel(files)
         gzFile = fullfile(dirMNIST, files{i});
         if ~exist(gzFile, 'file')
-            url = strrep(fullfile(baseURL, files{i}), '\', '/');
+            url = [baseURL, files{i}];
             urlwrite(url, gzFile);
         end
         %HACK: unfortunately MATLAB's gunzip (with Java's GZIPInputStream)
@@ -76,6 +76,8 @@ title(sprintf('label = %d',dtest(1).label))
 
 %% Display
 % show a sample of the first 100 train images corresponding to digit 8
-idx = find([dtrain.label] == 8);
-idx(101:end) = [];
-figure, montage(cat(4, dtrain(idx).image))
+if mexopencv.require('images')
+    idx = find([dtrain.label] == 8);
+    idx(101:end) = [];
+    figure, montage(cat(4, dtrain(idx).image))
+end

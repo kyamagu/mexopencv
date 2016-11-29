@@ -14,7 +14,7 @@ classdef TestStereoRectifyUncalibrated
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.stereoRectifyUncalibrated();
                 throw('UnitTest:Fail');

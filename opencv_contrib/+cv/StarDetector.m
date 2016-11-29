@@ -1,5 +1,5 @@
 classdef StarDetector < handle
-    %STARDETECTOR  The class implements the Star keypoint detector.
+    %STARDETECTOR  The class implements the Star keypoint detector
     %
     % ## References
     % [Agrawal08]:
@@ -77,7 +77,7 @@ classdef StarDetector < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -152,7 +152,7 @@ classdef StarDetector < handle
     %% Features2D: FeatureDetector
     methods
         function keypoints = detect(this, img, varargin)
-            %DETECT  Detects keypoints in an image or image set.
+            %DETECT  Detects keypoints in an image or image set
             %
             %    keypoints = obj.detect(img)
             %    keypoints = obj.detect(imgs)

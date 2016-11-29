@@ -34,7 +34,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int interpolation = cv::INTER_LINEAR;
     for (int i=(scale_variant ? 3 : 2); i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Interpolation")
+        if (key == "Interpolation")
             interpolation = InterpType[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error",

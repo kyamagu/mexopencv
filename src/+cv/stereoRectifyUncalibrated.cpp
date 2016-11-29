@@ -28,7 +28,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double threshold = 5;
     for (int i=4; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Threshold")
+        if (key == "Threshold")
             threshold = rhs[i+1].toDouble();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
@@ -42,7 +42,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     bool b = false;
     if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
         Mat points1(rhs[0].toMat(CV_64F)),
-            points2(rhs[0].toMat(CV_64F));
+            points2(rhs[1].toMat(CV_64F));
         b = stereoRectifyUncalibrated(points1, points2, F, imgSize, H1, H2,
             threshold);
     }

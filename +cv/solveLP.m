@@ -1,21 +1,21 @@
-%SOLVELP  Solve given (non-integer) linear programming problem using the Simplex Algorithm.
+%SOLVELP  Solve given (non-integer) linear programming problem using the Simplex Algorithm
 %
 %    [z, res] = cv.solveLP(Func, Constr)
 %    [...] = cv.solveLP(..., 'OptionName', optionValue, ...)
 %
 % ## Input
 % * __Func__ This row-vector corresponds to `c` in the LP problem formulation
-%       (see below). It should contain 32- or 64-bit floating point numbers.
+%       (see below). It should contain 32- or 64-bit floating-point numbers.
 %       As a convenience, column-vector may be also submitted, in the latter
 %       case it is understood to correspond to `c'`.
 % * __Constr__ m-by-n+1 matrix, whose rightmost column corresponds to `b` in
 %       formulation above and the remaining to `A`. It should containt 32- or
-%       64-bit floating point numbers.
+%       64-bit floating-point numbers.
 %
 % ## Output
 % * __z__ The solution will be returned here as a column-vector - it
 %       corresponds to `x` in the formulation above. It will contain 64-bit
-%       floating point numbers.
+%       floating-point numbers.
 % * __res__ Return code. One of:
 %       * __Unbounded__ problem is unbounded (target function can achieve
 %             arbitrary high values)

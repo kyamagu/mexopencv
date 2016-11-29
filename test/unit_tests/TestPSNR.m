@@ -14,7 +14,7 @@ classdef TestPSNR
             x = cv.PSNR(src1, src2);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.PSNR();
                 throw('UnitTest:Fail');

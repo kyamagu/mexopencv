@@ -5,7 +5,7 @@
 %
 % ## Input
 % * __src__ source image, it could be of any type (8/16/32-bit integers or
-%       32/64-bit floating points) and any number of channels from 1 to 4. In
+%       32/64-bit floating-points) and any number of channels from 1 to 4. In
 %       case of 3- and 4-channels images the function expect them in CIELab
 %       colorspace or similar one, where first color component shows
 %       intensity, while second and third shows colors. Nonetheless you can

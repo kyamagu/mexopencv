@@ -13,8 +13,8 @@ fast prototyping of OpenCV application in MATLAB, use of OpenCV as an external
 toolbox in MATLAB, and development of a custom MEX function.
 
 The current version of mexopencv (master branch) is compatible with OpenCV 3.1.
-For older OpenCV versions, please checkout the corresponding releases or
-branches ([v3.0][3], [v2.4][4], [v2.3][5], and [v2.1][6]).
+For older OpenCV versions, please checkout the corresponding branches
+([v3.0][3], [v2.4][4], [v2.3][5], and [v2.1][6]).
 
 Consult the [wiki][7] for help.
 
@@ -132,6 +132,9 @@ Developer documentation can be generated with Doxygen if installed:
 
 This will create HTML files under `doc/`.
 
+Refer to the wiki for detailed instructions on how to compile OpenCV for both
+[MATLAB][18] and [Octave][19].
+
 OS X
 ----
 
@@ -236,8 +239,8 @@ The code may be redistributed under the [BSD 3-Clause license](LICENSE).
 
 [1]: https://travis-ci.org/kyamagu/mexopencv
 [2]: https://ci.appveyor.com/project/kyamagu/mexopencv
-[3]: https://github.com/kyamagu/mexopencv/releases/tag/v3.0.0
-[4]: https://github.com/kyamagu/mexopencv/releases/tag/v2.4.11
+[3]: https://github.com/kyamagu/mexopencv/tree/v3.0
+[4]: https://github.com/kyamagu/mexopencv/tree/v2.4
 [5]: https://github.com/kyamagu/mexopencv/tree/v2.3
 [6]: https://github.com/kyamagu/mexopencv/tree/v2.1
 [7]: https://github.com/kyamagu/mexopencv/wiki
@@ -246,8 +249,10 @@ The code may be redistributed under the [BSD 3-Clause license](LICENSE).
 [10]: http://opencv.org/
 [11]: https://github.com/opencv/opencv/releases/tag/3.1.0
 [12]: https://github.com/opencv/opencv_contrib/releases/tag/3.1.0
-[13]: http://packages.ubuntu.com/zesty/libopencv-dev
+[13]: http://packages.ubuntu.com/yakkety/libopencv-dev
 [14]: https://people.freedesktop.org/~dbn/pkg-config-guide.html
 [15]: http://brew.sh/
 [16]: https://github.com/kyamagu/mexopencv/wiki/Installation-%28Windows%2C-MATLAB%2C-OpenCV-3%29
 [17]: http://kyamagu.github.io/mexopencv/matlab
+[18]: https://github.com/kyamagu/mexopencv/wiki/Installation-%28Linux%2C-MATLAB%2C-OpenCV-3%29
+[19]: https://github.com/kyamagu/mexopencv/wiki/Installation-%28Linux%2C-Octave%2C-OpenCV-3%29

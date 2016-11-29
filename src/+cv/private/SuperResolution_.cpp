@@ -368,14 +368,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==3 && nlhs<=1);
         obj_[++last_id] = createSuperResolution(rhs[2].toString());
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
 
     // Big operation switch
     Ptr<SuperResolution> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "clear") {
         nargchk(nrhs==2 && nlhs==0);
@@ -427,7 +431,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "nextFrame") {
         nargchk(nrhs>=2 && (nrhs%2)==0 && nlhs<=1);
-        bool flip = true;
+        bool flip = false;
         for (int i=2; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key == "FlipChannels")

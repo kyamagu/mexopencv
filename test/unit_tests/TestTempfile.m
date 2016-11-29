@@ -13,13 +13,14 @@ classdef TestTempfile
             assert(strncmp(fname(end-3:end), '.txt', 4));
         end
 
-        function test_error_1
+        function test_error_unrecognized_option
             try
-                cv.tempfile('Foo','bar');
+                cv.tempfile('foo','bar');
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));
             end
         end
     end
+
 end

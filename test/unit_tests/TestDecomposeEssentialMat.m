@@ -1,5 +1,6 @@
 classdef TestDecomposeEssentialMat
     %TestDecomposeEssentialMat
+
     properties (Constant)
         fields = {'R1', 'R2', 't'};
     end
@@ -15,7 +16,7 @@ classdef TestDecomposeEssentialMat
             validateattributes(S.t, {class(E)}, {'vector', 'numel',3});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.decomposeEssentialMat();
                 throw('UnitTest:Fail');

@@ -1,5 +1,5 @@
 classdef GFTTDetector < handle
-    %GFTTDETECTOR  Wrapping class for feature detection using the goodFeaturesToTrack function.
+    %GFTTDETECTOR  Wrapping class for feature detection using the goodFeaturesToTrack function
     %
     % The function finds the most prominent corners in the image or in the
     % specified image region, as described in [Shi94]:
@@ -124,7 +124,7 @@ classdef GFTTDetector < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -199,7 +199,7 @@ classdef GFTTDetector < handle
     %% Features2D: FeatureDetector
     methods
         function keypoints = detect(this, img, varargin)
-            %DETECT  Detects keypoints in an image or image set.
+            %DETECT  Detects keypoints in an image or image set
             %
             %    keypoints = obj.detect(img)
             %    keypoints = obj.detect(imgs)

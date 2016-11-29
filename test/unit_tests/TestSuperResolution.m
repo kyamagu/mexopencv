@@ -37,6 +37,7 @@ classdef TestSuperResolution
                 isequal(optflow.LevelsNumber,3));
         end
     end
+
 end
 
 function fname = get_car_video()

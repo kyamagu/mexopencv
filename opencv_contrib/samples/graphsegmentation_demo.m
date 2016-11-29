@@ -37,6 +37,7 @@ if false
     res(:,:,3) = 0.80;
     res = uint8(255 * cv.cvtColor(res, 'HSV2RGB'));
 else
-    res = label2rgb(out+1, jet(nb_segs), 'k', 'shuffle');
+    out = double(out) + 1;
+    res = label2rgb(out, jet(nb_segs), 'k', 'shuffle');
 end
 imshow(res)

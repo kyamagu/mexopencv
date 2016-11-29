@@ -1,5 +1,6 @@
 classdef TestDecomposeHomographyMat
     %TestDecomposeHomographyMat
+
     properties (Constant)
         fields = {'R', 't', 'n'};
     end
@@ -20,7 +21,7 @@ classdef TestDecomposeHomographyMat
             cellfun(@(n) validateattributes(n, {'numeric'}, {'vector', 'numel',3}), S.n);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.decomposeHomographyMat();
                 throw('UnitTest:Fail');

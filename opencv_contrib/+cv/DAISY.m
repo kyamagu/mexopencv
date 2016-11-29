@@ -1,5 +1,5 @@
 classdef DAISY < handle
-    %DAISY  Class implementing DAISY descriptor.
+    %DAISY  Class implementing DAISY descriptor
     %
     % As described in [Tola10].
     %
@@ -91,7 +91,7 @@ classdef DAISY < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -215,7 +215,7 @@ classdef DAISY < handle
         end
 
         function [descriptors, keypoints] = compute(this, img, keypoints)
-            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set.
+            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set
             %
             %    [descriptors, keypoints] = obj.compute(img, keypoints)
             %    [descriptors, keypoints] = obj.compute(imgs, keypoints)
@@ -271,7 +271,7 @@ classdef DAISY < handle
         end
 
         function descriptor = GetDescriptor(this, y, x, orientation, varargin)
-            %GETDESCRIPTOR  Compute descriptor for the specified position.
+            %GETDESCRIPTOR  Compute descriptor for the specified position
             %
             %    descriptor = obj.GetDescriptor(y, x, orientation)
             %    [...] = obj.GetDescriptor(..., 'OptionName',optionValue, ...)

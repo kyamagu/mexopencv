@@ -69,12 +69,20 @@ function handles = buildGUI(img)
     % show input image
     hFig(1) = figure('Name','Image', 'Position',[100 200 w h], fprops{:});
     hAx(1) = axes('Parent',hFig(1), aprops{:});
-    hImg(1) = imshow(img, 'Parent',hAx(1));
+    if mexopencv.isOctave()
+        hImg(1) = imshow(img);
+    else
+        hImg(1) = imshow(img, 'Parent',hAx(1));
+    end
 
     % show output image
     hFig(2) = figure('Name','Inpaint', 'Position',[200+w 200 w h], fprops{:});
     hAx(2) = axes('Parent',hFig(2), aprops{:});
-    hImg(2) = imshow(img, 'Parent',hAx(2));
+    if mexopencv.isOctave()
+        hImg(2) = imshow(img);
+    else
+        hImg(2) = imshow(img, 'Parent',hAx(2));
+    end
 
     % initialize structs of handles and data
     handles = struct();
@@ -96,8 +104,11 @@ function p = getCurrentPoint(handles, data)
     p = p(1,1:2);
 
     % convert axes coordinates to image pixel coordinates
-    p(1) = axes2pix(data.w, get(handles.hImg(1),'XData'), p(1));
-    p(2) = axes2pix(data.h, get(handles.hImg(1),'YData'), p(2));
+    if ~mexopencv.isOctave() && mexopencv.require('images')
+        %HACK: AXES2PIX not implemented in Octave
+        p(1) = axes2pix(data.w, get(handles.hImg(1),'XData'), p(1));
+        p(2) = axes2pix(data.h, get(handles.hImg(1),'YData'), p(2));
+    end
 end
 
 %% Callback functions

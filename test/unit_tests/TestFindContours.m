@@ -1,5 +1,6 @@
 classdef TestFindContours
     %TestFindContours
+
     properties (Constant)
         img = uint8([...
             0 0 0 0 0 0 0 0 0 0;...
@@ -55,7 +56,7 @@ classdef TestFindContours
             [C, H] = cv.findContours(labels, 'Mode','FloodFill');
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.findContours();
                 throw('UnitTest:Fail');

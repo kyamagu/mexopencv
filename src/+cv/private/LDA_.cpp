@@ -40,7 +40,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         int num_components = 0;
         for (int i=2; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="NumComponents")
+            if (key == "NumComponents")
                 num_components = rhs[i+1].toInt();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
@@ -48,6 +48,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         }
         obj_[++last_id] = makePtr<LDA>(num_components);
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
     // static method calls
@@ -74,9 +75,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Big operation switch
     Ptr<LDA> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "load") {
         nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);

@@ -1,5 +1,6 @@
 classdef TestTransientAreasSegmentationModule
     %TestTransientAreasSegmentationModule
+
     properties (Constant)
         filename = fullfile(mexopencv.root(),'test','balloon.jpg');
     end

@@ -17,7 +17,7 @@ classdef TestHoughLines
                 'SRN',0, 'STN',0, 'MinTheta',0, 'MaxTheta',0);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.HoughLines();
                 throw('UnitTest:Fail');

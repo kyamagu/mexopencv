@@ -1,5 +1,5 @@
 classdef DescriptorMatcher < handle
-    %DESCRIPTORMATCHER  Common interface for matching keypoint descriptors.
+    %DESCRIPTORMATCHER  Common interface for matching keypoint descriptors
     %
     % Class for matching keypoint descriptors.
     %
@@ -33,7 +33,7 @@ classdef DescriptorMatcher < handle
 
     methods
         function this = DescriptorMatcher(matcherType, varargin)
-            %DESCRIPTORMATCHER  Creates a descriptor matcher by name.
+            %DESCRIPTORMATCHER  Creates a descriptor matcher by name
             %
             %    matcher = cv.DescriptorMatcher(type)
             %    matcher = cv.DescriptorMatcher(type, 'OptionName',optionValue, ...)
@@ -43,23 +43,23 @@ classdef DescriptorMatcher < handle
             %       of a given type with the default parameters (using default
             %       constructor). The following types are recognized:
             %
-            %       * __'BruteForce'__ (default) L2 distance
-            %       * __'BruteForce-SL2'__ L2SQR distance
-            %       * __'BruteForce-L1'__ L1 distance
-            %       * __'BruteForce-Hamming'__, __'BruteForce-HammingLUT'__
-            %       * __'BruteForce-Hamming(2)'__
-            %       * __'FlannBased'__ Flann-based indexing
+            %       * __BruteForce__ (default) L2 distance
+            %       * __BruteForce-SL2__ L2SQR distance
+            %       * __BruteForce-L1__ L1 distance
+            %       * __BruteForce-Hamming__, __BruteForce-HammingLUT__
+            %       * __BruteForce-Hamming(2)__
+            %       * __FlannBased__ Flann-based indexing
             %
             %       In the second variant, it creates a matcher of the given
             %       type using the specified parameters. The following
             %       descriptor matcher types are supported:
             %
-            %       * __'BFMatcher'__ Brute-force descriptor matcher. For each
+            %       * __BFMatcher__ Brute-force descriptor matcher. For each
             %             descriptor in the first set, this matcher finds the
             %             closest descriptor in the second set by trying each
             %             one. This descriptor matcher supports masking
             %             permissible matches of descriptor sets.
-            %       * __'FlannBasedMatcher'__ Flann-based descriptor matcher.
+            %       * __FlannBasedMatcher__ Flann-based descriptor matcher.
             %             This matcher trains `flann::Index_` on a train
             %             descriptor collection and calls its nearest search
             %             methods to find the best matches. So, this matcher
@@ -73,14 +73,14 @@ classdef DescriptorMatcher < handle
             % The Brute-force matcher constructor (`BFMatcher`) accepts the
             % following options:
             %
-            % * __NormType__ One of 'L1', 'L2' (default), 'Hamming', or
-            %       'Hamming2'. See cv.DescriptorExtractor.defaultNorm.
-            %       * `L1` and `L2` norms are preferable choices for cv.SIFT
-            %         and cv.SURF descriptors.
-            %       * `Hamming` should be used with cv.ORB, cv.BRISK and
-            %         cv.BriefDescriptorExtractor.
-            %       * `Hamming2` should be used with cv.ORB when `WTA_K`
-            %         equals 3 or 4 (see cv.ORB.WTA_K description).
+            % * __NormType__ See cv.DescriptorExtractor.defaultNorm, default
+            %       'L2'. One of:
+            %       * __L1__, __L2__ L1 and L2 norms are preferable choices
+            %             for cv.SIFT and cv.SURF descriptors.
+            %       * __Hamming__ should be used with cv.ORB, cv.BRISK and
+            %             cv.BriefDescriptorExtractor.
+            %       * __Hamming2__ should be used with cv.ORB when `WTA_K`
+            %             equals 3 or 4 (see cv.ORB.WTA_K description).
             % * __CrossCheck__ If it is false, this is will be default
             %       `BFMatcher` behaviour when it finds the `k` nearest
             %       neighbors for each query descriptor. If `CrossCheck==true`,
@@ -101,15 +101,15 @@ classdef DescriptorMatcher < handle
             %       options below). You can specify the indexer by a cell
             %       array that starts from the type name followed by option
             %       arguments: `{'Type', 'OptionName',optionValue, ...}`.
-            %       * __'Linear'__ Brute-force matching, linear search
-            %       * __'KDTree'__ Randomized kd-trees, parallel search
-            %       * __'KMeans'__ Hierarchical k-means tree
-            %       * __'HierarchicalClustering'__ Hierarchical index
-            %       * __'Composite'__ Combination of KDTree and KMeans
-            %       * __'LSH'__  Multi-probe LSH
-            %       * __'Autotuned'__ Automatic tuning to one of the above
+            %       * __Linear__ Brute-force matching, linear search
+            %       * __KDTree__ Randomized kd-trees, parallel search
+            %       * __KMeans__ Hierarchical k-means tree
+            %       * __HierarchicalClustering__ Hierarchical index
+            %       * __Composite__ Combination of KDTree and KMeans
+            %       * __LSH__  Multi-probe LSH
+            %       * __Autotuned__ Automatic tuning to one of the above
             %             (`Linear`, `KDTree`, `KMeans`)
-            %       * __'Saved'__ Load saved index from a file
+            %       * __Saved__ Load saved index from a file
             %
             % * __Search__ Option in matching operation. Takes a cell
             %       array of option pairs:
@@ -150,12 +150,12 @@ classdef DescriptorMatcher < handle
             % * __CentersInit__ The algorithm to use for selecting the initial
             %       centers when performing a k-means clustering step. The
             %       possible values are (default is 'Random'):
-            %       * __'Random'__   picks the initial cluster centers randomly
-            %       * __'Gonzales'__ picks the initial centers using Gonzales
+            %       * __Random__ picks the initial cluster centers randomly
+            %       * __Gonzales__ picks the initial centers using Gonzales
             %             algorithm
-            %       * __'KMeansPP'__  picks the initial centers using the
+            %       * __KMeansPP__ picks the initial centers using the
             %             algorithm suggested in [ArthurKmeansPP2007]
-            %       * __'Groupwise'__ chooses the initial centers in a way
+            %       * __Groupwise__ chooses the initial centers in a way
             %             inspired by Gonzales (by Pierre-Emmanuel Viel).
             % * __CBIndex__ This parameter (cluster boundary index) influences
             %       the way exploration is performed in the hierarchical

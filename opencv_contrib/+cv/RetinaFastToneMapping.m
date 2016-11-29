@@ -7,7 +7,7 @@ classdef RetinaFastToneMapping < handle
     % This algorithm is already implemented in thre Retina class
     % (cv.Retina.applyFastToneMapping) but used it does not require all the
     % retina model to be allocated. This allows a light memory use for low
-    % memory devices (smartphones, etc..). As a summary, these are the model
+    % memory devices (smartphones, etc.). As a summary, these are the model
     % properties:
     %
     % - 2 stages of local luminance adaptation with a different local
@@ -86,7 +86,7 @@ classdef RetinaFastToneMapping < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %

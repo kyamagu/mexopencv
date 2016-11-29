@@ -43,14 +43,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs>=2 && nlhs<=1);
         obj_[++last_id] = createDAISY(rhs.begin() + 2, rhs.end());
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
 
     // Big operation switch
     Ptr<DAISY> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "typeid") {
         nargchk(nrhs==2 && nlhs<=1);
@@ -155,9 +159,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         Matx33d H;
         for (int i=5; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="Unnormalized")
+            if (key == "Unnormalized")
                 unnormalized = rhs[i+1].toBool();
-            else if (key=="H") {
+            else if (key == "H") {
                 H = rhs[i+1].toMatx<double,3,3>();
                 useHomography = true;
             }

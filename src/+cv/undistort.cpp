@@ -28,7 +28,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Mat newCameraMatrix;
     for (int i=3; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="NewCameraMatrix")
+        if (key == "NewCameraMatrix")
             newCameraMatrix = rhs[i+1].toMat(CV_64F);
         else
             mexErrMsgIdAndTxt("mexopencv:error",

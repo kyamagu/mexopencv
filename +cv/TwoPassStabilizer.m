@@ -78,7 +78,7 @@ classdef TwoPassStabilizer < handle
             % ## Options
             % * __FlipChannels__ in case the output is color image, flips the
             %       color order from OpenCV's BGR/BGRA to MATLAB's RGB/RGBA
-            %       order. default true
+            %       order. default false
             %
             % ## Output
             % * __frame__ Output result

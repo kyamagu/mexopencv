@@ -9,7 +9,7 @@ classdef TestDrawCharucoBoard
             validateattributes(img, {'uint8'}, {'size',fliplr(imgSz)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.drawCharucoBoard();
                 throw('UnitTest:Fail');
@@ -18,4 +18,5 @@ classdef TestDrawCharucoBoard
             end
         end
     end
+
 end

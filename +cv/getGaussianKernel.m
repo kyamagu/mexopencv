@@ -21,7 +21,7 @@
 %    G_i = alpha * exp( -(i - (KSize-1)/2)^2 / (2*sigma^2) )
 %
 % where `i = 0, ..., KSize-1` and `alpha` is the scale factor chosen so that
-% `\sum_i G_i = 1`.
+% `sum_{i}(G_i) = 1`.
 %
 % Two of such generated kernels can be passed to cv.sepFilter2D. Those
 % functions automatically recognize smoothing kernels (a symmetrical kernel

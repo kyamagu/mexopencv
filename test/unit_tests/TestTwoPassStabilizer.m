@@ -27,4 +27,5 @@ classdef TestTwoPassStabilizer
             end
         end
     end
+
 end

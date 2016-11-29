@@ -8,7 +8,7 @@ classdef TestCalcBlurriness
             validateattributes(f, {'numeric'}, {'scalar', 'real'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.calcBlurriness();
                 throw('UnitTest:Fail');
@@ -17,4 +17,5 @@ classdef TestCalcBlurriness
             end
         end
     end
+
 end

@@ -11,7 +11,7 @@ classdef TestFilterSpeckles
             validateattributes(DD, {'int16'}, {'size',size(D)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.filterSpeckles();
                 throw('UnitTest:Fail');

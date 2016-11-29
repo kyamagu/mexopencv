@@ -15,7 +15,7 @@ classdef TestCircle
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.circle();
                 throw('UnitTest:Fail');

@@ -27,4 +27,5 @@ classdef TestOnePassStabilizer
             end
         end
     end
+
 end

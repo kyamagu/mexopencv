@@ -10,7 +10,7 @@ classdef TestSampsonDistance
             validateattributes(sd, {'double'}, {'scalar'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.sampsonDistance();
                 throw('UnitTest:Fail');

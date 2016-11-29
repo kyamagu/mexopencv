@@ -1,5 +1,6 @@
 classdef TestMSDDetector
     %TestMSDDetector
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
         kfields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};

@@ -37,9 +37,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int flags = cv::INPAINT_NS;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="Radius")
+        if (key == "Radius")
             inpaintRadius = rhs[i+1].toDouble();
-        else if (key=="Method")
+        else if (key == "Method")
             flags = InpaintType[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error",

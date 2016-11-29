@@ -38,15 +38,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int flags = cv::KMEANS_RANDOM_CENTERS;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="InitialLabels") {
+        if (key == "InitialLabels") {
             bestLabels = rhs[i+1].toMat(CV_32S);
             flags |= cv::KMEANS_USE_INITIAL_LABELS;
         }
-        else if (key=="Criteria")
+        else if (key == "Criteria")
             criteria = rhs[i+1].toTermCriteria();
-        else if (key=="Attempts")
+        else if (key == "Attempts")
             attempts = rhs[i+1].toInt();
-        else if (key=="Initialization")
+        else if (key == "Initialization")
             flags = Initialization[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error",

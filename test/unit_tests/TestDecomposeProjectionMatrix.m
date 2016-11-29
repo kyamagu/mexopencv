@@ -1,5 +1,6 @@
 classdef TestDecomposeProjectionMatrix
     %TestDecomposeProjectionMatrix
+
     properties (Constant)
         fields = {'rotMatrX', 'rotMatrY', 'rotMatrZ', 'eulerAngles'};
     end
@@ -51,7 +52,7 @@ classdef TestDecomposeProjectionMatrix
             assert(norm(T - origT) < 1e-3, 'bad accuracy');
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.decomposeProjectionMatrix();
                 throw('UnitTest:Fail');

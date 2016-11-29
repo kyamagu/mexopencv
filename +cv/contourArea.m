@@ -20,9 +20,9 @@
 %
 % The function computes a contour area. Similarly to cv.moments, the area is
 % computed using the Green formula. Thus, the returned area and the number of
-% non-zero pixels, if you draw the contour using cv.drawContours or cv.fillPoly,
-% can be different. Also, the function will most certainly give a wrong results
-% for contours with self-intersections.
+% non-zero pixels, if you draw the contour using cv.drawContours or
+% cv.fillPoly, can be different. Also, the function will most certainly give
+% a wrong results for contours with self-intersections.
 %
 % ## Example
 %

@@ -1,4 +1,4 @@
-%ROTATEDRECTANGLEINTERSECTION  Finds out if there is any intersection between two rotated rectangles.
+%ROTATEDRECTANGLEINTERSECTION  Finds out if there is any intersection between two rotated rectangles
 %
 %    [intersectingRegion,result] = cv.rotatedRectangleIntersection(rect1, rect2)
 %

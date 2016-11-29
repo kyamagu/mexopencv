@@ -26,11 +26,11 @@
 %
 % The spatial moments `m_ji` are computed as:
 %
-%    m_ji = \sum_{x,y} (array(x,y) * x^j * y^i)
+%    m_ji = sum_{x,y} (array(x,y) * x^j * y^i)
 %
 % The central moments `mu_ji` are computed as:
 %
-%    mu_ji = \sum_{x,y} (array(x,y) * (x-xbar)^j * (y-ybar)^i)
+%    mu_ji = sum_{x,y} (array(x,y) * (x - xbar)^j * (y - ybar)^i)
 %
 % where `(xbar, ybar)` is the mass center:
 %
@@ -44,7 +44,7 @@
 % values are not stored.
 %
 % The moments of a contour are defined in the same way but computed using the
-% [Green's formula](http://en.wikipedia.org/wiki/Green_theorem). So, due
+% [Green's formula](http://en.wikipedia.org/wiki/Green_theorem). So, due to
 % a limited raster resolution, the moments computed for a contour are slightly
 % different from the moments computed for the same rasterized contour.
 %

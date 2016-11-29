@@ -1,5 +1,5 @@
 classdef LUCID < handle
-    %LUCID  Class implementing the Locally Uniform Comparison Image Descriptor.
+    %LUCID  Class implementing the Locally Uniform Comparison Image Descriptor
     %
     % As described in [LUCID].
     %
@@ -9,7 +9,7 @@ classdef LUCID < handle
     % LUCID is a simple description method based on linear time permutation
     % distances between the ordering of RGB values of two image patches.
     % LUCID is computable in linear time with respect to the number of pixels
-    % and does not require floating point computation.
+    % and does not require floating-point computation.
     %
     % ## References
     % [LUCID]:
@@ -79,7 +79,7 @@ classdef LUCID < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -204,7 +204,7 @@ classdef LUCID < handle
         end
 
         function [descriptors, keypoints] = compute(this, img, keypoints)
-            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set.
+            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set
             %
             %    [descriptors, keypoints] = obj.compute(img, keypoints)
             %    [descriptors, keypoints] = obj.compute(imgs, keypoints)

@@ -1,4 +1,4 @@
-%NORM  Calculates an absolute array norm, an absolute difference norm, or a relative difference norm.
+%NORM  Calculates an absolute array norm, an absolute difference norm, or a relative difference norm
 %
 %    nrm = cv.norm(src1)
 %    nrm = cv.norm(src1, src2)

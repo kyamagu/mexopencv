@@ -14,7 +14,7 @@ classdef TestStylization
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.stylization();
                 throw('UnitTest:Fail');
@@ -23,4 +23,5 @@ classdef TestStylization
             end
         end
     end
+
 end

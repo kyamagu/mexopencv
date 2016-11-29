@@ -1,7 +1,8 @@
 classdef TestBlur
     %TestBlur
+
     properties (Constant)
-        img = [...
+        img = 255*uint8([...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
@@ -12,7 +13,7 @@ classdef TestBlur
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
             0 0 0 0 0 0 0 0 0 0;...
-        ];
+        ]);
     end
 
     methods (Static)
@@ -46,7 +47,7 @@ classdef TestBlur
             validateattributes(result, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.blur();
                 throw('UnitTest:Fail');

@@ -18,8 +18,10 @@
 % * __Thickness__ Thickness of lines that make up the rectangle. Negative
 %       values (like -1) or the string 'Filled', mean that the function has
 %       to draw a filled rectangle. default 1.
-% * __LineType__ Type of the line boundary. One of 8,4,'AA' (Anti-aliased
-%       line). default 8.
+% * __LineType__ Type of the line boundary. One of:
+%       * __4__ 4-connected line
+%       * __8__ 8-connected line (default)
+%       * __AA__ anti-aliased line
 % * __Shift__ Number of fractional bits in the point coordinates. default 0
 %
 % The function cv.rectangle draws a rectangle outline or a filled rectangle

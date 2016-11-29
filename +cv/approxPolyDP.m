@@ -6,11 +6,12 @@
 % ## Input
 % * __curve__ Input vector of 2D points stored in numeric array
 %       (Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors (`{[x,y], ...}`).
-%       Supports integer (`int32`) and floating point (`single`) classes.
+%       Supports integer (`int32`) and floating-point (`single`) classes.
 %
 % ## Output
 % * __approxCurve__ Result of the approximation. The type should match the
-%       type of the input curve.
+%       type of the input curve. The shape should also match the input curve
+%       (numeric or cell array).
 %
 % ## Options
 % * __Epsilon__ Parameter specifying the approximation accuracy. This is the
@@ -23,4 +24,6 @@
 % curve/polygon with less vertices so that the distance between them is less
 % or equal to the specified precision. It uses the
 % [Douglas-Peucker algorithm](http://en.wikipedia.org/wiki/Ramer-Douglas-Peucker_algorithm).
+%
+% See also: cv.arcLength
 %

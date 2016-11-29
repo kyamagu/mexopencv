@@ -4,7 +4,7 @@
  * @author Kota Yamaguchi
  * @date 2012
  *
- * The header file for a MATLAB MEX-function that uses OpenCV library.
+ * Header file for MATLAB MEX-functions that use OpenCV library.
  * The file includes definition of MxArray class that converts between mxArray
  * and a couple of std:: and cv:: data types including cv::Mat.
  */
@@ -47,6 +47,20 @@ const ConstMap<int,std::string> ClassNameInvMap = ConstMap<int,std::string>
     (CV_32S, "int32")
     (CV_32F, "single")
     (CV_64F, "double");
+
+/** Translates MATLAB color names (see \c ColorSpec) into OpenCV scalars.
+ * @param name short name of MATLAB colors. One of eight predefined colors.
+ * @return BGR triplet as an OpenCV Scalar.
+ */
+const ConstMap<std::string,cv::Scalar> ColorType = ConstMap<std::string,cv::Scalar>
+    ("r", cv::Scalar(  0,  0,255))
+    ("g", cv::Scalar(  0,255,  0))
+    ("b", cv::Scalar(255,  0,  0))
+    ("c", cv::Scalar(255,255,  0))
+    ("m", cv::Scalar(255,  0,255))
+    ("y", cv::Scalar(  0,255,255))
+    ("k", cv::Scalar(  0,  0,  0))
+    ("w", cv::Scalar(255,255,255));
 
 /// Border type map for option processing
 const ConstMap<std::string,int> BorderType = ConstMap<std::string,int>

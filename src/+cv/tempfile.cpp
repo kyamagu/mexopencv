@@ -36,6 +36,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
-    string fname = tempfile(!suffix.empty() ? suffix.c_str() : NULL);
+    string fname(tempfile(!suffix.empty() ? suffix.c_str() : NULL));
     plhs[0] = MxArray(fname);
 }

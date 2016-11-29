@@ -1,4 +1,4 @@
-%CALCCOVARMATRIX  Calculates the covariance matrix of a set of vectors.
+%CALCCOVARMATRIX  Calculates the covariance matrix of a set of vectors
 %
 %    [covar,mean] = cv.calcCovarMatrix(samples)
 %    [...] = cv.calcCovarMatrix(..., 'OptionName', optionValue, ...)

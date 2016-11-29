@@ -6,7 +6,7 @@
 % ## Input
 % * __points__ Input 2D point set, stored in numeric array
 %       (Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors (`{[x,y], ...}`).
-%       Supports integer (`int32`) and floating point (`single`) classes.
+%       Supports integer (`int32`) and floating-point (`single`) classes.
 % * __mask__ Binary mask, a 1-channel NxM 8-bit or logical matrix.
 %
 % ## Output
@@ -14,4 +14,6 @@
 %
 % The function calculates and returns the minimal up-right bounding rectangle
 % for the specified point set.
+%
+% See also: cv.minAreaRect
 %

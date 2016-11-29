@@ -16,7 +16,7 @@ classdef TestMeanShift
                 'search window size should not change');
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.meanShift();
                 throw('UnitTest:Fail');

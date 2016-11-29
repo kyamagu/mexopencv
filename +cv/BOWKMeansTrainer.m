@@ -51,9 +51,8 @@ classdef BOWKMeansTrainer < handle
             %       the labels that yield the best compactness. default 3.
             % * __Initialization__ Method to initialize seeds, default 'PP'.
             %       One of the followings:
-            %       * __'Random'__ Select random initial centers in each
-            %             attempt.
-            %       * __'PP'__  Use kmeans++ center initialization by
+            %       * __Random__ Select random initial centers in each attempt.
+            %       * __PP__ Use kmeans++ center initialization by
             %             Arthur and Vassilvitskii [Arthur2007].
             %
             % See also: cv.BOWKMeansTrainer, cv.kmeans
@@ -155,4 +154,3 @@ classdef BOWKMeansTrainer < handle
     end
 
 end
-

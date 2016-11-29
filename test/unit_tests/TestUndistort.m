@@ -1,5 +1,6 @@
 classdef TestUndistort
     %TestUndistort
+
     properties (Constant)
         img = uint8([...
             0 0 0 0 0 0 0 0 0 0;...
@@ -23,7 +24,7 @@ classdef TestUndistort
             assert(isequal(result, im));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.undistort();
                 throw('UnitTest:Fail');

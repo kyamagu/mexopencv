@@ -34,10 +34,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if (key == "IDs")
             ids = rhs[i+1].toVector<int>();
         else if (key == "BorderColor")
-            borderColor = rhs[i+1].toScalar();
+            borderColor = (rhs[i+1].isChar()) ?
+                ColorType[rhs[i+1].toString()] : rhs[i+1].toScalar();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
-                "Unrecognized option %s",key.c_str());
+                "Unrecognized option %s", key.c_str());
     }
 
     // Process

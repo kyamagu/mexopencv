@@ -28,7 +28,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double aspectRatio = 1.0;
     for (int i=3; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="AspectRatio")
+        if (key == "AspectRatio")
             aspectRatio = rhs[i+1].toDouble();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

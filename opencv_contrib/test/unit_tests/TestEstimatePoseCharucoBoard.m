@@ -16,7 +16,7 @@ classdef TestEstimatePoseCharucoBoard
             validateattributes(valid, {'logical'}, {'scalar'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.estimatePoseCharucoBoard();
                 throw('UnitTest:Fail');
@@ -25,6 +25,7 @@ classdef TestEstimatePoseCharucoBoard
             end
         end
     end
+
 end
 
 function [img, board] = get_image_markers()

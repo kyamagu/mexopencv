@@ -74,7 +74,7 @@
 %
 
 %% Images
-if true
+if mexopencv.require('vision')
     fpath = fullfile(toolboxdir('vision'), 'visiondata', 'building');
     imgset = imageSet(fpath);
     img_names = imgset.ImageLocation;
@@ -105,7 +105,9 @@ for i=1:num_images
 end
 
 % display images
-try, montage(img_names); end
+if mexopencv.require('images')
+    montage(img_names);
+end
 
 %% Parameters
 p = struct();

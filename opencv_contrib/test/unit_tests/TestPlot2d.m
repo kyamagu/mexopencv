@@ -21,7 +21,7 @@ classdef TestPlot2d
             validateattributes(out, {'uint8'}, {'size',[300 400 3]});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.Plot2d();
                 throw('UnitTest:Fail');
@@ -30,4 +30,5 @@ classdef TestPlot2d
             end
         end
     end
+
 end

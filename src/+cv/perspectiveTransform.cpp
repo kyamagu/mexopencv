@@ -47,8 +47,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             plhs[0] = MxArray(dst);
         }
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
+            mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error","Invalid input");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
 }

@@ -1,5 +1,6 @@
 classdef TestBinaryDescriptor
     %TestBinaryDescriptor
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
         kfields = {'angle', 'class_id', 'octave', 'pt', 'response', ...

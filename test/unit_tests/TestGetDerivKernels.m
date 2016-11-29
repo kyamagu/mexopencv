@@ -1,5 +1,5 @@
 classdef TestGetDerivKernels
-    %TestScharr
+    %TestGetDerivKernels
 
     methods (Static)
         function test_1
@@ -22,9 +22,9 @@ classdef TestGetDerivKernels
             validateattributes(ky, {'single'}, {'vector', 'numel',3});
         end
 
-        function test_error_1
+        function test_error_unrecognized_option
             try
-                cv.getDerivKernels('foo');
+                cv.getDerivKernels('foo','bar');
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));

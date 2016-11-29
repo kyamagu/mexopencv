@@ -1,5 +1,6 @@
 classdef TestNormalBayesClassifier
     %TestNormalBayesClassifier
+
     properties (Constant)
         X = [randn(50,3)+1; randn(50,3)-1];
         Y = int32([ones(50,1); -ones(50,1)]);

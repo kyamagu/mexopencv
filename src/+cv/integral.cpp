@@ -29,10 +29,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int sqdepth = -1;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="SDepth")
+        if (key == "SDepth")
             sdepth = (rhs[i+1].isChar()) ?
                 ClassNameMap[rhs[i+1].toString()] : rhs[i+1].toInt();
-        else if (nlhs>1 && key=="SQDepth")
+        else if (nlhs>1 && key == "SQDepth")
             sqdepth = (rhs[i+1].isChar()) ?
                 ClassNameMap[rhs[i+1].toString()] : rhs[i+1].toInt();
         else

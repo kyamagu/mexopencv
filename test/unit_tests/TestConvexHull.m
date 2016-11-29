@@ -59,7 +59,7 @@ classdef TestConvexHull
             validateattributes(hull, {'int32'}, {'vector', 'nonnegative'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.convexHull();
                 throw('UnitTest:Fail');

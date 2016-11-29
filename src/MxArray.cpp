@@ -566,6 +566,10 @@ cv::Mat MxArray::toMat(int depth, bool transpose) const
             mxGetElementSize(p_)*subs(si));      // ptr to i-th channel data
         const cv::Mat m(ndims, &d[0], type, pd); // only creates Mat headers
         // Read from mxArray through m, writing into channels[i]
+        // (Note that saturate_cast<> is applied, so values are clipped
+        // rather than wrap-around in a two's complement sense. In
+        // floating-point to integer conversion, numbers are first rounded
+        // to nearest integer then clamped).
         m.convertTo(channels[i], CV_MAKETYPE(depth, 1));
         // transpose cv::Mat if needed. We do this inside the loop on each 2d
         // 1-cn slice to avoid cv::transpose limitation on number of channels
@@ -704,6 +708,8 @@ cv::SparseMat MxArray::toSparseMat(int depth) const
 
 cv::Moments MxArray::toMoments(mwIndex index) const
 {
+    if (!isStruct())
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not struct");
     // the muXX and nuXX are computed from mXX
     return cv::Moments(
         (isField("m00")) ? at("m00", index).toDouble() : 0,
@@ -721,6 +727,8 @@ cv::Moments MxArray::toMoments(mwIndex index) const
 
 cv::KeyPoint MxArray::toKeyPoint(mwIndex index) const
 {
+    if (!isStruct())
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not struct");
     return cv::KeyPoint(
         at("pt",   index).toPoint2f(),
         at("size", index).toFloat(),
@@ -733,6 +741,8 @@ cv::KeyPoint MxArray::toKeyPoint(mwIndex index) const
 
 cv::DMatch MxArray::toDMatch(mwIndex index) const
 {
+    if (!isStruct())
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not struct");
     return cv::DMatch(
         (isField("queryIdx")) ? at("queryIdx", index).toInt()    : 0,
         (isField("trainIdx")) ? at("trainIdx", index).toInt()    : 0,
@@ -755,6 +765,8 @@ cv::Range MxArray::toRange() const
 
 cv::RotatedRect MxArray::toRotatedRect(mwIndex index) const
 {
+    if (!isStruct())
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not struct");
     cv::RotatedRect rr;
     if (isField("center")) rr.center = at("center", index).toPoint_<float>();
     if (isField("size"))   rr.size   = at("size",   index).toSize_<float>();
@@ -764,6 +776,8 @@ cv::RotatedRect MxArray::toRotatedRect(mwIndex index) const
 
 cv::TermCriteria MxArray::toTermCriteria(mwIndex index) const
 {
+    if (!isStruct())
+        mexErrMsgIdAndTxt("mexopencv:error", "MxArray is not struct");
     const MxArray _type(at("type", index));
     return cv::TermCriteria(
         (_type.isChar()) ? TermCritType[_type.toString()] : _type.toInt(),
@@ -872,7 +886,7 @@ std::vector<cv::Mat> MxArray::toVector() const
     std::vector<cv::Mat> vm;
     vm.reserve(v.size());
     for (std::vector<MxArray>::const_iterator it = v.begin(); it != v.end(); ++it)
-        vm.push_back((*it).toMat());
+        vm.push_back(it->toMat());
     return vm;
 }
 

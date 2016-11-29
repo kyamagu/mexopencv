@@ -14,7 +14,7 @@ classdef TestValidateDisparity
                 {'size',size(disparity)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.validateDisparity();
                 throw('UnitTest:Fail');

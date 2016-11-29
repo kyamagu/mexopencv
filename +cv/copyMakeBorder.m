@@ -1,4 +1,4 @@
-%COPYMAKEBORDER  Forms a border around an image.
+%COPYMAKEBORDER  Forms a border around an image
 %
 %    dst = cv.copyMakeBorder(src, top, bottom, left, right)
 %    dst = cv.copyMakeBorder(src, [top, bottom, left, right])

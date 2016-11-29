@@ -12,7 +12,7 @@ classdef TestTextureFlattening
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.textureFlattening();
                 throw('UnitTest:Fail');
@@ -21,4 +21,5 @@ classdef TestTextureFlattening
             end
         end
     end
+
 end

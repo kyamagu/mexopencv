@@ -1,5 +1,6 @@
 classdef TestMinEnclosingCircle
     %TestMinEnclosingCircle
+
     properties (Constant)
         p = [0 0; 1 0; 2 2; 3 3; 3 4];
     end
@@ -17,7 +18,7 @@ classdef TestMinEnclosingCircle
             validateattributes(r, {'numeric'}, {'scalar'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.minEnclosingCircle();
                 throw('UnitTest:Fail');

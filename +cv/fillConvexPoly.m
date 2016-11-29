@@ -13,10 +13,12 @@
 % * __img__ Output image, same size and type as input `img`.
 %
 % ## Options
-% * __Color__ 3-element floating point vector specifying polygon color.
+% * __Color__ 3-element floating-point vector specifying polygon color.
 %       default zeros
-% * __LineType__ Type of the polygon boundaries. One of 8,4,'AA'
-%       (Anti-aliased line). default 8.
+% * __LineType__ Type of the polygon boundaries. One of:
+%       * __4__ 4-connected line
+%       * __8__ 8-connected line (default)
+%       * __AA__ anti-aliased line
 % * __Shift__ Number of fractional bits in the vertex coordinates. default 0
 %
 % The function cv.fillConvexPoly draws a filled convex polygon. This function

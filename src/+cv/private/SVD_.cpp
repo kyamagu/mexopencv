@@ -39,6 +39,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==2 && nlhs<=1);
         obj_[++last_id] = makePtr<SVD>();
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
     else if (method == "backSubst_static") {
@@ -64,13 +65,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         int flags = 0;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="Flags")
+            if (key == "Flags")
                 flags = rhs[i+1].toInt();
-            else if (key=="ModifyA")
+            else if (key == "ModifyA")
                 UPDATE_FLAG(flags, rhs[i+1].toBool(), SVD::MODIFY_A);
-            else if (key=="NoUV")
+            else if (key == "NoUV")
                 UPDATE_FLAG(flags, rhs[i+1].toBool(), SVD::NO_UV);
-            else if (key=="FullUV")
+            else if (key == "FullUV")
                 UPDATE_FLAG(flags, rhs[i+1].toBool(), SVD::FULL_UV);
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
@@ -88,22 +89,25 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Big operation switch
     Ptr<SVD> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "compute") {
         nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
         int flags = 0;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="Flags")
+            if (key == "Flags")
                 flags = rhs[i+1].toInt();
-            else if (key=="ModifyA")
+            else if (key == "ModifyA")
                 UPDATE_FLAG(flags, rhs[i+1].toBool(), SVD::MODIFY_A);
-            else if (key=="NoUV")
+            else if (key == "NoUV")
                 UPDATE_FLAG(flags, rhs[i+1].toBool(), SVD::NO_UV);
-            else if (key=="FullUV")
+            else if (key == "FullUV")
                 UPDATE_FLAG(flags, rhs[i+1].toBool(), SVD::FULL_UV);
             else
                 mexErrMsgIdAndTxt("mexopencv:error",

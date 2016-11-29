@@ -28,9 +28,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Mat R, P;
     for (int i=3; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="R")
+        if (key == "R")
             R = rhs[i+1].toMat(CV_64F);
-        else if (key=="P")
+        else if (key == "P")
             P = rhs[i+1].toMat(CV_64F);
         else
             mexErrMsgIdAndTxt("mexopencv:error",

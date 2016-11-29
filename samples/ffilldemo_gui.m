@@ -191,7 +191,10 @@ function stackAxes(h, idx1, idx2)
 
     set(h.img(idx1), 'Visible','on');
     set(h.img(idx2), 'Visible','off');
-    uistack(h.ax(idx1), 'top');
+    if ~mexopencv.isOctave()
+        %HACK: UISTACK not implemented in Octave
+        uistack(h.ax(idx1), 'top');
+    end
 end
 
 function usage(~,~)
@@ -263,6 +266,21 @@ function h = buildGUI(img)
     h.slid(2) = uicontrol('Parent',h.fig, 'Style','slider', 'Value',up, ...
         'Min',0, 'Max',255, 'SliderStep',[1 10]./(255-0), ...
         'Position',[205 30 sz(2)-210 20]);
+
+    %HACK: WindowKeyPressFcn not implemented in Octave
+    % http://savannah.gnu.org/bugs/?44910
+    if mexopencv.isOctave()
+        % create GUI buttons to interact instead of keyboard pressing
+        keys = 'qrcmsfg48';
+        labels = {'Quit', 'Help', 'Color/Grayscale', 'Mask', ...
+            'null', 'fixed', 'floating', '4-conn', '8-conn'};
+        for k=1:numel(keys)
+            uicontrol('Parent',h.fig, 'Style','pushbutton', ...
+                'Position',[sz(2)+20*k 30 20 20], 'String',keys(k), ...
+                'TooltipString',labels{k}, ...
+                'Callback',@(o,~) onType(o,struct('Key',keys(k)),h));
+        end
+    end
 
     % initialize interactive parameters
     p = struct();

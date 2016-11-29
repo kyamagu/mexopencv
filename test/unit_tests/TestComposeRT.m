@@ -1,5 +1,6 @@
 classdef TestComposeRT
     %TestComposeRT
+
     properties (Constant)
         fields = {'rvec3', 'tvec3', 'dr3dr1', 'dr3dt1', ...
             'dr3dr2', 'dr3dt2', 'dt3dr1', 'dt3dt1', 'dt3dr2', 'dt3dt2'};
@@ -34,7 +35,7 @@ classdef TestComposeRT
                 {'2d', 'size',[3 3]}), TestComposeRT.fields(3:end));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.composeRT();
                 throw('UnitTest:Fail');

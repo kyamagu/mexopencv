@@ -33,7 +33,7 @@
 % * __FlipChannels__ whether to flip the order of color channels in input
 %       `srcImgs{i}` and output `dst`, between MATLAB's RGB/RGBA order and
 %       OpenCV's BGR/BGRA (input: RGB/RGBA->BGR/BGRA,
-%       output: BGR/BGRA->RGB/RGBA). default true
+%       output: BGR/BGRA->RGB/RGBA). default false
 %
 % The function converts images to CIELAB colorspace and then separately
 % denoise L and AB components with given `H` parameters using

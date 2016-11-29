@@ -92,6 +92,7 @@ endif
 ifdef WITH_OCTAVE
 # -flto
 # -fdata-sections -ffunction-sections -Wl,--gc-sections
+# -Wl,--version-script=mexFunction.map
 MX_CFLAGS  := -O2 -s -fpermissive
 else
 MX_CFLAGS  := -largeArrayDims -cxx

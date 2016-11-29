@@ -32,7 +32,7 @@ classdef TestInpaint2
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.inpaint2();
                 throw('UnitTest:Fail');

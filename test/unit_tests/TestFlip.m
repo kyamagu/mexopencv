@@ -36,7 +36,7 @@ classdef TestFlip
             assert(isequal(dst1, dst2));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.flip();
                 throw('UnitTest:Fail');

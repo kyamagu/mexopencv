@@ -31,13 +31,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int borderType = cv::BORDER_DEFAULT;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="KSize")
+        if (key == "KSize")
             ksize = rhs[i+1].toSize();
-        else if (key=="SigmaX")
+        else if (key == "SigmaX")
             sigmaX = rhs[i+1].toDouble();
-        else if (key=="SigmaY")
+        else if (key == "SigmaY")
             sigmaY = rhs[i+1].toDouble();
-        else if (key=="BorderType")
+        else if (key == "BorderType")
             borderType = BorderType[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error",

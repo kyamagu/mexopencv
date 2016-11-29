@@ -59,14 +59,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         obj_[++last_id] = (nrhs == 3) ?
             makePtr<Subdiv2D>(rhs[2].toRect()) : makePtr<Subdiv2D>();
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
 
     // Big operation switch
     Ptr<Subdiv2D> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "initDelaunay") {
         nargchk(nrhs==3 && nlhs==0);

@@ -22,7 +22,7 @@
 %       * `col=3`: The horizontal size of the bounding box (width).
 %       * `col=4`: The vertical size of the bounding box (height).
 %       * `col=5`: The total area (in pixels) of the connected component.
-% * __centroids__ (optional) 64-bit floating point centroid `(x,y)` output for
+% * __centroids__ (optional) 64-bit floating-point centroid `(x,y)` output for
 %       each label, including the background label. A Nx2 numeric matrix.
 %       Centroids are accessed via `centroids(label,:)` for x and y.
 %

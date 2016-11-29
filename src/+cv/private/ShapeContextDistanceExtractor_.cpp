@@ -41,14 +41,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         obj_[++last_id] = create_ShapeContextDistanceExtractor(
             rhs.begin() + 2, rhs.end());
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
 
     // Big operation switch
     Ptr<ShapeContextDistanceExtractor> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "clear") {
         nargchk(nrhs==2 && nlhs==0);
@@ -109,7 +113,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             dist = obj->computeDistance(contour1, contour2);
         }
         else
-            mexErrMsgIdAndTxt("mexopencv:error","Invalid argument");
+            mexErrMsgIdAndTxt("mexopencv:error", "Invalid contour argument");
         plhs[0] = MxArray(dist);
     }
     else if (method == "setImages") {

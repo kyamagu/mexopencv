@@ -1,6 +1,5 @@
 %FLOODFILL  Fills a connected component with the given color
 %
-%    dst = cv.floodFill(src, seed, newVal)
 %    [dst, rect, area] = cv.floodFill(src, seed, newVal)
 %    [dst, rect, area, mask] = cv.floodFill(..., 'Mask',mask, 'MaskOnly',true)
 %    [...] = cv.floodFill(..., 'OptionName',optionValue, ...)
@@ -42,7 +41,8 @@
 % * __FixedRange__ If set, the difference between the current pixel and
 %       seed pixel is considered. Otherwise, the difference between
 %       neighbor pixels is considered (that is, the range is
-%       floating). default false
+%       floating). This determines whether to fill relative to the seed point
+%       pixel, or to fill relative the neighbor's value). default false
 % * __Mask__ Operation mask that should be a single-channel 8-bit image,
 %       2 pixels wider and 2 pixels taller than image. Flood-filling cannot go
 %       across non-zero pixels in the input mask. For example, an edge
@@ -60,28 +60,31 @@
 %
 % The function cv.floodFill fills a connected component starting from the seed
 % point with the specified color. The connectivity is determined by the
-% color/brightness closeness of the neighbor pixels. The pixel at `(x,y)` is
-% considered to belong to the repainted domain if:
+% color/brightness closeness of the neighbor pixels.
+%
+% The pixel at `(x,y)` is considered to belong to the repainted domain if:
 %
 % * in case of a grayscale image and floating range:
 %
-%        src(x',y') - loDiff <= src(x,y) <= src(x',y') + upDiff
+%        src(x',y') - LoDiff <= src(x,y) <= src(x',y') + UpDiff
 %
 % * in case of a grayscale image and fixed range:
 %
-%        src(seedPoint.x,seedPoint.y) - loDiff <= src(x,y) <= src(seedPoint.x,seedPoint.y) + upDiff
+%        src(seed.x,seed.y) - LoDiff <= src(x,y) <= src(seed.x,seed.y) + UpDiff
 %
 % * in case of a color image and floating range:
+% (a conjuction over all channels of the same condition as before)
 %
-%        src(x',y')_r - loDiffr <= src(x,y)_r <= src(x',y')_r + upDiffr,
-%        src(x',y')_g - loDiffg <= src(x,y)_g <= src(x',y')_g + upDiffg
-%        src(x',y')_b - loDiffb <= src(x,y)_b <= src(x',y')_b + upDiffb
+%        src(x',y',1) - LoDiff(1) <= src(x,y,1) <= src(x',y',1) + UpDiff(1), and
+%        src(x',y',2) - LoDiff(2) <= src(x,y,2) <= src(x',y',2) + UpDiff(2), and
+%        src(x',y',3) - LoDiff(3) <= src(x,y,3) <= src(x',y',3) + UpDiff(3)
 %
 % * in case of a color image and fixed range:
+% (a conjuction over all channels of the same condition as before)
 %
-%        src(seedPoint.x,seedPoint.y)_r - loDiffr <= src(x,y)_r <= src(seedPoint.x,seedPoint.y)_r + upDiffr,
-%        src(seedPoint.x,seedPoint.y)_g - loDiffg <= src(x,y)_g <= src(seedPoint.x,seedPoint.y)_g + upDiffg
-%        src(seedPoint.x,seedPoint.y)_b - loDiffb <= src(x,y)_b <= src(seedPoint.x,seedPoint.y)_b + upDiffb
+%        src(seed.x,seed.y,1) - LoDiff(1) <= src(x,y,1) <= src(seed.x,seed.y,1) + UpDiff(1),
+%        src(seed.x,seed.y,2) - LoDiff(2) <= src(x,y,2) <= src(seed.x,seed.y,2) + UpDiff(2),
+%        src(seed.x,seed.y,3) - LoDiff(3) <= src(x,y,3) <= src(seed.x,seed.y,3) + UpDiff(3)
 %
 % where `src(x',y')` is the value of one of pixel neighbors that is already
 % known to belong to the component. That is, to be added to the connected

@@ -34,19 +34,19 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double k = 0.04;
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());
-        if (key=="MaxCorners")
+        if (key == "MaxCorners")
             maxCorners = rhs[i+1].toInt();
-        else if (key=="QualityLevel")
+        else if (key == "QualityLevel")
             qualityLevel = rhs[i+1].toDouble();
-        else if (key=="MinDistance")
+        else if (key == "MinDistance")
             minDistance = rhs[i+1].toDouble();
-        else if (key=="Mask")
+        else if (key == "Mask")
             mask = rhs[i+1].toMat(CV_8U);
-        else if (key=="BlockSize")
+        else if (key == "BlockSize")
             blockSize = rhs[i+1].toInt();
-        else if (key=="UseHarrisDetector")
+        else if (key == "UseHarrisDetector")
             useHarrisDetector = rhs[i+1].toBool();
-        else if (key=="K")
+        else if (key == "K")
             k = rhs[i+1].toDouble();
         else
             mexErrMsgIdAndTxt("mexopencv:error",

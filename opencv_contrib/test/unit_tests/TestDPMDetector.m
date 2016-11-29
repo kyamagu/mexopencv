@@ -1,5 +1,6 @@
 classdef TestDPMDetector
     %TestDPMDetector
+
     properties (Constant)
         %xmlfile = fullfile(mexopencv.root(),'test','inriaperson.xml');
         xmlfile = fullfile(mexopencv.root(),'test','cat.xml');
@@ -65,6 +66,6 @@ function download_cascade_model(fname)
         % attempt to download cascade model from GitHub
         disp('Downloading cascade model...')
         url = 'https://cdn.rawgit.com/opencv/opencv_extra/3.1.0/testdata/cv/dpm/VOC2007_Cascade/';
-        urlwrite(strrep(fullfile(url,[f ext]),'\','/'), fname);
+        urlwrite([url f ext], fname);
     end
 end

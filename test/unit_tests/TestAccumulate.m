@@ -30,7 +30,7 @@ classdef TestAccumulate
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.accumulate();
                 throw('UnitTest:Fail');
@@ -39,4 +39,5 @@ classdef TestAccumulate
             end
         end
     end
+
 end

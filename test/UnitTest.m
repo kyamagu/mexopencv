@@ -53,6 +53,17 @@ classdef UnitTest
             'TestCalibrateCameraAruco'
             'TestCalibrateCameraCharuco'
             'TestNet'
+            'TestAdd'
+            'TestSubtract'
+            'TestMultiply'
+            'TestDivide'
+            'TestAddWeighted'
+            'TestAbsDiff'
+            'TestCompare'
+            'TestBitwiseAnd'
+            'TestBitwiseOr'
+            'TestBitwiseXor'
+            'TestBitwiseNot'
             % codecs
             'TestVideoWriter'
         };
@@ -90,6 +101,7 @@ classdef UnitTest
             else
                 ver octave;
                 %disp(octave_config_info())
+                %dump_prefs()
             end
 
             % get a list of all test classes
@@ -212,7 +224,7 @@ classdef UnitTest
         end
 
         function str = getReportException(ME)
-            %GETREPORTEXCEPTION  Get error message for exception.
+            %GETREPORTEXCEPTION  Get error message for exception
             %
             %    str = UnitTest.getReportException(ME)
             %

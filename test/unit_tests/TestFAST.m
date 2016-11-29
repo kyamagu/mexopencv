@@ -1,5 +1,6 @@
 classdef TestFAST
     %TestFAST
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
         kfields = {'pt', 'size', 'angle', 'response', 'octave', 'class_id'};
@@ -22,7 +23,7 @@ classdef TestFAST
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.FAST();
                 throw('UnitTest:Fail');

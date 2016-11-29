@@ -1,5 +1,6 @@
 classdef TestRollingGuidanceFilter
     %TestRollingGuidanceFilter
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','lena.jpg');
     end
@@ -11,7 +12,7 @@ classdef TestRollingGuidanceFilter
             validateattributes(dst, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.rollingGuidanceFilter();
                 throw('UnitTest:Fail');

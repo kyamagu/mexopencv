@@ -17,7 +17,7 @@ classdef TestEstimateGlobalMotionLeastSquares
             end
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.estimateGlobalMotionLeastSquares();
                 throw('UnitTest:Fail');
@@ -26,4 +26,5 @@ classdef TestEstimateGlobalMotionLeastSquares
             end
         end
     end
+
 end

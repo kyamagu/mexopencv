@@ -58,7 +58,7 @@ classdef TestRodrigues
             assert(norm(src - dst) < 1e-9);
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.Rodrigues();
                 throw('UnitTest:Fail');

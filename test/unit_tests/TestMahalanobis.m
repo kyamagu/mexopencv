@@ -20,7 +20,7 @@ classdef TestMahalanobis
             %assert(d == norm(v1-v2)); % equivalent to Eucliden dist
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.Mahalanobis();
                 throw('UnitTest:Fail');
@@ -29,4 +29,5 @@ classdef TestMahalanobis
             end
         end
     end
+
 end

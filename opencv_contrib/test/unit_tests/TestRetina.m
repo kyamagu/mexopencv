@@ -1,5 +1,6 @@
 classdef TestRetina
     %TestRetina
+
     properties (Constant)
         filename = fullfile(mexopencv.root(),'test','lena.jpg');
     end

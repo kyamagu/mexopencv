@@ -1,5 +1,6 @@
 classdef TestDctDenoising
     %TestDctDenoising
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','lena.jpg');
     end
@@ -41,7 +42,7 @@ classdef TestDctDenoising
             validateattributes(dst, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.dctDenoising();
                 throw('UnitTest:Fail');
@@ -50,4 +51,5 @@ classdef TestDctDenoising
             end
         end
     end
+
 end

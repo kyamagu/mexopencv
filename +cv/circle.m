@@ -12,13 +12,15 @@
 % * __img__ Output image.
 %
 % ## Options
-% * __Color__ 3-element floating point vector specifying circle color.
+% * __Color__ 3-element floating-point vector specifying circle color.
 %       default is a black color
 % * __Thickness__ Thickness of the circle outline, if positive. Negative
 %       thickness means that a filled circle is to be drawn (-1 or the string
 %       'Filled'). default 1.
-% * __LineType__ Type of the circle boundary. One of 8,4,'AA' (Anti-aliased
-%       line). default 8.
+% * __LineType__ Type of the circle boundary. One of:
+%       * __4__ 4-connected line
+%       * __8__ 8-connected line (default)
+%       * __AA__ anti-aliased line
 % * __Shift__ Number of fractional bits in the coordinates of the center
 %       and in the radius value. default 0.
 %

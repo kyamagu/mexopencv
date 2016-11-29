@@ -1,5 +1,6 @@
 classdef TestDrawKeypoints
     %TestDrawKeypoints
+
     properties (Constant)
         img = fullfile(mexopencv.root(),'test','fruits.jpg');
     end
@@ -22,7 +23,7 @@ classdef TestDrawKeypoints
             validateattributes(out, {class(im)}, {'size',size(im)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.drawKeypoints();
                 throw('UnitTest:Fail');
@@ -31,4 +32,5 @@ classdef TestDrawKeypoints
             end
         end
     end
+
 end

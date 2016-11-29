@@ -24,4 +24,5 @@ classdef TestMergeDebevec
                 {'size',size(imgs{1}), 'nonnegative'});
         end
     end
+
 end

@@ -14,7 +14,7 @@ classdef TestInitWideAngleProjMap
             validateattributes(scale, {'numeric'}, {'scalar'});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.initWideAngleProjMap();
                 throw('UnitTest:Fail');
@@ -23,4 +23,5 @@ classdef TestInitWideAngleProjMap
             end
         end
     end
+
 end

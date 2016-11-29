@@ -1,5 +1,5 @@
 classdef MSDDetector < handle
-    %MSDDETECTOR  Class implementing the MSD (*Maximal Self-Dissimilarity*) keypoint detector.
+    %MSDDETECTOR  Class implementing the MSD (Maximal Self-Dissimilarity) keypoint detector
     %
     % Maximal Self-Dissimilarity Interest Point Detector, as described in
     % [Tombari14].
@@ -93,7 +93,7 @@ classdef MSDDetector < handle
         end
 
         function b = empty(this)
-            %EMPTY  Checks if detector object is empty.
+            %EMPTY  Checks if detector object is empty
             %
             %    b = obj.empty()
             %
@@ -168,7 +168,7 @@ classdef MSDDetector < handle
     %% Features2D: FeatureDetector
     methods
         function keypoints = detect(this, img, varargin)
-            %DETECT  Detects keypoints in an image or image set.
+            %DETECT  Detects keypoints in an image or image set
             %
             %    keypoints = obj.detect(img)
             %    keypoints = obj.detect(imgs)

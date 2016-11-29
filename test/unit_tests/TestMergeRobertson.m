@@ -24,4 +24,5 @@ classdef TestMergeRobertson
                 {'size',size(imgs{1}), 'nonnegative'});
         end
     end
+
 end

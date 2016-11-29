@@ -1,5 +1,6 @@
 classdef TestMatchTemplate
     %TestMatchTemplate
+
     properties (Constant)
         im = fullfile(mexopencv.root(),'test','img001.jpg');
     end
@@ -57,10 +58,10 @@ classdef TestMatchTemplate
                 return;
             end
 
-            try
+            if ~mexopencv.isOctave()
                 img = cv.imread(which('peppers.png'), 'Grayscale',true);
                 tmpl = cv.imread(which('onion.png'), 'Grayscale',true);
-            catch ME
+            else
                 img = cv.imread(fullfile(mexopencv.root(),'test','pic1.png'), 'Grayscale',true);
                 tmpl = cv.imread(fullfile(mexopencv.root(),'test','templ.png'), 'Grayscale',true);
             end
@@ -76,7 +77,7 @@ classdef TestMatchTemplate
             %assert(isequal(row1,row2) && isequal(col1,col2));
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.matchTemplate();
                 throw('UnitTest:Fail');

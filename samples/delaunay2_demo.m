@@ -61,7 +61,6 @@ function delaunay2_demo()
 
 end
 
-
 function img = locate_point(img, subdiv, fp, active_color)
     [~, e0, vertex] = subdiv.locate(fp);
 

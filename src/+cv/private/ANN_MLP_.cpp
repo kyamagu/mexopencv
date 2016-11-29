@@ -63,14 +63,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==2 && nlhs<=1);
         obj_[++last_id] = ANN_MLP::create();
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
 
     // Big operation switch
     Ptr<ANN_MLP> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "clear") {
         nargchk(nrhs==2 && nlhs==0);
@@ -142,11 +146,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 dataOptions = rhs[i+1].toVector<MxArray>();
             else if (key == "Flags")
                 flags = rhs[i+1].toInt();
-            else if (key=="UpdateWeights")
+            else if (key == "UpdateWeights")
                 UPDATE_FLAG(flags, rhs[i+1].toBool(), ANN_MLP::UPDATE_WEIGHTS);
-            else if (key=="NoInputScale")
+            else if (key == "NoInputScale")
                 UPDATE_FLAG(flags, rhs[i+1].toBool(), ANN_MLP::NO_INPUT_SCALE);
-            else if (key=="NoOutputScale")
+            else if (key == "NoOutputScale")
                 UPDATE_FLAG(flags, rhs[i+1].toBool(), ANN_MLP::NO_OUTPUT_SCALE);
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
@@ -222,9 +226,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                param2 = 0;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key=="Param1")
+            if (key == "Param1")
                 param1 = rhs[i+1].toDouble();
-            else if (key=="Param2")
+            else if (key == "Param2")
                 param2 = rhs[i+1].toDouble();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",

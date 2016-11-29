@@ -13,7 +13,7 @@ classdef TestDrawDetectedMarkers
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
-        function test_error_1
+        function test_error_argnum
             try
                 cv.drawDetectedMarkers();
                 throw('UnitTest:Fail');
@@ -22,6 +22,7 @@ classdef TestDrawDetectedMarkers
             end
         end
     end
+
 end
 
 function [img, d] = get_image_markers()

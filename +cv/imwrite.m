@@ -2,10 +2,15 @@
 %
 %    cv.imwrite(filename, img)
 %    cv.imwrite(filename, img, 'OptionName', optionValue, ...)
+%    success = cv.imwrite(...)
 %
 % ## Input
 % * __filename__ Name of the file.
 % * __img__ Image to be saved.
+%
+% ## Output
+% * __success__ optional output flag, true on success, false otherwise. If not
+%       requested, the function throws an error on fail.
 %
 % ## Options
 % * __FlipChannels__ in case the input is color image, flips the color order
@@ -60,9 +65,9 @@
 % * __Params__ Format-specific save parameters encoded as pairs:
 %       `[paramId_1, paramValue_1, paramId_2, paramValue_2, ...]`.
 %
-% The function imwrite saves the image to the specified file. The image format
-% is chosen based on the filename extension (see cv.imread for the list of
-% extensions). Only 8-bit (or 16-bit unsigned `uint16` in case of PNG,
+% The function cv.imwrite saves the image to the specified file. The image
+% format is chosen based on the filename extension (see cv.imread for the list
+% of extensions). Only 8-bit (or 16-bit unsigned `uint16` in case of PNG,
 % JPEG 2000, and TIFF) single-channel or 3-channel (with RGB channel order)
 % images can be saved using this function. If the format, depth or channel
 % order is different, use cv.cvtColor to convert it before saving. Or, use the

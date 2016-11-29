@@ -51,14 +51,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         }
         obj_[++last_id] = p;
         plhs[0] = MxArray(last_id);
+        mexLock();
         return;
     }
 
     // Big operation switch
     Ptr<Plot2d> obj = obj_[id];
+    if (obj.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
         nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
+        mexUnlock();
     }
     else if (method == "clear") {
         nargchk(nrhs==2 && nlhs==0);
@@ -105,10 +109,24 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         plhs[0] = MxArray(obj->getDefaultName());
     }
     else if (method == "render") {
-        nargchk(nrhs==2 && nlhs<=1);
-        Mat plotResult;
-        obj->render(plotResult);
-        plhs[0] = MxArray(plotResult);
+        nargchk(nrhs>=2 && (nrhs%2)==0 && nlhs<=1);
+        bool flip = true;
+        for (int i=2; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key == "FlipChannels")
+                flip = rhs[i+1].toBool();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
+        }
+        Mat img;
+        obj->render(img);
+        if (flip && (img.channels() == 3 || img.channels() == 4)) {
+            // OpenCV's default is BGR/BGRA while MATLAB's is RGB/RGBA
+            cvtColor(img, img, (img.channels()==3 ?
+                cv::COLOR_BGR2RGB : cv::COLOR_BGRA2RGBA));
+        }
+        plhs[0] = MxArray(img);
     }
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
@@ -124,15 +142,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (prop == "PlotLineWidth")
             obj->setPlotLineWidth(rhs[3].toInt());
         else if (prop == "PlotLineColor")
-            obj->setPlotLineColor(rhs[3].toScalar());
+            obj->setPlotLineColor((rhs[3].isChar()) ?
+                ColorType[rhs[3].toString()] : rhs[3].toScalar());
         else if (prop == "PlotBackgroundColor")
-            obj->setPlotBackgroundColor(rhs[3].toScalar());
+            obj->setPlotBackgroundColor((rhs[3].isChar()) ?
+                ColorType[rhs[3].toString()] : rhs[3].toScalar());
         else if (prop == "PlotAxisColor")
-            obj->setPlotAxisColor(rhs[3].toScalar());
+            obj->setPlotAxisColor((rhs[3].isChar()) ?
+                ColorType[rhs[3].toString()] : rhs[3].toScalar());
         else if (prop == "PlotGridColor")
-            obj->setPlotGridColor(rhs[3].toScalar());
+            obj->setPlotGridColor((rhs[3].isChar()) ?
+                ColorType[rhs[3].toString()] : rhs[3].toScalar());
         else if (prop == "PlotTextColor")
-            obj->setPlotTextColor(rhs[3].toScalar());
+            obj->setPlotTextColor((rhs[3].isChar()) ?
+                ColorType[rhs[3].toString()] : rhs[3].toScalar());
         else if (prop == "PlotSize") {
             Size sz(rhs[3].toSize());
             obj->setPlotSize(sz.width, sz.height);

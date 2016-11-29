@@ -49,7 +49,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             threshold = rhs[i+1].toDouble();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
-                "Unrecognized option %s",key.c_str());
+                "Unrecognized option %s", key.c_str());
     }
 
     // Process
@@ -67,7 +67,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             prob, threshold, (nlhs>1 ? mask : noArray()));
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error", "Invalid input");
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
     plhs[0] = MxArray(E);
     if (nlhs > 1)
         plhs[1] = MxArray(mask);
