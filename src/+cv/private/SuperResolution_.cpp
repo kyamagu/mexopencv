@@ -73,14 +73,14 @@ Ptr<FrameSource> createFrameSource(
  * @param last iterator at the end of the vector range
  * @return smart pointer to created cv::superres::FarnebackOpticalFlow
  */
-Ptr<FarnebackOpticalFlow> createFarnebackOpticalFlow(
+Ptr<superres::FarnebackOpticalFlow> createFarnebackOpticalFlow(
     bool use_gpu,
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
     ptrdiff_t len = std::distance(first, last);
     nargchk((len%2)==0);
-    Ptr<FarnebackOpticalFlow> p = (use_gpu) ?
+    Ptr<superres::FarnebackOpticalFlow> p = (use_gpu) ?
         createOptFlow_Farneback_CUDA() :
         createOptFlow_Farneback();
     if (p.empty())
@@ -298,7 +298,7 @@ MxArray toStruct(Ptr<DenseOpticalFlowExt> p)
     if (!p.empty()) {
         s.set("TypeId",                   string(typeid(*p).name()));
         {
-            Ptr<FarnebackOpticalFlow> pp = p.dynamicCast<FarnebackOpticalFlow>();
+            Ptr<superres::FarnebackOpticalFlow> pp = p.dynamicCast<superres::FarnebackOpticalFlow>();
             if (!pp.empty()) {
                 s.set("PyrScale",         pp->getPyrScale());
                 s.set("LevelsNumber",     pp->getLevelsNumber());
