@@ -19,7 +19,7 @@ classdef BOWImgDescriptorExtractor < handle
     %
     %    % Compute histogram of visual word occurrences of an image
     %    extractor = cv.BOWImgDescriptorExtractor('SIFT','BruteForce');
-    %    extractor.setVocabulary(dictionary);
+    %    extractor.Vocabulary = dictionary;
     %    descs = extractor.compute(im, keypoints);
     %
     % See also: cv.BOWImgDescriptorExtractor.BOWImgDescriptorExtractor,
