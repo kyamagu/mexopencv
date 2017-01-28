@@ -71,15 +71,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     bool success = false;
     Mat cameraMatrix(rhs[2].toMat(CV_64F));
     if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
-        Mat objectPoints(rhs[0].toMat(CV_64F).reshape(3,0)),
-            imagePoints(rhs[1].toMat(CV_64F).reshape(2,0));
+        Mat objectPoints(rhs[0].toMat(CV_32F).reshape(3,0)),
+            imagePoints(rhs[1].toMat(CV_32F).reshape(2,0));
         success = solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs,
             rvec, tvec, useExtrinsicGuess, iterationsCount, reprojectionError,
             confidence, (nlhs>2 ? inliers : noArray()), flags);
     }
     else if (rhs[0].isCell() && rhs[1].isCell()) {
-        vector<Point3d> objectPoints(rhs[0].toVector<Point3d>());
-        vector<Point2d> imagePoints(rhs[1].toVector<Point2d>());
+        vector<Point3f> objectPoints(rhs[0].toVector<Point3f>());
+        vector<Point2f> imagePoints(rhs[1].toVector<Point2f>());
         success = solvePnPRansac(objectPoints, imagePoints, cameraMatrix, distCoeffs,
             rvec, tvec, useExtrinsicGuess, iterationsCount, reprojectionError,
             confidence, (nlhs>2 ? inliers : noArray()), flags);
