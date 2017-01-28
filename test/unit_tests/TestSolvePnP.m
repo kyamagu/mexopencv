@@ -3,7 +3,7 @@ classdef TestSolvePnP
 
     methods (Static)
         function test_numeric_Nxd
-            N = 10;
+            N = 10;  % minimum is 4 or 5 points depending on method used
             objPoints = rand(N,3);
             imgPoints = rand(N,2);
             camMatrix = eye(3);

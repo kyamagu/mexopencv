@@ -1,6 +1,6 @@
 %SOLVEPNPRANSAC  Finds an object pose from 3D-2D point correspondences using the RANSAC scheme
 %
-%    [rvec, tvec, inliers] = cv.solvePnPRansac(objectPoints, imagePoints, cameraMatrix)
+%    [rvec, tvec, success, inliers] = cv.solvePnPRansac(objectPoints, imagePoints, cameraMatrix)
 %    [...] = cv.solvePnPRansac(..., 'OptionName', optionValue, ...)
 %
 % ## Input
@@ -19,7 +19,8 @@
 %       `tvec`, brings points from the model coordinate system to the
 %       camera coordinate system.
 % * __tvec__ Output translation vector.
-% * __inliers__ Output vector that contains indices of inliers in
+% * __success__ success logical flag.
+% * __inliers__ Output vector that contains indices (zero-based) of inliers in
 %       `objectPoints` and `imagePoints`.
 %
 % ## Options
