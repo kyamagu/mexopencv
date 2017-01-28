@@ -86,9 +86,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
-    plhs[0] = MxArray(rvec);
+    plhs[0] = MxArray(rvec.clone());      //HACK, see #309
     if (nlhs>1)
-        plhs[1] = MxArray(tvec);
+        plhs[1] = MxArray(tvec.clone());  //HACK, see #309
     if (nlhs>2)
         plhs[2] = MxArray(inliers);
     if (nlhs>3)
