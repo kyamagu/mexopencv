@@ -10,7 +10,7 @@ The package provides MATLAB MEX functions that interface with hundreds of
 OpenCV APIs. Also the package contains C++ class that converts between
 MATLAB's native data type and OpenCV data types. The package is suitable for
 fast prototyping of OpenCV application in MATLAB, use of OpenCV as an external
-toolbox in MATLAB, and development of a custom MEX function.
+toolbox in MATLAB, and development of custom MEX functions.
 
 The current version of mexopencv (master branch) is compatible with OpenCV 3.1.
 For older OpenCV versions, please checkout the corresponding branches
@@ -170,8 +170,14 @@ Replace the path above with the location where OpenCV binaries are installed
 
 Contrib modules are enabled as:
 
+    >> addpath('C:\path\to\mexopencv')
     >> addpath('C:\path\to\mexopencv\opencv_contrib')
-    >> mexopencv.make(..., 'opencv_contrib',true)
+    >> mexopencv.make('opencv_path','C:\OpenCV\build', 'opencv_contrib',true)
+
+If you have previously compiled mexopencv with a different configuration,
+don't forget to clean old artifacts build before building:
+
+    >> mexopencv.make(..., 'clean',true)
 
 Usage
 =====

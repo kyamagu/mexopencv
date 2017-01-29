@@ -15,7 +15,7 @@ classdef TestSolvePnPRansac
                 else
                     n = N;
                 end
-                [rvec,tvec,inliers,success] = cv.solvePnPRansac(...
+                [rvec,tvec,success,inliers] = cv.solvePnPRansac(...
                     objPoints(1:n,:), imgPoints(1:n,:), camMatrix, ...
                     'DistCoeffs',distCoeffs, 'Method',methodsPNP{i});
                 validateattributes(rvec, {'double'}, {'vector', 'numel',3});
@@ -32,7 +32,8 @@ classdef TestSolvePnPRansac
             objPoints = rand(10,1,3);
             imgPoints = rand(10,1,2);
             camMatrix = eye(3);
-            [rvec,tvec,inliers,success] = cv.solvePnPRansac(objPoints, imgPoints, camMatrix);
+            [rvec,tvec,success,inliers] = cv.solvePnPRansac(...
+                objPoints, imgPoints, camMatrix);
             validateattributes(rvec, {'double'}, {'vector', 'numel',3});
             validateattributes(tvec, {'double'}, {'vector', 'numel',3});
             validateattributes(success, {'logical'}, {'scalar'});
@@ -46,7 +47,8 @@ classdef TestSolvePnPRansac
             objPoints = rand(1,10,3);
             imgPoints = rand(1,10,2);
             camMatrix = eye(3);
-            [rvec,tvec,inliers,success] = cv.solvePnPRansac(objPoints, imgPoints, camMatrix);
+            [rvec,tvec,success,inliers] = cv.solvePnPRansac(...
+                objPoints, imgPoints, camMatrix);
             validateattributes(rvec, {'double'}, {'vector', 'numel',3});
             validateattributes(tvec, {'double'}, {'vector', 'numel',3});
             validateattributes(success, {'logical'}, {'scalar'});
@@ -60,7 +62,8 @@ classdef TestSolvePnPRansac
             objPoints = num2cell(rand(10,3),2);
             imgPoints = num2cell(rand(10,2),2);
             camMatrix = eye(3);
-            [rvec,tvec,inliers,success] = cv.solvePnPRansac(objPoints, imgPoints, camMatrix);
+            [rvec,tvec,success,inliers] = cv.solvePnPRansac(...
+                objPoints, imgPoints, camMatrix);
             validateattributes(rvec, {'double'}, {'vector', 'numel',3});
             validateattributes(tvec, {'double'}, {'vector', 'numel',3});
             validateattributes(success, {'logical'}, {'scalar'});
@@ -76,7 +79,8 @@ classdef TestSolvePnPRansac
             camMatrix = eye(3);
             rvec = rand(3,1);
             tvec = rand(3,1);
-            [rvec,tvec,inliers,success] = cv.solvePnPRansac(objPoints, imgPoints, camMatrix, ...
+            [rvec,tvec,success,inliers] = cv.solvePnPRansac(...
+                objPoints, imgPoints, camMatrix, ...
                 'Rvec',rvec, 'Tvec',tvec, ...
                 'UseExtrinsicGuess',true, 'Method','Iterative');
             validateattributes(rvec, {'double'}, {'vector', 'numel',3});
