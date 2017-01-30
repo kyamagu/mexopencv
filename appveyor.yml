@@ -73,7 +73,7 @@ install:
   # download and install dependencies
   - if not exist "c:\dev" ( mkdir "c:\dev" )
   - cd "c:\dev"
-  - if "%DOXY%" == "yes" ( choco install doxygen.portable -y > nul )
+  - if "%DOXY%" == "yes" ( choco install doxygen.portable -y )
   - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.1.0/mingw32-make.exe" -FileName mingw32-make.exe
   - set "PATH=c:\dev;%PATH%"
   - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.1.0/cv310_x86_gcc493.7z" -FileName cv310_x86_gcc493.7z
