@@ -5,10 +5,10 @@
  * @author Amro, Kota Yamaguchi
  * @date 2015
  */
-#include <typeinfo>
 #include "mexopencv.hpp"
 #include "mexopencv_features2d.hpp"
 #include "opencv2/xfeatures2d.hpp"
+#include <typeinfo>
 using namespace std;
 using namespace cv;
 using namespace cv::xfeatures2d;

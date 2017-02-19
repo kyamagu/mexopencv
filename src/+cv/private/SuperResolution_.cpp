@@ -6,7 +6,6 @@
  * @date 2015
  */
 #include "mexopencv.hpp"
-#include "opencv2/superres.hpp"
 #include <typeinfo>
 using namespace std;
 using namespace cv;

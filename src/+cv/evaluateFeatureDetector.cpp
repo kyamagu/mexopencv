@@ -7,7 +7,6 @@
  */
 #include "mexopencv.hpp"
 #include "mexopencv_features2d.hpp"
-#include "opencv2/features2d.hpp"
 using namespace std;
 using namespace cv;
 
