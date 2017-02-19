@@ -20,7 +20,25 @@ map<int,Ptr<VideoWriter> > obj_;
 const ConstMap<string,int> VidWriterProp = ConstMap<string,int>
     ("Quality",    cv::VIDEOWRITER_PROP_QUALITY)
     ("FrameBytes", cv::VIDEOWRITER_PROP_FRAMEBYTES)
-    ("NStripes",   cv::VIDEOWRITER_PROP_NSTRIPES);
+    ("NStripes",   cv::VIDEOWRITER_PROP_NSTRIPES)
+    ("Images",     cv::CAP_PROP_IMAGES_BASE);
+
+/// PNG encoding strategies for option processing
+const ConstMap<string,int> PngStrategyMap = ConstMap<string,int>
+    ("Default",     cv::IMWRITE_PNG_STRATEGY_DEFAULT)
+    ("Filtered",    cv::IMWRITE_PNG_STRATEGY_FILTERED)
+    ("HuffmanOnly", cv::IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY)
+    ("RLE",         cv::IMWRITE_PNG_STRATEGY_RLE)
+    ("Fixed",       cv::IMWRITE_PNG_STRATEGY_FIXED);
+
+/// PAM tupletypes for option processing
+const ConstMap<string,int> PamFormatMap = ConstMap<string,int>
+    ("Null",           cv::IMWRITE_PAM_FORMAT_NULL)
+    ("BlackWhite",     cv::IMWRITE_PAM_FORMAT_BLACKANDWHITE)
+    ("Grayscale",      cv::IMWRITE_PAM_FORMAT_GRAYSCALE)
+    ("GrayscaleAlpha", cv::IMWRITE_PAM_FORMAT_GRAYSCALE_ALPHA)
+    ("RGB",            cv::IMWRITE_PAM_FORMAT_RGB)
+    ("RGBA",           cv::IMWRITE_PAM_FORMAT_RGB_ALPHA);
 
 /// Option arguments parser used by constructor and open method
 struct OptionsParser
@@ -58,6 +76,90 @@ struct OptionsParser
                 fps = val.toDouble();
             else if (key == "Color")
                 isColor = val.toBool();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
+        }
+    }
+};
+
+/// Option arguments parser for imwrite options used by set method
+struct ImwriteOptionsParser
+{
+    /// vector of parameters as key/value pairs
+    vector<int> params;
+
+    /** Parse input arguments.
+     * @param first iterator at the beginning of the arguments vector.
+     * @param last iterator at the end of the arguments vector.
+     */
+    ImwriteOptionsParser(vector<MxArray>::const_iterator first,
+                         vector<MxArray>::const_iterator last)
+    {
+        nargchk(((last-first) % 2) == 0);
+        for (; first != last; first += 2) {
+            string key((*first).toString());
+            const MxArray& val = *(first + 1);
+            if (key == "JpegQuality") {
+                params.push_back(cv::CAP_PROP_IMAGES_BASE +
+                    cv::IMWRITE_JPEG_QUALITY);
+                params.push_back(val.toInt());
+            }
+            else if (key == "JpegProgressive") {
+                params.push_back(cv::CAP_PROP_IMAGES_BASE +
+                    cv::IMWRITE_JPEG_PROGRESSIVE);
+                params.push_back(val.toBool() ? 1 : 0);
+            }
+            else if (key == "JpegOptimize") {
+                params.push_back(cv::CAP_PROP_IMAGES_BASE +
+                    cv::IMWRITE_JPEG_OPTIMIZE);
+                params.push_back(val.toBool() ? 1 : 0);
+            }
+            else if (key == "JpegResetInterval") {
+                params.push_back(cv::CAP_PROP_IMAGES_BASE +
+                    cv::IMWRITE_JPEG_RST_INTERVAL);
+                params.push_back(val.toInt());
+            }
+            else if (key == "JpegLumaQuality") {
+                params.push_back(cv::CAP_PROP_IMAGES_BASE +
+                    cv::IMWRITE_JPEG_LUMA_QUALITY);
+                params.push_back(val.toInt());
+            }
+            else if (key == "JpegChromaQuality") {
+                params.push_back(cv::CAP_PROP_IMAGES_BASE +
+                    cv::IMWRITE_JPEG_CHROMA_QUALITY);
+                params.push_back(val.toInt());
+            }
+            else if (key == "PngCompression") {
+                params.push_back(cv::CAP_PROP_IMAGES_BASE +
+                    cv::IMWRITE_PNG_COMPRESSION);
+                params.push_back(val.toInt());
+            }
+            else if (key == "PngStrategy") {
+                params.push_back(cv::CAP_PROP_IMAGES_BASE +
+                    cv::IMWRITE_PNG_STRATEGY);
+                params.push_back(PngStrategyMap[val.toString()]);
+            }
+            else if (key == "PngBilevel") {
+                params.push_back(cv::CAP_PROP_IMAGES_BASE +
+                    cv::IMWRITE_PNG_BILEVEL);
+                params.push_back(val.toBool() ? 1 : 0);
+            }
+            else if (key == "PxmBinary") {
+                params.push_back(cv::CAP_PROP_IMAGES_BASE +
+                    cv::IMWRITE_PXM_BINARY);
+                params.push_back(val.toBool() ? 1 : 0);
+            }
+            else if (key == "WebpQuality") {
+                params.push_back(cv::CAP_PROP_IMAGES_BASE +
+                    cv::IMWRITE_WEBP_QUALITY);
+                params.push_back(val.toInt());
+            }
+            else if (key == "PamTupleType") {
+                params.push_back(cv::CAP_PROP_IMAGES_BASE +
+                    cv::IMWRITE_PAM_TUPLETYPE);
+                params.push_back(PamFormatMap[val.toString()]);
+            }
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
@@ -146,11 +248,24 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==4 && nlhs==0);
         int propId = (rhs[2].isChar()) ?
             VidWriterProp[rhs[2].toString()] : rhs[2].toInt();
-        double value = rhs[3].toDouble();
-        bool success = obj->set(propId, value);
-        if (!success)
-            mexWarnMsgIdAndTxt("mexopencv:error",
-                "Error setting property %d", propId);
+        if (propId == cv::CAP_PROP_IMAGES_BASE) {
+            vector<MxArray> args(rhs[3].toVector<MxArray>());
+            ImwriteOptionsParser opts(args.begin(), args.end());
+            nargchk((opts.params.size() % 2) == 0);
+            for (size_t i = 0; i < opts.params.size(); i+=2) {
+                bool success = obj->set(opts.params[i], opts.params[i+1]);
+                if (!success)
+                    mexWarnMsgIdAndTxt("mexopencv:error",
+                        "Error setting property %d", opts.params[i]);
+            }
+        }
+        else {
+            double value = rhs[3].toDouble();
+            bool success = obj->set(propId, value);
+            if (!success)
+                mexWarnMsgIdAndTxt("mexopencv:error",
+                    "Error setting property %d", propId);
+        }
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error",
