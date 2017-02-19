@@ -85,7 +85,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Constructor is called. Create a new object from arguments
     if (method == "new") {
-        nargchk(nrhs==2 && nlhs==1);
+        nargchk(nrhs==2 && nlhs<=1);
         obj_[++last_id] = makePtr<VideoWriter>();
         plhs[0] = MxArray(last_id);
         mexLock();
@@ -137,18 +137,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "get") {
         nargchk(nrhs==3 && nlhs<=1);
-        string prop(rhs[2].toString());
-        double value = obj->get(VidWriterProp[prop]);
+        int propId = (rhs[2].isChar()) ?
+            VidWriterProp[rhs[2].toString()] : rhs[2].toInt();
+        double value = obj->get(propId);
         plhs[0] = MxArray(value);
     }
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
-        string prop(rhs[2].toString());
+        int propId = (rhs[2].isChar()) ?
+            VidWriterProp[rhs[2].toString()] : rhs[2].toInt();
         double value = rhs[3].toDouble();
-        bool success = obj->set(VidWriterProp[prop], value);
+        bool success = obj->set(propId, value);
         if (!success)
             mexWarnMsgIdAndTxt("mexopencv:error",
-                "Error setting property %s", prop.c_str());
+                "Error setting property %d", propId);
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error",

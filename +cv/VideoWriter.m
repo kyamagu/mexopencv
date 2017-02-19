@@ -202,6 +202,45 @@ classdef VideoWriter < handle
             %
             VideoWriter_(this.id, 'write', frame, varargin{:});
         end
+
+        function value = get(this, prop)
+            %GET  Returns the specified VideoWriter property
+            %
+            %    value = vid.get(prop)
+            %
+            % ## Input
+            % * __prop__ Property identifier. It can be specified as a string
+            %       (one of the recognized properties), or directly as its
+            %       corresponding integer code.
+            %
+            % ## Output
+            % * __value__ Value for the specified property (as a `double`).
+            %       Value 0 is returned when querying a property that is not
+            %       supported by the backend used by the VideoWriter instance.
+            %
+            % See also: cv.VideoWriter.set
+            %
+            value = VideoWriter_(this.id, 'get', prop);
+        end
+
+        function set(this, prop, value)
+            %SET  Sets a property in the VideoWriter
+            %
+            %    vid.set(prop, value)
+            %
+            % ## Input
+            % * __prop__ Property identifier. It can be specified as a string
+            %       (one of the recognized properties), or directly as its
+            %       corresponding integer code.
+            % * __value__ Value of the property (as a `double`).
+            %
+            % On failure (unsupported property by backend), the function
+            % issues a warning.
+            %
+            % See also: cv.VideoWriter.get
+            %
+            VideoWriter_(this.id, 'set', prop, value);
+        end
     end
 
     %% Getters/Setters

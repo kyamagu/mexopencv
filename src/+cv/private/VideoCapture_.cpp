@@ -208,20 +208,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "get") {
         nargchk(nrhs==3 && nlhs<=1);
-        int prop = (rhs[2].isChar()) ?
+        int propId = (rhs[2].isChar()) ?
             CapProp[rhs[2].toString()] : rhs[2].toInt();
-        double value = obj->get(prop);
+        double value = obj->get(propId);
         plhs[0] = MxArray(value);
     }
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
-        int prop = (rhs[2].isChar()) ?
+        int propId = (rhs[2].isChar()) ?
             CapProp[rhs[2].toString()] : rhs[2].toInt();
         double value = rhs[3].toDouble();
-        bool success = obj->set(prop, value);
+        bool success = obj->set(propId, value);
         if (!success)
             mexWarnMsgIdAndTxt("mexopencv:error",
-                "Error setting property %d", prop);
+                "Error setting property %d", propId);
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error",
