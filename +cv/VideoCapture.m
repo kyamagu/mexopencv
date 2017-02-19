@@ -128,6 +128,7 @@ classdef VideoCapture < handle
             %       * __GStreamer__ GStreamer.
             %       * __FFMPEG__ FFMPEG.
             %       * __Images__ OpenCV Image Sequence (e.g. `img_%02d.jpg`).
+            %       * __Aravis__ Aravis GigE SDK.
             %
             % Creates a new video capture instance. With no argument, it
             % connects to the default camera device found in the system.

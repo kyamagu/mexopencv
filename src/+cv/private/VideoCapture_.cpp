@@ -65,8 +65,8 @@ const ConstMap<string,int> CameraApiMap = ConstMap<string,int>
     ("VfW",             cv::CAP_VFW)
     ("V4L",             cv::CAP_V4L)
     ("V4L2",            cv::CAP_V4L2)
-    ("FireWare",        cv::CAP_FIREWARE)
     ("FireWire",        cv::CAP_FIREWIRE)
+    ("FireWare",        cv::CAP_FIREWARE)
     ("IEEE1394",        cv::CAP_IEEE1394)
     ("DC1394",          cv::CAP_DC1394)
     ("CMU1394",         cv::CAP_CMU1394)
@@ -88,7 +88,8 @@ const ConstMap<string,int> CameraApiMap = ConstMap<string,int>
     ("gPhoto2",         cv::CAP_GPHOTO2)
     ("GStreamer",       cv::CAP_GSTREAMER)
     ("FFMPEG",          cv::CAP_FFMPEG)
-    ("Images",          cv::CAP_IMAGES);
+    ("Images",          cv::CAP_IMAGES)
+    ("Aravis",          cv::CAP_ARAVIS);
 }
 
 /**
