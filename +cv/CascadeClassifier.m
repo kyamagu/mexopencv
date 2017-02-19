@@ -265,7 +265,8 @@ classdef CascadeClassifier < handle
             % * __MinSize__ Minimum possible object size. Objects smaller than
             %       that are ignored. Not set by default.
             % * __MaxSize__ Maximum possible object size. Objects larger than
-            %       that are ignored. Not set by default.
+            %       that are ignored. If `MaxSize == MinSize` model is
+            %       evaluated on single scale. Not set by default.
             % * __OutputRejectLevels__ if is true returns `rejectLevels` and
             %       `levelWeights`. default false
             % * __DoCannyPruning__ Parameter with the same meaning for an old

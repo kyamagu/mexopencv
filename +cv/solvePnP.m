@@ -53,6 +53,10 @@
 % their corresponding image projections, as well as the camera matrix and
 % the distortion coefficients.
 %
+% Note: The methods `DLS` and `UPnP` cannot be used as the current
+% implementations are unstable and sometimes give completly wrong results. If
+% you pass one of these two flags, `EPnP` method will be used instead.
+%
 % ## References
 % [gao2003complete]:
 % > X.S. Gao, X.R. Hou, J. Tang, H.F. Chang; "Complete Solution

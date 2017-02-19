@@ -22,9 +22,10 @@
 % * __R__ Rectification transformation in the object space (3x3 matrix). `R1`
 %       or `R2` computed by cv.stereoRectify can be passed here. If the matrix
 %       is empty, the identity transformation is used. default empty
-% * __P__ New camera matrix (3x3) or new projection matrix (3x4). `P1` or `P2`
-%       computed by cv.stereoRectify can be passed here. If the matrix is
-%       empty, the identity new camera matrix is used. default empty
+% * __P__ New camera matrix (3x3) or new projection matrix (3x4)
+%       `P = [fxp 0 cxp tx; 0 fyp cyp ty; 0 0 tz]`. `P1` or `P2` computed by
+%       cv.stereoRectify can be passed here. If the matrix is empty, the
+%       identity new camera matrix is used. default empty
 %
 % The function is similar to cv.undistort and cv.initUndistortRectifyMap but
 % it operates on a sparse set of points instead of a raster image. Also the
@@ -32,14 +33,16 @@
 % 3D object, it does not reconstruct its 3D coordinates, but for a planar
 % object, it does, up to a translation vector, if the proper `R` is specified.
 %
+% For each observed point coordinate `(u,v)` the function computes:
+%
 %    % (u,v) is the input point, (up, vp) is the output point
-%    % cameraMatrix = [fx 0 cx; 0 fy cy; 0 0 1]
-%    % P = [fxp 0 cxp tx; 0 fyp cyp ty; 0 0 tz]
 %    xpp = (u - cx)/fx
 %    ypp = (v - cy)/fy
 %    (xp,yp) = undistort(xpp, ypp, distCoeffs)
 %    [X,Y,W]' = R*[xp yp 1]'
-%    x = X/W, y = Y/W
+%    x = X/W
+%    y = Y/W
+%    % only performed if P is specified:
 %    up = x*fxp + cxp
 %    vp = y*fyp + cyp
 %

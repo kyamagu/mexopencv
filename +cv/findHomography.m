@@ -75,6 +75,7 @@
 % that `h33 = 1`. Note that whenever an `H` matrix cannot be estimated, an
 % empty one will be returned.
 %
-% See also: cv.getAffineTransform, cv.getPerspectiveTransform,
+% See also: cv.getAffineTransform, cv.estimateAffine2D,
+% cv.estimateAffinePartial2D, cv.getPerspectiveTransform,
 % cv.estimateRigidTransform, cv.warpPerspective, cv.perspectiveTransform
 %

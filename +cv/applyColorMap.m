@@ -4,7 +4,7 @@
 %    dst = cv.applyColorMap(..., 'OptionName',optionValue, ...)
 %
 % ## Input
-% * __src__ The source image, 8-bit grayscale or color.
+% * __src__ The source image, grayscale or color of type `uint8`.
 % * __colormap__ The colormap to apply. A string, one of:
 %       * __Autumn__ Shades of red and yellow color map.
 %       * __Bone__ Gray-scale with a tinge of blue color map.

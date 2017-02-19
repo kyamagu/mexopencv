@@ -51,6 +51,6 @@
 % > Gunnar Farneback. "Two-frame motion estimation based on polynomial
 % > expansion". In Image Analysis, pages 363-370. Springer, 2003.
 %
-% See also: cv.calcOpticalFlowPyrLK, opticalFlowLK, opticalFlowHS,
-%  opticalFlowFarneback, vision.OpticalFlow, vision.BlockMatcher
+% See also: cv.FarnebackOpticalFlow, cv.calcOpticalFlowPyrLK, opticalFlowLK,
+%  opticalFlowHS, opticalFlowFarneback, vision.OpticalFlow, vision.BlockMatcher
 %
