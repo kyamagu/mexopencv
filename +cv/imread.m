@@ -61,6 +61,7 @@
 % * OpenEXR Image files - `*.exr` (see the Notes section)
 % * Radiance HDR - `*.hdr`, `*.pic` (always supported)
 % * Raster and Vector geospatial data supported by Gdal (see the Notes section)
+% * DICOM medical images - `*.dcm` (see the Notes section)
 %
 % ## Notes
 % The function determines the type of an image by the content, not by the file
@@ -94,5 +95,5 @@
 % will be taken into account and thus the image will be rotated accordingly
 % except if the option `IgnoreOrientation` is passed.
 %
-% See also: cv.imwrite, cv.imdecode, imread, imfinfo, imformats
+% See also: cv.imwrite, cv.imdecode, imread, imfinfo, imformats, dicomread
 %
