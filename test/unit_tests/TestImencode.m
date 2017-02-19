@@ -62,15 +62,6 @@ classdef TestImencode
             end
         end
 
-        function test_error_invalid_param_value
-            try
-                cv.imencode('.jpg', TestImencode.im, 'JpegQuality',-1);
-                throw('UnitTest:Fail');
-            catch e
-                assert(strcmp(e.identifier,'mexopencv:error'));
-            end
-        end
-
         function test_error_unrecognized_extension
             %TODO: crashes Octave
             if mexopencv.isOctave()

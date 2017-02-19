@@ -49,12 +49,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "JpegQuality") {
-            int val = rhs[i+1].toInt();
-            if (val < 0 || 100 < val)
-                mexErrMsgIdAndTxt("mexopencv:error",
-                    "JPEG quality parameter must be in the range [0,100]");
             params.push_back(cv::IMWRITE_JPEG_QUALITY);
-            params.push_back(val);
+            params.push_back(rhs[i+1].toInt());
         }
         else if (key == "JpegProgressive") {
             params.push_back(cv::IMWRITE_JPEG_PROGRESSIVE);
@@ -65,36 +61,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             params.push_back(rhs[i+1].toBool() ? 1 : 0);
         }
         else if (key == "JpegResetInterval") {
-            int val = rhs[i+1].toInt();
-            if (val < 0 || 65535 < val)
-                mexErrMsgIdAndTxt("mexopencv:error",
-                    "JPEG restart interval must be in the range [0,65535]");
             params.push_back(cv::IMWRITE_JPEG_RST_INTERVAL);
-            params.push_back(val);
+            params.push_back(rhs[i+1].toInt());
         }
         else if (key == "JpegLumaQuality") {
-            int val = rhs[i+1].toInt();
-            if (val < 0 || 100 < val)
-                mexErrMsgIdAndTxt("mexopencv:error",
-                    "JPEG luma quality level must be in the range [0,100]");
             params.push_back(cv::IMWRITE_JPEG_LUMA_QUALITY);
-            params.push_back(val);
+            params.push_back(rhs[i+1].toInt());
         }
         else if (key == "JpegChromaQuality") {
-            int val = rhs[i+1].toInt();
-            if (val < 0 || 100 < val)
-                mexErrMsgIdAndTxt("mexopencv:error",
-                    "JPEG chroma quality level must be in the range [0,100]");
             params.push_back(cv::IMWRITE_JPEG_CHROMA_QUALITY);
-            params.push_back(val);
+            params.push_back(rhs[i+1].toInt());
         }
         else if (key == "PngCompression") {
-            int val = rhs[i+1].toInt();
-            if (val < 0 || 9 < val)
-                mexErrMsgIdAndTxt("mexopencv:error",
-                    "PNG compression level must be in the range [0,9]");
             params.push_back(cv::IMWRITE_PNG_COMPRESSION);
-            params.push_back(val);
+            params.push_back(rhs[i+1].toInt());
         }
         else if (key == "PngStrategy") {
             params.push_back(cv::IMWRITE_PNG_STRATEGY);
@@ -109,12 +89,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             params.push_back(rhs[i+1].toBool() ? 1 : 0);
         }
         else if (key == "WebpQuality") {
-            int val = rhs[i+1].toInt();
-            if (val < 1 /*|| 100 < val*/)
-                mexErrMsgIdAndTxt("mexopencv:error",
-                    "WEBP quality must be in the range [0,100]");
             params.push_back(cv::IMWRITE_WEBP_QUALITY);
-            params.push_back(val);
+            params.push_back(rhs[i+1].toInt());
         }
         else if (key == "PamTupleType") {
             params.push_back(cv::IMWRITE_PAM_TUPLETYPE);
