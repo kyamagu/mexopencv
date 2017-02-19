@@ -95,7 +95,7 @@ classdef TestImwrite
         end
 
         function frmts = getFormats()
-            frmts = repmat(struct('name','', 'ext','', 'opts',{{}}), 10, 1);
+            frmts = repmat(struct('name','', 'ext','', 'opts',{{}}), 11, 1);
             frmts(1).name = 'JPEG';
             frmts(1).ext = '.jpg';
             frmts(1).opts = {'JpegQuality',90, 'JpegProgressive',false, ...
@@ -121,6 +121,9 @@ classdef TestImwrite
             frmts(9).ext = '.exr';
             frmts(10).name = 'Radiance HDR';
             frmts(10).ext = '.hdr';
+            frmts(11).name = 'PAM';
+            frmts(11).ext = '.pam';
+            frmts(11).opts = {'PamTupleType','RGB'};
         end
     end
 

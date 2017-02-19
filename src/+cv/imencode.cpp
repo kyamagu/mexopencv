@@ -17,6 +17,15 @@ const ConstMap<string,int> PngStrategyMap = ConstMap<string,int>
     ("HuffmanOnly", cv::IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY)
     ("RLE",         cv::IMWRITE_PNG_STRATEGY_RLE)
     ("Fixed",       cv::IMWRITE_PNG_STRATEGY_FIXED);
+
+/// PAM tupletypes for option processing
+const ConstMap<string,int> PamFormatMap = ConstMap<string,int>
+    ("Null",           cv::IMWRITE_PAM_FORMAT_NULL)
+    ("BlackWhite",     cv::IMWRITE_PAM_FORMAT_BLACKANDWHITE)
+    ("Grayscale",      cv::IMWRITE_PAM_FORMAT_GRAYSCALE)
+    ("GrayscaleAlpha", cv::IMWRITE_PAM_FORMAT_GRAYSCALE_ALPHA)
+    ("RGB",            cv::IMWRITE_PAM_FORMAT_RGB)
+    ("RGBA",           cv::IMWRITE_PAM_FORMAT_RGB_ALPHA);
 }
 
 /**
@@ -106,6 +115,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                     "WEBP quality must be in the range [0,100]");
             params.push_back(cv::IMWRITE_WEBP_QUALITY);
             params.push_back(val);
+        }
+        else if (key == "PamTupleType") {
+            params.push_back(cv::IMWRITE_PAM_TUPLETYPE);
+            params.push_back(PamFormatMap[rhs[i+1].toString()]);
         }
         else if (key == "Params") {
             // append to parameters by directly passing a vector of integers

@@ -59,6 +59,14 @@
 % * __WebpQuality__ For WEBP, it can be a quality from 1 to 100 (the higher is
 %       the better). By default (without any parameter) and for quality above
 %       100 the lossless compression is used.
+% * __PamTupleType__ For PAM, sets the TUPLETYPE field to the corresponding
+%       string value that is defined for the format. One of:
+%       * __Null__
+%       * __BlackWhite__
+%       * __Grayscale__
+%       * __GrayscaleAlpha__
+%       * __RGB__
+%       * __RGBA__
 %
 % For advanced uses, you can directly pass a vector of paramters:
 %
