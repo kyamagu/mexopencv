@@ -44,7 +44,7 @@ classdef VideoCapture < handle
     % SDK, GStreamer, XIMEA Camera API, etc... are interfaces to proprietary
     % drivers or to external library.
     %
-    % See the list of supported backends here: cv.VideoCapture.VideoCapture
+    % See the list of supported backends here: cv.VideoCapture.open
     %
     % Warning: Some backends are experimental use them at your own risk.
     % Note: Each backend supports devices properties (cv.VideoCapture.set) in
@@ -157,12 +157,56 @@ classdef VideoCapture < handle
     end
 
     methods
-        function this = VideoCapture(index, varargin)
+        function this = VideoCapture(varargin)
             %VIDEOCAPTURE  Open video file or a capturing device or a IP video stream for video capturing
             %
+            %    cap = cv.VideoCapture()
             %    cap = cv.VideoCapture(index)
             %    cap = cv.VideoCapture(filename)
             %    cap = cv.VideoCapture(..., 'API',apiPreference)
+            %
+            % ## Output
+            % * __cap__ New instance of the VideoCapture
+            %
+            % Accepts the same inputs and options as the cv.VideoCapture.open
+            % method.
+            %
+            % Creates a new video capture instance. With no argument, it
+            % connects to the default camera device found in the system.
+            % You can specify camera devices by `index`, an integer value
+            % starting from 0. You can also specify a `filename` to open a
+            % video file.
+            %
+            % See also: cv.VideoCapture.open
+            %
+            this.id = VideoCapture_(0, 'new');
+            if nargin > 0
+                this.open(varargin{:});
+            else
+                this.open(0);
+            end
+        end
+
+        function delete(this)
+            %DELETE  Destructor
+            %
+            %    cap.delete()
+            %
+            % The method first calls cv.VideoCapture.release to close the
+            % already opened file or camera.
+            %
+            % See also: cv.VideoCapture.release
+            %
+            if isempty(this.id), return; end
+            VideoCapture_(this.id, 'delete');
+        end
+
+        function successFlag = open(this, index, varargin)
+            %OPEN  Open video file or a capturing device or a IP video stream for video capturing
+            %
+            %    successFlag = cap.open(index)
+            %    successFlag = cap.open(filename)
+            %    successFlag = cap.open(..., 'API',apiPreference)
             %
             % ## Input
             % * __index__ id of the video capturing device to open. To open
@@ -177,11 +221,15 @@ classdef VideoCapture < handle
             %         own URL scheme. Please refer to the documentation of
             %         source stream to know the right URL.
             %
+            % ## Output
+            % * __successFlag__ bool, true if the file/camera has been
+            %       successfully opened.
+            %
             % ## Options
-            % * __API__ preferred capture API backend to use. Can be used to enforce a
-            %       specific reader implementation if multiple are available:
-            %       e.g. 'FFMPEG' or 'Images' or 'DirectShow'. The list of
-            %       supported API backends:
+            % * __API__ preferred capture API backend to use. Can be used to
+            %       enforce a specific reader implementation if multiple are
+            %       available: e.g. 'FFMPEG' or 'Images' or 'DirectShow'. The
+            %       list of supported API backends:
             %       * __Any__ Auto detect. This is the default.
             %       * __VfW__ Video For Windows (platform native).
             %       * __V4L__ V4L/V4L2 capturing support via libv4l.
@@ -217,18 +265,8 @@ classdef VideoCapture < handle
             %       * __Images__ OpenCV Image Sequence (e.g. `img_%02d.jpg`).
             %       * __Aravis__ Aravis GigE SDK.
             %
-            % Creates a new video capture instance. With no argument, it
-            % connects to the default camera device found in the system.
-            % You can specify camera devices by `index`, an integer value
-            % starting from 0. You can also specify a `filename` to open a
-            % video file.
-            %
-            % ## Note
-            % Backends are available only if they have been built with your
-            % OpenCV binaries.
-            % Check your build to know which APIs are currently available.
-            % To enable/disable APIs, you have to re-configure OpenCV using
-            % the appropriates CMake switches and recompile OpenCV itself.
+            % The method first calls cv.VideoCapture.release to close the
+            % already opened file or camera.
             %
             % ## Example
             % Use `API` option to enforce a specific reader implementation
@@ -236,43 +274,14 @@ classdef VideoCapture < handle
             % 'DirectShow'. For example, to open camera 1 using the
             % "MS Media Foundation" API:
             %
-            %    cap = cv.VideoCapture(1, 'API','MediaFoundation')
+            %    cap.open(1, 'API','MediaFoundation')
             %
-            % See also: cv.VideoCapture.open
-            %
-            if nargin < 1, index = 0; end
-            this.id = VideoCapture_(0, 'new', index, varargin{:});
-        end
-
-        function delete(this)
-            %DELETE  Destructor
-            %
-            %    cap.delete()
-            %
-            % The method first calls cv.VideoCapture.release to close the
-            % already opened file or camera.
-            %
-            % See also: cv.VideoCapture.release
-            %
-            if isempty(this.id), return; end
-            VideoCapture_(this.id, 'delete');
-        end
-
-        function successFlag = open(this, index, varargin)
-            %OPEN  Open video file or a capturing device or a IP video stream for video capturing
-            %
-            %    successFlag = cap.open(index)
-            %    successFlag = cap.open(filename)
-            %    successFlag = cap.open(..., 'API',apiPreference)
-            %
-            % ## Output
-            % * __successFlag__ bool, true if the file/camera has been
-            %       successfully opened.
-            %
-            % Inputs and options are the same as in the constructor.
-            %
-            % The method first calls cv.VideoCapture.release to close the
-            % already opened file or camera.
+            % ## Note
+            % Backends are available only if they have been built with your
+            % OpenCV binaries.
+            % Check your build to know which APIs are currently available.
+            % To enable/disable APIs, you have to re-configure OpenCV using
+            % the appropriates CMake switches and recompile OpenCV itself.
             %
             % See also: cv.VideoCapture.VideoCapture, cv.VideoCapture.isOpened
             %

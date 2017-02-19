@@ -111,19 +111,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Constructor is called. Create a new object from arguments
     if (method == "new") {
-        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
-        int pref = cv::CAP_ANY;
-        for (int i=3; i<nrhs; i+=2) {
-            string key(rhs[i].toString());
-            if (key == "API")
-                pref = CameraApiMap[rhs[i+1].toString()];
-            else
-                mexErrMsgIdAndTxt("mexopencv:error",
-                    "Unrecognized option %s", key.c_str());
-        }
-        obj_[++last_id] = (rhs[2].isChar()) ?
-            makePtr<VideoCapture>(rhs[2].toString(), pref) :
-            makePtr<VideoCapture>(rhs[2].toInt() + pref);
+        nargchk(nrhs==2 && nlhs<=1);
+        obj_[++last_id] = makePtr<VideoCapture>();
         plhs[0] = MxArray(last_id);
         mexLock();
         return;
