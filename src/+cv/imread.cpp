@@ -29,7 +29,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
          anydepth = false,
          anycolor = false,
          color = true,
-         gdal = false;
+         gdal = false,
+         norotate = false;
     int scale_denom = 1;
     int flags = 0;
     bool override = false;
@@ -61,6 +62,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             CV_Assert(scale_denom==1 || scale_denom==2 ||
                 scale_denom==4 || scale_denom==8);
         }
+        else if (key == "IgnoreOrientation")
+            norotate = rhs[i+1].toBool();
         else if (key == "FlipChannels")
             flip = rhs[i+1].toBool();
         else
@@ -96,6 +99,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 else if (scale_denom == 8)
                     flags |= cv::IMREAD_REDUCED_GRAYSCALE_8;
             }
+
+            // EXIF orientation
+            flags |= (norotate ? cv::IMREAD_IGNORE_ORIENTATION : 0);
         }
     }
 

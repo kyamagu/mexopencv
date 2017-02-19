@@ -29,6 +29,8 @@
 %       * `2`: image scaled by 1/2 factor.
 %       * `4`: image scaled by 1/4 factor.
 %       * `8`: image scaled by 1/8 factor.
+% * __IgnoreOrientation__ If set, do not rotate the image according to EXIF's
+%       orientation flag. default false
 % * __Flags__ Advanced option to directly set the flag specifying the depth
 %       and color type of a loaded image. Note that setting this integer flag
 %       overrides all the other flag options. Not set by default:
@@ -87,6 +89,10 @@
 %
 % * [Raster](http://www.gdal.org/formats_list.html),
 % * [Vector](http://www.gdal.org/ogr_formats.html).
+%
+% If EXIF information are embedded in the image file, the EXIF orientation
+% will be taken into account and thus the image will be rotated accordingly
+% except if the option `IgnoreOrientation` is passed.
 %
 % See also: cv.imwrite, cv.imdecode, imread, imfinfo, imformats
 %
