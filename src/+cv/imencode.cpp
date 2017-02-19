@@ -38,7 +38,7 @@ const ConstMap<string,int> PamFormatMap = ConstMap<string,int>
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    nargchk(nrhs>=2 && (nrhs%2)==0 && nlhs<=1);
+    nargchk(nrhs>=2 && (nrhs%2)==0 && nlhs<=2);
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);
