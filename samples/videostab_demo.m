@@ -205,7 +205,7 @@ opts.trim_ratio = 0;                      %HACK: otherwise corrupts frames!
 %opts.color_inpaint = 'telea';
 %opts.wobble_suppress = true;
 %opts.ws_local_outlier_rejection = true;
-opts.output = 'stabilized.avi';
+opts.output = fullfile(tempdir(), 'stabilized.avi');
 opts.gpu = false;                         %TODO: not yet implemented
 display(opts)
 

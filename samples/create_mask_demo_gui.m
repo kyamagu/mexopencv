@@ -2,7 +2,7 @@
 % Interactively create a polygon mask.
 %
 % This tutorial demonstrates how to make mask image (black and white).
-% The program takes as input a source image and ouputs its corresponding
+% The program takes as input a source image and outputs its corresponding
 % mask image.
 %
 % <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/create_mask.cpp>

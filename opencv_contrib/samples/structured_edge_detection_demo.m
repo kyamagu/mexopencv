@@ -1,6 +1,9 @@
 %% Structured Edge Detection demo
 % This sample demonstrates structured forests for fast edge detection.
 %
+% The structered edge demo requires you to provide a model.
+% This demo downloads a model from the opencv_extra repository on Github.
+%
 % <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/ximgproc/samples/structured_edge_detection.cpp>
 %
 
