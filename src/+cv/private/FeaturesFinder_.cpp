@@ -83,6 +83,21 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             obj->operator()(image, features);
         plhs[0] = toStruct(features);
     }
+    else if (method == "findParallel") {
+        nargchk((nrhs==3 || nrhs==4) && nlhs<=1);
+        vector<Mat> images(rhs[2].toVector<Mat>());
+        vector<ImageFeatures> features;
+        if (nrhs == 4) {
+            //vector<vector<Rect> > rois(rhs[3].toVector<vector<Rect>>());
+            vector<vector<Rect> > rois(rhs[3].toVector(
+                const_mem_fun_ref_t<vector<Rect>, MxArray>(
+                    &MxArray::toVector<Rect>)));
+            obj->operator()(images, features, rois);
+        }
+        else
+            obj->operator()(images, features);
+        plhs[0] = toStruct(features);
+    }
     else
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized operation %s", method.c_str());

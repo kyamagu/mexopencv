@@ -103,14 +103,14 @@ classdef FeaturesFinder < handle
         end
         %}
 
-        function features = find(this, image, varargin)
+        function features = find(this, img, varargin)
             %FIND  Finds features in the given image
             %
-            %    features = obj.find(image)
-            %    features = obj.find(image, rois)
+            %    features = obj.find(img)
+            %    features = obj.find(img, rois)
             %
             % ## Input
-            % * __image__ Source image.
+            % * __img__ Source image.
             % * __rois__ Regions of interest. A cell array of 4-element
             %       vectors `{[x y w h], ...}`
             %
@@ -124,7 +124,32 @@ classdef FeaturesFinder < handle
             %
             % See also: cv.FeaturesFinder.FeaturesFinder
             %
-            features = FeaturesFinder_(this.id, 'find', image, varargin{:});
+            features = FeaturesFinder_(this.id, 'find', img, varargin{:});
+        end
+
+        function features = findParallel(this, imgs, varargin)
+            %FINDPARALLEL  Finds features in the given images in parallel
+            %
+            %    features = obj.findParallel(imgs)
+            %    features = obj.findParallel(imgs, rois)
+            %
+            % ## Input
+            % * __imgs__ Source images.
+            % * __rois__ Regions of interest for each image. A cell array of
+            %       cell arrays of 4-element vectors `{{[x y w h], ...}, ...}`
+            %
+            % ## Output
+            % * __features__ Found features for each image. Structure array
+            %       containing image keypoints and descriptors with the
+            %       following fields:
+            %       * **img_idx**
+            %       * **img_size**
+            %       * __keypoints__
+            %       * __descriptors__
+            %
+            % See also: cv.FeaturesFinder.FeaturesFinder
+            %
+            features = FeaturesFinder_(this.id, 'findParallel', imgs, varargin{:});
         end
     end
 
