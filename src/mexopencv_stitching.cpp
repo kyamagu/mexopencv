@@ -584,74 +584,43 @@ Ptr<Estimator> createEstimator(
     return p;
 }
 
-Ptr<BundleAdjusterRay> createBundleAdjusterRay(
-    vector<MxArray>::const_iterator first,
-    vector<MxArray>::const_iterator last)
-{
-    ptrdiff_t len = std::distance(first, last);
-    nargchk((len%2)==0);
-    Ptr<BundleAdjusterRay> p = makePtr<BundleAdjusterRay>();
-    if (p.empty())
-        mexErrMsgIdAndTxt("mexopencv:error",
-            "Failed to create BundleAdjusterRay");
-    for (; first != last; first += 2) {
-        string key(first->toString());
-        const MxArray& val = *(first + 1);
-        if (key == "ConfThresh")
-            p->setConfThresh(val.toDouble());
-        else if (key == "RefinementMask")
-            p->setRefinementMask(val.toMat(CV_8U));
-        else if (key == "TermCriteria")
-            p->setTermCriteria(val.toTermCriteria());
-        else
-            mexErrMsgIdAndTxt("mexopencv:error",
-                "Unrecognized option %s", key.c_str());
-    }
-    return p;
-}
-
-Ptr<BundleAdjusterReproj> createBundleAdjusterReproj(
-    vector<MxArray>::const_iterator first,
-    vector<MxArray>::const_iterator last)
-{
-    ptrdiff_t len = std::distance(first, last);
-    nargchk((len%2)==0);
-    Ptr<BundleAdjusterReproj> p = makePtr<BundleAdjusterReproj>();
-    if (p.empty())
-        mexErrMsgIdAndTxt("mexopencv:error",
-            "Failed to create BundleAdjusterReproj");
-    for (; first != last; first += 2) {
-        string key(first->toString());
-        const MxArray& val = *(first + 1);
-        if (key == "ConfThresh")
-            p->setConfThresh(val.toDouble());
-        else if (key == "RefinementMask")
-            p->setRefinementMask(val.toMat(CV_8U));
-        else if (key == "TermCriteria")
-            p->setTermCriteria(val.toTermCriteria());
-        else
-            mexErrMsgIdAndTxt("mexopencv:error",
-                "Unrecognized option %s", key.c_str());
-    }
-    return p;
-}
-
 Ptr<BundleAdjusterBase> createBundleAdjusterBase(
     const string& type,
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
+    ptrdiff_t len = std::distance(first, last);
+    nargchk((len%2)==0);
     Ptr<BundleAdjusterBase> p;
-    if (type == "BundleAdjusterRay")
-        p = createBundleAdjusterRay(first, last);
+    if (type == "NoBundleAdjuster")
+        p = makePtr<NoBundleAdjuster>();
+    else if (type == "BundleAdjusterRay")
+        p = makePtr<BundleAdjusterRay>();
     else if (type == "BundleAdjusterReproj")
-        p = createBundleAdjusterReproj(first, last);
+        p = makePtr<BundleAdjusterReproj>();
+    else if (type == "BundleAdjusterAffine")
+        p = makePtr<BundleAdjusterAffine>();
+    else if (type == "BundleAdjusterAffinePartial")
+        p = makePtr<BundleAdjusterAffinePartial>();
     else
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized bundle adjuster %s", type.c_str());
     if (p.empty())
         mexErrMsgIdAndTxt("mexopencv:error",
             "Failed to create BundleAdjusterBase");
+    for (; first != last; first += 2) {
+        string key(first->toString());
+        const MxArray& val = *(first + 1);
+        if (key == "ConfThresh")
+            p->setConfThresh(val.toDouble());
+        else if (key == "RefinementMask")
+            p->setRefinementMask(val.toMat(CV_8U));
+        else if (key == "TermCriteria")
+            p->setTermCriteria(val.toTermCriteria());
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
     return p;
 }
 

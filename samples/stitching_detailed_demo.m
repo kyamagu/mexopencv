@@ -31,7 +31,7 @@
 % * *conf_thresh* (float)
 %     Threshold for two images are from the same panorama confidence.
 %     The default is 1.0.
-% * *ba_cost_func* (BundleAdjusterReproj|BundleAdjusterRay)
+% * *ba_cost_func* (NoBundleAdjuster|BundleAdjusterReproj|BundleAdjusterRay|BundleAdjusterAffinePartial)
 %     Bundle adjustment cost function. The default is Ray.
 % * *ba_refine_mask* (mask)
 %     Set refinement mask for bundle adjustment. It looks like 'x_xxx',
@@ -290,8 +290,9 @@ fprintf('Homography estimation, time: ');
 toc
 
 for i=1:num_images
-    fprintf('Initial intrinsics #%d:\n', indices(i))
-    disp(cameras(i).K)
+    fprintf('Initial camera intrinsics #%d:\n', indices(i))
+    disp('K='), disp(cameras(i).K)
+    disp('R='), disp(cameras(i).R)
 end
 
 %% Camera parameters adjusting
@@ -318,7 +319,8 @@ end
 
 for i=1:num_images
     fprintf('Camera #%d:\n', indices(i))
-    disp(cameras(i).K)
+    disp('K='), disp(cameras(i).K)
+    disp('R='), disp(cameras(i).R)
 end
 
 % Wave correction

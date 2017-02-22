@@ -310,28 +310,13 @@ cv::Ptr<cv::detail::Estimator> createEstimator(
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 
-/** Create an instance of BundleAdjusterRay using options in arguments
- * @param first iterator at the beginning of the vector range
- * @param last iterator at the end of the vector range
- * @return smart pointer to created BundleAdjusterRay
- */
-cv::Ptr<cv::detail::BundleAdjusterRay> createBundleAdjusterRay(
-    std::vector<MxArray>::const_iterator first,
-    std::vector<MxArray>::const_iterator last);
-
-/** Create an instance of BundleAdjusterReproj using options in arguments
- * @param first iterator at the beginning of the vector range
- * @param last iterator at the end of the vector range
- * @return smart pointer to created BundleAdjusterReproj
- */
-cv::Ptr<cv::detail::BundleAdjusterReproj> createBundleAdjusterReproj(
-    std::vector<MxArray>::const_iterator first,
-    std::vector<MxArray>::const_iterator last);
-
 /** Create an instance of BundleAdjusterBase using options in arguments
  * @param type bundle adjuster type, one of:
+ *    - "NoBundleAdjuster"
  *    - "BundleAdjusterRay"
  *    - "BundleAdjusterReproj"
+ *    - "BundleAdjusterAffine"
+ *    - "BundleAdjusterAffinePartial"
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
  * @return smart pointer to created BundleAdjusterBase
