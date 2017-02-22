@@ -197,6 +197,7 @@ MxArray toStruct(Ptr<FeaturesFinder> p)
     MxArray s(MxArray::Struct());
     if (!p.empty()) {
         s.set("TypeId", string(typeid(*p).name()));
+        //s.set("isThreadSafe", p->isThreadSafe());
     }
     return s;
 }

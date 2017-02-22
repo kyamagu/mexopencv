@@ -76,6 +76,22 @@ classdef FeaturesFinder < handle
             FeaturesFinder_(this.id, 'collectGarbage');
         end
 
+        %{
+        function tf = isThreadSafe(this)
+            %ISTHREADSAFE  Determine thread-safety
+            %
+            %    tf = obj.isThreadSafe()
+            %
+            % ## Output
+            % * __tf__ True, if it's possible to use the same finder instance
+            %       in parallel, false otherwise.
+            %
+            % See also: cv.FeaturesFinder.FeaturesFinder
+            %
+            tf = FeaturesFinder_(this.id, 'isThreadSafe');
+        end
+        %}
+
         function features = find(this, image, varargin)
             %FIND  Finds features in the given image
             %

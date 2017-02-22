@@ -64,6 +64,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==2 && nlhs==0);
         obj->collectGarbage();
     }
+    /*
+    else if (method == "isThreadSafe") {
+        nargchk(nrhs==2 && nlhs<=1);
+        bool tf = obj->isThreadSafe();
+        plhs[0] = MxArray(tf);
+    }
+    */
     else if (method == "find") {
         nargchk((nrhs==3 || nrhs==4) && nlhs<=1);
         Mat image(rhs[2].toMat());
