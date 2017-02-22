@@ -259,10 +259,20 @@ cv::Ptr<cv::detail::BestOf2NearestRangeMatcher> createBestOf2NearestRangeMatcher
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 
+/** Create an instance of AffineBestOf2NearestMatcher using options in arguments
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to created AffineBestOf2NearestMatcher
+ */
+cv::Ptr<cv::detail::AffineBestOf2NearestMatcher> createAffineBestOf2NearestMatcher(
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
+
 /** Create an instance of FeaturesMatcher using options in arguments
  * @param type features matcher type, one of:
  *    - "BestOf2NearestMatcher"
  *    - "BestOf2NearestRangeMatcher"
+ *    - "AffineBestOf2NearestMatcher"
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
  * @return smart pointer to created FeaturesMatcher

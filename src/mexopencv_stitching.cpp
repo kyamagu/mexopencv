@@ -485,6 +485,35 @@ Ptr<BestOf2NearestRangeMatcher> createBestOf2NearestRangeMatcher(
         match_conf, num_matches_thresh1, num_matches_thresh2);
 }
 
+Ptr<AffineBestOf2NearestMatcher> createAffineBestOf2NearestMatcher(
+    vector<MxArray>::const_iterator first,
+    vector<MxArray>::const_iterator last)
+{
+    ptrdiff_t len = std::distance(first, last);
+    nargchk((len%2)==0);
+    bool full_affine = false;
+    bool try_use_gpu = false;
+    float match_conf = 0.3f;
+    int num_matches_thresh1 = 6;
+    for (; first != last; first += 2) {
+        string key(first->toString());
+        const MxArray& val = *(first + 1);
+        if (key == "FullAffine")
+            full_affine = val.toBool();
+        else if (key == "TryUseGPU")
+            try_use_gpu = val.toBool();
+        else if (key == "MatchConf")
+            match_conf = val.toFloat();
+        else if (key == "NumMatchesThresh1")
+            num_matches_thresh1 = val.toInt();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
+    return makePtr<AffineBestOf2NearestMatcher>(full_affine, try_use_gpu,
+        match_conf, num_matches_thresh1);
+}
+
 Ptr<FeaturesMatcher> createFeaturesMatcher(
     const string& type,
     vector<MxArray>::const_iterator first,
@@ -495,6 +524,8 @@ Ptr<FeaturesMatcher> createFeaturesMatcher(
         p = createBestOf2NearestMatcher(first, last);
     else if (type == "BestOf2NearestRangeMatcher")
         p = createBestOf2NearestRangeMatcher(first, last);
+    else if (type == "AffineBestOf2NearestMatcher")
+        p = createAffineBestOf2NearestMatcher(first, last);
     else
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized features matcher %s", type.c_str());

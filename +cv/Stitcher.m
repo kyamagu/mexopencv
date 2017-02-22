@@ -345,6 +345,16 @@ classdef Stitcher < handle
             %             ratio between descriptor distances is greater than
             %             the threshold `MatchConf`.
             %       * __BestOf2NearestRangeMatcher__
+            %       * __AffineBestOf2NearestMatcher__ A "best of 2 nearest"
+            %             matcher that expects affine trasformation between
+            %             images. Features matcher similar to
+            %             `BestOf2NearestMatcher` which finds two best matches
+            %             for each feature and leaves the best one only if the
+            %             ratio between descriptor distances is greater than
+            %             the threshold `MatchConf`.
+            %             Unlike `BestOf2NearestMatcher` this matcher uses
+            %             affine transformation (affine trasformation estimate
+            %             will be placed in `matches_info`).
             %
             % ## Options
             % The following are options accepted by all matchers:
@@ -363,9 +373,15 @@ classdef Stitcher < handle
             % ### `BestOf2NearestRangeMatcher`
             % * __RangeWidth__ default 5
             %
+            % ### `AffineBestOf2NearestMatcher`
+            % * __FullAffine__ whether to use full affine transformation with
+            %       6 degress of freedom or reduced transformation with
+            %       4 degrees of freedom using only rotation, translation and
+            %       uniform scaling. default false
+            %
             % The class uses `BestOf2NearestMatcher` by default.
             %
-            % See also: cv.Stitcher.getFeaturesMatcher
+            % See also: cv.Stitcher.getFeaturesMatcher, cv.FeaturesMatcher
             %
             Stitcher_(this.id, 'setFeaturesMatcher', matcherType, varargin{:});
         end

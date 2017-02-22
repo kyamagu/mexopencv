@@ -20,6 +20,8 @@
 %     Resolution for image registration step. The default is 0.6 Mpx.
 % * *features_type* (SurfFeaturesFinder|OrbFeaturesFinder|AKAZEFeaturesFinder)
 %     Type of features used for images matching. The default is SURF.
+% * *matcher_type* (homography|affine)
+%     Matcher used for pairwise image matching. The default is homography.
 % * *match_conf* (float)
 %     Confidence for feature matching step. The default is 0.65 for SURF
 %     and 0.3 for ORB.
@@ -125,6 +127,7 @@ elseif true
 else
     p.features_type = 'OrbFeaturesFinder';
 end
+p.matcher_type = 'homography';
 p.match_conf = 0.3;
 p.conf_thresh = 1.0;
 p.ba_cost_func = 'BundleAdjusterRay';
@@ -229,7 +232,9 @@ fprintf('Pairwise matching...\n');
 tic
 
 args = {'TryUseGPU',p.try_cuda, 'MatchConf',p.match_conf};
-if p.timelapse_range < 0
+if strcmp(p.matcher_type, 'affine')
+    args = ['AffineBestOf2NearestMatcher', args, 'FullAffine',false];
+elseif p.timelapse_range < 0
     args = ['BestOf2NearestMatcher', args];
 else
     args = ['BestOf2NearestRangeMatcher', args, 'RangeWidth',p.timelapse_range];
