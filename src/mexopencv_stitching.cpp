@@ -82,7 +82,7 @@ vector<ImageFeatures> MxArrayToVectorImageFeatures(const MxArray &arr)
             v.push_back(MxArrayToImageFeatures(arr, i));
     else
         mexErrMsgIdAndTxt("mexopencv:error",
-            "MxArray unable to convert to std::vector<cv::detail::ImageFeatures>");
+            "MxArray unable to convert to vector<cv::detail::ImageFeatures>");
     return v;
 }
 
@@ -99,7 +99,7 @@ vector<MatchesInfo> MxArrayToVectorMatchesInfo(const MxArray &arr)
             v.push_back(MxArrayToMatchesInfo(arr, i));
     else
         mexErrMsgIdAndTxt("mexopencv:error",
-            "MxArray unable to convert to std::vector<cv::detail::MatchesInfo>");
+            "MxArray unable to convert to vector<cv::detail::MatchesInfo>");
     return v;
 }
 
@@ -116,7 +116,7 @@ vector<CameraParams> MxArrayToVectorCameraParams(const MxArray &arr)
             v.push_back(MxArrayToCameraParams(arr, i));
     else
         mexErrMsgIdAndTxt("mexopencv:error",
-            "MxArray unable to convert to std::vector<cv::detail::CameraParams>");
+            "MxArray unable to convert to vector<cv::detail::CameraParams>");
     return v;
 }
 
@@ -225,6 +225,15 @@ MxArray toStruct(Ptr<FeaturesMatcher> p)
     if (!p.empty()) {
         s.set("TypeId",       string(typeid(*p).name()));
         s.set("isThreadSafe", p->isThreadSafe());
+    }
+    return s;
+}
+
+MxArray toStruct(Ptr<Estimator> p)
+{
+    MxArray s(MxArray::Struct());
+    if (!p.empty()) {
+        s.set("TypeId", string(typeid(*p).name()));
     }
     return s;
 }
@@ -554,6 +563,27 @@ Ptr<HomographyBasedEstimator> createHomographyBasedEstimator(
     return makePtr<HomographyBasedEstimator>(is_focals_estimated);
 }
 
+Ptr<Estimator> createEstimator(
+    const string& type,
+    vector<MxArray>::const_iterator first,
+    vector<MxArray>::const_iterator last)
+{
+    ptrdiff_t len = std::distance(first, last);
+    Ptr<Estimator> p;
+    if (type == "HomographyBasedEstimator")
+        p = createHomographyBasedEstimator(first, last);
+    else if (type == "AffineBasedEstimator") {
+        nargchk(len==0);
+        p = makePtr<AffineBasedEstimator>();
+    }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unrecognized estimator %s", type.c_str());
+    if (p.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Failed to create Estimator");
+    return p;
+}
+
 Ptr<BundleAdjusterRay> createBundleAdjusterRay(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
@@ -769,8 +799,7 @@ Ptr<WarperCreator> createWarperCreator(
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized warper creator %s", type.c_str());
     if (p.empty())
-        mexErrMsgIdAndTxt("mexopencv:error",
-            "Failed to create WarperCreator");
+        mexErrMsgIdAndTxt("mexopencv:error", "Failed to create WarperCreator");
     return p;
 }
 
@@ -905,8 +934,7 @@ Ptr<SeamFinder> createSeamFinder(
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized seam finder %s", type.c_str());
     if (p.empty())
-        mexErrMsgIdAndTxt("mexopencv:error",
-            "Failed to create SeamFinder");
+        mexErrMsgIdAndTxt("mexopencv:error", "Failed to create SeamFinder");
     return p;
 }
 
@@ -975,7 +1003,6 @@ Ptr<Blender> createBlender(
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized blender %s", type.c_str());
     if (p.empty())
-        mexErrMsgIdAndTxt("mexopencv:error",
-            "Failed to create Blender");
+        mexErrMsgIdAndTxt("mexopencv:error", "Failed to create Blender");
     return p;
 }

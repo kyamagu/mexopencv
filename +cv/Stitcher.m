@@ -420,6 +420,46 @@ classdef Stitcher < handle
             Stitcher_(this.id, 'setFeaturesMatcher', matcherType, varargin{:});
         end
 
+        %{
+        function value = getEstimator(this)
+            %GETESTIMATOR  Get the estimator
+            %
+            %    value = obj.getEstimator()
+            %
+            % ## Output
+            % * __value__ output scalar struct.
+            %
+            % See also: cv.Stitcher.setEstimator
+            %
+            value = Stitcher_(this.id, 'getEstimator');
+        end
+
+        function setEstimator(this, estimatorType, varargin)
+            %SETESTIMATOR  Set the estimator
+            %
+            %    obj.setEstimator(estimatorType)
+            %    obj.setEstimator(estimatorType, 'OptionName',optionValue, ...)
+            %
+            % ## Input
+            % * __estimatorType__ Estimator type. One of:
+            %       * __HomographyBasedEstimator__ Homography based rotation
+            %             estimator.
+            %       * __AffineBasedEstimator__ Affine transformation based
+            %             estimator. This estimator uses pairwise
+            %             tranformations estimated by matcher to estimate
+            %             final transformation for each camera.
+            %
+            % The following are options for the various algorithms:
+            %
+            % ### `HomographyBasedEstimator`
+            % * __IsFocalsEstimated__ default false
+            %
+            % See also: cv.Stitcher.getEstimator. cv.Estimator
+            %
+            Stitcher_(this.id, 'setEstimator', estimatorType, varargin{:});
+        end
+        %}
+
         function value = getBundleAdjuster(this)
             %GETBUNDLEADJUSTER  Get the bundle adjuster
             %

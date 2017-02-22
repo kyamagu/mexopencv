@@ -147,6 +147,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             rhs[2].toString(), rhs.begin() + 3, rhs.end());
         obj->setFeaturesMatcher(p);
     }
+    /*
+    else if (method == "setEstimator") {
+        nargchk(nrhs>=3 && nlhs==0);
+        Ptr<Estimator> p = createEstimator(
+            rhs[2].toString(), rhs.begin() + 3, rhs.end());
+        obj->setEstimator(p);
+    }
+    */
     else if (method == "setBundleAdjuster") {
         nargchk(nrhs>=3 && nlhs==0);
         Ptr<BundleAdjusterBase> p = createBundleAdjusterBase(
@@ -187,6 +195,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         const Ptr<FeaturesMatcher> p = obj->featuresMatcher();
         plhs[0] = toStruct(p);
     }
+    /*
+    else if (method == "getEstimator") {
+        nargchk(nrhs==2 && nlhs<=1);
+        const Ptr<Estimator> p = obj->estimator();
+        plhs[0] = toStruct(p);
+    }
+    */
     else if (method == "getBundleAdjuster") {
         nargchk(nrhs==2 && nlhs<=1);
         const Ptr<BundleAdjusterBase> p = obj->bundleAdjuster();

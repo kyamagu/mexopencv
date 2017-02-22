@@ -1,9 +1,9 @@
 /**
- * @file HomographyBasedEstimator_.cpp
- * @brief mex interface for cv::detail::HomographyBasedEstimator
+ * @file Estimator_.cpp
+ * @brief mex interface for cv::detail::Estimator
  * @ingroup stitching
  * @author Amro
- * @date 2016
+ * @date 2017
  */
 #include "mexopencv.hpp"
 #include "mexopencv_stitching.hpp"
@@ -18,7 +18,7 @@ namespace {
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,Ptr<HomographyBasedEstimator> > obj_;
+map<int,Ptr<Estimator> > obj_;
 }
 
 /**
@@ -40,9 +40,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Constructor is called. Create a new object from argument
     if (method == "new") {
-        nargchk(nrhs>=2 && nlhs<=1);
-        obj_[++last_id] = createHomographyBasedEstimator(
-            rhs.begin() + 2, rhs.end());
+        nargchk(nrhs>=3 && nlhs<=1);
+        obj_[++last_id] = createEstimator(
+            rhs[2].toString(), rhs.begin() + 3, rhs.end());
         plhs[0] = MxArray(last_id);
         mexLock();
         return;
@@ -99,7 +99,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Big operation switch
-    Ptr<HomographyBasedEstimator> obj = obj_[id];
+    Ptr<Estimator> obj = obj_[id];
     if (obj.empty())
         mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
@@ -120,8 +120,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if (nlhs > 1)
             plhs[1] = MxArray(success);
         else if (!success)
-            mexErrMsgIdAndTxt("mexopencv:error",
-                "Homography estimation failed");
+            mexErrMsgIdAndTxt("mexopencv:error", "Estimation failed");
         plhs[0] = toStruct(cameras);
     }
     else

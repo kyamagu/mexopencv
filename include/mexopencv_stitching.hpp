@@ -164,6 +164,12 @@ MxArray toStruct(cv::Ptr<cv::detail::FeaturesFinder> p);
  */
 MxArray toStruct(cv::Ptr<cv::detail::FeaturesMatcher> p);
 
+/** Convert a Estimator to MxArray
+ * @param p smart poitner to an instance of Estimator
+ * @return output MxArray structure
+ */
+MxArray toStruct(cv::Ptr<cv::detail::Estimator> p);
+
 /** Convert a BundleAdjusterBase to MxArray
  * @param p smart poitner to an instance of BundleAdjusterBase
  * @return output MxArray structure
@@ -288,6 +294,19 @@ cv::Ptr<cv::detail::FeaturesMatcher> createFeaturesMatcher(
  * @return smart pointer to created HomographyBasedEstimator
  */
 cv::Ptr<cv::detail::HomographyBasedEstimator> createHomographyBasedEstimator(
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
+
+/** Create an instance of Estimator using options in arguments
+ * @param type features matcher type, one of:
+ *    - "HomographyBasedEstimator"
+ *    - "AffineBasedEstimator"
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to created Estimator
+ */
+cv::Ptr<cv::detail::Estimator> createEstimator(
+    const std::string& type,
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 

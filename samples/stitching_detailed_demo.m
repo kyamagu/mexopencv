@@ -22,6 +22,9 @@
 %     Type of features used for images matching. The default is SURF.
 % * *matcher_type* (homography|affine)
 %     Matcher used for pairwise image matching. The default is homography.
+% * *estimator_type* (HomographyBasedEstimator|AffineBasedEstimator)
+%     Type of estimator used for transformation estimation. The default is
+%     homography.
 % * *match_conf* (float)
 %     Confidence for feature matching step. The default is 0.65 for SURF
 %     and 0.3 for ORB.
@@ -128,6 +131,7 @@ else
     p.features_type = 'OrbFeaturesFinder';
 end
 p.matcher_type = 'homography';
+p.estimator_type = 'HomographyBasedEstimator';
 p.match_conf = 0.3;
 p.conf_thresh = 1.0;
 p.ba_cost_func = 'BundleAdjusterRay';
@@ -271,7 +275,7 @@ assert(num_images >= 2, 'Need more images');
 fprintf('Homography estimation...\n');
 tic
 
-estimator = cv.HomographyBasedEstimator();
+estimator = cv.Estimator(p.estimator_type);
 
 [cameras,success] = estimator.estimate(features, pairwise_matches);
 assert(success, 'Homography estimation failed');

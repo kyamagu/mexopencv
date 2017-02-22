@@ -1,5 +1,5 @@
-classdef TestHomographyBasedEstimator
-    %TestHomographyBasedEstimator
+classdef TestEstimator
+    %TestEstimator
 
     properties (Constant)
         fields = {'aspect', 'focal', 'ppx', 'ppy', 'R', 't', 'K'};
@@ -14,9 +14,11 @@ classdef TestHomographyBasedEstimator
             features = {finder.find(img1), finder.find(img2)};
 
             matcher = cv.FeaturesMatcher('BestOf2NearestMatcher');
+            %matcher = cv.FeaturesMatcher('AffineBestOf2NearestMatcher');
             m = matcher.match_pairwise(features);
 
-            obj = cv.HomographyBasedEstimator();
+            obj = cv.Estimator('HomographyBasedEstimator');
+            %obj = cv.Estimator('AffineBasedEstimator');
             typename = obj.typeid();
             validateattributes(typename, {'char'}, {'row', 'nonempty'});
 
@@ -24,7 +26,7 @@ classdef TestHomographyBasedEstimator
             validateattributes(success, {'logical'}, {'scalar'});
             if success
                 validateattributes(cameras, {'struct'}, {'vector'});
-                assert(all(ismember(TestHomographyBasedEstimator.fields, fieldnames(cameras))));
+                assert(all(ismember(TestEstimator.fields, fieldnames(cameras))));
                 for i=1:numel(cameras)
                     validateattributes(cameras(i).aspect, {'numeric'}, {'scalar'});
                     validateattributes(cameras(i).focal, {'numeric'}, {'scalar'});

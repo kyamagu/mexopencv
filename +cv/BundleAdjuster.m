@@ -1,7 +1,7 @@
 classdef BundleAdjuster < handle
     %BUNDLEADJUSTER  Class for all camera parameters refinement methods
     %
-    % See also: cv.Stitcher, cv.HomographyBasedEstimator
+    % See also: cv.Stitcher, cv.Estimator
     %
 
     properties (SetAccess = private)
@@ -90,7 +90,7 @@ classdef BundleAdjuster < handle
             % * **pairwise_matches** Pairwise matches of images.
             %       See cv.FeaturesMatcher.
             % * __cameras__ Initial camera parameters to refine.
-            %       See cv.HomographyBasedEstimator.
+            %       See cv.Estimator.
             %
             % ## Output
             % * __cameras__ Refined camera parameters.

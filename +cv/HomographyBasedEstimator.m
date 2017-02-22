@@ -1,5 +1,5 @@
-classdef HomographyBasedEstimator < handle
-    %HOMOGRAPHYBASEDESTIMATOR  Homography based rotation estimator
+classdef Estimator < handle
+    %ESTIMATOR  Rotation estimator base class
     %
     % It takes features of all images, pairwise matches between all images
     % and estimates rotations of all cameras.
@@ -16,18 +16,29 @@ classdef HomographyBasedEstimator < handle
     end
 
     methods
-        function this = HomographyBasedEstimator(varargin)
-            %HOMOGRAPHYBASEDESTIMATOR  Constructor
+        function this = Estimator(estimatorType, varargin)
+            %ESTIMATOR  Constructor
             %
-            %    obj = cv.HomographyBasedEstimator()
-            %    obj = cv.HomographyBasedEstimator('OptionName',optionValue, ...)
+            %    obj = cv.Estimator(estimatorType)
+            %    obj = cv.Estimator(..., 'OptionName',optionValue, ...)
             %
-            % ## Options
+            % ## Input
+            % * __estimatorType__ Estimator type. One of:
+            %       * __HomographyBasedEstimator__ Homography based rotation
+            %             estimator.
+            %       * __AffineBasedEstimator__ Affine transformation based
+            %             estimator. This estimator uses pairwise
+            %             tranformations estimated by matcher to estimate
+            %             final transformation for each camera.
+            %
+            % The following are options for the various algorithms:
+            %
+            % ### `HomographyBasedEstimator`
             % * __IsFocalsEstimated__ default false
             %
-            % See also: cv.HomographyBasedEstimator.estimate
+            % See also: cv.Estimator.estimate
             %
-            this.id = HomographyBasedEstimator_(0, 'new', varargin{:});
+            this.id = Estimator_(0, 'new', estimatorType, varargin{:});
         end
 
         function delete(this)
@@ -35,10 +46,10 @@ classdef HomographyBasedEstimator < handle
             %
             %    obj.delete()
             %
-            % See also: cv.HomographyBasedEstimator
+            % See also: cv.Estimator
             %
             if isempty(this.id), return; end
-            HomographyBasedEstimator_(this.id, 'delete');
+            Estimator_(this.id, 'delete');
         end
 
         function typename = typeid(this)
@@ -46,7 +57,7 @@ classdef HomographyBasedEstimator < handle
             %
             %    typename = obj.typeid()
             %
-            typename = HomographyBasedEstimator_(this.id, 'typeid');
+            typename = Estimator_(this.id, 'typeid');
         end
     end
 
@@ -75,9 +86,9 @@ classdef HomographyBasedEstimator < handle
             %       * __K__ 3x3 camera intrinsic parameters.
             % * __success__ True in case of success, false otherwise.
             %
-            % See also: cv.HomographyBasedEstimator.HomographyBasedEstimator
+            % See also: cv.Estimator.Estimator
             %
-            [cameras,success] = HomographyBasedEstimator_(this.id, 'estimate', features, pairwise_matches);
+            [cameras,success] = Estimator_(this.id, 'estimate', features, pairwise_matches);
         end
     end
 
@@ -86,8 +97,8 @@ classdef HomographyBasedEstimator < handle
         function [K,success] = calibrateRotatingCamera(Hs)
             %CALIBRATEROTATINGCAMERA  Calibrate rotating camera
             %
-            %    K = cv.HomographyBasedEstimator.calibrateRotatingCamera(Hs)
-            %    [K,success] = cv.HomographyBasedEstimator.calibrateRotatingCamera(Hs)
+            %    K = cv.Estimator.calibrateRotatingCamera(Hs)
+            %    [K,success] = cv.Estimator.calibrateRotatingCamera(Hs)
             %
             % ## Input
             % * __Hs__ Cell-array of 3x3 double matrices.
@@ -96,13 +107,13 @@ classdef HomographyBasedEstimator < handle
             % * __K__ 3x3 double matrix.
             % * __success__ True in case of success, false otherwise.
             %
-            [K,success] = HomographyBasedEstimator_(0, 'calibrateRotatingCamera', Hs);
+            [K,success] = Estimator_(0, 'calibrateRotatingCamera', Hs);
         end
 
         function focals = estimateFocal(features, pairwise_matches)
             %ESTIMATEFOCAL  Estimates focal lengths for each given camera
             %
-            %    focals = cv.HomographyBasedEstimator.estimateFocal(features, pairwise_matches)
+            %    focals = cv.Estimator.estimateFocal(features, pairwise_matches)
             %
             % ## Input
             % * __features__ Features of images.
@@ -112,14 +123,14 @@ classdef HomographyBasedEstimator < handle
             % * __focals__ Estimated focal lengths for each camera, vector of
             %       doubles.
             %
-            focals = HomographyBasedEstimator_(0, 'estimateFocal', features, pairwise_matches);
+            focals = Estimator_(0, 'estimateFocal', features, pairwise_matches);
         end
 
         function [f0, f1, f0_ok, f1_ok] = focalsFromHomography(H)
             %FOCALSFROMHOMOGRAPHY  Tries to estimate focal lengths from the given homography under the assumption that the camera undergoes rotations around its centre only
             %
-            %    [f0, f1] = cv.HomographyBasedEstimator.focalsFromHomography(H)
-            %    [f0, f1, f0_ok, f1_ok] = cv.HomographyBasedEstimator.focalsFromHomography(H)
+            %    [f0, f1] = cv.Estimator.focalsFromHomography(H)
+            %    [f0, f1, f0_ok, f1_ok] = cv.Estimator.focalsFromHomography(H)
             %
             % ## Input
             % * __H__ Homography, 3x3 double matrix.
@@ -136,7 +147,7 @@ classdef HomographyBasedEstimator < handle
             % > Heung-Yeung Shum and Richard Szeliski. "Construction of
             % > of Panoramic Image Mosaics with Global and Local Alignment".
             %
-            [f0, f1, f0_ok, f1_ok] = HomographyBasedEstimator_(0, 'focalsFromHomography', H);
+            [f0, f1, f0_ok, f1_ok] = Estimator_(0, 'focalsFromHomography', H);
         end
     end
 
