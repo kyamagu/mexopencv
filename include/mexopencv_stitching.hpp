@@ -206,6 +206,15 @@ cv::Ptr<cv::detail::OrbFeaturesFinder> createOrbFeaturesFinder(
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 
+/** Create an instance of AKAZEFeaturesFinder using options in arguments
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to created AKAZEFeaturesFinder
+ */
+cv::Ptr<cv::detail::AKAZEFeaturesFinder> createAKAZEFeaturesFinder(
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
+
 #ifdef HAVE_OPENCV_XFEATURES2D
 /** Create an instance of SurfFeaturesFinder using options in arguments
  * @param first iterator at the beginning of the vector range
@@ -220,6 +229,7 @@ cv::Ptr<cv::detail::SurfFeaturesFinder> createSurfFeaturesFinder(
 /** Create an instance of FeaturesFinder using options in arguments
  * @param type features finder type, one of:
  *    - "OrbFeaturesFinder"
+ *    - "AKAZEFeaturesFinder"
  *    - "SurfFeaturesFinder" (requires `xfeatures2d` module)
  *    - "SurfFeaturesFinderGpu" (requires CUDA and `xfeatures2d` module)
  * @param first iterator at the beginning of the vector range

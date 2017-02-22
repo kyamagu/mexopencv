@@ -15,6 +15,23 @@ using namespace cv::detail;
 
 // ==================== XXX ====================
 
+/// KAZE Diffusivity type
+const ConstMap<string, int> KAZEDiffusivityType = ConstMap<string, int>
+    ("PM_G1",       cv::KAZE::DIFF_PM_G1)
+    ("PM_G2",       cv::KAZE::DIFF_PM_G2)
+    ("WEICKERT",    cv::KAZE::DIFF_WEICKERT)
+    ("CHARBONNIER", cv::KAZE::DIFF_CHARBONNIER);
+
+/// AKAZE descriptor type
+const ConstMap<string, int> AKAZEDescriptorType = ConstMap<string, int>
+    ("KAZEUpright", cv::AKAZE::DESCRIPTOR_KAZE_UPRIGHT)
+    ("KAZE",        cv::AKAZE::DESCRIPTOR_KAZE)
+    ("MLDBUpright", cv::AKAZE::DESCRIPTOR_MLDB_UPRIGHT)
+    ("MLDB",        cv::AKAZE::DESCRIPTOR_MLDB);
+
+
+// ==================== XXX ====================
+
 ImageFeatures MxArrayToImageFeatures(const MxArray &arr, mwIndex idx)
 {
     ImageFeatures feat;
@@ -306,6 +323,45 @@ Ptr<OrbFeaturesFinder> createOrbFeaturesFinder(
     return makePtr<OrbFeaturesFinder>(grid_size, nfeatures, scaleFactor, nlevels);
 }
 
+Ptr<AKAZEFeaturesFinder> createAKAZEFeaturesFinder(
+    vector<MxArray>::const_iterator first,
+    vector<MxArray>::const_iterator last)
+{
+    ptrdiff_t len = std::distance(first, last);
+    nargchk((len%2)==0);
+    int descriptor_type = cv::AKAZE::DESCRIPTOR_MLDB;
+    int descriptor_size = 0;
+    int descriptor_channels = 3;
+    float threshold = 0.001f;
+    int nOctaves = 4;
+    int nOctaveLayers = 4;
+    int diffusivity = cv::KAZE::DIFF_PM_G2;
+    for (; first != last; first += 2) {
+        string key(first->toString());
+        const MxArray& val = *(first + 1);
+        if (key == "DescriptorType")
+            descriptor_type = AKAZEDescriptorType[val.toString()];
+        else if (key == "DescriptorSize")
+            descriptor_size = val.toInt();
+        else if (key == "DescriptorChannels")
+            descriptor_channels = val.toInt();
+        else if (key == "Threshold")
+            threshold = val.toFloat();
+        else if (key == "NOctaves")
+            nOctaves = val.toInt();
+        else if (key == "NOctaveLayers")
+            nOctaveLayers = val.toInt();
+        else if (key == "Diffusivity")
+            diffusivity = KAZEDiffusivityType[val.toString()];
+
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
+    return makePtr<AKAZEFeaturesFinder>(descriptor_type, descriptor_size,
+        descriptor_channels, threshold, nOctaves, nOctaveLayers, diffusivity);
+}
+
 #ifdef HAVE_OPENCV_XFEATURES2D
 Ptr<SurfFeaturesFinder> createSurfFeaturesFinder(
     vector<MxArray>::const_iterator first,
@@ -348,6 +404,8 @@ Ptr<FeaturesFinder> createFeaturesFinder(
     Ptr<FeaturesFinder> p;
     if (type == "OrbFeaturesFinder")
         p = createOrbFeaturesFinder(first, last);
+    else if (type == "AKAZEFeaturesFinder")
+        p = createAKAZEFeaturesFinder(first, last);
 #ifdef HAVE_OPENCV_XFEATURES2D
     else if (type == "SurfFeaturesFinder")
         p = createSurfFeaturesFinder(first, last);

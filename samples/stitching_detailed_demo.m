@@ -18,7 +18,7 @@
 %     are for CPU mode.
 % * *work_megapix* (float)
 %     Resolution for image registration step. The default is 0.6 Mpx.
-% * *features_type* (SurfFeaturesFinder|OrbFeaturesFinder)
+% * *features_type* (SurfFeaturesFinder|OrbFeaturesFinder|AKAZEFeaturesFinder)
 %     Type of features used for images matching. The default is SURF.
 % * *match_conf* (float)
 %     Confidence for feature matching step. The default is 0.65 for SURF
@@ -118,8 +118,10 @@ p.try_cuda = false;
 
 % Motion Estimation Flags
 p.work_megapix = 0.6;
-if true
+if true  % requires opencv_contrib
     p.features_type = 'SurfFeaturesFinder';
+elseif true
+    p.features_type = 'AKAZEFeaturesFinder';
 else
     p.features_type = 'OrbFeaturesFinder';
 end

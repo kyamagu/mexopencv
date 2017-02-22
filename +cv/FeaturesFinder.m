@@ -18,6 +18,8 @@ classdef FeaturesFinder < handle
             % ## Input
             % * __finderType__ Feature finder type. One of:
             %       * __OrbFeaturesFinder__ ORB features finder. See cv.ORB
+            %       * __AKAZEFeaturesFinder__ AKAZE features finder. See
+            %             cv.AKAZE
             %       * __SurfFeaturesFinder__ SURF features finder. See cv.SURF
             %             (requires `xfeatures2d` module)
             %       * __SurfFeaturesFinderGpu__ (requires CUDA and
@@ -31,6 +33,15 @@ classdef FeaturesFinder < handle
             % * __NFeatures__ default 1500
             % * __ScaleFactor__ default 1.3
             % * __NLevels__ default 5
+            %
+            % ### `AKAZEFeaturesFinder`
+            % * __DescriptorType__ default 'MLDB'
+            % * __DescriptorSize__ default 0
+            % * __DescriptorChannels__ default 3
+            % * __Threshold__ default 0.001
+            % * __NOctaves__ default 4
+            % * __NOctaveLayers__ default 4
+            % * __Diffusivity__ default `PM_G2`
             %
             % ### `SurfFeaturesFinder`
             % * __HessThresh__ default 300.0
