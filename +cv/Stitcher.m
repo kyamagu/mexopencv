@@ -550,17 +550,25 @@ classdef Stitcher < handle
             % ## Input
             % * __warperType__ image warper factory class type, used to create
             %       the rotation-based warper. One of:
-            %       * __PlaneWarper__ Plane warper factory. Warper that maps
-            %             an image onto the `z = 1` plane.
+            %       * __PlaneWarper__ Plane warper factory class. Warper that
+            %             maps an image onto the `z = 1` plane.
             %       * __PlaneWarperGpu__ (requires CUDA)
+            %       * __AffineWarper__ Affine warper factory class. Affine
+            %             warper that uses rotations and translations. Uses
+            %             affine transformation in homogeneous coordinates to
+            %             represent both rotation and translation in camera
+            %             rotation matrix.
             %       * __CylindricalWarper__ Cylindrical warper factory class.
             %             Warper that maps an image onto the `x*x + z*z = 1`
             %             cylinder.
             %       * __CylindricalWarperGpu__ (requires CUDA)
-            %       * __SphericalWarper__ Spherical warper factory class.
-            %             Warper that maps an image onto the unit sphere
-            %             located at the [0,0,0] origin. Poles are located at
-            %             [0,-1,0] and [0,1,0] points.
+            %       * __SphericalWarper__ Warper that maps an image onto the
+            %             unit sphere located at the origin. Projects image
+            %             onto unit sphere with origin at [0,0,0] and radius
+            %             `scale`, measured in pixels. A 360 panorama would
+            %             therefore have a resulting width of `2*scale*pi`
+            %             pixels. Poles are located at [0,-1,0] and [0,1,0]
+            %             points.
             %       * __SphericalWarperGpu__ (requires CUDA)
             %       * __FisheyeWarper__
             %       * __StereographicWarper__
@@ -580,7 +588,7 @@ classdef Stitcher < handle
             %
             % The class uses `SphericalWarper` by default.
             %
-            % See also: cv.Stitcher.getWarper
+            % See also: cv.Stitcher.getWarper, cv.RotationWarper
             %
             Stitcher_(this.id, 'setWarper', warperType, varargin{:});
         end

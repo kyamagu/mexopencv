@@ -14,25 +14,32 @@ classdef RotationWarper < handle
     end
 
     methods
-        function this = RotationWarper(scale, warperType, varargin)
+        function this = RotationWarper(warperType, scale, varargin)
             %ROTATIONWARPER  Constructor
             %
-            %    obj = cv.RotationWarper(scale, warperType)
-            %    obj = cv.RotationWarper(scale, warperType, 'OptionName',optionValue, ...)
+            %    obj = cv.RotationWarper(warperType, scale)
+            %    obj = cv.RotationWarper(..., 'OptionName',optionValue, ...)
             %
             % ## Input
-            % * __scale__ Projected image scale multiplier, e.g. 1.0
             % * __warperType__ image warper factory class type, used to create
             %       the rotation-based warper. One of:
-            %       * __PlaneWarper__ Plane warper factory. Warper that maps
-            %             an image onto the `z = 1` plane.
+            %       * __PlaneWarper__ Plane warper factory class. Warper that
+            %             maps an image onto the `z = 1` plane.
+            %       * __AffineWarper__ Affine warper factory class. Affine
+            %             warper that uses rotations and translations. Uses
+            %             affine transformation in homogeneous coordinates to
+            %             represent both rotation and translation in camera
+            %             rotation matrix.
             %       * __CylindricalWarper__ Cylindrical warper factory class.
             %             Warper that maps an image onto the `x*x + z*z = 1`
             %             cylinder.
             %       * __SphericalWarper__ Spherical warper factory class.
             %             Warper that maps an image onto the unit sphere
-            %             located at the [0,0,0] origin. Poles are located at
-            %             [0,-1,0] and [0,1,0] points.
+            %             located at the origin. Projects image onto unit
+            %             sphere with origin at [0,0,0] and radius `scale`,
+            %             measured in pixels. A 360 panorama would therefore
+            %             have a resulting width of `2*scale*pi` pixels. Poles
+            %             are located at [0,-1,0] and [0,1,0] points.
             %       * __PlaneWarperGpu__ (requires CUDA)
             %       * __CylindricalWarperGpu__ (requires CUDA)
             %       * __SphericalWarperGpu__ (requires CUDA)
@@ -44,6 +51,7 @@ classdef RotationWarper < handle
             %       * __PaniniPortraitWarper__
             %       * __MercatorWarper__
             %       * __TransverseMercatorWarper__
+            % * __scale__ Projected image scale multiplier, e.g. 1.0
             %
             % ## Options
             % The following are options for the various warpers:
@@ -54,7 +62,7 @@ classdef RotationWarper < handle
             %
             % See also: cv.RotationWarper.warp
             %
-            this.id = RotationWarper_(0, 'new', scale, warperType, varargin{:});
+            this.id = RotationWarper_(0, 'new', warperType, scale, varargin{:});
         end
 
         function delete(this)

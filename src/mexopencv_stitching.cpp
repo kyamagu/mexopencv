@@ -723,6 +723,10 @@ Ptr<WarperCreator> createWarperCreator(
         nargchk(len==0);
         p = makePtr<cv::PlaneWarper>();
     }
+    else if (type == "AffineWarper") {
+        nargchk(len==0);
+        p = makePtr<cv::AffineWarper>();
+    }
     else if (type == "CylindricalWarper") {
         nargchk(len==0);
         p = makePtr<cv::CylindricalWarper>();

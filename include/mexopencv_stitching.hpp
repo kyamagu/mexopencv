@@ -366,6 +366,7 @@ cv::Ptr<cv::PaniniPortraitWarper> createPaniniPortraitWarper(
  * @param type warper creator type, one of:
  *   - "PlaneWarper"
  *   - "PlaneWarperGpu" (requires CUDA)
+ *   - "AffineWarper"
  *   - "CylindricalWarper"
  *   - "CylindricalWarperGpu" (requires CUDA)
  *   - "SphericalWarper"

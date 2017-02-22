@@ -48,7 +48,7 @@
 %     Save matches graph represented in DOT language and print it.
 %     Labels description: Nm is number of matches, Ni is number of inliers,
 %     C is confidence.
-% * *warp_type* (plane|cylindrical|spherical|fisheye|stereographic|
+% * *warp_type* (affine|plane|cylindrical|spherical|fisheye|stereographic|
 %              compressedPlaneA2B1|compressedPlaneA1.5B1|
 %              compressedPlanePortraitA2B1|compressedPlanePortraitA1.5B1|
 %              paniniA2B1|paniniA1.5B1|paniniPortraitA2B1|
@@ -341,54 +341,56 @@ tic
 p.warped_image_scale = median([cameras(indices).focal]);
 
 % create warper
+warper_args = {p.warped_image_scale * p.seam_work_aspect};
 switch p.warp_type
     case 'plane'
         if p.try_cuda
-            warper_args = {'PlaneWarperGpu'};
+            warper_args = ['PlaneWarperGpu', warper_args];
         else
-            warper_args = {'PlaneWarper'};
+            warper_args = ['PlaneWarper', warper_args];
         end
     case 'cylindrical'
         if p.try_cuda
-            warper_args = {'CylindricalWarperGpu'};
+            warper_args = ['CylindricalWarperGpu', warper_args];
         else
-            warper_args = {'CylindricalWarper'};
+            warper_args = ['CylindricalWarper', warper_args];
         end
     case 'spherical'
         if p.try_cuda
-            warper_args = {'SphericalWarperGpu'};
+            warper_args = ['SphericalWarperGpu', warper_args];
         else
-            warper_args = {'SphericalWarper'};
+            warper_args = ['SphericalWarper', warper_args];
         end
+    case 'affine'
+        warper_args = ['AffineWarper', warper_args];
     case 'fisheye'
-        warper_args = {'FisheyeWarper'};
+        warper_args = ['FisheyeWarper', warper_args];
     case 'stereographic'
-        warper_args = {'StereographicWarper'};
+        warper_args = ['StereographicWarper', warper_args];
     case 'compressedPlaneA2B1'
-        warper_args = {'CompressedRectilinearWarper', 'A',2.0, 'B',1.0};
+        warper_args = ['CompressedRectilinearWarper', warper_args, 'A',2.0, 'B',1.0];
     case 'compressedPlaneA1.5B1'
-        warper_args = {'CompressedRectilinearWarper', 'A',1.5, 'B',1.0};
+        warper_args = ['CompressedRectilinearWarper', warper_args, 'A',1.5, 'B',1.0];
     case 'compressedPlanePortraitA2B1'
-        warper_args = {'CompressedRectilinearPortraitWarper', 'A',2.0, 'B',1.0};
+        warper_args = ['CompressedRectilinearPortraitWarper', warper_args, 'A',2.0, 'B',1.0];
     case 'compressedPlanePortraitA1.5B1'
-        warper_args = {'CompressedRectilinearPortraitWarper', 'A',1.5, 'B',1.0};
+        warper_args = ['CompressedRectilinearPortraitWarper', warper_args, 'A',1.5, 'B',1.0];
     case 'paniniA2B1'
-        warper_args = {'PaniniWarper', 'A',2.0, 'B',1.0};
+        warper_args = ['PaniniWarper', warper_args, 'A',2.0, 'B',1.0];
     case 'paniniA1.5B1'
-        warper_args = {'PaniniWarper', 'A',1.5, 'B',1.0};
+        warper_args = ['PaniniWarper', warper_args, 'A',1.5, 'B',1.0];
     case 'paniniPortraitA2B1'
-        warper_args = {'PaniniPortraitWarper', 'A',2.0, 'B',1.0};
+        warper_args = ['PaniniPortraitWarper', warper_args, 'A',2.0, 'B',1.0];
     case 'paniniPortraitA1.5B1'
-        warper_args = {'PaniniPortraitWarper', 'A',1.5, 'B',1.0};
+        warper_args = ['PaniniPortraitWarper', warper_args, 'A',1.5, 'B',1.0];
     case 'mercator'
-        warper_args = {'MercatorWarper'};
+        warper_args = ['MercatorWarper', warper_args];
     case 'transverseMercator'
-        warper_args = {'TransverseMercatorWarper'};
+        warper_args = ['TransverseMercatorWarper', warper_args];
     otherwise
         error('Cant create warper');
 end
-warper = cv.RotationWarper(p.warped_image_scale * p.seam_work_aspect, ...
-    warper_args{:});
+warper = cv.RotationWarper(warper_args{:});
 
 % Preapre images masks
 masks = cell(num_images,1);
@@ -465,7 +467,8 @@ tic
 
 % Update warped image scale, then update corners and sizes
 p.warped_image_scale = p.warped_image_scale * p.compose_work_aspect;
-warper = cv.RotationWarper(p.warped_image_scale, warper_args{:});
+warper_args{2} = p.warped_image_scale;
+warper = cv.RotationWarper(warper_args{:});
 for i=1:num_images
     % Update intrinsics
     cameras(i).focal = cameras(i).focal * p.compose_work_aspect;
