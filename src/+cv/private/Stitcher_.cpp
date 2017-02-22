@@ -21,6 +21,11 @@ map<int,Ptr<Stitcher> > obj_;
 /// compositing resolution types
 const ConstMap<string, int> ComposeResolMap = ConstMap<string, int>
     ("Orig", cv::Stitcher::ORIG_RESOL);
+
+/// stitching mode types
+const ConstMap<string, Stitcher::Mode> ModesMap = ConstMap<string, Stitcher::Mode>
+    ("Panorama", cv::Stitcher::PANORAMA)
+    ("Scans",    cv::Stitcher::SCANS);
 }
 
 /**
@@ -43,17 +48,21 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Constructor is called. Create a new object from argument
     if (method == "new") {
         nargchk(nrhs>=2 && (nrhs%2)==0 && nlhs<=1);
+        Stitcher::Mode mode = cv::Stitcher::PANORAMA;
         bool try_use_gpu = false;
         for (int i=2; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key == "TryUseGPU")
+            if (key == "Mode")
+                mode = ModesMap[rhs[i+1].toString()];
+            else if (key == "TryUseGPU")
                 try_use_gpu = rhs[i+1].toBool();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
         //Stitcher::createDefault(try_use_gpu);
-        obj_[++last_id] = createStitcher(try_use_gpu);
+        //createStitcher(try_use_gpu);
+        obj_[++last_id] = Stitcher::create(mode, try_use_gpu);
         plhs[0] = MxArray(last_id);
         mexLock();
         return;

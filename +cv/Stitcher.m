@@ -16,6 +16,28 @@ classdef Stitcher < handle
     % The implemented stitching pipeline is very similar to the one proposed
     % in [BL07].
     %
+    % # Camera models
+    % There are currently 2 camera models implemented in stitching pipeline.
+    %
+    % - *Homography model* expecting perspective transformations between
+    %   images implemented in `BestOf2NearestMatcher`,
+    %   `HomographyBasedEstimator`, `BundleAdjusterReproj`, and
+    %   `BundleAdjusterRay`.
+    % - *Affine model* expecting affine transformation with 6 DOF or 4 DOF
+    %   implemented in `AffineBestOf2NearestMatcher`, `AffineBasedEstimator`,
+    %   `BundleAdjusterAffine`, `BundleAdjusterAffinePartial`, and
+    %   `AffineWarper`.
+    %
+    % Homography model is useful for creating photo panoramas captured by
+    % camera, while affine-based model can be used to stitch scans and object
+    % captured by specialized devices. Use cv.Stitcher.Stitcher to get
+    % preconfigured pipeline for one of those models.
+    %
+    % Note: Certain detailed settings of cv.Stitcher might not make sense.
+    % Especially you should not mix classes implementing affine model and
+    % classes implementing Homography model, as they work with different
+    % transformations.
+    %
     % ## Example
     % * A basic example on image stitching can be found in the
     %   `stitching_demo.m` sample
@@ -53,12 +75,24 @@ classdef Stitcher < handle
 
     methods
         function this = Stitcher(varargin)
-            %STITCHER  Creates a stitcher with the default parameters
+            %STITCHER  Creates a Stitcher configured in one of the stitching modes
             %
             %    obj = cv.Stitcher()
             %    obj = cv.Stitcher('OptionName',optionValue, ...)
             %
             % ## Options
+            % * __Mode__ Scenario for stitcher operation. This is usually
+            %       determined by source of images to stitch and their
+            %       transformation. Default parameters will be chosen for
+            %       operation in given scenario. Default 'Panorama'. One of:
+            %       * __Panorama__ Mode for creating photo panoramas. Expects
+            %             images under perspective transformation and projects
+            %             resulting pano to sphere. See also
+            %             `BestOf2NearestMatcher`, `SphericalWarper`.
+            %       * __Scans__ Mode for composing scans. Expects images under
+            %             affine transformation does not compensate exposure
+            %             by default. See also `AffineBestOf2NearestMatcher`,
+            %             `AffineWarper`
             % * __TryUseGPU__ Flag indicating whether GPU should be used
             %       whenever it's possible. default false
             %
@@ -551,7 +585,8 @@ classdef Stitcher < handle
             % > Proceedings of the 2001 IEEE Computer Society Conference on,
             % > volume 2, pages II-509. IEEE, 2001.
             %
-            % See also: cv.Stitcher.getExposureCompensator
+            % See also: cv.Stitcher.getExposureCompensator,
+            %  cv.ExposureCompensator
             %
             Stitcher_(this.id, 'setExposureCompensator', compensatorType, varargin{:});
         end
@@ -609,7 +644,7 @@ classdef Stitcher < handle
             % > graph cuts". In ACM Transactions on Graphics (ToG), volume 22,
             % > pages 277-286. ACM, 2003.
             %
-            % See also: cv.Stitcher.getSeamFinder
+            % See also: cv.Stitcher.getSeamFinder, cv.SeamFinder
             %
             Stitcher_(this.id, 'setSeamFinder', seamType, varargin{:});
         end
@@ -663,7 +698,7 @@ classdef Stitcher < handle
             % > "A multiresolution spline with application to image mosaics".
             % > ACM Transactions on Graphics (TOG), 2(4):217-236, 1983.
             %
-            % See also: cv.Stitcher.getBlender
+            % See also: cv.Stitcher.getBlender, cv.Blender
             %
             Stitcher_(this.id, 'setBlender', blenderType, varargin{:});
         end
