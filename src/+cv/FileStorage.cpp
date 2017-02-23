@@ -61,6 +61,11 @@ void read(FileStorage& fs, MxArray& x, const FileNode& node)
                         elem >> m;
                         v[i] = MxArray(m);
                     }
+                    else if (isa(elem, "opencv-sparse-matrix")) {
+                        SparseMat m;
+                        elem >> m;
+                        v[i] = MxArray(m);
+                    }
                     else {
                         MxArray y = MxArray::Struct();
                         read(fs, y, elem);
@@ -103,6 +108,11 @@ void read(FileStorage& fs, MxArray& x, const FileNode& node)
                         elem >> m;
                         x.set(name, m);
                     }
+                    else if (isa(elem, "opencv-sparse-matrix")) {
+                        SparseMat m;
+                        elem >> m;
+                        x.set(name, m);
+                    }
                     else {
                         MxArray y = MxArray::Struct();
                         read(fs, y, elem);
@@ -131,16 +141,16 @@ void write(FileStorage& fs, const MxArray& x, bool root=false)
         case mxSTRUCT_CLASS: {
             mwSize n = x.numel();
             vector<string> fields(x.fieldnames());
-            if (n>1) fs << "[";
+            if (n > 1) fs << "[";
             for (mwIndex i=0; i<n; ++i) {
                 if (!root) fs << "{";
                 for (vector<string>::const_iterator it = fields.begin(); it != fields.end(); ++it) {
-                    fs << *it;
-                    write(fs, MxArray(x.at(*it,i)));
+                    fs << (*it);
+                    write(fs, MxArray(x.at(*it, i)));
                 }
                 if (!root) fs << "}";
             }
-            if (n>1) fs << "]";
+            if (n > 1) fs << "]";
             break;
         }
         case mxCELL_CLASS: {
@@ -155,7 +165,7 @@ void write(FileStorage& fs, const MxArray& x, bool root=false)
             fs << x.toString();
             break;
         default:  // x.isNumeric() or x.isLogical()
-            if (x.numel()==1) {
+            if (x.numel() == 1) {
                 switch (classid) {
                     case mxDOUBLE_CLASS:
                         fs << x.toDouble();
@@ -168,6 +178,8 @@ void write(FileStorage& fs, const MxArray& x, bool root=false)
                         break;
                 }
             }
+            else if (x.isSparse())
+                fs << x.toSparseMat();
             else
                 fs << x.toMat();
     }

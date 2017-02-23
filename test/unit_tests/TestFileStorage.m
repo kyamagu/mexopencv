@@ -47,6 +47,13 @@ classdef TestFileStorage
             assert(isequaln(S, S2));  % NOTE: S2.* are all double
         end
 
+        function test_sparse
+            S = struct('field1',speye(10));
+            str = cv.FileStorage('dummy.yml', S);
+            [S2,~] = cv.FileStorage(str);
+            assert(isequaln(S, S2) && issparse(S2.field1));
+        end
+
         function test_struct_array
             S = dir(mexopencv.root());  % Nx1 struct array
             SS = struct('dummy',S);     % wrap inside a scalar struct
