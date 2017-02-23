@@ -6,6 +6,7 @@
  * @date 2012
  */
 #include "mexopencv.hpp"
+#include <sstream>
 using namespace std;
 using namespace cv;
 
@@ -78,9 +79,16 @@ void read(FileStorage& fs, MxArray& x, const FileNode& node)
         x = MxArray(v);
     }
     else if (node.type() == FileNode::MAP) {
+        int i = 1;
         for (FileNodeIterator it = node.begin(); it != node.end(); ++it) {
             const FileNode& elem = (*it);
             string name(elem.name());
+            if (name.empty()) {
+                //HACK: create a unique field name for the current struct
+                ostringstream ss;
+                ss << "x" << (i++);
+                name = ss.str();
+            }
             switch (elem.type()) {
                 case FileNode::INT:
                     x.set(name, static_cast<int>(elem));
