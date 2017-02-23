@@ -216,8 +216,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             ((nlhs > 1) ? FileStorage::MEMORY : 0));
         if (!fs.isOpened())
             mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
+        FileNode fn(fs.root());
+        if (fn.empty())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to get node");
         MxArray s = MxArray::Struct();
-        read(fs, s, fs.root());
+        read(fs, s, fn);
         plhs[0] = s;
         if (nlhs > 1)
             plhs[1] = MxArray(true);  // dummy output

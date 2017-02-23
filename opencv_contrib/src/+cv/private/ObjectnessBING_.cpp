@@ -83,9 +83,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             (loadFromString ? FileStorage::MEMORY : 0));
         if (!fs.isOpened())
             mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
+        FileNode fn(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
+        if (fn.empty())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to get node");
         // HACK: cast as base class since ObjectnessBING overrides read method
-        (obj.dynamicCast<Saliency>())->read(
-            objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
+        (obj.dynamicCast<Saliency>())->read(fn);
         //*/
     }
     else if (method == "save") {
