@@ -37,6 +37,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         s.set("SSE4_1",         checkHardwareSupport(CV_CPU_SSE4_1));
         s.set("SSE4_2",         checkHardwareSupport(CV_CPU_SSE4_2));
         s.set("POPCNT",         checkHardwareSupport(CV_CPU_POPCNT));
+        s.set("FP16",           checkHardwareSupport(CV_CPU_FP16));
         s.set("AVX",            checkHardwareSupport(CV_CPU_AVX));
         s.set("AVX2",           checkHardwareSupport(CV_CPU_AVX2));
         s.set("FMA3",           checkHardwareSupport(CV_CPU_FMA3));
