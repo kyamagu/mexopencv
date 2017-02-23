@@ -46,6 +46,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         Rect r = rect.boundingRect();
         plhs[0] = MxArray(r);
     }
+    else if (method == "boundingRect2f") {
+        nargchk(nrhs==2 && nlhs<=1);
+        RotatedRect rect(rhs[1].toRotatedRect());
+        Rect_<float> r = rect.boundingRect2f();
+        plhs[0] = MxArray(r);
+    }
     else
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized operation %s", method.c_str());

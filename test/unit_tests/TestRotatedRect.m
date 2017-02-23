@@ -17,8 +17,12 @@ classdef TestRotatedRect
 
         function test_RotatedRect_boundingRect
             rrect = struct('center',[10,20], 'size',[5,6], 'angle',30);
+
             rect = cv.RotatedRect.boundingRect(rrect);
-            validateattributes(rect, {'numeric'}, {'vector', 'numel',4});
+            validateattributes(rect, {'numeric'}, {'vector', 'numel',4, 'integer'});
+
+            rect = cv.RotatedRect.boundingRect2f(rrect);
+            validateattributes(rect, {'numeric'}, {'vector', 'numel',4, 'real'});
         end
     end
 
