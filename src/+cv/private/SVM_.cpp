@@ -241,7 +241,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             if (!fs.isOpened())
                 mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
             fs << obj->getDefaultName() << "{";
-            fs << "format" << 3;
             obj->write(fs);
             fs << "}";
             plhs[0] = MxArray(fs.releaseAndGetString());
