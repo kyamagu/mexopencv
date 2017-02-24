@@ -23,13 +23,13 @@ classdef SVMSGD < handle
     %
     %   where
     %
-    %       * `w_t` is the weights vector for decision function at step `t`,
-    %       * `gamma(t)` is the step size of model parameters at the iteration
-    %         `t`, it is decreased on each step by the formula
-    %         `gamma(t) = gamma_0 * (1 + lambda*gamma_0*t)^(-c)`
-    %       * `Q_i` is the target functional from SVM task for sample with
-    %         number `i`, this sample is chosen stochastically on each step of
-    %         the algorithm.
+    %   * `w_t` is the weights vector for decision function at step `t`,
+    %   * `gamma(t)` is the step size of model parameters at the iteration
+    %     `t`, it is decreased on each step by the formula
+    %     `gamma(t) = gamma_0 * (1 + lambda*gamma_0*t)^(-c)`
+    %   * `Q_i` is the target functional from SVM task for sample with
+    %     number `i`, this sample is chosen stochastically on each step of
+    %     the algorithm.
     %
     % * __ASGD__ is Average Stochastic Gradient Descent SVM Classifier. ASGD
     %   classifier averages weights vector on each step of algorithm by the
