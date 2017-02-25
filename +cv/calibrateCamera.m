@@ -97,6 +97,8 @@
 %       it is set to 0. default false.
 % * __UseLU__ Use LU instead of SVD decomposition for solving. Much faster but
 %       potentially less precise. default false.
+% * __UseQR__ Use QR instead of SVD decomposition for solving. Faster but
+%       potentially less precise. default false.
 % * __Criteria__ Termination criteria for the iterative optimization algorithm.
 %       default `struct('type','Count+EPS', 'maxCount',30, 'epsilon',eps)`
 %
