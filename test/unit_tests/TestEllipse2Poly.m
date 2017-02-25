@@ -17,6 +17,13 @@ classdef TestEllipse2Poly
                 {'vector', 'numel',2, 'integer'}), pts);
         end
 
+        function test_3
+            pts = cv.ellipse2Poly([64,64], [20,10], 'DoublePrecision',true);
+            validateattributes(pts, {'cell'}, {'vector'});
+            cellfun(@(v) validateattributes(v, {'numeric'}, ...
+                {'vector', 'numel',2, 'real'}), pts);
+        end
+
         function test_error_argnum
             try
                 cv.ellipse2Poly();

@@ -29,6 +29,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int arcStart = 0;
     int arcEnd = 360;
     int delta = 5;
+    bool doublePrecision = false;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "Angle")
@@ -39,15 +40,26 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             arcEnd = rhs[i+1].toInt();
         else if (key == "Delta")
             delta = rhs[i+1].toInt();
+        else if (key == "DoublePrecision")
+            doublePrecision = rhs[i+1].toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
     }
 
     // Process
-    Point center(rhs[0].toPoint());
-    Size axes(rhs[1].toSize());
-    vector<Point> pts;
-    ellipse2Poly(center, axes, angle, arcStart, arcEnd, delta, pts);
-    plhs[0] = MxArray(pts);
+    if (doublePrecision) {
+        Point2d center(rhs[0].toPoint_<double>());
+        Size2d axes(rhs[1].toSize_<double>());
+        vector<Point2d> pts;
+        ellipse2Poly(center, axes, angle, arcStart, arcEnd, delta, pts);
+        plhs[0] = MxArray(pts);
+    }
+    else {
+        Point center(rhs[0].toPoint());
+        Size axes(rhs[1].toSize());
+        vector<Point> pts;
+        ellipse2Poly(center, axes, angle, arcStart, arcEnd, delta, pts);
+        plhs[0] = MxArray(pts);
+    }
 }
