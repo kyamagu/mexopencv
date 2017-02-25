@@ -19,7 +19,7 @@ using namespace cv;
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=5);
+    nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=8);
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);
@@ -80,9 +80,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<vector<Point2f> > imagePoints(MxArrayToVectorVectorPoint<float>(rhs[1]));
     Size imageSize(rhs[2].toSize());
     vector<Mat> rvecs, tvecs;
-    double reprojErr = calibrateCamera(objectPoints, imagePoints, imageSize,
-        cameraMatrix, distCoeffs, (nlhs>3 ? rvecs : noArray()),
-        (nlhs>4 ? tvecs : noArray()), flags, criteria);
+    Mat stdDeviationsIntrinsics, stdDeviationsExtrinsics, perViewErrors;
+    double reprojErr = calibrateCamera(
+        objectPoints, imagePoints, imageSize, cameraMatrix, distCoeffs,
+        (nlhs>3 ? rvecs : noArray()),
+        (nlhs>4 ? tvecs : noArray()),
+        (nlhs>5 ? stdDeviationsIntrinsics : noArray()),
+        (nlhs>6 ? stdDeviationsExtrinsics : noArray()),
+        (nlhs>7 ? perViewErrors : noArray()),
+        flags, criteria);
     plhs[0] = MxArray(cameraMatrix);
     if (nlhs>1)
         plhs[1] = MxArray(distCoeffs);
@@ -92,4 +98,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         plhs[3] = MxArray(rvecs);
     if (nlhs>4)
         plhs[4] = MxArray(tvecs);
+    if (nlhs>5)
+        plhs[5] = MxArray(stdDeviationsIntrinsics);
+    if (nlhs>6)
+        plhs[6] = MxArray(stdDeviationsExtrinsics);
+    if (nlhs>7)
+        plhs[7] = MxArray(perViewErrors);
 }

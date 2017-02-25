@@ -26,6 +26,8 @@ classdef TestCalibrateCamera
             end
             [A, distCoeffs, err] = cv.calibrateCamera(opts, ipts, imgSize);
             [A, distCoeffs, err, rvecs, tvecs] = cv.calibrateCamera(opts, ipts, imgSize);
+            [A, distCoeffs, err, rvecs, tvecs, stdDevsInt, stdDevsExt, errs] = ...
+                cv.calibrateCamera(opts, ipts, imgSize);
             validateattributes(A, {'numeric'}, {'size',[3 3]});
             validateattributes(distCoeffs, {'numeric'}, {'vector', 'numel',5});
             validateattributes(err, {'numeric'}, {'scalar'});
@@ -35,6 +37,9 @@ classdef TestCalibrateCamera
             validateattributes(tvecs, {'cell'}, {'vector', 'numel',N});
             cellfun(@(v) validateattributes(v, {'numeric'}, ...
                 {'vector', 'numel',3}), tvecs);
+            validateattributes(stdDevsInt, {'numeric'}, {'vector', 'numel',18});
+            validateattributes(stdDevsExt, {'numeric'}, {'vector', 'numel',N*6});
+            validateattributes(errs, {'numeric'}, {'vector', 'numel',N});
         end
 
         function test_options
