@@ -185,6 +185,21 @@ classdef Subdiv2D < handle
             edgeList = Subdiv2D_(this.id, 'getEdgeList');
         end
 
+        function leadingEdgeList = getLeadingEdgeList(this)
+            %GETLEADINGEDGELIST  Returns a list of the leading edge ID connected to each triangle
+            %
+            %    leadingEdgeList = obj.getLeadingEdgeList()
+            %
+            % ## Output
+            % * __leadingEdgeList__ Output vector.
+            %
+            % The function gives one edge ID for each triangle.
+            %
+            % See also: cv.Subdiv2D.getTriangleList
+            %
+            leadingEdgeList = Subdiv2D_(this.id, 'getLeadingEdgeList');
+        end
+
         function triangleList = getTriangleList(this)
             %GETTRIANGLELIST  Returns a list of all triangles
             %

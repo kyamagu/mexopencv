@@ -113,6 +113,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         obj->getEdgeList(edgeList);
         plhs[0] = MxArray(edgeList);
     }
+    else if (method == "getLeadingEdgeList") {
+        nargchk(nrhs==2 && nlhs<=1);
+        vector<int> leadingEdgeList;
+        obj->getLeadingEdgeList(leadingEdgeList);
+        plhs[0] = MxArray(leadingEdgeList);
+    }
     else if (method == "getTriangleList") {
         nargchk(nrhs==2 && nlhs<=1);
         vector<Vec6f> triangleList;
