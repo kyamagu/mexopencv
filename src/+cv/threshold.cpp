@@ -53,8 +53,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         thresh = rhs[1].toDouble();
 
     // Process
-    Mat src(rhs[0].toMat(rhs[0].isUint8() ? CV_8U :
-        (rhs[0].isInt16() ? CV_16S : CV_32F))), dst;
+    Mat src(rhs[0].toMat()),  // 8u, 16s, 32f, 64f
+        dst;
     thresh = threshold(src, dst, thresh, maxval, type);
     plhs[0] = MxArray(dst);
     if (nlhs>1)
