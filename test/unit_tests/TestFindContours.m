@@ -50,8 +50,6 @@ classdef TestFindContours
 
         function test_3
             labels = int32(kron([0 1; 2 3], ones(3)));
-            labels = cv.copyMakeBorder(labels, [1 1 1 1], ...
-                'BorderType','Constant', 'Value',0);
             [C, H] = cv.findContours(labels, 'Mode','CComp');
             [C, H] = cv.findContours(labels, 'Mode','FloodFill');
         end
