@@ -53,13 +53,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         Size2d axes(rhs[1].toSize_<double>());
         vector<Point2d> pts;
         ellipse2Poly(center, axes, angle, arcStart, arcEnd, delta, pts);
-        plhs[0] = MxArray(pts);
+        plhs[0] = MxArray(Mat(pts,false).reshape(1,0));  // Nx2 numeric matrix
     }
     else {
         Point center(rhs[0].toPoint());
         Size axes(rhs[1].toSize());
         vector<Point> pts;
         ellipse2Poly(center, axes, angle, arcStart, arcEnd, delta, pts);
-        plhs[0] = MxArray(pts);
+        plhs[0] = MxArray(Mat(pts,false).reshape(1,0));  // Nx2 numeric matrix
     }
 }

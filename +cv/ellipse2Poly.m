@@ -9,8 +9,8 @@
 %       for details.
 %
 % ## Output
-% * __pts__ Output vector of polyline vertices. A cell-array of 2-element
-%       vector `{[x,y], ...}`.
+% * __pts__ Output vector of polyline vertices. An Nx2 numeric matrix
+%       `[x y; ...]`.
 %
 % ## Options
 % * __Angle__ Rotation angle of the ellipse in degrees. See cv.ellipse for
