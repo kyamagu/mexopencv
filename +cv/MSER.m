@@ -237,11 +237,10 @@ classdef MSER < handle
             %
             % ## Output
             % * __msers__ The output vector of connected points (list of
-            %       point sets). Cell-array of cell-array of 2D points
-            %       `{{[x,y],[x,y],..}, {[x,y],..}}`.
-            % * __bboxes__ Output vector of rectangles (bounding boxes). A
-            %       cell-array of 4-element vectors
-            %       `{[x,y,width,height], ...}`.
+            %       point sets). Cell-array of 2D points matrices
+            %       `{[x,y; x,y; ..], [x,y; x,y; ..], ..}`.
+            % * __bboxes__ Output matrix of rectangles (bounding boxes). A
+            %       N-by-4 matrix `[x,y,width,height; ...]`.
             %
             % Runs the extractor on the specified image; returns the MSER
             % regions, each encoded as a contour (see cv.findContours).

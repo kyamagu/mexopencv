@@ -146,9 +146,17 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         vector<vector<Point> > msers;
         vector<Rect> bboxes;
         obj->detectRegions(image, msers, bboxes);
-        plhs[0] = MxArray(msers);
+        vector<Mat> msers_;
+        {
+            msers_.reserve(msers.size());
+            for (vector<vector<Point> >::const_iterator it = msers.begin(); it != msers.end(); ++it)
+                msers_.push_back(Mat(*it, false).reshape(1,0));
+        }
+        //plhs[0] = MxArray(msers); // cell of cell of 2-element vectors {{[x,y], ..}, ..}
+        plhs[0] = MxArray(msers_);  // cell of Nx2 matrices {[x y; ..], ..}
         if (nlhs > 1)
-            plhs[1] = MxArray(bboxes);
+            //plhs[1] = MxArray(bboxes);  // cell of 4-element vectors
+            plhs[1] = MxArray(Mat(bboxes, false).reshape(1,0));  // Nx4 matrix
     }
     else if (method == "get") {
         nargchk(nrhs==3 && nlhs<=1);
