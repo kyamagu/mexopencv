@@ -33,6 +33,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double startAngle = 0;
     double endAngle = 360;
     Scalar color;
+    vector<Vec4d> colors;
     int thickness = 1;
     int lineType = cv::LINE_8;
     int shift = 0;
@@ -47,6 +48,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (key == "Color")
             color = (rhs[i+1].isChar()) ?
                 ColorType[rhs[i+1].toString()] : rhs[i+1].toScalar();
+        else if (key == "Colors")
+            colors = MxArrayToVectorVec<double,4>(rhs[i+1]);
         else if (key == "Thickness")
             thickness = (rhs[i+1].isChar()) ?
                 ThicknessType[rhs[i+1].toString()] : rhs[i+1].toInt();
@@ -69,8 +72,19 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             color, thickness, lineType, shift);
     }
     else {
-        RotatedRect box(rhs[1].toRotatedRect());
-        ellipse(img, box, color, thickness, lineType);
+        if (rhs[1].numel() == 1) {
+            RotatedRect box(rhs[1].toRotatedRect());
+            ellipse(img, box, color, thickness, lineType);
+        }
+        else {
+            vector<RotatedRect> box(rhs[1].toVector<RotatedRect>());
+            if (!colors.empty() && colors.size() != box.size())
+                mexErrMsgIdAndTxt("mexopencv:error", "Length mismatch");
+            for (size_t i = 0; i < box.size(); ++i)
+                ellipse(img, box[i],
+                    (colors.empty() ? color : Scalar(colors[i])),
+                    thickness, lineType);
+        }
     }
     plhs[0] = MxArray(img);
 }
