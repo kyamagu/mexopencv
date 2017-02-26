@@ -29,13 +29,32 @@
 % ## Options
 % * __Connectivity__ 8 or 4 for 8-way or 4-way connectivity respectively.
 %       default 8
-% * __LType__ specifies the output image label type, an important consideration
-%       based on the total number of labels or alternatively the total number
-%       of pixels in the source image. Currently `int32` and `uint16` are
-%       supported. default `int32`
+% * __LType__ specifies the output image label type, an important
+%       consideration based on the total number of labels or alternatively the
+%       total number of pixels in the source image. Currently `int32` and
+%       `uint16` are supported. default `int32`
+% * __Method__ specifies the connected components labeling algorithm to
+%       use, currently Grana's (BBDT) and Wu's (SAUF) algorithms are
+%       supported. Note that SAUF algorithm forces a row major ordering of
+%       labels while BBDT does not. One of:
+%       * __Wu__ SAUF algorithm for 8-way connectivity, SAUF algorithm for
+%             4-way connectivity
+%       * __Default__ BBDT algorithm for 8-way connectivity, SAUF algorithm
+%             for 4-way connectivity
+%       * __Grana__ BBDT algorithm for 8-way connectivity, SAUF algorithm for
+%             4-way connectivity
 %
 % The last two optional output arguments are only computed if requested.
 %
+% ## References
+% [Wu]:
+% > "Two Strategies to Speed up Connected Components Algorithms", Kesheng Wu,
+% > et al (the SAUF (Scan array union find) variant using decision trees)
+%
+% [Grana]:
+% > "Optimized Block-based Connected Components Labeling with Decision Trees",
+% > Costantino Grana et al
+%
 % See also: cv.findContours, bwconncomp, bwlabel, labelmatrix, regionprops,
-%  vision.BlobAnalysis, bwareafilt, bwpropfilt
+%  imageRegionAnalyzer, vision.BlobAnalysis, bwareafilt, bwpropfilt
 %
