@@ -41,8 +41,7 @@ classdef DualTVL1OpticalFlow < handle
     % > Javier Sanchez Perez, Enric Meinhardt-Llopis, and Gabriele Facciolo.
     % > "TV-L1 Optical Flow Estimation". 2012.
     %
-    % See also: cv.DualTVL1OpticalFlow.DualTVL1OpticalFlow,
-    %  cv.calcOpticalFlowFarneback
+    % See also: cv.DualTVL1OpticalFlow.calc, cv.calcOpticalFlowFarneback
     %
 
     properties (SetAccess = private)
@@ -64,26 +63,26 @@ classdef DualTVL1OpticalFlow < handle
         % Stopping criterion threshold used in the numerical scheme, which is
         % a trade-off between precision and running time. default 0.01
         Epsilon
-        % Coefficient for additional illumination variation term. default 0.0
-        Gamma
         % Inner iterations (between outlier filtering) used in the numerical
         % scheme. default 30
         InnerIterations
         % Outer iterations (number of inner loops) used in the numerical
         % scheme. default 10
         OuterIterations
-        % Use initial flow. default false
-        UseInitialFlow
-        % Median filter kernel size (1 = no filter) (3 or 5). default 5
-        MedianFiltering
         % Step between scales (`<1`). default 0.8
         ScaleStep
+        % Coefficient for additional illumination variation term. default 0.0
+        Gamma
+        % Median filter kernel size (1 = no filter) (3 or 5). default 5
+        MedianFiltering
+        % Use initial flow. default false
+        UseInitialFlow
     end
 
-    %% DenseOpticalFlow
+    %% Constructor/destructor
     methods
         function this = DualTVL1OpticalFlow()
-            %DUALTVL1OPTICALFLOW  Creates instance of DenseOpticalFlow
+            %DUALTVL1OPTICALFLOW  Creates instance of DualTVL1OpticalFlow
             %
             %    obj = cv.DualTVL1OpticalFlow()
             %
@@ -102,7 +101,10 @@ classdef DualTVL1OpticalFlow < handle
             if isempty(this.id), return; end
             DualTVL1OpticalFlow_(this.id, 'delete');
         end
+    end
 
+    %% DenseOpticalFlow
+    methods
         function flow = calc(this, I0, I1, varargin)
             %CALC  Calculates an optical flow
             %
