@@ -11,7 +11,7 @@ using namespace std;
 using namespace cv;
 using namespace cv::aruco;
 
-//NOTE: renamed to drawMarkerAruco to avoid name conflict with imgproc function
+//HACK: renamed to drawMarkerAruco to avoid name conflict with imgproc function
 
 /**
  * Main entry called from Matlab

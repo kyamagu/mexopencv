@@ -5,11 +5,6 @@ classdef TestRetina
         filename = fullfile(mexopencv.root(),'test','lena.jpg');
     end
 
-    %NOTE: cv::bioinspired::Retina class is chatty with several printf() calls
-    % (only shows up in Octave since MATLAB swallows output from MEX files)
-    % This shows in TestRetinaFastToneMapping
-    % and TestTransientAreasSegmentationModule as well.
-
     methods (Static)
         function test_run
             img = cv.imread(TestRetina.filename, 'Color',true);

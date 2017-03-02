@@ -11,6 +11,7 @@ using namespace std;
 using namespace cv;
 using namespace cv::superres;
 // note ambiguity between: cv::DualTVL1OpticalFlow and cv::superres::DualTVL1OpticalFlow
+// note ambiguity between: cv::FarnebackOpticalFlow and cv::superres::FarnebackOpticalFlow
 
 // Persistent objects
 namespace {
@@ -80,8 +81,8 @@ Ptr<superres::FarnebackOpticalFlow> createFarnebackOpticalFlow(
     ptrdiff_t len = std::distance(first, last);
     nargchk((len%2)==0);
     Ptr<superres::FarnebackOpticalFlow> p = (use_gpu) ?
-        createOptFlow_Farneback_CUDA() :
-        createOptFlow_Farneback();
+        superres::createOptFlow_Farneback_CUDA() :
+        superres::createOptFlow_Farneback();
     if (p.empty())
         mexErrMsgIdAndTxt("mexopencv:error",
             "Failed to create FarnebackOpticalFlow");
@@ -236,7 +237,7 @@ Ptr<PyrLKOpticalFlow> createPyrLKOpticalFlow(
  *    - "PyrLKOpticalFlowCUDA" (requires CUDA)
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
- * @return smart pointer to created DenseOpticalFlowExt
+ * @return smart pointer to created cv::superres::DenseOpticalFlowExt
  */
 Ptr<DenseOpticalFlowExt> createDenseOpticalFlowExt(
     const string& type,
@@ -269,7 +270,7 @@ Ptr<DenseOpticalFlowExt> createDenseOpticalFlowExt(
  * @param type super resolution algorithm type, one of:
  *    - "BTVL1"
  *    - "BTVL1_CUDA" (requires CUDA)
- * @return smart pointer to created SuperResolution
+ * @return smart pointer to created cv::superres::SuperResolution
  */
 Ptr<SuperResolution> createSuperResolution(const string& type)
 {

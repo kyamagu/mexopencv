@@ -23,11 +23,8 @@ classdef TestShapeContextDistanceExtractor
             [im1,im2] = sc.getImages();
             validateattributes(im1, {class(img1)}, {'size',size(img1)});
             validateattributes(im2, {class(img2)}, {'size',size(img2)});
-            if false
-                %HACK: https://github.com/opencv/opencv/issues/5643
-                assert(isequal(im1, img1));
-                assert(isequal(im2, img2));
-            end
+            assert(isequal(im1, img1));
+            assert(isequal(im2, img2));
 
             d = sc.computeDistance(c1, c2);
             validateattributes(d, {'numeric'}, {'scalar', 'real'});
