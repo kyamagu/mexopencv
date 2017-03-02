@@ -139,11 +139,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unknown option %s",key.c_str());
         }
-        // makePtr<T>() only takes upto 10 arguments
-        obj_[++last_id] = Ptr<HOGDescriptor>(new HOGDescriptor(
+        obj_[++last_id] = makePtr<HOGDescriptor>(
             winSize, blockSize, blockStride, cellSize, nbins, derivAperture,
             winSigma, histogramNormType, L2HysThreshold, gammaCorrection,
-            nlevels, signedGradient));
+            nlevels, signedGradient);
         plhs[0] = MxArray(last_id);
         mexLock();
         return;

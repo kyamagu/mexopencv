@@ -37,7 +37,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // constructor call
     if (method == "new") {
         nargchk(nrhs==2 && nlhs<=1);
-        obj_[++last_id] = createOptFlow_DualTVL1();
+        obj_[++last_id] = DualTVL1OpticalFlow::create();
         plhs[0] = MxArray(last_id);
         mexLock();
         return;

@@ -936,6 +936,7 @@ Ptr<FlannBasedMatcher> createFlannBasedMatcher(
         indexParams = makePtr<flann::KDTreeIndexParams>();
     if (searchParams.empty())
         searchParams = makePtr<flann::SearchParams>();
+    //return FlannBasedMatcher::create();
     return makePtr<FlannBasedMatcher>(indexParams, searchParams);
 }
 
@@ -957,7 +958,7 @@ Ptr<BFMatcher> createBFMatcher(
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
     }
-    return makePtr<BFMatcher>(normType, crossCheck);
+    return BFMatcher::create(normType, crossCheck);
 }
 
 Ptr<DescriptorMatcher> createDescriptorMatcher(
