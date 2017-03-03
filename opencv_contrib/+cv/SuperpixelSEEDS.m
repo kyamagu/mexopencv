@@ -19,7 +19,7 @@ classdef SuperpixelSEEDS < handle
     % > Sampling". In Computer Vision-ECCV 2012, pages 13-26. Springer, 2012.
     %
     % See also: cv.SuperpixelSEEDS.SuperpixelSEEDS, cv.SuperpixelSLIC,
-    %  cv.SuperpixelLSC
+    %  cv.SuperpixelLSC, superpixels
     %
 
     properties (SetAccess = private)

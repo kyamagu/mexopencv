@@ -17,7 +17,7 @@ classdef SuperpixelLSC < handle
     % > Recognition (CVPR), June 2015.
     %
     % See also: cv.SuperpixelLSC.SuperpixelLSC, cv.SuperpixelSLIC,
-    %  cv.SuperpixelSEEDS
+    %  cv.SuperpixelSEEDS, superpixels
     %
 
     properties (SetAccess = private)
@@ -236,7 +236,7 @@ classdef SuperpixelLSC < handle
             % See also: cv.SuperpixelLSC.iterate, boundarymask
             %
             img = SuperpixelLSC_(this.id, 'getLabelContourMask', varargin{:});
-            img = (img == -1);  % fg:int8(-1), bg:int8(1)
+            img = (img == 255);  % fg:uint8(255), bg:uint8(0)
         end
 
         function enforceLabelConnectivity(this, varargin)

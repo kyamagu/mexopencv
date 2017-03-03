@@ -247,7 +247,7 @@ classdef SuperpixelSLIC < handle
             % See also: cv.SuperpixelSLIC.iterate, boundarymask
             %
             img = SuperpixelSLIC_(this.id, 'getLabelContourMask', varargin{:});
-            img = (img == -1);  % fg:int8(-1), bg:int8(1)
+            img = (img == 255);  % fg:uint8(255), bg:uint8(0)
         end
 
         function enforceLabelConnectivity(this, varargin)
