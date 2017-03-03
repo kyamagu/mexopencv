@@ -11,8 +11,6 @@ using namespace std;
 using namespace cv;
 using namespace cv::ximgproc;
 
-//TODO: https://github.com/opencv/opencv_contrib/pull/542
-
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments
