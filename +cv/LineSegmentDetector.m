@@ -8,6 +8,9 @@ classdef LineSegmentDetector < handle
     % > Rafael Grompone von Gioi, Jeremie Jakubowicz, Jean-Michel Morel,
     % > and Gregory Randall. Lsd: a line segment detector. 2012.
     %
+    % See also: cv.LineSegmentDetector.LineSegmentDetector, cv.HoughLines,
+    %  cv.FastLineDetector, houghlines
+    %
 
     properties (SetAccess = private)
         id  % Object ID
@@ -47,6 +50,8 @@ classdef LineSegmentDetector < handle
             % The cv.LineSegmentDetector algorithm is defined using the
             % standard values. Only advanced users may want to edit those, as
             % to tailor it for their own application.
+            %
+            % See also: cv.LineSegmentDetector.detect
             %
             this.id = LineSegmentDetector_(0, 'new', varargin{:});
         end
@@ -172,6 +177,8 @@ classdef LineSegmentDetector < handle
             %       * -1 corresponds to 10 mean false alarms
             %       * 0 corresponds to 1 mean false alarm
             %       * 1 corresponds to 0.1 mean false alarms
+            %
+            % See also: cv.LineSegmentDetector.drawSegments
             %
             [lines, width, prec, nfa] = LineSegmentDetector_(this.id, 'detect', img);
         end
