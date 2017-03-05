@@ -2,7 +2,7 @@ classdef TestLUCID
     %TestLUCID
 
     properties (Constant)
-        im = fullfile(mexopencv.root(),'test','tsukuba_l.png');
+        im = fullfile(mexopencv.root(),'test','tsukuba.png');
     end
 
     methods (Static)

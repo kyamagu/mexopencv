@@ -11,6 +11,8 @@ classdef LUCID < handle
     % LUCID is computable in linear time with respect to the number of pixels
     % and does not require floating-point computation.
     %
+    % Note: It requires a color image as input.
+    %
     % ## References
     % [LUCID]:
     % > Andrew Ziegler, Eric Christiansen, David Kriegman, Serge J. Belongie.
@@ -210,7 +212,7 @@ classdef LUCID < handle
             %    [descriptors, keypoints] = obj.compute(imgs, keypoints)
             %
             % ## Input
-            % * __img__ Image (first variant), 8-bit color image.
+            % * __img__ Image (first variant), 8-bit 3-channel color image.
             % * __imgs__ Image set (second variant), cell array of images.
             % * __keypoints__ Input collection of keypoints. Keypoints for
             %       which a descriptor cannot be computed are removed.

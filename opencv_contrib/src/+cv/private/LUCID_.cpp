@@ -78,22 +78,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        /*
         obj_[id] = (loadFromString ?
             Algorithm::loadFromString<LUCID>(rhs[2].toString(), objname) :
             Algorithm::load<LUCID>(rhs[2].toString(), objname));
-        */
-        ///*
-        // HACK: workaround because LUCID::create() doesnt accept zero arguments
-        FileStorage fs(rhs[2].toString(), FileStorage::READ +
-            (loadFromString ? FileStorage::MEMORY : 0));
-        if (!fs.isOpened())
-            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
-        FileNode fn(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
-        if (fn.empty())
-            mexErrMsgIdAndTxt("mexopencv:error", "Failed to get node");
-        obj->read(fn);
-        //*/
     }
     else if (method == "save") {
         nargchk(nrhs==3 && nlhs==0);
@@ -123,9 +110,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==4 && nlhs<=2);
         if (rhs[2].isNumeric()) {  // first variant that accepts an image
             Mat image(rhs[2].toMat(CV_8U)), descriptors;
-            if (image.channels() == 1)
-                // LUCID requires CV_8UC3
-                cvtColor(image, image, cv::COLOR_GRAY2BGR);
             vector<KeyPoint> keypoints(rhs[3].toVector<KeyPoint>());
             obj->compute(image, keypoints, descriptors);
             plhs[0] = MxArray(descriptors);
@@ -138,12 +122,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             {
                 vector<MxArray> arr(rhs[2].toVector<MxArray>());
                 images.reserve(arr.size());
-                for (vector<MxArray>::const_iterator it = arr.begin(); it != arr.end(); ++it) {
-                    Mat img(it->toMat(CV_8U));
-                    if (img.channels() == 1)
-                        cvtColor(img, img, cv::COLOR_GRAY2BGR);
-                    images.push_back(img);
-                }
+                for (vector<MxArray>::const_iterator it = arr.begin(); it != arr.end(); ++it)
+                    images.push_back(it->toMat(CV_8U));
             }
             vector<vector<KeyPoint> > keypoints(rhs[3].toVector(
                 const_mem_fun_ref_t<vector<KeyPoint>, MxArray>(
