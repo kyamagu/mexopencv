@@ -8,7 +8,8 @@ classdef TestDescriptorExtractor
             'BRISK', 'ORB', 'KAZE', 'AKAZE', ...
             ... % xfeatures2d (opencv_contrib)
             'SIFT', 'SURF', ...
-            'BriefDescriptorExtractor', 'DAISY', 'FREAK', 'LATCH', 'LUCID', 'VGG'
+            'BriefDescriptorExtractor', 'DAISY', 'FREAK', 'LATCH', 'LUCID', ...
+            'VGG', 'BoostDesc'
         };
     end
 

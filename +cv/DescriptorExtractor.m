@@ -54,6 +54,7 @@ classdef DescriptorExtractor < handle
             %       * __LATCH__ see cv.LATCH (requires `xfeatures2d` module)
             %       * __DAISY__ see cv.DAISY (requires `xfeatures2d` module)
             %       * __VGG__ see cv.VGG (requires `xfeatures2d` module)
+            %       * __BoostDesc__ see cv.BoostDesc (requires `xfeatures2d` module)
             %
             % ## Options
             % Refer to the constructors of each descriptor extractor for a

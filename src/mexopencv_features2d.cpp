@@ -670,6 +670,30 @@ Ptr<VGG> createVGG(
     return VGG::create(desc, isigma, img_normalize, use_scale_orientation,
         scale_factor, dsc_normalize);
 }
+
+Ptr<BoostDesc> createBoostDesc(
+    vector<MxArray>::const_iterator first,
+    vector<MxArray>::const_iterator last)
+{
+    nargchk(((last-first) % 2) == 0);
+    int desc = BoostDesc::BINBOOST_256;
+    bool use_scale_orientation = true;
+    float scale_factor = 6.25f;
+    for (; first != last; first += 2) {
+        string key(first->toString());
+        const MxArray& val = *(first + 1);
+        if (key == "Desc")
+            desc = BoostDescType[val.toString()];
+        else if (key == "UseScaleOrientation")
+            use_scale_orientation = val.toBool();
+        else if (key == "ScaleFactor")
+            scale_factor = val.toFloat();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
+    return BoostDesc::create(desc, use_scale_orientation, scale_factor);
+}
 #endif
 
 Ptr<FeatureDetector> createFeatureDetector(
@@ -746,6 +770,8 @@ Ptr<DescriptorExtractor> createDescriptorExtractor(
         p = createDAISY(first, last);
     else if (type == "VGG")
         p = createVGG(first, last);
+    else if (type == "BoostDesc")
+        p = createBoostDesc(first, last);
 #endif
     else
         mexErrMsgIdAndTxt("mexopencv:error",
