@@ -1,7 +1,7 @@
-classdef StaticSaliencySpectralResidual < handle
-    %STATICSALIENCYSPECTRALRESIDUAL  The Spectral Residual approach for Static Saliency
+classdef StaticSaliencyFineGrained < handle
+    %STATICSALIENCYFINEGRAINED  The Fine Grained Saliency approach for Static Saliency
     %
-    % Implementation of SpectralResidual for Static Saliency.
+    % The Fine Grained Saliency approach from [FGS].
     %
     % ## Saliency API
     %
@@ -33,51 +33,35 @@ classdef StaticSaliencySpectralResidual < handle
     % Algorithms belonging to this category, exploit different image features
     % that allow to detect salient objects in a non dynamic scenarios.
     %
-    % Presently, the Spectral Residual approach [SR] has been implemented.
+    % ### Fine Grained Saliency
     %
-    % ### Spectral Residual
-    %
-    % Starting from the principle of natural image statistics, this method
-    % simulate the behavior of pre-attentive visual search. The algorithm
-    % analyze the log spectrum of each image and obtain the spectral residual.
-    % Then transform the spectral residual to spatial domain to obtain the
-    % saliency map, which suggests the positions of proto-objects.
+    % This method calculates saliency based on center-surround differences.
+    % High resolution saliency maps are generated in real time by using
+    % integral images.
     %
     % ## References
-    % [SR]:
-    % > Xiaodi Hou and Liqing Zhang. "Saliency detection: A spectral residual
-    % > approach". In Computer Vision and Pattern Recognition, 2007. CVPR'07.
-    % > IEEE Conference on, pages 1-8. IEEE, 2007.
+    % [FGS]:
+    % > Sebastian Montabone and Alvaro Soto. "Human detection using a mobile
+    % > platform and novel features derived from a visual saliency mechanism".
+    % > In Image and Vision Computing, Vol. 28 Issue 3, pages 391-402.
+    % > Elsevier, 2010.
     %
-    % See also: cv.MotionSaliencyBinWangApr2014, cv.StaticSaliencyFineGrained
+    % See also: cv.StaticSaliencySpectralResidual
     %
 
     properties (SetAccess = private)
         id    % Object ID
     end
 
-    properties (Dependent)
-        % The dimension to which the image should be resized
-        % (resized image width).
-        %
-        % Default 64
-        ImageWidth
-        % The dimension to which the image should be resized
-        % (resized image height).
-        %
-        % Default 64
-        ImageHeight
-    end
-
     methods
-        function this = StaticSaliencySpectralResidual()
-            %STATICSALIENCYSPECTRALRESIDUAL  Constructor, creates a specialized saliency algorithm of this type
+        function this = StaticSaliencyFineGrained()
+            %STATICSALIENCYFINEGRAINED  Constructor, creates a specialized saliency algorithm of this type
             %
-            %    obj = cv.StaticSaliencySpectralResidual()
+            %    obj = cv.StaticSaliencyFineGrained()
             %
-            % See also: cv.StaticSaliencySpectralResidual.computeSaliency
+            % See also: cv.StaticSaliencyFineGrained.computeSaliency
             %
-            this.id = StaticSaliencySpectralResidual_(0, 'new');
+            this.id = StaticSaliencyFineGrained_(0, 'new');
         end
 
         function delete(this)
@@ -85,10 +69,10 @@ classdef StaticSaliencySpectralResidual < handle
             %
             %    obj.delete()
             %
-            % See also: cv.StaticSaliencySpectralResidual
+            % See also: cv.StaticSaliencyFineGrained
             %
             if isempty(this.id), return; end
-            StaticSaliencySpectralResidual_(this.id, 'delete');
+            StaticSaliencyFineGrained_(this.id, 'delete');
         end
     end
 
@@ -99,10 +83,10 @@ classdef StaticSaliencySpectralResidual < handle
             %
             %    obj.clear()
             %
-            % See also: cv.StaticSaliencySpectralResidual.empty,
-            %  cv.StaticSaliencySpectralResidual.load
+            % See also: cv.StaticSaliencyFineGrained.empty,
+            %  cv.StaticSaliencyFineGrained.load
             %
-            StaticSaliencySpectralResidual_(this.id, 'clear');
+            StaticSaliencyFineGrained_(this.id, 'clear');
         end
 
         function b = empty(this)
@@ -114,10 +98,10 @@ classdef StaticSaliencySpectralResidual < handle
             % * __b__ Returns true if the detector object is empty (e.g in the
             %       very beginning or after unsuccessful read).
             %
-            % See also: cv.StaticSaliencySpectralResidual.clear,
-            %  cv.StaticSaliencySpectralResidual.load
+            % See also: cv.StaticSaliencyFineGrained.clear,
+            %  cv.StaticSaliencyFineGrained.load
             %
-            b = StaticSaliencySpectralResidual_(this.id, 'empty');
+            b = StaticSaliencyFineGrained_(this.id, 'empty');
         end
 
         function save(this, filename)
@@ -131,9 +115,9 @@ classdef StaticSaliencySpectralResidual < handle
             % This method stores the algorithm parameters in the specified
             % XML or YAML file.
             %
-            % See also: cv.StaticSaliencySpectralResidual.load
+            % See also: cv.StaticSaliencyFineGrained.load
             %
-            StaticSaliencySpectralResidual_(this.id, 'save', filename);
+            StaticSaliencyFineGrained_(this.id, 'save', filename);
         end
 
         function load(this, fname_or_str, varargin)
@@ -159,9 +143,9 @@ classdef StaticSaliencySpectralResidual < handle
             % YAML file (either from disk or serialized string). The previous
             % algorithm state is discarded.
             %
-            % See also: cv.StaticSaliencySpectralResidual.save
+            % See also: cv.StaticSaliencyFineGrained.save
             %
-            StaticSaliencySpectralResidual_(this.id, 'load', fname_or_str, varargin{:});
+            StaticSaliencyFineGrained_(this.id, 'load', fname_or_str, varargin{:});
         end
 
         function name = getDefaultName(this)
@@ -173,10 +157,10 @@ classdef StaticSaliencySpectralResidual < handle
             % * __name__ This string is used as top level XML/YML node tag
             %       when the object is saved to a file or string.
             %
-            % See also: cv.StaticSaliencySpectralResidual.save,
-            %  cv.StaticSaliencySpectralResidual.load
+            % See also: cv.StaticSaliencyFineGrained.save,
+            %  cv.StaticSaliencyFineGrained.load
             %
-            name = StaticSaliencySpectralResidual_(this.id, 'getDefaultName');
+            name = StaticSaliencyFineGrained_(this.id, 'getDefaultName');
         end
     end
 
@@ -190,9 +174,9 @@ classdef StaticSaliencySpectralResidual < handle
             % ## Output
             % * __className__ The name of the tracker initializer.
             %
-            % See also: cv.StaticSaliencySpectralResidual.StaticSaliencySpectralResidual
+            % See also: cv.StaticSaliencyFineGrained.StaticSaliencyFineGrained
             %
-            className = StaticSaliencySpectralResidual_(this.id, 'getClassName');
+            className = StaticSaliencyFineGrained_(this.id, 'getClassName');
         end
 
         function saliencyMap = computeSaliency(this, img)
@@ -201,19 +185,15 @@ classdef StaticSaliencySpectralResidual < handle
             %    saliencyMap = obj.computeSaliency(img)
             %
             % ## Input
-            % * __img__ The input image, 1 or 3-channel (internally converted
-            %       to grayscale).
+            % * __img__ The input image, 8-bit 1 or 3-channel (internally
+            %       converted to grayscale).
             %
             % ## Output
-            % * __saliencyMap__ The computed saliency map, `single` matrix.
+            % * __saliencyMap__ The computed saliency map, `uint8` matrix.
             %
-            % Performs all the operations and calls all internal functions
-            % necessary for the accomplishment of spectral residual saliency
-            % map.
+            % See also: cv.StaticSaliencyFineGrained.computeBinaryMap
             %
-            % See also: cv.StaticSaliencySpectralResidual.computeBinaryMap
-            %
-            saliencyMap = StaticSaliencySpectralResidual_(this.id, 'computeSaliency', img);
+            saliencyMap = StaticSaliencyFineGrained_(this.id, 'computeSaliency', img);
         end
     end
 
@@ -246,26 +226,13 @@ classdef StaticSaliencySpectralResidual < handle
             % separating those two classes, so that their intra-class variance
             % is minimal.
             %
-            % See also: cv.StaticSaliencySpectralResidual.computeSaliency
+            % See also: cv.StaticSaliencyFineGrained.computeSaliency
             %
-            binaryMap = StaticSaliencySpectralResidual_(this.id, 'computeBinaryMap', saliencyMap);
-        end
-    end
-
-    %% Getters/Setters
-    methods
-        function value = get.ImageWidth(this)
-            value = StaticSaliencySpectralResidual_(this.id, 'get', 'ImageWidth');
-        end
-        function set.ImageWidth(this, value)
-            StaticSaliencySpectralResidual_(this.id, 'set', 'ImageWidth', value);
-        end
-
-        function value = get.ImageHeight(this)
-            value = StaticSaliencySpectralResidual_(this.id, 'get', 'ImageHeight');
-        end
-        function set.ImageHeight(this, value)
-            StaticSaliencySpectralResidual_(this.id, 'set', 'ImageHeight', value);
+            if isa(saliencyMap, 'uint8')
+                % saliency map expected to be floating point in [0,1] range
+                saliencyMap = single(saliencyMap) / 255;
+            end
+            binaryMap = StaticSaliencyFineGrained_(this.id, 'computeBinaryMap', saliencyMap);
         end
     end
 
