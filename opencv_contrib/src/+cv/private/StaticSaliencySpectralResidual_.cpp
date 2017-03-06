@@ -39,7 +39,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Constructor is called. Create a new object from argument
     if (method == "new") {
         nargchk(nrhs==2 && nlhs<=1);
-        obj_[++last_id] = makePtr<StaticSaliencySpectralResidual>();
+        obj_[++last_id] = StaticSaliencySpectralResidual::create();
         plhs[0] = MxArray(last_id);
         mexLock();
         return;
@@ -72,22 +72,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        /*
         obj_[id] = (loadFromString ?
             Algorithm::loadFromString<StaticSaliencySpectralResidual>(rhs[2].toString(), objname) :
             Algorithm::load<StaticSaliencySpectralResidual>(rhs[2].toString(), objname));
-        */
-        ///*
-        // HACK: workaround for missing StaticSaliencySpectralResidual::create()
-        FileStorage fs(rhs[2].toString(), FileStorage::READ +
-            (loadFromString ? FileStorage::MEMORY : 0));
-        if (!fs.isOpened())
-            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
-        FileNode fn(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
-        if (fn.empty())
-            mexErrMsgIdAndTxt("mexopencv:error", "Failed to get node");
-        obj->read(fn);
-        //*/
     }
     else if (method == "save") {
         nargchk(nrhs==3 && nlhs==0);
