@@ -79,10 +79,11 @@ classdef BasicFaceRecognizer < handle
     properties (Dependent)
         % The number of components kept by the PCA/LDA transformations.
         NumComponents
-        % Threshhold parameter, required for default BestMinDist collector.
+        % Threshold parameter, required for default BestMinDist collector.
         Threshold
     end
 
+    %% Constructor/destructor
     methods
         function this = BasicFaceRecognizer(ftype, varargin)
             %BASICFACERECOGNIZER  Constructor
@@ -396,22 +397,26 @@ classdef BasicFaceRecognizer < handle
             [label, confidence] = BasicFaceRecognizer_(this.id, 'predict', src);
         end
 
-        function [labels, dists] = predict_collect(this, src)
+        function results = predict_collect(this, src, varargin)
             %PREDICT_COLLECT  send all result of prediction to collector for custom result handling
             %
-            %    [labels, dists] = obj.predict_collect(src)
+            %    results = obj.predict_collect(src)
+            %    results = obj.predict_collect(src, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __src__ Sample image to get a prediction from.
             %
             % ## Output
-            % * __labels__ All collected prediction labels for the given image.
-            % * __dists__ Associated prediction distances for the matching
-            %       label.
+            % * __results__ A struct array of all collected predictions labels
+            %       and associated prediction distances for the given image.
+            %
+            % ## Options
+            % * __Sorted__ If set, results will be sorted by distance. Each
+            %       value is a pair of label and distance. default false
             %
             % See also: cv.BasicFaceRecognizer.predict
             %
-            [labels, dists] = BasicFaceRecognizer_(this.id, 'predict_collect', src);
+            results = BasicFaceRecognizer_(this.id, 'predict_collect', src, varargin{:});
         end
 
         function setLabelInfo(this, label, strInfo)
