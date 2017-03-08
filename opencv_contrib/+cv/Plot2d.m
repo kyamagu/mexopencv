@@ -33,6 +33,10 @@ classdef Plot2d < handle
         MaxY
         % line width. default 1
         PlotLineWidth
+        % Switches data visualization mode. If true then neighbour plot points
+        % will be connected by lines. In other case data will be plotted as a
+        % set of standalone points. default true
+        NeedPlotLine
         % line color (RGB). default [0,255,255]
         PlotLineColor
         % background color (RGB). default [0,0,0]
@@ -49,17 +53,17 @@ classdef Plot2d < handle
 
     methods
         function this = Plot2d(varargin)
-            %PLOT2D  Constructor
+            %PLOT2D  Creates Plot2d object
             %
             %    obj = cv.Plot2d(dataY)
             %    obj = cv.Plot2d(dataX, dataY)
             %
             % ## Input
-            % * __dataY__ y-data vector, Nx1/1xN double matrix.
-            % * __dataX__ x-data vector, same size and type as `dataY`.
-            %
-            % In the first variant with y-data only, x-data defaults to
-            % `0:(numel(y)-1)`.
+            % * __dataY__ 1xN or Nx1 matrix containing `Y` values of points to
+            %       plot. In the first variant, `X` values will be equal to
+            %       indexes of corresponding elements in data matrix, i.e
+            %       `x = 0:(numel(y)-1)`.
+            % * __dataX__ 1xN or Nx1 matrix, `X` values of points to plot.
             %
             % See also: cv.Plot2d.render
             %
@@ -202,6 +206,10 @@ classdef Plot2d < handle
 
         function set.PlotLineWidth(this, value)
             Plot2d_(this.id, 'set', 'PlotLineWidth', value);
+        end
+
+        function set.NeedPlotLine(this, value)
+            Plot2d_(this.id, 'set', 'NeedPlotLine', value);
         end
 
         function set.PlotLineColor(this, value)

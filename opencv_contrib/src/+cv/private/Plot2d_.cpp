@@ -144,6 +144,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             obj->setMaxY(rhs[3].toDouble());
         else if (prop == "PlotLineWidth")
             obj->setPlotLineWidth(rhs[3].toInt());
+        else if (prop == "NeedPlotLine")
+            obj->setNeedPlotLine(rhs[3].toBool());
         else if (prop == "PlotLineColor")
             obj->setPlotLineColor((rhs[3].isChar()) ?
                 ColorType[rhs[3].toString()] : rhs[3].toScalar());
