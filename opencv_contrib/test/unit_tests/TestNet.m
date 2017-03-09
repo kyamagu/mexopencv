@@ -15,7 +15,8 @@ classdef TestNet
                 return;
             end
             net = cv.Net();
-            net.importCaffe(modelTxt, modelBin);
+            net.import('Caffe', modelTxt, modelBin);
+            assert(~net.empty());
 
             % set input blob (one image)
             img1 = cv.imread(TestNet.im1, 'FlipChannels',false);
@@ -43,7 +44,8 @@ classdef TestNet
                 return;
             end
             net = cv.Net();
-            net.importCaffe(modelTxt, modelBin);
+            net.import('Caffe', modelTxt, modelBin);
+            assert(~net.empty());
 
             img1 = cv.imread(TestNet.im1, 'FlipChannels',false);
             img2 = cv.imread(TestNet.im2, 'FlipChannels',false);

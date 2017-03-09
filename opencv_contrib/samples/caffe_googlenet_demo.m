@@ -78,7 +78,8 @@ img = cv.resize(img, [224 224]);
 
 %% Create and initialize network from Caffe model
 net = cv.Net();
-net.importCaffe(modelTxt, modelBin);
+net.import('Caffe', modelTxt, modelBin);
+assert(~net.empty(), 'Cant load network');
 
 %% Set the network input
 % we convert the image to 4-dimensional blob (so-called batch)
