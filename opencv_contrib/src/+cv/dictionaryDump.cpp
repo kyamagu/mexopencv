@@ -27,6 +27,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Process
-    Dictionary dictionary = MxArrayToDictionary(rhs[0]);
+    Ptr<Dictionary> dictionary = MxArrayToDictionary(rhs[0]);
     plhs[0] = toStruct(dictionary);
 }

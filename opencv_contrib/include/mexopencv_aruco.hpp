@@ -43,13 +43,13 @@ const ConstMap<std::string, cv::aruco::PREDEFINED_DICTIONARY_NAME> PredefinedDic
 
 // ==================== XXX ====================
 
-/** Convert MxArray to cv::aruco::DetectorParameters
+/** Convert MxArray to cv::Ptr<cv::aruco::DetectorParameters>
  * @param s scalar struct MxArray object
- * @return detector parameters object
+ * @return smart pointer to a detector parameters object
  */
-cv::aruco::DetectorParameters MxArrayToDetectorParameters(const MxArray &s);
+cv::Ptr<cv::aruco::DetectorParameters> MxArrayToDetectorParameters(const MxArray &s);
 
-/** Convert MxArray to cv::aruco::Dictionary
+/** Convert MxArray to cv::Ptr<cv::aruco::Dictionary>
  * @param arr MxArray object. In one of the following forms:
  * - a string, one of the recognized predefined dictionaries.
  * - a scalar struct with the following fields:
@@ -57,50 +57,50 @@ cv::aruco::DetectorParameters MxArrayToDetectorParameters(const MxArray &s);
  * - a cell-array of the form: <tt>{Type, ...}</tt> starting with the
  *   dictionary type ("Predefined", "Custom", or "Manual") followed by
  *   dictionary-specific options.
- * @return instance of created Dictionary object
+ * @return smart pointer to an instance of Dictionary object
  */
-cv::aruco::Dictionary MxArrayToDictionary(const MxArray &arr);
+cv::Ptr<cv::aruco::Dictionary> MxArrayToDictionary(const MxArray &arr);
 
-/** Convert MxArray to cv::aruco::Board
+/** Convert MxArray to cv::Ptr<cv::aruco::Board>
  * @param arr MxArray object. In one of the following forms:
  * - a scalar struct with the following fields:
  *   "objPoints", "dictionary", and "ids".
  * - a cell-array of the form: <tt>{Type, ...}</tt> starting with the
  *    board type ("Board", "GridBoard", or "CharucoBoard") followed by
  *    board-specific options.
- * @return instance of created Board object
+ * @return smart pointer to an instance of Board object
  */
-cv::aruco::Board MxArrayToBoard(const MxArray &arr);
+cv::Ptr<cv::aruco::Board> MxArrayToBoard(const MxArray &arr);
 
 /** Convert detector parameters to scalar struct
- * @param params instance of detector parameters
+ * @param params smart pointer to an instance of detector parameters
  * @return scalar struct MxArray object
  */
-MxArray toStruct(const cv::aruco::DetectorParameters &params);
+MxArray toStruct(const cv::Ptr<cv::aruco::DetectorParameters> &params);
 
 /** Convert Dictionary to scalar struct
- * @param dictionary instance of dictionary
+ * @param dictionary smart pointer to an instance of dictionary
  * @return scalar struct MxArray object
  */
-MxArray toStruct(const cv::aruco::Dictionary &dictionary);
+MxArray toStruct(const cv::Ptr<cv::aruco::Dictionary> &dictionary);
 
 /** Convert Board to scalar struct
- * @param board instance of Board
+ * @param board smart pointer to an instance of Board
  * @return scalar struct MxArray object
  */
-MxArray toStruct(const cv::aruco::Board &board);
+MxArray toStruct(const cv::Ptr<cv::aruco::Board> &board);
 
 /** Convert GridBoard to scalar struct
- * @param board instance of GridBoard
+ * @param board smart pointer to an instance of GridBoard
  * @return scalar struct MxArray object
  */
-MxArray toStruct(const cv::aruco::GridBoard &board);
+MxArray toStruct(const cv::Ptr<cv::aruco::GridBoard> &board);
 
 /** Convert CharucoBoard to scalar struct
- * @param board instance of CharucoBoard
+ * @param board smart pointer to an instance of CharucoBoard
  * @return scalar struct MxArray object
  */
-MxArray toStruct(const cv::aruco::CharucoBoard &board);
+MxArray toStruct(const cv::Ptr<cv::aruco::CharucoBoard> &board);
 
 
 // ==================== XXX ====================
@@ -108,27 +108,27 @@ MxArray toStruct(const cv::aruco::CharucoBoard &board);
 /** Create an instance of Board using options in arguments
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
- * @return instance of created Board
+ * @return smart pointer to an instance of created Board
  */
-cv::aruco::Board create_Board(
+cv::Ptr<cv::aruco::Board> create_Board(
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 
 /** Create an instance of GridBoard using options in arguments
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
- * @return instance of created GridBoard
+ * @return smart pointer to an instance of created GridBoard
  */
-cv::aruco::GridBoard create_GridBoard(
+cv::Ptr<cv::aruco::GridBoard> create_GridBoard(
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 
 /** Create an instance of CharucoBoard using options in arguments
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
- * @return instance of created CharucoBoard
+ * @return smart pointer to an instance of created CharucoBoard
  */
-cv::aruco::CharucoBoard create_CharucoBoard(
+cv::Ptr<cv::aruco::CharucoBoard> create_CharucoBoard(
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 

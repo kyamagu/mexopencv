@@ -81,7 +81,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<vector<Point2f> > corners(MxArrayToVectorVectorPoint<float>(rhs[0]));
     vector<int> ids(rhs[1].toVector<int>()),
         counter(rhs[2].toVector<int>());
-    Board board = MxArrayToBoard(rhs[3]);
+    Ptr<Board> board = MxArrayToBoard(rhs[3]);
     Size imageSize(rhs[4].toSize());
     vector<Vec3d> rvecs, tvecs;
     double reprojErr = calibrateCameraAruco(corners, ids,

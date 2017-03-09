@@ -40,7 +40,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
-    Dictionary dictionary = MxArrayToDictionary(rhs[0]);
+    Ptr<Dictionary> dictionary = MxArrayToDictionary(rhs[0]);
     int id = rhs[1].toInt(),
         sidePixels = rhs[2].toInt();
     Mat img;

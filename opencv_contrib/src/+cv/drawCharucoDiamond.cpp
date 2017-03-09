@@ -41,7 +41,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
-    Dictionary dictionary = MxArrayToDictionary(rhs[0]);
+    Ptr<Dictionary> dictionary = MxArrayToDictionary(rhs[0]);
     Vec4i ids(rhs[1].toVec<int,4>());
     int squareLength = rhs[2].toInt(),
         markerLength = rhs[3].toInt();

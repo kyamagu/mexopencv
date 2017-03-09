@@ -29,7 +29,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Process
     vector<Point2f> charucoCorners(rhs[0].toVector<Point2f>());
     vector<int> charucoIds(rhs[1].toVector<int>());
-    CharucoBoard board;
+    Ptr<CharucoBoard> board;
     {
         vector<MxArray> args(rhs[2].toVector<MxArray>());
         board = create_CharucoBoard(args.begin(), args.end());

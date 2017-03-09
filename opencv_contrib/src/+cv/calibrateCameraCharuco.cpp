@@ -80,7 +80,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Process
     vector<vector<Point2f> > charucoCorners(MxArrayToVectorVectorPoint<float>(rhs[0]));
     vector<vector<int> > charucoIds(MxArrayToVectorVectorPrimitive<int>(rhs[1]));
-    CharucoBoard board;
+    Ptr<CharucoBoard> board;
     {
         vector<MxArray> args(rhs[2].toVector<MxArray>());
         board = create_CharucoBoard(args.begin(), args.end());

@@ -43,7 +43,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<vector<Point2f> > markerCorners(MxArrayToVectorVectorPoint<float>(rhs[0]));
     vector<int> markerIds(rhs[1].toVector<int>());
     Mat image(rhs[2].toMat(CV_8U));
-    CharucoBoard board;
+    Ptr<CharucoBoard> board;
     {
         vector<MxArray> args(rhs[3].toVector<MxArray>());
         board = create_CharucoBoard(args.begin(), args.end());

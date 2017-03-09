@@ -41,7 +41,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
-    Board board = MxArrayToBoard(rhs[0]);
+    Ptr<Board> board = MxArrayToBoard(rhs[0]);
     Size outSize(rhs[1].toSize());
     Mat img;
     drawPlanarBoard(board, outSize, img, marginSize, borderBits);

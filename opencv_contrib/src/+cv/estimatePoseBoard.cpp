@@ -29,7 +29,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Process
     vector<vector<Point2f> > corners(MxArrayToVectorVectorPoint<float>(rhs[0]));
     vector<int> ids(rhs[1].toVector<int>());
-    Board board = MxArrayToBoard(rhs[2]);
+    Ptr<Board> board = MxArrayToBoard(rhs[2]);
     Mat cameraMatrix(rhs[3].toMat(CV_64F)),
         distCoeffs(rhs[4].toMat(CV_64F));
     Vec3d rvec, tvec;
