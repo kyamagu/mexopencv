@@ -16,7 +16,7 @@
 %       There are three types of boards available:
 %       * __Board__ `{'Board', objPoints, dictionary, ids}`.
 %             Creates a board of markers.
-%       * __GridBoard__ `{'GridBoard', markersX, markersY, markerLength, markerSeparation, dictionary}`.
+%       * __GridBoard__ `{'GridBoard', markersX, markersY, markerLength, markerSeparation, dictionary, 'FirstMarker',firstMarker}`.
 %             Creates a a GridBoard object given the number of markers in each
 %             direction and the marker size and marker separation.
 %       * __CharucoBoard__ `{'GridBoard', squaresX, squaresY, squareLength, markerLength, dictionary}`.
@@ -59,10 +59,11 @@
 % * __markersY__ number of markers in Y direction.
 % * __markerLength__ marker side length (normally in meters).
 % * __markerSeparation__ separation between two markers in the grid (same unit
-%       as `markerLenght`).
-% * __dictionary__ dictionary of markers indicating the type of markers. The
-%       first `markersX*markersY` markers in the dictionary are used. This is
-%       specified in the same format described in cv.detectMarkers.
+%       as `markerLength`).
+% * __dictionary__ dictionary of markers indicating the type of markers. This
+%       is specified in the same format described in cv.detectMarkers.
+% * __FirstMarker__ optional 0-based id of first marker in dictionary to use
+%       on board. default 0
 %
 % ## Inputs for CharucoBoard
 % * __squaresX__ number of chessboard squares in X direction.

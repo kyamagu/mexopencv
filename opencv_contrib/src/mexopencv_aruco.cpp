@@ -286,14 +286,25 @@ Ptr<GridBoard> create_GridBoard(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(std::distance(first, last) == 5);
+    ptrdiff_t len = std::distance(first, last);
+    nargchk(len>=5 && (len%2)==1);
     int markersX = first->toInt(); ++first;
     int markersY = first->toInt(); ++first;
     float markerLength = first->toFloat(); ++first;
     float markerSeparation = first->toFloat(); ++first;
     Ptr<Dictionary> dictionary = MxArrayToDictionary(*first); ++first;
+    int firstMarker = 0;
+    for (; first != last; first += 2) {
+        string key(first->toString());
+        const MxArray& val = *(first + 1);
+        if (key == "FirstMarker")
+            firstMarker = val.toInt();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
     return GridBoard::create(markersX, markersY,
-        markerLength, markerSeparation, dictionary);
+        markerLength, markerSeparation, dictionary, firstMarker);
 }
 
 Ptr<CharucoBoard> create_CharucoBoard(
