@@ -21,7 +21,7 @@ using namespace cv::aruco;
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    nargchk(nrhs>=4 && (nrhs%2)==0 && nlhs<=5);
+    nargchk(nrhs>=4 && (nrhs%2)==0 && nlhs<=8);
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);
@@ -87,9 +87,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     Size imageSize(rhs[3].toSize());
     vector<Vec3d> rvecs, tvecs;
+    Mat stdDeviationsIntrinsics, stdDeviationsExtrinsics, perViewErrors;
     double reprojErr = calibrateCameraCharuco(charucoCorners, charucoIds,
         board, imageSize, cameraMatrix, distCoeffs,
-        (nlhs>3 ? rvecs : noArray()), (nlhs>4 ? tvecs : noArray()),
+        (nlhs>3 ? rvecs : noArray()),
+        (nlhs>4 ? tvecs : noArray()),
+        (nlhs>5 ? stdDeviationsIntrinsics : noArray()),
+        (nlhs>6 ? stdDeviationsExtrinsics : noArray()),
+        (nlhs>7 ? perViewErrors : noArray()),
         flags, criteria);
     plhs[0] = MxArray(cameraMatrix);
     if (nlhs > 1)
@@ -100,4 +105,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         plhs[3] = MxArray(rvecs);
     if (nlhs > 4)
         plhs[4] = MxArray(tvecs);
+    if (nlhs > 5)
+        plhs[5] = MxArray(stdDeviationsIntrinsics);
+    if (nlhs > 6)
+        plhs[6] = MxArray(stdDeviationsExtrinsics);
+    if (nlhs > 7)
+        plhs[7] = MxArray(perViewErrors);
 }
