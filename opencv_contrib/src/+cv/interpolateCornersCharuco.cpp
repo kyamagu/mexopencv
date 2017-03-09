@@ -28,12 +28,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Option processing
     Mat cameraMatrix, distCoeffs;
+    int minMarkers = 2;
     for (int i=4; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "CameraMatrix")
             cameraMatrix = rhs[i+1].toMat(CV_64F);
         else if (key == "DistCoeffs")
             distCoeffs = rhs[i+1].toMat(CV_64F);
+        else if (key == "MinMarkers")
+            minMarkers = rhs[i+1].toInt();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
@@ -53,7 +56,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int num = interpolateCornersCharuco(markerCorners, markerIds, image,
         board, charucoCorners, charucoIds,
         (!cameraMatrix.empty()) ? cameraMatrix : noArray(),
-        (!distCoeffs.empty()) ? distCoeffs : noArray());
+        (!distCoeffs.empty()) ? distCoeffs : noArray(), minMarkers);
     plhs[0] = MxArray(charucoCorners);
     if (nlhs > 1)
         plhs[1] = MxArray(charucoIds);
