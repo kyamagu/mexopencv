@@ -1,6 +1,7 @@
 %ESTIMATEPOSEBOARD  Pose estimation for a board of markers
 %
 %    [rvec, tvec, num] = cv.estimatePoseBoard(corners, ids, board, cameraMatrix, distCoeffs)
+%    [rvec, tvec, num] = cv.estimatePoseBoard(..., 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __corners__ cell array of already detected markers corners. For each
@@ -36,7 +37,13 @@
 %       estimation. Note that returning a 0 means the pose has not been
 %       estimated.
 %
-% ## Options for Board
+% ## Options
+% * __Rvec__, __Tvec__ Initial `rvec` and `tvec`. Used as initial guess if not
+%       empty. The function uses the provided values as initial approximations
+%       of the rotation and translation vectors, respectively, and further
+%       optimizes them. Not set by default.
+%
+% ## Inputs for Board
 % * __objPoints__ array of object points of all the marker corners in the
 %       board, i.e. their coordinates with respect to the board system. Each
 %       marker include its 4 corners in CCW order
@@ -47,7 +54,7 @@
 %       as `objPoints`). The identifiers refers to the board dictionary
 %       (0-based).
 %
-% ## Options for GridBoard
+% ## Inputs for GridBoard
 % * __markersX__ number of markers in X direction.
 % * __markersY__ number of markers in Y direction.
 % * __markerLength__ marker side length (normally in meters).
@@ -57,7 +64,7 @@
 %       first `markersX*markersY` markers in the dictionary are used. This is
 %       specified in the same format described in cv.detectMarkers.
 %
-% ## Options for CharucoBoard
+% ## Inputs for CharucoBoard
 % * __squaresX__ number of chessboard squares in X direction.
 % * __squaresY__ number of chessboard squares in Y direction.
 % * __squareLength__ chessboard square side length (normally in meters).
