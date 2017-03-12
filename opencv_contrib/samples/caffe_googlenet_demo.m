@@ -27,12 +27,12 @@ if ~isdir(dirDNN)
 end
 if ~exist(modelLabels, 'file')
     disp('Downloading...')
-    url = 'https://cdn.rawgit.com/opencv/opencv_contrib/3.1.0/modules/dnn/samples/synset_words.txt';
+    url = 'https://cdn.rawgit.com/opencv/opencv_contrib/3.2.0/modules/dnn/samples/synset_words.txt';
     urlwrite(url, modelLabels);
 end
 if ~exist(modelTxt, 'file')
     disp('Downloading...')
-    url = 'https://cdn.rawgit.com/opencv/opencv_contrib/3.1.0/modules/dnn/samples/bvlc_googlenet.prototxt';
+    url = 'https://cdn.rawgit.com/opencv/opencv_contrib/3.2.0/modules/dnn/samples/bvlc_googlenet.prototxt';
     urlwrite(url, modelTxt);
 end
 if ~exist(modelBin, 'file')

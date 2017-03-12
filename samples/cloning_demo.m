@@ -35,7 +35,7 @@ imgs = {
 if ~isdir(dirRoot)
     mkdir(dirRoot);
     disp('Downloading images...')
-    baseURL = 'https://cdn.rawgit.com/opencv/opencv_extra/3.1.0/testdata/cv/cloning/';
+    baseURL = 'https://cdn.rawgit.com/opencv/opencv_extra/3.2.0/testdata/cv/cloning/';
     for i=1:numel(dirs)
         d = fullfile(dirRoot, dirs{i});
         if ~isdir(d)

@@ -11,7 +11,7 @@
 dsFile = fullfile(mexopencv.root(), 'test', 'data01.xml');
 if ~exist(dsFile, 'file')
     disp('Download dataset...');
-    url = 'https://cdn.rawgit.com/opencv/opencv/3.1.0/samples/data/data01.xml';
+    url = 'https://cdn.rawgit.com/opencv/opencv/3.2.0/samples/data/data01.xml';
     urlwrite(url, dsFile);
 end
 

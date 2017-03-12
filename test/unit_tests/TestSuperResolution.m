@@ -44,7 +44,7 @@ function fname = get_car_video()
     fname = fullfile(mexopencv.root(),'test','car.avi');
     if ~exist(fname, 'file')
         % download video from Github
-        url = 'https://cdn.rawgit.com/opencv/opencv_extra/3.1.0/testdata/superres/car.avi';
+        url = 'https://cdn.rawgit.com/opencv/opencv_extra/3.2.0/testdata/superres/car.avi';
         urlwrite(url, fname);
     end
 end

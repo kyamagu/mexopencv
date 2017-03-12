@@ -20,7 +20,7 @@ img = single(img) / 255;
 modelFilename = fullfile(mexopencv.root(),'test','model.yml.gz');
 if exist(modelFilename, 'file') ~= 2
     % download model from GitHub
-    url = 'https://cdn.rawgit.com/opencv/opencv_extra/3.1.0/testdata/cv/ximgproc/model.yml.gz';
+    url = 'https://cdn.rawgit.com/opencv/opencv_extra/3.2.0/testdata/cv/ximgproc/model.yml.gz';
     disp('Downloading model...')
     urlwrite(url, modelFilename);
 end

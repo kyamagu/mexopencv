@@ -49,7 +49,7 @@ function training_path = get_training_path()
         };
         mkdir(training_path);
         for i=1:numel(files)
-            url = 'https://cdn.rawgit.com/opencv/opencv_contrib/3.1.0/modules/saliency/samples/ObjectnessTrainedModel/';
+            url = 'https://cdn.rawgit.com/opencv/opencv_contrib/3.2.0/modules/saliency/samples/ObjectnessTrainedModel/';
             urlwrite([url files{i}], fullfile(training_path,files{i}));
         end
     end
