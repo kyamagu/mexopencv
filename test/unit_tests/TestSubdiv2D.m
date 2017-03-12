@@ -2,7 +2,7 @@ classdef TestSubdiv2D
     %TestSubdiv2D
 
     methods (Static)
-        function testGetTriangleList
+        function test_get_triangle_list
             s2d = cv.Subdiv2D([0, 0, 50, 50]);
             s2d.insert([10, 10]);
             s2d.insert([20, 10]);
@@ -13,7 +13,7 @@ classdef TestSubdiv2D
             assert(isvector(triangles{1}) && numel(triangles{1}) == 6);
         end
 
-        function testGetEdgeList
+        function test_get_edge_list
             s2d = cv.Subdiv2D();
             s2d.initDelaunay([0, 0, 50, 50]);
             s2d.insert([10, 10; 20, 10; 20, 20; 10, 20]);
@@ -22,7 +22,7 @@ classdef TestSubdiv2D
             assert(isvector(edges{1}) && numel(edges{1}) == 4);
         end
 
-        function testGetVoronoiFacetList
+        function test_get_voronoi_facet_list
             s2d = cv.Subdiv2D([0, 0, 50, 50]);
             s2d.insert([10, 10; 20, 10; 20, 20; 10, 20]);
             [faces,centers] = s2d.getVoronoiFacetList([]);
@@ -37,7 +37,7 @@ classdef TestSubdiv2D
             assert(size(centers,2) == 2);
         end
 
-        function testLocate
+        function test_locate
             s2d = cv.Subdiv2D([0, 0, 50, 50]);
             s2d.insert([10, 10; 20, 10; 20, 20; 10, 20]);
             [loc,edge,vertex] = s2d.locate([16, 17]);
@@ -50,7 +50,7 @@ classdef TestSubdiv2D
             %assert(strcmp(loc,'Error'));
         end
 
-        function testFindNearest
+        function test_find_nearest
             s2d = cv.Subdiv2D([0, 0, 50, 50]);
             s2d.insert([10, 10; 20, 10; 20, 20; 10, 20]);
             [vertex,pt] = s2d.findNearest([18, 19]);

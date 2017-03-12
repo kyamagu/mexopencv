@@ -33,7 +33,6 @@ function [img1, img2, flo] = readRubberWhale()
     GT = fullfile(mexopencv.root(), 'test', 'RubberWhale.flo');
     if ~exist(GT, 'file')
         % attempt to download ground thruth flow from GitHub
-        disp('Downloading FLO...')
         url = 'https://cdn.rawgit.com/opencv/opencv_extra/3.2.0/testdata/cv/optflow/RubberWhale.flo';
         urlwrite(url, GT);
     end

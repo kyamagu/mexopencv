@@ -9,17 +9,17 @@ classdef TestMergeRobertson
             for i=1:numel(files)
                 imgs{i} = imread(fullfile(fpath,files(i).name));
             end
-            times = 2.^(5:-1:-10);
-            assert(numel(imgs) == numel(times));
+            etimes = 2.^(5:-1:-10);
+            assert(numel(imgs) == numel(etimes));
 
             obj = cv.MergeRobertson();
-            hdr = obj.process(imgs, times);
+            hdr = obj.process(imgs, etimes);
             validateattributes(hdr, {'single'}, ...
                 {'size',size(imgs{1}), 'nonnegative'});
 
             calibrate = cv.CalibrateDebevec();
-            response = calibrate.process(imgs, times);
-            hdr = obj.process(imgs, times, response);
+            response = calibrate.process(imgs, etimes);
+            hdr = obj.process(imgs, etimes, response);
             validateattributes(hdr, {'single'}, ...
                 {'size',size(imgs{1}), 'nonnegative'});
         end

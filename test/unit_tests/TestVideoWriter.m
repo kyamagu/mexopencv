@@ -4,7 +4,7 @@ classdef TestVideoWriter
     methods (Static)
         function test_1
             % we use "Microsoft Video 1" codec (Windows only)
-            if ~ispc
+            if ~ispc || mexopencv.isOctave()
                 disp('SKIP')
                 return
             end

@@ -3,7 +3,7 @@ classdef TestBilateralTextureFilter
 
     methods (Static)
         function test_simple
-            img = imread(fullfile(mexopencv.root(),'test','img001.jpg'));
+            img = imread(fullfile(mexopencv.root(),'test','cat.jpg'));
             out = cv.bilateralTextureFilter(img);
             validateattributes(out, {class(img)}, {'size',size(img)});
         end

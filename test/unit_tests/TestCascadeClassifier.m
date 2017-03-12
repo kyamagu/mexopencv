@@ -108,7 +108,6 @@ function download_classifier_xml(fname)
         else
             error('File not found');
         end
-        disp('Downloading cascade classifier...')
         urlwrite([url f ext], fname);
     end
 end

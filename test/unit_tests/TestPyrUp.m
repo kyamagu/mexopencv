@@ -19,7 +19,7 @@ classdef TestPyrUp
 
         function test_custom_size
             img = imread(TestPyrUp.im);
-            img = img(1:400,1:512);
+            img = img(1:400,1:512,:);
             [h,w,~] = size(img);
             sz = [w,h].*2;
             result = cv.pyrUp(img, 'DstSize',sz);

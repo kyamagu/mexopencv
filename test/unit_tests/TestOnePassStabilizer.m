@@ -10,7 +10,6 @@ classdef TestOnePassStabilizer
             stab.getMotionEstimator();
             stab.getInpainter();
             stab.getMotionFilter();
-
         end
 
         function test_1

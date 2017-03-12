@@ -35,7 +35,6 @@ function fname = get_pedestrian_video()
     if ~exist(fname, 'file')
         % download video from Github
         url = 'https://cdn.rawgit.com/opencv/opencv/3.1.0/samples/data/768x576.avi';
-        disp('Downloading video...')
         urlwrite(url, fname);
     end
 end

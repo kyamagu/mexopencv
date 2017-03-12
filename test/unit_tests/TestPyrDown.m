@@ -19,7 +19,7 @@ classdef TestPyrDown
 
         function test_custom_size
             img = imread(TestPyrDown.im);
-            img = img(1:400,1:512);
+            img = img(1:400,1:512,:);
             [h,w,~] = size(img);
             sz = round([w,h]./2);
             result = cv.pyrDown(img, 'DstSize',sz);

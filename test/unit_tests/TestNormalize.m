@@ -1,9 +1,14 @@
 classdef TestNormalize
     %TestNormalize
 
+    properties (Constant)
+        imGray = fullfile(mexopencv.root(),'test','left01.jpg');
+        imColor = fullfile(mexopencv.root(),'test','cat.jpg');
+    end
+
     methods (Static)
         function test_minmax_gray
-            img = imread(fullfile(mexopencv.root(),'test','left01.jpg'));
+            img = imread(TestNormalize.imGray);
             I = cv.normalize(img, 'NormType','MinMax', 'DType','int8', ...
                 'Alpha',-50, 'Beta',100);
             J = my_normalize_minmax(img, -50, 100, 'int8');
@@ -12,7 +17,7 @@ classdef TestNormalize
         end
 
         function test_minmax_color
-            img = imread(fullfile(mexopencv.root(),'test','cat.jpg'));
+            img = imread(TestNormalize.imColor);
             I = cv.normalize(img, 'NormType','MinMax', 'DType','double', ...
                 'Alpha',0, 'Beta',1);
             J = my_normalize_minmax(img, 0, 1, 'double');
@@ -21,7 +26,7 @@ classdef TestNormalize
         end
 
         function test_lp_1
-            img = imread(fullfile(mexopencv.root(),'test','cat.jpg'));
+            img = imread(TestNormalize.imColor);
             I = cv.normalize(img, 'NormType','L1', 'DType','double', ...
                 'Alpha',1);
             J = my_normalize_Lp(img, 'L1', 1, 'double');
@@ -30,7 +35,7 @@ classdef TestNormalize
         end
 
         function test_lp_2
-            img = imread(fullfile(mexopencv.root(),'test','left01.jpg'));
+            img = imread(TestNormalize.imGray);
             I = cv.normalize(img, 'NormType','L2', 'DType','double', ...
                 'Alpha',1);
             J = my_normalize_Lp(img, 'L2', 1, 'double');
@@ -39,7 +44,7 @@ classdef TestNormalize
         end
 
         function test_lp_inf
-            img = imread(fullfile(mexopencv.root(),'test','left01.jpg'));
+            img = imread(TestNormalize.imGray);
             I = cv.normalize(img, 'NormType','Inf', 'DType','double', ...
                 'Alpha',1);
             J = my_normalize_Lp(img, 'Inf', 1, 'double');
@@ -48,7 +53,7 @@ classdef TestNormalize
         end
 
         function test_mask
-            img = imread(fullfile(mexopencv.root(),'test','left01.jpg'));
+            img = imread(TestNormalize.imGray);
             mask = (rand(size(img)) > 0.5);
             I = cv.normalize(img, 'NormType','MinMax', 'Mask',mask);
             I = cv.normalize(img, 'NormType','L2', 'Mask',mask);

@@ -2,12 +2,12 @@ classdef TestLineSegmentDetector
     %TestLineSegmentDetector
 
     properties (Constant)
-        fname = fullfile(mexopencv.root(),'test','img001.jpg');
+        im = fullfile(mexopencv.root(),'test','blox.jpg');
     end
 
     methods (Static)
         function test_1
-            img = cv.imread(TestLineSegmentDetector.fname, 'Flags',0);
+            img = cv.imread(TestLineSegmentDetector.im, 'Grayscale',true);
             lsd = cv.LineSegmentDetector('Refine','Advanced');
 
             [lines, width, prec, nfa] = lsd.detect(img);
@@ -23,7 +23,7 @@ classdef TestLineSegmentDetector
         end
 
         function test_2
-            img = cv.imread(TestLineSegmentDetector.fname, 'Flags',0);
+            img = cv.imread(TestLineSegmentDetector.im, 'Grayscale',true);
             lsd1 = cv.LineSegmentDetector('Refine','Standard');
             lsd2 = cv.LineSegmentDetector('Refine','None');
             lines1 = lsd1.detect(img);

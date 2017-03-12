@@ -1,10 +1,6 @@
 classdef TestObjectnessBING
     %TestObjectnessBING
 
-    properties (Constant)
-        im = fullfile(mexopencv.root(),'test','balloon.jpg');
-    end
-
     methods (Static)
         function test_1
             saliency = cv.ObjectnessBING();
@@ -16,7 +12,7 @@ classdef TestObjectnessBING
             saliency.setTrainingPath(get_training_path());
             saliency.setBBResDir(resdir);
 
-            img = imread(TestObjectnessBING.im);
+            img = imread(fullfile(mexopencv.root(),'test','balloon.jpg'));
             objectnessBoundingBox = saliency.computeSaliency(img);
             validateattributes(objectnessBoundingBox, {'cell'}, {'vector'});
             cellfun(@(bb) validateattributes(bb, {'numeric'}, ...
@@ -39,7 +35,7 @@ end
 function training_path = get_training_path()
     training_path = fullfile(mexopencv.root(),'test','ObjectnessTrainedModel');
     if ~isdir(training_path)
-        % download from GitHub
+        % download trained models from GitHub
         files = {
             'ObjNessB2W8HSV.idx.yml.gz'
             'ObjNessB2W8HSV.wS1.yml.gz'
@@ -51,7 +47,6 @@ function training_path = get_training_path()
             'ObjNessB2W8MAXBGR.wS1.yml.gz'
             'ObjNessB2W8MAXBGR.wS2.yml.gz'
         };
-        disp('Downloading trained models...');
         mkdir(training_path);
         for i=1:numel(files)
             url = 'https://cdn.rawgit.com/opencv/opencv_contrib/3.1.0/modules/saliency/samples/ObjectnessTrainedModel/';
