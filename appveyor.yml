@@ -3,13 +3,13 @@
 # https://ci.appveyor.com/project/kyamagu/mexopencv
 #
 # Note:
-# Due to the time limit on AppVeyor, OpenCV 3.1.0 is pre-built separately
+# Due to the time limit on AppVeyor, OpenCV 3.2.0 is pre-built separately
 # (using the same configuration with MinGW-GCC from Octave). See:
-# https://github.com/amroamroamro/opencv/blob/tag_3.1.0/appveyor.yml
+# https://github.com/amroamroamro/opencv/blob/tag_3.2.0/appveyor.yml
 #
 
 # version format
-version: 3.1.0.{build}
+version: 3.2.0.{build}
 
 # clone directory
 clone_folder: c:\projects\mexopencv
@@ -27,7 +27,7 @@ environment:
   # queried by mkoctfile.exe/octave-config.exe to alter compile and link paths
   # (otherwise some wrong hardcoded paths from cross-compiling are used)
   # http://savannah.gnu.org/bugs/?48671
-  OCTAVE_HOME: c:\dev\octave-4.0.3
+  OCTAVE_HOME: c:\dev\octave-4.2.1
   #TODO: https://savannah.gnu.org/bugs/?41699
   # we use octave-cli.exe here instead of octave.exe because of a bug
   # in the MinGW/MXE build causing Octave to crash on exit with a segfault
@@ -44,11 +44,11 @@ environment:
   # whether to run mexopencv.make() in Octave or use external makefile
   WITH_MAKE: yes
   # options in case of makefile (the quotes around the path are needed here!)
-  MAKE_OPTS: MATLABDIR='/c/dev/octave-4.0.3' WITH_OCTAVE=true WITH_CONTRIB=true NO_CV_PKGCONFIG_HACK=true
+  MAKE_OPTS: MATLABDIR='/c/dev/octave-4.2.1' WITH_OCTAVE=true WITH_CONTRIB=true NO_CV_PKGCONFIG_HACK=true
   # Extra make arguments like number of parallel jobs (NPROC+1 is recommended).
   # Note that GNU Make 3.81 bundled with Octave has poor parallel jobs support
   # (make -jN freezes, make -j has no limit creating way too many processes!).
-  # So we download a newer GNU Make 4.1 for Windows (mingw32-make -jN works).
+  # So we download a newer GNU Make 4.2 for Windows (mingw32-make -jN works).
   MAKE_EXTRA: -j2
 
 # immediately finish build if one of the jobs fails
@@ -74,13 +74,13 @@ install:
   - if not exist "c:\dev" ( mkdir "c:\dev" )
   - cd "c:\dev"
   - if "%DOXY%" == "yes" ( choco install doxygen.portable -y > nul )
-  - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.1.0/mingw32-make.exe" -FileName mingw32-make.exe
+  - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.2.0/mingw32-make.exe" -FileName mingw32-make.exe
   - set "PATH=c:\dev;%PATH%"
-  - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.1.0/cv310_x86_gcc493.7z" -FileName cv310_x86_gcc493.7z
-  - 7z x "c:\dev\cv310_x86_gcc493.7z" -o"c:\dev\build" -y > nul
+  - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.2.0/cv320_x86_gcc494.7z" -FileName cv320_x86_gcc494.7z
+  - 7z x "c:\dev\cv320_x86_gcc494.7z" -o"c:\dev\build" -y > nul
   - set "PATH=%OPENCV_DIR%\x86\mingw\bin;%PATH%"
-  - ps: Start-FileDownload "https://ftp.gnu.org/gnu/octave/windows/octave-4.0.3.zip" -FileName octave-4.0.3.zip
-  - 7z x "c:\dev\octave-4.0.3.zip" -o"c:\dev" -y > nul
+  - ps: Start-FileDownload "https://ftp.gnu.org/gnu/octave/windows/octave-4.2.1-w32.zip" -FileName octave-4.2.1-w32.zip
+  - 7z x "c:\dev\octave-4.2.1-w32.zip" -o"c:\dev" -y > nul
   - copy /y "%OCTAVE_HOME%\bin\libopenblas.dll" "%OCTAVE_HOME%\bin\libblas.dll" > nul
   - set "PATH=%OCTAVE_HOME%\bin;%PATH%"
   - call %OCTAVE% --eval "try, pkg('rebuild', '-noauto'); end"

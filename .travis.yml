@@ -86,10 +86,10 @@ install:
   - sudo apt-get install -y libxine-dev libv4l-dev libdc1394-22-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
   - sudo apt-get install -y libgtk2.0-dev libtbb-dev libeigen3-dev
 
-  # build OpenCV 3.1.0 from source (opencv + opencv_contrib)
+  # build OpenCV 3.2.0 from source (opencv + opencv_contrib)
   - mkdir $HOME/cv && pushd $HOME/cv
-  - wget -O opencv.zip https://github.com/opencv/opencv/archive/3.1.0.zip
-  - wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/3.1.0.zip
+  - wget -O opencv.zip https://github.com/opencv/opencv/archive/3.2.0.zip
+  - wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/3.2.0.zip
   - unzip opencv.zip > /dev/null
   - unzip opencv_contrib.zip > /dev/null
   - mkdir build && cd build
@@ -103,6 +103,7 @@ install:
       -DINSTALL_PYTHON_EXAMPLES:BOOL=OFF
       -DWITH_CUDA:BOOL=OFF
       -DWITH_CUFFT:BOOL=OFF
+      -DWITH_MATLAB:BOOL=OFF
       -DWITH_OPENCL:BOOL=OFF
       -DWITH_VTK:BOOL=OFF
       -DBUILD_opencv_apps:BOOL=OFF
@@ -123,7 +124,8 @@ install:
       -DBUILD_opencv_surface_matching:BOOL=OFF
       -DCMAKE_BUILD_TYPE:STRING=RELEASE
       -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_PREFIX
-      -DOPENCV_EXTRA_MODULES_PATH:PATH=$HOME/cv/opencv_contrib-3.1.0/modules $HOME/cv/opencv-3.1.0
+      -DOPENCV_ENABLE_NONFREE:BOOL=ON
+      -DOPENCV_EXTRA_MODULES_PATH:PATH=$HOME/cv/opencv_contrib-3.2.0/modules $HOME/cv/opencv-3.2.0
   - cmake --build .
   - sudo cmake --build . --target install
   - popd
