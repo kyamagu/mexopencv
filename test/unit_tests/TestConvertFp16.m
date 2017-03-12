@@ -4,7 +4,7 @@ classdef TestConvertFp16
     methods (Static)
         function test_1
             % fp32 -> fp16
-            fp32 = rand([10 20], 'single');
+            fp32 = rand([5 6], 'single');
             fp16 = cv.convertFp16(fp32);
             validateattributes(fp16, {'int16'}, {'size',size(fp32)});
 

@@ -18,7 +18,7 @@ classdef TestCalibrateCamera
         end
 
         function test_multiple_views
-            N = 9;
+            N = 5;
             opts = cell(1,N);
             ipts = cell(1,N);
             for i=1:N

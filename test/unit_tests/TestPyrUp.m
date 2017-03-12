@@ -7,19 +7,19 @@ classdef TestPyrUp
 
     methods (Static)
         function test_uint8_img
-            img = imread(TestPyrUp.im);
+            img = cv.imread(TestPyrUp.im, 'ReduceScale',2);
             result = cv.pyrUp(img);
         end
 
         function test_double_img
-            img = imread(TestPyrUp.im);
+            img = cv.imread(TestPyrUp.im, 'ReduceScale',2);
             img = double(img) ./ 255;
             result = cv.pyrUp(img);
         end
 
         function test_custom_size
-            img = imread(TestPyrUp.im);
-            img = img(1:400,1:512,:);
+            img = cv.imread(TestPyrUp.im, 'ReduceScale',2);
+            img = img(1:200,1:256,:);
             [h,w,~] = size(img);
             sz = [w,h].*2;
             result = cv.pyrUp(img, 'DstSize',sz);

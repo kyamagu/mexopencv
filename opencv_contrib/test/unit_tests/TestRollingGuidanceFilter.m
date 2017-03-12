@@ -1,13 +1,10 @@
 classdef TestRollingGuidanceFilter
     %TestRollingGuidanceFilter
 
-    properties (Constant)
-        im = fullfile(mexopencv.root(),'test','lena.jpg');
-    end
-
     methods (Static)
         function test_1
-            img = imread(TestRollingGuidanceFilter.im);
+            img = cv.imread(fullfile(mexopencv.root(),'test','lena.jpg'), ...
+                'Color',true, 'ReduceScale',2);
             dst = cv.rollingGuidanceFilter(img, 'SigmaSpace',3.0);
             validateattributes(dst, {class(img)}, {'size',size(img)});
         end

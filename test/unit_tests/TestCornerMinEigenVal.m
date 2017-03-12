@@ -7,13 +7,15 @@ classdef TestCornerMinEigenVal
 
     methods (Static)
         function test_1
-            img = cv.imread(TestCornerMinEigenVal.im, 'Grayscale',true);
+            img = cv.imread(TestCornerMinEigenVal.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             result = cv.cornerMinEigenVal(img);
             validateattributes(result, {'single'}, {'size',size(img)});
         end
 
         function test_2
-            img = cv.imread(TestCornerMinEigenVal.im, 'Grayscale',true);
+            img = cv.imread(TestCornerMinEigenVal.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             result = cv.cornerMinEigenVal(single(img)/255);
             validateattributes(result, {'single'}, {'size',size(img)});
         end

@@ -4,7 +4,7 @@ classdef TestBm3dDenoising
     methods (Static)
         function test_1
             img = cv.imread(fullfile(mexopencv.root(),'test','cat.jpg'), ...
-                'Grayscale',true);
+                'Grayscale',true, 'ReduceScale',2);
             out = cv.bm3dDenoising(img, 'H',10);
             validateattributes(out, {class(img)}, {'size',size(img)});
         end

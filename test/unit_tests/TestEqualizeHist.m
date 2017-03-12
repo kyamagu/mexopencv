@@ -3,7 +3,8 @@ classdef TestEqualizeHist
 
     methods (Static)
         function test_1
-            img = imread(fullfile(mexopencv.root(),'test','left01.jpg'));
+            img = cv.imread(fullfile(mexopencv.root(),'test','left01.jpg'), ...
+                'Grayscale',true, 'ReduceScale',2);
             dst = cv.equalizeHist(img);
             validateattributes(dst, {class(img)}, {'size',size(img)});
         end

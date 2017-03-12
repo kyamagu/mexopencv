@@ -4,7 +4,7 @@ classdef TestFastLineDetector
     methods (Static)
         function test_1
             img = cv.imread(fullfile(mexopencv.root(),'test','blox.jpg'), ...
-                'Grayscale',true);
+                'Grayscale',true, 'ReduceScale',2);
 
             obj = cv.FastLineDetector();
             lines = obj.detect(img);

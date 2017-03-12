@@ -2,15 +2,15 @@ classdef TestKNearest
     %TestKNearest
 
     properties (Constant)
-        X = [randn(50,3)+1; randn(50,3)-1];
-        Y = int32([ones(50,1); -ones(50,1)]);
-        YReg = [ones(50,1); -ones(50,1)] + randn(100,1)*0.5;
+        X = [randn(10,3)+1; randn(10,3)-1];
+        Y = int32([ones(10,1); -ones(10,1)]);
+        YReg = [ones(10,1); -ones(10,1)] + randn(20,1)*0.5;
     end
 
     methods (Static)
         function test_classification1
             % 2-class (binary)
-            K = 5;  % number of nearest neighbors
+            K = 3;  % number of nearest neighbors
             model = cv.KNearest();
             model.DefaultK = K;
             model.AlgorithmType = 'BruteForce';
@@ -78,7 +78,7 @@ classdef TestKNearest
         end
 
         function test_regression
-            K = 5;  % number of nearest neighbors
+            K = 3;  % number of nearest neighbors
             model = cv.KNearest();
             model.DefaultK = K;
             model.IsClassifier = false;

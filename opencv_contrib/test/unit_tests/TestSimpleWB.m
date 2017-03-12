@@ -8,7 +8,7 @@ classdef TestSimpleWB
     methods (Static)
         function test_8u
             % rgb
-            img = cv.imread(TestSimpleWB.im, 'Color',true);
+            img = cv.imread(TestSimpleWB.im, 'Color',true, 'ReduceScale',2);
             wb = cv.SimpleWB();
             out = wb.balanceWhite(img);
             validateattributes(out, {class(img)}, {'size',size(img)});
@@ -20,7 +20,7 @@ classdef TestSimpleWB
         end
 
         function test_32f
-            img = cv.imread(TestSimpleWB.im, 'Color',true);
+            img = cv.imread(TestSimpleWB.im, 'Color',true, 'ReduceScale',2);
             img = single(img) / 255;
 
             wb = cv.SimpleWB();

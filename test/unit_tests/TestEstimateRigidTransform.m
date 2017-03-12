@@ -20,14 +20,16 @@ classdef TestEstimateRigidTransform
         end
 
         function test_images_input
-            im1 = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale1.png'), 'Grayscale',true);
-            im2 = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'), 'Grayscale',true);
+            im1 = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale1.png'), ...
+                'Grayscale',true, 'ReduceScale',2);
+            im2 = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'), ...
+                'Grayscale',true, 'ReduceScale',2);
             M = cv.estimateRigidTransform(im1, im2, 'FullAffine',true);
             validateattributes(M, {'double'}, {'size',[2 3]});
         end
 
         function test_points_input
-            N = 100;
+            N = 50;
             pts1 = rand(2,N)*10;                  % a set of 2D points
             aff = randn(2,3);                     % true affine transformation
             pts2 = aff * [pts1; ones(1,N)];       % transform pts1
@@ -35,7 +37,7 @@ classdef TestEstimateRigidTransform
             M = cv.estimateRigidTransform(...
                 num2cell(pts1,1), num2cell(pts2,1), 'FullAffine',true);
             validateattributes(M, {'double'}, {'size',[2 3]});
-            norm(M - aff);
+            err = norm(M - aff);
         end
 
         function test_error_argnum

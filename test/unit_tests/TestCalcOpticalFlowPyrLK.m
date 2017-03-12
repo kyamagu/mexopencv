@@ -25,9 +25,11 @@ classdef TestCalcOpticalFlowPyrLK
         end
 
         function test_images
-            prevImg = cv.imread(TestCalcOpticalFlowPyrLK.img1, 'Grayscale',true);
-            nextImg = cv.imread(TestCalcOpticalFlowPyrLK.img2, 'Grayscale',true);
-            prevPts = cv.goodFeaturesToTrack(prevImg);
+            prevImg = cv.imread(TestCalcOpticalFlowPyrLK.img1, ...
+                'Grayscale',true, 'ReduceScale',2);
+            nextImg = cv.imread(TestCalcOpticalFlowPyrLK.img2, ...
+                'Grayscale',true, 'ReduceScale',2);
+            prevPts = cv.goodFeaturesToTrack(prevImg, 'MaxCorners',200);
             [nextPts,status,err] = cv.calcOpticalFlowPyrLK(prevImg, nextImg, prevPts);
             validateattributes(nextPts, {'cell'}, ...
                 {'vector', 'numel',numel(prevPts)});
@@ -50,9 +52,11 @@ classdef TestCalcOpticalFlowPyrLK
                 return;
             end
 
-            prevImg = cv.imread(TestCalcOpticalFlowPyrLK.img1, 'Grayscale',true);
-            nextImg = cv.imread(TestCalcOpticalFlowPyrLK.img2, 'Grayscale',true);
-            prevPts = cv.goodFeaturesToTrack(prevImg);
+            prevImg = cv.imread(TestCalcOpticalFlowPyrLK.img1, ...
+                'Grayscale',true, 'ReduceScale',2);
+            nextImg = cv.imread(TestCalcOpticalFlowPyrLK.img2, ...
+                'Grayscale',true, 'ReduceScale',2);
+            prevPts = cv.goodFeaturesToTrack(prevImg, 'MaxCorners',200);
             prevPyr = cv.buildOpticalFlowPyramid(prevImg);
             nextPyr = cv.buildOpticalFlowPyramid(nextImg);
             nextPts = cv.calcOpticalFlowPyrLK(prevPyr, nextPyr, prevPts);

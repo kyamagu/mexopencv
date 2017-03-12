@@ -21,9 +21,11 @@ classdef TestSparsePyrLKOpticalFlow
         end
 
         function test_2
-            prevImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale1.png'), 'Grayscale',true);
-            nextImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'), 'Grayscale',true);
-            prevPts = cv.goodFeaturesToTrack(prevImg);
+            prevImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale1.png'), ...
+                'Grayscale',true, 'ReduceScale',2);
+            nextImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'), ...
+                'Grayscale',true, 'ReduceScale',2);
+            prevPts = cv.goodFeaturesToTrack(prevImg, 'MaxCorners',200);
             alg = cv.SparsePyrLKOpticalFlow();
             [nextPts,status,err] = alg.calc(prevImg, nextImg, prevPts);
             validateattributes(nextPts, {'cell'}, ...

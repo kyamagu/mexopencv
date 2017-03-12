@@ -3,15 +3,15 @@ classdef TestEllipse
 
     methods (Static)
         function test_first_variant
-            img = 255*ones(128,128,3,'uint8');
-            out = cv.ellipse(img, [64,64], [20,10]);
+            img = 255*ones(64,64,3,'uint8');
+            out = cv.ellipse(img, [32,32], [20,10]);
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
         function test_second_variant
-            img = 255*ones(128,128,3,'uint8');
+            img = 255*ones(64,64,3,'uint8');
             out = cv.ellipse(img, ...
-                struct('center',[64,64], 'size',[20,10], 'angle',0));
+                struct('center',[32,32], 'size',[20,10], 'angle',0));
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
@@ -28,21 +28,21 @@ classdef TestEllipse
 
         function test_options
             % rotated ellipse
-            img = 255*ones(128,128,3,'uint8');
-            img = cv.ellipse(img, [64,64], [20,10], 'Angle',60);
+            img = 255*ones(64,64,3,'uint8');
+            img = cv.ellipse(img, [32,32], [20,10], 'Angle',60);
 
             % arc
-            img = 255*ones(128,128,3,'uint8');
-            img = cv.ellipse(img, [64,64], [20,10], ...
+            img = 255*ones(64,64,3,'uint8');
+            img = cv.ellipse(img, [32,32], [20,10], ...
                 'StartAngle',20, 'EndAngle',300, ...
                 'LineType','AA', 'Thickness',3);
 
             % filled
-            img = zeros(128,128,3,'uint8');
-            img = cv.ellipse(img, [64,64], [20,10], ...
+            img = zeros(64,64,3,'uint8');
+            img = cv.ellipse(img, [32,32], [20,10], ...
                 'Color',[255,0,255], 'Thickness','Filled');
             img = cv.ellipse(img, ...
-                struct('center',[64,64], 'size',[40,20], 'Angle',0), ...
+                struct('center',[32,32], 'size',[40,20], 'Angle',0), ...
                 'Color',[0,255,0], 'Thickness',-1);
         end
 
@@ -57,7 +57,7 @@ classdef TestEllipse
 
         function test_error_invalid_arg
             try
-                cv.ellipse(zeros(100), [], []);
+                cv.ellipse(zeros(50), [], []);
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));
@@ -66,7 +66,7 @@ classdef TestEllipse
 
         function test_error_unrecognized_option
             try
-                cv.ellipse(zeros(100), [50,50], [10,20], 'foo','bar');
+                cv.ellipse(zeros(50), [25,25], [10,20], 'foo','bar');
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));
@@ -75,7 +75,7 @@ classdef TestEllipse
 
         function test_error_invalid_option_value
             try
-                cv.ellipse(zeros(100), [50,50], [10,20], 'LineType','bar');
+                cv.ellipse(zeros(50), [25,25], [10,20], 'LineType','bar');
                 throw('UnitTest:Fail');
             catch e
                 assert(strcmp(e.identifier,'mexopencv:error'));
@@ -84,8 +84,8 @@ classdef TestEllipse
 
         function test_error_second_variant_options
             try
-                cv.ellipse(zeros(100), ...
-                    struct('center',[50,50], 'size',[20,40], 'angle',0), ...
+                cv.ellipse(zeros(50), ...
+                    struct('center',[25,25], 'size',[10,20], 'angle',0), ...
                     'StartAngle',45);
                 throw('UnitTest:Fail');
             catch e

@@ -1,13 +1,10 @@
 classdef TestJointBilateralFilter
     %TestJointBilateralFilter
 
-    properties (Constant)
-        im = fullfile(mexopencv.root(),'test','lena.jpg');
-    end
-
     methods (Static)
         function test_1
-            img = imread(TestJointBilateralFilter.im);
+            img = cv.imread(fullfile(mexopencv.root(),'test','lena.jpg'), ...
+                'Color',true, 'ReduceScale',2);
             dst = cv.jointBilateralFilter(img, img, 'Diameter',7);
             validateattributes(dst, {class(img)}, {'size',size(img)});
         end

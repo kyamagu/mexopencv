@@ -10,6 +10,7 @@ classdef TestRetinaFastToneMapping
             end
 
             hdr = cv.imread(fullfile(mexopencv.root(),'test','memorial.hdr'), 'Flags',-1);
+            hdr = cv.resize(hdr, 0.5, 0.5);
             sz = size(hdr);
 
             retina = cv.RetinaFastToneMapping([sz(2) sz(1)]);

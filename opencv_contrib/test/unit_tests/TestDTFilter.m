@@ -7,14 +7,14 @@ classdef TestDTFilter
 
     methods (Static)
         function test_1
-            img = imread(TestDTFilter.im);
+            img = cv.imread(TestDTFilter.im, 'Color',true, 'ReduceScale',2);
             filt = cv.DTFilter(img, 'Mode','NC');
             dst = filt.filter(img);
             validateattributes(dst, {class(img)}, {'size',size(img)});
         end
 
         function test_2
-            img = imread(TestDTFilter.im);
+            img = cv.imread(TestDTFilter.im, 'Color',true, 'ReduceScale',2);
             dst = cv.DTFilter.dtFilter(img, img, 'Mode','NC');
             validateattributes(dst, {class(img)}, {'size',size(img)});
         end

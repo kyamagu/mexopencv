@@ -4,7 +4,7 @@ classdef TestThinning
     methods (Static)
         function test_1
             bw = cv.imread(fullfile(mexopencv.root(),'test','bw.png'), ...
-                'Grayscale',true);
+                'Grayscale',true, 'ReduceScale',2);
             out = cv.thinning(bw, 'ThinningType','ZhangSuen');
             validateattributes(out, {class(bw)}, {'size',size(bw)});
         end

@@ -10,22 +10,22 @@ classdef TestCompareHist
         end
 
         function test_2
-            H1 = randi(1000, [50 40 30], 'single');
-            H2 = randi(1000, [50 40 30], 'single');
+            H1 = randi(1000, [14 12 10], 'single');
+            H2 = randi(1000, [14 12 10], 'single');
             d = cv.compareHist(H1, H2);
             validateattributes(d, {'double'}, {'scalar'});
         end
 
         function test_3
-            H1 = round(sprand(500,500,0.01)*1000);
-            H2 = round(sprand(500,500,0.01)*1000);
+            H1 = round(sprand(100,100,0.01)*1000);
+            H2 = round(sprand(100,100,0.01)*1000);
             d = cv.compareHist(H1,H2);
             validateattributes(d, {'double'}, {'scalar'});
         end
 
         function test_4
-            H1 = randi(1000, [50 50], 'single');
-            H2 = randi(1000, [50 50], 'single');
+            H1 = randi(1000, [20 20], 'single');
+            H2 = randi(1000, [20 20], 'single');
             comps = {'Correlation', 'ChiSquare', 'Intersection', ...
                 'Bhattacharyya', 'Hellinger', 'AltChiSquare', ...
                 'KullbackLeibler'};

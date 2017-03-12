@@ -7,14 +7,16 @@ classdef TestCornerEigenValsAndVecs
 
     methods (Static)
         function test_8bit
-            img = cv.imread(TestCornerEigenValsAndVecs.im, 'Grayscale',true);
+            img = cv.imread(TestCornerEigenValsAndVecs.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             result = cv.cornerEigenValsAndVecs(img);
             validateattributes(result, {'single'}, ...
                 {'ndims',3, 'size',[size(img) 6]});
         end
 
         function test_float
-            img = cv.imread(TestCornerEigenValsAndVecs.im, 'Grayscale',true);
+            img = cv.imread(TestCornerEigenValsAndVecs.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             result = cv.cornerEigenValsAndVecs(single(img)/255);
             validateattributes(result, {'single'}, ...
                 {'ndims',3, 'size',[size(img) 6]});

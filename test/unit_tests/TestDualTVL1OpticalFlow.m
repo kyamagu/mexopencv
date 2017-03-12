@@ -23,8 +23,10 @@ classdef TestDualTVL1OpticalFlow
         end
 
         function test_2
-            prevImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale1.png'), 'Grayscale',true);
-            nextImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'), 'Grayscale',true);
+            prevImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale1.png'), ...
+                'Grayscale',true, 'ReduceScale',2);
+            nextImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'), ...
+                'Grayscale',true, 'ReduceScale',2);
             alg = cv.DualTVL1OpticalFlow();
             alg.ScaleStep = 0.3;
             alg.MedianFiltering = 3;

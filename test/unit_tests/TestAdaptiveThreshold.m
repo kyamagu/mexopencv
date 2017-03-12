@@ -7,13 +7,15 @@ classdef TestAdaptiveThreshold
 
     methods (Static)
         function test_1
-            img = cv.imread(TestAdaptiveThreshold.im, 'Grayscale',true);
+            img = cv.imread(TestAdaptiveThreshold.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             out = cv.adaptiveThreshold(img);
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
         function test_2
-            img = cv.imread(TestAdaptiveThreshold.im, 'Grayscale',true);
+            img = cv.imread(TestAdaptiveThreshold.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             out = cv.adaptiveThreshold(img, 'Method','Gaussian', ...
                 'Type','BinaryInv', 'BlockSize',7, 'C',1, 'MaxValue',255);
             validateattributes(out, {class(img)}, {'size',size(img)});

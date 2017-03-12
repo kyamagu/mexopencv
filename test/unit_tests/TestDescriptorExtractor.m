@@ -15,7 +15,8 @@ classdef TestDescriptorExtractor
 
     methods (Static)
         function test_compute_img
-            img = imread(TestDescriptorExtractor.im);
+            img = cv.imread(TestDescriptorExtractor.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             kpts0 = cv.FAST(img, 'Threshold',20);
             for i=1:numel(TestDescriptorExtractor.extractors)
                 try
@@ -56,7 +57,8 @@ classdef TestDescriptorExtractor
         end
 
         function test_compute_imgset
-            img = imread(TestDescriptorExtractor.im);
+            img = cv.imread(TestDescriptorExtractor.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             kpts0 = cv.FAST(img, 'Threshold',20);
             for i=1:numel(TestDescriptorExtractor.extractors)
                 try

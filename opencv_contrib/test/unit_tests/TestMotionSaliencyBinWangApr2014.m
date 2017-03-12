@@ -17,7 +17,7 @@ classdef TestMotionSaliencyBinWangApr2014
             cname = saliency.getClassName();
             validateattributes(cname, {'char'}, {'vector', 'nonempty'});
 
-            for i=1:min(10,cap.FrameCount)
+            for i=1:min(5,cap.FrameCount)
                 img = cap.read();
                 img = cv.cvtColor(img, 'RGB2GRAY');
 

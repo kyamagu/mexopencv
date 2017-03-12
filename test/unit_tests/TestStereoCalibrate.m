@@ -24,7 +24,7 @@ classdef TestStereoCalibrate
         end
 
         function test_multiple_views
-            N = 9;
+            N = 5;
             opts = cell(1,N);
             ipts1 = cell(1,N);
             ipts2 = cell(1,N);

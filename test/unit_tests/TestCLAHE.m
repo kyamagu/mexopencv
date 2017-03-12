@@ -1,13 +1,10 @@
 classdef TestCLAHE
     %TestCLAHE
 
-    properties (Constant)
-        fname = fullfile(mexopencv.root(),'test','img001.jpg');
-    end
-
     methods (Static)
         function test_1
-            src = cv.imread(TestCLAHE.fname, 'Flags',0);
+            src = cv.imread(fullfile(mexopencv.root(),'test','img001.jpg'), ...
+                'Grayscale',true, 'ReduceScale',2);
             dst = cv.CLAHE(src, 'ClipLimit',40, 'TileGridSize',[8 8]);
             assert(isequal(size(dst), size(src)));
         end

@@ -7,7 +7,8 @@ classdef TestDenoise_TVL1
 
     methods (Static)
         function test_1
-            img = cv.imread(TestDenoise_TVL1.im, 'Grayscale',true);
+            img = cv.imread(TestDenoise_TVL1.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             images = repmat({img},1,5);
             out = cv.denoise_TVL1(images, 'Lambda',1.0, 'NIters',30);
             validateattributes(out, {class(img)}, {'size',size(img)});
@@ -20,7 +21,8 @@ classdef TestDenoise_TVL1
                 return;
             end
 
-            img = cv.imread(TestDenoise_TVL1.im, 'Grayscale',true);
+            img = cv.imread(TestDenoise_TVL1.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             images = cell(1,5);
             for i=1:numel(images)
                 images{i} = imnoise(img, 'gaussian');
@@ -30,7 +32,8 @@ classdef TestDenoise_TVL1
         end
 
         function test_3
-            img = cv.imread(TestDenoise_TVL1.im, 'Grayscale',true);
+            img = cv.imread(TestDenoise_TVL1.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             images = cell(1,5);
             for i=1:numel(images)
                 images{i} = make_noisy(img, 20, 0.02);
@@ -40,7 +43,8 @@ classdef TestDenoise_TVL1
         end
 
         function test_4
-            img = cv.imread(TestDenoise_TVL1.im, 'Grayscale',true);
+            img = cv.imread(TestDenoise_TVL1.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             images = cell(1,5);
             for i=1:numel(images)
                 images{i} = make_spotty(img);

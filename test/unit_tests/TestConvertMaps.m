@@ -3,7 +3,7 @@ classdef TestConvertMaps
 
     methods (Static)
         function test_conversion
-            r = 100; c = 200;
+            r = 10; c = 20;
             [Y,X] = ndgrid(single(1:r)-1, single(1:c)-1);  % 0-based indices
 
             [XX,YY] = cv.convertMaps(X, Y);
@@ -26,7 +26,7 @@ classdef TestConvertMaps
         end
 
         function test_merge_split
-            r = 100; c = 200;
+            r = 10; c = 20;
             [Y,X] = ndgrid(single(1:r)-1, single(1:c)-1);  % 0-based indices
 
             XY = cv.convertMaps(X, Y, 'DstMap1Type','single2');
@@ -40,7 +40,7 @@ classdef TestConvertMaps
         end
 
         function test_copy
-            r = 100; c = 200;
+            r = 10; c = 20;
             [Y,X] = ndgrid(single(1:r)-1, single(1:c)-1);  % 0-based indices
 
             [XX,YY] = cv.convertMaps(X, Y, 'DstMap1Type','single1');

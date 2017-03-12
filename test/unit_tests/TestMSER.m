@@ -42,8 +42,10 @@ classdef TestMSER
         end
 
         function test_detectRegions
-            img = imread(TestMSER.im);
+            img = cv.imread(TestMSER.im, 'ReduceScale',2);
             obj = cv.MSER();
+            obj.MinArea = 200;
+            obj.MaxArea = 2000;
             [chains, bboxes] = obj.detectRegions(img);
             if ~isempty(chains)
                 validateattributes(chains, {'cell'}, ...

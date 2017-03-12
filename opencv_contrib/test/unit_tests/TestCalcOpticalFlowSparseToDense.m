@@ -22,8 +22,10 @@ classdef TestCalcOpticalFlowSparseToDense
         end
 
         function test_2
-            prevImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale1.png'), 'Color',true);
-            nextImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'), 'Color',true);
+            prevImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale1.png'), ...
+                'Color',true, 'ReduceScale',2);
+            nextImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'), ...
+                'Color',true, 'ReduceScale',2);
             flow = cv.calcOpticalFlowSparseToDense(prevImg, nextImg);
             validateattributes(flow, {'single'}, ...
                 {'3d', 'size',[size(prevImg,1) size(prevImg,2) 2]});

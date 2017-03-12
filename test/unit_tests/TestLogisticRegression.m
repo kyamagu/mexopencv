@@ -2,8 +2,8 @@ classdef TestLogisticRegression
     %TestLogisticRegression
 
     properties (Constant)
-        X = [randn(50,3)+1; randn(50,3)-1];
-        Y = [ones(50,1); -ones(50,1)];
+        X = [randn(10,3)+1; randn(10,3)-1];
+        Y = [ones(10,1); -ones(10,1)];
     end
 
     methods (Static)
@@ -16,7 +16,7 @@ classdef TestLogisticRegression
             model.Iterations = 1000;
             model.Regularization = 'L2';
             model.TrainMethod = 'MiniBatch';
-            model.MiniBatchSize = 10;
+            model.MiniBatchSize = 5;
 
             model.train(X, Y);
             assert(model.isTrained());

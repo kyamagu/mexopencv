@@ -1,13 +1,10 @@
 classdef TestL0Smooth
     %TestL0Smooth
 
-    properties (Constant)
-        im = fullfile(mexopencv.root(),'test','lena.jpg');
-    end
-
     methods (Static)
         function test_1
-            img = imread(TestL0Smooth.im);
+            img = cv.imread(fullfile(mexopencv.root(),'test','lena.jpg'), ...
+                'Color',true, 'ReduceScale',2);
             dst = cv.l0Smooth(img, 'Lambda',0.01);
             validateattributes(dst, {class(img)}, {'size',size(img)});
         end

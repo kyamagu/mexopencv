@@ -5,7 +5,7 @@ classdef TestReadOpticalFlow
         function test_1
             filename = [tempname() '.flo'];
             cObj = onCleanup(@() TestReadOpticalFlow.deleteFile(filename));
-            flow = rand([100 100 2], 'single');
+            flow = rand([50 50 2], 'single');
             success = cv.writeOpticalFlow(filename, flow);
             if success
                 flow2 = cv.readOpticalFlow(filename);

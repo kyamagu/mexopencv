@@ -3,7 +3,7 @@ classdef TestPutText
 
     methods (Static)
         function test_simple
-            im = 255*ones(128,128,3,'uint8');
+            im = 255*ones(64,64,3,'uint8');
             out = cv.putText(im, 'foo', [5,30]);
             validateattributes(out, {class(im)}, {'size',size(im)});
         end

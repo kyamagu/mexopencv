@@ -3,7 +3,7 @@ classdef TestDrawAxis
 
     methods (Static)
         function test_1
-            img = zeros([300 300 3], 'uint8');
+            img = zeros([50 50 3], 'uint8');
             camMat = eye(3);
             distCoef = zeros(1,5);
             rvec = zeros(1,3);

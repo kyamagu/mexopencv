@@ -3,8 +3,8 @@ classdef TestCreateHanningWindow
 
     methods (Static)
         function test_1
-            dst = cv.createHanningWindow([100 100], 'Type','single');
-            validateattributes(dst, {'single'}, {'size',[100 100]});
+            dst = cv.createHanningWindow([10 10], 'Type','single');
+            validateattributes(dst, {'single'}, {'size',[10 10]});
         end
 
         function test_2

@@ -2,7 +2,7 @@ classdef TestImwrite
     %TestImwrite
 
     properties (Constant)
-        im = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
+        im = cv.imread(fullfile(mexopencv.root(),'test','fruits.jpg'), 'ReduceScale',2);
     end
 
     methods (Static)

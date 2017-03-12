@@ -7,7 +7,8 @@ classdef TestFastNlMeansDenoising
 
     methods (Static)
         function test_1
-            img = cv.imread(TestFastNlMeansDenoising.im, 'Grayscale',true);
+            img = cv.imread(TestFastNlMeansDenoising.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             out = cv.fastNlMeansDenoising(img, 'H',20);
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
@@ -19,7 +20,8 @@ classdef TestFastNlMeansDenoising
                 return;
             end
 
-            img = cv.imread(TestFastNlMeansDenoising.im, 'Grayscale',true);
+            img = cv.imread(TestFastNlMeansDenoising.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             img = imnoise(img, 'gaussian');
             out = cv.fastNlMeansDenoising(img, 'H',20);
             validateattributes(out, {class(img)}, {'size',size(img)});
@@ -32,7 +34,8 @@ classdef TestFastNlMeansDenoising
                 return;
             end
 
-            img = cv.imread(TestFastNlMeansDenoising.im, 'Grayscale',true);
+            img = cv.imread(TestFastNlMeansDenoising.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             img = imnoise(img, 'gaussian');
             img = im2uint16(img);
             out = cv.fastNlMeansDenoising(img, 'H',5000, 'NormType','L1');

@@ -3,7 +3,8 @@ classdef TestHoughLines
 
     methods (Static)
         function test_1
-            img = imread(fullfile(mexopencv.root(),'test','left12.jpg'));
+            img = cv.imread(fullfile(mexopencv.root(),'test','left12.jpg'), ...
+                'Grayscale',true, 'ReduceScale',2);
             lines = cv.HoughLines(img);
             validateattributes(lines, {'cell'}, {'vector'});
             cellfun(@(v) validateattributes(v, {'numeric'}, ...

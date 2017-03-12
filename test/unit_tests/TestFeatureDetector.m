@@ -16,7 +16,8 @@ classdef TestFeatureDetector
 
     methods (Static)
         function test_detect_img
-            img = imread(TestFeatureDetector.im);
+            img = cv.imread(TestFeatureDetector.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             for i=1:numel(TestFeatureDetector.detectors)
                 try
                     obj = cv.FeatureDetector(TestFeatureDetector.detectors{i});
@@ -35,7 +36,8 @@ classdef TestFeatureDetector
         end
 
         function test_detect_imgset
-            img = imread(TestFeatureDetector.im);
+            img = cv.imread(TestFeatureDetector.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             imgs = {img, img};
             for i=1:numel(TestFeatureDetector.detectors)
                 try

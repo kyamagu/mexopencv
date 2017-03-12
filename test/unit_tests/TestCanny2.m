@@ -4,7 +4,7 @@ classdef TestCanny2
     methods (Static)
         function test_canny_custom_gradient
             img = cv.imread(fullfile(mexopencv.root(),'test','img001.jpg'), ...
-                'Grayscale',true);
+                'Grayscale',true, 'ReduceScale',2);
             dx = cv.Sobel(img, 'XOrder',1, 'YOrder',0, 'KSize',5);
             dy = cv.Sobel(img, 'XOrder',0, 'YOrder',1, 'KSize',5);
             result = cv.Canny2(dx, dy, [96,192], 'L2Gradient',true);

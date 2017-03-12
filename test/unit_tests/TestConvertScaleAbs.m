@@ -3,7 +3,7 @@ classdef TestConvertScaleAbs
 
     methods (Static)
         function test_1
-            A = rand([30 30], 'single')*200 - 100;
+            A = rand([10 10], 'single')*200 - 100;
             B = cv.convertScaleAbs(A, 'Alpha',5, 'Beta',3);
             validateattributes(B, {'uint8'}, {'size',size(A)});
         end

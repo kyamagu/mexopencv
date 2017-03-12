@@ -3,7 +3,8 @@ classdef TestSelectiveSearchSegmentation
 
     methods (Static)
         function test_1
-            img = cv.imread(fullfile(mexopencv.root(),'test','balloon.jpg'));
+            img = cv.imread(fullfile(mexopencv.root(),'test','balloon.jpg'), ...
+                'Color',true, 'ReduceScale',2);
 
             for s=1:3
                 gs = cv.SelectiveSearchSegmentation();
