@@ -21,7 +21,7 @@ X1X2 = [X1(:) X2(:)];
 if true
     clrBG = [1.0 0.7 0.7; 0.7 1.0 0.7; 0.7 0.7 1.0; ...
             0.7 1.0 1.0; 1.0 0.7 1.0; 1.0 1.0 0.7];
-    clrFG = 'rgbcmy';
+    clrFG = [1 0 0; 0 1 0; 0 0 1; 0 1 1; 1 0 1; 1 1 0];  % 'rgbcmy'
 else
     clrBG = brighten(lines(6), 0.7);
     clrFG = lines(6);
@@ -73,9 +73,16 @@ for i=1:numel(models)
 
     % plot predictions and actual classes
     subplot(2,3,i)
-    imagesc(X1(1,:), X2(:,1), reshape(Yhat, size(X1)))
+    imagesc(X1(1,:), X2(:,1), reshape(double(Yhat)+1, size(X1)))
+    hold on
+    if mexopencv.isOctave()
+        %HACK: GSCATTER not implemented in Octave
+        scatter(X(:,1), X(:,2), 6, clrFG(double(Y)+1,:), 'filled')
+    else
+        gscatter(X(:,1), X(:,2), Y, clrFG, '.', 6, 'off')
+    end
+    hold off
     colormap(clrBG(1:K,:))
-    hold on, gscatter(X(:,1), X(:,2), Y, clrFG, '.', 6, 'off'), hold off
     axis equal, axis([mn(1) mx(1) mn(2) mx(2)])
     title(models{i}, 'Interpreter','none')
 end

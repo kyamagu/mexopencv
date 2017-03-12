@@ -110,7 +110,7 @@ for i=1:num_images
 end
 
 % display images
-if mexopencv.require('images')
+if ~mexopencv.isOctave() && mexopencv.require('images')
     montage(img_names);
 end
 
