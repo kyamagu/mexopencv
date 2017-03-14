@@ -85,7 +85,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             if (!fs.isOpened())
                 mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
             fs << obj->getDefaultName() << "{";
-            fs << "format" << 3;
             obj->write(fs);
             fs << "}";
             plhs[0] = MxArray(fs.releaseAndGetString());
@@ -204,26 +203,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        //HACK: we must do this one sample at a time to avoid incorrect outputProbs
-        //TODO: https://github.com/opencv/opencv/issues/5911
-        Mat inputs(rhs[2].toMat(CV_32F));
-        Mat outputs(inputs.rows, 1, CV_32S),
+        Mat inputs(rhs[2].toMat(CV_32F)),
+            outputs,
             outputProbs;
-        if (nlhs > 1) {
-            // we need to determine the number of classes
-            // to allocate the output probabilities matrix
-            int nclasses = 1;
-            if (!inputs.empty()) {
-                Mat tmp;
-                obj->predictProb(inputs.row(0), noArray(), tmp, flags);
-                nclasses = tmp.cols;
-            }
-            outputProbs.create(inputs.rows, nclasses, CV_32F);
-        }
-        float f = 0;
-        for (size_t i=0; i<inputs.rows; ++i)
-            f = obj->predictProb(inputs.row(i), outputs.row(i),
-                (nlhs>1 ? outputProbs.row(i) : noArray()), flags);
+        float f = obj->predictProb(inputs, outputs,
+            (nlhs>1 ? outputProbs : noArray()), flags);
         plhs[0] = MxArray(outputs);
         if (nlhs>1)
             plhs[1] = MxArray(outputProbs);

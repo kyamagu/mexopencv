@@ -18,10 +18,14 @@ if ~mexopencv.isOctave() && mexopencv.require('images')
 end
 
 %% Compare the different methods
-algorithms = {'farneback', 'simpleflow', 'tvl1', 'deepflow', 'sparsetodenseflow'};
+algorithms = {'farneback', 'simpleflow', 'tvl1', 'deepflow', ...
+    'sparsetodenseflow', 'pcaflow', ...
+    'DISflow_ultrafast', 'DISflow_fast', 'DISflow_medium', 'variational'};
 for i=1:numel(algorithms)
     % prepare images
-    if any(strcmp(algorithms{i}, {'farneback', 'tvl1', 'deepflow'})) && size(im1,3)==3
+    if any(strcmp(algorithms{i}, {'farneback', 'tvl1', 'deepflow', ...
+            'DISflow_ultrafast', 'DISflow_fast', 'DISflow_medium', ...
+            'variational'})) && size(im1,3)==3
         % 1-channel images are expected
         img1 = cv.cvtColor(im1, 'RGB2GRAY');
         img2 = cv.cvtColor(im2, 'RGB2GRAY');
@@ -30,7 +34,7 @@ for i=1:numel(algorithms)
         img1 = cv.cvtColor(im1, 'GRAY2RGB');
         img2 = cv.cvtColor(im2, 'GRAY2RGB');
     else
-        % sparsetodenseflow handles both 1- or 3-channels
+        % sparsetodenseflow/pcaflow handle both 1- or 3-channels
         img1 = im1;
         img2 = im2;
     end
@@ -39,6 +43,10 @@ for i=1:numel(algorithms)
     tic
     switch lower(algorithms{i})
         case 'farneback'
+            %{
+            obj = cv.FarnebackOpticalFlow();
+            flow = obj.calc(img1, img2);
+            %}
             flow = cv.calcOpticalFlowFarneback(img1, img2);
         case 'simpleflow'
             flow = cv.calcOpticalFlowSF(img1, img2);
@@ -49,7 +57,22 @@ for i=1:numel(algorithms)
         case 'tvl1'
             obj = cv.DualTVL1OpticalFlow();
             flow = obj.calc(img1, img2);
-            clear obj
+        case 'pcaflow'
+            %obj = cv.OpticalFlowPCAFlow(prior);  % path to a prior file for PCAFlow
+            obj = cv.OpticalFlowPCAFlow();
+            flow = obj.calc(img1, img2);
+        case 'disflow_ultrafast'
+            obj = cv.DISOpticalFlow('Preset','UltraFast');
+            flow = obj.calc(img1, img2);
+        case 'disflow_fast'
+            obj = cv.DISOpticalFlow('Preset','Fast');
+            flow = obj.calc(img1, img2);
+        case 'disflow_medium'
+            obj = cv.DISOpticalFlow('Preset','Medium');
+            flow = obj.calc(img1, img2);
+        case 'variational'
+            obj = cv.VariationalRefinement();
+            flow = obj.calc(img1, img2);
     end
     fprintf('%18s: ', algorithms{i});
     toc
@@ -66,5 +89,5 @@ for i=1:numel(algorithms)
     hsv = cat(3, ang, ones(size(ang),class(ang)), mag);
     rgb = cv.cvtColor(hsv, 'HSV2RGB');
     figure, imshow(rgb)
-    title(sprintf('Computed flow: %s',algorithms{i}))
+    title(sprintf('Computed flow: %s',algorithms{i}), 'Interpreter','none')
 end

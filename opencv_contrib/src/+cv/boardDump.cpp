@@ -28,7 +28,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Process
     if (rhs[0].isStruct()) {
-        Board board = MxArrayToBoard(rhs[0]);
+        Ptr<Board> board = MxArrayToBoard(rhs[0]);
         plhs[0] = toStruct(board);
     }
     else {
@@ -36,15 +36,17 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(args.size() >= 1);
         string type(args[0].toString());
         if (type == "Board") {
-            Board board = create_Board(args.begin() + 1, args.end());
+            Ptr<Board> board = create_Board(args.begin() + 1, args.end());
             plhs[0] = toStruct(board);
         }
         else if (type == "GridBoard") {
-            GridBoard board = create_GridBoard(args.begin() + 1, args.end());
+            Ptr<GridBoard> board = create_GridBoard(
+                args.begin() + 1, args.end());
             plhs[0] = toStruct(board);
         }
         else if (type == "CharucoBoard") {
-            CharucoBoard board = create_CharucoBoard(args.begin() + 1, args.end());
+            Ptr<CharucoBoard> board = create_CharucoBoard(
+                args.begin() + 1, args.end());
             plhs[0] = toStruct(board);
         }
         else

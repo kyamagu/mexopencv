@@ -15,6 +15,7 @@
 #define MEXOPENCV_FEATURES2D_HPP
 
 #include "mexopencv.hpp"
+#include "opencv2/features2d.hpp"
 
 #include "opencv2/opencv_modules.hpp"
 #ifdef HAVE_OPENCV_XFEATURES2D
@@ -102,6 +103,40 @@ const ConstMap<int, std::string> DAISYNormTypeInv = ConstMap<int, std::string>
     (cv::xfeatures2d::DAISY::NRM_PARTIAL, "Partial")
     (cv::xfeatures2d::DAISY::NRM_FULL,    "Full")
     (cv::xfeatures2d::DAISY::NRM_SIFT,    "SIFT");
+
+/// VGG descriptor types
+const ConstMap<std::string, int> VGGDescType = ConstMap<std::string, int>
+    ("120", cv::xfeatures2d::VGG::VGG_120)
+    ("80",  cv::xfeatures2d::VGG::VGG_80)
+    ("64",  cv::xfeatures2d::VGG::VGG_64)
+    ("48",  cv::xfeatures2d::VGG::VGG_48);
+
+/// inverse VGG descriptor types
+const ConstMap<int, std::string> VGGDescTypeInv = ConstMap<int, std::string>
+    (cv::xfeatures2d::VGG::VGG_120, "120")
+    (cv::xfeatures2d::VGG::VGG_80,  "80")
+    (cv::xfeatures2d::VGG::VGG_64,  "64")
+    (cv::xfeatures2d::VGG::VGG_48,  "48");
+
+/// BoostDesc descriptor types
+const ConstMap<std::string, int> BoostDescType = ConstMap<std::string, int>
+    ("BGM",         cv::xfeatures2d::BoostDesc::BGM)
+    ("BGMHard",     cv::xfeatures2d::BoostDesc::BGM_HARD)
+    ("BGMBilinear", cv::xfeatures2d::BoostDesc::BGM_BILINEAR)
+    ("LBGM",        cv::xfeatures2d::BoostDesc::LBGM)
+    ("BinBoost64",  cv::xfeatures2d::BoostDesc::BINBOOST_64)
+    ("BinBoost128", cv::xfeatures2d::BoostDesc::BINBOOST_128)
+    ("BinBoost256", cv::xfeatures2d::BoostDesc::BINBOOST_256);
+
+/// inverse BoostDesc descriptor types
+const ConstMap<int, std::string> BoostDescTypeInv = ConstMap<int, std::string>
+    (cv::xfeatures2d::BoostDesc::BGM,          "BGM")
+    (cv::xfeatures2d::BoostDesc::BGM_HARD,     "BGMHard")
+    (cv::xfeatures2d::BoostDesc::BGM_BILINEAR, "BGMBilinear")
+    (cv::xfeatures2d::BoostDesc::LBGM,         "LBGM")
+    (cv::xfeatures2d::BoostDesc::BINBOOST_64,  "BinBoost64")
+    (cv::xfeatures2d::BoostDesc::BINBOOST_128, "BinBoost128")
+    (cv::xfeatures2d::BoostDesc::BINBOOST_256, "BinBoost256");
 #endif
 
 /** Create an instance of BRISK using options in arguments
@@ -266,6 +301,24 @@ cv::Ptr<cv::xfeatures2d::DAISY> createDAISY(
 cv::Ptr<cv::xfeatures2d::MSDDetector> createMSDDetector(
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
+
+/** Create an instance of VGG using options in arguments
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to an instance cv::xfeatures2d::VGG
+ */
+cv::Ptr<cv::xfeatures2d::VGG> createVGG(
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
+
+/** Create an instance of BoostDesc using options in arguments
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to an instance cv::xfeatures2d::BoostDesc
+ */
+cv::Ptr<cv::xfeatures2d::BoostDesc> createBoostDesc(
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
 #endif
 
 /** Factory function for FeatureDetector creation
@@ -305,6 +358,8 @@ cv::Ptr<cv::FeatureDetector> createFeatureDetector(
  *    - "LUCID" (requires `xfeatures2d` module)
  *    - "LATCH" (requires `xfeatures2d` module)
  *    - "DAISY" (requires `xfeatures2d` module)
+ *    - "VGG" (requires `xfeatures2d` module)
+ *    - "BoostDesc" (requires `xfeatures2d` module)
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
  * @return smart pointer to an instance cv::DescriptorExtractor

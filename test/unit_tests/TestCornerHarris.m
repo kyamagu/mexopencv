@@ -7,13 +7,15 @@ classdef TestCornerHarris
 
     methods (Static)
         function test_8bit
-            img = cv.imread(TestCornerHarris.im, 'Grayscale',true);
+            img = cv.imread(TestCornerHarris.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             result = cv.cornerHarris(img);
             validateattributes(result, {'single'}, {'size',size(img)});
         end
 
         function test_float
-            img = cv.imread(TestCornerHarris.im, 'Grayscale',true);
+            img = cv.imread(TestCornerHarris.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             result = cv.cornerHarris(single(img)/255);
             validateattributes(result, {'single'}, {'size',size(img)});
         end

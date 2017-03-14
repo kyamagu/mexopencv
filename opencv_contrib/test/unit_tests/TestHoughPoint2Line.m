@@ -1,13 +1,9 @@
 classdef TestHoughPoint2Line
     %TestHoughPoint2Line
 
-    properties (Constant)
-        im = fullfile(mexopencv.root(),'test','building.jpg');
-    end
-
     methods (Static)
         function test_1
-            img = cv.imread(TestHoughPoint2Line.im, ...
+            img = cv.imread(fullfile(mexopencv.root(),'test','building.jpg'), ...
                 'Grayscale',true, 'ReduceScale',2);
             edges = cv.Canny(img, [50 200]);
             fht = cv.FastHoughTransform(edges, 'DDepth','int32', ...

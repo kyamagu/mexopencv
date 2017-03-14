@@ -7,7 +7,8 @@
 %% Options
 % choose Saliency algorithm
 alg = 'SpectralResidual';
-alg = validatestring(alg, {'SpectralResidual', 'BinWangApr2014', 'BING'});
+alg = validatestring(alg, ...
+    {'SpectralResidual', 'FineGrained', 'BinWangApr2014', 'BING'});
 
 % path of input video file to read frames from
 video_name = fullfile(mexopencv.root(),'test','768x576.avi');
@@ -37,7 +38,7 @@ if strcmp(alg, 'BING') && ~isdir(training_path)
     disp('Downloading trained models...');
     mkdir(training_path);
     for i=1:numel(files)
-        url = 'https://cdn.rawgit.com/opencv/opencv_contrib/3.1.0/modules/saliency/samples/ObjectnessTrainedModel/';
+        url = 'https://cdn.rawgit.com/opencv/opencv_contrib/3.2.0/modules/saliency/samples/ObjectnessTrainedModel/';
         urlwrite([url files{i}], fullfile(training_path,files{i}));
     end
 end
@@ -54,6 +55,8 @@ assert(~isempty(frame), 'Could not read data from the video source');
 switch alg
     case 'SpectralResidual'
         saliency = cv.StaticSaliencySpectralResidual();
+    case 'FineGrained'
+        saliency = cv.StaticSaliencyFineGrained();
     case 'BinWangApr2014'
         saliency = cv.MotionSaliencyBinWangApr2014();
     case 'BING'
@@ -66,9 +69,12 @@ fprintf('className = %s\n', saliency.getClassName());
 
 %% Compute saliency
 switch alg
-    case 'SpectralResidual'
+    case {'SpectralResidual', 'FineGrained'}
         % compute
         tic, saliencyMap = saliency.computeSaliency(frame); toc
+        if isa(saliencyMap, 'uint8')
+            saliencyMap = single(saliencyMap) / 255;
+        end
         tic, binaryMap = saliency.computeBinaryMap(saliencyMap); toc
         binaryMap = logical(binaryMap ~= 0);
 

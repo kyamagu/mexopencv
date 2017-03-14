@@ -8,6 +8,8 @@ classdef TestWBDetector
 
         function test_2
             %TODO: we need a test set
+            %TODO: https://github.com/opencv/opencv_contrib/issues/633
+            %TODO: https://github.com/opencv/opencv_contrib/issues/741
             if true
                 disp('SKIP');
                 return;

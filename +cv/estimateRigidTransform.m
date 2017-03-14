@@ -41,6 +41,7 @@
 %
 % when `FullAffine=false`.
 %
-% See also: cv.getAffineTransform, cv.getPerspectiveTransform,
-%  cv.findHomography, imregtform
+% See also: cv.estimateAffine2D, cv.estimateAffinePartial2D,
+%  cv.getAffineTransform, cv.getPerspectiveTransform, cv.findHomography,
+%  imregtform
 %

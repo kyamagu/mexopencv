@@ -23,8 +23,8 @@
 %       * __AltChiSquare__ Alternative Chi-Square.
 %       * __KullbackLeibler__ Kullback-Leibler divergence.
 %
-% The function compares two dense or two sparse histograms using the specified
-% method.
+% The function cv.compareHist compares two dense or two sparse histograms
+% using the specified method.
 %
 % While the function works well with 1-, 2-, 3-dimensional dense histograms,
 % it may not be suitable for high-dimensional sparse histograms. In such

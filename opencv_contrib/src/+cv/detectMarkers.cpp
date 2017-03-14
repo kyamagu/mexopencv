@@ -27,7 +27,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
-    DetectorParameters params;
+    Ptr<DetectorParameters> params;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "DetectorParameters")
@@ -36,10 +36,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
     }
+    if (params.empty())
+        params = DetectorParameters::create();
 
     // Process
     Mat image(rhs[0].toMat(CV_8U));
-    Dictionary dictionary = MxArrayToDictionary(rhs[1]);
+    Ptr<Dictionary> dictionary = MxArrayToDictionary(rhs[1]);
     vector<vector<Point2f> > corners, rejectedImgPoints;
     vector<int> ids;
     detectMarkers(image, dictionary, corners, ids, params,

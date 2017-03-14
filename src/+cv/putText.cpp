@@ -29,6 +29,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int fontStyle = 0;
     double fontScale = 1.0;
     Scalar color;
+    vector<Vec4d> colors;
     int thickness = 1;
     int lineType = cv::LINE_8;
     bool bottomLeftOrigin = false;
@@ -43,6 +44,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (key == "Color")
             color = (rhs[i+1].isChar()) ?
                 ColorType[rhs[i+1].toString()] : rhs[i+1].toScalar();
+        else if (key == "Colors")
+            colors = MxArrayToVectorVec<double,4>(rhs[i+1]);
         else if (key == "Thickness")
             thickness = (rhs[i+1].isChar()) ?
                 ThicknessType[rhs[i+1].toString()] : rhs[i+1].toInt();
@@ -59,9 +62,23 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Process
     Mat img(rhs[0].toMat());
-    string text(rhs[1].toString());
-    Point org(rhs[2].toPoint());
-    putText(img, text, org, fontFace, fontScale, color, thickness,
-        lineType, bottomLeftOrigin);
+    if (rhs[1].isChar()) {
+        string text(rhs[1].toString());
+        Point org(rhs[2].toPoint());
+        putText(img, text, org, fontFace, fontScale, color, thickness,
+            lineType, bottomLeftOrigin);
+    }
+    else {
+        vector<string> text(rhs[1].toVector<string>());
+        vector<Point> org(rhs[2].toVector<Point>());
+        if (text.size() != org.size())
+            mexErrMsgIdAndTxt("mexopencv:error", "Length mismatch");
+        if (!colors.empty() && colors.size() != text.size())
+            mexErrMsgIdAndTxt("mexopencv:error", "Length mismatch");
+        for (size_t i = 0; i < text.size(); ++i)
+            putText(img, text[i], org[i], fontFace, fontScale,
+                (colors.empty() ? color : Scalar(colors[i])),
+                thickness, lineType, bottomLeftOrigin);
+    }
     plhs[0] = MxArray(img);
 }

@@ -168,7 +168,7 @@ classdef LATCH < handle
             %       * __Hamming__
             %       * __Hamming2__
             %
-            % Always `Hamming` for SURF.
+            % Always `Hamming` for LATCH.
             %
             % See also: cv.LATCH.compute, cv.DescriptorMatcher
             %

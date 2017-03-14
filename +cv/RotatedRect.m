@@ -57,7 +57,7 @@ classdef RotatedRect
         end
 
         function rect = boundingRect(rrect)
-            %BOUNDINGRECT  Returns the minimal up-right rectangle containing the rotated rectangle
+            %BOUNDINGRECT  Returns the minimal up-right integer rectangle containing the rotated rectangle
             %
             %    rect = cv.RotatedRect.boundingRect(rrect)
             %
@@ -73,7 +73,33 @@ classdef RotatedRect
             % ## Output
             % * __rect__ bounding rectangle, a 1-by-4 vector `[x, y, w, h]`
             %
+            % See also: cv.RotatedRect.boundingRect2f
+            %
             rect = RotatedRect_('boundingRect', rrect);
+        end
+
+        function rect = boundingRect2f(rrect)
+            %BOUNDINGRECT  returns the minimal (exact) floating point rectangle containing the rotated rectangle
+            %
+            %    rect = cv.RotatedRect.boundingRect2f(rrect)
+            %
+            % ## Input
+            % * __rrect__ rotated rectangle. A structure with the following
+            %       fields:
+            %       * __center__ The rectangle mass center `[x,y]`.
+            %       * __size__ Width and height of the rectangle `[w,h]`.
+            %       * __angle__ The rotation angle in a clockwise direction.
+            %             When the angle is 0, 90, 180, 270 etc., the
+            %             rectangle becomes an up-right rectangle.
+            %
+            % ## Output
+            % * __rect__ bounding rectangle, a 1-by-4 vector `[x, y, w, h]`
+            %
+            % Not intended for use with images.
+            %
+            % See also: cv.RotatedRect.boundingRect
+            %
+            rect = RotatedRect_('boundingRect2f', rrect);
         end
     end
 

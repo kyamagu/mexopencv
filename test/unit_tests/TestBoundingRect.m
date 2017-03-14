@@ -21,14 +21,14 @@ classdef TestBoundingRect
         end
 
         function test_4
-            [X,Y] = ndgrid((1:100)-50,(1:100)-50);
-            mask = logical((X.^2 + Y.^2) < 30^2);  % circular mask
+            [X,Y] = ndgrid((1:50)-25,(1:50)-25);
+            mask = logical((X.^2 + Y.^2) < 15^2);  % circular mask
             rct = cv.boundingRect(mask);
             validateattributes(rct, {'numeric'}, {'vector', 'numel',4});
         end
 
         function test_5
-            mask = cv.circle(zeros(100,'uint8'), [50 50], 30, ...
+            mask = cv.circle(zeros(50,'uint8'), [25 25], 15, ...
                 'Color',255, 'Thickness','Filled');
             rct = cv.boundingRect(mask);
             validateattributes(rct, {'numeric'}, {'vector', 'numel',4});

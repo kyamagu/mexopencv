@@ -25,6 +25,8 @@
 % * __Grayscale__ If set, always convert image to the single channel grayscale
 %       image. default false
 % * __GDAL__ If set, use the gdal driver for loading the image. default false
+% * __IgnoreOrientation__ If set, do not rotate the image according to EXIF's
+%       orientation flag. default false
 % * __Flags__ Advanced option to directly set the flag specifying the depth
 %       and color type of a loaded image. Note that setting this integer flag
 %       overrides all the other flag options. Not set by default:

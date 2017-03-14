@@ -228,6 +228,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
+        //obj_[id] = SVM::load(rhs[2].toString());
         obj_[id] = (loadFromString ?
             Algorithm::loadFromString<SVM>(rhs[2].toString(), objname) :
             Algorithm::load<SVM>(rhs[2].toString(), objname));
@@ -241,7 +242,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             if (!fs.isOpened())
                 mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
             fs << obj->getDefaultName() << "{";
-            fs << "format" << 3;
             obj->write(fs);
             fs << "}";
             plhs[0] = MxArray(fs.releaseAndGetString());

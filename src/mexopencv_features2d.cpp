@@ -636,6 +636,64 @@ Ptr<MSDDetector> createMSDDetector(
         nms_scale_radius, th_saliency, kNN, scale_factor, n_scales,
         compute_orientation);
 }
+
+Ptr<VGG> createVGG(
+    vector<MxArray>::const_iterator first,
+    vector<MxArray>::const_iterator last)
+{
+    nargchk(((last-first) % 2) == 0);
+    int desc = VGG::VGG_120;
+    float isigma = 1.4f;
+    bool img_normalize = true;
+    bool use_scale_orientation = true;
+    float scale_factor = 6.25f;
+    bool dsc_normalize = false;
+    for (; first != last; first += 2) {
+        string key(first->toString());
+        const MxArray& val = *(first + 1);
+        if (key == "Desc")
+            desc = VGGDescType[val.toString()];
+        else if (key == "Sigma")
+            isigma = val.toFloat();
+        else if (key == "ImgNormalize")
+            img_normalize = val.toBool();
+        else if (key == "UseScaleOrientation")
+            use_scale_orientation = val.toBool();
+        else if (key == "ScaleFactor")
+            scale_factor = val.toFloat();
+        else if (key == "DescNormalize")
+            dsc_normalize = val.toBool();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
+    return VGG::create(desc, isigma, img_normalize, use_scale_orientation,
+        scale_factor, dsc_normalize);
+}
+
+Ptr<BoostDesc> createBoostDesc(
+    vector<MxArray>::const_iterator first,
+    vector<MxArray>::const_iterator last)
+{
+    nargchk(((last-first) % 2) == 0);
+    int desc = BoostDesc::BINBOOST_256;
+    bool use_scale_orientation = true;
+    float scale_factor = 6.25f;
+    for (; first != last; first += 2) {
+        string key(first->toString());
+        const MxArray& val = *(first + 1);
+        if (key == "Desc")
+            desc = BoostDescType[val.toString()];
+        else if (key == "UseScaleOrientation")
+            use_scale_orientation = val.toBool();
+        else if (key == "ScaleFactor")
+            scale_factor = val.toFloat();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
+    return BoostDesc::create(desc, use_scale_orientation, scale_factor);
+}
 #endif
 
 Ptr<FeatureDetector> createFeatureDetector(
@@ -710,6 +768,10 @@ Ptr<DescriptorExtractor> createDescriptorExtractor(
         p = createLATCH(first, last);
     else if (type == "DAISY")
         p = createDAISY(first, last);
+    else if (type == "VGG")
+        p = createVGG(first, last);
+    else if (type == "BoostDesc")
+        p = createBoostDesc(first, last);
 #endif
     else
         mexErrMsgIdAndTxt("mexopencv:error",
@@ -936,6 +998,7 @@ Ptr<FlannBasedMatcher> createFlannBasedMatcher(
         indexParams = makePtr<flann::KDTreeIndexParams>();
     if (searchParams.empty())
         searchParams = makePtr<flann::SearchParams>();
+    //return FlannBasedMatcher::create();
     return makePtr<FlannBasedMatcher>(indexParams, searchParams);
 }
 
@@ -957,7 +1020,7 @@ Ptr<BFMatcher> createBFMatcher(
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
     }
-    return makePtr<BFMatcher>(normType, crossCheck);
+    return BFMatcher::create(normType, crossCheck);
 }
 
 Ptr<DescriptorMatcher> createDescriptorMatcher(

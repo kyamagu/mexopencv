@@ -6,9 +6,9 @@
  * @author Amro
  * @date 2012, 2015
  */
-#include <typeinfo>
 #include "mexopencv.hpp"
 #include "mexopencv_features2d.hpp"
+#include <typeinfo>
 using namespace std;
 using namespace cv;
 
@@ -89,7 +89,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             (loadFromString ? FileStorage::MEMORY : 0));
         if (!fs.isOpened())
             mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
-        obj->read(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
+        FileNode fn(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
+        if (fn.empty())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to get node");
+        obj->read(fn);
         //*/
     }
     else if (method == "save") {

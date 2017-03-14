@@ -17,6 +17,15 @@ const ConstMap<string,int> PngStrategyMap = ConstMap<string,int>
     ("HuffmanOnly", cv::IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY)
     ("RLE",         cv::IMWRITE_PNG_STRATEGY_RLE)
     ("Fixed",       cv::IMWRITE_PNG_STRATEGY_FIXED);
+
+/// PAM tupletypes for option processing
+const ConstMap<string,int> PamFormatMap = ConstMap<string,int>
+    ("Null",           cv::IMWRITE_PAM_FORMAT_NULL)
+    ("BlackWhite",     cv::IMWRITE_PAM_FORMAT_BLACKANDWHITE)
+    ("Grayscale",      cv::IMWRITE_PAM_FORMAT_GRAYSCALE)
+    ("GrayscaleAlpha", cv::IMWRITE_PAM_FORMAT_GRAYSCALE_ALPHA)
+    ("RGB",            cv::IMWRITE_PAM_FORMAT_RGB)
+    ("RGBA",           cv::IMWRITE_PAM_FORMAT_RGB_ALPHA);
 }
 
 /**
@@ -29,7 +38,7 @@ const ConstMap<string,int> PngStrategyMap = ConstMap<string,int>
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    nargchk(nrhs>=2 && (nrhs%2)==0 && nlhs<=1);
+    nargchk(nrhs>=2 && (nrhs%2)==0 && nlhs<=2);
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);
@@ -40,12 +49,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "JpegQuality") {
-            int val = rhs[i+1].toInt();
-            if (val < 0 || 100 < val)
-                mexErrMsgIdAndTxt("mexopencv:error",
-                    "JPEG quality parameter must be in the range [0,100]");
             params.push_back(cv::IMWRITE_JPEG_QUALITY);
-            params.push_back(val);
+            params.push_back(rhs[i+1].toInt());
         }
         else if (key == "JpegProgressive") {
             params.push_back(cv::IMWRITE_JPEG_PROGRESSIVE);
@@ -56,36 +61,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             params.push_back(rhs[i+1].toBool() ? 1 : 0);
         }
         else if (key == "JpegResetInterval") {
-            int val = rhs[i+1].toInt();
-            if (val < 0 || 65535 < val)
-                mexErrMsgIdAndTxt("mexopencv:error",
-                    "JPEG restart interval must be in the range [0,65535]");
             params.push_back(cv::IMWRITE_JPEG_RST_INTERVAL);
-            params.push_back(val);
+            params.push_back(rhs[i+1].toInt());
         }
         else if (key == "JpegLumaQuality") {
-            int val = rhs[i+1].toInt();
-            if (val < 0 || 100 < val)
-                mexErrMsgIdAndTxt("mexopencv:error",
-                    "JPEG luma quality level must be in the range [0,100]");
             params.push_back(cv::IMWRITE_JPEG_LUMA_QUALITY);
-            params.push_back(val);
+            params.push_back(rhs[i+1].toInt());
         }
         else if (key == "JpegChromaQuality") {
-            int val = rhs[i+1].toInt();
-            if (val < 0 || 100 < val)
-                mexErrMsgIdAndTxt("mexopencv:error",
-                    "JPEG chroma quality level must be in the range [0,100]");
             params.push_back(cv::IMWRITE_JPEG_CHROMA_QUALITY);
-            params.push_back(val);
+            params.push_back(rhs[i+1].toInt());
         }
         else if (key == "PngCompression") {
-            int val = rhs[i+1].toInt();
-            if (val < 0 || 9 < val)
-                mexErrMsgIdAndTxt("mexopencv:error",
-                    "PNG compression level must be in the range [0,9]");
             params.push_back(cv::IMWRITE_PNG_COMPRESSION);
-            params.push_back(val);
+            params.push_back(rhs[i+1].toInt());
         }
         else if (key == "PngStrategy") {
             params.push_back(cv::IMWRITE_PNG_STRATEGY);
@@ -100,12 +89,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             params.push_back(rhs[i+1].toBool() ? 1 : 0);
         }
         else if (key == "WebpQuality") {
-            int val = rhs[i+1].toInt();
-            if (val < 1 /*|| 100 < val*/)
-                mexErrMsgIdAndTxt("mexopencv:error",
-                    "WEBP quality must be in the range [0,100]");
             params.push_back(cv::IMWRITE_WEBP_QUALITY);
-            params.push_back(val);
+            params.push_back(rhs[i+1].toInt());
+        }
+        else if (key == "PamTupleType") {
+            params.push_back(cv::IMWRITE_PAM_TUPLETYPE);
+            params.push_back(PamFormatMap[rhs[i+1].toString()]);
         }
         else if (key == "Params") {
             // append to parameters by directly passing a vector of integers

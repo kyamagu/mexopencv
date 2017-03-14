@@ -21,18 +21,33 @@ using namespace cv::aruco;
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    nargchk(nrhs==5 && nlhs<=3);
+    nargchk(nrhs>=5 && (nrhs%2)==1 && nlhs<=3);
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);
 
+    // Option processing
+    Mat rvec, tvec;
+    for (int i=5; i<nrhs; i+=2) {
+        string key(rhs[i].toString());
+        if (key == "Rvec")
+            rvec = rhs[i+1].toMat(CV_64F);
+        else if (key == "Tvec")
+            tvec = rhs[i+1].toMat(CV_64F);
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
+    if (rvec.empty() != tvec.empty())
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Intial rvec/tvec must be specified together");
+
     // Process
     vector<vector<Point2f> > corners(MxArrayToVectorVectorPoint<float>(rhs[0]));
     vector<int> ids(rhs[1].toVector<int>());
-    Board board = MxArrayToBoard(rhs[2]);
+    Ptr<Board> board = MxArrayToBoard(rhs[2]);
     Mat cameraMatrix(rhs[3].toMat(CV_64F)),
         distCoeffs(rhs[4].toMat(CV_64F));
-    Vec3d rvec, tvec;
     int num = estimatePoseBoard(corners, ids, board, cameraMatrix, distCoeffs,
         rvec, tvec);
     plhs[0] = MxArray(rvec);

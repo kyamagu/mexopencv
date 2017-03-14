@@ -3,7 +3,7 @@ classdef TestDemosaicing
 
     methods (Static)
         function test_1
-            src = randi([0 255], [200 200 1], 'uint8');
+            src = randi([0 255], [50 50 1], 'uint8');
             dst = cv.demosaicing(src, 'BayerBG2GRAY');
             assert(isequal(size(dst,1), size(src,1)));
             assert(isequal(size(dst,2), size(src,2)));
@@ -11,7 +11,7 @@ classdef TestDemosaicing
         end
 
         function test_2
-            src = randi([0 255], [200 200 1], 'uint8');
+            src = randi([0 255], [50 50 1], 'uint8');
 
             dst = cv.demosaicing(src, 'BayerBG2RGB');
             assert(isequal(size(dst,1), size(src,1)));
@@ -30,7 +30,7 @@ classdef TestDemosaicing
         end
 
         function test_3
-            src = randi([0 255], [200 200 1], 'uint8');
+            src = randi([0 255], [50 50 1], 'uint8');
             dst = cv.demosaicing(src, 'BayerBG2GRAY', 'Channels',1);
             assert(size(dst,3) == 1);
         end

@@ -1,7 +1,7 @@
 %CALIBRATECAMERA  Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern
 %
 %    [cameraMatrix, distCoeffs, reprojErr] = cv.calibrateCamera(objectPoints, imagePoints, imageSize)
-%    [cameraMatrix, distCoeffs, reprojErr, rvecs, tvecs] = cv.calibrateCamera(...)
+%    [cameraMatrix, distCoeffs, reprojErr, rvecs, tvecs, stdDevsIntrinsics, stdDevsExtrinsics, perViewErrors] = cv.calibrateCamera(...)
 %    [...] = cv.calibrateCamera(..., 'OptionName', optionValue, ...)
 %
 % ## Input
@@ -29,7 +29,7 @@
 % * __distCoeffs__ Output vector of distortion coefficients
 %       `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4,taux,tauy]` of 4, 5, 8, 12 or 14
 %       elements.
-% * __reprojErr__ Output final re-projection error.
+% * __reprojErr__ the overall RMS re-projection error.
 % * __rvecs__ Output cell array of rotation vectors (see cv.Rodrigues)
 %       estimated for each pattern view (cell array of 3-element vectors).
 %       That is, each k-th rotation vector together with the corresponding
@@ -40,6 +40,16 @@
 %       pattern view (`k=1:M`)
 % * __tvecs__ Output cell array of translation vectors estimated for each
 %       pattern view (cell array of 3-element vectors).
+% * __stdDevsIntrinsics__ Output vector of standard deviations estimated for
+%       intrinsic parameters. Order of deviations values:
+%       `(fx,fy,cx,cy,k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4,taux,tauy)`. If one
+%       of parameters is not estimated, its deviation is equals to zero.
+% * __stdDevsExtrinsics__ Output vector of standard deviations estimated for
+%       extrinsic parameters. Order of deviations values:
+%       `(R1, T1, ..., RM, TM)` where `M` is number of pattern views, `Ri, Ti`
+%       are concatenated 1x3 vectors.
+% * __perViewErrors__ Output vector of the RMS re-projection error estimated
+%       for each pattern view.
 %
 % ## Options
 % * __CameraMatrix__ Input 3x3 camera matrix used as initial value for
@@ -96,6 +106,8 @@
 %       coefficient from the supplied `DistCoeffs` matrix is used. Otherwise,
 %       it is set to 0. default false.
 % * __UseLU__ Use LU instead of SVD decomposition for solving. Much faster but
+%       potentially less precise. default false.
+% * __UseQR__ Use QR instead of SVD decomposition for solving. Faster but
 %       potentially less precise. default false.
 % * __Criteria__ Termination criteria for the iterative optimization algorithm.
 %       default `struct('type','Count+EPS', 'maxCount',30, 'epsilon',eps)`

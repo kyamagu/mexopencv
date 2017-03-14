@@ -3,8 +3,8 @@ classdef TestDrawMarker
 
     methods (Static)
         function test_1
-            img = 255*ones(128,128,3,'uint8');
-            out = cv.drawMarker(img, [64,64]);
+            img = 255*ones(64,64,3,'uint8');
+            out = cv.drawMarker(img, [32,32]);
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 

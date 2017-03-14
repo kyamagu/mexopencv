@@ -64,6 +64,7 @@ classdef UnitTest
             'TestBitwiseOr'
             'TestBitwiseXor'
             'TestBitwiseNot'
+            'TestGPCForest'
             % codecs
             'TestVideoWriter'
         };

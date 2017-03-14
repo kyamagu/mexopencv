@@ -37,7 +37,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // constructor call
     if (method == "new") {
         nargchk(nrhs==2 && nlhs<=1);
-        obj_[++last_id] = createOptFlow_DualTVL1();
+        obj_[++last_id] = DualTVL1OpticalFlow::create();
         plhs[0] = MxArray(last_id);
         mexLock();
         return;
@@ -85,7 +85,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             (loadFromString ? FileStorage::MEMORY : 0));
         if (!fs.isOpened())
             mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
-        obj->read(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
+        FileNode fn(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
+        if (fn.empty())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to get node");
+        obj->read(fn);
         //*/
     }
     else if (method == "empty") {

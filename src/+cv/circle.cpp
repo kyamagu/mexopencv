@@ -26,6 +26,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Option processing
     Scalar color;
+    vector<Vec4d> colors;
     int thickness = 1;
     int lineType = cv::LINE_8;
     int shift = 0;
@@ -34,6 +35,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if (key == "Color")
             color = (rhs[i+1].isChar()) ?
                 ColorType[rhs[i+1].toString()] : rhs[i+1].toScalar();
+        else if (key == "Colors")
+            colors = MxArrayToVectorVec<double,4>(rhs[i+1]);
         else if (key == "Thickness")
             thickness = (rhs[i+1].isChar()) ?
                 ThicknessType[rhs[i+1].toString()] : rhs[i+1].toInt();
@@ -56,17 +59,23 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else {
         vector<Point> centers(rhs[1].toVector<Point>());
+        if (!colors.empty() && colors.size() != centers.size())
+            mexErrMsgIdAndTxt("mexopencv:error", "Length mismatch");
         if (rhs[2].isNumeric() && rhs[2].numel() == 1) {
             int radius = rhs[2].toInt();
             for (size_t i = 0; i < centers.size(); ++i)
-                circle(img, centers[i], radius, color, thickness, lineType, shift);
+                circle(img, centers[i], radius,
+                    (colors.empty() ? color : Scalar(colors[i])),
+                    thickness, lineType, shift);
         }
         else {
             vector<int> radii(rhs[2].toVector<int>());
-            if (centers.size() != radii.size())
+            if (radii.size() != centers.size())
                 mexErrMsgIdAndTxt("mexopencv:error", "Length mismatch");
             for (size_t i = 0; i < centers.size(); ++i)
-                circle(img, centers[i], radii[i], color, thickness, lineType, shift);
+                circle(img, centers[i], radii[i],
+                    (colors.empty() ? color : Scalar(colors[i])),
+                    thickness, lineType, shift);
         }
     }
     plhs[0] = MxArray(img);

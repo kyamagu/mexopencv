@@ -8,13 +8,15 @@ classdef TestDescriptorExtractor
             'BRISK', 'ORB', 'KAZE', 'AKAZE', ...
             ... % xfeatures2d (opencv_contrib)
             'SIFT', 'SURF', ...
-            'BriefDescriptorExtractor', 'DAISY', 'FREAK', 'LATCH', 'LUCID'
+            'BriefDescriptorExtractor', 'DAISY', 'FREAK', 'LATCH', 'LUCID', ...
+            'VGG', 'BoostDesc'
         };
     end
 
     methods (Static)
         function test_compute_img
-            img = imread(TestDescriptorExtractor.im);
+            img = cv.imread(TestDescriptorExtractor.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             kpts0 = cv.FAST(img, 'Threshold',20);
             for i=1:numel(TestDescriptorExtractor.extractors)
                 try
@@ -55,7 +57,8 @@ classdef TestDescriptorExtractor
         end
 
         function test_compute_imgset
-            img = imread(TestDescriptorExtractor.im);
+            img = cv.imread(TestDescriptorExtractor.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             kpts0 = cv.FAST(img, 'Threshold',20);
             for i=1:numel(TestDescriptorExtractor.extractors)
                 try
@@ -86,6 +89,11 @@ classdef TestDescriptorExtractor
                     im = img;
                 end
                 imgs = {im, im};
+
+                % VGG doesn't have a compute() version that takes image set
+                if strcmp(TestDescriptorExtractor.extractors{i}, 'LUCID')
+                    continue;
+                end
 
                 [descs, kpts] = obj.compute(imgs, kpts);
                 validateattributes(kpts, {'cell'}, {'vector'});

@@ -49,7 +49,7 @@ classdef StaticSaliencySpectralResidual < handle
     % > approach". In Computer Vision and Pattern Recognition, 2007. CVPR'07.
     % > IEEE Conference on, pages 1-8. IEEE, 2007.
     %
-    % See also: cv.MotionSaliencyBinWangApr2014
+    % See also: cv.MotionSaliencyBinWangApr2014, cv.StaticSaliencyFineGrained
     %
 
     properties (SetAccess = private)

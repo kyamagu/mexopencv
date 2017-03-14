@@ -65,8 +65,8 @@ const ConstMap<string,int> CameraApiMap = ConstMap<string,int>
     ("VfW",             cv::CAP_VFW)
     ("V4L",             cv::CAP_V4L)
     ("V4L2",            cv::CAP_V4L2)
-    ("FireWare",        cv::CAP_FIREWARE)
     ("FireWire",        cv::CAP_FIREWIRE)
+    ("FireWare",        cv::CAP_FIREWARE)
     ("IEEE1394",        cv::CAP_IEEE1394)
     ("DC1394",          cv::CAP_DC1394)
     ("CMU1394",         cv::CAP_CMU1394)
@@ -88,7 +88,8 @@ const ConstMap<string,int> CameraApiMap = ConstMap<string,int>
     ("gPhoto2",         cv::CAP_GPHOTO2)
     ("GStreamer",       cv::CAP_GSTREAMER)
     ("FFMPEG",          cv::CAP_FFMPEG)
-    ("Images",          cv::CAP_IMAGES);
+    ("Images",          cv::CAP_IMAGES)
+    ("Aravis",          cv::CAP_ARAVIS);
 }
 
 /**
@@ -110,19 +111,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Constructor is called. Create a new object from arguments
     if (method == "new") {
-        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
-        int pref = cv::CAP_ANY;
-        for (int i=3; i<nrhs; i+=2) {
-            string key(rhs[i].toString());
-            if (key == "API")
-                pref = CameraApiMap[rhs[i+1].toString()];
-            else
-                mexErrMsgIdAndTxt("mexopencv:error",
-                    "Unrecognized option %s", key.c_str());
-        }
-        obj_[++last_id] = (rhs[2].isChar()) ?
-            makePtr<VideoCapture>(rhs[2].toString(), pref) :
-            makePtr<VideoCapture>(rhs[2].toInt() + pref);
+        nargchk(nrhs==2 && nlhs<=1);
+        obj_[++last_id] = makePtr<VideoCapture>();
         plhs[0] = MxArray(last_id);
         mexLock();
         return;
@@ -207,20 +197,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "get") {
         nargchk(nrhs==3 && nlhs<=1);
-        int prop = (rhs[2].isChar()) ?
+        int propId = (rhs[2].isChar()) ?
             CapProp[rhs[2].toString()] : rhs[2].toInt();
-        double value = obj->get(prop);
+        double value = obj->get(propId);
         plhs[0] = MxArray(value);
     }
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
-        int prop = (rhs[2].isChar()) ?
+        int propId = (rhs[2].isChar()) ?
             CapProp[rhs[2].toString()] : rhs[2].toInt();
         double value = rhs[3].toDouble();
-        bool success = obj->set(prop, value);
+        bool success = obj->set(propId, value);
         if (!success)
             mexWarnMsgIdAndTxt("mexopencv:error",
-                "Error setting property %d", prop);
+                "Error setting property %d", propId);
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error",

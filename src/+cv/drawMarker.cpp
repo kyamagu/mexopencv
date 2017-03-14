@@ -9,8 +9,6 @@
 using namespace std;
 using namespace cv;
 
-//TODO: https://github.com/opencv/opencv/issues/5905
-
 namespace {
 /// Marker types for option processing
 const ConstMap<string,int> MarkerTypeMap = ConstMap<string,int>

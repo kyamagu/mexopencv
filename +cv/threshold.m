@@ -5,8 +5,7 @@
 %    [dst, thresh] = cv.threshold(src, 'auto', ...)
 %
 % ## Input
-% * __src__ Input array (single-channel, 8-bit, 16-bit, or 32-bit floating
-%       point).
+% * __src__ Input array (single-channel, 8-bit, 16-bit, or floating point).
 % * __thresh__ Threshold value. Scalar numeric value or one of the strings:
 %       * __Otsu__ use Otsu algorithm to choose the optimal threshold value
 %       * __Triangle__ use Triangle algorithm to choose the optimal threshold

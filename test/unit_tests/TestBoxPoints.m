@@ -5,7 +5,7 @@ classdef TestBoxPoints
         function test_1
             rrect = struct('center',[10,20], 'size',[5,6], 'angle',30);
             pts = cv.boxPoints(rrect);
-            assert(isnumeric(pts) && ismatrix(pts) && isequal(size(pts), [4 2]));
+            validateattributes(pts, {'numeric'}, {'2d', 'size',[4 2]});
         end
 
         function test_error_argnum

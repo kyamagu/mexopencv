@@ -2,9 +2,9 @@ classdef TestANN_MLP
     %TestANN_MLP
 
     properties (Constant)
-        X = [randn(50,3)+1; randn(50,3)-1];
-        Y = [ones(50,1); -ones(50,1)];
-        YReg = [ones(50,1); -ones(50,1)] + randn(100,1)*0.5;
+        X = [randn(10,3)+1; randn(10,3)-1];
+        Y = [ones(10,1); -ones(10,1)];
+        YReg = [ones(10,1); -ones(10,1)] + randn(20,1)*0.5;
     end
 
     methods (Static)

@@ -2,9 +2,9 @@ classdef TestDTrees
     %TestDTrees
 
     properties (Constant)
-        X = [randn(50,3)+1; randn(50,3)-1];
-        Y = int32([ones(50,1); -ones(50,1)]);
-        YReg = [ones(50,1); -ones(50,1)] + randn(100,1)*0.5;
+        X = [randn(10,3)+1; randn(10,3)-1];
+        Y = int32([ones(10,1); -ones(10,1)]);
+        YReg = [ones(10,1); -ones(10,1)] + randn(20,1)*0.5;
         nfields = {'value', 'classIdx', 'parent', 'left', 'right', 'defaultDir', 'split'};
         sfields = {'varIdx', 'inversed', 'quality', 'next', 'c', 'subsetOfs'};
     end
@@ -133,16 +133,13 @@ classdef TestDTrees
                 'Data',{'VarIdx',[true,false,true]});
             Yhat = model.predict(TestDTrees.X(:,[true,false,true]));
 
+            %TODO: might throw C++ exception (not enough samples?)
             if false
-                %TODO: throws C++ exception
                 model.clear();
                 model.train(TestDTrees.X, TestDTrees.Y, ...
-                    'Data',{'SampleIdx',[1:20 51:70]-1});
+                    'Data',{'SampleIdx',[1:3 6:8]-1});
                 Yhat = model.predict(TestDTrees.X);
-            end
 
-            if false
-                %TODO: throws C++ exception
                 model.clear();
                 model.train(TestDTrees.X, TestDTrees.Y, ...
                     'Data',{'SampleIdx',rand(N,1)>0.5});

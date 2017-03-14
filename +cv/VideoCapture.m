@@ -19,15 +19,94 @@ classdef VideoCapture < handle
     %    end
     %    % the camera will be deinitialized automatically in destructor
     %    % when "cap" goes out of scope
+    %    % you can also explicitly call cap.release() to close the camera
     %
-    % ## Note
-    % In some environments, there is a concurrency issue during camera
+    % Note: In some environments, there is a concurrency issue during camera
     % initialization. To avoid unexpected crash, pause for a few seconds after
     % the initialization of cv.VideoCapture object.
     %
+    % # Video I/O with OpenCV Overview
+    %
+    % The OpenCV "videoio" module is a set of classes and functions to read
+    % and write video or images sequence.
+    %
+    % Basically, the module provides the cv.VideoCapture and cv.VideoWriter
+    % classes as 2-layer interface to many video I/O APIs used as backend.
+    %
+    % ![image](http://docs.opencv.org/3.2.0/videoio_overview.svg)
+    %
+    % Some backends such as (`DirectShow`) Direct Show, Video For Windows
+    % (`VfW`), Microsoft Media Foundation (`MediaFoundation`), Video 4 Linux
+    % (`V4L`), etc... are interfaces to the video I/O library provided by the
+    % operating system.
+    %
+    % Some others backends like OpenNI2 for Kinect, Intel Perceptual Computing
+    % SDK, GStreamer, XIMEA Camera API, etc... are interfaces to proprietary
+    % drivers or to external library.
+    %
+    % See the list of supported backends here: cv.VideoCapture.open
+    %
+    % Warning: Some backends are experimental use them at your own risk.
+    % Note: Each backend supports devices properties (cv.VideoCapture.set) in
+    % a different way or might not support any property at all.
+    %
+    % ## Select the backend at runtime
+    % OpenCV automatically selects and uses first available backend
+    % (`API='Any'`).
+    %
+    % As advanced usage you can select the backend to use at runtime.
+    % Currently this option is available only with cv.VideoCapture.
+    %
+    % For example to grab from default camera using Direct Show as backend
+    %
+    %    % declare a capture object
+    %    cap = cv.VideoCapture(0, 'API','DirectShow')
+    %
+    %    % or specify the API preference with open
+    %    cap.open(0, 'API','DirectShow');
+    %
+    % If you want to grab from a file using the Direct Show as backend:
+    %
+    %    % declare a capture object
+    %    cap = cv.VideoCapture(filename, 'API','DirectShow')
+    %
+    %    % or specify the API preference with open
+    %    cap.open(filename, 'API','DirectShow');
+    %
+    % ### Enable backends
+    % Backends are available only if they have been built with your OpenCV
+    % binaries.
+    %
+    % Check in `opencv2/cvconfig.h` to know which APIs are currently available
+    % (e.g. `HAVE_MSMF, HAVE_VFW, HAVE_LIBV4L`, etc...).
+    %
+    % To enable/disable APIs, you have to:
+    % 1. re-configure OpenCV using appropriates CMake switches
+    %    (e.g. `-DWITH_MSMF=ON -DWITH_VFW=ON ... `) or checking related switch
+    %    in cmake-gui
+    % 2. rebuild OpenCV itself
+    %
+    % ### Use 3rd party drivers or cameras
+    % Many industrial cameras or some video I/O devices don't provide standard
+    % driver interfaces for the operating system. Thus you can't use
+    % cv.VideoCapture or cv.VideoWriter with these devices.
+    %
+    % ## The FFmpeg library
+    % OpenCV can use the [FFmpeg](http://ffmpeg.org/) library as backend to
+    % record, convert and stream audio and video. FFMpeg is a complete,
+    % cross-reference solution. If you enable FFmpeg while configuring OpenCV
+    % than CMake will download and install the binaries in
+    % `OPENCV_SOURCE_CODE/3rdparty/ffmpeg/`. To use FFMpeg at runtime, you
+    % must deploy the FFMepg binaries with your application.
+    %
+    % Note: FFmpeg is licensed under the GNU Lesser General Public License
+    % (LGPL) version 2.1 or later. See
+    % `OPENCV_SOURCE_CODE/3rdparty/ffmpeg/readme.txt` and
+    % http://ffmpeg.org/legal.html for details and licensing information.
+    %
     % See also: cv.VideoCapture.VideoCapture, cv.VideoCapture.read,
-    %  VideoReader, mmreader, aviread, webcam, videoinput, imaq.VideoDevice,
-    %  vision.VideoFileReader
+    %  cv.VideoWriter, VideoReader, mmreader, aviread, webcam, videoinput,
+    %  imaq.VideoDevice, vision.VideoFileReader
     %
 
     properties (SetAccess = private)
@@ -78,25 +157,80 @@ classdef VideoCapture < handle
     end
 
     methods
-        function this = VideoCapture(index, varargin)
-            %VIDEOCAPTURE  Create a new VideoCapture object
+        function this = VideoCapture(varargin)
+            %VIDEOCAPTURE  Open video file or a capturing device or a IP video stream for video capturing
             %
+            %    cap = cv.VideoCapture()
             %    cap = cv.VideoCapture(index)
             %    cap = cv.VideoCapture(filename)
             %    cap = cv.VideoCapture(..., 'API',apiPreference)
             %
+            % ## Output
+            % * __cap__ New instance of the VideoCapture
+            %
+            % Accepts the same inputs and options as the cv.VideoCapture.open
+            % method.
+            %
+            % Creates a new video capture instance. With no argument, it
+            % connects to the default camera device found in the system.
+            % You can specify camera devices by `index`, an integer value
+            % starting from 0. You can also specify a `filename` to open a
+            % video file.
+            %
+            % See also: cv.VideoCapture.open
+            %
+            this.id = VideoCapture_(0, 'new');
+            if nargin > 0
+                this.open(varargin{:});
+            else
+                this.open(0);
+            end
+        end
+
+        function delete(this)
+            %DELETE  Destructor
+            %
+            %    cap.delete()
+            %
+            % The method first calls cv.VideoCapture.release to close the
+            % already opened file or camera.
+            %
+            % See also: cv.VideoCapture.release
+            %
+            if isempty(this.id), return; end
+            VideoCapture_(this.id, 'delete');
+        end
+
+        function successFlag = open(this, index, varargin)
+            %OPEN  Open video file or a capturing device or a IP video stream for video capturing
+            %
+            %    successFlag = cap.open(index)
+            %    successFlag = cap.open(filename)
+            %    successFlag = cap.open(..., 'API',apiPreference)
+            %
             % ## Input
-            % * __index__ id of the video capturing device to open. If there
-            %       is a single camera connected, just pass 0.
-            % * __filename__ name of the opened video file (eg. `video.avi`)
-            %       or image sequence (eg. `img_%02d.jpg`, which will read
-            %       samples like `img_00.jpg`, `img_01.jpg`, `img_02.jpg`, ...)
+            % * __index__ id of the video capturing device to open. To open
+            %       default camera using default backend just pass 0.
+            % * __filename__ it can be:
+            %       * name of video file (eg. `video.avi`)
+            %       * or image sequence (eg. `img_%02d.jpg`, which will read
+            %         samples like `img_00.jpg`, img_01.jpg`, img_02.jpg`, ...)
+            %       * or URL of video stream
+            %         (eg. `protocol://host:port/script_name?script_params|auth`).
+            %         Note that each video stream or IP camera feed has its
+            %         own URL scheme. Please refer to the documentation of
+            %         source stream to know the right URL.
+            %
+            % ## Output
+            % * __successFlag__ bool, true if the file/camera has been
+            %       successfully opened.
             %
             % ## Options
-            % * __API__ preferred capture API to use. Can be used to enforce a
-            %       specific reader implementation if multiple are available:
-            %       e.g. 'FFMPEG' 'Images'. Available implementations:
-            %       * __Any__ autodetect. This is the default.
+            % * __API__ preferred capture API backend to use. Can be used to
+            %       enforce a specific reader implementation if multiple are
+            %       available: e.g. 'FFMPEG' or 'Images' or 'DirectShow'. The
+            %       list of supported API backends:
+            %       * __Any__ Auto detect. This is the default.
             %       * __VfW__ Video For Windows (platform native).
             %       * __V4L__ V4L/V4L2 capturing support via libv4l.
             %       * __V4L2__ Same as V4L.
@@ -126,14 +260,21 @@ classdef VideoCapture < handle
             %             Occipital Structure sensors).
             %       * __gPhoto2__ gPhoto2 connection.
             %       * __GStreamer__ GStreamer.
-            %       * __FFMPEG__ FFMPEG.
+            %       * __FFMPEG__ Open video file or stream using the FFMPEG
+            %             library.
             %       * __Images__ OpenCV Image Sequence (e.g. `img_%02d.jpg`).
+            %       * __Aravis__ Aravis GigE SDK.
             %
-            % Creates a new video capture instance. With no argument, it
-            % connects to the default camera device found in the system.
-            % You can specify camera devices by `index`, an integer value
-            % starting from 0. You can also specify a `filename` to open a
-            % video file.
+            % The method first calls cv.VideoCapture.release to close the
+            % already opened file or camera.
+            %
+            % ## Example
+            % Use `API` option to enforce a specific reader implementation
+            % if multiple are available like 'FFMPEG' or 'Images' or
+            % 'DirectShow'. For example, to open camera 1 using the
+            % "MS Media Foundation" API:
+            %
+            %    cap.open(1, 'API','MediaFoundation')
             %
             % ## Note
             % Backends are available only if they have been built with your
@@ -141,43 +282,6 @@ classdef VideoCapture < handle
             % Check your build to know which APIs are currently available.
             % To enable/disable APIs, you have to re-configure OpenCV using
             % the appropriates CMake switches and recompile OpenCV itself.
-            %
-            % ## Example
-            % To open camera 1 using the MS Media Foundation API:
-            %
-            %    cap = cv.VideoCapture(1, 'API','MediaFoundation')
-            %
-            % See also: cv.VideoCapture.open
-            %
-            if nargin < 1, index = 0; end
-            this.id = VideoCapture_(0, 'new', index, varargin{:});
-        end
-
-        function delete(this)
-            %DELETE  Destructor
-            %
-            %    cap.delete()
-            %
-            % See also: cv.VideoCapture.release
-            %
-            if isempty(this.id), return; end
-            VideoCapture_(this.id, 'delete');
-        end
-
-        function successFlag = open(this, index, varargin)
-            %OPEN  Open video file or a capturing device for video capturing
-            %
-            %    successFlag = cap.open(index)
-            %    successFlag = cap.open(filename)
-            %    successFlag = cap.open(..., 'API',apiPreference)
-            %
-            % ## Output
-            % * __successFlag__ bool, true if successful
-            %
-            % Inputs and options are the same as in the constructor.
-            %
-            % The method first call cv.VideoCapture.release to close the
-            % already opened file or camera.
             %
             % See also: cv.VideoCapture.VideoCapture, cv.VideoCapture.isOpened
             %
@@ -246,7 +350,7 @@ classdef VideoCapture < handle
             %    successFlag = cap.grab()
             %
             % ## Output
-            % * __successFlag__ bool, success flag
+            % * __successFlag__ bool, true (non-zero) in the case of success.
             %
             % The function grabs the next frame from video file or camera and
             % returns true (non-zero) in the case of success.
@@ -278,10 +382,12 @@ classdef VideoCapture < handle
             %    frame = cap.retrieve('OptionName',optionValue, ...)
             %
             % ## Output
-            % * __frame__ output image
+            % * __frame__ the video frame is returned here. If no frames has
+            %       been grabbed the image will be empty.
             %
             % ## Options
-            % * __StreamIdx__ 0-based index (for multi-head camera). default 0
+            % * __StreamIdx__ 0-based index (for multi-head camera). It could
+            %       be a frame index or a driver specific flag. default 0
             % * __FlipChannels__ in case the output is color image, flips the
             %       color order from OpenCV's BGR to MATLAB's RGB order.
             %       default true
@@ -307,10 +413,18 @@ classdef VideoCapture < handle
             %       corresponding integer code.
             %
             % ## Output
-            % * __value__ Value of the property (as a `double`).
+            % * __value__ Value for the specified property (as a `double`).
+            %       Value 0 is returned when querying a property that is not
+            %       supported by the backend used by the VideoCapture instance.
             %
-            % When querying a property that is not supported by the backend
-            % used by the cv.VideoCapture class, value 0 is returned.
+            % ## Note
+            % Reading/writing properties involves many layers. Some unexpected
+            % result might happens along this chain.
+            % `VideoCapture -> API Backend -> Operating System -> Device Driver -> Device Hardware`
+            % The returned value might be different from what really used by
+            % the device or it could be encoded using device dependant rules
+            % (eg. steps or percentage). Effective behaviour depends from
+            % device driver and API Backend.
             %
             % ## Example
             % All the following are equivalent:
@@ -335,8 +449,12 @@ classdef VideoCapture < handle
             %       corresponding integer code.
             % * __value__ Value of the property (as a `double`).
             %
-            % On failure (unsupported property), the function issues a
-            % warning.
+            % On failure (unsupported property by backend), the function
+            % issues a warning.
+            %
+            % Note: Even if no warning was issued, this doesn't ensure that
+            % the property value has been accepted by the capture device.
+            % See note in cv.VideoCapture.get.
             %
             % See also: cv.VideoCapture.get
             %

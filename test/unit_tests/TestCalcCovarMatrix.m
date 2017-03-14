@@ -3,18 +3,18 @@ classdef TestCalcCovarMatrix
 
     methods (Static)
         function test_1
-            X = randn(100,4);
+            X = randn(50,4);
             [c,m] = cv.calcCovarMatrix(X);
             [c,m] = cv.calcCovarMatrix(X, 'Scale',true);
         end
 
         function test_2
-            X = randn(100,4);
+            X = randn(50,4);
             [c,m] = cv.calcCovarMatrix(X.', 'Cols',true);
         end
 
         function test_3
-            X = randn(100,4);
+            X = randn(50,4);
             [c,m] = cv.calcCovarMatrix(X, 'Mean',mean(X));
         end
 

@@ -9,7 +9,7 @@ classdef TestFeaturesFinder
     methods (Static)
         function test_1
             img = imread(fullfile(mexopencv.root(),'test','tsukuba_l.png'));
-            ttypes = {'OrbFeaturesFinder'};  % 'SurfFeaturesFinder'
+            ttypes = {'OrbFeaturesFinder'};  % 'AKAZEFeaturesFinder', 'SurfFeaturesFinder'
             for i=1:numel(ttypes)
                 obj = cv.FeaturesFinder(ttypes{i});
                 typename = obj.typeid();

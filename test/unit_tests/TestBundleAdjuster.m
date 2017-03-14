@@ -16,7 +16,7 @@ classdef TestBundleAdjuster
             matcher = cv.FeaturesMatcher('BestOf2NearestMatcher');
             m = matcher.match_pairwise(features);
 
-            estimator = cv.HomographyBasedEstimator();
+            estimator = cv.Estimator('HomographyBasedEstimator');
             cameras = estimator.estimate(features, m);
             for i=1:numel(cameras)
                 cameras(i).R = single(cameras(i).R);

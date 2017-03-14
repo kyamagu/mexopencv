@@ -2,7 +2,7 @@ classdef TestImwrite
     %TestImwrite
 
     properties (Constant)
-        im = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
+        im = cv.imread(fullfile(mexopencv.root(),'test','fruits.jpg'), 'ReduceScale',2);
     end
 
     methods (Static)
@@ -60,15 +60,6 @@ classdef TestImwrite
             end
         end
 
-        function test_error_invalid_param_value
-            try
-                cv.imwrite('image.jpg', TestImwrite.im, 'JpegQuality',-1);
-                throw('UnitTest:Fail');
-            catch e
-                assert(strcmp(e.identifier,'mexopencv:error'));
-            end
-        end
-
         function test_error_unrecognized_extension
             %TODO: crashes Octave
             if mexopencv.isOctave()
@@ -95,7 +86,7 @@ classdef TestImwrite
         end
 
         function frmts = getFormats()
-            frmts = repmat(struct('name','', 'ext','', 'opts',{{}}), 10, 1);
+            frmts = repmat(struct('name','', 'ext','', 'opts',{{}}), 11, 1);
             frmts(1).name = 'JPEG';
             frmts(1).ext = '.jpg';
             frmts(1).opts = {'JpegQuality',90, 'JpegProgressive',false, ...
@@ -121,6 +112,9 @@ classdef TestImwrite
             frmts(9).ext = '.exr';
             frmts(10).name = 'Radiance HDR';
             frmts(10).ext = '.hdr';
+            frmts(11).name = 'PAM';
+            frmts(11).ext = '.pam';
+            frmts(11).opts = {'PamTupleType','RGB'};
         end
     end
 

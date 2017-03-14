@@ -4,8 +4,6 @@
 % <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/ximgproc/samples/niblack_thresholding.cpp>
 %
 
-%TODO: https://github.com/opencv/opencv_contrib/pull/542
-
 %% Load gray-scale image
 src = cv.imread(fullfile(mexopencv.root(),'test','sudoku.jpg'), 'Grayscale',true);
 assert(~isempty(src), 'Could not open image');

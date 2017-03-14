@@ -1,16 +1,23 @@
-%FILESTORAGE  Reading from or writing to a XML/YAML file storage
+%FILESTORAGE  Reading from or writing to a XML/YAML/JSON file storage
 %
-%    S = cv.FileStorage(fileName)
-%    [S,~] = cv.FileStorage(str)
+%    S = cv.FileStorage(source)
+%    [S,~] = cv.FileStorage(source)
 %
-%    cv.FileStorage(fileName, S)
-%    cv.FileStorage(fileName, X1, X2, ...)
-%    str = cv.FileStorage(fileName, S)
-%    str = cv.FileStorage(fileName, X1, X2, ...)
+%    cv.FileStorage(source, S)
+%    cv.FileStorage(source, X1, X2, ...)
+%    str = cv.FileStorage(source, S)
+%    str = cv.FileStorage(source, X1, X2, ...)
 %
 % ## Input
-% * __fileName__ Name of the XML/YAML file. The file name should have either
-%       `.xml` or `.yml` extension.
+% * __source__ Name of the file to open or the text string to read the data
+%       from. Extension of the file (`.xml`, `.yml`/`.yaml`, or `.json`)
+%       determines its format (XML, YAML or JSON respectively). Also you can
+%       append `.gz` to work with gzip-compressed files, for example
+%       `myHugeMatrix.xml.gz`. When serializing to a string, `source` is used
+%       just to specify the output file format (e.g. `mydata.xml`, `.yml`).
+%       A file name can also contain parameters like `file.yml?base64`
+%       (case sensitive) in which case it outputs sequences in Base64 encoding
+%       rather than in plain text.
 % * __S__ Scalar struct to be written to file. Each field represents an object
 %       where the field name is the variable name, and the field value is the
 %       object value.
@@ -23,11 +30,10 @@
 % * __str__ optional output when writing. If requested, the data is persisted
 %       to a string in memory instead of writing to disk.
 %
-% The function reads or writes a MATLAB object from/to a XML/YAML file. The
-% file is compatible with OpenCV formats.
-%
-% The functions supports gzip-compressed files by appending `.gz` to the
-% filename extension, i.e `.xml.gz` or `.yml.gz`.
+% The function reads or writes a MATLAB object from/to a
+% [XML](http://www.w3c.org/XML), [YAML](http://www.yaml.org), or
+% [JSON](http://www.json.org/) file. The file is compatible with OpenCV
+% formats.
 %
 % The function also supports reading and writing from/to serialized strings.
 % In reading mode, a second dummpy output is used to differentiate between
@@ -39,13 +45,13 @@
 % forms are equivalent:
 %
 %    vars = {'hi', pi, magic(5)};
-%    cv.FileStorage(filename, vars{:});
+%    cv.FileStorage('mydata.xml', vars{:});
 %
 %    S = struct();
 %    S.(name) = vars;
-%    cv.FileStorage(filename, S);
+%    cv.FileStorage('mydata.xml', S);
 %
-% where `name` is a default object name generated from `filename`.
+% where `name` is a default object name generated from the filename.
 %
 % A few limitations to be aware of:
 %
@@ -81,11 +87,12 @@
 % Replace '.yml' with '.xml' to use XML format.
 %
 % ## Example
-% Below is an example of four variables stored in XML and YAML files:
+% Below is an example of four variables stored in XML, YAML and JSON files:
 %
 %    >> S = struct('var1',magic(3), 'var2','foo bar', 'var3',1, 'var4',{{2 3}});
 %    >> cv.FileStorage('test.xml', S);
 %    >> cv.FileStorage('test.yml', S);
+%    >> cv.FileStorage('test.json', S);
 %    >> S = cv.FileStorage('test.xml')
 %    S =
 %        var1: [3x3 double]
@@ -111,6 +118,7 @@
 % __YAML__
 %
 %    %YAML:1.0
+%    ---
 %    var1: !!opencv-matrix
 %       rows: 3
 %       cols: 3
@@ -121,6 +129,24 @@
 %    var4:
 %       - 2.
 %       - 3.
+%
+% __JSON__
+%
+%    {
+%        "var1": {
+%            "type_id": "opencv-matrix",
+%            "rows": 3,
+%            "cols": 3,
+%            "dt": "d",
+%            "data": [ 8., 1., 6., 3., 5., 7., 4., 9., 2. ]
+%        },
+%        "var2": "foo bar",
+%        "var3": 1.,
+%        "var4": [
+%            2.,
+%            3.
+%        ]
+%    }
 %
 % See also: load, save, xmlread, xmlwrite, jsonencode, jsondecode,
 %  netcdf, h5info, hdfinfo, hdftool, cdflib

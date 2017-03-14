@@ -164,6 +164,12 @@ MxArray toStruct(cv::Ptr<cv::detail::FeaturesFinder> p);
  */
 MxArray toStruct(cv::Ptr<cv::detail::FeaturesMatcher> p);
 
+/** Convert a Estimator to MxArray
+ * @param p smart poitner to an instance of Estimator
+ * @return output MxArray structure
+ */
+MxArray toStruct(cv::Ptr<cv::detail::Estimator> p);
+
 /** Convert a BundleAdjusterBase to MxArray
  * @param p smart poitner to an instance of BundleAdjusterBase
  * @return output MxArray structure
@@ -206,6 +212,15 @@ cv::Ptr<cv::detail::OrbFeaturesFinder> createOrbFeaturesFinder(
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 
+/** Create an instance of AKAZEFeaturesFinder using options in arguments
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to created AKAZEFeaturesFinder
+ */
+cv::Ptr<cv::detail::AKAZEFeaturesFinder> createAKAZEFeaturesFinder(
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
+
 #ifdef HAVE_OPENCV_XFEATURES2D
 /** Create an instance of SurfFeaturesFinder using options in arguments
  * @param first iterator at the beginning of the vector range
@@ -220,6 +235,7 @@ cv::Ptr<cv::detail::SurfFeaturesFinder> createSurfFeaturesFinder(
 /** Create an instance of FeaturesFinder using options in arguments
  * @param type features finder type, one of:
  *    - "OrbFeaturesFinder"
+ *    - "AKAZEFeaturesFinder"
  *    - "SurfFeaturesFinder" (requires `xfeatures2d` module)
  *    - "SurfFeaturesFinderGpu" (requires CUDA and `xfeatures2d` module)
  * @param first iterator at the beginning of the vector range
@@ -249,10 +265,20 @@ cv::Ptr<cv::detail::BestOf2NearestRangeMatcher> createBestOf2NearestRangeMatcher
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 
+/** Create an instance of AffineBestOf2NearestMatcher using options in arguments
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to created AffineBestOf2NearestMatcher
+ */
+cv::Ptr<cv::detail::AffineBestOf2NearestMatcher> createAffineBestOf2NearestMatcher(
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
+
 /** Create an instance of FeaturesMatcher using options in arguments
  * @param type features matcher type, one of:
  *    - "BestOf2NearestMatcher"
  *    - "BestOf2NearestRangeMatcher"
+ *    - "AffineBestOf2NearestMatcher"
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
  * @return smart pointer to created FeaturesMatcher
@@ -271,28 +297,26 @@ cv::Ptr<cv::detail::HomographyBasedEstimator> createHomographyBasedEstimator(
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 
-/** Create an instance of BundleAdjusterRay using options in arguments
+/** Create an instance of Estimator using options in arguments
+ * @param type features matcher type, one of:
+ *    - "HomographyBasedEstimator"
+ *    - "AffineBasedEstimator"
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
- * @return smart pointer to created BundleAdjusterRay
+ * @return smart pointer to created Estimator
  */
-cv::Ptr<cv::detail::BundleAdjusterRay> createBundleAdjusterRay(
-    std::vector<MxArray>::const_iterator first,
-    std::vector<MxArray>::const_iterator last);
-
-/** Create an instance of BundleAdjusterReproj using options in arguments
- * @param first iterator at the beginning of the vector range
- * @param last iterator at the end of the vector range
- * @return smart pointer to created BundleAdjusterReproj
- */
-cv::Ptr<cv::detail::BundleAdjusterReproj> createBundleAdjusterReproj(
+cv::Ptr<cv::detail::Estimator> createEstimator(
+    const std::string& type,
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 
 /** Create an instance of BundleAdjusterBase using options in arguments
  * @param type bundle adjuster type, one of:
+ *    - "NoBundleAdjuster"
  *    - "BundleAdjusterRay"
  *    - "BundleAdjusterReproj"
+ *    - "BundleAdjusterAffine"
+ *    - "BundleAdjusterAffinePartial"
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
  * @return smart pointer to created BundleAdjusterBase
@@ -342,6 +366,7 @@ cv::Ptr<cv::PaniniPortraitWarper> createPaniniPortraitWarper(
  * @param type warper creator type, one of:
  *   - "PlaneWarper"
  *   - "PlaneWarperGpu" (requires CUDA)
+ *   - "AffineWarper"
  *   - "CylindricalWarper"
  *   - "CylindricalWarperGpu" (requires CUDA)
  *   - "SphericalWarper"

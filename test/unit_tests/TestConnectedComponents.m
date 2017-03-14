@@ -8,7 +8,7 @@ classdef TestConnectedComponents
     methods (Static)
         function test_1
             bw = logical(imread(TestConnectedComponents.im));
-            [L,N,stats,centroids] = cv.connectedComponents(bw);
+            [L,N,stats,centroids] = cv.connectedComponents(bw, 'Method','Default');
             assert(isinteger(L));
             validateattributes(L, {'numeric'}, ...
                 {'size',size(bw), 'integer', 'nonnegative', '<',N});

@@ -176,7 +176,7 @@ const ConstMap<int,std::string> NormTypeInv = ConstMap<int,std::string>
         else      { (NUM) &= ~(BIT); }  \
     } while(0)
 
-/// Alias for input/ouput arguments number check
+/// Alias for input/output arguments number check
 inline void nargchk(bool cond)
 {
     if (!cond) {

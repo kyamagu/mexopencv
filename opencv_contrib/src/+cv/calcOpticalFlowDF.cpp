@@ -6,7 +6,6 @@
  * @date 2015
  */
 #include "mexopencv.hpp"
-#include "opencv2/video.hpp"
 #include "opencv2/optflow.hpp"
 using namespace std;
 using namespace cv;

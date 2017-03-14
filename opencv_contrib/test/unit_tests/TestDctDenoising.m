@@ -7,15 +7,14 @@ classdef TestDctDenoising
 
     methods (Static)
         function test_gray
-            img = cv.imread(TestDctDenoising.im, 'Grayscale',true);
-            img = cv.resize(img, 0.4, 0.4);
+            img = cv.imread(TestDctDenoising.im, ...
+                'Grayscale',true, 'ReduceScale',4);
             dst = cv.dctDenoising(img);
             validateattributes(dst, {class(img)}, {'size',size(img)});
         end
 
         function test_rgb1
-            img = imread(TestDctDenoising.im);
-            img = cv.resize(img, 0.4, 0.4);
+            img = cv.imread(TestDctDenoising.im, 'Color',true, 'ReduceScale',4);
             dst = cv.dctDenoising(img);
             validateattributes(dst, {class(img)}, {'size',size(img)});
         end
@@ -28,16 +27,14 @@ classdef TestDctDenoising
             end
 
             % CV_8U
-            img = imread(TestDctDenoising.im);
-            img = cv.resize(img, 0.4, 0.4);
+            img = cv.imread(TestDctDenoising.im, 'Color',true, 'ReduceScale',4);
             img = imnoise(img, 'gaussian', 0, 0.01);
             dst = cv.dctDenoising(img, 'Sigma',sqrt(0.01)*255, 'BlockSize',16);
             validateattributes(dst, {class(img)}, {'size',size(img)});
 
             % CV_32F
-            img = im2single(imread(TestDctDenoising.im));
-            img = cv.resize(img, 0.4, 0.4);
-            img = imnoise(img, 'gaussian', 0, 0.01);
+            img = cv.imread(TestDctDenoising.im, 'Color',true, 'ReduceScale',4);
+            img = imnoise(im2single(img), 'gaussian', 0, 0.01);
             dst = cv.dctDenoising(img, 'Sigma',sqrt(0.01), 'BlockSize',16);
             validateattributes(dst, {class(img)}, {'size',size(img)});
         end

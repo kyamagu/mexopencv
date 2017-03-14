@@ -6,13 +6,9 @@
  * @date 2015
  */
 #include "mexopencv.hpp"
-#include "opencv2/ml.hpp"
 using namespace std;
 using namespace cv;
 using namespace cv::ml;
-
-//TODO: bug in 3.1.0, fixed in master
-// https://github.com/opencv/opencv/pull/5965
 
 /**
  * Main entry called from Matlab

@@ -16,7 +16,7 @@ classdef TestPCA
         end
 
         function test_2
-            Xtrain = randn(100,10);
+            Xtrain = randn(50,5);
             pca = cv.PCA(Xtrain, 'MaxComponents',3);
             S = struct(pca);
             pca2 = cv.PCA(S);
@@ -27,7 +27,7 @@ classdef TestPCA
             fname = [tempname() '.xml'];
             cleanObj = onCleanup(@() delete(fname));
 
-            X = randn(100,10);
+            X = randn(50,5);
             pca = cv.PCA();
             pca.compute(X, 'RetainedVariance',0.8)
             pca.write(fname)
@@ -48,7 +48,7 @@ classdef TestPCA
             fname = [tempname() '.mat'];
             cleanObj = onCleanup(@() delete(fname));
 
-            pca = cv.PCA(rand(100,5));
+            pca = cv.PCA(rand(50,5));
             save(fname, 'pca');
 
             L = load(fname, 'pca');

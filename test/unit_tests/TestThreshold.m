@@ -3,13 +3,14 @@ classdef TestThreshold
 
     methods (Static)
         function test_result
-            img = rand(100, 'single');
+            img = rand(50, 'single');
             result = cv.threshold(img, 0.5, 'MaxValue',1.0);
             validateattributes(result, {class(img)}, {'size',size(img)});
         end
 
         function test_threshold_types
-            img = cv.imread(fullfile(mexopencv.root(),'test','sudoku.jpg'), 'Grayscale',true);
+            img = cv.imread(fullfile(mexopencv.root(),'test','sudoku.jpg'), ...
+                'Grayscale',true, 'ReduceScale',2);
             types = {'Binary', 'BinaryInv', 'Trunc', 'ToZero', 'ToZeroInv'};
             for i=1:numel(types)
                 result = cv.threshold(img, 127, 'MaxValue',255, 'Type',types{i});
@@ -18,7 +19,8 @@ classdef TestThreshold
         end
 
         function test_auto_threshold
-            img = cv.imread(fullfile(mexopencv.root(),'test','fruits.jpg'), 'Grayscale',true);
+            img = cv.imread(fullfile(mexopencv.root(),'test','fruits.jpg'), ...
+                'Grayscale',true, 'ReduceScale',2);
 
             [result,t] = cv.threshold(img, 'Otsu');
             validateattributes(result, {class(img)}, {'size',size(img)});

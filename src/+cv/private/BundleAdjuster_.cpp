@@ -92,8 +92,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if (nlhs > 1)
             plhs[1] = MxArray(success);
         else if (!success)
-            mexErrMsgIdAndTxt("mexopencv:error",
-                "Bundle adjustment failed");
+            mexErrMsgIdAndTxt("mexopencv:error", "Bundle adjustment failed");
         plhs[0] = toStruct(cameras);
     }
     else if (method == "get") {

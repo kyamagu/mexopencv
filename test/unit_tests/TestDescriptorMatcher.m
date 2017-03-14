@@ -7,8 +7,8 @@ classdef TestDescriptorMatcher
 
     methods (Static)
         function test_1
-            X = randn(50,3);
-            Y = randn(10,3);
+            X = randn(20,3);
+            Y = randn(5,3);
             matchers = { ...
                 cv.DescriptorMatcher('BruteForce'), ...
                 cv.DescriptorMatcher('BruteForce-L1'), ...
@@ -50,8 +50,8 @@ classdef TestDescriptorMatcher
         end
 
         function test_2
-            X = randi([0,255], [50,3], 'uint8');
-            Y = randi([0,255], [10,3], 'uint8');
+            X = randi([0,255], [20,3], 'uint8');
+            Y = randi([0,255], [5,3], 'uint8');
             matchers = { ...
                 cv.DescriptorMatcher('BruteForce-Hamming'), ...
                 cv.DescriptorMatcher('BruteForce-HammingLUT'), ...
@@ -89,8 +89,8 @@ classdef TestDescriptorMatcher
         end
 
         function test_3
-            X = randn(50,3);
-            Y = randn(10,3);
+            X = randn(20,3);
+            Y = randn(5,3);
             matcher = cv.DescriptorMatcher('BruteForce');
             assert(matcher.isMaskSupported());
             mask = rand(size(Y,1), size(X,1)) > 0.5;

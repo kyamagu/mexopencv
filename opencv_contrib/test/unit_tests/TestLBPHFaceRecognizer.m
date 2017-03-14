@@ -26,10 +26,11 @@ classdef TestLBPHFaceRecognizer
             assert(ismember(lbl, unique(labels(:))));
             validateattributes(dist, {'numeric'}, {'scalar', 'real'});
 
-            [lbl,dist] = model.predict_collect(img);
-            validateattributes(lbl, {'numeric'}, ...
+            results = model.predict_collect(img);
+            validateattributes(results, {'struct'}, {'vector', 'numel',N});
+            validateattributes([results.label], {'numeric'}, ...
                 {'vector', 'integer', 'numel',N});
-            validateattributes(dist, {'numeric'}, ...
+            validateattributes([results.distance], {'numeric'}, ...
                 {'vector', 'real', 'numel',N});
 
             % model data

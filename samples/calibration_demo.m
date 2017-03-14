@@ -104,7 +104,7 @@ toc
 assert(all(isfinite([S.cameraMatrix1(:); S.cameraMatrix2(:)])));
 assert(all(isfinite([S.distCoeffs1(:); S.distCoeffs2(:)])));
 fprintf('Total RMS reprojection error: %f\n', S.reprojErr);
-display(S)
+if ~mexopencv.isOctave(), display(S); end
 
 %% Rectification
 % compute rectification transforms for the two camera heads
@@ -113,8 +113,7 @@ RCT = cv.stereoRectify(S.cameraMatrix1, S.distCoeffs1,...
     S.cameraMatrix2, S.distCoeffs2, imgSiz, S.R, S.T, ...
     'ZeroDisparity',true, 'Alpha',-1);
 toc
-
-display(RCT)
+if ~mexopencv.isOctave(), display(RCT); end
 
 %%
 % combined transformations to rectify images and remove distortions
@@ -129,7 +128,7 @@ RM = struct('map1',cell(1,2), 'map2',cell(1,2));
 toc
 
 whos RM
-display(RM(1))
+if ~mexopencv.isOctave(), display(RM(1)); end
 
 %% Draw
 % show rectified images

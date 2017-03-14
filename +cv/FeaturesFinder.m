@@ -18,6 +18,8 @@ classdef FeaturesFinder < handle
             % ## Input
             % * __finderType__ Feature finder type. One of:
             %       * __OrbFeaturesFinder__ ORB features finder. See cv.ORB
+            %       * __AKAZEFeaturesFinder__ AKAZE features finder. See
+            %             cv.AKAZE
             %       * __SurfFeaturesFinder__ SURF features finder. See cv.SURF
             %             (requires `xfeatures2d` module)
             %       * __SurfFeaturesFinderGpu__ (requires CUDA and
@@ -31,6 +33,15 @@ classdef FeaturesFinder < handle
             % * __NFeatures__ default 1500
             % * __ScaleFactor__ default 1.3
             % * __NLevels__ default 5
+            %
+            % ### `AKAZEFeaturesFinder`
+            % * __DescriptorType__ default 'MLDB'
+            % * __DescriptorSize__ default 0
+            % * __DescriptorChannels__ default 3
+            % * __Threshold__ default 0.001
+            % * __NOctaves__ default 4
+            % * __NOctaveLayers__ default 4
+            % * __Diffusivity__ default `PM_G2`
             %
             % ### `SurfFeaturesFinder`
             % * __HessThresh__ default 300.0
@@ -76,14 +87,30 @@ classdef FeaturesFinder < handle
             FeaturesFinder_(this.id, 'collectGarbage');
         end
 
-        function features = find(this, image, varargin)
+        %{
+        function tf = isThreadSafe(this)
+            %ISTHREADSAFE  Determine thread-safety
+            %
+            %    tf = obj.isThreadSafe()
+            %
+            % ## Output
+            % * __tf__ True, if it's possible to use the same finder instance
+            %       in parallel, false otherwise.
+            %
+            % See also: cv.FeaturesFinder.FeaturesFinder
+            %
+            tf = FeaturesFinder_(this.id, 'isThreadSafe');
+        end
+        %}
+
+        function features = find(this, img, varargin)
             %FIND  Finds features in the given image
             %
-            %    features = obj.find(image)
-            %    features = obj.find(image, rois)
+            %    features = obj.find(img)
+            %    features = obj.find(img, rois)
             %
             % ## Input
-            % * __image__ Source image.
+            % * __img__ Source image.
             % * __rois__ Regions of interest. A cell array of 4-element
             %       vectors `{[x y w h], ...}`
             %
@@ -97,7 +124,32 @@ classdef FeaturesFinder < handle
             %
             % See also: cv.FeaturesFinder.FeaturesFinder
             %
-            features = FeaturesFinder_(this.id, 'find', image, varargin{:});
+            features = FeaturesFinder_(this.id, 'find', img, varargin{:});
+        end
+
+        function features = findParallel(this, imgs, varargin)
+            %FINDPARALLEL  Finds features in the given images in parallel
+            %
+            %    features = obj.findParallel(imgs)
+            %    features = obj.findParallel(imgs, rois)
+            %
+            % ## Input
+            % * __imgs__ Source images.
+            % * __rois__ Regions of interest for each image. A cell array of
+            %       cell arrays of 4-element vectors `{{[x y w h], ...}, ...}`
+            %
+            % ## Output
+            % * __features__ Found features for each image. Structure array
+            %       containing image keypoints and descriptors with the
+            %       following fields:
+            %       * **img_idx**
+            %       * **img_size**
+            %       * __keypoints__
+            %       * __descriptors__
+            %
+            % See also: cv.FeaturesFinder.FeaturesFinder
+            %
+            features = FeaturesFinder_(this.id, 'findParallel', imgs, varargin{:});
         end
     end
 

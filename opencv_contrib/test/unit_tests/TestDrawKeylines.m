@@ -7,7 +7,7 @@ classdef TestDrawKeylines
 
     methods (Static)
         function test_1
-            im = imread(TestDrawKeylines.img);
+            im = cv.imread(TestDrawKeylines.img, 'Color',true, 'ReduceScale',2);
             detector = cv.LSDDetector();
             klines = detector.detect(im, 'Scale',2, 'NumOctaves',1);
             out = cv.drawKeylines(im, klines);
@@ -15,7 +15,7 @@ classdef TestDrawKeylines
         end
 
         function test_2
-            im = imread(TestDrawKeylines.img);
+            im = cv.imread(TestDrawKeylines.img, 'Color',true, 'ReduceScale',2);
             detector = cv.LSDDetector();
             klines = detector.detect(im, 'Scale',2, 'NumOctaves',1);
             out = cv.drawKeylines(im, klines, ...

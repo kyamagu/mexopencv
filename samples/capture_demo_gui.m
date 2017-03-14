@@ -2,8 +2,8 @@
 % We learn how to capture live stream from camera and display it, while
 % adjusting basic video color properties.
 %
-% <http://docs.opencv.org/3.1.0/dd/d43/tutorial_py_video_display.html>
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/starter_video.cpp>
+% <http://docs.opencv.org/3.2.0/dd/d43/tutorial_py_video_display.html>
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/videocapture_starter.cpp>
 %
 
 function varargout = capture_demo_gui()

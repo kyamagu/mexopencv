@@ -19,75 +19,6 @@ int last_id = 0;
 /// Object container
 map<int,Ptr<BasicFaceRecognizer> > obj_;
 
-/// A custom predict collector class used in prediction
-class CustomPredictCollector : public cv::face::PredictCollector
-{
-public:
-    /** Constructor
-     * @param threshold threshold on distance
-     */
-    explicit CustomPredictCollector(double threshold = DBL_MAX)
-    : PredictCollector(threshold)
-    {}
-
-    /** Initialization called once at start of recognition
-     * @param size total size of prediction evaluation that recognizer could perform
-     * @param state user defined optional value to allow multi-session or aggregation scenarios
-     */
-    void init(const int size, const int state = 0)
-    {
-        PredictCollector::init(size, state);
-        m_labels.reserve(size);
-        m_dists.reserve(size);
-    }
-
-    /** Emit called with every recognition result
-     * @param label current prediction label
-     * @param dist current prediction distance (confidence)
-     * @param state user defined optional value to allow multi-session or aggregation scenarios
-     * @return true if recognizer should proceed prediction,
-     *         false if recognizer should terminate prediction.
-     */
-    bool emit(const int label, const double dist, const int state = 0)
-    {
-        // only track its own session
-        if (_state != state)
-            return false;
-
-        // store label/dist pair
-        m_labels.push_back(label);
-        m_dists.push_back(dist);
-
-        // always keep going, we want to collect all predictions
-        return true;
-    }
-
-    /// retrieve stored vector of all prediction labels
-    vector<int> getLabels() const
-    {
-        return m_labels;
-    }
-
-    /// retrieve stored vector of all prediction distances
-    vector<double> getDists() const
-    {
-        return m_dists;
-    }
-
-    /** Factory function
-     * @param threshold threshold on distance
-     * @return smart pointer to newly created instance
-     */
-    static Ptr<CustomPredictCollector> create(double threshold = DBL_MAX)
-    {
-        return makePtr<CustomPredictCollector>(threshold);
-    }
-
-private:
-    vector<int> m_labels;    ///<! labels
-    vector<double> m_dists;  ///<! distances
-};
-
 /** Create an instance of BasicFaceRecognizer using options in arguments
  * @param type face recognizer type, one of:
  *    - "Eigenfaces"
@@ -128,6 +59,21 @@ Ptr<BasicFaceRecognizer> create_BasicFaceRecognizer(
         mexErrMsgIdAndTxt("mexopencv:error",
             "Failed to create BasicFaceRecognizer");
     return p;
+}
+
+/** Convert results to struct array
+ * @param results vector of pairs of label/distance
+ * @return struct-array MxArray object
+ */
+MxArray toStruct(const vector<pair<int,double> >& results)
+{
+    const char *fields[] = {"label", "distance"};
+    MxArray s = MxArray::Struct(fields, 2, 1, results.size());
+    for (mwIndex i = 0; i < results.size(); ++i) {
+        s.set("label",  results[i].first,  i);
+        s.set("distance", results[i].second, i);
+    }
+    return s;
 }
 }
 
@@ -259,14 +205,21 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         plhs[0] = MxArray(label);
     }
     else if (method == "predict_collect") {
-        nargchk(nrhs==3 && nlhs<=2);
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
+        bool sorted = false;
+        for (int i=3; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key == "Sorted")
+                sorted = rhs[i+1].toBool();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
+        }
         Mat src(rhs[2].toMat(CV_64F));
-        Ptr<CustomPredictCollector> collector =
-            CustomPredictCollector::create(obj->getThreshold());
-        obj->predict(src, collector, 0);
-        plhs[0] = MxArray(collector->getLabels());
-        if (nlhs > 1)
-            plhs[1] = MxArray(collector->getDists());
+        Ptr<StandardCollector> collector =
+            StandardCollector::create(obj->getThreshold());
+        obj->predict(src, collector);
+        plhs[0] = toStruct(collector->getResults(sorted));
     }
     else if (method == "setLabelInfo") {
         nargchk(nrhs==4 && nlhs==0);

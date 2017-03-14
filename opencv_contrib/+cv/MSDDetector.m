@@ -11,7 +11,7 @@ classdef MSDDetector < handle
     % self-dissimilarity" reverses the key paradigm of recent successful
     % techniques such as the Local Self-Similarity descriptor and the
     % Non-Local Means filter, which build upon the presence of similar
-    % - rather than dissimilar - patches. Moreover, it extends to contextual
+    % (rather than dissimilar) patches. Moreover, it extends to contextual
     % information the local self-dissimilarity notion embedded in established
     % detectors of corner-like interest points, thereby achieving enhanced
     % repeatability, distinctiveness and localization accuracy.

@@ -16,6 +16,28 @@ classdef Stitcher < handle
     % The implemented stitching pipeline is very similar to the one proposed
     % in [BL07].
     %
+    % # Camera models
+    % There are currently 2 camera models implemented in stitching pipeline.
+    %
+    % - *Homography model* expecting perspective transformations between
+    %   images implemented in `BestOf2NearestMatcher`,
+    %   `HomographyBasedEstimator`, `BundleAdjusterReproj`, and
+    %   `BundleAdjusterRay`.
+    % - *Affine model* expecting affine transformation with 6 DOF or 4 DOF
+    %   implemented in `AffineBestOf2NearestMatcher`, `AffineBasedEstimator`,
+    %   `BundleAdjusterAffine`, `BundleAdjusterAffinePartial`, and
+    %   `AffineWarper`.
+    %
+    % Homography model is useful for creating photo panoramas captured by
+    % camera, while affine-based model can be used to stitch scans and object
+    % captured by specialized devices. Use cv.Stitcher.Stitcher to get
+    % preconfigured pipeline for one of those models.
+    %
+    % Note: Certain detailed settings of cv.Stitcher might not make sense.
+    % Especially you should not mix classes implementing affine model and
+    % classes implementing Homography model, as they work with different
+    % transformations.
+    %
     % ## Example
     % * A basic example on image stitching can be found in the
     %   `stitching_demo.m` sample
@@ -53,12 +75,24 @@ classdef Stitcher < handle
 
     methods
         function this = Stitcher(varargin)
-            %STITCHER  Creates a stitcher with the default parameters
+            %STITCHER  Creates a Stitcher configured in one of the stitching modes
             %
             %    obj = cv.Stitcher()
             %    obj = cv.Stitcher('OptionName',optionValue, ...)
             %
             % ## Options
+            % * __Mode__ Scenario for stitcher operation. This is usually
+            %       determined by source of images to stitch and their
+            %       transformation. Default parameters will be chosen for
+            %       operation in given scenario. Default 'Panorama'. One of:
+            %       * __Panorama__ Mode for creating photo panoramas. Expects
+            %             images under perspective transformation and projects
+            %             resulting pano to sphere. See also
+            %             `BestOf2NearestMatcher`, `SphericalWarper`.
+            %       * __Scans__ Mode for composing scans. Expects images under
+            %             affine transformation does not compensate exposure
+            %             by default. See also `AffineBestOf2NearestMatcher`,
+            %             `AffineWarper`
             % * __TryUseGPU__ Flag indicating whether GPU should be used
             %       whenever it's possible. default false
             %
@@ -278,6 +312,8 @@ classdef Stitcher < handle
             % ## Input
             % * __finderType__ Feature finder type. One of:
             %       * __OrbFeaturesFinder__ ORB features finder. See cv.ORB
+            %       * __AKAZEFeaturesFinder__ AKAZE features finder. See
+            %             cv.AKAZE
             %       * __SurfFeaturesFinder__ SURF features finder. See cv.SURF
             %             (requires `xfeatures2d` module)
             %       * __SurfFeaturesFinderGpu__ (requires CUDA and
@@ -292,6 +328,15 @@ classdef Stitcher < handle
             % * __ScaleFactor__ default 1.3
             % * __NLevels__ default 5
             %
+            % ### `AKAZEFeaturesFinder`
+            % * __DescriptorType__ default 'MLDB'
+            % * __DescriptorSize__ default 0
+            % * __DescriptorChannels__ default 3
+            % * __Threshold__ default 0.001
+            % * __NOctaves__ default 4
+            % * __NOctaveLayers__ default 4
+            % * __Diffusivity__ default `PM_G2`
+            %
             % ### `SurfFeaturesFinder`
             % * __HessThresh__ default 300.0
             % * __NumOctaves__ default 3
@@ -302,7 +347,7 @@ classdef Stitcher < handle
             % The class uses `OrbFeaturesFinder` by default or
             % `SurfFeaturesFinder` if `xfeatures2d` module is available.
             %
-            % See also: cv.Stitcher.getFeaturesFinder
+            % See also: cv.Stitcher.getFeaturesFinder, cv.FeaturesMatcher
             %
             Stitcher_(this.id, 'setFeaturesFinder', finderType, varargin{:});
         end
@@ -334,6 +379,16 @@ classdef Stitcher < handle
             %             ratio between descriptor distances is greater than
             %             the threshold `MatchConf`.
             %       * __BestOf2NearestRangeMatcher__
+            %       * __AffineBestOf2NearestMatcher__ A "best of 2 nearest"
+            %             matcher that expects affine trasformation between
+            %             images. Features matcher similar to
+            %             `BestOf2NearestMatcher` which finds two best matches
+            %             for each feature and leaves the best one only if the
+            %             ratio between descriptor distances is greater than
+            %             the threshold `MatchConf`.
+            %             Unlike `BestOf2NearestMatcher` this matcher uses
+            %             affine transformation (affine trasformation estimate
+            %             will be placed in `matches_info`).
             %
             % ## Options
             % The following are options accepted by all matchers:
@@ -352,12 +407,58 @@ classdef Stitcher < handle
             % ### `BestOf2NearestRangeMatcher`
             % * __RangeWidth__ default 5
             %
+            % ### `AffineBestOf2NearestMatcher`
+            % * __FullAffine__ whether to use full affine transformation with
+            %       6 degress of freedom or reduced transformation with
+            %       4 degrees of freedom using only rotation, translation and
+            %       uniform scaling. default false
+            %
             % The class uses `BestOf2NearestMatcher` by default.
             %
-            % See also: cv.Stitcher.getFeaturesMatcher
+            % See also: cv.Stitcher.getFeaturesMatcher, cv.FeaturesMatcher
             %
             Stitcher_(this.id, 'setFeaturesMatcher', matcherType, varargin{:});
         end
+
+        %{
+        function value = getEstimator(this)
+            %GETESTIMATOR  Get the estimator
+            %
+            %    value = obj.getEstimator()
+            %
+            % ## Output
+            % * __value__ output scalar struct.
+            %
+            % See also: cv.Stitcher.setEstimator
+            %
+            value = Stitcher_(this.id, 'getEstimator');
+        end
+
+        function setEstimator(this, estimatorType, varargin)
+            %SETESTIMATOR  Set the estimator
+            %
+            %    obj.setEstimator(estimatorType)
+            %    obj.setEstimator(estimatorType, 'OptionName',optionValue, ...)
+            %
+            % ## Input
+            % * __estimatorType__ Estimator type. One of:
+            %       * __HomographyBasedEstimator__ Homography based rotation
+            %             estimator.
+            %       * __AffineBasedEstimator__ Affine transformation based
+            %             estimator. This estimator uses pairwise
+            %             tranformations estimated by matcher to estimate
+            %             final transformation for each camera.
+            %
+            % The following are options for the various algorithms:
+            %
+            % ### `HomographyBasedEstimator`
+            % * __IsFocalsEstimated__ default false
+            %
+            % See also: cv.Stitcher.getEstimator. cv.Estimator
+            %
+            Stitcher_(this.id, 'setEstimator', estimatorType, varargin{:});
+        end
+        %}
 
         function value = getBundleAdjuster(this)
             %GETBUNDLEADJUSTER  Get the bundle adjuster
@@ -380,6 +481,8 @@ classdef Stitcher < handle
             %
             % ## Input
             % * __adjusterType__ camera parameters refinement method. One of:
+            %       * __NoBundleAdjuster__ Stub bundle adjuster that does
+            %             nothing.
             %       * __BundleAdjusterRay__ Implementation of the camera
             %             parameters refinement algorithm which minimizes sum
             %             of the distances between the rays passing through
@@ -392,6 +495,23 @@ classdef Stitcher < handle
             %             It can estimate focal length, aspect ratio,
             %             principal point. You can affect only on them via the
             %             refinement mask.
+            %       * __BundleAdjusterAffine__ Bundle adjuster that expects
+            %             affine transformation represented in homogeneous
+            %             coordinates in R for each camera param. Implements
+            %             camera parameters refinement algorithm which
+            %             minimizes sum of the reprojection error squares.
+            %             It estimates all transformation parameters.
+            %             Refinement mask is ignored. See also
+            %             cv.AffineBasedEstimator,
+            %             `AffineBestOf2NearestMatcher`.
+            %       * __BundleAdjusterAffinePartial__ Bundle adjuster that
+            %             expects affine transformation with 4 DOF represented
+            %             in homogeneous coordinates in R for each camera
+            %             param. Implements camera parameters refinement
+            %             algorithm which minimizes sum of the reprojection
+            %             error squares.
+            %             It estimates all transformation parameters.
+            %             Refinement mask is ignored.
             %
             % ## Options
             % The following are options accepted by all adjusters:
@@ -403,7 +523,7 @@ classdef Stitcher < handle
             %
             % The class uses `BundleAdjusterRay` by default.
             %
-            % See also: cv.Stitcher.getBundleAdjuster
+            % See also: cv.Stitcher.getBundleAdjuster, cv.cv.BundleAdjuster
             %
             Stitcher_(this.id, 'setBundleAdjuster', adjusterType, varargin{:});
         end
@@ -430,17 +550,25 @@ classdef Stitcher < handle
             % ## Input
             % * __warperType__ image warper factory class type, used to create
             %       the rotation-based warper. One of:
-            %       * __PlaneWarper__ Plane warper factory. Warper that maps
-            %             an image onto the `z = 1` plane.
+            %       * __PlaneWarper__ Plane warper factory class. Warper that
+            %             maps an image onto the `z = 1` plane.
             %       * __PlaneWarperGpu__ (requires CUDA)
+            %       * __AffineWarper__ Affine warper factory class. Affine
+            %             warper that uses rotations and translations. Uses
+            %             affine transformation in homogeneous coordinates to
+            %             represent both rotation and translation in camera
+            %             rotation matrix.
             %       * __CylindricalWarper__ Cylindrical warper factory class.
             %             Warper that maps an image onto the `x*x + z*z = 1`
             %             cylinder.
             %       * __CylindricalWarperGpu__ (requires CUDA)
-            %       * __SphericalWarper__ Spherical warper factory class.
-            %             Warper that maps an image onto the unit sphere
-            %             located at the [0,0,0] origin. Poles are located at
-            %             [0,-1,0] and [0,1,0] points.
+            %       * __SphericalWarper__ Warper that maps an image onto the
+            %             unit sphere located at the origin. Projects image
+            %             onto unit sphere with origin at [0,0,0] and radius
+            %             `scale`, measured in pixels. A 360 panorama would
+            %             therefore have a resulting width of `2*scale*pi`
+            %             pixels. Poles are located at [0,-1,0] and [0,1,0]
+            %             points.
             %       * __SphericalWarperGpu__ (requires CUDA)
             %       * __FisheyeWarper__
             %       * __StereographicWarper__
@@ -460,7 +588,7 @@ classdef Stitcher < handle
             %
             % The class uses `SphericalWarper` by default.
             %
-            % See also: cv.Stitcher.getWarper
+            % See also: cv.Stitcher.getWarper, cv.RotationWarper
             %
             Stitcher_(this.id, 'setWarper', warperType, varargin{:});
         end
@@ -524,7 +652,8 @@ classdef Stitcher < handle
             % > Proceedings of the 2001 IEEE Computer Society Conference on,
             % > volume 2, pages II-509. IEEE, 2001.
             %
-            % See also: cv.Stitcher.getExposureCompensator
+            % See also: cv.Stitcher.getExposureCompensator,
+            %  cv.ExposureCompensator
             %
             Stitcher_(this.id, 'setExposureCompensator', compensatorType, varargin{:});
         end
@@ -582,7 +711,7 @@ classdef Stitcher < handle
             % > graph cuts". In ACM Transactions on Graphics (ToG), volume 22,
             % > pages 277-286. ACM, 2003.
             %
-            % See also: cv.Stitcher.getSeamFinder
+            % See also: cv.Stitcher.getSeamFinder, cv.SeamFinder
             %
             Stitcher_(this.id, 'setSeamFinder', seamType, varargin{:});
         end
@@ -636,7 +765,7 @@ classdef Stitcher < handle
             % > "A multiresolution spline with application to image mosaics".
             % > ACM Transactions on Graphics (TOG), 2(4):217-236, 1983.
             %
-            % See also: cv.Stitcher.getBlender
+            % See also: cv.Stitcher.getBlender, cv.Blender
             %
             Stitcher_(this.id, 'setBlender', blenderType, varargin{:});
         end

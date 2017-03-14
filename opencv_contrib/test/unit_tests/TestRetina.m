@@ -5,14 +5,9 @@ classdef TestRetina
         filename = fullfile(mexopencv.root(),'test','lena.jpg');
     end
 
-    %NOTE: cv::bioinspired::Retina class is chatty with several printf() calls
-    % (only shows up in Octave since MATLAB swallows output from MEX files)
-    % This shows in TestRetinaFastToneMapping
-    % and TestTransientAreasSegmentationModule as well.
-
     methods (Static)
         function test_run
-            img = cv.imread(TestRetina.filename, 'Color',true);
+            img = cv.imread(TestRetina.filename, 'Color',true, 'ReduceScale',2);
             retina = cv.Retina([size(img,2) size(img,1)], ...
                 'ColorMode',true, 'ColorSamplingMethod','Bayer', ...
                 'UseRetinaLogSampling',false, 'ReductionFactor',1.0, ...
@@ -38,7 +33,7 @@ classdef TestRetina
         end
 
         function test_methods
-            img = cv.imread(TestRetina.filename, 'Color',true);
+            img = cv.imread(TestRetina.filename, 'Color',true, 'ReduceScale',2);
             retina = cv.Retina([size(img,2) size(img,1)]);
 
             sz = retina.getInputSize();
@@ -53,7 +48,7 @@ classdef TestRetina
         end
 
         function test_params
-            img = cv.imread(TestRetina.filename, 'Color',true);
+            img = cv.imread(TestRetina.filename, 'Color',true, 'ReduceScale',2);
             retina = cv.Retina([size(img,2) size(img,1)]);
 
             fname = [tempname() '.xml'];
@@ -79,6 +74,7 @@ classdef TestRetina
 
         function test_tonemap
             hdr = cv.imread(fullfile(mexopencv.root(),'test','memorial.hdr'), 'Flags',-1);
+            hdr = cv.resize(hdr, 0.5, 0.5);
             retina = cv.Retina([size(hdr,2) size(hdr,1)]);
 
             %sz = [size(hdr,2) size(hdr,1)];

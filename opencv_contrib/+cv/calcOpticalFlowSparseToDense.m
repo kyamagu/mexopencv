@@ -31,5 +31,5 @@
 % * __FGSSigma__ see the respective parameter of
 %       cv.FastGlobalSmootherFilter.fastGlobalSmootherFilter, default 1.5
 %
-% See also: cv.calcOpticalFlowPyrLK
+% See also: cv.calcOpticalFlowPyrLK, cv.SparsePyrLKOpticalFlow
 %

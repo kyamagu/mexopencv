@@ -179,7 +179,7 @@ classdef DAISY < handle
             %       * __Hamming__
             %       * __Hamming2__
             %
-            % Always `L2` for FREAK.
+            % Always `L2` for DAISY.
             %
             % See also: cv.DAISY.compute, cv.DescriptorMatcher
             %

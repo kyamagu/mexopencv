@@ -24,7 +24,7 @@ end
 inputVideoName = fullfile(mexopencv.root(),'test','car.avi');
 if ~exist(inputVideoName, 'file')
     % download video from Github
-    url = 'https://cdn.rawgit.com/opencv/opencv_extra/3.1.0/testdata/superres/car.avi';
+    url = 'https://cdn.rawgit.com/opencv/opencv_extra/3.2.0/testdata/superres/car.avi';
     disp('Downloading video...')
     urlwrite(url, inputVideoName);
 end

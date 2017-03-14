@@ -25,11 +25,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // cv::rectangle has two overloaded variants
-    bool rect_variant = (rhs[1].numel() == 4);
+    bool rect_variant = (rhs[1].isCell() || (rhs[1].numel() % 4)==0);
     nargchk(rect_variant ? ((nrhs%2)==0) : (nrhs>=3 && (nrhs%2)==1));
 
     // Option processing
     Scalar color;
+    vector<Vec4d> colors;
     int thickness = 1;
     int lineType = cv::LINE_8;
     int shift = 0;
@@ -38,6 +39,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if (key == "Color")
             color = (rhs[i+1].isChar()) ?
                 ColorType[rhs[i+1].toString()] : rhs[i+1].toScalar();
+        else if (key == "Colors")
+            colors = MxArrayToVectorVec<double,4>(rhs[i+1]);
         else if (key == "Thickness")
             thickness = (rhs[i+1].isChar()) ?
                 ThicknessType[rhs[i+1].toString()] : rhs[i+1].toInt();
@@ -54,12 +57,24 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Process
     Mat img(rhs[0].toMat());
     if (!rect_variant) {
-        Point pt1(rhs[1].toPoint()), pt2(rhs[2].toPoint());
+        Point pt1(rhs[1].toPoint()),
+              pt2(rhs[2].toPoint());
         rectangle(img, pt1, pt2, color, thickness, lineType, shift);
     }
     else {
-        Rect r(rhs[1].toRect());
-        rectangle(img, r, color, thickness, lineType, shift);
+        if (rhs[1].isNumeric() && rhs[1].numel() == 4) {
+            Rect r(rhs[1].toRect());
+            rectangle(img, r, color, thickness, lineType, shift);
+        }
+        else {
+            vector<Rect> r(rhs[1].toVector<Rect>());
+            if (!colors.empty() && colors.size() != r.size())
+                mexErrMsgIdAndTxt("mexopencv:error", "Length mismatch");
+            for (size_t i = 0; i < r.size(); ++i)
+                rectangle(img, r[i],
+                    (colors.empty() ? color : Scalar(colors[i])),
+                    thickness, lineType, shift);
+        }
     }
     plhs[0] = MxArray(img);
 }

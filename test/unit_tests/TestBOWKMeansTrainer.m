@@ -5,7 +5,7 @@ classdef TestBOWKMeansTrainer
         function test_1
             K = 5;
             trainer = cv.BOWKMeansTrainer(K);
-            desc = randn(100,4);
+            desc = randn(50,4);
             centers = trainer.cluster(desc);
             validateattributes(centers, {'numeric'}, {'size',[K 4]});
         end

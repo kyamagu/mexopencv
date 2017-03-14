@@ -674,9 +674,9 @@ classdef Retina < handle
             % If the xml file does not exist, then default setup is applied.
             % Warning: Exceptions are thrown if read XML file is not valid.
             %
-            % You can retreive the current parameters structure using method
-            % cv.Retina.getParameters and update it before running method
-            % cv.Retina.setupParameters.
+            % You can retrieve the current parameters structure using the
+            % method cv.Retina.getParameters and update it before running
+            % method cv.Retina.setupParameters.
             %
             % See also: cv.Retina.setupParameters, cv.Retina.write
             %

@@ -1,7 +1,7 @@
 classdef BundleAdjuster < handle
     %BUNDLEADJUSTER  Class for all camera parameters refinement methods
     %
-    % See also: cv.Stitcher, cv.HomographyBasedEstimator
+    % See also: cv.Stitcher, cv.Estimator
     %
 
     properties (SetAccess = private)
@@ -27,6 +27,8 @@ classdef BundleAdjuster < handle
             %
             % ## Input
             % * __adjusterType__ Bundle adjustment cost function. One of:
+            %       * __NoBundleAdjuster__ Stub bundle adjuster that does
+            %             nothing.
             %       * __BundleAdjusterRay__ Implementation of the camera
             %             parameters refinement algorithm which minimizes sum
             %             of the distances between the rays passing through
@@ -39,6 +41,23 @@ classdef BundleAdjuster < handle
             %             It can estimate focal length, aspect ratio,
             %             principal point. You can affect only on them via the
             %             refinement mask.
+            %       * __BundleAdjusterAffine__ Bundle adjuster that expects
+            %             affine transformation represented in homogeneous
+            %             coordinates in R for each camera param. Implements
+            %             camera parameters refinement algorithm which
+            %             minimizes sum of the reprojection error squares.
+            %             It estimates all transformation parameters.
+            %             Refinement mask is ignored. See also
+            %             cv.AffineBasedEstimator,
+            %             `AffineBestOf2NearestMatcher`.
+            %       * __BundleAdjusterAffinePartial__ Bundle adjuster that
+            %             expects affine transformation with 4 DOF represented
+            %             in homogeneous coordinates in R for each camera
+            %             param. Implements camera parameters refinement
+            %             algorithm which minimizes sum of the reprojection
+            %             error squares.
+            %             It estimates all transformation parameters.
+            %             Refinement mask is ignored.
             %
             % ## Options
             % The following are options accepted by all adjusters:
@@ -90,7 +109,7 @@ classdef BundleAdjuster < handle
             % * **pairwise_matches** Pairwise matches of images.
             %       See cv.FeaturesMatcher.
             % * __cameras__ Initial camera parameters to refine.
-            %       See cv.HomographyBasedEstimator.
+            %       See cv.Estimator.
             %
             % ## Output
             % * __cameras__ Refined camera parameters.

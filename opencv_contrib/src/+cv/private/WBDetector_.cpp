@@ -56,10 +56,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "read") {
         nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
+        string objname;
         bool loadFromString = false;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
-            if (key == "FromString")
+            if (key == "ObjName")
+                objname = rhs[i+1].toString();
+            else if (key == "FromString")
                 loadFromString = rhs[i+1].toBool();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
@@ -69,7 +72,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             (loadFromString ? FileStorage::MEMORY : 0));
         if (!fs.isOpened())
             mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
-        obj->read(fs.getFirstTopLevelNode());  //TODO: fs.root() ?
+        FileNode fn(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
+        if (fn.empty())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to get node");
+        obj->read(fn);
     }
     else if (method == "write") {
         nargchk(nrhs==3 && nlhs<=1);

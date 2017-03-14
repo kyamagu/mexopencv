@@ -11,7 +11,7 @@ using namespace std;
 using namespace cv;
 using namespace cv::aruco;
 
-//NOTE: renamed to drawMarkerAruco to avoid name conflict with imgproc function
+//HACK: renamed to drawMarkerAruco to avoid name conflict with imgproc function
 
 /**
  * Main entry called from Matlab
@@ -40,7 +40,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
-    Dictionary dictionary = MxArrayToDictionary(rhs[0]);
+    Ptr<Dictionary> dictionary = MxArrayToDictionary(rhs[0]);
     int id = rhs[1].toInt(),
         sidePixels = rhs[2].toInt();
     Mat img;

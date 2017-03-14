@@ -199,7 +199,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             (loadFromString ? FileStorage::MEMORY : 0));
         if (!fs.isOpened())
             mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
-        obj->read(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
+        FileNode fn(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
+        if (fn.empty())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to get node");
+        obj->read(fn);
         //*/
     }
     else if (method == "save") {
@@ -308,10 +311,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                     images.push_back(it->toMat(CV_8U));
             }
             vector<vector<KeyLine> > keylines(MxArrayToVectorVectorKeyLine(rhs[3]));
-            //NOTE: compute method does not check correct sizes, so we do it
+            //HACK: compute method does not check correct sizes, so we do it
             if (keylines.size() != images.size())
                 mexErrMsgIdAndTxt("mexopencv:error", "Incorrect keylines size");
-            //NOTE: compute method does not take care of allocating output vector!
+            //HACK: compute method does not take care of allocating output vector!
             descriptors.resize(images.size());
             obj->compute(images, keylines, descriptors, returnFloatDescr);
             plhs[0] = MxArray(descriptors);

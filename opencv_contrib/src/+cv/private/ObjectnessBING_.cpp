@@ -39,7 +39,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Constructor is called. Create a new object from argument
     if (method == "new") {
         nargchk(nrhs==2 && nlhs<=1);
-        obj_[++last_id] = makePtr<ObjectnessBING>();
+        obj_[++last_id] = ObjectnessBING::create();
         plhs[0] = MxArray(last_id);
         mexLock();
         return;
@@ -78,14 +78,16 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             Algorithm::load<ObjectnessBING>(rhs[2].toString(), objname));
         */
         ///*
-        // HACK: workaround for missing ObjectnessBING::create()
+        // HACK: ObjectnessBING read/write interface is non-conformant
         FileStorage fs(rhs[2].toString(), FileStorage::READ +
             (loadFromString ? FileStorage::MEMORY : 0));
         if (!fs.isOpened())
             mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
+        FileNode fn(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
+        if (fn.empty())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to get node");
         // HACK: cast as base class since ObjectnessBING overrides read method
-        (obj.dynamicCast<Saliency>())->read(
-            objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
+        (obj.staticCast<Saliency>())->read(fn);
         //*/
     }
     else if (method == "save") {

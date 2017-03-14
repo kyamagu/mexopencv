@@ -15,6 +15,23 @@ using namespace cv::detail;
 
 // ==================== XXX ====================
 
+/// KAZE Diffusivity type
+const ConstMap<string, int> KAZEDiffusivityType = ConstMap<string, int>
+    ("PM_G1",       cv::KAZE::DIFF_PM_G1)
+    ("PM_G2",       cv::KAZE::DIFF_PM_G2)
+    ("WEICKERT",    cv::KAZE::DIFF_WEICKERT)
+    ("CHARBONNIER", cv::KAZE::DIFF_CHARBONNIER);
+
+/// AKAZE descriptor type
+const ConstMap<string, int> AKAZEDescriptorType = ConstMap<string, int>
+    ("KAZEUpright", cv::AKAZE::DESCRIPTOR_KAZE_UPRIGHT)
+    ("KAZE",        cv::AKAZE::DESCRIPTOR_KAZE)
+    ("MLDBUpright", cv::AKAZE::DESCRIPTOR_MLDB_UPRIGHT)
+    ("MLDB",        cv::AKAZE::DESCRIPTOR_MLDB);
+
+
+// ==================== XXX ====================
+
 ImageFeatures MxArrayToImageFeatures(const MxArray &arr, mwIndex idx)
 {
     ImageFeatures feat;
@@ -65,7 +82,7 @@ vector<ImageFeatures> MxArrayToVectorImageFeatures(const MxArray &arr)
             v.push_back(MxArrayToImageFeatures(arr, i));
     else
         mexErrMsgIdAndTxt("mexopencv:error",
-            "MxArray unable to convert to std::vector<cv::detail::ImageFeatures>");
+            "MxArray unable to convert to vector<cv::detail::ImageFeatures>");
     return v;
 }
 
@@ -82,7 +99,7 @@ vector<MatchesInfo> MxArrayToVectorMatchesInfo(const MxArray &arr)
             v.push_back(MxArrayToMatchesInfo(arr, i));
     else
         mexErrMsgIdAndTxt("mexopencv:error",
-            "MxArray unable to convert to std::vector<cv::detail::MatchesInfo>");
+            "MxArray unable to convert to vector<cv::detail::MatchesInfo>");
     return v;
 }
 
@@ -99,7 +116,7 @@ vector<CameraParams> MxArrayToVectorCameraParams(const MxArray &arr)
             v.push_back(MxArrayToCameraParams(arr, i));
     else
         mexErrMsgIdAndTxt("mexopencv:error",
-            "MxArray unable to convert to std::vector<cv::detail::CameraParams>");
+            "MxArray unable to convert to vector<cv::detail::CameraParams>");
     return v;
 }
 
@@ -197,6 +214,7 @@ MxArray toStruct(Ptr<FeaturesFinder> p)
     MxArray s(MxArray::Struct());
     if (!p.empty()) {
         s.set("TypeId", string(typeid(*p).name()));
+        //s.set("isThreadSafe", p->isThreadSafe());
     }
     return s;
 }
@@ -207,6 +225,15 @@ MxArray toStruct(Ptr<FeaturesMatcher> p)
     if (!p.empty()) {
         s.set("TypeId",       string(typeid(*p).name()));
         s.set("isThreadSafe", p->isThreadSafe());
+    }
+    return s;
+}
+
+MxArray toStruct(Ptr<Estimator> p)
+{
+    MxArray s(MxArray::Struct());
+    if (!p.empty()) {
+        s.set("TypeId", string(typeid(*p).name()));
     }
     return s;
 }
@@ -305,6 +332,45 @@ Ptr<OrbFeaturesFinder> createOrbFeaturesFinder(
     return makePtr<OrbFeaturesFinder>(grid_size, nfeatures, scaleFactor, nlevels);
 }
 
+Ptr<AKAZEFeaturesFinder> createAKAZEFeaturesFinder(
+    vector<MxArray>::const_iterator first,
+    vector<MxArray>::const_iterator last)
+{
+    ptrdiff_t len = std::distance(first, last);
+    nargchk((len%2)==0);
+    int descriptor_type = cv::AKAZE::DESCRIPTOR_MLDB;
+    int descriptor_size = 0;
+    int descriptor_channels = 3;
+    float threshold = 0.001f;
+    int nOctaves = 4;
+    int nOctaveLayers = 4;
+    int diffusivity = cv::KAZE::DIFF_PM_G2;
+    for (; first != last; first += 2) {
+        string key(first->toString());
+        const MxArray& val = *(first + 1);
+        if (key == "DescriptorType")
+            descriptor_type = AKAZEDescriptorType[val.toString()];
+        else if (key == "DescriptorSize")
+            descriptor_size = val.toInt();
+        else if (key == "DescriptorChannels")
+            descriptor_channels = val.toInt();
+        else if (key == "Threshold")
+            threshold = val.toFloat();
+        else if (key == "NOctaves")
+            nOctaves = val.toInt();
+        else if (key == "NOctaveLayers")
+            nOctaveLayers = val.toInt();
+        else if (key == "Diffusivity")
+            diffusivity = KAZEDiffusivityType[val.toString()];
+
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
+    return makePtr<AKAZEFeaturesFinder>(descriptor_type, descriptor_size,
+        descriptor_channels, threshold, nOctaves, nOctaveLayers, diffusivity);
+}
+
 #ifdef HAVE_OPENCV_XFEATURES2D
 Ptr<SurfFeaturesFinder> createSurfFeaturesFinder(
     vector<MxArray>::const_iterator first,
@@ -347,6 +413,8 @@ Ptr<FeaturesFinder> createFeaturesFinder(
     Ptr<FeaturesFinder> p;
     if (type == "OrbFeaturesFinder")
         p = createOrbFeaturesFinder(first, last);
+    else if (type == "AKAZEFeaturesFinder")
+        p = createAKAZEFeaturesFinder(first, last);
 #ifdef HAVE_OPENCV_XFEATURES2D
     else if (type == "SurfFeaturesFinder")
         p = createSurfFeaturesFinder(first, last);
@@ -426,6 +494,35 @@ Ptr<BestOf2NearestRangeMatcher> createBestOf2NearestRangeMatcher(
         match_conf, num_matches_thresh1, num_matches_thresh2);
 }
 
+Ptr<AffineBestOf2NearestMatcher> createAffineBestOf2NearestMatcher(
+    vector<MxArray>::const_iterator first,
+    vector<MxArray>::const_iterator last)
+{
+    ptrdiff_t len = std::distance(first, last);
+    nargchk((len%2)==0);
+    bool full_affine = false;
+    bool try_use_gpu = false;
+    float match_conf = 0.3f;
+    int num_matches_thresh1 = 6;
+    for (; first != last; first += 2) {
+        string key(first->toString());
+        const MxArray& val = *(first + 1);
+        if (key == "FullAffine")
+            full_affine = val.toBool();
+        else if (key == "TryUseGPU")
+            try_use_gpu = val.toBool();
+        else if (key == "MatchConf")
+            match_conf = val.toFloat();
+        else if (key == "NumMatchesThresh1")
+            num_matches_thresh1 = val.toInt();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
+    return makePtr<AffineBestOf2NearestMatcher>(full_affine, try_use_gpu,
+        match_conf, num_matches_thresh1);
+}
+
 Ptr<FeaturesMatcher> createFeaturesMatcher(
     const string& type,
     vector<MxArray>::const_iterator first,
@@ -436,6 +533,8 @@ Ptr<FeaturesMatcher> createFeaturesMatcher(
         p = createBestOf2NearestMatcher(first, last);
     else if (type == "BestOf2NearestRangeMatcher")
         p = createBestOf2NearestRangeMatcher(first, last);
+    else if (type == "AffineBestOf2NearestMatcher")
+        p = createAffineBestOf2NearestMatcher(first, last);
     else
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized features matcher %s", type.c_str());
@@ -464,55 +563,24 @@ Ptr<HomographyBasedEstimator> createHomographyBasedEstimator(
     return makePtr<HomographyBasedEstimator>(is_focals_estimated);
 }
 
-Ptr<BundleAdjusterRay> createBundleAdjusterRay(
+Ptr<Estimator> createEstimator(
+    const string& type,
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
     ptrdiff_t len = std::distance(first, last);
-    nargchk((len%2)==0);
-    Ptr<BundleAdjusterRay> p = makePtr<BundleAdjusterRay>();
-    if (p.empty())
-        mexErrMsgIdAndTxt("mexopencv:error",
-            "Failed to create BundleAdjusterRay");
-    for (; first != last; first += 2) {
-        string key(first->toString());
-        const MxArray& val = *(first + 1);
-        if (key == "ConfThresh")
-            p->setConfThresh(val.toDouble());
-        else if (key == "RefinementMask")
-            p->setRefinementMask(val.toMat(CV_8U));
-        else if (key == "TermCriteria")
-            p->setTermCriteria(val.toTermCriteria());
-        else
-            mexErrMsgIdAndTxt("mexopencv:error",
-                "Unrecognized option %s", key.c_str());
+    Ptr<Estimator> p;
+    if (type == "HomographyBasedEstimator")
+        p = createHomographyBasedEstimator(first, last);
+    else if (type == "AffineBasedEstimator") {
+        nargchk(len==0);
+        p = makePtr<AffineBasedEstimator>();
     }
-    return p;
-}
-
-Ptr<BundleAdjusterReproj> createBundleAdjusterReproj(
-    vector<MxArray>::const_iterator first,
-    vector<MxArray>::const_iterator last)
-{
-    ptrdiff_t len = std::distance(first, last);
-    nargchk((len%2)==0);
-    Ptr<BundleAdjusterReproj> p = makePtr<BundleAdjusterReproj>();
-    if (p.empty())
+    else
         mexErrMsgIdAndTxt("mexopencv:error",
-            "Failed to create BundleAdjusterReproj");
-    for (; first != last; first += 2) {
-        string key(first->toString());
-        const MxArray& val = *(first + 1);
-        if (key == "ConfThresh")
-            p->setConfThresh(val.toDouble());
-        else if (key == "RefinementMask")
-            p->setRefinementMask(val.toMat(CV_8U));
-        else if (key == "TermCriteria")
-            p->setTermCriteria(val.toTermCriteria());
-        else
-            mexErrMsgIdAndTxt("mexopencv:error",
-                "Unrecognized option %s", key.c_str());
-    }
+            "Unrecognized estimator %s", type.c_str());
+    if (p.empty())
+        mexErrMsgIdAndTxt("mexopencv:error", "Failed to create Estimator");
     return p;
 }
 
@@ -521,17 +589,38 @@ Ptr<BundleAdjusterBase> createBundleAdjusterBase(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
+    ptrdiff_t len = std::distance(first, last);
+    nargchk((len%2)==0);
     Ptr<BundleAdjusterBase> p;
-    if (type == "BundleAdjusterRay")
-        p = createBundleAdjusterRay(first, last);
+    if (type == "NoBundleAdjuster")
+        p = makePtr<NoBundleAdjuster>();
+    else if (type == "BundleAdjusterRay")
+        p = makePtr<BundleAdjusterRay>();
     else if (type == "BundleAdjusterReproj")
-        p = createBundleAdjusterReproj(first, last);
+        p = makePtr<BundleAdjusterReproj>();
+    else if (type == "BundleAdjusterAffine")
+        p = makePtr<BundleAdjusterAffine>();
+    else if (type == "BundleAdjusterAffinePartial")
+        p = makePtr<BundleAdjusterAffinePartial>();
     else
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized bundle adjuster %s", type.c_str());
     if (p.empty())
         mexErrMsgIdAndTxt("mexopencv:error",
             "Failed to create BundleAdjusterBase");
+    for (; first != last; first += 2) {
+        string key(first->toString());
+        const MxArray& val = *(first + 1);
+        if (key == "ConfThresh")
+            p->setConfThresh(val.toDouble());
+        else if (key == "RefinementMask")
+            p->setRefinementMask(val.toMat(CV_8U));
+        else if (key == "TermCriteria")
+            p->setTermCriteria(val.toTermCriteria());
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
     return p;
 }
 
@@ -634,6 +723,10 @@ Ptr<WarperCreator> createWarperCreator(
         nargchk(len==0);
         p = makePtr<cv::PlaneWarper>();
     }
+    else if (type == "AffineWarper") {
+        nargchk(len==0);
+        p = makePtr<cv::AffineWarper>();
+    }
     else if (type == "CylindricalWarper") {
         nargchk(len==0);
         p = makePtr<cv::CylindricalWarper>();
@@ -679,8 +772,7 @@ Ptr<WarperCreator> createWarperCreator(
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized warper creator %s", type.c_str());
     if (p.empty())
-        mexErrMsgIdAndTxt("mexopencv:error",
-            "Failed to create WarperCreator");
+        mexErrMsgIdAndTxt("mexopencv:error", "Failed to create WarperCreator");
     return p;
 }
 
@@ -815,8 +907,7 @@ Ptr<SeamFinder> createSeamFinder(
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized seam finder %s", type.c_str());
     if (p.empty())
-        mexErrMsgIdAndTxt("mexopencv:error",
-            "Failed to create SeamFinder");
+        mexErrMsgIdAndTxt("mexopencv:error", "Failed to create SeamFinder");
     return p;
 }
 
@@ -885,7 +976,6 @@ Ptr<Blender> createBlender(
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized blender %s", type.c_str());
     if (p.empty())
-        mexErrMsgIdAndTxt("mexopencv:error",
-            "Failed to create Blender");
+        mexErrMsgIdAndTxt("mexopencv:error", "Failed to create Blender");
     return p;
 }

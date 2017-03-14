@@ -29,6 +29,8 @@
 %       * `2`: image scaled by 1/2 factor.
 %       * `4`: image scaled by 1/4 factor.
 %       * `8`: image scaled by 1/8 factor.
+% * __IgnoreOrientation__ If set, do not rotate the image according to EXIF's
+%       orientation flag. default false
 % * __Flags__ Advanced option to directly set the flag specifying the depth
 %       and color type of a loaded image. Note that setting this integer flag
 %       overrides all the other flag options. Not set by default:
@@ -52,13 +54,14 @@
 % * JPEG 2000 files - `*.jp2` (see the Notes section)
 % * Portable Network Graphics - `*.png` (see the Notes section)
 % * WebP - `*.webp` (see the Notes section)
-% * Portable image format - `*.pbm`, `*.pgm`, `*.ppm`, `*.pxm`, `*.pnm`
-%   (always supported)
+% * Portable image format - `*.pbm`, `*.pgm`, `*.ppm`, `*.pxm`, `*.pnm`,
+%   `*.pam` (always supported)
 % * Sun rasters - `*.sr`, `*.ras` (always supported)
 % * TIFF files - `*.tiff`, `*.tif` (see the Notes section)
 % * OpenEXR Image files - `*.exr` (see the Notes section)
 % * Radiance HDR - `*.hdr`, `*.pic` (always supported)
 % * Raster and Vector geospatial data supported by Gdal (see the Notes section)
+% * DICOM medical images - `*.dcm` (see the Notes section)
 %
 % ## Notes
 % The function determines the type of an image by the content, not by the file
@@ -88,5 +91,9 @@
 % * [Raster](http://www.gdal.org/formats_list.html),
 % * [Vector](http://www.gdal.org/ogr_formats.html).
 %
-% See also: cv.imwrite, cv.imdecode, imread, imfinfo, imformats
+% If EXIF information are embedded in the image file, the EXIF orientation
+% will be taken into account and thus the image will be rotated accordingly
+% except if the option `IgnoreOrientation` is passed.
+%
+% See also: cv.imwrite, cv.imdecode, imread, imfinfo, imformats, dicomread
 %

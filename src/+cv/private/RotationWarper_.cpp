@@ -41,7 +41,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     if (method == "new") {
         nargchk(nrhs>=4 && nlhs<=1);
         obj_[++last_id] = createRotationWarper(
-            rhs[3].toString(), rhs.begin() + 4, rhs.end(), rhs[2].toFloat());
+            rhs[2].toString(), rhs.begin() + 4, rhs.end(), rhs[3].toFloat());
         plhs[0] = MxArray(last_id);
         mexLock();
         return;

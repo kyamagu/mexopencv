@@ -24,6 +24,8 @@
 %       `A = [fx 0 cx; 0 fy cy; 0 0 1]`.
 % * __DistCoeffs__ optional vector of distortion coefficients
 %       `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4]` of 4, 5, 8 or 12 elements.
+% * __MinMarkers__ number of adjacent markers that must be detected to return
+%       a charuco corner. default 2
 %
 % This function receives the detected markers and returns the 2D position of
 % the chessboard corners from a ChArUco board using the detected Aruco

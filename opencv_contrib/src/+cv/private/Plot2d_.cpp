@@ -93,7 +93,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             (loadFromString ? FileStorage::MEMORY : 0));
         if (!fs.isOpened())
             mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
-        obj->read(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
+        FileNode fn(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
+        if (fn.empty())
+            mexErrMsgIdAndTxt("mexopencv:error", "Failed to get node");
+        obj->read(fn);
         //*/
     }
     else if (method == "save") {
@@ -141,6 +144,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             obj->setMaxY(rhs[3].toDouble());
         else if (prop == "PlotLineWidth")
             obj->setPlotLineWidth(rhs[3].toInt());
+        else if (prop == "NeedPlotLine")
+            obj->setNeedPlotLine(rhs[3].toBool());
         else if (prop == "PlotLineColor")
             obj->setPlotLineColor((rhs[3].isChar()) ?
                 ColorType[rhs[3].toString()] : rhs[3].toScalar());

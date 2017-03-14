@@ -2,6 +2,10 @@ classdef TestCalcMotionGradient
     %TestCalcMotionGradient
 
     methods (Static)
+        function test_1
+            %TODO
+        end
+
         function test_error_argnum
             try
                 cv.calcMotionGradient();

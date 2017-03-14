@@ -18,15 +18,20 @@
 %     are for CPU mode.
 % * *work_megapix* (float)
 %     Resolution for image registration step. The default is 0.6 Mpx.
-% * *features_type* (SurfFeaturesFinder|OrbFeaturesFinder)
+% * *features_type* (SurfFeaturesFinder|OrbFeaturesFinder|AKAZEFeaturesFinder)
 %     Type of features used for images matching. The default is SURF.
+% * *matcher_type* (homography|affine)
+%     Matcher used for pairwise image matching. The default is homography.
+% * *estimator_type* (HomographyBasedEstimator|AffineBasedEstimator)
+%     Type of estimator used for transformation estimation. The default is
+%     homography.
 % * *match_conf* (float)
 %     Confidence for feature matching step. The default is 0.65 for SURF
 %     and 0.3 for ORB.
 % * *conf_thresh* (float)
 %     Threshold for two images are from the same panorama confidence.
 %     The default is 1.0.
-% * *ba_cost_func* (BundleAdjusterReproj|BundleAdjusterRay)
+% * *ba_cost_func* (NoBundleAdjuster|BundleAdjusterReproj|BundleAdjusterRay|BundleAdjusterAffinePartial)
 %     Bundle adjustment cost function. The default is Ray.
 % * *ba_refine_mask* (mask)
 %     Set refinement mask for bundle adjustment. It looks like 'x_xxx',
@@ -43,7 +48,7 @@
 %     Save matches graph represented in DOT language and print it.
 %     Labels description: Nm is number of matches, Ni is number of inliers,
 %     C is confidence.
-% * *warp_type* (plane|cylindrical|spherical|fisheye|stereographic|
+% * *warp_type* (affine|plane|cylindrical|spherical|fisheye|stereographic|
 %              compressedPlaneA2B1|compressedPlaneA1.5B1|
 %              compressedPlanePortraitA2B1|compressedPlanePortraitA1.5B1|
 %              paniniA2B1|paniniA1.5B1|paniniPortraitA2B1|
@@ -105,7 +110,7 @@ for i=1:num_images
 end
 
 % display images
-if mexopencv.require('images')
+if ~mexopencv.isOctave() && mexopencv.require('images')
     montage(img_names);
 end
 
@@ -118,11 +123,15 @@ p.try_cuda = false;
 
 % Motion Estimation Flags
 p.work_megapix = 0.6;
-if true
+if true  % requires opencv_contrib
     p.features_type = 'SurfFeaturesFinder';
+elseif true
+    p.features_type = 'AKAZEFeaturesFinder';
 else
     p.features_type = 'OrbFeaturesFinder';
 end
+p.matcher_type = 'homography';
+p.estimator_type = 'HomographyBasedEstimator';
 p.match_conf = 0.3;
 p.conf_thresh = 1.0;
 p.ba_cost_func = 'BundleAdjusterRay';
@@ -227,7 +236,9 @@ fprintf('Pairwise matching...\n');
 tic
 
 args = {'TryUseGPU',p.try_cuda, 'MatchConf',p.match_conf};
-if p.timelapse_range < 0
+if strcmp(p.matcher_type, 'affine')
+    args = ['AffineBestOf2NearestMatcher', args, 'FullAffine',false];
+elseif p.timelapse_range < 0
     args = ['BestOf2NearestMatcher', args];
 else
     args = ['BestOf2NearestRangeMatcher', args, 'RangeWidth',p.timelapse_range];
@@ -264,7 +275,7 @@ assert(num_images >= 2, 'Need more images');
 fprintf('Homography estimation...\n');
 tic
 
-estimator = cv.HomographyBasedEstimator();
+estimator = cv.Estimator(p.estimator_type);
 
 [cameras,success] = estimator.estimate(features, pairwise_matches);
 assert(success, 'Homography estimation failed');
@@ -279,8 +290,9 @@ fprintf('Homography estimation, time: ');
 toc
 
 for i=1:num_images
-    fprintf('Initial intrinsics #%d:\n', indices(i))
-    disp(cameras(i).K)
+    fprintf('Initial camera intrinsics #%d:\n', indices(i))
+    disp('K='), disp(cameras(i).K)
+    disp('R='), disp(cameras(i).R)
 end
 
 %% Camera parameters adjusting
@@ -307,7 +319,8 @@ end
 
 for i=1:num_images
     fprintf('Camera #%d:\n', indices(i))
-    disp(cameras(i).K)
+    disp('K='), disp(cameras(i).K)
+    disp('R='), disp(cameras(i).R)
 end
 
 % Wave correction
@@ -328,54 +341,56 @@ tic
 p.warped_image_scale = median([cameras(indices).focal]);
 
 % create warper
+warper_args = {p.warped_image_scale * p.seam_work_aspect};
 switch p.warp_type
     case 'plane'
         if p.try_cuda
-            warper_args = {'PlaneWarperGpu'};
+            warper_args = ['PlaneWarperGpu', warper_args];
         else
-            warper_args = {'PlaneWarper'};
+            warper_args = ['PlaneWarper', warper_args];
         end
     case 'cylindrical'
         if p.try_cuda
-            warper_args = {'CylindricalWarperGpu'};
+            warper_args = ['CylindricalWarperGpu', warper_args];
         else
-            warper_args = {'CylindricalWarper'};
+            warper_args = ['CylindricalWarper', warper_args];
         end
     case 'spherical'
         if p.try_cuda
-            warper_args = {'SphericalWarperGpu'};
+            warper_args = ['SphericalWarperGpu', warper_args];
         else
-            warper_args = {'SphericalWarper'};
+            warper_args = ['SphericalWarper', warper_args];
         end
+    case 'affine'
+        warper_args = ['AffineWarper', warper_args];
     case 'fisheye'
-        warper_args = {'FisheyeWarper'};
+        warper_args = ['FisheyeWarper', warper_args];
     case 'stereographic'
-        warper_args = {'StereographicWarper'};
+        warper_args = ['StereographicWarper', warper_args];
     case 'compressedPlaneA2B1'
-        warper_args = {'CompressedRectilinearWarper', 'A',2.0, 'B',1.0};
+        warper_args = ['CompressedRectilinearWarper', warper_args, 'A',2.0, 'B',1.0];
     case 'compressedPlaneA1.5B1'
-        warper_args = {'CompressedRectilinearWarper', 'A',1.5, 'B',1.0};
+        warper_args = ['CompressedRectilinearWarper', warper_args, 'A',1.5, 'B',1.0];
     case 'compressedPlanePortraitA2B1'
-        warper_args = {'CompressedRectilinearPortraitWarper', 'A',2.0, 'B',1.0};
+        warper_args = ['CompressedRectilinearPortraitWarper', warper_args, 'A',2.0, 'B',1.0];
     case 'compressedPlanePortraitA1.5B1'
-        warper_args = {'CompressedRectilinearPortraitWarper', 'A',1.5, 'B',1.0};
+        warper_args = ['CompressedRectilinearPortraitWarper', warper_args, 'A',1.5, 'B',1.0];
     case 'paniniA2B1'
-        warper_args = {'PaniniWarper', 'A',2.0, 'B',1.0};
+        warper_args = ['PaniniWarper', warper_args, 'A',2.0, 'B',1.0];
     case 'paniniA1.5B1'
-        warper_args = {'PaniniWarper', 'A',1.5, 'B',1.0};
+        warper_args = ['PaniniWarper', warper_args, 'A',1.5, 'B',1.0];
     case 'paniniPortraitA2B1'
-        warper_args = {'PaniniPortraitWarper', 'A',2.0, 'B',1.0};
+        warper_args = ['PaniniPortraitWarper', warper_args, 'A',2.0, 'B',1.0];
     case 'paniniPortraitA1.5B1'
-        warper_args = {'PaniniPortraitWarper', 'A',1.5, 'B',1.0};
+        warper_args = ['PaniniPortraitWarper', warper_args, 'A',1.5, 'B',1.0];
     case 'mercator'
-        warper_args = {'MercatorWarper'};
+        warper_args = ['MercatorWarper', warper_args];
     case 'transverseMercator'
-        warper_args = {'TransverseMercatorWarper'};
+        warper_args = ['TransverseMercatorWarper', warper_args];
     otherwise
         error('Cant create warper');
 end
-warper = cv.RotationWarper(p.warped_image_scale * p.seam_work_aspect, ...
-    warper_args{:});
+warper = cv.RotationWarper(warper_args{:});
 
 % Preapre images masks
 masks = cell(num_images,1);
@@ -452,7 +467,8 @@ tic
 
 % Update warped image scale, then update corners and sizes
 p.warped_image_scale = p.warped_image_scale * p.compose_work_aspect;
-warper = cv.RotationWarper(p.warped_image_scale, warper_args{:});
+warper_args{2} = p.warped_image_scale;
+warper = cv.RotationWarper(warper_args{:});
 for i=1:num_images
     % Update intrinsics
     cameras(i).focal = cameras(i).focal * p.compose_work_aspect;

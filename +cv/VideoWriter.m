@@ -1,8 +1,10 @@
 classdef VideoWriter < handle
     %VIDEOWRITER  Video Writer class
     %
-    % When querying a property that is not supported by the backend
-    % used by the cv.VideoWriter class, value 0 is returned.
+    % The class provides API for writing video files or image sequences.
+    %
+    % Note: When querying a property that is not supported by the backend
+    % used by the cv.VideoWriter instance, value 0 is returned.
     %
     % ## Example
     % Here is how to write to a video file:
@@ -12,7 +14,8 @@ classdef VideoWriter < handle
     %    clear vid;             % finish
     %
     % See also: cv.VideoWriter.VideoWriter, cv.VideoWriter.write,
-    %  VideoWriter, avifile, movie2avi, vision.VideoFileWriter
+    %  cv.VideoCapture, VideoWriter, avifile, movie2avi,
+    %  vision.VideoFileWriter
     %
 
     properties (SetAccess = private)
@@ -66,6 +69,9 @@ classdef VideoWriter < handle
             %
             %    vid.delete()
             %
+            % The method first calls cv.VideoWriter.release to close the
+            % already opened file.
+            %
             % See also: cv.VideoWriter.release
             %
             if isempty(this.id), return; end
@@ -83,7 +89,8 @@ classdef VideoWriter < handle
             % * __frameSize__ Size of the video frames `[width, height]`.
             %
             % ## Output
-            % * __retval__ bool, indicates if video is successfully initialized
+            % * __retval__ bool, true if video writer has been successfully
+            %       initialized.
             %
             % ## Options
             % * __FourCC__ 4-character code of codec used to compress the
@@ -111,9 +118,27 @@ classdef VideoWriter < handle
             %       frames, otherwise it will work with grayscale frames (the
             %       flag is currently supported on Windows only). default true
             %
-            % The method opens a video writer. On Linux FFMPEG is
-            % used to write videos; on Windows FFMPEG or VFW is used; on
-            % MacOSX QTKit is used.
+            % The method first calls cv.VideoWriter.release to close the
+            % already opened file.
+            %
+            % The method opens a video writer:
+            %
+            % * On Linux FFMPEG is used to write videos;
+            % * On Windows FFMPEG or VFW is used;
+            % * On MacOSX QTKit is used.
+            %
+            % ## Tips
+            % * With some backends `FourCC=-1` pops up the codec selection
+            %   dialog from the system.
+            % * To save image sequence use a proper filename
+            %   (eg. `img_%02d.jpg`) and `FourCC=0` OR `FPS=0`. Use
+            %   uncompressed image format (eg. `img_%02d.BMP`) to save raw
+            %   frames.
+            % * Most codecs are lossy. If you want lossless video file you
+            %   need to use a lossless codecs (eg. FFMPEG FFV1, Huffman HFYU,
+            %   Lagarith LAGS, etc...)
+            % * If FFMPEG is enabled, using `codec=0; fps=0;` you can create
+            %   an uncompressed (raw) video file.
             %
             % ## References
             % [FOURCC]:
@@ -176,6 +201,45 @@ classdef VideoWriter < handle
             % See also: cv.VideoWriter.open
             %
             VideoWriter_(this.id, 'write', frame, varargin{:});
+        end
+
+        function value = get(this, prop)
+            %GET  Returns the specified VideoWriter property
+            %
+            %    value = vid.get(prop)
+            %
+            % ## Input
+            % * __prop__ Property identifier. It can be specified as a string
+            %       (one of the recognized properties), or directly as its
+            %       corresponding integer code.
+            %
+            % ## Output
+            % * __value__ Value for the specified property (as a `double`).
+            %       Value 0 is returned when querying a property that is not
+            %       supported by the backend used by the VideoWriter instance.
+            %
+            % See also: cv.VideoWriter.set
+            %
+            value = VideoWriter_(this.id, 'get', prop);
+        end
+
+        function set(this, prop, value)
+            %SET  Sets a property in the VideoWriter
+            %
+            %    vid.set(prop, value)
+            %
+            % ## Input
+            % * __prop__ Property identifier. It can be specified as a string
+            %       (one of the recognized properties), or directly as its
+            %       corresponding integer code.
+            % * __value__ Value of the property (as a `double`).
+            %
+            % On failure (unsupported property by backend), the function
+            % issues a warning.
+            %
+            % See also: cv.VideoWriter.get
+            %
+            VideoWriter_(this.id, 'set', prop, value);
         end
     end
 

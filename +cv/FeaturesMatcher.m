@@ -23,11 +23,21 @@ classdef FeaturesMatcher < handle
             %             ratio between descriptor distances is greater than
             %             the threshold `MatchConf`.
             %       * __BestOf2NearestRangeMatcher__
+            %       * __AffineBestOf2NearestMatcher__ A "best of 2 nearest"
+            %             matcher that expects affine trasformation between
+            %             images. Features matcher similar to
+            %             `BestOf2NearestMatcher` which finds two best matches
+            %             for each feature and leaves the best one only if the
+            %             ratio between descriptor distances is greater than
+            %             the threshold `MatchConf`.
+            %             Unlike `BestOf2NearestMatcher` this matcher uses
+            %             affine transformation (affine trasformation estimate
+            %             will be placed in `matches_info`).
             %
             % ## Options
             % The following are options accepted by all matchers:
             %
-            % * __TryUseGPU__ Should try to use GPU or not . default false
+            % * __TryUseGPU__ Should try to use GPU or not. default false
             % * __MatchConf__ Match distances ration threshold. Confidence for
             %       feature matching step. default 0.3
             % * __NumMatchesThresh1__ Minimum number of matches required for
@@ -41,6 +51,13 @@ classdef FeaturesMatcher < handle
             %
             % ### `BestOf2NearestRangeMatcher`
             % * __RangeWidth__ Range width. default 5
+            %
+            % ### `AffineBestOf2NearestMatcher`
+            % * __FullAffine__ whether to use full affine transformation with
+            %       6 degress of freedom (cv.estimateAffine2D) or reduced
+            %       transformation with 4 degrees of freedom
+            %       (cv.estimateAffinePartial2D) using only rotation,
+            %       translation and uniform scaling. default false
             %
             % See also: cv.FeaturesMatcher.match
             %
@@ -105,8 +122,10 @@ classdef FeaturesMatcher < handle
             % ## Output
             % * **matches_info** Found matches. Structure containing
             %       information about matches between two images.
-            %       It's assumed that there is a homography between those
-            %       images. Struct with the following fields:
+            %       It's assumed that there is a transformation between those
+            %       images. Transformation may be homography or affine
+            %       transformation based on selected matcher. Struct with the
+            %       following fields:
             %       * **src_img_idx** Images indices (optional).
             %       * **dst_img_idx** Images indices (optional).
             %       * __matches__ Matches. A 1-by-N structure array with the
@@ -115,7 +134,7 @@ classdef FeaturesMatcher < handle
             %       * **inliers_mask** Geometrically consistent matches mask.
             %       * **num_inliers** Number of geometrically consistent
             %             matches.
-            %       * __H__ Estimated homography.
+            %       * __H__ Estimated transformation.
             %       * __confidence__ Confidence two images are from the same
             %             panorama.
             %

@@ -4,17 +4,21 @@ classdef TestEllipse2Poly
     methods (Static)
         function test_1
             pts = cv.ellipse2Poly([64,64], [20,10]);
-            validateattributes(pts, {'cell'}, {'vector'});
-            cellfun(@(v) validateattributes(v, {'numeric'}, ...
-                {'vector', 'numel',2, 'integer'}), pts);
+            validateattributes(pts, {'numeric'}, ...
+                {'2d', 'size',[NaN 2], 'integer'});
         end
 
         function test_2
             pts = cv.ellipse2Poly([64,64], [20,10], 'Angle',30, ...
                 'StartAngle',15, 'EndAngle',200, 'Delta',2);
-            validateattributes(pts, {'cell'}, {'vector'});
-            cellfun(@(v) validateattributes(v, {'numeric'}, ...
-                {'vector', 'numel',2, 'integer'}), pts);
+            validateattributes(pts, {'numeric'}, ...
+                {'2d', 'size',[NaN 2], 'integer'});
+        end
+
+        function test_3
+            pts = cv.ellipse2Poly([64,64], [20,10], 'DoublePrecision',true);
+            validateattributes(pts, {'numeric'}, ...
+                {'2d', 'size',[NaN 2], 'real'});
         end
 
         function test_error_argnum

@@ -99,7 +99,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             if (!fs.isOpened())
                 mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
             fs << obj->getDefaultName() << "{";
-            fs << "format" << 3;
             obj->write(fs);
             fs << "}";
             plhs[0] = MxArray(fs.releaseAndGetString());
@@ -274,8 +273,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==3 && nlhs<=3);
         Mat samples(rhs[2].toMat(rhs[2].isSingle() ? CV_32F : CV_64F)),
             probs;
-        if (samples.rows == 1 || samples.cols == 1)
-            samples = samples.reshape(1,1); // ensure 1xd vector if one sample
         if (nlhs > 1)
             probs.create(samples.rows, obj->getClustersNumber(), CV_64F);
         vector<Vec2d> results;

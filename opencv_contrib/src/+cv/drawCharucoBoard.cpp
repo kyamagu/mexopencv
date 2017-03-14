@@ -41,13 +41,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
-    CharucoBoard board;
+    Ptr<CharucoBoard> board;
     {
         vector<MxArray> args(rhs[0].toVector<MxArray>());
         board = create_CharucoBoard(args.begin(), args.end());
     }
     Size outSize(rhs[1].toSize());
     Mat img;
-    board.draw(outSize, img, marginSize, borderBits);
+    board->draw(outSize, img, marginSize, borderBits);
     plhs[0] = MxArray(img);
 }

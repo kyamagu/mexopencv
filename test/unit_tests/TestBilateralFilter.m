@@ -7,13 +7,13 @@ classdef TestBilateralFilter
 
     methods (Static)
         function test_simple
-            img = imread(TestBilateralFilter.im);
+            img = cv.imread(TestBilateralFilter.im, 'ReduceScale',2);
             result = cv.bilateralFilter(img);
             validateattributes(result, {class(img)}, {'size',size(img)});
         end
 
         function test_options
-            img = imread(TestBilateralFilter.im);
+            img = cv.imread(TestBilateralFilter.im, 'ReduceScale',2);
             result = cv.bilateralFilter(img, ...
                 'Diameter',7, 'SigmaColor',50, 'SigmaSpace',50, ...
                 'BorderType','Default');

@@ -42,21 +42,20 @@ classdef TestMSER
         end
 
         function test_detectRegions
-            img = imread(TestMSER.im);
+            img = cv.imread(TestMSER.im, 'ReduceScale',2);
             obj = cv.MSER();
+            obj.MinArea = 200;
+            obj.MaxArea = 2000;
             [chains, bboxes] = obj.detectRegions(img);
             if ~isempty(chains)
                 validateattributes(chains, {'cell'}, ...
-                    {'vector', 'numel',numel(bboxes)});
-                cellfun(@(c) validateattributes(c, {'cell'}, {'vector'}), chains);
-                cellfun(@(c) cellfun(@(p) validateattributes(p, ...
-                    {'numeric'}, {'vector', 'integer', 'numel',2}), c), chains);
+                    {'vector', 'numel',size(bboxes,1)});
+                cellfun(@(c) validateattributes(c, {'numeric'}, ...
+                    {'integer', 'size',[NaN 2]}), chains);
             end
             if ~isempty(bboxes)
-                validateattributes(bboxes, {'cell'}, ...
-                    {'vector', 'numel',numel(chains)});
-                cellfun(@(r) validateattributes(r, {'numeric'}, ...
-                    {'vector', 'integer', 'numel',4}), bboxes);
+                validateattributes(bboxes, {'numeric'}, ...
+                    {'integer', 'size',[numel(chains) 4]});
             end
         end
 

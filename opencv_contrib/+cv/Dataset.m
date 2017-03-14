@@ -70,6 +70,7 @@ classdef Dataset < handle
             %       * **TR_icdar** ICDAR
             %       * **TR_svt** The Street View Text Dataset
             %       * **TRACK_vot** VOT 2015 Database
+            %       * **TRACK_alov** Amsterdam Library of Ordinary Videos (ALOV++)
             %
             % ### HMDB: A Large Human Motion Database
             %
@@ -523,6 +524,11 @@ classdef Dataset < handle
             %
             %        ds = cv.Dataset('TRACK_vot');
             %        ds.load('/home/user/path_to_unpacked_files/VOT2015/');
+            %
+            % ### Amsterdam Library of Ordinary Videos for tracking
+            %
+            % Implements loading daataset: ALOV++
+            % [Link](http://www.alov300.org/)
             %
             % See also: cv.Dataset.load
             %

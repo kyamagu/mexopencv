@@ -31,7 +31,9 @@ if numel(images) <= 1
         'Please add more images to your data set!']);
 end
 
-display(images)
+if ~mexopencv.isOctave()
+    display(images)
+end
 
 %% PCA
 % Reshape and stack images into a row Matrix

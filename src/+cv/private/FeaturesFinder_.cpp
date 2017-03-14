@@ -64,6 +64,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==2 && nlhs==0);
         obj->collectGarbage();
     }
+    /*
+    else if (method == "isThreadSafe") {
+        nargchk(nrhs==2 && nlhs<=1);
+        bool tf = obj->isThreadSafe();
+        plhs[0] = MxArray(tf);
+    }
+    */
     else if (method == "find") {
         nargchk((nrhs==3 || nrhs==4) && nlhs<=1);
         Mat image(rhs[2].toMat());
@@ -74,6 +81,21 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         }
         else
             obj->operator()(image, features);
+        plhs[0] = toStruct(features);
+    }
+    else if (method == "findParallel") {
+        nargchk((nrhs==3 || nrhs==4) && nlhs<=1);
+        vector<Mat> images(rhs[2].toVector<Mat>());
+        vector<ImageFeatures> features;
+        if (nrhs == 4) {
+            //vector<vector<Rect> > rois(rhs[3].toVector<vector<Rect>>());
+            vector<vector<Rect> > rois(rhs[3].toVector(
+                const_mem_fun_ref_t<vector<Rect>, MxArray>(
+                    &MxArray::toVector<Rect>)));
+            obj->operator()(images, features, rois);
+        }
+        else
+            obj->operator()(images, features);
         plhs[0] = toStruct(features);
     }
     else

@@ -6,7 +6,6 @@
  * @date 2016
  */
 #include "mexopencv.hpp"
-#include <typeinfo>
 #include "opencv2/datasets/dataset.hpp"
 #include "opencv2/datasets/ar_hmdb.hpp"
 #include "opencv2/datasets/ar_sports.hpp"
@@ -34,6 +33,8 @@
 #include "opencv2/datasets/tr_icdar.hpp"
 #include "opencv2/datasets/tr_svt.hpp"
 #include "opencv2/datasets/track_vot.hpp"
+#include "opencv2/datasets/track_alov.hpp"
+#include <typeinfo>
 using namespace std;
 using namespace cv;
 using namespace cv::datasets;
@@ -720,6 +721,23 @@ MxArray toStruct_TRACK_vot(const vector<Ptr<Object> >& objs)
     return s;
 }
 
+/** Convert TRACK_alov objects to struct array
+ * @param objs vector of object pointers
+ * @return struct-array MxArray object
+ */
+MxArray toStruct_TRACK_alov(const vector<Ptr<Object> >& objs)
+{
+    const char *fields[] = {"id", "imagePath", "gtbb"};
+    MxArray s = MxArray::Struct(fields, 3, 1, objs.size());
+    for (mwIndex i = 0; i < objs.size(); ++i) {
+        Ptr<TRACK_alovObj> obj = objs[i].staticCast<TRACK_alovObj>();
+        s.set("id",        obj->id,        i);
+        s.set("imagePath", obj->imagePath, i);
+        s.set("gtbb",      obj->gtbb,      i);
+    }
+    return s;
+}
+
 /** Convert objects to struct array
  * @param objs vector of object pointers
  * @param klass dataset class
@@ -779,6 +797,8 @@ MxArray toStruct(const vector<Ptr<Object> >& objs, const string& klass)
         return toStruct_TR_svt(objs);
     else if (klass == "TRACK_vot")
         return toStruct_TRACK_vot(objs);
+    else if (klass == "TRACK_alov")
+        return toStruct_TRACK_alov(objs);
     else
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized dataset class %s",klass.c_str());
@@ -843,6 +863,8 @@ Ptr<Dataset> create_Dataset(const string& type)
         p = TR_svt::create();
     else if (type == "TRACK_vot")
         p = TRACK_vot::create();
+    else if (type == "TRACK_alov")
+        p = TRACK_alov::create();
     else
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized dataset %s",type.c_str());

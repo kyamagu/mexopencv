@@ -26,6 +26,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Option processing
     Scalar color;
+    vector<Vec4d> colors;
     int thickness = 1;
     int lineType = cv::LINE_8;
     int shift = 0;
@@ -34,6 +35,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         if (key == "Color")
             color = (rhs[i+1].isChar()) ?
                 ColorType[rhs[i+1].toString()] : rhs[i+1].toScalar();
+        else if (key == "Colors")
+            colors = MxArrayToVectorVec<double,4>(rhs[i+1]);
         else if (key == "Thickness")
             thickness = (rhs[i+1].isChar()) ?
                 ThicknessType[rhs[i+1].toString()] : rhs[i+1].toInt();
@@ -59,8 +62,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                       pt2(rhs[2].toVector<Point>());
         if (pt1.size() != pt2.size())
             mexErrMsgIdAndTxt("mexopencv:error", "Length mismatch");
+        if (!colors.empty() && colors.size() != pt1.size())
+            mexErrMsgIdAndTxt("mexopencv:error", "Length mismatch");
         for (size_t i = 0; i < pt1.size(); ++i)
-            line(img, pt1[i], pt2[i], color, thickness, lineType, shift);
+            line(img, pt1[i], pt2[i],
+                (colors.empty() ? color : Scalar(colors[i])),
+                thickness, lineType, shift);
     }
     plhs[0] = MxArray(img);
 }

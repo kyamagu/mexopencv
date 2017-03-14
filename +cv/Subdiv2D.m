@@ -10,7 +10,7 @@ classdef Subdiv2D < handle
     % Voronoi diagram. In the figure below, the Delaunay's triangulation is
     % marked with black lines and the Voronoi diagram with red lines.
     %
-    % ![image](https://github.com/opencv/opencv/raw/master/modules/imgproc/doc/pics/delaunay_voronoi.png)
+    % ![image](https://github.com/opencv/opencv/raw/3.2.0/modules/imgproc/doc/pics/delaunay_voronoi.png)
     %
     % The subdivisions can be used for the 3D piece-wise transformation of a
     % plane, morphing, fast location of points on the plane, building special
@@ -114,7 +114,8 @@ classdef Subdiv2D < handle
             % * __pt__ Point `[x,y]` to locate.
             %
             % ## Output
-            % * __location__ a string which specifoes one of the following five cases for point location:
+            % * __location__ a string which specifies one of the following
+            %       five cases for point location:
             %       * __Inside__ The point falls into some facet. The function
             %             returns 'Inside' and edge will contain one of edges
             %             of the facet.
@@ -135,7 +136,8 @@ classdef Subdiv2D < handle
             % * __vertex__ Optional output vertex the input point coincides
             %       with.
             %
-            % The function locates the input point within the subdivision and gives one of the triangle edges or vertices.
+            % The function locates the input point within the subdivision and
+            % gives one of the triangle edges or vertices.
             %
             % See also: cv.Subdiv2D.findNearest
             %
@@ -181,6 +183,21 @@ classdef Subdiv2D < handle
             % See also: cv.Subdiv2D.getTriangleList
             %
             edgeList = Subdiv2D_(this.id, 'getEdgeList');
+        end
+
+        function leadingEdgeList = getLeadingEdgeList(this)
+            %GETLEADINGEDGELIST  Returns a list of the leading edge ID connected to each triangle
+            %
+            %    leadingEdgeList = obj.getLeadingEdgeList()
+            %
+            % ## Output
+            % * __leadingEdgeList__ Output vector.
+            %
+            % The function gives one edge ID for each triangle.
+            %
+            % See also: cv.Subdiv2D.getTriangleList
+            %
+            leadingEdgeList = Subdiv2D_(this.id, 'getLeadingEdgeList');
         end
 
         function triangleList = getTriangleList(this)
@@ -247,7 +264,9 @@ classdef Subdiv2D < handle
             %
             % ## Input
             % * __edge__ Subdivision edge ID.
-            % * __nextEdgeType__ Parameter specifying which of the related edges to return. The following edge type navigation values are possible:
+            % * __nextEdgeType__ Parameter specifying which of the related
+            %       edges to return. The following edge type navigation values
+            %       are possible:
             %       * __NextAroundOrg__ next around the edge origin (`eOnext`
             %             on the picture below if `e` is the input edge).
             %       * __NextAroundDst__ next around the edge vertex (`eDnext`).

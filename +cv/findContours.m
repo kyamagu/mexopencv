@@ -63,11 +63,6 @@
 % [Suzuki85]. The contours are a useful tool for shape analysis and object
 % detection and recognition.
 %
-% ## Note
-% The function does not take into account 1-pixel border of the image (it's
-% filled with 0's and used for neighbor analysis in the algorithm), therefore
-% the contours touching the image border will be clipped.
-%
 % ## References
 % [Suzuki85]:
 % > Satoshi Suzuki and others. "Topological structural analysis of digitized

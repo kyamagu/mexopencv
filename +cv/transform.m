@@ -53,5 +53,6 @@
 %    end
 %
 % See also: cv.perspectiveTransform, cv.getAffineTransform,
-%  cv.estimateRigidTransform, cv.warpAffine, cv.warpPerspective
+%  cv.estimateAffine2D, cv.estimateRigidTransform, cv.warpAffine,
+%  cv.warpPerspective
 %

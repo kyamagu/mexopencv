@@ -60,7 +60,7 @@ classdef SuperpixelSLIC < handle
             % for future computing iterations over the given image. An example
             % of SLIC versus SLICO is ilustrated in the following picture.
             %
-            % ![image](https://github.com/opencv/opencv_contrib/raw/3.1.0/modules/ximgproc/doc/pics/slic-slico-kermit.png)
+            % ![image](https://github.com/opencv/opencv_contrib/raw/3.2.0/modules/ximgproc/doc/pics/superpixels_slic.png)
             %
             % See also: cv.SuperpixelSLIC.iterate
             %
@@ -247,7 +247,7 @@ classdef SuperpixelSLIC < handle
             % See also: cv.SuperpixelSLIC.iterate, boundarymask
             %
             img = SuperpixelSLIC_(this.id, 'getLabelContourMask', varargin{:});
-            img = (img == -1);  % fg:int8(-1), bg:int8(1)
+            img = (img == 255);  % fg:uint8(255), bg:uint8(0)
         end
 
         function enforceLabelConnectivity(this, varargin)

@@ -73,6 +73,6 @@
 %    prevPts = cv.goodFeaturesToTrack(prevIm);
 %    nextPts = cv.calcOpticalFlowPyrLK(prevIm, nextIm, prevPts);
 %
-% See also: cv.calcOpticalFlowFarneback, cv.goodFeaturesToTrack,
-%  vision.PointTracker
+% See also: cv.SparsePyrLKOpticalFlow, cv.calcOpticalFlowFarneback,
+%  cv.goodFeaturesToTrack, vision.PointTracker
 %
