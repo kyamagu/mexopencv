@@ -15,7 +15,9 @@ os:
 
 # switch to: Ubuntu 14.04 LTS Server Edition 64-bit (trusty)
 # default is: Ubuntu 12.04 LTS Server Edition 64-bit (precise)
-dist: trusty
+#dist: trusty
+
+# full Ubuntu VM (with sudo enabled) vs. container-based environment
 sudo: required
 
 # whitelisted branches to build
@@ -34,7 +36,7 @@ env:
     # octave-image fails to compile with gcc-4.6 as it needs C++11 support
     # (it compiles fine in trusty but fails in precise)
     - OCT_STATS=yes
-    - OCT_IMAGE=yes
+    - OCT_IMAGE=no
     # common options for make
     - MAKE_OPTS="WITH_OCTAVE=true WITH_CONTRIB=true NO_CV_PKGCONFIG_HACK=true"
     # Extra make arguments
@@ -50,8 +52,19 @@ env:
     - CMAKE_GEN=Ninja
 
 install:
+  #HACK: Travis adds this PPA which contains a different GraphicsMagick version
+  # that conflicts with the one Octave was compiled against, so we remove it
+  # (it appears to be brought on by redis)
+  #- sudo add-apt-repository -y -r ppa:rwky/ppa
+  - sudo rm -rf /etc/apt/sources.list.d/rwky-redis.list
+  # alternative way, which removes PPA and downgrades its packages to ones
+  # provided by official repositories
+  #- sudo apt-get install ppa-purge
+  #- sudo ppa-purge ppa:rwky/ppa
+
   # add PPAs
   - sudo add-apt-repository -y ppa:octave/stable
+  - sudo add-apt-repository -y ppa:kalakris/cmake
   - sudo apt-get update -qq
 
   # install Octave 4.0.2
@@ -66,15 +79,17 @@ install:
   - if [ "$DOXY" = "yes" ]; then sudo apt-get install -y doxygen ; fi
 
   # show info about build tools
-  - printenv
-  - lsb_release -a
-  - uname -a
+  #- printenv
+  #- lsb_release -a
+  #- uname -a
+  #- dpkg -s octave liboctave-dev
+  #- apt-cache showpkg octave
+  #- apt-cache policy octave
   - $CXX --version
   - make --version
   - if [ "$CMAKE_GEN" = "Ninja" ]; then ninja --version ; fi
   - cmake --version
   - pkg-config --version
-  - dpkg -s octave liboctave-dev
   - octave-cli $OCTAVE_OPTS --version
   - octave-cli $OCTAVE_OPTS --eval "pkg list"
   - if [ "$DOXY" = "yes" ]; then doxygen --version ; fi
