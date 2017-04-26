@@ -13,6 +13,8 @@ function varargout = UnitTest(varargin)
     %             either ".", "S", or "F"). Good for minimal output.
     %       * __2__ verbose output, one line per test (test name and status),
     %             along with error message and stack trace if any.
+    % * __FilterStack__ remove test framework from exceptions stack traces.
+    %       default false
     %
     % ## Output
     % * __results__ output structure of results with the following fields:
@@ -88,11 +90,13 @@ function opts = parse_options(varargin)
     addParam('MainModules', true, isbool);
     addParam('ContribModules', false, isbool);
     addParam('Verbosity', 1, @isnumeric);
+    addParam('FilterStack', false, isbool);
     p.parse(varargin{:});
     opts = p.Results;
 
     opts.MainModules = logical(opts.MainModules);
     opts.ContribModules = logical(opts.ContribModules);
+    opts.FilterStack = logical(opts.FilterStack);
 
     % root directory for opencv/opencv_contrib tests
     opts.TestDirs = {};
@@ -457,7 +461,7 @@ function varargout = testrunner_monitor(opts, action, t, varargin)
             if opts.Verbosity > 0
                 print_summary(out);
                 if opts.Verbosity == 1
-                    print_faults(out);
+                    print_faults(out, opts);
                 end
             end
 
@@ -512,7 +516,7 @@ function varargout = testrunner_monitor(opts, action, t, varargin)
             % print progress
             if opts.Verbosity > 1
                 fprintf('SKIP\n');
-                fprintf('%s\n', exception_getReport(ex));
+                fprintf('%s\n', exception_getReport(ex, opts));
             elseif opts.Verbosity > 0
                 fprintf('S');
             end
@@ -525,7 +529,7 @@ function varargout = testrunner_monitor(opts, action, t, varargin)
             % print progress
             if opts.Verbosity > 1
                 fprintf('FAIL\n');
-                fprintf(1, '%s\n', exception_getReport(ex));
+                fprintf(1, '%s\n', exception_getReport(ex, opts));
             elseif opts.Verbosity > 0
                 fprintf('F');
             end
@@ -567,11 +571,14 @@ function print_summary(results)
     fprintf('  Elapsed time is %f seconds.\n', results.Duration);
 end
 
-function print_faults(results)
+function print_faults(results, opts)
     %PRINT_FAULTS  Display list of exceptions thrown from tests
+    %
+    %    print_faults(results, opts)
     %
     % ## Input
     % * __results__ output structure of results.
+    % * __opts__ Options structure.
     %
 
     for i=1:numel(results.Details)
@@ -583,18 +590,19 @@ function print_faults(results)
             continue;
         end
         fprintf('\n===== %s: %s =====\n', ftype, results.Details(i).Name);
-        fprintf(1, '%s\n', exception_getReport(results.Details(i).Exception));
+        fprintf(1, '%s\n', exception_getReport(results.Details(i).Exception, opts));
     end
 end
 
-function str = exception_getReport(ME)
+function str = exception_getReport(ME, opts)
     %EXCEPTION_GETREPORT  Get error message for exception
     %
-    %    str = exception_getReport(ME)
+    %    str = exception_getReport(ME, opts)
     %
     % ## Input
     % * __ME__ exception caught. Either a MATLAB MException object or an
     %       Octave error structure.
+    % * __opts__ Options structure.
     %
     % ## Output
     % * __str__ a formatted error message, along with stack trace.
@@ -602,10 +610,7 @@ function str = exception_getReport(ME)
     % See also: MException.getReport
     %
 
-    if ~mexopencv.isOctave()
-        %str = getReport(ME, 'extended', 'hyperlinks','off');
-        str = getReport(ME);
-    else
+    if mexopencv.isOctave()
         str = {};
         str{end+1} = sprintf('error: %s', ME.message);
         if ~isempty(ME.stack)
@@ -616,5 +621,36 @@ function str = exception_getReport(ME)
             end
         end
         str = sprintf('%s\n', str{:});
+    elseif opts.FilterStack
+        %HACK: filter stack trace to not show UnitTest itself
+        % unfortunately MException.stack is read-only so we have to
+        % traverse it manually
+        %TODO: add "matlab:opentoline()" hyperlinks
+        thisFile = [mfilename('fullpath') '.m'];
+        str = {};
+        str{end+1} = ME.message;
+        for i=1:numel(ME.stack)
+            if strcmp(ME.stack(i).file, thisFile)
+                continue;
+            end
+            if isempty(strfind(ME.stack(i).name, '.'))
+                [~,name] = fileparts(ME.stack(i).file);
+                if ~strcmp(ME.stack(i).name, name)
+                    name = [name filemarker() ME.stack(i).name];
+                end
+            else
+                name = ME.stack(i).name;
+            end
+            str{end+1} = sprintf('Error in %s (line %d)', ...
+                name, ME.stack(i).line);
+            %HACK: dbtype is missing in Octave
+            cmd = sprintf('dbtype(''%s'',''%d'')', ...
+                ME.stack(i).file, ME.stack(i).line);
+            str{end+1} = strtrim(evalc(cmd));
+        end
+        str = sprintf('%s\n', str{:});
+    else
+        %str = getReport(ME, 'extended', 'hyperlinks','off');
+        str = getReport(ME);
     end
 end
