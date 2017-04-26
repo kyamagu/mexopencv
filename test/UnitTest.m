@@ -670,6 +670,16 @@ function print_faults(results, opts)
     end
 end
 
+function str = xml_escape(str)
+    %XML_ESCAPE  Escape XML special characters
+
+    str = strrep(str, '&', '&amp;');
+    str = strrep(str, '<', '&lt;');
+    str = strrep(str, '>', '&gt;');
+    str = strrep(str, '"', '&quot;');
+    str = strrep(str, '''', '&apos;');
+end
+
 function export_xunit(results, opts)
     %EXPORT_XUNIT  Save test results in xUnit XML Format
     %
@@ -714,7 +724,6 @@ function export_xunit(results, opts)
             name{1}, name{2}, t.Duration);
 
         % reason if test did not pass
-        %TODO: XML escape any special chars
         if ~t.Passed
             if t.Failed
                 tag = 'failure';
@@ -723,8 +732,8 @@ function export_xunit(results, opts)
             end
             ex = t.Exception;
             fprintf(fid, '\n<%s type="%s" message="%s">\n%s\n</%s>\n', ...
-                tag, ex.identifier, ex.message, ...
-                exception_getReport(ex, opts), tag);
+                tag, ex.identifier, xml_escape(ex.message), ...
+                xml_escape(exception_getReport(ex, opts)), tag);
         end
 
         fprintf(fid, '</testcase>\n');
