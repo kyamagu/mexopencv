@@ -27,6 +27,7 @@ function varargout = UnitTest(varargin)
     % ## Output
     % * __results__ output structure of results with the following fields:
     %       * __Duration__ total time elapsed running all tests.
+    %       * __Timestamp__ when test suite was executed (serial date number).
     %       * __Passed__ number of tests passed.
     %       * __Failed__ number of tests failed.
     %       * __Incomplete__ number of tests skipped.
@@ -34,6 +35,7 @@ function varargout = UnitTest(varargin)
     %             following fields:
     %             * __Name__ test name.
     %             * __Duration__ time elapsed running test.
+    %             * __Timestamp__ when test case was executed.
     %             * __Passed__ boolean indicating if test passed.
     %             * __Failed__ boolean indicating if test failed.
     %             * __Incomplete__ boolean indicating if test was incomplete
@@ -397,6 +399,7 @@ function [results, passed] = testsuite_run(tests, opts)
     % run all test methods
     passed = true;
     opts.monitor('tsuite_started', tests);
+    ts = now();
     tid = tic();
     for i=1:numel(tests)
         % show graphical progress
@@ -410,7 +413,7 @@ function [results, passed] = testsuite_run(tests, opts)
         passed = passed && (status ~= 0);
     end
     elapsed = toc(tid);
-    results = opts.monitor('tsuite_finished', tests, elapsed, passed);
+    results = opts.monitor('tsuite_finished', tests, elapsed, ts, passed);
 end
 
 function status = testcase_run(t, opts)
@@ -433,6 +436,7 @@ function status = testcase_run(t, opts)
 
     status = 1;
     opts.monitor('tcase_started', t);
+    ts = now();
     tid = tic();
     try
         if ~opts.DryRun
@@ -458,7 +462,7 @@ function status = testcase_run(t, opts)
         end
     end
     elapsed = toc(tid);
-    opts.monitor('tcase_finished', t, elapsed, status);
+    opts.monitor('tcase_finished', t, elapsed, ts, status);
 end
 
 function varargout = testrunner_monitor(opts, action, t, varargin)
@@ -497,8 +501,9 @@ function varargout = testrunner_monitor(opts, action, t, varargin)
         case 'tsuite_started'
             % initialize persistent data
             n = 0;
-            res = struct('Name',t(:), 'Duration',NaN, 'Exception',[], ...
-                'Passed',false, 'Failed',false, 'Incomplete',false);
+            res = struct('Name',t(:), 'Duration',NaN, 'Timestamp',NaN, ...
+                'Exception',[], 'Passed',false, 'Failed',false, ...
+                'Incomplete',false);
             % print version/config info
             if opts.Verbosity > 1
                 print_version();
@@ -506,9 +511,10 @@ function varargout = testrunner_monitor(opts, action, t, varargin)
 
         case 'tsuite_finished'
             % return final results
-            elapsed = varargin{1};
+            [elapsed, ts, passed] = deal(varargin{:});
             out = struct();
             out.Duration = elapsed;
+            out.Timestamp = ts;
             out.Passed = nnz([res.Passed]);
             out.Failed = nnz([res.Failed]);
             out.Incomplete = nnz([res.Incomplete]);
@@ -536,11 +542,12 @@ function varargout = testrunner_monitor(opts, action, t, varargin)
 
         case 'tcase_finished'
             % store test duration
-            [elapsed, passed] = deal(varargin{:});
+            [elapsed, ts, status] = deal(varargin{:});
             res(n).Duration = elapsed;
+            res(n).Timestamp = ts;
             % wrap lines
             if opts.Verbosity > 1
-                if passed
+                if status == 1
                     %fprintf(' (%.3g ms)\n', elapsed*1000);  %TODO
                     fprintf('\n');
                 end
