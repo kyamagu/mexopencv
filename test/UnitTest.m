@@ -1,259 +1,519 @@
-classdef UnitTest
-    %UNITTEST  Helper class for unit testing
+function varargout = UnitTest(varargin)
+    %UNITTEST  Helper function for mexopencv unit testing
+    %
+    %    [results, passed] = UnitTest()
+    %    [...] = UnitTest('OptionName',optionValue, ...)
+    %
+    % ## Options
+    % * __MainModules__ enable main modules tests. default true
+    % * __ContribModules__ enable contrib modules tests. default false
+    % * __Verbosity__ Verbosity level. default 1:
+    %       * __0__ quiet mode.
+    %       * __1__ dot-matrix output (one character per test,
+    %             either ".", "S", or "F"). Good for minimal output.
+    %       * __2__ verbose output, one line per test (test name and status),
+    %             along with error message and stack trace if any.
+    %
+    % ## Output
+    % * __results__ output structure of results with the following fields:
+    %       * __Duration__ total time elapsed running all tests.
+    %       * __Passed__ number of tests passed.
+    %       * __Failed__ number of tests failed.
+    %       * __Incomplete__ number of tests skipped.
+    %       * __Details__ structure array (one struct for each test) with the
+    %             following fields:
+    %             * __Name__ test name.
+    %             * __Duration__ time elapsed running test.
+    %             * __Passed__ boolean indicating if test passed.
+    %             * __Failed__ boolean indicating if test failed.
+    %             * __Incomplete__ boolean indicating if test was incomplete
+    %                   (skipped).
+    %             * __Exception__ exception thrown if failed/skipped.
+    %       * __Logs__ test runner log.
+    % * __passed__ boolean indicates tests status (passed or failed).
     %
     % ## Usage
     %
     %    cd test;
-    %    UnitTest;
+    %    results = UnitTest('Verbosity',0);
+    %    t = struct2table(results.Details)
+    %    sortrows(t(t.Duration>1,:), 'Duration')  % inspect slow tests
+    %    t(t.Incomplete|t.Failed,:)               % inspect non-passing tests
+    %    disp(results.Log)
     %
     % See also: matlab.unittest
     %
 
-    properties (Constant)
-        % root directory for opencv tests
-        TESTDIR1 = fullfile(mexopencv.root(),'test','unit_tests');
-        % root directory for contrib tests
-        TESTDIR2 = fullfile(mexopencv.root(),'opencv_contrib','test','unit_tests');
+    % parse inputs
+    nargoutchk(0,2);
+    opts = parse_options(varargin{:});
 
-        %HACK: Tests to skip due to bugs in Octave
-        SKIP = {
-            % local functions in M-classes
-            'TestConjGradSolver'
-            'TestDownhillSolver'
-            'TestNormalize'
-            'TestSVM'
-            'TestGeneralizedHoughBallard'
-            'TestGeneralizedHoughGuil'
-            'TestCalibrateCamera'
-            'TestCascadeClassifier'
-            'TestDenoise_TVL1'
-            'TestHOGDescriptor'
-            'TestRemap'
-            'TestReprojectImageTo3D'
-            'TestStereoCalibrate'
-            'TestStereoRectify'
-            'TestStereoRectifyUncalibrated'
-            'TestSuperResolution'
-            'TestDPMDetector'
-            'TestStructuredEdgeDetection'
-            'TestMotionSaliencyBinWangApr2014'
-            'TestObjectnessBING'
-            'TestBasicFaceRecognizer'
-            'TestLBPHFaceRecognizer'
-            'TestDetectMarkers'
-            'TestRefineDetectedMarkers'
-            'TestDetectCharucoDiamond'
-            'TestInterpolateCornersCharuco'
-            'TestDrawDetectedMarkers'
-            'TestDrawDetectedDiamonds'
-            'TestDrawDetectedCornersCharuco'
-            'TestEstimatePoseSingleMarkers'
-            'TestEstimatePoseBoard'
-            'TestEstimatePoseCharucoBoard'
-            'TestCalibrateCameraAruco'
-            'TestCalibrateCameraCharuco'
-            'TestNet'
-            'TestAdd'
-            'TestSubtract'
-            'TestMultiply'
-            'TestDivide'
-            'TestAddWeighted'
-            'TestAbsDiff'
-            'TestCompare'
-            'TestBitwiseAnd'
-            'TestBitwiseOr'
-            'TestBitwiseXor'
-            'TestBitwiseNot'
-            'TestGPCForest'
-            % codecs
-            'TestVideoWriter'
-        };
+    % collect tests from all folders
+    addpath(opts.TestDirs{:});
+    tests = cellfun(@(d) testsuite_fromFolder(d, opts), opts.TestDirs, ...
+        'UniformOutput',false);
+    tests = cat(1, tests{:});
+
+    % run test suite
+    [results, passed] = testsuite_run(tests, opts);
+
+    % output
+    if nargout > 0, varargout{1} = results; end
+    if nargout > 1, varargout{2} = passed; end
+end
+
+function opts = parse_options(varargin)
+    %PARSE_OPTIONS  Help function to parse input arguments
+    %
+    %    opts = parse_options(...)
+    %
+    % ## Output
+    % * __opts__ options structure.
+    %
+    % See also: inputParser
+    %
+
+    %TODO: attempt to detect if opencv_contrib is available
+
+    % helper function to validate true/false arguments
+    isbool = @(x) isscalar(x) && (islogical(x) || isnumeric(x));
+
+    %HACK: Octave inputParser: 4.0.x has addParamValue, 4.2.0 has addParameter
+    p = inputParser();
+    if mexopencv.isOctave() && compare_versions(version(), '4.2.0', '<')
+        addParam = @(varargin) p.addParamValue(varargin{:}); %#ok<NVREPL>
+    else
+        addParam = @(varargin) p.addParameter(varargin{:});
+    end
+    addParam('MainModules', true, isbool);
+    addParam('ContribModules', false, isbool);
+    addParam('Verbosity', 1, @isnumeric);
+    p.parse(varargin{:});
+    opts = p.Results;
+
+    opts.MainModules = logical(opts.MainModules);
+    opts.ContribModules = logical(opts.ContribModules);
+
+    % root directory for opencv/opencv_contrib tests
+    opts.TestDirs = {};
+    if opts.MainModules
+        opts.TestDirs{end+1} = ...
+            fullfile(mexopencv.root(), 'test', 'unit_tests');
+    end
+    if opts.ContribModules
+        opts.TestDirs{end+1} = ...
+            fullfile(mexopencv.root(), 'opencv_contrib', 'test', 'unit_tests');
+    end
+    assert(~isempty(opts.TestDirs), 'No tests included');
+
+    % monitor function
+    opts.monitor = @(varargin) testrunner_monitor(opts, varargin{:});
+end
+
+function tests = testsuite_fromFolder(dpath, opts)
+    %TESTSUITE_FROMFOLDER  Create test suite from all test classes in a folder
+    %
+    %    tests = testsuite_fromFolder(dpath, opts)
+    %
+    % ## Input
+    % * __dpath__ Folder containing test classes `Test*.m`.
+    % * __opts__ Options structure.
+    %
+    % ## Output
+    % * __tests__ Cell array of test names discovered.
+    %
+    % ## Usage
+    %
+    %    t = testsuite_fromFolder(fullfile(mexopencv.root(),'test','unit_tests'));
+    %
+    % Test class files must be named with a "Test" prefix.
+    %
+    % See also: matlab.unittest.TestSuite.fromFolder
+    %
+
+    % list of all test classes
+    names = dir(fullfile(dpath, 'Test*.m'));
+    names = regexprep({names.name}, '\.m$', '');
+
+    % sort classes alphabetically
+    names = sort(names(:));
+
+    % get test methods from all classes
+    tests = cellfun(@(c) testsuite_fromClass(c, opts), names, ...
+        'UniformOutput',false);
+
+    % combine all
+    tests = cat(1, tests{:});
+    if isempty(tests)
+        %HACK: avoid an Octave bug when later concatenated with other tests
+        % https://savannah.gnu.org/bugs/index.php?49759
+        tests = {};
+    end
+end
+
+function tests = testsuite_fromClass(klass, opts)
+    %TESTSUITE_FROMCLASS  Create test suite from test class
+    %
+    %    tests = testsuite_fromClass(klass, opts)
+    %
+    % ## Input
+    % * __klass__ Test class. This can be specified as:
+    %       * name of class as a string
+    %       * path to class file as a string
+    %       * metaclass object associated with the test class
+    %       * instance of test class itself as object
+    % * __opts__ Options structure.
+    %
+    % ## Output
+    % * __tests__ Cell array of test names discovered.
+    %
+    % ## Usage
+    %
+    %    t = testsuite_fromClass('TestBlur');
+    %    t = testsuite_fromClass(fullfile(mexopencv.root(),'test','unit_tests','TestBlur.m'));
+    %    t = testsuite_fromClass(?TestBlur);
+    %    t = testsuite_fromClass(TestBlur());
+    %
+    % The class must be on the path and contains test methods
+    % (static functions whose name start with "test").
+    %
+    % See also: matlab.unittest.TestSuite.fromClass
+    %
+
+    % introspection to get class metadata
+    if ischar(klass)
+        [~,klass] = fileparts(klass);
+        mc = meta.class.fromName(klass);
+    elseif isa(klass, 'meta.class')
+        mc = klass;
+    elseif isobject(klass)
+        mc = metaclass(klass);
+    else
+        error('UnitTest:error', 'Invalid class argument');
+    end
+    assert(~isempty(mc), 'UnitTest:error', 'Test class not found');
+
+    % get list of all names of static test methods
+    %HACK: for Octave and backward-compatibility
+    if ~mexopencv.isOctave() && isprop(mc, 'MethodList')
+        mt = findobj(mc.MethodList, '-regexp', 'Name','^test', ...
+            '-and', 'Static',true);
+        names = {mt.Name};
+    else
+        % names of static methods
+        idx = cellfun(@(m) m.Static, mc.Methods);
+        names = cellfun(@(m) m.Name, mc.Methods(idx), 'UniformOutput',false);
+
+        % only keep methods starting with the 'test' prefix
+        idx = strncmp('test', names, length('test'));
+        names = names(idx);
     end
 
-    methods
-        function obj = UnitTest(opencv_contrib)
-            %UNITTEST  Execute all unit tests
-            %
-            %    UnitTest()
-            %    UnitTest(opencv_contrib)
-            %
-            % ## Input
-            % * **opencv_contrib** boolean, whether to enable contrib tests.
-            %       default false.
-            %
-            % See also: UnitTest.all
-            %
+    % sort methods alphabetically
+    names = sort(names(:));
 
-            %TODO: detect if opencv_contrib is available
-            if nargin < 1, opencv_contrib = false; end
+    % return canonical name of static class methods
+    tests = strcat(mc.Name, '.', names);
+    if isempty(tests)
+        %HACK: avoid an Octave bug when later concatenated with other tests
+        % https://savannah.gnu.org/bugs/index.php?49759
+        tests = {};
+    end
+end
 
-            % setup path to unit tests
-            addpath(UnitTest.TESTDIR1);
-            if opencv_contrib
-                addpath(UnitTest.TESTDIR2);
-            end
+function [results, passed] = testsuite_run(tests, opts)
+    %TESTSUITE_RUN  Execute all tests in a suite
+    %
+    %    [results, passed] = testsuite_run(tests, opts)
+    %
+    % ## Input
+    % * __tests__ Cell array of test names to run.
+    % * __opts__ Options structure.
+    %
+    % ## Output
+    % * __results__ output structure of results.
+    % * __passed__ boolean indicates if passed or failed.
+    %
+    % See also: matlab.unittest.TestSuite.run, runtests
+    %
 
-            % log output to timestamped file in current directory
-            diary(sprintf('UnitTest_%s.log', datestr(now(),'yyyymmddTHHMMSS')));
-            cObj = onCleanup(@() diary('off'));  % turn off logging when done
+    % run all test methods
+    passed = true;
+    opts.monitor('tsuite_started', tests);
+    tid = tic();
+    for i=1:numel(tests)
+        % run test
+        status = testcase_run(tests{i}, opts);
+        passed = passed && (status ~= 0);
+    end
+    elapsed = toc(tid);
+    results = opts.monitor('tsuite_finished', tests, elapsed, passed);
+end
 
-            if ~mexopencv.isOctave()
-                ver matlab;
-            else
-                ver octave;
-                %disp(octave_config_info())
-                %dump_prefs()
-            end
+function status = testcase_run(t, opts)
+    %TESTCASE_RUN  Run test
+    %
+    %    status = testcase_run(t, opts)
+    %
+    % ## Input
+    % * __t__ test name to run.
+    % * __opts__ Options structure.
+    %
+    % ## Output
+    % * __status__ Result of running test. One of:
+    %       * __1__ pass
+    %       * __0__ fail
+    %       * __-1__ skip
+    %
+    % See also: matlab.unittest.TestCase.run
+    %
 
-            % get a list of all test classes
-            d = dir(fullfile(UnitTest.TESTDIR1, 'Test*.m'));
-            if opencv_contrib
-                d = [d ; dir(fullfile(UnitTest.TESTDIR2, 'Test*.m'))];
-            end
-
-            % run test suite
-            ntests = [0 0];
-            tID = tic();
-            for i=1:numel(d)
-                klass = strrep(d(i).name, '.m', '');
-                fprintf('== %s ==\n', klass);
-                if mexopencv.isOctave() && any(strcmp(klass, UnitTest.SKIP))
-                    %HACK: skip tests due to Octave bugs/incompatibilities
-                    disp('SKIP');
-                    continue;
-                end
-                numtests = UnitTest.all(klass);
-                ntests = ntests + numtests;
-
-                %HACK: avoid out-of-memory errors (especially for CI)
-                if mod(i,25)==0
-                    if mexopencv.isOctave()
-                        %clear -classes
-                        clear -functions
-                    else
-                        %clear classes
-                        clear functions
-                    end
-                end
-            end
-            elapsed = toc(tID);
-
-            % summary
-            fprintf('\nTotals:\n');
-            fprintf('  %d Passed, %d Failed\n', ntests(1), ntests(2));
-            fprintf('  Elapsed time is %f seconds.\n', elapsed);
+    status = 1;
+    opts.monitor('tcase_started', t);
+    tid = tic();
+    try
+        if mexopencv.isOctave()
+            %HACK: Octave errors on feval of a "Class.Method"
+            eval(t);
+        else
+            feval(t);
+        end
+        % pass
+        status = 1;
+        opts.monitor('tcase_passed', t);
+    catch ME
+        if strcmp(ME.identifier, 'mexopencv:testskip')
+            % skip
+            status = -1;
+            opts.monitor('tcase_skipped', t, ME);
+        else
+            % fail
+            status = 0;
+            opts.monitor('tcase_failed', t, ME);
         end
     end
+    elapsed = toc(tid);
+    opts.monitor('tcase_finished', t, elapsed, status);
+end
 
-    methods (Static)
-        function varargout = all(klass)
-            %ALL  Execute all test methods in specified test class
-            %
-            %    UnitTest.all(klass)
-            %    numtests = UnitTest.all(klass)
-            %
-            % ## Input
-            % * __klass__ Test class to run. This can be specified as:
-            %       * name of class as a string
-            %       * metaclass object associated with the test class
-            %       * instance of test class itself as object
-            %
-            % ## Output
-            % * __numtests__ optional output 2-element vector, containing
-            %       number of tests that passed and failed respectively.
-            %
-            % ## Usage
-            %
-            %    UnitTest.all('TestBlur');
-            %    UnitTest.all(?TestBlur);
-            %    UnitTest.all(TestBlur);
-            %
-            % See also: meta.class
-            %
+function varargout = testrunner_monitor(opts, action, t, varargin)
+    %TESTRUNNER_MONITOR  Test runner monitor
+    %
+    %    [...] = testrunner_monitor(opts, action, t, ...)
+    %
+    % ## Input
+    % * __opts__ Options structure.
+    % * __action__ Current phase (test suite/case start/finish, pass/fail/skip)
+    % * __t__ Current test case, or test suite
+    %
+    % ## Output
+    % * __results__ output structure of results when test suite is finished.
+    %
+    % The function takes optional arguments depending on monitor phase
+    % (elapsed time, timestamp, test status, exception, etc.)
+    %
+    % See also: matlab.unittest.TestRunner
+    %
 
-            % get class metadata
-            if nargin < 1, klass = mfilename(); end
-            if ischar(klass)
-                mc = meta.class.fromName(klass);
-            elseif isa(klass, 'meta.class')
-                mc = klass;
-            elseif isobject(klass)
-                mc = metaclass(klass);
-            else
-                error('UnitTest:all', 'Invalid class argument');
-            end
-            assert(~isempty(mc), 'Test class not found');
+    persistent n res logs
 
-            % get list of all method names
-            if ~mexopencv.isOctave() && isprop(mc,'MethodList')
-                mt = {mc.MethodList.Name};
-            else
-                %HACK: backward-compatible and Octave
-                mt = cellfun(@(x) x.Name, mc.Methods, 'UniformOutput',false);
-            end
-            mt = sort(mt(:))';
-
-            % only keep methods starting with the 'test' prefix
-            idx = strncmp('test', mt, length('test'));
-            mt = mt(idx);
-
-            % evaluate all test methods, and report success/failure
-            npass = 0;
-            nfail = 0;
-            for i=1:numel(mt)
-                fprintf('-- %s --\n', mt{i});
-                fname = [mc.Name '.' mt{i}];
-                try
-                    if ~mexopencv.isOctave()
-                        feval(fname);
-                    else
-                        %HACK: Octave doesnt support feval of a "Class.Method"
-                        eval(fname);
-                    end
-                    disp('PASS');
-                    npass = npass + 1;
-                catch ME
-                    fprintf(2, '%s\n', UnitTest.getReportException(ME));
-                    disp('FAIL');
-                    nfail = nfail + 1;
-                end
-            end
-
-            if nargout > 0
-                varargout{1} = [npass, nfail];
-            end
+    % log timestamped message
+    if isempty(logs), logs = {}; end
+    if opts.Verbosity < 1
+        if ischar(t)
+            str = t;
+        else
+            str = sprintf('%d tests', numel(t));
         end
-
-        function str = getReportException(ME)
-            %GETREPORTEXCEPTION  Get error message for exception
-            %
-            %    str = UnitTest.getReportException(ME)
-            %
-            % ## Input
-            % * __ME__ exception caught. Handles both MATLAB and Octave.
-            %
-            % ## Output
-            % * __str__ a formatted error message, along with stack trace.
-            %
-            % See also: MException.getReport
-            %
-
-            if ~mexopencv.isOctave()
-                str = getReport(ME, 'extended');
-            else
-                str = {};
-                str{end+1} = sprintf('error: %s', ME.message);
-                if ~isempty(ME.stack)
-                    str{end+1} = sprintf('error: called from');
-                    for i=1:numel(ME.stack)
-                        str{end+1} = sprintf('    %s at line %d column %d', ...
-                            ME.stack(i).name, ME.stack(i).line, ME.stack(i).column);
-                    end
-                end
-                str = sprintf('%s\n', str{:});
-            end
-        end
-
+        logs{end+1} = sprintf('[%s] %-20s: %s', datestr(now(),13), action, str);
     end
 
+    switch action
+        case 'tsuite_started'
+            % initialize persistent data
+            n = 0;
+            res = struct('Name',t(:), 'Duration',NaN, 'Exception',[], ...
+                'Passed',false, 'Failed',false, 'Incomplete',false);
+            % print version/config info
+            if opts.Verbosity > 1
+                print_version();
+            end
+
+        case 'tsuite_finished'
+            % return final results
+            elapsed = varargin{1};
+            out = struct();
+            out.Duration = elapsed;
+            out.Passed = nnz([res.Passed]);
+            out.Failed = nnz([res.Failed]);
+            out.Incomplete = nnz([res.Incomplete]);
+            out.Details = res;
+            out.Log = sprintf('%s\n', logs{:});
+            varargout{1} = out;
+            % clear persistent data
+            clear n res logs
+            % print summary
+            if opts.Verbosity > 0
+                print_summary(out);
+                if opts.Verbosity == 1
+                    print_faults(out);
+                end
+            end
+
+        case 'tcase_started'
+            % increment counter and store test name
+            n = n + 1;
+            res(n).Name = t;
+            % print progress
+            if opts.Verbosity > 1
+                fprintf('[%4d/%4d] %-60s ', n, numel(res), t);
+            end
+
+        case 'tcase_finished'
+            % store test duration
+            [elapsed, passed] = deal(varargin{:});
+            res(n).Duration = elapsed;
+            % wrap lines
+            if opts.Verbosity > 1
+                if passed
+                    %fprintf(' (%.3g ms)\n', elapsed*1000);  %TODO
+                    fprintf('\n');
+                end
+            elseif opts.Verbosity > 0
+                %{
+                %TODO: adapt to console size
+                if mexopencv.isOctave()
+                    sz = terminal_size();  % [rows,cols]
+                else
+                    sz = get(0, 'CommandWindowSize');  % [cols,rows]
+                end
+                %}
+                if mod(n, 80) == 0
+                    fprintf('\n');
+                end
+            end
+
+        case 'tcase_passed'
+            % mark test as passed
+            res(n).Passed = true;
+            % print progress
+            if opts.Verbosity > 1
+                fprintf('OK');
+            elseif opts.Verbosity > 0
+                fprintf('.');
+            end
+
+        case 'tcase_skipped'
+            % mark test as skipped
+            ex = varargin{1};
+            res(n).Incomplete = true;
+            res(n).Exception = ex;
+            % print progress
+            if opts.Verbosity > 1
+                fprintf('SKIP\n');
+                fprintf('%s\n', exception_getReport(ex));
+            elseif opts.Verbosity > 0
+                fprintf('S');
+            end
+
+        case 'tcase_failed'
+            % mark test as failed
+            ex = varargin{1};
+            res(n).Failed = true;
+            res(n).Exception = ex;
+            % print progress
+            if opts.Verbosity > 1
+                fprintf('FAIL\n');
+                fprintf(1, '%s\n', exception_getReport(ex));
+            elseif opts.Verbosity > 0
+                fprintf('F');
+            end
+    end
+end
+
+function print_version()
+    %PRINT_VERSION  Display MATLAB/Octave version
+    %
+    %    print_summary(results)
+    %
+    % See also: ver, version
+    %
+
+    if mexopencv.isOctave()
+        ver('octave');
+        %{
+        disp(octave_config_info());
+        dump_prefs();
+        %}
+    else
+        ver('matlab');
+    end
+    fprintf('\n');
+end
+
+function print_summary(results)
+    %PRINT_SUMMARY  Display summary of tests totals
+    %
+    %    print_summary(results)
+    %
+    % ## Input
+    % * __results__ output structure of results.
+    %
+
+    fprintf('\n\nTotals:\n');
+    fprintf('  %d Passed, %d Failed, %d Incomplete\n', ...
+        results.Passed, results.Failed, results.Incomplete);
+    fprintf('  Elapsed time is %f seconds.\n', results.Duration);
+end
+
+function print_faults(results)
+    %PRINT_FAULTS  Display list of exceptions thrown from tests
+    %
+    % ## Input
+    % * __results__ output structure of results.
+    %
+
+    for i=1:numel(results.Details)
+        if results.Details(i).Failed
+            ftype = 'Failure';
+        elseif results.Details(i).Incomplete
+            ftype = 'Incomplete';
+        else
+            continue;
+        end
+        fprintf('\n===== %s: %s =====\n', ftype, results.Details(i).Name);
+        fprintf(1, '%s\n', exception_getReport(results.Details(i).Exception));
+    end
+end
+
+function str = exception_getReport(ME)
+    %EXCEPTION_GETREPORT  Get error message for exception
+    %
+    %    str = exception_getReport(ME)
+    %
+    % ## Input
+    % * __ME__ exception caught. Either a MATLAB MException object or an
+    %       Octave error structure.
+    %
+    % ## Output
+    % * __str__ a formatted error message, along with stack trace.
+    %
+    % See also: MException.getReport
+    %
+
+    if ~mexopencv.isOctave()
+        %str = getReport(ME, 'extended', 'hyperlinks','off');
+        str = getReport(ME);
+    else
+        str = {};
+        str{end+1} = sprintf('error: %s', ME.message);
+        if ~isempty(ME.stack)
+            str{end+1} = sprintf('error: called from');
+            for i=1:numel(ME.stack)
+                str{end+1} = sprintf('    %s at line %d column %d', ...
+                    ME.stack(i).name, ME.stack(i).line, ME.stack(i).column);
+            end
+        end
+        str = sprintf('%s\n', str{:});
+    end
 end
