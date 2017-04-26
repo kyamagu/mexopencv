@@ -17,6 +17,7 @@ function varargout = UnitTest(varargin)
     % * __FilterStack__ remove test framework from exceptions stack traces.
     %       default false
     % * __DryRun__ dont actually run the tests, just print them. default false
+    % * __Progress__ display a graphical progress bar. default false
     %
     % ## Output
     % * __results__ output structure of results with the following fields:
@@ -95,6 +96,7 @@ function opts = parse_options(varargin)
     addParam('HotLinks', 'default', @ischar);
     addParam('FilterStack', false, isbool);
     addParam('DryRun', false, isbool);
+    addParam('Progress', false, isbool);
     p.parse(varargin{:});
     opts = p.Results;
 
@@ -103,6 +105,7 @@ function opts = parse_options(varargin)
     opts.HotLinks = validatestring(opts.HotLinks, {'on', 'off', 'default'});
     opts.FilterStack = logical(opts.FilterStack);
     opts.DryRun = logical(opts.DryRun);
+    opts.Progress = logical(opts.Progress);
 
     % root directory for opencv/opencv_contrib tests
     opts.TestDirs = {};
@@ -348,11 +351,30 @@ function [results, passed] = testsuite_run(tests, opts)
     % See also: matlab.unittest.TestSuite.run, runtests
     %
 
+    % show graphical progress
+    if opts.Progress
+        if ~mexopencv.isOctave()
+            cancel = {'CreateCancelBtn','setappdata(gcbf,''cancel'',true)'};
+        else
+            %HACK: https://savannah.gnu.org/bugs/?45364
+            cancel = {};
+        end
+        hWait = waitbar(0, 'Running tests...', 'Name',mfilename(), cancel{:});
+        setappdata(hWait, 'cancel',false);
+        wbCleanObj = onCleanup(@() delete(hWait));
+    end
+
     % run all test methods
     passed = true;
     opts.monitor('tsuite_started', tests);
     tid = tic();
     for i=1:numel(tests)
+        % show graphical progress
+        if opts.Progress
+            waitbar(i/numel(tests), hWait, strrep(tests{i}, '_', '\_'));
+            if getappdata(hWait, 'cancel'), break; end
+        end
+
         % run test
         status = testcase_run(tests{i}, opts);
         passed = passed && (status ~= 0);
