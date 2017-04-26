@@ -32,8 +32,7 @@ classdef TestDPMDetector
             %TODO: Octave throws error:
             % (out of memory or dimension too large for Octave's index type)
             if mexopencv.isOctave()
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'todo');
             end
 
             detector = cv.DPMDetector(...

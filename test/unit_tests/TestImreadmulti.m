@@ -5,8 +5,7 @@ classdef TestImreadmulti
         function test_read_pages
             filename = which('mri.tif');
             if isempty(filename)
-                disp('SKIP')
-                return
+                error('mexopencv:testskip', 'missing data');
             end
 
             imgs = cv.imreadmulti(filename);
@@ -19,8 +18,7 @@ classdef TestImreadmulti
             % TIFF file with 27 grayscale images
             filename = which('mri.tif');
             if isempty(filename)
-                disp('SKIP')
-                return
+                error('mexopencv:testskip', 'missing data');
             end
 
             % number of pages

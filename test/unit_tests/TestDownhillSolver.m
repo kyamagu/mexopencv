@@ -5,8 +5,7 @@ classdef TestDownhillSolver
         function test_rosenbrock
             % skip test if external M-file is not found on the path
             if ~exist('rosenbrockFcn.m', 'file')
-                disp('SKIPPED')
-                return
+                error('mexopencv:testskip', 'undefined function');
             end
 
             solver = cv.DownhillSolver();
@@ -22,8 +21,7 @@ classdef TestDownhillSolver
         function test_sphere
             % skip test if external M-file is not found on the path
             if ~exist('sphereFcn.m', 'file')
-                disp('SKIPPED')
-                return
+                error('mexopencv:testskip', 'undefined function');
             end
 
             solver = cv.DownhillSolver('InitStep', [-0.5, -0.5], ...
@@ -36,8 +34,7 @@ classdef TestDownhillSolver
         function test_booth
             % skip test if external M-file is not found on the path
             if ~exist('boothFcn.m', 'file')
-                disp('SKIPPED')
-                return
+                error('mexopencv:testskip', 'undefined function');
             end
 
             solver = cv.DownhillSolver('InitStep', [1 1], ...
@@ -50,8 +47,7 @@ classdef TestDownhillSolver
         function test_matyas
             % skip test if external M-file is not found on the path
             if ~exist('matyasFcn.m', 'file')
-                disp('SKIPPED')
-                return
+                error('mexopencv:testskip', 'undefined function');
             end
 
             solver = cv.DownhillSolver('InitStep', [1 1], ...
@@ -64,8 +60,7 @@ classdef TestDownhillSolver
         function test_beale
             % skip test if external M-file is not found on the path
             if ~exist('bealeFcn.m', 'file')
-                disp('SKIPPED')
-                return
+                error('mexopencv:testskip', 'undefined function');
             end
 
             solver = cv.DownhillSolver('InitStep', [1 1], ...

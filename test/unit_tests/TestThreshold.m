@@ -34,8 +34,7 @@ classdef TestThreshold
         function test_compare_im2bw
             % we use GRAYTHRESH/IM2BW from Image Processing Toolbox
             if ~mexopencv.require('images')
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'toolbox');
             end
 
             % compare against im2bw/graythresh

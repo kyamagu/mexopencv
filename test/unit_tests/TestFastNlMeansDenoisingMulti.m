@@ -17,8 +17,7 @@ classdef TestFastNlMeansDenoisingMulti
         function test_2
             % we use IMNOISE Image Processing Toolbox
             if ~mexopencv.require('images')
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'toolbox');
             end
 
             img = cv.imread(TestFastNlMeansDenoisingMulti.im, ...

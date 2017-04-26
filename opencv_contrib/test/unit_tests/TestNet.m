@@ -11,8 +11,7 @@ classdef TestNet
             % load net
             [modelTxt, modelBin] = load_bvlc_googlenet();
             if exist(modelTxt, 'file') ~= 2 || exist(modelBin, 'file') ~= 2
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'missing data');
             end
             net = cv.Net();
             net.import('Caffe', modelTxt, modelBin);
@@ -40,8 +39,7 @@ classdef TestNet
         function test_imgs
             [modelTxt, modelBin] = load_bvlc_googlenet();
             if exist(modelTxt, 'file') ~= 2 || exist(modelBin, 'file') ~= 2
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'missing data');
             end
             net = cv.Net();
             net.import('Caffe', modelTxt, modelBin);

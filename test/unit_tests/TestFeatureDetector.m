@@ -23,7 +23,7 @@ classdef TestFeatureDetector
                     obj = cv.FeatureDetector(TestFeatureDetector.detectors{i});
                 catch ME
                     %TODO: check if opencv_contrib/xfeatures2d is available
-                    fprintf('SKIPPED: %s\n', TestFeatureDetector.detectors{i});
+                    %error('mexopencv:testskip', 'contrib');
                     continue;
                 end
                 typename = obj.typeid();
@@ -44,7 +44,7 @@ classdef TestFeatureDetector
                     obj = cv.FeatureDetector(TestFeatureDetector.detectors{i});
                 catch ME
                     %TODO: check if opencv_contrib/xfeatures2d is available
-                    fprintf('SKIPPED: %s\n', TestFeatureDetector.detectors{i});
+                    %error('mexopencv:testskip', 'contrib');
                     continue;
                 end
 
@@ -68,7 +68,7 @@ classdef TestFeatureDetector
                     obj = cv.FeatureDetector(TestFeatureDetector.detectors{i});
                 catch ME
                     %TODO: check if opencv_contrib/xfeatures2d is available
-                    fprintf('SKIPPED: %s\n', TestFeatureDetector.detectors{i});
+                    %error('mexopencv:testskip', 'contrib');
                     continue;
                 end
 

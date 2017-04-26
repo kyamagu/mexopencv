@@ -10,8 +10,7 @@ classdef TestSuperResolution
                 filename = get_car_video();
             end
             if isempty(filename)
-                disp('SKIP')
-                return
+                error('mexopencv:testskip', 'missing data');
             end
 
             superres = cv.SuperResolution();

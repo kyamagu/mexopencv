@@ -5,8 +5,7 @@ classdef TestDISOpticalFlow
         function test_1
             %TODO: crashes MATLAB
             if true
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'todo');
             end
 
             im1 = 255*uint8([...

@@ -19,8 +19,7 @@ classdef TestInRange
         function test_grayscale_image
             % we use GRAYTHRESH/IM2BW from Image Processing Toolbox
             if ~mexopencv.require('images')
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'toolbox');
             end
 
             % compare against IM2BW

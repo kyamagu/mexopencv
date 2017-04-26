@@ -22,8 +22,7 @@ classdef TestDctDenoising
         function test_rgb2
             % we use IMNOISE from Image Processing Toolbox
             if ~mexopencv.require('images')
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'toolbox');
             end
 
             % CV_8U

@@ -48,8 +48,7 @@ classdef TestCalcOpticalFlowPyrLK
             % larger matrix (original image), but the ROI information is lost
             % when Mat is converted to mxArray and back (a full copy is made)
             if true
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'todo');
             end
 
             prevImg = cv.imread(TestCalcOpticalFlowPyrLK.img1, ...

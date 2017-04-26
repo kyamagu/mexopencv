@@ -5,8 +5,7 @@ classdef TestVideoWriter
         function test_1
             % we use "Microsoft Video 1" codec (Windows only)
             if ~ispc || mexopencv.isOctave()
-                disp('SKIP')
-                return
+                error('mexopencv:testskip', 'codecs');
             end
 
             filename = [tempname() '.avi'];
@@ -39,8 +38,7 @@ classdef TestVideoWriter
             %TODO: this tests some common codecs that worked on my Windows
             % machine, no guarantees elsewhere!
             if true
-                disp('SKIP')
-                return
+                error('mexopencv:testskip', 'codecs');
             end
 
             % fourCC + extension
@@ -66,7 +64,8 @@ classdef TestVideoWriter
                     vid.release();
                 catch ME
                     %TODO: some codecs are not available on all platforms
-                    fprintf('SKIPPED: %s (%s)\n', codecs{i,1}, codecs{i,2});
+                    %error('mexopencv:testskip', 'codecs %s (%s)', ...
+                    %    codecs{i,1}, codecs{i,2});
                     continue;
                 end
             end

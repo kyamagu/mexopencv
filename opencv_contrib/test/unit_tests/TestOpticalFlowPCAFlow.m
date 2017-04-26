@@ -5,8 +5,7 @@ classdef TestOpticalFlowPCAFlow
         function test_1
             %TODO: crashes MATLAB sometimes!
             if true
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'todo');
             end
 
             im1 = 255*uint8([...

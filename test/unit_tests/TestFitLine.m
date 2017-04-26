@@ -14,8 +14,7 @@ classdef TestFitLine
         function test_2
             % we use MVNRND from Statistics Toolbox
             if ~mexopencv.require('stats')
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'toolbox');
             end
 
             % random 3D points with a strong correlation

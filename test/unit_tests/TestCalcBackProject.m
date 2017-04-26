@@ -54,8 +54,7 @@ classdef TestCalcBackProject
         function test_histcounts
             % compare against the new HISTCOUNTS function
             if mexopencv.isOctave() || verLessThan('matlab','8.4')
-                disp('SKIP');
-                return
+                error('mexopencv:testskip', 'toolbox');
             end
             im = cv.imread(TestCalcBackProject.img, 'Grayscale',true);  % uint8 grayscale
             edges = [0 50 100 150 200 256];                             % 1D histogram

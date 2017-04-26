@@ -16,8 +16,7 @@ classdef TestTwoPassStabilizer
         function test_1
             %TODO
             if true
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'todo');
             end
 
             stab = cv.TwoPassStabilizer();
