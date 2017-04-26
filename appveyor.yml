@@ -153,5 +153,5 @@ test_script:
   - if "%WITH_MAKE%" == "yes" (
       sh --login -c "cd \"$MCV_ROOT\" && mingw32-make $MAKE_OPTS test"
     ) else (
-      %OCTAVE% --eval "cd test;try,UnitTest(true);catch e,disp(e);exit(1);end;exit(0);" || ver > nul
+      %OCTAVE% --eval "cd test;try,UnitTest('ContribModules',true);catch e,disp(e);exit(1);end;exit(0);" || ver > nul
     )

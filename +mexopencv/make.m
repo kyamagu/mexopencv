@@ -243,7 +243,13 @@ function target_test(opts)
 
     if opts.verbose > 0, fprintf('Running unit-tests...\n'); end
     cd(fullfile(mexopencv.root(),'test'));
-    if ~opts.dryrun, UnitTest(opts.opencv_contrib); end
+    if ~opts.dryrun
+        UnitTest(...
+            'ContribModules',opts.opencv_contrib, ...
+            'Verbosity',opts.verbose, ...
+            'DryRun',opts.dryrun, ...
+            'Progress',opts.progressbar);
+    end
 end
 
 function mex_flags = mex_options(opts)
