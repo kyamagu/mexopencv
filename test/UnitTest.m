@@ -23,6 +23,9 @@ function varargout = UnitTest(varargin)
     % * __LogFile__ name of log file (output logged using DIARY). default is a
     %       timestamped file named `UnitTest_*.log` in current directory. Set
     %       to empty string to disable logging.
+    % * __XUnitFile__ export results to an XML file (in xUnit Format), this
+    %       can be consumed by several CI systems. default is `tests.xml`. Set
+    %       to empty string to disable report.
     %
     % ## Output
     % * __results__ output structure of results with the following fields:
@@ -75,6 +78,11 @@ function varargout = UnitTest(varargin)
     % run test suite
     [results, passed] = testsuite_run(tests, opts);
 
+    % xUnit report
+    if ~isempty(opts.XUnitFile) && ~opts.DryRun
+        export_xunit(results, opts);
+    end
+
     % output
     if nargout > 0, varargout{1} = results; end
     if nargout > 1, varargout{2} = passed; end
@@ -117,6 +125,7 @@ function opts = parse_options(varargin)
     addParam('DryRun', false, isbool);
     addParam('Progress', false, isbool);
     addParam('LogFile', logFile, @ischar);
+    addParam('XUnitFile', 'tests.xml', @ischar);
     p.parse(varargin{:});
     opts = p.Results;
 
@@ -659,6 +668,70 @@ function print_faults(results, opts)
         fprintf('\n===== %s: %s =====\n', ftype, results.Details(i).Name);
         fprintf(1, '%s\n', exception_getReport(results.Details(i).Exception, opts));
     end
+end
+
+function export_xunit(results, opts)
+    %EXPORT_XUNIT  Save test results in xUnit XML Format
+    %
+    %    export_xunit(results, opts)
+    %
+    % ## Input
+    % * __results__ output structure of results.
+    % * __opts__ Options structure.
+    %
+    % See also: matlab.unittest.plugins.XMLPlugin
+    %
+
+    % open XML file
+    fid = fopen(opts.XUnitFile, 'wt');
+    fprintf(fid, '<?xml version="1.0" encoding="UTF-8"?>\n');
+
+    % test suite root node which contains test case nodes
+    fprintf(fid, ['<testsuite name="mexopencv" timestamp="%s" time="%f"' ...
+        ' tests="%d" errors="%d" failures="%d" skip="%d">\n'], ...
+        datestr(results.Timestamp, 'yyyy-mm-ddTHH:MM:SS'), results.Duration, ...
+        numel(results.Details), 0, results.Failed, results.Incomplete);
+
+    % environment properties
+    if mexopencv.isOctave()
+        name = 'Octave';
+    else
+        name = 'MATLAB';
+    end
+    fprintf(fid, '<properties>\n');
+    fprintf(fid, '<property name="computer" value="%s"/>\n', computer());
+    fprintf(fid, '<property name="software" value="%s %s"/>\n', name, version());
+    fprintf(fid, '<property name="opencv" value="%s"/>\n', cv.Utils.version());
+    fprintf(fid, '</properties>\n');
+
+    % test cases
+    opts.HotLinks = 'off';
+    for i=1:numel(results.Details)
+        % test case node
+        t = results.Details(i);
+        name = regexp(t.Name, '\.', 'split');
+        fprintf(fid, '<testcase classname="%s" name="%s" time="%f">', ...
+            name{1}, name{2}, t.Duration);
+
+        % reason if test did not pass
+        %TODO: XML escape any special chars
+        if ~t.Passed
+            if t.Failed
+                tag = 'failure';
+            else
+                tag = 'skipped';
+            end
+            ex = t.Exception;
+            fprintf(fid, '\n<%s type="%s" message="%s">\n%s\n</%s>\n', ...
+                tag, ex.identifier, ex.message, ...
+                exception_getReport(ex, opts), tag);
+        end
+
+        fprintf(fid, '</testcase>\n');
+    end
+
+    fprintf(fid, '</testsuite>\n');
+    fclose(fid);
 end
 
 function str = exception_getReport(ME, opts)
