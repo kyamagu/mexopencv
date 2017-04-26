@@ -7,6 +7,8 @@ function varargout = UnitTest(varargin)
     % ## Options
     % * __MainModules__ enable main modules tests. default true
     % * __ContribModules__ enable contrib modules tests. default false
+    % * __MatchPattern__ regex pattern to filter test classes. Only matched
+    %       tests are kept. default empty (no filtering)
     % * __Verbosity__ Verbosity level. default 1:
     %       * __0__ quiet mode.
     %       * __1__ dot-matrix output (one character per test,
@@ -106,6 +108,7 @@ function opts = parse_options(varargin)
     end
     addParam('MainModules', true, isbool);
     addParam('ContribModules', false, isbool);
+    addParam('MatchPattern', '', @ischar);
     addParam('Verbosity', 1, @isnumeric);
     addParam('HotLinks', 'default', @ischar);
     addParam('FilterStack', false, isbool);
@@ -121,6 +124,12 @@ function opts = parse_options(varargin)
     opts.FilterStack = logical(opts.FilterStack);
     opts.DryRun = logical(opts.DryRun);
     opts.Progress = logical(opts.Progress);
+    %{
+    %TODO
+    if ~isempty(opts.MatchPattern)
+        opts.MatchPattern = regexptranslate('wildcard', opts.MatchPattern);
+    end
+    %}
 
     % root directory for opencv/opencv_contrib tests
     opts.TestDirs = {};
@@ -192,6 +201,12 @@ function tests = testsuite_fromFolder(dpath, opts)
     % list of all test classes
     names = dir(fullfile(dpath, 'Test*.m'));
     names = regexprep({names.name}, '\.m$', '');
+
+    % keep only classes that match the specified pattern
+    if ~isempty(opts.MatchPattern)
+        idx = ~cellfun(@isempty, regexp(names, opts.MatchPattern, 'once'));
+        names = names(idx);
+    end
 
     % remove classes that dont work in Octave
     %TODO: should count towards skipped tests
