@@ -110,6 +110,36 @@ function opts = parse_options(varargin)
     opts.monitor = @(varargin) testrunner_monitor(opts, varargin{:});
 end
 
+function skip = skip_class(fpath)
+    %SKIP_CLASS  Determine if test class should be skipped (Octave)
+    %
+    %    skip = skip_class(fpath)
+    %
+    % ## Input
+    % * __fpath__ full absolute path to M-file to check.
+    %
+    % ## Output
+    % * __skip__ true or false.
+    %
+    % This is manily use for Octave to avoid certain Octave-specific bugs and
+    % incompatibilities.
+    %
+    % See also: mlint, checkcode
+    %
+
+    %HACK: Octave throws syntax error if a local function is defined in the
+    % same file as a classdef, http://savannah.gnu.org/bugs/?41723
+    skip = false;
+    if mexopencv.isOctave()
+        % check if file is accepted by Octave parser
+        try
+            builtin('__parse_file__', fpath);
+        catch
+            skip = true;
+        end
+    end
+end
+
 function tests = testsuite_fromFolder(dpath, opts)
     %TESTSUITE_FROMFOLDER  Create test suite from all test classes in a folder
     %
@@ -134,6 +164,11 @@ function tests = testsuite_fromFolder(dpath, opts)
     % list of all test classes
     names = dir(fullfile(dpath, 'Test*.m'));
     names = regexprep({names.name}, '\.m$', '');
+
+    % remove classes that dont work in Octave
+    %TODO: should count towards skipped tests
+    idx = cellfun(@(c) skip_class(fullfile(dpath, [c '.m'])), names);
+    names = names(~idx);
 
     % sort classes alphabetically
     names = sort(names(:));
