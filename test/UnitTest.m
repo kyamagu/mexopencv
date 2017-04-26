@@ -13,6 +13,7 @@ function varargout = UnitTest(varargin)
     %             either ".", "S", or "F"). Good for minimal output.
     %       * __2__ verbose output, one line per test (test name and status),
     %             along with error message and stack trace if any.
+    % * __HotLinks__ Allow HTML hyperlinks in error messages. default 'default'
     % * __FilterStack__ remove test framework from exceptions stack traces.
     %       default false
     %
@@ -90,12 +91,14 @@ function opts = parse_options(varargin)
     addParam('MainModules', true, isbool);
     addParam('ContribModules', false, isbool);
     addParam('Verbosity', 1, @isnumeric);
+    addParam('HotLinks', 'default', @ischar);
     addParam('FilterStack', false, isbool);
     p.parse(varargin{:});
     opts = p.Results;
 
     opts.MainModules = logical(opts.MainModules);
     opts.ContribModules = logical(opts.ContribModules);
+    opts.HotLinks = validatestring(opts.HotLinks, {'on', 'off', 'default'});
     opts.FilterStack = logical(opts.FilterStack);
 
     % root directory for opencv/opencv_contrib tests
@@ -650,7 +653,6 @@ function str = exception_getReport(ME, opts)
         end
         str = sprintf('%s\n', str{:});
     else
-        %str = getReport(ME, 'extended', 'hyperlinks','off');
-        str = getReport(ME);
+        str = getReport(ME, 'extended', 'hyperlinks',opts.HotLinks);
     end
 end
