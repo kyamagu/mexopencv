@@ -18,6 +18,9 @@ function varargout = UnitTest(varargin)
     %       default false
     % * __DryRun__ dont actually run the tests, just print them. default false
     % * __Progress__ display a graphical progress bar. default false
+    % * __LogFile__ name of log file (output logged using DIARY). default is a
+    %       timestamped file named `UnitTest_*.log` in current directory. Set
+    %       to empty string to disable logging.
     %
     % ## Output
     % * __results__ output structure of results with the following fields:
@@ -53,6 +56,12 @@ function varargout = UnitTest(varargin)
     nargoutchk(0,2);
     opts = parse_options(varargin{:});
 
+    % output logging
+    if ~isempty(opts.LogFile) && ~opts.DryRun
+        diary(opts.LogFile);
+        cObj = onCleanup(@() diary('off'));
+    end
+
     % collect tests from all folders
     addpath(opts.TestDirs{:});
     tests = cellfun(@(d) testsuite_fromFolder(d, opts), opts.TestDirs, ...
@@ -79,6 +88,11 @@ function opts = parse_options(varargin)
     %
 
     %TODO: attempt to detect if opencv_contrib is available
+    %TODO: add option to specify file handle to print to, which can replace
+    % the logging options
+
+    % by default, log output to timestamped file in current directory
+    logFile = sprintf('UnitTest_%s.log', datestr(now(),'yyyymmddTHHMMSS'));
 
     % helper function to validate true/false arguments
     isbool = @(x) isscalar(x) && (islogical(x) || isnumeric(x));
@@ -97,6 +111,7 @@ function opts = parse_options(varargin)
     addParam('FilterStack', false, isbool);
     addParam('DryRun', false, isbool);
     addParam('Progress', false, isbool);
+    addParam('LogFile', logFile, @ischar);
     p.parse(varargin{:});
     opts = p.Results;
 
