@@ -16,6 +16,7 @@ function varargout = UnitTest(varargin)
     % * __HotLinks__ Allow HTML hyperlinks in error messages. default 'default'
     % * __FilterStack__ remove test framework from exceptions stack traces.
     %       default false
+    % * __DryRun__ dont actually run the tests, just print them. default false
     %
     % ## Output
     % * __results__ output structure of results with the following fields:
@@ -93,6 +94,7 @@ function opts = parse_options(varargin)
     addParam('Verbosity', 1, @isnumeric);
     addParam('HotLinks', 'default', @ischar);
     addParam('FilterStack', false, isbool);
+    addParam('DryRun', false, isbool);
     p.parse(varargin{:});
     opts = p.Results;
 
@@ -100,6 +102,7 @@ function opts = parse_options(varargin)
     opts.ContribModules = logical(opts.ContribModules);
     opts.HotLinks = validatestring(opts.HotLinks, {'on', 'off', 'default'});
     opts.FilterStack = logical(opts.FilterStack);
+    opts.DryRun = logical(opts.DryRun);
 
     % root directory for opencv/opencv_contrib tests
     opts.TestDirs = {};
@@ -380,11 +383,13 @@ function status = testcase_run(t, opts)
     opts.monitor('tcase_started', t);
     tid = tic();
     try
-        if mexopencv.isOctave()
-            %HACK: Octave errors on feval of a "Class.Method"
-            eval(t);
-        else
-            feval(t);
+        if ~opts.DryRun
+            if mexopencv.isOctave()
+                %HACK: Octave errors on feval of a "Class.Method"
+                eval(t);
+            else
+                feval(t);
+            end
         end
         % pass
         status = 1;
