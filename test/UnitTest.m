@@ -186,6 +186,72 @@ function tests = testsuite_fromFolder(dpath, opts)
     end
 end
 
+function tests = testsuite_fromPackage(name, opts)
+    %TESTSUITE_FROMPACKAGE  Create test suite from package
+    %
+    %    tests = testsuite_fromPackage(name, opts)
+    %
+    % ## Input
+    % * __name__ Package. This can be specified as:
+    %       * name of a package as a string
+    %       * metapackage object associated with the package
+    % * __opts__ Options structure.
+    %
+    % ## Output
+    % * __tests__ Cell array of test names discovered.
+    %
+    % See also: matlab.unittest.TestSuite.fromPackage
+    %
+
+    % introspection to get package metadata
+    if ischar(name)
+        mp = meta.package.fromName(name);
+    elseif isa(name, 'meta.package')
+        mp = name;
+    else
+        error('UnitTest:error', 'Invalid package argument');
+    end
+    assert(~isempty(mp), 'UnitTest:error', 'Package not found');
+
+    % sub-packages
+    if ~mexopencv.isOctave() && isprop(mp, 'PackageList')
+        testsP = arrayfun(@(p) testsuite_fromPackage(p.Name, opts), ...
+            mp.PackageList, 'UniformOutput',false);
+    else
+        testsP = cellfun(@(p) testsuite_fromPackage(p.Name, opts), ...
+            mp.Packages, 'UniformOutput',false);
+    end
+
+    % classes
+    %{
+    %TODO
+    if ~mexopencv.isOctave() && isprop(mp, 'ClassList')
+        mc = findobj(mp.ClassList, '-depth',1, '-regexp', 'Name','^Test');
+        cnames = {mc.Name};
+    else
+        cnames = cellfun(@(c) c.Name, mp.Classes, 'UniformOutput',false);
+        cnames = cnames(strncmp('Test', cnames, length('Test')));
+    end
+    testsC = cellfun(@(c) testsuite_fromClass(c, opts), ...
+        cnames, 'UniformOutput',false);
+    %}
+    if ~mexopencv.isOctave() && isprop(mp, 'ClassList')
+        testsC = arrayfun(@(c) testsuite_fromClass(c.Name, opts), ...
+            mp.ClassList, 'UniformOutput',false);
+    else
+        testsC = cellfun(@(c) testsuite_fromClass(c.Name, opts), ...
+            mp.Classes, 'UniformOutput',false);
+    end
+
+    % combine all
+    tests = cat(1, testsP{:}, testsC{:});
+    if isempty(tests)
+        %HACK: avoid an Octave bug when later concatenated with other tests
+        % https://savannah.gnu.org/bugs/index.php?49759
+        tests = {};
+    end
+end
+
 function tests = testsuite_fromClass(klass, opts)
     %TESTSUITE_FROMCLASS  Create test suite from test class
     %
