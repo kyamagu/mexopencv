@@ -2,7 +2,7 @@
 % This program demonstrates arbitrary object finding with the Generalized
 % Hough transform.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/gpu/generalized_hough.cpp>
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/generalized_hough.cpp>
 %
 
 %% Input images
@@ -17,16 +17,16 @@ imshow(templ), title('Template')
 
 %% Create Generalized Hough transform object
 if true
-    hough = cv.GeneralizedHoughBallard();
+    alg = cv.GeneralizedHoughBallard();
 else
-    hough = cv.GeneralizedHoughGuil();
+    alg = cv.GeneralizedHoughGuil();
 end
 
 %% Feed it the template
-hough.setTemplate(templ);
+alg.setTemplate(templ);
 
 %% Detect the template in the image
-[positions,votes] = hough.detect(img);
+[positions,votes] = alg.detect(img);
 
 %% Show results
 out = cv.cvtColor(img, 'GRAY2RGB');
@@ -42,13 +42,14 @@ for i=1:numel(positions)
 
     % draw rotated box
     opts = {'Color',[0 0 255], 'Thickness',2, 'LineType','AA'};
-    out = cv.polylines(out, {num2cell(pts,2)}, 'Closed',true, opts{:});
-    %{
-    out = cv.line(out, pts(1,:), pts(2,:), opts{:});
-    out = cv.line(out, pts(2,:), pts(3,:), opts{:});
-    out = cv.line(out, pts(3,:), pts(4,:), opts{:});
-    out = cv.line(out, pts(4,:), pts(1,:), opts{:});
-    %}
+    if true
+        out = cv.polylines(out, {num2cell(pts,2)}, 'Closed',true, opts{:});
+    else
+        out = cv.line(out, pts(1,:), pts(2,:), opts{:});
+        out = cv.line(out, pts(2,:), pts(3,:), opts{:});
+        out = cv.line(out, pts(3,:), pts(4,:), opts{:});
+        out = cv.line(out, pts(4,:), pts(1,:), opts{:});
+    end
 
     % draw upright bounding box
     rect = cv.RotatedRect.boundingRect(rrect);

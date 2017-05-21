@@ -4,7 +4,7 @@
 %
 
 %% Create detector
-xmlfile = fullfile(mexopencv.root(),'test','lbpcascade_frontalface.xml');
+xmlfile = fullfile(mexopencv.root(),'test','lbpcascade_frontalface.xml'); % lbpcascade_frontalface_improved.xml
 params = {};
 try
     detector = cv.DetectionBasedTracker(xmlfile, xmlfile, params{:});

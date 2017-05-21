@@ -66,7 +66,7 @@ board = {'GridBoard', ...
     markersX, markersY, markerLength, markerSeparation, dictionary};
 
 %% Input source
-if ~isempty(vidFile) && exist(vidFile, 'file')
+if ~isempty(vidFile) && exist(vidFile, 'file') == 2
     vid = cv.VideoCapture(vidFile);
     waitTime = 1;     % 1 sec
 else

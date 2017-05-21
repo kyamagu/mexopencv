@@ -20,7 +20,7 @@ if ~isdir(dirMNIST)
     mkdir(dirMNIST);
     for i=1:numel(files)
         gzFile = fullfile(dirMNIST, files{i});
-        if ~exist(gzFile, 'file')
+        if exist(gzFile, 'file') ~= 2
             url = [baseURL, files{i}];
             urlwrite(url, gzFile);
         end

@@ -1,5 +1,5 @@
 %% Flood-Fill demo
-% Demonstrates how to use cv.floodFill
+% Demonstrates how to use |cv.floodFill|.
 %
 
 %% Input image and mask

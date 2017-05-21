@@ -3,6 +3,7 @@
 % adjusting basic video color properties.
 %
 % <http://docs.opencv.org/3.2.0/dd/d43/tutorial_py_video_display.html>
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/videocapture_basic.cpp>
 % <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/videocapture_starter.cpp>
 %
 
@@ -66,7 +67,7 @@ function h = buildGUI()
     %BUILDGUI  Creates the UI
 
     % setup video capture
-    cap = cv.VideoCapture(0);
+    cap = cv.VideoCapture(0, 'API','Any');
     pause(1);
     assert(cap.isOpened());
 

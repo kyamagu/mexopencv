@@ -30,7 +30,7 @@ groundTruths = {
 };
 assert(isequal(numel(imgs1), numel(imgs2), numel(groundTruths)));
 
-if ~exist(groundTruths{1}, 'file')
+if exist(groundTruths{1}, 'file') ~= 2
     % attempt to download ground thruth flow from GitHub
     disp('Downloading FLO...')
     url = 'https://cdn.rawgit.com/opencv/opencv_extra/3.2.0/testdata/cv/optflow/RubberWhale.flo';
@@ -49,7 +49,7 @@ forestDumpPath = fullfile(tempdir(), 'forest.yml.gz');
 
 %%
 % train the forest for the Global Patch Collider and save it
-if ~exist(forestDumpPath, 'file')
+if exist(forestDumpPath, 'file') ~= 2
     gpc = cv.GPCForest();
     tic
     gpc.train(imgs1, imgs2, groundTruths);

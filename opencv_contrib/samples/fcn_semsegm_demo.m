@@ -21,8 +21,13 @@ urls = {
 };
 if ~isdir(dirDNN), mkdir(dirDNN); end
 for i=1:numel(files)
-    if ~exist(files{i}, 'file')
+    if exist(files{i}, 'file') ~= 2
         disp('Downloading...')
+        if i==3
+            choice = questdlg({'Downloading a large Caffe model (>500MB).', ...
+                'Continue?'}, 'Download', 'OK', 'Cancel', 'OK');
+            assert(strcmp(choice, 'OK'), 'Download cancelled');
+        end
         urlwrite(urls{i}, files{i});
     end
 end

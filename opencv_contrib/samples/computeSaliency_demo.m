@@ -13,7 +13,7 @@ alg = validatestring(alg, ...
 % path of input video file to read frames from
 video_name = fullfile(mexopencv.root(),'test','768x576.avi');
 start_frame = 0;  % index of starting frame
-if ~exist(video_name, 'file')
+if exist(video_name, 'file') ~= 2
     % download video from Github
     disp('Downloading video...')
     url = 'https://cdn.rawgit.com/opencv/opencv/3.1.0/samples/data/768x576.avi';

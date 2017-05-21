@@ -25,17 +25,17 @@ modelBin = fullfile(dirDNN, 'bvlc_googlenet.caffemodel');
 if ~isdir(dirDNN)
     mkdir(dirDNN);
 end
-if ~exist(modelLabels, 'file')
+if exist(modelLabels, 'file') ~= 2
     disp('Downloading...')
     url = 'https://cdn.rawgit.com/opencv/opencv_contrib/3.2.0/modules/dnn/samples/synset_words.txt';
     urlwrite(url, modelLabels);
 end
-if ~exist(modelTxt, 'file')
+if exist(modelTxt, 'file') ~= 2
     disp('Downloading...')
     url = 'https://cdn.rawgit.com/opencv/opencv_contrib/3.2.0/modules/dnn/samples/bvlc_googlenet.prototxt';
     urlwrite(url, modelTxt);
 end
-if ~exist(modelBin, 'file')
+if exist(modelBin, 'file') ~= 2
     disp('Downloading...')
     url = 'http://dl.caffe.berkeleyvision.org/bvlc_googlenet.caffemodel';
     urlwrite(url, modelBin);

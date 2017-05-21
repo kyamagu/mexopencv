@@ -6,7 +6,8 @@
 % * use the OpenCV function <matlab:doc('cv.boundingRect') cv.boundingRect>
 % * use the OpenCV function <matlab:doc('cv.minEnclosingCircle') cv.minEnclosingCircle>
 %
-% <http://docs.opencv.org/3.1.0/da/d0c/tutorial_bounding_rects_circles.html>
+% <http://docs.opencv.org/3.2.0/da/d0c/tutorial_bounding_rects_circles.html>,
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ShapeDescriptors/generalContours_demo1.cpp>
 %
 
 %% Input

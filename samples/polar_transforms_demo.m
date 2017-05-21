@@ -3,7 +3,8 @@
 %
 % This program illustrates Linear-Polar and Log-Polar image transforms.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/polar_transforms.cpp>
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/polar_transforms.cpp>
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/logpolar.py>
 %
 
 %%
@@ -34,9 +35,15 @@ while ishghandle(window)
     % Grab an image
     im = camera.read();
     if isempty(im), break; end
+
     center = [c r] / 2;
-    radius = min(c,r) / 2;
-    M = c / log(radius);
+    if true
+        radius = min(c,r) / 2;
+        M = c / log(radius);
+    else
+        M = 70;
+        radius = M;
+    end
 
     % transform
     log_polar_img = cv.logPolar(im, center, M, ...

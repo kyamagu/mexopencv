@@ -12,7 +12,7 @@ function varargout = grabcut_demo_gui(im)
     if nargin < 1
         src = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
     elseif isempty(im)
-        fmts = imformats;
+        fmts = imformats();
         filtspec = strjoin(strcat('*.', [fmts.ext]), ';');
         [fn,fp] = uigetfile(filtspec, 'Select an image');
         if fp==0, error('No file selected'); end
