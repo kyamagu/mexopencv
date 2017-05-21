@@ -41,7 +41,7 @@ function varargout = grabcut_demo_gui(im)
         'WindowButtonDownFcn',@onMouseDown, opts{:});
 
     % return graphics handles
-    if nargout > 1, varargout{1} = h; end
+    if nargout > 0, varargout{1} = h; end
 
     % ========== Event Handlers ==========
 

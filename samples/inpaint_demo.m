@@ -23,7 +23,7 @@ function varargout = inpaint_demo(im)
 
     % build and initialize GUI
     h = buildGUI(img);
-    if nargout > 1, varargout{1} = h; end
+    if nargout > 0, varargout{1} = h; end
 
     % display instructions
     onHelp([],[]);

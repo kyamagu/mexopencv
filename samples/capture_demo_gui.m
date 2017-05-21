@@ -10,7 +10,7 @@
 function varargout = capture_demo_gui()
     % create the UI
     h = buildGUI();
-    if nargout > 1, varargout{1} = h; end
+    if nargout > 0, varargout{1} = h; end
 
     % main loop
     counter = 0;

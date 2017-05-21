@@ -8,7 +8,7 @@ function varargout = gabor_filter_gui(ksize)
     % create the UI
     if nargin < 1, ksize = [121 121]; end
     h = buildGUI(ksize);
-    if nargout > 1, varargout{1} = h; end
+    if nargout > 0, varargout{1} = h; end
 end
 
 function onChange(~,~,h)

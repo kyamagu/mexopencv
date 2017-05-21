@@ -14,7 +14,7 @@ function varargout = train_svmsgd_demo_gui()
     % create the UI
     h = buildGUI();
     onHelp([],[]);   % display instructions
-    if nargout > 1, varargout{1} = h; end
+    if nargout > 0, varargout{1} = h; end
 
 
     function h = buildGUI()
