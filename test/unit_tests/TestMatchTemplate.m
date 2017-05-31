@@ -67,12 +67,14 @@ classdef TestMatchTemplate
             end
 
             result = cv.matchTemplate(img, tmpl, 'Method','CCorrNormed');
-            [row1,col1] = find(result == max(result(:)));
+            [~,idx1] = max(result(:));
+            [row1,col1] = ind2sub(size(result), idx1);
 
             C = normxcorr2(tmpl, img);
             [h,w] = size(tmpl);
             C = C(h:end-h+1,w:end-w+1);
-            [row2,col2] = find(C == max(C(:)));
+            [~,idx2] = max(C(:));
+            [row2,col2] = ind2sub(size(C), idx2);
 
             %assert(isequal(row1,row2) && isequal(col1,col2));
         end
