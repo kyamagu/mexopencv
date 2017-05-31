@@ -13,7 +13,9 @@
 %
 % Test images are downloaded from |opencv_extra| on Github.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/cloning_demo.cpp>
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/cloning_demo.cpp>,
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/cloning_gui.cpp>,
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/photo/seamless_cloning/cloning_demo.cpp>
 %
 
 %% Test images
@@ -44,7 +46,7 @@ if ~isdir(dirRoot)
             if i > 3, N = N - 1; end
             for j=1:N
                 f = fullfile(d, imgs{j});
-                if ~exist(f, 'file')
+                if exist(f, 'file') ~= 2
                     url = [baseURL, dirs{i}, '/', imgs{j}]
                     urlwrite(url, f);
                 end
@@ -53,7 +55,11 @@ if ~isdir(dirRoot)
     end
 end
 
+%%
+% some options
 opts = {'FlipChannels',true};
+showPoint = @(I,p) cv.drawMarker(I, p, 'Color',[0 255 0], ...
+    'MarkerType','x', 'MarkerSize',30, 'Thickness',2, 'LineType','AA');
 
 %% Normal Cloning
 src = imread(fullfile(dirRoot, dirs{1}, imgs{1}));
@@ -65,7 +71,7 @@ result = cv.seamlessClone(src, dst, mask, p, 'Method','NormalClone', opts{:});
 
 figure('Name','Normal Cloning')
 subplot(221), imshow(src), title('source')
-subplot(222), imshow(dst), title('destination')
+subplot(222), imshow(showPoint(dst,p)), title('destination')
 subplot(223), imshow(mask), title('mask')
 subplot(224), imshow(result), title('cloned')
 
@@ -79,7 +85,7 @@ result = cv.seamlessClone(src, dst, mask, p, 'Method','MixedClone', opts{:});
 
 figure('Name','Mixed Cloning')
 subplot(221), imshow(src), title('source')
-subplot(222), imshow(dst), title('destination')
+subplot(222), imshow(showPoint(dst,p)), title('destination')
 subplot(223), imshow(mask), title('mask')
 subplot(224), imshow(result), title('cloned')
 
@@ -94,7 +100,7 @@ result = cv.seamlessClone(src, dst, mask, p, ...
 
 figure('Name','Monochrome Transfer')
 subplot(221), imshow(src), title('source')
-subplot(222), imshow(dst), title('destination')
+subplot(222), imshow(showPoint(dst,p)), title('destination')
 subplot(223), imshow(mask), title('mask')
 subplot(224), imshow(result), title('cloned')
 
