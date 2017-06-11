@@ -49,3 +49,4 @@ octave-workspace
 /test/data01.xml
 /test/RubberWhale.flo
 /test/sparse_optical_flow.avi
+/test/Histogram_Comparison_Source_*.jpg
