@@ -48,3 +48,4 @@ octave-workspace
 /test/cloning/
 /test/data01.xml
 /test/RubberWhale.flo
+/test/sparse_optical_flow.avi
