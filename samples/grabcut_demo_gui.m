@@ -1,10 +1,83 @@
 %% GrabCut segmentation demo
-% An example using the GrabCut algorithm.
+% Interactive foreground extraction using the GrabCut algorithm.
 %
 % This program demonstrates GrabCut segmentation: select an object in a
 % region and then grabcut will attempt to segment it out.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/grabcut.cpp>
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/grabcut.cpp>,
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/grabcut.py>,
+% <http://docs.opencv.org/3.2.0/d8/d83/tutorial_py_grabcut.html>
+%
+
+%% Theory
+%
+% GrabCut algorithm was designed by Carsten Rother, Vladimir Kolmogorov and
+% Andrew Blake from Microsoft Research Cambridge, UK. in their paper:
+%
+% * "GrabCut": interactive foreground extraction using iterated graph cuts
+%   <http://dl.acm.org/citation.cfm?id=1015720>
+%
+% An algorithm was needed for foreground extraction with minimal user
+% interaction, and the result was *GrabCut*.
+%
+% How it works from user point of view? Initially user draws a rectangle
+% around the foreground region (foreground region should be completely inside
+% the rectangle). Then algorithm segments it iteratively to get the best
+% result. Done. But in some cases, the segmentation won't be fine, like, it
+% may have marked some foreground region as background and vice versa. In that
+% case, user need to do fine touch-ups. Just give some strokes on the images
+% where some faulty results are there. Strokes basically says: "Hey, this
+% region should be foreground, you marked it background, correct it in next
+% iteration", or its opposite for background. Then in the next iteration, you
+% get better results.
+%
+% See the image below. First player and football is enclosed in a blue
+% rectangle. Then some final touchups with white strokes (denoting foreground)
+% and black strokes (denoting background) is made. And we get a nice result.
+%
+% <<http://docs.opencv.org/3.2.0/grabcut_output1.jpg>>
+%
+% So what happens in background ?
+%
+% * User inputs the rectangle. Everything outside this rectangle will be taken
+%   as sure background (That is the reason it is mentioned before that your
+%   rectangle should include all the objects). Everything inside rectangle is
+%   unknown. Similarly any user input specifying foreground and background are
+%   considered as hard-labelling which means they won't change in the process.
+% * Computer does an initial labelling depeding on the data we gave. It labels
+%   the foreground and background pixels (or it hard-labels)
+% * Now a Gaussian Mixture Model(GMM) is used to model the foreground and
+%   background.
+% * Depending on the data we gave, GMM learns and create new pixel
+%   distribution. That is, the unknown pixels are labelled either probable
+%   foreground or probable background depending on its relation with the other
+%   hard-labelled pixels in terms of color statistics (It is just like
+%   clustering).
+% * A graph is built from this pixel distribution. Nodes in the graphs are
+%   pixels. Additional two nodes are added, *Source node* and *Sink node*.
+%   Every foreground pixel is connected to source node and every background
+%   pixel is connected to sink node.
+% * The weights of edges connecting pixels to source node/end node are defined
+%   by the probability of a pixel being foreground/background. The weights
+%   between the pixels are defined by the edge information or pixel
+%   similarity. If there is a large difference in pixel color, the edge
+%   between them will get a low weight.
+% * Then a mincut algorithm is used to segment the graph. It cuts the graph
+%   into two separating source node and sink node with minimum cost function.
+%   The cost function is the sum of all weights of the edges that are cut.
+%   After the cut, all the pixels connected to source node become foreground
+%   and those connected to sink node become background.
+% * The process is continued until the classification converges.
+%
+% It is illustrated in below image
+% (Image Courtesy: <http://www.cs.ru.ac.za/research/g02m1682/>)
+%
+% <<http://docs.opencv.org/3.2.0/grabcut_scheme.jpg>>
+%
+
+%% Code
+% This is an interactive tool using grabcut. You can also watch this
+% <http://www.youtube.com/watch?v=kAwxLTDDAwU youtube video> on how to use it.
 %
 
 function varargout = grabcut_demo_gui(im)
@@ -29,7 +102,7 @@ function varargout = grabcut_demo_gui(im)
 
     % initialize app state, and create the UI
     app = initApp(src);
-    h = buildGUI(src);
+    h = buildGUI(src, app);
 
     % hook event handlers
     opts = {'Interruptible','off', 'BusyAction','cancel'};
@@ -55,6 +128,12 @@ function varargout = grabcut_demo_gui(im)
             ''
             'Select a rectangular area around the object you'
             'want to segment.'
+            ''
+            'Then press "next" to segment the object (once or a few times).'
+            ''
+            'For finer touch-ups, set the mode and draw lines on the areas you'
+            'want, to mark them as foreground/background (sure or probable),'
+            'then press "next" again.'
             ''
             'Hot keys:'
             'ESC - quit the program'
@@ -89,7 +168,7 @@ function varargout = grabcut_demo_gui(im)
         %ONNEXT  Event handler for next button
 
         if app.isInitialized
-            % set pixels in GC mask using label points
+            % set pixels in GC mask using drawing points
             if any(~cellfun(@isempty, app.pts))
                 setLblsInMask();
             end
@@ -101,8 +180,8 @@ function varargout = grabcut_demo_gui(im)
             toc
         elseif any(~cellfun(@isempty, app.pts))
             % set foreground pixels in GC mask using rectangle
-            % and set pixels in GC mask using label points
             setRectInMask();
+            % set pixels in GC mask using drawing points
             setLblsInMask();
             % init using mask
             tic
@@ -117,7 +196,7 @@ function varargout = grabcut_demo_gui(im)
                 app.img0, rect, 'Mode','InitWithRect', 'IterCount',1);
             toc
         else
-            disp('rect must be determined');
+            disp('First select object to segment by drawing a rectangle');
             return;
         end
 
@@ -136,7 +215,6 @@ function varargout = grabcut_demo_gui(im)
         switch e.Key
             case {'q', 'escape'}
                 close(h.fig);
-                return;
 
             case 'h'
                 onHelp([],[]);
@@ -147,17 +225,26 @@ function varargout = grabcut_demo_gui(im)
             case 'n'
                 onNext([],[]);
 
+            case {'add', 'subtract'}
+                % adjust brush thickness
+                if strcmp(e.Character, '+')
+                    app.thick = min(app.thick + 2, 40);
+                elseif strcmp(e.Character, '-')
+                    app.thick = max(app.thick - 2, 1);
+                end
+                set(h.line(:), 'MarkerSize',app.thick*5.4);
+
             case {'1', '2', '3', '4'}
+                % set brush value
                 app.currIdx = str2double(e.Key);
                 set(h.pop, 'Value',app.currIdx);
-                drawnow;
         end
     end
 
     function onChange(~,~)
         %ONCHANGE  Event handler for UI controls
 
-        % retrieve current value from popup menu
+        % change current GC mask drawing value: BGD/FGD/PR_BGD/PR_FGD
         app.currIdx = get(h.pop, 'Value');
     end
 
@@ -175,7 +262,6 @@ function varargout = grabcut_demo_gui(im)
             select_rectangle();
             if isempty(app.rect), return; end
             set(h.rect, 'XData',app.rectxy(:,1), 'YData',app.rectxy(:,2));
-            drawnow;
         else
             % attach event handlers, and change mouse pointer
             set(h.fig, 'Pointer','circle', ...
@@ -194,7 +280,6 @@ function varargout = grabcut_demo_gui(im)
         set(h.line(app.currIdx), ...
             'XData',app.pts{app.currIdx}(:,1), ...
             'YData',app.pts{app.currIdx}(:,2));
-        drawnow;
     end
 
     function onMouseUp(~,~)
@@ -209,13 +294,18 @@ function varargout = grabcut_demo_gui(im)
     % ========== Helper Functions ==========
 
     function showImage()
-        res = app.img0;
+        out = app.img0;
         if app.isInitialized
-            % background pixels
-            binMask = repmat(app.mask == 0 | app.mask == 2, [1 1 3]);
-            res(binMask) = 0;
+            % zero-out background pixels
+            if true
+                binMask = repmat(app.mask == 0 | app.mask == 2, [1 1 3]);
+                out(binMask) = 0;
+            else
+                binMask = (app.mask == 1 | app.mask == 3);
+                out = cv.bitwise_and(out, out, 'Mask',binMask);
+            end
         end
-        set(h.img, 'CData',res);
+        set(h.img, 'CData',out);
         set(h.txt, 'String',sprintf('Iter = %2d',app.iterCount));
         drawnow;
     end
@@ -231,24 +321,13 @@ function varargout = grabcut_demo_gui(im)
     end
 
     function setLblsInMask()
-        % set pixels in GC mask: BGD, FGD, PR_BGD, PR_FGD
-        radius = 5;
+        % set pixels in GC mask from drawing points: BGD, FGD, PR_BGD, PR_FGD
         for i=1:4
-            %{
-            x = axes2pix(app.sz(2), get(h.img,'XData'), app.pts{idx}(:,1));
-            y = axes2pix(app.sz(1), get(h.img,'YData'), app.pts{idx}(:,2));
-            x = min(max(x,1), sz(2));
-            y = min(max(y,1), sz(1));
-            x = round(x) - 1;
-            y = round(y) - 1;
-            %}
-            for k=1:size(app.pts{i},1)
-                app.mask = cv.circle(app.mask, app.pts{i}(k,:)-1, radius, ...
-                    'Color',uint8(i-1), 'Thickness','Filled');
-            end
+            app.mask = cv.circle(app.mask, app.pts{i}-1, app.thick, ...
+                'Color',uint8(i-1), 'Thickness','Filled');
         end
 
-        % clear label points
+        % clear drawing points after being processed
         app.pts = repmat({zeros(0,2)}, [1 4]);
         set(h.line(:), 'XData',NaN, 'YData',NaN);
     end
@@ -287,20 +366,21 @@ function app = initApp(img)
     %INITAPP  Initialize app state
 
     app = struct();
-    app.img0 = img;
-    app.sz = size(img);
-    app.mask = zeros(size(img,1), size(img,2), 'uint8');
-    app.bgdModel = zeros(1,64);
-    app.fgdModel = zeros(1,64);
-    app.currIdx = 1;
-    app.pts = repmat({zeros(0,2)}, [1 4]);
-    app.rect = zeros(0, 4);
-    app.rectxy = zeros(0,2);
-    app.iterCount = 0;
-    app.isInitialized = false;
+    app.img0 = img;              % original image
+    app.sz = size(img);          % image size
+    app.mask = zeros(size(img,1), size(img,2), 'uint8'); % GC mask
+    app.bgdModel = zeros(1,64);  % GC background model
+    app.fgdModel = zeros(1,64);  % GC foreground model
+    app.currIdx = 1;             % drawing value (BGD/FGD/PR_BGD/PR_FGD)
+    app.thick = 5;               % drawing thickness
+    app.pts = repmat({zeros(0,2)}, [1 4]); % drawing points of each brush
+    app.rect = zeros(0, 4);      % rectangle [x,y,w,h]
+    app.rectxy = zeros(0,2);     % rectangle points [TL;TR;BR;BL;TL]
+    app.iterCount = 0;           % iterations counter
+    app.isInitialized = false;   % whethet GC mask is initialized
 end
 
-function h = buildGUI(img)
+function h = buildGUI(img, app)
     %BUILDGUI  Creates the UI
 
     % parameters
@@ -337,15 +417,11 @@ function h = buildGUI(img)
     h.pop = uicontrol('Parent',h.fig, 'Style','popupmenu', ...
         'Position',[260 5 80 20], 'String',{'BGD','FGD','PR_BGD','PR_FGD'});
 
-    % initialize lines
-    clr = 'rbcmg';
+    % initialize lines (drawing and rectangle selection)
+    clr = 'kwgrb';  % 'rbcmg'
     for i=1:4
-        %TODO: use animatedline
-        %if ~mexopencv.isOctave() && ~verLessThan('matlab','8.4')
-        %h.line(i) = animatedline(..);
-        %end
         h.line(i) = line(NaN, NaN, 'Color',clr(i), 'Parent',h.ax, ...
-            'LineStyle','none', 'Marker','.', 'MarkerSize',10);
+            'LineStyle','none', 'Marker','.', 'MarkerSize',app.thick*5.4);
     end
     h.rect = line(NaN, NaN, 'Color',clr(5), 'Parent',h.ax, 'LineWidth',2);
 end
