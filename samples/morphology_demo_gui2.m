@@ -10,9 +10,91 @@
 % * Top Hat
 % * Black Hat
 %
-% <http://docs.opencv.org/3.1.0/d3/dbe/tutorial_opening_closing_hats.html>
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ImgProc/Morphology_2.cpp>
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/morphology2.cpp>
+% <http://docs.opencv.org/3.2.0/d3/dbe/tutorial_opening_closing_hats.html>,
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgProc/Morphology_2.cpp>,
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/morphology2.cpp>,
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/morphology.py>
+%
+
+%% Theory
+%
+% We previously covered two basic Morphology operations:
+%
+% * Erosion
+% * Dilation
+%
+% Based on these two we can effectuate more sophisticated transformations to
+% our images. Here we discuss briefly 5 operations offered by OpenCV.
+%
+%% 1) Opening
+%
+% It is obtained by the erosion of an image followed by a dilation.
+%
+% $$dst = open( src, element) = dilate( erode( src, element ) )$$
+%
+% Useful for removing small objects (it is assumed that the objects are bright
+% on a dark foreground). For instance, check out the example below. The image
+% at the left is the original and the image at the right is the result after
+% applying the opening transformation. We can observe that the small spaces in
+% the corners of the letter tend to dissapear.
+%
+% <<http://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_Opening.png>>
+%
+% For the sake of clarity, we have performed the opening operation (|7x7|
+% rectangular structuring element) on the same original image but inverted
+% such as the object in white is now the letter.
+%
+% <<http://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_Opening_2.png>>
+%
+% (Left image: original image inverted, right image: resulting opening).
+%
+%% 2) Closing
+%
+% It is obtained by the dilation of an image followed by an erosion.
+%
+% $$dst = close( src, element ) = erode( dilate( src, element ) )$$
+%
+% Useful to remove small holes (dark regions).
+%
+% <<http://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_Closing.png>>
+%
+% On the inverted image, we have performed the closing operation (|7x7|
+% rectangular structuring element):
+%
+% <<http://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_Closing_2.png>>
+%
+% (Left image: original image inverted, right image: resulting closing).
+%
+%% 3) Morphological Gradient
+%
+% It is the difference between the dilation and the erosion of an image.
+%
+% $$dst = morph_{grad}( src, element )
+%       = dilate( src, element ) - erode( src, element )$$
+%
+% It is useful for finding the outline of an object as can be seen below:
+%
+% <<http://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_Gradient.png>>
+%
+%% 4) Top Hat
+%
+% It is the difference between an input image and its opening.
+%
+% $$dst = tophat( src, element ) = src - open( src, element )$$
+%
+% <<http://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_TopHat.png>>
+%
+%% 5) Black Hat
+%
+% It is the difference between the closing and its input image
+%
+% $$dst = blackhat( src, element ) = close( src, element ) - src$$
+%
+% <<http://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_BlackHat.png>>
+%
+%% References
+%
+% * "Learning OpenCV" by Bradski and Kaehler.
 %
 
 function varargout = morphology_demo_gui2(im)
@@ -41,7 +123,8 @@ function onChange(~,~,h)
 
     % options (structuring element shape and morphological operation)
     shapes = {'Rect', 'Cross', 'Ellipse'};
-    types = {'Open', 'Close', 'Gradient', 'Tophat', 'Blackhat', ''};
+    types = {'Erode', 'Dilate', 'Open', 'Close', 'Gradient', 'Tophat', ...
+        'Blackhat', ''};
 
     % apply the specified morphology operation
     elem = cv.getStructuringElement('Shape',shapes{shapeIdx}, ...
@@ -85,8 +168,9 @@ function h = buildGUI(img)
         h.img = imshow(img);
     end
     h.pop(1) = uicontrol('Parent',h.fig, 'Style','popupmenu', ...
-       'Position',[5 5 70 20], ...
-       'String', {'Opening','Closing','Gradient','Top Hat','Black Hat','-None-'});
+       'Position',[5 5 70 20], 'Value',3, ...
+       'String', {'Erosion','Dilation','Opening','Closing','Gradient',...
+            'Top Hat','Black Hat','-None-'});
     h.pop(2) = uicontrol('Parent',h.fig, 'Style','popupmenu', ...
        'Position',[75 5 70 20], 'String',{'Rect','Cross','Ellipse'});
     h.slid = uicontrol('Parent',h.fig, 'Style','slider', 'Value',ksize, ...
