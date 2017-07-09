@@ -38,6 +38,8 @@ octave-workspace
 /test/haarcascade_frontalface_alt.xml
 /test/haarcascade_eye_tree_eyeglasses.xml
 /test/haarcascade_smile.xml
+/test/haarcascade_mcs_nose.xml
+/test/haarcascade_mcs_mouth.xml
 /test/inriaperson.xml
 /test/model.yml.gz
 /test/ObjectnessTrainedModel/
