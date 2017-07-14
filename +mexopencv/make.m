@@ -360,7 +360,9 @@ function s = compiler_str()
     else
         s = '';
         cc = mex.getCompilerConfigurations('C++', 'Selected');
-        if strcmp(cc.Manufacturer, 'Microsoft')
+        if isempty(cc)
+            error('mexopencv:make', 'No C++ compiler selected');
+        elseif strcmp(cc.Manufacturer, 'Microsoft')
             if ~isempty(strfind(cc.Name, 'Visual'))  % Visual Studio
                 switch cc.Version
                     case '15.0'
@@ -400,7 +402,7 @@ function s = compiler_str()
             s = 'mingw';
         end
         if isempty(s)
-            error('mexopencv:make', 'Unsupported compiler: %s', cc.Name);
+            error('mexopencv:make', 'Unsupported C++ compiler: %s', cc.Name);
         end
     end
 end
