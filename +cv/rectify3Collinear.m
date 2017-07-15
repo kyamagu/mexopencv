@@ -54,7 +54,7 @@
 %       between 0 and 1. `Alpha=0` means that the rectified images are zoomed
 %       and shifted so that only valid pixels are visible (no black areas
 %       after rectification). `Alpha=1` means that the rectified image is
-%       decimated and shifted so that all the pixels from the original iamges
+%       decimated and shifted so that all the pixels from the original images
 %       from the cameras are retained in the rectified images (no source image
 %       pixels are lost). Obviously, any intermediate value yields an
 %       intermediate result between those two extreme cases. default -1

@@ -33,5 +33,5 @@
 %    fprintf('area0 = %.2f\narea1 = %.2f\napprox poly vertices = %d\n', ...
 %        area0, area1, numel(approx));
 %
-% See also: cv.arcLength
+% See also: cv.arcLength, polyarea
 %

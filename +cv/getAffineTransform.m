@@ -1,4 +1,4 @@
-%GETAFFINETRANSFORM  Calculates an affine transform from three pairs of the corresponding points
+%GETAFFINETRANSFORM  Calculates an affine transform from three pairs of corresponding points
 %
 %    T = cv.getAffineTransform(src, dst)
 %

@@ -14,7 +14,7 @@
 % * __DDepth__ Desired depth of the destination image. default -1, which uses
 %       the same type as the input `src`.
 % * __KSize__ Aperture size used to compute the second-derivative filters. See
-%       getDerivKernels for details. The size must be positive and odd.
+%       cv.getDerivKernels for details. The size must be positive and odd.
 %       default 1
 % * __Scale__ Optional scale factor for the computed Laplacian values. By
 %       default, no scaling is applied. See cv.getDerivKernels for details.

@@ -47,7 +47,8 @@
 % * __objPoints__ array of object points of all the marker corners in the
 %       board, i.e. their coordinates with respect to the board system. Each
 %       marker include its 4 corners in CCW order
-%       `{{[x1,y1],[x2,y2],[x3,y3],[x4,y4]}, ..}`.
+%       `{{[x1,y1,z1],[x2,y2,z2],[x3,y3,z3],[x4,y4,z4]}, ..}`. Usually object
+%       points are planar with Z=0.
 % * __dictionary__ the dictionary of markers employed for this board. This is
 %       specified in the same format described in cv.detectMarkers.
 % * __ids__ vector of the identifiers of the markers in the board (same size
@@ -76,7 +77,7 @@
 %       cv.detectMarkers.
 %
 % The cv.estimatePoseBoard function receives the detected markers and returns
-% the pose of a marker board composed by those markers. A noard of marker has
+% the pose of a marker board composed by those markers. A board of marker has
 % a single world coordinate system which is defined by the board layout. The
 % returned transformation is the one that transforms points from the board
 % coordinate system to the camera coordinate system. Input markers that are

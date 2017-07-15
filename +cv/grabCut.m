@@ -48,5 +48,5 @@
 % The function implements the GrabCut image segmentation algorithm:
 % [GrabCut](http://en.wikipedia.org/wiki/GrabCut).
 %
-% See also: cv.watershed
+% See also: cv.watershed, lazysnapping, imageSegmenter, regionfill
 %

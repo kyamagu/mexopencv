@@ -10,9 +10,9 @@
 % ## Output
 % * __dst__ Output image with the same size and type as `src`.
 % * __dstStep1__ Output image of the first step of BM3D with the same size
-%       and size and type as `src`. `Basic` image must be provided.
+%       and type as `src`. `Basic` image must be provided.
 % * __dstStep2__ Output image of the second step of BM3D with the same size
-%       and size and type as `src`.
+%       and type as `src`.
 %
 % ## Options
 % * __Basic__ Basic image, initial estimate of the first step. Must be

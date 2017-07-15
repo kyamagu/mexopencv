@@ -6,11 +6,12 @@ classdef StereoBM < handle
     %
     % ## Usage
     %
-    %    bm = cv.StereoBM('NumDisparities',0, ...);
-    %    bm.MinDisparity = ...;
+    %    bm = cv.StereoBM('NumDisparities',64, ...);
+    %    bm.MinDisparity = 0;
     %    disparity = bm.compute(left, right);
     %
     % See also: cv.StereoBM.StereoBM, cv.StereoBM.compute, cv.StereoSGBM,
+    %  cv.getValidDisparityROI, cv.filterSpeckles, cv.validateDisparity,
     %  disparity, stereoAnaglyph
     %
 

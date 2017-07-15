@@ -26,5 +26,5 @@
 % contours. The function can fill complex areas, for example, areas with
 % holes, contours with self-intersections (some of thier parts), and so forth.
 %
-% See also: cv.line, cv.fillConvexPoly, roipoly
+% See also: cv.line, cv.fillConvexPoly, roipoly, poly2mask
 %

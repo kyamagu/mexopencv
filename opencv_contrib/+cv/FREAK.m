@@ -225,7 +225,7 @@ classdef FREAK < handle
             %       (for each orientation). In the first variant, this is a
             %       struct-array of detected keypoints. In the second variant,
             %       it is a cell-array, where `keypoints{i}` is a set of keypoints
-            %       detected in `images{i}` (a struct-array like before).
+            %       detected in `imgs{i}` (a struct-array like before).
             %
             % ## Output
             % * __descriptors__ Computed descriptors. In the second variant of

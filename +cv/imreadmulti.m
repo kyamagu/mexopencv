@@ -44,5 +44,5 @@
 %
 % See cv.imread for details.
 %
-% See also: cv.imread, imread
+% See also: cv.imread, imread, multibandread
 %

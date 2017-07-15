@@ -13,14 +13,18 @@
 %
 % ## Options
 % * __FontFace__ Font type to use. One of the following:
-%       * __HersheySimplex__ (default)
-%       * __HersheyPlain__
-%       * __HersheyDuplex__
-%       * __HersheyComplex__
-%       * __HersheyTriplex__
-%       * __HersheyComplexSmall__
-%       * __HersheyScriptSimplex__
-%       * __HersheyScriptComplex__
+%       * __HersheySimplex__ Normal size sans-serif (default)
+%       * __HersheyPlain__ Small size sans-serif
+%       * __HersheyDuplex__ Normal size sans-serif; more complex than
+%             `HersheySimplex`
+%       * __HersheyComplex__ Normal size serif; more complex than
+%             `HersheyDuplex`
+%       * __HersheyTriplex__ Normal size serif; more complex than
+%             `HersheyComplex`
+%       * __HersheyComplexSmall__ Smaller version of `HersheyComplex`
+%       * __HersheyScriptSimplex__ Handwriting style
+%       * __HersheyScriptComplex__ More complex variant of
+%             `HersheyScriptSimplex`
 % * __FontStyle__ Font style. One of:
 %       * __Regular__ (default)
 %       * __Italic__

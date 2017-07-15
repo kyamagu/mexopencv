@@ -21,6 +21,8 @@
 %       * __Full__ One of the rectangle is fully enclosed in the other.
 %
 % Finds out if there is any intersection between two rotated rectangles.
-% If there is then the vertices of the interesecting region are returned as
+% If there is then the vertices of the intersecting region are returned as
 % well.
+%
+% See also: cv.intersectConvexConvex
 %

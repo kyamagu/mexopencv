@@ -98,7 +98,8 @@
 % and orientation of the second camera relative to the first camera. This is
 % what the described function does. It computes `(R,T)` so that:
 %
-%    R2 = R * R1*T2 = R * T1 + T
+%    R2 = R * R1
+%    T2 = R * T1 + T
 %
 % Optionally, it computes the essential matrix `E`:
 %

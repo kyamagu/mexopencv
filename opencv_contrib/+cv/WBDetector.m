@@ -30,7 +30,7 @@ classdef WBDetector < handle
     % > [PDF](https://dspace.cvut.cz/bitstream/handle/10467/9494/2005-Waldboost-learning-for-time-constrained-sequential-detection.pdf?sequence=1)
     %
     % See also: cv.WBDetector.WBDetector, cv.WBDetector.detect,
-    %  detectPeopleACF
+    %  detectPeopleACF, peopleDetectorACF, trainACFObjectDetector
     %
 
     properties (SetAccess = private)

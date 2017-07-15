@@ -9,8 +9,10 @@
 %       `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4,taux,tauy]` of 4, 5, 8, 12 or 14
 %       elements. If the vector is empty, the zero distortion coefficients are
 %       assumed.
-% * __newCameraMatrix__ New camera matrix
-%       `Ap = [fp_x 0 cp_x; 0 fp_y cp_y; 0 0 1]`
+% * __newCameraMatrix__ New `A` camera matrix (3x3)
+%       `Ap = [fp_x 0 cp_x; 0 fp_y cp_y; 0 0 1]` or new `P` projection matrix
+%       (3x4). If empty, uses the default new camera matrix from
+%       cv.getDefaultNewCameraMatrix (with `CenterPrincipalPoint=true`).
 % * __siz__ Undistorted image size `[w,h]`.
 %
 % ## Output
@@ -78,8 +80,8 @@
 % possible to compute the rectification transformations directly from the
 % fundamental matrix using cv.stereoRectifyUncalibrated. For each camera, the
 % function computes homography `H` as the rectification transformation in a
-% pixel domain, not a rotation matrix `R` in 3D space. `R`  can be computed
-% from `H` as
+% pixel domain, not a rotation matrix `R` in 3D space. `R` can be computed
+% from `H` as:
 %
 %    R = inv(cameraMatrix) * H * cameraMatrix
 %

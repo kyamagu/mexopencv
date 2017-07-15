@@ -187,7 +187,7 @@ classdef Rect
             % ## Output
             % * __r__ output rectangle `[x,y,w,h]`.
             %
-            % See also: cv.Rect.union, bboxOverlapRatio
+            % See also: cv.Rect.union, bboxOverlapRatio, rectint
             %
             r = Rect_('intersect', r1, r2);
         end
@@ -221,7 +221,7 @@ classdef Rect
             % ## Output
             % * __out__ output cropped image.
             %
-            % See also: imcrop
+            % See also: cv.getRectSubPix, imcrop
             %
             out = Rect_('crop', img, r);
         end

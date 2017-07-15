@@ -17,3 +17,5 @@
 % ## Options
 % * __HandleNested__ default true
 %
+% See also: cv.rotatedRectangleIntersection, cv.Rect.intersect, rectint
+%

@@ -67,5 +67,5 @@
 %    subplot(121), imshow(src), title('Source')
 %    subplot(122), imshow(dst), title('Components')
 %
-% See also: cv.findContours, visboundaries, bwlabel
+% See also: cv.findContours, cv.fillPoly, visboundaries, bwlabel
 %

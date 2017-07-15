@@ -43,6 +43,11 @@
 % function cv.cornerSubPix with different parameters if returned coordinates
 % are not accurate enough.
 %
+% In practice, it is more convenient to use a chessboard grid that is
+% asymmetric, for example 5x6. Using such even-odd asymmetry yields a
+% chessboard that has only one symmetry axis, so the board orientation can
+% always be defined uniquely.
+%
 % ## Example
 % Sample usage of detecting and drawing chessboard corners:
 %

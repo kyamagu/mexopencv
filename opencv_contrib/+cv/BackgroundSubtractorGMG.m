@@ -7,6 +7,20 @@ classdef BackgroundSubtractorGMG < handle
     % of the same size, where 255 indicates Foreground and 0 represents
     % Background. This class implements an algorithm described in [Gold2012].
     %
+    % This algorithm combines statistical background image estimation and
+    % per-pixel Bayesian segmentation. It was introduced by [Gold2012]. As per
+    % the paper, the system ran a successful interactive audio art
+    % installation called "Are We There Yet?" in 2011 at the Contemporary
+    % Jewish Museum in San Francisco, California.
+    %
+    % It uses first few (120 by default) frames for background modelling. It
+    % employs probabilistic foreground segmentation algorithm that identifies
+    % possible foreground objects using Bayesian inference. The estimates are
+    % adaptive; newer observations are more heavily weighted than old
+    % observations to accommodate variable illumination. Several morphological
+    % filtering operations like closing and opening are done to remove
+    % unwanted noise. You will get a black window during first few frames.
+    %
     % ## References
     % [Gold2012]:
     % > Andrew B Godbehere, Akihiro Matsukawa, and Ken Goldberg. "Visual

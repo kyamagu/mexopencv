@@ -95,5 +95,6 @@
 % will be taken into account and thus the image will be rotated accordingly
 % except if the option `IgnoreOrientation` is passed.
 %
-% See also: cv.imwrite, cv.imdecode, imread, imfinfo, imformats, dicomread
+% See also: cv.imwrite, cv.imdecode, imread, imfinfo, imformats, dicomread,
+%  hdrread, Tiff
 %

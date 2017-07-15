@@ -18,5 +18,5 @@
 % The method copies the matrix data to another matrix. Before copying the data,
 % the destination matrix is allocated if needed, initialized with all zeros.
 %
-% See also: cv.convertTo
+% See also: cv.convertTo, roipoly, poly2mask
 %

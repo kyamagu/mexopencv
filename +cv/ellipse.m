@@ -36,12 +36,17 @@
 %       values of axes. default 0.
 %
 % The first variant of the cv.ellipse function draws an ellipse outline, a
-% filled ellipse, an elliptic arc, or a filled ellipse sector. A piecewise-
-% linear curve is used to approximate the elliptic arc boundary. If you need
-% more control of the ellipse rendering, you can retrieve the curve using
-% cv.ellipse2Poly and then render it with cv.polylines or fill it with
-% cv.fillPoly. If you use the first variant of the function and want to draw
-% the whole ellipse, not an arc, pass `StartAngle=0` and `EndAngle=360`.
+% filled ellipse, an elliptic arc, or a filled ellipse sector. The drawing
+% code uses general parametric form. A piecewise-linear curve is used to
+% approximate the elliptic arc boundary. If you need more control of the
+% ellipse rendering, you can retrieve the curve using cv.ellipse2Poly and then
+% render it with cv.polylines or fill it with cv.fillPoly. If you use the
+% first variant of the function and want to draw the whole ellipse, not an
+% arc, pass `StartAngle=0` and `EndAngle=360`. If `StartAngle` is greater than
+% `EndAngle`, they are swapped. The figure below explains the meaning of the
+% parameters to draw the blue arc.
+%
+% ![Parameters of Elliptic Arc][http://docs.opencv.org/3.3.0/ellipse.svg]
 %
 % The second variant of the function (with rotated rectange as input) does not
 % support the `Angle`, `StartAngle`, `EndAngle`, and `Shift` parameters

@@ -288,6 +288,19 @@ classdef CascadeClassifier < handle
             %
             % The function is parallelized with the TBB library.
             %
+            % The third variant allows you to retrieve the final stage
+            % decision certainty of classification. For this, one needs to set
+            % `OutputRejectLevels` to true and request the `rejectLevels` and
+            % `levelWeights` output arguments. For each resulting detection,
+            % `levelWeights` will then contain the certainty of classification
+            % at the final stage. This value can then be used to separate
+            % strong from weaker classifications.
+            % A code sample on how to use it efficiently can be found below:
+            %
+            %    model = cv.CascadeClassifier('/path/to/your/model.xml');
+            %    [boxes, levels, weights] = model.detect(img, 'OutputRejectLevels',true);
+            %    fprintf('Detection [%d,%d,%d,%d] with weight %f\n', boxes{1}, weights(1));
+            %
             % See also: cv.CascadeClassifier.CascadeClassifier
             %
             [boxes, varargout{1:nargout-1}] = CascadeClassifier_(this.id, ...

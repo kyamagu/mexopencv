@@ -24,7 +24,8 @@
 %       * __CCoeff__        Cosine coefficient
 %       * __CCoeffNormed__  Normalized cosine coefficient
 % * __Mask__ Mask of searched template. It must have the same datatype and
-%       size with `templ`. It is not set by default.
+%       size with `templ`. Currently, only the `SqDiff` and `CCorrNormed`
+%       methods are supported. It is not set by default.
 %
 % The function slides through `image`, compares the overlapped patches of size
 % `w x h` against `templ` using the specified method and stores the comparison

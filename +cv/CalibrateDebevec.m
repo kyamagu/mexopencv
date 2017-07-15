@@ -29,7 +29,7 @@ classdef CalibrateDebevec < handle
         % Greater values produce smoother results, but can alter the response.
         Lambda
         % if true sample pixel locations are chosen at random, otherwise
-        % the form a rectangular grid.
+        % they form a rectangular grid.
         Random
     end
 
@@ -65,15 +65,15 @@ classdef CalibrateDebevec < handle
 
     %% CalibrateCRF
     methods
-        function dst = process(this, src, times)
+        function dst = process(this, src, etimes)
             %PROCESS  Recovers inverse camera response
             %
-            %    dst = obj.process(src, times)
+            %    dst = obj.process(src, etimes)
             %
             % ## Input
             % * __src__ cell array of input images, all of the same size and
             %       `uint8` type.
-            % * __times__ vector of exposure time values for each image.
+            % * __etimes__ vector of exposure time values for each image.
             %
             % ## Output
             % * __dst__ 256x1xCN `single` matrix with inverse camera response
@@ -82,7 +82,7 @@ classdef CalibrateDebevec < handle
             %
             % See also: cv.CalibrateDebevec.CalibrateDebevec
             %
-            dst = CalibrateDebevec_(this.id, 'process', src, times);
+            dst = CalibrateDebevec_(this.id, 'process', src, etimes);
         end
     end
 

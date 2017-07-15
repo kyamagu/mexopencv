@@ -570,8 +570,8 @@ classdef SVM < handle
             % ## Options
             % * __Data__ See the train method.
             % * __KFold__ Cross-validation parameter. The training set is
-            %       divided into `KFold` subsets. One subset is used to train
-            %       the model, the others form the test set. So, the SVM
+            %       divided into `KFold` subsets. One subset is used to test
+            %       the model, the others form the train set. So, the SVM
             %       algorithm is executed `KFold` times. default 10
             % * __Balanced__ If true and the problem is 2-class classification
             %       then the method creates more balanced cross-validation

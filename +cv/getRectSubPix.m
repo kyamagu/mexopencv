@@ -30,5 +30,5 @@
 % parts of the rectangle may be outside. In this case, the replication border
 % mode is used to extrapolate the pixel values outside of the image.
 %
-% See also: cv.warpAffine, cv.warpPerspective
+% See also: cv.Rect.crop, cv.warpAffine, cv.warpPerspective
 %

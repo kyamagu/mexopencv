@@ -391,7 +391,7 @@ classdef BinaryDescriptor < handle
             %       which descriptors must be computed. In the first variant,
             %       this is a struct-array of detected lines. In the second
             %       variant, it is a cell-array, where `keylines{i}` is a set
-            %       of lines detected in `images{i}`.
+            %       of lines detected in `imgs{i}`.
             %
             % ## Output
             % * __descriptors__ Computed descriptors. In the second variant of
