@@ -32,7 +32,7 @@ end
 
 function fname = get_pedestrian_video()
     fname = fullfile(mexopencv.root(),'test','768x576.avi');
-    if ~exist(fname, 'file')
+    if exist(fname, 'file') ~= 2
         % download video from Github
         url = 'https://cdn.rawgit.com/opencv/opencv/3.1.0/samples/data/768x576.avi';
         urlwrite(url, fname);

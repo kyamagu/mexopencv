@@ -39,8 +39,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int method = cv::HOUGH_GRADIENT;
     double dp = 1;
     double minDist = image.rows/8;
-    double param1 = 100;
-    double param2 = 100;
+    double param1 = 100;  // cannyThreshold
+    double param2 = 100;  // accumulatorThreshold
     int minRadius = 0;
     int maxRadius = 0;
     for (int i=1; i<nrhs; i+=2) {

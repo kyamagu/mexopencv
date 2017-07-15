@@ -44,7 +44,7 @@ end
 
 function fname = get_model_file()
     fname = fullfile(mexopencv.root(),'test','model.yml.gz');
-    if ~exist(fname, 'file')
+    if exist(fname, 'file') ~= 2
         % download model from GitHub
         url = 'https://cdn.rawgit.com/opencv/opencv_extra/3.2.0/testdata/cv/ximgproc/model.yml.gz';
         urlwrite(url, fname);

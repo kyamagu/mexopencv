@@ -41,7 +41,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
-    Mat op(rhs[0].toMat()), dst;
+    Mat op(rhs[0].toMat()),  // 8u, 8s, 16u, 16s
+        dst;
     string dir(rhs[1].toString());
     if (dir == "X")
         GradientPaillouX(op, dst, alpha, omega);

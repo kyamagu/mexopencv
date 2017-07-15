@@ -135,7 +135,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             obj->setMaxLevel(rhs[3].toInt());
         else if (prop == "TermCriteria") {
             //HACK: method defined as: setTermCriteria(TermCriteria& crit)
-            // rvalue should be passed either by-value of by-const-ref
+            // rvalue should be passed either by-value or by-const-ref
             // (GCC complains when rvalue is passed by-non-const-ref)
             TermCriteria tc(rhs[3].toTermCriteria());
             obj->setTermCriteria(tc);
