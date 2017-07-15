@@ -59,7 +59,7 @@ classdef TestDescriptorExtractor
         function test_compute_imgset
             img = cv.imread(TestDescriptorExtractor.im, ...
                 'Grayscale',true, 'ReduceScale',2);
-            kpts0 = cv.FAST(img, 'Threshold',20);
+            kpts0 = cv.FAST(img, 'Threshold',50);
             for i=1:numel(TestDescriptorExtractor.extractors)
                 try
                     obj = cv.DescriptorExtractor(...

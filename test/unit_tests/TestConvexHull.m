@@ -31,6 +31,11 @@ classdef TestConvexHull
             hull = cv.convexHull(points);
         end
 
+        function test_type_2
+            points = int32([0 0; 1 0; 2 2; 3 3; 3 4]);
+            hull = cv.convexHull(points);
+        end
+
         function test_option_1
             points = [0 0; 1 0; 2 2; 3 3; 3 4];
             hull = cv.convexHull(points, 'Clockwise',false);

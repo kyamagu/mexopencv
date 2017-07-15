@@ -7,7 +7,8 @@ classdef TestEvaluateFeatureDetector
 
     methods (Static)
         function test_1
-            img = imread(TestEvaluateFeatureDetector.im);
+            img = cv.imread(TestEvaluateFeatureDetector.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             H = eye(3);
             detector = cv.FeatureDetector('AgastFeatureDetector');
             kp = detector.detect(img);
@@ -20,10 +21,11 @@ classdef TestEvaluateFeatureDetector
 
         function test_2
             H = [0.8 -0.04 50; -0.05 0.9 50; 1e-5 1e-4 1];
-            img1 = imread(TestEvaluateFeatureDetector.im);
+            img1 = cv.imread(TestEvaluateFeatureDetector.im, ...
+                'Grayscale',true, 'ReduceScale',2);
             img2 = cv.warpPerspective(img1, H);
             [repeat, correspCount] = cv.evaluateFeatureDetector(...
-                img1, img2, H, {}, {}, 'Detector',{'ORB', 'MaxFeatures',500});
+                img1, img2, H, {}, {}, 'Detector',{'ORB', 'MaxFeatures',200});
             validateattributes(repeat, {'numeric'}, {'scalar'});
             validateattributes(correspCount, {'numeric'}, {'scalar', 'integer'});
         end

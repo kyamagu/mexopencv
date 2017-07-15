@@ -103,17 +103,18 @@ classdef TestDescriptorMatcher
         end
 
         function test_4
-            % compute descriptors for all training images
-            obj = cv.KAZE();
-            matcher = cv.DescriptorMatcher('BruteForce');
-            query = [];
             files = dir(fullfile(mexopencv.root(),'test','shape0*.png'));
             if isempty(files)
                 disp('SKIP');
                 return;
             end
+            query = [];
+
+            % compute descriptors for all training images
+            obj = cv.ORB();
+            matcher = cv.DescriptorMatcher('BruteForce-Hamming');
             idxQuery = 1;
-            idxTrain = 2:numel(files);
+            idxTrain = setdiff(1:numel(files), idxQuery);
             for i=1:numel(files)
                 img = cv.imread(fullfile(mexopencv.root(),'test',files(i).name), 'Flags',0);
                 [~,desc] = obj.detectAndCompute(img);

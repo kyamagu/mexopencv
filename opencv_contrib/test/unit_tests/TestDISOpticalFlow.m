@@ -33,7 +33,7 @@ classdef TestDISOpticalFlow
                 'Grayscale',true, 'ReduceScale',2);
             nextImg = cv.imread(fullfile(mexopencv.root(),'test','RubberWhale2.png'), ...
                 'Grayscale',true, 'ReduceScale',2);
-            alg = cv.DISOpticalFlow();
+            alg = cv.DISOpticalFlow('Preset','Fast');
             flow = alg.calc(prevImg, nextImg);
             validateattributes(flow, {'single'}, ...
                 {'3d', 'size',[size(prevImg,1) size(prevImg,2) 2]});
