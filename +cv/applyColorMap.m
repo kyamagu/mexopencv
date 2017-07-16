@@ -15,7 +15,7 @@
 %       * __Summer__ Shades of green and yellow colormap.
 %       * __Spring__ Shades of magenta and yellow color map.
 %       * __Cool__ Shades of cyan and magenta color map.
-%       * __Hsv__ Hue-saturation-value color map.
+%       * __HSV__ Hue-saturation-value color map.
 %       * __Pink__ Pastel shades of pink color map.
 %       * __Hot__ Black-red-yellow-white color map.
 %       * __Parula__ Blue-green-orange-yellow color map.
@@ -53,7 +53,7 @@
 % ## Example
 %
 %    cmaps = {'Autumn', 'Bone', 'Jet', 'Winter', 'Rainbow', 'Ocean', ...
-%        'Summer', 'Spring', 'Cool', 'Hsv', 'Pink', 'Hot', 'Parula'};
+%        'Summer', 'Spring', 'Cool', 'HSV', 'Pink', 'Hot', 'Parula'};
 %    img = cell2mat(cellfun(@(cmap) ...
 %        cv.applyColorMap(repmat(uint8(0:255), 20, 1), cmap), cmaps(:), ...
 %        'UniformOutput',false));

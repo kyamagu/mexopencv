@@ -9,7 +9,6 @@ classdef TestApplyColorMap
         end
 
         function test_gray
-            %src = im2uint8(mat2gray(peaks(200)));
             src = peaks(200);
             src = uint8(255 * (src - min(src(:))) ./ (max(src(:)) - min(src(:))));
             dst = cv.applyColorMap(src, 'Jet');
@@ -17,11 +16,10 @@ classdef TestApplyColorMap
         end
 
         function test_colormaps
-            %src = im2uint8(mat2gray(peaks(200)));
             src = peaks(200);
             src = uint8(255 * (src - min(src(:))) ./ (max(src(:)) - min(src(:))));
             cmaps = {'Autumn', 'Bone', 'Jet', 'Winter', 'Rainbow', 'Ocean', ...
-                'Summer', 'Spring', 'Cool', 'Hsv', 'Pink', 'Hot', 'Parula'};
+                'Summer', 'Spring', 'Cool', 'HSV', 'Pink', 'Hot', 'Parula'};
             for i=1:numel(cmaps)
                 dst = cv.applyColorMap(src, cmaps{i});
                 validateattributes(dst, {'uint8'}, {'ndims',3, 'size',[size(src) 3]});
