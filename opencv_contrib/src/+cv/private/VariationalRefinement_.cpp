@@ -112,8 +112,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat I0(rhs[2].toMat(rhs[2].isSingle() ? CV_32F : CV_8U)),
-            I1(rhs[3].toMat(rhs[3].isSingle() ? CV_32F : CV_8U));
+        Mat I0(rhs[2].toMat(rhs[2].isFloat() ? CV_32F : CV_8U)),
+            I1(rhs[3].toMat(rhs[3].isFloat() ? CV_32F : CV_8U));
         //HACK: function expects Mat to be allocated
         if (flow.empty()) flow.create(I0.size(), CV_32FC2);
         obj->calc(I0, I1, flow);
@@ -132,8 +132,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat I0(rhs[2].toMat(rhs[2].isSingle() ? CV_32F : CV_8U)),
-            I1(rhs[3].toMat(rhs[3].isSingle() ? CV_32F : CV_8U));
+        Mat I0(rhs[2].toMat(rhs[2].isFloat() ? CV_32F : CV_8U)),
+            I1(rhs[3].toMat(rhs[3].isFloat() ? CV_32F : CV_8U));
         //HACK: function expects Mat to be allocated
         if (flow_u.empty()) flow_u.create(I0.size(), CV_32FC1);
         if (flow_v.empty()) flow_v.create(I0.size(), CV_32FC1);

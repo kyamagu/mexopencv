@@ -109,7 +109,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "compute") {
         nargchk(nrhs==4 && nlhs<=2);
         if (rhs[2].isNumeric()) {  // first variant that accepts an image
-            Mat image(rhs[2].toMat(rhs[2].isSingle() ? CV_32F : CV_8U)),
+            Mat image(rhs[2].toMat(rhs[2].isFloat() ? CV_32F : CV_8U)),
                 descriptors;
             vector<KeyPoint> keypoints(rhs[3].toVector<KeyPoint>());
             obj->compute(image, keypoints, descriptors);
@@ -124,7 +124,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 vector<MxArray> arr(rhs[2].toVector<MxArray>());
                 images.reserve(arr.size());
                 for (vector<MxArray>::const_iterator it = arr.begin(); it != arr.end(); ++it)
-                    images.push_back(it->toMat(it->isSingle() ? CV_32F : CV_8U));
+                    images.push_back(it->toMat(it->isFloat() ? CV_32F : CV_8U));
             }
             vector<vector<KeyPoint> > keypoints(rhs[3].toVector(
                 const_mem_fun_ref_t<vector<KeyPoint>, MxArray>(
@@ -139,7 +139,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "compute_all") {
         nargchk((nrhs==3 || nrhs==4) && nlhs<=1);
-        Mat image(rhs[2].toMat(rhs[2].isSingle() ? CV_32F : CV_8U)),
+        Mat image(rhs[2].toMat(rhs[2].isFloat() ? CV_32F : CV_8U)),
             descriptors;
         if (nrhs == 4) {
             Rect roi(rhs[3].toRect());

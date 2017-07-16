@@ -40,7 +40,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Process
     if (rhs[0].isNumeric()) {
-        Mat points(rhs[0].toMat(rhs[0].isSingle() ? CV_32F : CV_32S));
+        Mat points(rhs[0].toMat(rhs[0].isFloat() ? CV_32F : CV_32S));
         Mat hull;  // either points or indices depending on returnPoints
         convexHull(points, hull, clockwise, returnPoints);
         plhs[0] = MxArray(hull.reshape(1,0));  // Nx2 or Nx1

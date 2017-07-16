@@ -25,8 +25,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Process
-    Mat src1(rhs[0].toMat(rhs[0].isSingle() || rhs[0].isDouble() ? CV_32F : CV_8U)),
-        src2(rhs[1].toMat(rhs[1].isSingle() || rhs[1].isDouble() ? CV_32F : CV_8U)),
+    Mat src1(rhs[0].toMat(rhs[0].isFloat() ? CV_32F : CV_8U)),
+        src2(rhs[1].toMat(rhs[1].isFloat() ? CV_32F : CV_8U)),
         weights1(rhs[2].toMat(CV_32F)),
         weights2(rhs[3].toMat(CV_32F)),
         dst;
