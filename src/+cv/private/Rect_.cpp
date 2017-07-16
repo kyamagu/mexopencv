@@ -92,10 +92,22 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         plhs[0] = MxArray(rect1);
     }
     else if (method == "crop") {
-        nargchk(nrhs==3 && nlhs<=1);
+        nargchk((nrhs==3 || nrhs==4) && nlhs<=1);
         Mat img(rhs[1].toMat());
         Rect rect(rhs[2].toRect());
-        plhs[0] = MxArray(img(rect).clone());  //HACK: clone was needed here!
+        Mat roi(img, rect);
+        if (nrhs == 3) {
+            // get ROI
+            plhs[0] = MxArray(roi.clone());  //HACK: clone was needed here!
+        }
+        else {
+            // set ROI
+            Mat roi_new(rhs[3].toMat(img.depth()));
+            CV_Assert(roi_new.size() == rect.size() &&
+                roi_new.type() == img.type());
+            roi_new.copyTo(roi);
+            plhs[0] = MxArray(img);
+        }
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error",
