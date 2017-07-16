@@ -35,8 +35,8 @@
 %
 % ## Options
 % * __CameraMatrix1__, __CameraMatrix2__ Initial camera matrices. If any of
-%       'UseIntrinsicGuess', 'FixAspectRatio', 'FixIntrinsic' (default), or
-%       'FixFocalLength' are specified, some or all of the matrix components
+%       `UseIntrinsicGuess`, `FixAspectRatio`, `FixIntrinsic` (default), or
+%       `FixFocalLength` are specified, some or all of the matrix components
 %       must be initialized. See the flags description for details.
 % * __DistCoeffs1__, __DistCoeffs2__ Initial lens distortion coefficients.
 % * __FixIntrinsic__ Fix `cameraMatrix1`,`cameraMatrix2` and `distCoeffs1`,
@@ -51,32 +51,34 @@
 % * __FixAspectRatio__ Optimize `fy1`,`fy2` and fix the ratio `fx1/fy1`,
 %       `fx2/fy2`. default false.
 % * __SameFocalLength__ Enforce same `fx1=fx2` and `fy1=fy2`. default false.
-% * __ZeroTangentDist__ Set tangential distortion coefficients for each
-%       camera to zeros and fix there. default false.
-% * __FixK1__, ..., __FixK6__ Do not change the corresponding radial
-%       distortion coefficient during the optimization. If `UseIntrinsicGuess`
-%       is set, the coefficient from the supplied `DistCoeffs` matrix is used.
+% * __ZeroTangentDist__ Tangential distortion coefficients for each camera are
+%       set to zeros and stay fixed. default false.
+% * __FixK1__, ..., __FixK6__ The corresponding radial distortion coefficient
+%       is not changed during the optimization. If `UseIntrinsicGuess` is set,
+%       the coefficient from the supplied `DistCoeffs` matrix is used.
 %       Otherwise, it is set to 0. default false.
-% * __RationalModel__ Enable coefficients `k4`, `k5`, and `k6`. To provide the
-%       backward compatibility, this extra flag should be explicitly specified
-%       to make the calibration function use the rational model and return 8
-%       coefficients. If the flag is not set, the function computes and
-%       returns only 5 distortion coefficients. default false.
+% * __RationalModel__ Coefficients `k4`, `k5`, and `k6` are enabled. To
+%       provide the backward compatibility, this extra flag should be
+%       explicitly specified to make the calibration function use the rational
+%       model and return 8 coefficients. If the flag is not set, the function
+%       computes and returns only 5 distortion coefficients. default false.
+%       (`RationalModel` as false implies `FixK4`,`FixK5`,`FixK6` as true).
 % * __ThinPrismModel__ Coefficients `s1`, `s2`, `s3` and `s4` are enabled. To
 %       provide the backward compatibility, this extra flag should be
 %       explicitly specified to make the calibration function use the thin
 %       prism model and return 12 coefficients. If the flag is not set, the
-%       function computes and returns only 5 distortion coefficients.
-%       default false.
+%       function computes and returns only 5 distortion coefficients. default
+%       false. (`ThinPrismModel` as false implies `FixS1S2S3S4` as true).
 % * __FixS1S2S3S4__ The thin prism distortion coefficients are not changed
-%       during the optimization. If 'UseIntrinsicGuess' is set, the
+%       during the optimization. If `UseIntrinsicGuess` is set, the
 %       coefficient from the supplied `DistCoeffs` matrix is used. Otherwise,
-%       it is set to 0. default false
+%       it is set to 0. default false.
 % * __TiltedModel__ Coefficients `tauX` and `tauY` are enabled. To provide the
 %       backward compatibility, this extra flag should be explicitly specified
 %       to make the calibration function use the tilted sensor model and
 %       return 14 coefficients. If the flag is not set, the function computes
 %       and returns only 5 distortion coefficients. default false.
+%       (`TiltedModel` as false implies `FixTauXTauY` as true).
 % * __FixTauXTauY__ The coefficients of the tilted sensor model are not
 %       changed during the optimization. If `UseIntrinsicGuess` is set, the
 %       coefficient from the supplied `DistCoeffs` matrix is used. Otherwise,
@@ -118,7 +120,7 @@
 % from the correct solution. If the intrinsic parameters can be estimated with
 % high accuracy for each of the cameras individually (for example, using
 % cv.calibrateCamera), you are recommended to do so and then pass
-% 'FixIntrinsic' flag to the function along with the computed intrinsic
+% `FixIntrinsic` flag to the function along with the computed intrinsic
 % parameters. Otherwise, if all the parameters are estimated at once, it makes
 % sense to restrict some parameters, for example, pass 'SameFocalLength' and
 % 'ZeroTangentDist' flags, which is usually a reasonable assumption.

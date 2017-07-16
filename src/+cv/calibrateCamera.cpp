@@ -38,6 +38,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_USE_INTRINSIC_GUESS);
         else if (key == "FixPrincipalPoint")
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_FIX_PRINCIPAL_POINT);
+        else if (key == "FixFocalLength")
+            UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_FIX_FOCAL_LENGTH);
         else if (key == "FixAspectRatio")
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_FIX_ASPECT_RATIO);
         else if (key == "ZeroTangentDist")
@@ -90,18 +92,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         (nlhs>7 ? perViewErrors : noArray()),
         flags, criteria);
     plhs[0] = MxArray(cameraMatrix);
-    if (nlhs>1)
+    if (nlhs > 1)
         plhs[1] = MxArray(distCoeffs);
-    if (nlhs>2)
+    if (nlhs > 2)
         plhs[2] = MxArray(reprojErr);
-    if (nlhs>3)
+    if (nlhs > 3)
         plhs[3] = MxArray(rvecs);
-    if (nlhs>4)
+    if (nlhs > 4)
         plhs[4] = MxArray(tvecs);
-    if (nlhs>5)
+    if (nlhs > 5)
         plhs[5] = MxArray(stdDeviationsIntrinsics);
-    if (nlhs>6)
+    if (nlhs > 6)
         plhs[6] = MxArray(stdDeviationsExtrinsics);
-    if (nlhs>7)
+    if (nlhs > 7)
         plhs[7] = MxArray(perViewErrors);
 }

@@ -40,6 +40,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_USE_INTRINSIC_GUESS);
         else if (key == "FixPrincipalPoint")
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_FIX_PRINCIPAL_POINT);
+        else if (key == "FixFocalLength")
+            UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_FIX_FOCAL_LENGTH);
         else if (key == "FixAspectRatio")
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_FIX_ASPECT_RATIO);
         else if (key == "ZeroTangentDist")

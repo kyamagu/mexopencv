@@ -14,9 +14,9 @@
 %
 % ## Output
 % * __cameraMatrix__ Output 3x3 floating-point camera matrix
-%       `A = [fx 0 cx; 0 fy cy; 0 0 1]`. If `UseIntrinsicGuess` and/or
-%       `FixAspectRatio` are specified, some or all of `fx`, `fy`, `cx`, `cy`
-%       must be initialized before calling the function.
+%       `A = [fx 0 cx; 0 fy cy; 0 0 1]`. If any of `UseIntrinsicGuess`,
+%       `FixAspectRatio`, or `FixFocalLength` are specified, some or all of
+%       `fx`, `fy`, `cx`, `cy` must be initialized before calling the function.
 % * __distCoeffs__ Output vector of distortion coefficients
 %       `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4]` of 4, 5, 8 or 12 elements.
 % * __reprojErr__ the overall RMS re-projection error.
@@ -42,9 +42,10 @@
 %
 % ## Options
 % * __CameraMatrix__, __DistCoeffs__, __UseIntrinsicGuess__,
-%   __FixPrincipalPoint__, __FixAspectRatio__, __ZeroTangentDist__,
-%   __FixK1__, ..., __FixK6__, __RationalModel__, __ThinPrismModel__,
-%   __FixS1S2S3S4__, __TiltedModel__, __FixTauXTauY__, __UseLU__, __UseQR__
+%   __FixPrincipalPoint__, __FixFocalLength__, __FixAspectRatio__,
+%   __ZeroTangentDist__, __FixK1__, ..., __FixK6__, __RationalModel__,
+%   __ThinPrismModel__, __FixS1S2S3S4__, __TiltedModel__, __FixTauXTauY__,
+%   __UseLU__, __UseQR__
 %       Different flags for the calibration process. See cv.calibrateCamera
 %       for details.
 % * __Criteria__ Termination criteria for the iterative optimization algorithm.
