@@ -126,9 +126,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat image(rhs[2].toMat()), fgmask;
+        Mat image(rhs[2].toMat(rhs[2].isFloat() ? CV_32F : CV_8U)), fgmask;
         obj->apply(image, fgmask, learningRate);
-        plhs[0] = MxArray(fgmask, mxLOGICAL_CLASS);
+        plhs[0] = MxArray(fgmask);
     }
     else if (method == "getBackgroundImage") {
         nargchk(nrhs==2 && nlhs<=1);
@@ -139,30 +139,30 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "get") {
         nargchk(nrhs==3 && nlhs<=1);
         string prop(rhs[2].toString());
-        if (prop == "BackgroundRatio")
-            plhs[0] = MxArray(obj->getBackgroundRatio());
-        else if (prop == "ComplexityReductionThreshold")
-            plhs[0] = MxArray(obj->getComplexityReductionThreshold());
-        else if (prop == "DetectShadows")
-            plhs[0] = MxArray(obj->getDetectShadows());
-        else if (prop == "History")
+        if (prop == "History")
             plhs[0] = MxArray(obj->getHistory());
         else if (prop == "NMixtures")
             plhs[0] = MxArray(obj->getNMixtures());
-        else if (prop == "ShadowThreshold")
-            plhs[0] = MxArray(obj->getShadowThreshold());
-        else if (prop == "ShadowValue")
-            plhs[0] = MxArray(obj->getShadowValue());
-        else if (prop == "VarInit")
-            plhs[0] = MxArray(obj->getVarInit());
-        else if (prop == "VarMax")
-            plhs[0] = MxArray(obj->getVarMax());
-        else if (prop == "VarMin")
-            plhs[0] = MxArray(obj->getVarMin());
+        else if (prop == "BackgroundRatio")
+            plhs[0] = MxArray(obj->getBackgroundRatio());
         else if (prop == "VarThreshold")
             plhs[0] = MxArray(obj->getVarThreshold());
         else if (prop == "VarThresholdGen")
             plhs[0] = MxArray(obj->getVarThresholdGen());
+        else if (prop == "VarInit")
+            plhs[0] = MxArray(obj->getVarInit());
+        else if (prop == "VarMin")
+            plhs[0] = MxArray(obj->getVarMin());
+        else if (prop == "VarMax")
+            plhs[0] = MxArray(obj->getVarMax());
+        else if (prop == "ComplexityReductionThreshold")
+            plhs[0] = MxArray(obj->getComplexityReductionThreshold());
+        else if (prop == "DetectShadows")
+            plhs[0] = MxArray(obj->getDetectShadows());
+        else if (prop == "ShadowValue")
+            plhs[0] = MxArray(obj->getShadowValue());
+        else if (prop == "ShadowThreshold")
+            plhs[0] = MxArray(obj->getShadowThreshold());
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized property %s", prop.c_str());
@@ -170,30 +170,30 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
         string prop(rhs[2].toString());
-        if (prop == "BackgroundRatio")
-            obj->setBackgroundRatio(rhs[3].toDouble());
-        else if (prop == "ComplexityReductionThreshold")
-            obj->setComplexityReductionThreshold(rhs[3].toDouble());
-        else if (prop == "DetectShadows")
-            obj->setDetectShadows(rhs[3].toBool());
-        else if (prop == "History")
+        if (prop == "History")
             obj->setHistory(rhs[3].toInt());
         else if (prop == "NMixtures")
             obj->setNMixtures(rhs[3].toInt());
-        else if (prop == "ShadowThreshold")
-            obj->setShadowThreshold(rhs[3].toDouble());
-        else if (prop == "ShadowValue")
-            obj->setShadowValue(rhs[3].toInt());
-        else if (prop == "VarInit")
-            obj->setVarInit(rhs[3].toDouble());
-        else if (prop == "VarMax")
-            obj->setVarMax(rhs[3].toDouble());
-        else if (prop == "VarMin")
-            obj->setVarMin(rhs[3].toDouble());
+        else if (prop == "BackgroundRatio")
+            obj->setBackgroundRatio(rhs[3].toDouble());
         else if (prop == "VarThreshold")
             obj->setVarThreshold(rhs[3].toDouble());
         else if (prop == "VarThresholdGen")
             obj->setVarThresholdGen(rhs[3].toDouble());
+        else if (prop == "VarInit")
+            obj->setVarInit(rhs[3].toDouble());
+        else if (prop == "VarMin")
+            obj->setVarMin(rhs[3].toDouble());
+        else if (prop == "VarMax")
+            obj->setVarMax(rhs[3].toDouble());
+        else if (prop == "ComplexityReductionThreshold")
+            obj->setComplexityReductionThreshold(rhs[3].toDouble());
+        else if (prop == "DetectShadows")
+            obj->setDetectShadows(rhs[3].toBool());
+        else if (prop == "ShadowValue")
+            obj->setShadowValue(rhs[3].toInt());
+        else if (prop == "ShadowThreshold")
+            obj->setShadowThreshold(rhs[3].toDouble());
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized property %s", prop.c_str());

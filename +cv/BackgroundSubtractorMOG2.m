@@ -1,5 +1,5 @@
 classdef BackgroundSubtractorMOG2 < handle
-    %BACKGROUNDSUBTRACTORMOG2  Gaussian Mixture-based Backbround/Foreground Segmentation Algorithm
+    %BACKGROUNDSUBTRACTORMOG2  Gaussian Mixture-based Background/Foreground Segmentation Algorithm
     %
     % The class implements the Gaussian mixture model background subtraction
     % described in [Zivkovic2004] and [Zivkovic2006].
@@ -23,11 +23,13 @@ classdef BackgroundSubtractorMOG2 < handle
     % > Zoran Zivkovic and Ferdinand van der Heijden. "Efficient adaptive
     % > density estimation per image pixel for the task of background
     % > subtraction". Pattern recognition letters, 27(7):773-780, 2006.
+    % > [PDF](http://www.zoranz.net/Publications/zivkovicPRL2006.pdf).
     %
     % [Zivkovic04recursiveunsupervised]:
     % > Zoran Zivkovic and Ferdinand van der Heijden, "Recursive unsupervised
     % > learning of finite mixture models", IEEE Trans. on Pattern Analysis
     % > and Machine Intelligence, vol.26, no.5, pages 651-656, 2004.
+    % > [PDF](http://www.zoranz.net/Publications/zivkovic2004PAMI.pdf).
     %
     % [Prati03detectingmoving]:
     % > Andrea Prati, Ivana Mikic, Mohan M. Trivedi, Rita Cucchiara.
@@ -49,45 +51,17 @@ classdef BackgroundSubtractorMOG2 < handle
         % The number of gaussian components in the background model.
         % The model needs to be reinitalized to reserve memory.
         NMixtures
-        % The variance threshold for the pixel-model match.
-        % The main threshold on the squared Mahalanobis distance to decide if
-        % the sample is well described by the background model or not. Related
-        % to `Cthr` from the paper.
-        VarThreshold
         % The "background ratio" parameter of the algorithm.
         % If a foreground pixel keeps semi-constant value for about
         % `BackgroundRatio * History` frames, it's considered background and
         % added to the model as a center of a new component. It corresponds to
         % `TB` parameter in the paper.
         BackgroundRatio
-        % The complexity reduction threshold.
-        % This parameter defines the number of samples needed to accept to
-        % prove the component exists. `CT=0.05` is a default value for all the
-        % samples. By setting `CT=0` you get an algorithm very similar to the
-        % standard Stauffer&Grimson algorithm.
-        ComplexityReductionThreshold
-        % The shadow detection flag.
-        % If true, the algorithm detects shadows and marks them. See
-        % cv.BackgroundSubtractorMOG2.BackgroundSubtractorMOG2 for details.
-        DetectShadows
-        % The shadow threshold.
-        % A shadow is detected if pixel is a darker version of the background.
-        % The shadow threshold (Tau in the paper) is a threshold defining how
-        % much darker the shadow can be. Tau=0.5 means that if a pixel is more
-        % than twice darker then it is not shadow.
-        % See [Prati03detectingmoving].
-        ShadowThreshold
-        % The shadow value.
-        % Shadow value is the value used to mark shadows in the foreground
-        % mask. Default value is 127. Value 0 in the mask always means
-        % background, 255 means foreground.
-        ShadowValue
-        % The initial variance of gaussian components. default 15
-        VarInit
-        % Maximum variance. default 5*15
-        VarMax
-        % Minimmum variance. default 4
-        VarMin
+        % The variance threshold for the pixel-model match.
+        % The main threshold on the squared Mahalanobis distance to decide if
+        % the sample is well described by the background model or not. Related
+        % to `Cthr` from the paper.
+        VarThreshold
         % The variance threshold for the pixel-model match used for new
         % mixture component generation.
         % Threshold for the squared Mahalanobis distance that helps decide
@@ -98,6 +72,34 @@ classdef BackgroundSubtractorMOG2 < handle
         % more components. A higher `Tg` value may result in a small number of
         % components but they can grow too large.
         VarThresholdGen
+        % The initial variance of gaussian components. default 15
+        VarInit
+        % Minimmum variance. default 4
+        VarMin
+        % Maximum variance. default 5*15
+        VarMax
+        % The complexity reduction threshold.
+        % This parameter defines the number of samples needed to accept to
+        % prove the component exists. `CT=0.05` is a default value for all the
+        % samples. By setting `CT=0` you get an algorithm very similar to the
+        % standard Stauffer&Grimson algorithm.
+        ComplexityReductionThreshold
+        % The shadow detection flag.
+        % If true, the algorithm detects shadows and marks them. See
+        % cv.BackgroundSubtractorMOG2.BackgroundSubtractorMOG2 for details.
+        DetectShadows
+        % The shadow value.
+        % Shadow value is the value used to mark shadows in the foreground
+        % mask. Default value is 127. Value 0 in the mask always means
+        % background, 255 means foreground.
+        ShadowValue
+        % The shadow threshold.
+        % A shadow is detected if pixel is a darker version of the background.
+        % The shadow threshold (Tau in the paper) is a threshold defining how
+        % much darker the shadow can be. Tau=0.5 means that if a pixel is more
+        % than twice darker then it is not shadow.
+        % See [Prati03detectingmoving].
+        ShadowThreshold
     end
 
     %% BackgroundSubtractor
@@ -142,10 +144,14 @@ classdef BackgroundSubtractorMOG2 < handle
             %    fgmask = bs.apply(im, 'OptionName', optionValue, ...)
             %
             % ## Input
-            % * __im__ Next video frame.
+            % * __im__ Next video frame, uint8 or single. Floating point frame
+            %       will be used without scaling and should be in range
+            %       [0,255].
             %
             % ## Output
-            % * __fgmask__ The output foreground mask as a binary image.
+            % * __fgmask__ The output foreground mask as an 8-bit binary image
+            %       (0 for background, 255 for foregound, and `ShadowValue`
+            %       for shadows if `DetectShadows` is true).
             %
             % ## Options
             % * __LearningRate__ The value between 0 and 1 that indicates how
@@ -161,12 +167,13 @@ classdef BackgroundSubtractorMOG2 < handle
         end
 
         function bgImg = getBackgroundImage(this)
-            %GETBACKGROUNDIMAGE  Computes a foreground mask
+            %GETBACKGROUNDIMAGE  Computes a background image
             %
             %    bgImg = bs.getBackgroundImage()
             %
             % ## Output
-            % * __bgImg__ The output background image.
+            % * __bgImg__ The output background image, which is the mean of
+            %       all background Gaussians.
             %
             % ## Note
             % Sometimes the background image can be very blurry, as it contain
@@ -277,6 +284,13 @@ classdef BackgroundSubtractorMOG2 < handle
             BackgroundSubtractorMOG2_(this.id, 'set', 'NMixtures', value);
         end
 
+        function value = get.BackgroundRatio(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'BackgroundRatio');
+        end
+        function set.BackgroundRatio(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'BackgroundRatio', value);
+        end
+
         function value = get.VarThreshold(this)
             value = BackgroundSubtractorMOG2_(this.id, 'get', 'VarThreshold');
         end
@@ -284,11 +298,32 @@ classdef BackgroundSubtractorMOG2 < handle
             BackgroundSubtractorMOG2_(this.id, 'set', 'VarThreshold', value);
         end
 
-        function value = get.BackgroundRatio(this)
-            value = BackgroundSubtractorMOG2_(this.id, 'get', 'BackgroundRatio');
+        function value = get.VarThresholdGen(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'VarThresholdGen');
         end
-        function set.BackgroundRatio(this, value)
-            BackgroundSubtractorMOG2_(this.id, 'set', 'BackgroundRatio', value);
+        function set.VarThresholdGen(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'VarThresholdGen', value);
+        end
+
+        function value = get.VarInit(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'VarInit');
+        end
+        function set.VarInit(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'VarInit', value);
+        end
+
+        function value = get.VarMin(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'VarMin');
+        end
+        function set.VarMin(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'VarMin', value);
+        end
+
+        function value = get.VarMax(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'VarMax');
+        end
+        function set.VarMax(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'VarMax', value);
         end
 
         function value = get.ComplexityReductionThreshold(this)
@@ -305,13 +340,6 @@ classdef BackgroundSubtractorMOG2 < handle
             BackgroundSubtractorMOG2_(this.id, 'set', 'DetectShadows', value);
         end
 
-        function value = get.ShadowThreshold(this)
-            value = BackgroundSubtractorMOG2_(this.id, 'get', 'ShadowThreshold');
-        end
-        function set.ShadowThreshold(this, value)
-            BackgroundSubtractorMOG2_(this.id, 'set', 'ShadowThreshold', value);
-        end
-
         function value = get.ShadowValue(this)
             value = BackgroundSubtractorMOG2_(this.id, 'get', 'ShadowValue');
         end
@@ -319,32 +347,11 @@ classdef BackgroundSubtractorMOG2 < handle
             BackgroundSubtractorMOG2_(this.id, 'set', 'ShadowValue', value);
         end
 
-        function value = get.VarInit(this)
-            value = BackgroundSubtractorMOG2_(this.id, 'get', 'VarInit');
+        function value = get.ShadowThreshold(this)
+            value = BackgroundSubtractorMOG2_(this.id, 'get', 'ShadowThreshold');
         end
-        function set.VarInit(this, value)
-            BackgroundSubtractorMOG2_(this.id, 'set', 'VarInit', value);
-        end
-
-        function value = get.VarMax(this)
-            value = BackgroundSubtractorMOG2_(this.id, 'get', 'VarMax');
-        end
-        function set.VarMax(this, value)
-            BackgroundSubtractorMOG2_(this.id, 'set', 'VarMax', value);
-        end
-
-        function value = get.VarMin(this)
-            value = BackgroundSubtractorMOG2_(this.id, 'get', 'VarMin');
-        end
-        function set.VarMin(this, value)
-            BackgroundSubtractorMOG2_(this.id, 'set', 'VarMin', value);
-        end
-
-        function value = get.VarThresholdGen(this)
-            value = BackgroundSubtractorMOG2_(this.id, 'get', 'VarThresholdGen');
-        end
-        function set.VarThresholdGen(this, value)
-            BackgroundSubtractorMOG2_(this.id, 'set', 'VarThresholdGen', value);
+        function set.ShadowThreshold(this, value)
+            BackgroundSubtractorMOG2_(this.id, 'set', 'ShadowThreshold', value);
         end
     end
 

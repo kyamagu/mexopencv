@@ -126,9 +126,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat image(rhs[2].toMat()), fgmask;
+        Mat image(rhs[2].toMat(CV_8U)), fgmask;
         obj->apply(image, fgmask, learningRate);
-        plhs[0] = MxArray(fgmask, mxLOGICAL_CLASS);
+        plhs[0] = MxArray(fgmask);
     }
     else if (method == "getBackgroundImage") {
         nargchk(nrhs==2 && nlhs<=1);
@@ -139,20 +139,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "get") {
         nargchk(nrhs==3 && nlhs<=1);
         string prop(rhs[2].toString());
-        if (prop == "DetectShadows")
-            plhs[0] = MxArray(obj->getDetectShadows());
-        else if (prop == "Dist2Threshold")
-            plhs[0] = MxArray(obj->getDist2Threshold());
-        else if (prop == "History")
+        if (prop == "History")
             plhs[0] = MxArray(obj->getHistory());
-        else if (prop == "kNNSamples")
-            plhs[0] = MxArray(obj->getkNNSamples());
         else if (prop == "NSamples")
             plhs[0] = MxArray(obj->getNSamples());
-        else if (prop == "ShadowThreshold")
-            plhs[0] = MxArray(obj->getShadowThreshold());
+        else if (prop == "kNNSamples")
+            plhs[0] = MxArray(obj->getkNNSamples());
+        else if (prop == "Dist2Threshold")
+            plhs[0] = MxArray(obj->getDist2Threshold());
+        else if (prop == "DetectShadows")
+            plhs[0] = MxArray(obj->getDetectShadows());
         else if (prop == "ShadowValue")
             plhs[0] = MxArray(obj->getShadowValue());
+        else if (prop == "ShadowThreshold")
+            plhs[0] = MxArray(obj->getShadowThreshold());
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized property %s", prop.c_str());
@@ -160,20 +160,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
         string prop(rhs[2].toString());
-        if (prop == "DetectShadows")
-            obj->setDetectShadows(rhs[3].toBool());
-        else if (prop == "Dist2Threshold")
-            obj->setDist2Threshold(rhs[3].toDouble());
-        else if (prop == "History")
+        if (prop == "History")
             obj->setHistory(rhs[3].toInt());
-        else if (prop == "kNNSamples")
-            obj->setkNNSamples(rhs[3].toInt());
         else if (prop == "NSamples")
             obj->setNSamples(rhs[3].toInt());
-        else if (prop == "ShadowThreshold")
-            obj->setShadowThreshold(rhs[3].toDouble());
+        else if (prop == "kNNSamples")
+            obj->setkNNSamples(rhs[3].toInt());
+        else if (prop == "Dist2Threshold")
+            obj->setDist2Threshold(rhs[3].toDouble());
+        else if (prop == "DetectShadows")
+            obj->setDetectShadows(rhs[3].toBool());
         else if (prop == "ShadowValue")
             obj->setShadowValue(rhs[3].toInt());
+        else if (prop == "ShadowThreshold")
+            obj->setShadowThreshold(rhs[3].toDouble());
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized property %s", prop.c_str());
