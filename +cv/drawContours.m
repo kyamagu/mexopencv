@@ -57,7 +57,7 @@
 %    dst = zeros([size(src),3], 'uint8');
 %    idx = 0;
 %    while idx >= 0
-%        color = randi(255, [1 3], 'uint8');
+%        color = randi([0 255], [1 3], 'uint8');
 %        dst = cv.drawContours(dst, contours, 'ContourIdx',idx, ...
 %            'Color',color, 'Thickness','Filled', 'LineType',8, ...
 %            'Hierarchy',hierarchy);

@@ -6,7 +6,7 @@ classdef TestBackgroundSubtractorMOG
             bs = cv.BackgroundSubtractorMOG();
             bs.History = 5;
             for i=1:10
-                frame = randi(255, [50 50 3], 'uint8');
+                frame = randi([0 255], [50 50 3], 'uint8');
                 fgmask = bs.apply(frame, 'LearningRate',-1);
                 validateattributes(fgmask, {'logical'}, {'size',[50 50]});
             end

@@ -15,8 +15,8 @@ classdef TestAccumulateProduct
             sz = [10 20];
             dst = zeros(sz, 'single');
             for i=1:5
-                dst = cv.accumulateProduct(randi(255,sz,'uint8'), ...
-                    randi(255,sz,'uint8'), dst);
+                dst = cv.accumulateProduct(randi([0 255],sz,'uint8'), ...
+                    randi([0 255],sz,'uint8'), dst);
             end
             validateattributes(dst, {'single'}, {'size',sz});
         end

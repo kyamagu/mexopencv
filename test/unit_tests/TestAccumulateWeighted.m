@@ -15,7 +15,7 @@ classdef TestAccumulateWeighted
             sz = [10 20];
             dst = zeros(sz, 'single');
             for i=1:5
-                dst = cv.accumulateWeighted(randi(255,sz,'uint8'), dst, 0.5);
+                dst = cv.accumulateWeighted(randi([0 255],sz,'uint8'), dst, 0.5);
             end
             validateattributes(dst, {'single'}, {'size',sz});
         end

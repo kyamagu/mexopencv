@@ -9,7 +9,7 @@ classdef TestMoments
 
     methods (Static)
         function test_img_8bit
-            img = randi(255, [50 50], 'uint8');
+            img = randi([0 255], [50 50], 'uint8');
             mo = cv.moments(img);
             validateattributes(mo, {'struct'}, {'scalar'});
             assert(all(ismember(TestMoments.fields, fieldnames(mo))));

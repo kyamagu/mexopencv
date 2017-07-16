@@ -62,7 +62,7 @@ classdef TestVideoWriter
                 try
                     vid = cv.VideoWriter(fname, [w h], 'FourCC',codecs{i,1});
                     assert(vid.isOpened());
-                    for j=1:5, vid.write(randi(255, [h w 3], 'uint8')); end
+                    for j=1:5, vid.write(randi([0 255], [h w 3], 'uint8')); end
                     vid.release();
                 catch ME
                     %TODO: some codecs are not available on all platforms

@@ -52,7 +52,7 @@ function onClick(~,~,h)
     seed = round(seed(1,1:2)) - 1;
 
     % flood fill options
-    newVal = randi(255, [1 3]);
+    newVal = randi([0 255], [1 3]);
     if ~p.isColor
         newVal = newVal * [0.299; 0.587; 0.114];
     end

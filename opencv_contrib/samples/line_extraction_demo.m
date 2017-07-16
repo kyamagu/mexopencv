@@ -65,11 +65,11 @@ outBD = img;
 outLSD = img;
 for i=1:numel(keylinesBD)
     outBD = cv.line(outBD, keylinesBD(i).startPoint, keylinesBD(i).endPoint, ...
-        'Color',randi(255,[1 3]), 'Thickness',3);
+        'Color',randi([0 255],[1 3]), 'Thickness',3);
 end
 for i=1:numel(keylinesLSD)
     outLSD = cv.line(outLSD, keylinesLSD(i).startPoint, keylinesLSD(i).endPoint, ...
-        'Color',randi(255,[1 3]), 'Thickness',3);
+        'Color',randi([0 255],[1 3]), 'Thickness',3);
 end
 subplot(121), imshow(outBD), title('BD Lines')
 subplot(122), imshow(outLSD), title('LSD Lines')
