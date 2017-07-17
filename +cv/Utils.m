@@ -35,6 +35,18 @@ classdef Utils
             info = Utils_('getBuildInformation');
         end
 
+        function v = version()
+            %VERSION  Returns OpenCV version
+            %
+            %    v = cv.Utils.version()
+            %
+            % ## Output
+            % * __v__ current version of OpenCV, in the form
+            %       'major.minor.revision'.
+            %
+            v = Utils_('version');
+        end
+
         function n = getNumberOfCPUs()
             %GETNUMBEROFCPUS  Return number of logical CPUs
             %
