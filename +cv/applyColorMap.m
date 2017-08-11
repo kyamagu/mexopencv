@@ -1,6 +1,7 @@
 %APPLYCOLORMAP  Applies a GNU Octave/MATLAB equivalent colormap on a given image
 %
 %    dst = cv.applyColorMap(src, colormap)
+%    dst = cv.applyColorMap(src, userColor)
 %    dst = cv.applyColorMap(..., 'OptionName',optionValue, ...)
 %
 % ## Input
@@ -19,6 +20,8 @@
 %       * __Pink__ Pastel shades of pink color map.
 %       * __Hot__ Black-red-yellow-white color map.
 %       * __Parula__ Blue-green-orange-yellow color map.
+% * __userColor__ The colormap to apply of type `uint8` (1 or 3 channels) and
+%       length 256.
 %
 % ## Output
 % * __dst__ The result is the colormapped source image. Same row/column size
@@ -33,6 +36,9 @@
 % so you often need to recolor your grayscale images to get a clue about them.
 % OpenCV now comes with various colormaps to enhance the visualization in your
 % computer vision application.
+%
+% The second variant of the function applies a user-defined colormap on the
+% given image.
 %
 % ## Example
 %

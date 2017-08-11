@@ -55,8 +55,16 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Process
     Mat src(rhs[0].toMat(CV_8U)), dst;
-    int colormap = ColormapTypesMap[rhs[1].toString()];
-    applyColorMap(src, dst, colormap);
+    if (rhs[1].isChar()) {
+        int colormap = ColormapTypesMap[rhs[1].toString()];
+        applyColorMap(src, dst, colormap);
+    }
+    else {
+        Mat userColor(rhs[1].toMat(CV_8U));
+        if (flip && userColor.channels() == 3 && src.channels() == 3)
+            cvtColor(userColor, userColor, cv::COLOR_BGR2RGB);
+        applyColorMap(src, dst, userColor);
+    }
     // OpenCV's default is BGR while MATLAB's is RGB
     if (flip && dst.channels() == 3)
         cvtColor(dst, dst, cv::COLOR_BGR2RGB);  // flip 3rd dim
