@@ -43,9 +43,9 @@
 % ## Options
 % * __CameraMatrix__, __DistCoeffs__, __UseIntrinsicGuess__,
 %   __FixPrincipalPoint__, __FixFocalLength__, __FixAspectRatio__,
-%   __ZeroTangentDist__, __FixK1__, ..., __FixK6__, __RationalModel__,
-%   __ThinPrismModel__, __FixS1S2S3S4__, __TiltedModel__, __FixTauXTauY__,
-%   __UseLU__, __UseQR__
+%   __ZeroTangentDist__, __FixTangentDist__, __FixK1__, ..., __FixK6__,
+%   __RationalModel__, __ThinPrismModel__, __FixS1S2S3S4__, __TiltedModel__,
+%   __FixTauXTauY__, __UseLU__, __UseQR__
 %       Different flags for the calibration process. See cv.calibrateCamera
 %       for details.
 % * __Criteria__ Termination criteria for the iterative optimization algorithm.
