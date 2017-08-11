@@ -39,6 +39,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::DFT_COMPLEX_OUTPUT);
         else if (key == "RealOutput")
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::DFT_REAL_OUTPUT);
+        else if (key == "ComplexInput")
+            UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::DFT_COMPLEX_INPUT);
         else if (key == "NonzeroRows")
             nonzeroRows = rhs[i+1].toInt();
         else

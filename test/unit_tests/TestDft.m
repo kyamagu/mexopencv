@@ -23,7 +23,7 @@ classdef TestDft
             x(:,:,2) = 0;                    % imag
 
             % 1D DFT
-            y = cv.dft(x);
+            y = cv.dft(x, 'ComplexInput',true);
             validateattributes(y, {class(x)}, {'size',size(x)});
 
             % inverse transform
