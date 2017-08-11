@@ -15,6 +15,7 @@ const ConstMap<string,int> PnPMethod = ConstMap<string,int>
     ("Iterative", cv::SOLVEPNP_ITERATIVE)
     ("EPnP",      cv::SOLVEPNP_EPNP)
     ("P3P",       cv::SOLVEPNP_P3P)
+    ("AP3P",      cv::SOLVEPNP_AP3P)
     ("DLS",       cv::SOLVEPNP_DLS)
     ("UPnP",      cv::SOLVEPNP_UPNP);
 }

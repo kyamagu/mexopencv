@@ -16,8 +16,8 @@
 %
 % ## Output
 % * __rvec__ Output rotation vector (see cv.Rodrigues) that, together with
-%       `tvec`, brings points from the model coordinate system to the
-%       camera coordinate system.
+%       `tvec`, brings points from the model coordinate system to the camera
+%       coordinate system.
 % * __tvec__ Output translation vector.
 % * __success__ success logical flag.
 %
@@ -41,10 +41,12 @@
 %             default.
 %       * __P3P__ Method is based on the paper [gao2003complete]. In this case
 %             the function requires exactly four object and image points.
+%       * __AP3P__ Method is based on the paper [Ke17]. In this case the
+%             function requires exactly four object and image points.
 %       * __EPnP__ Method has been introduced in the paper [morenoepnp] and
 %             [lepetit2009epnp].
-%       * __DLS__ Method is based on the paper of [hesch2011direct].
-%       * __UPnP__ Method is based on the paper of [penate2013exhaustive]. In
+%       * __DLS__ Method is based on the paper [hesch2011direct].
+%       * __UPnP__ Method is based on the paper [penate2013exhaustive]. In
 %             this case the function also estimates the parameters `fx` and
 %             `fy` assuming that both have the same value. Then the
 %             `cameraMatrix` is updated with the estimated focal length.
@@ -57,11 +59,22 @@
 % implementations are unstable and sometimes give completly wrong results. If
 % you pass one of these two flags, `EPnP` method will be used instead.
 %
+% Note: The minimum number of points is 4. In the case of `P3P` and `AP3P`
+% methods, it is required to use exactly 4 points (the first 3 points are used
+% to estimate all the solutions of the P3P problem, the last one is used to
+% retain the best solution that minimizes the reprojection error).
+%
 % ## References
 % [gao2003complete]:
 % > X.S. Gao, X.R. Hou, J. Tang, H.F. Chang; "Complete Solution
 % > Classification for the Perspective-Three-Point Problem",
 % > IEEE Trans. on PAMI, vol. 25, No. 8, p. 930-943, August 2003.
+%
+% [Ke17]:
+% > T. Ke, S. Roumeliotis; "An Efficient Algebraic Solution to the
+% > Perspective-Three-Point Problem", IEEE Conference on Computer Vision and
+% > Pattern Recognition (CVPR), 2017
+% > [PDF](https://arxiv.org/pdf/1701.08237.pdf)
 %
 % [morenoepnp]:
 % > F. Moreno-Noguer, V. Lepetit and P. Fua;

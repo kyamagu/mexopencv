@@ -8,9 +8,9 @@ classdef TestSolvePnPRansac
             imgPoints = rand(N,2);
             camMatrix = eye(3);
             distCoeffs = zeros(1,5);
-            methodsPNP = {'Iterative', 'EPnP', 'P3P', 'DLS', 'UPnP'};
+            methodsPNP = {'Iterative', 'EPnP', 'P3P', 'AP3P'}; % 'DLS', 'UPnP'
             for i=1:numel(methodsPNP)
-                if strcmp(methodsPNP{i}, 'P3P')
+                if any(strcmp(methodsPNP{i}, {'P3P', 'AP3P'}))
                     n = 4;  % requires exactly 4 points
                 else
                     n = N;

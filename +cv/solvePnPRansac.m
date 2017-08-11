@@ -52,5 +52,14 @@
 % cv.projectPoints) `objectPoints`. The use of RANSAC makes the function
 % resistant to outliers.
 %
+% Note: The default method used to estimate the camera pose for the Minimal
+% Sample Sets step is `EPnP`. Exceptions: if you choose `P3P` or `AP3P`, these
+% methods will be used; if the number of input points is equal to 4, `P3P` is
+% used.
+%
+% The method used to estimate the camera pose using all the inliers is defined
+% by the flags parameters unless it is equal to `P3P` or `AP3P`. In this case,
+% the method `EPnP` will be used instead.
+%
 % See also: cv.solvePnP, estimateWorldCameraPose
 %
