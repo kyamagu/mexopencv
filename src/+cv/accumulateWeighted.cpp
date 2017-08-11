@@ -36,7 +36,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
-    Mat src(rhs[0].toMat(rhs[0].isUint8() ? CV_8U : CV_32F)),
+    Mat src(rhs[0].toMat()),  // 8u, 16u, 32f, 64f
         dst(rhs[1].toMat(rhs[1].isSingle() ? CV_32F : CV_64F));
     double alpha = rhs[2].toDouble();
     accumulateWeighted(src, dst, alpha, mask);
