@@ -29,14 +29,15 @@
 % * __JpegChromaQuality__ Separate chroma quality level, 0 - 100,
 %       default is 0 (don't use).
 % * __PngCompression__ For PNG, it can be the compression level from 0 to 9.
-%       A higher value means a smaller size and longer compression time.
-%       Default value is 3. Also strategy is changed to `Default`.
+%       A higher value means a smaller size and longer compression time. If
+%       specified, `PngStrategy` is changed to `Default`. Default value is 1
+%       (best speed setting).
 % * __PngStrategy__ For PNG; used to tune the compression algorithm. These
 %       flags will be modify the way of PNG image compression and will be
 %       passed to the underlying zlib processing stage. The strategy parameter
 %       only affects the compression ratio but not the correctness of the
 %       compressed output even if it is not set appropriately. One of:
-%       * __Default__ (default) Use this value for normal data.
+%       * __Default__ Use this value for normal data.
 %       * __Filtered__ Use this value for data produced by a filter (or
 %             predictor). Filtered data consists mostly of small values with a
 %             somewhat random distribution. In this case, the compression
@@ -46,8 +47,8 @@
 %             `HuffmanOnly`.
 %       * __HuffmanOnly__ Use this value to force Huffman encoding only
 %             (no string match).
-%       * __RLE__ Use this value to limit match distances to one (run-length
-%             encoding). `RLE` is designed to be almost as fast as
+%       * __RLE__ (default) Use this value to limit match distances to one
+%             (run-length encoding). `RLE` is designed to be almost as fast as
 %             `HuffmanOnly`, but give better compression for PNG image data.
 %       * __Fixed__ Using this value prevents the use of dynamic Huffman
 %             codes, allowing for a simpler decoder for special applications.
