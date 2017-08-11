@@ -46,7 +46,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
-    Mat src(rhs[0].toMat(CV_8U)),
+    Mat src(rhs[0].toMat(rhs[0].isUint8() ? CV_8U :
+            (rhs[0].isUint16() ? CV_16U : CV_32F))),
         mask(rhs[1].toMat(CV_8U)),
         dst;
     inpaint(src, mask, dst, inpaintRadius, flags);

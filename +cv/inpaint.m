@@ -4,7 +4,8 @@
 %    dst = cv.inpaint(src, mask, 'OptionName', optionValue, ...)
 %
 % ## Input
-% * __src__ Input 8-bit 1-channel or 3-channel image.
+% * __src__ Input 8-bit, 16-bit unsigned or 32-bit float 1-channel, or 8-bit
+%       3-channel image.
 % * __mask__ Inpainting mask, 8-bit 1-channel image. Non-zero pixels indicate
 %       the area that needs to be inpainted.
 %
