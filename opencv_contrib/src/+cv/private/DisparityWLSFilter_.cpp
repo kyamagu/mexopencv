@@ -28,7 +28,8 @@ const ConstMap<string, int> PreFilerTypeMap = ConstMap<string, int>
 const ConstMap<string, int> SGBMModeMap = ConstMap<string, int>
     ("SGBM",     cv::StereoSGBM::MODE_SGBM)
     ("HH",       cv::StereoSGBM::MODE_HH)
-    ("SGBM3Way", cv::StereoSGBM::MODE_SGBM_3WAY);
+    ("SGBM3Way", cv::StereoSGBM::MODE_SGBM_3WAY)
+    ("HH4",      cv::StereoSGBM::MODE_HH4);
 
 /** Convert a StereoMatcher to MxArray
  * @param p smart poitner to an instance of cv::StereoMatcher
@@ -163,8 +164,8 @@ Ptr<StereoSGBM> create_StereoSGBM(
     ptrdiff_t len = std::distance(first, last);
     nargchk((len%2)==0);
     int minDisparity = 0;
-    int numDisparities = 64;
-    int blockSize = 7;
+    int numDisparities = 16;
+    int blockSize = 3;
     int P1 = 0;
     int P2 = 0;
     int disp12MaxDiff = 0;

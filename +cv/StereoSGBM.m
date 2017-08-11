@@ -52,9 +52,9 @@ classdef StereoSGBM < handle
         % Minimum possible disparity value, default 0
         MinDisparity
         % Maximum disparity minus minimum disparity, positive and divisble by
-        % 16. default 64
+        % 16. default 16
         NumDisparities
-        % Matched block size, default 7
+        % Matched block size (SAD window size), default 3
         BlockSize
         % Maximum size of smooth disparity regions to consider their noise
         % speckles and invalidate (when `SpeckleRange>=0` and
@@ -81,9 +81,11 @@ classdef StereoSGBM < handle
         P2
         % Algorithm Mode, default 'SGBM'
         %
-        % * __SGBM__
-        % * __SGBM3Way__
-        % * __HH__ runs the full-scale two-pass dynamic programming algorithm
+        % * __SGBM__ 5-directional version of the algorithm
+        % * __HH__ 8-dir mode, runs the full-scale two-pass dynamic
+        %       programming algorithm (slowest, memory intensive)
+        % * __SGBM3Way__ 3-dir mode (fastest)
+        % * __HH4__ 4-directional variation of SGBM
         Mode
     end
 
@@ -102,10 +104,10 @@ classdef StereoSGBM < handle
             % * __NumDisparities__ Maximum disparity minus minimum disparity.
             %       The value is always greater than zero. In the current
             %       implementation, this parameter must be divisible by 16.
-            %       default 64
+            %       default 16
             % * __BlockSize__ Matched block size. It must be an odd number >=1.
             %       Normally, it should be somewhere in the 3..11 range.
-            %       default 7
+            %       default 3
             % * __P1__ The first parameter controlling the disparity
             %       smoothness. See `P2`. default 0 (which uses 2).
             % * __P2__ The second parameter controlling the disparity
