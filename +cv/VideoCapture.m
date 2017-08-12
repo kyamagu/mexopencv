@@ -137,7 +137,7 @@ classdef VideoCapture < handle
         Format
         % Backend-specific value indicating the current capture mode.
         Mode
-        % Brightness of the image (only for cameras).
+        % Brightness of the image (only for those cameras that support it).
         Brightness
         % Contrast of the image (only for cameras).
         Contrast
@@ -145,9 +145,9 @@ classdef VideoCapture < handle
         Saturation
         % Hue of the image (only for cameras).
         Hue
-        % Gain of the image (only for cameras).
+        % Gain of the image (only for those cameras that support it).
         Gain
-        % Exposure (only for cameras).
+        % Exposure (only for those cameras that support it).
         Exposure
         % Boolean flags indicating whether images should be converted to RGB.
         ConvertRGB
@@ -220,6 +220,7 @@ classdef VideoCapture < handle
             %         Note that each video stream or IP camera feed has its
             %         own URL scheme. Please refer to the documentation of
             %         source stream to know the right URL.
+            %       * or device name (for backends like V4L or gPhoto2)
             %
             % ## Output
             % * __successFlag__ bool, true if the file/camera has been
@@ -264,6 +265,8 @@ classdef VideoCapture < handle
             %             library.
             %       * __Images__ OpenCV Image Sequence (e.g. `img_%02d.jpg`).
             %       * __Aravis__ Aravis GigE SDK.
+            %       * __MotionJPEG__ Built-in OpenCV MotionJPEG codec.
+            %       * __MediaSDK__ Intel MediaSDK.
             %
             % The method first calls cv.VideoCapture.release to close the
             % already opened file or camera.
