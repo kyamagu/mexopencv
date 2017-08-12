@@ -196,6 +196,34 @@ classdef TestRTrees
             model3.load(strYML, 'FromString',true);
             Yhat = model3.predict(TestRTrees.X);
         end
+
+        function test_classification_votes
+            rt = cv.RTrees();
+            data = rand(12,4,'single');
+            labels = int32([0 0 0 0 1 1 1 1 2 2 2 2]);  % 3 classes
+            rt.train(data, labels);
+
+            votes = rt.getVotes(data);
+            validateattributes(votes, {'numeric'}, {'integer', 'size',[12+1 3]});
+
+            % first row contains the class labels
+            L = votes(1,:);
+            assert(isequal(L, unique(labels)));
+
+            % next rows are the counts per class
+            count = numel(rt.getRoots()); % number of random trees
+            assert(all(sum(votes(2:end,:), 2) == count));
+
+            % for each sample, find class with max num of votes
+            [v,idx] = max(votes(2:end,:), [], 2);
+            yhat1 = L(idx);
+
+            % compare against predictions
+            yhat2 = rt.predict(data);
+            yhat2 = int32(yhat2);
+            assert(isequal(yhat1(:), yhat2(:)));
+
+        end
     end
 
 end
