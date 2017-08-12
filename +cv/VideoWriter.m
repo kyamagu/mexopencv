@@ -78,21 +78,34 @@ classdef VideoWriter < handle
             VideoWriter_(this.id, 'delete');
         end
 
-        function retval = open(this, filename, frameSize, varargin)
+        function successFlag = open(this, filename, frameSize, varargin)
             %OPEN  Initializes or reinitializes video writer
             %
-            %    retval = vid.open(filename, frameSize)
-            %    retval = vid.open(filename, frameSize, 'OptionName',optionValue, ...)
+            %    successFlag = vid.open(filename, frameSize)
+            %    successFlag = vid.open(filename, frameSize, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __filename__ Name of the output video file
             % * __frameSize__ Size of the video frames `[width, height]`.
             %
             % ## Output
-            % * __retval__ bool, true if video writer has been successfully
+            % * __successFlag__ bool, true if video writer has been successfully
             %       initialized.
             %
             % ## Options
+            % * __API__ The parameter allows to specify API backends to use.
+            %       Can be used to enforce a specific writer implementation if
+            %       multiple are available: e.g. 'FFMPEG' or 'GStreamer'
+            %       * __Any__ (default) Auto detect
+            %       * __VfW__ Video For Windows
+            %       * __QuickTime__ QuickTime
+            %       * __AVFoundation__ AVFoundation framework for iOS
+            %       * __MediaFoundation__ Microsoft Media Foundation
+            %       * __GStreamer__ GStreamer
+            %       * __FFMPEG__ FFMPEG library
+            %       * __Images__ OpenCV Image Sequence (e.g. `img_%02d.jpg`)
+            %       * __MotionJPEG__ Built-in OpenCV MotionJPEG codec
+            %       * __MediaSDK__ Intel Media SDK
             % * __FourCC__ 4-character code of codec used to compress the
             %       frames. List of codes can be obtained at [FOURCC]. FFMPEG
             %       backend with MP4 container natively uses other values as
@@ -100,12 +113,12 @@ classdef VideoWriter < handle
             %       warning message from OpenCV about fourcc code conversion.
             %       Examples are:
             %       * __PIM1__ MPEG-1 codec
-            %       * __MJPG__ Motion-JPEG codec
+            %       * __MJPG__ Motion-JPEG codec (default)
             %       * __MP42__ MPEG-4 (Microsoft)
             %       * __DIV3__ DivX MPEG-4 Part 2
             %       * __DIVX__ DivX codec
             %       * __XVID__ XVID MPEG-4 Part 2
-            %       * __U263__ H263 (default)
+            %       * __U263__ H263
             %       * __I263__ ITU H.263
             %       * __FLV1__ Sorenson Spark (Flash Video)
             %       * __X264__ H.264
@@ -149,7 +162,7 @@ classdef VideoWriter < handle
             %
             % See also: cv.VideoWriter.VideoWriter, cv.VideoWriter.isOpened
             %
-            retval = VideoWriter_(this.id, 'open', filename, frameSize, varargin{:});
+            successFlag = VideoWriter_(this.id, 'open', filename, frameSize, varargin{:});
         end
 
         function retval = isOpened(this)

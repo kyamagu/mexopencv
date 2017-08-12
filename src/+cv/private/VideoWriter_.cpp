@@ -16,6 +16,19 @@ int last_id = 0;
 /// Object container
 map<int,Ptr<VideoWriter> > obj_;
 
+/// API backends map for option processing
+const ConstMap<string,int> ApiPreferenceMap = ConstMap<string,int>
+    ("Any",             cv::CAP_ANY)
+    ("VfW",             cv::CAP_VFW)
+    ("QuickTime",       cv::CAP_QT)
+    ("AVFoundation",    cv::CAP_AVFOUNDATION)
+    ("MediaFoundation", cv::CAP_MSMF)
+    ("GStreamer",       cv::CAP_GSTREAMER)
+    ("FFMPEG",          cv::CAP_FFMPEG)
+    ("Images",          cv::CAP_IMAGES)
+    ("MotionJPEG",      cv::CAP_OPENCV_MJPEG)
+    ("MediaSDK",        cv::CAP_INTEL_MFX);
+
 /// Capture Property map for option processing
 const ConstMap<string,int> VidWriterProp = ConstMap<string,int>
     ("Quality",    cv::VIDEOWRITER_PROP_QUALITY)
@@ -43,6 +56,8 @@ const ConstMap<string,int> PamFormatMap = ConstMap<string,int>
 /// Option arguments parser used by constructor and open method
 struct OptionsParser
 {
+    /// API preference.
+    int apiPreference;
     /// 4-character code of codec used to compress the frames.
     int fourcc;
     /// Framerate of the created video stream.
@@ -56,7 +71,8 @@ struct OptionsParser
      */
     OptionsParser(vector<MxArray>::const_iterator first,
                   vector<MxArray>::const_iterator last)
-        : fourcc(CV_FOURCC('U','2','6','3')),  // H263 codec
+        : apiPreference(cv::CAP_ANY),
+          fourcc(CV_FOURCC('M','J','P','G')),
           fps(25),
           isColor(true)
     {
@@ -64,7 +80,9 @@ struct OptionsParser
         for (; first != last; first += 2) {
             string key((*first).toString());
             const MxArray& val = *(first + 1);
-            if (key == "FourCC") {
+            if (key == "API")
+                apiPreference = ApiPreferenceMap[val.toString()];
+            else if (key == "FourCC") {
                 if (val.isChar() && val.numel()==4) {
                     string cc(val.toString());
                     fourcc = VideoWriter::fourcc(cc[0], cc[1], cc[2], cc[3]);
@@ -208,8 +226,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         string filename(rhs[2].toString());
         Size frameSize(rhs[3].toSize());
         OptionsParser opts(rhs.begin() + 4, rhs.end());
-        bool b = obj->open(filename, opts.fourcc, opts.fps, frameSize,
-            opts.isColor);
+        bool b = obj->open(filename, opts.apiPreference,
+            opts.fourcc, opts.fps, frameSize, opts.isColor);
         plhs[0] = MxArray(b);
     }
     else if (method == "isOpened") {
