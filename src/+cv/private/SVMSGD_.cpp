@@ -92,6 +92,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
+        //obj_[id] = SVMSGD::load(rhs[2].toString());
         obj_[id] = (loadFromString ?
             Algorithm::loadFromString<SVMSGD>(rhs[2].toString(), objname) :
             Algorithm::load<SVMSGD>(rhs[2].toString(), objname));

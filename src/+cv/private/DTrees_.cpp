@@ -72,6 +72,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
+        //obj_[id] = DTrees::load(rhs[2].toString());
         obj_[id] = (loadFromString ?
             Algorithm::loadFromString<DTrees>(rhs[2].toString(), objname) :
             Algorithm::load<DTrees>(rhs[2].toString(), objname));
