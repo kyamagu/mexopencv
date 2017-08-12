@@ -5,9 +5,8 @@
 % classification by using GoogLeNet trained network from
 % <http://caffe.berkeleyvision.org/model_zoo.html Caffe model zoo>.
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/dnn/samples/caffe_googlenet.cpp>
-% <http://docs.opencv.org/3.1.0/d5/de7/tutorial_dnn_googlenet.html>
-% <http://docs.opencv.org/3.1.0/de/d25/tutorial_dnn_build.html>
+% <https://github.com/opencv/opencv/blob/3.3.0/samples/dnn/caffe_googlenet.cpp>,
+% <http://docs.opencv.org/3.3.0/d5/de7/tutorial_dnn_googlenet.html>
 %
 
 %% BVLC GoogLeNet
@@ -27,12 +26,12 @@ if ~isdir(dirDNN)
 end
 if exist(modelLabels, 'file') ~= 2
     disp('Downloading...')
-    url = 'https://cdn.rawgit.com/opencv/opencv_contrib/3.2.0/modules/dnn/samples/synset_words.txt';
+    url = 'https://cdn.rawgit.com/opencv/opencv/3.3.0/samples/data/dnn/synset_words.txt';
     urlwrite(url, modelLabels);
 end
 if exist(modelTxt, 'file') ~= 2
     disp('Downloading...')
-    url = 'https://cdn.rawgit.com/opencv/opencv_contrib/3.2.0/modules/dnn/samples/bvlc_googlenet.prototxt';
+    url = 'https://cdn.rawgit.com/opencv/opencv/3.3.0/samples/data/dnn/bvlc_googlenet.prototxt';
     urlwrite(url, modelTxt);
 end
 if exist(modelBin, 'file') ~= 2
@@ -70,38 +69,42 @@ fclose(fid);
 
 fprintf('%d classes\n', numel(labels));
 
-%% Read input image
-% we resize image and change its channel sequence order
-% because GoogLeNet accepts only 224x224 BGR-images
-img = cv.imread(fullfile(mexopencv.root(), 'test', 'cat.jpg'), 'FlipChannels',false);
-img = cv.resize(img, [224 224]);
-
 %% Create and initialize network from Caffe model
 net = cv.Net();
 net.import('Caffe', modelTxt, modelBin);
 assert(~net.empty(), 'Cant load network');
 
-%% Set the network input
-% we convert the image to 4-dimensional blob (so-called batch)
-% with 1x3x224x224 shape.
-% In |bvlc_googlenet.prototxt| the network input blob named as "data",
-% therefore this blob labeled as ".data" in OpenCV DNN API.
-% Other blobs labeled as "name_of_layer.name_of_layer_output".
-net.setBlob('.data', single(img));
+%% Prepare blob from input image
+% Read input image (BGR channel order)
+img = cv.imread(fullfile(mexopencv.root(), 'test', 'cat.jpg'), ...
+    'Color',true, 'FlipChannels',false);
 
-if false
-    % verify we get the same image/blob we set
-    im = net.getBlob('.data');
-    im = uint8(permute(im, [3 4 2 1]));  % num,cn,row,col -> row,col,cn,num
-    assert(isequal(im,img));
-    imshow(flip(im,3))                   % BGR to RGB
+%%
+% we resize and convert the image to 4-dimensional blob (so-called batch)
+% with 1x3x224x224 shape, because GoogLeNet accepts only 224x224 BGR-images.
+% we also subtract the mean pixel value of the training dataset ILSVRC_2012
+% (B: 104.0069879317889, G: 116.66876761696767, R: 122.6789143406786)
+if true
+    blob = cv.Net.blobFromImages(img, ...
+        'Size',[224 224], 'Mean',[104 117 123], 'SwapRB',true);
+else
+    % NOTE: blobFromImages does crop/resize to maintain aspect ratio of image
+    blob = cv.resize(img, [224 224]);                       % Size
+    blob = bsxfun(@plus, blob, uint8(cat(3,123,117,104)));  % Mean (BGR)
+    blob = permute(blob, [4 3 1 2]);                        % HWCN -> NCHW
+    blob = single(blob);                                    % CV_32F
 end
 
-%% Make forward pass
+%% Set the network input
+% In |bvlc_googlenet.prototxt| the network input blob named as "data".
+% Other blobs labeled as "name_of_layer.name_of_layer_output".
+net.setInput(blob, 'data');
+
+%% Make forward pass and compute output
 % During the forward pass output of each network layer is computed,
 % but in this example we need output from "prob" layer only.
 tic
-net.forward();  % computes output
+p = net.forward('prob');  % vector of length 1000
 toc
 
 %% Gather output of "prob" layer
@@ -109,7 +112,6 @@ toc
 % contain probabilities for each of 1000 ILSVRC2012 image classes, and finding
 % the index of element with maximal value in this one. This index correspond
 % to the class of the image.
-p = net.getBlob('prob');       % vector of length 1000
 [~,ord] = sort(p, 'descend');  % ordered by maximum probability
 
 %% Show predictions

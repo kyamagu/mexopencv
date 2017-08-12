@@ -4,7 +4,7 @@
 % Evan Shelhamer and Trevor Darrell, CVPR, 2015.
 % <http://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Long_Fully_Convolutional_Networks_2015_CVPR_paper.pdf>
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.2.0/modules/dnn/samples/fcn_semsegm.cpp>
+% <https://github.com/opencv/opencv/blob/3.3.0/samples/dnn/fcn_semsegm.cpp>
 %
 
 %% Model files
@@ -15,8 +15,8 @@ modelBin = fullfile(dirDNN, 'fcn8s-heavy-pascal.caffemodel');  % 513MB file
 
 files = {modelLabels, modelTxt, modelBin};
 urls = {
-    'https://cdn.rawgit.com/opencv/opencv_contrib/3.2.0/modules/dnn/samples/pascal-classes.txt';
-    'https://cdn.rawgit.com/opencv/opencv_contrib/3.2.0/modules/dnn/samples/fcn8s-heavy-pascal.prototxt';
+    'https://cdn.rawgit.com/opencv/opencv/3.3.0/samples/data/dnn/pascal-classes.txt';
+    'https://cdn.rawgit.com/opencv/opencv/3.3.0/samples/data/dnn/fcn8s-heavy-pascal.prototxt';
     'http://dl.caffe.berkeleyvision.org/fcn8s-heavy-pascal.caffemodel';
 };
 if ~isdir(dirDNN), mkdir(dirDNN); end
@@ -46,22 +46,29 @@ net.import('Caffe', modelTxt, modelBin);
 assert(~net.empty(), 'Cant load network');
 
 %% Prepare blob
-% FCN accepts 500x500 RGB-images
-imageFile = fullfile(mexopencv.root(), 'test', 'rgb.jpg');
-img = cv.imread(imageFile, 'FlipChannels',false);
-img = cv.resize(img, [500 500]);
-
-% Set the network input
-net.setBlob('.data', single(img));
+% Set the network input (VOC-FCN8s was trained on 500x500 BGR-images)
+img = cv.imread(fullfile(mexopencv.root(), 'test', 'rgb.jpg'), ...
+    'Color',true, 'FlipChannels',false);
+if true
+    blob = cv.Net.blobFromImages(img, 'Size',[500 500]);
+elseif true
+    blob = cv.resize(img, [500 500]);
+    blob = permute(blob, [4 3 1 2]);
+    blob = single(blob);
+else
+    blob = img;
+    blob = permute(blob, [4 3 1 2]);
+    blob = single(blob);
+end
+net.setInput(blob, 'data');
 
 %% Make forward pass
 % computes output
 tic
-net.forward();
+score = net.forward('score');
 toc
 
 %% Gather output
-score = net.getBlob('score');
 score = permute(score, [3 4 2 1]);  % num,cn,row,col -> row,col,cn,num
 
 % max scores and corresponding labels
@@ -72,9 +79,18 @@ score = permute(score, [3 4 2 1]);  % num,cn,row,col -> row,col,cn,num
 
 %% Result
 
+% for display, recover image from blob as fed to network
+if true
+    rgb = permute(uint8(round(blob)), [3 4 2 1]);
+elseif true
+    rgb = flip(cv.resize(img, [500 500]), 3);
+else
+    rgb = flip(img, 3);
+end
+
 % colorize segmentations using label colors and overlay on top of image
 out = reshape(colors(L(:),:), [size(L) 3]);
-out = cv.addWeighted(flip(img,3), 0.4, out, 0.6, 0.0);
+out = cv.addWeighted(rgb, 0.4, out, 0.6, 0.0);
 
 % highlight segmented objects
 for lbl=2:numel(labels)  % skip 1, background label
