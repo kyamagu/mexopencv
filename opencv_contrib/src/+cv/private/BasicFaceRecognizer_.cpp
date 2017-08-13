@@ -49,9 +49,9 @@ Ptr<BasicFaceRecognizer> create_BasicFaceRecognizer(
     }
     Ptr<BasicFaceRecognizer> p;
     if (type == "Eigenfaces")
-        p = createEigenFaceRecognizer(num_components, threshold);
+        p = EigenFaceRecognizer::create(num_components, threshold);
     else if (type == "Fisherfaces")
-        p = createFisherFaceRecognizer(num_components, threshold);
+        p = FisherFaceRecognizer::create(num_components, threshold);
     else
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized face recognizer %s", type.c_str());
@@ -121,7 +121,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==2 && nlhs==0);
         obj->clear();
     }
-    else if (method == "load") {
+    else if (method == "read") {
         nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs==0);
         bool loadFromString = false;
         for (int i=3; i<nrhs; i+=2) {
@@ -137,12 +137,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             FileStorage fs(fname, FileStorage::READ + FileStorage::MEMORY);
             if (!fs.isOpened())
                 mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
-            obj->load(fs);
+            obj->read(fs.root());  //TODO: root or getFirstTopLevelNode ?
         }
         else
-            obj->load(fname);
+            obj->read(fname);
     }
-    else if (method == "save") {
+    else if (method == "write") {
         nargchk(nrhs==3 && nlhs<=1);
         string fname(rhs[2].toString());
         if (nlhs > 0) {
@@ -150,12 +150,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             FileStorage fs(fname, FileStorage::WRITE + FileStorage::MEMORY);
             if (!fs.isOpened())
                 mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
-            obj->save(fs);
+            obj->write(fs);
             plhs[0] = MxArray(fs.releaseAndGetString());
         }
         else
             // write to disk
-            obj->save(fname);
+            obj->write(fname);
     }
     else if (method == "empty") {
         nargchk(nrhs==2 && nlhs<=1);
