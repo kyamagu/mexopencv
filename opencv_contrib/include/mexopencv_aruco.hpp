@@ -40,6 +40,18 @@ const ConstMap<std::string, cv::aruco::PREDEFINED_DICTIONARY_NAME> PredefinedDic
     ("7x7_1000",      cv::aruco::DICT_7X7_1000)
     ("ArucoOriginal", cv::aruco::DICT_ARUCO_ORIGINAL);
 
+/// Corner refinement methods map
+const ConstMap<std::string, int> CornerRefineMethodMap = ConstMap<std::string, int>
+    ("None",    cv::aruco::CORNER_REFINE_NONE)
+    ("Subpix",  cv::aruco::CORNER_REFINE_SUBPIX)
+    ("Contour", cv::aruco::CORNER_REFINE_CONTOUR);
+
+/// Inverse corner refinement methods map
+const ConstMap<int, std::string> CornerRefineMethodInvMap = ConstMap<int, std::string>
+    (cv::aruco::CORNER_REFINE_NONE,    "None")
+    (cv::aruco::CORNER_REFINE_SUBPIX,  "Subpix")
+    (cv::aruco::CORNER_REFINE_CONTOUR, "Contour");
+
 
 // ==================== XXX ====================
 

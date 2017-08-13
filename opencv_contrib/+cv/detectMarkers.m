@@ -65,7 +65,10 @@
 %             corners to be considered similar, so that the smaller one is
 %             removed. The rate is relative to the smaller perimeter of the
 %             two markers (default 0.05).
-%       * __doCornerRefinement__ do subpixel refinement or not (default false).
+%       * __cornerRefinementMethod__  corner refinement method, one of:
+%             * __None__ (default) no refinement.
+%             * __Subpix__ do subpixel refinement (cv.cornerSubPix).
+%             * __Contour__ refine the corners using the contour-points.
 %       * __cornerRefinementWinSize__ window size for the corner refinement
 %             process (in pixels) (default 5).
 %       * __cornerRefinementMaxIterations__ maximum number of iterations for
