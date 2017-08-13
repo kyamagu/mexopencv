@@ -42,6 +42,8 @@
 %       empty. The function uses the provided values as initial approximations
 %       of the rotation and translation vectors, respectively, and further
 %       optimizes them. Not set by default.
+% * __UseExtrinsicGuess__ defines whether initial guess for `rvec` and `tvec`
+%       will be used or not. default false.
 %
 % ## Inputs for Board
 % * __objPoints__ array of object points of all the marker corners in the
