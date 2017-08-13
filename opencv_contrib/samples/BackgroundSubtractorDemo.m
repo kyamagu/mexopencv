@@ -148,8 +148,13 @@ if true
         'History',50, 'NMixtures',5, 'BackgroundRatio',0.2, 'NoiseSigma',7);
 elseif true
     bs = cv.BackgroundSubtractorMOG2('History',50);
-else
+elseif true
     bs = cv.BackgroundSubtractorKNN('History',50);
+elseif false
+    bs = cv.BackgroundSubtractorGMG(...
+        'InitializationFrames',20, 'DecisionThreshold',0.7);
+elseif false
+    bs = cv.BackgroundSubtractorCNT();
 end
 
 %%
