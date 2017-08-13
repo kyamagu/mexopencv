@@ -26,7 +26,7 @@ classdef TestRetina
             validateattributes(magno, {'uint8'}, {'size',[sz(2) sz(1)]});
 
             parvo = retina.getParvoRAW();
-            validateattributes(parvo, {'single'}, {'vector', 'numel',prod(sz)});
+            validateattributes(parvo, {'single'}, {'vector', 'numel',prod(sz)*3});
 
             magno = retina.getMagnoRAW();
             validateattributes(magno, {'single'}, {'vector', 'numel',prod(sz)});
