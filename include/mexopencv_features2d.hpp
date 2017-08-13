@@ -319,6 +319,15 @@ cv::Ptr<cv::xfeatures2d::VGG> createVGG(
 cv::Ptr<cv::xfeatures2d::BoostDesc> createBoostDesc(
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
+
+/** Create an instance of HarrisLaplaceFeatureDetector using options in arguments
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to an instance cv::xfeatures2d::HarrisLaplaceFeatureDetector
+ */
+cv::Ptr<cv::xfeatures2d::HarrisLaplaceFeatureDetector> createHarrisLaplaceFeatureDetector(
+    std::vector<MxArray>::const_iterator first,
+    std::vector<MxArray>::const_iterator last);
 #endif
 
 /** Factory function for FeatureDetector creation
@@ -336,6 +345,7 @@ cv::Ptr<cv::xfeatures2d::BoostDesc> createBoostDesc(
  *    - "SURF" (requires `xfeatures2d` module)
  *    - "StarDetector" (requires `xfeatures2d` module)
  *    - "MSDDetector" (requires `xfeatures2d` module)
+ *    - "HarrisLaplaceFeatureDetector" (requires `xfeatures2d` module)
  * @param first iterator at the beginning of the vector range
  * @param last iterator at the end of the vector range
  * @return smart pointer to an instance cv::FeatureDetector

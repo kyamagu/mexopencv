@@ -46,6 +46,9 @@ classdef FeatureDetector < handle
             %             `xfeatures2d` module)
             %       * __MSDDetector__ see cv.MSDDetector (requires
             %             `xfeatures2d` module)
+            %       * __HarrisLaplaceFeatureDetector__ see
+            %             cv.HarrisLaplaceFeatureDetector (requires
+            %             `xfeatures2d` module)
             %
             % ## Options
             % Refer to the constructors of each feature detector for a
