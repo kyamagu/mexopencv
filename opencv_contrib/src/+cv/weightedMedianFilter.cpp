@@ -13,7 +13,7 @@ using namespace cv::ximgproc;
 
 namespace {
 /// weight type options of weighted median filter
-const ConstMap<string, WMFWeightType> WeightTypeMap = ConstMap<string, WMFWeightType>
+const ConstMap<string, int> WeightTypeMap = ConstMap<string, int>
     ("EXP", cv::ximgproc::WMF_EXP)
     ("IV1", cv::ximgproc::WMF_IV1)
     ("IV2", cv::ximgproc::WMF_IV2)
@@ -40,7 +40,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Option processing
     int r = 7;
     double sigma = 25.5;
-    WMFWeightType weightType = cv::ximgproc::WMF_EXP;
+    int weightType = cv::ximgproc::WMF_EXP;
     Mat mask;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
