@@ -65,16 +65,26 @@ function niblack_thresholding_demo()
         'C',C, 'BlockSize',BS, opts{:});
     bw3 = cv.adaptiveThreshold(src, 'Method','Gaussian', ...
         'C',C, 'BlockSize',BS, opts{:});
-    bw4 = cv.niBlackThreshold(src, K, 'BlockSize',BS, opts{:});
-    %bw5 = my_niblack(src, K, BS);
+    bw4 = cv.niBlackThreshold(src, K, 'Method','Niblack', ...
+        'BlockSize',BS, opts{:});
+    bw5 = cv.niBlackThreshold(src, -K, 'Method','Sauvola', ...
+        'BlockSize',BS, opts{:});
+    bw6 = cv.niBlackThreshold(src, -K, 'Method','Wolf', ...
+        'BlockSize',BS, opts{:});
+    bw7 = cv.niBlackThreshold(src, K, 'Method','Nick', ...
+        'BlockSize',BS, opts{:});
+    %bw8 = my_niblack(src, K, BS);
 
     % Results
-    subplot(231), imshow(img), title('Source')
-    subplot(232), imshow(src), title('Processed')
-    subplot(233), imshow(bw1), title('Otsu')
-    subplot(234), imshow(bw2), title('Adaptive Mean')
-    subplot(235), imshow(bw3), title('Adaptive Gaussian')
-    subplot(236), imshow(bw4), title('Niblack')
+    subplot(331), imshow(img), title('Source')
+    subplot(332), imshow(src), title('Processed')
+    subplot(333), imshow(bw1), title('Otsu')
+    subplot(334), imshow(bw2), title('Adaptive Mean')
+    subplot(335), imshow(bw3), title('Adaptive Gaussian')
+    subplot(336), imshow(bw4), title('Niblack')
+    subplot(337), imshow(bw5), title('Sauvola')
+    subplot(338), imshow(bw6), title('Wolf')
+    subplot(339), imshow(bw7), title('Nick')
 end
 
 %% Helper function
