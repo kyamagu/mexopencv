@@ -212,6 +212,51 @@ classdef StructuredEdgeDetection < handle
             %
             dst = StructuredEdgeDetection_(this.id, 'detectEdges', src);
         end
+
+        function orientation_image = computeOrientation(this, edge_image)
+            %COMPUTEORIENTATION  Computes orientation map from edge image
+            %
+            %    orientation_image = obj.computeOrientation(edge_image)
+            %
+            % ## Input
+            % * **edge_image** edge image from `detectEdges` function.
+            %
+            % ## Output
+            % * **orientation_image** orientation image.
+            %
+            % See also: cv.StructuredEdgeDetection.detectEdges
+            %
+            orientation_image = StructuredEdgeDetection_(this.id, 'computeOrientation', edge_image);
+        end
+
+        function dst = edgesNms(this, edge_image, orientation_image, varargin)
+            %EDGESNMS  Suppress edges
+            %
+            %    dst = obj.edgesNms(edge_image, orientation_image)
+            %    dst = obj.edgesNms(..., 'OptionName',optionValue, ...)
+            %
+            % ## Input
+            % * **edge_image** edge image from `detectEdges` function.
+            % * **orientation_image** orientation image from `computeOrientation` function.
+            %
+            % ## Output
+            % * __dst__ suppressed image (grayscale, float, in [0;1]).
+            %
+            % ## Options
+            % * __R__ radius for NMS suppression. default 2
+            % * __S__ radius for boundary suppression. default 0
+            % * __M__ multiplier for conservative suppression. default 1.0
+            % * __IsParallel__ enables/disables parallel computing.
+            %       default true
+            %
+            % The function suppresses edges where edge is stronger in
+            % orthogonal direction.
+            %
+            % See also: cv.StructuredEdgeDetection.detectEdges,
+            %  cv.StructuredEdgeDetection.computeOrientation
+            %
+            dst = StructuredEdgeDetection_(this.id, 'edgesNms', edge_image, orientation_image, varargin{:});
+        end
     end
 
 end
