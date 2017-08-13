@@ -41,7 +41,6 @@ Ptr<Retina> create_Retina(
     bool useRetinaLogSampling = false;
     float reductionFactor = 1.0f;
     float samplingStrength = 10.0f;
-    bool use_ocl = false;
     for (; first != last; first += 2) {
         string key(first->toString());
         const MxArray& val = *(first + 1);
@@ -55,17 +54,10 @@ Ptr<Retina> create_Retina(
             reductionFactor = val.toFloat();
         else if (key == "SamplingStrength")
             samplingStrength = val.toFloat();
-        else if (key == "UseOCL")
-            use_ocl = val.toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
     }
-    #ifdef HAVE_OPENCV_OCL
-    if (use_ocl)
-        return createRetina_OCL(inputSize, colorMode, colorSamplingMethod,
-            useRetinaLogSampling, reductionFactor, samplingStrength);
-    #endif
     return createRetina(inputSize, colorMode, colorSamplingMethod,
         useRetinaLogSampling, reductionFactor, samplingStrength);
 }
