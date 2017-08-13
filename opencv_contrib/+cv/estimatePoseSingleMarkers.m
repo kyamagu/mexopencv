@@ -1,6 +1,7 @@
 %ESTIMATEPOSESINGLEMARKERS  Pose estimation for single markers
 %
 %    [rvecs, tvecs] = cv.estimatePoseSingleMarkers(corners, markerLength, cameraMatrix, distCoeffs)
+%    [rvecs, tvecs, objPoints] = cv.estimatePoseSingleMarkers(...)
 %
 % ## Input
 % * __corners__ cell array of already detected markers corners. For each
@@ -20,6 +21,9 @@
 % * __tvecs__ cell array of output translation vectors (e.g. `{[x,y,z], ...}`).
 %       Each element in `tvecs` corresponds to the specific marker in
 %       `corners`.
+% * __objPoints__ optional output, array of object points of the marker four
+%       corners (object points for the system centered in a single marker
+%       given the marker length, see explanation below).
 %
 % This function receives the detected markers and returns their pose
 % estimation respect to the camera individually. So for each marker, one
@@ -30,9 +34,9 @@
 % The coordinates of the four corners of the marker in its own coordinate
 % system are:
 %
-%    (-markerLength/2, markerLength/2, 0),
-%    (markerLength/2, markerLength/2, 0),
-%    (markerLength/2, -markerLength/2, 0),
+%    (-markerLength/2,  markerLength/2, 0),
+%    ( markerLength/2,  markerLength/2, 0),
+%    ( markerLength/2, -markerLength/2, 0),
 %    (-markerLength/2, -markerLength/2, 0)
 %
 % See also: cv.detectMarkers, cv.estimatePoseBoard, cv.Rodrigues, cv.solvePnP

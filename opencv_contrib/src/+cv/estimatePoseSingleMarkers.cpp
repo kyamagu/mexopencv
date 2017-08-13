@@ -21,7 +21,7 @@ using namespace cv::aruco;
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    nargchk(nrhs==4 && nlhs<=2);
+    nargchk(nrhs==4 && nlhs<=3);
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);
@@ -32,9 +32,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Mat cameraMatrix(rhs[2].toMat(CV_64F)),
         distCoeffs(rhs[3].toMat(CV_64F));
     vector<Vec3d> rvecs, tvecs;
+    vector<Point3f> objPoints;
     estimatePoseSingleMarkers(corners, markerLength, cameraMatrix, distCoeffs,
-        rvecs, tvecs);
+        rvecs, tvecs, (nlhs > 2) ? objPoints : noArray());
     plhs[0] = MxArray(rvecs);
     if (nlhs > 1)
         plhs[1] = MxArray(tvecs);
+    if (nlhs > 2)
+        plhs[2] = MxArray(objPoints);
 }
