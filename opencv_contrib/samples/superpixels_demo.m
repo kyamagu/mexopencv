@@ -7,7 +7,7 @@
 %
 
 %% Algorithm
-% choose one of: 'SEEDS', 'SLIC', 'SLICO', 'LSC'
+% choose one of: 'SEEDS', 'SLIC', 'SLICO', 'MSLIC', 'LSC'
 ALG = 'SEEDS';
 
 %% Load image
@@ -35,10 +35,10 @@ num_levels = 4;         % SEEDS Number of Levels
 prior = 2;              % SEEDS Smoothing Prior
 num_histogram_bins = 5; % SEEDS histogram bins
 double_step = false;    % SEEDS two steps
-region_size = 20;       % SLIC/SLICO/LSC average superpixel size
-ruler = 15.0;           % SLIC smoothness (spatial regularization)
+region_size = 20;       % SLIC/SLICO/MSLIC/LSC average superpixel size
+ruler = 15.0;           % SLIC/MSLIC smoothness (spatial regularization)
 ratio = 0.075;          % LSC compactness
-min_element_size = 25;  % SLIC/SLICO/LSC minimum component size percentage
+min_element_size = 25;  % SLIC/SLICO/MSLIC/LSC minimum component size percentage
 num_iterations = 10;    % Iterations
 
 switch ALG
@@ -46,7 +46,7 @@ switch ALG
         superpix = cv.SuperpixelSEEDS(...
             size(converted), num_superpixels, num_levels, 'Prior',prior, ...
             'HistogramBins',num_histogram_bins, 'DoubleStep',double_step);
-    case {'SLIC', 'SLICO'}
+    case {'SLIC', 'SLICO', 'MSLIC'}
         superpix = cv.SuperpixelSLIC(converted, 'Algorithm',ALG, ...
             'RegionSize',region_size, 'Ruler',ruler);
     case 'LSC'

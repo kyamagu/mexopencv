@@ -21,7 +21,8 @@ map<int,Ptr<SuperpixelSLIC> > obj_;
 /// Option values for SLIC algorithms
 const ConstMap<string, int> SLICAlgorithmMap = ConstMap<string, int>
     ("SLIC",  cv::ximgproc::SLIC)
-    ("SLICO", cv::ximgproc::SLICO);
+    ("SLICO", cv::ximgproc::SLICO)
+    ("MSLIC", cv::ximgproc::MSLIC);
 }
 
 /**

@@ -12,7 +12,7 @@ classdef TestSuperpixelSLIC
                 'Color',true, 'ReduceScale',2);
             lab = cv.cvtColor(img, 'RGB2Lab');
 
-            alg = {'SLIC', 'SLICO'};
+            alg = {'SLIC', 'SLICO', 'MSLIC'};
             for i=1:numel(alg)
                 superpix = cv.SuperpixelSLIC(lab, 'RegionSize',20, ...
                     'Algorithm',alg{i});
