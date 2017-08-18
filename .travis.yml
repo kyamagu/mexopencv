@@ -4,20 +4,13 @@
 #
 
 language: cpp
+compiler: gcc
+os: linux
 
-compiler:
-  - gcc
-  #- clang
+# Ubuntu image: 14.04 (Trusty) LTS Server Edition 64-bit
+dist: trusty
 
-os:
-  - linux
-  #- osx
-
-# switch to: Ubuntu 14.04 LTS Server Edition 64-bit (trusty)
-# default is: Ubuntu 12.04 LTS Server Edition 64-bit (precise)
-#dist: trusty
-
-# full Ubuntu VM (with sudo enabled) vs. container-based environment
+# full Ubuntu VM (sudo enabled) vs. container-based environment
 sudo: required
 
 # whitelisted branches to build
@@ -28,82 +21,56 @@ branches:
 # global environment variables
 env:
   global:
-    - MCV_ROOT=$(pwd)
+    # OpenCV build options
+    # (CMake generators: "Unix Makefiles", "Ninja")
+    - CMAKE_GEN=Ninja
+    - INSTALL_PREFIX=/usr/local
+
+    # Octave options + optional Octave-Forge packages to install
+    # (Note: latest octave-image requires a C++11 compiler to build, this
+    # works in Trusty with gcc-4.8 but fails in Precise with gcc-4.6)
     - OCTAVERC=$HOME/.octaverc
     - OCTAVE_OPTS="--no-gui --no-window-system"
-    # whether to install Octave Forge packages. They are optional, tests will
-    # simply skip if needed packages are not detected. Note that the latest
-    # octave-image fails to compile with gcc-4.6 as it needs C++11 support
-    # (it compiles fine in trusty but fails in precise)
     - OCT_STATS=yes
     - OCT_IMAGE=no
-    # common options for make
+
+    # mexopencv options
+    # (Note: dont use too many Make parallel jobs on VM)
+    - MCV_ROOT=$(pwd)
     - MAKE_OPTS="WITH_OCTAVE=true WITH_CONTRIB=true NO_CV_PKGCONFIG_HACK=true"
-    # Extra make arguments
-    # (avoid using too many parallel jobs, as it could starve memory!)
     - MAKE_EXTRA=-j2
-    # whether to generate doxygen HTML documentation
     - DOXY=yes
-    # path where OpenCV is installed
-    - INSTALL_PREFIX=/usr/local
-    # CMake generator, one of:
-    # - Unix Makefiles: GNU Make
-    # - Ninja: usually faster than make
-    - CMAKE_GEN=Ninja
 
 install:
-  #HACK: Travis adds this PPA which contains a different GraphicsMagick version
-  # that conflicts with the one Octave was compiled against, so we remove it
-  # (it appears to be brought on by redis)
-  #- sudo add-apt-repository -y -r ppa:rwky/ppa
-  - sudo rm -rf /etc/apt/sources.list.d/rwky-redis.list
-  # alternative way, which removes PPA and downgrades its packages to ones
-  # provided by official repositories
-  #- sudo apt-get install ppa-purge
-  #- sudo ppa-purge ppa:rwky/ppa
+  #HACK: Travis adds a PPA for Redis, but it also contains GraphicsMagick lib
+  # which conflicts with the one Octave was compiled against, so we remove it
+  - sudo rm -f /etc/apt/sources.list.d/rwky-redis.list
 
-  # add PPAs
+  # third-party PPA with Octave 4.0.2
   - sudo add-apt-repository -y ppa:octave/stable
-  - sudo add-apt-repository -y ppa:kalakris/cmake
   - sudo apt-get update -qq
 
-  # install Octave 4.0.2
-  - sudo apt-get install -y octave liboctave-dev
-  # install image and statistics packages used by some tests
-  - if [ "$OCT_STATS" = "yes" ]; then octave-cli $OCTAVE_OPTS --eval "try, pkg install -forge -local io statistics, end" ; fi
-  - if [ "$OCT_IMAGE" = "yes" ]; then octave-cli $OCTAVE_OPTS --eval "try, pkg install -forge -local image, end" ; fi
-
-  # install build tools (CMake, Ninja, pkg-config, Doxygen)
+  # install build tools: CMake, Ninja, pkg-config, Doxygen
   - sudo apt-get install -y cmake pkg-config
   - if [ "$CMAKE_GEN" = "Ninja" ]; then sudo apt-get install -y ninja-build ; fi
   - if [ "$DOXY" = "yes" ]; then sudo apt-get install -y doxygen ; fi
 
-  # show info about build tools
-  #- printenv
-  #- lsb_release -a
-  #- uname -a
-  #- dpkg -s octave liboctave-dev
-  #- apt-cache showpkg octave
-  #- apt-cache policy octave
-  - $CXX --version
-  - make --version
-  - if [ "$CMAKE_GEN" = "Ninja" ]; then ninja --version ; fi
-  - cmake --version
-  - pkg-config --version
-  - octave-cli $OCTAVE_OPTS --version
-  - octave-cli $OCTAVE_OPTS --eval "pkg list"
-  - if [ "$DOXY" = "yes" ]; then doxygen --version ; fi
+  # install Octave + optional statistics/image packages
+  - sudo apt-get install -y octave liboctave-dev
+  - if [ "$OCT_STATS" = "yes" ]; then octave-cli $OCTAVE_OPTS --eval "try, pkg install -forge -local io statistics, end" ; fi
+  - if [ "$OCT_IMAGE" = "yes" ]; then octave-cli $OCTAVE_OPTS --eval "try, pkg install -forge -local image, end" ; fi
 
-  # install some dependencies for OpenCV
+  # install some OpenCV dependencies
   - sudo apt-get install -y zlib1g-dev libjpeg8-dev libpng12-dev libtiff4-dev libjasper-dev libopenexr-dev
   - sudo apt-get install -y libavcodec-dev libavformat-dev libswscale-dev
-  - sudo apt-get install -y libxine-dev libv4l-dev libdc1394-22-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
-  - sudo apt-get install -y libgtk2.0-dev libtbb-dev libeigen3-dev
+  - sudo apt-get install -y libxine2-dev libv4l-dev libdc1394-22-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
+  - sudo apt-get install -y libgtk2.0-dev libtbb-dev libeigen3-dev libblas-dev liblapack-dev liblapacke-dev libatlas-base-dev
+  - sudo apt-get install -y libhdf5-dev libprotobuf-dev libgflags-dev libgoogle-glog-dev
 
-  # build OpenCV 3.2.0 from source (opencv + opencv_contrib)
-  - mkdir $HOME/cv && pushd $HOME/cv
-  - wget -O opencv.zip https://github.com/opencv/opencv/archive/3.2.0.zip
-  - wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/3.2.0.zip
+  # build OpenCV 3.3.0 from source (opencv + opencv_contrib)
+  - mkdir $HOME/cv330 && pushd $HOME/cv330
+  - wget -O opencv.zip https://github.com/opencv/opencv/archive/3.3.0.zip
+  - wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/3.3.0.zip
   - unzip opencv.zip > /dev/null
   - unzip opencv_contrib.zip > /dev/null
   - mkdir build && cd build
@@ -113,13 +80,13 @@ install:
       -DBUILD_PACKAGE:BOOL=OFF
       -DBUILD_PERF_TESTS:BOOL=OFF
       -DBUILD_TESTS:BOOL=OFF
-      -DINSTALL_C_EXAMPLES:BOOL=OFF
-      -DINSTALL_PYTHON_EXAMPLES:BOOL=OFF
       -DWITH_CUDA:BOOL=OFF
       -DWITH_CUFFT:BOOL=OFF
+      -DWITH_ITT:BOOL=OFF
       -DWITH_MATLAB:BOOL=OFF
       -DWITH_OPENCL:BOOL=OFF
       -DWITH_VTK:BOOL=OFF
+      -DCV_TRACE:BOOL=OFF
       -DBUILD_opencv_apps:BOOL=OFF
       -DBUILD_opencv_cuda:BOOL=OFF
       -DBUILD_opencv_java:BOOL=OFF
@@ -139,7 +106,7 @@ install:
       -DCMAKE_BUILD_TYPE:STRING=RELEASE
       -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_PREFIX
       -DOPENCV_ENABLE_NONFREE:BOOL=ON
-      -DOPENCV_EXTRA_MODULES_PATH:PATH=$HOME/cv/opencv_contrib-3.2.0/modules $HOME/cv/opencv-3.2.0
+      -DOPENCV_EXTRA_MODULES_PATH:PATH=$HOME/cv330/opencv_contrib-3.3.0/modules $HOME/cv330/opencv-3.3.0
   - cmake --build .
   - sudo cmake --build . --target install
   - popd
@@ -150,13 +117,9 @@ install:
   - sudo sh -c 'echo "$INSTALL_PREFIX/lib" > /etc/ld.so.conf.d/opencv.conf'
   - sudo ldconfig
 
-  # show cv pkg info
-  - pkg-config --modversion opencv
-  - pkg-config --cflags --libs opencv
-
 before_script:
-  # create .octaverc file (where we setup path and load required packages on start)
-  #TODO: http://savannah.gnu.org/bugs/?45444, we also add private directories on path
+  # create .octaverc file (to setup path and load required packages on start)
+  #HACK: we also add private directories on path, http://savannah.gnu.org/bugs/?45444
   - touch $OCTAVERC
   - echo "crash_dumps_octave_core(false);" >> $OCTAVERC
   - echo "more off" >> $OCTAVERC
@@ -169,7 +132,6 @@ before_script:
   - echo "addpath(fullfile('$MCV_ROOT','+cv','private'));" >> $OCTAVERC
   - echo "addpath(fullfile('$MCV_ROOT','opencv_contrib'));" >> $OCTAVERC
   - echo "addpath(fullfile('$MCV_ROOT','opencv_contrib','+cv','private'));" >> $OCTAVERC
-  - cat $OCTAVERC
 
 script:
   # compile mexopencv
@@ -178,9 +140,6 @@ script:
 
   # build docs
   - if [ "$DOXY" = "yes" ]; then make $MAKE_OPTS doc ; fi
-
-  # print cv build info
-  - octave-cli $OCTAVE_OPTS --eval "path, disp(cv.getBuildInformation())"
 
   # run test suite
   - make $MAKE_OPTS test

@@ -33,6 +33,7 @@ appveyor.yml   export-ignore
 *.gif       binary
 *.hdr       binary
 *.avi       binary
+*.mp4       binary
 *.jar       binary
 *.zip       binary
 *.gz        binary
