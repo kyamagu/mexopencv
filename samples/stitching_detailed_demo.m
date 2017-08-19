@@ -1,7 +1,7 @@
 %% Rotation model images stitcher
 % A detailed example on image stitching.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/stitching_detailed.cpp>
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/stitching_detailed.cpp>
 %
 % See also:
 % <http://www.mathworks.com/help/vision/examples/feature-based-panoramic-image-stitching.html>

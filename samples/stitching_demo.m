@@ -1,6 +1,10 @@
 %% Rotation model images stitcher
 % A basic example on image stitching.
 %
+% In this demo, we show how to use the high-level stitching API provided by
+% |cv.Stitcher|, and we learn how to use preconfigured stitcher configurations
+% to stitch images using different camera models.
+%
 % <http://docs.opencv.org/3.2.0/d8/d19/tutorial_stitcher.html>
 % <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/stitching.cpp>
 %

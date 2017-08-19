@@ -2,8 +2,6 @@
 % Here is an example that illustrates how to detect faces
 % in a live video stream.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/facedetect.cpp>
-%
 
 %%
 % Load cascade file

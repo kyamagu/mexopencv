@@ -1,9 +1,74 @@
 %% Inpainting demo
 %
+% We will learn how to remove small noises, strokes, etc. in old photographs
+% by a method called inpainting.
+%
 % Inpainting repairs damage to images by flood-filling the damage with
 % surrounding image areas.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/inpaint.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/inpaint.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/inpaint.py>
+% * <http://docs.opencv.org/3.2.0/df/d3d/tutorial_py_inpainting.html>
+%
+
+%% Theory
+%
+% Most of you will have some old degraded photos at your home with some black
+% spots or some strokes on it. Have you ever thought of restoring it back?
+% We can't simply erase them in a paint tool because it is will simply replace
+% black structures with white structures which is of no use. In these cases,
+% a technique called image inpainting is used. The basic idea is simple:
+% Replace those bad marks with its neighbouring pixels so that it looks like
+% the neigbourhood. Consider the image shown below (taken from
+% <http://en.wikipedia.org/wiki/Inpainting Wikipedia>):
+%
+% <<http://docs.opencv.org/3.2.0/inpaint_basics.jpg>>
+%
+% Several algorithms were designed for this purpose and OpenCV provides two of
+% them. Both can be accessed by the same function, |cv.inpaint|.
+% (Additional algorithms are implemented in |cv.inpaint2|, part of
+% opencv_contrib).
+%
+% First algorithm is based on the paper _"An Image Inpainting Technique Based
+% on the Fast Marching Method"_. It is based on Fast Marching Method. Consider
+% a region in the image to be inpainted. Algorithm starts from the boundary of
+% this region and goes inside the region gradually filling everything in the
+% boundary first. It takes a small neighbourhood around the pixel on the
+% neigbourhood to be inpainted. This pixel is replaced by normalized weighted
+% sum of all the known pixels in the neigbourhood. Selection of the weights is
+% an important matter. More weightage is given to those pixels lying near to
+% the point, near to the normal of the boundary and those lying on the
+% boundary contours. Once a pixel is inpainted, it moves to next nearest pixel
+% using Fast Marching Method. FMM ensures those pixels near the known pixels
+% are inpainted first, so that it just works like a manual heuristic
+% operation. This algorithm is enabled by using |Method = 'Telea'|.
+%
+% Second algorithm is based on the paper _"Navier-Stokes, Fluid Dynamics, and
+% Image and Video Inpainting"_. This algorithm is based on fluid dynamics and
+% utilizes partial differential equations. Basic principle is heurisitic. It
+% first travels along the edges from known regions to unknown regions (because
+% edges are meant to be continuous). It continues isophotes (lines joining
+% points with same intensity, just like contours joins points with same
+% elevation) while matching gradient vectors at the boundary of the inpainting
+% region. For this, some methods from fluid dynamics are used. Once they are
+% obtained, color is filled to reduce minimum variance in that area. This
+% algorithm is enabled by using |Method = 'NS'|.
+%
+%% Citations
+%
+% * Bertalmio, Marcelo, Andrea L. Bertozzi, and Guillermo Sapiro.
+%   "Navier-stokes, fluid dynamics, and image and video inpainting." In
+%   Computer Vision and Pattern Recognition, CVPR 2001. Proceedings of the
+%   2001 IEEE Computer Society Conference on, vol. 1, pp. I-355. IEEE, 2001.
+% * Telea, Alexandru. "An image inpainting technique based on the fast
+%   marching method." Journal of graphics tools 9.1 (2004): 23-34.
+%
+
+%% Code
+%
+% We need to create a mask of same size as that of input image, where non-zero
+% pixels corresponds to the area which is to be inpainted. Everything else is
+% straightforward.
 %
 
 function varargout = inpaint_demo(im)
@@ -23,13 +88,14 @@ function varargout = inpaint_demo(im)
 
     % build and initialize GUI
     h = buildGUI(img);
-    if nargout > 1, varargout{1} = h; end
+    if nargout > 0, varargout{1} = h; end
 
     % display instructions
     onHelp([],[]);
 end
 
 %% Helper functions
+
 function img = sampleImage()
     fname = fullfile(mexopencv.root(),'test','lena.jpg');
     img = cv.imread(fname, 'Color',true);
@@ -55,6 +121,9 @@ function data = initData(img)
 
     % keep track of location of the last point pressed with the mouse
     data.prev_pt = [];
+
+    % stroke thickness
+    data.thick = 10;
 end
 
 function handles = buildGUI(img)
@@ -92,7 +161,8 @@ function handles = buildGUI(img)
     guidata(hFig(1), initData(img));
 
     % hook-up figure event handlers
-    set(hFig, 'KeyPressFcn',{@onKeyPress,handles});
+    set(hFig, 'KeyPressFcn',{@onKeyPress,handles}, ...
+        'CloseRequestFcn',@(~,~) delete(hFig));
     set(hFig(1), 'WindowButtonDownFcn',{@onMouseDown,handles}, ...
         'WindowButtonUpFcn',{@onMouseUp,handles}, ...
         'WindowButtonMotionFcn',{@onMouseMove,handles});
@@ -112,6 +182,7 @@ function p = getCurrentPoint(handles, data)
 end
 
 %% Callback functions
+
 function onHelp(~,~)
     %ONHELP  Display usage help dialog
 
@@ -119,8 +190,9 @@ function onHelp(~,~)
         'Paint something on the left image using the mouse.'
         'Close figures when done.'
         'Hot keys:'
-        '  r: restore the original image'
-        '  q: quit the program'
+        '   r: restore the original image'
+        '   q: quit the program'
+        ' +/-: change stroke thickness (starts at 10)'
     }, 'Inpaint demo');
     set(h, 'WindowStyle','modal');
 end
@@ -144,6 +216,14 @@ function onKeyPress(~,e,handles)
             set(handles.hImg(1), 'CData',data.img);
             set(handles.hImg(2), 'CData',data.img);
             drawnow;
+        case {'add', 'subtract'}
+            data = guidata(handles.hFig(1));
+            if strcmp(e.Character, '+')
+                data.thick = min(data.thick + 2, 40);
+            elseif strcmp(e.Character, '-')
+                data.thick = max(data.thick - 2, 1);
+            end
+            guidata(handles.hFig(1), data);
         case 'h'
             onHelp([],[]);
         case {'q', 'escape'}
@@ -183,9 +263,9 @@ function onMouseMove(~,~,handles)
     % draw line connecting from previous point to current
     % on both mask and marked image
     data.mask = cv.line(data.mask, data.prev_pt, pt, ...
-        'Color',255, 'Thickness',10);   % non-zero value
+        'Color',255, 'Thickness',data.thick);   % non-zero value
     data.img_marked = cv.line(data.img_marked, data.prev_pt, pt, ...
-        'Color',[255 255 255], 'Thickness',10); % white
+        'Color',[255 255 255], 'Thickness',data.thick); % white
 
     % store point as new starting point
     data.prev_pt = pt;

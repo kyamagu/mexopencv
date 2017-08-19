@@ -86,8 +86,8 @@ for i=1:numel(algorithms)
         ang = rad2deg(ang + pi);
     end
     mag = cv.normalize(mag, 'Alpha',0, 'Beta',1, 'NormType','MinMax');
-    hsv = cat(3, ang, ones(size(ang),class(ang)), mag);
-    rgb = cv.cvtColor(hsv, 'HSV2RGB');
+    hsv = cat(3, ang, ones(size(ang),class(ang)), mag); % H=[0,360], S,V=[0,1]
+    rgb = cv.cvtColor(hsv, 'HSV2RGB');                  % R,G,B=[0,1]
     figure, imshow(rgb)
     title(sprintf('Computed flow: %s',algorithms{i}), 'Interpreter','none')
 end

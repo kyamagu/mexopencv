@@ -60,7 +60,7 @@ board = {squaresX, squaresY, squareLength, markerLength, dictionary};
 axisLength = 0.5 * min(squaresX, squaresY) * squareLength;
 
 %% Input source
-if ~isempty(vidFile) && exist(vidFile, 'file')
+if ~isempty(vidFile) && exist(vidFile, 'file') == 2
     vid = cv.VideoCapture(vidFile);
     waitTime = 1;     % 1 sec
 else

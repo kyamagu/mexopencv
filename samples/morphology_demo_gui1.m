@@ -1,16 +1,92 @@
-%% Erosion and Dilation sample code
+%% Erosion and Dilation Demo
 %
-% In this sample you will learn how to apply two very common
-% morphology operators: Dilation and Erosion. For this purpose, you will use
-% the following OpenCV functions:
+% In this sample, you will learn how to apply two very common morphological
+% operators: Erosion and Dilation. For this purpose, you will use the
+% following OpenCV functions:
 %
 % * <matlab:doc('cv.erode') cv.erode>
 % * <matlab:doc('cv.dilate') cv.dilate>
 %
-% <http://docs.opencv.org/3.1.0/db/df6/tutorial_erosion_dilatation.html>
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ImgProc/Morphology_1.cpp>
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/morphology2.cpp>
+% <http://docs.opencv.org/3.2.0/db/df6/tutorial_erosion_dilatation.html>,
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgProc/Morphology_1.cpp>,
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/morphology2.cpp>,
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/morphology.py>
 %
+
+%% Morphological Operations
+%
+% In short: A set of operations that process images based on shapes.
+% Morphological operations apply a _structuring element_ to an input image and
+% generate an output image. The most basic morphological operations are:
+% Erosion and Dilation. They have a wide array of uses, i.e.:
+%
+% * Removing noise
+% * Isolation of individual elements and joining disparate elements in an
+%   image.
+% * Finding of intensity bumps or holes in an image
+%
+% We will explain dilation and erosion briefly, using the following image as
+% an example:
+%
+% <<http://docs.opencv.org/3.2.0/Morphology_1_Tutorial_Theory_Original_Image.png>>
+%
+%% 1) Dilation
+%
+% This operations consists of convolving an image $A$ with some kernel ($B$),
+% which can have any shape or size, usually a square or circle. The kernel $B$
+% has a defined _anchor point_, usually being the center of the kernel. As the
+% kernel $B$ is scanned over the image, we compute the maximal pixel value
+% overlapped by $B$ and replace the image pixel in the anchor point position
+% with that maximal value. As you can deduce, this maximizing operation causes
+% bright regions within an image to "grow" (therefore the name _dilation_).
+%
+% Take the above image as an example. Applying dilation we can get:
+%
+% <<http://docs.opencv.org/3.2.0/Morphology_1_Tutorial_Theory_Dilation.png>>
+%
+% The background (bright) dilates around the black regions of the letter.
+%
+% To better grasp the idea and avoid possible confusion, in this other example
+% we have inverted the original image such as the object in white is now the
+% letter. We have performed two dilatations with a rectangular structuring
+% element of size |3x3|.
+%
+% <<http://docs.opencv.org/3.2.0/Morphology_1_Tutorial_Theory_Dilatation_2.png>>
+%
+% (Left image: original image inverted, right image: resulting dilatation).
+%
+% The dilatation makes the object in white bigger.
+%
+%% 2) Erosion
+%
+% This operation is the sister of dilation. It computes a local minimum over
+% the area of given kernel. As the kernel $B$ is scanned over the image, we
+% compute the minimal pixel value overlapped by $B$ and replace the image
+% pixel under the anchor point with that minimal value.
+%
+% Analagously to the example for dilation, we can apply the erosion operator
+% to the original image (shown above). You can see in the result below that
+% the bright areas of the image (the background, apparently), get thinner,
+% whereas the dark zones (the "writing") gets bigger.
+%
+% <<http://docs.opencv.org/3.2.0/Morphology_1_Tutorial_Theory_Erosion.png>>
+%
+% In similar manner, the corresponding image results by applying erosion
+% operation on the inverted original image (two erosions with a rectangular
+% structuring element of size |3x3|):
+%
+% <<http://docs.opencv.org/3.2.0/Morphology_1_Tutorial_Theory_Erosion_2.png>>
+%
+% (Left image: original image inverted, right image: resulting erosion).
+%
+% The erosion makes the object in white smaller.
+%
+%% References
+%
+% * "Learning OpenCV" by Bradski and Kaehler.
+%
+
+%% Code
 
 function varargout = morphology_demo_gui1(im)
     % load source image
@@ -24,7 +100,7 @@ function varargout = morphology_demo_gui1(im)
 
     % create the UI
     h = buildGUI(src);
-    if nargout > 1, varargout{1} = h; end
+    if nargout > 0, varargout{1} = h; end
 end
 
 function onChange(~,~,h)
@@ -49,7 +125,7 @@ function onChange(~,~,h)
         };
     end
 
-    % apply the specified morphology operation
+    % apply the specified morphological operation
     elem = cv.getStructuringElement('Shape',shapes{shapeIdx}, ...
         'KSize',[ksize ksize]*2+1, 'Anchor',[ksize ksize]);
     dst = feval(fhandles{funcIdx}, h.src, 'Element',elem);

@@ -4,7 +4,8 @@
 % This program demonstrates the famous watershed segmentation algorithm
 % in OpenCV.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/watershed.cpp>
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/watershed.cpp>,
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/watershed.py>
 %
 
 function varargout = watershed_demo_gui(im)
@@ -12,7 +13,7 @@ function varargout = watershed_demo_gui(im)
     if nargin < 1
         src = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
     elseif isempty(im)
-        fmts = imformats;
+        fmts = imformats();
         filtspec = strjoin(strcat('*.', [fmts.ext]), ';');
         [fn,fp] = uigetfile(filtspec, 'Select an image');
         if fp==0, error('No file selected'); end
@@ -40,7 +41,7 @@ function varargout = watershed_demo_gui(im)
         'WindowButtonDownFcn',@onMouseDown, opts{:});
 
     % return graphics handles
-    if nargout > 1, varargout{1} = h; end
+    if nargout > 0, varargout{1} = h; end
 
     % ========== Event Handlers ==========
 
@@ -109,7 +110,11 @@ function varargout = watershed_demo_gui(im)
         wshed = uint8(ind2rgb(double(markers+2), colorTab) * 255);
 
         % show result
-        wshed = imlincomb(0.5, wshed, 0.5, app.imgGray, 'uint8');
+        if mexopencv.require('images')
+            wshed = imlincomb(0.5, wshed, 0.5, app.imgGray, 'uint8');
+        else
+            wshed = cv.addWeighted(wshed, 0.5, app.imgGray, 0.5, 0);
+        end
         set(h.img(2), 'CData',wshed);
         drawnow;
     end

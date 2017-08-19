@@ -21,7 +21,7 @@ function varargout = connected_components_demo_gui(im)
 
     % create the UI
     h = buildGUI(src);
-    if nargout > 1, varargout{1} = h; end
+    if nargout > 0, varargout{1} = h; end
 end
 
 function onChange(~,~,h)
@@ -32,10 +32,18 @@ function onChange(~,~,h)
     set(h.txt, 'String',sprintf('Threshold: %3d',thresh));
 
     % Find connected components
-    if thresh < 128
-        bw = (h.src < thresh);
+    if true
+        if thresh < 128
+            bw = (h.src <= thresh);
+        else
+            bw = (h.src > thresh);
+        end
     else
-        bw = (h.src > thresh);
+        if thresh < 128
+            bw = cv.threshold(h.src, thresh, 'Type','BinaryInv');
+        else
+            bw = cv.threshold(h.src, thresh, 'Type','Binary');
+        end
     end
     [labels, nLabels] = cv.connectedComponents(bw);
 

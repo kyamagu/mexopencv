@@ -6,12 +6,12 @@
 % When the program starts, it begins learning the background.
 % You can toggle background learning on and off using the checkbox.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/segment_objects.cpp>
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/segment_objects.cpp>
 %
 
 %% Set up video source: video file or camera
 fname = fullfile(mexopencv.root(),'test','768x576.avi');
-if ~exist(fname, 'file')
+if exist(fname, 'file') ~= 2
     % download video from Github
     disp('Downloading video...')
     url = 'https://cdn.rawgit.com/opencv/opencv/3.1.0/samples/data/768x576.avi';
@@ -25,18 +25,20 @@ frame = cap.read();
 assert(~isempty(frame), 'Cannot read data from the video source');
 
 %% Create a background subtractor
-bgsubtractor = cv.BackgroundSubtractorMOG2();
-bgsubtractor.VarThreshold = 10;
+bs = cv.BackgroundSubtractorMOG2('VarThreshold',10);
 
+%%
+ZR = zeros(size(frame,1), size(frame,2), 'uint8');
 niters = 3;
 
 %% Prepare window
-hFig = figure('Position',[300 300 1000 450], ...
+hFig = figure('Position',[100 100 840 630], ...
     'KeyPressFcn',@(o,e)setappdata(o,'flag',true));
 setappdata(hFig, 'flag',false);
-subplot(131), hImg1 = imshow(frame); title('video')
-subplot(132), hImg2 = imshow(zeros(size(frame))); title('FG segmented')
-subplot(133), hImg3 = imshow(zeros(size(frame))); title('BG')
+subplot(221), hImg(1) = imshow(frame); title('video')
+subplot(222), hImg(2) = imshow(frame); title('BG model')
+subplot(223), hImg(3) = imshow(ZR); title('FG segmented')
+subplot(224), hImg(4) = imshow(ZR); title('FG largest component')
 hCB = uicontrol('Style','checkbox', 'Position',[20 20 200 20], ...
     'String','Update Background Model', 'Value',true);
 
@@ -53,35 +55,43 @@ while ishghandle(hFig)
     else
         learnRate = 0;  % dont update BG model
     end
-    fgmask = bgsubtractor.apply(frame, 'LearningRate',learnRate);
+    fgmask = bs.apply(frame, 'LearningRate',learnRate);
 
     % process mask and extract largest connected component
-    im = cv.dilate(fgmask, 'Iterations',niters);
-    im = cv.erode(im, 'Iterations',niters*2);
-    im = cv.dilate(im, 'Iterations',niters);
-    [contours, hierarchy] = cv.findContours(im, ...
+    bw = cv.dilate(fgmask, 'Iterations',niters);
+    bw = cv.erode(bw, 'Iterations',niters*2);
+    bw = cv.dilate(bw, 'Iterations',niters);
+    [contours, hierarchy] = cv.findContours(bw, ...
         'Mode','CComp', 'Method','Simple');
-    if isempty(contours), continue; end
-    areas = [];
-    idx = 0;
-    while idx >= 0
-        % compute contour area
-        areas(end+1) = abs(cv.contourArea(contours{idx+1}));
-        % iterate through all the top-level contours
-        idx = hierarchy{idx+1}(1);
+    if ~isempty(contours)
+        maxArea = 0;
+        largestComp = 0;
+        idx = 0;
+        while idx >= 0
+            % compute contour area
+            a = abs(cv.contourArea(contours{idx+1}));
+            if a > maxArea
+                maxArea = a;
+                largestComp = idx;
+            end
+            % iterate through all the top-level contours
+            idx = hierarchy{idx+1}(1);
+        end
+        out_frame = cv.drawContours(ZR, contours, ...
+            'ContourIdx',largestComp, 'Hierarchy',hierarchy, ...
+            'Color',255, 'Thickness','Filled');
+    else
+        out_frame = ZR;
     end
-    [~,largestComp] = max(areas);
-    out_frame = cv.drawContours(zeros(size(frame),'uint8'), contours, ...
-        'ContourIdx',largestComp-1, 'Hierarchy',hierarchy, ...
-        'Color',[0 0 255], 'Thickness','Filled');
 
     % update images
-    set(hImg1, 'CData',frame)     % video frame
-    set(hImg2, 'CData',out_frame) % largest contour in FG mask
+    set(hImg(1), 'CData',frame)     % video frame
     if update_bg_model
         % get the current BG model
-        set(hImg3, 'CData',bgsubtractor.getBackgroundImage())
+        set(hImg(2), 'CData',bs.getBackgroundImage())
     end
+    set(hImg(3), 'CData',fgmask)    % FG mask
+    set(hImg(4), 'CData',out_frame) % largest contour in FG mask
 
     % Terminate if any user input
     flag = getappdata(hFig, 'flag');

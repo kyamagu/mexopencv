@@ -64,7 +64,7 @@ axisLength = 0.5 * (min(markersX, markersY) * ...
     (markerLength + markerSeparation) + markerSeparation);
 
 %% Input source
-if ~isempty(vidFile) && exist(vidFile, 'file')
+if ~isempty(vidFile) && exist(vidFile, 'file') == 2
     vid = cv.VideoCapture(vidFile);
     waitTime = 1;     % 1 sec
 else

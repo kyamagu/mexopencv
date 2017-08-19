@@ -1,15 +1,18 @@
 %% Detecting corners location in subpixeles
-% Demo code for refining corner locations.
+% Demo code for detecting corners using Shi-Tomasi method and refining corner
+% locations.
 %
-% Is pixel resolution enough? Here we learn a simple method to improve our
-% accuracy.
+% In this sample you will learn how to use the OpenCV functions:
 %
-% In this sample you will learn how to use the OpenCV function
-% <matlab:doc('cv.cornerSubPix') cv.cornerSubPix> to find more exact corner
-% positions (more exact than integer pixels).
+% * <matlab:doc('cv.goodFeaturesToTrack') cv.goodFeaturesToTrack> to detect
+%   corners using the Shi-Tomasi method.
+% * <matlab:doc('cv.cornerSubPix') cv.cornerSubPix> to find more exact corner
+%   positions (more exact than integer pixels).
 %
-% <http://docs.opencv.org/3.1.0/d8/d5e/tutorial_corner_subpixeles.html>
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/TrackingMotion/cornerSubPix_Demo.cpp>
+% <http://docs.opencv.org/3.2.0/d8/dd8/tutorial_good_features_to_track.html>,
+% <http://docs.opencv.org/3.2.0/d8/d5e/tutorial_corner_subpixeles.html>,
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/TrackingMotion/goodFeaturesToTrack_Demo.cpp>,
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/TrackingMotion/cornerSubPix_Demo.cpp>
 %
 
 function varargout = corner_subpixels_demo_gui(im)
@@ -24,7 +27,7 @@ function varargout = corner_subpixels_demo_gui(im)
 
     % create the UI
     h = buildGUI(src);
-    if nargout > 1, varargout{1} = h; end
+    if nargout > 0, varargout{1} = h; end
 end
 
 function onChange(~,~,h)

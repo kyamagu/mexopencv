@@ -20,7 +20,8 @@
 % * |CComp|: switch to Voronoi diagram mode.
 % * |Pixel|: switch to pixel-based Voronoi diagram mode.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/distrans.cpp>
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/distrans.cpp>,
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/distrans.py>
 %
 
 function varargout = distrans_demo_gui(im)
@@ -37,7 +38,7 @@ function varargout = distrans_demo_gui(im)
 
     % create the UI
     h = buildGUI(src);
-    if nargout > 1, varargout{1} = h; end
+    if nargout > 0, varargout{1} = h; end
 end
 
 function onChange(o,~,h)
@@ -75,8 +76,15 @@ function onChange(o,~,h)
         end
     end
 
-    % threshold image and compute distance map
-    bw = uint8(h.src >= thresh) * 255;
+    % threshold image
+    if true
+        bw = uint8(h.src >= thresh) * 255;
+    else
+        bw = cv.Canny(h.src, [1 3]*thresh);
+        bw = cv.bitwise_not(bw);
+    end
+
+    % compute distance map
     if voronoiType == 1
         D = cv.distanceTransform(bw, ...
             'DistanceType',dists{distType}, 'MaskSize',masks{maskSize});
@@ -87,25 +95,38 @@ function onChange(o,~,h)
     end
 
     % build output image
-    if voronoiType == 1
-        % begin "painting" the distance transform result
-        D = abs(D*5000) .^ 0.5;
-        D32s = bitand(int32(D + 0.5), 255);
-        D8u1 = uint8(D32s);
-        D8u2 = uint8((D32s * -1) + 255);
-        D8u = cat(3, D8u2, D8u2, D8u1);
-    else
-        if true
-            clrs = single(lines(7) * 255);
+    if true
+        if voronoiType == 1
+            % begin "painting" the distance transform result
+            D = abs(D*5000) .^ 0.5;
+            D32s = bitand(int32(D + 0.5), 255);
+            D8u1 = uint8(D32s);
+            D8u2 = uint8((D32s * -1) + 255);
+            D8u = cat(3, D8u2, D8u2, D8u1);
         else
-            clrs = [0 0 0; 0 0 255; 0 128 255; 0 255 255;
-                0 255 0; 255 128 0; 255 255 0; 255 0 0; 255 0 255];
+            if true
+                clrs = single(lines(7) * 255);
+            else
+                clrs = [0 0 0; 0 0 255; 0 128 255; 0 255 255;
+                    0 255 0; 255 128 0; 255 255 0; 255 0 0; 255 0 255];
+            end
+            idx = mod(labels - 1, size(clrs,1)-1) + 1;
+            idx(labels == 0 | D == 0) = 0;
+            scale = 1 ./ (1 + D.*D * 0.0004);
+            D8u = reshape(clrs(idx+1,:), [size(labels) 3]);
+            D8u = uint8(bsxfun(@times, D8u, scale));
         end
-        idx = mod(labels - 1, size(clrs,1)-1) + 1;
-        idx(labels == 0 | D == 0) = 0;
-        scale = 1 ./ (1 + D.*D * 0.0004);
-        D8u = reshape(clrs(idx+1,:), [size(labels) 3]);
-        D8u = uint8(bsxfun(@times, D8u, scale));
+    else
+        if voronoiType == 1
+            N = 256;
+            D8u = uint8(mod(D*2, N));
+        else
+            N = max(labels(:));
+            N = min(double(N), 256);
+            D8u = uint8(mod(labels, N));
+        end
+        D8u = ind2rgb(D8u, jet(N));
+        D8u(repmat(bw == 0, [1 1 3])) = 255;
     end
 
     % show result

@@ -1,7 +1,10 @@
 %% Drawing demo
 % This program demonstrates OpenCV drawing and text output functions.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/drawing.cpp>
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/drawing.cpp>,
+% <http://docs.opencv.org/3.2.0/df/d61/tutorial_random_generator_and_text.html>,
+% <http://docs.opencv.org/3.2.0/dc/da5/tutorial_py_drawing_functions.html>,
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/core/Matrix/Drawing_2.cpp>
 %
 
 %% Options
@@ -15,31 +18,43 @@ img = zeros(H,W,3,'uint8');
 xlims = fix([-W/2 W*3/2]);
 ylims = fix([-H/2 H*3/2]);
 clr = @() randi([0 255], [1 3], 'uint8');
+markers = '+x*ds^v';
+marker = @() markers(randi([1 numel(markers)]));
 
 % prepare plot
 hImg = imshow(img);
 
 %% Lines
-for i=1:NUMBER
+for i=1:NUMBER*2
     pt1 = [randi(xlims) randi(ylims)];
     pt2 = [randi(xlims) randi(ylims)];
     thick = randi([1 10]);
 
-    img = cv.line(img, pt1, pt2, ...
-        'Color',clr(), 'Thickness',thick, lineType{:});
+    if rand < 0.5
+        img = cv.line(img, pt1, pt2, ...
+            'Color',clr(), 'Thickness',thick, lineType{:});
+    else
+        img = cv.arrowedLine(img, pt1, pt2, ...
+            'Color',clr(), 'Thickness',thick, lineType{:});
+    end
 
     set(hImg, 'CData',img);
     pause(DELAY);
 end
 
 %% Rectangles
-for i=1:NUMBER
+for i=1:NUMBER*2
     pt1 = [randi(xlims) randi(ylims)];
     pt2 = [randi(xlims) randi(ylims)];
     thick = max(randi([-3 10]), -1);
 
-    img = cv.rectangle(img, pt1, pt2, ...
-        'Color',clr(), 'Thickness',thick, lineType{:});
+    if rand < 0.5
+        img = cv.rectangle(img, pt1, pt2, ...
+            'Color',clr(), 'Thickness',thick, lineType{:});
+    else
+        img = cv.drawMarker(img, pt1, ...
+            'Color',clr(), 'MarkerType',marker(), 'MarkerSize',randi([30 80]));
+    end
 
     set(hImg, 'CData',img);
     pause(DELAY);

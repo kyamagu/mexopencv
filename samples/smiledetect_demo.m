@@ -67,7 +67,8 @@ else
     cap.release();
 end
 
-%% Help functions
+%% Process function
+
 function img = detectAndDraw(img, cascadeF, cascadeS, scale, tryflip)
     % smile min/max neighbors
     persistent minNB maxNB;
@@ -122,7 +123,11 @@ function img = detectAndDraw(img, cascadeF, cascadeS, scale, tryflip)
         half_height = round(r(4)/2);
         r(2) = r(2) + half_height;
         r(4) = half_height - 1;
-        grayROI = imcrop(gray, [r(1:2)+1 r(3:4)]);
+        if false && mexopencv.require('images')
+            grayROI = imcrop(gray, [r(1:2)+1 r(3:4)]);
+        else
+            grayROI = cv.Rect.crop(gray, r);
+        end
         nestedObjs = cascadeS.detect(grayROI, ...
             'ScaleFactor',1.1, ...
             'MinNeighbors',0, ...
@@ -152,8 +157,10 @@ function img = detectAndDraw(img, cascadeF, cascadeS, scale, tryflip)
     end
 end
 
+%% Helper function
+
 function download_classifier_xml(fname)
-    if ~exist(fname, 'file')
+    if exist(fname, 'file') ~= 2
         % attempt to download trained Haar/LBP/HOG classifier from Github
         url = 'https://cdn.rawgit.com/opencv/opencv/3.2.0/data/';
         [~, f, ext] = fileparts(fname);

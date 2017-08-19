@@ -9,7 +9,8 @@
 % * Pencil sketch/Color Pencil Drawing
 % * Stylization
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/npr_demo.cpp>
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/npr_demo.cpp>,
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/photo/non_photorealistic_rendering/npr_demo.cpp>
 %
 
 %% Input Image

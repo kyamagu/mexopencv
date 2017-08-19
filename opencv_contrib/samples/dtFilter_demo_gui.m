@@ -24,8 +24,7 @@ function varargout = dtFilter_demo_gui(im)
 
     % create the UI
     h = buildGUI(src);
-
-    if nargout > 1, varargout{1} = h; end
+    if nargout > 0, varargout{1} = h; end
 end
 
 function onChange(~,~,h)

@@ -38,6 +38,8 @@ octave-workspace
 /test/haarcascade_frontalface_alt.xml
 /test/haarcascade_eye_tree_eyeglasses.xml
 /test/haarcascade_smile.xml
+/test/haarcascade_mcs_nose.xml
+/test/haarcascade_mcs_mouth.xml
 /test/inriaperson.xml
 /test/model.yml.gz
 /test/ObjectnessTrainedModel/
@@ -48,3 +50,15 @@ octave-workspace
 /test/cloning/
 /test/data01.xml
 /test/RubberWhale.flo
+/test/sparse_optical_flow.avi
+/test/Histogram_Comparison_Source_*.jpg
+/test/cards.png
+/test/graf[13].png
+/test/blais.mp4
+/test/pca_test1.jpg
+/test/digits.png
+/test/letter-recognition.data
+/test/starry_night.jpg
+/test/imageText[NR].png
+/test/licenseplate_motion.jpg
+/test/aero[13].jpg

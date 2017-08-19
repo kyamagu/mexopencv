@@ -30,7 +30,7 @@ groundTruths = {
 };
 assert(isequal(numel(imgs1), numel(imgs2), numel(groundTruths)));
 
-if ~exist(groundTruths{1}, 'file')
+if exist(groundTruths{1}, 'file') ~= 2
     % attempt to download ground thruth flow from GitHub
     disp('Downloading FLO...')
     url = 'https://cdn.rawgit.com/opencv/opencv_extra/3.2.0/testdata/cv/optflow/RubberWhale.flo';
@@ -49,7 +49,7 @@ forestDumpPath = fullfile(tempdir(), 'forest.yml.gz');
 
 %%
 % train the forest for the Global Patch Collider and save it
-if ~exist(forestDumpPath, 'file')
+if exist(forestDumpPath, 'file') ~= 2
     gpc = cv.GPCForest();
     tic
     gpc.train(imgs1, imgs2, groundTruths);
@@ -78,21 +78,28 @@ forest.load(forestDumpPath);
 %%
 % find correspondences between two the images using GPC
 tic
-corr = forest.findCorrespondences(from, to, 'UseOpenCL',false);
+corresp = forest.findCorrespondences(from, to, 'UseOpenCL',false);
 toc
-fprintf('Found %d matches\n', numel(corr));
+fprintf('Found %d matches\n', numel(corresp));
 
 %%
 % calculate error using provided ground truth flow
 gtU = flo(:,:,1);
 gtV = flo(:,:,2);
-a = cat(1, corr.first);
-b = cat(1, corr.second);
+a = cat(1, corresp.first);
+b = cat(1, corresp.second);
 ind = sub2ind(size(gtU), a(:,2), a(:,1));
-c = a + [gtU(ind) gtV(ind)];
+gtDisplacement = [gtU(ind) gtV(ind)];
+c = a + gtDisplacement;
+
+% check for correct flow vector
+mask = all(isfinite(gtDisplacement) & (gtDisplacement < 1e9), 2);
+a = a(mask,:);
+b = b(mask,:);
+c = c(mask,:);
 
 err = mean(sqrt(sum((b - c).^2, 2)));
-fprintf('Average endpoint error = %.2f px.\n', err);
+fprintf('Average endpoint error = %f px.\n', err);
 
 %%
 % display flows as color images
@@ -119,7 +126,7 @@ str = 'Sparse matching: Global Patch Collider';
 dispOut = cv.putText(dispOut, str, [20 40], opts{:});
 str = sprintf('Average EPE: %.2f', err);
 dispOut = cv.putText(dispOut, str, [20 80], opts{:});
-str = sprintf('Number of matches: %d', numel(corr));
+str = sprintf('Number of matches: %d', nnz(mask));
 dispOut = cv.putText(dispOut, str, [20 120], opts{:});
 
 figure(1), imshow(dispOut), title('Correspondences')

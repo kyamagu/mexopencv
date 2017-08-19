@@ -24,7 +24,7 @@ function varargout = fitellipse_demo_gui(im)
 
     % create the UI
     h = buildGUI(src);
-    if nargout > 1, varargout{1} = h; end
+    if nargout > 0, varargout{1} = h; end
 end
 
 function onChange(~,~,h)
@@ -58,8 +58,9 @@ function onChange(~,~,h)
             'Color',[255 255 255]);
 
         % draw ellipse
-        cimg = cv.ellipse(cimg, rrect, 'Color',[255 0 0], 'LineType','AA');
-        if false
+        if true
+            cimg = cv.ellipse(cimg, rrect, 'Color',[255 0 0], 'LineType','AA');
+        else
             cimg = cv.ellipse(cimg, rrect.center, rrect.size*0.5, ...
                 'Angle',rrect.angle, 'Color',[255 255 0], 'LineType','AA');
         end

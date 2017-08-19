@@ -5,7 +5,8 @@
 %
 % * <matlab:doc('cv.floodFill') cv.floodFill>
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/ffilldemo.cpp>
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/ffilldemo.cpp>,
+% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/floodfill.py>
 %
 
 function varargout = ffilldemo_gui(im)
@@ -25,7 +26,7 @@ function varargout = ffilldemo_gui(im)
 
     % create the UI
     h = buildGUI(src);
-    if nargout > 1, varargout{1} = h; end
+    if nargout > 0, varargout{1} = h; end
 end
 
 function onClick(~,~,h)
@@ -49,7 +50,7 @@ function onClick(~,~,h)
     % retrieve location of mouse click (in image coordinates)
     % and use it as flooding seed point
     seed = get(h.ax(idx), 'CurrentPoint');
-    seed = round(seed(1,1:2)) - 1;
+    seed = seed(1,1:2);
 
     % flood fill options
     newVal = randi([0 255], [1 3]);
@@ -72,17 +73,18 @@ function onClick(~,~,h)
         % update mask as well
         mask = get(h.img(3), 'CData');
         mask = cv.threshold(mask, 1, 'MaxValue',128, 'Type','Binary');
-        [dst,~,area,mask] = cv.floodFill(dst, seed, newVal, ...
+        [dst,~,area,mask] = cv.floodFill(dst, round(seed-1), newVal, ...
             'Mask',mask, 'LoDiff',lo, 'UpDiff',up, flags{:});
         set(h.img(3), 'CData',mask);
     else
-        [dst,~,area] = cv.floodFill(dst, seed, newVal, ...
+        [dst,~,area] = cv.floodFill(dst, round(seed-1), newVal, ...
             'LoDiff',lo, 'UpDiff',up, flags{:});
     end
 
     % show result
     fprintf('%d pixels were repainted\n', area);
     set(h.img(idx), 'CData',dst);
+    set(h.lin, 'XData',seed(1), 'YData',seed(2));
     drawnow;
 end
 
@@ -184,6 +186,9 @@ function resetImages(h)
     mask = get(h.img(3), 'CData');
     mask(:) = 0;
     set(h.img(3), 'CData',mask);
+
+    % seed point
+    set(h.lin, 'XData',NaN, 'YData',NaN);
 end
 
 function stackAxes(h, idx1, idx2)
@@ -195,12 +200,17 @@ function stackAxes(h, idx1, idx2)
         %HACK: UISTACK not implemented in Octave
         uistack(h.ax(idx1), 'top');
     end
+
+    % re-parent seed point line inside top axis
+    set(h.lin, 'Parent',h.ax(idx1));
 end
 
 function usage(~,~)
     %USAGE  Display help dialog
 
     helpdlg({
+        'Click on the left image to set flood-fill seed point.'
+        ''
         'Hot keys:'
         'ESC - quit the program'
         'h - this help dialog'
@@ -266,13 +276,15 @@ function h = buildGUI(img)
     h.slid(2) = uicontrol('Parent',h.fig, 'Style','slider', 'Value',up, ...
         'Min',0, 'Max',255, 'SliderStep',[1 10]./(255-0), ...
         'Position',[205 30 sz(2)-210 20]);
+    h.lin = line(NaN, NaN, 'Parent',h.ax(1), ...
+        'LineStyle','none', 'Marker','.', 'MarkerSize',10, 'Color','r');
 
     %HACK: WindowKeyPressFcn not implemented in Octave
     % http://savannah.gnu.org/bugs/?44910
     if mexopencv.isOctave()
         % create GUI buttons to interact instead of keyboard pressing
         keys = 'qrcmsfg48';
-        labels = {'Quit', 'Help', 'Color/Grayscale', 'Mask', ...
+        labels = {'Quit', 'Reset', 'Color/Grayscale', 'Mask', ...
             'null', 'fixed', 'floating', '4-conn', '8-conn'};
         for k=1:numel(keys)
             uicontrol('Parent',h.fig, 'Style','pushbutton', ...
