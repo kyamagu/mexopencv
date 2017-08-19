@@ -65,7 +65,10 @@
 %             corners to be considered similar, so that the smaller one is
 %             removed. The rate is relative to the smaller perimeter of the
 %             two markers (default 0.05).
-%       * __doCornerRefinement__ do subpixel refinement or not (default false).
+%       * __cornerRefinementMethod__  corner refinement method, one of:
+%             * __None__ (default) no refinement.
+%             * __Subpix__ do subpixel refinement (cv.cornerSubPix).
+%             * __Contour__ refine the corners using the contour-points.
 %       * __cornerRefinementWinSize__ window size for the corner refinement
 %             process (in pixels) (default 5).
 %       * __cornerRefinementMaxIterations__ maximum number of iterations for
@@ -91,6 +94,10 @@
 %             or not) (default 5.0)
 %       * __errorCorrectionRate__error correction rate respect to the maximum
 %             error correction capability for each dictionary. (default 0.6).
+% * __CameraMatrix__ Optional 3x3 camera calibration matrix
+%       `A = [fx 0 cx; 0 fy cy; 0 0 1]`.
+% * __DistCoeffs__ Optional vector of camera distortion coefficients
+%       `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4]` of 4, 5, 8 or 12 elements.
 %
 % ## Inputs for Predefined Dictionary
 % * __name__ name of predefined markers dictionaries/sets. Each dictionary

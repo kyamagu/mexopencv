@@ -89,7 +89,9 @@ const ConstMap<string,int> CameraApiMap = ConstMap<string,int>
     ("GStreamer",       cv::CAP_GSTREAMER)
     ("FFMPEG",          cv::CAP_FFMPEG)
     ("Images",          cv::CAP_IMAGES)
-    ("Aravis",          cv::CAP_ARAVIS);
+    ("Aravis",          cv::CAP_ARAVIS)
+    ("MotionJPEG",      cv::CAP_OPENCV_MJPEG)
+    ("MediaSDK",        cv::CAP_INTEL_MFX);
 }
 
 /**

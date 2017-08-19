@@ -34,7 +34,7 @@
 % * __Mask__ An optional mask to indicate valid values of `inputImage`.
 %       Not set by default.
 % * __InputWarp__ Initial estimate for `warpMatrix`. See the notes
-%       below. Default `eye(2,3)`
+%       below. Default `eye(2,3)` or `eye(3,3)` depending on motion type.
 %
 % The function estimates the optimum transformation (`warpMatrix`) with
 % respect to ECC criterion ([EP08]), that is:
@@ -55,7 +55,7 @@
 % cv.findTransformECC implements an area-based alignment that builds on
 % intensity similarities. In essence, the function updates the initial
 % transformation that roughly aligns the images. If this information is
-% missing, the identity warp (unity matrix) should be given as input. Note
+% missing, the identity warp (unity matrix) is used as an initialization. Note
 % that if images undergo strong displacements/rotations, an initial
 % transformation that roughly aligns the images is necessary (e.g., a simple
 % euclidean/similarity transform that allows for the images showing the same

@@ -199,7 +199,7 @@ classdef LBPHFaceRecognizer < handle
             %
             % See also: cv.LBPHFaceRecognizer.load
             %
-            [varargout{1:nargout}] = LBPHFaceRecognizer_(this.id, 'save', filename);
+            [varargout{1:nargout}] = LBPHFaceRecognizer_(this.id, 'write', filename);
         end
 
         function load(this, fname_or_str, varargin)
@@ -223,7 +223,7 @@ classdef LBPHFaceRecognizer < handle
             %
             % See also: cv.LBPHFaceRecognizer.save
             %
-            LBPHFaceRecognizer_(this.id, 'load', fname_or_str, varargin{:});
+            LBPHFaceRecognizer_(this.id, 'read', fname_or_str, varargin{:});
         end
 
         function name = getDefaultName(this)

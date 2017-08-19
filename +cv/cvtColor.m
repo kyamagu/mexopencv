@@ -79,7 +79,9 @@
 %       * __BayerBG2BGR__, __BayerGB2BGR__, __BayerRG2BGR__, __BayerGR2BGR__,
 %         __BayerBG2RGB__, __BayerGB2RGB__, __BayerRG2RGB__, __BayerGR2RGB__,
 %         __BayerBG2GRAY__, __BayerGB2GRAY__, __BayerRG2GRAY__,
-%         __BayerGR2GRAY__: Demosaicing
+%         __BayerGR2GRAY__, __BayerBG2BGRA__, __BayerGB2BGRA__,
+%         __BayerRG2BGRA__, __BayerGR2BGRA__, __BayerBG2RGBA__,
+%         __BayerGB2RGBA__, __BayerRG2RGBA__, __BayerGR2RGBA__: Demosaicing
 %       * **BayerBG2BGR_VNG**, **BayerGB2BGR_VNG**, **BayerRG2BGR_VNG**,
 %         **BayerGR2BGR_VNG**, **BayerBG2RGB_VNG**, **BayerGB2RGB_VNG**,
 %         **BayerRG2RGB_VNG**, **BayerGR2RGB_VNG**: Demosaicing using

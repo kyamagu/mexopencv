@@ -694,6 +694,37 @@ Ptr<BoostDesc> createBoostDesc(
     }
     return BoostDesc::create(desc, use_scale_orientation, scale_factor);
 }
+
+Ptr<HarrisLaplaceFeatureDetector> createHarrisLaplaceFeatureDetector(
+    vector<MxArray>::const_iterator first,
+    vector<MxArray>::const_iterator last)
+{
+    nargchk(((last-first) % 2) == 0);
+    int numOctaves = 6;
+    float corn_thresh = 0.01f;
+    float DOG_thresh = 0.01f;
+    int maxCorners = 5000;
+    int num_layers = 4;
+    for (; first != last; first += 2) {
+        string key((*first).toString());
+        const MxArray& val = *(first + 1);
+        if (key == "NumOctaves")
+            numOctaves = val.toInt();
+        else if (key == "CornThresh")
+            corn_thresh = val.toFloat();
+        else if (key == "DOGThresh")
+            DOG_thresh = val.toFloat();
+        else if (key == "MaxCorners")
+            maxCorners = val.toInt();
+        else if (key == "NumLayers")
+            num_layers = val.toInt();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
+    return HarrisLaplaceFeatureDetector::create(
+        numOctaves, corn_thresh, DOG_thresh, maxCorners, num_layers);
+}
 #endif
 
 Ptr<FeatureDetector> createFeatureDetector(
@@ -729,6 +760,8 @@ Ptr<FeatureDetector> createFeatureDetector(
         p = createStarDetector(first, last);
     else if (type == "MSDDetector")
         p = createMSDDetector(first, last);
+    else if (type == "HarrisLaplaceFeatureDetector")
+        p = createHarrisLaplaceFeatureDetector(first, last);
 #endif
     else
         mexErrMsgIdAndTxt("mexopencv:error",

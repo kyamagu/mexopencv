@@ -202,7 +202,7 @@ classdef BasicFaceRecognizer < handle
             %
             % See also: cv.BasicFaceRecognizer.load
             %
-            [varargout{1:nargout}] = BasicFaceRecognizer_(this.id, 'save', filename);
+            [varargout{1:nargout}] = BasicFaceRecognizer_(this.id, 'write', filename);
         end
 
         function load(this, fname_or_str, varargin)
@@ -226,7 +226,7 @@ classdef BasicFaceRecognizer < handle
             %
             % See also: cv.BasicFaceRecognizer.save
             %
-            BasicFaceRecognizer_(this.id, 'load', fname_or_str, varargin{:});
+            BasicFaceRecognizer_(this.id, 'read', fname_or_str, varargin{:});
         end
 
         function name = getDefaultName(this)

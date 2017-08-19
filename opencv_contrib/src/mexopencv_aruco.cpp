@@ -39,8 +39,9 @@ Ptr<DetectorParameters> MxArrayToDetectorParameters(const MxArray &s)
         params->minDistanceToBorder = s.at("minDistanceToBorder").toInt();
     if (s.isField("minMarkerDistanceRate"))
         params->minMarkerDistanceRate = s.at("minMarkerDistanceRate").toDouble();
-    if (s.isField("doCornerRefinement"))
-        params->doCornerRefinement = s.at("doCornerRefinement").toBool();
+    if (s.isField("cornerRefinementMethod"))
+        params->cornerRefinementMethod =
+            CornerRefineMethodMap[s.at("cornerRefinementMethod").toString()];
     if (s.isField("cornerRefinementWinSize"))
         params->cornerRefinementWinSize = s.at("cornerRefinementWinSize").toInt();
     if (s.isField("cornerRefinementMaxIterations"))
@@ -172,7 +173,7 @@ MxArray toStruct(const Ptr<DetectorParameters> &params)
         "adaptiveThreshConstant", "minMarkerPerimeterRate",
         "maxMarkerPerimeterRate", "polygonalApproxAccuracyRate",
         "minCornerDistanceRate", "minDistanceToBorder",
-        "minMarkerDistanceRate", "doCornerRefinement",
+        "minMarkerDistanceRate", "cornerRefinementMethod",
         "cornerRefinementWinSize", "cornerRefinementMaxIterations",
         "cornerRefinementMinAccuracy", "markerBorderBits",
         "perspectiveRemovePixelPerCell",
@@ -190,7 +191,8 @@ MxArray toStruct(const Ptr<DetectorParameters> &params)
     s.set("minCornerDistanceRate", params->minCornerDistanceRate);
     s.set("minDistanceToBorder", params->minDistanceToBorder);
     s.set("minMarkerDistanceRate", params->minMarkerDistanceRate);
-    s.set("doCornerRefinement", params->doCornerRefinement);
+    s.set("cornerRefinementMethod",
+        CornerRefineMethodInvMap[params->cornerRefinementMethod]);
     s.set("cornerRefinementWinSize", params->cornerRefinementWinSize);
     s.set("cornerRefinementMaxIterations", params->cornerRefinementMaxIterations);
     s.set("cornerRefinementMinAccuracy", params->cornerRefinementMinAccuracy);

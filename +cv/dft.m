@@ -41,6 +41,10 @@
 %       inverse transformation is executed, the function treats the input as a
 %       packed complex-conjugate symmetrical array, and the output will also
 %       be a real array). default false
+% * __ComplexInput__ specifies that input is complex input. If this flag is
+%       set, the input must have 2 channels. On the other hand, for backwards
+%       compatibility reason, if input has 2 channels, input is already
+%       considered complex. default false
 % * __NonzeroRows__ when the parameter is not zero, the function assumes that
 %       only the first `NonzeroRows` rows of the input array (`Inverse` is not
 %       set) or only the first `NonzeroRows` of the output array (`Inverse` is

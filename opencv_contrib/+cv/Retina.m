@@ -526,7 +526,6 @@ classdef Retina < handle
             % * __SamplingStrength__ only useful if param
             %       `UseRetinaLogSampling=true`, specifies the strength of the
             %       log scale that is applied. default 10.0
-            % * __UseOCL__ use the OpenCL implementation. default false
             %
             % See also: cv.Retina.run
             %

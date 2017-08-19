@@ -9,6 +9,13 @@ classdef SuperpixelSLIC < handle
     % to use a lone parameter specifies the number of superpixels and the
     % efficiency of the algorithm makes it very practical.
     %
+    % Several optimizations are available for SLIC class:
+    %
+    % * SLICO stands for "Zero parameter SLIC" and it is an optimization of
+    %   baseline SLIC descibed in [Achanta2012].
+    % * MSLIC stands for "Manifold SLIC" and it is an optimization of baseline
+    %   SLIC described in [Liu_2017_IEEE].
+    %
     % ## References
     % [Achanta2012]:
     % > Radhakrishna Achanta, Appu Shaji, Kevin Smith, Aurelien Lucchi,
@@ -21,6 +28,12 @@ classdef SuperpixelSLIC < handle
     % > Aurelien Lucchi, Pascal Fua, and Sabine Susstrunk. EPFL Technical
     % > Report no. 149300, June 2010.
     %
+    % [Liu_2017_IEEE]:
+    % > Yong-Jin Liu, Cheng-Chi Yu, Min-Jing Yu, and Ying He. "Intrinsic
+    % > Manifold SLIC: A Simple and Efficient Method for Computing
+    % > Content-Sensitive Superpixels". IEEE Transactions on Pattern Analysis
+    % > and Machine Intelligence, Issue 99, March 2017.
+    %
     % See also: cv.SuperpixelSLIC.SuperpixelSLIC, cv.SuperpixelLSC,
     %  cv.SuperpixelSEEDS, superpixels
     %
@@ -31,7 +44,7 @@ classdef SuperpixelSLIC < handle
 
     methods
         function this = SuperpixelSLIC(img, varargin)
-            %SUPERPIXELSLIC  Class implementing the SLIC (Simple Linear Iterative Clustering) superpixels
+            %SUPERPIXELSLIC  Initialize a SuperpixelSLIC object
             %
             %    obj = cv.SuperpixelSLIC(img)
             %    obj = cv.SuperpixelSLIC(img, 'OptionName',optionValue, ...)
@@ -48,6 +61,8 @@ classdef SuperpixelSLIC < handle
             %             and in addition will choose an adaptive compactness
             %             factor for each superpixel differently. This is the
             %             default.
+            %       * __MSLIC__ optimize using manifold methods resulting in
+            %             more content-sensitive superpixels.
             % * __RegionSize__ Chooses an average superpixel size measured in
             %       pixels. default 10
             % * __Ruler__ Chooses the enforcement of superpixel smoothness
@@ -57,10 +72,16 @@ classdef SuperpixelSLIC < handle
             % The function initializes a SuperpixelSLIC object for the input
             % image. It sets the parameters of choosed superpixel algorithm,
             % which are: `RegionSize` and `Ruler`. It preallocate some buffers
-            % for future computing iterations over the given image. An example
-            % of SLIC versus SLICO is ilustrated in the following picture.
+            % for future computing iterations over the given image.
             %
-            % ![image](https://github.com/opencv/opencv_contrib/raw/3.2.0/modules/ximgproc/doc/pics/superpixels_slic.png)
+            % For enanched results it is recommended for color images to
+            % preprocess image with little gaussian blur using a small 3x3
+            % kernel and additional conversion into CIELAB color space.
+            %
+            % An example of SLIC versus SLICO and MSLIC is ilustrated in the
+            % following picture.
+            %
+            % ![image](https://github.com/opencv/opencv_contrib/raw/3.3.0/modules/ximgproc/doc/pics/superpixels_slic.png)
             %
             % See also: cv.SuperpixelSLIC.iterate
             %

@@ -12,8 +12,17 @@ classdef TestStructuredEdgeDetection
 
             modelFilename = get_model_file();
             pDollar = cv.StructuredEdgeDetection(modelFilename);
-            edges = pDollar.detectEdges(img);
-            validateattributes(edges, {'single'}, ...
+
+            E = pDollar.detectEdges(img);
+            validateattributes(E, {'single'}, ...
+                {'size',[size(img,1) size(img,2)], '>=',0, '<=',1});
+
+            O = pDollar.computeOrientation(E);
+            validateattributes(O, {'single'}, ...
+                {'size',[size(img,1) size(img,2)]});
+
+            E_nms = pDollar.edgesNms(E, O);
+            validateattributes(E_nms, {'single'}, ...
                 {'size',[size(img,1) size(img,2)], '>=',0, '<=',1});
         end
 
@@ -29,7 +38,7 @@ classdef TestStructuredEdgeDetection
             modelFilename = get_model_file();
             pDollar = cv.StructuredEdgeDetection(modelFilename, ...
                 'myRFFeatureGetter');
-            edges = pDollar.detectEdges(img);
+            E = pDollar.detectEdges(img);
         end
     end
 

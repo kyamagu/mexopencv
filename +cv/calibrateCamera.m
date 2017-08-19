@@ -78,6 +78,10 @@
 %       default false.
 % * __ZeroTangentDist__ Tangential distortion coefficients `p1` and `p2` are
 %       set to zeros and stay fixed. default false.
+% * __FixTangentDist__ The tangential distortion coefficients are not
+%       changed during the optimization. If `UseIntrinsicGuess` is set, the
+%       coefficient from the supplied `DistCoeffs` matrix is used. Otherwise,
+%       it is set to 0. default false.
 % * __FixK1__, ..., __FixK6__ The corresponding radial distortion coefficient
 %       is not changed during the optimization. If `UseIntrinsicGuess` is set,
 %       the coefficient from the supplied `DistCoeffs` matrix is used.

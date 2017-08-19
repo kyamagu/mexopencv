@@ -4,7 +4,7 @@ classdef TestDetectMarkers
     methods (Static)
         function test_1
             [img, d] = get_image_markers();
-            params = struct('doCornerRefinement',false);
+            params = struct('cornerRefinementMethod','None');
             [corners, ids, rejected] = cv.detectMarkers(img, d.dict, ...
                 'DetectorParameters',params);
             validateattributes(corners, {'cell'}, {'vector'});

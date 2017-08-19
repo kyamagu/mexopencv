@@ -49,7 +49,7 @@ if false
     detectorParams.minCornerDistanceRate = 0.05;
     detectorParams.minDistanceToBorder = 3;
     detectorParams.minMarkerDistanceRate = 0.05;
-    detectorParams.doCornerRefinement = false;
+    detectorParams.cornerRefinementMethod = 'None';
     detectorParams.cornerRefinementWinSize = 5;
     detectorParams.cornerRefinementMaxIterations = 30;
     detectorParams.cornerRefinementMinAccuracy = 0.1;

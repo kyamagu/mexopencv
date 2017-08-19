@@ -125,6 +125,7 @@ classdef Net < handle
             % - `nn.SpatialMaxPooling`, `nn.SpatialAveragePooling`
             % - `nn.ReLU`, `nn.TanH`, `nn.Sigmoid`
             % - `nn.Reshape`
+            % - `nn.SoftMax`, `nn.LogSoftMax`
             %
             % Also some equivalents of these classes from cunn, cudnn, and
             % fbcunn may be successfully imported.
@@ -135,82 +136,41 @@ classdef Net < handle
         end
     end
 
-    %% Net (set/get blobs and params, run)
+    %% Net (set/get blobs and params, forward pass)
     methods
-        function setBlob(this, outputName, blob)
-            %SETBLOB  Sets the new value for the layer output blob
+        function setInput(this, blob, name)
+            %SETINPUT  Sets the new value for the layer output blob
             %
-            %    net.setBlob(outputName, blob)
+            %    net.setInput(blob)
+            %    net.setInput(blob, name)
             %
             % ## Input
-            % * __outputName__ descriptor of the updating layer output blob.
-            %       See cv.Net.connect to know format of the descriptor.
             % * __blob__ new blob, constructed from an image or an array of
             %       images.
+            % * __name__ descriptor of the updating layer output blob.
+            %       See cv.Net.connect to know format of the descriptor.
             %
             % NOTE: If updating blob is not empty then `blob` must have the
             % same shape, because network reshaping is not implemented yet.
             %
-            % Blob is a class provides methods for continuous n-dimensional
-            % CPU and GPU array processing. The class is realized as a wrapper
-            % over `cv::Mat` and `cv::UMat`. It will support methods for
-            % switching and logical synchronization between CPU and GPU.
-            %
-            % The blob (4-dimensional blob, so-called batch) is constructe
+            % The blob (4-dimensional blob, so-called batch) is constructed
             % from image or array of images. Image is a 2-dimensional
             % multi-channel or 3-dimensional single-channel image (or array of
             % such images).
             %
-            % See also: cv.Net.getBlob, cv.Net.connect
+            % See also: cv.Net.forward, cv.Net.blobFromImages
             %
-            Net_(this.id, 'setBlob', outputName, blob);
-        end
-
-        function setBlobTorch(this, outputName, filename, varargin)
-            %SETBLOBTORCH  Sets the new value for the layer output using a Torch7 serialized blob
-            %
-            %    net.setBlobTorch(outputName, filename)
-            %    net.setBlobTorch(outputName, filename, 'OptionName',optionValue, ...)
-            %
-            % ## Input
-            % * __outputName__ descriptor of the updating layer output blob.
-            % * __filename__ path to the blob file which was serialized as
-            %       `torch.Tensor` object of Torch7 framework.
-            %
-            % ## Options
-            % * __IsBinary__ default true.
-            %
-            % This function has the same limitations as cv.Net.import.
-            %
-            % See also: cv.Net.setBlob, cv.Net.import
-            %
-            Net_(this.id, 'setBlobTorch', outputName, filename, varargin{:});
-        end
-
-        function blob = getBlob(this, outputName)
-            %GETBLOB  Returns the layer output blob
-            %
-            %    blob = net.getBlob(outputName)
-            %
-            % ## Input
-            % * __outputName__ the descriptor of the returning layer output
-            %       blob.
-            %
-            % ## Output
-            % * __blob__ returned blob.
-            %
-            % A blob is a 4-dimensional matrix (so-called batch) with the
-            % following shape: `[num, cn, rows, cols]`.
-            %
-            % See also: cv.Net.setBlob, cv.Net.connect
-            %
-            blob = Net_(this.id, 'getBlob', outputName);
+            if nargin > 2
+                Net_(this.id, 'setInput', blob, name);
+            else
+                Net_(this.id, 'setInput', blob);
+            end
         end
 
         function setParam(this, layerId, numParam, blob)
             %SETPARAM  Sets the new value for the learned param of the layer
             %
-            %    net.setParam(layerId)
+            %    net.setParam(layerId, numParam, blob)
             %
             % ## Input
             % * __layerId__ name or id of the layer.
@@ -225,48 +185,96 @@ classdef Net < handle
             Net_(this.id, 'setParam', layerId, numParam, blob);
         end
 
-        function blob = getParam(this, layerId, varargin)
+        function blob = getParam(this, layerId, numParam)
             %GETPARAM  Returns parameter blob of the layer
             %
             %    blob = net.getParam(layerId)
-            %    blob = net.getParam(layerId, 'OptionName',optionValue, ...)
+            %    blob = net.getParam(layerId, numParam)
             %
             % ## Input
             % * __layerId__ name or id of the layer.
+            % * __numParam__ index of the layer parameter in the blobs array.
+            %       default 0.
             %
             % ## Output
             % * __blob__ returned parameter blob.
             %
-            % ## Options
-            % * __NumParam__ index of the layer parameter in the blobs array.
-            %       default 0.
+            % Parameters are the weights and biases.
             %
             % See also: cv.Net.setParam
             %
-            blob = Net_(this.id, 'getParam', layerId, varargin{:});
+            if nargin > 2
+                blob = Net_(this.id, 'getParam', layerId, numParam);
+            else
+                blob = Net_(this.id, 'getParam', layerId);
+            end
         end
 
-        function forward(this, varargin)
+        function blob = forward(this, varargin)
             %FORWARD  Runs forward pass
             %
-            %    net.forward()
-            %    net.forward(toLayerId)
-            %    net.forward(startLayerId, toLayerId)
+            %    blob = net.forward()
+            %    blob = net.forward(outputName)
+            %
+            %    blobs = net.forward(outBlobNames)
             %
             % ## Input
-            % * __startLayerId__, __toLayerId__ layer name or layer id.
+            % * __outputName__ name for layer which output is needed to get.
+            % * __outBlobNames__ names for layers which outputs are needed to
+            %       get.
             %
-            % The first form runs forward pass for the whole network.
-            % The second form runs forward pass to compute output of layer
-            % `toLayerId`.
-            % The third form runs forward pass to compute output of layer
-            % `toLayerId`, but computations start from `startLayerId`.
+            % ## Output
+            % * __blob__ blob for first output of specified layer.
+            % * __blobs__ blobs for first outputs of specified layers
+            %       (cell array).
             %
-            % Warning: Third form is not yet implemented yet.
+            % The first form runs forward pass to compute output of layer
+            % with name `outputName`. By default (`outputName` not specified)
+            % runs forward pass for the whole network.
+            % (i.e `names = net.getLayerNames(); outputName = names(end);`).
+            % It returns blob for first output of specified layer.
             %
-            % See also: cv.Net.Net, cv.Net.import
+            % The second form runs forward pass to compute outputs of layers
+            % listed in `outBlobNames`. It returns blobs for first outputs of
+            % specified layers.
             %
-            Net_(this.id, 'forward', varargin{:});
+            % See also: cv.Net.forwardAll, cv.Net.Net, cv.Net.import
+            %
+            blob = Net_(this.id, 'forward', varargin{:});
+        end
+
+        function blobs = forwardAll(this, varargin)
+            %FORWARDALL  Runs forward pass
+            %
+            %    blobs = net.forwardAll()
+            %    blobs = net.forwardAll(outputName)
+            %
+            %    blobsArr = net.forwardAll(outBlobNames)
+            %
+            % ## Input
+            % * __outputName__ name for layer which output is needed to get.
+            % * __outBlobNames__ names for layers which outputs are needed to
+            %       get.
+            %
+            % ## Output
+            % * __blobs__ contains all output blobs for specified layer
+            %       (cell array)
+            % * __blobsArr__ contains all output blobs for each layer
+            %       specified in `outBlobNames` (cell array of cell arrays).
+            %
+            % The first form runs forward pass to compute output of layer
+            % with name `outputName`. By default (`outputName` not specified)
+            % runs forward pass for the whole network
+            % (i.e `names = net.getLayerNames(); outputName = names(end);`).
+            % It returns all output blobs for specified layer.
+            %
+            % The second form runs forward pass to compute outputs of layers
+            % listed in `outBlobNames`. It returns all output blobs for each
+            % layer specified in `outBlobNames`.
+            %
+            % See also: cv.Net.forward, cv.Net.Net, cv.Net.import
+            %
+            blobs = Net_(this.id, 'forwardAll', varargin{:});
         end
 
         function forwardOpt(this, toLayerId)
@@ -289,7 +297,7 @@ classdef Net < handle
     end
 
     %% Net (network architecture)
-    methods (Hidden)
+    methods
         function b = empty(this)
             %EMPTY  Returns true if there are no layers in the network.
             %
@@ -349,7 +357,7 @@ classdef Net < handle
             % - MVN
             % - Dropout (since it does nothing on forward pass)
             %
-            % See also: cv.Net.addLayerToPrev
+            % See also: cv.Net.addLayerToPrev, cv.Net.deleteLayer, cv.Net.connect
             %
             id = Net_(this.id, 'addLayer', name, layerType, params);
         end
@@ -370,7 +378,7 @@ classdef Net < handle
             % * __id__ unique identifier of created layer, or -1 if a failure
             %       will happen.
             %
-            % See also: cv.Net.addLayer
+            % See also: cv.Net.addLayer, cv.Net.deleteLayer, cv.Net.connect
             %
             id = Net_(this.id, 'addLayerToPrev', name, layerType, params);
         end
@@ -386,7 +394,7 @@ classdef Net < handle
             % ## Output
             % * __id__ id of the layer, or -1 if the layer wasn't found.
             %
-            % See also: cv.Net.deleteLayer
+            % See also: cv.Net.getLayer, cv.Net.getLayerNames
             %
             id = Net_(this.id, 'getLayerId', name);
         end
@@ -399,13 +407,13 @@ classdef Net < handle
             % ## Output
             % * __names__ names of layers.
             %
-            % See also: cv.Net.getLayerId
+            % See also: cv.Net.getLayerId, cv.Net.getLayer
             %
             names = Net_(this.id, 'getLayerNames');
         end
 
         function layer = getLayer(this, layerId)
-            %GETLAYER  Returns layer with specified name which the network use
+            %GETLAYER  Returns layer with specified id or name which the network use
             %
             %    layer = net.getLayer(layerId)
             %
@@ -429,15 +437,33 @@ classdef Net < handle
             layer = Net_(this.id, 'getLayer', layerId);
         end
 
+        function layers = getLayerInputs(this, layerId)
+            %GETLAYERINPUTS  Returns input layers of specific layer
+            %
+            %    layers = net.getLayerInputs(layerId)
+            %
+            % ## Input
+            % * __layerId__ layer name or layer id.
+            %
+            % ## Output
+            % * __layers__ returned layers, struct array.
+            %
+            % See also: cv.Net.getLayerId, cv.Net.getLayer
+            %
+            layers = Net_(this.id, 'getLayerInputs', layerId);
+        end
+
         function deleteLayer(this, layerId)
-            %DELETELAYER  Delete layer for the network (not implemented yet)
+            %DELETELAYER  Delete layer for the network
             %
             %    net.deleteLayer(layerId)
             %
             % ## Input
             % * __layerId__ layer name or layer id.
             %
-            % See also: cv.Net.getLayerId
+            % Warning: Not yet implemented.
+            %
+            % See also: cv.Net.addLayer
             %
             Net_(this.id, 'deleteLayer', layerId);
         end
@@ -449,8 +475,8 @@ classdef Net < handle
             %    net.connect(outLayerId, outNum, inpLayerId, inpNum)
             %
             % ## Input
-            % * __outPin__ descriptor of the first layer output.
-            % * __inpPin__ descriptor of the second layer input.
+            % * __outPin__ descriptor of the first layer output. See below.
+            % * __inpPin__ descriptor of the second layer input. See below.
             %
             % ## Input
             % * __outLayerId__ identifier of the first layer.
@@ -467,15 +493,15 @@ classdef Net < handle
             %   either number of the layer input, either label one. If this
             %   part is omitted then the first layer input will be used.
             %
-            % See also: cv.Net.setNetInputs
+            % See also: cv.Net.setInputsNames, cv.Net.addLayer
             %
             Net_(this.id, 'connect', varargin{:});
         end
 
-        function setNetInputs(this, inputBlobNames)
-            %SETNETINPUTS  Sets outputs names of the network input pseudo layer
+        function setInputsNames(this, inputBlobNames)
+            %SETINPUTSNAMES  Sets outputs names of the network input pseudo layer
             %
-            %    net.setNetInputs(inputBlobNames)
+            %    net.setInputsNames(inputBlobNames)
             %
             % ## Input
             % * __inputBlobNames__ blob names.
@@ -487,19 +513,182 @@ classdef Net < handle
             % layer can label its outputs and this function provides an easy
             % way to do this.
             %
-            % See also: cv.Net.connect
+            % See also: cv.Net.connect, cv.Net.setInput
             %
-            Net_(this.id, 'setNetInputs', inputBlobNames);
+            Net_(this.id, 'setInputsNames', inputBlobNames);
         end
 
-        function allocate(this)
-            %ALLOCATE  Initializes and allocates all layers.
+        function indices = getUnconnectedOutLayers(this)
+            %GETUNCONNECTEDOUTLAYERS  Returns indexes of layers with unconnected outputs
             %
-            %    net.allocate()
+            %    indices = net.getUnconnectedOutLayers()
             %
-            % See also: cv.Net.forward
+            % ## Output
+            % * __indices__ vector of indices.
             %
-            Net_(this.id, 'allocate');
+            % See also: cv.Net.getLayer
+            %
+            indices = Net_(this.id, 'getUnconnectedOutLayers');
+        end
+
+        function layersTypes = getLayerTypes(this)
+            %GETLAYERTYPES  Returns list of types for layer used in model
+            %
+            %    layersTypes = net.getLayerTypes()
+            %
+            % ## Output
+            % * __layersTypes__ layer types.
+            %
+            % See also: cv.Net.getLayersCount
+            %
+            layersTypes = Net_(this.id, 'getLayerTypes');
+        end
+
+        function count = getLayersCount(this, layerType)
+            %GETLAYERSCOUNT  Returns count of layers of specified type
+            %
+            %    count = net.getLayersCount(layerType)
+            %
+            % ## Input
+            % * __layerType__ type.
+            %
+            % ## Output
+            % * __count__ count of layers.
+            %
+            % See also: cv.Net.getLayerTypes
+            %
+            count = Net_(this.id, 'getLayersCount', layerType);
+        end
+
+        function enableFusion(this, fusion)
+            %ENABLEFUSION  Enables or disables layer fusion in the network
+            %
+            %    net.enableFusion(fusion)
+            %
+            % ## Input
+            % * __fusion__ true to enable the fusion, false to disable. The
+            %       fusion is enabled by default.
+            %
+            % See also: cv.Net.connect
+            %
+            Net_(this.id, 'enableFusion', fusion);
+        end
+
+        function setHalideScheduler(this, scheduler)
+            %SETHALIDESCHEDULER  Compile Halide layers
+            %
+            %    net.setHalideScheduler(scheduler)
+            %
+            % ## Input
+            % * __scheduler__ scheduler Path to YAML file with scheduling
+            %       directives.
+            %
+            % Schedule layers that support Halide backend. Then compile them
+            % for specific target. For layers that not represented in
+            % scheduling file or if no manual scheduling used at all,
+            % automatic scheduling will be applied.
+            %
+            % See also: cv.setPreferableBackend
+            %
+            Net_(this.id, 'setHalideScheduler', scheduler);
+        end
+
+        function setPreferableBackend(this, backend)
+            %SETPREFERABLEBACKEND  Ask network to use specific computation backend where it supported
+            %
+            %    net.setPreferableBackend(backend)
+            %
+            % ## Input
+            % * __backend__ computation backend supported by layers, one of:
+            %       * __Default__
+            %       * __Halide__
+            %
+            % See also: cv.setPreferableTarget, cv.Net.setHalideScheduler
+            %
+            Net_(this.id, 'setPreferableBackend', backend);
+        end
+
+        function setPreferableTarget(this, target)
+            %SETPREFERABLETARGET  Ask network to make computations on specific target device
+            %
+            %    net.setPreferableTarget(target)
+            %
+            % ## Input
+            % * __target__ target device for computations, one of:
+            %       * __CPU__
+            %       * __OpenCL__
+            %
+            % See also: cv.setPreferableBackend
+            %
+            Net_(this.id, 'setPreferableTarget', target);
+        end
+    end
+
+    %% Auxiliary functions
+    methods (Static)
+        function blob = readTorchBlob(filename, varargin)
+            %READTORCHBLOB  Loads blob which was serialized as torch.Tensor object of Torch7 framework
+            %
+            %    blob = cv.Net.readTorchBlob(filename)
+            %    blob = cv.Net.readTorchBlob(filename, 'OptionName',optionValue, ...)
+            %
+            % ## Input
+            % * __filename__ path to the blob file.
+            %
+            % ## Output
+            % * __blob__ output blob.
+            %
+            % ## Options
+            % * __IsBinary__ specifies whether blob file was serialized in
+            %       ascii mode or binary. default true.
+            %
+            % This function has the same limitations as cv.Net.import with
+            % regards to the Torch importer.
+            %
+            % See also: cv.Net.setInput, cv.Net.blobFromImages
+            %
+            blob = Net_(0, 'readTorchBlob', filename, varargin{:});
+        end
+
+        function blob = blobFromImages(img, varargin)
+            %BLOBFROMIMAGES  Creates 4-dimensional blob from image or series of images
+            %
+            %    blob = cv.Net.blobFromImages(img)
+            %    blob = cv.Net.blobFromImages(imgs)
+            %    blob = cv.Net.blobFromImages(..., 'OptionName',optionValue, ...)
+            %
+            % ## Input
+            % * __img__ input image (with 1- or 3-channels).
+            % * __imgs__ input images (all with 1- or 3-channels).
+            %
+            % ## Output
+            % * __blob__ 4-dimansional array with NCHW dimensions order.
+            %
+            % ## Options
+            % * __Size__ spatial size for output image `[w,h]`. default [0,0]
+            %       (in which case input image size is used)
+            % * __Mean__ scalar with mean values which are subtracted from
+            %       channels. Values are intended to be in
+            %       (mean-R, mean-G, mean-B) order if image has BGR ordering
+            %       and `SwapRB` is true. default [0,0,0]
+            % * __ScaleFactor__ multiplier for images values. default 1.0
+            % * __SwapRB__ flag which indicates that swap first and last
+            %       channels in 3-channel image is necessary. default true
+            %
+            % Creates blob and optionally resizes and crops the images from
+            % center, subtracts mean values, scales values, and swaps blue and
+            % red channels.
+            %
+            % Input image is resized so one side after resize is equal to
+            % corresponing dimension in `Size` and another one is equal or
+            % larger. Then, crop from the center is performed.
+            %
+            % A blob is a 4-dimensional matrix (so-called batch) with the
+            % following shape: `[num, cn, rows, cols]`.
+            %
+            % See also: cv.Net.setInput
+            %
+            blob = Net_(0, 'blobFromImages', img, varargin{:});
         end
     end
 end

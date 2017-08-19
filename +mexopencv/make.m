@@ -174,8 +174,8 @@ function makefile_unix(opts)
     if opts.dryrun         , options{end+1} = '--dry-run'; end
     if opts.force          , options{end+1} = '--always-make'; end
     if opts.verbose < 1    , options{end+1} = '--silent'; end
-    if opts.verbose > 1    , options{end+1} = 'CFLAGS+=-v'; end
-    if opts.debug          , options{end+1} = 'CFLAGS+=-g'; end
+    if opts.verbose > 1    , options{end+1} = 'CXXFLAGS+=-v'; end
+    if opts.debug          , options{end+1} = 'CXXFLAGS+=-g'; end
     if ~isempty(opts.extra), options{end+1} = opts.extra; end
     options = strtrim(sprintf(' %s', options{:}));
 
@@ -224,7 +224,9 @@ function target_clean(opts)
             fullfile('opencv_contrib', '+cv', '*.idb') ; ...
             fullfile('opencv_contrib', '+cv', 'private', ['*.' mexext()]) ; ...
             fullfile('opencv_contrib', '+cv', 'private', '*.pdb') ; ...
-            fullfile('opencv_contrib', '+cv', 'private', '*.idb') ...
+            fullfile('opencv_contrib', '+cv', 'private', '*.idb') ;
+            fullfile('opencv_contrib', 'lib', '*.obj') ;
+            fullfile('opencv_contrib', 'lib', '*.o') ...
         ];
     end
 

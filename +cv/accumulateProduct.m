@@ -4,11 +4,11 @@
 %    dst = cv.accumulateProduct(src1, src2, dst, 'OptionName',optionValue, ...)
 %
 % ## Input
-% * __src1__ First input image, 1- or 3-channel, 8-bit or 32-bit floating
-%       point.
+% * __src1__ First input image of type `uint8`, `uint16`, `single`, or `double,
+%       with any number of channels
 % * __src2__ Second input image of the same type and the same size as `src1`.
-% * __dst__ Input accumulator with the same number of channels as input
-%       images, 32-bit or 64-bit floating-point.
+% * __dst__ Input accumulator image with the same number of channels as input
+%       images, and a depth of `single` or `double`.
 %
 % ## Output
 % * __dst__ Output accumulator image.

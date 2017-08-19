@@ -28,10 +28,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Option processing
     Ptr<DetectorParameters> params;
+    Mat cameraMatrix, distCoeffs;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "DetectorParameters")
             params = MxArrayToDetectorParameters(rhs[i+1]);
+        else if (key == "CameraMatrix")
+            cameraMatrix = rhs[i+1].toMat(CV_64F);
+        else if (key == "DistCoeffs")
+            distCoeffs = rhs[i+1].toMat(CV_64F);
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
@@ -45,7 +50,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<vector<Point2f> > corners, rejectedImgPoints;
     vector<int> ids;
     detectMarkers(image, dictionary, corners, ids, params,
-        (nlhs==3) ? rejectedImgPoints : noArray());
+        (nlhs==3) ? rejectedImgPoints : noArray(), cameraMatrix, distCoeffs);
     plhs[0] = MxArray(corners);
     if (nlhs > 1)
         plhs[1] = MxArray(ids);

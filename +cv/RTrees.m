@@ -601,6 +601,43 @@ classdef RTrees < handle
             v = RTrees_(this.id, 'getVarImportance');
         end
 
+        function votes = getVotes(this, samples, varargin)
+            %GETVOTES  Returns the result of each individual tree in the forest
+            %
+            %    votes = model.getVotes(samples)
+            %    votes = model.getVotes(..., 'OptionName',optionValue, ...)
+            %
+            % ## Input
+            % * __samples__ matrix containg the samples for which votes will
+            %       be calculated.
+            %
+            % ## Output
+            % * __votes__ matrix of the result of the calculation.
+            %
+            % ## Options
+            % * __Flags__ Flags for defining the type of RTrees. For
+            %       convenience, you can set the individual flag options
+            %       below, instead of directly setting bits here. default 0
+            % * __RawOutput__ See the predict method. default false
+            % * __CompressedInput__ See the predict method. default false
+            % * __PreprocessedInput__ See the predict method. default false
+            % * __PredictAuto__ See the predict method. default false
+            % * __PredictSum__ See the predict method. default false
+            % * __PredictMaxVote__ See the predict method. default false
+            %
+            % In case the model is a regression problem, the method will
+            % return each of the trees' results for each of the sample cases,
+            % i.e `nsamples-by-ntrees` matrix.
+            % If the model is a classifier, it will return a matrix with
+            % `nsamples + 1` rows, where the first row gives the class number
+            % and the following rows return the votes each class had for each
+            % sample, i.e `(nsamples+1)-by-nclasses` matrix.
+            %
+            % See also: cv.RTrees.predict
+            %
+            votes = RTrees_(this.id, 'getVotes', samples, varargin{:});
+        end
+
         function roots = getRoots(this)
             %GETROOTS  Returns indices of root nodes
             %

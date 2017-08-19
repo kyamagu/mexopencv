@@ -46,6 +46,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_FIX_ASPECT_RATIO);
         else if (key == "ZeroTangentDist")
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_ZERO_TANGENT_DIST);
+        else if (key == "FixTangentDist")
+            UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_FIX_TANGENT_DIST);
         else if (key == "FixK1")
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_FIX_K1);
         else if (key == "FixK2")

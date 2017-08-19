@@ -20,11 +20,13 @@ map<int,Ptr<StereoSGBM> > obj_;
 const ConstMap<string, int> SGBMModeMap = ConstMap<string, int>
     ("SGBM",     cv::StereoSGBM::MODE_SGBM)
     ("HH",       cv::StereoSGBM::MODE_HH)
-    ("SGBM3Way", cv::StereoSGBM::MODE_SGBM_3WAY);
+    ("SGBM3Way", cv::StereoSGBM::MODE_SGBM_3WAY)
+    ("HH4",      cv::StereoSGBM::MODE_HH4);
 const ConstMap<int, string> InvSGBMModeMap = ConstMap<int, string>
     (cv::StereoSGBM::MODE_SGBM,      "SGBM")
     (cv::StereoSGBM::MODE_HH,        "HH")
-    (cv::StereoSGBM::MODE_SGBM_3WAY, "SGBM3Way");
+    (cv::StereoSGBM::MODE_SGBM_3WAY, "SGBM3Way")
+    (cv::StereoSGBM::MODE_HH4,       "HH4");
 
 /** Create an instance of StereoSGBM using options in arguments
  * @param first iterator at the beginning of the vector range
@@ -38,8 +40,8 @@ Ptr<StereoSGBM> create_StereoSGBM(
     ptrdiff_t len = std::distance(first, last);
     nargchk((len%2)==0);
     int minDisparity = 0;
-    int numDisparities = 64;
-    int blockSize = 7;
+    int numDisparities = 16;
+    int blockSize = 3;
     int P1 = 0;
     int P2 = 0;
     int disp12MaxDiff = 0;
@@ -141,22 +143,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        /*
         obj_[id] = (loadFromString ?
             Algorithm::loadFromString<StereoSGBM>(rhs[2].toString(), objname) :
             Algorithm::load<StereoSGBM>(rhs[2].toString(), objname));
-        */
-        ///*
-        // HACK: workaround because StereoSGBM::create() doesnt accept zero arguments
-        FileStorage fs(rhs[2].toString(), FileStorage::READ +
-            (loadFromString ? FileStorage::MEMORY : 0));
-        if (!fs.isOpened())
-            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
-        FileNode fn(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
-        if (fn.empty())
-            mexErrMsgIdAndTxt("mexopencv:error", "Failed to get node");
-        obj->read(fn);
-        //*/
     }
     else if (method == "empty") {
         nargchk(nrhs==2 && nlhs<=1);

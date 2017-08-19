@@ -94,6 +94,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
+        //obj_[id] = LogisticRegression::load(rhs[2].toString());
         obj_[id] = (loadFromString ?
             Algorithm::loadFromString<LogisticRegression>(rhs[2].toString(), objname) :
             Algorithm::load<LogisticRegression>(rhs[2].toString(), objname));

@@ -1,6 +1,7 @@
 %ESTIMATEPOSECHARUCOBOARD  Pose estimation for a ChArUco board given some of their corners
 %
 %    [rvec, tvec, valid] = cv.estimatePoseCharucoBoard(charucoCorners, charucoIds, board, cameraMatrix, distCoeffs)
+%    [...] = cv.estimatePoseCharucoBoard(..., 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __charucoCorners__ cell array of detected charuco corners `{[x,y], ..}`.
@@ -19,6 +20,14 @@
 % * __valid__ The function checks if the input corners are enough and valid
 %       to perform pose estimation. If pose estimation is valid, returns true,
 %       else returns false.
+%
+% ## Options
+% * __Rvec__, __Tvec__ Initial `rvec` and `tvec`. Used as initial guess if not
+%       empty. The function uses the provided values as initial approximations
+%       of the rotation and translation vectors, respectively, and further
+%       optimizes them. Not set by default.
+% * __UseExtrinsicGuess__ defines whether initial guess for `rvec` and `tvec`
+%       will be used or not. default false.
 %
 % This function estimates a Charuco board pose from some detected corners.
 %

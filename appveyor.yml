@@ -3,13 +3,12 @@
 # https://ci.appveyor.com/project/kyamagu/mexopencv
 #
 # Note:
-# Due to the time limit on AppVeyor, OpenCV 3.2.0 is pre-built separately
-# (using the same configuration with MinGW-GCC from Octave). See:
-# https://github.com/amroamroamro/opencv/blob/tag_3.2.0/appveyor.yml
+# We use prepared opencv binaries built using the same MinGW/Octave config,
+# see: https://github.com/amroamroamro/opencv/blob/tag_3.3.0/appveyor.yml
 #
 
 # version format
-version: 3.2.0.{build}
+version: 3.3.0.{build}
 
 # clone directory
 clone_folder: c:\projects\mexopencv
@@ -19,85 +18,53 @@ branches:
   only:
   - master
 
-# global environment variables
-environment:
-  MCV_ROOT: c:\projects\mexopencv
-  OPENCV_DIR: c:\dev\build\install
-  #NOTE: it's important to set OCTAVE_HOME environment variable because it is
-  # queried by mkoctfile.exe/octave-config.exe to alter compile and link paths
-  # (otherwise some wrong hardcoded paths from cross-compiling are used)
-  # http://savannah.gnu.org/bugs/?48671
-  OCTAVE_HOME: c:\dev\octave-4.2.1
-  #TODO: https://savannah.gnu.org/bugs/?41699
-  # we use octave-cli.exe here instead of octave.exe because of a bug
-  # in the MinGW/MXE build causing Octave to crash on exit with a segfault
-  # after having used any GraphicsMagick functions (imread, etc..).
-  # Even then, we can't always trust Octave's exit code on Windows! It throws
-  # 0xC0000005 on exit (access violation), even when it runs just fine.
-  #TODO: The YAML parser report errors if we use % as first char in a command,
-  # so we cannot just write %OCTAVE%, we must use: call %OCTAVE%
-  OCTAVE: octave-cli --no-gui --no-window-system
-  # whether to generate doxygen HTML documentation
-  DOXY: yes
-  # for pkg-config to find opencv.pc when using the makefile
-  PKG_CONFIG_PATH: /c/dev/build/install
-  # whether to run mexopencv.make() in Octave or use external makefile
-  WITH_MAKE: yes
-  # options in case of makefile (the quotes around the path are needed here!)
-  MAKE_OPTS: MATLABDIR='/c/dev/octave-4.2.1' WITH_OCTAVE=true WITH_CONTRIB=true NO_CV_PKGCONFIG_HACK=true
-  # Extra make arguments like number of parallel jobs (NPROC+1 is recommended).
-  # Note that GNU Make 3.81 bundled with Octave has poor parallel jobs support
-  # (make -jN freezes, make -j has no limit creating way too many processes!).
-  # So we download a newer GNU Make 4.2 for Windows (mingw32-make -jN works).
-  MAKE_EXTRA: -j2
-
-# immediately finish build if one of the jobs fails
-matrix:
-  fast_finish: true
-
-# disable automatic building/testing/deploying phases, we use custom scripts
+# disable automatic build/test/deploy phases
 build: off
 test: off
 deploy: off
 
-# keep build artifacts, which can be downloaded later
+# build artifacts to keep
 artifacts:
+  - path: mexopencv.7z
   - path: test\UnitTest_*.log
-    name: tests-log
+  - path: test\tests.xml
 
-# enable debugging using an RDP connection
-#on_finish:
-#  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+# global environment variables
+environment:
+  # OpenCV options
+  # (Note: the makefile calls pkg-config which needs to locate opencv.pc)
+  OPENCV_DIR: c:\dev\build\install
+  PKG_CONFIG_PATH: /c/dev/build/install
+
+  # Octave options
+  OCTAVE_HOME: c:\dev\octave-4.2.1
+  OCTAVE: octave-cli --no-gui --no-window-system
+
+  # mexopencv options
+  # (build choices: mexopencv.make() in Octave, or Makefile in shell)
+  # (Note: Make 3.81 included has poor jobs support, we use Make 4.2 instead)
+  MCV_ROOT: c:\projects\mexopencv
+  WITH_MAKE: yes
+  MAKE_OPTS: MATLABDIR='/c/dev/octave-4.2.1' WITH_OCTAVE=true WITH_CONTRIB=true NO_CV_PKGCONFIG_HACK=true
+  MAKE_EXTRA: -j2
+  DOXY: yes
 
 install:
-  # download and install dependencies
-  - if not exist "c:\dev" ( mkdir "c:\dev" )
-  - cd "c:\dev"
+  # install dependencies (Doxygen, Make, OpenCV, Octave)
+  - mkdir "c:\dev" && cd "c:\dev"
   - if "%DOXY%" == "yes" ( choco install doxygen.portable -y > nul )
   - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.2.0/mingw32-make.exe" -FileName mingw32-make.exe
-  - set "PATH=c:\dev;%PATH%"
-  - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.2.0/cv320_x86_gcc494.7z" -FileName cv320_x86_gcc494.7z
-  - 7z x "c:\dev\cv320_x86_gcc494.7z" -o"c:\dev\build" -y > nul
-  - set "PATH=%OPENCV_DIR%\x86\mingw\bin;%PATH%"
+  - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.3.0/cv330_x86_mingw.7z" -FileName cv330_x86_mingw.7z
   - ps: Start-FileDownload "https://ftp.gnu.org/gnu/octave/windows/octave-4.2.1-w32.zip" -FileName octave-4.2.1-w32.zip
+  - 7z x "c:\dev\cv330_x86_mingw.7z" -o"c:\dev\build" -y > nul
   - 7z x "c:\dev\octave-4.2.1-w32.zip" -o"c:\dev" -y > nul
   - copy /y "%OCTAVE_HOME%\bin\libopenblas.dll" "%OCTAVE_HOME%\bin\libblas.dll" > nul
-  - set "PATH=%OCTAVE_HOME%\bin;%PATH%"
-  - call %OCTAVE% --eval "try, pkg('rebuild', '-noauto'); end"
-  # show info about build tools
-  #- dir "c:\dev"
-  #- set
-  #- ver
-  #- systeminfo
-  - mingw32-make --version
-  - g++ --version
-  - call %OCTAVE% --version
-  - call %OCTAVE% --eval "pkg list"
-  - if "%DOXY%" == "yes" ( doxygen --version )
+  - set "PATH=%OCTAVE_HOME%\bin;%OPENCV_DIR%\x86\mingw\bin;c:\dev;%PATH%"
 
 before_build:
-  # create .octaverc file (where we setup path and load required packages on start)
-  #TODO: http://savannah.gnu.org/bugs/?45444, we also add private directories on path
+  # create .octaverc file (to setup path and load required packages on start)
+  # (one for SHELL=sh.exe and one for SHELL=cmd.exe)
+  #HACK: we also add private directories on path, http://savannah.gnu.org/bugs/?45444
   - ps: |
       $OctaveRC = @"
         crash_dumps_octave_core(false);
@@ -112,7 +79,6 @@ before_build:
         addpath(fullfile(getenv('MCV_ROOT'),'opencv_contrib'));
         addpath(fullfile(getenv('MCV_ROOT'),'opencv_contrib','+cv','private'));
       "@
-      # one for SHELL=sh.exe and one for SHELL=cmd.exe
       $HomeDirs = @(
         (Join-Path (Join-Path $env:OCTAVE_HOME 'home') $env:USERNAME),
         $env:USERPROFILE
@@ -122,7 +88,6 @@ before_build:
         New-Item -ItemType File -Path "$OctaveRCFile" -Force | Out-Null
         $OctaveRC | Out-File -FilePath "$OctaveRCFile" -Encoding ASCII
       }
-      cat "$OctaveRCFile"
 
 build_script:
   # compile mexopencv
@@ -132,26 +97,27 @@ build_script:
     ) else (
       %OCTAVE% --eval "mexopencv.make('opencv_path',getenv('OPENCV_DIR'), 'opencv_contrib',true, 'progress',false, 'verbose',1);"
     )
-  # generate HTML docs
+
+  # build docs
   - if "%DOXY%" == "yes" ( doxygen Doxyfile )
 
 after_build:
-  # package all built MEX-files in a zip file
-  - pushd "%MCV_ROOT%" && 7z a -t7z "%APPVEYOR_BUILD_FOLDER%\mexopencv.7z" *.mex -r -y > nul && popd
-  - appveyor PushArtifact "%APPVEYOR_BUILD_FOLDER%\mexopencv.7z" -DeploymentName "binaries_octave_x86"
-  # package HTML docs
-  - if "%DOXY%" == "yes" ( 7z a -t7z "%APPVEYOR_BUILD_FOLDER%\mexopencv_doc.7z" "%MCV_ROOT%\doc\html\" -y > nul )
-  - if "%DOXY%" == "yes" ( appveyor PushArtifact "%APPVEYOR_BUILD_FOLDER%\mexopencv_doc.7z" -DeploymentName "docs-cpp" )
+  # package MEX-files
+  - cd "%MCV_ROOT%" && 7z a -t7z "%APPVEYOR_BUILD_FOLDER%\mexopencv.7z" *.mex -r -y > nul
 
 before_test:
   # print cv build info
-  - call %OCTAVE% --eval "path, disp(cv.getBuildInformation())"
+  - call %OCTAVE% --eval "disp(cv.getBuildInformation())"
 
 test_script:
   # run test suite
-  #TODO: we reset %ERRORLEVEL% because we can't rely on Octave exit code
+  #HACK: we reset %ERRORLEVEL% because we can't rely on Octave exit code
   - if "%WITH_MAKE%" == "yes" (
       sh --login -c "cd \"$MCV_ROOT\" && mingw32-make $MAKE_OPTS test"
     ) else (
-      %OCTAVE% --eval "cd test;try,UnitTest('ContribModules',true);catch e,disp(e);exit(1);end;exit(0);" || ver > nul
+      %OCTAVE% --eval "cd test;try,UnitTest('ContribModules',true,'Verbosity',2);catch e,disp(e);exit(1);end;exit(0);" || ver > nul
     )
+
+after_test:
+  # upload xUnit test results
+  - ps: (New-Object System.Net.WebClient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\test\tests.xml))

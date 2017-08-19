@@ -235,7 +235,16 @@ const ConstMap<string,int> ColorConv = ConstMap<string,int>
     ("BayerBG2RGB_EA",  cv::COLOR_BayerBG2RGB_EA)
     ("BayerGB2RGB_EA",  cv::COLOR_BayerGB2RGB_EA)
     ("BayerRG2RGB_EA",  cv::COLOR_BayerRG2RGB_EA)
-    ("BayerGR2RGB_EA",  cv::COLOR_BayerGR2RGB_EA);
+    ("BayerGR2RGB_EA",  cv::COLOR_BayerGR2RGB_EA)
+    // Demosaicing with alpha channel
+    ("BayerBG2BGRA",    cv::COLOR_BayerBG2BGRA)
+    ("BayerGB2BGRA",    cv::COLOR_BayerGB2BGRA)
+    ("BayerRG2BGRA",    cv::COLOR_BayerRG2BGRA)
+    ("BayerGR2BGRA",    cv::COLOR_BayerGR2BGRA)
+    ("BayerBG2RGBA",    cv::COLOR_BayerBG2RGBA)
+    ("BayerGB2RGBA",    cv::COLOR_BayerGB2RGBA)
+    ("BayerRG2RGBA",    cv::COLOR_BayerRG2RGBA)
+    ("BayerGR2RGBA",    cv::COLOR_BayerGR2RGBA);
 }
 
 /**

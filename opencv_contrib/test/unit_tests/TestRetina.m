@@ -11,7 +11,7 @@ classdef TestRetina
             retina = cv.Retina([size(img,2) size(img,1)], ...
                 'ColorMode',true, 'ColorSamplingMethod','Bayer', ...
                 'UseRetinaLogSampling',false, 'ReductionFactor',1.0, ...
-                'SamplingStrength',10, 'UseOCL',false);
+                'SamplingStrength',10);
 
             retina.clearBuffers();
             retina.run(img);
@@ -26,7 +26,7 @@ classdef TestRetina
             validateattributes(magno, {'uint8'}, {'size',[sz(2) sz(1)]});
 
             parvo = retina.getParvoRAW();
-            validateattributes(parvo, {'single'}, {'vector', 'numel',prod(sz)});
+            validateattributes(parvo, {'single'}, {'vector', 'numel',prod(sz)*3});
 
             magno = retina.getMagnoRAW();
             validateattributes(magno, {'single'}, {'vector', 'numel',prod(sz)});

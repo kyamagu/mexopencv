@@ -15,6 +15,7 @@ const ConstMap<string,int> PnPMethod = ConstMap<string,int>
     ("Iterative", cv::SOLVEPNP_ITERATIVE)
     ("EPnP",      cv::SOLVEPNP_EPNP)
     ("P3P",       cv::SOLVEPNP_P3P)
+    ("AP3P",      cv::SOLVEPNP_AP3P)
     ("DLS",       cv::SOLVEPNP_DLS)
     ("UPnP",      cv::SOLVEPNP_UPNP);
 }
@@ -86,9 +87,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error", "Invalid points argument");
-    plhs[0] = MxArray(rvec.clone());      //HACK, see #309
+    plhs[0] = MxArray(rvec);
     if (nlhs>1)
-        plhs[1] = MxArray(tvec.clone());  //HACK, see #309
+        plhs[1] = MxArray(tvec);
     if (nlhs>2)
         plhs[2] = MxArray(success);
     if (nlhs>3)

@@ -18,6 +18,16 @@ int last_id = 0;
 /// Object container
 map<int,Ptr<Net> > obj_;
 
+/// Computation backends for option processing
+const ConstMap<string,int> BackendsMap = ConstMap<string,int>
+    ("Default", cv::dnn::DNN_BACKEND_DEFAULT)
+    ("Halide",  cv::dnn::DNN_BACKEND_HALIDE);
+
+/// Computation target devices for option processing
+const ConstMap<string,int> TargetsMap = ConstMap<string,int>
+    ("CPU", cv::dnn::DNN_TARGET_CPU)
+    ("OpenCL",  cv::dnn::DNN_TARGET_OPENCL);
+
 /** Convert MxArray to cv::dnn::Net::LayerId
  * @param arr MxArray object. In one of the following forms:
  * - a scalar integer.
@@ -97,7 +107,7 @@ LayerParams MxArrayToLayerParams(const MxArray& arr)
         vector<MxArray> blobs(arr.at("blobs").toVector<MxArray>());
         params.blobs.reserve(blobs.size());
         for (vector<MxArray>::const_iterator it = blobs.begin(); it != blobs.end(); ++it)
-            params.blobs.push_back(Blob::fromImages(it->toMat(CV_32F)));
+            params.blobs.push_back(it->toMatND(CV_32F));
     }
     if (arr.isField("name")) params.name = arr.at("name").toString();
     if (arr.isField("type")) params.type = arr.at("type").toString();
@@ -112,13 +122,25 @@ MxArray toStruct(const Ptr<Layer> &layer)
 {
     const char *fields[] = {"blobs", "name", "type"};
     MxArray s = MxArray::Struct(fields, 3);
-    vector<Mat> blobs;
-    blobs.reserve((layer->blobs).size());
-    for (vector<Blob>::const_iterator it = (layer->blobs).begin(); it != (layer->blobs).end(); ++it)
-        blobs.push_back(it->matRefConst());
-    s.set("blobs", blobs);
+    s.set("blobs", layer->blobs);
     s.set("name",  layer->name);
     s.set("type",  layer->type);
+    return s;
+}
+
+/** Convert std::vector<cv::Ptr<cv::dnn::Layer>> to struct array
+ * @param layers vector of smart pointers to layers
+ * @return struct-array MxArray object
+ */
+MxArray toStruct(const vector<Ptr<Layer> > &layers)
+{
+    const char *fields[] = {"blobs", "name", "type"};
+    MxArray s = MxArray::Struct(fields, 3, 1, layers.size());
+    for (mwIndex i = 0; i < layers.size(); ++i) {
+        s.set("blobs", layers[i]->blobs, i);
+        s.set("name",  layers[i]->name,  i);
+        s.set("type",  layers[i]->type,  i);
+    }
     return s;
 }
 }
@@ -146,6 +168,62 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         obj_[++last_id] = makePtr<Net>();
         plhs[0] = MxArray(last_id);
         mexLock();
+        return;
+    }
+    // static method calls
+    else if (method == "readTorchBlob") {
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
+        bool isBinary = true;
+        for (int i=3; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key == "IsBinary")
+                isBinary = rhs[i+1].toBool();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
+        }
+        string filename(rhs[2].toString());
+        MatND blob = readTorchBlob(filename, isBinary);
+        plhs[0] = MxArray(blob);
+        return;
+    }
+    else if (method == "blobFromImages") {
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
+        double scalefactor = 1.0;
+        Size size;
+        Scalar mean;
+        bool swapRB = true;
+        for (int i=3; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key == "ScaleFactor")
+                scalefactor = rhs[i+1].toDouble();
+            else if (key == "Size")
+                size = rhs[i+1].toSize();
+            else if (key == "Mean")
+                mean = rhs[i+1].toScalar();
+            else if (key == "SwapRB")
+                swapRB = rhs[i+1].toBool();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
+        }
+        MatND blob;
+        if (rhs[2].isCell()) {
+            //vector<Mat> images(rhs[2].toVector<Mat>());
+            vector<Mat> images;
+            {
+                vector<MxArray> arr(rhs[2].toVector<MxArray>());
+                images.reserve(arr.size());
+                for (vector<MxArray>::const_iterator it = arr.begin(); it != arr.end(); ++it)
+                    images.push_back(it->toMat(CV_32F));
+            }
+            blob = blobFromImages(images, scalefactor, size, mean, swapRB);
+        }
+        else {
+            Mat image(rhs[2].toMat(CV_32F));
+            blob = blobFromImage(image, scalefactor, size, mean, swapRB);
+        }
+        plhs[0] = MxArray(blob);
         return;
     }
 
@@ -177,9 +255,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (type == "Torch") {
             nargchk(nrhs==4 || nrhs==5);
             string filename(rhs[3].toString());
-            bool isBinary = true;
-            if (nrhs == 5)
-                isBinary = rhs[4].toBool();
+            bool isBinary = (nrhs == 5) ? rhs[4].toBool() : true;
             importer = createTorchImporter(filename, isBinary);
         }
         else
@@ -214,7 +290,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==3 && nlhs<=1);
         string layer(rhs[2].toString());
         int id = obj->getLayerId(layer);
-        plhs[0] = MxArray(id);
+        plhs[0] = MxArray(id);  //TODO: return int32 scalar value
     }
     else if (method == "getLayerNames") {
         nargchk(nrhs==2 && nlhs<=1);
@@ -224,6 +300,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==3 && nlhs<=1);
         Ptr<Layer> layer = obj->getLayer(MxArrayToLayerId(rhs[2]));
         plhs[0] = toStruct(layer);
+    }
+    else if (method == "getLayerInputs") {
+        nargchk(nrhs==3 && nlhs<=1);
+        vector<Ptr<Layer> > layers = obj->getLayerInputs(MxArrayToLayerId(rhs[2]));
+        plhs[0] = toStruct(layers);
     }
     else if (method == "deleteLayer") {
         nargchk(nrhs==3 && nlhs==0);
@@ -244,32 +325,46 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             obj->connect(outLayerId, outNum, inpLayerId, inpNum);
         }
     }
-    else if (method == "setNetInputs") {
+    else if (method == "setInputsNames") {
         nargchk(nrhs==3 && nlhs==0);
         vector<string> inputBlobNames(rhs[2].toVector<string>());
-        obj->setNetInputs(
+        obj->setInputsNames(
             vector<String>(inputBlobNames.begin(), inputBlobNames.end()));
     }
-    else if (method == "allocate") {
-        nargchk(nrhs==2 && nlhs==0);
-        obj->allocate();
-    }
     else if (method == "forward") {
-        nargchk((nrhs==2 || nrhs==3/* || nrhs==4*/) && nlhs==0);
-        if (nrhs > 2) {
-            Net::LayerId layer1(MxArrayToLayerId(rhs[2]));
-            /*
-            //TODO: linking error; unresolved external symbol
-            if (nrhs > 3) {
-                Net::LayerId layer2(MxArrayToLayerId(rhs[3]));
-                obj->forward(layer1, layer2);  // startLayer, toLayer
-            }
-            else
-            */
-                obj->forward(layer1);  // toLayer
+        nargchk((nrhs==2 || nrhs==3) && nlhs<=1);
+        if (nrhs == 2 || rhs[2].isChar()) {
+            string outputName;
+            if (nrhs == 3)
+                outputName = rhs[2].toString();
+            MatND outputBlob = obj->forward(outputName);
+            plhs[0] = MxArray(outputBlob);
         }
-        else
-            obj->forward();
+        else {
+            vector<string> outBlobNames(rhs[2].toVector<string>());
+            vector<MatND> outputBlobs;
+            obj->forward(outputBlobs,
+                vector<String>(outBlobNames.begin(), outBlobNames.end()));
+            plhs[0] = MxArray(outputBlobs);
+        }
+    }
+    else if (method == "forwardAll") {
+        nargchk((nrhs==2 || nrhs==3) && nlhs<=1);
+        if (nrhs == 2 || rhs[2].isChar()) {
+            string outputName;
+            if (nrhs == 3)
+                outputName = rhs[2].toString();
+            vector<MatND> outputBlobs;
+            obj->forward(outputBlobs, outputName);
+            plhs[0] = MxArray(outputBlobs);
+        }
+        else {
+            vector<string> outBlobNames(rhs[2].toVector<string>());
+            vector<vector<MatND> > outputBlobs;
+            obj->forward(outputBlobs,
+                vector<String>(outBlobNames.begin(), outBlobNames.end()));
+            plhs[0] = MxArray(outputBlobs);
+        }
     }
     /*
     //TODO: linking error; unresolved external symbol
@@ -281,88 +376,66 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             obj->forwardOpt(MxArrayToVectorLayerId(rhs[2]));
     }
     */
-    else if (method == "setBlobTorch") {
-        nargchk(nrhs>=4 && (nrhs%2)==0 && nlhs==0);
-        string outputName(rhs[2].toString()),
-            filename(rhs[3].toString());
-        bool isBinary = true;
-        for (int i=4; i<nrhs; i+=2) {
-            string key(rhs[i].toString());
-            if (key == "IsBinary")
-                isBinary = rhs[i+1].toBool();
-            else
-                mexErrMsgIdAndTxt("mexopencv:error",
-                    "Unrecognized option %s", key.c_str());
-        }
-        Blob blob = readTorchBlob(filename, isBinary);
-        obj->setBlob(outputName, blob);
+    else if (method == "setHalideScheduler") {
+        nargchk(nrhs==3 && nlhs==0);
+        obj->setHalideScheduler(rhs[2].toString());
     }
-    else if (method == "setBlob") {
-        nargchk(nrhs==4 && nlhs==0);
-        string outputName(rhs[2].toString());
-        if (rhs[3].isNumeric()) {
-            Mat img(rhs[3].toMat(CV_32F));
-            obj->setBlob(outputName, Blob::fromImages(img));
-        }
-        else if (rhs[3].isCell()) {
-            //vector<Mat> imgs(rhs[3].toVector<Mat>());
-            vector<Mat> imgs;
-            {
-                vector<MxArray> arr(rhs[3].toVector<MxArray>());
-                imgs.reserve(arr.size());
-                for (vector<MxArray>::const_iterator it = arr.begin(); it != arr.end(); ++it)
-                    imgs.push_back(it->toMat(CV_32F));
-            }
-            obj->setBlob(outputName, Blob::fromImages(imgs));
-        }
+    else if (method == "setPreferableBackend") {
+        nargchk(nrhs==3 && nlhs==0);
+        obj->setPreferableBackend(BackendsMap[rhs[2].toString()]);
+    }
+    else if (method == "setPreferableTarget") {
+        nargchk(nrhs==3 && nlhs==0);
+        obj->setPreferableTarget(TargetsMap[rhs[2].toString()]);
+    }
+    else if (method == "setInput") {
+        nargchk((nrhs==3 || nrhs==4) && nlhs==0);
+        MatND blob(rhs[2].toMatND(CV_32F));
+        if (nrhs > 3)
+            obj->setInput(blob, rhs[3].toString());
         else
-            mexErrMsgIdAndTxt("mexopencv:error", "Invalid arguments");
-    }
-    else if (method == "getBlob") {
-        nargchk(nrhs==3 && nlhs<=1);
-        string outputName(rhs[2].toString());
-        Blob blob = obj->getBlob(outputName);
-        plhs[0] = MxArray(blob.matRefConst());
+            obj->setInput(blob);
     }
     else if (method == "setParam") {
         nargchk(nrhs==5 && nlhs==0);
         Net::LayerId layer(MxArrayToLayerId(rhs[2]));
         int numParam = rhs[3].toInt();
-        if (rhs[4].isNumeric()) {
-            Mat img(rhs[4].toMat(CV_32F));
-            obj->setParam(layer, numParam, Blob::fromImages(img));
-        }
-        else if (rhs[4].isCell()) {
-            //vector<Mat> imgs(rhs[4].toVector<Mat>());
-            vector<Mat> imgs;
-            {
-                vector<MxArray> arr(rhs[4].toVector<MxArray>());
-                imgs.reserve(arr.size());
-                for (vector<MxArray>::const_iterator it = arr.begin(); it != arr.end(); ++it)
-                    imgs.push_back(it->toMat(CV_32F));
-            }
-            obj->setParam(layer, numParam, Blob::fromImages(imgs));
-        }
-        else
-            mexErrMsgIdAndTxt("mexopencv:error", "Invalid arguments");
+        MatND blob(rhs[4].toMatND(CV_32F));
+        obj->setParam(layer, numParam, blob);
     }
     else if (method == "getParam") {
-        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
-        int numParam = 0;
-        for (int i=3; i<nrhs; i+=2) {
-            string key(rhs[i].toString());
-            if (key == "NumParam") {
-                numParam = rhs[i+1].toInt();
-                CV_Assert(numParam >= 0);
-            }
-            else
-                mexErrMsgIdAndTxt("mexopencv:error",
-                    "Unrecognized option %s", key.c_str());
-        }
+        nargchk((nrhs==3 || nrhs==4) && nlhs<=1);
         Net::LayerId layer(MxArrayToLayerId(rhs[2]));
-        Blob blob = obj->getParam(layer, numParam);
-        plhs[0] = MxArray(blob.matRefConst());
+        int numParam = (nrhs > 3) ? rhs[3].toInt() : 0;
+        CV_Assert(numParam >= 0);
+        MatND blob = obj->getParam(layer, numParam);
+        plhs[0] = MxArray(blob);
     }
+    else if (method == "getUnconnectedOutLayers") {
+        nargchk(nrhs==2 && nlhs<=1);
+        plhs[0] = MxArray(obj->getUnconnectedOutLayers());
+    }
+    else if (method == "getLayerTypes") {
+        nargchk(nrhs==2 && nlhs<=1);
+        vector<String> layersTypes;
+        obj->getLayerTypes(layersTypes);
+        plhs[0] = MxArray(layersTypes);
+    }
+    else if (method == "getLayersCount") {
+        nargchk(nrhs==3 && nlhs<=1);
+        string layerType(rhs[2].toString());
+        int count = obj->getLayersCount(layerType);
+        plhs[0] = MxArray(count);
+    }
+    else if (method == "enableFusion") {
+        nargchk(nrhs==3 && nlhs==0);
+        obj->enableFusion(rhs[2].toBool());
+    }
+    //TODO:
+    //else if (method == "getLayerShapes") {}
+    //else if (method == "getLayersShapes") {}
+    //else if (method == "getFLOPS") {}
+    //else if (method == "getMemoryConsumption") {}
     else
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized operation %s",method.c_str());

@@ -28,19 +28,21 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Option processing
     Mat rvec, tvec;
+    bool useExtrinsicGuess = false;
     for (int i=5; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "Rvec")
             rvec = rhs[i+1].toMat(CV_64F);
         else if (key == "Tvec")
             tvec = rhs[i+1].toMat(CV_64F);
+        else if (key == "UseExtrinsicGuess")
+            useExtrinsicGuess = rhs[i+1].toBool();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
     }
-    if (rvec.empty() != tvec.empty())
-        mexErrMsgIdAndTxt("mexopencv:error",
-            "Intial rvec/tvec must be specified together");
+    if (!rvec.empty() && !tvec.empty())
+        useExtrinsicGuess = true;
 
     // Process
     vector<vector<Point2f> > corners(MxArrayToVectorVectorPoint<float>(rhs[0]));
@@ -49,7 +51,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Mat cameraMatrix(rhs[3].toMat(CV_64F)),
         distCoeffs(rhs[4].toMat(CV_64F));
     int num = estimatePoseBoard(corners, ids, board, cameraMatrix, distCoeffs,
-        rvec, tvec);
+        rvec, tvec, useExtrinsicGuess);
     plhs[0] = MxArray(rvec);
     if (nlhs > 1)
         plhs[1] = MxArray(tvec);

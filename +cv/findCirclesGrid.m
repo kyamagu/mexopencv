@@ -31,6 +31,25 @@
 %       optional parameters used to construct the specified feature detector.
 %       See cv.FeatureDetector for possible types.
 %       default is to use cv.SimpleBlobDetector with its default parameters.
+% * __FinderParameters__ Parameters for finding circles in a grid pattern.
+%       You can specify the parameters as a cell-array that starts with the
+%       grid type followed by pairs of key-value options
+%       `{'Symmetric', 'key',val, ...}`, or as a structure where the fields
+%       are the options `struct('GridType','Symmetric', 'key',val, ...)`.
+%       * __GridType__ one of 'Symmetric' (default) or 'Asymmetric'
+%       * __DensityNeighborhoodSize__ default [16,16]
+%       * __MinDensity__ default 10.0
+%       * __KmeansAttempts__ default 100
+%       * __MinDistanceToAddKeypoint__ default 20
+%       * __KeypointScale__ default 1
+%       * __MinGraphConfidence__ default 9.0
+%       * __VertexGain__ default 1.0
+%       * __VertexPenalty__ default -0.6
+%       * __ExistingVertexGain__ default 10000.0
+%       * __EdgeGain__ default 1.0
+%       * __EdgePenalty__ default -0.6
+%       * __ConvexHullFactor__ default 1.1
+%       * __MinRNGEdgeSwitchDist__ default 5.0
 %
 % The function attempts to determine whether the input image contains a grid
 % of circles. If it is, the function locates centers of the circles. The

@@ -17,7 +17,7 @@
 # NO_CV_PKGCONFIG_HACK  If set, disables fixing the output of pkg-config with
 #                       OpenCV. Not set by default, meaning hack is applied.
 # PKG_CONFIG_OPENCV     Name of OpenCV 3 pkg-config package. Default opencv.
-# CFLAGS                Extra flags passed to the C/C++ MEX compiler.
+# CXXFLAGS              Extra flags passed to the C++ MEX compiler.
 # LDFLAGS               Extra flags passed to the linker by the compiler.
 # WITH_CONTRIB          If set, enables opencv_contrib modules in addition
 #                       to main opencv modules.
@@ -102,8 +102,8 @@ ifdef WITH_CONTRIB
 MX_CFLAGS  += -Iopencv_contrib/include
 endif
 MX_LDFLAGS := -Llib -lMxArray
-override CFLAGS  := $(MX_CFLAGS) $(CV_CFLAGS) $(CFLAGS)
-override LDFLAGS := $(MX_LDFLAGS) $(CV_LDFLAGS) $(LDFLAGS)
+override CXXFLAGS := $(MX_CFLAGS) $(CV_CFLAGS) $(CXXFLAGS)
+override LDFLAGS  := $(MX_LDFLAGS) $(CV_LDFLAGS) $(LDFLAGS)
 
 # mexopencv files and targets
 HEADERS  := $(wildcard include/*.hpp)
@@ -148,9 +148,9 @@ lib/%.$(OBJEXT) \
 opencv_contrib/lib/%.$(OBJEXT) \
 : %.cpp $(HEADERS)
 ifdef WITH_OCTAVE
-	$(MEX) -c $(CFLAGS) -o $@ $<
+	$(MEX) -c $(CXXFLAGS) -o $@ $<
 else
-	$(MEX) -c $(CFLAGS) -outdir $(dir $@) $<
+	$(MEX) -c $(CXXFLAGS) -outdir $(dir $@) $<
 endif
 
 # MxArray library
@@ -165,10 +165,10 @@ opencv_contrib/+cv/%.$(MEXEXT) \
 opencv_contrib/+cv/private/%.$(MEXEXT) \
 : %.cpp $(TARGETS0)
 ifdef WITH_OCTAVE
-	$(MEX) $(CFLAGS) -o ${@:.$(MEXEXT)=} $< $(LDFLAGS) && \
+	$(MEX) $(CXXFLAGS) -o ${@:.$(MEXEXT)=} $< $(LDFLAGS) && \
         $(RM) ./$(notdir $(<:.cpp=.$(OBJEXT)))
 else
-	$(MEX) $(CFLAGS) -output ${@:.$(MEXEXT)=} $< $(LDFLAGS)
+	$(MEX) $(CXXFLAGS) -output ${@:.$(MEXEXT)=} $< $(LDFLAGS)
 endif
 
 # other targets
@@ -191,7 +191,7 @@ doc:
 # on exit (access violation), even when it runs just fine.
 test:
 ifdef WITH_OCTAVE
-	$(MATLAB) --eval "addpath(pwd);cd test;try,UnitTest('ContribModules',$(WITH_CONTRIB));catch e,disp(e);exit(1);end;exit(0);" || echo "Exit code: $$?"
+	$(MATLAB) --eval "addpath(pwd);cd test;try,UnitTest('ContribModules',$(WITH_CONTRIB),'Verbosity',2);catch e,disp(e);exit(1);end;exit(0);" || echo "Exit code: $$?"
 else
-	$(MATLAB) -r "addpath(pwd);cd test;try,UnitTest('ContribModules',$(WITH_CONTRIB));catch e,disp(e.getReport);end;exit;"
+	$(MATLAB) -r "addpath(pwd);cd test;try,UnitTest('ContribModules',$(WITH_CONTRIB),'Verbosity',2);catch e,disp(e.getReport);end;exit;"
 endif

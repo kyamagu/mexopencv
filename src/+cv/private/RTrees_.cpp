@@ -72,6 +72,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
+        //obj_[id] = RTrees::load(rhs[2].toString());
         obj_[id] = (loadFromString ?
             Algorithm::loadFromString<RTrees>(rhs[2].toString(), objname) :
             Algorithm::load<RTrees>(rhs[2].toString(), objname));
@@ -226,6 +227,37 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "getVarImportance") {
         nargchk(nrhs==2 && nlhs<=1);
         plhs[0] = MxArray(obj->getVarImportance());
+    }
+    else if (method == "getVotes") {
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
+        int flags = 0;
+        for (int i=3; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key == "Flags")
+                flags = rhs[i+1].toInt();
+            else if (key == "RawOutput")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::RAW_OUTPUT);
+            else if (key == "CompressedInput")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::COMPRESSED_INPUT);
+            else if (key == "PreprocessedInput")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), StatModel::PREPROCESSED_INPUT);
+            else if (key == "PredictAuto") {
+                //UPDATE_FLAG(flags, rhs[i+1].toBool(), DTrees::PREDICT_AUTO);
+                UPDATE_FLAG(flags, !rhs[i+1].toBool(), DTrees::PREDICT_SUM);
+                UPDATE_FLAG(flags, !rhs[i+1].toBool(), DTrees::PREDICT_MAX_VOTE);
+            }
+            else if (key == "PredictSum")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), DTrees::PREDICT_SUM);
+            else if (key == "PredictMaxVote")
+                UPDATE_FLAG(flags, rhs[i+1].toBool(), DTrees::PREDICT_MAX_VOTE);
+            else
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
+        }
+        Mat samples(rhs[2].toMat(CV_32F)),
+            results;
+        obj->getVotes(samples, results, flags);
+        plhs[0] = MxArray(results);
     }
     else if (method == "get") {
         nargchk(nrhs==3 && nlhs<=1);

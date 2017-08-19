@@ -36,8 +36,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Process
-    Mat src1(rhs[0].toMat(rhs[0].isUint8() ? CV_8U : CV_32F)),
-        src2(rhs[1].toMat(rhs[1].isUint8() ? CV_8U : CV_32F)),
+    Mat src1(rhs[0].toMat()),  // 8u, 16u, 32f, 64f
+        src2(rhs[1].toMat()),  // same as src1.depth()
         dst(rhs[2].toMat(rhs[2].isSingle() ? CV_32F : CV_64F));
     accumulateProduct(src1, src2, dst, mask);
     plhs[0] = MxArray(dst);

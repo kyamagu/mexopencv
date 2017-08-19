@@ -4,9 +4,10 @@
 %    dst = cv.accumulateWeighted(..., 'OptionName',optionValue, ...)
 %
 % ## Input
-% * __src__ Input image as 1- or 3-channel, 8-bit or 32-bit floating-point.
+% * __src__ Input image of type `uint8`, `uint16`, `single`, or `double, with
+%       any number of channels
 % * __dst__ Input accumulator image with the same number of channels as input
-%       image, 32-bit or 64-bit floating-point.
+%       image, and a depth of `single` or `double`.
 % * __alpha__ Weight of the input image. A scalar double.
 %
 % ## Output

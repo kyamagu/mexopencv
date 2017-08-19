@@ -51,7 +51,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        obj_[++last_id] = createBIF(num_bands, num_rotations);
+        obj_[++last_id] = BIF::create(num_bands, num_rotations);
         plhs[0] = MxArray(last_id);
         mexLock();
         return;
@@ -84,24 +84,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        /*
         obj_[id] = (loadFromString ?
             Algorithm::loadFromString<BIF>(rhs[2].toString(), objname) :
             Algorithm::load<BIF>(rhs[2].toString(), objname));
-        */
-        ///*
-        // HACK: workaround for missing BIF::create()
-        FileStorage fs(rhs[2].toString(), FileStorage::READ +
-            (loadFromString ? FileStorage::MEMORY : 0));
-        if (!fs.isOpened())
-            mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
-        FileNode fn(objname.empty() ? fs.getFirstTopLevelNode() : fs[objname]);
-        if (fn.empty())
-            mexErrMsgIdAndTxt("mexopencv:error", "Failed to get node");
-        obj->read(fn);
-        //if (obj->empty())
-        //    mexErrMsgIdAndTxt("mexopencv:error", "Failed to load algorithm");
-        //*/
     }
     else if (method == "save") {
         nargchk(nrhs==3 && nlhs==0);

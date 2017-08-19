@@ -11,6 +11,15 @@ using namespace std;
 using namespace cv;
 using namespace cv::ximgproc;
 
+namespace {
+/// binarization methods map for option processing
+const ConstMap<string,int> BinarizationMethodsMap = ConstMap<string,int>
+    ("Niblack", cv::ximgproc::BINARIZATION_NIBLACK)
+    ("Sauvola", cv::ximgproc::BINARIZATION_SAUVOLA)
+    ("Wolf",    cv::ximgproc::BINARIZATION_WOLF)
+    ("Nick",    cv::ximgproc::BINARIZATION_NICK);
+}
+
 /**
  * Main entry called from Matlab
  * @param nlhs number of left-hand-side arguments
@@ -30,6 +39,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double maxValue = 255;
     int type = cv::THRESH_BINARY;
     int blockSize = 5;
+    int binarizationMethod = cv::ximgproc::BINARIZATION_NIBLACK;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "MaxValue")
@@ -38,14 +48,17 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             type = ThreshType[rhs[i+1].toString()];
         else if (key == "BlockSize")
             blockSize = rhs[i+1].toInt();
+        else if (key == "Method")
+            binarizationMethod = BinarizationMethodsMap[rhs[i+1].toString()];
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
     }
 
     // Process
-    Mat src(rhs[0].toMat(CV_8U)), dst;
+    Mat src(rhs[0].toMat(CV_8U)),  // 8u for Sauvola, otherwise any depth
+        dst;
     double k = rhs[1].toDouble();
-    niBlackThreshold(src, dst, maxValue, type, blockSize, k);
+    niBlackThreshold(src, dst, maxValue, type, blockSize, k, binarizationMethod);
     plhs[0] = MxArray(dst);
 }

@@ -194,6 +194,38 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         obj->detectEdges(src, dst);
         plhs[0] = MxArray(dst);
     }
+    else if (method == "computeOrientation") {
+        nargchk(nrhs==3 && nlhs<=1);
+        Mat src(rhs[2].toMat(CV_32F)), dst;
+        obj->computeOrientation(src, dst);
+        plhs[0] = MxArray(dst);
+    }
+    else if (method == "edgesNms") {
+        nargchk(nrhs>=4 && (nrhs%2)==0 && nlhs<=1);
+        int r = 2;
+        int s = 0;
+        float m = 1;
+        bool isParallel = true;
+        for (int i=4; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key == "R")
+                r = rhs[i+1].toInt();
+            else if (key == "S")
+                s = rhs[i+1].toInt();
+            else if (key == "M")
+                m = rhs[i+1].toFloat();
+            else if (key == "IsParallel")
+                isParallel = rhs[i+1].toBool();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
+        }
+        Mat edge_image(rhs[2].toMat(CV_32F)),
+            orientation_image(rhs[3].toMat(CV_32F)),
+            dst;
+        obj->edgesNms(edge_image, orientation_image, dst, r, s, m, isParallel);
+        plhs[0] = MxArray(dst);
+    }
     else
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized operation %s", method.c_str());
