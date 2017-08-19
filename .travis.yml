@@ -95,7 +95,7 @@ install:
   - if [ "$DOXY" = "yes" ]; then doxygen --version ; fi
 
   # install some dependencies for OpenCV
-  - sudo apt-get install -y zlib1g-dev libjpeg8-dev libpng12-dev libtiff4-dev libjasper-dev libopenexr-dev libgdal-dev libgdcm2-dev
+  - sudo apt-get install -y zlib1g-dev libjpeg8-dev libpng12-dev libtiff4-dev libjasper-dev libopenexr-dev
   - sudo apt-get install -y libavcodec-dev libavformat-dev libswscale-dev
   - sudo apt-get install -y libxine-dev libv4l-dev libdc1394-22-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
   - sudo apt-get install -y libgtk2.0-dev libtbb-dev libeigen3-dev
