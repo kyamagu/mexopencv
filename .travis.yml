@@ -27,12 +27,13 @@ env:
     - INSTALL_PREFIX=/usr/local
 
     # Octave options + optional Octave-Forge packages to install
-    # (Note: latest octave-image requires a C++11 compiler to build, this
-    # works in Trusty with gcc-4.8 but fails in Precise with gcc-4.6)
+    # (Note: latest image/stats packages requires a C++11 compiler to build,
+    # Trusty has gcc-4.8 and must explicitly pass -std=c++11)
     - OCTAVERC=$HOME/.octaverc
     - OCTAVE_OPTS="--no-gui --no-window-system"
     - OCT_STATS=yes
-    - OCT_IMAGE=no
+    - OCT_IMAGE=yes
+    - CXXFLAGS="-std=c++11"
 
     # mexopencv options
     # (Note: dont use too many Make parallel jobs on VM)
