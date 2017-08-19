@@ -56,8 +56,7 @@ classdef TestCascadeClassifier
         function test_mask_generator
             % skip test if external M-file is not found on the path
             if ~exist('my_mask_generator.m', 'file')
-                disp('SKIP')
-                return;
+                error('mexopencv:testskip', 'undefined function');
             end
             xmlfile = fullfile(mexopencv.root(),'test','haarcascade_frontalface_default.xml');
             download_classifier_xml(xmlfile);

@@ -5,8 +5,7 @@ classdef TestConjGradSolver
         function test_rosenbrock
             % skip test if external M-files are not found on the path
             if ~exist('rosenbrockFcn.m', 'file') || ~exist('rosenbrockGrad.m', 'file')
-                disp('SKIPPED')
-                return
+                error('mexopencv:testskip', 'undefined function');
             end
 
             solver = cv.ConjGradSolver();
@@ -22,8 +21,7 @@ classdef TestConjGradSolver
         function test_sphere
             % skip test if external M-files are not found on the path
             if ~exist('sphereFcn.m', 'file') || ~exist('sphereGrad.m', 'file')
-                disp('SKIPPED')
-                return
+                error('mexopencv:testskip', 'undefined function');
             end
 
             solver = cv.ConjGradSolver('Function', ...
@@ -36,8 +34,7 @@ classdef TestConjGradSolver
         function test_sphere_autograd
             % skip test if external M-file is not found on the path
             if ~exist('sphereFcn.m', 'file')
-                disp('SKIPPED')
-                return
+                error('mexopencv:testskip', 'undefined function');
             end
 
             solver = cv.ConjGradSolver('Function', ...
@@ -50,8 +47,7 @@ classdef TestConjGradSolver
         function test_booth
             % skip test if external M-files are not found on the path
             if ~exist('boothFcn.m', 'file') || ~exist('boothGrad.m', 'file')
-                disp('SKIPPED')
-                return
+                error('mexopencv:testskip', 'undefined function');
             end
 
             solver = cv.ConjGradSolver('Function', ...
@@ -64,8 +60,7 @@ classdef TestConjGradSolver
         function test_matyas
             % skip test if external M-files are not found on the path
             if ~exist('matyasFcn.m', 'file') || ~exist('matyasGrad.m', 'file')
-                disp('SKIPPED')
-                return
+                error('mexopencv:testskip', 'undefined function');
             end
 
             solver = cv.ConjGradSolver('Function', ...
@@ -78,8 +73,7 @@ classdef TestConjGradSolver
         function test_beale
             % skip test if external M-files are not found on the path
             if ~exist('bealeFcn.m', 'file') || ~exist('bealeGrad.m', 'file')
-                disp('SKIPPED')
-                return
+                error('mexopencv:testskip', 'undefined function');
             end
 
             solver = cv.ConjGradSolver('Function', ...

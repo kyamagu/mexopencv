@@ -21,8 +21,7 @@ classdef TestDataset
             % see: dataset_mnist_demo.m
             dirMNIST = fullfile(mexopencv.root(), 'test', 'mnist', filesep());
             if ~isdir(dirMNIST)
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'missing data');
             end
 
             ds = cv.Dataset('OR_mnist');

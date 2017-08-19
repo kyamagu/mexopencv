@@ -105,8 +105,7 @@ classdef TestDescriptorMatcher
         function test_4
             files = dir(fullfile(mexopencv.root(),'test','shape0*.png'));
             if isempty(files)
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'missing data');
             end
             query = [];
 

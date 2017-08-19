@@ -5,8 +5,7 @@ classdef TestRetinaFastToneMapping
         function test_tonemap
             %TODO: intermittent MATLAB crashes!
             if true
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'todo');
             end
 
             hdr = cv.imread(fullfile(mexopencv.root(),'test','memorial.hdr'), 'Flags',-1);

@@ -11,8 +11,7 @@ classdef TestEMD
         function test_2
             % we use NORMPDF from Statistics Toolbox
             if ~mexopencv.require('stats')
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'toolbox');
             end
 
             % signatures of two 1D histograms

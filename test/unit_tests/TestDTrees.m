@@ -49,8 +49,7 @@ classdef TestDTrees
         function test_classification2
             % we load data from Statistics Toolbox
             if mexopencv.isOctave() || ~mexopencv.require('stats')
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'toolbox');
             end
 
             % 3-class (multiclass): NNNN+C

@@ -101,8 +101,7 @@ classdef TestDft
 
         function test_ccs_2d
             %TODO
-            disp('SKIP');
-            return;
+            error('mexopencv:testskip', 'todo');
         end
 
         function test_error_argnum

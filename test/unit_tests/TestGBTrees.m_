@@ -48,10 +48,9 @@ classdef TestGBTrees
         end
 
         function test_classification2
-            %if ~license('test', 'statistics_toolbox'), return; end
-            if ~exist('fisheriris.mat', 'file')
-                disp('SKIP')
-                return
+            % we load data from Statistics Toolbox
+            if mexopencv.isOctave() || ~mexopencv.require('stats')
+                error('mexopencv:testskip', 'toolbox');
             end
 
             % 3-class (multiclass): NNNN+C

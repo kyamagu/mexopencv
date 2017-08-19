@@ -48,8 +48,7 @@ classdef TestANN_MLP
         function test_classification3
             % we load data from Neural Network toolbox
             if mexopencv.isOctave() || ~mexopencv.require('nnet')
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'toolbox');
             end
 
             load simpleclass_dataset
@@ -86,8 +85,7 @@ classdef TestANN_MLP
         function test_regression2
             % we load data from Neural Network toolbox
             if mexopencv.isOctave() || ~mexopencv.require('nnet')
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'toolbox');
             end
 
             load simplefit_dataset

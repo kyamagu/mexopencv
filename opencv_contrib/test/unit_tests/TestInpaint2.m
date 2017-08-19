@@ -27,8 +27,7 @@ classdef TestInpaint2
         function test_grayscale
             %TODO: crashes MATLAB!
             if true
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'todo');
             end
         end
 

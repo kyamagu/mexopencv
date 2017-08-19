@@ -54,8 +54,7 @@ classdef TestMatchTemplate
         function test_compare_normxcorr2
             % we use NORMXCORR2 from Image Processing Toolbox
             if ~mexopencv.require('images')
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'toolbox');
             end
 
             if ~mexopencv.isOctave()

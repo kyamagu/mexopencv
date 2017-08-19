@@ -5,8 +5,7 @@ classdef TestDetectionBasedTracker
         function test_1
             %TODO: untested
             if true
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'todo');
             end
 
             cascadeFile = fullfile(mexopencv.root(),'test','lbpcascade_frontalface.xml');

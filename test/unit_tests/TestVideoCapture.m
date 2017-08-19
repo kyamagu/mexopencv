@@ -6,8 +6,7 @@ classdef TestVideoCapture
             % AVC1
             filename = which('xylophone.mp4');
             if isempty(filename)
-                disp('SKIP')
-                return
+                error('mexopencv:testskip', 'missing data');
             end
             TestVideoCapture.checkVideoFile(filename);
         end
@@ -16,8 +15,7 @@ classdef TestVideoCapture
             % MPEG1
             filename = which('xylophone.mpg');
             if isempty(filename)
-                disp('SKIP')
-                return
+                error('mexopencv:testskip', 'missing data');
             end
             TestVideoCapture.checkVideoFile(filename);
         end
@@ -26,8 +24,7 @@ classdef TestVideoCapture
             % MJPG
             filename = which('shuttle.avi');
             if isempty(filename)
-                disp('SKIP')
-                return
+                error('mexopencv:testskip', 'missing data');
             end
             TestVideoCapture.checkVideoFile(filename);
         end
@@ -39,17 +36,16 @@ classdef TestVideoCapture
 
         function test_camera
             %TODO
-            if false
-                cap = cv.VideoCapture(0);
-                pause(2);
-                assert(cap.isOpened());
-                img = cap.read();
-                assert(~isempty(img));
-                cap.release();
-            else
-                disp('SKIP')
-                return
+            if true
+                error('mexopencv:testskip', 'todo');
             end
+
+            cap = cv.VideoCapture(0);
+            pause(2);
+            assert(cap.isOpened());
+            img = cap.read();
+            assert(~isempty(img));
+            cap.release();
         end
     end
 

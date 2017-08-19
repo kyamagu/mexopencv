@@ -47,8 +47,7 @@ classdef TestSVM
         function test_classification2
             % we load data from Statistics Toolbox
             if mexopencv.isOctave() || ~mexopencv.require('stats')
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'toolbox');
             end
 
             % 3-class (multiclass)
@@ -209,8 +208,7 @@ classdef TestSVM
         function test_custom_kernel
             % skip test if external M-file is not found on the path
             if ~exist('my_linear_kernel.m', 'file')
-                disp('SKIP')
-                return
+                error('mexopencv:testskip', 'undefined function');
             end
 
             % temporarily disable threads

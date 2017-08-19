@@ -20,8 +20,7 @@ classdef TestStructuredEdgeDetection
         function test_custom_feat_extract
             %TODO: custom feature extractor
             if true
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'todo');
             end
 
             img = imread(TestStructuredEdgeDetection.im);

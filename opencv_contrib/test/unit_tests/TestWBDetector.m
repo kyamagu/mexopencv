@@ -11,8 +11,7 @@ classdef TestWBDetector
             %TODO: https://github.com/opencv/opencv_contrib/issues/633
             %TODO: https://github.com/opencv/opencv_contrib/issues/741
             if true
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'todo');
             end
 
             detector = cv.WBDetector();

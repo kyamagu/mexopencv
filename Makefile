@@ -191,7 +191,7 @@ doc:
 # on exit (access violation), even when it runs just fine.
 test:
 ifdef WITH_OCTAVE
-	$(MATLAB) --eval "addpath(pwd);cd test;try,UnitTest($(WITH_CONTRIB));catch e,disp(e);exit(1);end;exit(0);" || echo "Exit code: $$?"
+	$(MATLAB) --eval "addpath(pwd);cd test;try,UnitTest('ContribModules',$(WITH_CONTRIB));catch e,disp(e);exit(1);end;exit(0);" || echo "Exit code: $$?"
 else
-	$(MATLAB) -r "addpath(pwd);cd test;try,UnitTest($(WITH_CONTRIB));catch e,disp(e.getReport);end;exit;"
+	$(MATLAB) -r "addpath(pwd);cd test;try,UnitTest('ContribModules',$(WITH_CONTRIB));catch e,disp(e.getReport);end;exit;"
 endif

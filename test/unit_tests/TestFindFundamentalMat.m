@@ -27,8 +27,7 @@ classdef TestFindFundamentalMat
         function test_2
             % we load data from CVST toolbox
             if mexopencv.isOctave() || ~mexopencv.require('vision')
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'toolbox');
             end
 
             load stereoPointPairs

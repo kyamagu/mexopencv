@@ -17,7 +17,8 @@ classdef TestImwrite
                         'Failed to write %s', frmts(i).name);
                 catch ME
                     %TODO: some codecs are not available on all platforms
-                    fprintf('SKIPPED: %s (%s)\n', frmts(i).name, frmts(i).ext);
+                    %error('mexopencv:testskip', 'codecs %s (%s)', ...
+                    %    frmts(i).name, frmts(i).ext);
                     continue;
                 end
             end
@@ -63,8 +64,7 @@ classdef TestImwrite
         function test_error_unrecognized_extension
             %TODO: crashes Octave
             if mexopencv.isOctave()
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'todo');
             end
 
             try

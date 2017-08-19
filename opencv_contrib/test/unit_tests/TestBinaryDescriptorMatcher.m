@@ -10,8 +10,7 @@ classdef TestBinaryDescriptorMatcher
             %TODO: something in this test is causing memory corruption and
             %TODO: crashing MATLAB on repeated runs.. most likely an OpenCV bug!
             if true
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'todo');
             end
 
             X = randi([0,255], [50,32], 'uint8');
@@ -65,8 +64,7 @@ classdef TestBinaryDescriptorMatcher
             %TODO: something in this test is causing memory corruption and
             %TODO: crashing MATLAB on repeated runs.. most likely an OpenCV bug!
             if true
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'todo');
             end
 
             % compute descriptors for all training images
@@ -75,8 +73,7 @@ classdef TestBinaryDescriptorMatcher
             query = [];
             files = dir(fullfile(mexopencv.root(),'test','shape0*.png'));
             if isempty(files)
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'missing data');
             end
             idxQuery = 1;
             idxTrain = 2:numel(files);

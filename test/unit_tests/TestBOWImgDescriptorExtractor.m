@@ -64,8 +64,7 @@ classdef TestBOWImgDescriptorExtractor
         function test_bow_image_classification
             % we load images from CVST toolbox
             if mexopencv.isOctave() || ~mexopencv.require('vision')
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'toolbox');
             end
 
             % we use SURF from opencv_contrib/xfeatures2d
@@ -73,8 +72,7 @@ classdef TestBOWImgDescriptorExtractor
             try
                 obj = cv.SURF(opts{:});
             catch ME
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'contrib');
             end
 
             % two categories with 12 images total: 6 books and 6 cups

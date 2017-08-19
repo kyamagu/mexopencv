@@ -6,8 +6,7 @@ classdef TestCalibrateCameraCharuco
             %TODO: we need some charuco calibration images: charuco%d.jpg
             % (or create synthetic images of board in different perspectives)
             if true
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'todo');
             end
             N = 4;
             corners = cell(1,N);

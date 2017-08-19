@@ -24,8 +24,7 @@ classdef TestDescriptorExtractor
                         TestDescriptorExtractor.extractors{i});
                 catch ME
                     %TODO: check if opencv_contrib/xfeatures2d is available
-                    fprintf('SKIPPED: %s\n', ...
-                        TestDescriptorExtractor.extractors{i});
+                    %error('mexopencv:testskip', 'contrib');
                     continue;
                 end
                 typename = obj.typeid();
@@ -66,8 +65,7 @@ classdef TestDescriptorExtractor
                         TestDescriptorExtractor.extractors{i});
                 catch ME
                     %TODO: check if opencv_contrib/xfeatures2d is available
-                    fprintf('SKIPPED: %s\n', ...
-                        TestDescriptorExtractor.extractors{i});
+                    %error('mexopencv:testskip', 'contrib');
                     continue;
                 end
 

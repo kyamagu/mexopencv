@@ -3,10 +3,10 @@ classdef TestSuperpixelLSC
 
     methods (Static)
         function test_1
-            %TODO: OpenCV's SuperpixelLSC is buggy; sometimes crashes MATLAB when called repeatedly
+            %TODO: OpenCV's SuperpixelLSC is buggy;
+            % sometimes crashes MATLAB when called repeatedly
             if true
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'todo');
             end
 
             img = cv.imread(fullfile(mexopencv.root(),'test','fruits.jpg'), ...

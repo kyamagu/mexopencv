@@ -6,8 +6,7 @@ classdef TestCalibrateCameraAruco
             %TODO: we need some aruco calibration images: aruco%d.jpg
             % (or create synthetic images of board in different perspectives)
             if true
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'todo');
             end
             N = 4;
             corners = cell(1,N);

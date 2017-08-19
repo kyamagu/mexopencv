@@ -37,8 +37,7 @@ classdef TestDAISY
         function test_compute_all
             %TODO: crashes MATLAB
             if true
-                disp('SKIP');
-                return;
+                error('mexopencv:testskip', 'todo');
             end
 
             img = cv.resize(imread(TestDAISY.im), [64 64]);
