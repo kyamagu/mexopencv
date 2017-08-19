@@ -22,7 +22,9 @@ classdef Net < handle
     % Each network layer has unique integer id and unique string name inside
     % its network. LayerId can store either layer name or layer id.
     %
-    % See also: cv.Net.Net, cv.Net.import, nnet.cnn.layer.Layer, SeriesNetwork
+    % See also: cv.Net.Net, cv.Net.import, nnet.cnn.layer.Layer, trainNetwork,
+    %  SeriesNetwork, importCaffeNetwork, importCaffeLayers, alexnet, vgg16,
+    %  vgg19
     %
 
     properties (SetAccess = private)

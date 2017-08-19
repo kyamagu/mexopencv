@@ -15,7 +15,7 @@ classdef TestAccumulateSquare
             sz = [10 20];
             dst = zeros(sz, 'single');
             for i=1:5
-                dst = cv.accumulateSquare(randi(255,sz,'uint8'), dst);
+                dst = cv.accumulateSquare(randi([0 255],sz,'uint8'), dst);
             end
             validateattributes(dst, {'single'}, {'size',sz});
         end

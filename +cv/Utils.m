@@ -35,6 +35,18 @@ classdef Utils
             info = Utils_('getBuildInformation');
         end
 
+        function v = version()
+            %VERSION  Returns OpenCV version
+            %
+            %    v = cv.Utils.version()
+            %
+            % ## Output
+            % * __v__ current version of OpenCV, in the form
+            %       'major.minor.revision'.
+            %
+            v = Utils_('version');
+        end
+
         function n = getNumberOfCPUs()
             %GETNUMBEROFCPUS  Return number of logical CPUs
             %
@@ -95,8 +107,7 @@ classdef Utils
             %
             % * __TBB__ User-defined parallel constructions will run with the
             %       same threads number, if another does not specified. If
-            %       If late on user creates own scheduler, OpenCV will be use
-            %       it.
+            %       later on user creates own scheduler, OpenCV will use it.
             % * __OpenMP__ No special defined behaviour.
             % * __Concurrency__ If `threads == 1`, OpenCV will disable
             %       threading optimizations and run it's functions

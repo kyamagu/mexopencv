@@ -11,7 +11,7 @@ classdef TestGetRectSubPix
         end
 
         function test_2
-            src = randi(255, [50 50], 'uint8');
+            src = randi([0 255], [50 50], 'uint8');
             sz = [10 20];
             center = [25 25];
             dst = cv.getRectSubPix(src, sz, center, 'PatchType','single');
@@ -19,7 +19,7 @@ classdef TestGetRectSubPix
         end
 
         function test_3
-            src = randi(255, [50 50 3], 'uint8');
+            src = randi([0 255], [50 50 3], 'uint8');
             sz = [10 20];
             center = [25 25];
             dst = cv.getRectSubPix(src, sz, center);

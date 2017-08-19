@@ -187,7 +187,7 @@ classdef Rect
             % ## Output
             % * __r__ output rectangle `[x,y,w,h]`.
             %
-            % See also: cv.Rect.union, bboxOverlapRatio
+            % See also: cv.Rect.union, bboxOverlapRatio, rectint
             %
             r = Rect_('intersect', r1, r2);
         end
@@ -209,21 +209,35 @@ classdef Rect
             r = Rect_('union', r1, r2);
         end
 
-        function out = crop(img, r)
+        function out = crop(img, r, roi)
             %CROP  Extract region-of-interest from image
             %
-            %    out = cv.Rect.crop(img, r)
+            %    roi = cv.Rect.crop(img, r)
+            %    img = cv.Rect.crop(img, r, roi)
             %
             % ## Input
             % * __img__ input image.
             % * __r__ ROI rectangle `[x,y,w,h]`.
+            % * __roi__ input cropped image, of size `[h,w]`, and same type
+            %       and channels as input image `img`.
             %
             % ## Output
-            % * __out__ output cropped image.
+            % * __roi__ output cropped image.
+            % * __img__ output image with updated ROI region.
             %
-            % See also: imcrop
+            % In the first variant, the function gets ROI region from image,
+            % i.e: `roi = img(r(1)+1:r(1)+r(3), r(2)+1:r(2)+r(4), :)`.
             %
-            out = Rect_('crop', img, r);
+            % In the second variant, the function sets ROI region inside image,
+            % i.e: `img(r(1)+1:r(1)+r(3), r(2)+1:r(2)+r(4), :) = roi`
+            %
+            % See also: cv.getRectSubPix, imcrop
+            %
+            if nargin < 3
+                out = Rect_('crop', img, r);
+            else
+                out = Rect_('crop', img, r, roi);
+            end
         end
     end
 

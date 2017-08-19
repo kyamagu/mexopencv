@@ -378,7 +378,7 @@ classdef Retina < handle
     %   frequencies pass into the system and set a higher value (<1).
     % * __HCellsTemporalConstant__ similar to photo-receptors, this parameter
     %   acts on the temporal constant of a low pass temporal filter that
-    %   smoothes input data. Here, a high value generates a high retina after
+    %   smooths input data. Here, a high value generates a high retina after
     %   effect while a lower value makes the retina more reactive. This value
     %   should be lower than `PhotoreceptorsTemporalConstant` to limit strong
     %   retina after effects.
@@ -410,7 +410,7 @@ classdef Retina < handle
     %
     % Once image's information are cleaned, this channel acts as a high pass
     % temporal filter that selects only the signals related to transient
-    % signals (events, motion, etc.). A low pass spatial filter smoothes
+    % signals (events, motion, etc.). A low pass spatial filter smooths
     % extracted transient data while a final logarithmic compression enhances
     % low transient events thus enhancing event sensitivity.
     %
@@ -517,13 +517,13 @@ classdef Retina < handle
             %       * __Bayer__ standard bayer sampling
             % * __UseRetinaLogSampling__ activate retina log sampling. If true,
             %       the 2 following parameters can be used. default false
-            % * __ReductionFactor__ only usefull if param
+            % * __ReductionFactor__ only useful if param
             %       `UseRetinaLogSampling=true`, specifies the reduction factor
             %       of the output frame (as the center (fovea) is high
             %       resolution and corners can be underscaled, then a reduction
             %       of the output is allowed without precision leak).
             %       default 1.0
-            % * __SamplingStrength__ only usefull if param
+            % * __SamplingStrength__ only useful if param
             %       `UseRetinaLogSampling=true`, specifies the strength of the
             %       log scale that is applied. default 10.0
             % * __UseOCL__ use the OpenCL implementation. default false

@@ -3,19 +3,21 @@ classdef TestBackgroundSubtractorMOG
 
     methods (Static)
         function test_1
-            bs = cv.BackgroundSubtractorMOG();
-            bs.History = 5;
+            frame = randi([0 255], [50 50 3], 'uint8');
+            sz = size(frame);
+
+            bs = cv.BackgroundSubtractorMOG('History',5);
             for i=1:10
-                frame = randi(255, [50 50 3], 'uint8');
                 fgmask = bs.apply(frame, 'LearningRate',-1);
-                validateattributes(fgmask, {'logical'}, {'size',[50 50]});
             end
+
+            frame(1:10,1:10,:) = 255;
             fgmask = bs.apply(frame, 'LearningRate',0);
-            if false
-                %TODO: getBackgroundImage not implemented for MOG
-                bg = bs.getBackgroundImage();
-                validateattributes(bg, {'uint8'}, {'size',[50 50 3]});
-            end
+            validateattributes(fgmask, {'uint8'}, {'size',sz(1:2)});
+            assert(numel(unique(fgmask)) <= 2);  % 0=bg, 255=fg
+
+            % getBackgroundImage not implemented for MOG, always throws
+            %bg = bs.getBackgroundImage();
         end
     end
 

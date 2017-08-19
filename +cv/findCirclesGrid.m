@@ -15,11 +15,14 @@
 % * __patternFound__ logical return value, see below.
 %
 % ## Options
-% * __SymmetricGrid__ Use symmetric or asymmetric pattern of circles.
-%       default true.
+% * __SymmetricGrid__ Use symmetric or asymmetric pattern of circles. In an
+%       asymmetric grid, the circles in each row are staggered transverse to
+%       the row (important to remember how rows and columns are counted in
+%       this case). default true.
 % * __Clustering__ Use a special algorithm for grid detection. It is more
 %       robust to perspective distortions but much more sensitive to
-%       background clutter. default false.
+%       background clutter. This is a good choice when you are trying to
+%       calibrate a camera with an unusually wide field of view. default false.
 % * __BlobDetector__ feature detector that finds blobs like dark circles on
 %       light background. It can be specified as a string containing the type
 %       of feature detector, such as 'SimpleBlobDetector'. It can also be

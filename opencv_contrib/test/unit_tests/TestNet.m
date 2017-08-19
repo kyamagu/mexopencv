@@ -10,7 +10,7 @@ classdef TestNet
         function test_img
             % load net
             [modelTxt, modelBin] = load_bvlc_googlenet();
-            if ~exist(modelTxt, 'file') || ~exist(modelBin, 'file')
+            if exist(modelTxt, 'file') ~= 2 || exist(modelBin, 'file') ~= 2
                 disp('SKIP');
                 return;
             end
@@ -39,7 +39,7 @@ classdef TestNet
 
         function test_imgs
             [modelTxt, modelBin] = load_bvlc_googlenet();
-            if ~exist(modelTxt, 'file') || ~exist(modelBin, 'file')
+            if exist(modelTxt, 'file') ~= 2 || exist(modelBin, 'file') ~= 2
                 disp('SKIP');
                 return;
             end

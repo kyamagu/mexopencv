@@ -54,11 +54,11 @@ cObj = onCleanup(@()cd(cwd));
 % parse options
 opts = getargs(varargin{:});
 
-if ~ispc  % Unix
+if ~ispc()  % Unix
     makefile_unix(opts);
     return;
 
-else      % Windows
+else  % Windows
     % Clean
     if opts.clean
         target_clean(opts);
@@ -360,7 +360,9 @@ function s = compiler_str()
     else
         s = '';
         cc = mex.getCompilerConfigurations('C++', 'Selected');
-        if strcmp(cc.Manufacturer, 'Microsoft')
+        if isempty(cc)
+            error('mexopencv:make', 'No C++ compiler selected');
+        elseif strcmp(cc.Manufacturer, 'Microsoft')
             if ~isempty(strfind(cc.Name, 'Visual'))  % Visual Studio
                 switch cc.Version
                     case '15.0'
@@ -381,7 +383,7 @@ function s = compiler_str()
             elseif ~isempty(strfind(cc.Name, 'SDK'))  % Windows SDK
                 switch cc.Version
                     case '10.0'
-                        s = 'vc14';    % VS2015
+                        s = 'vc14';    % VS2015 (or VS2017)
                     case '8.1'
                         s = 'vc12';    % VS2013
                     case '8.0'
@@ -395,12 +397,53 @@ function s = compiler_str()
                 end
             end
         elseif strcmp(cc.Manufacturer, 'Intel')  % Intel C++ Composer
-            % TODO: check versions 11.0, 12.0, 13.0, 14.0, 15.0
+            % TODO: check IntelCPP versions 11.0, 12.0, 13.0, 15.0, 16.0
+            if ~isempty(strfind(cc.Name, 'Visual'))  % Intel + Visual Studio
+                tok = regexp(cc.ShortName, 'MSVCPP(\d+)$', 'tokens', 'once');
+                if ~isempty(tok)
+                    tok = tok{1};
+                    switch tok
+                        case '150'
+                            s = 'vc15';    % VS2017
+                        case '140'
+                            s = 'vc14';    % VS2015
+                        case '120'
+                            s = 'vc12';    % VS2013
+                        case '110'
+                            s = 'vc11';    % VS2012
+                        case '100'
+                            s = 'vc10';    % VS2010
+                        case '90'
+                            s = 'vc9';     % VS2008
+                        case '80'
+                            s = 'vc8';     % VS2005
+                    end
+                end
+            elseif ~isempty(strfind(cc.Name, 'SDK'))  % Intel + Windows SDK
+                tok = regexp(cc.ShortName, 'MSSDK(\d+)$', 'tokens', 'once');
+                if ~isempty(tok)
+                    tok = tok{1};
+                    switch tok
+                        case '100'
+                            s = 'vc14';    % VS2015 (or VS2017)
+                        case '81'
+                            s = 'vc12';    % VS2013
+                        case '80'
+                            s = 'vc11';    % VS2012
+                        case '71'
+                            s = 'vc10';    % VS2010
+                        case {'70', '61'}
+                            s = 'vc9';     % VS2008
+                        case '60'
+                            s = 'vc8';     % VS2005
+                    end
+                end
+            end
         elseif strcmp(cc.Manufacturer, 'GNU')  % MinGW (GNU GCC)
             s = 'mingw';
         end
         if isempty(s)
-            error('mexopencv:make', 'Unsupported compiler: %s', cc.Name);
+            error('mexopencv:make', 'Unsupported C++ compiler: %s', cc.Name);
         end
     end
 end

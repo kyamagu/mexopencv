@@ -17,7 +17,7 @@ features = struct('x',cell(1,3), 'y',cell(1,3), 'lbp',cell(1,3));
 for i=1:numel(features)
     features(i).x = randi(640,'int32');
     features(i).y = randi(480,'int32');
-    features(i).lbp = num2cell(bitget(randi(255,'uint8'),1:8));
+    features(i).lbp = num2cell(bitget(randi([0 255],'uint8'),1:8));
 end
 
 %%

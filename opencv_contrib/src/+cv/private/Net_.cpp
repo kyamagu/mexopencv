@@ -30,7 +30,7 @@ Net::LayerId MxArrayToLayerId(const MxArray& arr)
 {
     if (arr.isChar())
         return Net::LayerId(arr.toString());
-    else if (arr.isDouble() || arr.isSingle())
+    else if (arr.isFloat())
         return Net::LayerId(arr.toDouble());
     else
         return Net::LayerId(arr.toInt());
@@ -49,7 +49,7 @@ vector<Net::LayerId> MxArrayToVectorLayerId(const MxArray &arr)
     vector<Net::LayerId> v;
     v.reserve(n);
     if (arr.isNumeric()) {
-        if (arr.isDouble() || arr.isSingle()) {
+        if (arr.isFloat()) {
             vector<double> nums(arr.toVector<double>());
             v.assign(nums.begin(), nums.end());
         }
@@ -87,7 +87,7 @@ LayerParams MxArrayToLayerParams(const MxArray& arr)
             const MxArray val(dict.at(key));
             if (val.isChar())
                 params.set(key, val.toString());
-            else if (val.isDouble() || val.isSingle())
+            else if (val.isFloat())
                 params.set(key, val.toDouble());
             else
                 params.set(key, val.toInt());

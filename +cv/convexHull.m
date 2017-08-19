@@ -37,5 +37,5 @@
 % > Jack Sklansky. "Finding the convex hull of a simple polygon".
 % > Pattern Recognition Letters, 1(2):79-83, 1982.
 %
-% See also: convhull, convhulln, bwconvhull
+% See also: convhull, convhulln, bwconvhull, boundary
 %

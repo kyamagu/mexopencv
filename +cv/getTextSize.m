@@ -9,7 +9,9 @@
 % ## Output
 % * __siz__ Size of a box that contains the specified text `[w,h]`.
 % * __baseLine__ y-coordinate of the baseline relative to the bottom-most
-%       text point.
+%       text point. The baseline is the line on which the bottoms of
+%       characters such as 'a' and 'b' are aligned. Characters such as 'y' and
+%       'g' hang below the baseline.
 %
 % ## Options
 % * __FontFace__ Font to use. One of the following:

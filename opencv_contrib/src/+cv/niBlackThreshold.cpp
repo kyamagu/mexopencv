@@ -45,7 +45,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Process
     Mat src(rhs[0].toMat(CV_8U)), dst;
-    double delta = rhs[1].toDouble();
-    niBlackThreshold(src, dst, maxValue, type, blockSize, delta);
+    double k = rhs[1].toDouble();
+    niBlackThreshold(src, dst, maxValue, type, blockSize, k);
     plhs[0] = MxArray(dst);
 }

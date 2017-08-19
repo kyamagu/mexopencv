@@ -589,7 +589,7 @@ classdef RTrees < handle
         function v = getVarImportance(this)
             %GETVARIMPORTANCE  Returns the variable importance array
             %
-            %    v = classifier.getVarImportance()
+            %    v = model.getVarImportance()
             %
             % ## Output
             % * __v__ the variable importance vector, computed at the training
@@ -604,7 +604,7 @@ classdef RTrees < handle
         function roots = getRoots(this)
             %GETROOTS  Returns indices of root nodes
             %
-            %    roots = classifier.getRoots()
+            %    roots = model.getRoots()
             %
             % ## Output
             % * __roots__ vector of indices.
@@ -617,7 +617,7 @@ classdef RTrees < handle
         function nodes = getNodes(this)
             %GETNODES  Returns all the nodes
             %
-            %    nodes = classifier.getNodes()
+            %    nodes = model.getNodes()
             %
             % ## Output
             % * __nodes__ Struct-array with the following fields:
@@ -647,7 +647,7 @@ classdef RTrees < handle
         function splits = getSplits(this)
             %GETSPLITS  Returns all the splits
             %
-            %    splits = classifier.getSplits()
+            %    splits = model.getSplits()
             %
             % ## Output
             % * __splits__ Struct-array with the following fields:
@@ -679,7 +679,7 @@ classdef RTrees < handle
         function subsets = getSubsets(this)
             %GETSUBSETS  Returns all the bitsets for categorical splits
             %
-            %    subsets = classifier.getSubsets()
+            %    subsets = model.getSubsets()
             %
             % ## Output
             % * __subsets__ vector of indices.

@@ -57,6 +57,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==1 && nlhs<=1);
         plhs[0] = MxArray(getBuildInformation());
     }
+    else if (method == "version") {
+        nargchk(nrhs==1 && nlhs<=1);
+        plhs[0] = MxArray(string(CV_VERSION));
+    }
     else if (method == "getNumberOfCPUs") {
         nargchk(nrhs==1 && nlhs<=1);
         plhs[0] = MxArray(getNumberOfCPUs());

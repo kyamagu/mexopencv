@@ -35,18 +35,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 "Unrecognized option %s", key.c_str());
     }
 
-    // Process
-    double result = 0;
-    Point2f pt(rhs[1].toPoint2f());
-    if (rhs[0].isNumeric()) {
-        Mat contour(rhs[0].toMat(rhs[0].isInt32() ? CV_32S : CV_32F));
-        result = pointPolygonTest(contour, pt, measureDist);
-    }
-    else if (rhs[0].isCell()) {
-        vector<Point2f> contour(rhs[0].toVector<Point2f>());
-        result = pointPolygonTest(contour, pt, measureDist);
+    Mat contour;
+    vector<Point2f> contour_; // defined here, to allow data sharing w/o copy
+    if (rhs[0].isCell()) {
+        contour_ = rhs[0].toVector<Point2f>();
+        contour = Mat(contour_,false).reshape(1,0);  // Nx2
     }
     else
-        mexErrMsgIdAndTxt("mexopencv:error", "Invalid contour argument");
-    plhs[0] = MxArray(result);
+        contour = rhs[0].toMat(rhs[0].isInt32() ? CV_32S : CV_32F);
+
+    // Process
+    vector<double> results;
+    vector<Point2f> pts(rhs[1].toVector<Point2f>());
+    results.reserve(pts.size());
+    for (size_t i = 0; i < pts.size(); ++i)
+        results.push_back(pointPolygonTest(contour, pts[i], measureDist));
+    plhs[0] = MxArray(results);
 }

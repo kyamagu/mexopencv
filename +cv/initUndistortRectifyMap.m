@@ -1,6 +1,6 @@
 %INITUNDISTORTRECTIFYMAP  Computes the undistortion and rectification transformation map
 %
-%    [map1, map2] = cv.initUndistortRectifyMap(cameraMatrix, distCoeffs, newCameraMatrix, siz)
+%    [map1, map2] = cv.initUndistortRectifyMap(cameraMatrix, distCoeffs, siz)
 %    [...] = cv.initUndistortRectifyMap(..., 'OptionName', optionValue, ...)
 %
 % ## Input
@@ -9,8 +9,6 @@
 %       `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4,taux,tauy]` of 4, 5, 8, 12 or 14
 %       elements. If the vector is empty, the zero distortion coefficients are
 %       assumed.
-% * __newCameraMatrix__ New camera matrix
-%       `Ap = [fp_x 0 cp_x; 0 fp_y cp_y; 0 0 1]`
 % * __siz__ Undistorted image size `[w,h]`.
 %
 % ## Output
@@ -21,6 +19,11 @@
 % * __R__ Optional rectification transformation in the object space (3x3
 %       matrix). `R1` or `R2`, computed by cv.stereoRectify can be passed
 %       here. If the matrix is empty, the identity transformation is assumed.
+%       default empty
+% * __NewCameraMatrix__, __P__ New camera matrix (3x3)
+%       `Ap = [fp_x 0 cp_x; 0 fp_y cp_y; 0 0 1]` or new projection matrix `P`
+%       (3x4). If empty, uses the default new camera matrix from
+%       cv.getDefaultNewCameraMatrix (with `CenterPrincipalPoint=true`).
 %       default empty
 % * __M1Type__ Type of the first output map, default -1 (equivalent to
 %       `int16`). See cv.convertMaps. Accepted types are:
@@ -35,10 +38,10 @@
 % The function computes the joint undistortion and rectification
 % transformation and represents the result in the form of maps for
 % cv.remap. The undistorted image looks like original, as if it is captured
-% with a camera using the camera matrix `newCameraMatrix` and zero distortion.
-% In case of a monocular camera, `newCameraMatrix` is usually equal to
+% with a camera using the camera matrix `NewCameraMatrix` and zero distortion.
+% In case of a monocular camera, `NewCameraMatrix` is usually equal to
 % `cameraMatrix`, or it can be computed by cv.getOptimalNewCameraMatrix for a
-% better control over scaling. In case of a stereo camera, `newCameraMatrix`
+% better control over scaling. In case of a stereo camera, `NewCameraMatrix`
 % is normally set to `P1` or `P2` computed by cv.stereoRectify.
 %
 % Also, this new camera is oriented differently in the coordinate space,
@@ -78,8 +81,8 @@
 % possible to compute the rectification transformations directly from the
 % fundamental matrix using cv.stereoRectifyUncalibrated. For each camera, the
 % function computes homography `H` as the rectification transformation in a
-% pixel domain, not a rotation matrix `R` in 3D space. `R`  can be computed
-% from `H` as
+% pixel domain, not a rotation matrix `R` in 3D space. `R` can be computed
+% from `H` as:
 %
 %    R = inv(cameraMatrix) * H * cameraMatrix
 %

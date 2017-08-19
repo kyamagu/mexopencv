@@ -20,7 +20,7 @@
 % * __BorderType__ border mode used to extrapolate pixels outside of the
 %       image. See cv.copyMakeBorder. Default 'Default'
 %
-% The function smoothes an image using the kernel:
+% The function smooths an image using the kernel:
 %
 %    K = alpha * ones(KSize)
 %

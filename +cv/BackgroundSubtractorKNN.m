@@ -10,6 +10,7 @@ classdef BackgroundSubtractorKNN < handle
     % > Zoran Zivkovic and Ferdinand van der Heijden. "Efficient adaptive
     % > density estimation per image pixel for the task of background
     % > subtraction". Pattern recognition letters, 27(7):773-780, 2006.
+    % > [PDF](http://www.zoranz.net/Publications/zivkovicPRL2006.pdf).
     %
     % [Prati03detectingmoving]:
     % > Andrea Prati, Ivana Mikic, Mohan M. Trivedi, Rita Cucchiara.
@@ -25,23 +26,28 @@ classdef BackgroundSubtractorKNN < handle
     end
 
     properties (Dependent)
-        % The shadow detection flag.
-        % If true, the algorithm detects shadows and marks them. See
-        % cv.BackgroundSubtractorKNN.BackgroundSubtractorKNN for details.
-        DetectShadows
-        % The threshold on the squared distance between the pixel and the
-        % sample to decide whether a pixel is close to a data sample.
-        Dist2Threshold
         % The number of last frames that affect the background model.
         History
+        % The number of data samples in the background model.
+        % The model needs to be reinitalized to reserve memory.
+        NSamples
         % The number of neighbours, the k in the kNN.
         % K is the number of samples that need to be within `Dist2Threshold`
         % in order to decide that that pixel is matching the kNN background
         % model.
         KNNSamples
-        % The number of data samples in the background model.
-        % The model needs to be reinitalized to reserve memory.
-        NSamples
+        % The threshold on the squared distance between the pixel and the
+        % sample to decide whether a pixel is close to a data sample.
+        Dist2Threshold
+        % The shadow detection flag.
+        % If true, the algorithm detects shadows and marks them. See
+        % cv.BackgroundSubtractorKNN.BackgroundSubtractorKNN for details.
+        DetectShadows
+        % The shadow value.
+        % Shadow value is the value used to mark shadows in the foreground
+        % mask. Default value is 127. Value 0 in the mask always means
+        % background, 255 means foreground.
+        ShadowValue
         % The shadow threshold.
         % A shadow is detected if pixel is a darker version of the background.
         % The shadow threshold (Tau in the paper) is a threshold defining how
@@ -49,10 +55,6 @@ classdef BackgroundSubtractorKNN < handle
         % than twice darker then it is not shadow.
         % See [Prati03detectingmoving].
         ShadowThreshold
-        % Shadow value is the value used to mark shadows in the foreground
-        % mask. Default value is 127. Value 0 in the mask always means
-        % background, 255 means foreground.
-        ShadowValue
     end
 
     %% BackgroundSubtractor
@@ -100,7 +102,9 @@ classdef BackgroundSubtractorKNN < handle
             % * __im__ Next video frame.
             %
             % ## Output
-            % * __fgmask__ The output foreground mask as a binary image.
+            % * __fgmask__ The output foreground mask as an 8-bit binary image
+            %       (0 for background, 255 for foregound, and `ShadowValue`
+            %       for shadows if `DetectShadows` is true).
             %
             % ## Options
             % * __LearningRate__ The value between 0 and 1 that indicates how
@@ -116,12 +120,13 @@ classdef BackgroundSubtractorKNN < handle
         end
 
         function bgImg = getBackgroundImage(this)
-            %GETBACKGROUNDIMAGE  Computes a foreground mask
+            %GETBACKGROUNDIMAGE  Computes a background image
             %
             %    bgImg = bs.getBackgroundImage()
             %
             % ## Output
-            % * __bgImg__ The output background image.
+            % * __bgImg__ The output background image, which is the mean of
+            %       all background Gaussians.
             %
             % ## Note
             % Sometimes the background image can be very blurry, as it contain
@@ -218,32 +223,11 @@ classdef BackgroundSubtractorKNN < handle
 
     %% Getters/Setters
     methods
-        function value = get.DetectShadows(this)
-            value = BackgroundSubtractorKNN_(this.id, 'get', 'DetectShadows');
-        end
-        function set.DetectShadows(this, value)
-            BackgroundSubtractorKNN_(this.id, 'set', 'DetectShadows', value);
-        end
-
-        function value = get.Dist2Threshold(this)
-            value = BackgroundSubtractorKNN_(this.id, 'get', 'Dist2Threshold');
-        end
-        function set.Dist2Threshold(this, value)
-            BackgroundSubtractorKNN_(this.id, 'set', 'Dist2Threshold', value);
-        end
-
         function value = get.History(this)
             value = BackgroundSubtractorKNN_(this.id, 'get', 'History');
         end
         function set.History(this, value)
             BackgroundSubtractorKNN_(this.id, 'set', 'History', value);
-        end
-
-        function value = get.KNNSamples(this)
-            value = BackgroundSubtractorKNN_(this.id, 'get', 'KNNSamples');
-        end
-        function set.KNNSamples(this, value)
-            BackgroundSubtractorKNN_(this.id, 'set', 'KNNSamples', value);
         end
 
         function value = get.NSamples(this)
@@ -253,11 +237,25 @@ classdef BackgroundSubtractorKNN < handle
             BackgroundSubtractorKNN_(this.id, 'set', 'NSamples', value);
         end
 
-        function value = get.ShadowThreshold(this)
-            value = BackgroundSubtractorKNN_(this.id, 'get', 'ShadowThreshold');
+        function value = get.KNNSamples(this)
+            value = BackgroundSubtractorKNN_(this.id, 'get', 'KNNSamples');
         end
-        function set.ShadowThreshold(this, value)
-            BackgroundSubtractorKNN_(this.id, 'set', 'ShadowThreshold', value);
+        function set.KNNSamples(this, value)
+            BackgroundSubtractorKNN_(this.id, 'set', 'KNNSamples', value);
+        end
+
+        function value = get.Dist2Threshold(this)
+            value = BackgroundSubtractorKNN_(this.id, 'get', 'Dist2Threshold');
+        end
+        function set.Dist2Threshold(this, value)
+            BackgroundSubtractorKNN_(this.id, 'set', 'Dist2Threshold', value);
+        end
+
+        function value = get.DetectShadows(this)
+            value = BackgroundSubtractorKNN_(this.id, 'get', 'DetectShadows');
+        end
+        function set.DetectShadows(this, value)
+            BackgroundSubtractorKNN_(this.id, 'set', 'DetectShadows', value);
         end
 
         function value = get.ShadowValue(this)
@@ -265,6 +263,13 @@ classdef BackgroundSubtractorKNN < handle
         end
         function set.ShadowValue(this, value)
             BackgroundSubtractorKNN_(this.id, 'set', 'ShadowValue', value);
+        end
+
+        function value = get.ShadowThreshold(this)
+            value = BackgroundSubtractorKNN_(this.id, 'get', 'ShadowThreshold');
+        end
+        function set.ShadowThreshold(this, value)
+            BackgroundSubtractorKNN_(this.id, 'set', 'ShadowThreshold', value);
         end
     end
 

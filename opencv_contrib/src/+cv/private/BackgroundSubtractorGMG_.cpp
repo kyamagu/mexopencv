@@ -125,9 +125,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat image(rhs[2].toMat()), fgmask;
+        Mat image(rhs[2].toMat(rhs[2].isFloat() ? CV_32F :
+            (rhs[2].isUint16() ? CV_16U : CV_8U))), fgmask;
         obj->apply(image, fgmask, learningRate);
-        plhs[0] = MxArray(fgmask, mxLOGICAL_CLASS);
+        plhs[0] = MxArray(fgmask);
     }
     else if (method == "getBackgroundImage") {
         nargchk(nrhs==2 && nlhs<=1);
@@ -138,26 +139,26 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "get") {
         nargchk(nrhs==3 && nlhs<=1);
         string prop(rhs[2].toString());
-        if (prop == "BackgroundPrior")
-            plhs[0] = MxArray(obj->getBackgroundPrior());
-        else if (prop == "DecisionThreshold")
-            plhs[0] = MxArray(obj->getDecisionThreshold());
+        if (prop == "MaxFeatures")
+            plhs[0] = MxArray(obj->getMaxFeatures());
         else if (prop == "DefaultLearningRate")
             plhs[0] = MxArray(obj->getDefaultLearningRate());
-        else if (prop == "MaxFeatures")
-            plhs[0] = MxArray(obj->getMaxFeatures());
-        else if (prop == "MaxVal")
-            plhs[0] = MxArray(obj->getMaxVal());
-        else if (prop == "MinVal")
-            plhs[0] = MxArray(obj->getMinVal());
         else if (prop == "NumFrames")
             plhs[0] = MxArray(obj->getNumFrames());
         else if (prop == "QuantizationLevels")
             plhs[0] = MxArray(obj->getQuantizationLevels());
+        else if (prop == "BackgroundPrior")
+            plhs[0] = MxArray(obj->getBackgroundPrior());
         else if (prop == "SmoothingRadius")
             plhs[0] = MxArray(obj->getSmoothingRadius());
+        else if (prop == "DecisionThreshold")
+            plhs[0] = MxArray(obj->getDecisionThreshold());
         else if (prop == "UpdateBackgroundModel")
             plhs[0] = MxArray(obj->getUpdateBackgroundModel());
+        else if (prop == "MinVal")
+            plhs[0] = MxArray(obj->getMinVal());
+        else if (prop == "MaxVal")
+            plhs[0] = MxArray(obj->getMaxVal());
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized property %s", prop.c_str());
@@ -165,26 +166,26 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
         string prop(rhs[2].toString());
-        if (prop == "BackgroundPrior")
-            obj->setBackgroundPrior(rhs[3].toDouble());
-        else if (prop == "DecisionThreshold")
-            obj->setDecisionThreshold(rhs[3].toDouble());
+        if (prop == "MaxFeatures")
+            obj->setMaxFeatures(rhs[3].toInt());
         else if (prop == "DefaultLearningRate")
             obj->setDefaultLearningRate(rhs[3].toDouble());
-        else if (prop == "MaxFeatures")
-            obj->setMaxFeatures(rhs[3].toInt());
-        else if (prop == "MaxVal")
-            obj->setMaxVal(rhs[3].toDouble());
-        else if (prop == "MinVal")
-            obj->setMinVal(rhs[3].toDouble());
         else if (prop == "NumFrames")
             obj->setNumFrames(rhs[3].toInt());
         else if (prop == "QuantizationLevels")
             obj->setQuantizationLevels(rhs[3].toInt());
+        else if (prop == "BackgroundPrior")
+            obj->setBackgroundPrior(rhs[3].toDouble());
         else if (prop == "SmoothingRadius")
             obj->setSmoothingRadius(rhs[3].toInt());
+        else if (prop == "DecisionThreshold")
+            obj->setDecisionThreshold(rhs[3].toDouble());
         else if (prop == "UpdateBackgroundModel")
             obj->setUpdateBackgroundModel(rhs[3].toBool());
+        else if (prop == "MinVal")
+            obj->setMinVal(rhs[3].toDouble());
+        else if (prop == "MaxVal")
+            obj->setMaxVal(rhs[3].toDouble());
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized property %s", prop.c_str());

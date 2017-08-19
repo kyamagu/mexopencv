@@ -41,5 +41,5 @@
 % multi-channel arrays, each channel is processed independently. In the second
 % and third cases above, the scalar is first converted to the array type.
 %
-% See also: cv.bitwise_or, cv.bitwise_xor, cv.bitwise_not
+% See also: cv.bitwise_or, cv.bitwise_xor, cv.bitwise_not, bitand
 %

@@ -138,7 +138,7 @@ switch alg
 
         % plot bounding boxes around possible objects
         for i=1:min(10, numel(objectnessBoundingBox))
-            clr = randi(255, [1 3]);
+            clr = randi([0 255], [1 3]);
             bb = objectnessBoundingBox{i};
             val = objectnessValues(i);
             frame = cv.rectangle(frame, bb(1:2), bb(3:4), 'Color',clr);

@@ -43,7 +43,7 @@
 %       between 0 and 1. `Alpha=0` means that the rectified images are zoomed
 %       and shifted so that only valid pixels are visible (no black areas
 %       after rectification). `Alpha=1` means that the rectified image is
-%       decimated and shifted so that all the pixels from the original iamges
+%       decimated and shifted so that all the pixels from the original images
 %       from the cameras are retained in the rectified images (no source image
 %       pixels are lost). Obviously, any intermediate value yields an
 %       intermediate result between those two extreme cases. default -1
@@ -99,11 +99,11 @@
 % `R2`, can then be passed to cv.initUndistortRectifyMap to initialize the
 % rectification map for each camera.
 %
-% See the output of the `calibration_demo.m` sample. Some red horizontal lines
-% pass through the corresponding image regions. This means that the images are
-% well rectified, which is what most stereo correspondence algorithms rely on.
-% The green rectangles are `roi1` and `roi2`. You see that their interiors are
-% all valid pixels.
+% See the output of the `stereo_calibration_demo.m` sample. Some red
+% horizontal lines pass through the corresponding image regions. This means
+% that the images are well rectified, which is what most stereo correspondence
+% algorithms rely on. The green rectangles are `roi1` and `roi2`. You see that
+% their interiors are all valid pixels.
 %
 % See also: cv.stereoCalibrate, cv.stereoRectifyUncalibrated,
 %  rectifyStereoImages

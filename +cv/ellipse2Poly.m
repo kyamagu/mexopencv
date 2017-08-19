@@ -21,7 +21,8 @@
 %       approximation accuracy. default 5.
 %
 % The function cv.ellipse2Poly computes the vertices of a polyline that
-% approximates the specified elliptic arc. It is used by cv.ellipse.
+% approximates the specified elliptic arc. It is used by cv.ellipse. If
+% `StartAngle` is greater than `EndAngle`, they are swapped.
 %
 % See also: cv.ellipse
 %

@@ -39,7 +39,8 @@ classdef StereoSGBM < handle
     % > Intelligence, IEEE Transactions on, 20(4):401-406, 1998.
     %
     % See also: cv.StereoSGBM.StereoSGBM, cv.StereoSGBM.compute, cv.StereoBM,
-    %  disparity
+    %  cv.getValidDisparityROI, cv.filterSpeckles, cv.validateDisparity,
+    %  disparity, stereoAnaglyph
     %
 
     properties (SetAccess = private)

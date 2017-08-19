@@ -4,9 +4,9 @@ classdef TestFastNlMeansDenoisingColoredMulti
     methods (Static)
         function test_1
             img = cv.imread(fullfile(mexopencv.root(),'test','lena.jpg'), ...
-                'Color',true, 'ReduceScale',2);
+                'Color',true, 'ReduceScale',4);
             imgs = repmat({img},1,5);
-            out = cv.fastNlMeansDenoisingColoredMulti(imgs, 2, 3, 'H',10, 'HColor',10);
+            out = cv.fastNlMeansDenoisingColoredMulti(imgs, 2, 3, 'H',5, 'HColor',5);
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 
@@ -18,12 +18,12 @@ classdef TestFastNlMeansDenoisingColoredMulti
             end
 
             img = cv.imread(fullfile(mexopencv.root(),'test','lena.jpg'), ...
-                'Color',true, 'ReduceScale',2);
+                'Color',true, 'ReduceScale',4);
             imgs = cell(1,5);
             for i=1:numel(imgs)
                 imgs{i} = imnoise(img, 'gaussian');
             end
-            out = cv.fastNlMeansDenoisingColoredMulti(imgs, 2, 3, 'H',10, 'HColor',10);
+            out = cv.fastNlMeansDenoisingColoredMulti(imgs, 2, 3, 'H',5, 'HColor',5);
             validateattributes(out, {class(img)}, {'size',size(img)});
         end
 

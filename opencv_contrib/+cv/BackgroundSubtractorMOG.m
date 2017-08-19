@@ -1,5 +1,5 @@
 classdef BackgroundSubtractorMOG < handle
-    %BACKGROUNDSUBTRACTORMOG  Gaussian Mixture-based Backbround/Foreground Segmentation Algorithm
+    %BACKGROUNDSUBTRACTORMOG  Gaussian Mixture-based Background/Foreground Segmentation Algorithm
     %
     % The class implements the algorithm described in [KB2001].
     %
@@ -79,7 +79,8 @@ classdef BackgroundSubtractorMOG < handle
             % * __im__ Next video frame.
             %
             % ## Output
-            % * __fgmask__ The output foreground mask as a binary image.
+            % * __fgmask__ The output foreground mask as an 8-bit binary image
+            %       (0 for background, 255 for foregound).
             %
             % ## Options
             % * __LearningRate__ The value between 0 and 1 that indicates how
@@ -95,7 +96,7 @@ classdef BackgroundSubtractorMOG < handle
         end
 
         function bgImg = getBackgroundImage(this)
-            %GETBACKGROUNDIMAGE  Computes a foreground mask
+            %GETBACKGROUNDIMAGE  Computes a background image
             %
             %    bgImg = bs.getBackgroundImage()
             %
@@ -103,8 +104,7 @@ classdef BackgroundSubtractorMOG < handle
             % * __bgImg__ The output background image.
             %
             % ## Note
-            % Sometimes the background image can be very blurry, as it contain
-            % the average background statistics.
+            % Method not implemented for this class, throws exception.
             %
             % See also: cv.BackgroundSubtractorMOG.apply
             %

@@ -67,8 +67,13 @@ classdef TestRect
         function test_crop
             img = imread(fullfile(mexopencv.root(),'test','lena.jpg'));
             r = [175 175 225 225];
-            out = cv.Rect.crop(img, r);
-            validateattributes(out, {class(img)}, {'size',[r(3:4) size(img,3)]});
+
+            roi = cv.Rect.crop(img, r);
+            validateattributes(roi, {class(img)}, {'size',[r(3:4) size(img,3)]});
+
+            roi = flipud(roi);
+            out = cv.Rect.crop(img, r, roi);
+            validateattributes(out, {class(img)}, {'size',size(img)});
         end
     end
 

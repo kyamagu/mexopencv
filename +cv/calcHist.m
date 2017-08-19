@@ -110,6 +110,6 @@
 %    axis image; colormap gray; colorbar
 %    ylabel('Hue'); xlabel('Saturation'); title('Histogram')
 %
-% See also: cv.calcBackProject, cv.compareHist, cv.EMD, histc, histcounts,
-%  histcounts2, discretize, imhist
+% See also: cv.calcBackProject, cv.compareHist, cv.EMD, hist, histc,
+%  histogram, histcounts, histcounts2, discretize, imhist, hist3
 %

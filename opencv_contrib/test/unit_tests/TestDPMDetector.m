@@ -60,7 +60,7 @@ classdef TestDPMDetector
 end
 
 function download_cascade_model(fname)
-    if ~exist(fname, 'file')
+    if exist(fname, 'file') ~= 2
         [~, f, ext] = fileparts(fname);
         assert(strcmpi(ext, '.xml'), 'Not an XML cascade model');
         % attempt to download cascade model from GitHub

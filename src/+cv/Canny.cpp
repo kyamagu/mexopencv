@@ -38,22 +38,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 "Unrecognized option %s", key.c_str());
     }
 
-    // Second argument
     double threshold1 = 0, threshold2 = 0;
-    if (rhs[1].numel()==1) {
-        threshold2 = rhs[1].toDouble();
-        threshold1 = 0.4 * threshold2;
-    }
-    else if (rhs[1].numel()==2) {
+    if (rhs[1].numel() == 2) {
         Scalar s(rhs[1].toScalar());
         threshold1 = s[0];
         threshold2 = s[1];
     }
-    else
-        mexErrMsgIdAndTxt("mexopencv:error", "Invalid threshold argument");
+    else {
+        threshold2 = rhs[1].toDouble();
+        threshold1 = 0.4 * threshold2;
+    }
 
     // Process
-    Mat image(rhs[0].toMat(CV_8U)), edges;
+    Mat image(rhs[0].toMat(CV_8U)),
+        edges;
     Canny(image, edges, threshold1, threshold2, apertureSize, L2gradient);
     plhs[0] = MxArray(edges);
 }

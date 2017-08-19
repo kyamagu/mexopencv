@@ -110,8 +110,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat I0(rhs[2].toMat(rhs[2].isSingle() ? CV_32F : CV_8U)),
-            I1(rhs[3].toMat(rhs[3].isSingle() ? CV_32F : CV_8U));
+        Mat I0(rhs[2].toMat(rhs[2].isFloat() ? CV_32F : CV_8U)),
+            I1(rhs[3].toMat(rhs[3].isFloat() ? CV_32F : CV_8U));
         obj->calc(I0, I1, flow);
         plhs[0] = MxArray(flow);
     }

@@ -26,9 +26,9 @@ classdef TestReprojectImageTo3D
             RCT = cv.stereoRectify(S.cameraMatrix1, S.distCoeffs1, ...
                 S.cameraMatrix2, S.distCoeffs2, imgSize, S.R, S.T);
             [map11, map12] = cv.initUndistortRectifyMap(S.cameraMatrix1, ...
-                S.distCoeffs1, RCT.P1, imgSize, 'R',RCT.R1);
+                S.distCoeffs1, imgSize, 'P',RCT.P1, 'R',RCT.R1);
             [map21, map22] = cv.initUndistortRectifyMap(S.cameraMatrix2, ...
-                S.distCoeffs2, RCT.P2, imgSize, 'R',RCT.R2);
+                S.distCoeffs2, imgSize, 'P',RCT.P2, 'R',RCT.R2);
             img1 = cv.remap(img1, map11, map12);
             img2 = cv.remap(img2, map21, map22);
 

@@ -36,3 +36,6 @@
 % can form the new camera matrix for each view where the principal points are
 % located at the center.
 %
+% See also: cv.undistort, cv.initUndistortRectifyMap,
+%  cv.getOptimalNewCameraMatrix
+%

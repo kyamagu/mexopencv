@@ -95,7 +95,7 @@ function deleteFile(fname)
 end
 
 function download_classifier_xml(fname)
-    if ~exist(fname, 'file')
+    if exist(fname, 'file') ~= 2
         % attempt to download trained Haar/LBP/HOG classifier from Github
         url = 'https://cdn.rawgit.com/opencv/opencv/3.2.0/data/';
         [~, f, ext] = fileparts(fname);

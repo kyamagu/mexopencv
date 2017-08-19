@@ -45,16 +45,16 @@ classdef MergeDebevec < handle
 
     %% MergeExposures
     methods
-        function dst = process(this, src, times, varargin)
+        function dst = process(this, src, etimes, varargin)
             %PROCESS  Merges images
             %
-            %    dst = obj.process(src, times)
-            %    dst = obj.process(src, times, response)
+            %    dst = obj.process(src, etimes)
+            %    dst = obj.process(src, etimes, response)
             %
             % ## Input
             % * __src__ vector of input images, all of the same size and
             %       `uint8` type.
-            % * __times__ vector of exposure time values for each image.
+            % * __etimes__ vector of exposure time values for each image.
             % * __response__ 256x1xCN `single` matrix with inverse camera
             %       response function (CRF) for each pixel value, it should
             %       have the same number of channels as images `src{i}`.
@@ -67,7 +67,7 @@ classdef MergeDebevec < handle
             %
             % See also: cv.MergeDebevec.MergeDebevec
             %
-            dst = MergeDebevec_(this.id, 'process', src, times, varargin{:});
+            dst = MergeDebevec_(this.id, 'process', src, etimes, varargin{:});
         end
     end
 

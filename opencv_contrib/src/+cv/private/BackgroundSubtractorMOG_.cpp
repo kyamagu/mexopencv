@@ -131,9 +131,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat image(rhs[2].toMat()), fgmask;
+        Mat image(rhs[2].toMat(CV_8U)), fgmask;
         obj->apply(image, fgmask, learningRate);
-        plhs[0] = MxArray(fgmask, mxLOGICAL_CLASS);
+        plhs[0] = MxArray(fgmask);
     }
     else if (method == "getBackgroundImage") {
         nargchk(nrhs==2 && nlhs<=1);
@@ -144,12 +144,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "get") {
         nargchk(nrhs==3 && nlhs<=1);
         string prop(rhs[2].toString());
-        if (prop == "BackgroundRatio")
-            plhs[0] = MxArray(obj->getBackgroundRatio());
-        else if (prop == "History")
+        if (prop == "History")
             plhs[0] = MxArray(obj->getHistory());
         else if (prop == "NMixtures")
             plhs[0] = MxArray(obj->getNMixtures());
+        else if (prop == "BackgroundRatio")
+            plhs[0] = MxArray(obj->getBackgroundRatio());
         else if (prop == "NoiseSigma")
             plhs[0] = MxArray(obj->getNoiseSigma());
         else
@@ -159,12 +159,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
         string prop(rhs[2].toString());
-        if (prop == "BackgroundRatio")
-            obj->setBackgroundRatio(rhs[3].toDouble());
-        else if (prop == "History")
+        if (prop == "History")
             obj->setHistory(rhs[3].toInt());
         else if (prop == "NMixtures")
             obj->setNMixtures(rhs[3].toInt());
+        else if (prop == "BackgroundRatio")
+            obj->setBackgroundRatio(rhs[3].toDouble());
         else if (prop == "NoiseSigma")
             obj->setNoiseSigma(rhs[3].toDouble());
         else

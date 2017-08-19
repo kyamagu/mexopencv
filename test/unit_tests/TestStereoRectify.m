@@ -8,7 +8,8 @@ classdef TestStereoRectify
     methods (Static)
         function test_1
             [opts, ipts1, ipts2, imgSize] = getPointsPair();
-            SS = cv.stereoCalibrate(opts, ipts1, ipts2, imgSize);
+            SS = cv.stereoCalibrate(opts, ipts1, ipts2, imgSize, ...
+                'FixIntrinsic',false);
             S = cv.stereoRectify(SS.cameraMatrix1, SS.distCoeffs1, ...
                 SS.cameraMatrix2, SS.distCoeffs2, imgSize, SS.R, SS.T);
             validateattributes(S, {'struct'}, {'scalar'});

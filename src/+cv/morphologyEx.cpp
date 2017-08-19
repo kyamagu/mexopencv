@@ -36,6 +36,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);
+    int op = MorphType[rhs[1].toString()];
 
     // Option processing
     Mat kernel;
@@ -46,7 +47,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "Element")
-            kernel = rhs[i+1].toMat(CV_8U);
+            // structuring element is normally binary, but HitMiss uses 0/+1/-1
+            kernel = rhs[i+1].toMat(op == cv::MORPH_HITMISS ? CV_32S : CV_8U);
         else if (key == "Anchor")
             anchor = rhs[i+1].toPoint();
         else if (key == "Iterations")
@@ -62,7 +64,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Process
     Mat src(rhs[0].toMat()), dst;
-    int op = MorphType[rhs[1].toString()];
     morphologyEx(src, dst, op, kernel, anchor, iterations,
         borderType, borderValue);
     plhs[0] = MxArray(dst);

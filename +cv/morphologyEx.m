@@ -19,8 +19,8 @@
 %             `dst = tophat(src,element) = src - open(src,element)`
 %       * __Blackhat__ "black hat"
 %             `dst = blackhat(src,element) = close(src,element) - src`
-%       * __HitMiss__ "hit and miss". Only supported for `uint8` 1-channel
-%             binary images. Tutorial can be found in this
+%       * __HitMiss__ "hit or miss". Only supported for `uint8` 1-channel
+%             binary images. A tutorial can be found in this
 %             [page](https://web.archive.org/web/20160316070407/http://opencv-code.com/tutorials/hit-or-miss-transform-in-opencv/).
 %
 % ## Output
@@ -42,6 +42,12 @@
 % transformations using an erosion and dilation as basic operations.
 %
 % In case of multi-channel images, each channel is processed independently.
+%
+% Note: The number of iterations is the number of times erosion or dilatation
+% operation will be applied. For instance, an opening operation (`Open`) with
+% two iterations is equivalent to apply successively:
+% `erode -> erode -> dilate -> dilate`
+% (and not `erode -> dilate -> erode -> dilate`).
 %
 % See also: cv.dilate, cv.erode, cv.getStructuringElement, imopen, imclose,
 %  imtophat, imbothat, bwmorph

@@ -7,9 +7,9 @@ classdef TestGrabCut
 
     methods (Static)
         function test_init_rect
-            img = imread(TestGrabCut.im);
+            img = cv.imread(TestGrabCut.im, 'ReduceScale',2);
             sz = size(img);
-            bbox = [100,100,280,320]; % [x y w h]
+            bbox = [75 50 100 175]; % [x y w h]
             [res, bgd, fgd] = cv.grabCut(img, bbox, 'Mode','InitWithRect');
             validateattributes(res, {'uint8'}, {'size',sz(1:2), '<=',3});
             validateattributes(bgd, {'double'}, {'vector', 'numel',65});
@@ -17,12 +17,12 @@ classdef TestGrabCut
         end
 
         function test_init_mask
-            img = imread(TestGrabCut.im);
+            img = cv.imread(TestGrabCut.im, 'ReduceScale',2);
             sz = size(img);
-            bbox = [100,100,200,320]; % [y x w h]
+            bbox = [75 50 100 175];
             mask = zeros(sz(1:2),'uint8');
             mask(:) = 0;
-            mask(bbox(2):(bbox(2)+bbox(4)-1),bbox(1):(bbox(1)+bbox(3)-1)) = 3;
+            mask = cv.rectangle(mask, bbox, 'Color',3, 'Thickness','Filled');
             [res, bgd, fgd] = cv.grabCut(img, mask, 'Mode','InitWithMask');
             validateattributes(res, {'uint8'}, {'size',sz(1:2), '<=',3});
             validateattributes(bgd, {'double'}, {'vector', 'numel',65});
@@ -30,8 +30,8 @@ classdef TestGrabCut
         end
 
         function test_eval
-            img = imread(TestGrabCut.im);
-            bbox = [100,100,280,320];
+            img = cv.imread(TestGrabCut.im, 'ReduceScale',2);
+            bbox = [75 50 100 175];
             [res, bgd, fgd] = cv.grabCut(img, bbox, 'Mode','InitWithRect');
             for i=1:2
                 [res, bgd, fgd] = cv.grabCut(img, res, 'Mode','Eval', ...
@@ -49,7 +49,7 @@ classdef TestGrabCut
         end
 
         function test_error_invalid_arg
-            img = imread(TestGrabCut.im);
+            img = cv.imread(TestGrabCut.im, 'ReduceScale',2);
             mask = zeros(size(img,1),size(img,2),'uint8');
             try
                 cv.grabCut(img, mask, 'foo');
@@ -60,7 +60,7 @@ classdef TestGrabCut
         end
 
         function test_error_unrecognized_option
-            img = imread(TestGrabCut.im);
+            img = cv.imread(TestGrabCut.im, 'ReduceScale',2);
             mask = zeros(size(img,1),size(img,2),'uint8');
             try
                 cv.grabCut(img, mask, 'foo','bar');
@@ -71,7 +71,7 @@ classdef TestGrabCut
         end
 
         function test_error_invalid_option_value_1
-            img = imread(TestGrabCut.im);
+            img = cv.imread(TestGrabCut.im, 'ReduceScale',2);
             mask = zeros(size(img,1),size(img,2),'uint8');
             try
                 cv.grabCut(img, mask, 'Mode','foo');
@@ -82,7 +82,7 @@ classdef TestGrabCut
         end
 
         function test_error_invalid_option_value_2
-            img = imread(TestGrabCut.im);
+            img = cv.imread(TestGrabCut.im, 'ReduceScale',2);
             mask = zeros(size(img,1),size(img,2),'uint8');
             try
                 cv.grabCut(img, mask, 'IterCount','foo');

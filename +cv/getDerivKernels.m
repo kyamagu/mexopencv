@@ -13,7 +13,7 @@
 % * __KSize__ Aperture size. It can be 'Scharr', 1, 3, 5, or 7. default 3.
 % * __Normalize__ Flag indicating whether to normalize (scale down) the filter
 %       coefficients or not. Theoretically, the coefficients should have the
-%       `denominator = 2^(KSize*2-Dx-Dy-2)`. If you are going to fitler
+%       `denominator = 2^(KSize*2-Dx-Dy-2)`. If you are going to filter
 %       floating-point images, you are likely to use the normalized kernels.
 %       But if you compute derivatives of an 8-bit image, store the results in
 %       a 16-bit image, and wish to preserve all the fractional bits, you may

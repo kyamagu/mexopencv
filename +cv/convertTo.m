@@ -22,5 +22,6 @@
 %
 %    dst = cast(src*alpha + beta, RType);
 %
-% See also: cv.copyTo, cv.normalize
+% See also: cv.copyTo, cv.normalize, cast, typecast, im2double, im2uint8,
+%  mat2gray
 %

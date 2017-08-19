@@ -24,5 +24,5 @@
 % representation (usually IEEE754-compliant) is used for the operation. In
 % case of multi-channel arrays, each channel is processed independently.
 %
-% See also: cv.bitwise_and, cv.bitwise_or, cv.bitwise_xor
+% See also: cv.bitwise_and, cv.bitwise_or, cv.bitwise_xor, bitcmp
 %

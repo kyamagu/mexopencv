@@ -7,6 +7,20 @@ classdef BackgroundSubtractorGMG < handle
     % of the same size, where 255 indicates Foreground and 0 represents
     % Background. This class implements an algorithm described in [Gold2012].
     %
+    % This algorithm combines statistical background image estimation and
+    % per-pixel Bayesian segmentation. It was introduced by [Gold2012]. As per
+    % the paper, the system ran a successful interactive audio art
+    % installation called "Are We There Yet?" in 2011 at the Contemporary
+    % Jewish Museum in San Francisco, California.
+    %
+    % It uses first few (120 by default) frames for background modelling. It
+    % employs probabilistic foreground segmentation algorithm that identifies
+    % possible foreground objects using Bayesian inference. The estimates are
+    % adaptive; newer observations are more heavily weighted than old
+    % observations to accommodate variable illumination. Several morphological
+    % filtering operations like closing and opening are done to remove
+    % unwanted noise. You will get a black window during first few frames.
+    %
     % ## References
     % [Gold2012]:
     % > Andrew B Godbehere, Akihiro Matsukawa, and Ken Goldberg. "Visual
@@ -24,33 +38,34 @@ classdef BackgroundSubtractorGMG < handle
     end
 
     properties (Dependent)
-        % The prior probability that each individual pixel is a background
-        % pixel.
-        BackgroundPrior
-        % The value of decision threshold.
-        % Decision value is the value above which pixel is determined to be FG.
-        DecisionThreshold
+        % Total number of distinct colors to maintain in histogram.
+        MaxFeatures
         % The learning rate of the algorithm.
         % It lies between 0.0 and 1.0. It determines how quickly features are
         % "forgotten" from histograms.
         DefaultLearningRate
-        % Total number of distinct colors to maintain in histogram.
-        MaxFeatures
-        % The maximum value taken on by pixels in image sequence.
-        % e.g. 1.0 or 255.
-        MaxVal
-        % The minimum value taken on by pixels in image sequence. Usually 0.
-        MinVal
         % The number of frames used to initialize background model.
         NumFrames
         % The parameter used for quantization of color-space.
         % It is the number of discrete levels in each channel to be used in
         % histograms.
         QuantizationLevels
-        % The kernel radius used for morphological operations.
+        % The prior probability that each individual pixel is a background
+        % pixel.
+        BackgroundPrior
+        % The kernel radius, in pixels, used for morphological operations for
+        % cleaning up FG image.
         SmoothingRadius
+        % The value of decision threshold.
+        % Decision value is the value above which pixel is determined to be FG.
+        DecisionThreshold
         % The status of background model update.
         UpdateBackgroundModel
+        % The minimum value taken on by pixels in image sequence. Usually 0.
+        MinVal
+        % The maximum value taken on by pixels in image sequence.
+        % e.g. 1.0 or 255.
+        MaxVal
     end
 
     %% BackgroundSubtractor
@@ -95,7 +110,8 @@ classdef BackgroundSubtractorGMG < handle
             % * __im__ Next video frame.
             %
             % ## Output
-            % * __fgmask__ The output foreground mask as a binary image.
+            % * __fgmask__ The output foreground mask as an 8-bit binary image
+            %       (0 for background, 255 for foregound).
             %
             % ## Options
             % * __LearningRate__ The value between 0 and 1 that indicates how
@@ -105,13 +121,16 @@ classdef BackgroundSubtractorGMG < handle
             %       updated at all, 1 means that the background model is
             %       completely reinitialized from the last frame. default -1
             %
+            % Performs single-frame background subtraction and builds up a
+            % statistical background image model.
+            %
             % See also: cv.BackgroundSubtractorGMG.getBackgroundImage
             %
             fgmask = BackgroundSubtractorGMG_(this.id, 'apply', im, varargin{:});
         end
 
         function bgImg = getBackgroundImage(this)
-            %GETBACKGROUNDIMAGE  Computes a foreground mask
+            %GETBACKGROUNDIMAGE  Computes a background image
             %
             %    bgImg = bs.getBackgroundImage()
             %
@@ -119,8 +138,7 @@ classdef BackgroundSubtractorGMG < handle
             % * __bgImg__ The output background image.
             %
             % ## Note
-            % Sometimes the background image can be very blurry, as it contain
-            % the average background statistics.
+            % Method not implemented for this class, returns empty.
             %
             % See also: cv.BackgroundSubtractorGMG.apply
             %
@@ -213,27 +231,6 @@ classdef BackgroundSubtractorGMG < handle
 
     %% Getters/Setters
     methods
-        function value = get.BackgroundPrior(this)
-            value = BackgroundSubtractorGMG_(this.id, 'get', 'BackgroundPrior');
-        end
-        function set.BackgroundPrior(this, value)
-            BackgroundSubtractorGMG_(this.id, 'set', 'BackgroundPrior', value);
-        end
-
-        function value = get.DecisionThreshold(this)
-            value = BackgroundSubtractorGMG_(this.id, 'get', 'DecisionThreshold');
-        end
-        function set.DecisionThreshold(this, value)
-            BackgroundSubtractorGMG_(this.id, 'set', 'DecisionThreshold', value);
-        end
-
-        function value = get.DefaultLearningRate(this)
-            value = BackgroundSubtractorGMG_(this.id, 'get', 'DefaultLearningRate');
-        end
-        function set.DefaultLearningRate(this, value)
-            BackgroundSubtractorGMG_(this.id, 'set', 'DefaultLearningRate', value);
-        end
-
         function value = get.MaxFeatures(this)
             value = BackgroundSubtractorGMG_(this.id, 'get', 'MaxFeatures');
         end
@@ -241,18 +238,11 @@ classdef BackgroundSubtractorGMG < handle
             BackgroundSubtractorGMG_(this.id, 'set', 'MaxFeatures', value);
         end
 
-        function value = get.MaxVal(this)
-            value = BackgroundSubtractorGMG_(this.id, 'get', 'MaxVal');
+        function value = get.DefaultLearningRate(this)
+            value = BackgroundSubtractorGMG_(this.id, 'get', 'DefaultLearningRate');
         end
-        function set.MaxVal(this, value)
-            BackgroundSubtractorGMG_(this.id, 'set', 'MaxVal', value);
-        end
-
-        function value = get.MinVal(this)
-            value = BackgroundSubtractorGMG_(this.id, 'get', 'MinVal');
-        end
-        function set.MinVal(this, value)
-            BackgroundSubtractorGMG_(this.id, 'set', 'MinVal', value);
+        function set.DefaultLearningRate(this, value)
+            BackgroundSubtractorGMG_(this.id, 'set', 'DefaultLearningRate', value);
         end
 
         function value = get.NumFrames(this)
@@ -269,6 +259,13 @@ classdef BackgroundSubtractorGMG < handle
             BackgroundSubtractorGMG_(this.id, 'set', 'QuantizationLevels', value);
         end
 
+        function value = get.BackgroundPrior(this)
+            value = BackgroundSubtractorGMG_(this.id, 'get', 'BackgroundPrior');
+        end
+        function set.BackgroundPrior(this, value)
+            BackgroundSubtractorGMG_(this.id, 'set', 'BackgroundPrior', value);
+        end
+
         function value = get.SmoothingRadius(this)
             value = BackgroundSubtractorGMG_(this.id, 'get', 'SmoothingRadius');
         end
@@ -276,11 +273,32 @@ classdef BackgroundSubtractorGMG < handle
             BackgroundSubtractorGMG_(this.id, 'set', 'SmoothingRadius', value);
         end
 
+        function value = get.DecisionThreshold(this)
+            value = BackgroundSubtractorGMG_(this.id, 'get', 'DecisionThreshold');
+        end
+        function set.DecisionThreshold(this, value)
+            BackgroundSubtractorGMG_(this.id, 'set', 'DecisionThreshold', value);
+        end
+
         function value = get.UpdateBackgroundModel(this)
             value = BackgroundSubtractorGMG_(this.id, 'get', 'UpdateBackgroundModel');
         end
         function set.UpdateBackgroundModel(this, value)
             BackgroundSubtractorGMG_(this.id, 'set', 'UpdateBackgroundModel', value);
+        end
+
+        function value = get.MinVal(this)
+            value = BackgroundSubtractorGMG_(this.id, 'get', 'MinVal');
+        end
+        function set.MinVal(this, value)
+            BackgroundSubtractorGMG_(this.id, 'set', 'MinVal', value);
+        end
+
+        function value = get.MaxVal(this)
+            value = BackgroundSubtractorGMG_(this.id, 'get', 'MaxVal');
+        end
+        function set.MaxVal(this, value)
+            BackgroundSubtractorGMG_(this.id, 'set', 'MaxVal', value);
         end
     end
 

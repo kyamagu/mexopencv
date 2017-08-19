@@ -3,8 +3,8 @@ classdef TestMatchShapes
 
     methods (Static)
         function test_img_8bit
-            img1 = randi(255, [50 50], 'uint8');
-            img2 = randi(255, [50 50], 'uint8');
+            img1 = randi([0 255], [50 50], 'uint8');
+            img2 = randi([0 255], [50 50], 'uint8');
             score = cv.matchShapes(img1, img2);
             validateattributes(score, {'double'}, {'scalar'});
         end

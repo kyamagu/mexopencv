@@ -130,7 +130,7 @@ classdef Subdiv2D < handle
             %       * __Error__ Point location error. One of input arguments
             %             is invalid. A runtime error is raised or, if silent
             %             or "parent" error processing mode is selected,
-            %             'Error' is returnd.
+            %             'Error' is returned.
             % * __edge__ Output edge that the point belongs to or is located
             %       to the right of it.
             % * __vertex__ Optional output vertex the input point coincides

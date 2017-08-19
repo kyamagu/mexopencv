@@ -29,5 +29,5 @@
 % When the lower and/or upper boundary parameters are scalars, the indexes at
 % `lowerb` and `upperb` in the above formulas should be omitted.
 %
-% See also: cv.threshold
+% See also: cv.threshold, roicolor
 %

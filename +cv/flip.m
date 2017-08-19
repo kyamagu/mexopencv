@@ -32,3 +32,5 @@
 %   central symmetry (`flipCode < 0`).
 % * Reversing the order of point arrays (flipCode > 0 or flipCode == 0).
 %
+% See also: cv.rotate, flip, fliplr, flipud, rot90, transpose
+%

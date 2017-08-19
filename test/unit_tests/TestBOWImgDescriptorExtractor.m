@@ -69,8 +69,9 @@ classdef TestBOWImgDescriptorExtractor
             end
 
             % we use SURF from opencv_contrib/xfeatures2d
+            opts = {'HessianThreshold',500, 'Upright',true};
             try
-                obj = cv.SURF();
+                obj = cv.SURF(opts{:});
             catch ME
                 disp('SKIP');
                 return;
@@ -87,27 +88,26 @@ classdef TestBOWImgDescriptorExtractor
             K = 100;
             trainer = cv.BOWKMeansTrainer(K);
             for i=1:numel(trainIdx)
-                img = cv.imread(files{trainIdx(i)}, 'Grayscale',true);
-                img = cv.resize(img, 0.5, 0.5);
+                img = cv.imread(files{trainIdx(i)}, 'Grayscale',true, 'ReduceScale',4);
                 [~, descs] = obj.detectAndCompute(img);
                 trainer.add(descs);
             end
             vocab = trainer.cluster();
 
             % use BOW model to encode all images into feature vectors
-            bowextractor = cv.BOWImgDescriptorExtractor('SURF', 'BruteForce');
+            bowextractor = cv.BOWImgDescriptorExtractor(['SURF', opts], 'BruteForce');
             bowextractor.Vocabulary = vocab;
             data = zeros([numel(files), bowextractor.descriptorSize()], ...
                 bowextractor.descriptorType());
             for i=1:numel(files)
-                img = cv.imread(files{i}, 'Grayscale',true);
-                img = cv.resize(img, 0.5, 0.5);
+                img = cv.imread(files{i}, 'Grayscale',true, 'ReduceScale',4);
                 kpts = obj.detect(img);
                 data(i,:) = bowextractor.compute2(img, kpts);
             end
 
             % train a supervised SVM classifier on training set
             model = cv.SVM();
+            model.KernelType = 'Linear';
             model.train(data(trainIdx,:), labels(trainIdx));
 
             % use it to classify test images

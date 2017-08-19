@@ -5,10 +5,10 @@ classdef TestInitUndistortRectifyMap
         function test_1
             camMat = eye(3);
             distCoeffs = zeros(1,4);
-            newCamMat = cv.getDefaultNewCameraMatrix(camMat);
             sz = [50 100];  % [w,h]
             [map1,map2] = cv.initUndistortRectifyMap(...
-                camMat, distCoeffs, newCamMat, sz, 'M1Type','int16');
+                camMat, distCoeffs, sz, 'M1Type','int16', ...
+                'NewCameraMatrix',camMat, 'R',eye(3));
             validateattributes(map1, {'int16'}, {'size',[sz(2) sz(1) 2]});
             validateattributes(map2, {'uint16'}, {'size',[sz(2) sz(1)]});
         end
@@ -16,10 +16,9 @@ classdef TestInitUndistortRectifyMap
         function test_2
             camMat = eye(3);
             distCoeffs = zeros(1,4);
-            newCamMat = cv.getDefaultNewCameraMatrix(camMat);
             sz = [50 100];  % [w,h]
             [map1,map2] = cv.initUndistortRectifyMap(...
-                camMat, distCoeffs, newCamMat, sz, 'M1Type','single1');
+                camMat, distCoeffs, sz, 'M1Type','single1');
             validateattributes(map1, {'single'}, {'size',[sz(2) sz(1)]});
             validateattributes(map2, {'single'}, {'size',[sz(2) sz(1)]});
         end
@@ -27,10 +26,9 @@ classdef TestInitUndistortRectifyMap
         function test_3
             camMat = eye(3);
             distCoeffs = zeros(1,4);
-            newCamMat = cv.getDefaultNewCameraMatrix(camMat);
             sz = [50 100];  % [w,h]
             [map1,map2] = cv.initUndistortRectifyMap(...
-                camMat, distCoeffs, newCamMat, sz, 'M1Type','single2');
+                camMat, distCoeffs, sz, 'M1Type','single2');
             validateattributes(map1, {'single'}, {'size',[sz(2) sz(1) 2]});
             assert(isempty(map2));
         end

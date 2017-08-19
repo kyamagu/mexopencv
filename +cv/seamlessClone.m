@@ -22,7 +22,7 @@
 %             halo. Seamless cloning, even averaged with the original image,
 %             is not effective. Mixed seamless cloning based on a loose
 %             selection proves effective.
-%       * __MonochromeTransfer__ Feature exchange allows the user to easily
+%       * __MonochromeTransfer__ Monochrome transfer allows the user to easily
 %             replace certain features of one object by alternative features.
 % * __FlipChannels__ whether to flip the order of color channels in inputs
 %       `src` and `mask` and output `dst`, between MATLAB's RGB order and

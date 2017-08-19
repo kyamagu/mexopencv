@@ -13,7 +13,8 @@
 %
 % ## Output
 % * __H__ 3x3 Homography matrix.
-% * __mask__ Nx1 mask array of same length as input points, indicates inliers.
+% * __mask__ Nx1 mask array of same length as input points, indicates inliers
+%       (which points were actually used in the best computation of `H`).
 %
 % ## Options
 % * __Method__ Method used to computed a homography matrix. The following
@@ -21,7 +22,9 @@
 %       * __0__ a regular method using all the points. (default)
 %       * __Ransac__ RANSAC-based robust method.
 %       * __LMedS__ Least-Median robust method.
-%       * __Rho__ PROSAC-based robust method.
+%       * __Rho__ PROSAC-based robust method, introduced in [Bazargani15].
+%             (weighted RANSAC modification, faster in the case of many
+%             outliers).
 % * __RansacReprojThreshold__ Maximum allowed reprojection error to treat a
 %       point pair as an inlier (used in the RANSAC and RHO methods only).
 %       That is, if
@@ -74,6 +77,26 @@
 % Homography matrix is determined up to a scale. Thus, it is normalized so
 % that `h33 = 1`. Note that whenever an `H` matrix cannot be estimated, an
 % empty one will be returned.
+%
+% ## References
+% [Fischler81]:
+% > Fischler, M. A., and R. C. Bolles. "Random sample consensus: A paradigm
+% > for model fitting with applications to image analysis and automated
+% > cartography", Communications of the Association for Computing Machinery
+% > 24 (1981): 381-395.
+%
+% [Rousseeuw84]:
+% > Rousseeuw, P. J. "Least median of squares regression", Journal of the
+% > American Statistical Association, 79 (1984): 871-880.
+%
+% [Inui03]:
+% > Inui, K., S. Kaneko, and S. Igarashi. "Robust line fitting using LmedS
+% > clustering", Systems and Computers in Japan 34 (2003): 92-100.
+%
+% [Bazargani15]:
+% > Hamid Bazargani, Olexa Bilaniuk, and Robert Laganiere. "A fast and robust
+% > homography scheme for real-time planar target detection". Journal of
+% > Real-Time Image Processing (2015): 1-20.
 %
 % See also: cv.getAffineTransform, cv.estimateAffine2D,
 % cv.estimateAffinePartial2D, cv.getPerspectiveTransform,

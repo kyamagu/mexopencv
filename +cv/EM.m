@@ -510,6 +510,8 @@ classdef EM < handle
             % * __Flags__ The optional predict flags, model-dependent.
             %       Not used. default 0
             %
+            % Returns posterior probabilities for the provided samples.
+            %
             % See also: cv.EM.predict2, cv.EM.train, cv.EM.calcError
             %
             [results,f] = EM_(this.id, 'predict', samples, varargin{:});

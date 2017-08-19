@@ -92,6 +92,7 @@
 % To do this, create 8-bit (or 16-bit) 4-channel image RGBA, where the alpha
 % channel goes last. Fully transparent pixels should have alpha set to 0,
 % fully opaque pixels should have alpha set to 255/65535.
+% Note: WEBP format can also store images with alpha channel.
 %
 % ## Example
 % The sample below shows how to create such a RGBA image and store to PNG file.
@@ -116,5 +117,5 @@
 %    image(img(:,:,1:3), 'AlphaData',img(:,:,4))
 %    axis image off
 %
-% See also: cv.imread, cv.imencode, imwrite
+% See also: cv.imread, cv.imencode, imwrite, dicomwrite, hdrwrite
 %

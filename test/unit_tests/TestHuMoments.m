@@ -10,7 +10,7 @@ classdef TestHuMoments
         end
 
         function test_2
-            img = randi(255, [10 10], 'uint8');
+            img = randi([0 255], [10 10], 'uint8');
             mo = cv.moments(img);
             hu = cv.HuMoments(mo);
             validateattributes(hu, {'double'}, {'vector', 'numel',7});

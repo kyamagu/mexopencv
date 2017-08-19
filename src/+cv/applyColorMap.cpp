@@ -21,7 +21,7 @@ const ConstMap<string,int> ColormapTypesMap = ConstMap<string,int>
     ("Summer",  cv::COLORMAP_SUMMER)
     ("Spring",  cv::COLORMAP_SPRING)
     ("Cool",    cv::COLORMAP_COOL)
-    ("Hsv",     cv::COLORMAP_HSV)
+    ("HSV",     cv::COLORMAP_HSV)
     ("Pink",    cv::COLORMAP_PINK)
     ("Hot",     cv::COLORMAP_HOT)
     ("Parula",  cv::COLORMAP_PARULA);

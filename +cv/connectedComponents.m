@@ -34,9 +34,9 @@
 %       total number of pixels in the source image. Currently `int32` and
 %       `uint16` are supported. default `int32`
 % * __Method__ specifies the connected components labeling algorithm to
-%       use, currently Grana's (BBDT) and Wu's (SAUF) algorithms are
-%       supported. Note that SAUF algorithm forces a row major ordering of
-%       labels while BBDT does not. One of:
+%       use, currently Grana (BBDT) and Wu's (SAUF) algorithms are supported.
+%       Note that SAUF algorithm forces a row major ordering of labels while
+%       BBDT does not. One of:
 %       * __Wu__ SAUF algorithm for 8-way connectivity, SAUF algorithm for
 %             4-way connectivity
 %       * __Default__ BBDT algorithm for 8-way connectivity, SAUF algorithm
@@ -45,6 +45,11 @@
 %             4-way connectivity
 %
 % The last two optional output arguments are only computed if requested.
+%
+% This function uses parallel version of both Grana and Wu's algorithms
+% (statistics included) if at least one allowed parallel framework is enabled
+% and if the rows of the image are at least twice the number returned by
+% cv.Utils.getNumberOfCPUs.
 %
 % ## References
 % [Wu]:

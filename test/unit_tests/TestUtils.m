@@ -5,6 +5,9 @@ classdef TestUtils
         function test_1
             info = cv.Utils.getBuildInformation();
             assert(ischar(info) && ~isempty(info));
+
+            v = cv.Utils.version();
+            assert(ischar(v) && ~isempty(v));
         end
 
         function test_2

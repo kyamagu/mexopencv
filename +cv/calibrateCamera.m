@@ -53,54 +53,57 @@
 %
 % ## Options
 % * __CameraMatrix__ Input 3x3 camera matrix used as initial value for
-%       `cameraMatrix`. If 'UseIntrinsicGuess' and/or 'FixAspectRatio' are
-%       specified, some or all of `fx`, `fy`, `cx`, `cy` must be initialized
-%       before calling the function. Not set by default (uses `eye(3)`).
+%       `cameraMatrix`. If any of `UseIntrinsicGuess`, `FixAspectRatio`, or
+%       `FixFocalLength` are specified, some or all of `fx`, `fy`, `cx`, `cy`
+%       must be initialized before calling the function. Not set by default
+%       (uses `eye(3)`).
 % * __DistCoeffs__ Input 4, 5, 8, 12 or 14 elements vector used as an initial
 %       values of `distCoeffs`. Not set by default (uses `zeros(1,14)`).
-% * __UseIntrinsicGuess__ Logical flag. When true, `CameraMatrix` contains
-%       valid initial values of `fx`, `fy`, `cx`, `cy` that are optimized
-%       further. Otherwise, `(cx,cy)` is initially set to the image center
-%       (`imageSize` is used), and focal distances are computed in a
-%       least-squares fashion. Note, that if intrinsic parameters are known,
-%       there is no need to use this function just to estimate extrinsic
-%       parameters. Use cv.solvePnP instead. default false.
-% * __FixPrincipalPoint__ Logical flag. The principal point is not changed
-%       during the global optimization. It stays at the center or at a
-%       different location specified when 'UseIntrinsicGuess' is set too.
+% * __UseIntrinsicGuess__ When true, `CameraMatrix` contains valid initial
+%       values of `fx`, `fy`, `cx`, `cy` that are optimized further.
+%       Otherwise, `(cx,cy)` is initially set to the image center (`imageSize`
+%       is used), and focal distances are computed in a least-squares fashion.
+%       Note, that if intrinsic parameters are known, there is no need to use
+%       this function just to estimate extrinsic parameters. Use cv.solvePnP
+%       instead. default false.
+% * __FixPrincipalPoint__ The principal point is not changed during the global
+%       optimization. It stays at the image center or at a different location
+%       specified when `UseIntrinsicGuess` is set too. default false.
+% * __FixFocalLength__ Fix `fx` and `fy`, as specified in the input
+%       `CameraMatrix`. default false.
+% * __FixAspectRatio__ The functions considers only `fy` as a free parameter.
+%       The ratio `fx/fy` stays the same as in the input `CameraMatrix`. When
+%       `UseIntrinsicGuess` is not set, the actual input values of `fx` and
+%       `fy` are ignored, only their ratio is computed and used further.
 %       default false.
-% * __FixAspectRatio__ Logical flag. The functions considers only `fy` as a
-%       free parameter. The ratio `fx/fy` stays the same as in the input
-%       `CameraMatrix`. When 'UseIntrinsicGuess' is not set, the actual input
-%       values of `fx` and `fy` are ignored, only their ratio is computed and
-%       used further. default false.
-% * __ZeroTangentDist__ Logical flag. Tangential distortion coefficients
-%       `p1` and `p2` are set to zeros and stay zero. default false.
-% * __FixK1__, ..., __FixK6__ Logical flag. The corresponding radial
-%       distortion coefficient is not changed during the optimization. If
-%       'UseIntrinsicGuess' is set, the coefficient from the supplied
-%       `DistCoeffs` matrix is used. Otherwise, it is set to 0. default false.
-% * __RationalModel__ Logical flag. Coefficients `k4`, `k5`, and `k6` are
-%       enabled. To provide the backward compatibility, this extra flag should
-%       be explicitly specified to make the calibration function use the
-%       rational model and return 8 coefficients. If the flag is not set, the
-%       function computes and returns only 5 distortion coefficients.
-%       default false.
-% * __ThinPrismModel__ Logical flag. Coefficients `s1`, `s2`, `s3` and `s4`
-%       are enabled. To provide the backward compatibility, this extra flag
-%       should be explicitly specified to make the calibration function use
-%       the thin prism model and return 12 coefficients. If the flag is not
-%       set, the function computes and returns only 5 distortion coefficients.
-%       default false.
-% * __FixS1S2S3S4__ Logical flag. The thin prism distortion coefficients are
-%       not changed during the optimization. If 'UseIntrinsicGuess' is set,
+% * __ZeroTangentDist__ Tangential distortion coefficients `p1` and `p2` are
+%       set to zeros and stay fixed. default false.
+% * __FixK1__, ..., __FixK6__ The corresponding radial distortion coefficient
+%       is not changed during the optimization. If `UseIntrinsicGuess` is set,
 %       the coefficient from the supplied `DistCoeffs` matrix is used.
 %       Otherwise, it is set to 0. default false.
+% * __RationalModel__ Coefficients `k4`, `k5`, and `k6` are enabled. To
+%       provide the backward compatibility, this extra flag should be
+%       explicitly specified to make the calibration function use the rational
+%       model and return 8 coefficients. If the flag is not set, the function
+%       computes and returns only 5 distortion coefficients. default false.
+%       (`RationalModel` as false implies `FixK4`,`FixK5`,`FixK6` as true).
+% * __ThinPrismModel__ Coefficients `s1`, `s2`, `s3` and `s4` are enabled. To
+%       provide the backward compatibility, this extra flag should be
+%       explicitly specified to make the calibration function use the thin
+%       prism model and return 12 coefficients. If the flag is not set, the
+%       function computes and returns only 5 distortion coefficients. default
+%       false. (`ThinPrismModel` as false implies `FixS1S2S3S4` as true).
+% * __FixS1S2S3S4__ The thin prism distortion coefficients are not changed
+%       during the optimization. If `UseIntrinsicGuess` is set, the
+%       coefficient from the supplied `DistCoeffs` matrix is used. Otherwise,
+%       it is set to 0. default false.
 % * __TiltedModel__ Coefficients `tauX` and `tauY` are enabled. To provide the
 %       backward compatibility, this extra flag should be explicitly specified
 %       to make the calibration function use the tilted sensor model and
 %       return 14 coefficients. If the flag is not set, the function computes
 %       and returns only 5 distortion coefficients. default false.
+%       (`TiltedModel` as false implies `FixTauXTauY` as true).
 % * __FixTauXTauY__ The coefficients of the tilted sensor model are not
 %       changed during the optimization. If `UseIntrinsicGuess` is set, the
 %       coefficient from the supplied `DistCoeffs` matrix is used. Otherwise,
@@ -120,7 +123,7 @@
 % an object is called a calibration rig or calibration pattern, and OpenCV has
 % built-in support for a chessboard as a calibration rig (see
 % cv.findChessboardCorners). Currently, initialization of intrinsic parameters
-% (when 'UseIntrinsicGuess' is not set) is only implemented for planar
+% (when `UseIntrinsicGuess` is not set) is only implemented for planar
 % calibration patterns (where Z-coordinates of the object points must be all
 % zeros). 3D calibration rigs can also be used as long as initial
 % `CameraMatrix` is provided.
@@ -150,12 +153,16 @@
 % ## References
 % [Zhang2000]:
 % > Zhengyou Zhang. "A flexible new technique for camera calibration".
-% > Pattern Analysis and Machine Intelligence, IEEE Transactions on,
+% > IEEE Transactions on Pattern Analysis and Machine Intelligence,
 % > 22(11):1330-1334, 2000.
 %
 % [BoughuetMCT]:
-% > Jean-Yves Bouguet. "Camera calibration toolbox for matlab" [eb/ol], 2004.
+% > Jean-Yves Bouguet. "Camera Calibration Toolbox for MATLAB" [eb/ol], 2004.
 % > [Camera Calibration Toolbox](http://www.vision.caltech.edu/bouguetj/calib_doc/)
+%
+% [Brown71]:
+% > Brown, D. C. "Close-range camera calibration",
+% > Photogrammetric Engineering 37 (1971): 855-866.
 %
 % See also: cv.findChessboardCorners, cv.solvePnP, cv.initCameraMatrix2D,
 %  cv.stereoCalibrate, cv.undistort, estimateCameraParameters,
