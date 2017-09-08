@@ -30,6 +30,9 @@ octave-workspace
 /samples/html/
 /opencv_contrib/samples/html/
 
+# downloaded Java packages for generating docs
+/utils/jars/*/*.jar
+
 # downloaded files for samples and tests
 /test/768x576.avi
 /test/car.avi
