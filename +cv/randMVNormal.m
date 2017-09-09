@@ -1,6 +1,6 @@
 %RANDMVNORMAL  Generates sample from multivariate normal distribution
 %
-%    samples = cv.randMVNormal(mu, sigma, nsamples)
+%     samples = cv.randMVNormal(mu, sigma, nsamples)
 %
 % ## Input
 % * __mu__ mean, an average row vector `1xd`.

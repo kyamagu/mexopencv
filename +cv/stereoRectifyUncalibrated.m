@@ -1,17 +1,16 @@
 %STEREORECTIFYUNCALIBRATED  Computes a rectification transform for an uncalibrated stereo camera
 %
-%    [H1,H2,success] = cv.stereoRectifyUncalibrated(points1, points2, F, imageSize)
-%    [...] = cv.stereoRectifyUncalibrated(..., 'OptionName', optionValue, ...)
+%     [H1,H2,success] = cv.stereoRectifyUncalibrated(points1, points2, F, imageSize)
+%     [...] = cv.stereoRectifyUncalibrated(..., 'OptionName', optionValue, ...)
 %
 % ## Input
 % * __points1__ Array of feature points in the first image as a cell array of
-%       2-element vectors: `{[x1, y1], [x2, y2], ...}` or an Nx2/Nx1x2/1xNx2
-%       numeric array. The same formats as in cv.findFundamentalMat are
-%       supported.
+%   2-element vectors: `{[x1, y1], [x2, y2], ...}` or an Nx2/Nx1x2/1xNx2
+%   numeric array. The same formats as in cv.findFundamentalMat are supported.
 % * __points2__ The corresponding points in the second image, same size and
-%       type as `points1`.
+%   type as `points1`.
 % * __F__ Input 3x3 fundamental matrix. It can be computed from the same set
-%       of point pairs using cv.findFundamentalMat.
+%   of point pairs using cv.findFundamentalMat.
 % * __imageSize__ Size of the image `[w,h]`.
 %
 % ## Output
@@ -21,11 +20,11 @@
 %
 % ## Options
 % * __Threshold__ Optional threshold used to filter out the outliers. If the
-%       parameter is greater than zero, all the point pairs that do not comply
-%       with the epipolar geometry (that is, the points for which
-%       `|points2{i}' * F * points1{i}| > Threshold`) are rejected prior to
-%       computing the homographies. Otherwise,all the points are considered
-%       inliers. default 5
+%   parameter is greater than zero, all the point pairs that do not comply
+%   with the epipolar geometry (that is, the points for which
+%   `|points2{i}' * F * points1{i}| > Threshold`) are rejected prior to
+%   computing the homographies. Otherwise,all the points are considered
+%   inliers. default 5
 %
 % The function computes the rectification transformations without knowing
 % intrinsic parameters of the cameras and their relative position in the
@@ -35,7 +34,7 @@
 % transformations encoded by the homography matrices `H1` and `H2`. The
 % function implements the algorithm [Hartley99].
 %
-% ## Note
+% ### Note
 % While the algorithm does not need to know the intrinsic parameters of the
 % cameras, it heavily depends on the epipolar geometry. Therefore, if the
 % camera lenses have a significant distortion, it would be better to correct

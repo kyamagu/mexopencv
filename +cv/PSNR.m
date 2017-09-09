@@ -1,6 +1,6 @@
 %PSNR  Computes PSNR image/video quality metric
 %
-%    psnr = cv.PSNR(src1, src2)
+%     psnr = cv.PSNR(src1, src2)
 %
 % ## Input
 % * __src1__ first image (gray or color), 8-bit integer type.

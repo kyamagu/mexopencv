@@ -1,8 +1,8 @@
 %INVERT  Finds the inverse or pseudo-inverse of a matrix
 %
-%    dst = cv.invert(src)
-%    [dst,d] = cv.invert(...)
-%    [...] = cv.invert(..., 'OptionName',optionValue, ...)
+%     dst = cv.invert(src)
+%     [dst,d] = cv.invert(...)
+%     [...] = cv.invert(..., 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __src__ input floating-point M x N matrix.
@@ -13,11 +13,11 @@
 %
 % ## Options
 % * __Method__ Inversion method, default 'LU'. One of the following:
-%       * __LU__ Gaussian elimination with the optimal pivot element chosen.
-%       * __SVD__ Singular value decomposition (SVD) method. The matrix can
-%             be singular.
-%       * __Cholesky__ Cholesky decomposion. The matrix must be symmetrical
-%             and positively defined.
+%   * __LU__ Gaussian elimination with the optimal pivot element chosen.
+%   * __SVD__ Singular value decomposition (SVD) method. The matrix can be
+%     singular.
+%   * __Cholesky__ Cholesky decomposion. The matrix must be symmetrical and
+%     positively defined.
 %
 % The function cv.invert inverts the matrix `src` and stores the result in
 % `dst`. When the matrix `src` is singular or non-square, the function

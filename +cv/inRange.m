@@ -1,6 +1,6 @@
 %INRANGE  Checks if array elements lie between the elements of two other arrays
 %
-%    dst = cv.inRange(src, lowerb, upperb)
+%     dst = cv.inRange(src, lowerb, upperb)
 %
 % ## Input
 % * __src__ first input array.
@@ -14,12 +14,12 @@
 %
 % - For every element of a single-channel input array:
 %
-%        dst(i,j,..) = lowerb(i,j,..,1) <= src(i,j,..,1) <= upperb(i,j,..,1)
+%       dst(i,j,..) = lowerb(i,j,..,1) <= src(i,j,..,1) <= upperb(i,j,..,1)
 %
 % - For two-channel arrays:
 %
-%        dst(i,j,..) = lowerb(i,j,..,1) <= src(i,j,..,1) <= upperb(i,j,..,1) and
-%                      lowerb(i,j,..,2) <= src(i,j,..,2) <= upperb(i,j,..,2)
+%       dst(i,j,..) = lowerb(i,j,..,1) <= src(i,j,..,1) <= upperb(i,j,..,1) and
+%                     lowerb(i,j,..,2) <= src(i,j,..,2) <= upperb(i,j,..,2)
 %
 % - and so forth.
 %

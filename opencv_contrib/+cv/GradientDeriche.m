@@ -1,13 +1,13 @@
 %GRADIENTDERICHE  Applies Deriche filter to an image
 %
-%    dst = cv.GradientDeriche(op, dir)
-%    dst = cv.GradientDeriche(op, dir, 'OptionName',optionValue, ...)
+%     dst = cv.GradientDeriche(op, dir)
+%     dst = cv.GradientDeriche(op, dir, 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __op__ Source 8-bit or 16-bit image, 1-channel or 3-channel image.
 % * __dir__ Filter direction. One of:
-%       * __X__
-%       * __Y__
+%   * __X__
+%   * __Y__
 %
 % ## Output
 % * __dst__ result `single` image with same number of channel than `op`.

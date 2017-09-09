@@ -1,98 +1,98 @@
 %STEREOCALIBRATE  Calibrates the stereo camera
 %
-%    S = cv.stereoCalibrate(objectPoints, imagePoints1, imagePoints2, imageSize)
-%    [...] = cv.stereoCalibrate(..., 'OptionName', optionValue, ...)
+%     S = cv.stereoCalibrate(objectPoints, imagePoints1, imagePoints2, imageSize)
+%     [...] = cv.stereoCalibrate(..., 'OptionName', optionValue, ...)
 %
 % ## Input
 % * __objectPoints__ A cell array of cells of calibration pattern points in
-%       the calibration pattern coordinate space  `{{[x,y,z], ..}, ...}`.
+%   the calibration pattern coordinate space  `{{[x,y,z], ..}, ...}`.
 % * __imagePoints1__ A cell array of cells of the projections of calibration
-%       pattern points `{{[x,y], ..}, ...}`, observed by the first camera.
+%   pattern points `{{[x,y], ..}, ...}`, observed by the first camera.
 % * __imagePoints2__ A cell array of cells of the projections of calibration
-%       pattern points `{{[x,y], ..}, ...}`, observed by the second camera.
+%   pattern points `{{[x,y], ..}, ...}`, observed by the second camera.
 % * __imageSize__ Size of the image used only to initialize the intrinsic
-%       camera matrix `[w,h]`.
+%   camera matrix `[w,h]`.
 %
 % ## Output
 % * __S__ scalar struct having the following fields:
-%       * __cameraMatrix1__ output first camera matrix
-%             `A = [fx1 0 cx1; 0 fy1 cy1; 0 0 1]`.
-%       * __distCoeffs1__ output vector of distortion coefficients
-%             `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4,taux,tauy]` of 4, 5, 8, 12
-%             or 14 elements. The output vector length depends on the options.
-%       * __cameraMatrix2__ output second camera matrix
-%             `A = [fx2 0 cx2; 0 fy2 cy2; 0 0 1]`. The parameter is similar to
-%             `cameraMatrix1`.
-%       * __distCoeffs2__ output lens distortion coefficients for the second
-%             camera. The parameter is similar to `distCoeffs1`.
-%       * __R__ output 3x3 rotation matrix between the 1st and the 2nd camera
-%             coordinate systems.
-%       * __T__ output 3x1 translation vector between the coordinate systems
-%             of the cameras.
-%       * __E__ output 3x3 essential matrix.
-%       * __F__ output 3x3 fundamental matrix.
-%       * __reprojErr__ output final re-projection error (scalar).
+%   * __cameraMatrix1__ output first camera matrix
+%     `A = [fx1 0 cx1; 0 fy1 cy1; 0 0 1]`.
+%   * __distCoeffs1__ output vector of distortion coefficients
+%     `[k1,k2,p1,p2,k3,k4,k5,k6,s1,s2,s3,s4,taux,tauy]` of 4, 5, 8, 12
+%     or 14 elements. The output vector length depends on the options.
+%   * __cameraMatrix2__ output second camera matrix
+%     `A = [fx2 0 cx2; 0 fy2 cy2; 0 0 1]`. The parameter is similar to
+%     `cameraMatrix1`.
+%   * __distCoeffs2__ output lens distortion coefficients for the second
+%     camera. The parameter is similar to `distCoeffs1`.
+%   * __R__ output 3x3 rotation matrix between the 1st and the 2nd camera
+%     coordinate systems.
+%   * __T__ output 3x1 translation vector between the coordinate systems of
+%     the cameras.
+%   * __E__ output 3x3 essential matrix.
+%   * __F__ output 3x3 fundamental matrix.
+%   * __reprojErr__ output final re-projection error (scalar).
 %
 % ## Options
 % * __CameraMatrix1__, __CameraMatrix2__ Initial camera matrices. If any of
-%       `UseIntrinsicGuess`, `FixAspectRatio`, `FixIntrinsic` (default), or
-%       `FixFocalLength` are specified, some or all of the matrix components
-%       must be initialized. See the flags description for details.
+%   `UseIntrinsicGuess`, `FixAspectRatio`, `FixIntrinsic` (default), or
+%   `FixFocalLength` are specified, some or all of the matrix components must
+%   be initialized. See the flags description for details.
 % * __DistCoeffs1__, __DistCoeffs2__ Initial lens distortion coefficients.
 % * __FixIntrinsic__ Fix `cameraMatrix1`,`cameraMatrix2` and `distCoeffs1`,
-%       `distCoeffs2` so that only `R`, `T`, `E`, and `F` matrices are
-%       estimated. default true.
+%   `distCoeffs2` so that only `R`, `T`, `E`, and `F` matrices are estimated.
+%   default true.
 % * __UseIntrinsicGuess__ Optimize some or all of the intrinsic parameters
-%       according to the specified flags. Initial values are provided by
-%       the user. default false.
+%   according to the specified flags. Initial values are provided by the user.
+%   default false.
 % * __FixPrincipalPoint__ Fix the principal points during the optimization.
-%       default false.
+%   default false.
 % * __FixFocalLength__ Fix `fx1`,`fx2` and `fy1`,`fy2`. default false.
 % * __FixAspectRatio__ Optimize `fy1`,`fy2` and fix the ratio `fx1/fy1`,
-%       `fx2/fy2`. default false.
+%   `fx2/fy2`. default false.
 % * __SameFocalLength__ Enforce same `fx1=fx2` and `fy1=fy2`. default false.
 % * __ZeroTangentDist__ Tangential distortion coefficients for each camera are
-%       set to zeros and stay fixed. default false.
+%   set to zeros and stay fixed. default false.
 % * __FixTangentDist__ The tangential distortion coefficients are not
-%       changed during the optimization. If `UseIntrinsicGuess` is set, the
-%       coefficient from the supplied `DistCoeffs` matrix is used. Otherwise,
-%       it is set to 0. default false.
+%   changed during the optimization. If `UseIntrinsicGuess` is set, the
+%   coefficient from the supplied `DistCoeffs` matrix is used. Otherwise, it
+%   is set to 0. default false.
 % * __FixK1__, ..., __FixK6__ The corresponding radial distortion coefficient
-%       is not changed during the optimization. If `UseIntrinsicGuess` is set,
-%       the coefficient from the supplied `DistCoeffs` matrix is used.
-%       Otherwise, it is set to 0. default false.
+%   is not changed during the optimization. If `UseIntrinsicGuess` is set, the
+%   coefficient from the supplied `DistCoeffs` matrix is used. Otherwise, it
+%   is set to 0. default false.
 % * __RationalModel__ Coefficients `k4`, `k5`, and `k6` are enabled. To
-%       provide the backward compatibility, this extra flag should be
-%       explicitly specified to make the calibration function use the rational
-%       model and return 8 coefficients. If the flag is not set, the function
-%       computes and returns only 5 distortion coefficients. default false.
-%       (`RationalModel` as false implies `FixK4`,`FixK5`,`FixK6` as true).
+%   provide the backward compatibility, this extra flag should be explicitly
+%   specified to make the calibration function use the rational model and
+%   return 8 coefficients. If the flag is not set, the function computes and
+%   returns only 5 distortion coefficients. default false.
+%   (`RationalModel` as false implies `FixK4`,`FixK5`,`FixK6` as true).
 % * __ThinPrismModel__ Coefficients `s1`, `s2`, `s3` and `s4` are enabled. To
-%       provide the backward compatibility, this extra flag should be
-%       explicitly specified to make the calibration function use the thin
-%       prism model and return 12 coefficients. If the flag is not set, the
-%       function computes and returns only 5 distortion coefficients. default
-%       false. (`ThinPrismModel` as false implies `FixS1S2S3S4` as true).
+%   provide the backward compatibility, this extra flag should be explicitly
+%   specified to make the calibration function use the thin prism model and
+%   return 12 coefficients. If the flag is not set, the function computes and
+%   returns only 5 distortion coefficients. default false.
+%   (`ThinPrismModel` as false implies `FixS1S2S3S4` as true).
 % * __FixS1S2S3S4__ The thin prism distortion coefficients are not changed
-%       during the optimization. If `UseIntrinsicGuess` is set, the
-%       coefficient from the supplied `DistCoeffs` matrix is used. Otherwise,
-%       it is set to 0. default false.
+%   during the optimization. If `UseIntrinsicGuess` is set, the coefficient
+%   from the supplied `DistCoeffs` matrix is used. Otherwise, it is set to 0.
+%   default false.
 % * __TiltedModel__ Coefficients `tauX` and `tauY` are enabled. To provide the
-%       backward compatibility, this extra flag should be explicitly specified
-%       to make the calibration function use the tilted sensor model and
-%       return 14 coefficients. If the flag is not set, the function computes
-%       and returns only 5 distortion coefficients. default false.
-%       (`TiltedModel` as false implies `FixTauXTauY` as true).
+%   backward compatibility, this extra flag should be explicitly specified to
+%   make the calibration function use the tilted sensor model and return 14
+%   coefficients. If the flag is not set, the function computes and returns
+%   only 5 distortion coefficients. default false.
+%   (`TiltedModel` as false implies `FixTauXTauY` as true).
 % * __FixTauXTauY__ The coefficients of the tilted sensor model are not
-%       changed during the optimization. If `UseIntrinsicGuess` is set, the
-%       coefficient from the supplied `DistCoeffs` matrix is used. Otherwise,
-%       it is set to 0. default false.
+%   changed during the optimization. If `UseIntrinsicGuess` is set, the
+%   coefficient from the supplied `DistCoeffs` matrix is used. Otherwise, it
+%   is set to 0. default false.
 % * __UseLU__ Use LU instead of SVD decomposition for solving. Much faster but
-%       potentially less precise. default false.
+%   potentially less precise. default false.
 % * __UseQR__ Use QR instead of SVD decomposition for solving. Faster but
-%       potentially less precise. default false.
+%   potentially less precise. default false.
 % * __Criteria__ Termination criteria for the iterative optimization algorithm.
-%       default `struct('type','Count+EPS', 'maxCount',30, 'epsilon',1e-6)`
+%   default `struct('type','Count+EPS', 'maxCount',30, 'epsilon',1e-6)`
 %
 % The function estimates transformation between two cameras making a stereo
 % pair. If you have a stereo camera where the relative position and
@@ -104,19 +104,19 @@
 % and orientation of the second camera relative to the first camera. This is
 % what the described function does. It computes `(R,T)` so that:
 %
-%    R2 = R * R1
-%    T2 = R * T1 + T
+%     R2 = R * R1
+%     T2 = R * T1 + T
 %
 % Optionally, it computes the essential matrix `E`:
 %
-%    E = [ 0 -T2  T1;
-%         T2   0 -T0;
-%        -T1  T0   0] * R
+%     E = [ 0 -T2  T1;
+%          T2   0 -T0;
+%         -T1  T0   0] * R
 %
 % where `Ti` are components of the translation vector `T`: `T = [T0,T1,T2]'`.
 % And the function can also compute the fundamental matrix `F`:
 %
-%    F = inv(cameraMatrix2)' * E * inv(cameraMatrix1)
+%     F = inv(cameraMatrix2)' * E * inv(cameraMatrix1)
 %
 % Besides the stereo-related information, the function can also perform a full
 % calibration of each of two cameras. However, due to the high dimensionality

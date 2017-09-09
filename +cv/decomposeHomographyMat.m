@@ -1,6 +1,6 @@
 %DECOMPOSEHOMOGRAPHYMAT  Decompose a homography matrix to rotation(s), translation(s) and plane normal(s)
 %
-%    [motions, nsols] = cv.decomposeHomographyMat(H, K)
+%     [motions, nsols] = cv.decomposeHomographyMat(H, K)
 %
 % ## Input
 % * __H__ The input homography matrix between two images, 3x3.
@@ -8,9 +8,9 @@
 %
 % ## Output
 % * __motions__ Decomposed `H`. A scalar struct with the following fields:
-%       * __R__ Array of rotation matrices. Cell array of 3x3 rotations.
-%       * __t__ Array of translation matrices. Cell array of 3x1 translations.
-%       * __n__ Array of plane normal matrices. Cell array of 3x1 normals.
+%   * __R__ Array of rotation matrices. Cell array of 3x3 rotations.
+%   * __t__ Array of translation matrices. Cell array of 3x1 translations.
+%   * __n__ Array of plane normal matrices. Cell array of 3x1 normals.
 % * __nsols__ number of solutions.
 %
 % This function extracts relative camera motion between two views observing a

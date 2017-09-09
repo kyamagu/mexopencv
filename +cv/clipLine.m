@@ -1,7 +1,7 @@
 %CLIPLINE  Clips the line against the image rectangle
 %
-%    [B,pt1,pt2] = cv.clipLine(imgSize, pt1, pt2)
-%    [B,pt1,pt2] = cv.clipLine(imgRect, pt1, pt2)
+%     [B,pt1,pt2] = cv.clipLine(imgSize, pt1, pt2)
+%     [B,pt1,pt2] = cv.clipLine(imgRect, pt1, pt2)
 %
 % ## Input
 % * __imgSize__ Image size `[w,h]`. The image rectangle is `[0, 0, w, h]`.

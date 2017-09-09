@@ -1,7 +1,7 @@
 %MULSPECTRUMS  Performs the per-element multiplication of two Fourier spectrums
 %
-%    c = cv.mulSpectrums(a, b)
-%    c = cv.mulSpectrums(a, b, 'OptionName',optionValue, ...)
+%     c = cv.mulSpectrums(a, b)
+%     c = cv.mulSpectrums(a, b, 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __a__ first input array.
@@ -12,9 +12,9 @@
 %
 % ## Options
 % * __Rows__ flag which indicates that each row of `a` and `b` is an
-%       independent 1D Fourier spectrum. default false
+%   independent 1D Fourier spectrum. default false
 % * __ConjB__ optional flag that conjugates the second input array before the
-%       multiplication (true) or not (false). default false
+%   multiplication (true) or not (false). default false
 %
 % The function cv.mulSpectrums performs the per-element multiplication of the
 % two CCS-packed or complex matrices that are results of a real or complex

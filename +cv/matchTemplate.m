@@ -1,31 +1,31 @@
 %MATCHTEMPLATE  Compares a template against overlapped image regions
 %
-%    result = cv.matchTemplate(image, tmpl)
-%    result = cv.matchTemplate(image, tmpl, 'OptionName', optionValue, ...)
+%     result = cv.matchTemplate(image, tmpl)
+%     result = cv.matchTemplate(image, tmpl, 'OptionName', optionValue, ...)
 %
 % ## Input
 % * __image__ Image where the search is running.  It must be 8-bit integer or
-%       32-bit floating-point.
+%   32-bit floating-point.
 % * __tmpl__ Searched template. It must be not greater than the source `image`
-%       and have the same data type.
+%   and have the same data type.
 %
 % ## Output
 % * __result__ Map of comparison results. It is single-channel 32-bit
-%       floating-point. If `image` is `W x H` and `templ` is `w x h`, then
-%       result is `(W-w+1) x (H-h+1)`.
+%   floating-point. If `image` is `W x H` and `templ` is `w x h`, then result
+%   is `(W-w+1) x (H-h+1)`.
 %
 % ## Options
 % * __Method__ Parameter specifying the comparison method, default 'SqDiff'.
-%       One of the following:
-%       * __SqDiff__        Squared difference
-%       * __SqDiffNormed__  Normalized squared difference
-%       * __CCorr__         Cross correlation
-%       * __CCorrNormed__   Normalized cross correlation
-%       * __CCoeff__        Cosine coefficient
-%       * __CCoeffNormed__  Normalized cosine coefficient
+%   One of the following:
+%   * __SqDiff__ Squared difference
+%   * __SqDiffNormed__ Normalized squared difference
+%   * __CCorr__ Cross correlation
+%   * __CCorrNormed__ Normalized cross correlation
+%   * __CCoeff__ Cosine coefficient
+%   * __CCoeffNormed__ Normalized cosine coefficient
 % * __Mask__ Mask of searched template. It must have the same datatype and
-%       size with `templ`. Currently, only the `SqDiff` and `CCorrNormed`
-%       methods are supported. It is not set by default.
+%   size with `templ`. Currently, only the `SqDiff` and `CCorrNormed` methods
+%   are supported. It is not set by default.
 %
 % The function slides through `image`, compares the overlapped patches of size
 % `w x h` against `templ` using the specified method and stores the comparison
@@ -37,33 +37,33 @@
 %
 % * __SqDiff__:
 %
-%        R(x,y) = sum_{x',y'} (T(x',y') - I(x+x',y+y'))^2
+%       R(x,y) = sum_{x',y'} (T(x',y') - I(x+x',y+y'))^2
 %
 % * __SqDiffNormed__:
 %
-%        R(x,y) = sum_{x',y'} (T(x',y') - I(x+x',y+y'))^2 /
-%                 sqrt(sum_{x',y'} (T(x',y')^2) * sum_{x',y'} (I(x+x',y+y')^2))
+%       R(x,y) = sum_{x',y'} (T(x',y') - I(x+x',y+y'))^2 /
+%                sqrt(sum_{x',y'} (T(x',y')^2) * sum_{x',y'} (I(x+x',y+y')^2))
 %
 % * __CCorr__:
 %
-%        R(x,y) = sum_{x',y'} (T(x',y') * I(x+x',y+y'))
+%       R(x,y) = sum_{x',y'} (T(x',y') * I(x+x',y+y'))
 %
 % * __CCorrNormed__:
 %
-%        R(x,y) = sum_{x',y'} (T(x',y') * I(x+x',y+y')) /
-%                 sqrt(sum_{x',y'} (T(x',y')^2) * sum_{x',y'} (I(x+x',y+y')^2))
+%       R(x,y) = sum_{x',y'} (T(x',y') * I(x+x',y+y')) /
+%                sqrt(sum_{x',y'} (T(x',y')^2) * sum_{x',y'} (I(x+x',y+y')^2))
 %
 % * __CCoeff__:
 %
-%        R(x,y) = sum_{x',y'} (T'(x',y') * I'(x+x',y+y')), where
+%       R(x,y) = sum_{x',y'} (T'(x',y') * I'(x+x',y+y')), where
 %
-%        T'(x',y') = T(x',y') - 1 / (w*h) * sum_{x'',y''} T(x'',y'')
-%        I'(x+x',y+y') = I(x+x',y+y') - 1 / (w*h) * sum_{x'',y''} I(x+x'',y+y'')
+%       T'(x',y') = T(x',y') - 1 / (w*h) * sum_{x'',y''} T(x'',y'')
+%       I'(x+x',y+y') = I(x+x',y+y') - 1 / (w*h) * sum_{x'',y''} I(x+x'',y+y'')
 %
 % * __CCoeffNormed__:
 %
-%        R(x,y) = sum_{x',y'} (T'(x',y') * I'(x+x',y+y')) /
-%                 sqrt(sum_{x',y'} (T'(x',y')^2) * sum_{x',y'} (I'(x+x',y+y')^2))
+%       R(x,y) = sum_{x',y'} (T'(x',y') * I'(x+x',y+y')) /
+%                sqrt(sum_{x',y'} (T'(x',y')^2) * sum_{x',y'} (I'(x+x',y+y')^2))
 %
 % After the function finishes the comparison, the best matches can be found as
 % global minimums (when 'SqDiff' was used) or maximums (when 'CCorr' or

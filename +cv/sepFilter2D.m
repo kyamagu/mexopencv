@@ -1,7 +1,7 @@
 %SEPFILTER2D  Applies a separable linear filter to an image
 %
-%    dst = cv.sepFilter2D(src, kernelX, kernelY)
-%    dst = cv.sepFilter2D(..., 'OptionName',optionValue, ...)
+%     dst = cv.sepFilter2D(src, kernelX, kernelY)
+%     dst = cv.sepFilter2D(..., 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __src__ Source image.
@@ -10,15 +10,15 @@
 %
 % ## Output
 % * __dst__ Destination image of the same size and the same number of channels
-%       as `src`.
+%   as `src`.
 %
 % ## Options
 % * __Anchor__ Anchor position within the kernel. The default value (-1,-1)
-%       means that the anchor is at the kernel center.
+%   means that the anchor is at the kernel center.
 % * __Delta__ Value added to the filtered results before storing them.
-%       default 0
+%   default 0
 % * __BorderType__ Pixel extrapolation method. See cv.copyMakeBorder.
-%       default 'Default'
+%   default 'Default'
 % * __DDepth__ Destination image depth, see cv.filter2D. default -1
 %
 % The function applies a separable linear filter to the image. That is, first,

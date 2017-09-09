@@ -1,6 +1,6 @@
 %CALCBLURRINESS  Calculate image blurriness
 %
-%    blurriness = cv.calcBlurriness(img)
+%     blurriness = cv.calcBlurriness(img)
 %
 % ## Input
 % * __img__ input image.

@@ -1,18 +1,17 @@
 %FITELLIPSE  Fits an ellipse around a set of 2D points
 %
-%    rct = cv.fitEllipse(points)
+%     rct = cv.fitEllipse(points)
 %
 % ## Input
 % * __points__ Input 2D point set, stored in numeric array
-%       (Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors (`{[x,y], ...}`).
+%   (Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors (`{[x,y], ...}`).
 %
 % ## Output
 % * __rct__ Output rotated rectangle struct with the following fields:
-%       * __center__ The rectangle mass center `[x,y]`.
-%       * __size__ Width and height of the rectangle `[w,h]`.
-%       * __angle__ The rotation angle in a clockwise direction.
-%             When the angle is 0, 90, 180, 270 etc., the
-%             rectangle becomes an up-right rectangle.
+%   * __center__ The rectangle mass center `[x,y]`.
+%   * __size__ Width and height of the rectangle `[w,h]`.
+%   * __angle__ The rotation angle in a clockwise direction. When the angle is
+%     0, 90, 180, 270 etc., the rectangle becomes an up-right rectangle.
 %
 % The function calculates the ellipse that fits (in a least-squares sense) a
 % set of 2D points best of all. It returns the rotated rectangle in which the

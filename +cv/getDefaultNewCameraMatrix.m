@@ -1,7 +1,7 @@
 %GETDEFAULTNEWCAMERAMATRIX  Returns the default new camera matrix
 %
-%    newCameraMatrix = cv.getDefaultNewCameraMatrix(cameraMatrix)
-%    [...] = cv.getDefaultNewCameraMatrix(..., 'OptionName',optionValue, ...)
+%     newCameraMatrix = cv.getDefaultNewCameraMatrix(cameraMatrix)
+%     [...] = cv.getDefaultNewCameraMatrix(..., 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __cameraMatrix__ Input camera matrix, a 3x3 double matrix.
@@ -12,8 +12,8 @@
 % ## Options
 % * __ImgSize__ Camera view image size in pixels `[w,h]`. Default [0,0]
 % * __CenterPrincipalPoint__ Location of the principal point in the new camera
-%       matrix. The parameter indicates whether this location should be at the
-%       image center or not. default false
+%   matrix. The parameter indicates whether this location should be at the
+%   image center or not. default false
 %
 % The function returns the camera matrix that is either an exact copy of the
 % input `cameraMatrix` (when `CenterPrinicipalPoint=false`), or the modified
@@ -21,9 +21,9 @@
 %
 % In the latter case, the new camera matrix will be:
 %
-%    [ fx,   0,  (ImgSize(1)-1)*0.5 ;
-%       0,  fy,  (ImgSize(2)-1)*0.5 ;
-%       0,   0,                   1 ]
+%     [ fx,   0,  (ImgSize(1)-1)*0.5 ;
+%        0,  fy,  (ImgSize(2)-1)*0.5 ;
+%        0,   0,                   1 ]
 %
 % where `fx` and `fy` are (0,0) and (1,1) elements of `cameraMatrix`,
 % respectively.

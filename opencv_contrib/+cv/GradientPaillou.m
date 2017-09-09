@@ -1,13 +1,13 @@
 %GRADIENTPAILLOU  Applies Paillou filter to an image
 %
-%    dst = cv.GradientPaillou(op, dir)
-%    dst = cv.GradientPaillou(op, dir, 'OptionName',optionValue, ...)
+%     dst = cv.GradientPaillou(op, dir)
+%     dst = cv.GradientPaillou(op, dir, 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __op__ Source 8-bit or 16-bit image, 1-channel or 3-channel image.
 % * __dir__ Gradient direction. One of:
-%       * __X__
-%       * __Y__
+%   * __X__
+%   * __Y__
 %
 % ## Output
 % * __dst__ result `single` image with same number of channel than `op`.

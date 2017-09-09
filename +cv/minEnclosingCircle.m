@@ -1,10 +1,10 @@
 %MINENCLOSINGCIRCLE  Finds a circle of the minimum area enclosing a 2D point set
 %
-%    [center,radius] = cv.minEnclosingCircle(points)
+%     [center,radius] = cv.minEnclosingCircle(points)
 %
 % ## Input
 % * __points__ Input vector of 2D points, stored in numeric array
-%       (Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors (`{[x,y], ...}`).
+%   (Nx2/Nx1x2/1xNx2) or cell array of 2-element vectors (`{[x,y], ...}`).
 %
 % ## Output
 % * __center__ Output center of circle `[x,y]`.

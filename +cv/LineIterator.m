@@ -1,7 +1,7 @@
 %LINEITERATOR  Raster line iterator
 %
-%    [pos, count] = cv.LineIterator(img, pt1, pt2)
-%    [...] = cv.LineIterator(..., 'OptionName',optionValue, ...)
+%     [pos, count] = cv.LineIterator(img, pt1, pt2)
+%     [...] = cv.LineIterator(..., 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __img__ input image
@@ -36,17 +36,17 @@
 %
 % ## Example
 %
-%    img = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
-%    pt1 = [10 15];    % 0-based
-%    pt2 = [200 100];  % 0-based
+%     img = imread(fullfile(mexopencv.root(),'test','fruits.jpg'));
+%     pt1 = [10 15];    % 0-based
+%     pt2 = [200 100];  % 0-based
 %
-%    % grabs pixels along the line (pt1, pt2) from 8-bit 3-channel image
-%    [xy,num] = cv.LineIterator(img, pt1, pt2, 'Connectivity',8);
-%    xy = xy + 1;  % 1-based subscripts
-%    c = zeros(num, size(img,3), class(img));
-%    for i=1:num
-%        c(i,:) = img(xy(i,2), xy(i,1), :);
-%    end
+%     % grabs pixels along the line (pt1, pt2) from 8-bit 3-channel image
+%     [xy,num] = cv.LineIterator(img, pt1, pt2, 'Connectivity',8);
+%     xy = xy + 1;  % 1-based subscripts
+%     c = zeros(num, size(img,3), class(img));
+%     for i=1:num
+%         c(i,:) = img(xy(i,2), xy(i,1), :);
+%     end
 %
 % See also: improfile
 %

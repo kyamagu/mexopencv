@@ -1,8 +1,8 @@
 %RECTANGLE  Draws a simple, thick, or filled up-right rectangle
 %
-%    img = cv.rectangle(img, pt1, pt2)
-%    img = cv.rectangle(img, rect)
-%    [...] = cv.rectangle(..., 'OptionName', optionValue, ...)
+%     img = cv.rectangle(img, pt1, pt2)
+%     img = cv.rectangle(img, rect)
+%     [...] = cv.rectangle(..., 'OptionName', optionValue, ...)
 %
 % ## Input
 % * __img__ Image.
@@ -16,12 +16,12 @@
 % ## Options
 % * __Color__ Rectangle color or brightness (grayscale image). default zeros
 % * __Thickness__ Thickness of lines that make up the rectangle. Negative
-%       values (like -1) or the string 'Filled', mean that the function has
-%       to draw a filled rectangle. default 1.
+%   values (like -1) or the string 'Filled', mean that the function has to
+%   draw a filled rectangle. default 1.
 % * __LineType__ Type of the line boundary. One of:
-%       * __4__ 4-connected line
-%       * __8__ 8-connected line (default)
-%       * __AA__ anti-aliased line
+%   * __4__ 4-connected line
+%   * __8__ 8-connected line (default)
+%   * __AA__ anti-aliased line
 % * __Shift__ Number of fractional bits in the point coordinates. default 0
 %
 % The function cv.rectangle draws a rectangle outline or a filled rectangle

@@ -1,25 +1,25 @@
 %ANISOTROPICDIFFUSION  Performs anisotropic diffusion on an image
 %
-%    dst = cv.anisotropicDiffusion(src)
-%    dst = cv.anisotropicDiffusion(src, 'OptionName',optionValue, ...)
+%     dst = cv.anisotropicDiffusion(src)
+%     dst = cv.anisotropicDiffusion(src, 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __src__ 8-bit 3-channel source image.
 %
 % ## Output
 % * __dst__ Destination image of the same size and the same number of channels
-%       as `src`.
+%   as `src`.
 %
 % ## Options
 % * __Alpha__ The amount of time to step forward by on each iteration
-%       (normally, it's between 0 and 1). default 1.0
+%   (normally, it's between 0 and 1). default 1.0
 % * __K__ sensitivity to the edges. default 0.02
 % * __Iterations__ The number of iterations. default 10
 %
 % The function applies Perona-Malik anisotropic diffusion to an image. This is
 % the solution to the partial differential equation:
 %
-%    dI/dt = div(c(x,y,t) * nabla_I) = nabla_c * nabla_I + c(x,y,t) * delta_I
+%     dI/dt = div(c(x,y,t) * nabla_I) = nabla_c * nabla_I + c(x,y,t) * delta_I
 %
 % where `delta` denotes the Laplacian, `nabla` denotes the gradient, `div` is
 % the divergence operator and `c(x,y,t)` is the diffusion coefficient (usually
