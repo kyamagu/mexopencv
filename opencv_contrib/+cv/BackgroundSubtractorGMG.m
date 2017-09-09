@@ -34,7 +34,8 @@ classdef BackgroundSubtractorGMG < handle
     %
 
     properties (SetAccess = private)
-        id % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -73,14 +74,14 @@ classdef BackgroundSubtractorGMG < handle
         function this = BackgroundSubtractorGMG(varargin)
             %BACKGROUNDSUBTRACTORGMG  Creates a GMG Background Subtractor
             %
-            %    bs = cv.BackgroundSubtractorGMG()
-            %    bs = cv.BackgroundSubtractorGMG('OptionName', optionValue, ...)
+            %     bs = cv.BackgroundSubtractorGMG()
+            %     bs = cv.BackgroundSubtractorGMG('OptionName', optionValue, ...)
             %
             % ## Options
             % * __InitializationFrames__ number of frames used to initialize
-            %       the background models. default 120
+            %   the background models. default 120
             % * __DecisionThreshold__ Threshold value, above which it is
-            %       marked foreground, else background. default 0.8
+            %   marked foreground, else background. default 0.8
             %
             % Default constructor sets all parameters to default values.
             %
@@ -92,7 +93,7 @@ classdef BackgroundSubtractorGMG < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    bs.delete()
+            %     bs.delete()
             %
             % See also: cv.BackgroundSubtractorGMG
             %
@@ -103,23 +104,23 @@ classdef BackgroundSubtractorGMG < handle
         function fgmask = apply(this, im, varargin)
             %APPLY  Updates the background model and computes the foreground mask
             %
-            %    fgmask = bs.apply(im)
-            %    fgmask = bs.apply(im, 'OptionName', optionValue, ...)
+            %     fgmask = bs.apply(im)
+            %     fgmask = bs.apply(im, 'OptionName', optionValue, ...)
             %
             % ## Input
             % * __im__ Next video frame.
             %
             % ## Output
             % * __fgmask__ The output foreground mask as an 8-bit binary image
-            %       (0 for background, 255 for foregound).
+            %   (0 for background, 255 for foregound).
             %
             % ## Options
             % * __LearningRate__ The value between 0 and 1 that indicates how
-            %       fast the background model is learnt. Negative parameter
-            %       value makes the algorithm to use some automatically chosen
-            %       learning rate. 0 means that the background model is not
-            %       updated at all, 1 means that the background model is
-            %       completely reinitialized from the last frame. default -1
+            %   fast the background model is learnt. Negative parameter value
+            %   makes the algorithm to use some automatically chosen learning
+            %   rate. 0 means that the background model is not updated at all,
+            %   1 means that the background model is completely reinitialized
+            %   from the last frame. default -1
             %
             % Performs single-frame background subtraction and builds up a
             % statistical background image model.
@@ -132,12 +133,12 @@ classdef BackgroundSubtractorGMG < handle
         function bgImg = getBackgroundImage(this)
             %GETBACKGROUNDIMAGE  Computes a background image
             %
-            %    bgImg = bs.getBackgroundImage()
+            %     bgImg = bs.getBackgroundImage()
             %
             % ## Output
             % * __bgImg__ The output background image.
             %
-            % ## Note
+            % ### Note
             % Method not implemented for this class, returns empty.
             %
             % See also: cv.BackgroundSubtractorGMG.apply
@@ -151,7 +152,7 @@ classdef BackgroundSubtractorGMG < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.BackgroundSubtractorGMG.empty
             %
@@ -161,11 +162,11 @@ classdef BackgroundSubtractorGMG < handle
         function b = empty(this)
             %EMPTY  Returns true if the algorithm is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the algorithm is empty (e.g. in the very
-            %       beginning or after unsuccessful read).
+            %   beginning or after unsuccessful read).
             %
             % See also: cv.BackgroundSubtractorGMG.clear
             %
@@ -175,11 +176,11 @@ classdef BackgroundSubtractorGMG < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.BackgroundSubtractorGMG.save, cv.BackgroundSubtractorGMG.load
             %
@@ -189,7 +190,7 @@ classdef BackgroundSubtractorGMG < handle
         function save(this, filename)
             %SAVE  Saves the algorithm to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -204,21 +205,21 @@ classdef BackgroundSubtractorGMG < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from a file storage.
             % The previous model state is discarded.

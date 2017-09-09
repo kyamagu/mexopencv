@@ -5,11 +5,11 @@ classdef TickMeter < handle
     % second. That is, the following code computes the execution time in
     % seconds:
     %
-    %    tm = cv.TickMeter();
-    %    tm.start();
-    %    % do something ...
-    %    tm.stop();
-    %    disp(tm.TimeSec)
+    %     tm = cv.TickMeter();
+    %     tm.start();
+    %     % do something ...
+    %     tm.stop();
+    %     disp(tm.TimeSec)
     %
     % See also: tic, toc, cputime, timeit
     %
@@ -36,7 +36,7 @@ classdef TickMeter < handle
         function this = TickMeter()
             %TICKMETER  the default constructor
             %
-            %    obj = cv.TickMeter()
+            %     obj = cv.TickMeter()
             %
             % See also: cv.TickMeter.start, cv.TickMeter.reset
             %
@@ -45,6 +45,8 @@ classdef TickMeter < handle
 
         function delete(this)
             %DELETE  Destructor
+            %
+            %     obj.delete()
             %
             % See also: cv.TickMeter
             %
@@ -55,7 +57,7 @@ classdef TickMeter < handle
         function start(this)
             %START  Starts counting ticks
             %
-            %    obj.start()
+            %     obj.start()
             %
             % See also: cv.TickMeter.stop
             %
@@ -65,7 +67,7 @@ classdef TickMeter < handle
         function stop(this)
             %STOP  Stops counting ticks
             %
-            %    obj.stop()
+            %     obj.stop()
             %
             % See also: cv.TickMeter.start
             %
@@ -75,7 +77,7 @@ classdef TickMeter < handle
         function reset(this)
             %RESET  Resets internal values
             %
-            %    obj.reset()
+            %     obj.reset()
             %
             % See also: cv.TickMeter.start
             %

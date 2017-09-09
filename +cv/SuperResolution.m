@@ -8,16 +8,16 @@ classdef SuperResolution < handle
     %
     % ## Example
     %
-    %    superres = cv.SuperResolution();
-    %    superres.Scale = 2;       % 2x scale
-    %    superres.Iterations = 10; % careful alg is computationally expensive!
-    %    superres.setOpticalFlow('FarnebackOpticalFlow', 'LevelsNumber',3);
-    %    superres.setInput('Video', 'video.avi');
-    %    while true
-    %        tic, frame = superres.nextFrame(); toc
-    %        if isempty(frame), break; end
-    %        imshow(frame), drawnow
-    %    end
+    %     superres = cv.SuperResolution();
+    %     superres.Scale = 2;       % 2x scale
+    %     superres.Iterations = 10; % careful alg is computationally expensive!
+    %     superres.setOpticalFlow('FarnebackOpticalFlow', 'LevelsNumber',3);
+    %     superres.setInput('Video', 'video.avi');
+    %     while true
+    %         tic, frame = superres.nextFrame(); toc
+    %         if isempty(frame), break; end
+    %         imshow(frame), drawnow
+    %     end
     %
     % ## References
     % [Farsiu03]:
@@ -35,7 +35,8 @@ classdef SuperResolution < handle
     %
 
     properties (SetAccess = private)
-        id % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -64,12 +65,12 @@ classdef SuperResolution < handle
         function this = SuperResolution(superresType)
             %SUPERRESOLUTION  Create Bilateral TV-L1 Super Resolution
             %
-            %    obj = cv.SuperResolution(superresType)
+            %     obj = cv.SuperResolution(superresType)
             %
             % ## Input
             % * __superresType__ Super resolution algorithm type, one of:
-            %       * __BTVL1__ Bilateral TV-L1 on CPU. This is the default.
-            %       * **BTVL1_CUDA** Bilateral TV-L1 on GPU (requires CUDA).
+            %   * __BTVL1__ Bilateral TV-L1 on CPU. This is the default.
+            %   * **BTVL1_CUDA** Bilateral TV-L1 on GPU (requires CUDA).
             %
             % This class implements Super Resolution algorithm described in
             % the papers [Farsiu03] and [Mitzel09].
@@ -100,7 +101,7 @@ classdef SuperResolution < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.SuperResolution
             %
@@ -111,7 +112,7 @@ classdef SuperResolution < handle
         function collectGarbage(this)
             %COLLECTGARBAGE  Clear all inner buffers
             %
-            %    obj.collectGarbage()
+            %     obj.collectGarbage()
             %
             % See also: cv.SuperResolution.SuperResolution
             %
@@ -121,23 +122,23 @@ classdef SuperResolution < handle
         function setInput(this, frameSourceType, varargin)
             %SETINPUT  Set input frame source for Super Resolution algorithm
             %
-            %    obj.setInput(frameSourceType, ...)
+            %     obj.setInput(frameSourceType, ...)
             %
-            %    obj.setInput('Camera', deviceId)
-            %    obj.setInput('Video', filename)
+            %     obj.setInput('Camera', deviceId)
+            %     obj.setInput('Video', filename)
             %
             % ## Input
             % * __frameSourceType__ Input frame source type. One of:
-            %       * __Camera__ wrapper around cv.VideoCapture with a camera
-            %             device as source.
-            %       * __Video__ wrapper around cv.VideoCapture with a video
-            %             file as source.
+            %   * __Camera__ wrapper around cv.VideoCapture with a camera
+            %     device as source.
+            %   * __Video__ wrapper around cv.VideoCapture with a video file
+            %     as source.
             % * __deviceId__ id of the opened video capturing device (i.e. a
-            %       camera index). If there is a single camera connected, just
-            %       pass 0. default 0
+            %   camera index). If there is a single camera connected, just
+            %   pass 0. default 0
             % * __filename__ name of the opened video file (eg. `video.avi`)
-            %       or image sequence (eg. `img_%02d.jpg`, which will read
-            %       samples like `img_00.jpg`, `img_01.jpg`, `img_02.jpg`, ...)
+            %   or image sequence (eg. `img_%02d.jpg`, which will read samples
+            %   like `img_00.jpg`, `img_01.jpg`, `img_02.jpg`, ...)
             %
             % See also: cv.SuperResolution.nextFrame
             %
@@ -147,23 +148,23 @@ classdef SuperResolution < handle
         function setOpticalFlow(this, optFlowType, varargin)
             %SETOPTICALFLOW  Dense optical flow algorithm
             %
-            %    obj.setOpticalFlow(optFlowType)
-            %    obj.setOpticalFlow(optFlowType, 'OptionName',optionValue, ...)
+            %     obj.setOpticalFlow(optFlowType)
+            %     obj.setOpticalFlow(optFlowType, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __optFlowType__ Dense optical flow algorithm. One of:
-            %       * __FarnebackOpticalFlow__ wrapper for
-            %             cv.calcOpticalFlowFarneback function.
-            %       * __DualTVL1OpticalFlow__ wrapper for
-            %             cv.DualTVL1OpticalFlow class.
-            %       * __FarnebackOpticalFlowCUDA__ wrapper for
-            %             `cv::cuda::FarnebackOpticalFlow` (requires CUDA)
-            %       * __DualTVL1OpticalFlowCUDA__ wrapper for
-            %             `cv::cuda::OpticalFlowDual_TVL1` (requires CUDA)
-            %       * __BroxOpticalFlowCUDA__ wrapper for
-            %             `cv::cuda::BroxOpticalFlow` (requires CUDA)
-            %       * __PyrLKOpticalFlowCUDA__ wrapper for
-            %             `cv::cuda::DensePyrLKOpticalFlow` (requires CUDA)
+            %   * __FarnebackOpticalFlow__ wrapper for
+            %     cv.calcOpticalFlowFarneback function.
+            %   * __DualTVL1OpticalFlow__ wrapper for cv.DualTVL1OpticalFlow
+            %     class.
+            %   * __FarnebackOpticalFlowCUDA__ wrapper for
+            %     `cv::cuda::FarnebackOpticalFlow` (requires CUDA)
+            %   * __DualTVL1OpticalFlowCUDA__ wrapper for
+            %     `cv::cuda::OpticalFlowDual_TVL1` (requires CUDA)
+            %   * __BroxOpticalFlowCUDA__ wrapper for
+            %     `cv::cuda::BroxOpticalFlow` (requires CUDA)
+            %   * __PyrLKOpticalFlowCUDA__ wrapper for
+            %     `cv::cuda::DensePyrLKOpticalFlow` (requires CUDA)
             %
             % ## Options
             % The following are options for the various algorithms:
@@ -215,11 +216,11 @@ classdef SuperResolution < handle
         function optFlow = getOpticalFlow(this)
             %GETOPTICALFLOW  Dense optical flow algorithm
             %
-            %    optFlow = obj.getOpticalFlow()
+            %     optFlow = obj.getOpticalFlow()
             %
             % ## Output
-            % * __optFlow__ output struct containing properties of the
-            %       optical flow algorithm.
+            % * __optFlow__ output struct containing properties of the optical
+            %   flow algorithm.
             %
             % See also: cv.SuperResolution.setOpticalFlow,
             %  cv.calcOpticalFlowPyrLK, cv.DualTVL1OpticalFlow
@@ -233,13 +234,13 @@ classdef SuperResolution < handle
         function frame = nextFrame(this, varargin)
             %NEXTFRAME  Process next frame from input and return output result
             %
-            %    frame = obj.nexFrame()
-            %    frame = obj.nexFrame('OptionName',optionValue, ...)
+            %     frame = obj.nexFrame()
+            %     frame = obj.nexFrame('OptionName',optionValue, ...)
             %
             % ## Options
             % * __FlipChannels__ in case the output is color image, flips the
-            %       color order from OpenCV's BGR/BGRA to MATLAB's RGB/RGBA
-            %       order. default false
+            %   color order from OpenCV's BGR/BGRA to MATLAB's RGB/RGBA order.
+            %   default false
             %
             % ## Output
             % * __frame__ Output result
@@ -252,7 +253,7 @@ classdef SuperResolution < handle
         function reset(this)
             %RESET  Reset the frame source
             %
-            %    obj.reset()
+            %     obj.reset()
             %
             % See also: cv.SuperResolution.nextFrame
             %
@@ -265,7 +266,7 @@ classdef SuperResolution < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.SuperResolution.empty, cv.SuperResolution.load
             %
@@ -275,11 +276,11 @@ classdef SuperResolution < handle
         function b = empty(this)
             %EMPTY  Returns true if the algorithm is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.SuperResolution.clear, cv.SuperResolution.load
             %
@@ -289,11 +290,11 @@ classdef SuperResolution < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.SuperResolution.save, cv.SuperResolution.load
             %
@@ -303,7 +304,7 @@ classdef SuperResolution < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -319,21 +320,21 @@ classdef SuperResolution < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous

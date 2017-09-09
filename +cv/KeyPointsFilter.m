@@ -19,14 +19,14 @@ classdef KeyPointsFilter
     % * __pt__ coordinates of the keypoint `[x,y]`.
     % * __size__ diameter of the meaningful keypoint neighborhood.
     % * __angle__ computed orientation of the keypoint (-1 if not applicable);
-    %       it's in [0,360) degrees and measured relative to image coordinate
-    %       system, ie in clockwise.
+    %   it's in [0,360) degrees and measured relative to image coordinate
+    %   system, ie in clockwise.
     % * __response__ the response by which the most strong keypoints have been
-    %       selected. Can be used for the further sorting or subsampling.
+    %   selected. Can be used for the further sorting or subsampling.
     % * __octave__ octave (pyramid layer) from which the keypoint has been
-    %       extracted.
+    %   extracted.
     % * **class_id** object class (if the keypoints need to be clustered by an
-    %       object they belong to).
+    %   object they belong to).
     %
     % See also: cv.FeatureDetector
     %
@@ -36,7 +36,7 @@ classdef KeyPointsFilter
         function keypoints = runByImageBorder(keypoints, imgSize, borderSize)
             %RUNBYIMAGEBORDER  Remove keypoints within borderPixels of an image edge
             %
-            %    keypoints = cv.KeyPointsFilter.runByImageBorder(keypoints, imgSize, borderSize)
+            %     keypoints = cv.KeyPointsFilter.runByImageBorder(keypoints, imgSize, borderSize)
             %
             % ## Input
             % * __keypoints__ input collection of keypoints.
@@ -52,7 +52,7 @@ classdef KeyPointsFilter
         function keypoints = runByKeypointSize(keypoints, minSize, maxSize)
             %RUNBYKEYPOINTSIZE  Remove keypoints of sizes out of range
             %
-            %    keypoints = cv.KeyPointsFilter.runByKeypointSize(keypoints, minSize, maxSize)
+            %     keypoints = cv.KeyPointsFilter.runByKeypointSize(keypoints, minSize, maxSize)
             %
             % ## Input
             % * __keypoints__ input collection of keypoints.
@@ -68,7 +68,7 @@ classdef KeyPointsFilter
         function keypoints = runByPixelsMask(keypoints, mask)
             %RUNBYPIXELSMASK  Remove keypoints from some image by mask for pixels of this image
             %
-            %    keypoints = cv.KeyPointsFilter.runByPixelsMask(keypoints, mask)
+            %     keypoints = cv.KeyPointsFilter.runByPixelsMask(keypoints, mask)
             %
             % ## Input
             % * __keypoints__ input collection of keypoints.
@@ -83,7 +83,7 @@ classdef KeyPointsFilter
         function keypoints = removeDuplicated(keypoints)
             %REMOVEDUPLICATED  Remove duplicated keypoints
             %
-            %    keypoints = cv.KeyPointsFilter.removeDuplicated(keypoints)
+            %     keypoints = cv.KeyPointsFilter.removeDuplicated(keypoints)
             %
             % ## Input
             % * __keypoints__ input collection of keypoints.
@@ -97,7 +97,7 @@ classdef KeyPointsFilter
         function keypoints = retainBest(keypoints, npoints)
             %RETAINBEST  Retain the specified number of the best keypoints (according to the response)
             %
-            %    keypoints = cv.KeyPointsFilter.retainBest(keypoints, npoints)
+            %     keypoints = cv.KeyPointsFilter.retainBest(keypoints, npoints)
             %
             % ## Input
             % * __keypoints__ input collection of keypoints.
@@ -117,20 +117,20 @@ classdef KeyPointsFilter
         function points2f = convertToPoints(keypoints, varargin)
             %CONVERTTOPOINTS  Convert vector of keypoints to vector of points
             %
-            %    points2f = cv.KeyPointsFilter.convertToPoints(keypoints)
-            %    points2f = cv.KeyPointsFilter.convertToPoints(keypoints, 'OptionName',optionValue, ...)
+            %     points2f = cv.KeyPointsFilter.convertToPoints(keypoints)
+            %     points2f = cv.KeyPointsFilter.convertToPoints(keypoints, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __keypoints__ Keypoints obtained from any feature detection
-            %       algorithm like SIFT/SURF/ORB.
+            %   algorithm like SIFT/SURF/ORB.
             %
             % ## Output
             % * __points2f__ Array of (x,y) coordinates of each keypoint.
             %
             % ## Options
             % * __Indices__ Optional array of indexes of keypoints to be
-            %       converted to points. (Acts like a mask to convert only
-            %       specified keypoints). Not set by default.
+            %   converted to points. (Acts like a mask to convert only
+            %   specified keypoints). Not set by default.
             %
             % See also: cv.KeyPointsFilter.convertFromPoints
             %
@@ -140,22 +140,22 @@ classdef KeyPointsFilter
         function keypoints = convertFromPoints(points2f, varargin)
             %CONVERTFROMPOINTS  Convert vector of points to vector of keypoints, where each keypoint is assigned the same size and the same orientation
             %
-            %    keypoints = cv.KeyPointsFilter.convertFromPoints(points2f)
-            %    keypoints = cv.KeyPointsFilter.convertFromPoints(points2f, 'OptionName',optionValue, ...)
+            %     keypoints = cv.KeyPointsFilter.convertFromPoints(points2f)
+            %     keypoints = cv.KeyPointsFilter.convertFromPoints(points2f, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __points2f__ Array of (x,y) coordinates of each keypoint.
             %
             % ## Output
             % * __keypoints__ Keypoints similar to those obtained from any
-            %       feature detection algorithm like SIFT/SURF/ORB.
+            %   feature detection algorithm like SIFT/SURF/ORB.
             %
             % ## Options
             % * __Size__ keypoint diameter.
             % * __Response__ keypoint detector response on the keypoint (that
-            %       is, strength of the keypoint).
+            %   is, strength of the keypoint).
             % * __Octave__ pyramid octave in which the keypoint has been
-            %       detected.
+            %   detected.
             % * __ClassId__ object id.
             %
             % See also: cv.KeyPointsFilter.convertToPoints
@@ -166,7 +166,7 @@ classdef KeyPointsFilter
         function ovrl = overlap(kp1, kp2)
             %OVERLAP  Compute overlap for pair of keypoints
             %
-            %    ovrl = cv.KeyPointsFilter.overlap(kp1, kp2)
+            %     ovrl = cv.KeyPointsFilter.overlap(kp1, kp2)
             %
             % ## Input
             % * __kp1__ First keypoint.
@@ -174,10 +174,10 @@ classdef KeyPointsFilter
             %
             % ## Output
             % * __ovrl__ Overlap is the ratio between area of keypoint
-            %       regions' intersection and area of keypoint regions' union
-            %       (considering keypoint region as circle). If they don't
-            %       overlap, we get zero. If they coincide at same location
-            %       with same size, we get 1.
+            %   regions' intersection and area of keypoint regions' union
+            %   (considering keypoint region as circle). If they don't
+            %   overlap, we get zero. If they coincide at same location with
+            %   same size, we get 1.
             %
             ovrl = KeyPointsFilter_('overlap', kp1, kp2);
         end
@@ -185,7 +185,7 @@ classdef KeyPointsFilter
         function val = hash(kp)
             %HASH  Compute hash of a keypoint
             %
-            %    val = cv.KeyPointsFilter.hash(kp)
+            %     val = cv.KeyPointsFilter.hash(kp)
             %
             % ## Input
             % * __kp__ input keypoint.

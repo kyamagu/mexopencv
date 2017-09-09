@@ -13,7 +13,8 @@ classdef PCTSignaturesSQFD < handle
     %
 
     properties (SetAccess = private)
-        id % Object ID
+        % Object ID
+        id
     end
 
     %% Constructor/destructor
@@ -21,26 +22,26 @@ classdef PCTSignaturesSQFD < handle
         function this = PCTSignaturesSQFD(varargin)
             %PCTSIGNATURESSQFD  Creates the algorithm instance using selected distance function, similarity function and similarity function parameter
             %
-            %    obj = cv.PCTSignaturesSQFD()
-            %    obj = cv.PCTSignaturesSQFD('OptionName',optionValue, ...)
+            %     obj = cv.PCTSignaturesSQFD()
+            %     obj = cv.PCTSignaturesSQFD('OptionName',optionValue, ...)
             %
             % ## Options
             % * __DistanceFunction__ Lp Distance function selector. Available:
-            %       * **L0_25**
-            %       * **L0_5**
-            %       * __L1__
-            %       * __L2__ (default)
-            %       * __L2Squared__
-            %       * __L5__
-            %       * **L_Inf**
+            %   * **L0_25**
+            %   * **L0_5**
+            %   * __L1__
+            %   * __L2__ (default)
+            %   * __L2Squared__
+            %   * __L5__
+            %   * **L_Inf**
             % * __SimilarityFunction__ Similarity function selector, for
-            %       selected distance function `d(c_i, c_j)` and parameter
-            %       `alpha`. Available:
-            %       * __Minus__ `-d(c_i, c_j)`
-            %       * __Gaussian__ `exp(-alpha * d^2(c_i, c_j))`
-            %       * __Heuristic__ (default) `1/(alpha + d(c_i, c_j))`
+            %   selected distance function `d(c_i, c_j)` and parameter
+            %   `alpha`. Available:
+            %   * __Minus__ `-d(c_i, c_j)`
+            %   * __Gaussian__ `exp(-alpha * d^2(c_i, c_j))`
+            %   * __Heuristic__ (default) `1/(alpha + d(c_i, c_j))`
             % * __SimilarityParameter__ Parameter of the similarity function.
-            %       default 1.0
+            %   default 1.0
             %
             % See also: cv.PCTSignaturesSQFD.computeQuadraticFormDistance
             %
@@ -50,7 +51,7 @@ classdef PCTSignaturesSQFD < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.PCTSignaturesSQFD
             %
@@ -64,7 +65,7 @@ classdef PCTSignaturesSQFD < handle
         function dist = computeQuadraticFormDistance(this, signature0, signature1)
             %COMPUTEQUADRATICFORMDISTANCE  Computes Signature Quadratic Form Distance of two signatures
             %
-            %    dist = obj.computeQuadraticFormDistance(signature0, signature1)
+            %     dist = obj.computeQuadraticFormDistance(signature0, signature1)
             %
             % ## Input
             % * __signature0__ The first signature.
@@ -82,13 +83,13 @@ classdef PCTSignaturesSQFD < handle
         function distances = computeQuadraticFormDistances(this, sourceSignature, imageSignatures)
             %COMPUTEQUADRATICFORMDISTANCES  Computes Signature Quadratic Form Distance between the reference signature and each of the other image signatures
             %
-            %    distances = obj.computeQuadraticFormDistances(sourceSignature, imageSignatures)
+            %     distances = obj.computeQuadraticFormDistances(sourceSignature, imageSignatures)
             %
             % ## Input
             % * __sourceSignature__ The signature to measure distance of other
-            %       signatures from.
+            %   signatures from.
             % * __imageSignatures__ Vector of signatures to measure distance
-            %       from the source signature.
+            %   from the source signature.
             %
             % ## Output
             % * __distances__ Output vector of measured distances.
@@ -105,7 +106,7 @@ classdef PCTSignaturesSQFD < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.PCTSignaturesSQFD.empty
             %
@@ -115,11 +116,11 @@ classdef PCTSignaturesSQFD < handle
         function b = empty(this)
             %EMPTY  Returns true if the algorithm is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the algorithm is empty (e.g. in the very
-            %       beginning or after unsuccessful read).
+            %   beginning or after unsuccessful read).
             %
             % See also: cv.PCTSignaturesSQFD.clear
             %
@@ -129,11 +130,11 @@ classdef PCTSignaturesSQFD < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.PCTSignaturesSQFD.save, cv.PCTSignaturesSQFD.load
             %
@@ -143,7 +144,7 @@ classdef PCTSignaturesSQFD < handle
         function save(this, filename)
             %SAVE  Saves the algorithm to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -158,21 +159,21 @@ classdef PCTSignaturesSQFD < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from a file storage.
             % The previous model state is discarded.

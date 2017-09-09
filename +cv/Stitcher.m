@@ -54,7 +54,8 @@ classdef Stitcher < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -77,24 +78,24 @@ classdef Stitcher < handle
         function this = Stitcher(varargin)
             %STITCHER  Creates a Stitcher configured in one of the stitching modes
             %
-            %    obj = cv.Stitcher()
-            %    obj = cv.Stitcher('OptionName',optionValue, ...)
+            %     obj = cv.Stitcher()
+            %     obj = cv.Stitcher('OptionName',optionValue, ...)
             %
             % ## Options
             % * __Mode__ Scenario for stitcher operation. This is usually
-            %       determined by source of images to stitch and their
-            %       transformation. Default parameters will be chosen for
-            %       operation in given scenario. Default 'Panorama'. One of:
-            %       * __Panorama__ Mode for creating photo panoramas. Expects
-            %             images under perspective transformation and projects
-            %             resulting pano to sphere. See also
-            %             `BestOf2NearestMatcher`, `SphericalWarper`.
-            %       * __Scans__ Mode for composing scans. Expects images under
-            %             affine transformation does not compensate exposure
-            %             by default. See also `AffineBestOf2NearestMatcher`,
-            %             `AffineWarper`
+            %   determined by source of images to stitch and their
+            %   transformation. Default parameters will be chosen for
+            %   operation in given scenario. Default 'Panorama'. One of:
+            %   * __Panorama__ Mode for creating photo panoramas. Expects
+            %     images under perspective transformation and projects
+            %     resulting pano to sphere. See also `BestOf2NearestMatcher`,
+            %     `SphericalWarper`.
+            %   * __Scans__ Mode for composing scans. Expects images under
+            %     affine transformation does not compensate exposure by
+            %     default. See also `AffineBestOf2NearestMatcher`,
+            %     `AffineWarper`
             % * __TryUseGPU__ Flag indicating whether GPU should be used
-            %       whenever it's possible. default false
+            %   whenever it's possible. default false
             %
             % See also: cv.Stitcher.stitch
             %
@@ -104,7 +105,7 @@ classdef Stitcher < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.Stitcher
             %
@@ -117,28 +118,28 @@ classdef Stitcher < handle
         function pano = stitch(this, images, varargin)
             %STITCH  Tries to stitch the given images
             %
-            %    pano = obj.stitch(images)
-            %    pano = obj.stitch(images, rois)
-            %    [pano,status] = obj.stitch(...)
+            %     pano = obj.stitch(images)
+            %     pano = obj.stitch(images, rois)
+            %     [pano, status] = obj.stitch(...)
             %
             % ## Input
             % * __images__ Input cell-array of images.
             % * __rois__ Optional region of interest rectangles, a cell-array
-            %       of cell-arrays of 4-elements vectors
-            %       `{{[x,y,w,h], ...}, ...}` or `{[x,y,w,h; ...], ...}`.
+            %   of cell-arrays of 4-elements vectors `{{[x,y,w,h], ...}, ...}`
+            %   or `{[x,y,w,h; ...], ...}`.
             %
             % ## Output
             % * __pano__ Final pano.
             % * __status__ optional output status code. If not requested, the
-            %       function throws an error if the operation fails. A string
-            %       one of:
-            %       * __OK__
-            %       * **ERR_NEED_MORE_IMGS**
-            %       * **ERR_HOMOGRAPHY_EST_FAIL**
-            %       * **ERR_CAMERA_PARAMS_ADJUST_FAIL**
+            %   function throws an error if the operation fails. A string one
+            %   of:
+            %   * __OK__
+            %   * **ERR_NEED_MORE_IMGS**
+            %   * **ERR_HOMOGRAPHY_EST_FAIL**
+            %   * **ERR_CAMERA_PARAMS_ADJUST_FAIL**
             %
-            % The function throws an error if the stitch function returns
-            % a non-OK status code.
+            % The function throws an error if the stitch function returns a
+            % non-OK status code.
             %
             % See also: cv.Stitcher.estimateTransform,
             %  cv.Stitcher.composePanorama
@@ -149,24 +150,24 @@ classdef Stitcher < handle
         function estimateTransform(this, images, varargin)
             %ESTIMATETRANSFORM  Estimate transformation
             %
-            %    obj.estimateTransform(images)
-            %    obj.estimateTransform(images, rois)
-            %    status = obj.estimateTransform(...)
+            %     obj.estimateTransform(images)
+            %     obj.estimateTransform(images, rois)
+            %     status = obj.estimateTransform(...)
             %
             % ## Input
             % * __images__ Input cell-array of images.
             % * __rois__ Optional region of interest rectangles, a cell-array
-            %       of cell-arrays of 4-elements vectors
-            %       `{{[x,y,w,h], ...}, ...}` or `{[x,y,w,h; ...], ...}`.
+            %   of cell-arrays of 4-elements vectors `{{[x,y,w,h], ...}, ...}`
+            %   or `{[x,y,w,h; ...], ...}`.
             %
             % ## Output
             % * __status__ optional output status code. If not requested, the
-            %       function throws an error if the operation fails. A string
-            %       one of:
-            %       * __OK__
-            %       * **ERR_NEED_MORE_IMGS**
-            %       * **ERR_HOMOGRAPHY_EST_FAIL**
-            %       * **ERR_CAMERA_PARAMS_ADJUST_FAIL**
+            %   function throws an error if the operation fails. A string one
+            %   of:
+            %   * __OK__
+            %   * **ERR_NEED_MORE_IMGS**
+            %   * **ERR_HOMOGRAPHY_EST_FAIL**
+            %   * **ERR_CAMERA_PARAMS_ADJUST_FAIL**
             %
             % This function tries to match the given images and to estimate
             % rotations of each camera.
@@ -182,9 +183,9 @@ classdef Stitcher < handle
         function pano = composePanorama(this, varargin)
             %COMPOSEPANORAMA  Compose panorama
             %
-            %    pano = obj.composePanorama()
-            %    pano = obj.composePanorama(images)
-            %    [pano,status] = obj.composePanorama(...)
+            %     pano = obj.composePanorama()
+            %     pano = obj.composePanorama(images)
+            %     [pano, status] = obj.composePanorama(...)
             %
             % ## Input
             % * __images__ Input cell-array of images.
@@ -192,12 +193,12 @@ classdef Stitcher < handle
             % ## Output
             % * __pano__ Final pano.
             % * __status__ optional output status code. If not requested, the
-            %       function throws an error if the operation fails. A string
-            %       one of:
-            %       * __OK__
-            %       * **ERR_NEED_MORE_IMGS**
-            %       * **ERR_HOMOGRAPHY_EST_FAIL**
-            %       * **ERR_CAMERA_PARAMS_ADJUST_FAIL**
+            %   function throws an error if the operation fails. A string one
+            %   of:
+            %   * __OK__
+            %   * **ERR_NEED_MORE_IMGS**
+            %   * **ERR_HOMOGRAPHY_EST_FAIL**
+            %   * **ERR_CAMERA_PARAMS_ADJUST_FAIL**
             %
             % This function tries to compose the given images (or images
             % stored internally from the other function calls) into the final
@@ -215,7 +216,7 @@ classdef Stitcher < handle
         function indices = component(this)
             %COMPONENT  Image indices
             %
-            %    indices = obj.component()
+            %     indices = obj.component()
             %
             % ## Output
             % * __indices__ Vector of integer indices (0-based).
@@ -228,18 +229,18 @@ classdef Stitcher < handle
         function params = cameras(this)
             %CAMERAS  Estimates camera parameters
             %
-            %    params = obj.cameras()
+            %     params = obj.cameras()
             %
             % ## Output
             % * __params__ Describes camera parameters, a struct-array with
-            %       the following fields:
-            %       * __aspect__ Aspect ratio.
-            %       * __focal__ Focal length.
-            %       * __ppx__ Principal point X.
-            %       * __ppy__ Principal point Y.
-            %       * __R__ 3x3 camera rotation matrix.
-            %       * __t__ 3x1 camera translation vector.
-            %       * __K__ 3x3 camera intrinsic parameters.
+            %   the following fields:
+            %   * __aspect__ Aspect ratio.
+            %   * __focal__ Focal length.
+            %   * __ppx__ Principal point X.
+            %   * __ppy__ Principal point Y.
+            %   * __R__ 3x3 camera rotation matrix.
+            %   * __t__ 3x1 camera translation vector.
+            %   * __K__ 3x3 camera intrinsic parameters.
             %
             % Note: Translation is assumed to be zero during the whole
             % stitching pipeline.
@@ -252,7 +253,7 @@ classdef Stitcher < handle
         function wscale = workScale(this)
             %WORKSCALE  Work scale
             %
-            %    wscale = obj.workScale()
+            %     wscale = obj.workScale()
             %
             % ## Output
             % * __wscale__ scalar double value.
@@ -267,7 +268,7 @@ classdef Stitcher < handle
         function mask = getMatchingMask(this)
             %GETMATCHINGMASK
             %
-            %    mask = obj.getMatchingMask()
+            %     mask = obj.getMatchingMask()
             %
             % ## Output
             % * __mask__
@@ -280,7 +281,7 @@ classdef Stitcher < handle
         function setMatchingMask(this, mask)
             %SETMATCHINGMASK
             %
-            %    obj.setMatchingMask(mask)
+            %     obj.setMatchingMask(mask)
             %
             % ## Input
             % * __mask__
@@ -293,7 +294,7 @@ classdef Stitcher < handle
         function value = getFeaturesFinder(this)
             %GETFEATURESFINDER  Get the features finder
             %
-            %    value = obj.getFeaturesFinder()
+            %     value = obj.getFeaturesFinder()
             %
             % ## Output
             % * __value__ output scalar struct.
@@ -306,18 +307,17 @@ classdef Stitcher < handle
         function setFeaturesFinder(this, finderType, varargin)
             %SETFEATURESFINDER  Set the features finder
             %
-            %    obj.setFeaturesFinder(finderType)
-            %    obj.setFeaturesFinder(finderType, 'OptionName',optionValue, ...)
+            %     obj.setFeaturesFinder(finderType)
+            %     obj.setFeaturesFinder(finderType, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __finderType__ Feature finder type. One of:
-            %       * __OrbFeaturesFinder__ ORB features finder. See cv.ORB
-            %       * __AKAZEFeaturesFinder__ AKAZE features finder. See
-            %             cv.AKAZE
-            %       * __SurfFeaturesFinder__ SURF features finder. See cv.SURF
-            %             (requires `xfeatures2d` module)
-            %       * __SurfFeaturesFinderGpu__ (requires CUDA and
-            %             `xfeatures2d` module)
+            %   * __OrbFeaturesFinder__ ORB features finder. See cv.ORB
+            %   * __AKAZEFeaturesFinder__ AKAZE features finder. See cv.AKAZE
+            %   * __SurfFeaturesFinder__ SURF features finder. See cv.SURF
+            %     (requires `xfeatures2d` module)
+            %   * __SurfFeaturesFinderGpu__ (requires CUDA and `xfeatures2d`
+            %     module)
             %
             % ## Options
             % The following are options for the various finders:
@@ -355,7 +355,7 @@ classdef Stitcher < handle
         function value = getFeaturesMatcher(this)
             %GETFEATURESMATCHER  Get the features matcher
             %
-            %    value = obj.getFeaturesMatcher()
+            %     value = obj.getFeaturesMatcher()
             %
             % ## Output
             % * __value__ output scalar struct.
@@ -368,27 +368,26 @@ classdef Stitcher < handle
         function setFeaturesMatcher(this, matcherType, varargin)
             %SETFEATURESMATCHER  Set the features matcher
             %
-            %    obj.setFeaturesMatcher(matcherType)
-            %    obj.setFeaturesMatcher(matcherType, 'OptionName',optionValue, ...)
+            %     obj.setFeaturesMatcher(matcherType)
+            %     obj.setFeaturesMatcher(matcherType, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __matcherType__ Feature matcher type. One of:
-            %       * __BestOf2NearestMatcher__ A "best of 2 nearest" matcher.
-            %             Features matcher which finds two best matches for
-            %             each feature and leaves the best one only if the
-            %             ratio between descriptor distances is greater than
-            %             the threshold `MatchConf`.
-            %       * __BestOf2NearestRangeMatcher__
-            %       * __AffineBestOf2NearestMatcher__ A "best of 2 nearest"
-            %             matcher that expects affine trasformation between
-            %             images. Features matcher similar to
-            %             `BestOf2NearestMatcher` which finds two best matches
-            %             for each feature and leaves the best one only if the
-            %             ratio between descriptor distances is greater than
-            %             the threshold `MatchConf`.
-            %             Unlike `BestOf2NearestMatcher` this matcher uses
-            %             affine transformation (affine trasformation estimate
-            %             will be placed in `matches_info`).
+            %   * __BestOf2NearestMatcher__ A "best of 2 nearest" matcher.
+            %     Features matcher which finds two best matches for each
+            %     feature and leaves the best one only if the ratio between
+            %     descriptor distances is greater than the threshold
+            %     `MatchConf`.
+            %   * __BestOf2NearestRangeMatcher__
+            %   * __AffineBestOf2NearestMatcher__ A "best of 2 nearest"
+            %     matcher that expects affine trasformation between images.
+            %     Features matcher similar to `BestOf2NearestMatcher` which
+            %     finds two best matches for each feature and leaves the best
+            %     one only if the ratio between descriptor distances is
+            %     greater than the threshold `MatchConf`. Unlike
+            %     `BestOf2NearestMatcher` this matcher uses affine
+            %     transformation (affine trasformation estimate will be placed
+            %     in `matches_info`).
             %
             % ## Options
             % The following are options accepted by all matchers:
@@ -396,11 +395,11 @@ classdef Stitcher < handle
             % * __TryUseGPU__ Should try to use GPU or not. default false
             % * __MatchConf__ Match distances ration threshold. default 0.3
             % * __NumMatchesThresh1__ Minimum number of matches required for
-            %       the 2D projective transform estimation used in the inliers
-            %       classification step. default 6
+            %   the 2D projective transform estimation used in the inliers
+            %   classification step. default 6
             % * __NumMatchesThresh2__ Minimum number of matches required for
-            %       the 2D projective transform re-estimation on inliers.
-            %       default 6
+            %   the 2D projective transform re-estimation on inliers.
+            %   default 6
             %
             % The following are options for the various algorithms:
             %
@@ -409,9 +408,9 @@ classdef Stitcher < handle
             %
             % ### `AffineBestOf2NearestMatcher`
             % * __FullAffine__ whether to use full affine transformation with
-            %       6 degress of freedom or reduced transformation with
-            %       4 degrees of freedom using only rotation, translation and
-            %       uniform scaling. default false
+            %   6 degress of freedom or reduced transformation with 4 degrees
+            %   of freedom using only rotation, translation and uniform
+            %   scaling. default false
             %
             % The class uses `BestOf2NearestMatcher` by default.
             %
@@ -424,7 +423,7 @@ classdef Stitcher < handle
         function value = getEstimator(this)
             %GETESTIMATOR  Get the estimator
             %
-            %    value = obj.getEstimator()
+            %     value = obj.getEstimator()
             %
             % ## Output
             % * __value__ output scalar struct.
@@ -437,17 +436,17 @@ classdef Stitcher < handle
         function setEstimator(this, estimatorType, varargin)
             %SETESTIMATOR  Set the estimator
             %
-            %    obj.setEstimator(estimatorType)
-            %    obj.setEstimator(estimatorType, 'OptionName',optionValue, ...)
+            %     obj.setEstimator(estimatorType)
+            %     obj.setEstimator(estimatorType, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __estimatorType__ Estimator type. One of:
-            %       * __HomographyBasedEstimator__ Homography based rotation
-            %             estimator.
-            %       * __AffineBasedEstimator__ Affine transformation based
-            %             estimator. This estimator uses pairwise
-            %             tranformations estimated by matcher to estimate
-            %             final transformation for each camera.
+            %   * __HomographyBasedEstimator__ Homography based rotation
+            %     estimator.
+            %   * __AffineBasedEstimator__ Affine transformation based
+            %     estimator. This estimator uses pairwise tranformations
+            %     estimated by matcher to estimate final transformation for
+            %     each camera.
             %
             % The following are options for the various algorithms:
             %
@@ -463,7 +462,7 @@ classdef Stitcher < handle
         function value = getBundleAdjuster(this)
             %GETBUNDLEADJUSTER  Get the bundle adjuster
             %
-            %    value = obj.getBundleAdjuster()
+            %     value = obj.getBundleAdjuster()
             %
             % ## Output
             % * __value__ output scalar struct.
@@ -476,42 +475,35 @@ classdef Stitcher < handle
         function setBundleAdjuster(this, adjusterType, varargin)
             %SETBUNDLEADJUSTER  Set the bundle adjuster
             %
-            %    obj.setBundleAdjuster(adjusterType)
-            %    obj.setBundleAdjuster(adjusterType, 'OptionName',optionValue, ...)
+            %     obj.setBundleAdjuster(adjusterType)
+            %     obj.setBundleAdjuster(adjusterType, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __adjusterType__ camera parameters refinement method. One of:
-            %       * __NoBundleAdjuster__ Stub bundle adjuster that does
-            %             nothing.
-            %       * __BundleAdjusterRay__ Implementation of the camera
-            %             parameters refinement algorithm which minimizes sum
-            %             of the distances between the rays passing through
-            %             the camera center and a feature.
-            %             It can estimate focal length. It ignores the
-            %             refinement mask for now.
-            %       * __BundleAdjusterReproj__ Implementation of the camera
-            %             parameters refinement algorithm which minimizes sum
-            %             of the reprojection error squares.
-            %             It can estimate focal length, aspect ratio,
-            %             principal point. You can affect only on them via the
-            %             refinement mask.
-            %       * __BundleAdjusterAffine__ Bundle adjuster that expects
-            %             affine transformation represented in homogeneous
-            %             coordinates in R for each camera param. Implements
-            %             camera parameters refinement algorithm which
-            %             minimizes sum of the reprojection error squares.
-            %             It estimates all transformation parameters.
-            %             Refinement mask is ignored. See also
-            %             cv.AffineBasedEstimator,
-            %             `AffineBestOf2NearestMatcher`.
-            %       * __BundleAdjusterAffinePartial__ Bundle adjuster that
-            %             expects affine transformation with 4 DOF represented
-            %             in homogeneous coordinates in R for each camera
-            %             param. Implements camera parameters refinement
-            %             algorithm which minimizes sum of the reprojection
-            %             error squares.
-            %             It estimates all transformation parameters.
-            %             Refinement mask is ignored.
+            %   * __NoBundleAdjuster__ Stub bundle adjuster that does nothing.
+            %   * __BundleAdjusterRay__ Implementation of the camera
+            %     parameters refinement algorithm which minimizes sum of the
+            %     distances between the rays passing through the camera center
+            %     and a feature. It can estimate focal length. It ignores the
+            %     refinement mask for now.
+            %   * __BundleAdjusterReproj__ Implementation of the camera
+            %     parameters refinement algorithm which minimizes sum of the
+            %     reprojection error squares. It can estimate focal length,
+            %     aspect ratio, principal point. You can affect only on them
+            %     via the refinement mask.
+            %   * __BundleAdjusterAffine__ Bundle adjuster that expects affine
+            %     transformation represented in homogeneous coordinates in R
+            %     for each camera param. Implements camera parameters
+            %     refinement algorithm which minimizes sum of the reprojection
+            %     error squares. It estimates all transformation parameters.
+            %     Refinement mask is ignored. See also
+            %     cv.AffineBasedEstimator, `AffineBestOf2NearestMatcher`.
+            %   * __BundleAdjusterAffinePartial__ Bundle adjuster that expects
+            %     affine transformation with 4 DOF represented in homogeneous
+            %     coordinates in R for each camera param. Implements camera
+            %     parameters refinement algorithm which minimizes sum of the
+            %     reprojection error squares. It estimates all transformation
+            %     parameters. Refinement mask is ignored.
             %
             % ## Options
             % The following are options accepted by all adjusters:
@@ -519,7 +511,7 @@ classdef Stitcher < handle
             % * __ConfThresh__ default 1
             % * __RefinementMask__ default `eye(3)`
             % * __TermCriteria__ default
-            %       `struct('type','Count+EPS', 'maxCount',1000, 'epsilon',eps)`
+            %   `struct('type','Count+EPS', 'maxCount',1000, 'epsilon',eps)`
             %
             % The class uses `BundleAdjusterRay` by default.
             %
@@ -531,7 +523,7 @@ classdef Stitcher < handle
         function value = getWarper(this)
             %GETWARPER  Get the warper
             %
-            %    value = obj.getWarper()
+            %     value = obj.getWarper()
             %
             % ## Output
             % * __value__ output scalar struct.
@@ -544,40 +536,37 @@ classdef Stitcher < handle
         function setWarper(this, warperType, varargin)
             %SETWARPER  Set the image warper
             %
-            %    obj.setWarper(warperType)
-            %    obj.setWarper(warperType, 'OptionName',optionValue, ...)
+            %     obj.setWarper(warperType)
+            %     obj.setWarper(warperType, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __warperType__ image warper factory class type, used to create
-            %       the rotation-based warper. One of:
-            %       * __PlaneWarper__ Plane warper factory class. Warper that
-            %             maps an image onto the `z = 1` plane.
-            %       * __PlaneWarperGpu__ (requires CUDA)
-            %       * __AffineWarper__ Affine warper factory class. Affine
-            %             warper that uses rotations and translations. Uses
-            %             affine transformation in homogeneous coordinates to
-            %             represent both rotation and translation in camera
-            %             rotation matrix.
-            %       * __CylindricalWarper__ Cylindrical warper factory class.
-            %             Warper that maps an image onto the `x*x + z*z = 1`
-            %             cylinder.
-            %       * __CylindricalWarperGpu__ (requires CUDA)
-            %       * __SphericalWarper__ Warper that maps an image onto the
-            %             unit sphere located at the origin. Projects image
-            %             onto unit sphere with origin at [0,0,0] and radius
-            %             `scale`, measured in pixels. A 360 panorama would
-            %             therefore have a resulting width of `2*scale*pi`
-            %             pixels. Poles are located at [0,-1,0] and [0,1,0]
-            %             points.
-            %       * __SphericalWarperGpu__ (requires CUDA)
-            %       * __FisheyeWarper__
-            %       * __StereographicWarper__
-            %       * __CompressedRectilinearWarper__
-            %       * __CompressedRectilinearPortraitWarper__
-            %       * __PaniniWarper__
-            %       * __PaniniPortraitWarper__
-            %       * __MercatorWarper__
-            %       * __TransverseMercatorWarper__
+            %   the rotation-based warper. One of:
+            %   * __PlaneWarper__ Plane warper factory class. Warper that maps
+            %     an image onto the `z = 1` plane.
+            %   * __PlaneWarperGpu__ (requires CUDA)
+            %   * __AffineWarper__ Affine warper factory class. Affine warper
+            %     that uses rotations and translations. Uses affine
+            %     transformation in homogeneous coordinates to represent both
+            %     rotation and translation in camera rotation matrix.
+            %   * __CylindricalWarper__ Cylindrical warper factory class.
+            %     Warper that maps an image onto the `x*x + z*z = 1` cylinder.
+            %   * __CylindricalWarperGpu__ (requires CUDA)
+            %   * __SphericalWarper__ Warper that maps an image onto the unit
+            %     sphere located at the origin. Projects image onto unit
+            %     sphere with origin at [0,0,0] and radius `scale`, measured
+            %     in pixels. A 360 panorama would therefore have a resulting
+            %     width of `2*scale*pi` pixels. Poles are located at [0,-1,0]
+            %     and [0,1,0] points.
+            %   * __SphericalWarperGpu__ (requires CUDA)
+            %   * __FisheyeWarper__
+            %   * __StereographicWarper__
+            %   * __CompressedRectilinearWarper__
+            %   * __CompressedRectilinearPortraitWarper__
+            %   * __PaniniWarper__
+            %   * __PaniniPortraitWarper__
+            %   * __MercatorWarper__
+            %   * __TransverseMercatorWarper__
             %
             % ## Options
             % The following are options for the various warpers:
@@ -596,7 +585,7 @@ classdef Stitcher < handle
         function value = getExposureCompensator(this)
             %GETEXPOSURECOMPENSATOR  Get the exposire compensator
             %
-            %    value = obj.getExposureCompensator()
+            %     value = obj.getExposureCompensator()
             %
             % ## Output
             % * __value__ output scalar struct.
@@ -609,20 +598,19 @@ classdef Stitcher < handle
         function setExposureCompensator(this, compensatorType, varargin)
             %SETEXPOSURECOMPENSATOR  Set the exposure compensator
             %
-            %    obj.setExposureCompensator(compensatorType)
-            %    obj.setExposureCompensator(compensatorType, 'OptionName',optionValue, ...)
+            %     obj.setExposureCompensator(compensatorType)
+            %     obj.setExposureCompensator(compensatorType, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __compensatorType__ exposure compensator type. One of:
-            %       * __NoExposureCompensator__ Stub exposure compensator
-            %             which does nothing.
-            %       * __GainCompensator__ Exposure compensator which tries to
-            %             remove exposure related artifacts by adjusting image
-            %             intensities, see [BL07] and [WJ10] for details.
-            %       * __BlocksGainCompensator__ Exposure compensator which
-            %             tries to remove exposure related artifacts by
-            %             adjusting image block intensities, see [UES01] for
-            %             details.
+            %   * __NoExposureCompensator__ Stub exposure compensator which
+            %     does nothing.
+            %   * __GainCompensator__ Exposure compensator which tries to
+            %     remove exposure related artifacts by adjusting image
+            %     intensities, see [BL07] and [WJ10] for details.
+            %   * __BlocksGainCompensator__ Exposure compensator which tries
+            %     to remove exposure related artifacts by adjusting image
+            %     block intensities, see [UES01] for details.
             %
             % ## Options
             % The following are options for the various compensators:
@@ -661,7 +649,7 @@ classdef Stitcher < handle
         function value = getSeamFinder(this)
             %GETSEAMFINDER  Get the seam finder
             %
-            %    value = obj.getSeamFinder()
+            %     value = obj.getSeamFinder()
             %
             % ## Output
             % * __value__ output scalar struct.
@@ -674,31 +662,31 @@ classdef Stitcher < handle
         function setSeamFinder(this, seamType, varargin)
             %SETSEAMFINDER  Set the seam finder
             %
-            %    obj.setSeamFinder(seamType)
-            %    obj.setSeamFinder(seamType, 'OptionName',optionValue, ...)
+            %     obj.setSeamFinder(seamType)
+            %     obj.setSeamFinder(seamType, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __seamType__ seam estimator type. One of:
-            %       * __NoSeamFinder__ Stub seam estimator which does nothing.
-            %       * __VoronoiSeamFinder__ Voronoi diagram-based pairwise
-            %             seam estimator.
-            %       * __DpSeamFinder__
-            %       * __GraphCutSeamFinder__ Minimum graph cut-based seam
-            %             estimator. See details in [V03].
-            %       * __GraphCutSeamFinderGpu__ (requires CUDA)
+            %   * __NoSeamFinder__ Stub seam estimator which does nothing.
+            %   * __VoronoiSeamFinder__ Voronoi diagram-based pairwise seam
+            %     estimator.
+            %   * __DpSeamFinder__
+            %   * __GraphCutSeamFinder__ Minimum graph cut-based seam
+            %     estimator. See details in [V03].
+            %   * __GraphCutSeamFinderGpu__ (requires CUDA)
             %
             % ## Options
             % The following are options for the various seam finders:
             %
             % ### `DpSeamFinder`
             % * __CostFunction__ default 'Color'. One of:
-            %       * __Color__
-            %       * __ColorGrad__
+            %   * __Color__
+            %   * __ColorGrad__
             %
             % ### `GraphCutSeamFinder`
             % * __CostType__ default 'ColorGrad'. One of:
-            %       * __Color__
-            %       * __ColorGrad__
+            %   * __Color__
+            %   * __ColorGrad__
             % * __TerminalCost__ default 10000.0
             % * __BadRegionPenaly__ default 1000.0
             %
@@ -719,7 +707,7 @@ classdef Stitcher < handle
         function value = getBlender(this)
             %GETBLENDER  Get the blender
             %
-            %    value = obj.getBlender()
+            %     value = obj.getBlender()
             %
             % ## Output
             % * __value__ output scalar struct.
@@ -732,17 +720,17 @@ classdef Stitcher < handle
         function setBlender(this, blenderType, varargin)
             %SETBLENDER  Set the blender
             %
-            %    obj.setBlender(blenderType)
-            %    obj.setBlender(blenderType, 'OptionName',optionValue, ...)
+            %     obj.setBlender(blenderType)
+            %     obj.setBlender(blenderType, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __blenderType__ image blender type. One of:
-            %       * __NoBlender__ Simple blender which puts one image over
-            %             another.
-            %       * __FeatherBlender__ Simple blender which mixes images at
-            %             its borders.
-            %       * __MultiBandBlender__ Blender which uses multi-band
-            %             blending algorithm (see [BA83]).
+            %   * __NoBlender__ Simple blender which puts one image over
+            %     another.
+            %   * __FeatherBlender__ Simple blender which mixes images at its
+            %     borders.
+            %   * __MultiBandBlender__ Blender which uses multi-band blending
+            %     algorithm (see [BA83]).
             %
             % ## Options
             % The following are options for the various blenders:
@@ -754,8 +742,8 @@ classdef Stitcher < handle
             % * __TryGPU__ default false
             % * __NumBands__ default 5
             % * __WeightType__ One of:
-            %       * __single__ (default)
-            %       * __int16__
+            %   * __single__ (default)
+            %   * __int16__
             %
             % The class uses `MultiBandBlender` by default.
             %

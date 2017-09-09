@@ -44,14 +44,15 @@ classdef RetinaFastToneMapping < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     methods
         function this = RetinaFastToneMapping(inputSize)
             %RETINAFASTTONEMAPPING  Constructor
             %
-            %    obj = cv.RetinaFastToneMapping(inputSize)
+            %     obj = cv.RetinaFastToneMapping(inputSize)
             %
             % ## Input
             % * __inputSize__ input image size `[w,h]`.
@@ -64,7 +65,7 @@ classdef RetinaFastToneMapping < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.RetinaFastToneMapping
             %
@@ -78,9 +79,10 @@ classdef RetinaFastToneMapping < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
-            % See also: cv.RetinaFastToneMapping.empty, cv.RetinaFastToneMapping.load
+            % See also: cv.RetinaFastToneMapping.empty,
+            %  cv.RetinaFastToneMapping.load
             %
             RetinaFastToneMapping_(this.id, 'clear');
         end
@@ -88,13 +90,14 @@ classdef RetinaFastToneMapping < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
-            % See also: cv.RetinaFastToneMapping.clear, cv.RetinaFastToneMapping.load
+            % See also: cv.RetinaFastToneMapping.clear,
+            %  cv.RetinaFastToneMapping.load
             %
             b = RetinaFastToneMapping_(this.id, 'empty');
         end
@@ -102,7 +105,7 @@ classdef RetinaFastToneMapping < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -118,21 +121,21 @@ classdef RetinaFastToneMapping < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -146,13 +149,14 @@ classdef RetinaFastToneMapping < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
-            % See also: cv.RetinaFastToneMapping.save, cv.RetinaFastToneMapping.load
+            % See also: cv.RetinaFastToneMapping.save,
+            %  cv.RetinaFastToneMapping.load
             %
             name = RetinaFastToneMapping_(this.id, 'getDefaultName');
         end
@@ -163,16 +167,16 @@ classdef RetinaFastToneMapping < handle
         function setup(this, varargin)
             %SETUP  Updates tone mapping behaviors by adjusing the local luminance computation area
             %
-            %    obj.setup('OptionName',optionValue, ...)
+            %     obj.setup('OptionName',optionValue, ...)
             %
             % ## Options
             % * __PhotoreceptorsNeighborhoodRadius__ the first stage local
-            %       adaptation area. default 3.0
+            %   adaptation area. default 3.0
             % * __GanglioncellsNeighborhoodRadius__ the second stage local
-            %       adaptation area. default 1.0
+            %   adaptation area. default 1.0
             % * __MeanLuminanceModulatorK__ the factor applied to modulate the
-            %       mean Luminance information (default is 1, see reference
-            %       paper). default 1.0
+            %   mean Luminance information (default is 1, see reference paper).
+            %   default 1.0
             %
             % See also: cv.RetinaFastToneMapping.applyFastToneMapping
             %
@@ -182,7 +186,7 @@ classdef RetinaFastToneMapping < handle
         function outputToneMappedImage = applyFastToneMapping(this, inputImage)
             %APPLYFASTTONEMAPPING  Applies a luminance correction (initially High Dynamic Range (HDR) tone mapping)
             %
-            %    outputToneMappedImage = obj.applyFastToneMapping(inputImage)
+            %     outputToneMappedImage = obj.applyFastToneMapping(inputImage)
             %
             % ## Input
             % * __inputImage__ the input image to process RGB or gray levels.

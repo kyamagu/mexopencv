@@ -15,7 +15,8 @@ classdef FastLineDetector < handle
     %
 
     properties (SetAccess = private)
-        id % Object ID
+        % Object ID
+        id
     end
 
     %% Constructor/destructor
@@ -23,23 +24,23 @@ classdef FastLineDetector < handle
         function this = FastLineDetector(varargin)
             %FASTLINEDETECTOR  Creates a FastLineDetector object and initializes it
             %
-            %    obj = cv.FastLineDetector()
-            %    obj = cv.FastLineDetector('OptionName',optionValue, ...)
+            %     obj = cv.FastLineDetector()
+            %     obj = cv.FastLineDetector('OptionName',optionValue, ...)
             %
             % ## Options
             % * __LengthThreshold__ Segment shorter than this will be
-            %       discarded. default 10
+            %   discarded. default 10
             % * __DistanceThreshold__ A point placed from a hypothesis line
-            %       segment farther than this will be regarded as an outlier.
-            %       default 1.41421356
+            %   segment farther than this will be regarded as an outlier.
+            %   default 1.41421356
             % * __CannyThreshold1__ First threshold for hysteresis procedure
-            %       in cv.Canny. default 50
+            %   in cv.Canny. default 50
             % * __CannyThreshold2__ Second threshold for hysteresis procedure
-            %       in cv.Canny. default 50
+            %   in cv.Canny. default 50
             % * __CannyApertureSize__ Aperturesize for the sobel operator in
-            %       cv.Canny. default 3
+            %   cv.Canny. default 3
             % * __DoMerge__ If true, incremental merging of segments will be
-            %       perfomred. default false
+            %   perfomred. default false
             %
             % See also: cv.FastLineDetector.detect
             %
@@ -49,7 +50,7 @@ classdef FastLineDetector < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.FastLineDetector
             %
@@ -63,28 +64,28 @@ classdef FastLineDetector < handle
         function lines = detect(this, img)
             %DETECT  Finds lines in the input image
             %
-            %    lines = obj.detect(img)
+            %     lines = obj.detect(img)
             %
             % ## Input
             % * __img__ A grayscale (`uint8`) input image.
             %
             % ## Output
             % * __lines__ A cell array of 4-elements vectors of the form
-            %       `{[x1,y1, x2,y2], ..}` specifying the beginning and ending
-            %       point of a line, where point 1 `[x1,y1]` is the start,
-            %       point 2 `[x2,y2]` the end. Returned lines are directed so
-            %       that the brighter side is on their left.
+            %   `{[x1,y1, x2,y2], ..}` specifying the beginning and ending
+            %   point of a line, where point 1 `[x1,y1]` is the start, point 2
+            %   `[x2,y2]` the end. Returned lines are directed so that the
+            %   brighter side is on their left.
             %
             % An example output of the default parameters of the algorithm can
             % be seen here:
             %
-            % <<pics/corridor_fld.jpg>>
+            % ![image](http://docs.opencv.org/3.3.0/corridor_fld.jpg)
             %
             % If only a ROI needs to be selected, use:
             %
-            %    lines = obj.detect(cv.Rect.crop(image, roi));
-            %    lines = cat(1, lines{:});
-            %    lines = bsxfun(@plus, lines, roi);
+            %     lines = obj.detect(cv.Rect.crop(image, roi));
+            %     lines = cat(1, lines{:});
+            %     lines = bsxfun(@plus, lines, roi);
             %
             % See also: cv.FastLineDetector.drawSegments
             %
@@ -94,12 +95,12 @@ classdef FastLineDetector < handle
         function img = drawSegments(this, img, lines, varargin)
             %DRAWSEGMENTS  Draws the line segments on a given image
             %
-            %    img = obj.drawSegments(img, lines)
-            %    img = obj.drawSegments(img, lines, 'OptionName',optionValue, ...)
+            %     img = obj.drawSegments(img, lines)
+            %     img = obj.drawSegments(img, lines, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __img__ The image, where the lines will be drawn. Should be
-            %       bigger or equal to the image, where the lines were found.
+            %   bigger or equal to the image, where the lines were found.
             % * __lines__ A vector of the lines that needed to be drawn.
             %
             % ## Output
@@ -119,7 +120,7 @@ classdef FastLineDetector < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.FastLineDetector.empty, cv.FastLineDetector.load
             %
@@ -129,11 +130,11 @@ classdef FastLineDetector < handle
         function b = empty(this)
             %EMPTY  Returns true if the algorithm is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.FastLineDetector.clear, cv.FastLineDetector.load
             %
@@ -143,7 +144,7 @@ classdef FastLineDetector < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -159,21 +160,21 @@ classdef FastLineDetector < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -187,11 +188,11 @@ classdef FastLineDetector < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.FastLineDetector.save, cv.FastLineDetector.load
             %

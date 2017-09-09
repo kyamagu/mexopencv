@@ -42,7 +42,8 @@ classdef BackgroundSubtractorMOG2 < handle
     %
 
     properties (SetAccess = private)
-        id % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -107,19 +108,18 @@ classdef BackgroundSubtractorMOG2 < handle
         function this = BackgroundSubtractorMOG2(varargin)
             %BACKGROUNDSUBTRACTORMOG2  Creates MOG2 Background Subtractor
             %
-            %    bs = cv.BackgroundSubtractorMOG2()
-            %    bs = cv.BackgroundSubtractorMOG2('OptionName', optionValue, ...)
+            %     bs = cv.BackgroundSubtractorMOG2()
+            %     bs = cv.BackgroundSubtractorMOG2('OptionName', optionValue, ...)
             %
             % ## Options
             % * __History__ Length of the history. default 500
             % * __VarThreshold__ Threshold on the squared Mahalanobis distance
-            %       between the pixel and the model to decide whether a pixel
-            %       is well described by the background model. This parameter
-            %       does not affect the background update. default 16
+            %   between the pixel and the model to decide whether a pixel is
+            %   well described by the background model. This parameter does
+            %   not affect the background update. default 16
             % * __DetectShadows__ If true, the algorithm will detect shadows
-            %       and mark them. It decreases the speed a bit, so if you do
-            %       not need this feature, set the parameter to false.
-            %       default true
+            %   and mark them. It decreases the speed a bit, so if you do not
+            %   need this feature, set the parameter to false. default true
             %
             % See also: cv.BackgroundSubtractorMOG2
             %
@@ -129,7 +129,7 @@ classdef BackgroundSubtractorMOG2 < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    bs.delete()
+            %     bs.delete()
             %
             % See also: cv.BackgroundSubtractorMOG2
             %
@@ -140,26 +140,25 @@ classdef BackgroundSubtractorMOG2 < handle
         function fgmask = apply(this, im, varargin)
             %APPLY  Updates the background model and computes the foreground mask
             %
-            %    fgmask = bs.apply(im)
-            %    fgmask = bs.apply(im, 'OptionName', optionValue, ...)
+            %     fgmask = bs.apply(im)
+            %     fgmask = bs.apply(im, 'OptionName', optionValue, ...)
             %
             % ## Input
             % * __im__ Next video frame, uint8 or single. Floating point frame
-            %       will be used without scaling and should be in range
-            %       [0,255].
+            %   will be used without scaling and should be in range [0,255].
             %
             % ## Output
             % * __fgmask__ The output foreground mask as an 8-bit binary image
-            %       (0 for background, 255 for foregound, and `ShadowValue`
-            %       for shadows if `DetectShadows` is true).
+            %   (0 for background, 255 for foregound, and `ShadowValue` for
+            %   shadows if `DetectShadows` is true).
             %
             % ## Options
             % * __LearningRate__ The value between 0 and 1 that indicates how
-            %       fast the background model is learnt. Negative parameter
-            %       value makes the algorithm to use some automatically chosen
-            %       learning rate. 0 means that the background model is not
-            %       updated at all, 1 means that the background model is
-            %       completely reinitialized from the last frame. default -1
+            %   fast the background model is learnt. Negative parameter value
+            %   makes the algorithm to use some automatically chosen learning
+            %   rate. 0 means that the background model is not updated at all,
+            %   1 means that the background model is completely reinitialized
+            %   from the last frame. default -1
             %
             % See also: cv.BackgroundSubtractorMOG2.getBackgroundImage
             %
@@ -169,13 +168,13 @@ classdef BackgroundSubtractorMOG2 < handle
         function bgImg = getBackgroundImage(this)
             %GETBACKGROUNDIMAGE  Computes a background image
             %
-            %    bgImg = bs.getBackgroundImage()
+            %     bgImg = bs.getBackgroundImage()
             %
             % ## Output
             % * __bgImg__ The output background image, which is the mean of
-            %       all background Gaussians.
+            %   all background Gaussians.
             %
-            % ## Note
+            % ### Note
             % Sometimes the background image can be very blurry, as it contain
             % the average background statistics.
             %
@@ -190,7 +189,7 @@ classdef BackgroundSubtractorMOG2 < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.BackgroundSubtractorMOG2.empty
             %
@@ -200,11 +199,11 @@ classdef BackgroundSubtractorMOG2 < handle
         function b = empty(this)
             %EMPTY  Returns true if the algorithm is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the algorithm is empty (e.g. in the very
-            %       beginning or after unsuccessful read).
+            %   beginning or after unsuccessful read).
             %
             % See also: cv.BackgroundSubtractorMOG2.clear
             %
@@ -214,11 +213,11 @@ classdef BackgroundSubtractorMOG2 < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.BackgroundSubtractorMOG2.save, cv.BackgroundSubtractorMOG2.load
             %
@@ -228,7 +227,7 @@ classdef BackgroundSubtractorMOG2 < handle
         function save(this, filename)
             %SAVE  Saves the algorithm to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -243,21 +242,21 @@ classdef BackgroundSubtractorMOG2 < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from a file storage.
             % The previous model state is discarded.

@@ -15,7 +15,8 @@ classdef ShapeContextDistanceExtractor < handle
     %
 
     properties (SetAccess = private)
-        id % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -80,36 +81,36 @@ classdef ShapeContextDistanceExtractor < handle
         function this = ShapeContextDistanceExtractor(varargin)
             %SHAPECONTEXTDISTANCEEXTRACTOR  Constructor
             %
-            %    obj = cv.ShapeContextDistanceExtractor()
-            %    obj = cv.ShapeContextDistanceExtractor('OptionName',optionValue, ...)
+            %     obj = cv.ShapeContextDistanceExtractor()
+            %     obj = cv.ShapeContextDistanceExtractor('OptionName',optionValue, ...)
             %
             % ## Options
             % * __AngularBins__ see
-            %       cv.ShapeContextDistanceExtractor.AngularBins, default 12
+            %   cv.ShapeContextDistanceExtractor.AngularBins, default 12
             % * __RadialBins__ see
-            %       cv.ShapeContextDistanceExtractor.RadialBins, default 4
+            %   cv.ShapeContextDistanceExtractor.RadialBins, default 4
             % * __InnerRadius__ see
-            %       cv.ShapeContextDistanceExtractor.InnerRadius, default 0.2
+            %   cv.ShapeContextDistanceExtractor.InnerRadius, default 0.2
             % * __OuterRadius__ see
-            %       cv.ShapeContextDistanceExtractor.OuterRadius, default 2
+            %   cv.ShapeContextDistanceExtractor.OuterRadius, default 2
             % * __Iterations__ see
-            %       cv.ShapeContextDistanceExtractor.Iterations, default 3
+            %   cv.ShapeContextDistanceExtractor.Iterations, default 3
             % * __CostExtractor__ an algorithm that defines the cost matrix
-            %       between descriptors, specified as
-            %       `{comparerType, 'OptionName',optionValue, ...}`.
-            %       See cv.ShapeContextDistanceExtractor.setCostExtractor,
-            %       where `comparerType` is one of:
-            %       * __NormHistogramCostExtractor__
-            %       * __EMDHistogramCostExtractor__
-            %       * __ChiHistogramCostExtractor__ (default)
-            %       * __EMDL1HistogramCostExtractor__
+            %   between descriptors, specified as
+            %   `{comparerType, 'OptionName',optionValue, ...}`. See
+            %   cv.ShapeContextDistanceExtractor.setCostExtractor, where
+            %   `comparerType` is one of:
+            %   * __NormHistogramCostExtractor__
+            %   * __EMDHistogramCostExtractor__
+            %   * __ChiHistogramCostExtractor__ (default)
+            %   * __EMDL1HistogramCostExtractor__
             % * __TransformAlgorithm__ an algorithm that defines the aligning
-            %       transformation, specified as
-            %       `{transformerType, 'OptionName',optionValue, ...}`.
-            %       See cv.ShapeContextDistanceExtractor.setTransformAlgorithm,
-            %       where `transformerType` is one of:
-            %       * __ThinPlateSplineShapeTransformer__ (default)
-            %       * __AffineTransformer__
+            %   transformation, specified as
+            %   `{transformerType, 'OptionName',optionValue, ...}`. See
+            %   cv.ShapeContextDistanceExtractor.setTransformAlgorithm, where
+            %   `transformerType` is one of:
+            %   * __ThinPlateSplineShapeTransformer__ (default)
+            %   * __AffineTransformer__
             %
             % See also: cv.ShapeContextDistanceExtractor.computeDistance
             %
@@ -119,7 +120,7 @@ classdef ShapeContextDistanceExtractor < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.ShapeContextDistanceExtractor
             %
@@ -130,13 +131,13 @@ classdef ShapeContextDistanceExtractor < handle
         function setImages(this, image1, image2)
             %SETIMAGES  Set the images that correspond to each shape, used in the calculation of the Image Appearance cost
             %
-            %    obj.setImages(image1, image2)
+            %     obj.setImages(image1, image2)
             %
             % ## Input
             % * __image1__ Image corresponding to the shape defined by
-            %       `contours1`.
+            %   `contours1`.
             % * __image2__ Image corresponding to the shape defined by
-            %       `contours2`.
+            %   `contours2`.
             %
             % See also: cv.ShapeContextDistanceExtractor.getImages
             %
@@ -146,20 +147,19 @@ classdef ShapeContextDistanceExtractor < handle
         function setCostExtractor(this, comparerType, varargin)
             %SETCOSTEXTRACTOR  Set the algorithm used for building the shape context descriptor cost matrix
             %
-            %    obj.setCostExtractor(comparerType)
-            %    obj.setCostExtractor(comparerType, 'OptionName',optionValue,...)
+            %     obj.setCostExtractor(comparerType)
+            %     obj.setCostExtractor(comparerType, 'OptionName',optionValue,...)
             %
             % ## Input
             % * __comparerType__ an algorithm that defines the cost matrix
-            %       between descriptors. One of:
-            %       * __NormHistogramCostExtractor__ A norm based cost
-            %             extraction. See cv.norm
-            %       * __EMDHistogramCostExtractor__ An EMD based cost
-            %             extraction. See cv.EMD
-            %       * __ChiHistogramCostExtractor__ An Chi based cost
-            %             extraction.
-            %       * __EMDL1HistogramCostExtractor__ An EMD-L1 based
-            %             cost extraction. See cv.EMDL1
+            %   between descriptors. One of:
+            %   * __NormHistogramCostExtractor__ A norm based cost extraction.
+            %     See cv.norm
+            %   * __EMDHistogramCostExtractor__ An EMD based cost extraction.
+            %     See cv.EMD
+            %   * __ChiHistogramCostExtractor__ An Chi based cost extraction.
+            %   * __EMDL1HistogramCostExtractor__ An EMD-L1 based cost
+            %     extraction. See cv.EMDL1
             %
             % ## Options
             % The following are options accepted by all algorithms:
@@ -171,8 +171,8 @@ classdef ShapeContextDistanceExtractor < handle
             %
             % ### `NormHistogramCostExtractor`, `EMDHistogramCostExtractor`
             % * __NormFlag__ default 'L2'. This parameter matches the
-            %       `NormType` and `DistType` flags of cv.norm and cv.EMD
-            %       respectively.
+            %   `NormType` and `DistType` flags of cv.norm and cv.EMD
+            %   respectively.
             %
             % See also: cv.ShapeContextDistanceExtractor.getCostExtractor
             %
@@ -182,25 +182,24 @@ classdef ShapeContextDistanceExtractor < handle
         function setTransformAlgorithm(this, transformerType, varargin)
             %SETTRANSFORMALGORITHM  Set the algorithm used for aligning the shapes
             %
-            %    obj.setTransformAlgorithm(transformerType)
-            %    obj.setTransformAlgorithm(transformerType, 'OptionName',optionValue,...)
+            %     obj.setTransformAlgorithm(transformerType)
+            %     obj.setTransformAlgorithm(transformerType, 'OptionName',optionValue,...)
             %
             % ## Input
             % * __transformerType__ an algorithm that defines the aligning
-            %       transformation. One of:
-            %       * __ThinPlateSplineShapeTransformer__ Definition of the
-            %             transformation occupied in the paper [Bookstein89].
-            %       * __AffineTransformer__ Wrapper class for the OpenCV
-            %             Affine Transformation algorithm.
-            %             See cv.estimateRigidTransform
+            %   transformation. One of:
+            %   * __ThinPlateSplineShapeTransformer__ Definition of the
+            %     transformation occupied in the paper [Bookstein89].
+            %   * __AffineTransformer__ Wrapper class for the OpenCV Affine
+            %     Transformation algorithm. See cv.estimateRigidTransform
             %
             % ## Options
             % The following are options for the various algorithms:
             %
             % ### `ThinPlateSplineShapeTransformer`
             % * __RegularizationParameter__ The regularization parameter for
-            %       relaxing the exact interpolation requirements of the TPS
-            %       algorithm. default 0
+            %   relaxing the exact interpolation requirements of the TPS
+            %   algorithm. default 0
             %
             % ### `AffineTransformer`
             % * __FullAffine__ see cv.estimateRigidTransform, default true
@@ -218,13 +217,13 @@ classdef ShapeContextDistanceExtractor < handle
         function [image1, image2] = getImages(this)
             %GETIMAGES  Get the images that correspond to each shape, used in the calculation of the Image Appearance cost
             %
-            %    [image1, image2] = obj.getImages()
+            %     [image1, image2] = obj.getImages()
             %
             % ## Output
             % * __image1__ Image corresponding to the shape defined by
-            %       `contours1`.
+            %   `contours1`.
             % * __image2__ Image corresponding to the shape defined by
-            %       `contours2`.
+            %   `contours2`.
             %
             % See also: cv.ShapeContextDistanceExtractor.setImages
             %
@@ -234,7 +233,7 @@ classdef ShapeContextDistanceExtractor < handle
         function value = getCostExtractor(this)
             %GETCOSTEXTRACTOR  Get the current algorithm used for building the shape context descriptor cost matrix
             %
-            %    value = obj.getCostExtractor()
+            %     value = obj.getCostExtractor()
             %
             % ## Output
             % * __value__ output scalar struct
@@ -247,7 +246,7 @@ classdef ShapeContextDistanceExtractor < handle
         function value = getTransformAlgorithm(this)
             %GETTRANSFORMALGORITHM  Get the current algorithm used for aligning the shapes
             %
-            %    value = obj.getTransformAlgorithm()
+            %     value = obj.getTransformAlgorithm()
             %
             % ## Output
             % * __value__ output scalar struct
@@ -263,14 +262,14 @@ classdef ShapeContextDistanceExtractor < handle
         function dist = computeDistance(this, contour1, contour2)
             %COMPUTEDISTANCE  Compute the shape distance between two shapes defined by its contours
             %
-            %    dist = obj.computeDistance(contour1, contour2)
+            %     dist = obj.computeDistance(contour1, contour2)
             %
             % ## Options
             % * __contour1__ Contour defining first shape. A numeric
-            %       Nx2/Nx1x2/1xNx2 array or a cell-array of 2D points
-            %       `{[x,y], ...}`
+            %   Nx2/Nx1x2/1xNx2 array or a cell-array of 2D points
+            %   `{[x,y], ...}`
             % * __contour2__ Contour defining second shape. Same format as
-            %       `contours1`.
+            %   `contours1`.
             %
             % ## Output
             % * __dist__ output distance.
@@ -286,7 +285,7 @@ classdef ShapeContextDistanceExtractor < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.ShapeContextDistanceExtractor.empty,
             %  cv.ShapeContextDistanceExtractor.load
@@ -297,11 +296,11 @@ classdef ShapeContextDistanceExtractor < handle
         function b = empty(this)
             %EMPTY  Returns true if the algorithm is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.ShapeContextDistanceExtractor.clear,
             %  cv.ShapeContextDistanceExtractor.load
@@ -312,7 +311,7 @@ classdef ShapeContextDistanceExtractor < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -328,21 +327,21 @@ classdef ShapeContextDistanceExtractor < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -356,11 +355,11 @@ classdef ShapeContextDistanceExtractor < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.ShapeContextDistanceExtractor.save,
             %  cv.ShapeContextDistanceExtractor.load

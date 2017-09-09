@@ -54,7 +54,7 @@ classdef ImgHash < handle
     %
     % ### Contributors
     %
-    % Tham Ngap Wei, thamngapwei@gmail.com
+    % [Tham Ngap Wei](mailto:thamngapwei@gmail.com)
     %
     % ## References
     % [lookslikeit]:
@@ -71,8 +71,10 @@ classdef ImgHash < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
-        klass % Object class
+        % Object ID
+        id
+        % Object class
+        klass
     end
 
     %% Constructor/destructor
@@ -80,28 +82,28 @@ classdef ImgHash < handle
         function this = ImgHash(alg, varargin)
             %IMGHASH  Constructor
             %
-            %    obj = cv.ImgHash(alg)
-            %    obj = cv.ImgHash(alg, 'OptionName',optionValue, ...)
+            %     obj = cv.ImgHash(alg)
+            %     obj = cv.ImgHash(alg, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __alg__ image hash algorithm, one of:
-            %       * __AverageHash__ Computes average hash value of the input
-            %             image. This is a fast image hashing algorithm, but
-            %             only work on simple case. For more details, please
-            %             refer to [lookslikeit].
-            %       * __BlockMeanHash__ Image hash based on block mean.
-            %             See [zauner2010implementation] for details.
-            %       * __ColorMomentHash__ Image hash based on color moments.
-            %             See [tang2012perceptual] for details.
-            %       * __MarrHildrethHash__ Marr-Hildreth Operator Based Hash,
-            %             slowest but more discriminative.
-            %             See [zauner2010implementation] for details.
-            %       * __PHash__ Slower than average_hash, but tolerant of
-            %             minor modifications. This algorithm can combat more
-            %             variation than AverageHash, for more details please
-            %             refer to [lookslikeit].
-            %       * __RadialVarianceHash__ Image hash based on Radon
-            %             transform. See [tang2012perceptual] for details.
+            %   * __AverageHash__ Computes average hash value of the input
+            %     image. This is a fast image hashing algorithm, but only work
+            %     on simple case. For more details, please refer to
+            %     [lookslikeit].
+            %   * __BlockMeanHash__ Image hash based on block mean. See
+            %     [zauner2010implementation] for details.
+            %   * __ColorMomentHash__ Image hash based on color moments. See
+            %     [tang2012perceptual] for details.
+            %   * __MarrHildrethHash__ Marr-Hildreth Operator Based Hash,
+            %     slowest but more discriminative. See
+            %     [zauner2010implementation] for details.
+            %   * __PHash__ Slower than average_hash, but tolerant of minor
+            %     modifications. This algorithm can combat more variation than
+            %     than AverageHash, for more details please refer to
+            %     [lookslikeit].
+            %   * __RadialVarianceHash__ Image hash based on Radon transform.
+            %     See [tang2012perceptual] for details.
             %
             % ## Options
             % The following are options for the various algorithms:
@@ -126,7 +128,7 @@ classdef ImgHash < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.ImgHash
             %
@@ -137,7 +139,7 @@ classdef ImgHash < handle
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
-            %    typename = obj.typeid()
+            %     typename = obj.typeid()
             %
             % ## Output
             % * __typename__ Name of C++ type
@@ -151,7 +153,7 @@ classdef ImgHash < handle
         function hash = compute(this, img)
             %COMPUTE  Computes hash of the input image
             %
-            %    hash = obj.compute(img)
+            %     hash = obj.compute(img)
             %
             % ## Input
             % * __img__ input image want to compute hash value.
@@ -167,7 +169,7 @@ classdef ImgHash < handle
         function val = compare(this, hashOne, hashTwo)
             %COMPARE  Compare two hash values
             %
-            %    val = obj.compare(hashOne, hashTwo)
+            %     val = obj.compare(hashOne, hashTwo)
             %
             % ## Input
             % * __hashOne__ Hash value one.
@@ -175,7 +177,7 @@ classdef ImgHash < handle
             %
             % ## Output
             % * __val__ indicate similarity between the two hashes, the
-            %       meaning of the value vary from algorithm to algorithm.
+            %   meaning of the value vary from algorithm to algorithm.
             %
             % See also: cv.ImgHash.compute
             %
@@ -188,15 +190,15 @@ classdef ImgHash < handle
         function hash = averageHash(img)
             %AVERAGEHASH  Calculates the average hash in one call
             %
-            %    hash = cv.ImgHash.averageHash(img)
+            %     hash = cv.ImgHash.averageHash(img)
             %
             % ## Input
             % * __img__ input image want to compute hash value, type should be
-            %       `uint8` with 1/3/4 channels.
+            %   `uint8` with 1/3/4 channels.
             %
             % ## Output
             % * __hash__ Hash value of input, it will contain 16 hex decimal
-            %       number, return type is `uint8`
+            %   number, return type is `uint8`
             %
             % See also: cv.ImgHash.ImgHash, cv.ImgHash.compute
             %
@@ -206,23 +208,23 @@ classdef ImgHash < handle
         function hash = blockMeanHash(img, varargin)
             %BLOCKMEANHASH  Computes block mean hash of the input image
             %
-            %    hash = cv.ImgHash.blockMeanHash(img)
-            %    hash = cv.ImgHash.blockMeanHash(img, 'OptionName',optionValue, ...)
+            %     hash = cv.ImgHash.blockMeanHash(img)
+            %     hash = cv.ImgHash.blockMeanHash(img, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __img__ input image want to compute hash value, type should be
-            %       `uint8` with 1/3/4 channels.
+            %   `uint8` with 1/3/4 channels.
             %
             % ## Output
             % * __hash__ Hash value of input, it will contain 16 hex decimal
-            %       number, return type is `uint8`.
+            %   number, return type is `uint8`.
             %
             % ## Options
             % * __Mode__ block mean hash mode, one of:
-            %       * __Mode0__ (default) use fewer blocks and generates
-            %             16*16/8 `uint8` hash values.
-            %       * __Mode1__ use block blocks (step_sizes/2) and generates
-            %             fix(31*31/8)+1 `uint8` hash values.
+            %   * __Mode0__ (default) use fewer blocks and generates 16*16/8
+            %     `uint8` hash values.
+            %   * __Mode1__ use block blocks (step_sizes/2) and generates
+            %     `fix(31*31/8)+1` `uint8` hash values.
             %
             % See also: cv.ImgHash.ImgHash, cv.ImgHash.compute
             %
@@ -232,11 +234,11 @@ classdef ImgHash < handle
         function hash = colorMomentHash(img)
             %COLORMOMENTHASH   Computes color moment hash of the input
             %
-            %    hash = cv.ImgHash.colorMomentHash(img)
+            %     hash = cv.ImgHash.colorMomentHash(img)
             %
             % ## Input
             % * __img__ input image want to compute hash value, type should be
-            %       `uint8` with 1/3/4 channels.
+            %   `uint8` with 1/3/4 channels.
             %
             % ## Output
             % * __hash__ 42 hash values with type `double`.
@@ -251,16 +253,16 @@ classdef ImgHash < handle
         function hash = marrHildrethHash(img, varargin)
             %MARRHILDRETHHASH  Computes average hash value of the input image
             %
-            %    hash = cv.ImgHash.marrHildrethHash(img)
-            %    hash = cv.ImgHash.marrHildrethHash(img, 'OptionName',optionValue, ...)
+            %     hash = cv.ImgHash.marrHildrethHash(img)
+            %     hash = cv.ImgHash.marrHildrethHash(img, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __img__ input image want to compute hash value, type should be
-            %       `uint8` with 1/3/4 channels.
+            %   `uint8` with 1/3/4 channels.
             %
             % ## Output
             % * __hash__ Hash value of input, it will contain 16 hex decimal
-            %       number, return type is `uint8`.
+            %   number, return type is `uint8`.
             %
             % ## Options
             % * __Alpha__ scale factor for marr wavelet. default 2
@@ -274,11 +276,11 @@ classdef ImgHash < handle
         function hash = pHash(img)
             %PHASH  Computes pHash value of the input image
             %
-            %    hash = cv.ImgHash.pHash(img)
+            %     hash = cv.ImgHash.pHash(img)
             %
             % ## Input
             % * __img__ input image want to compute hash value, type should be
-            %       `uint8` with 1/3/4 channels.
+            %   `uint8` with 1/3/4 channels.
             %
             % ## Output
             % * __hash__ Hash value of input, it will contain 8 `uint8` values.
@@ -291,12 +293,12 @@ classdef ImgHash < handle
         function hash = radialVarianceHash(img, varargin)
             %RADIALVARIANCEHASH  Computes radial variance hash of the input image
             %
-            %    hash = cv.ImgHash.radialVarianceHash(img)
-            %    hash = cv.ImgHash.radialVarianceHash(img, 'OptionName',optionValue, ...)
+            %     hash = cv.ImgHash.radialVarianceHash(img)
+            %     hash = cv.ImgHash.radialVarianceHash(img, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __img__ input image want to compute hash value, type should be
-            %       `uint8`, with 1/3/4 channels.
+            %   `uint8`, with 1/3/4 channels.
             %
             % ## Output
             % * __hash__ Hash value of input, contains 40 `uint8` values.
@@ -304,7 +306,7 @@ classdef ImgHash < handle
             % ## Options
             % * __Sigma__ Gaussian kernel standard deviation. default 1
             % * __NumOfAngleLine__ The number of angles to consider.
-            %       default 180
+            %   default 180
             %
             % See also: cv.ImgHash.ImgHash, cv.ImgHash.compute
             %

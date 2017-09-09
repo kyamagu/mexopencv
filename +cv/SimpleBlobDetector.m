@@ -42,15 +42,16 @@ classdef SimpleBlobDetector < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     methods
         function this = SimpleBlobDetector(varargin)
             %SIMPLEBLOBDETECTOR  Constructor
             %
-            %    obj = cv.SimpleBlobDetector()
-            %    obj = cv.SimpleBlobDetector(..., 'OptionName',optionValue, ...)
+            %     obj = cv.SimpleBlobDetector()
+            %     obj = cv.SimpleBlobDetector(..., 'OptionName',optionValue, ...)
             %
             % ## Options
             % * __ThresholdStep__ default 10
@@ -81,7 +82,7 @@ classdef SimpleBlobDetector < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.SimpleBlobDetector
             %
@@ -92,7 +93,7 @@ classdef SimpleBlobDetector < handle
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
-            %    typename = obj.typeid()
+            %     typename = obj.typeid()
             %
             % ## Output
             % * __typename__ Name of C++ type
@@ -106,7 +107,7 @@ classdef SimpleBlobDetector < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.SimpleBlobDetector.empty,
             %  cv.SimpleBlobDetector.load
@@ -117,11 +118,11 @@ classdef SimpleBlobDetector < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.SimpleBlobDetector.clear,
             %  cv.SimpleBlobDetector.load
@@ -132,7 +133,7 @@ classdef SimpleBlobDetector < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -148,21 +149,21 @@ classdef SimpleBlobDetector < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -176,11 +177,11 @@ classdef SimpleBlobDetector < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.SimpleBlobDetector.save, cv.SimpleBlobDetector.load
             %
@@ -193,28 +194,26 @@ classdef SimpleBlobDetector < handle
         function keypoints = detect(this, img, varargin)
             %DETECT  Detects keypoints in an image or image set
             %
-            %    keypoints = obj.detect(img)
-            %    keypoints = obj.detect(imgs)
-            %    [...] = obj.detect(..., 'OptionName',optionValue, ...)
+            %     keypoints = obj.detect(img)
+            %     keypoints = obj.detect(imgs)
+            %     [...] = obj.detect(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __img__ Image (first variant), 8-bit grayscale image where
-            %       keypoints (blobs) are detected.
+            %   keypoints (blobs) are detected.
             % * __imgs__ Image set (second variant), cell array of images.
             %
             % ## Output
-            % * __keypoints__ The detected keypoints. In the first variant,
-            %       a 1-by-N structure array. In the second variant of the
-            %       method, `keypoints{i}` is a set of keypoints detected in
-            %       `imgs{i}`.
+            % * __keypoints__ The detected keypoints. In the first variant, a
+            %   1-by-N structure array. In the second variant of the method,
+            %   `keypoints{i}` is a set of keypoints detected in `imgs{i}`.
             %
             % ## Options
             % * __Mask__ A mask specifying where to look for keypoints
-            %       (optional). It must be a logical or 8-bit integer matrix
-            %       with non-zero values in the region of interest. In the
-            %       second variant, it is a cell-array of masks for each input
-            %       image, `masks{i}` is a mask for `imgs{i}`.
-            %       Not set by default.
+            %   (optional). It must be a logical or 8-bit integer matrix with
+            %   non-zero values in the region of interest. In the second
+            %   variant, it is a cell-array of masks for each input image,
+            %   `masks{i}` is a mask for `imgs{i}`. Not set by default.
             %
             % See also: cv.SimpleBlobDetector.SimpleBlobDetector
             %

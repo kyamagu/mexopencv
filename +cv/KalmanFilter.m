@@ -8,19 +8,19 @@ classdef KalmanFilter < handle
     %
     % ## Example
     %
-    %    % initialization
-    %    kf = cv.KalmanFilter(4,2);
-    %    kf.statePre = [10;20;0;0]; % initial state prediction
-    %    kf.transitionMatrix = [1,0,1,0; 0,1,0,1; 0,0,1,0; 0,0,0,1];
-    %    kf.measurementMatrix([1,4]) = 1;
-    %    kf.processNoiseCov = eye(4) * 1e-4;
-    %    kf.measurementNoiseCov = eye(2) * 1e-1;
-    %    kf.errorCovPost = eye(4) * 0.1;
+    %     % initialization
+    %     kf = cv.KalmanFilter(4,2);
+    %     kf.statePre = [10;20;0;0]; % initial state prediction
+    %     kf.transitionMatrix = [1,0,1,0; 0,1,0,1; 0,0,1,0; 0,0,0,1];
+    %     kf.measurementMatrix([1,4]) = 1;
+    %     kf.processNoiseCov = eye(4) * 1e-4;
+    %     kf.measurementNoiseCov = eye(2) * 1e-1;
+    %     kf.errorCovPost = eye(4) * 0.1;
     %
-    %    % dynamics
-    %    p_pred = kf.predict();       % update internal state
-    %    measure = [11;21];           % measurement
-    %    p_est = kf.correct(measure); % correct
+    %     % dynamics
+    %     p_pred = kf.predict();       % update internal state
+    %     measure = [11;21];           % measurement
+    %     p_est = kf.correct(measure); % correct
     %
     % ## References
     % [Welch95]:
@@ -32,7 +32,8 @@ classdef KalmanFilter < handle
     %
 
     properties (SetAccess = private)
-        id % Object id
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -64,9 +65,9 @@ classdef KalmanFilter < handle
         function this = KalmanFilter(varargin)
             %KALMANFILTER  KalmanFilter constructor
             %
-            %    kf = cv.KalmanFilter()
-            %    kf = cv.KalmanFilter(dynamParams, measureParams)
-            %    kf = cv.KalmanFilter(..., 'OptionName', optionValue, ...)
+            %     kf = cv.KalmanFilter()
+            %     kf = cv.KalmanFilter(dynamParams, measureParams)
+            %     kf = cv.KalmanFilter(..., 'OptionName', optionValue, ...)
             %
             % ## Input
             % * __dynamParams__ Dimensionality of the state.
@@ -74,9 +75,9 @@ classdef KalmanFilter < handle
             %
             % ## Options
             % * __ControlParams__ Dimensionality of the control vector.
-            %       default 0
+            %   default 0
             % * __Type__ Type of the created matrices that should be `single`
-            %       or `double`. default `single`
+            %   or `double`. default `single`
             %
             % The constructor invokes the cv.KalmanFilter.init method to
             % initialize the object with the passed parameters.
@@ -90,7 +91,7 @@ classdef KalmanFilter < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    kf.delete()
+            %     kf.delete()
             %
             % See also: cv.KalmanFilter
             %
@@ -101,8 +102,8 @@ classdef KalmanFilter < handle
         function init(this, dynamParams, measureParams, varargin)
             %INIT  Re-initializes Kalman filter. The previous content is destroyed
             %
-            %    kf.init(dynamParams, measureParams)
-            %    kf.init(..., 'OptionName', optionValue, ...)
+            %     kf.init(dynamParams, measureParams)
+            %     kf.init(..., 'OptionName', optionValue, ...)
             %
             % ## Input
             % * __dynamParams__ Dimensionality of the state.
@@ -110,9 +111,9 @@ classdef KalmanFilter < handle
             %
             % ## Options
             % * __ControlParams__ Dimensionality of the control vector.
-            %       default 0
+            %   default 0
             % * __Type__ Type of the created matrices that should be `single`
-            %       or `double` (default).
+            %   or `double` (default).
             %
             % See also: cv.KalmanFilter.KalmanFilter
             %
@@ -122,7 +123,7 @@ classdef KalmanFilter < handle
         function s = predict(this, varargin)
             %PREDICT  Computes a predicted state
             %
-            %    s = kf.predict('OptionName', optionValue, ...)
+            %     s = kf.predict('OptionName', optionValue, ...)
             %
             % ## Output
             % * __s__ Output predicted state.
@@ -138,7 +139,7 @@ classdef KalmanFilter < handle
         function s = correct(this, measurement)
             %CORRECT  Updates the predicted state from the measurement
             %
-            %    s = kf.correct(measurement)
+            %     s = kf.correct(measurement)
             %
             % ## Input
             % * __measurement__ The measured system parameters.

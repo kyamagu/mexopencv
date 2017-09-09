@@ -171,12 +171,12 @@ classdef Retina < handle
     % * apply retina with default parameters along with the following changes
     %   (generic parameters used for the presented illustrations of the
     %   section):
-    %       * `HorizontalCellsGain=0.4` (the main change compared to the
-    %         default configuration: it strongly reduces halo effects)
-    %       * `PhotoreceptorsLocalAdaptationSensitivity=0.99` (a little
-    %         higher than default value to enforce local adaptation)
-    %       * `GanglionCellsSensitivity=0.95` (also slightly higher than
-    %         default for local adaptation enforcement)
+    %   * `HorizontalCellsGain=0.4` (the main change compared to the default
+    %     configuration: it strongly reduces halo effects)
+    %   * `PhotoreceptorsLocalAdaptationSensitivity=0.99` (a little higher
+    %     than default value to enforce local adaptation)
+    %   * `GanglionCellsSensitivity=0.95` (also slightly higher than default
+    %     for local adaptation enforcement)
     % * get the parvo output using the cv.Retina.getParvo method.
     %
     % Have a look at the end of this page to see how to specify these
@@ -282,31 +282,32 @@ classdef Retina < handle
     %
     % The default configuration is presented below.
     %
-    %    <?xml version="1.0"?>
-    %    <opencv_storage>
-    %    <OPLandIPLparvo>
-    %        <colorMode>1</colorMode>
-    %        <normaliseOutput>1</normaliseOutput>
-    %        <photoreceptorsLocalAdaptationSensitivity>7.5e-01</photoreceptorsLocalAdaptationSensitivity>
-    %        <photoreceptorsTemporalConstant>9.0e-01</photoreceptorsTemporalConstant>
-    %        <photoreceptorsSpatialConstant>5.7e-01</photoreceptorsSpatialConstant>
-    %        <horizontalCellsGain>0.01</horizontalCellsGain>
-    %        <hcellsTemporalConstant>0.5</hcellsTemporalConstant>
-    %        <hcellsSpatialConstant>7.</hcellsSpatialConstant>
-    %        <ganglionCellsSensitivity>7.5e-01</ganglionCellsSensitivity>
-    %    </OPLandIPLparvo>
-    %    <IPLmagno>
-    %        <normaliseOutput>1</normaliseOutput>
-    %        <parasolCells_beta>0.</parasolCells_beta>
-    %        <parasolCells_tau>0.</parasolCells_tau>
-    %        <parasolCells_k>7.</parasolCells_k>
-    %        <amacrinCellsTemporalCutFrequency>2.0e+00</amacrinCellsTemporalCutFrequency>
-    %        <V0CompressionParameter>9.5e-01</V0CompressionParameter>
-    %        <localAdaptintegration_tau>0.</localAdaptintegration_tau>
-    %        <localAdaptintegration_k>7.</localAdaptintegration_k>
-    %    </IPLmagno>
-    %    </opencv_storage>
-    %
+    % ```xml
+    % <?xml version="1.0"?>
+    % <opencv_storage>
+    % <OPLandIPLparvo>
+    %     <colorMode>1</colorMode>
+    %     <normaliseOutput>1</normaliseOutput>
+    %     <photoreceptorsLocalAdaptationSensitivity>7.5e-01</photoreceptorsLocalAdaptationSensitivity>
+    %     <photoreceptorsTemporalConstant>9.0e-01</photoreceptorsTemporalConstant>
+    %     <photoreceptorsSpatialConstant>5.7e-01</photoreceptorsSpatialConstant>
+    %     <horizontalCellsGain>0.01</horizontalCellsGain>
+    %     <hcellsTemporalConstant>0.5</hcellsTemporalConstant>
+    %     <hcellsSpatialConstant>7.</hcellsSpatialConstant>
+    %     <ganglionCellsSensitivity>7.5e-01</ganglionCellsSensitivity>
+    % </OPLandIPLparvo>
+    % <IPLmagno>
+    %     <normaliseOutput>1</normaliseOutput>
+    %     <parasolCells_beta>0.</parasolCells_beta>
+    %     <parasolCells_tau>0.</parasolCells_tau>
+    %     <parasolCells_k>7.</parasolCells_k>
+    %     <amacrinCellsTemporalCutFrequency>2.0e+00</amacrinCellsTemporalCutFrequency>
+    %     <V0CompressionParameter>9.5e-01</V0CompressionParameter>
+    %     <localAdaptintegration_tau>0.</localAdaptintegration_tau>
+    %     <localAdaptintegration_k>7.</localAdaptintegration_k>
+    % </IPLmagno>
+    % </opencv_storage>
+    % ```
     %
     % Here are some words about all those parameters, tweak them as you wish
     % to amplify or moderate retina effects (contours enforcement, halos
@@ -448,10 +449,10 @@ classdef Retina < handle
     % - load a frist input image to get its size
     % - allocate a retina instance with appropriate input size
     % - loop over grabbed frames:
-    %     - grab a new frame
-    %     - run on a frame
-    %     - call the two output getters
-    %     - display retina outputs
+    %   - grab a new frame
+    %   - run on a frame
+    %   - call the two output getters
+    %   - display retina outputs
     %
     % See `retina_demo.m` MATLAB sample.
     %
@@ -492,40 +493,40 @@ classdef Retina < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     methods
         function this = Retina(inputSize, varargin)
             %RETINA  Constructor from standardized interface to create a Retina instance
             %
-            %    obj = cv.Retina(inputSize)
-            %    obj = cv.Retina(inputSize, 'OptionName',optionValue, ...)
+            %     obj = cv.Retina(inputSize)
+            %     obj = cv.Retina(inputSize, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __inputSize__ the input frame size `[w,h]`.
             %
             % ## Options
             % * __ColorMode__ the chosen processing mode: with or without
-            %       color processing. default true
+            %   color processing. default true
             % * __ColorSamplingMethod__ specifies which kind of color sampling
-            %       will be used, default 'Bayer'. One of:
-            %       * __Random__ each pixel position is either R, G or B in a
-            %             random choice
-            %       * __Diagonal__ color sampling is RGBRGBRGB...,
-            %             line 2 BRGBRGBRG..., line 3, GBRGBRGBR...
-            %       * __Bayer__ standard bayer sampling
+            %   will be used, default 'Bayer'. One of:
+            %   * __Random__ each pixel position is either R, G or B in a
+            %     random choice
+            %   * __Diagonal__ color sampling is RGBRGBRGB...,
+            %     line 2 BRGBRGBRG..., line 3 GBRGBRGBR...
+            %   * __Bayer__ standard bayer sampling
             % * __UseRetinaLogSampling__ activate retina log sampling. If true,
-            %       the 2 following parameters can be used. default false
+            %   the 2 following parameters can be used. default false
             % * __ReductionFactor__ only useful if param
-            %       `UseRetinaLogSampling=true`, specifies the reduction factor
-            %       of the output frame (as the center (fovea) is high
-            %       resolution and corners can be underscaled, then a reduction
-            %       of the output is allowed without precision leak).
-            %       default 1.0
+            %   `UseRetinaLogSampling=true`, specifies the reduction factor of
+            %   the output frame (as the center (fovea) is high resolution and
+            %   corners can be underscaled, then a reduction of the output is
+            %   allowed without precision leak). default 1.0
             % * __SamplingStrength__ only useful if param
-            %       `UseRetinaLogSampling=true`, specifies the strength of the
-            %       log scale that is applied. default 10.0
+            %   `UseRetinaLogSampling=true`, specifies the strength of the log
+            %   scale that is applied. default 10.0
             %
             % See also: cv.Retina.run
             %
@@ -535,7 +536,7 @@ classdef Retina < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.Retina
             %
@@ -549,7 +550,7 @@ classdef Retina < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.Retina.empty, cv.Retina.load
             %
@@ -559,11 +560,11 @@ classdef Retina < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.Retina.clear, cv.Retina.load
             %
@@ -573,7 +574,7 @@ classdef Retina < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -589,21 +590,21 @@ classdef Retina < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -617,11 +618,11 @@ classdef Retina < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.Retina.save, cv.Retina.load
             %
@@ -634,7 +635,7 @@ classdef Retina < handle
         function sz = getInputSize(this)
             %GETINPUTSIZE  Retreive retina input buffer size
             %
-            %    sz = obj.getInputSize()
+            %     sz = obj.getInputSize()
             %
             % ## Output
             % * __sz__ the retina input buffer size
@@ -647,7 +648,7 @@ classdef Retina < handle
         function sz = getOutputSize(this)
             %GETOUTPUTSIZE  Retreive retina output buffer size that can be different from the input if a spatial log transformation is applied
             %
-            %    sz = obj.getOutputSize()
+            %     sz = obj.getOutputSize()
             %
             % ## Output
             % * __sz__ the retina output buffer size
@@ -660,15 +661,15 @@ classdef Retina < handle
         function setup(this, retinaParameterFile, varargin)
             %SETUP  Try to open an XML retina parameters file to adjust current retina instance setup
             %
-            %    obj.setup(retinaParameterFile)
-            %    obj.setup(retinaParameterFile, 'OptionName',optionValue, ...)
+            %     obj.setup(retinaParameterFile)
+            %     obj.setup(retinaParameterFile, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __retinaParameterFile__ the parameters filename.
             %
             % ## Options
             % * __ApplyDefaultSetupOnFailure__ set to true if an error must be
-            %       thrown on error. default true
+            %   thrown on error. default true
             %
             % If the xml file does not exist, then default setup is applied.
             % Warning: Exceptions are thrown if read XML file is not valid.
@@ -685,13 +686,13 @@ classdef Retina < handle
         function setupParameters(this, varargin)
             %SETUPPARAMETERS  Pass retina parameters to adjust current retina instance setup
             %
-            %    obj.setupParameters('OptionName',optionValue, ...)
+            %     obj.setupParameters('OptionName',optionValue, ...)
             %
             % ## Options
             % * __OPLandIplParvo__ Outer Plexiform Layer (OPL) and Inner
-            %       Plexiform Layer Parvocellular (IplParvo) parameters.
+            %   Plexiform Layer Parvocellular (IplParvo) parameters.
             % * __IplMagno__ Inner Plexiform Layer Magnocellular channel
-            %       (IplMagno).
+            %   (IplMagno).
             %
             % ### `OPLandIplParvo` options
             % See cv.Retina.setupOPLandIPLParvoChannel options.
@@ -709,58 +710,62 @@ classdef Retina < handle
             % gives results such as the first retina output shown on the top
             % of this page.
             %
-            %    <?xml version="1.0"?>
-            %    <opencv_storage>
-            %    <OPLandIPLparvo>
-            %        <colorMode>1</colorMode>
-            %        <normaliseOutput>1</normaliseOutput>
-            %        <photoreceptorsLocalAdaptationSensitivity>7.5e-01</photoreceptorsLocalAdaptationSensitivity>
-            %        <photoreceptorsTemporalConstant>9.0e-01</photoreceptorsTemporalConstant>
-            %        <photoreceptorsSpatialConstant>5.3e-01</photoreceptorsSpatialConstant>
-            %        <horizontalCellsGain>0.01</horizontalCellsGain>
-            %        <hcellsTemporalConstant>0.5</hcellsTemporalConstant>
-            %        <hcellsSpatialConstant>7.</hcellsSpatialConstant>
-            %        <ganglionCellsSensitivity>7.5e-01</ganglionCellsSensitivity>
-            %    </OPLandIPLparvo>
-            %    <IPLmagno>
-            %        <normaliseOutput>1</normaliseOutput>
-            %        <parasolCells_beta>0.</parasolCells_beta>
-            %        <parasolCells_tau>0.</parasolCells_tau>
-            %        <parasolCells_k>7.</parasolCells_k>
-            %        <amacrinCellsTemporalCutFrequency>2.0e+00</amacrinCellsTemporalCutFrequency>
-            %        <V0CompressionParameter>9.5e-01</V0CompressionParameter>
-            %        <localAdaptintegration_tau>0.</localAdaptintegration_tau>
-            %        <localAdaptintegration_k>7.</localAdaptintegration_k>
-            %    </IPLmagno>
-            %    </opencv_storage>
+            % ```xml
+            % <?xml version="1.0"?>
+            % <opencv_storage>
+            % <OPLandIPLparvo>
+            %     <colorMode>1</colorMode>
+            %     <normaliseOutput>1</normaliseOutput>
+            %     <photoreceptorsLocalAdaptationSensitivity>7.5e-01</photoreceptorsLocalAdaptationSensitivity>
+            %     <photoreceptorsTemporalConstant>9.0e-01</photoreceptorsTemporalConstant>
+            %     <photoreceptorsSpatialConstant>5.3e-01</photoreceptorsSpatialConstant>
+            %     <horizontalCellsGain>0.01</horizontalCellsGain>
+            %     <hcellsTemporalConstant>0.5</hcellsTemporalConstant>
+            %     <hcellsSpatialConstant>7.</hcellsSpatialConstant>
+            %     <ganglionCellsSensitivity>7.5e-01</ganglionCellsSensitivity>
+            % </OPLandIPLparvo>
+            % <IPLmagno>
+            %     <normaliseOutput>1</normaliseOutput>
+            %     <parasolCells_beta>0.</parasolCells_beta>
+            %     <parasolCells_tau>0.</parasolCells_tau>
+            %     <parasolCells_k>7.</parasolCells_k>
+            %     <amacrinCellsTemporalCutFrequency>2.0e+00</amacrinCellsTemporalCutFrequency>
+            %     <V0CompressionParameter>9.5e-01</V0CompressionParameter>
+            %     <localAdaptintegration_tau>0.</localAdaptintegration_tau>
+            %     <localAdaptintegration_k>7.</localAdaptintegration_k>
+            % </IPLmagno>
+            % </opencv_storage>
+            % ```
             %
             % Here is the "realistic" setup used to obtain the second retina
             % output shown on the top of this page.
             %
-            %    <?xml version="1.0"?>
-            %    <opencv_storage>
-            %    <OPLandIPLparvo>
-            %        <colorMode>1</colorMode>
-            %        <normaliseOutput>1</normaliseOutput>
-            %        <photoreceptorsLocalAdaptationSensitivity>8.9e-01</photoreceptorsLocalAdaptationSensitivity>
-            %        <photoreceptorsTemporalConstant>9.0e-01</photoreceptorsTemporalConstant>
-            %        <photoreceptorsSpatialConstant>5.3e-01</photoreceptorsSpatialConstant>
-            %        <horizontalCellsGain>0.3</horizontalCellsGain>
-            %        <hcellsTemporalConstant>0.5</hcellsTemporalConstant>
-            %        <hcellsSpatialConstant>7.</hcellsSpatialConstant>
-            %        <ganglionCellsSensitivity>8.9e-01</ganglionCellsSensitivity>
-            %    </OPLandIPLparvo>
-            %    <IPLmagno>
-            %        <normaliseOutput>1</normaliseOutput>
-            %        <parasolCells_beta>0.</parasolCells_beta>
-            %        <parasolCells_tau>0.</parasolCells_tau>
-            %        <parasolCells_k>7.</parasolCells_k>
-            %        <amacrinCellsTemporalCutFrequency>2.0e+00</amacrinCellsTemporalCutFrequency>
-            %        <V0CompressionParameter>9.5e-01</V0CompressionParameter>
-            %        <localAdaptintegration_tau>0.</localAdaptintegration_tau>
-            %        <localAdaptintegration_k>7.</localAdaptintegration_k>
-            %    </IPLmagno>
-            %    </opencv_storage>
+            % ```xml
+            % <?xml version="1.0"?>
+            % <opencv_storage>
+            % <OPLandIPLparvo>
+            %     <colorMode>1</colorMode>
+            %     <normaliseOutput>1</normaliseOutput>
+            %     <photoreceptorsLocalAdaptationSensitivity>8.9e-01</photoreceptorsLocalAdaptationSensitivity>
+            %     <photoreceptorsTemporalConstant>9.0e-01</photoreceptorsTemporalConstant>
+            %     <photoreceptorsSpatialConstant>5.3e-01</photoreceptorsSpatialConstant>
+            %     <horizontalCellsGain>0.3</horizontalCellsGain>
+            %     <hcellsTemporalConstant>0.5</hcellsTemporalConstant>
+            %     <hcellsSpatialConstant>7.</hcellsSpatialConstant>
+            %     <ganglionCellsSensitivity>8.9e-01</ganglionCellsSensitivity>
+            % </OPLandIPLparvo>
+            % <IPLmagno>
+            %     <normaliseOutput>1</normaliseOutput>
+            %     <parasolCells_beta>0.</parasolCells_beta>
+            %     <parasolCells_tau>0.</parasolCells_tau>
+            %     <parasolCells_k>7.</parasolCells_k>
+            %     <amacrinCellsTemporalCutFrequency>2.0e+00</amacrinCellsTemporalCutFrequency>
+            %     <V0CompressionParameter>9.5e-01</V0CompressionParameter>
+            %     <localAdaptintegration_tau>0.</localAdaptintegration_tau>
+            %     <localAdaptintegration_k>7.</localAdaptintegration_k>
+            % </IPLmagno>
+            % </opencv_storage>
+            % ```
             %
             % See also: cv.Retina.setup, cv.Retina.setupOPLandIPLParvoChannel,
             %  cv.Retina.setupIPLMagnoChannel
@@ -771,46 +776,46 @@ classdef Retina < handle
         function setupOPLandIPLParvoChannel(this, varargin)
             %SETUPOPLANDIPLPARVOCHANNEL  Setup the OPL and IPL parvo channels (see biologocal model)
             %
-            %    obj.setupOPLandIPLParvoChannel('OptionName',optionValue, ...)
+            %     obj.setupOPLandIPLParvoChannel('OptionName',optionValue, ...)
             %
             % ## Options
             % * __ColorMode__ specifies if (true) color is processed of not
-            %       (false) to then processing gray level image. default true
+            %   (false) to then processing gray level image. default true
             % * __NormaliseOutput__ specifies if (true) output is rescaled
-            %       between 0 and 255 of not (false). default true
+            %   between 0 and 255 of not (false). default true
             % * __PhotoreceptorsLocalAdaptationSensitivity__ the photoreceptors
-            %       sensitivity renage is 0-1 (more log compression effect when
-            %       value increases). default 0.7
+            %   sensitivity renage is 0-1 (more log compression effect when
+            %   value increases). default 0.7
             % * __PhotoreceptorsTemporalConstant__ the time constant of the
-            %       first order low pass filter of the photoreceptors, use it
-            %       to cut high temporal frequencies (noise or fast motion),
-            %       unit is frames, typical value is 1 frame. default 0.5
+            %   first order low pass filter of the photoreceptors, use it to
+            %   cut high temporal frequencies (noise or fast motion), unit is
+            %   frames, typical value is 1 frame. default 0.5
             % * __PhotoreceptorsSpatialConstant__ the spatial constant of the
-            %       first order low pass filter of the photoreceptors, use it
-            %       to cut high spatial frequencies (noise or thick contours),
-            %       unit is pixels, typical value is 1 pixel. default 0.53
+            %   first order low pass filter of the photoreceptors, use it to
+            %   cut high spatial frequencies (noise or thick contours), unit
+            %   is pixels, typical value is 1 pixel. default 0.53
             % * __HorizontalCellsGain__ gain of the horizontal cells network,
-            %       if 0, then the mean value of the output is zero, if the
-            %       parameter is near 1, then, the luminance is not filtered
-            %       and is still reachable at the output, typicall value is 0.
-            %       default 0.0
+            %   if 0, then the mean value of the output is zero, if the
+            %   parameter is near 1, then, the luminance is not filtered and
+            %   is still reachable at the output, typicall value is 0.
+            %   default 0.0
             % * __HCellsTemporalConstant__ the time constant of the first
-            %       order low pass filter of the horizontal cells, use it to
-            %       cut low temporal frequencies (local luminance variations),
-            %       unit is frames, typical value is 1 frame, as the
-            %       photoreceptors. default 1.0
+            %   order low pass filter of the horizontal cells, use it to cut
+            %   low temporal frequencies (local luminance variations), unit is
+            %   frames, typical value is 1 frame, as the photoreceptors.
+            %   default 1.0
             % * __HCellsSpatialConstant__ the spatial constant of the first
-            %       order low pass filter of the horizontal cells, use it to
-            %       cut low spatial frequencies (local luminance), unit is
-            %       pixels, typical value is 5 pixel, this value is also used
-            %       for local contrast computing when computing the local
-            %       contrast adaptation at the ganglion cells level (Inner
-            %       Plexiform Layer parvocellular channel model). default 7.0
+            %   order low pass filter of the horizontal cells, use it to cut
+            %   low spatial frequencies (local luminance), unit is pixels,
+            %   typical value is 5 pixel, this value is also used for local
+            %   contrast computing when computing the local contrast
+            %   adaptation at the ganglion cells level (Inner Plexiform Layer
+            %   parvocellular channel model). default 7.0
             % * __GanglionCellsSensitivity__ the compression strengh of the
-            %       ganglion cells local adaptation output, set a value
-            %       between 0.6 and 1 for best results, a high value increases
-            %       more the low value sensitivity and the output saturates
-            %       faster, recommended value: 0.7. default 0.7
+            %   ganglion cells local adaptation output, set a value between
+            %   0.6 and 1 for best results, a high value increases more the
+            %   low value sensitivity and the output saturates faster,
+            %   recommended value: 0.7. default 0.7
             %
             % OPL is referred as Outer Plexiform Layer of the retina, it
             % allows the spatio-temporal filtering which withens the spectrum
@@ -829,40 +834,38 @@ classdef Retina < handle
         function setupIPLMagnoChannel(this, varargin)
             %SETUPIPLMAGNOCHANNEL  Set parameters values for the Inner Plexiform Layer (IPL) magnocellular channel
             %
-            %    obj.setupIPLMagnoChannel('OptionName',optionValue, ...)
+            %     obj.setupIPLMagnoChannel('OptionName',optionValue, ...)
             %
             % ## Options
             % * __NormaliseOutput__ specifies if (true) output is rescaled
-            %       between 0 and 255 of not (false). default true
+            %   between 0 and 255 of not (false). default true
             % * __ParasolCellsBeta__ the low pass filter gain used for local
-            %       contrast adaptation at the IPL level of the retina (for
-            %       ganglion cells local adaptation), typical value is 0.
-            %       default 0.0
+            %   contrast adaptation at the IPL level of the retina (for
+            %   ganglion cells local adaptation), typical value is 0.
+            %   default 0.0
             % * __ParasolCellsTau__ the low pass filter time constant used for
-            %       local contrast adaptation at the IPL level of the retina
-            %       (for ganglion cells local adaptation), unit is frame,
-            %       typical value is 0 (immediate response). default 0.0
+            %   local contrast adaptation at the IPL level of the retina (for
+            %   ganglion cells local adaptation), unit is frame, typical value
+            %   is 0 (immediate response). default 0.0
             % * __ParasolCellsK__ the low pass filter spatial constant used
-            %       for local contrast adaptation at the IPL level of the
-            %       retina (for ganglion cells local adaptation), unit is
-            %       pixels, typical value is 5. default 7.0
+            %   for local contrast adaptation at the IPL level of the retina
+            %   (for ganglion cells local adaptation), unit is pixels, typical
+            %   value is 5. default 7.0
             % * __AmacrinCellsTemporalCutFrequency__ the time constant of the
-            %       first order high pass fiter of the magnocellular way
-            %       (motion information channel), unit is frames, typical
-            %       value is 1.2. default 1.2
+            %   first order high pass fiter of the magnocellular way (motion
+            %   information channel), unit is frames, typical value is 1.2.
+            %   default 1.2
             % * __V0CompressionParameter__ the compression strengh of the
-            %       ganglion cells local adaptation output, set a value
-            %       between 0.6 and 1 for best results, a high value increases
-            %       more the low value sensitivity and the output saturates
-            %       faster, recommended value: 0.95. default 0.95
+            %   ganglion cells local adaptation output, set a value between
+            %   0.6 and 1 for best results, a high value increases more the
+            %   low value sensitivity and the output saturates faster,
+            %   recommended value: 0.95. default 0.95
             % * __LocalAdaptintegrationTau__ specifies the temporal constant
-            %       of the low pas filter involved in the computation of the
-            %       local "motion mean" for the local adaptation computation.
-            %       default 0.0
+            %   of the low pas filter involved in the computation of the local
+            %   "motion mean" for the local adaptation computation. default 0.0
             % * __LocalAdaptintegrationK__ specifies the spatial constant of
-            %       the low pas filter involved in the computation of the
-            %       local "motion mean" for the local adaptation computation.
-            %       default 7.0
+            %   the low pas filter involved in the computation of the local
+            %   "motion mean" for the local adaptation computation. default 7.0
             %
             % This channel processes signals output from OPL processing stage
             % in peripheral vision, it allows motion information enhancement.
@@ -877,7 +880,7 @@ classdef Retina < handle
         function params = getParameters(this)
             %GETPARAMETERS  Retrieve the current retina parameters values in a structure
             %
-            %    params = obj.getParameters()
+            %     params = obj.getParameters()
             %
             % ## Output
             % * __params__ the current parameters setup.
@@ -890,11 +893,11 @@ classdef Retina < handle
         function str = printSetup(this)
             %PRINTSETUP  Outputs a string showing the used parameters setup
             %
-            %    str = obj.printSetup()
+            %     str = obj.printSetup()
             %
             % ## Output
             % * __str__ a string which contains formatted parameters
-            %       information.
+            %   information.
             %
             % See also: cv.Retina.getParameters
             %
@@ -904,17 +907,16 @@ classdef Retina < handle
         function varargout = write(this, fs)
             %WRITE  Write xml/yml formated parameters information
             %
-            %    obj.write(fs)
-            %    str = obj.write(fs)
+            %     obj.write(fs)
+            %     str = obj.write(fs)
             %
             % ## Input
             % * __fs__ the filename of the xml file that will be open and
-            %       writen with formatted parameters information.
+            %   writen with formatted parameters information.
             %
             % ## Output
             % * __str__ optional output. If requested, the parameters are
-            %       persisted to a string in memory instead of writing to
-            %       disk.
+            %   persisted to a string in memory instead of writing to disk.
             %
             % See also: cv.Retina.setup
             %
@@ -924,11 +926,11 @@ classdef Retina < handle
         function run(this, inputImage)
             %RUN  Method which allows retina to be applied on an input image
             %
-            %    obj.run(inputImage)
+            %     obj.run(inputImage)
             %
             % ## Input
             % * __inputImage__ the input image to be processed, can be gray
-            %       level or BGR coded in any format (from 8bit to 16bits).
+            %   level or BGR coded in any format (from 8bit to 16bits).
             %
             % After run, encapsulated retina module is ready to deliver its
             % outputs using dedicated acccessors, see `getParvo` and
@@ -942,16 +944,16 @@ classdef Retina < handle
         function outputToneMappedImage = applyFastToneMapping(this, inputImage)
             %APPLYFASTTONEMAPPING  Method which processes an image in the aim to correct its luminance correct backlight problems, enhance details in shadows
             %
-            %    outputToneMappedImage = obj.applyFastToneMapping(inputImage)
+            %     outputToneMappedImage = obj.applyFastToneMapping(inputImage)
             %
             % ## Input
             % * __inputImage__ the input image to process (should be coded in
-            %       float format `single`: 1/3/4-channels, the 4th channel
-            %       won't be considered).
+            %   float format `single`: 1/3/4-channels, the 4th channel won't
+            %   be considered).
             %
             % ## Output
             % * __outputToneMappedImage__ the output 8bit/channel tone mapped
-            %       image (`uint8` with 1/3-channels format).
+            %   image (`uint8` with 1/3-channels format).
             %
             % This method is designed to perform High Dynamic Range image tone
             % mapping (compress >8bit/pixel images to 8bit/pixel). This is a
@@ -974,16 +976,16 @@ classdef Retina < handle
         function parvo = getParvo(this)
             %GETPARVO  Accessor of the details channel of the retina (models foveal vision)
             %
-            %    parvo = obj.getParvo()
+            %     parvo = obj.getParvo()
             %
             % ## Output
             % * __parvo__ the output buffer, format can be:
-            %       * a matrix, this output is rescaled for standard 8bits
-            %         image processing use in OpenCV
-            %       * RAW methods actually return a 1D matrix (encoding is
-            %         R1, R2, ... Rn, G1, G2, ..., Gn, B1, B2, ...Bn), this
-            %         output is the original retina filter model output,
-            %         without any quantification or rescaling.
+            %   * a matrix, this output is rescaled for standard 8bits image
+            %     processing use in OpenCV
+            %   * RAW methods actually return a 1D matrix (encoding is
+            %     `R1, R2, ..., Rn, G1, G2, ..., Gn, B1, B2, ..., Bn`), this
+            %     output is the original retina filter model output, without
+            %     any quantification or rescaling.
             %
             % Warning, `getParvoRAW` methods return buffers that are not
             % rescaled within range [0;255] while the non RAW method allows a
@@ -997,16 +999,16 @@ classdef Retina < handle
         function parvo = getParvoRAW(this)
             %GETPARVORAW  Accessor of the details channel of the retina (models foveal vision)
             %
-            %    parvo = obj.getParvoRAW()
+            %     parvo = obj.getParvoRAW()
             %
             % ## Output
             % * __parvo__ the output buffer, format can be:
-            %       * a matrix, this output is rescaled for standard 8bits
-            %         image processing use in OpenCV
-            %       * RAW methods actually return a 1D matrix (encoding is
-            %         R1, R2, ... Rn, G1, G2, ..., Gn, B1, B2, ...Bn), this
-            %         output is the original retina filter model output,
-            %         without any quantification or rescaling.
+            %   * a matrix, this output is rescaled for standard 8bits image
+            %     processing use in OpenCV
+            %   * RAW methods actually return a 1D matrix (encoding is
+            %     `R1, R2, ..., Rn, G1, G2, ..., Gn, B1, B2, ..., Bn`), this
+            %     output is the original retina filter model output, without
+            %     any quantification or rescaling.
             %
             % Warning, `getParvoRAW` methods return buffers that are not
             % rescaled within range [0;255] while the non RAW method allows a
@@ -1020,16 +1022,15 @@ classdef Retina < handle
         function magno = getMagno(this)
             %GETMAGNO  Accessor of the motion channel of the retina (models peripheral vision)
             %
-            %    magno = obj.getMagno()
+            %     magno = obj.getMagno()
             %
             % ## Output
             % * __magno__ the output buffer, format can be:
-            %       * a matrix, this output is rescaled for standard 8bits
-            %         image processing use in OpenCV
-            %       * RAW methods actually return a 1D matrix (encoding is
-            %         M1, M2,... Mn), this output is the original retina
-            %         filter model output, without any quantification or
-            %         rescaling.
+            %   * a matrix, this output is rescaled for standard 8bits image
+            %     processing use in OpenCV
+            %   * RAW methods actually return a 1D matrix (encoding is
+            %     `M1, M2, ..., Mn`), this output is the original retina filter
+            %     model output, without any quantification or rescaling.
             %
             % Warning, `getMagnoRAW` methods return buffers that are not
             % rescaled within range [0;255] while the non RAW method allows a
@@ -1043,16 +1044,15 @@ classdef Retina < handle
         function magno = getMagnoRAW(this)
             %GETMAGNORAW  Accessor of the motion channel of the retina (models peripheral vision)
             %
-            %    magno = obj.getMagnoRAW()
+            %     magno = obj.getMagnoRAW()
             %
             % ## Output
             % * __magno__ the output buffer, format can be:
-            %       * a matrix, this output is rescaled for standard 8bits
-            %         image processing use in OpenCV
-            %       * RAW methods actually return a 1D matrix (encoding is
-            %         M1, M2,... Mn), this output is the original retina
-            %         filter model output, without any quantification or
-            %         rescaling.
+            %   * a matrix, this output is rescaled for standard 8bits image
+            %     processing use in OpenCV
+            %   * RAW methods actually return a 1D matrix (encoding is
+            %     `M1, M2, ..., Mn`), this output is the original retina filter
+            %     model output, without any quantification or rescaling.
             %
             % Warning, `getMagnoRAW` methods return buffers that are not
             % rescaled within range [0;255] while the non RAW method allows a
@@ -1066,13 +1066,13 @@ classdef Retina < handle
         function setColorSaturation(this, varargin)
             %SETCOLORSATURATION  Activate color saturation as the final step of the color demultiplexing process
             %
-            %    obj.setColorSaturation('OptionName',optionValue, ...)
+            %     obj.setColorSaturation('OptionName',optionValue, ...)
             %
             % ## Options
             % * __SaturateColors__ boolean that activates color saturation (if
-            %       true) or desactivate (if false). default true
+            %   true) or desactivate (if false). default true
             % * __ColorSaturationValue__ the saturation factor: a simple
-            %       factor applied on the chrominance buffers. default 4.0
+            %   factor applied on the chrominance buffers. default 4.0
             %
             % This saturation is a sigmoide function applied to each channel
             % of the demultiplexed image.
@@ -1085,7 +1085,7 @@ classdef Retina < handle
         function clearBuffers(this)
             %CLEARBUFFERS  Clears all retina buffers
             %
-            %    obj.clearBuffers()
+            %     obj.clearBuffers()
             %
             % (equivalent to opening the eyes after a long period of eye
             % close) whatchout the temporal transition occuring just after
@@ -1099,12 +1099,12 @@ classdef Retina < handle
         function activateMovingContoursProcessing(this, activate)
             %ACTIVATEMOVINGCONTOURSPROCESSING  Activate/desactivate the Magnocellular pathway processing (motion information extraction)
             %
-            %    obj.activateMovingContoursProcessing(activate)
+            %     obj.activateMovingContoursProcessing(activate)
             %
             % ## Input
             % * __activate__ true if Magnocellular output should be activated,
-            %       false if not. If activated, the Magnocellular output can
-            %       be retrieved using the cv.Retina.getMagno method.
+            %   false if not. If activated, the Magnocellular output can be
+            %   retrieved using the cv.Retina.getMagno method.
             %
             % By default, it is activated.
             %
@@ -1116,13 +1116,13 @@ classdef Retina < handle
         function activateContoursProcessing(this, activate)
             %ACTIVATECONTOURSPROCESSING  Activate/desactivate the Parvocellular pathway processing (contours information extraction)
             %
-            %    obj.activateContoursProcessing(activate)
+            %     obj.activateContoursProcessing(activate)
             %
             % ## Input
             % * __activate__ true if Parvocellular (contours information
-            %       extraction) output should be activated, false if not. If
-            %       activated, the Parvocellular output can be retrieved using
-            %       the cv.Retina.getParvo method.
+            %   extraction) output should be activated, false if not. If
+            %   activated, the Parvocellular output can be retrieved using the
+            %   cv.Retina.getParvo method.
             %
             % By default, it is activated.
             %

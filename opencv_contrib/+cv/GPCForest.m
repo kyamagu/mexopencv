@@ -4,7 +4,7 @@ classdef GPCForest < handle
     % From the following paper:
     % [PDF](http://research.microsoft.com/en-us/um/people/pkohli/papers/wfrik_cvpr2016.pdf).
     %
-    % ## Usage:
+    % ## Usage
     % - Train forest for the Global Patch Collider (or load a pretrained one).
     % - Find correspondences between two images using Global Patch Collider.
     %   These can be used to perform optical flow matching and stereo
@@ -25,7 +25,8 @@ classdef GPCForest < handle
     %
 
     properties (SetAccess = private)
-        id % Object ID
+        % Object ID
+        id
     end
 
     %% Constructor/destructor
@@ -33,7 +34,7 @@ classdef GPCForest < handle
         function this = GPCForest()
             %GPCFOREST  Creates an instance of GPCForest
             %
-            %    obj = cv.GPCForest()
+            %     obj = cv.GPCForest()
             %
             % See also: cv.GPCForest.findCorrespondences
             %
@@ -43,7 +44,7 @@ classdef GPCForest < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.GPCForest
             %
@@ -57,25 +58,25 @@ classdef GPCForest < handle
         function train(this, imagesFrom, imagesTo, groundTruths, varargin)
             %TRAIN  Train the forest using individual samples for each tree
             %
-            %    obj.train(imagesFrom, imagesTo, groundTruths)
-            %    obj.train(..., 'OptionName',optionValue, ...)
+            %     obj.train(imagesFrom, imagesTo, groundTruths)
+            %     obj.train(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __imagesFrom__ First sequence of images, a cell array of
-            %       either filenames or 3-channel color images.
+            %   either filenames or 3-channel color images.
             % * __imagesTo__ Second sequence of images, same size and format
-            %       as `imagesFrom`.
+            %   as `imagesFrom`.
             % * __groundTruth__ Ground thruth flows, either flow fields or
-            %       filenames (see cv.readOpticalFlow).
+            %   filenames (see cv.readOpticalFlow).
             %
             % ## Options
             % * __MaxTreeDepth__ Maximum tree depth to stop partitioning.
-            %       default 20
+            %   default 20
             % * __MinNumberOfSamples__ Minimum number of samples in the node
-            %       to stop partitioning. default 3
+            %   to stop partitioning. default 3
             % * __DescriptorType__ Type of descriptors to use. One of:
-            %       * __DCT__ (default) Better quality but slow.
-            %       * __WHT__ Worse quality but much faster.
+            %   * __DCT__ (default) Better quality but slow.
+            %   * __WHT__ Worse quality but much faster.
             % * __PrintProgress__ Print progress to stdout. default false
             %
             % Inputs form the training samples (pairs of images and ground
@@ -90,8 +91,8 @@ classdef GPCForest < handle
         function corrs = findCorrespondences(this, imgFrom, imgTo, varargin)
             %FINDCORRESPONDENCES  Find correspondences between two images
             %
-            %    corrs = obj.findCorrespondences(imgFrom, imgTo)
-            %    corrs = obj.findCorrespondences(..., 'OptionName',optionValue, ...)
+            %     corrs = obj.findCorrespondences(imgFrom, imgTo)
+            %     corrs = obj.findCorrespondences(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __imgFrom__ First 3-channel image in a sequence.
@@ -99,11 +100,11 @@ classdef GPCForest < handle
             %
             % ## Output
             % * __corrs__ Output struct array with pairs of corresponding
-            %       points.
+            %   points.
             %
             % ## Options
             % * __UseOpenCL__ Whether to use OpenCL to speed up the matching.
-            %       default false
+            %   default false
             %
             % Options are the additional matching parameters for fine-tuning.
             %
@@ -118,7 +119,7 @@ classdef GPCForest < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.GPCForest.empty
             %
@@ -128,11 +129,11 @@ classdef GPCForest < handle
         function b = empty(this)
             %EMPTY  Returns true if the algorithm is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the algorithm is empty (e.g. in the very
-            %       beginning or after unsuccessful read).
+            %   beginning or after unsuccessful read).
             %
             % See also: cv.GPCForest.clear
             %
@@ -142,11 +143,11 @@ classdef GPCForest < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.GPCForest.save, cv.GPCForest.load
             %
@@ -156,7 +157,7 @@ classdef GPCForest < handle
         function save(this, filename)
             %SAVE  Saves the algorithm to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -171,21 +172,21 @@ classdef GPCForest < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from a file storage.
             % The previous model state is discarded.

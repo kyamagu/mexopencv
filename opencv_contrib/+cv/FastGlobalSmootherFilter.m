@@ -20,31 +20,32 @@ classdef FastGlobalSmootherFilter < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     methods
         function this = FastGlobalSmootherFilter(guide, varargin)
             %FASTGLOBALSMOOTHERFILTER  Factory method, create instance of FastGlobalSmootherFilter and execute the initialization routines
             %
-            %    obj = cv.FastGlobalSmootherFilter(guide)
-            %    obj = cv.FastGlobalSmootherFilter(guide, 'OptionName',optionValue, ...)
+            %     obj = cv.FastGlobalSmootherFilter(guide)
+            %     obj = cv.FastGlobalSmootherFilter(guide, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __guide__ image serving as guide for filtering. It should have
-            %       8-bit depth and either 1 or 3 channels.
+            %   8-bit depth and either 1 or 3 channels.
             %
             % ## Options
             % * __Lambda__ parameter defining the amount of regularization.
-            %       default 100.0
+            %   default 100.0
             % * __SigmaColor__ parameter, that is similar to color space sigma
-            %       in cv.bilateralFilter. default 5.0
+            %   in cv.bilateralFilter. default 5.0
             % * __LambdaAttenuation__ internal parameter, defining how much
-            %       lambda decreases after each iteration. Normally, it should
-            %       be 0.25. Setting it to 1.0 may lead to streaking artifacts.
-            %       default 0.25
+            %   lambda decreases after each iteration. Normally, it should be
+            %   0.25. Setting it to 1.0 may lead to streaking artifacts.
+            %   default 0.25
             % * __NumIter__ number of iterations used for filtering, 3 is
-            %       usually enough. default 3
+            %   usually enough. default 3
             %
             % For more details about Fast Global Smoother parameters, see the
             % original paper [Min2014]. However, please note that there are
@@ -65,7 +66,7 @@ classdef FastGlobalSmootherFilter < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.FastGlobalSmootherFilter
             %
@@ -79,7 +80,7 @@ classdef FastGlobalSmootherFilter < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.FastGlobalSmootherFilter.empty,
             %  cv.FastGlobalSmootherFilter.load
@@ -90,11 +91,11 @@ classdef FastGlobalSmootherFilter < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.FastGlobalSmootherFilter.clear,
             %  cv.FastGlobalSmootherFilter.load
@@ -105,7 +106,7 @@ classdef FastGlobalSmootherFilter < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -121,21 +122,21 @@ classdef FastGlobalSmootherFilter < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -149,11 +150,11 @@ classdef FastGlobalSmootherFilter < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.FastGlobalSmootherFilter.save,
             %  cv.FastGlobalSmootherFilter.load
@@ -167,12 +168,12 @@ classdef FastGlobalSmootherFilter < handle
         function dst = filter(this, src)
             %FILTER  Apply smoothing operation to the source image
             %
-            %    dst = obj.filter(src)
+            %     dst = obj.filter(src)
             %
             % ## Input
             % * __src__ source image for filtering with unsigned 8-bit or
-            %       signed 16-bit or floating-point 32-bit depth and up to 4
-            %       channels.
+            %   signed 16-bit or floating-point 32-bit depth and up to 4
+            %   channels.
             %
             % ## Output
             % * __dst__ destination image.
@@ -187,30 +188,30 @@ classdef FastGlobalSmootherFilter < handle
         function dst = fastGlobalSmootherFilter(src, guide, varargin)
             %FASTGLOBALSMOOTHERFILTER  Simple one-line Fast Global Smoother filter call
             %
-            %    dst = cv.FastGlobalSmootherFilter.fastGlobalSmootherFilter(src, guide)
-            %    dst = cv.FastGlobalSmootherFilter.fastGlobalSmootherFilter(src, guide, 'OptionName',optionValue, ...)
+            %     dst = cv.FastGlobalSmootherFilter.fastGlobalSmootherFilter(src, guide)
+            %     dst = cv.FastGlobalSmootherFilter.fastGlobalSmootherFilter(src, guide, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __src__ source image for filtering with unsigned 8-bit or
-            %       signed 16-bit or floating-point 32-bit depth and up to 4
-            %       channels.
+            %   signed 16-bit or floating-point 32-bit depth and up to 4
+            %   channels.
             % * __guide__ image serving as guide for filtering. It should have
-            %       8-bit depth and either 1 or 3 channels.
+            %   8-bit depth and either 1 or 3 channels.
             %
             % ## Output
             % * __dst__ destination image.
             %
             % ## Options
             % * __Lambda__ parameter defining the amount of regularization.
-            %       default 100.0
+            %   default 100.0
             % * __SigmaColor__ parameter, that is similar to color space sigma
-            %       in cv.bilateralFilter. default 5.0
+            %   in cv.bilateralFilter. default 5.0
             % * __LambdaAttenuation__ internal parameter, defining how much
-            %       lambda decreases after each iteration. Normally, it should
-            %       be 0.25. Setting it to 1.0 may lead to streaking artifacts.
-            %       default 0.25
+            %   lambda decreases after each iteration. Normally, it should be
+            %   0.25. Setting it to 1.0 may lead to streaking artifacts.
+            %   default 0.25
             % * __NumIter__ number of iterations used for filtering, 3 is
-            %       usually enough. default 3
+            %   usually enough. default 3
             %
             % If you have multiple images to filter with the same guide then
             % use FastGlobalSmootherFilter interface to avoid extra

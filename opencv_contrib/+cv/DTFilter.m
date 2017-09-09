@@ -13,34 +13,35 @@ classdef DTFilter < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     methods
         function this = DTFilter(guide, varargin)
             %DTFILTER  Factory method, create instance of DTFilter and produce initialization routines
             %
-            %    obj = cv.DTFilter(guide)
-            %    obj = cv.DTFilter(guide, 'OptionName',optionValue, ...)
+            %     obj = cv.DTFilter(guide)
+            %     obj = cv.DTFilter(guide, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __guide__ guided image (used to build transformed distance,
-            %       which describes edge structure of guided image).
+            %   which describes edge structure of guided image).
             %
             % ## Options
             % * __SigmaSpatial__ `sigma_H` parameter in the original article,
-            %       it's similar to the sigma in the coordinate space into
-            %       cv.bilateralFilter. default 10.0
+            %   it's similar to the sigma in the coordinate space into
+            %   cv.bilateralFilter. default 10.0
             % * __SigmaColor__ `sigma_r` parameter in the original article,
-            %       it's similar to the sigma in the color space into
-            %       cv.bilateralFilter. default 25.0
+            %   it's similar to the sigma in the color space into
+            %   cv.bilateralFilter. default 25.0
             % * __Mode__ one form three modes which corresponds to three modes
-            %       for filtering 2D signals in the article. default 'NC':
-            %       * __NC__ Normalized Convolution (NC).
-            %       * __IC__ Interpolated Convolution (IC).
-            %       * __RF__ Recursive Filtering (RF).
+            %   for filtering 2D signals in the article. default 'NC':
+            %   * __NC__ Normalized Convolution (NC).
+            %   * __IC__ Interpolated Convolution (IC).
+            %   * __RF__ Recursive Filtering (RF).
             % * __NumIters__ optional number of iterations used for filtering,
-            %       3 is quite enough. default 3
+            %   3 is quite enough. default 3
             %
             % For more details about Domain Transform filter parameters, see
             % the original article [Gastal11] and Domain Transform filter
@@ -54,7 +55,7 @@ classdef DTFilter < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.DTFilter
             %
@@ -68,7 +69,7 @@ classdef DTFilter < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.DTFilter.empty, cv.DTFilter.load
             %
@@ -78,11 +79,11 @@ classdef DTFilter < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.DTFilter.clear, cv.DTFilter.load
             %
@@ -92,7 +93,7 @@ classdef DTFilter < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -108,21 +109,21 @@ classdef DTFilter < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -136,11 +137,11 @@ classdef DTFilter < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.DTFilter.save, cv.DTFilter.load
             %
@@ -153,20 +154,19 @@ classdef DTFilter < handle
         function dst = filter(this, src, varargin)
             %FILTER  Produce domain transform filtering operation on source image
             %
-            %    dst = obj.filter(src)
-            %    dst = obj.filter(src, 'OptionName',optionValue, ...)
+            %     dst = obj.filter(src)
+            %     dst = obj.filter(src, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __src__ filtering image with unsigned 8-bit or floating-point
-            %       32-bit depth and up to 4 channels.
+            %   32-bit depth and up to 4 channels.
             %
             % ## Output
             % * __dst__ destination image.
             %
             % ## Options
             % * __DDepth__ optional depth of the output image. `DDepth` can be
-            %       set to -1, which will be equivalent to `class(src)`.
-            %       default -1
+            %   set to -1, which will be equivalent to `class(src)`. default -1
             %
             % See also: cv.DTFilter.DTFilter, cv.DTFilter.dtFilter
             %
@@ -178,33 +178,33 @@ classdef DTFilter < handle
         function dst = dtFilter(src, guide, varargin)
             %DTFILTER  Simple one-line Domain Transform filter call
             %
-            %    dst = cv.DTFilter.dtFilter(src, guide)
-            %    dst = cv.DTFilter.dtFilter(src, guide, 'OptionName',optionValue, ...)
+            %     dst = cv.DTFilter.dtFilter(src, guide)
+            %     dst = cv.DTFilter.dtFilter(src, guide, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __src__ filtering image with unsigned 8-bit or floating-point
-            %       32-bit depth and up to 4 channels.
+            %   32-bit depth and up to 4 channels.
             % * __guide__ guided image (also called as joint image) with
-            %       unsigned 8-bit or floating-point 32-bit depth and up to 4
-            %       channels.
+            %   unsigned 8-bit or floating-point 32-bit depth and up to 4
+            %   channels.
             %
             % ## Output
             % * __dst__ destination image.
             %
             % ## Options
             % * __SigmaSpatial__ `sigma_H` parameter in the original article,
-            %       it's similar to the sigma in the coordinate space into
-            %       cv.bilateralFilter. default 10.0
+            %   it's similar to the sigma in the coordinate space into
+            %   cv.bilateralFilter. default 10.0
             % * __SigmaColor__ `sigma_r` parameter in the original article,
-            %       it's similar to the sigma in the color space into
-            %       cv.bilateralFilter. default 25.0
+            %   it's similar to the sigma in the color space into
+            %   cv.bilateralFilter. default 25.0
             % * __Mode__ one form three modes which corresponds to three modes
-            %       for filtering 2D signals in the article. default 'NC':
-            %       * __NC__ Normalized Convolution (NC).
-            %       * __IC__ Interpolated Convolution (IC).
-            %       * __RF__ Recursive Filtering (RF).
+            %   for filtering 2D signals in the article. default 'NC':
+            %   * __NC__ Normalized Convolution (NC).
+            %   * __IC__ Interpolated Convolution (IC).
+            %   * __RF__ Recursive Filtering (RF).
             % * __NumIters__ optional number of iterations used for filtering,
-            %       3 is quite enough. default 3
+            %   3 is quite enough. default 3
             %
             % If you have multiple images to filter with the same guided image
             % then use DTFilter interface to avoid extra computations on

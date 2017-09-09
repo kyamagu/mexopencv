@@ -23,27 +23,28 @@ classdef PCA < handle
     % The following shows a quick example of how to reduce dimensionality
     % of samples from 10 to 3.
     %
-    %    Xtrain = randn(100,10);
-    %    Xtest  = randn(100,10);
-    %    pca = cv.PCA(Xtrain, 'MaxComponents',3);
-    %    Y = pca.project(Xtest);
-    %    Xapprox = pca.backProject(Y);
+    %     Xtrain = randn(100,10);
+    %     Xtest  = randn(100,10);
+    %     pca = cv.PCA(Xtrain, 'MaxComponents',3);
+    %     Y = pca.project(Xtest);
+    %     Xapprox = pca.backProject(Y);
     %
     % The class also implements the save/load pattern to regular MAT-files,
     % so we can do the following:
     %
-    %    pca = cv.PCA(randn(100,5));
-    %    save out.mat pca
-    %    clear pca
+    %     pca = cv.PCA(randn(100,5));
+    %     save out.mat pca
+    %     clear pca
     %
-    %    load out.mat
-    %    disp(pca)
+    %     load out.mat
+    %     disp(pca)
     %
     % See also: cv.PCA.PCA
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     % cached properties of their C++ couterpart
@@ -68,9 +69,9 @@ classdef PCA < handle
         function this = PCA(varargin)
             %PCA  PCA constructors
             %
-            %    pca = cv.PCA()
-            %    pca = cv.PCA(data, 'OptionName', optionValue, ...)
-            %    pca = cv.PCA(S)
+            %     pca = cv.PCA()
+            %     pca = cv.PCA(data, 'OptionName', optionValue, ...)
+            %     pca = cv.PCA(S)
             %
             % ## Input
             % * __data__ input samples stored as matrix rows or matrix columns
@@ -103,7 +104,7 @@ classdef PCA < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.PCA
             %
@@ -114,18 +115,18 @@ classdef PCA < handle
         function read(this, fname_or_str, varargin)
             %READ  Read PCA objects from file
             %
-            %    obj.read(filename)
-            %    obj.read(str, 'FromString',true)
-            %    obj.read(..., 'OptionName', optionValue, ...)
+            %     obj.read(filename)
+            %     obj.read(str, 'FromString',true)
+            %     obj.read(..., 'OptionName', optionValue, ...)
             %
             % ## Input
             % * __filename__ Name of the file to read.
             % * __str__ String containing serialized object you want to load.
             %
             % ## Options
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized object.
-            %       default false
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized object.
+            %   default false
             %
             % Loads `eigenvalues`, `eigenvectors` and `mean` from specified
             % storage.
@@ -138,15 +139,15 @@ classdef PCA < handle
         function varargout = write(this, filename)
             %WRITE  Write PCA objects to file
             %
-            %    obj.write(filename)
-            %    str = obj.write(filename)
+            %     obj.write(filename)
+            %     str = obj.write(filename)
             %
             % ## Input
             % * __filename__ Name of the file to write to.
             %
             % ## Output
             % * __str__ optional output. If requested, the object is persisted
-            %       to a string in memory instead of writing to disk.
+            %   to a string in memory instead of writing to disk.
             %
             % Writes `eigenvalues`, `eigenvectors` and `mean` to the specified
             % file.
@@ -159,27 +160,27 @@ classdef PCA < handle
         function compute(this, data, varargin)
             %COMPUTE  Performs Principal Component Analysis on the supplied dataset
             %
-            %    pca.compute(data)
-            %    pca.compute(..., 'OptionName', optionValue, ...)
+            %     pca.compute(data)
+            %     pca.compute(..., 'OptionName', optionValue, ...)
             %
             % ## Input
             % * __data__ input samples stored as the matrix rows or as the
-            %       matrix columns
+            %   matrix columns
             %
             % ## Options
             % * __DataAs__ Data layout option. Default 'Row'. One of:
-            %       * __Row__ indicates that the input samples are stored as
-            %             matrix rows.
-            %       * __Col__ indicates that the input samples are stored as
-            %             matrix columns.
+            %   * __Row__ indicates that the input samples are stored as
+            %     matrix rows.
+            %   * __Col__ indicates that the input samples are stored as
+            %     matrix columns.
             % * __MaxComponents__ Maximum number of components that PCA should
-            %       retain. default 0 (all the components are retained).
+            %   retain. default 0 (all the components are retained).
             % * __RetainedVariance__ Percentage of variance that PCA should
-            %       retain. Using this parameter will let the PCA decided how
-            %       many components to retain but it will always keep at
-            %       least 2. default 1.0 (all the components are retained).
+            %   retain. Using this parameter will let the PCA decided how many
+            %   components to retain but it will always keep at least 2.
+            %   default 1.0 (all the components are retained).
             % * __Mean__ Optional mean value. By default, the mean is computed
-            %       from the data. Not set by default.
+            %   from the data. Not set by default.
             %
             % **Note**: `RetainedVariance` and `MaxComponents` are mutually
             % exclusive options, and shoudn't be used together.
@@ -208,23 +209,21 @@ classdef PCA < handle
         function Y = project(this, X)
             %PROJECT  Projects vector(s) to the principal component subspace
             %
-            %    Y = pca.project(X)
+            %     Y = pca.project(X)
             %
             % ## Input
             % * __X__ input vector(s); must have the same dimensionality and
-            %       the same layout as the input data used at PCA phase, that
-            %       is, if 'Row' was specified, then `size(X,2)==size(data,2)`
-            %       (vector dimensionality) and `size(X,1)` is the number of
-            %       vectors to project, and the same is true for the 'Col'
-            %       case.
+            %   the same layout as the input data used at PCA phase, that is,
+            %   if 'Row' was specified, then `size(X,2)==size(data,2)` (vector
+            %   dimensionality) and `size(X,1)` is the number of vectors to
+            %   project, and the same is true for the 'Col' case.
             %
             % ## Output
             % * __Y__ output vectors (PC coefficients); in case of 'Col', the
-            %       output matrix has as many columns as the number of input
-            %       vectors, this means that `size(Y,2)==size(X,2)` and the
-            %       number of rows match the number of principal components
-            %       (for example, `MaxComponents` parameter passed to the
-            %       constructor).
+            %   output matrix has as many columns as the number of input
+            %   vectors, this means that `size(Y,2)==size(X,2)` and the number
+            %   of rows match the number of principal components (for example,
+            %   `MaxComponents` parameter passed to the constructor).
             %
             % The method project one or more vectors to the principal
             % component subspace, where each vector projection is
@@ -238,16 +237,16 @@ classdef PCA < handle
         function X = backProject(this, Y)
             %BACKPROJECT  Reconstructs vectors from their PC projections
             %
-            %    X = pca.backProject(Y)
+            %     X = pca.backProject(Y)
             %
             % ## Input
             % * __Y__ coordinates of the vectors in the principal component
-            %       subspace, the layout and size are the same as of
-            %       cv.PCA.project output vectors.
+            %   subspace, the layout and size are the same as of
+            %   cv.PCA.project output vectors.
             %
             % ## Output
             % * __X__ reconstructed vectors; the layout and size are the same
-            %       as of cv.PCA.project input vectors.
+            %   as of cv.PCA.project input vectors.
             %
             % The method is the inverse operation to cv.PCA.project. It
             % takes PC coordinates of projected vectors and reconstruct the
@@ -304,7 +303,7 @@ classdef PCA < handle
         function S = struct(this)
             %STRUCT  Converts to a struct array
             %
-            %    S = struct(obj)
+            %     S = struct(obj)
             %
             % ## Output
             % * __S__ output struct array
@@ -319,7 +318,7 @@ classdef PCA < handle
         function S = saveobj(this)
             %SAVEOBJ  Serialization before save
             %
-            %    S = obj.saveobj()
+            %     S = obj.saveobj()
             %
             % ## Output
             % * __S__ output struct.
@@ -336,7 +335,7 @@ classdef PCA < handle
         function this = loadobj(S)
             %LOADOBJ  Deserialization after load
             %
-            %    obj = loadobj(S)
+            %     obj = loadobj(S)
             %
             % ## Input
             % * __S__ input struct.

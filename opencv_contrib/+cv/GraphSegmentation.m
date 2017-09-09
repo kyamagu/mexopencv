@@ -12,7 +12,8 @@ classdef GraphSegmentation < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -28,12 +29,12 @@ classdef GraphSegmentation < handle
         function this = GraphSegmentation(varargin)
             %GRAPHSEGMENTATION  Creates a graph based segmentor
             %
-            %    obj = cv.GraphSegmentation()
-            %    obj = cv.GraphSegmentation('OptionName',optionValue, ...)
+            %     obj = cv.GraphSegmentation()
+            %     obj = cv.GraphSegmentation('OptionName',optionValue, ...)
             %
             % ## Options
             % * __Sigma__ The sigma parameter, used to smooth image.
-            %       default 0.5
+            %   default 0.5
             % * __K__ The k parameter of the algorithm. default 300
             % * __MinSize__ The minimum size of segments. default 100
             %
@@ -45,7 +46,7 @@ classdef GraphSegmentation < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.GraphSegmentation
             %
@@ -59,7 +60,7 @@ classdef GraphSegmentation < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.GraphSegmentation.empty, cv.GraphSegmentation.load
             %
@@ -69,11 +70,11 @@ classdef GraphSegmentation < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.GraphSegmentation.clear, cv.GraphSegmentation.load
             %
@@ -83,7 +84,7 @@ classdef GraphSegmentation < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -99,21 +100,21 @@ classdef GraphSegmentation < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -127,11 +128,11 @@ classdef GraphSegmentation < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.GraphSegmentation.save, cv.GraphSegmentation.load
             %
@@ -144,16 +145,16 @@ classdef GraphSegmentation < handle
         function dst = processImage(this, src)
             %PROCESSIMAGE  Segment an image and store output in dst
             %
-            %    dst = obj.processImage(src)
+            %     dst = obj.processImage(src)
             %
             % ## Input
             % * __src__ The input image. Any number of channel (1 (Eg: Gray),
-            %       3 (Eg: RGB), 4 (Eg: RGB-D)) can be provided.
+            %   3 (Eg: RGB), 4 (Eg: RGB-D)) can be provided.
             %
             % ## Output
             % * __dst__ The output segmentation. It's a `int32` matrix with
-            %       the same number of cols and rows as input image, with an
-            %       unique, sequential, id for each pixel.
+            %   the same number of cols and rows as input image, with a
+            %   unique sequential id for each pixel.
             %
             % See also: cv.GraphSegmentation.GraphSegmentation
             %

@@ -12,25 +12,26 @@ classdef GuidedFilter < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     methods
         function this = GuidedFilter(guide, varargin)
             %GUIDEDFILTER  Factory method, create instance of GuidedFilter and produce initialization routines
             %
-            %    obj = cv.GuidedFilter(guide)
-            %    obj = cv.GuidedFilter(guide, 'OptionName',optionValue, ...)
+            %     obj = cv.GuidedFilter(guide)
+            %     obj = cv.GuidedFilter(guide, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __guide__ guided image with up to 3 channels, if it have more
-            %       then 3 channels then only first 3 channels will be used.
+            %   then 3 channels then only first 3 channels will be used.
             %
             % ## Options
             % * __Radius__ radius of Guided Filter. default 7
             % * __EPS__ regularization term of Guided Filter. `eps^2` is
-            %       similar to the sigma in the color space into
-            %       cv.bilateralFilter. default 500.0
+            %   similar to the sigma in the color space into
+            %   cv.bilateralFilter. default 500.0
             %
             % For more details about Guided Filter parameters, see the
             % original article [Kaiming10].
@@ -43,7 +44,7 @@ classdef GuidedFilter < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.GuidedFilter
             %
@@ -57,7 +58,7 @@ classdef GuidedFilter < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.GuidedFilter.empty, cv.GuidedFilter.load
             %
@@ -67,11 +68,11 @@ classdef GuidedFilter < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.GuidedFilter.clear, cv.GuidedFilter.load
             %
@@ -81,7 +82,7 @@ classdef GuidedFilter < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -97,21 +98,21 @@ classdef GuidedFilter < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -125,11 +126,11 @@ classdef GuidedFilter < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.GuidedFilter.save, cv.GuidedFilter.load
             %
@@ -142,8 +143,8 @@ classdef GuidedFilter < handle
         function dst = filter(this, src, varargin)
             %FILTER  Apply Guided Filter to the filtering image
             %
-            %    dst = obj.filter(src)
-            %    dst = obj.filter(src, 'OptionName',optionValue, ...)
+            %     dst = obj.filter(src)
+            %     dst = obj.filter(src, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __src__ filtering image with any numbers of channels.
@@ -153,8 +154,7 @@ classdef GuidedFilter < handle
             %
             % ## Options
             % * __DDepth__ optional depth of the output image. `DDepth` can be
-            %       set to -1, which will be equivalent to `class(src)`.
-            %       Default -1
+            %   set to -1, which will be equivalent to `class(src)`. Default -1
             %
             % See also: cv.GuidedFilter.GuidedFilter,
             %  cv.GuidedFilter.guidedFilter
@@ -167,13 +167,13 @@ classdef GuidedFilter < handle
         function dst = guidedFilter(src, guide, varargin)
             %GUIDEDFILTER  Simple one-line Guided Filter call
             %
-            %    dst = cv.GuidedFilter.guidedFilter(src, guide)
-            %    dst = cv.GuidedFilter.guidedFilter(src, guide, 'OptionName',optionValue, ...)
+            %     dst = cv.GuidedFilter.guidedFilter(src, guide)
+            %     dst = cv.GuidedFilter.guidedFilter(src, guide, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __src__ filtering image with any numbers of channels.
             % * __guide__ guided image with up to 3 channels, if it have more
-            %       then 3 channels then only first 3 channels will be used.
+            %   then 3 channels then only first 3 channels will be used.
             %
             % ## Output
             % * __dst__ output image.
@@ -181,11 +181,10 @@ classdef GuidedFilter < handle
             % ## Options
             % * __Radius__ radius of Guided Filter. default 7
             % * __EPS__ regularization term of Guided Filter. `eps^2` is
-            %       similar to the sigma in the color space into
-            %       cv.bilateralFilter. default 500.0
+            %   similar to the sigma in the color space into
+            %   cv.bilateralFilter. default 500.0
             % * __DDepth__ optional depth of the output image. `DDepth` can be
-            %       set to -1, which will be equivalent to `class(src)`.
-            %       Default -1
+            %   set to -1, which will be equivalent to `class(src)`. Default -1
             %
             % If you have multiple images to filter with the same guided image
             % then use GuidedFilter interface to avoid extra computations on

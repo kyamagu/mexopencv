@@ -6,7 +6,8 @@ classdef Tonemap < handle
     %
 
     properties (SetAccess = private)
-        id % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -23,8 +24,8 @@ classdef Tonemap < handle
         function this = Tonemap(varargin)
             %TONEMAP  Creates simple linear mapper with gamma correction
             %
-            %    obj = cv.Tonemap()
-            %    obj = cv.Tonemap('OptionName',optionValue, ...)
+            %     obj = cv.Tonemap()
+            %     obj = cv.Tonemap('OptionName',optionValue, ...)
             %
             % ## Options
             % * __Gamma__ default 1.0
@@ -37,7 +38,7 @@ classdef Tonemap < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.Tonemap
             %
@@ -51,14 +52,14 @@ classdef Tonemap < handle
         function dst = process(this, src)
             %PROCESS  Tonemaps image
             %
-            %    dst = obj.process(src)
+            %     dst = obj.process(src)
             %
             % ## Input
             % * __src__ source RGB image, 32-bit `single` 3-channel array.
             %
             % ## Output
             % * __dst__ destination image of same size as `src`, 32-bit
-            %       `single` 3-channel array with values in [0,1] range.
+            %   `single` 3-channel array with values in [0,1] range.
             %
             % See also: cv.Tonemap.Tonemap
             %
@@ -71,7 +72,7 @@ classdef Tonemap < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.Tonemap.empty, cv.Tonemap.load
             %
@@ -81,11 +82,11 @@ classdef Tonemap < handle
         function b = empty(this)
             %EMPTY  Returns true if the algorithm is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.Tonemap.clear, cv.Tonemap.load
             %
@@ -95,11 +96,11 @@ classdef Tonemap < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.Tonemap.save, cv.Tonemap.load
             %
@@ -109,7 +110,7 @@ classdef Tonemap < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -125,21 +126,21 @@ classdef Tonemap < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous

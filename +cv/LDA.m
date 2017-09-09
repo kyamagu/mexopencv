@@ -3,20 +3,21 @@ classdef LDA < handle
     %
     % ## Example
     %
-    %    Xtrain = randn(100,5);
-    %    labels = randi([1 3], [100 1]);
-    %    Xtest = randn(100,5);
+    %     Xtrain = randn(100,5);
+    %     labels = randi([1 3], [100 1]);
+    %     Xtest = randn(100,5);
     %
-    %    lda = cv.LDA('NumComponents',3);
-    %    lda.compute(Xtrain, labels);
-    %    Y = lda.project(Xtest);
-    %    Xapprox = lda.reconstruct(Y);
+    %     lda = cv.LDA('NumComponents',3);
+    %     lda.compute(Xtrain, labels);
+    %     Y = lda.project(Xtest);
+    %     Xapprox = lda.reconstruct(Y);
     %
     % See also: cv.PCA, fitcdiscr
     %
 
     properties (SetAccess = private)
-        id  % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent, SetAccess = private)
@@ -30,13 +31,13 @@ classdef LDA < handle
         function this = LDA(varargin)
             %LDA  Constructor, initializes a LDA object
             %
-            %    lda = cv.LDA()
-            %    lda = cv.LDA('OptionName', optionValue, ...)
+            %     lda = cv.LDA()
+            %     lda = cv.LDA('OptionName', optionValue, ...)
             %
             % ## Options
             % * __NumComponents__ number of components (default 0). If 0 (or
-            %       less) number of components are given, they are
-            %       automatically determined for given data in computation.
+            %   less) number of components are given, they are automatically
+            %   determined for given data in computation.
             %
             % See also: cv.LDA.compute
             %
@@ -46,7 +47,7 @@ classdef LDA < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    lda.delete()
+            %     lda.delete()
             %
             % See also: cv.LDA
             %
@@ -57,17 +58,17 @@ classdef LDA < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Deserializes this object from a given filename
             %
-            %    lda.load(filename)
-            %    lda.load(str, 'FromString',true)
+            %     lda.load(filename)
+            %     lda.load(str, 'FromString',true)
             %
             % ## Input
             % * __filename__ name of file to load
             % * __str__ String containing serialized object you want to load.
             %
             % ## Options
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized object.
-            %       default false
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized object.
+            %   default false
             %
             % See also: cv.LDA.save
             %
@@ -77,15 +78,15 @@ classdef LDA < handle
         function varargout = save(this, filename)
             %SAVE  Serializes this object to a given filename
             %
-            %    lda.save(filename)
-            %    str = lda.save(filename)
+            %     lda.save(filename)
+            %     str = lda.save(filename)
             %
             % ## Input
             % * __filename__ name of file to save
             %
             % ## Output
             % * __str__ optional output. If requested, the object is persisted
-            %       to a string in memory instead of writing to disk.
+            %   to a string in memory instead of writing to disk.
             %
             % See also: cv.LDA.load
             %
@@ -95,14 +96,14 @@ classdef LDA < handle
         function compute(this, src, labels)
             %COMPUTE  Compute the discriminants for data and labels
             %
-            %    lda.compute(src, labels)
+            %     lda.compute(src, labels)
             %
             % ## Input
             % * __src__ data samples (matrix of rows of size `N-by-d`, or a
-            %       cell-array of `N` vectors each of length `d`).
-            %       Floating-point type.
+            %   cell-array of `N` vectors each of length `d`). Floating-point
+            %   type.
             % * __labels__ corresponding labels (vector of length `N`).
-            %       Integer type.
+            %   Integer type.
             %
             % Performs a Discriminant Analysis with Fisher's Optimization
             % Criterion on given data in `src` and corresponding labels in
@@ -116,7 +117,7 @@ classdef LDA < handle
         function m = project(this, src)
             %PROJECT  Projects samples into the LDA subspace
             %
-            %    m = lda.project(src)
+            %     m = lda.project(src)
             %
             % ## Input
             % * __src__ data sampels (matrix of size N-by-d)
@@ -132,7 +133,7 @@ classdef LDA < handle
         function m = reconstruct(this, src)
             %RECONSTRUCT  Reconstructs projections from the LDA subspace
             %
-            %    m = lda.reconstruct(src)
+            %     m = lda.reconstruct(src)
             %
             % ## Input
             % * __src__ projected data (matrix of size N-by-ncomponents)
@@ -150,7 +151,7 @@ classdef LDA < handle
         function dst = subspaceProject(W, mn, src)
             %SUBSPACEPROJECT  Projects samples
             %
-            %    dst = cv.LDA.subspaceProject(W, mn, src)
+            %     dst = cv.LDA.subspaceProject(W, mn, src)
             %
             % ## Input
             % * __W__ eigenvectors.
@@ -170,7 +171,7 @@ classdef LDA < handle
         function dst = subspaceReconstruct(W, mn, src)
             %SUBSPACERECONSTRUCT  Reconstructs projections
             %
-            %    dst = cv.LDA.subspaceReconstruct(W, mn, src)
+            %     dst = cv.LDA.subspaceReconstruct(W, mn, src)
             %
             % ## Input
             % * __W__ eigenvectors.

@@ -13,7 +13,8 @@ classdef SURF < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -36,19 +37,19 @@ classdef SURF < handle
         % Basic or Extended descriptors.
         %
         % * __false__ means that the basic descriptors (64 elements each)
-        %       shall be computed. This is the default.
+        %   shall be computed. This is the default.
         % * __true__ means that the extended descriptors (128 elements each)
-        %       shall be computed.
+        %   shall be computed.
         Extended
         % Up-right or rotated features.
         %
         % * __false__ means that detector computes orientation of each
-        %       feature. This is the default.
+        %   feature. This is the default.
         % * __true__ means that the orientation is not computed (which is much
-        %       much faster). For example, if you match images from a stereo
-        %       pair, or do image stitching, the matched features likely have
-        %       very similar angles, and you can speed up feature extraction
-        %       by setting `Upright=true`.
+        %   much faster). For example, if you match images from a stereo pair,
+        %   or do image stitching, the matched features likely have very
+        %   similar angles, and you can speed up feature extraction by setting
+        %   `Upright=true`.
         Upright
     end
 
@@ -56,22 +57,22 @@ classdef SURF < handle
         function this = SURF(varargin)
             %SURF  Constructor
             %
-            %    obj = cv.SURF()
-            %    obj = cv.SURF(..., 'OptionName',optionValue, ...)
+            %     obj = cv.SURF()
+            %     obj = cv.SURF(..., 'OptionName',optionValue, ...)
             %
             % ## Options
             % * __HessianThreshold__ Threshold for hessian keypoint detector
-            %       used in SURF. default 100
+            %   used in SURF. default 100
             % * __NOctaves__ Number of pyramid octaves the keypoint detector
-            %       will use. default 4
+            %   will use. default 4
             % * __NOctaveLayers__ Number of octave layers within each octave.
-            %       default 3
+            %   default 3
             % * __Extended__ Extended descriptor flag (true: use extended
-            %       128-element descriptors; false: use 64-element
-            %       descriptors). default false
+            %   128-element descriptors; false: use 64-element descriptors).
+            %   default false
             % * __Upright__ Up-right or rotated features flag (true: do not
-            %       compute orientation of features; false: compute
-            %       orientation). default false
+            %   compute orientation of features; false: compute orientation).
+            %   default false
             %
             % See also: cv.SURF.detectAndCompute
             %
@@ -81,7 +82,7 @@ classdef SURF < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.SURF
             %
@@ -92,7 +93,7 @@ classdef SURF < handle
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
-            %    typename = obj.typeid()
+            %     typename = obj.typeid()
             %
             % ## Output
             % * __typename__ Name of C++ type
@@ -106,7 +107,7 @@ classdef SURF < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.SURF.empty, cv.SURF.load
             %
@@ -116,11 +117,11 @@ classdef SURF < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.SURF.clear, cv.SURF.load
             %
@@ -130,7 +131,7 @@ classdef SURF < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -146,21 +147,21 @@ classdef SURF < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -174,11 +175,11 @@ classdef SURF < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.SURF.save, cv.SURF.load
             %
@@ -191,16 +192,16 @@ classdef SURF < handle
         function ntype = defaultNorm(this)
             %DEFAULTNORM  Returns the default norm type
             %
-            %    ntype = obj.defaultNorm()
+            %     ntype = obj.defaultNorm()
             %
             % ## Output
             % * __ntype__ Norm type. One of `cv::NormTypes`:
-            %       * __Inf__
-            %       * __L1__
-            %       * __L2__
-            %       * __L2Sqr__
-            %       * __Hamming__
-            %       * __Hamming2__
+            %   * __Inf__
+            %   * __L1__
+            %   * __L2__
+            %   * __L2Sqr__
+            %   * __Hamming__
+            %   * __Hamming2__
             %
             % Always `L2` for SURF.
             %
@@ -212,11 +213,11 @@ classdef SURF < handle
         function sz = descriptorSize(this)
             %DESCRIPTORSIZE  Returns the descriptor size in floats
             %
-            %    sz = obj.descriptorSize()
+            %     sz = obj.descriptorSize()
             %
             % ## Output
             % * __sz__ Descriptor size, either 64 or 128 (see the
-            %       cv.SURF.Extended property).
+            %   cv.SURF.Extended property).
             %
             % See also: cv.SURF.descriptorType, cv.SURF.compute
             %
@@ -226,7 +227,7 @@ classdef SURF < handle
         function dtype = descriptorType(this)
             %DESCRIPTORTYPE  Returns the descriptor type
             %
-            %    dtype = obj.descriptorType()
+            %     dtype = obj.descriptorType()
             %
             % ## Output
             % * __dtype__ Descriptor type, one of numeric MATLAB class names.
@@ -241,27 +242,25 @@ classdef SURF < handle
         function keypoints = detect(this, img, varargin)
             %DETECT  Detects keypoints in an image or image set
             %
-            %    keypoints = obj.detect(img)
-            %    keypoints = obj.detect(imgs)
-            %    [...] = obj.detect(..., 'OptionName',optionValue, ...)
+            %     keypoints = obj.detect(img)
+            %     keypoints = obj.detect(imgs)
+            %     [...] = obj.detect(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __img__ Image (first variant), 8-bit grayscale image.
             % * __imgs__ Image set (second variant), cell array of images.
             %
             % ## Output
-            % * __keypoints__ The detected keypoints. In the first variant,
-            %       a 1-by-N structure array. In the second variant of the
-            %       method, `keypoints{i}` is a set of keypoints detected in
-            %       `imgs{i}`.
+            % * __keypoints__ The detected keypoints. In the first variant, a
+            %   1-by-N structure array. In the second variant of the method,
+            %   `keypoints{i}` is a set of keypoints detected in `imgs{i}`.
             %
             % ## Options
             % * __Mask__ A mask specifying where to look for keypoints
-            %       (optional). It must be a logical or 8-bit integer matrix
-            %       with non-zero values in the region of interest. In the
-            %       second variant, it is a cell-array of masks for each input
-            %       image, `masks{i}` is a mask for `imgs{i}`.
-            %       Not set by default.
+            %   (optional). It must be a logical or 8-bit integer matrix with
+            %   non-zero values in the region of interest. In the second
+            %   variant, it is a cell-array of masks for each input image,
+            %   `masks{i}` is a mask for `imgs{i}`. Not set by default.
             %
             % See also: cv.SURF.compute, cv.SURF.detectAndCompute
             %
@@ -271,26 +270,26 @@ classdef SURF < handle
         function [descriptors, keypoints] = compute(this, img, keypoints)
             %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set
             %
-            %    [descriptors, keypoints] = obj.compute(img, keypoints)
-            %    [descriptors, keypoints] = obj.compute(imgs, keypoints)
+            %     [descriptors, keypoints] = obj.compute(img, keypoints)
+            %     [descriptors, keypoints] = obj.compute(imgs, keypoints)
             %
             % ## Input
             % * __img__ Image (first variant), 8-bit grayscale image.
             % * __imgs__ Image set (second variant), cell array of images.
             % * __keypoints__ Input collection of keypoints. Keypoints for
-            %       which a descriptor cannot be computed are removed.
-            %       Sometimes new keypoints can be added, for example: cv.SIFT
-            %       duplicates keypoint with several dominant orientations
-            %       (for each orientation). In the first variant, this is a
-            %       struct-array of detected keypoints. In the second variant,
-            %       it is a cell-array, where `keypoints{i}` is a set of keypoints
-            %       detected in `imgs{i}` (a struct-array like before).
+            %   which a descriptor cannot be computed are removed. Sometimes
+            %   new keypoints can be added, for example: cv.SIFT duplicates
+            %   keypoint with several dominant orientations (for each
+            %   orientation). In the first variant, this is a struct-array of
+            %   detected keypoints. In the second variant, it is a cell-array,
+            %   where `keypoints{i}` is a set of keypoints detected in
+            %   `imgs{i}` (a struct-array like before).
             %
             % ## Output
             % * __descriptors__ Computed descriptors. In the second variant of
-            %       the method `descriptors{i}` are descriptors computed for a
-            %       `keypoints{i}`. Row `j` in `descriptors` (or
-            %       `descriptors{i}`) is the descriptor for `j`-th keypoint.
+            %   the method `descriptors{i}` are descriptors computed for a
+            %   `keypoints{i}`. Row `j` in `descriptors` (or `descriptors{i}`)
+            %   is the descriptor for `j`-th keypoint.
             % * __keypoints__ Optional output with possibly updated keypoints.
             %
             % See also: cv.SURF.detect, cv.SURF.detectAndCompute
@@ -301,41 +300,41 @@ classdef SURF < handle
         function [keypoints, descriptors] = detectAndCompute(this, img, varargin)
             %DETECTANDCOMPUTE  Detects keypoints and computes their descriptors
             %
-            %    [keypoints, descriptors] = obj.detectAndCompute(img)
-            %    [...] = obj.detectAndCompute(..., 'OptionName',optionValue, ...)
+            %     [keypoints, descriptors] = obj.detectAndCompute(img)
+            %     [...] = obj.detectAndCompute(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __img__ Image, input 8-bit grayscale image.
             %
             % ## Output
             % * __keypoints__ The detected keypoints. A 1-by-N structure array
-            %       with the following fields:
-            %       * __pt__ coordinates of the keypoint `[x,y]`
-            %       * __size__ diameter of the meaningful keypoint neighborhood
-            %       * __angle__ computed orientation of the keypoint (-1 if not
-            %             applicable); it's in [0,360) degrees and measured
-            %             relative to image coordinate system (y-axis is
-            %             directed downward), i.e in clockwise.
-            %       * __response__ the response by which the most strong
-            %             keypoints have been selected. Can be used for further
-            %             sorting or subsampling.
-            %       * __octave__ octave (pyramid layer) from which the keypoint
-            %             has been extracted.
-            %       * **class_id** object class (if the keypoints need to be
-            %             clustered by an object they belong to).
+            %   with the following fields:
+            %   * __pt__ coordinates of the keypoint `[x,y]`
+            %   * __size__ diameter of the meaningful keypoint neighborhood
+            %   * __angle__ computed orientation of the keypoint (-1 if not
+            %     applicable); it's in [0,360) degrees and measured relative
+            %     to image coordinate system (y-axis is directed downward),
+            %     i.e in clockwise.
+            %   * __response__ the response by which the most strong keypoints
+            %     have been selected. Can be used for further sorting or
+            %     subsampling.
+            %   * __octave__ octave (pyramid layer) from which the keypoint
+            %     has been extracted.
+            %   * **class_id** object class (if the keypoints need to be
+            %     clustered by an object they belong to).
             % * __descriptors__ Computed descriptors. Output concatenated
-            %       vectors of descriptors. Each descriptor is a 64- or
-            %       128-element vector, as returned by cv.SURF.descriptorSize,
-            %       so the total size of descriptors will be
-            %       `numel(keypoints) * obj.descriptorSize()`. A matrix of
-            %       size N-by-(64/128) of class `single`, one row per keypoint.
+            %   vectors of descriptors. Each descriptor is a 64 or 128 element
+            %   vector, as returned by cv.SURF.descriptorSize, so the total
+            %   size of descriptors will be
+            %   `numel(keypoints) * obj.descriptorSize()`. A matrix of size
+            %   N-by-(64/128) of class `single`, one row per keypoint.
             %
             % ## Options
             % * __Mask__ optional mask specifying where to look for keypoints.
-            %       Not set by default.
+            %   Not set by default.
             % * __Keypoints__ If passed, then the method will use the provided
-            %       vector of keypoints instead of detecting them, and the
-            %       algorithm just computes their descriptors.
+            %   vector of keypoints instead of detecting them, and the
+            %   algorithm just computes their descriptors.
             %
             % The function is parallelized with the TBB library.
             %

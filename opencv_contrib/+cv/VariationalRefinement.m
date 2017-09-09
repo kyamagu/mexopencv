@@ -23,7 +23,8 @@ classdef VariationalRefinement < handle
     %
 
     properties (SetAccess = private)
-        id % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -49,7 +50,7 @@ classdef VariationalRefinement < handle
         function this = VariationalRefinement()
             %VARIATIONALREFINEMENT  Creates an instance of VariationalRefinement
             %
-            %    obj = cv.VariationalRefinement()
+            %     obj = cv.VariationalRefinement()
             %
             % See also: cv.VariationalRefinement.calc
             %
@@ -59,7 +60,7 @@ classdef VariationalRefinement < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.VariationalRefinement
             %
@@ -73,17 +74,17 @@ classdef VariationalRefinement < handle
         function flow = calc(this, I0, I1, varargin)
             %CALC  Calculates an optical flow
             %
-            %    flow = obj.calc(I0, I1)
-            %    flow = obj.calc(I0, I1, 'OptionName',optionValue, ...)
+            %     flow = obj.calc(I0, I1)
+            %     flow = obj.calc(I0, I1, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __I0__ first 8-bit single-channel input image.
             % * __I1__ second input image of the same size and the same type
-            %       as `I0`.
+            %   as `I0`.
             %
             % ## Output
             % * __flow__ computed flow image that has the same size as `I0`
-            %       and type `single` (2-channels).
+            %   and type `single` (2-channels).
             %
             % ## Options
             % * __InitialFlow__ specify the initial flow. Not set by default.
@@ -96,7 +97,7 @@ classdef VariationalRefinement < handle
         function collectGarbage(this)
             %COLLECTGARBAGE  Releases all inner buffers
             %
-            %    obj.collectGarbage()
+            %     obj.collectGarbage()
             %
             VariationalRefinement_(this.id, 'collectGarbage');
         end
@@ -107,19 +108,19 @@ classdef VariationalRefinement < handle
         function [flow_u, flow_v] = calcUV(this, I0, I1, varargin)
             %CALCUV  calc function overload to handle separate horizontal (u) and vertical (v) flow components (to avoid extra splits/merges)
             %
-            %    [flow_u, flow_v] = obj.calcUV(I0, I1)
-            %    [flow_u, flow_v] = obj.calcUV(I0, I1, 'OptionName',optionValue, ...)
+            %     [flow_u, flow_v] = obj.calcUV(I0, I1)
+            %     [flow_u, flow_v] = obj.calcUV(I0, I1, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __I0__ first 8-bit single-channel input image.
             % * __I1__ second input image of the same size and the same type
-            %       as `I0`.
+            %   as `I0`.
             %
             % ## Output
             % * **flow_u** computed horizontal flow image that has the same
-            %       size as `I0` and type `single` (1-channel1).
-            % * **flow_v** computed vertical flow image that has the same
-            %       size as `I0` and type `single` (1-channel1).
+            %   size as `I0` and type `single` (1-channel1).
+            % * **flow_v** computed vertical flow image that has the same size
+            %   as `I0` and type `single` (1-channel1).
             %
             % ## Options
             % * __InitialFlowU__ specify initial U-flow. Not set by default.
@@ -138,7 +139,7 @@ classdef VariationalRefinement < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.VariationalRefinement.empty
             %
@@ -148,11 +149,11 @@ classdef VariationalRefinement < handle
         function b = empty(this)
             %EMPTY  Returns true if the algorithm is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the algorithm is empty (e.g. in the very
-            %       beginning or after unsuccessful read).
+            %   beginning or after unsuccessful read).
             %
             % See also: cv.VariationalRefinement.clear
             %
@@ -162,11 +163,11 @@ classdef VariationalRefinement < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.VariationalRefinement.save, cv.VariationalRefinement.load
             %
@@ -176,7 +177,7 @@ classdef VariationalRefinement < handle
         function save(this, filename)
             %SAVE  Saves the algorithm to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -191,21 +192,21 @@ classdef VariationalRefinement < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from a file storage.
             % The previous model state is discarded.

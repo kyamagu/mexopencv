@@ -49,7 +49,8 @@ classdef MotionSaliencyBinWangApr2014 < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -63,7 +64,7 @@ classdef MotionSaliencyBinWangApr2014 < handle
         function this = MotionSaliencyBinWangApr2014()
             %MOTIONSALIENCYBINWANGAPR2014  Constructor, creates a specialized saliency algorithm of this type
             %
-            %    obj = cv.MotionSaliencyBinWangApr2014()
+            %     obj = cv.MotionSaliencyBinWangApr2014()
             %
             % See also: cv.MotionSaliencyBinWangApr2014.computeSaliency
             %
@@ -73,7 +74,7 @@ classdef MotionSaliencyBinWangApr2014 < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.MotionSaliencyBinWangApr2014
             %
@@ -84,7 +85,7 @@ classdef MotionSaliencyBinWangApr2014 < handle
         function setImagesize(this, W, H)
             %SETIMAGESIZE  This is a utility function that allows to set the correct size (taken from the input image) in the corresponding variables that will be used to size the data structures of the algorithm
             %
-            %    obj.setImagesize(W, H)
+            %     obj.setImagesize(W, H)
             %
             % ## Input
             % * __W__ width of input image.
@@ -98,7 +99,7 @@ classdef MotionSaliencyBinWangApr2014 < handle
         function init(this)
             %INIT  This function allows the correct initialization of all data structures that will be used by the algorithm
             %
-            %    obj.init()
+            %     obj.init()
             %
             % See also: cv.MotionSaliencyBinWangApr2014.setImagesize
             %
@@ -111,7 +112,7 @@ classdef MotionSaliencyBinWangApr2014 < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.MotionSaliencyBinWangApr2014.empty,
             %  cv.MotionSaliencyBinWangApr2014.load
@@ -122,11 +123,11 @@ classdef MotionSaliencyBinWangApr2014 < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.MotionSaliencyBinWangApr2014.clear,
             %  cv.MotionSaliencyBinWangApr2014.load
@@ -137,7 +138,7 @@ classdef MotionSaliencyBinWangApr2014 < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -153,21 +154,21 @@ classdef MotionSaliencyBinWangApr2014 < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -181,11 +182,11 @@ classdef MotionSaliencyBinWangApr2014 < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.MotionSaliencyBinWangApr2014.save,
             %  cv.MotionSaliencyBinWangApr2014.load
@@ -199,7 +200,7 @@ classdef MotionSaliencyBinWangApr2014 < handle
         function className = getClassName(this)
             %GETCLASSNAME  Get the name of the specific saliency type
             %
-            %    className = obj.getClassName()
+            %     className = obj.getClassName()
             %
             % ## Output
             % * __className__ The name of the tracker initializer.
@@ -212,17 +213,17 @@ classdef MotionSaliencyBinWangApr2014 < handle
         function saliencyMap = computeSaliency(this, img)
             %COMPUTESALIENCY  Compute the saliency
             %
-            %    saliencyMap = obj.computeSaliency(img)
+            %     saliencyMap = obj.computeSaliency(img)
             %
             % ## Input
             % * __img__ The input image, 8-bit.
             %
             % ## Output
             % * __saliencyMap__ The computed saliency map. Is a binarized map
-            %       that, in accordance with the nature of the algorithm,
-            %       highlights the moving objects or areas of change in the
-            %       scene. The saliency map is given by a matrix (one for each
-            %       frame of an hypothetical video stream).
+            %   that, in accordance with the nature of the algorithm,
+            %   highlights the moving objects or areas of change in the scene.
+            %   The saliency map is given by a matrix (one for each frame of
+            %   an hypothetical video stream).
             %
             % Performs all the operations and calls all internal functions
             % necessary for the accomplishment of the Fast Self-tuning

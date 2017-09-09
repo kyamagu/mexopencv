@@ -13,7 +13,8 @@ classdef HausdorffDistanceExtractor < handle
     %
 
     properties (SetAccess = private)
-        id % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -34,14 +35,14 @@ classdef HausdorffDistanceExtractor < handle
         function this = HausdorffDistanceExtractor(varargin)
             %HAUSDORFFDISTANCEEXTRACTOR  Constructor
             %
-            %    obj = cv.HausdorffDistanceExtractor()
-            %    obj = cv.HausdorffDistanceExtractor('OptionName',optionValue, ...)
+            %     obj = cv.HausdorffDistanceExtractor()
+            %     obj = cv.HausdorffDistanceExtractor('OptionName',optionValue, ...)
             %
             % ## Options
             % * __DistanceFlag__ see
-            %       cv.HausdorffDistanceExtractor.DistanceFlag, default 'L2'
+            %   cv.HausdorffDistanceExtractor.DistanceFlag, default 'L2'
             % * __RankProportion__ see
-            %       cv.HausdorffDistanceExtractor.RankProportion, default 0.6
+            %   cv.HausdorffDistanceExtractor.RankProportion, default 0.6
             %
             % See also: cv.HausdorffDistanceExtractor.computeDistance
             %
@@ -51,7 +52,7 @@ classdef HausdorffDistanceExtractor < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.HausdorffDistanceExtractor
             %
@@ -65,14 +66,14 @@ classdef HausdorffDistanceExtractor < handle
         function dist = computeDistance(this, contour1, contour2)
             %COMPUTEDISTANCE  Compute the shape distance between two shapes defined by its contours
             %
-            %    dist = obj.computeDistance(contour1, contour2)
+            %     dist = obj.computeDistance(contour1, contour2)
             %
             % ## Options
             % * __contour1__ Contour defining first shape. A numeric
-            %       Nx2/Nx1x2/1xNx2 array or a cell-array of 2D points
-            %       `{[x,y], ...}`
+            %   Nx2/Nx1x2/1xNx2 array or a cell-array of 2D points
+            %   `{[x,y], ...}`
             % * __contour2__ Contour defining second shape. Same format as
-            %       `contours1`.
+            %   `contours1`.
             %
             % ## Output
             % * __dist__ output distance.
@@ -88,7 +89,7 @@ classdef HausdorffDistanceExtractor < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.HausdorffDistanceExtractor.empty,
             %  cv.HausdorffDistanceExtractor.load
@@ -99,11 +100,11 @@ classdef HausdorffDistanceExtractor < handle
         function b = empty(this)
             %EMPTY  Returns true if the algorithm is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.HausdorffDistanceExtractor.clear,
             %  cv.HausdorffDistanceExtractor.load
@@ -114,7 +115,7 @@ classdef HausdorffDistanceExtractor < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -130,21 +131,21 @@ classdef HausdorffDistanceExtractor < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -158,11 +159,11 @@ classdef HausdorffDistanceExtractor < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.HausdorffDistanceExtractor.save,
             %  cv.HausdorffDistanceExtractor.load

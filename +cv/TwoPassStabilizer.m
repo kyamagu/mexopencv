@@ -28,7 +28,8 @@ classdef TwoPassStabilizer < handle
     %
 
     properties (SetAccess = private)
-        id % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -48,7 +49,7 @@ classdef TwoPassStabilizer < handle
         function this = TwoPassStabilizer()
             %TWOPASSSTABILIZER  Constructor
             %
-            %    obj = cv.TwoPassStabilizer()
+            %     obj = cv.TwoPassStabilizer()
             %
             % See also: cv.TwoPassStabilizer.nextFrame
             %
@@ -58,7 +59,7 @@ classdef TwoPassStabilizer < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.TwoPassStabilizer
             %
@@ -72,13 +73,13 @@ classdef TwoPassStabilizer < handle
         function frame = nextFrame(this, varargin)
             %NEXTFRAME  Process next frame from input and return output result
             %
-            %    frame = obj.nexFrame()
-            %    frame = obj.nexFrame('OptionName',optionValue, ...)
+            %     frame = obj.nexFrame()
+            %     frame = obj.nexFrame('OptionName',optionValue, ...)
             %
             % ## Options
             % * __FlipChannels__ in case the output is color image, flips the
-            %       color order from OpenCV's BGR/BGRA to MATLAB's RGB/RGBA
-            %       order. default false
+            %   color order from OpenCV's BGR/BGRA to MATLAB's RGB/RGBA order.
+            %   default false
             %
             % ## Output
             % * __frame__ Output result
@@ -91,7 +92,7 @@ classdef TwoPassStabilizer < handle
         function reset(this)
             %RESET  Reset the frame source
             %
-            %    obj.reset()
+            %     obj.reset()
             %
             % See also: cv.TwoPassStabilizer.nextFrame
             %
@@ -104,15 +105,15 @@ classdef TwoPassStabilizer < handle
         function setLog(this, logType)
             %SETLOG  Set logger class for the video stabilizer
             %
-            %    stab.setLog(logType)
+            %     stab.setLog(logType)
             %
             % ## Input
             % * __logType__ Logging type. One of:
-            %       * __NullLog__ no logging.
-            %       * __LogToStdout__ (default) log messages to standard
-            %             output. Note that standard output is not displayed
-            %             in MATLAB, you should use `LogToMATLAB` instead.
-            %       * __LogToMATLAB__ log messages to MATLAB command window.
+            %   * __NullLog__ no logging.
+            %   * __LogToStdout__ (default) log messages to standard output.
+            %     Note that standard output is not displayed in MATLAB, you
+            %     should use `LogToMATLAB` instead.
+            %   * __LogToMATLAB__ log messages to MATLAB command window.
             %
             % The class uses `LogToStdout` by default.
             %
@@ -123,7 +124,7 @@ classdef TwoPassStabilizer < handle
         function value = getLog(this)
             %GETLOG  Get the current logger class
             %
-            %    value = stab.getLog()
+            %     value = stab.getLog()
             %
             % ## Output
             % * __value__ output scalar struct
@@ -136,20 +137,20 @@ classdef TwoPassStabilizer < handle
         function setFrameSource(this, frameSourceType, varargin)
             %SETFRAMESOURCE  Set input frame source for the video stabilizer
             %
-            %    stab.setInput(frameSourceType, ...)
+            %     stab.setInput(frameSourceType, ...)
             %
-            %    stab.setFrameSource('NullFrameSource')
-            %    stab.setFrameSource('VideoFileSource', filename)
-            %    stab.setFrameSource('VideoFileSource', filename, 'OptionName',optionValue, ...)
+            %     stab.setFrameSource('NullFrameSource')
+            %     stab.setFrameSource('VideoFileSource', filename)
+            %     stab.setFrameSource('VideoFileSource', filename, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __frameSourceType__ Input frames source type. One of:
-            %       * __NullFrameSource__
-            %       * __VideoFileSource__ wrapper around cv.VideoCapture with
-            %             a video file or image sequence as source.
+            %   * __NullFrameSource__
+            %   * __VideoFileSource__ wrapper around cv.VideoCapture with a
+            %     video file or image sequence as source.
             % * __filename__ name of the opened video file (eg. `video.avi`)
-            %       or image sequence (eg. `img_%02d.jpg`, which will read
-            %       samples like `img_00.jpg`, `img_01.jpg`, `img_02.jpg`, ...)
+            %   or image sequence (eg. `img_%02d.jpg`, which will read samples
+            %   like `img_00.jpg`, `img_01.jpg`, `img_02.jpg`, ...)
             %
             % ## Options
             % * __VolatileFrame__ default false
@@ -163,7 +164,7 @@ classdef TwoPassStabilizer < handle
         function value = getFrameSource(this)
             %GETFRAMESOURCE  Get the current input frame source
             %
-            %    value = stab.getFrameSource()
+            %     value = stab.getFrameSource()
             %
             % ## Output
             % * __value__ output scalar struct
@@ -176,128 +177,127 @@ classdef TwoPassStabilizer < handle
         function setMotionEstimator(this, motionEstType, varargin)
             %SETMOTIONESTIMATOR  Set the motion estimating algorithm for the video stabilizer
             %
-            %    stab.setMotionEstimator(motionEstType, ...)
+            %     stab.setMotionEstimator(motionEstType, ...)
             %
-            %    stab.setMotionEstimator('KeypointBasedMotionEstimator', {estType, ...}, 'OptionName',optionValue, ...)
-            %    stab.setMotionEstimator('FromFileMotionReader', path, 'OptionName',optionValue, ...)
-            %    stab.setMotionEstimator('ToFileMotionWriter', path, {motionEstType, ...}, 'OptionName',optionValue, ...)
+            %     stab.setMotionEstimator('KeypointBasedMotionEstimator', {estType, ...}, 'OptionName',optionValue, ...)
+            %     stab.setMotionEstimator('FromFileMotionReader', path, 'OptionName',optionValue, ...)
+            %     stab.setMotionEstimator('ToFileMotionWriter', path, {motionEstType, ...}, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __motionEstType__ Global 2D motion estimation methods which
-            %       take frames as input. One of:
-            %       * __KeypointBasedMotionEstimator__ Describes a global 2D
-            %             motion estimation method which uses keypoints
-            %             detection and optical flow for matching.
-            %       * __FromFileMotionReader__
-            %       * __ToFileMotionWriter__
+            %   take frames as input. One of:
+            %   * __KeypointBasedMotionEstimator__ Describes a global 2D
+            %     motion estimation method which uses keypoints detection and
+            %     optical flow for matching.
+            %   * __FromFileMotionReader__
+            %   * __ToFileMotionWriter__
             % * __path__ name of file for motion to read-from/write-to.
             % * __estType__ Global motion estimation method, which estimates
-            %       global motion between two 2D point clouds as a 3x3 2D
-            %       transformation matrix. One of:
-            %       * __MotionEstimatorL1__ Describes a global 2D motion
-            %             estimation method which minimizes L1 error.
-            %             Note: To be able to use this method you must build
-            %             OpenCV with CLP library support.
-            %       * __MotionEstimatorRansacL2__ Describes a robust
-            %             RANSAC-based global 2D motion estimation method
-            %             which minimizes L2 error.
+            %   global motion between two 2D point clouds as a 3x3 2D
+            %   transformation matrix. One of:
+            %   * __MotionEstimatorL1__ Describes a global 2D motion
+            %     estimation method which minimizes L1 error. Note: To be able
+            %     to use this method you must build OpenCV with CLP library
+            %     support.
+            %   * __MotionEstimatorRansacL2__ Describes a robust RANSAC-based
+            %     global 2D motion estimation method which minimizes L2 error.
             %
             % ## Options
             % The following are options for the various algorithms:
             %
             % ### `KeypointBasedMotionEstimator`, `FromFileMotionReader`, `ToFileMotionWriter`
             % * __MotionModel__ Describes motion model between two point
-            %       clouds. Default is based on the estimation method. One of:
-            %       * __Translation__
-            %       * __TranslationAndScale__
-            %       * __Rotation__
-            %       * __Rigid__
-            %       * __Similarity__
-            %       * __Affine__
-            %       * __Homography__
-            %       * __Unknown__
+            %   clouds. Default is based on the estimation method. One of:
+            %   * __Translation__
+            %   * __TranslationAndScale__
+            %   * __Rotation__
+            %   * __Rigid__
+            %   * __Similarity__
+            %   * __Affine__
+            %   * __Homography__
+            %   * __Unknown__
             %
             % ### `KeypointBasedMotionEstimator`
             % * __Detector__ feature detector, specified in the form:
-            %       `{detectorType, 'OptionName',optionValue, ...}`.
-            %       See cv.FeatureDetector.FeatureDetector for a list of
-            %       supported feature detectors. Default is `{'GFTTDetector'}`.
+            %   `{detectorType, 'OptionName',optionValue, ...}`. See
+            %   cv.FeatureDetector.FeatureDetector for a list of supported
+            %   feature detectors. Default is `{'GFTTDetector'}`.
             % * __OpticalFlowEstimator__ sparse optical flow estimator
-            %       specified as: `{optflowType, 'OptionName',optionValue, ...}`,
-            %       where `optflowType` is one of:
-            %       * __SparsePyrLkOptFlowEstimator__ (default) wrapper around
-            %             cv.calcOpticalFlowPyrLK.
-            %       * __SparsePyrLkOptFlowEstimatorGpu__
+            %   specified as: `{optflowType, 'OptionName',optionValue, ...}`,
+            %   where `optflowType` is one of:
+            %   * __SparsePyrLkOptFlowEstimator__ (default) wrapper around
+            %     cv.calcOpticalFlowPyrLK.
+            %   * __SparsePyrLkOptFlowEstimatorGpu__
             % * __OutlierRejector__ outlier rejector specified as:
-            %       `{rejectorType, 'OptionName',optionValue, ...}`, where
-            %       `rejectorType` is one of:
-            %       * __NullOutlierRejector__ (default)
-            %       * __TranslationBasedLocalOutlierRejector__
+            %   `{rejectorType, 'OptionName',optionValue, ...}`, where
+            %   `rejectorType` is one of:
+            %   * __NullOutlierRejector__ (default)
+            %   * __TranslationBasedLocalOutlierRejector__
             %
             % ### `MotionEstimatorL1` and `MotionEstimatorRansacL2`
             % * __MotionModel__ Describes motion model between two point
-            %       clouds. One of:
-            %       * __Translation__
-            %       * __TranslationAndScale__
-            %       * __Rotation__
-            %       * __Rigid__
-            %       * __Similarity__
-            %       * __Affine__ (default)
-            %       * __Homography__
-            %       * __Unknown__
+            %   clouds. One of:
+            %   * __Translation__
+            %   * __TranslationAndScale__
+            %   * __Rotation__
+            %   * __Rigid__
+            %   * __Similarity__
+            %   * __Affine__ (default)
+            %   * __Homography__
+            %   * __Unknown__
             %
             % ### `MotionEstimatorRansacL2`
             % * __MinInlierRatio__ default 0.1
             % * __RansacParams__ Describes RANSAC method parameters. A struct
-            %       with the following fields:
-            %       * __Size__ Subset size.
-            %       * __Thresh__ Maximum re-projection error value to classify
-            %             as inlier.
-            %       * __Eps__ Maximum ratio of incorrect correspondences.
-            %       * __Prob__ Required success probability.
+            %   with the following fields:
+            %   * __Size__ Subset size.
+            %   * __Thresh__ Maximum re-projection error value to classify as
+            %     inlier.
+            %   * __Eps__ Maximum ratio of incorrect correspondences.
+            %   * __Prob__ Required success probability.
             %
-            %       If a string is passed, it uses the default RANSAC
-            %       parameters for the given motion model. Here are the
-            %       defaults corresponding to each motion model:
+            %   If a string is passed, it uses the default RANSAC parameters
+            %   for the given motion model. Here are the defaults
+            %   corresponding to each motion model:
             %
-            %       * __Translation__ `struct('Size',1, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
-            %       * __TranslationAndScale__ `struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
-            %       * __Rotation__ `struct('Size',1, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
-            %       * __Rigid__ `struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
-            %       * __Similarity__ `struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
-            %       * __Affine__ `struct('Size',3, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
-            %       * __Homography__ `struct('Size',4, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
+            %   * __Translation__ `struct('Size',1, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
+            %   * __TranslationAndScale__ `struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
+            %   * __Rotation__ `struct('Size',1, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
+            %   * __Rigid__ `struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
+            %   * __Similarity__ `struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
+            %   * __Affine__ `struct('Size',3, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
+            %   * __Homography__ `struct('Size',4, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
             %
-            %       By default is it set to 'Affine'.
+            %   By default is it set to 'Affine'.
             %
             % ### `SparsePyrLkOptFlowEstimator`
             % * __WinSize__ Size of the search window at each pyramid level.
-            %       default [21,21]
+            %   default [21,21]
             % * __MaxLevel__ 0-based maximal pyramid level number. default 3
             %
             % ### `TranslationBasedLocalOutlierRejector`
             % * __CellSize__ default [50,50]
             % * __RansacParams__ Describes RANSAC method parameters. A struct
-            %       with the following fields:
-            %       * __Size__ Subset size.
-            %       * __Thresh__ Maximum re-projection error value to classify
-            %             as inlier.
-            %       * __Eps__ Maximum ratio of incorrect correspondences.
-            %       * __Prob__ Required success probability.
+            %   with the following fields:
+            %   * __Size__ Subset size.
+            %   * __Thresh__ Maximum re-projection error value to classify as
+            %     inlier.
+            %   * __Eps__ Maximum ratio of incorrect correspondences.
+            %   * __Prob__ Required success probability.
             %
-            %       If a string is passed, it uses the default RANSAC
-            %       parameters for the given motion model. Here are the
-            %       defaults corresponding to each motion model:
+            %   If a string is passed, it uses the default RANSAC parameters
+            %   for the given motion model. Here are the defaults
+            %   corresponding to each motion model:
             %
-            %       * __Translation__ `struct('Size',1, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
-            %       * __TranslationAndScale__ `struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
-            %       * __Rotation__ `struct('Size',1, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
-            %       * __Rigid__ `struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
-            %       * __Similarity__ `struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
-            %       * __Affine__ `struct('Size',3, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
-            %       * __Homography__ `struct('Size',4, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
+            %   * __Translation__ `struct('Size',1, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
+            %   * __TranslationAndScale__ `struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
+            %   * __Rotation__ `struct('Size',1, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
+            %   * __Rigid__ `struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
+            %   * __Similarity__ `struct('Size',2, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
+            %   * __Affine__ `struct('Size',3, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
+            %   * __Homography__ `struct('Size',4, 'Thresh',0.5, 'Eps',0.5, 'Prob',0.99)`
             %
-            %       By default is it set to 'Translation'.
+            %   By default is it set to 'Translation'.
             %
             % The class uses `KeypointBasedMotionEstimator` by default with
             % `MotionEstimatorRansacL2`.
@@ -309,7 +309,7 @@ classdef TwoPassStabilizer < handle
         function value = getMotionEstimator(this)
             %GETMOTIONESTIMATOR  Get the current motion estimating algorithm
             %
-            %    value = stab.getMotionEstimator()
+            %     value = stab.getMotionEstimator()
             %
             % ## Output
             % * __value__ output scalar struct
@@ -322,15 +322,15 @@ classdef TwoPassStabilizer < handle
         function setDeblurer(this, deblurerType, varargin)
             %SETDEBLURER  Set the deblurring algorithm for the video stabilizer
             %
-            %    stab.setDeblurer(deblurerType, ...)
+            %     stab.setDeblurer(deblurerType, ...)
             %
-            %    stab.setDeblurer('NullDeblurer')
-            %    stab.setDeblurer('WeightingDeblurer', 'OptionName',optionValue, ...)
+            %     stab.setDeblurer('NullDeblurer')
+            %     stab.setDeblurer('WeightingDeblurer', 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __deblurerType__ Deblurring method. One of:
-            %       * __NullDeblurer__
-            %       * __WeightingDeblurer__
+            %   * __NullDeblurer__
+            %   * __WeightingDeblurer__
             %
             % ## Options
             % * __Radius__ default 0
@@ -345,7 +345,7 @@ classdef TwoPassStabilizer < handle
         function value = getDeblurer(this)
             %GETDEBLURER  Gets the current deblurring algorithm
             %
-            %    value = stab.getDeblurer()
+            %     value = stab.getDeblurer()
             %
             % ## Output
             % * __value__ output scalar struct
@@ -358,47 +358,47 @@ classdef TwoPassStabilizer < handle
         function setInpainter(this, inpainterType, varargin)
             %SETINPAINTER  Set the inpainting algorithm for the video stabilizer
             %
-            %    stab.setInpainter(inpainterType, ...)
+            %     stab.setInpainter(inpainterType, ...)
             %
-            %    stab.setInpainter('NullInpainter')
-            %    stab.setInpainter('ColorInpainter', 'OptionName',optionValue, ...)
-            %    stab.setInpainter('InpaintingPipeline', {{inpainterType, ...}, {inpainterType, ...}, ...}, 'OptionName',optionValue, ...)
-            %    stab.setInpainter('ConsistentMosaicInpainter', 'OptionName',optionValue, ...)
-            %    stab.setInpainter('MotionInpainter', 'OptionName',optionValue, ...)
-            %    stab.setInpainter('ColorAverageInpainter', 'OptionName',optionValue, ...)
-            %    stab.setInpainter('ColorInpainter', 'OptionName',optionValue, ...)
+            %     stab.setInpainter('NullInpainter')
+            %     stab.setInpainter('ColorInpainter', 'OptionName',optionValue, ...)
+            %     stab.setInpainter('InpaintingPipeline', {{inpainterType, ...}, {inpainterType, ...}, ...}, 'OptionName',optionValue, ...)
+            %     stab.setInpainter('ConsistentMosaicInpainter', 'OptionName',optionValue, ...)
+            %     stab.setInpainter('MotionInpainter', 'OptionName',optionValue, ...)
+            %     stab.setInpainter('ColorAverageInpainter', 'OptionName',optionValue, ...)
+            %     stab.setInpainter('ColorInpainter', 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __inpainterType__ inpainting method. One of:
-            %       * __NullInpainter__ Null inpainter.
-            %       * __InpaintingPipeline__ A pipeline composed of other
-            %             inpainters, applied in sequence.
-            %       * __ConsistentMosaicInpainter__
-            %       * __MotionInpainter__ (requires CUDA)
-            %       * __ColorAverageInpainter__
-            %       * __ColorInpainter__
+            %   * __NullInpainter__ Null inpainter.
+            %   * __InpaintingPipeline__ A pipeline composed of other
+            %     inpainters, applied in sequence.
+            %   * __ConsistentMosaicInpainter__
+            %   * __MotionInpainter__ (requires CUDA)
+            %   * __ColorAverageInpainter__
+            %   * __ColorInpainter__
             %
             % ## Options
             % The following are options accepted by all algorithms:
             %
             % * __MotionModel__ Describes motion model between two point
-            %       clouds. One of:
-            %       * __Translation__
-            %       * __TranslationAndScale__
-            %       * __Rotation__
-            %       * __Rigid__
-            %       * __Similarity__
-            %       * __Affine__
-            %       * __Homography__
-            %       * __Unknown__ (default)
+            %   clouds. One of:
+            %   * __Translation__
+            %   * __TranslationAndScale__
+            %   * __Rotation__
+            %   * __Rigid__
+            %   * __Similarity__
+            %   * __Affine__
+            %   * __Homography__
+            %   * __Unknown__ (default)
             % * __Radius__ default 0
             %
             % The following are options for the various algorithms:
             %
             % ### `ColorInpainter`
             % * __Method__ Inpainting algorithm. One of:
-            %       * __NS__ Navier-Stokes based method
-            %       * __Telea__ Method by Alexandru Telea (default)
+            %   * __NS__ Navier-Stokes based method
+            %   * __Telea__ Method by Alexandru Telea (default)
             % * __Radius2__ default 2.0
             %
             % ### `ConsistentMosaicInpainter`
@@ -406,9 +406,9 @@ classdef TwoPassStabilizer < handle
             %
             % ### `MotionInpainter`
             % * __OptFlowEstimator__ dense optical flow estimator specified as
-            %       `{optflowType, 'OptionName',optionValue, ...}`, where
-            %       `optflowType` is one of:
-            %       * __DensePyrLkOptFlowEstimatorGpu__ (default, requires CUDA)
+            %   `{optflowType, 'OptionName',optionValue, ...}`, where
+            %   `optflowType` is one of:
+            %   * __DensePyrLkOptFlowEstimatorGpu__ (default, requires CUDA)
             % * __FlowErrorThreshold__ default 1e-4
             % * __DistThreshold__ default 5.0
             % * __BorderMode__ default 'Replicate'
@@ -426,7 +426,7 @@ classdef TwoPassStabilizer < handle
         function value = getInpainter(this)
             %GETINPAINTER  Gets the current inpainting algorithm
             %
-            %    value = stab.getInpainter()
+            %     value = stab.getInpainter()
             %
             % ## Output
             % * __value__ output scalar struct
@@ -442,20 +442,19 @@ classdef TwoPassStabilizer < handle
         function setMotionStabilizer(this, motionStabType, varargin)
             %SETMOTIONSTABILIZER  Set the motion stabilization algorithm for the video stabilizer
             %
-            %    stab.setMotionStabilizer(motionStabType, ...)
+            %     stab.setMotionStabilizer(motionStabType, ...)
             %
-            %    stab.setMotionStabilizer('InpaintingPipeline', {{motionStabType, ...}, {motionStabType, ...}, ...})
-            %    stab.setMotionStabilizer('GaussianMotionFilter', 'OptionName',optionValue, ...)
-            %    stab.setMotionStabilizer('LpMotionStabilizer', 'OptionName',optionValue, ...)
+            %     stab.setMotionStabilizer('InpaintingPipeline', {{motionStabType, ...}, {motionStabType, ...}, ...})
+            %     stab.setMotionStabilizer('GaussianMotionFilter', 'OptionName',optionValue, ...)
+            %     stab.setMotionStabilizer('LpMotionStabilizer', 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __motionStabType__ motion stabilization method. One of:
-            %       * __MotionStabilizationPipeline__ A pipeline composed of
-            %             other motion stabilizers, applied in sequence.
-            %       * __GaussianMotionFilter__
-            %       * __LpMotionStabilizer__ Note: To be able to use this
-            %             method you must build OpenCV with CLP library
-            %             support.
+            %   * __MotionStabilizationPipeline__ A pipeline composed of other
+            %     motion stabilizers, applied in sequence.
+            %   * __GaussianMotionFilter__
+            %   * __LpMotionStabilizer__ Note: To be able to use this method
+            %     you must build OpenCV with CLP library support.
             %
             % ## Options
             % The following are options for the various algorithms:
@@ -466,15 +465,15 @@ classdef TwoPassStabilizer < handle
             %
             % ### `LpMotionStabilizer`
             % * __MotionModel__ Describes motion model between two point
-            %       clouds. One of:
-            %       * __Translation__
-            %       * __TranslationAndScale__
-            %       * __Rotation__
-            %       * __Rigid__
-            %       * __Similarity__ (default)
-            %       * __Affine__
-            %       * __Homography__
-            %       * __Unknown__
+            %   clouds. One of:
+            %   * __Translation__
+            %   * __TranslationAndScale__
+            %   * __Rotation__
+            %   * __Rigid__
+            %   * __Similarity__ (default)
+            %   * __Affine__
+            %   * __Homography__
+            %   * __Unknown__
             % * __FrameSize__ default [0,0]
             % * __TrimRatio__ default 0.1
             % * __Weight1__ default 1
@@ -491,7 +490,7 @@ classdef TwoPassStabilizer < handle
         function value = getMotionStabilizer(this)
             %GETMOTIONSTABILIZER  Get the current motion stabilization algorithm
             %
-            %    value = stab.getMotionStabilizer()
+            %     value = stab.getMotionStabilizer()
             %
             % ## Output
             % * __value__ output scalar struct
@@ -504,23 +503,23 @@ classdef TwoPassStabilizer < handle
         function setWobbleSuppressor(this, wobbleSuppressType, varargin)
             %SETWOBBLESUPPRESSOR  Set the wobble suppressing algorithm for the video stabilizer
             %
-            %    stab.setWobbleSuppressor(wobbleSuppressType, ...)
+            %     stab.setWobbleSuppressor(wobbleSuppressType, ...)
             %
-            %    stab.setWobbleSuppressor('NullWobbleSuppressor')
-            %    stab.setWobbleSuppressor('MoreAccurateMotionWobbleSuppressor', 'OptionName',optionValue, ...)
+            %     stab.setWobbleSuppressor('NullWobbleSuppressor')
+            %     stab.setWobbleSuppressor('MoreAccurateMotionWobbleSuppressor', 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __wobbleSuppressType__ wobble suppressing method. One of:
-            %       * __NullWobbleSuppressor__
-            %       * __MoreAccurateMotionWobbleSuppressor__
+            %   * __NullWobbleSuppressor__
+            %   * __MoreAccurateMotionWobbleSuppressor__
             %
             % ## Options
             % * __MotionEstimator__ Global 2D motion estimation method which
-            %       take frames as input, specified as:
-            %       `{motionEstType, {estType, 'key',val, ...}, 'OptionName',optionVal, ...}`.
-            %       See cv.TwoPassStabilizer.setMotionEstimator for details.
-            %       Default is
-            %       `{'KeypointBasedMotionEstimator', {'MotionEstimatorRansacL2', 'MotionModel','Homography'}}`
+            %   take frames as input, specified as:
+            %   `{motionEstType, {estType, 'key',val, ...}, 'OptionName',optionVal, ...}`.
+            %   See cv.TwoPassStabilizer.setMotionEstimator for details.
+            %   Default is
+            %   `{'KeypointBasedMotionEstimator', {'MotionEstimatorRansacL2', 'MotionModel','Homography'}}`
             % * __Period__ default 30
             %
             % The class uses `NullWobbleSuppressor` by default.
@@ -532,7 +531,7 @@ classdef TwoPassStabilizer < handle
         function value = getWobbleSuppressor(this)
             %GETWOBBLESUPPRESSOR  Get the current wobble suppressing algorithm
             %
-            %    value = stab.getWobbleSuppressor()
+            %     value = stab.getWobbleSuppressor()
             %
             % ## Output
             % * __value__ output scalar struct
@@ -548,26 +547,26 @@ classdef TwoPassStabilizer < handle
         function ransac = RansacParamsDefault2dMotion(model)
             %RANSACPARAMSDEFAULT2DMOTION  Default RANSAC method parameters for a given motion model
             %
-            %    ransac = cv.TwoPassStabilizer.RansacParamsDefault2dMotion(model)
+            %     ransac = cv.TwoPassStabilizer.RansacParamsDefault2dMotion(model)
             %
             % ## Input
             % * __model__ Motion model. One of:
-            %       * __Translation__
-            %       * __TranslationAndScale__
-            %       * __Rotation__
-            %       * __Rigid__
-            %       * __Similarity__
-            %       * __Affine__
-            %       * __Homography__
+            %   * __Translation__
+            %   * __TranslationAndScale__
+            %   * __Rotation__
+            %   * __Rigid__
+            %   * __Similarity__
+            %   * __Affine__
+            %   * __Homography__
             %
             % ## Output
             % * __ransac__ Default RANSAC method parameters for the given
-            %       motion model. A struct with the following fields:
-            %       * __Size__ Subset size.
-            %       * __Thresh__ Maximum re-projection error value to classify
-            %             as inlier.
-            %       * __Eps__ Maximum ratio of incorrect correspondences.
-            %       * __Prob__ Required success probability.
+            %   motion model. A struct with the following fields:
+            %   * __Size__ Subset size.
+            %   * __Thresh__ Maximum re-projection error value to classify as
+            %     inlier.
+            %   * __Eps__ Maximum ratio of incorrect correspondences.
+            %   * __Prob__ Required success probability.
             %
             % Here are the parameters corresponding to each motion model:
             %

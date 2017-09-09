@@ -13,32 +13,31 @@ classdef DetectionBasedTracker < handle
         function this = DetectionBasedTracker(mainDetector, trackingDetector, varargin)
             %DETECTIONBASEDTRACKER  Creates a new tracker object
             %
-            %    tracker = cv.DetectionBasedTracker(mainDetector, trackingDetector)
-            %    tracker = cv.DetectionBasedTracker(..., 'OptionName',optionValue, ...)
+            %     tracker = cv.DetectionBasedTracker(mainDetector, trackingDetector)
+            %     tracker = cv.DetectionBasedTracker(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __mainDetector__, __trackingDetector__ detector of the form
-            %       `{filename, 'key',val, ...}` where `filename` is the name
-            %       of the file from which the classifier is loaded. See
-            %       detection options below for valid key/value pairs.
-            %       Currently only one detector based on cv.CascadeClassifier
-            %       is supported.
+            %   `{filename, 'key',val, ...}` where `filename` is the name of
+            %   the file from which the classifier is loaded. See detection
+            %   options below for valid key/value pairs. Currently only one
+            %   detector based on cv.CascadeClassifier is supported.
             %
             % ## Options
             % * __MaxTrackLifetime__ must be non-negative. default 5
             % * __MinDetectionPeriod__ the minimal time between run of the big
-            %       object detector (on the whole frame) in msec (1000 mean
-            %       1 sec). default 0
+            %   object detector (on the whole frame) in msec (1000 mean 1 sec).
+            %   default 0
             %
             % ## CascadeClassifier detection options
             % * __ScaleFactor__ Parameter specifying how much the image size
-            %       is reduced at each image scale. default 1.1
+            %   is reduced at each image scale. default 1.1
             % * __MinNeighbors__ Parameter specifying how many neighbors each
-            %       candiate rectangle should have to retain it. default 2
+            %   candiate rectangle should have to retain it. default 2
             % * __MinSize__ Minimum possible object size. Objects smaller than
-            %       that are ignored. default `[96,96]`.
+            %   that are ignored. default `[96,96]`.
             % * __MaxSize__ Maximum possible object size. Objects larger than
-            %       that are ignored. default `[intmax,intmax]`.
+            %   that are ignored. default `[intmax,intmax]`.
             %
             % See also: cv.DetectionBasedTracker.process
             %
@@ -48,7 +47,7 @@ classdef DetectionBasedTracker < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    tracker.delete()
+            %     tracker.delete()
             %
             % See also: cv.DetectionBasedTracker
             %
@@ -59,7 +58,7 @@ classdef DetectionBasedTracker < handle
         function success = run(this)
             %RUN  Run tracker
             %
-            %    success = tracker.run()
+            %     success = tracker.run()
             %
             % ## Output
             % * __success__ success logical flag
@@ -72,7 +71,7 @@ classdef DetectionBasedTracker < handle
         function stop(this)
             %STOP  Stop tracker
             %
-            %    tracker.stop()
+            %     tracker.stop()
             %
             % See also: cv.DetectionBasedTracker.run
             %
@@ -82,7 +81,7 @@ classdef DetectionBasedTracker < handle
         function resetTracking(this)
             %RESETTRACKING  Reset tracker
             %
-            %    tracker.resetTracking()
+            %     tracker.resetTracking()
             %
             % See also: cv.DetectionBasedTracker.run
             %
@@ -92,12 +91,12 @@ classdef DetectionBasedTracker < handle
         function params = getParameters(this)
             %GETPARAMETERS  Get current tracker parameters
             %
-            %    params = tracker.getParameters()
+            %     params = tracker.getParameters()
             %
             % ## Output
             % * __params__ a struct containing with the following fields:
-            %       * __maxTrackLifetime__
-            %       * __minDetectionPeriod__
+            %   * __maxTrackLifetime__
+            %   * __minDetectionPeriod__
             %
             % See also: cv.DetectionBasedTracker.setParameters
             %
@@ -107,7 +106,7 @@ classdef DetectionBasedTracker < handle
         function success = setParameters(this, varargin)
             %SETPARAMETERS  Set current tracker parameters
             %
-            %    success = tracker.setParameters('OptionName',optionValue, ...)
+            %     success = tracker.setParameters('OptionName',optionValue, ...)
             %
             % ## Output
             % * __success__ success logical flag.
@@ -115,8 +114,8 @@ classdef DetectionBasedTracker < handle
             % ## Options
             % * __MaxTrackLifetime__ must be non-negative. default 5
             % * __MinDetectionPeriod__ the minimal time between run of the big
-            %       object detector (on the whole frame) in msec (1000 mean
-            %       1 sec). default 0
+            %   object detector (on the whole frame) in msec (1000 mean 1 sec).
+            %   default 0
             %
             % See also: cv.DetectionBasedTracker.getParameters
             %
@@ -126,7 +125,7 @@ classdef DetectionBasedTracker < handle
         function process(this, imageGray)
             %PROCESS  Process new frame
             %
-            %    tracker.process(imageGray)
+            %     tracker.process(imageGray)
             %
             % ## Input
             % * __imageGray__ 8-bit 1-channel gray image.
@@ -139,7 +138,7 @@ classdef DetectionBasedTracker < handle
         function id = addObject(this, location)
             %ADDOBJECT  Track new object
             %
-            %    tracker.addObject(location)
+            %     tracker.addObject(location)
             %
             % ## Input
             % * __location__ rectangle containing object `[x,y,w,h]`.
@@ -155,12 +154,12 @@ classdef DetectionBasedTracker < handle
         function [boxes, ids] = getObjects(this)
             %GETOBJECTS  Return tracked objects
             %
-            %    boxes = tracker.getObjects()
-            %    [boxes, ids] = tracker.getObjects()
+            %     boxes = tracker.getObjects()
+            %     [boxes, ids] = tracker.getObjects()
             %
             % ## Output
             % * __boxes__ Cell array of rectangles where each rectangle
-            %       contains the detected object `{[x,y,w,h], ...}`.
+            %   contains the detected object `{[x,y,w,h], ...}`.
             % * __ids__ optional vector of corresponding tracked object ID.
             %
             % See also: cv.DetectionBasedTracker.getObjectsExtended
@@ -175,19 +174,19 @@ classdef DetectionBasedTracker < handle
         function objects = getObjectsExtended(this)
             %GETOBJECTSEXTENDED  Return tracked objects (extended)
             %
-            %    objects = tracker.getObjectsExtended()
+            %     objects = tracker.getObjectsExtended()
             %
             % ## Output
             % * __objects__ a struct-array of tracked objects with the
-            %       following fields:
-            %       * __id__ tracked object ID
-            %       * __location__ rectangle contains the detected object
-            %             `[x,y,w,h]`.
-            %       * __status__ object status. One of the following strings:
-            %             * __DetectedNotShownYet__
-            %             * __Detected__
-            %             * __DetectedTemporaryLost__
-            %             * __WrongObject__
+            %   following fields:
+            %   * __id__ tracked object ID
+            %   * __location__ rectangle contains the detected object
+            %     `[x,y,w,h]`.
+            %   * __status__ object status. One of the following strings:
+            %     * __DetectedNotShownYet__
+            %     * __Detected__
+            %     * __DetectedTemporaryLost__
+            %     * __WrongObject__
             %
             % See also: cv.DetectionBasedTracker.getObjects
             %

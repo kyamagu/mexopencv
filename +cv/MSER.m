@@ -30,7 +30,8 @@ classdef MSER < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -55,28 +56,28 @@ classdef MSER < handle
         function this = MSER(varargin)
             %MSER  Full constructor for MSER detector
             %
-            %    obj = cv.MSER()
-            %    obj = cv.MSER(..., 'OptionName',optionValue, ...)
+            %     obj = cv.MSER()
+            %     obj = cv.MSER(..., 'OptionName',optionValue, ...)
             %
             % ## Options
             % * __Delta__ delta, in the code, it compares
-            %       `(size_{i}-size_{i-delta})/size_{i-delta}`. default 5.
+            %   `(size_{i}-size_{i-delta})/size_{i-delta}`. default 5.
             % * __MinArea__ prune the area which smaller than minArea.
-            %       default 60.
+            %   default 60.
             % * __MaxArea__ prune the area which bigger than maxArea.
-            %       default 14400.
+            %   default 14400.
             % * __MaxVariation__ prune the area have simliar size to its
-            %       children. default 0.25
+            %   children. default 0.25
             % * __MinDiversity__ for color image, trace back to cut off mser
-            %       with diversity less than `MinDiversity`. default 0.2.
+            %   with diversity less than `MinDiversity`. default 0.2.
             % * __MaxEvolution__ for color image, the evolution steps.
-            %       default 200.
+            %   default 200.
             % * __AreaThreshold__ for color image, the area threshold to cause
-            %       re-initialize. default 1.01.
+            %   re-initialize. default 1.01.
             % * __MinMargin__ for color image, ignore too small margin.
-            %       default 0.003.
+            %   default 0.003.
             % * __EdgeBlurSize__ for color image, the aperture size for edge
-            %       blur. default 5.
+            %   blur. default 5.
             %
             % See also: cv.MSER.detectRegions, cv.MSER.detect
             %
@@ -86,7 +87,7 @@ classdef MSER < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.MSER
             %
@@ -97,7 +98,7 @@ classdef MSER < handle
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
-            %    typename = obj.typeid()
+            %     typename = obj.typeid()
             %
             % ## Output
             % * __typename__ Name of C++ type
@@ -111,7 +112,7 @@ classdef MSER < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.MSER.empty, cv.MSER.load
             %
@@ -121,11 +122,11 @@ classdef MSER < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.MSER.clear, cv.MSER.load
             %
@@ -135,7 +136,7 @@ classdef MSER < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -151,21 +152,21 @@ classdef MSER < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -179,11 +180,11 @@ classdef MSER < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.MSER.save, cv.MSER.load
             %
@@ -196,27 +197,25 @@ classdef MSER < handle
         function keypoints = detect(this, img, varargin)
             %DETECT  Detects keypoints in an image or image set
             %
-            %    keypoints = obj.detect(img)
-            %    keypoints = obj.detect(imgs)
-            %    [...] = obj.detect(..., 'OptionName',optionValue, ...)
+            %     keypoints = obj.detect(img)
+            %     keypoints = obj.detect(imgs)
+            %     [...] = obj.detect(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __img__ Image (first variant), 8-bit grayscale/color image.
             % * __imgs__ Image set (second variant), cell array of images.
             %
             % ## Output
-            % * __keypoints__ The detected keypoints. In the first variant,
-            %       a 1-by-N structure array. In the second variant of the
-            %       method, `keypoints{i}` is a set of keypoints detected in
-            %       `imgs{i}`.
+            % * __keypoints__ The detected keypoints. In the first variant, a
+            %   1-by-N structure array. In the second variant of the method,
+            %   `keypoints{i}` is a set of keypoints detected in `imgs{i}`.
             %
             % ## Options
             % * __Mask__ A mask specifying where to look for keypoints
-            %       (optional). It must be a logical or 8-bit integer matrix
-            %       with non-zero values in the region of interest. In the
-            %       second variant, it is a cell-array of masks for each input
-            %       image, `masks{i}` is a mask for `imgs{i}`.
-            %       Not set by default.
+            %   (optional). It must be a logical or 8-bit integer matrix with
+            %   non-zero values in the region of interest. In the second
+            %   variant, it is a cell-array of masks for each input image,
+            %   `masks{i}` is a mask for `imgs{i}`. Not set by default.
             %
             % See also: cv.MSER.detectRegions
             %
@@ -229,18 +228,18 @@ classdef MSER < handle
         function [msers, bboxes] = detectRegions(this, img)
             %DETECTREGIONS  Maximally stable extremal region extractor
             %
-            %    [msers, bboxes] = obj.detectRegions(img)
+            %     [msers, bboxes] = obj.detectRegions(img)
             %
             % ## Input
             % * __img__ Input 8-bit grayscale or color image (supports
-            %       1/3/4-channels). Must be greater or equal than 3x3.
+            %   1/3/4-channels). Must be greater or equal than 3x3.
             %
             % ## Output
-            % * __msers__ The output vector of connected points (list of
-            %       point sets). Cell-array of 2D points matrices
-            %       `{[x,y; x,y; ..], [x,y; x,y; ..], ..}`.
+            % * __msers__ The output vector of connected points (list of point
+            %   sets). Cell-array of 2D points matrices
+            %   `{[x,y; x,y; ..], [x,y; x,y; ..], ..}`.
             % * __bboxes__ Output matrix of rectangles (bounding boxes). A
-            %       N-by-4 matrix `[x,y,width,height; ...]`.
+            %   N-by-4 matrix `[x,y,width,height; ...]`.
             %
             % Runs the extractor on the specified image; returns the MSER
             % regions, each encoded as a contour (see cv.findContours).

@@ -19,7 +19,8 @@ classdef EdgeAwareInterpolator < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -57,7 +58,7 @@ classdef EdgeAwareInterpolator < handle
         function this = EdgeAwareInterpolator()
             %EDGEAWAREINTERPOLATOR  Factory method that creates an instance of EdgeAwareInterpolator
             %
-            %    obj = cv.EdgeAwareInterpolator()
+            %     obj = cv.EdgeAwareInterpolator()
             %
             % See also: cv.EdgeAwareInterpolator.interpolate
             %
@@ -67,7 +68,7 @@ classdef EdgeAwareInterpolator < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.EdgeAwareInterpolator
             %
@@ -81,7 +82,7 @@ classdef EdgeAwareInterpolator < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.EdgeAwareInterpolator.empty,
             %  cv.EdgeAwareInterpolator.load
@@ -92,11 +93,11 @@ classdef EdgeAwareInterpolator < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.EdgeAwareInterpolator.clear,
             %  cv.EdgeAwareInterpolator.load
@@ -107,7 +108,7 @@ classdef EdgeAwareInterpolator < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -123,21 +124,21 @@ classdef EdgeAwareInterpolator < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -151,11 +152,11 @@ classdef EdgeAwareInterpolator < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.EdgeAwareInterpolator.save,
             %  cv.EdgeAwareInterpolator.load
@@ -169,24 +170,23 @@ classdef EdgeAwareInterpolator < handle
         function dense_flow = interpolate(this, from_image, from_points, to_image, to_points)
             %INTERPOLATE  Interpolate input sparse matches
             %
-            %    dense_flow = obj.interpolate(from_image, from_points, to_image, to_points)
+            %     dense_flow = obj.interpolate(from_image, from_points, to_image, to_points)
             %
             % ## Input
             % * **from_image** first of the two matched images, 8-bit
-            %       single-channel or three-channel.
+            %   single-channel or three-channel.
             % * **from_points** points of the `from_image` for which there are
-            %       correspondences in the `to_image` (a cell array of
-            %       2-element float vectors `{[x,y],..}`, size shouldn't
-            %       exceed 32767).
+            %   correspondences in the `to_image` (a cell array of 2-element
+            %   float vectors `{[x,y],..}`, size shouldn't exceed 32767).
             % * **to_image** second of the two matched images, 8-bit
-            %       single-channel or three-channel.
+            %   single-channel or three-channel.
             % * **to_points** points in the `to_image` corresponding to
-            %       `from_points` (a cell array of 2-element float vectors
-            %       `{[x,y],..}`, size shouldn't exceed 32767).
+            %   `from_points` (a cell array of 2-element float vectors
+            %   `{[x,y],..}`, size shouldn't exceed 32767).
             %
             % ## Output
             % * **dense_flow** output dense matching (two-channel `single`
-            %       image).
+            %   image).
             %
             % See also: cv.EdgeAwareInterpolator.EdgeAwareInterpolator
             %

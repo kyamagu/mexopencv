@@ -24,7 +24,8 @@ classdef AdaptiveManifoldFilter < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -46,22 +47,21 @@ classdef AdaptiveManifoldFilter < handle
         function this = AdaptiveManifoldFilter(varargin)
             %ADAPTIVEMANIFOLDFILTER  Factory method, create instance of AdaptiveManifoldFilter and produce some initialization routines
             %
-            %    obj = cv.AdaptiveManifoldFilter()
-            %    obj = cv.AdaptiveManifoldFilter('OptionName',optionValue, ...)
+            %     obj = cv.AdaptiveManifoldFilter()
+            %     obj = cv.AdaptiveManifoldFilter('OptionName',optionValue, ...)
             %
             % ## Options
             % * __SigmaS__ spatial standard deviation. default 16.0
             % * __SigmaR__ color space standard deviation, it is similar to
-            %       the sigma in the color space into cv.bilateralFilter.
-            %       default 0.2
+            %   the sigma in the color space into cv.bilateralFilter.
+            %   default 0.2
             % * __AdjustOutliers__ optional, specify perform outliers adjust
-            %       operation or not, (Eq. 9) in the original paper.
-            %       default false
+            %   operation or not, (Eq. 9) in the original paper. default false
             %
             % For more details about Adaptive Manifold Filter parameters, see
             % the original article [Gastal12].
             %
-            % ## Note
+            % ### Note
             % Joint images with `uint8` and `uint16` depth converted to images
             % with `single` depth and [0; 1] color range before processing.
             % Hence color space `SigmaR` must be in [0; 1] range, unlike same
@@ -75,7 +75,7 @@ classdef AdaptiveManifoldFilter < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.AdaptiveManifoldFilter
             %
@@ -89,7 +89,7 @@ classdef AdaptiveManifoldFilter < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.AdaptiveManifoldFilter.empty,
             %  cv.AdaptiveManifoldFilter.load
@@ -100,11 +100,11 @@ classdef AdaptiveManifoldFilter < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.AdaptiveManifoldFilter.clear,
             %  cv.AdaptiveManifoldFilter.load
@@ -115,7 +115,7 @@ classdef AdaptiveManifoldFilter < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -131,21 +131,21 @@ classdef AdaptiveManifoldFilter < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -159,11 +159,11 @@ classdef AdaptiveManifoldFilter < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.AdaptiveManifoldFilter.save,
             %  cv.AdaptiveManifoldFilter.load
@@ -177,7 +177,7 @@ classdef AdaptiveManifoldFilter < handle
         function collectGarbage(this)
             %COLLECTGARBAGE  Collect garbage
             %
-            %    obj.collectGarbage()
+            %     obj.collectGarbage()
             %
             % See also: cv.AdaptiveManifoldFilter
             %
@@ -187,13 +187,13 @@ classdef AdaptiveManifoldFilter < handle
         function dst = filter(this, src, varargin)
             %FILTER  Apply high-dimensional filtering using adaptive manifolds
             %
-            %    dst = obj.filter(src)
-            %    dst = obj.filter(src, joint)
+            %     dst = obj.filter(src)
+            %     dst = obj.filter(src, joint)
             %
             % ## Input
             % * __src__ filtering image with any numbers of channels.
             % * __joint__ optional joint (also called as guided) image with
-            %       any numbers of channels.
+            %   any numbers of channels.
             %
             % ## Output
             % * __dst__ output image.
@@ -253,13 +253,13 @@ classdef AdaptiveManifoldFilter < handle
         function dst = amFilter(src, joint, varargin)
             %AMFILTER  Simple one-line Adaptive Manifold Filter call
             %
-            %    dst = cv.AdaptiveManifoldFilter.amFilter(src, joint)
-            %    dst = cv.AdaptiveManifoldFilter.amFilter(src, joint, 'OptionName',optionValue, ...)
+            %     dst = cv.AdaptiveManifoldFilter.amFilter(src, joint)
+            %     dst = cv.AdaptiveManifoldFilter.amFilter(src, joint, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __src__ filtering image with any numbers of channels.
             % * __joint__ joint (also called as guided) image or array of
-            %       images with any numbers of channels.
+            %   images with any numbers of channels.
             %
             % ## Output
             % * __dst__ output image.
@@ -267,13 +267,12 @@ classdef AdaptiveManifoldFilter < handle
             % ## Options
             % * __SigmaS__ spatial standard deviation. default 16.0
             % * __SigmaR__ color space standard deviation, it is similar to
-            %       the sigma in the color space into cv.bilateralFilter.
-            %       default 0.2
+            %   the sigma in the color space into cv.bilateralFilter.
+            %   default 0.2
             % * __AdjustOutliers__ optional, specify perform outliers adjust
-            %       operation or not, (Eq. 9) in the original paper.
-            %       default false
+            %   operation or not, (Eq. 9) in the original paper. default false
             %
-            % ## Note
+            % ### Note
             % Joint images with `uint8` and `uint16` depth converted to images
             % with `single` depth and [0; 1] color range before processing.
             % Hence color space `SigmaR` must be in [0; 1] range, unlike same

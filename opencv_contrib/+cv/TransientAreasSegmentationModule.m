@@ -8,7 +8,7 @@ classdef TransientAreasSegmentationModule < handle
     % data Based on Alexandre BENOIT thesis:
     % "Le systeme visuel humain au secours de la vision par ordinateur"
     %
-    % 3 spatio temporal filters are used:
+    % Three spatio temporal filters are used:
     %
     % - a first one which filters the noise and local variations of the input
     %   motion energy
@@ -28,18 +28,19 @@ classdef TransientAreasSegmentationModule < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     methods
         function this = TransientAreasSegmentationModule(inputSize)
             %TRANSIENTAREASSEGMENTATIONMODULE  Allocator
             %
-            %    obj = cv.TransientAreasSegmentationModule(inputSize)
+            %     obj = cv.TransientAreasSegmentationModule(inputSize)
             %
             % ## Input
             % * __inputSize__ size of the images input to segment `[w,h]`
-            %       (output will be the same size).
+            %   (output will be the same size).
             %
             % See also: cv.TransientAreasSegmentationModule.run
             %
@@ -49,7 +50,7 @@ classdef TransientAreasSegmentationModule < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.TransientAreasSegmentationModule
             %
@@ -63,7 +64,7 @@ classdef TransientAreasSegmentationModule < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.TransientAreasSegmentationModule.empty,
             %  cv.TransientAreasSegmentationModule.load
@@ -74,11 +75,11 @@ classdef TransientAreasSegmentationModule < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.TransientAreasSegmentationModule.clear,
             %  cv.TransientAreasSegmentationModule.load
@@ -89,7 +90,7 @@ classdef TransientAreasSegmentationModule < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -105,21 +106,21 @@ classdef TransientAreasSegmentationModule < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -133,11 +134,11 @@ classdef TransientAreasSegmentationModule < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.TransientAreasSegmentationModule.save,
             %  cv.TransientAreasSegmentationModule.load
@@ -151,7 +152,7 @@ classdef TransientAreasSegmentationModule < handle
         function sz = getSize(this)
             %GETSIZE  Return the size of the manage input and output images
             %
-            %    sz = obj.getSize()
+            %     sz = obj.getSize()
             %
             % ## Output
             % * __sz__ image size `[w,h]`.
@@ -164,15 +165,15 @@ classdef TransientAreasSegmentationModule < handle
         function setup(this, segmentationParameterFile, varargin)
             %SETUP  Try to open an XML segmentation parameters file to adjust current segmentation instance setup
             %
-            %    obj.setup(segmentationParameterFile)
-            %    obj.setup(segmentationParameterFile, 'OptionName',optionValue, ...)
+            %     obj.setup(segmentationParameterFile)
+            %     obj.setup(segmentationParameterFile, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __segmentationParameterFile__ the parameters filename.
             %
             % ## Options
             % * __ApplyDefaultSetupOnFailure__ set to true if an error must be
-            %       thrown on error. default true
+            %   thrown on error. default true
             %
             % If the xml file does not exist, then default setup is applied.
             % Warning: Exceptions are thrown if read XML file is not valid.
@@ -186,31 +187,31 @@ classdef TransientAreasSegmentationModule < handle
         function setupParameters(this, varargin)
             %SETUPPARAMETERS  Pass segmentation parameters to adjust current segmentation instance setup
             %
-            %    obj.setupParameters('OptionName',optionValue, ...)
+            %     obj.setupParameters('OptionName',optionValue, ...)
             %
             % ## Options
             % * __ThresholdON__ default 100
             % * __ThresholdOFF__ default 100
             % * __LocalEnergyTemporalConstant__ the time constant of the first
-            %       order low pass filter, use it to cut high temporal
-            %       frequencies (noise or fast motion), unit is frames,
-            %       typical value is 0.5 frame. default 0.5
+            %   order low pass filter, use it to cut high temporal frequencies
+            %   (noise or fast motion), unit is frames, typical value is 0.5
+            %   frame. default 0.5
             % * __LocalEnergySpatialConstant__ the spatial constant of the
-            %       first order low pass filter, use it to cut high spatial
-            %       frequencies (noise or thick contours), unit is pixels,
-            %       typical value is 5 pixel. default 5
+            %   first order low pass filter, use it to cut high spatial
+            %   frequencies (noise or thick contours), unit is pixels, typical
+            %   value is 5 pixel. default 5
             % * __NeighborhoodEnergyTemporalConstant__ local neighborhood
-            %       energy filtering parameters: the aim is to get information
-            %       about the energy neighborhood to perform a center surround
-            %       energy analysis. default 1
+            %   energy filtering parameters: the aim is to get information
+            %   about the energy neighborhood to perform a center surround
+            %   energy analysis. default 1
             % * __NeighborhoodEnergySpatialConstant__ see
-            %       `NeighborhoodEnergyTemporalConstant`. default 15
+            %   `NeighborhoodEnergyTemporalConstant`. default 15
             % * __ContextEnergyTemporalConstant__ context neighborhood energy
-            %       filtering parameters: the aim is to get information about
-            %       the energy on a wide neighborhood area to filtered out
-            %       local effects. default 1
+            %   filtering parameters: the aim is to get information about the
+            %   energy on a wide neighborhood area to filtered out local
+            %   effects. default 1
             % * __ContextEnergySpatialConstant__ see
-            %       `ContextEnergyTemporalConstant`. default 75
+            %   `ContextEnergyTemporalConstant`. default 75
             %
             % Sets new parameter structure that stores the transient events
             % detector setup parameters.
@@ -223,7 +224,7 @@ classdef TransientAreasSegmentationModule < handle
         function params = getParameters(this)
             %GETPARAMETERS  Return the current parameters setup
             %
-            %    params = obj.getParameters()
+            %     params = obj.getParameters()
             %
             % ## Output
             % * __params__ the current parameters setup.
@@ -237,11 +238,11 @@ classdef TransientAreasSegmentationModule < handle
         function str = printSetup(this)
             %PRINTSETUP  Parameters setup display method
             %
-            %    str = obj.printSetup()
+            %     str = obj.printSetup()
             %
             % ## Output
             % * __str__ a string which contains formatted parameters
-            %       information.
+            %   information.
             %
             % See also: cv.TransientAreasSegmentationModule.getParameters
             %
@@ -251,17 +252,16 @@ classdef TransientAreasSegmentationModule < handle
         function varargout = write(this, fs)
             %WRITE  Write xml/yml formated parameters information
             %
-            %    obj.write(fs)
-            %    str = obj.write(fs)
+            %     obj.write(fs)
+            %     str = obj.write(fs)
             %
             % ## Input
             % * __fs__ the filename of the xml file that will be open and
-            %       writen with formatted parameters information.
+            %   writen with formatted parameters information.
             %
             % ## Output
             % * __str__ optional output. If requested, the parameters are
-            %       persisted to a string in memory instead of writing to
-            %       disk.
+            %   persisted to a string in memory instead of writing to disk.
             %
             % See also: cv.TransientAreasSegmentationModule.setup
             %
@@ -271,16 +271,16 @@ classdef TransientAreasSegmentationModule < handle
         function run(this, inputToSegment)
             %RUN  Main processing method
             %
-            %    obj.run(inputToSegment)
-            %    obj.run(inputToSegment, 'OptionName',optionValue, ...)
+            %     obj.run(inputToSegment)
+            %     obj.run(inputToSegment, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __inputToSegment__ the image to process, it must match the
-            %       instance buffer size.
+            %   instance buffer size.
             %
             % ## Options
             % * __ChannelIndex__ the channel to process in case of
-            %       multichannel images (0-based index). default 0
+            %   multichannel images (0-based index). default 0
             %
             % Get result using
             % cv.TransientAreasSegmentationModule.getSegmentationPicture
@@ -294,12 +294,12 @@ classdef TransientAreasSegmentationModule < handle
         function transientAreas = getSegmentationPicture(this)
             %GETSEGMENTATIONPICTURE  Access function
             %
-            %    transientAreas = obj.getSegmentationPicture()
+            %     transientAreas = obj.getSegmentationPicture()
             %
             % ## Output
             % * __transientAreas__ the last segmentation result: a boolean
-            %       picture which is resampled between 0 and 255 for a display
-            %       purpose.
+            %   picture which is resampled between 0 and 255 for a display
+            %   purpose.
             %
             % See also: cv.TransientAreasSegmentationModule.run
             %
@@ -309,7 +309,7 @@ classdef TransientAreasSegmentationModule < handle
         function clearAllBuffers(this)
             %CLEARALLBUFFERS  Cleans all the buffers of the instance
             %
-            %    obj.clearAllBuffers()
+            %     obj.clearAllBuffers()
             %
             % See also: cv.TransientAreasSegmentationModule.run
             %

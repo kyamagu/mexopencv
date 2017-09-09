@@ -41,17 +41,17 @@ classdef DPMDetector < handle
     % ## Example
     % The basic usage is the following:
     %
-    %    img = imread(fullfile(mexopencv.root(),'test','cat.jpg'));
-    %    detector = cv.DPMDetector(fullfile(mexopencv.root(),'test','cat.xml'));
-    %    detections = detector.detect(img);
-    %    for i=1:numel(detections)
-    %        img = cv.rectangle(img, detections(i).rect, 'Color',[0 255 0]);
-    %    end
-    %    imshow(img)
+    %     img = imread(fullfile(mexopencv.root(),'test','cat.jpg'));
+    %     detector = cv.DPMDetector(fullfile(mexopencv.root(),'test','cat.xml'));
+    %     detections = detector.detect(img);
+    %     for i=1:numel(detections)
+    %         img = cv.rectangle(img, detections(i).rect, 'Color',[0 255 0]);
+    %     end
+    %     imshow(img)
     %
     % The detector can also accept multiple models as cell array of strings:
     %
-    %    detector = cv.DPMDetector({'cat.xml','car.xml'});
+    %     detector = cv.DPMDetector({'cat.xml','car.xml'});
     %
     % The XML file must be a format compatible to OpenCV's DPM detector, but
     % you can convert models from the original implementation in
@@ -87,17 +87,16 @@ classdef DPMDetector < handle
         function this = DPMDetector(filenames, varargin)
             %DPMDETECTOR  Load and create a new detector
             %
-            %    detector = cv.DPMDetector(filenames)
-            %    detector = cv.DPMDetector(filenames, classnames)
+            %     detector = cv.DPMDetector(filenames)
+            %     detector = cv.DPMDetector(filenames, classnames)
             %
             % ## Input
             % * __filenames__ A set of filenames storing the trained detectors
-            %       (models). Each file contains one model.
+            %   (models). Each file contains one model.
             % * __classnames__ (optional) A set of trained models names. If
-            %       it's empty then the name of each model will be
-            %       constructed from the name of file containing the model.
-            %       E.g. the model stored in "/home/user/cat.xml" will get
-            %       the name "cat".
+            %   it's empty then the name of each model will be constructed
+            %   from the name of file containing the model. E.g. the model
+            %   stored in "/home/user/cat.xml" will get the name "cat".
             %
             % Load the trained models from given .xml files and return a new
             % DPMDetector detector.
@@ -117,7 +116,7 @@ classdef DPMDetector < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    detector.delete()
+            %     detector.delete()
             %
             % See also: cv.DPMDetector
             %
@@ -128,7 +127,7 @@ classdef DPMDetector < handle
         function status = isEmpty(this)
             %ISEMPTY  Check if the detector is empty
             %
-            %    status = detector.isEmpty()
+            %     status = detector.isEmpty()
             %
             % ## Output
             % * __status__ boolean
@@ -141,7 +140,7 @@ classdef DPMDetector < handle
         function names = getClassNames(this)
             %GETCLASSNAMES  Get names of the object classes
             %
-            %    names = detector.getClassNames()
+            %     names = detector.getClassNames()
             %
             % ## Output
             % * __names__ a cell array of strings.
@@ -157,7 +156,7 @@ classdef DPMDetector < handle
         function count = getClassCount(this)
             %GETCLASSCOUNT  Return a count of loaded models (classes)
             %
-            %    count = detector.getClassCount()
+            %     count = detector.getClassCount()
             %
             % ## Output
             % * __count__ a numeric value.
@@ -170,18 +169,18 @@ classdef DPMDetector < handle
         function objects = detect(this, img)
             %DETECT  Detects objects
             %
-            %    objects = detector.detect(img)
+            %     objects = detector.detect(img)
             %
             % ## Input
             % * __img__ An image where objects are to be detected
-            %       (8-bit integer or 64-bit floating-point color image).
+            %   (8-bit integer or 64-bit floating-point color image).
             %
             % ## Output
             % * __objects__ The detections. A struct array of detected objects
-            %       with the following fields:
-            %       * __rect__ rectangle `[x,y,w,h]` of the object
-            %       * __score__ score of the detection
-            %       * __class__ name of the object class
+            %   with the following fields:
+            %   * __rect__ rectangle `[x,y,w,h]` of the object
+            %   * __score__ score of the detection
+            %   * __class__ name of the object class
             %
             % Find rectangular regions in the given image that are likely to
             % contain objects of loaded classes (models) and corresponding
@@ -197,21 +196,21 @@ classdef DPMDetector < handle
         function mat2opencvxml(matpath, xmlpath)
             %MAT2OPENCVXML  Convert DPM 2007 model (MAT) to cascade model (XML)
             %
-            %    cv.DPMDetector.mat2opencvxml(matpath, xmlpath)
+            %     cv.DPMDetector.mat2opencvxml(matpath, xmlpath)
             %
             % ## Input
             % * __matpath__ input MAT filename, path to the DPM VOC 2007
-            %       model.
+            %   model.
             % * __xmlpath__ output XML filename, path to the OpenCV file
-            %       storage model.
+            %   storage model.
             %
             % The method converts [Felzenszwalb2010] model files to xml
             % format specified by OpenCV's implementation. The usage is the
             % following:
             %
-            %    matpath = 'VOC2007/cat_final.mat';
-            %    xmlpath = 'cat.xml';
-            %    cv.DPMDetector.mat2opencvxml(matpath, xmlpath);
+            %     matpath = 'VOC2007/cat_final.mat';
+            %     xmlpath = 'cat.xml';
+            %     cv.DPMDetector.mat2opencvxml(matpath, xmlpath);
             %
             % Check the latest models in:
             %

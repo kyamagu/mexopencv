@@ -32,45 +32,47 @@ classdef Dataset < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
-        klass % Object class
+        % Object ID
+        id
+        % Object class
+        klass
     end
 
     methods
         function this = Dataset(dstype)
             %DATASET  Constructor
             %
-            %    ds = cv.Dataset(dstype)
+            %     ds = cv.Dataset(dstype)
             %
             % ## Input
             % * __dstype__ Dataset class implementation. One of:
-            %       * **AR_hmdb** HMDB: A Large Human Motion Database
-            %       * **AR_sports** Sports-1M Dataset
-            %       * **FR_adience** Adience
-            %       * **FR_lfw** Labeled Faces in the Wild
-            %       * **GR_chalearn** ChaLearn Looking at People
-            %       * **GR_skig** Sheffield Kinect Gesture Dataset
-            %       * **HPE_humaneva** HumanEva Dataset
-            %       * **HPE_parse** PARSE Dataset
-            %       * **IR_affine** Affine Covariant Regions Datasets
-            %       * **IR_robot** Robot Data Set
-            %       * **IS_bsds** The Berkeley Segmentation Dataset and Benchmark
-            %       * **IS_weizmann** Weizmann Segmentation Evaluation Database
-            %       * **MSM_epfl** EPFL Multi-View Stereo
-            %       * **MSM_middlebury** Stereo - Middlebury Computer Vision
-            %       * **OR_imagenet** ImageNet
-            %       * **OR_mnist** MNIST
-            %       * **OR_pascal** PASCAL Object Recognition Database
-            %       * **OR_sun** SUN Database
-            %       * **PD_caltech** Caltech Pedestrian Detection Benchmark
-            %       * **PD_inria** INRIA Person Dataset
-            %       * **SLAM_kitti** KITTI Vision Benchmark
-            %       * **SLAM_tumindoor** TUMindoor Dataset
-            %       * **TR_chars** The Chars74K Dataset
-            %       * **TR_icdar** ICDAR
-            %       * **TR_svt** The Street View Text Dataset
-            %       * **TRACK_vot** VOT 2015 Database
-            %       * **TRACK_alov** Amsterdam Library of Ordinary Videos (ALOV++)
+            %   * **AR_hmdb** HMDB: A Large Human Motion Database
+            %   * **AR_sports** Sports-1M Dataset
+            %   * **FR_adience** Adience
+            %   * **FR_lfw** Labeled Faces in the Wild
+            %   * **GR_chalearn** ChaLearn Looking at People
+            %   * **GR_skig** Sheffield Kinect Gesture Dataset
+            %   * **HPE_humaneva** HumanEva Dataset
+            %   * **HPE_parse** PARSE Dataset
+            %   * **IR_affine** Affine Covariant Regions Datasets
+            %   * **IR_robot** Robot Data Set
+            %   * **IS_bsds** The Berkeley Segmentation Dataset and Benchmark
+            %   * **IS_weizmann** Weizmann Segmentation Evaluation Database
+            %   * **MSM_epfl** EPFL Multi-View Stereo
+            %   * **MSM_middlebury** Stereo - Middlebury Computer Vision
+            %   * **OR_imagenet** ImageNet
+            %   * **OR_mnist** MNIST
+            %   * **OR_pascal** PASCAL Object Recognition Database
+            %   * **OR_sun** SUN Database
+            %   * **PD_caltech** Caltech Pedestrian Detection Benchmark
+            %   * **PD_inria** INRIA Person Dataset
+            %   * **SLAM_kitti** KITTI Vision Benchmark
+            %   * **SLAM_tumindoor** TUMindoor Dataset
+            %   * **TR_chars** The Chars74K Dataset
+            %   * **TR_icdar** ICDAR
+            %   * **TR_svt** The Street View Text Dataset
+            %   * **TRACK_vot** VOT 2015 Database
+            %   * **TRACK_alov** Amsterdam Library of Ordinary Videos (ALOV++)
             %
             % ### HMDB: A Large Human Motion Database
             %
@@ -85,8 +87,8 @@ classdef Dataset < handle
             %   and remove them.
             % - To load data run:
             %
-            %        ds = cv.Dataset('AR_hmdb');
-            %        ds.load('/home/user/path_to_unpacked_folders/');
+            %       ds = cv.Dataset('AR_hmdb');
+            %       ds.load('/home/user/path_to_unpacked_folders/');
             %
             % Benchmark:
             %
@@ -112,8 +114,8 @@ classdef Dataset < handle
             %   [files](https://code.google.com/p/sports-1m-dataset/).
             % - To load data run:
             %
-            %        ds = cv.Dataset('AR_sports');
-            %        ds.load('/home/user/path_to_downloaded_folders/');
+            %       ds = cv.Dataset('AR_sports');
+            %       ds.load('/home/user/path_to_downloaded_folders/');
             %
             % ### Adience
             %
@@ -131,8 +133,8 @@ classdef Dataset < handle
             %   the same folder.
             % - To load data run:
             %
-            %        ds = cv.Dataset('FR_adience');
-            %        ds.load('/home/user/path_to_created_folder/');
+            %       ds = cv.Dataset('FR_adience');
+            %       ds.load('/home/user/path_to_created_folder/');
             %
             % ### Labeled Faces in the Wild
             %
@@ -149,8 +151,8 @@ classdef Dataset < handle
             %   `pairsDevTrain.txt` in created folder.
             % - To load data run:
             %
-            %        ds = cv.Dataset('FR_lfw');
-            %        ds.load('/home/user/path_to_unpacked_folder/lfw2/');
+            %       ds = cv.Dataset('FR_lfw');
+            %       ds.load('/home/user/path_to_unpacked_folder/lfw2/');
             %
             % Benchmark:
             %
@@ -181,8 +183,8 @@ classdef Dataset < handle
             %   `Sample0001/`
             % - To load data run:
             %
-            %        ds = cv.Dataset('GR_chalearn');
-            %        ds.load('/home/user/path_to_unpacked_folders/');
+            %       ds = cv.Dataset('GR_chalearn');
+            %       ds.load('/home/user/path_to_unpacked_folders/');
             %
             % ### Sheffield Kinect Gesture Dataset
             %
@@ -197,8 +199,8 @@ classdef Dataset < handle
             % - Unpack them.
             % - To load data run:
             %
-            %        ds = cv.Dataset('GR_skig');
-            %        ds.load('/home/user/path_to_unpacked_folders/');
+            %       ds = cv.Dataset('GR_skig');
+            %       ds.load('/home/user/path_to_unpacked_folders/');
             %
             % ### HumanEva Dataset
             %
@@ -212,8 +214,8 @@ classdef Dataset < handle
             % - Unpack them to `HumanEva_1` and `HumanEva_2` accordingly.
             % - To load data run:
             %
-            %        ds = cv.Dataset('HPE_humaneva');
-            %        ds.load('/home/user/path_to_unpacked_folders/');
+            %       ds = cv.Dataset('HPE_humaneva');
+            %       ds.load('/home/user/path_to_unpacked_folders/');
             %
             % ### PARSE Dataset
             %
@@ -226,8 +228,8 @@ classdef Dataset < handle
             % - Unpack it.
             % - To load data run:
             %
-            %        ds = cv.Dataset('HPE_parse');
-            %        ds.load('/home/user/path_to_unpacked_folder/people_all/');
+            %       ds = cv.Dataset('HPE_parse');
+            %       ds.load('/home/user/path_to_unpacked_folder/people_all/');
             %
             % ### Affine Covariant Regions Datasets
             %
@@ -241,8 +243,8 @@ classdef Dataset < handle
             % - Unpack them.
             % - To load data, for example, for "bark", run:
             %
-            %        ds = cv.Dataset('IR_affine');
-            %        ds.load('/home/user/path_to_unpacked_folder/bark/');
+            %       ds = cv.Dataset('IR_affine');
+            %       ds.load('/home/user/path_to_unpacked_folder/bark/');
             %
             % ### Robot Data Set
             %
@@ -256,8 +258,8 @@ classdef Dataset < handle
             % - Unpack them to one folder.
             % - To load data run:
             %
-            %        ds = cv.Dataset('IR_robot');
-            %        ds.load('/home/user/path_to_unpacked_folder/');
+            %       ds = cv.Dataset('IR_robot');
+            %       ds.load('/home/user/path_to_unpacked_folder/');
             %
             % ### The Berkeley Segmentation Dataset and Benchmark
             %
@@ -271,8 +273,8 @@ classdef Dataset < handle
             % - Unpack them.
             % - To load data run:
             %
-            %        ds = cv.Dataset('IS_bsds');
-            %        ds.load('/home/user/path_to_unpacked_folder/BSDS300/');
+            %       ds = cv.Dataset('IS_bsds');
+            %       ds.load('/home/user/path_to_unpacked_folder/BSDS300/');
             %
             % ### Weizmann Segmentation Evaluation Database
             %
@@ -286,8 +288,8 @@ classdef Dataset < handle
             % - Unpack them.
             % - To load data, for example, for `1 object` dataset, run:
             %
-            %        ds = cv.Dataset('IS_weizmann');
-            %        ds.load('/home/user/path_to_unpacked_folder/1obj/');
+            %       ds = cv.Dataset('IS_weizmann');
+            %       ds.load('/home/user/path_to_unpacked_folder/1obj/');
             %
             % ### EPFL Multi-View Stereo
             %
@@ -306,8 +308,8 @@ classdef Dataset < handle
             %   `fountain_dense_p.tar.gz -> P/`
             % - To load data, for example, for "fountain", run:
             %
-            %        ds = cv.Dataset('MSM_epfl');
-            %        ds.load('/home/user/path_to_unpacked_folder/fountain/');
+            %       ds = cv.Dataset('MSM_epfl');
+            %       ds.load('/home/user/path_to_unpacked_folder/fountain/');
             %
             % ### Stereo - Middlebury Computer Vision
             %
@@ -321,8 +323,8 @@ classdef Dataset < handle
             % - Unpack them.
             % - To load data, for example "temple" dataset, run:
             %
-            %        ds = cv.Dataset('MSM_middlebury');
-            %        ds.load('/home/user/path_to_unpacked_folder/temple/');
+            %       ds = cv.Dataset('MSM_middlebury');
+            %       ds.load('/home/user/path_to_unpacked_folder/temple/');
             %
             % ### ImageNet
             %
@@ -348,19 +350,21 @@ classdef Dataset < handle
             % - Unpack all tar files in train.
             % - To load data run:
             %
-            %        ds = cv.Dataset('OR_imagenet');
-            %        ds.load('/home/user/some_folder/');
+            %       ds = cv.Dataset('OR_imagenet');
+            %       ds.load('/home/user/some_folder/');
             %
             % Python script to parse `meta.mat`:
             %
-            %    import scipy.io
-            %    meta_mat = scipy.io.loadmat("devkit-1.0/data/meta.mat")
+            % ```python
+            % import scipy.io
+            % meta_mat = scipy.io.loadmat("devkit-1.0/data/meta.mat")
             %
-            %    labels_dic = dict((m[0][1][0], m[0][0][0][0]-1) for m in meta_mat['synsets']
-            %    label_names_dic = dict((m[0][1][0], m[0][2][0]) for m in meta_mat['synsets']
+            % labels_dic = dict((m[0][1][0], m[0][0][0][0]-1) for m in meta_mat['synsets']
+            % label_names_dic = dict((m[0][1][0], m[0][2][0]) for m in meta_mat['synsets']
             %
-            %    for label in labels_dic.keys():
-            %        print "{0},{1},{2}".format(label, labels_dic[label], label_names_dic[label])
+            % for label in labels_dic.keys():
+            %     print "{0},{1},{2}".format(label, labels_dic[label], label_names_dic[label])
+            % ```
             %
             % ### MNIST
             %
@@ -375,8 +379,8 @@ classdef Dataset < handle
             % - Unpack them.
             % - To load data run:
             %
-            %        ds = cv.Dataset('OR_mnist');
-            %        ds.load('/home/user/path_to_unpacked_files/');
+            %       ds = cv.Dataset('OR_mnist');
+            %       ds.load('/home/user/path_to_unpacked_files/');
             %
             % ### SUN Database
             %
@@ -391,8 +395,8 @@ classdef Dataset < handle
             %   into folder: `SUN397/Partitions/`
             % - To load data run:
             %
-            %        ds = cv.Dataset('OR_sun');
-            %        ds.load('/home/user/path_to_unpacked_files/SUN397/');
+            %       ds = cv.Dataset('OR_sun');
+            %       ds.load('/home/user/path_to_unpacked_files/SUN397/');
             %
             % ### Caltech Pedestrian Detection Benchmark
             %
@@ -406,8 +410,8 @@ classdef Dataset < handle
             % - Unpack them to separate folder.
             % - To load data run:
             %
-            %        ds = cv.Dataset('PD_caltech');
-            %        ds.load('/home/user/path_to_unpacked_folders/');
+            %       ds = cv.Dataset('PD_caltech');
+            %       ds.load('/home/user/path_to_unpacked_folders/');
             %
             % Note:
             %
@@ -438,8 +442,8 @@ classdef Dataset < handle
             %   replaced after unpacking `data_odometry_calib.zip` at the end.
             % - To load data run:
             %
-            %        ds = cv.Dataset('SLAM_kitti');
-            %        ds.load('/home/user/path_to_unpacked_folder/dataset/');
+            %       ds = cv.Dataset('SLAM_kitti');
+            %       ds.load('/home/user/path_to_unpacked_folder/dataset/');
             %
             % ### TUMindoor Dataset
             %
@@ -460,8 +464,8 @@ classdef Dataset < handle
             %   `pointcloud.tar.bz2 -> pointcloud/`.
             % - To load each dataset run:
             %
-            %        ds = cv.Dataset('SLAM_tumindoor');
-            %        ds.load('/home/user/path_to_unpacked_folders/');
+            %       ds = cv.Dataset('SLAM_tumindoor');
+            %       ds.load('/home/user/path_to_unpacked_folders/');
             %
             % ### The Chars74K Dataset
             %
@@ -478,8 +482,8 @@ classdef Dataset < handle
             %   For example, `English/list_English_Img.m` for `EnglishImg.tgz`.
             % - To load data, for example "EnglishImg", run:
             %
-            %        ds = cv.Dataset('TR_chars');
-            %        ds.load('/home/user/path_to_unpacked_folder/English/');
+            %       ds = cv.Dataset('TR_chars');
+            %       ds.load('/home/user/path_to_unpacked_folder/English/');
             %
             % ### The Street View Text Dataset
             %
@@ -492,8 +496,8 @@ classdef Dataset < handle
             % - Unpack it.
             % - To load data run:
             %
-            %        ds = cv.Dataset('TR_svt');
-            %        ds.load('/home/user/path_to_unpacked_folder/svt/svt1/');
+            %       ds = cv.Dataset('TR_svt');
+            %       ds.load('/home/user/path_to_unpacked_folder/svt/svt1/');
             %
             % Benchmark:
             %
@@ -522,8 +526,8 @@ classdef Dataset < handle
             % - Unpack `vot2015.zip` into folder: `VOT2015/`
             % - To load data run:
             %
-            %        ds = cv.Dataset('TRACK_vot');
-            %        ds.load('/home/user/path_to_unpacked_files/VOT2015/');
+            %       ds = cv.Dataset('TRACK_vot');
+            %       ds.load('/home/user/path_to_unpacked_files/VOT2015/');
             %
             % ### Amsterdam Library of Ordinary Videos for tracking
             %
@@ -539,7 +543,7 @@ classdef Dataset < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    ds.delete()
+            %     ds.delete()
             %
             % See also: cv.Dataset
             %
@@ -550,7 +554,7 @@ classdef Dataset < handle
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
-            %    typename = ds.typeid()
+            %     typename = ds.typeid()
             %
             % ## Output
             % * __typename__ Name of C++ type
@@ -564,7 +568,7 @@ classdef Dataset < handle
         function load(this, dpath)
             %LOAD  Load dataset
             %
-            %    ds.load(dpth)
+            %     ds.load(dpth)
             %
             % ## Input
             % * __dpath__ directory path for dataset files.
@@ -582,7 +586,7 @@ classdef Dataset < handle
         function num = getNumSplits(this)
             %GETNUMSPLITS  Get Number of data splits
             %
-            %    num = ds.getNumSplits()
+            %     num = ds.getNumSplits()
             %
             % ## Output
             % * __num__ number of splits.
@@ -596,13 +600,13 @@ classdef Dataset < handle
         function data = getTrain(this, varargin)
             %GETTRAIN  Get training data
             %
-            %    data = ds.getTrain('OptionName',optionValue, ...)
+            %     data = ds.getTrain('OptionName',optionValue, ...)
             %
             % ## Output
             % * __data__ training data samples.
             %
             % ## Options
-            % * __ SplitNum__ split number. default 0
+            % * __SplitNum__ split number. default 0
             %
             % See also: cv.Dataset.getTest, cv.Dataset.getValidation
             %
@@ -612,13 +616,13 @@ classdef Dataset < handle
         function data = getTest(this, varargin)
             %GETTEST  Get testing data
             %
-            %    data = ds.getTest('OptionName',optionValue, ...)
+            %     data = ds.getTest('OptionName',optionValue, ...)
             %
             % ## Output
             % * __data__ testing data samples.
             %
             % ## Options
-            % * __ SplitNum__ split number. default 0
+            % * __SplitNum__ split number. default 0
             %
             % See also: cv.Dataset.getTrain, cv.Dataset.getValidation
             %
@@ -628,13 +632,13 @@ classdef Dataset < handle
         function data = getValidation(this, varargin)
             %GETVALIDATION  Get validation data
             %
-            %    data = ds.getValidation('OptionName',optionValue, ...)
+            %     data = ds.getValidation('OptionName',optionValue, ...)
             %
             % ## Output
             % * __data__ validation data samples.
             %
             % ## Options
-            % * __ SplitNum__ split number. default 0
+            % * __SplitNum__ split number. default 0
             %
             % See also: cv.Dataset.getTrain, cv.Dataset.getTest
             %
@@ -647,7 +651,7 @@ classdef Dataset < handle
         function createDirectory(dirPath)
             %CREATEDIRECTORY  Create directory
             %
-            %    cv.Dataset.createDirectory(dirPath)
+            %     cv.Dataset.createDirectory(dirPath)
             %
             % ## Input
             % * __dirPath__ directory path.
@@ -660,7 +664,7 @@ classdef Dataset < handle
         function fileNames = getDirList(dirName)
             %GETDIRLIST  Get directory listing
             %
-            %    fileNames = cv.Dataset.createDirectory(dirName)
+            %     fileNames = cv.Dataset.createDirectory(dirName)
             %
             % ## Input
             % * __dirName__ directory name.
@@ -676,7 +680,7 @@ classdef Dataset < handle
         function elems = split(s, delim)
             %SPLIT  Split string by delimiter
             %
-            %    elems = cv.Dataset.split(s, delim)
+            %     elems = cv.Dataset.split(s, delim)
             %
             % ## Input
             % * __s__ string.

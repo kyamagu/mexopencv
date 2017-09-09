@@ -6,9 +6,9 @@ classdef StereoBM < handle
     %
     % ## Usage
     %
-    %    bm = cv.StereoBM('NumDisparities',64, ...);
-    %    bm.MinDisparity = 0;
-    %    disparity = bm.compute(left, right);
+    %     bm = cv.StereoBM('NumDisparities',64, ...);
+    %     bm.MinDisparity = 0;
+    %     disparity = bm.compute(left, right);
     %
     % See also: cv.StereoBM.StereoBM, cv.StereoBM.compute, cv.StereoSGBM,
     %  cv.getValidDisparityROI, cv.filterSpeckles, cv.validateDisparity,
@@ -68,22 +68,21 @@ classdef StereoBM < handle
         function this = StereoBM(varargin)
             %STEREOBM  Creates StereoBM object
             %
-            %    bm = cv.StereoBM()
-            %    bm = cv.StereoBM('OptionName', optionValue, ...)
+            %     bm = cv.StereoBM()
+            %     bm = cv.StereoBM('OptionName', optionValue, ...)
             %
             % ## Options
             % * __NumDisparities__ the disparity search range. For each pixel
-            %       algorithm will find the best disparity from 0 (default
-            %       minimum disparity) to `NumDisparities`. The search range
-            %       can then be shifted by changing the minimum disparity.
-            %       default 0 (which uses 64 by default).
+            %   algorithm will find the best disparity from 0 (default minimum
+            %   disparity) to `NumDisparities`. The search range can then be
+            %   shifted by changing the minimum disparity. default 0 (which
+            %   uses 64 by default).
             % * __BlockSize__ the linear size of the blocks compared by the
-            %       algorithm. The size should be odd (as the block is
-            %       centered at the current pixel). Larger block size implies
-            %       smoother, though less accurate disparity map. Smaller
-            %       block size gives more detailed disparity map, but there is
-            %       is higher chance for algorithm to find a wrong
-            %       correspondence. default 21.
+            %   algorithm. The size should be odd (as the block is centered at
+            %   the current pixel). Larger block size implies smoother, though
+            %   less accurate disparity map. Smaller block size gives more
+            %   detailed disparity map, but there is is higher chance for
+            %   algorithm to find a wrong correspondence. default 21.
             %
             % The function creates cv.StereoBM object. You can then call
             % cv.StereoBM.compute to compute disparity for a specific stereo
@@ -97,7 +96,7 @@ classdef StereoBM < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    bm.delete()
+            %     bm.delete()
             %
             % See also: cv.StereoBM
             %
@@ -108,20 +107,19 @@ classdef StereoBM < handle
         function disparity = compute(this, left, right)
             %COMPUTE  Computes disparity map for the specified stereo pair
             %
-            %    disparity = bm.compute(left, right)
+            %     disparity = bm.compute(left, right)
             %
             % ## Input
             % * __left__ Left 8-bit single-channel image.
             % * __right__ Right image of the same size and the same type as
-            %       the left one.
+            %   the left one.
             %
             % ## Output
             % * __disparity__ Output disparity map. It has the same size as
-            %       the input images. Some algorithms, like cv.StereoBM or
-            %       cv.StereoSGBM compute 16-bit fixed-point disparity map
-            %       (where each disparity value has 4 fractional bits),
-            %       whereas other algorithms output 32-bit floating-point
-            %       disparity map.
+            %   the input images. Some algorithms, like cv.StereoBM or
+            %   cv.StereoSGBM compute 16-bit fixed-point disparity map (where
+            %   each disparity value has 4 fractional bits), whereas other
+            %   algorithms output 32-bit floating-point disparity map.
             %
             % The method executes the BM algorithm on a rectified stereo pair.
             % Note that the method is not constant, thus you should not use
@@ -139,7 +137,7 @@ classdef StereoBM < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.StereoBM.empty
             %
@@ -149,11 +147,11 @@ classdef StereoBM < handle
         function b = empty(this)
             %EMPTY  Checks if algorithm object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the algorithm object is empty
-            %       (e.g. in the very beginning or after unsuccessful read).
+            %   (e.g. in the very beginning or after unsuccessful read).
             %
             % See also: cv.StereoBM.clear
             %
@@ -163,11 +161,11 @@ classdef StereoBM < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.StereoBM.save, cv.StereoBM.load
             %
@@ -177,7 +175,7 @@ classdef StereoBM < handle
         function save(this, filename)
             %SAVE  Saves the algorithm to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -192,21 +190,21 @@ classdef StereoBM < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from a file storage.
             % The previous model state is discarded.

@@ -6,14 +6,14 @@ classdef BOWKMeansTrainer < handle
     %
     % ## Example
     %
-    %    % create bag of visual words
-    %    trainer = cv.BOWKMeansTrainer(K);
-    %    dictionary = trainer.cluster(train_descs);
+    %     % create bag of visual words
+    %     trainer = cv.BOWKMeansTrainer(K);
+    %     dictionary = trainer.cluster(train_descs);
     %
-    %    % Compute histogram of visual word occurrences of an image
-    %    extractor = cv.BOWImgDescriptorExtractor('SIFT','BruteForce');
-    %    extractor.Vocabulary = dictionary;
-    %    descs = extractor.compute(im, keypoints);
+    %     % Compute histogram of visual word occurrences of an image
+    %     extractor = cv.BOWImgDescriptorExtractor('SIFT','BruteForce');
+    %     extractor.Vocabulary = dictionary;
+    %     descs = extractor.compute(im, keypoints);
     %
     % ## References
     % > "Visual Categorization with Bags of Keypoints" by
@@ -33,27 +33,27 @@ classdef BOWKMeansTrainer < handle
         function this = BOWKMeansTrainer(dictionarySize, varargin)
             %BOWKMEANSTRAINER  The constructor
             %
-            %    trainer = cv.BOWKMeansTrainer(dictionarySize)
-            %    [...] = cv.BOWKMeansTrainer(...,'OptionName', optionValue, ...)
+            %     trainer = cv.BOWKMeansTrainer(dictionarySize)
+            %     [...] = cv.BOWKMeansTrainer(...,'OptionName', optionValue, ...)
             %
             % ## Input
             % * __dictionarySize__ Number of clusters.
             %
             % ## Options
             % * __Criteria__ The algorithm termination criteria, that is, the
-            %       maximum number of iterations and/or the desired accuracy.
-            %       The accuracy is specified as `Criteria.epsilon`. As soon
-            %       as each of the cluster centers moves by less than
-            %       `Criteria.epsilon` on some iteration, the algorithm stops.
-            %       default `struct('type','Count+EPS', 'maxCount',100, 'epsilon',eps('float'))`
+            %   maximum number of iterations and/or the desired accuracy. The
+            %   accuracy is specified as `Criteria.epsilon`. As soon as each
+            %   of the cluster centers moves by less than `Criteria.epsilon`
+            %   on some iteration, the algorithm stops. default
+            %   `struct('type','Count+EPS', 'maxCount',100, 'epsilon',eps('float'))`
             % * __Attempts__ The number of times the algorithm is executed
-            %       using different initial labelings. The algorithm returns
-            %       the labels that yield the best compactness. default 3.
+            %   using different initial labelings. The algorithm returns the
+            %   labels that yield the best compactness. default 3.
             % * __Initialization__ Method to initialize seeds, default 'PP'.
-            %       One of the followings:
-            %       * __Random__ Select random initial centers in each attempt.
-            %       * __PP__ Use kmeans++ center initialization by
-            %             Arthur and Vassilvitskii [Arthur2007].
+            %   One of the followings:
+            %   * __Random__ Select random initial centers in each attempt.
+            %   * __PP__ Use kmeans++ center initialization by
+            %     Arthur and Vassilvitskii [Arthur2007].
             %
             % See also: cv.BOWKMeansTrainer, cv.kmeans
             %
@@ -63,7 +63,7 @@ classdef BOWKMeansTrainer < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    trainer.delete()
+            %     trainer.delete()
             %
             % See also: cv.BOWKMeansTrainer
             %
@@ -74,7 +74,7 @@ classdef BOWKMeansTrainer < handle
         function descs = getDescriptors(this)
             %GETDESCRIPTORS  Returns a training set of descriptors
             %
-            %    descs = trainer.getDescriptors()
+            %     descs = trainer.getDescriptors()
             %
             % ## Output
             % * __descs__ a cell array of descriptors
@@ -87,7 +87,7 @@ classdef BOWKMeansTrainer < handle
         function count = descriptorsCount(this)
             %DESCRIPTORSCOUNT  Returns the count of all descriptors stored in the training set
             %
-            %    count = trainer.descriptorsCount()
+            %     count = trainer.descriptorsCount()
             %
             % ## Output
             % * __count__ is a numeric value
@@ -100,11 +100,11 @@ classdef BOWKMeansTrainer < handle
         function add(this, descs)
             %ADD  Adds descriptors to a training set
             %
-            %    trainer.add(descs)
+            %     trainer.add(descs)
             %
             % ## Input
             % * __descs__ Descriptors to add to a training set. Each row of
-            %       the descriptors matrix is a descriptor.
+            %   the descriptors matrix is a descriptor.
             %
             % The training set is clustered using cluster method to construct
             % the vocabulary.
@@ -117,7 +117,7 @@ classdef BOWKMeansTrainer < handle
         function clear(this)
             %CLEAR  Clear training descriptors
             %
-            %    trainer.clear()
+            %     trainer.clear()
             %
             % See also: cv.BOWKMeansTrainer.add
             %
@@ -127,13 +127,13 @@ classdef BOWKMeansTrainer < handle
         function centers = cluster(this, descs)
             %CLUSTER  Clusters train descriptors
             %
-            %    centers = trainer.cluster()
-            %    centers = trainer.cluster(descs)
+            %     centers = trainer.cluster()
+            %     centers = trainer.cluster(descs)
             %
             % ## Input
             % * __descs__ Descriptors to cluster. Each row of the
-            %       descriptors matrix is a descriptor. Descriptors are not
-            %       added to the inner train descriptor set.
+            %   descriptors matrix is a descriptor. Descriptors are not added
+            %   to the inner train descriptor set.
             %
             % ## Output
             % * __centers__ Row vectors of vocabulary descriptors.

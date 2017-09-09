@@ -5,7 +5,8 @@ classdef RotationWarper < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -17,40 +18,38 @@ classdef RotationWarper < handle
         function this = RotationWarper(warperType, scale, varargin)
             %ROTATIONWARPER  Constructor
             %
-            %    obj = cv.RotationWarper(warperType, scale)
-            %    obj = cv.RotationWarper(..., 'OptionName',optionValue, ...)
+            %     obj = cv.RotationWarper(warperType, scale)
+            %     obj = cv.RotationWarper(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __warperType__ image warper factory class type, used to create
-            %       the rotation-based warper. One of:
-            %       * __PlaneWarper__ Plane warper factory class. Warper that
-            %             maps an image onto the `z = 1` plane.
-            %       * __AffineWarper__ Affine warper factory class. Affine
-            %             warper that uses rotations and translations. Uses
-            %             affine transformation in homogeneous coordinates to
-            %             represent both rotation and translation in camera
-            %             rotation matrix.
-            %       * __CylindricalWarper__ Cylindrical warper factory class.
-            %             Warper that maps an image onto the `x*x + z*z = 1`
-            %             cylinder.
-            %       * __SphericalWarper__ Spherical warper factory class.
-            %             Warper that maps an image onto the unit sphere
-            %             located at the origin. Projects image onto unit
-            %             sphere with origin at [0,0,0] and radius `scale`,
-            %             measured in pixels. A 360 panorama would therefore
-            %             have a resulting width of `2*scale*pi` pixels. Poles
-            %             are located at [0,-1,0] and [0,1,0] points.
-            %       * __PlaneWarperGpu__ (requires CUDA)
-            %       * __CylindricalWarperGpu__ (requires CUDA)
-            %       * __SphericalWarperGpu__ (requires CUDA)
-            %       * __FisheyeWarper__
-            %       * __StereographicWarper__
-            %       * __CompressedRectilinearWarper__
-            %       * __CompressedRectilinearPortraitWarper__
-            %       * __PaniniWarper__
-            %       * __PaniniPortraitWarper__
-            %       * __MercatorWarper__
-            %       * __TransverseMercatorWarper__
+            %   the rotation-based warper. One of:
+            %   * __PlaneWarper__ Plane warper factory class. Warper that maps
+            %     an image onto the `z = 1` plane.
+            %   * __AffineWarper__ Affine warper factory class. Affine warper
+            %     that uses rotations and translations. Uses affine
+            %     transformation in homogeneous coordinates to represent both
+            %     rotation and translation in camera rotation matrix.
+            %   * __CylindricalWarper__ Cylindrical warper factory class.
+            %     Warper that maps an image onto the `x*x + z*z = 1` cylinder.
+            %   * __SphericalWarper__ Spherical warper factory class. Warper
+            %     that maps an image onto the unit sphere located at the
+            %     origin. Projects image onto unit sphere with origin at
+            %     [0,0,0] and radius `scale`, measured in pixels. A 360
+            %     panorama would therefore have a resulting width of
+            %     `2*scale*pi` pixels. Poles are located at [0,-1,0] and
+            %     [0,1,0] points.
+            %   * __PlaneWarperGpu__ (requires CUDA)
+            %   * __CylindricalWarperGpu__ (requires CUDA)
+            %   * __SphericalWarperGpu__ (requires CUDA)
+            %   * __FisheyeWarper__
+            %   * __StereographicWarper__
+            %   * __CompressedRectilinearWarper__
+            %   * __CompressedRectilinearPortraitWarper__
+            %   * __PaniniWarper__
+            %   * __PaniniPortraitWarper__
+            %   * __MercatorWarper__
+            %   * __TransverseMercatorWarper__
             % * __scale__ Projected image scale multiplier, e.g. 1.0
             %
             % ## Options
@@ -68,7 +67,7 @@ classdef RotationWarper < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.RotationWarper
             %
@@ -79,7 +78,10 @@ classdef RotationWarper < handle
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
-            %    typename = obj.typeid()
+            %     typename = obj.typeid()
+            %
+            % ## Output
+            % * __typename__ Name of C++ type
             %
             typename = RotationWarper_(this.id, 'typeid');
         end
@@ -90,7 +92,7 @@ classdef RotationWarper < handle
         function uv = warpPoint(this, pt, K, R)
             %WARPPOINT  Projects the image point
             %
-            %    uv = obj.warpPoint(pt, K, R)
+            %     uv = obj.warpPoint(pt, K, R)
             %
             % ## Input
             % * __pt__ Source point `[x,y]`.
@@ -108,7 +110,7 @@ classdef RotationWarper < handle
         function [xmap,ymap,bbox] = buildMaps(this, src_size, K, R)
             %BUILDMAPS  Builds the projection maps according to the given camera data
             %
-            %    [xmap,ymap,bbox] = obj.buildMaps(src_size, K, R)
+            %     [xmap,ymap,bbox] = obj.buildMaps(src_size, K, R)
             %
             % ## Input
             % * **src_size** Source image size `[w,h]`.
@@ -128,8 +130,8 @@ classdef RotationWarper < handle
         function [dst,tl] = warp(this, src, K, R, varargin)
             %WARP  Projects the image
             %
-            %    [dst,tl] = obj.warp(src, K, R)
-            %    [dst,tl] = obj.warp(src, K, R, 'OptionName',optionValue, ...)
+            %     [dst,tl] = obj.warp(src, K, R)
+            %     [dst,tl] = obj.warp(src, K, R, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __src__ Source image.
@@ -142,9 +144,9 @@ classdef RotationWarper < handle
             %
             % ## Options
             % * __InterpMode__ Interpolation mode, see cv.remap.
-            %       default 'Linear'
+            %   default 'Linear'
             % * __BorderMode__ Border extrapolation mode, see cv.remap.
-            %       default 'Constant'
+            %   default 'Constant'
             %
             % See also: cv.RotationWarper.RotationWarper
             %
@@ -154,8 +156,8 @@ classdef RotationWarper < handle
         function dst = warpBackward(this, src, K, R, dst_size, varargin)
             %WARPBACKWARD  Projects the image backward
             %
-            %    dst = obj.warpBackward(src, K, R, dst_size)
-            %    dst = obj.warpBackward(src, K, R, dst_size, 'OptionName',optionValue, ...)
+            %     dst = obj.warpBackward(src, K, R, dst_size)
+            %     dst = obj.warpBackward(src, K, R, dst_size, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __src__ Projected image.
@@ -168,9 +170,9 @@ classdef RotationWarper < handle
             %
             % ## Options
             % * __InterpMode__ Interpolation mode, see cv.remap.
-            %       default 'Linear'
+            %   default 'Linear'
             % * __BorderMode__ Border extrapolation mode, see cv.remap.
-            %       default 'Constant'
+            %   default 'Constant'
             %
             % See also: cv.RotationWarper.warp
             %
@@ -180,7 +182,7 @@ classdef RotationWarper < handle
         function bbox = warpRoi(this, src_size, K, R)
             %WARPROI  Projects image ROI
             %
-            %    bbox = obj.warpRoi(src_size, K, R)
+            %     bbox = obj.warpRoi(src_size, K, R)
             %
             % ## Input
             % * **src_size** Source image bounding box, `[x,y,w,h].

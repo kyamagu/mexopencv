@@ -60,21 +60,21 @@ classdef CascadeClassifier < handle
     % cascade of boosted classifiers from a set of samples. This is not
     % included in mexopencv.
     %
-    % ## Note
+    % ### Note
     % In the new interface it is also possible to use LBP (local binary
     % pattern) features in addition to Haar-like features.
     %
     % ## Example
     % The usage example is shown in the following:
     %
-    %    xmlfile = fullfile(mexopencv.root(),'test','haarcascade_frontalface_alt2.xml');
-    %    cc = cv.CascadeClassifier(xmlfile);
-    %    im = imread(fullfile(mexopencv.root(),'test','lena.jpg'));
-    %    boxes = cc.detect(im);
-    %    for i=1:numel(boxes)
-    %        im = cv.rectangle(im, boxes{i}, 'Color',[0 255 0], 'Thickness',2);
-    %    end
-    %    imshow(im)
+    %     xmlfile = fullfile(mexopencv.root(),'test','haarcascade_frontalface_alt2.xml');
+    %     cc = cv.CascadeClassifier(xmlfile);
+    %     im = imread(fullfile(mexopencv.root(),'test','lena.jpg'));
+    %     boxes = cc.detect(im);
+    %     for i=1:numel(boxes)
+    %         im = cv.rectangle(im, boxes{i}, 'Color',[0 255 0], 'Thickness',2);
+    %     end
+    %     imshow(im)
     %
     % ## References
     % [Viola01]:
@@ -101,13 +101,13 @@ classdef CascadeClassifier < handle
         function this = CascadeClassifier(filename)
             %CASCADECLASSIFIER  Creates a new cascade classifier object
             %
-            %    classifier = cv.CascadeClassifier()
-            %    classifier = cv.CascadeClassifier(filename)
+            %     classifier = cv.CascadeClassifier()
+            %     classifier = cv.CascadeClassifier(filename)
             %
             % ## Input
             % * __filename__ Name of the XML file from which the trained
-            %       classifier is loaded. This is handled by the
-            %       cv.CascadeClassifier.load method.
+            %   classifier is loaded. This is handled by the
+            %   cv.CascadeClassifier.load method.
             %
             % Supports HAAR and LBP cascades.
             %
@@ -122,7 +122,7 @@ classdef CascadeClassifier < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    classifier.delete()
+            %     classifier.delete()
             %
             % See also: cv.CascadeClassifier
             %
@@ -133,7 +133,7 @@ classdef CascadeClassifier < handle
         function tf = empty(this)
             %EMPTY  Checks whether the classifier has been loaded
             %
-            %    tf = classifier.empty()
+            %     tf = classifier.empty()
             %
             % ## Output
             % * __tf__ a logical value indicating empty object when true.
@@ -146,14 +146,14 @@ classdef CascadeClassifier < handle
         function status = load(this, filename)
             %LOAD  Loads a classifier from a file
             %
-            %    classifier.load(filename)
-            %    status = classifier.load(filename)
+            %     classifier.load(filename)
+            %     status = classifier.load(filename)
             %
             % ## Input
             % * __filename__ Name of the file from which the classifier is
-            %       loaded. The file may contain an old HAAR classifier
-            %       trained by the `haartraining` application or a new cascade
-            %       classifier trained by the `traincascade` application.
+            %   loaded. The file may contain an old HAAR classifier trained by
+            %   the `haartraining` application or a new cascade classifier
+            %   trained by the `traincascade` application.
             %
             % ## Output
             % * __status__ a logical value indicating success of load.
@@ -166,7 +166,7 @@ classdef CascadeClassifier < handle
         function tf = isOldFormatCascade(this)
             %ISOLDFORMATCASCADE  Check if loaded classifer is from the old format
             %
-            %    tf = classifier.isOldFormatCascade()
+            %     tf = classifier.isOldFormatCascade()
             %
             % ## Output
             % * __tf__ true if old format, false if new format classifier
@@ -179,7 +179,7 @@ classdef CascadeClassifier < handle
         function ftype = getFeatureType(this)
             %GETFEATURETYPE  Get features type
             %
-            %    ftype = classifier.getFeatureType()
+            %     ftype = classifier.getFeatureType()
             %
             % ## Output
             % * __ftype__
@@ -191,7 +191,7 @@ classdef CascadeClassifier < handle
         function winsiz = getOriginalWindowSize(this)
             %GETORIGINALWINDOWSIZE  Get original window size
             %
-            %    winsiz = classifier.getOriginalWindowSize()
+            %     winsiz = classifier.getOriginalWindowSize()
             %
             % ## Output
             % * __winsiz__
@@ -202,11 +202,11 @@ classdef CascadeClassifier < handle
         function S = getMaskGenerator(this)
             %GETMASKGENERATOR  Get the current mask generator function
             %
-            %    S = classifier.getMaskGenerator()
+            %     S = classifier.getMaskGenerator()
             %
             % ## Output
             % * __S__ a struct containing with the following fields:
-            %       * __fun__ the name of the mask generator MATLAB function.
+            %   * __fun__ the name of the mask generator MATLAB function.
             %
             % See also: cv.CascadeClassifier.setMaskGenerator
             %
@@ -216,12 +216,12 @@ classdef CascadeClassifier < handle
         function setMaskGenerator(this, maskgenFcn)
             %SETMASKGENERATOR  Set the current mask generator function
             %
-            %    classifier.setMaskGenerator(maskgenFcn)
+            %     classifier.setMaskGenerator(maskgenFcn)
             %
             % ## Input
             % * __maskgenFcn__ name of a MATLAB M-function that generates
-            %       mask. It also accepts the special name of
-            %       'FaceDetectionMaskGenerator'.
+            %   mask. It also accepts the special name of
+            %   'FaceDetectionMaskGenerator'.
             %
             % This only works with the new format cascade classifiers.
             %
@@ -235,52 +235,52 @@ classdef CascadeClassifier < handle
         function [boxes, varargout] = detect(this, im, varargin)
             %DETECT  Detects objects of different sizes in the input image
             %
-            %    boxes = classifier.detect(im)
-            %    [boxes, numDetections] = classifier.detect(im)
-            %    [boxes, rejectLevels, levelWeights] = classifier.detect(im)
-            %    [...] = classifier.detect(im, 'OptionName', optionValue, ...)
+            %     boxes = classifier.detect(im)
+            %     [boxes, numDetections] = classifier.detect(im)
+            %     [boxes, rejectLevels, levelWeights] = classifier.detect(im)
+            %     [...] = classifier.detect(im, 'OptionName', optionValue, ...)
             %
             % ## Input
             % * __im__ Matrix of the type `uint8` containing an image where
-            %       objects are detected.
+            %   objects are detected.
             %
             % ## Output
             % * __boxes__ Cell array of rectangles where each rectangle
-            %       contains the detected object, the rectangles may be
-            %       partially outside the original image.
+            %   contains the detected object, the rectangles may be partially
+            %   outside the original image.
             % * __numDetections__ optional vector of detection numbers for the
-            %       corresponding objects. An object's number of detections is
-            %       the number of neighboring positively classified rectangles
-            %       that were joined together to form the object.
+            %   corresponding objects. An object's number of detections is the
+            %   number of neighboring positively classified rectangles that
+            %   were joined together to form the object.
             % * __rejectLevels__ optional output vector of integers. Implies
-            %       `OutputRejectLevels=true`.
+            %   `OutputRejectLevels=true`.
             % * __levelWeights__ optional output vector of doubles. Implies
-            %       `OutputRejectLevels=true`.
+            %   `OutputRejectLevels=true`.
             %
             % ## Options
             % * __ScaleFactor__ Parameter specifying how much the image size
-            %       is reduced at each image scale. default 1.1
+            %   is reduced at each image scale. default 1.1
             % * __MinNeighbors__ Parameter specifying how many neighbors each
-            %       candiate rectangle should have to retain it. default 3
+            %   candiate rectangle should have to retain it. default 3
             % * __MinSize__ Minimum possible object size. Objects smaller than
-            %       that are ignored. Not set by default.
+            %   that are ignored. Not set by default.
             % * __MaxSize__ Maximum possible object size. Objects larger than
-            %       that are ignored. If `MaxSize == MinSize` model is
-            %       evaluated on single scale. Not set by default.
+            %   that are ignored. If `MaxSize == MinSize` model is evaluated
+            %   on single scale. Not set by default.
             % * __OutputRejectLevels__ if is true returns `rejectLevels` and
-            %       `levelWeights`. default false
+            %   `levelWeights`. default false
             % * __DoCannyPruning__ Parameter with the same meaning for an old
-            %       cascade as in the function `cvHaarDetectObjects`. It is
-            %       not used for a new cascade. default false
+            %   cascade as in the function `cvHaarDetectObjects`. It is not
+            %   used for a new cascade. default false
             % * __ScaleImage__ Parameter with the same meaning for an old
-            %       cascade as in the function `cvHaarDetectObjects`. It is
-            %       not used for a new cascade. default false
+            %   cascade as in the function `cvHaarDetectObjects`. It is not
+            %   used for a new cascade. default false
             % * __FindBiggestObject__ Parameter with the same meaning for an
-            %       old cascade as in the function `cvHaarDetectObjects`. It
-            %       is not used for a new cascade. default false
+            %   old cascade as in the function `cvHaarDetectObjects`. It is
+            %   not used for a new cascade. default false
             % * __DoRoughSearch__ Parameter with the same meaning for an old
-            %       cascade as in the function `cvHaarDetectObjects`. It is
-            %       not used for a new cascade. default false
+            %   cascade as in the function `cvHaarDetectObjects`. It is not
+            %   used for a new cascade. default false
             %
             % The detected objects are returned as a cell array of rectangles.
             % Note that the function has three variants based on the number of
@@ -297,9 +297,9 @@ classdef CascadeClassifier < handle
             % strong from weaker classifications.
             % A code sample on how to use it efficiently can be found below:
             %
-            %    model = cv.CascadeClassifier('/path/to/your/model.xml');
-            %    [boxes, levels, weights] = model.detect(img, 'OutputRejectLevels',true);
-            %    fprintf('Detection [%d,%d,%d,%d] with weight %f\n', boxes{1}, weights(1));
+            %     model = cv.CascadeClassifier('/path/to/your/model.xml');
+            %     [boxes, levels, weights] = model.detect(img, 'OutputRejectLevels',true);
+            %     fprintf('Detection [%d,%d,%d,%d] with weight %f\n', boxes{1}, weights(1));
             %
             % See also: cv.CascadeClassifier.CascadeClassifier
             %
@@ -312,8 +312,8 @@ classdef CascadeClassifier < handle
         function status = convert(oldcascade, newcascade)
             %CONVERT  Convert classifier file from the old format to the new format
             %
-            %    cv.CascadeClassifier.convert(oldcascade, newcascade)
-            %    status = cv.CascadeClassifier.convert(oldcascade, newcascade)
+            %     cv.CascadeClassifier.convert(oldcascade, newcascade)
+            %     status = cv.CascadeClassifier.convert(oldcascade, newcascade)
             %
             % ## Input
             % * __oldcascade__ name of classifier file to read in old format
