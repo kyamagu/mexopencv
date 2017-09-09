@@ -120,6 +120,8 @@ end
 function [weights, shift] = doTrain(samples, responses)
     %DOTRAIN  Train with SVMSGD algorithm
     %
+    %     [weights, shift] = doTrain(samples, responses)
+    %
     % ## Input
     % * __samples__, __responses__ train set
     %

@@ -17,11 +17,14 @@ end
 function pts = sample_line(p1, p2, num, noise)
     %SAMPLE_LINE  Sample points from line segment
     %
+    %     pts = sample_line(p1, p2, num)
+    %     pts = sample_line(p1, p2, num, noise)
+    %
     % ## Input
     % * __p1__ first line point
     % * __p2__ second line point
     % * __num__ number of points to sample
-    % * __noise__ gaussian noise added
+    % * __noise__ gaussian noise added, default 0
     %
     % ## Output
     % * __pts__ points matrix num-by-2

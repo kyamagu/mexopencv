@@ -188,6 +188,8 @@ end
 function [img1,img2] = drawlines(img1, img2, lines, pts1, pts2, clrs)
     %DRAWLINES  Draw epilines and points on images
     %
+    %     [img1,img2] = drawlines(img1, img2, lines, pts1, pts2, clrs)
+    %
     % ## Input
     % * __img1__ first image
     % * __img2__ second image

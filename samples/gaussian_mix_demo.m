@@ -60,7 +60,7 @@ end
 function [pts, labels, mus, sigmas] = make_gaussian_mixture(K, sz)
     %MAKE_GAUSSIAN_MIXTURE  Random points from Gaussian mixture distribution
     %
-    %    [pts, labels, mus, sigmas] = make_gaussian_mixture(K, sz)
+    %     [pts, labels, mus, sigmas] = make_gaussian_mixture(K, sz)
     %
     % ## Input
     % * __K__ number of components
@@ -96,7 +96,7 @@ end
 function X = my_mvnrnd(mu, sigma, num)
     %MY_MVNRND  Random points from Gaussian distribution
     %
-    %    X = my_mvnrnd(mu, sigma, num)
+    %     X = my_mvnrnd(mu, sigma, num)
     %
     % ## Input
     % * __mu__ 1x2 mean vector
@@ -121,7 +121,7 @@ end
 function img = draw_gaussian(img, mu, sigma, clr)
     %DRAW_GAUSSIAN  Draw a bivariate Gaussian
     %
-    %    img = draw_gaussian(img, mu, sigma, clr)
+    %     img = draw_gaussian(img, mu, sigma, clr)
     %
     % ## Input
     % * __img__ input image on which to draw
@@ -138,7 +138,7 @@ function img = draw_gaussian(img, mu, sigma, clr)
     % * its covariance matrix eigenvector corresponding to largest eigenvalue
     %   is the direction of the ellipse
     % * its (scaled) eigenvalues are the major/minor axis lengths of the
-    %    ellipse
+    %   ellipse
     %
 
     [w,u,~] = cv.SVD.Compute(sigma);

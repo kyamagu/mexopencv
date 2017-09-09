@@ -24,7 +24,7 @@
 % the mapping function that operates on $(x,y)$.
 %
 % Let's think in a quick example. Imagine that we have an image $I$ and, say
-%  we want to do a remap such that:
+% we want to do a remap such that:
 %
 % $$h(x,y) = (I.cols - x, y )$$
 %

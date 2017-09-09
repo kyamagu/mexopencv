@@ -39,6 +39,9 @@ end
 function levels = build_lap_pyr(img, nlevel, dtype)
     %BUILD_LAP_PYR  Build Laplacian pyramid
     %
+    %     levels = build_lap_pyr(img, nlevel)
+    %     levels = build_lap_pyr(img, nlevel, dtype)
+    %
     % ## Input
     % * __img__ input image
     % * __nlevel__ number of pyramid levels
@@ -64,6 +67,8 @@ end
 
 function img = merge_lap_pyr(levels)
     %MERGE_LAP_PYR  Reconstruct image from Laplacian pyramid
+    %
+    %     img = merge_lap_pyr(levels)
     %
     % ## Input
     % * __levels__ Laplacian pyramid, cell array

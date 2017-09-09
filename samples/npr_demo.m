@@ -3,8 +3,8 @@
 % Module:
 %
 % * Edge Preserve Smoothing
-%    - Using Normalized convolution Filter
-%    - Using Recursive Filter
+%   - Using Normalized convolution Filter
+%   - Using Recursive Filter
 % * Detail Enhancement
 % * Pencil sketch/Color Pencil Drawing
 % * Stylization

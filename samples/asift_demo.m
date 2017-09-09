@@ -121,6 +121,9 @@ end
 function [kpts, descs] = affine_detect(detector, img, mask)
     %AFFINE_DETECT  Affine-SIFT (ASIFT) algorithm
     %
+    %     [kpts, descs] = affine_detect(detector, img)
+    %     [kpts, descs] = affine_detect(detector, img, mask)
+    %
     % ## Input
     % * __detector__ detector object
     % * __img__ input image
@@ -180,6 +183,8 @@ end
 
 function [img, mask, Ai] = affine_skew(tilt, phi, img, mask)
     %AFFINE_SKEW  Transform image/mask by an affine distortion
+    %
+    %     [img, mask, Ai] = affine_skew(tilt, phi, img, mask)
     %
     % ## Input
     % * __tilt__ tilt
@@ -246,6 +251,9 @@ end
 
 function pos = select_poly(ax)
     %SELECT_POLY  Select polygon area using the mouse
+    %
+    %     pos = select_poly()
+    %     pos = select_poly(ax)
     %
     % ## Input
     % * __ax__ axes handle, default gca

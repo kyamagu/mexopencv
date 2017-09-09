@@ -1,7 +1,7 @@
 function retval = isOctave()
     %ISOCTAVE  Return true if the environment is Octave
     %
-    %    retval = mexopencv.isOctave()
+    %     retval = mexopencv.isOctave()
     %
     % ## Output
     % * __retval__ true if running in Octave, false otherwise (MATLAB).

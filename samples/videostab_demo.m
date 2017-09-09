@@ -7,128 +7,124 @@
 % Description of parameters:
 %
 % * *model*=(Translation|TranslationAndScale|Rigid|Similarity|Affine|Homography)
-%       Set motion model. The default is 'Affine'.
+%   Set motion model. The default is 'Affine'.
 % * *lin_prog_motion_est*=(true|false)
-%       Turn on/off LP based motion estimation. Requires CLP library.
-%       The default is false.
+%   Turn on/off LP based motion estimation. Requires CLP library.
+%   The default is false.
 % * *subset*=(<int>|auto)
-%       Number of random samples per one motion hypothesis.
-%       The default is 'auto'.
+%   Number of random samples per one motion hypothesis. The default is 'auto'.
 % * *thresh*=(<float>|auto)
-%       Maximum error to classify match as inlier. The default is 'auto'.
+%   Maximum error to classify match as inlier. The default is 'auto'.
 % * *outlier_ratio*=<float>
-%       Motion estimation outlier ratio hypothesis. The default is 0.5.
+%   Motion estimation outlier ratio hypothesis. The default is 0.5.
 % * *min_inlier_ratio*=<float>
-%       Minimum inlier ratio to decide if estimated motion is OK.
-%       The default is 0.1.
+%   Minimum inlier ratio to decide if estimated motion is OK.
+%   The default is 0.1.
 % * *nkps*=<int>
-%       Number of keypoints to find in each frame. The default is 1000.
+%   Number of keypoints to find in each frame. The default is 1000.
 % * *extra_kps*=<int>
-%       Default is 0.
+%   Default is 0.
 % * *local_outlier_rejection*=(true|false)
-%       Perform local outlier rejection. The default is false.
+%   Perform local outlier rejection. The default is false.
 %
 % * *save_motions*=<file_path>
-%       Save estimated motions into file. The default is ''.
+%   Save estimated motions into file. The default is ''.
 % * *load_motions*=<file_path>
-%       Load motions from file. The default is ''.
+%   Load motions from file. The default is ''.
 %
 % * *radius*=<int>
-%       Set sliding window radius. The default is 15.
+%   Set sliding window radius. The default is 15.
 % * *stdev*=(<float>|auto)
-%       Set smoothing weights standard deviation. The default is 'auto'
-%       (i.e. sqrt(radius)).
+%   Set smoothing weights standard deviation. The default is 'auto'
+%   (i.e. sqrt(radius)).
 % * *lin_prog_stab*=(true|false)
-%       Turn on/off linear programming based stabilization method.
-%       Requires CLP library. Default false
+%   Turn on/off linear programming based stabilization method.
+%   Requires CLP library. Default false
 % * *lps_trim_ratio*=(<float>|auto)
-%       Trimming ratio used in linear programming based method.
+%   Trimming ratio used in linear programming based method.
 % * *lps_w1*=<float>
-%       1st derivative weight. The default is 1.
+%   1st derivative weight. The default is 1.
 % * *lps_w2*=<float>
-%       2nd derivative weight. The default is 10.
+%   2nd derivative weight. The default is 10.
 % * *lps_w3*=<float>
-%       3rd derivative weight. The default is 100.
+%   3rd derivative weight. The default is 100.
 % * *lps_w4*=<float>
-%       Non-translation motion components weight. The default is 100.
+%   Non-translation motion components weight. The default is 100.
 %
 % * *deblur*=(true|false)
-%       Do deblurring.
+%   Do deblurring.
 % * *deblur_sens*=<float>
-%       Set deblurring sensitivity (from 0 to +inf). The default is 0.1.
+%   Set deblurring sensitivity (from 0 to +inf). The default is 0.1.
 %
 % * *trim_ratio*=<float>
-%       Set trimming ratio (from 0 to 0.5). The default is 0.1.
+%   Set trimming ratio (from 0 to 0.5). The default is 0.1.
 % * *est_trim*=(true|false)
-%       Estimate trim ratio automatically. The default is true.
+%   Estimate trim ratio automatically. The default is true.
 % * *incl_constr*=(true|false)
-%       Ensure the inclusion constraint is always satisfied.
-%       The default is false.
+%   Ensure the inclusion constraint is always satisfied. The default is false.
 %
 % * *border_mode*=(Replicate|Reflect|Constant)
-%       Set border extrapolation mode. The default is 'Replicate'.
+%   Set border extrapolation mode. The default is 'Replicate'.
 %
 % * *mosaic*=(true|false)
-%       Do consistent mosaicing. The default is false.
+%   Do consistent mosaicing. The default is false.
 % * *mosaic_stdev*=<float>
-%       Consistent mosaicing stdev threshold. The default is 10.0.
+%   Consistent mosaicing stdev threshold. The default is 10.0.
 %
 % * *motion_inpaint*=(true|false)
-%       Do motion inpainting (requires CUDA support). The default is false.
+%   Do motion inpainting (requires CUDA support). The default is false.
 % * *mi_dist_thresh*=<float>
-%       Estimated flow distance threshold for motion inpainting.
-%       The default is 5.0.
+%   Estimated flow distance threshold for motion inpainting.
+%   The default is 5.0.
 %
 % * *color_inpaint*=(no|average|ns|telea)
-%       Do color inpainting. The defailt is 'no'.
+%   Do color inpainting. The defailt is 'no'.
 % * *ci_radius*=<float>
-%       Set color inpainting radius (for 'ns' and 'telea' options only).
-%       The default is 2.0
+%   Set color inpainting radius (for 'ns' and 'telea' options only).
+%   The default is 2.0
 %
 % * *wobble_suppress*=(true|false)
-%       Perform wobble suppression. The default is false.
+%   Perform wobble suppression. The default is false.
 % * *ws_lin_prog_motion_est*=(true|false)
-%       Turn on/off LP based motion estimation. Requires CLP library.
-%       The default is false.
+%   Turn on/off LP based motion estimation. Requires CLP library.
+%   The default is false.
 % * *ws_period*=<int>
-%       Set wobble suppression period. The default is 30.
+%   Set wobble suppression period. The default is 30.
 % * *ws_model*=(Translation|TranslationAndScale|Rigid|Similarity|Affine|Homography)
-%       Set wobble suppression motion model (must have more DOF than motion
-%       estimation model). The default is 'Homography'.
+%   Set wobble suppression motion model (must have more DOF than motion
+%   estimation model). The default is 'Homography'.
 % * *ws_subset*=(<int>|auto)
-%       Number of random samples per one motion hypothesis.
-%       The default is 'auto'.
+%   Number of random samples per one motion hypothesis. The default is 'auto'.
 % * *ws_thresh*=(<float>|auto)
-%       Maximum error to classify match as inlier. The default is 'auto'.
+%   Maximum error to classify match as inlier. The default is 'auto'.
 % * *ws_outlier_ratio*=<float>
-%       Motion estimation outlier ratio hypothesis. The default is 0.5.
+%   Motion estimation outlier ratio hypothesis. The default is 0.5.
 % * *ws_min_inlier_ratio*=<float>
-%       Minimum inlier ratio to decide if estimated motion is OK.
-%       The default is 0.1.
+%   Minimum inlier ratio to decide if estimated motion is OK.
+%   The default is 0.1.
 % * *ws_nkps*=<int>
-%       Number of keypoints to find in each frame. The default is 1000.
+%   Number of keypoints to find in each frame. The default is 1000.
 % * *ws_extra_kps*=<int>
-%       Default is 0.
+%   Default is 0.
 % * *ws_local_outlier_rejection*=(true|false)
-%       Perform local outlier rejection. The default is false.
+%   Perform local outlier rejection. The default is false.
 %
 % * *save_motions2*=<file_path>
-%       Save motions estimated for wobble suppression. The default is ''.
+%   Save motions estimated for wobble suppression. The default is ''.
 % * *load_motions2*=<file_path>
-%       Load motions for wobble suppression from file. The default is ''.
+%   Load motions for wobble suppression from file. The default is ''.
 %
 % * *gpu*=(true|false)
-%       Use CUDA optimization whenever possible. The default is false.
+%   Use CUDA optimization whenever possible. The default is false.
 %
 % * *output*=<file_path>
-%       Set output file path explicitely. The default is 'stabilized.avi'.
+%   Set output file path explicitely. The default is 'stabilized.avi'.
 % * *fps*=(<float>|auto)
-%       Set output video FPS explicitely.
-%       By default the source FPS is used (auto).
+%   Set output video FPS explicitely. By default the source FPS is used (auto).
 % * *quiet*
-%       Don't show output video frames.
+%   Don't show output video frames.
 % * *logger*=(LogToMATLAB|NullLog)
-%       Log message to specified sink. Default is 'NullLog'.
+%   Log message to specified sink. Default is 'NullLog'.
 %
 % Note: some configurations lead to two passes, some to single pass.
 %

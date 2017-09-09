@@ -55,9 +55,12 @@ end
 function img = blur_edge(img, d)
     %BLUR_EDGE  Blur image edges to reduce ringing effect in deblurred image
     %
+    %     img = blur_edge(img)
+    %     img = blur_edge(img, d)
+    %
     % ## Input
     % * __img__ input image
-    % * __d__ gaussian size
+    % * __d__ gaussian size, default 31
     %
     % ## Output
     % * __img__ output image
@@ -81,10 +84,13 @@ end
 function kern = motion_kernel(ang, d, sz)
     %MOTION_KERNEL  Create linear motion filter
     %
+    %     kern = motion_kernel(ang, d)
+    %     kern = motion_kernel(ang, d, sz)
+    %
     % ## Input
     % * __ang__ linear motion angle
     % * __d__ linear motion length
-    % * __sz__ kernel size
+    % * __sz__ kernel size, default 65
     %
     % ## Output
     % * __kern__ kernel
@@ -103,9 +109,12 @@ end
 function kern = defocus_kernel(d, sz)
     %DEFOCUS_KERNEL  Create circular defocus kernel
     %
+    %     kern = defocus_kernel(d)
+    %     kern = defocus_kernel(d, sz)
+    %
     % ## Input
     % * __d__ circular motion diameter
-    % * __sz__ kernel size
+    % * __sz__ kernel size, default 65
     %
     % ## Output
     % * __kern__ kernel

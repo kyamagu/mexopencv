@@ -1,48 +1,49 @@
 function make(varargin)
 %MAKE  Compile MEX-functions
 %
-%    mexopencv.make
-%    mexopencv.make('OptionName', optionValue, ...)
+%     mexopencv.make
+%     mexopencv.make('OptionName', optionValue, ...)
 %
 % Make builds mexopencv library. In Unix, this function invokes Makefile
 % in the project root. In Windows, the function takes an optional argument
 % to specify installed OpenCV path.
 %
 % ## Options
-% * **opencv_path** string specifying the path to OpenCV installation
-%       default `'C:\OpenCV\build'`
+% * **opencv_path** string specifying the path to OpenCV installation.
+%   default `'C:\OpenCV\build'`
 % * **opencv_contrib** flag to indicate whether optional opencv modules are
-%       available or not. These can only be selected in OpenCV at compile-time.
-%       default `false`.
+%   available or not. These can only be selected in OpenCV at compile-time.
+%   default `false`.
 % * __clean__ clean all compiled MEX files. default `false`
 % * __test__ run all unit-tests. default `false`
 % * __dryrun__ dont actually run commands, just print them. default `false`
 % * __force__ Unconditionally build all files. default `false`
-% * __verbose__ output verbosity. The higher the number, the more output
-%       is shown. default 1
-%       * __0__ no output at all
-%       * __1__ echo commands and information messages only
-%       * __2__ verbose output from mex
-%       * __3__ enables all compiler warnings
-%       * __4__ enables verbose compiler/linker output
+% * __verbose__ output verbosity. The higher the number, the more output is
+%   shown. default 1
+%   * __0__ no output at all
+%   * __1__ echo commands and information messages only
+%   * __2__ verbose output from mex
+%   * __3__ enables all compiler warnings
+%   * __4__ enables verbose compiler/linker output
 % * __progress__ show a progress bar GUI during compilation (Windows only).
-%       default `true`
-% * __debug__ Produce binaries with debugging information, linked against
-%       the debug version of OpenCV libraries. default false
-% * __extra__ extra arguments passed to Unix make command. default `''`
+%   default `true`
+% * __debug__ Produce binaries with debugging information, linked against the
+%   debug version of OpenCV libraries. default false
+% * __extra__ extra arguments passed to Unix make command. default empty
+%   string
 %
 % ## Example
 %
-%    mexopencv.make('opencv_path', pathname)      % Windows only
-%    mexopencv.make(..., 'opencv_contrib', true)  % build with contrib modules
-%    mexopencv.make('clean',true)                 % clean MEX files
-%    mexopencv.make('test',true)                  % run unittests
-%    mexopencv.make('dryrun',true, 'force',true)  % print commands used to build
-%    mexopencv.make(..., 'verbose',2)             % verbose compiler output
-%    mexopencv.make(..., 'progress',true)         % show progress bar
-%    mexopencv.make(..., 'debug',true)            % enalbe debugging symbols
-%    mexopencv.make('extra','--jobs=2')           % instruct Make to execute N
-%                                                 %  jobs in parallel (Unix only)
+%     mexopencv.make('opencv_path', pathname)      % Windows only
+%     mexopencv.make(..., 'opencv_contrib', true)  % build with contrib modules
+%     mexopencv.make('clean',true)                 % clean MEX files
+%     mexopencv.make('test',true)                  % run unittests
+%     mexopencv.make('dryrun',true, 'force',true)  % print commands used to build
+%     mexopencv.make(..., 'verbose',2)             % verbose compiler output
+%     mexopencv.make(..., 'progress',true)         % show progress bar
+%     mexopencv.make(..., 'debug',true)            % enalbe debugging symbols
+%     mexopencv.make('extra','--jobs=2')           % instruct Make to execute N
+%                                                  % jobs in parallel (Unix only)
 %
 % See also: mex
 %
