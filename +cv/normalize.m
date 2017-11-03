@@ -71,5 +71,6 @@
 %     % 10.0     1.0     (shift to right border)
 %     normalizedData_minmax = cv.normalize(positiveData, 'NormType','MinMax');
 %
-% See also: cv.convertTo, cv.norm, norm, min, max, mat2gray, im2double, zscore
+% See also: cv.convertTo, cv.norm, norm, min, max, mat2gray, im2double, zscore,
+%  rescale
 %

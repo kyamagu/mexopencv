@@ -2,7 +2,7 @@ classdef KalmanFilter < handle
     %KALMANFILTER  Kalman filter class
     %
     % The class implements a standard
-    % [Kalman filter](http://en.wikipedia.org/wiki/Kalman_filter), [Welch95].
+    % [Kalman filter](https://en.wikipedia.org/wiki/Kalman_filter), [Welch95].
     % However, you can modify `transitionMatrix`, `controlMatrix`, and
     % `measurementMatrix` to get an extended Kalman filter functionality.
     %

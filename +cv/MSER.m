@@ -13,7 +13,7 @@ classdef MSER < handle
     %
     % ## References
     % [WikiArticle]:
-    % > [MSER](http://en.wikipedia.org/wiki/Maximally_stable_extremal_regions)
+    % > [MSER](https://en.wikipedia.org/wiki/Maximally_stable_extremal_regions)
     %
     % [Nister08]:
     % > David Nister and Henrik Stewenius. "Linear Time Maximally Stable

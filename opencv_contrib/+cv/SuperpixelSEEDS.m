@@ -70,7 +70,7 @@ classdef SuperpixelSEEDS < handle
             % level. An example of initialization of 4 block levels is
             % illustrated in the following figure.
             %
-            % ![image](http://docs.opencv.org/3.1.0/superpixels_blocks.png)
+            % ![image](https://docs.opencv.org/3.3.1/superpixels_blocks.png)
             %
             % See also: cv.SuperpixelSEEDS.iterate
             %
@@ -218,7 +218,7 @@ classdef SuperpixelSEEDS < handle
             % proposing pixel updates. An illustrative example can be seen
             % below.
             %
-            % ![image](http://docs.opencv.org/3.1.0/superpixels_blocks2.png)
+            % ![image](https://docs.opencv.org/3.3.1/superpixels_blocks2.png)
             %
             % This function can be called again for other images without the
             % need of initializing the algorithm with constructor. This save
@@ -269,7 +269,7 @@ classdef SuperpixelSEEDS < handle
             % The function return the boundaries of the superpixel
             % segmentation.
             %
-            % ![image](http://docs.opencv.org/3.1.0/superpixels_demo.png)
+            % ![image](https://docs.opencv.org/3.3.1/superpixels_demo.png)
             %
             % See also: cv.SuperpixelSEEDS.iterate, boundarymask
             %

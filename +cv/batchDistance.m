@@ -23,7 +23,7 @@
 % * __Update__ default 0.
 % * __CrossCheck__ default false.
 %
-% See [Nearest neighbor search](http://en.wikipedia.org/wiki/Nearest_neighbor_search).
+% See [Nearest neighbor search](https://en.wikipedia.org/wiki/Nearest_neighbor_search).
 %
 % See also: pdist2, knnsearch
 %

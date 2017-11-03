@@ -45,7 +45,7 @@
 % `EndAngle`, they are swapped. The figure below explains the meaning of the
 % parameters to draw the blue arc.
 %
-% ![Parameters of Elliptic Arc](http://docs.opencv.org/3.3.0/ellipse.svg)
+% ![Parameters of Elliptic Arc](https://docs.opencv.org/3.3.1/ellipse.svg)
 %
 % The second variant of the function (with rotated rectange as input) does not
 % support the `Angle`, `StartAngle`, `EndAngle`, and `Shift` parameters

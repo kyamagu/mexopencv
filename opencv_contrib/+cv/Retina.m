@@ -114,7 +114,7 @@ classdef Retina < handle
     % backlight problems. Here is the considered input...
     % *"Well,i could see more with my eyes than what i captured with my camera..."*
     %
-    % ![image](http://docs.opencv.org/3.1.0/retinaInput.jpg)
+    % ![image](https://docs.opencv.org/3.3.1/retinaInput.jpg)
     %
     % Below, the retina foveal model applied on the entire image with default
     % parameters. Details are enforced whatever the local luminance is. Here
@@ -123,7 +123,7 @@ classdef Retina < handle
     % parameters discussion below and increase `HorizontalCellsGain` near 1 to
     % remove them.
     %
-    % ![image](http://docs.opencv.org/3.1.0/retinaOutput_default.jpg)
+    % ![image](https://docs.opencv.org/3.3.1/retinaOutput_default.jpg)
     %
     % Below, a second retina foveal model output applied on the entire image
     % with a parameters setup focused on naturalness perception.
@@ -140,7 +140,7 @@ classdef Retina < handle
     % - `HorizontalCellsGain = 0.3`
     % - `PhotoreceptorsLocalAdaptationSensitivity = GanglioncellsSensitivity = 0.89`.
     %
-    % ![image](http://docs.opencv.org/3.1.0/retinaOutput_realistic.jpg)
+    % ![image](https://docs.opencv.org/3.3.1/retinaOutput_realistic.jpg)
     %
     % As observed in this preliminary demo, the retina can be settled up with
     % various parameters, by default, as shown on the figure above, the retina
@@ -189,13 +189,13 @@ classdef Retina < handle
     %   Original image comes from [OpenEXR](http://openexr.com/) samples
     %   (`openexr-images-1.7.0/ScanLines/CandleGlass.exr`)
     %
-    %   ![image](http://docs.opencv.org/3.1.0/HDRtoneMapping_candleSample.jpg)
+    %   ![image](https://docs.opencv.org/3.3.1/HDRtoneMapping_candleSample.jpg)
     %
     % - HDR image tone mapping example with the same generic parameters.
     %   Original image comes from
     %   [memorial.exr](http://www.pauldebevec.com/Research/HDR/memorial.exr)
     %
-    %   ![image](http://docs.opencv.org/3.1.0/HDRtoneMapping_memorialSample.jpg)
+    %   ![image](https://docs.opencv.org/3.3.1/HDRtoneMapping_memorialSample.jpg)
     %
     % #### Motion and event detection using the Magnocellular pathway (magno retina output)
     %
@@ -232,14 +232,14 @@ classdef Retina < handle
     %   Magno channel highligths moving persons, observe the energy mapping on
     %   the one on top, partly behind a dark glass.
     %
-    %   ![image](http://docs.opencv.org/3.1.0/VideoDemo_RGB_PETS2006.jpg)
+    %   ![image](https://docs.opencv.org/3.3.1/VideoDemo_RGB_PETS2006.jpg)
     %
     % - Retina processing on gray levels image sequence: example from
     %   [CDNET](http://changedetection.net/) (thermal/park).
     %   On such grayscale images, parvo channel enforces contrasts while mango
     %   strongly reacts on moving pedestrians
     %
-    %   ![image](http://docs.opencv.org/3.1.0/VideoDemo_thermal_park.jpg)
+    %   ![image](https://docs.opencv.org/3.3.1/VideoDemo_thermal_park.jpg)
     %
     % ### Literature
     %
@@ -263,8 +263,8 @@ classdef Retina < handle
     %   originates from Jeanny's discussions. More informations in the above
     %   cited Jeanny Heraults's book.
     %
-    % - Meylan&al work on HDR tone mapping that is implemented as a specific
-    %   method within the model [Meylan2007]
+    % - Meylan et al. work on HDR tone mapping that is implemented as a
+    %   specific method within the model [Meylan2007]
     %
     % ## Retina programming interfaces
     %

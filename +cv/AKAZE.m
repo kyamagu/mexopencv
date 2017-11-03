@@ -4,6 +4,11 @@ classdef AKAZE < handle
     % As described in [ANB13].
     %
     % Note: AKAZE descriptors can only be used with KAZE or AKAZE keypoints.
+    % This class is thread-safe.
+    %
+    % Note: When you need descriptors use cv.AKAZE.detectAndCompute, which
+    % provides better performance. When using cv.AKAZE.detect followed by
+    % cv.AKAZE.compute scale space pyramid is computed twice.
     %
     % ## References
     % [ANB13]:

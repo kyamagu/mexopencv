@@ -65,10 +65,10 @@ classdef LogisticRegression < handle
     %
     % ## References
     % [LogRegWiki]:
-    % > [Logistic regression](http://en.wikipedia.org/wiki/Logistic_regression)
+    % > [Logistic regression](https://en.wikipedia.org/wiki/Logistic_regression)
     %
     % [BatchDesWiki]:
-    % > [Gradient descent optimization](http://en.wikipedia.org/wiki/Gradient_descent_optimization)
+    % > [Gradient descent optimization](https://en.wikipedia.org/wiki/Gradient_descent_optimization)
     %
     % [LogRegTomMitch]:
     % > "Generative and Discriminative Classifiers: Naive Bayes and Logistic

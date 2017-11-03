@@ -4,7 +4,8 @@
 %     dst = cv.createHanningWindow(winSize, 'Type',type)
 %
 % ## Input
-% * __winSize__ The window size specifications `[w,h]`.
+% * __winSize__ The window size specifications `[w,h]` (both width and height
+%   must be > 1).
 %
 % ## Output
 % * __dst__ Destination array containing Hann coefficients.
@@ -14,8 +15,8 @@
 %
 % This function computes a Hanning window coefficients in two dimensions.
 %
-% See [Hann function](http://en.wikipedia.org/wiki/Hann_function) and
-% [Window function](http://en.wikipedia.org/wiki/Window_function) for more
+% See [Hann function](https://en.wikipedia.org/wiki/Hann_function) and
+% [Window function](https://en.wikipedia.org/wiki/Window_function) for more
 % information.
 %
 % See also: hann, hanning

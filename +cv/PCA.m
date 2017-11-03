@@ -17,7 +17,7 @@ classdef PCA < handle
     % space with a much shorter vector consisting of the projected vector's
     % coordinates in the subspace. Such a transformation is also known as
     % Karhunen-Loeve Transform, or KLT. See
-    % [PCA](http://en.wikipedia.org/wiki/Principal_component_analysis).
+    % [PCA](https://en.wikipedia.org/wiki/Principal_component_analysis).
     %
     % ## Example
     % The following shows a quick example of how to reduce dimensionality
@@ -39,7 +39,7 @@ classdef PCA < handle
     %     load out.mat
     %     disp(pca)
     %
-    % See also: cv.PCA.PCA
+    % See also: cv.PCA.PCA, cv.SVD
     %
 
     properties (SetAccess = private)

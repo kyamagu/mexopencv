@@ -71,7 +71,7 @@ classdef Utils
             % ## Output
             % * __n__ number of threads.
             %
-            % The exact meaning of return value depends on the threading
+            % The exact meaning of the return value depends on the threading
             % framework used by OpenCV library:
             %
             % * __TBB__ The number of threads, that OpenCV will try to use for
@@ -105,15 +105,15 @@ classdef Utils
             % OpenCV will try to set the number of threads for the next
             % parallel region.
             %
-            % OpenCV will try to run it's functions with specified threads
+            % OpenCV will try to run its functions with specified threads
             % number, but some behaviour differs from framework:
             %
             % * __TBB__ User-defined parallel constructions will run with the
-            %   same threads number, if another does not specified. If later
-            %   on user creates own scheduler, OpenCV will use it.
+            %   same threads number, if another is not specified. If later
+            %   on user creates their own scheduler, OpenCV will use it.
             % * __OpenMP__ No special defined behaviour.
             % * __Concurrency__ If `threads == 1`, OpenCV will disable
-            %   threading optimizations and run it's functions sequentially.
+            %   threading optimizations and run its functions sequentially.
             % * __GCD__ Supports only values <= 0.
             % * __C=__ No special defined behaviour.
             %

@@ -31,7 +31,7 @@
 %   to a string in memory instead of writing to disk.
 %
 % The function reads or writes a MATLAB object from/to a
-% [XML](http://www.w3c.org/XML), [YAML](http://www.yaml.org), or
+% [XML](http://www.w3.org/XML), [YAML](http://www.yaml.org), or
 % [JSON](http://www.json.org/) file. The file is compatible with OpenCV
 % formats.
 %

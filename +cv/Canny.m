@@ -25,7 +25,7 @@
 % largest value is used to find initial segments of strong edges. When
 % `thresh` is a scalar, it is treated as a higher threshold value and
 % `0.4*thresh` is used for the lower threshold. See
-% [Canny edge detector](http://en.wikipedia.org/wiki/Canny_edge_detector).
+% [Canny edge detector](https://en.wikipedia.org/wiki/Canny_edge_detector).
 %
 % ## References
 % [Canny86]:

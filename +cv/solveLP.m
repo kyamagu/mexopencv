@@ -48,7 +48,7 @@
 % > Introduction to Algorithms, 3rd edition
 % > by T. H. Cormen, C. E. Leiserson, R. L. Rivest and Clifford Stein.
 %
-% In particular, the [Bland's rule](http://en.wikipedia.org/wiki/Bland%27s_rule)
+% In particular, the [Bland's rule](https://en.wikipedia.org/wiki/Bland%27s_rule)
 % is used to prevent cycling.
 %
 % See also: linprog

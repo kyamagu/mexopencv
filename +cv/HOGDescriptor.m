@@ -1,8 +1,15 @@
 classdef HOGDescriptor < handle
-    %HOGDESCRIPTOR  Histogram of Oriented Gaussian (HOG) descriptor and detector
+    %HOGDESCRIPTOR  Histogram of Oriented Gaussian (HOG) descriptor and object detector
     %
-    % The class implements Histogram of Oriented Gradients object detector
-    % [Dalal2005].
+    % The HOG descriptor algorithm introduced by [Dalal2005].
+    %
+    % Useful links:
+    %
+    % - [PDF](https://hal.inria.fr/inria-00548512/document/)
+    % - [Wikipedia](https://en.wikipedia.org/wiki/Histogram_of_oriented_gradients)
+    % - [IPP](https://software.intel.com/en-us/ipp-dev-reference-histogram-of-oriented-gradients-hog-descriptor)
+    % - [LearnOpenCV](http://www.learnopencv.com/histogram-of-oriented-gradients)
+    % - [LearnOpenCV](http://www.learnopencv.com/handwritten-digits-classification-an-opencv-c-python-tutorial)
     %
     % ## Example
     % The basic usage is the following for computing HOG descriptors:
@@ -102,7 +109,7 @@ classdef HOGDescriptor < handle
         % other uses. The avaiable pretrained classifiers are:
         %
         % * __DefaultPeopleDetector__ coefficients of the classifier trained
-        %   for people detection (for default window size).
+        %   for people detection (for default window size 64x128).
         % * __DaimlerPeopleDetector__ 1981 SVM coeffs obtained from daimler's
         %   base. To use these coeffs the detection window size should be
         %   [48,96].
@@ -136,7 +143,8 @@ classdef HOGDescriptor < handle
             % * __BlockStride__ Block stride. It must be a multiple of cell
             %   size. default [8,8]
             % * __CellSize__ Cell size. default [8,8]
-            % * __NBins__ Number of bins. default 9
+            % * __NBins__ Number of bins in the calculation of histogram of
+            %   gradients. default 9
             % * __DerivAperture__ Derivative of aperture. default 1
             % * __WinSigma__ Gaussian smoothing window parameter. default -1
             %   (corresponds to `sum(BlockSize)/8`)
@@ -182,7 +190,9 @@ classdef HOGDescriptor < handle
             %     status = hog.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
-            % * __filename__ HOG descriptor config filename (XML or YAML).
+            % * __filename__ HOG descriptor config filename (XML or YAML),
+            %   containing properties and coefficients of the trained
+            %   classifier.
             % * __str__ String containing the serialized HOG descriptor you
             %   want to load.
             %
@@ -195,6 +205,8 @@ classdef HOGDescriptor < handle
             % * __FromString__ Logical flag to indicate whether the input is a
             %   filename or a string containing the serialized model.
             %   default false
+            %
+            % Loads coefficients for the linear SVM classifier from a file.
             %
             % See also: cv.HOGDescriptor.save, cv.HOGDescriptor.readALTModel
             %
@@ -218,6 +230,8 @@ classdef HOGDescriptor < handle
             % ## Options
             % * __ObjName__ The optional name of the node to write (if empty,
             %   a default name value will be used). default empty
+            %
+            % Saves coefficients for the linear SVM classifier to a file.
             %
             % See also: cv.HOGDescriptor.load
             %
@@ -267,6 +281,8 @@ classdef HOGDescriptor < handle
             % ## Output
             % * __tf__ a logical value, indicates validity of detector size.
             %
+            % Checks if detector size equal to descriptor size.
+            %
             % The detector is considered valid if the coefficients vector is
             % either empty or has length matching `hog.getDescriptorSize()` or
             % `hog.getDescriptorSize()+1`.
@@ -299,11 +315,13 @@ classdef HOGDescriptor < handle
             %     descs = hog.compute(im, 'OptionName', optionValue, ...)
             %
             % ## Input
-            % * __im__ 8-bit 1- or 3-channel source image.
+            % * __im__ 8-bit 1- or 3-channel source image where HOG features
+            %   will be calculated.
             %
             % ## Output
             % * __descs__ Row vectors of HOG descriptors, with the number of
-            %   columns equal to `hog.getDescriptorSize()`.
+            %   columns equal to `hog.getDescriptorSize()`. Matrix of type
+            %   `single`.
             %
             % ## Options
             % * __WinStride__ Window stride `[w,h]`. It must be a multiple of
@@ -315,16 +333,18 @@ classdef HOGDescriptor < handle
             %   descriptors are computed for the whole image with a sliding
             %   window).
             %
+            % Computes HOG descriptors of given image.
+            %
             % In case of "dense" descriptors (i.e `Locations` is not set), the
             % number of rows is equal to the number of sliding windows over
             % the image. Assuming zero padding, this is computed in the
             % following way:
             %
             %     [h,w,~] = size(im);
-            %     % numel(hog.WinSize(1):hog.CellSize(1):w)
-            %     % numel(hog.WinSize(2):hog.CellSize(2):h)
             %     windows_per_img = ([w,h] - hog.WinSize) ./ WinStride + 1
             %     num_windows = prod(windows_per_img)
+            %     % num_windows = numel(hog.WinSize(1):WinStride(1):w) * ...
+            %     %               numel(hog.WinSize(2):WinStride(2):h)
             %
             % The windows cover the image in a top-to-bottom left-to-right
             % order.
@@ -344,13 +364,13 @@ classdef HOGDescriptor < handle
         end
 
         function [grad, angleOfs] = computeGradient(this, im, varargin)
-            %COMPUTEGRADIENT  Computes gradient
+            %COMPUTEGRADIENT  Computes gradients and quantized gradient orientations
             %
             %     [grad, angleOfs] = hog.computeGradient(im)
             %     [...] = hog.computeGradient(im, 'OptionName', optionValue, ...)
             %
             % ## Input
-            % * __im__ 8-bit 1- or 3-channel source image.
+            % * __im__ 8-bit 1- or 3-channel source image to be computed.
             %
             % ## Output
             % * __grad__ gradient magnitudes (2-channel float matrix of same
@@ -360,8 +380,8 @@ classdef HOGDescriptor < handle
             %   as the image plus the padding).
             %
             % ## Options
-            % * __paddingTL__ Optional padding. default [0,0]
-            % * __paddingBR__ Optional padding. default [0,0]
+            % * __paddingTL__ Optional padding from top-left. default [0,0]
+            % * __paddingBR__ Optional padding from bottom-right. default [0,0]
             %
             % See also: cv.HOGDescriptor.compute
             %
@@ -378,11 +398,12 @@ classdef HOGDescriptor < handle
             % * __im__ 8-bit 1- or 3-channel image where objects are detected.
             %
             % ## Output
-            % * __pts__ Left-top corner points of detected objects boundaries.
+            % * __pts__ Top-left corner points of detected objects boundaries.
             %   A cell array of points where objects are found of the form
             %   `{[x,y], ...}`. The width and height of boundaries are
             %   specified by the `WinSize` parameter.
-            % * __weights__ Ouput vector of associated weights.
+            % * __weights__ Ouput vector of associated weights. Contains
+            %   confidence values for each detected object.
             %
             % ## Options
             % * __HitThreshold__ Threshold for the distance between features
@@ -394,9 +415,10 @@ classdef HOGDescriptor < handle
             %   block stride. Not set by default in which case it uses
             %   `CellSize`.
             % * __Padding__ Padding `[w,h]`. default [0,0]
-            % * __Locations__ cell array of 2-element points `{[x,y],...}` at
-            %   which detector is executed. Not set by default, in which case
-            %   the whole image is searched with a sliding window.
+            % * __Locations__ cell array of 2-element points `{[x,y],...}` of
+            %   requrested locations at which detector is evaluated. Not set
+            %   by default, in which case the whole image is searched with a
+            %   sliding window.
             %
             % `SvmDetector` should be set before calling this method.
             %
@@ -417,7 +439,8 @@ classdef HOGDescriptor < handle
             % ## Output
             % * __rcts__ Detected objects boundaries. Cell array of rectangles
             %   where objects are found, of the form `{[x,y,w,h], ...}`.
-            % * __weights__ Vector of associated weights.
+            % * __weights__ Vector of associated weights. Contain confidence
+            %   values for each detected object.
             %
             % ## Options
             % * __HitThreshold__ Threshold for the distance between features
@@ -442,6 +465,9 @@ classdef HOGDescriptor < handle
             %   true, cv.groupRectangles_meanshift is performed instead, and
             %   `FinalThreshold` is used for the `DetectThreshold` option.
             %   default false
+            %
+            % Detects objects of different sizes in the input image. The
+            % detected objects are returned as a list of rectangles.
             %
             % `SvmDetector` should be set before calling this method.
             %
@@ -471,7 +497,7 @@ classdef HOGDescriptor < handle
             %   candidate points at which to detect objects.
             %
             % ## Output
-            % * __pts__ Left-top corner points of detected objects boundaries.
+            % * __pts__ Top-left corner points of detected objects boundaries.
             %   A cell array of points where objects are found of the form
             %   `{[x,y], ...}`. The width and height of boundaries are
             %   specified by the `WinSize` parameter. These are the filtered
@@ -549,11 +575,12 @@ classdef HOGDescriptor < handle
             % * __weights__ Input vector of associated weights.
             %
             % ## Output
-            % * __rects__ outupt updated rectangles. Grouped rectangles are
-            %   the average of all rectangles in that cluster.
-            % * __weights__ output updated weights. Corresponding grouped
-            %   weights are the maximum weights of all rectangles in that
-            %   cluster.
+            % * __rects__ outupt updated rectangles. Includes retained and
+            %   grouped rectangles. Grouped rectangles are the average of all
+            %   rectangles in that cluster.
+            % * __weights__ output updated weights. Includes weights of
+            %   retained and grouped rectangles. Corresponding grouped weights
+            %   are the maximum weights of all rectangles in that cluster.
             %
             % ## Options
             % * __EPS__ Relative difference between sides of the rectangles to

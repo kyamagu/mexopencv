@@ -11,7 +11,7 @@ classdef SVD < handle
     % 'NoUV' flag. Another flag 'FullUV' indicates that full-size
     % `u` and `vt` must be computed, which is not necessary most of the time.
     %
-    % See also: cv.SVD.compute
+    % See also: cv.SVD.compute, cv.PCA
     %
 
     properties (SetAccess = protected)

@@ -226,10 +226,10 @@ classdef Rect
             % * __img__ output image with updated ROI region.
             %
             % In the first variant, the function gets ROI region from image,
-            % i.e: `roi = img(r(1)+1:r(1)+r(3), r(2)+1:r(2)+r(4), :)`.
+            % i.e: `roi = img(r(2)+1:r(2)+r(4), r(1)+1:r(1)+r(3), :)`.
             %
             % In the second variant, the function sets ROI region inside image,
-            % i.e: `img(r(1)+1:r(1)+r(3), r(2)+1:r(2)+r(4), :) = roi`
+            % i.e: `img(r(2)+1:r(2)+r(4), r(1)+1:r(1)+r(3), :) = roi`
             %
             % See also: cv.getRectSubPix, imcrop
             %

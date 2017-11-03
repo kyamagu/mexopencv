@@ -20,12 +20,12 @@ classdef ImgHash < handle
     %
     % ### Performance under different attacks
     %
-    % ![Performance chart](http://docs.opencv.org/3.3.0/attack_performance.JPG)
+    % ![Performance chart](https://docs.opencv.org/3.3.0/attack_performance.JPG)
     %
     % ### Speed comparison with PHash library (100 images from ukbench)
     %
-    % ![Hash Computation chart](http://docs.opencv.org/3.3.0/hash_computation_chart.JPG)
-    % ![Hash comparison chart](http://docs.opencv.org/3.3.0/hash_comparison_chart.JPG)
+    % ![Hash Computation chart](https://docs.opencv.org/3.3.1/hash_computation_chart.JPG)
+    % ![Hash comparison chart](https://docs.opencv.org/3.3.1/hash_comparison_chart.JPG)
     %
     % As you can see, hash computation speed of img_hash module outperform
     % [PHash library](http://www.phash.org/) a lot.

@@ -22,7 +22,6 @@
 % Note: Saturation is not applied when the output array has the depth `int32`.
 % You may even get result of an incorrect sign in the case of overflow.
 %
-% See also: cv.add, cv.subtract, cv.divide, cv.scaleAdd, cv.addWeighted,
-%  cv.accumulate, cv.accumulateProduct, cv.accumulateSquare,
-%  immultiply, times, mtimes
+% See also: cv.add, cv.subtract, cv.divide, cv.addWeighted, cv.accumulate,
+%  cv.accumulateProduct, cv.accumulateSquare, immultiply, times, mtimes
 %

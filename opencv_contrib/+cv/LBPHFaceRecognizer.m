@@ -94,7 +94,8 @@ classdef LBPHFaceRecognizer < handle
             %
             % ## Options
             % * __Radius__ The radius used for building the Circular Local
-            %   Binary Pattern. The greater the radius, the.. default 1
+            %   Binary Pattern. The greater the radius, the smoother the image
+            %   but more spatial information you can get. default 1
             % * __Neighbors__ The number of sample points to build a Circular
             %   Local Binary Pattern from. An appropriate value is to use 8
             %   sample points. Keep in mind: the more sample points you

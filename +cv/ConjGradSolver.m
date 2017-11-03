@@ -6,7 +6,7 @@ classdef ConjGradSolver < handle
     % beautifully clear explanatory article [1].
     %
     % The method can be seen as an adaptation of a standard
-    % [Conjugate Gradient method](http://en.wikipedia.org/wiki/Conjugate_gradient_method)
+    % [Conjugate Gradient method](https://en.wikipedia.org/wiki/Conjugate_gradient_method)
     % for numerically solving the systems of linear equations.
     %
     % It should be noted, that this method, although deterministic, is rather

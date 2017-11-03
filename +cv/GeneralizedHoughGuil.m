@@ -1,5 +1,5 @@
 classdef GeneralizedHoughGuil < handle
-    %GeneralizedHoughGuil  Generalized Hough transform
+    %GENERALIZEDHOUGHGUIL  Generalized Hough transform
     %
     % Finds arbitrary template in the grayscale image using
     % Generalized Hough Transform.

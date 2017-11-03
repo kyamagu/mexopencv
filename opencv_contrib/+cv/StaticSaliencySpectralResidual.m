@@ -24,7 +24,7 @@ classdef StaticSaliencySpectralResidual < handle
     %
     % Saliency UML diagram:
     %
-    % ![image](http://docs.opencv.org/3.1.0/saliency.png)
+    % ![image](https://docs.opencv.org/3.3.1/saliency.png)
     %
     % To see how API works, try tracker demo: `computeSaliency_demo.m`.
     %

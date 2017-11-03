@@ -79,7 +79,7 @@ classdef FastLineDetector < handle
             % An example output of the default parameters of the algorithm can
             % be seen here:
             %
-            % ![image](http://docs.opencv.org/3.3.0/corridor_fld.jpg)
+            % ![image](https://docs.opencv.org/3.3.1/corridor_fld.jpg)
             %
             % If only a ROI needs to be selected, use:
             %

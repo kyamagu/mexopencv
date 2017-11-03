@@ -44,7 +44,7 @@
 %
 % Polar remaps reference:
 %
-% ![image](http://docs.opencv.org/trunk/polar_remap_doc.png)
+% ![image](https://docs.opencv.org/3.3.1/polar_remap_doc.png)
 %
 % Note: To calculate magnitude and angle in degrees, cv.cartToPolar is used
 % internally thus angles are measured from 0 to 360 with accuracy about 0.3

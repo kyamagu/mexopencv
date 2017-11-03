@@ -63,7 +63,7 @@
 %                | C * (r - C/2)  otherwise
 %
 % The algorithm is based on the
-% [M-estimator](http://en.wikipedia.org/wiki/M-estimator) technique that
+% [M-estimator](https://en.wikipedia.org/wiki/M-estimator) technique that
 % iteratively fits the line using the weighted least-squares algorithm. After
 % each iteration the weights `w_i` are adjusted to be inversely proportional
 % to `rho(r_i)`.

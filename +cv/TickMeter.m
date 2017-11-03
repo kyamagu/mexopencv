@@ -11,6 +11,17 @@ classdef TickMeter < handle
     %     tm.stop();
     %     disp(tm.TimeSec)
     %
+    % It is also possible to compute the average time over multiple runs:
+    %
+    %     tm = cv.TickMeter();
+    %     for i=1:100
+    %         tm.start();
+    %         % do something ...
+    %         tm.stop();
+    %     end
+    %     fprintf('Average time in second per iteration is: %f\n', ...
+    %         tm.TimeSec / double(tm.Counter))
+    %
     % See also: tic, toc, cputime, timeit
     %
 

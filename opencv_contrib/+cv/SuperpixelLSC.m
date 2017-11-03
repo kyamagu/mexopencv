@@ -50,7 +50,7 @@ classdef SuperpixelLSC < handle
             % preprocess image with little gaussian blur with a small 3x3
             % kernel and additional conversion into CieLAB color space.
             %
-            % ![image](http://docs.opencv.org/3.1.0/superpixels_lsc.png)
+            % ![image](https://docs.opencv.org/3.3.1/superpixels_lsc.png)
             %
             % See also: cv.SuperpixelLSC.iterate
             %

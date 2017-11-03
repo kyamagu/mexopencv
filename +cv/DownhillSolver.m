@@ -4,7 +4,7 @@ classdef DownhillSolver < handle
     % defined on an `n`-dimensional Euclidean space, using the **Nelder-Mead**
     % method, also known as downhill simplex method. The basic idea about the
     % method can be obtained from
-    % [Nelder-Mead method](http://en.wikipedia.org/wiki/Nelder-Mead_method).
+    % [Nelder-Mead method](https://en.wikipedia.org/wiki/Nelder-Mead_method).
     %
     % It should be noted, that this method, although deterministic, is rather
     % a heuristic and therefore may converge to a local minima, not necessary

@@ -1,5 +1,5 @@
 classdef WBDetector < handle
-    %WBDETECTOR  WaldBoost detector: Object Detection using Boosted Features
+    %WBDETECTOR  WaldBoost detector - Object Detection using Boosted Features
     %
     % Class for object detection using WaldBoost from [Sochman05].
     % Uses a Waldboost cascade and local binary patterns computed as integral

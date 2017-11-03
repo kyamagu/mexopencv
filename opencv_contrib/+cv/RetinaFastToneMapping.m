@@ -1,5 +1,5 @@
 classdef RetinaFastToneMapping < handle
-    %RETINAFASTTONEMAPPING  Class with tone mapping algorithm of Meylan&al(2007)
+    %RETINAFASTTONEMAPPING  Class with tone mapping algorithm of Meylan et al. (2007)
     %
     % High Dynamic Range (HDR >8bit images) tone mapping to (conversion to
     % 8bit) use case of the retina.

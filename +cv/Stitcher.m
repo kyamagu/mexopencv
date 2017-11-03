@@ -6,7 +6,7 @@ classdef Stitcher < handle
     % stability and quality of the final images at least being familiar with
     % the theory is recommended.
     %
-    % ![image](http://docs.opencv.org/3.1.0/StitchingPipeline.jpg)
+    % ![image](https://docs.opencv.org/3.3.1/StitchingPipeline.jpg)
     %
     % This figure illustrates the stitching module pipeline implemented in the
     % cv.Stitcher class. Using that class it's possible to configure/remove

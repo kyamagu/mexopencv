@@ -33,7 +33,7 @@ classdef VideoCapture < handle
     % Basically, the module provides the cv.VideoCapture and cv.VideoWriter
     % classes as 2-layer interface to many video I/O APIs used as backend.
     %
-    % ![image](http://docs.opencv.org/3.2.0/videoio_overview.svg)
+    % ![image](https://docs.opencv.org/3.3.1/videoio_overview.svg)
     %
     % Some backends such as (`DirectShow`) Direct Show, Video For Windows
     % (`VfW`), Microsoft Media Foundation (`MediaFoundation`), Video 4 Linux

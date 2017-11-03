@@ -48,8 +48,9 @@ classdef RotatedRect
             %     up-right rectangle.
             %
             % ## Output
-            % * __pts__ 4-by-2 points matrix of the rectangle vertices.
-            %   `[x1 y1; x2 y2; x3 y3; x4 y4]`
+            % * __pts__ 4-by-2 points matrix of the rectangle vertices
+            %   `[x1 y1; x2 y2; x3 y3; x4 y4]`. The order is bottom-left,
+            %   top-left, top-right, bottom-right.
             %
             % See also: cv.boxPoints, bbox2points
             %

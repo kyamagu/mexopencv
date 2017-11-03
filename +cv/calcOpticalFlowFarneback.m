@@ -43,7 +43,7 @@
 % The function finds an optical flow for each `prevImg` pixel using the
 % [Farneback2003] alorithm so that:
 %
-%     prevImg(y,x) ~ next(y + flow(y,x,2), x + flow(y,x,1))
+%     prevImg(y,x) ~ nextImg(y + flow(y,x,2), x + flow(y,x,1))
 %
 % ## References
 % [Farneback2003]:

@@ -44,7 +44,7 @@
 %   * __Eval__ The value means that the algorithm should just resume.
 %
 % The function implements the GrabCut image segmentation algorithm:
-% [GrabCut](http://en.wikipedia.org/wiki/GrabCut).
+% [GrabCut](https://en.wikipedia.org/wiki/GrabCut).
 %
 % See also: cv.watershed, lazysnapping, imageSegmenter, regionfill
 %

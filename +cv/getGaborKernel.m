@@ -17,7 +17,7 @@
 %   default `double`.
 %
 % For more details about gabor filter equations and parameters, see
-% [Gabor filter](http://en.wikipedia.org/wiki/Gabor_filter).
+% [Gabor filter](https://en.wikipedia.org/wiki/Gabor_filter).
 %
 % ## Example
 % Try the `gabor_filter_gui.m` sample file to interact with the various
