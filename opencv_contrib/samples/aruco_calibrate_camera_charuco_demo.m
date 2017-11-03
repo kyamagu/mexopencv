@@ -5,8 +5,10 @@
 % If input comes from video, press any key for next frame
 % To finish capturing, press 'ESC' key and calibration starts.
 %
-% <http://docs.opencv.org/3.1.0/da/d13/tutorial_aruco_calibration.html>
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/aruco/samples/calibrate_camera_charuco.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.1.0/da/d13/tutorial_aruco_calibration.html>
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/aruco/samples/calibrate_camera_charuco.cpp>
 %
 
 %% Parameters

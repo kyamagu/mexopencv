@@ -1,7 +1,9 @@
-%% Blob Detection demo
+%% Blob Detection
 % This program demonstrates how to use BLOB to detect and filter region.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/detect_blob.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/detect_blob.cpp>
 %
 
 %% Image

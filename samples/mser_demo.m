@@ -1,7 +1,9 @@
-%% MSER detector demo
+%% Maximally Stable Extremal Regions (MSER)
 % This program demonstrates how to use MSER to detect extremal regions.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/mser.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/mser.py>
 %
 
 %%

@@ -1,4 +1,4 @@
-%% Serialization demo
+%% Serialization Functionality
 % Demonstrate the usage of OpenCV serialization functionality.
 %
 % This program demonstrates the use of |cv.FileStorage| for serialization in
@@ -6,7 +6,9 @@
 % the file end type. You should try using different file extensions
 % (e.g. |.yaml|, |.yml|, |.xml|, |.xml.gz|, |.yaml.gz|, etc.)
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/filestorage.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/filestorage.cpp>
 %
 
 %% Data

@@ -6,7 +6,9 @@
 % implementation is based on SIFT, you can try to use SURF or ORB detectors
 % instead. Homography RANSAC is used to reject outliers.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/asift.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/asift.py>
 %
 
 function asift_demo()

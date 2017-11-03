@@ -2,7 +2,9 @@
 %
 % In this demo, we will see the basics of ORB.
 %
-% <http://docs.opencv.org/3.2.0/d1/d89/tutorial_py_orb.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d1/d89/tutorial_py_orb.html>
 %
 
 %% Theory

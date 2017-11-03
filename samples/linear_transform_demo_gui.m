@@ -1,12 +1,14 @@
-%% Brightness and contrast adjustments Demo
+%% Brightness and contrast adjustments
 %
 % In this demo we show how to perform the operation
 % $g(i,j) = \alpha \cdot f(i,j) + \beta$.
 %
-% <http://docs.opencv.org/3.3.0/d3/dc1/tutorial_basic_linear_transform.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgProc/BasicLinearTransforms.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/HighGUI/BasicLinearTransformsTrackbar.cpp>,
-% <https://github.com/opencv/opencv/blob/3.3.0/samples/cpp/tutorial_code/ImgProc/changing_contrast_brightness_image/changing_contrast_brightness_image.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.3.0/d3/dc1/tutorial_basic_linear_transform.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgProc/BasicLinearTransforms.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/HighGUI/BasicLinearTransformsTrackbar.cpp>
+% * <https://github.com/opencv/opencv/blob/3.3.0/samples/cpp/tutorial_code/ImgProc/changing_contrast_brightness_image/changing_contrast_brightness_image.cpp>
 %
 
 %% Theory
@@ -61,7 +63,7 @@
 % saturated (i.e. a pixel value higher/lesser than 255/0 will be clamp to
 % 255/0).
 %
-% <<http://docs.opencv.org/3.3.0/Basic_Linear_Transform_Tutorial_hist_beta.png>>
+% <<https://docs.opencv.org/3.3.0/Basic_Linear_Transform_Tutorial_hist_beta.png>>
 %
 % _In light gray, histogram of the original image, in dark gray when
 % |brightness = 80| in Gimp_
@@ -76,7 +78,7 @@
 % the color levels will be compressed and the result will be an image with
 % less contrast.
 %
-% <<http://docs.opencv.org/3.3.0/Basic_Linear_Transform_Tutorial_hist_alpha.png>>
+% <<https://docs.opencv.org/3.3.0/Basic_Linear_Transform_Tutorial_hist_alpha.png>>
 %
 % _In light gray, histogram of the original image, in dark gray when
 % |contrast < 0| in Gimp_
@@ -104,7 +106,7 @@
 % As this relation is non linear, the effect will not be the same for all the
 % pixels and will depend to their original value.
 %
-% <<http://docs.opencv.org/3.3.0/Basic_Linear_Transform_Tutorial_gamma.png>>
+% <<https://docs.opencv.org/3.3.0/Basic_Linear_Transform_Tutorial_gamma.png>>
 %
 % When $\gamma < 1$, the original dark regions will be brighter and the
 % histogram will be shifted to the right whereas it will be the opposite with
@@ -118,7 +120,7 @@
 %
 % The following image has been corrected with: $\alpha = 1.3$ and $\beta = 40$.
 %
-% <<http://docs.opencv.org/3.3.0/Basic_Linear_Transform_Tutorial_linear_transform_correction.jpg>>
+% <<https://docs.opencv.org/3.3.0/Basic_Linear_Transform_Tutorial_linear_transform_correction.jpg>>
 %
 % The overall brightness has been improved but you can notice that the clouds
 % are now greatly saturated due to the numerical saturation of the
@@ -128,13 +130,13 @@
 %
 % The following image has been corrected with: $\gamma = 0.4$.
 %
-% <<http://docs.opencv.org/3.3.0/Basic_Linear_Transform_Tutorial_gamma_correction.jpg>>
+% <<https://docs.opencv.org/3.3.0/Basic_Linear_Transform_Tutorial_gamma_correction.jpg>>
 %
 % The gamma correction should tend to add less saturation effect as the
 % mapping is non linear and there is no numerical saturation possible as in
 % the previous method.
 %
-% <<http://docs.opencv.org/3.3.0/Basic_Linear_Transform_Tutorial_histogram_compare.png>>
+% <<https://docs.opencv.org/3.3.0/Basic_Linear_Transform_Tutorial_histogram_compare.png>>
 %
 % * Left: histogram after alpha, beta correction
 % * Center: histogram of the original image

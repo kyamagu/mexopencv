@@ -1,7 +1,9 @@
 %% Saliency algorithms demo
 % This example shows the functionality of "Saliency"
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/saliency/samples/computeSaliency.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/saliency/samples/computeSaliency.cpp>
 %
 
 %% Options

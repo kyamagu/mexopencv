@@ -1,6 +1,8 @@
 %% Video Stabilizer
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/videostab.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/videostab.cpp>
 %
 
 %%

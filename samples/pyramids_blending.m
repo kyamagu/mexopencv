@@ -6,7 +6,9 @@
 % * We will use Image pyramids to create a new fruit, "Orapple"
 % * We will see these functions: |cv.pyrUp|, |cv.pyrDown|, |cv.buildPyramid|
 %
-% <http://docs.opencv.org/3.1.0/dc/dff/tutorial_py_pyramids.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.1.0/dc/dff/tutorial_py_pyramids.html>
 %
 
 %% Theory

@@ -5,7 +5,9 @@
 % Switch between the different M-estimator functions and see, how well the
 % robust functions fit the line even in case of ~50% of outliers.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/fitline.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/fitline.py>
 %
 
 function varargout = fitline_demo_gui()

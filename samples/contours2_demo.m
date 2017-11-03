@@ -2,8 +2,10 @@
 % This program illustrates the use of |cv.findContours| and |cv.drawContours|.
 % The original image is put up along with the image of drawn contours.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/contours2.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/contours.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/contours2.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/contours.py>
 %
 
 %% Draw faces

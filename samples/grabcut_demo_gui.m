@@ -4,9 +4,11 @@
 % This program demonstrates GrabCut segmentation: select an object in a
 % region and then grabcut will attempt to segment it out.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/grabcut.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/grabcut.py>,
-% <http://docs.opencv.org/3.2.0/d8/d83/tutorial_py_grabcut.html>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/grabcut.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/grabcut.py>
+% * <https://docs.opencv.org/3.2.0/d8/d83/tutorial_py_grabcut.html>
 %
 
 %% Theory
@@ -35,7 +37,7 @@
 % rectangle. Then some final touchups with white strokes (denoting foreground)
 % and black strokes (denoting background) is made. And we get a nice result.
 %
-% <<http://docs.opencv.org/3.2.0/grabcut_output1.jpg>>
+% <<https://docs.opencv.org/3.2.0/grabcut_output1.jpg>>
 %
 % So what happens in background ?
 %
@@ -46,7 +48,7 @@
 %   considered as hard-labelling which means they won't change in the process.
 % * Computer does an initial labelling depeding on the data we gave. It labels
 %   the foreground and background pixels (or it hard-labels)
-% * Now a Gaussian Mixture Model(GMM) is used to model the foreground and
+% * Now a Gaussian Mixture Model (GMM) is used to model the foreground and
 %   background.
 % * Depending on the data we gave, GMM learns and create new pixel
 %   distribution. That is, the unknown pixels are labelled either probable
@@ -72,7 +74,7 @@
 % It is illustrated in below image
 % (Image Courtesy: <http://www.cs.ru.ac.za/research/g02m1682/>)
 %
-% <<http://docs.opencv.org/3.2.0/grabcut_scheme.jpg>>
+% <<https://docs.opencv.org/3.2.0/grabcut_scheme.jpg>>
 %
 
 %% Code

@@ -1,7 +1,9 @@
 %% Super Resolution demo
 % This sample demonstrates Super Resolution algorithms for video sequence.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/super_resolution.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/super_resolution.cpp>
 %
 
 %%

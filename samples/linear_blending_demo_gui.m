@@ -1,4 +1,4 @@
-%% Blending two images
+%% Image Blending
 %
 % In this demo, we add two images using |cv.addWeighted| which defines a
 % linear blend operator:
@@ -8,11 +8,13 @@
 % By varying $\alpha$ from $0 \rightarrow 1$ this operator can be used to
 % perform a temporal *cross-dissolve* between two images or videos.
 %
-% <http://docs.opencv.org/3.2.0/d5/dc4/tutorial_adding_images.html>,
-% <http://docs.opencv.org/3.2.0/da/d6a/tutorial_trackbar.html>,
-% <http://docs.opencv.org/3.2.0/d0/d86/tutorial_py_image_arithmetics.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/core/AddingImages/AddingImages.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/HighGUI/AddingImagesTrackbar.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d5/dc4/tutorial_adding_images.html>
+% * <https://docs.opencv.org/3.2.0/da/d6a/tutorial_trackbar.html>
+% * <https://docs.opencv.org/3.2.0/d0/d86/tutorial_py_image_arithmetics.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/core/AddingImages/AddingImages.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/HighGUI/AddingImagesTrackbar.cpp>
 %
 
 function varargout = linear_blending_demo_gui(im1, im2)

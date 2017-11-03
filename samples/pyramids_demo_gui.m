@@ -3,8 +3,10 @@
 % In this demo, we show how to use the functions |cv.pyrUp| and |cv.pyrDown|
 % to downsample or upsample a given image.
 %
-% <http://docs.opencv.org/3.2.0/d4/d1f/tutorial_pyramids.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgProc/Pyramids.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d4/d1f/tutorial_pyramids.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgProc/Pyramids.cpp>
 %
 
 %% Theory
@@ -44,7 +46,7 @@
 % Imagine the pyramid as a set of layers in which the higher the layer, the
 % smaller the size.
 %
-% <<http://docs.opencv.org/3.2.0/Pyramids_Tutorial_Pyramid_Theory.png>>
+% <<https://docs.opencv.org/3.2.0/Pyramids_Tutorial_Pyramid_Theory.png>>
 %
 % Every layer is numbered from bottom to top, so layer $(i+1)$ (denoted as
 % $G_{i+1}$ is smaller than layer $i$ ($G_{i}$).

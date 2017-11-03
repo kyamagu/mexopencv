@@ -6,8 +6,10 @@
 % * Calculate histograms of arrays of images by using the OpenCV function
 %   |cv.calcHist|
 %
-% <http://docs.opencv.org/3.2.0/d8/dbc/tutorial_histogram_calculation.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/Histograms_Matching/calcHist_Demo.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d8/dbc/tutorial_histogram_calculation.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/Histograms_Matching/calcHist_Demo.cpp>
 %
 
 %% Theory
@@ -20,7 +22,7 @@
 % Let's see an example. Imagine that a matrix contains information of an image
 % (i.e. intensity in the range $0-255$):
 %
-% <<http://docs.opencv.org/3.2.0/Histogram_Calculation_Theory_Hist0.jpg>>
+% <<https://docs.opencv.org/3.2.0/Histogram_Calculation_Theory_Hist0.jpg>>
 %
 % What happens if we want to _count_ this data in an organized way? Since we
 % know that the _range_ of information value for this case is 256 values, we
@@ -34,7 +36,7 @@
 % $bin_{i}$. Applying this to the example above we get the image below
 % (axis x represents the bins and axis y the number of pixels in each of them).
 %
-% <<http://docs.opencv.org/3.2.0/Histogram_Calculation_Theory_Hist1.jpg>>
+% <<https://docs.opencv.org/3.2.0/Histogram_Calculation_Theory_Hist1.jpg>>
 %
 % This was just a simple example of how an histogram works and why it is
 % useful. An histogram can keep count not only of color intensities, but of

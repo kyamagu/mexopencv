@@ -1,4 +1,4 @@
-%% 2D Histograms
+%% 2D Histogram
 %
 % We previously showed how to calculate and plot one-dimensional histograms.
 % It is called one-dimensional because we are taking only one feature into our
@@ -10,8 +10,10 @@
 % We explain how to create such a color histogram, which will be useful in
 % understanding further topics like Histogram Back-Projection
 %
-% <http://docs.opencv.org/3.2.0/dd/d0d/tutorial_py_2d_histogram.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/color_histogram.py>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/dd/d0d/tutorial_py_2d_histogram.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/color_histogram.py>
 %
 
 %% Theory

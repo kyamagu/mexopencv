@@ -1,7 +1,9 @@
 %% Fast Line Detector demo
-% Compares FastLineDetector against LineSegmentDetector.
+% Compares |cv.FastLineDetector| against |cv.LineSegmentDetector|.
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.2.0/modules/ximgproc/samples/fld_lines.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.2.0/modules/ximgproc/samples/fld_lines.cpp>
 %
 
 %%

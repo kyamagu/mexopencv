@@ -1,8 +1,10 @@
 %% Detection of ChArUco Corners Demo
 % The example shows how to do pose estimation using a ChArUco board.
 %
-% <http://docs.opencv.org/3.1.0/df/d4a/tutorial_charuco_detection.html>
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/aruco/samples/detect_board_charuco.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.1.0/df/d4a/tutorial_charuco_detection.html>
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/aruco/samples/detect_board_charuco.cpp>
 %
 
 %% Parameters

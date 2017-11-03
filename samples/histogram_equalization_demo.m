@@ -6,8 +6,10 @@
 % * How to equalize histograms of images by using the OpenCV function
 %   |cv.equalizeHist|
 %
-% <http://docs.opencv.org/3.2.0/d4/d1b/tutorial_histogram_equalization.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/Histograms_Matching/EqualizeHist_Demo.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d4/d1b/tutorial_histogram_equalization.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/Histograms_Matching/EqualizeHist_Demo.cpp>
 %
 
 %% Theory
@@ -16,7 +18,7 @@
 % distribution of an image. It quantifies the number of pixels for each
 % intensity value considered.
 %
-% <<http://docs.opencv.org/3.2.0/Histogram_Equalization_Theory_0.jpg>>
+% <<https://docs.opencv.org/3.2.0/Histogram_Equalization_Theory_0.jpg>>
 %
 % Histogram Equalization is a method that improves the contrast in an image,
 % in order to stretch out the intensity range. To make it clearer, from the
@@ -27,7 +29,7 @@
 % we get an histogram like the figure in the center. The resulting image is
 % shown in the picture at right.
 %
-% <<http://docs.opencv.org/3.2.0/Histogram_Equalization_Theory_1.jpg>>
+% <<https://docs.opencv.org/3.2.0/Histogram_Equalization_Theory_1.jpg>>
 %
 % Equalization implies _mapping_ one distribution (the given histogram) to
 % another distribution (a wider and more uniform distribution of intensity
@@ -43,7 +45,7 @@
 % that the maximum value is 255 (or the maximum value for the intensity of the
 % image). From the example above, the cumulative function is:
 %
-% <<http://docs.opencv.org/3.2.0/Histogram_Equalization_Theory_2.jpg>>
+% <<https://docs.opencv.org/3.2.0/Histogram_Equalization_Theory_2.jpg>>
 %
 % Finally, we use a simple remapping procedure to obtain the intensity values
 % of the equalized image:

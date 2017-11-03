@@ -6,8 +6,10 @@
 %   express how well two histograms match with each other
 % * Use different metrics to compare histograms
 %
-% <http://docs.opencv.org/3.2.0/d8/dc8/tutorial_histogram_comparison.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/Histograms_Matching/compareHist_Demo.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d8/dc8/tutorial_histogram_comparison.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/Histograms_Matching/compareHist_Demo.cpp>
 %
 
 %% Theory
@@ -23,7 +25,9 @@
 % $$d(H_1,H_2) =  \frac{\sum_I (H_1(I) - \bar{H_1}) (H_2(I) - \bar{H_2})}
 %                      {\sqrt{\sum_I(H_1(I) - \bar{H_1})^2
 %                             \sum_I(H_2(I) - \bar{H_2})^2}}$$
+%
 % where
+%
 % $$\bar{H_k} =  \frac{1}{N} \sum _J H_k(J)$$
 %
 % and $N$ is the total number of histogram bins.
@@ -60,9 +64,9 @@
 %%
 % Load source images (base image and the two other images to compare)
 im = {
-    'http://docs.opencv.org/3.2.0/Histogram_Comparison_Source_0.jpg'
-    'http://docs.opencv.org/3.2.0/Histogram_Comparison_Source_1.jpg'
-    'http://docs.opencv.org/3.2.0/Histogram_Comparison_Source_2.jpg'
+    'https://docs.opencv.org/3.3.1/Histogram_Comparison_Source_0.jpg'
+    'https://docs.opencv.org/3.3.1/Histogram_Comparison_Source_1.jpg'
+    'https://docs.opencv.org/3.3.1/Histogram_Comparison_Source_2.jpg'
 };
 src = cell(3,1);
 for i=1:3

@@ -3,8 +3,10 @@
 % In this demo, we show how to use the OpenCV function |cv.copyMakeBorder| to
 % set the borders (extra image padding).
 %
-% <http://docs.opencv.org/3.2.0/dc/da3/tutorial_copyMakeBorder.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/copyMakeBorder_demo.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/dc/da3/tutorial_copyMakeBorder.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/copyMakeBorder_demo.cpp>
 %
 
 %% Theory

@@ -3,7 +3,9 @@
 % Sample shows how |cv.cornerEigenValsAndVecs| function can be used to
 % estimate image texture flow direction.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/texture_flow.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/texture_flow.py>
 %
 
 %%

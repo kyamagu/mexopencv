@@ -1,7 +1,9 @@
-%% Histogram demo
+%% Intensity Image Histogram
 % This program demonstrates the use of |cv.calcHist| for histogram creation.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/demhist.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/demhist.cpp>
 %
 
 function varargout = hist_demo_gui(im)

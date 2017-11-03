@@ -1,8 +1,10 @@
 %% Detection of ArUco Markers Demo
 % Basic marker detection and pose estimation from single ArUco markers.
 %
-% <http://docs.opencv.org/3.1.0/d5/dae/tutorial_aruco_detection.html>
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/aruco/samples/detect_markers.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.1.0/d5/dae/tutorial_aruco_detection.html>
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/aruco/samples/detect_markers.cpp>
 %
 
 %% Parameters

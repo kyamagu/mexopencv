@@ -10,10 +10,12 @@
 %   <matlab:doc('cv.perspectiveTransform') cv.perspectiveTransform> to map the
 %   points.
 %
-% <http://docs.opencv.org/3.2.0/d7/dff/tutorial_feature_homography.html>,
-% <http://docs.opencv.org/3.2.0/dd/dd4/tutorial_detection_of_planar_objects.html>,
-% <http://docs.opencv.org/3.2.0/d1/de0/tutorial_py_feature_homography.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/find_obj.py>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d7/dff/tutorial_feature_homography.html>
+% * <https://docs.opencv.org/3.2.0/dd/dd4/tutorial_detection_of_planar_objects.html>
+% * <https://docs.opencv.org/3.2.0/d1/de0/tutorial_py_feature_homography.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/find_obj.py>
 %
 
 %%

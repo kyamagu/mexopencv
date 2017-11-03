@@ -1,4 +1,4 @@
-%% Erosion and Dilation Demo
+%% Erosion and Dilation
 %
 % In this sample, you will learn how to apply two very common morphological
 % operators: Erosion and Dilation. For this purpose, you will use the
@@ -7,10 +7,12 @@
 % * <matlab:doc('cv.erode') cv.erode>
 % * <matlab:doc('cv.dilate') cv.dilate>
 %
-% <http://docs.opencv.org/3.2.0/db/df6/tutorial_erosion_dilatation.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgProc/Morphology_1.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/morphology2.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/morphology.py>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/db/df6/tutorial_erosion_dilatation.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgProc/Morphology_1.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/morphology2.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/morphology.py>
 %
 
 %% Morphological Operations
@@ -28,7 +30,7 @@
 % We will explain dilation and erosion briefly, using the following image as
 % an example:
 %
-% <<http://docs.opencv.org/3.2.0/Morphology_1_Tutorial_Theory_Original_Image.png>>
+% <<https://docs.opencv.org/3.2.0/Morphology_1_Tutorial_Theory_Original_Image.png>>
 %
 %% 1) Dilation
 %
@@ -42,7 +44,7 @@
 %
 % Take the above image as an example. Applying dilation we can get:
 %
-% <<http://docs.opencv.org/3.2.0/Morphology_1_Tutorial_Theory_Dilation.png>>
+% <<https://docs.opencv.org/3.2.0/Morphology_1_Tutorial_Theory_Dilation.png>>
 %
 % The background (bright) dilates around the black regions of the letter.
 %
@@ -51,7 +53,7 @@
 % letter. We have performed two dilatations with a rectangular structuring
 % element of size |3x3|.
 %
-% <<http://docs.opencv.org/3.2.0/Morphology_1_Tutorial_Theory_Dilatation_2.png>>
+% <<https://docs.opencv.org/3.2.0/Morphology_1_Tutorial_Theory_Dilatation_2.png>>
 %
 % (Left image: original image inverted, right image: resulting dilatation).
 %
@@ -69,13 +71,13 @@
 % the bright areas of the image (the background, apparently), get thinner,
 % whereas the dark zones (the "writing") gets bigger.
 %
-% <<http://docs.opencv.org/3.2.0/Morphology_1_Tutorial_Theory_Erosion.png>>
+% <<https://docs.opencv.org/3.2.0/Morphology_1_Tutorial_Theory_Erosion.png>>
 %
 % In similar manner, the corresponding image results by applying erosion
 % operation on the inverted original image (two erosions with a rectangular
 % structuring element of size |3x3|):
 %
-% <<http://docs.opencv.org/3.2.0/Morphology_1_Tutorial_Theory_Erosion_2.png>>
+% <<https://docs.opencv.org/3.2.0/Morphology_1_Tutorial_Theory_Erosion_2.png>>
 %
 % (Left image: original image inverted, right image: resulting erosion).
 %

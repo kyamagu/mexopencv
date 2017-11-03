@@ -1,6 +1,6 @@
 %% Line descriptors matching demo
 % This example shows the functionalities of line descriptors matching
-% furnished by cv.BinaryDescriptorMatcher class.
+% furnished by |cv.BinaryDescriptorMatcher| class.
 %
 % This module shows how to extract line segments from an image by 2 different
 % methods: First segmenting lines with Line Segment Detector |cv.LSDDetector|,
@@ -8,7 +8,9 @@
 % them a descriptor |cv.BinaryDescriptor|. Finally, we can then match line
 % segments using the |cv.BinaryDescriptorMatcher| class.
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/line_descriptor/samples/matching.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/line_descriptor/samples/matching.cpp>
 %
 
 %% Matching among descriptors

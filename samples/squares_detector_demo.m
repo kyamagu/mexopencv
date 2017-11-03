@@ -1,4 +1,4 @@
-%% Square Detector demo
+%% Squares Detector
 % It loads several images sequentially and tries to find squares in each
 % image.
 %
@@ -6,9 +6,11 @@
 % (it's got it all folks) to find squares in a list of images |pic*.png|.
 % Returns sequence of squares detected on the image.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/squares.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/tapi/squares.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/squares.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/squares.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/tapi/squares.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/squares.py>
 %
 
 function squares_detector_demo()

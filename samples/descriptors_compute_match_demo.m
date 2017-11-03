@@ -2,7 +2,9 @@
 % This program demonstrates how to detect, compute, and match descriptors
 % using various algorithms: ORB, BRISK, and AKAZE.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/matchmethod_orb_akaze_brisk.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/matchmethod_orb_akaze_brisk.cpp>
 %
 
 %%

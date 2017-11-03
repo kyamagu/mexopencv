@@ -1,4 +1,4 @@
-%% Laplacian Pyramid construction and merging
+%% Laplacian Pyramid Construction and Merging
 %
 % References:
 %
@@ -7,7 +7,9 @@
 %   IEEE Trans. on Communications, vol. 31, no. 4, pages 532-540, 1983.
 %   <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.54.299>
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/lappyr.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/lappyr.py>
 %
 
 function varargout = lap_pyr_demo_gui(varargin)

@@ -7,8 +7,10 @@
 % * use the OpenCV function <matlab:doc('cv.minAreaRect') cv.minAreaRect>
 % * use the OpenCV function <matlab:doc('cv.fitEllipse') cv.fitEllipse>
 %
-% <http://docs.opencv.org/3.2.0/de/d62/tutorial_bounding_rotated_ellipses.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ShapeDescriptors/generalContours_demo2.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/de/d62/tutorial_bounding_rotated_ellipses.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ShapeDescriptors/generalContours_demo2.cpp>
 %
 
 %% Input

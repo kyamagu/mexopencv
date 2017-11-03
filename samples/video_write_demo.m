@@ -10,9 +10,11 @@
 % As a simple demonstration we will just extract one of the BGR color channels
 % of an input video file or webcam feed into a new video.
 %
-% <http://docs.opencv.org/3.2.0/d7/d9e/tutorial_video_write.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/videoio/video-write/video-write.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/videowriter_basic.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d7/d9e/tutorial_video_write.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/videoio/video-write/video-write.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/videowriter_basic.cpp>
 %
 
 %%
@@ -35,7 +37,7 @@
 % Codec). The full list of codecs you may use on a system depends on just what
 % one you have installed.
 %
-% <<http://docs.opencv.org/3.2.0/videoFileStructure.png>>
+% <<https://docs.opencv.org/3.2.0/videoFileStructure.png>>
 %
 % As you can see things can get really complicated with videos. However,
 % OpenCV is mainly a computer vision library, not a video stream, codec and
@@ -75,7 +77,7 @@
 %   value "minus one" then a window will pop up at runtime that contains all
 %   the codec installed on your system and ask you to select the one to use:
 %
-% <<http://docs.opencv.org/3.2.0/videoCompressSelect.png>>
+% <<https://docs.opencv.org/3.2.0/videoCompressSelect.png>>
 %
 % Afterwards, you can use the |cv.VideoWriter.isOpened| function to find out
 % if the open operation succeeded or not. The video file automatically closes

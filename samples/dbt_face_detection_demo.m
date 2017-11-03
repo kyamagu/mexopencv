@@ -1,6 +1,8 @@
 %% DBT Face Detection
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/dbt_face_detection.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/dbt_face_detection.cpp>
 %
 
 %% Create detector

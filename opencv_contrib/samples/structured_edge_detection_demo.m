@@ -4,7 +4,9 @@
 % The structered edge demo requires you to provide a model.
 % This demo downloads a model from the opencv_extra repository on Github.
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.3.0/modules/ximgproc/samples/structured_edge_detection.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.3.0/modules/ximgproc/samples/structured_edge_detection.cpp>
 %
 
 %% Load image

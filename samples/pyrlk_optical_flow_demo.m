@@ -1,7 +1,9 @@
 %% Lucas-Kanade Sparse Optical Flow
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/tapi/pyrlk_optical_flow.cpp>
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/pyrlk_optical_flow.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/tapi/pyrlk_optical_flow.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/pyrlk_optical_flow.cpp>
 %
 
 function pyrlk_optical_flow_demo()

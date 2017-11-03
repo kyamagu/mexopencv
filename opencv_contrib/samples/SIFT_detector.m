@@ -5,7 +5,9 @@
 % * about the concepts of SIFT algorithm
 % * how to find SIFT Keypoints and Descriptors.
 %
-% <http://docs.opencv.org/3.2.0/da/df5/tutorial_py_sift_intro.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/da/df5/tutorial_py_sift_intro.html>
 %
 
 %% Theory
@@ -18,7 +20,7 @@
 % small image within a small window is flat when it is zoomed in the same
 % window. So Harris corner is not scale invariant.
 %
-% <<http://docs.opencv.org/3.2.0/sift_scale_invariant.jpg>>
+% <<https://docs.opencv.org/3.2.0/sift_scale_invariant.jpg>>
 %
 % So, in 2004, *D.Lowe*, University of British Columbia, came up with a new
 % algorithm, Scale Invariant Feature Transform (SIFT) in his paper,
@@ -51,7 +53,7 @@
 % for different octaves of the image in Gaussian Pyramid. It is represented in
 % below image:
 %
-% <<http://docs.opencv.org/3.2.0/sift_dog.jpg>>
+% <<https://docs.opencv.org/3.2.0/sift_dog.jpg>>
 %
 % Once this DoG are found, images are searched for local extrema over scale
 % and space. For exmple, one pixel in an image is compared with its 8
@@ -60,7 +62,7 @@
 % means that keypoint is best represented in that scale. It is shown in below
 % image:
 %
-% <<http://docs.opencv.org/3.2.0/sift_local_extrema.jpg>>
+% <<https://docs.opencv.org/3.2.0/sift_local_extrema.jpg>>
 %
 % Regarding different parameters, the paper gives some empirical data which
 % can be summarized as, number of octaves = 4, number of scale levels = 5,

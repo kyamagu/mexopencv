@@ -4,8 +4,10 @@
 % In this sample you will learn how to use the OpenCV function
 % <matlab:doc('cv.convexHull') cv.convexHull>.
 %
-% <http://docs.opencv.org/3.1.0/d7/d1d/tutorial_hull.html>
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ShapeDescriptors/hull_demo.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.1.0/d7/d1d/tutorial_hull.html>
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ShapeDescriptors/hull_demo.cpp>
 %
 
 function varargout = hull_demo_gui(im)

@@ -9,10 +9,12 @@
 % * <matlab:doc('cv.cornerSubPix') cv.cornerSubPix> to find more exact corner
 %   positions (more exact than integer pixels).
 %
-% <http://docs.opencv.org/3.2.0/d8/dd8/tutorial_good_features_to_track.html>,
-% <http://docs.opencv.org/3.2.0/d8/d5e/tutorial_corner_subpixeles.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/TrackingMotion/goodFeaturesToTrack_Demo.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/TrackingMotion/cornerSubPix_Demo.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d8/dd8/tutorial_good_features_to_track.html>
+% * <https://docs.opencv.org/3.2.0/d8/d5e/tutorial_corner_subpixeles.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/TrackingMotion/goodFeaturesToTrack_Demo.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/TrackingMotion/cornerSubPix_Demo.cpp>
 %
 
 function varargout = corner_subpixels_demo_gui(im)

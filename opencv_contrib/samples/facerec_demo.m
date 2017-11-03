@@ -8,12 +8,14 @@
 % * Local Binary Patterns Histograms
 %
 % See this page for a complete tutorial:
-% <http://docs.opencv.org/3.1.0/da/d60/tutorial_face_main.html>
+% <https://docs.opencv.org/3.1.0/da/d60/tutorial_face_main.html>
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_demo.cpp>
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_eigenfaces.cpp>
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_fisherfaces.cpp>
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_lbph.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_demo.cpp>
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_eigenfaces.cpp>
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_fisherfaces.cpp>
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/face/samples/cpp/facerec_lbph.cpp>
 %
 
 %% Options

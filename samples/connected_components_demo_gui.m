@@ -1,6 +1,8 @@
-%% Connected Components demo
+%% Connected Components
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/connected_components.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/connected_components.cpp>
 %
 
 function varargout = connected_components_demo_gui(im)

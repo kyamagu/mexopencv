@@ -3,8 +3,10 @@
 % (global thresholding and adaptive thresholding) for an image with varying
 % illumination.
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.2.0/modules/ximgproc/samples/niblack_thresholding.cpp>
-% <http://docs.opencv.org/3.2.0/d7/d4d/tutorial_py_thresholding.html>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.2.0/modules/ximgproc/samples/niblack_thresholding.cpp>
+% * <https://docs.opencv.org/3.2.0/d7/d4d/tutorial_py_thresholding.html>
 %
 
 function niblack_thresholding_demo()

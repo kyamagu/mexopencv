@@ -10,10 +10,12 @@
 % * Top Hat
 % * Black Hat
 %
-% <http://docs.opencv.org/3.2.0/d3/dbe/tutorial_opening_closing_hats.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgProc/Morphology_2.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/morphology2.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/morphology.py>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d3/dbe/tutorial_opening_closing_hats.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgProc/Morphology_2.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/morphology2.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/morphology.py>
 %
 
 %% Theory
@@ -38,13 +40,13 @@
 % applying the opening transformation. We can observe that the small spaces in
 % the corners of the letter tend to dissapear.
 %
-% <<http://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_Opening.png>>
+% <<https://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_Opening.png>>
 %
 % For the sake of clarity, we have performed the opening operation (|7x7|
 % rectangular structuring element) on the same original image but inverted
 % such as the object in white is now the letter.
 %
-% <<http://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_Opening_2.png>>
+% <<https://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_Opening_2.png>>
 %
 % (Left image: original image inverted, right image: resulting opening).
 %
@@ -56,12 +58,12 @@
 %
 % Useful to remove small holes (dark regions).
 %
-% <<http://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_Closing.png>>
+% <<https://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_Closing.png>>
 %
 % On the inverted image, we have performed the closing operation (|7x7|
 % rectangular structuring element):
 %
-% <<http://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_Closing_2.png>>
+% <<https://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_Closing_2.png>>
 %
 % (Left image: original image inverted, right image: resulting closing).
 %
@@ -74,7 +76,7 @@
 %
 % It is useful for finding the outline of an object as can be seen below:
 %
-% <<http://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_Gradient.png>>
+% <<https://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_Gradient.png>>
 %
 %% 4) Top Hat
 %
@@ -82,7 +84,7 @@
 %
 % $$dst = tophat( src, element ) = src - open( src, element )$$
 %
-% <<http://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_TopHat.png>>
+% <<https://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_TopHat.png>>
 %
 %% 5) Black Hat
 %
@@ -90,7 +92,7 @@
 %
 % $$dst = blackhat( src, element ) = close( src, element ) - src$$
 %
-% <<http://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_BlackHat.png>>
+% <<https://docs.opencv.org/3.2.0/Morphology_2_Tutorial_Theory_BlackHat.png>>
 %
 %% References
 %

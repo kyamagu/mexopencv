@@ -2,7 +2,9 @@
 %
 % Sample shows how to apply false color on a grayscale image.
 %
-% <https://github.com/opencv/opencv/blob/3.3.0/samples/cpp/falsecolor.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.3.0/samples/cpp/falsecolor.cpp>
 %
 
 function varargout = falsecolor_demo_gui(im)

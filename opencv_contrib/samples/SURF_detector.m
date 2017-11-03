@@ -10,9 +10,10 @@
 % * How to use the function <matlab:doc('cv.drawKeypoints') cv.drawKeypoints>
 %   to draw the detected keypoints.
 %
-% See also:
-% <http://docs.opencv.org/3.2.0/d7/d66/tutorial_feature_detection.html>,
-% <http://docs.opencv.org/3.2.0/df/dd2/tutorial_py_surf_intro.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d7/d66/tutorial_feature_detection.html>
+% * <https://docs.opencv.org/3.2.0/df/dd2/tutorial_py_surf_intro.html>
 %
 
 %% Theory
@@ -31,7 +32,7 @@
 % done in parallel for different scales. Also the SURF rely on determinant of
 % Hessian matrix for both scale and location.
 %
-% <<http://docs.opencv.org/3.2.0/surf_boxfilter.jpg>>
+% <<https://docs.opencv.org/3.2.0/surf_boxfilter.jpg>>
 %
 % For orientation assignment, SURF uses wavelet responses in horizontal and
 % vertical direction for a neighbourhood of size 6s. Adequate Gaussian weights
@@ -44,9 +45,9 @@
 % process. SURF provides such a functionality called Upright-SURF or U-SURF.
 % It improves speed and is robust upto $\pm 15^{\circ}$. OpenCV supports both,
 % depending upon the flag, |Upright|. If it is 0, orientation is calculated.
-% If it is 1, orientation is not calculated and it is more faster.
+% If it is 1, orientation is not calculated and it is faster.
 %
-% <<http://docs.opencv.org/3.2.0/surf_orientation.jpg>>
+% <<https://docs.opencv.org/3.2.0/surf_orientation.jpg>>
 %
 % For feature description, SURF uses Wavelet responses in horizontal and
 % vertical direction (again, use of integral images makes things easier). A
@@ -74,7 +75,7 @@
 % of contrast (as shown in image below). This minimal information allows for
 % faster matching, without reducing the descriptor's performance.
 %
-% <<http://docs.opencv.org/3.2.0/surf_matching.jpg>>
+% <<https://docs.opencv.org/3.2.0/surf_matching.jpg>>
 %
 % In short, SURF adds a lot of features to improve the speed in every step.
 % Analysis shows it is 3 times faster than SIFT while performance is

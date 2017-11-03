@@ -14,9 +14,11 @@
 % * Use the function <matlab:doc('cv.drawMatches') cv.drawMatches> to draw the
 %   detected matches.
 %
-% <http://docs.opencv.org/3.2.0/d5/dde/tutorial_feature_description.html>,
-% <http://docs.opencv.org/3.2.0/d5/d6f/tutorial_feature_flann_matcher.html>,
-% <http://docs.opencv.org/3.2.0/dc/dc3/tutorial_py_matcher.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d5/dde/tutorial_feature_description.html>
+% * <https://docs.opencv.org/3.2.0/d5/d6f/tutorial_feature_flann_matcher.html>
+% * <https://docs.opencv.org/3.2.0/dc/dc3/tutorial_py_matcher.html>
 %
 
 %% Brute-Force Matcher
@@ -54,7 +56,7 @@
 %
 % FLANN stands for Fast Library for Approximate Nearest Neighbors. It contains
 % a collection of algorithms optimized for fast nearest neighbor search in
-% large datasets and for high dimensional features. It works more faster than
+% large datasets and for high dimensional features. It works faster than
 % |BFMatcher| for large datasets. We will see the second example with FLANN
 % based matcher.
 %

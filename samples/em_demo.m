@@ -1,6 +1,8 @@
-%% EM Clustering demo
+%% EM Clustering
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/em.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/em.cpp>
 %
 
 %% Options

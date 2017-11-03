@@ -1,9 +1,11 @@
 %% Superpixels demo
 % This program demonstrates superpixels segmentation using OpenCV classes
-% cv.SuperpixelSEEDS, cv.SuperpixelSLIC, and cv.SuperpixelLSC
+% |cv.SuperpixelSEEDS|, |cv.SuperpixelSLIC|, and |cv.SuperpixelLSC|.
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.2.0/modules/ximgproc/samples/seeds.cpp>
-% <https://github.com/opencv/opencv_contrib/blob/3.2.0/modules/ximgproc/samples/slic.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.2.0/modules/ximgproc/samples/seeds.cpp>
+% * <https://github.com/opencv/opencv_contrib/blob/3.2.0/modules/ximgproc/samples/slic.cpp>
 %
 
 %% Algorithm

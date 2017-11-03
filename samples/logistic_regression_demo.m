@@ -1,9 +1,11 @@
-%% Logistic Regression demo
+%% Logistic Regression
 % The file |data01.xml| contains digits 0 and 1 of 20 samples each,
 % collected on an Android device. Each of the collected images are of size
 % 28 x 28 re-arranged to 1 x 784 matrix.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/logistic_regression.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/logistic_regression.cpp>
 %
 
 %% Dataset

@@ -1,7 +1,7 @@
-%% Wiener deconvolution
+%% Wiener Deconvolution for Image Deblurring
 %
 % Sample shows how DFT can be used to perform
-% <http://en.wikipedia.org/wiki/Wiener_deconvolution Weiner deconvolution>
+% <https://en.wikipedia.org/wiki/Wiener_deconvolution Weiner deconvolution>
 % of an image with user-defined point spread function (PSF).
 %
 % Use controls to adjust PSF parameters, and swtich between linear/cirular PSF.
@@ -9,7 +9,9 @@
 % See also: |deconvwnr|,
 % <https://www.mathworks.com/help/images/image-restoration-deblurring.html>
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/deconvolution.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/deconvolution.py>
 %
 
 function varargout = weiner_deconvolution_demo_gui(im)

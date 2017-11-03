@@ -1,4 +1,4 @@
-%% Hi-resolution image navigation
+%% Hi-Resolution Image Navigation
 %
 % Sample shows how to implement a simple hi-resolution image navigation.
 % Similar to |imtool|.
@@ -6,7 +6,9 @@
 % Use the mouse to move the preview window, and the scroll wheel to change
 % the preview size.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/browse.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/browse.py>
 %
 
 function varargout = hi_res_browse_demo(im)

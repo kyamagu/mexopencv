@@ -6,10 +6,12 @@
 % * How to use the OpenCV function |cv.calcBackProject| to calculate Back
 %   Projection
 %
-% <http://docs.opencv.org/3.2.0/da/d7f/tutorial_back_projection.html>,
-% <http://docs.opencv.org/3.2.0/dc/df6/tutorial_py_histogram_backprojection.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/Histograms_Matching/calcBackProject_Demo1.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/Histograms_Matching/calcBackProject_Demo2.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/da/d7f/tutorial_back_projection.html>
+% * <https://docs.opencv.org/3.2.0/dc/df6/tutorial_py_histogram_backprojection.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/Histograms_Matching/calcBackProject_Demo1.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/Histograms_Matching/calcBackProject_Demo2.cpp>
 %
 
 %% Theory
@@ -27,16 +29,16 @@
 % (which we know represents a sample of skin tonality). You applied some mask
 % to capture only the histogram of the skin area:
 %
-% <<http://docs.opencv.org/3.2.0/Back_Projection_Theory0.jpg>>
+% <<https://docs.opencv.org/3.2.0/Back_Projection_Theory0.jpg>>
 %
-% <<http://docs.opencv.org/3.2.0/Back_Projection_Theory1.jpg>>
+% <<https://docs.opencv.org/3.2.0/Back_Projection_Theory1.jpg>>
 %
 % Now, let's imagine that you get another hand image (test Image) like the one
 % below, with its respective histogram:
 %
-% <<http://docs.opencv.org/3.2.0/Back_Projection_Theory2.jpg>>
+% <<https://docs.opencv.org/3.2.0/Back_Projection_Theory2.jpg>>
 %
-% <<http://docs.opencv.org/3.2.0/Back_Projection_Theory3.jpg>>
+% <<https://docs.opencv.org/3.2.0/Back_Projection_Theory3.jpg>>
 %
 % What we want to do is to use our _model histogram_ (that we know represents
 % a skin tonality) to detect skin areas in our test image. Here are the steps
@@ -52,7 +54,7 @@
 % * Applying the steps above, we get the following BackProjection image for
 %   our test image:
 %
-% <<http://docs.opencv.org/3.2.0/Back_Projection_Theory4.jpg>>
+% <<https://docs.opencv.org/3.2.0/Back_Projection_Theory4.jpg>>
 %
 % * In terms of statistics, the values stored in _BackProjection_ represent
 %   the _probability_ that a pixel in _test image_ belongs to a skin area,
@@ -98,8 +100,8 @@ function imgs = loadImages()
 
     % source and target images
     im = {
-        'http://docs.opencv.org/3.2.0/Histogram_Comparison_Source_0.jpg'
-        'http://docs.opencv.org/3.2.0/Histogram_Comparison_Source_1.jpg'
+        'https://docs.opencv.org/3.2.0/Histogram_Comparison_Source_0.jpg'
+        'https://docs.opencv.org/3.2.0/Histogram_Comparison_Source_1.jpg'
     };
     imgs = cell(size(im));
     for i=1:numel(im)

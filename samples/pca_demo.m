@@ -1,4 +1,4 @@
-%% PCA demo
+%% PCA for dimensionality reduction
 % An example using PCA for dimensionality reduction while maintaining an
 % amount of variance.
 %
@@ -9,7 +9,9 @@
 % The author recommends using the first 15 faces of the AT&T face data set:
 % <http://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html>
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/pca.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/pca.cpp>
 %
 
 %% Input images

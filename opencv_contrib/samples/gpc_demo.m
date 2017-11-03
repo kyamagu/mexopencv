@@ -11,8 +11,10 @@
 % downloading one of the files trained on some publicly available dataset from
 % here: <https://drive.google.com/open?id=0B7Hb8cfuzrIIZDFscXVYd0NBNFU>
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.2.0/modules/optflow/samples/gpc_train.cpp>
-% <https://github.com/opencv/opencv_contrib/blob/3.2.0/modules/optflow/samples/gpc_evaluate.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.2.0/modules/optflow/samples/gpc_train.cpp>
+% * <https://github.com/opencv/opencv_contrib/blob/3.2.0/modules/optflow/samples/gpc_evaluate.cpp>
 %
 
 %% 1) Train

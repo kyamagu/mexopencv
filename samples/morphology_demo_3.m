@@ -2,8 +2,10 @@
 % Use morphology transformations for extracting horizontal and vertical lines
 % sample code
 %
-% <http://docs.opencv.org/3.1.0/d1/dee/tutorial_moprh_lines_detection.html>
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ImgProc/Morphology_3.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.1.0/d1/dee/tutorial_moprh_lines_detection.html>
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ImgProc/Morphology_3.cpp>
 %
 
 %% Music Sheet image

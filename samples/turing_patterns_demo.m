@@ -1,9 +1,11 @@
-%% Multi-Scale Turing Patterns generator
+%% Multi-Scale Turing Patterns Generator
 %
 % Inspired by:
 % <http://www.jonathanmccabe.com/Cyclic_Symmetric_Multi-Scale_Turing_Patterns.pdf>
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/turing.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/turing.py>
 %
 
 function turing_patterns_demo()

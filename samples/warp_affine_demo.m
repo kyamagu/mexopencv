@@ -1,4 +1,4 @@
-%% Affine Transformations
+%% Image Affine Transformation
 %
 % In this demo, we show how to:
 %
@@ -7,8 +7,10 @@
 % * Use the OpenCV function |cv.getRotationMatrix2D| to obtain a 2x3 rotation
 %   matrix
 %
-% <http://docs.opencv.org/3.2.0/d4/d61/tutorial_warp_affine.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/Geometric_Transforms_Demo.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d4/d61/tutorial_warp_affine.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/Geometric_Transforms_Demo.cpp>
 %
 
 %% Theory
@@ -33,8 +35,7 @@
 %         a_{00} & a_{01} \cr
 %         a_{10} & a_{11}
 %     }}\right]_{2 \times 2}
-% $$
-% $$
+% \qquad
 % B = \left[{\matrix{
 %         b_{00} \cr
 %         b_{10}
@@ -57,7 +58,9 @@
 % same with:
 %
 % $$T = A \cdot \left[{\matrix{x \cr y}}\right] + B$$
+%
 % or
+%
 % $$T = M \cdot  [x, y, 1]^{T}$$
 %
 % $$T = \left[{\matrix{
@@ -81,7 +84,7 @@
 % images, we can analyze the simplest case in which it relates three points in
 % both images. Look at the figure below:
 %
-% <<http://docs.opencv.org/3.2.0/Warp_Affine_Tutorial_Theory_0.jpg>>
+% <<https://docs.opencv.org/3.2.0/Warp_Affine_Tutorial_Theory_0.jpg>>
 %
 % the points 1, 2 and 3 (forming a triangle in image 1) are mapped into
 % image 2, still forming a triangle, but now they have changed notoriously. If

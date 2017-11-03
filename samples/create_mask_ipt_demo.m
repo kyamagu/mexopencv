@@ -3,9 +3,11 @@
 %
 % This demo uses Image Processing Toolbox functions.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/create_mask.cpp>
-%
 % See also: impoly, getline, roipoly
+%
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/create_mask.cpp>
 %
 
 % load an image, and display it

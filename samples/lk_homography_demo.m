@@ -1,10 +1,12 @@
-%% Lucas-Kanade homography tracker
+%% Lucas-Kanade Homography Tracker
 %
 % Lucas-Kanade sparse optical flow demo. Uses |cv.goodFeaturesToTrack| for
 % track initialization and back-tracking for match verification between
 % frames. Finds homography between reference and current views.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/lk_homography.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/lk_homography.py>
 %
 
 %% Options

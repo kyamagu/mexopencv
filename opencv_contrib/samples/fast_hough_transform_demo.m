@@ -1,7 +1,9 @@
 %% Fast Hough transform demo
 % This program demonstrates line finding with the Fast Hough transform.
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/ximgproc/samples/fast_hough_transform.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/ximgproc/samples/fast_hough_transform.cpp>
 %
 
 %% Image

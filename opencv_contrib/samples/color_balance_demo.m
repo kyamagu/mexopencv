@@ -1,7 +1,9 @@
 %% White Balance Demo
 % OpenCV color balance demonstration sample.
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.2.0/modules/xphoto/samples/color_balance.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.2.0/modules/xphoto/samples/color_balance.cpp>
 %
 
 %% Load input image

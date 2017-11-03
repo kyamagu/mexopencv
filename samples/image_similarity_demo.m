@@ -1,9 +1,11 @@
 %% Similarity measurement (PSNR and SSIM)
 % Image similarity under lossy compression.
 %
-% <http://docs.opencv.org/3.2.0/d5/dc4/tutorial_video_input_psnr_ssim.html>,
-% <http://docs.opencv.org/3.2.0/dd/d3d/tutorial_gpu_basics_similarity.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/videoio/video-input-psnr-ssim/video-input-psnr-ssim.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d5/dc4/tutorial_video_input_psnr_ssim.html>
+% * <https://docs.opencv.org/3.2.0/dd/d3d/tutorial_gpu_basics_similarity.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/videoio/video-input-psnr-ssim/video-input-psnr-ssim.cpp>
 %
 
 %% PSNR
@@ -21,7 +23,7 @@
 %
 % $$PSNR = 10 \cdot \log_{10} \left( \frac{MAX_I^2}{MSE} \right)$$
 %
-% Here the $MAX_I^2$ is the maximum valid value for a pixel. In case of the
+% Here the $MAX_I$ is the maximum valid value for a pixel. In case of the
 % simple single byte image per pixel per channel this is 255. When two images
 % are the same the MSE will give zero, resulting in an invalid divide by zero
 % operation in the PSNR formula. In this case the PSNR is undefined and as

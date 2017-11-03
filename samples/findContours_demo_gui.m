@@ -6,8 +6,10 @@
 % * <matlab:doc('cv.findContours') cv.findContours>
 % * <matlab:doc('cv.drawContours') cv.drawContours>
 %
-% <http://docs.opencv.org/3.1.0/df/d0d/tutorial_find_contours.html>
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ShapeDescriptors/findContours_demo.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.1.0/df/d0d/tutorial_find_contours.html>
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ShapeDescriptors/findContours_demo.cpp>
 %
 
 function varargout = findContours_demo_gui(im)

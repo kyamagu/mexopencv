@@ -1,7 +1,9 @@
 %% Smoothing Demo
 % Sample code for simple filters
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ImgProc/Smoothing.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ImgProc/Smoothing.cpp>
 %
 
 %%

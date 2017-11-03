@@ -1,10 +1,12 @@
-%% Smile Detection demo
+%% Smile Detection
 % This program demonstrates the smile detector.
 %
 % NOTE: Smile intensity will only be valid after a first smile has been
 % detected.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/smiledetect.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/smiledetect.cpp>
 %
 
 %% Options

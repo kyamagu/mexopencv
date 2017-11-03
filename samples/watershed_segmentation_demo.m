@@ -12,9 +12,11 @@
 % * Use the OpenCV function |cv.watershed| in order to isolate objects in the
 %   image from the background
 %
-% <http://docs.opencv.org/3.2.0/d2/dbd/tutorial_distance_transform.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/imageSegmentation.cpp>,
-% <http://docs.opencv.org/3.2.0/d3/db4/tutorial_py_watershed.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d2/dbd/tutorial_distance_transform.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/imageSegmentation.cpp>
+% * <https://docs.opencv.org/3.2.0/d3/db4/tutorial_py_watershed.html>
 %
 
 %%

@@ -54,7 +54,7 @@
 %
 % The following figure illustrates the pinhole camera model.
 %
-% <<http://docs.opencv.org/3.2.0/pinhole_camera_model.png>>
+% <<https://docs.opencv.org/3.2.0/pinhole_camera_model.png>>
 %
 % Real lenses usually have some distortion, mostly radial distortion and
 % slight tangential distortion. So, the above model is extended as:
@@ -84,7 +84,7 @@
 % distortion (typically $k_1 > 0$ and pincushion distortion (typically
 % $k_1 < 0$).
 %
-% <<http://docs.opencv.org/3.2.0/distortion_examples.png>>
+% <<https://docs.opencv.org/3.2.0/distortion_examples.png>>
 %
 % In some cases the image sensor may be tilted in order to focus an oblique
 % plane in front of the camera (Scheimpfug condition). This can be useful for
@@ -156,10 +156,10 @@
 pattern = 'chessboard';
 switch pattern
     case 'chessboard'
-        % http://docs.opencv.org/3.2.0/pattern.png
+        % https://docs.opencv.org/3.3.1/pattern.png
         bsz = [9 6];
     case 'acircles'
-        % http://docs.opencv.org/3.2.0/acircles_pattern.png
+        % https://docs.opencv.org/3.3.1/acircles_pattern.png
         % or https://nerian.com/support/resources/patterns/
         bsz = [4 11];
     case 'circles'

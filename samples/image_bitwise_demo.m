@@ -1,9 +1,11 @@
-%% Bitwise Operations
+%% Bitwise Operations on Images
 %
 % In this demo, we show how to perform arithmetic operations on images like
 % addition, subtraction, bitwise operations, etc.
 %
-% <http://docs.opencv.org/3.2.0/d0/d86/tutorial_py_image_arithmetics.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d0/d86/tutorial_py_image_arithmetics.html>
 %
 
 %% Theory

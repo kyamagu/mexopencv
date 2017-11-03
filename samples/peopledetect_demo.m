@@ -1,12 +1,14 @@
-%% People Detector Demo
+%% People Detection using HoG
 % This program demonstrates the use of the HoG descriptor using the
 % pre-trained SVM model for people detection.
 % During execution, close figure to quit.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/peopledetect.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/peopledetect.py>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/hog.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/tapi/hog.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/peopledetect.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/peopledetect.py>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/hog.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/tapi/hog.cpp>
 %
 
 %% Detector

@@ -1,4 +1,4 @@
-%% Rotation model images stitcher
+%% Simple rotation model images stitcher
 % A basic example on image stitching.
 %
 % In this demo, we show how to use the high-level stitching API provided by

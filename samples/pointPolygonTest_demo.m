@@ -3,8 +3,10 @@
 % In this sample you will learn how to use the OpenCV function
 % <matlab:doc('cv.pointPolygonTest') cv.pointPolygonTest>.
 %
-% <http://docs.opencv.org/3.2.0/dc/d48/tutorial_point_polygon_test.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ShapeDescriptors/pointPolygonTest_demo.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/dc/d48/tutorial_point_polygon_test.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ShapeDescriptors/pointPolygonTest_demo.cpp>
 %
 
 %%

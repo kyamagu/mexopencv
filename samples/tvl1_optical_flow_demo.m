@@ -1,7 +1,9 @@
 %% Optical Flow Estimation using Dual TV-L1 method
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tvl1_optical_flow.cpp>
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/optical_flow.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tvl1_optical_flow.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/optical_flow.cpp>
 %
 
 %% Load a pair of images

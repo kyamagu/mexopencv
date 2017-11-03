@@ -7,10 +7,12 @@
 % "Two-Frame Motion Estimation Based on Polynomial Expansion"
 % by Gunner Farneback in 2003.
 %
-% <http://docs.opencv.org/3.2.0/d7/d8b/tutorial_py_lucas_kanade.html>
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/opt_flow.py>
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/farneback_optical_flow.cpp>
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/tapi/tvl1_optical_flow.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d7/d8b/tutorial_py_lucas_kanade.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/opt_flow.py>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/farneback_optical_flow.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/tapi/tvl1_optical_flow.cpp>
 %
 
 function opt_flow_demo()

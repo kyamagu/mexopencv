@@ -5,8 +5,10 @@
 %
 % * <matlab:doc('cv.floodFill') cv.floodFill>
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/ffilldemo.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/floodfill.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/ffilldemo.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/floodfill.py>
 %
 
 function varargout = ffilldemo_gui(im)

@@ -5,9 +5,11 @@
 % with given homography matrix, match them and count the number of inliers
 % (i.e. matches that fit in the given homography).
 %
-% <http://docs.opencv.org/3.2.0/db/d70/tutorial_akaze_matching.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/features2D/AKAZE_match.cpp>
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/xfeatures2D/LATCH_match.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/db/d70/tutorial_akaze_matching.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/features2D/AKAZE_match.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/xfeatures2D/LATCH_match.cpp>
 %
 
 %% Description
@@ -18,7 +20,7 @@
 % We are going to use images 1 and 3 from _Graffity_ sequence of Oxford
 % dataset.
 %
-% <<http://docs.opencv.org/3.2.0/graf.png>>
+% <<https://docs.opencv.org/3.2.0/graf.png>>
 %
 % Homography is given by a 3-by-3 matrix shown below.
 %

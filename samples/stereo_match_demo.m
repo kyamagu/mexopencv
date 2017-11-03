@@ -6,11 +6,13 @@
 % Resulting .ply file can also be viewed using
 % <http://meshlab.sourceforge.net/ MeshLab>.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/stereo_match.py>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/stereo_match.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/stereo_match.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/calib3d/stereoBM/SBM_Sample.cpp>,
-% <http://docs.opencv.org/3.2.0/dd/d53/tutorial_py_depthmap.html>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/stereo_match.py>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/stereo_match.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/stereo_match.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/calib3d/stereoBM/SBM_Sample.cpp>
+% * <https://docs.opencv.org/3.2.0/dd/d53/tutorial_py_depthmap.html>
 %
 
 %% Theory
@@ -18,9 +20,9 @@
 % Previously, we saw basic concepts like epipolar constraints and other
 % related terms. We also saw that if we have two images of same scene, we can
 % get depth information from that in an intuitive way. Below is an image and
-% some simple mathematical formulas which proves that intuition:
+% some simple mathematical formulas which prove that intuition:
 %
-% <<http://docs.opencv.org/3.2.0/stereo_depth.jpg>>
+% <<https://docs.opencv.org/3.2.0/stereo_depth.jpg>>
 %
 % The above diagram contains equivalent triangles. Writing their equivalent
 % equations will yield us following result:
@@ -30,7 +32,7 @@
 % $x$ and $x'$ are the distance between points in image plane corresponding to
 % the scene point 3D and their camera center. $B$ is the distance between two
 % cameras (which we know) and $f$ is the focal length of camera (already
-% known). So in short, above equation says that the depth of a point in a
+% known). So in short, the above equation says that the depth of a point in a
 % scene is inversely proportional to the difference in distance of
 % corresponding image points and their camera centers. So with this
 % information, we can derive the depth of all pixels in an image.

@@ -1,9 +1,11 @@
-%% Gaussian mixture model demo
+%% Gaussian Mixture Model (GMM)
 %
 % Demonstrates EM clustering, and also compares againt K-means clustering.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/gaussian_mix.py>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/kmeans.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/gaussian_mix.py>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/kmeans.py>
 %
 
 function gaussian_mix_demo()

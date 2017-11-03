@@ -1,4 +1,4 @@
-%% Stereo Calibration demo
+%% Stereo Calibration
 % Demonstration of stereo calibration, rectification, and correspondence.
 %
 % You will learn how to use the following OpenCV functions and classes:
@@ -16,8 +16,10 @@
 % * |cv.StereoBM|, |cv.StereoSGBM|
 % * |cv.reprojectImageTo3D|
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/stereo_calib.cpp>,
-% <https://github.com/oreillymedia/Learning-OpenCV-3_examples/blob/master/example_19-03.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/stereo_calib.cpp>
+% * <https://github.com/oreillymedia/Learning-OpenCV-3_examples/blob/master/example_19-03.cpp>
 %
 % See also: stereoCameraCalibrator
 %

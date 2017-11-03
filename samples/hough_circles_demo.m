@@ -5,11 +5,13 @@
 % how to use the OpenCV function |cv.HoughCircles| to detect circles in an
 % image.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/houghcircles.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/houghcircles.py>,
-% <http://docs.opencv.org/3.2.0/d4/d70/tutorial_hough_circle.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/HoughCircle_Demo.cpp>,
-% <http://docs.opencv.org/3.2.0/da/d53/tutorial_py_houghcircles.html>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/houghcircles.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/houghcircles.py>
+% * <https://docs.opencv.org/3.2.0/d4/d70/tutorial_hough_circle.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/HoughCircle_Demo.cpp>
+% * <https://docs.opencv.org/3.2.0/da/d53/tutorial_py_houghcircles.html>
 %
 
 %% Theory
@@ -27,7 +29,7 @@
 % and $r$ is the radius, which allows us to completely define a circle, as it
 % can be seen below:
 %
-% <<http://docs.opencv.org/3.2.0/Hough_Circle_Tutorial_Theory_0.jpg>>
+% <<https://docs.opencv.org/3.2.0/Hough_Circle_Tutorial_Theory_0.jpg>>
 %
 % For sake of efficiency, OpenCV implements a detection method slightly
 % trickier than the standard Hough Transform: _The Hough gradient method_,

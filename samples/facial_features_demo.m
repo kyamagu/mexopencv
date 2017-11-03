@@ -16,7 +16,9 @@
 %
 % * <https://github.com/opencv/opencv_contrib/tree/master/modules/face/data/cascades>
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/facial_features.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/facial_features.cpp>
 %
 
 function facial_features_demo(im)

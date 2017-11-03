@@ -1,4 +1,4 @@
-%% OCR of hand-written digits using SVM
+%% OCR of hand-written digits using HoG and SVM
 %
 % In this tutorial, we will build an SVM classifer to recognize
 % hand-written digits (0 to 9), using Histogram of Oriented Gradients (HOG)
@@ -7,9 +7,11 @@
 % For additional resources, see this
 % <https://www.youtube.com/watch?v=0Zib1YEE4LU HoG video lecture>.
 %
-% <http://docs.opencv.org/3.2.0/dd/d3b/tutorial_py_svm_opencv.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/digits.py>,
-% <https://www.mathworks.com/help/vision/examples/digit-classification-using-hog-features.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/dd/d3b/tutorial_py_svm_opencv.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/digits.py>
+% * <https://www.mathworks.com/help/vision/examples/digit-classification-using-hog-features.html>
 %
 
 function svm_hog_ocr_digits_demo()
