@@ -86,7 +86,7 @@ end
 % find total markers
 D = uint8(D * 255);
 contours = cv.findContours(D, 'Mode','External', 'Method','Simple');
-contours = cellfun(@(C) cat(1,C{:}), contours, 'Uniform',false);
+contours = cellfun(@(C) cat(1,C{:}), contours, 'UniformOutput',false);
 N = numel(contours);
 
 %%

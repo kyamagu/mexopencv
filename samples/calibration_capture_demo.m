@@ -169,6 +169,7 @@ end
 %%
 % open webcam
 cap = cv.VideoCapture(0);
+assert(cap.isOpened(), 'Failed to initialize camera capture');
 img = cap.read();
 sz = size(img);
 

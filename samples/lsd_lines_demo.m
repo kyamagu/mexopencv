@@ -1,16 +1,19 @@
 %% Line Segment Detector demo
 % An example using the |cv.LineSegmentDetector| class.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/lsd_lines.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.3.1/samples/cpp/lsd_lines.cpp>
 %
 
 %% Input image
-img = imread(fullfile(mexopencv.root(),'test','building.jpg'));
-gray = cv.cvtColor(img, 'RGB2GRAY');
+img = cv.imread(fullfile(mexopencv.root(),'test','building.jpg'), 'Grayscale',true);
 
 %% Preprocess
-% Apply canny edge
-%gray = cv.Canny(gray, [50 200], 'ApertureSize',5);
+% Apply canny edge detector
+if false
+    img = cv.Canny(img, [50 200], 'ApertureSize',5);
+end
 
 %% LSD detectors
 % Create two LSD detectors with standard and no refinement.
@@ -19,17 +22,17 @@ lsd2 = cv.LineSegmentDetector('Refine','None');
 
 %%
 % Detect the lines both ways
-tic, lines1 = lsd1.detect(gray); toc
-tic, lines2 = lsd2.detect(gray); toc
+tic, lines1 = lsd1.detect(img); toc
+tic, lines2 = lsd2.detect(img); toc
 
 %% Result 1
 % Show found lines with standard refinement
-drawnLines1 = lsd1.drawSegments(gray, lines1);
+drawnLines1 = lsd1.drawSegments(img, lines1);
 imshow(drawnLines1), title('Standard refinement')
 
 %% Result 2
 % Show found lines with no refinement
-drawnLines2 = lsd2.drawSegments(gray, lines2);
+drawnLines2 = lsd2.drawSegments(img, lines2);
 imshow(drawnLines2), title('No refinement')
 
 %% Compare

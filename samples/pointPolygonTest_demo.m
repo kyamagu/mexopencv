@@ -23,7 +23,7 @@ src = cv.line(src, vert, circshift(vert,-1,1), 'Color',255, 'Thickness',3);
 %%
 % get the contours
 [contours, hierarchy] = cv.findContours(src, 'Mode','Tree', 'Method','Simple');
-contours = cellfun(@(C) cat(1,C{:}), contours, 'Uniform',false);
+contours = cellfun(@(C) cat(1,C{:}), contours, 'UniformOutput',false);
 assert(~isempty(contours));
 
 %%

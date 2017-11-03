@@ -49,7 +49,7 @@ imshow(vis), title('flow')
 % another way to visualize flow
 figure, imshow(img)
 if ~mexopencv.isOctave()
-	alpha(0.5)
+    alpha(0.5)
 end
 hold on, quiver(X, Y, VX, VY, 'Color','k'), hold off
 title('flow')

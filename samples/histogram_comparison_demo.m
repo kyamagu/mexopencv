@@ -139,7 +139,7 @@ if ~mexopencv.isOctave()
     disp(t);
 else
     %HACK: use cell array instead of table
-    t = [{''}, names; algs(:), arrayfun(@num2str,D,'Uniform',false)];
+    t = [{''}, names; algs(:), arrayfun(@num2str,D,'UniformOutput',false)];
     t = t';
     fprintf('%13s %9s %9s %9s %9s\n',t{:});
 end

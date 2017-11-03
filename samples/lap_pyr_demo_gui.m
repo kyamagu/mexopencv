@@ -105,7 +105,7 @@ function h = buildGUI(nlevel, varargin)
     %BUILDGUI  Creates the UI
 
     % setup video capture
-    if nargin > 0
+    if nargin > 1
         cap = cv.VideoCapture(varargin{:});
     else
         cap = cv.VideoCapture(0);

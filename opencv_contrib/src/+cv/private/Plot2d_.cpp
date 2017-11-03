@@ -9,7 +9,7 @@
 #include "opencv2/plot.hpp"
 using namespace std;
 using namespace cv;
-using namespace plot;
+using namespace cv::plot;
 
 // Persistent objects
 namespace {

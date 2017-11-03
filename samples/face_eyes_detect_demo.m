@@ -218,7 +218,7 @@ function img = detectAndDraw(img, cascadeF, cascadeE, scale, tryflip)
     faces = cascadeF.detect(gray, detectOpts{:});
     if tryflip
         faces2 = cascadeF.detect(cv.flip(gray, 1), detectOpts{:});
-        faces2 = cellfun(@(r) [w-r(1)-r(3) r(2:4)], faces2, 'Uniform',false);
+        faces2 = cellfun(@(r) [w-r(1)-r(3) r(2:4)], faces2, 'UniformOutput',false);
         faces = [faces(:); faces2(:)];
     end
     toc

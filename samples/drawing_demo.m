@@ -80,7 +80,7 @@ end
 %% Polygons
 for i=1:NUMBER
     pts = arrayfun(@(~) [randi(xlims, [3 1]) randi(ylims, [3 1])], 1:2, ...
-        'Uniform',false);
+        'UniformOutput',false);
     thick = randi([1 10]);
 
     img = cv.polylines(img, pts, ...
@@ -93,7 +93,7 @@ end
 %% Filled Polygons
 for i=1:NUMBER
     pts = arrayfun(@(~) [randi(xlims, [3 1]) randi(ylims, [3 1])], 1:2, ...
-        'Uniform',false);
+        'UniformOutput',false);
 
     img = cv.fillPoly(img, pts, ...
         'Color',clr(), lineType{:});

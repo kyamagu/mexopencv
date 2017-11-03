@@ -33,7 +33,7 @@ classdef TestFindContours
                     {'vector', 'numel',4, 'integer', '<',numel(contours)}), ...
                     hierarchy);
             end
-            contours = cellfun(@(c) cat(1,c{:}), contours, 'Uniform',false);
+            contours = cellfun(@(c) cat(1,c{:}), contours, 'UniformOutput',false);
             hierarchy = cat(1, hierarchy{:});
         end
 

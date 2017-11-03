@@ -1,6 +1,6 @@
 /**
  * @file GradientDeriche.cpp
- * @brief mex interface for cv::ximgproc::GradientDeriche(X|Y)
+ * @brief mex interface for cv::ximgproc::GradientDericheX, cv::ximgproc::GradientDericheY
  * @ingroup ximgproc
  * @author Amro
  * @date 2017

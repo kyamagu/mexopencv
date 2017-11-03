@@ -27,8 +27,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
-    float alpha = 1.0;  // 1.0/7
-    float K = 0.02;
+    float alpha = 1.0f;  // 1.0/7
+    float K = 0.02f;
     int niters = 10;  // 1
     for (int i=1; i<nrhs; i+=2) {
         string key(rhs[i].toString());

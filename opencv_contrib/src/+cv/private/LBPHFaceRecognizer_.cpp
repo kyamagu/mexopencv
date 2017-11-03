@@ -176,8 +176,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==3 && nlhs<=2);
         Mat src(rhs[2].toMat());
         int label = -1;
-        double confidence = 0;
         if (nlhs > 1) {
+            double confidence = 0;
             obj->predict(src, label, confidence);
             plhs[1] = MxArray(confidence);
         }

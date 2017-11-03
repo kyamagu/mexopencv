@@ -28,8 +28,13 @@ figure(1), imshow(out), title('Flow')
 
 %% Draw velocities vector field
 [X,Y,U,V] = drawVelocities(flow);
-figure(2), imshowpair(frame0, frame1)
-%imshowpair(flow(:,:,1), flow(:,:,2))
+figure(2)
+if ~mexopencv.isOctave() && mexopencv.require('images')
+    imshowpair(frame0, frame1)
+    %imshowpair(flow(:,:,1), flow(:,:,2))
+else
+    imshow(cat(3, frame1, frame0, frame1))
+end
 hold on
 quiver(X(:), Y(:), U(:), V(:));
 hold off

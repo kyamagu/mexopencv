@@ -37,7 +37,7 @@ imshow(dst), title('Components')
 % convert labels to one-based floating-point indices, background being label 1
 labels = double(labels) + 1;
 if mexopencv.require('stats')
-	tabulate(labels(:))
+    tabulate(labels(:))
 end
 
 %%

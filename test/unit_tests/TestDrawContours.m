@@ -34,7 +34,7 @@ classdef TestDrawContours
 
         function test_2
             [contours, hierarchy] = cv.findContours(TestDrawContours.img);
-            contours = cellfun(@(c) cat(1,c{:}), contours, 'Uniform',false);
+            contours = cellfun(@(c) cat(1,c{:}), contours, 'UniformOutput',false);
             hierarchy = cat(1, hierarchy{:});
             img = repmat(TestDrawContours.img, [1 1 3]);
             im = cv.drawContours(img, contours, ...

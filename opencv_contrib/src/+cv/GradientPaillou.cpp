@@ -1,6 +1,6 @@
 /**
  * @file GradientPaillou.cpp
- * @brief mex interface for cv::ximgproc::GradientPaillou(X|Y)
+ * @brief mex interface for cv::ximgproc::GradientPaillouX, cv::ximgproc::GradientPaillouY
  * @ingroup ximgproc
  * @author Amro
  * @date 2017
