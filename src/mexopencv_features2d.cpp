@@ -25,16 +25,22 @@ Ptr<BRISK> createBRISK(
     vector<MxArray>::const_iterator last)
 {
     nargchk(((last-first) % 2) == 0);
-    // second variant for custom patterns
+    // second/third variants for a custom pattern
     if ((last-first) >= 2 && !first->isChar()) {
         vector<float> radiusList(first->toVector<float>()); ++first;
         vector<int> numberList(first->toVector<int>()); ++first;
+        int thresh = 20;
+        int octaves = 3;
         float dMax = 5.85f, dMin = 8.2f;
         vector<int> indexChange;
         for (; first != last; first += 2) {
             string key((*first).toString());
             const MxArray& val = *(first + 1);
-            if (key == "DMax")
+            if (key == "Threshold")
+                thresh = val.toInt();
+            else if (key == "Octaves")
+                octaves = val.toInt();
+            else if (key == "DMax")
                 dMax = val.toFloat();
             else if (key == "DMin")
                 dMin = val.toFloat();
@@ -44,7 +50,8 @@ Ptr<BRISK> createBRISK(
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        return BRISK::create(radiusList, numberList, dMax, dMin, indexChange);
+        return BRISK::create(thresh, octaves,
+            radiusList, numberList, dMax, dMin, indexChange);
     }
     // first variant
     else {

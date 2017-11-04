@@ -44,6 +44,9 @@ classdef BRISK < handle
             %
             % Options accepted by second variant for a custom pattern:
             %
+            % * __Threshold__ FAST/AGAST detection threshold score. default 20
+            % * __Octaves__ detection octaves. Use 0 to do single scale.
+            %   default 3
             % * __DMax__ threshold for the short pairings used for descriptor
             %   formation (in pixels for keypoint scale 1). default 5.85
             % * __DMin__ threshold for the long pairings used for orientation
