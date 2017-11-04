@@ -118,4 +118,72 @@ classdef TickMeter < handle
         end
     end
 
+    methods (Static)
+        function t = getTickCount();
+            %GETTICKCOUNT  Returns the number of ticks.
+            %
+            %     t = cv.TickMeter.getTickCount()
+            %
+            % ## Output
+            % * __t__ number of ticks.
+            %
+            % The function returns the number of ticks after a certain event
+            % (for example, when the machine was turned on). It can be used to
+            % initialize RNG or to measure a function execution time by
+            % reading the tick count before and after the function call.
+            %
+            % See also: cv.TickMeter.getTickFrequency, cv.TickMeter
+            %
+            t = TickMeter_(0, 'getTickCount');
+        end
+
+        function f = getTickFrequency();
+            %GETTICKFREQUENCY  Returns the number of ticks per second
+            %
+            %     f = cv.TickMeter.getTickFrequency()
+            %
+            % ## Output
+            % * __f__ number of ticks per second.
+            %
+            % The function returns the number of ticks per second. That is,
+            % the following code computes the execution time in seconds:
+            %
+            %     t = double(cv.TickMeter.getTickCount());
+            %     % do something ...
+            %     t = (double(cv.TickMeter.getTickCount()) - t) / cv.TickMeter.getTickFrequency();
+            %
+            % See also: cv.TickMeter.getTickCount, cv.TickMeter
+            %
+            f = TickMeter_(0, 'getTickFrequency');
+        end
+
+        function t = getCPUTickCount();
+            %GETCPUTICKCOUNT  Returns the number of CPU ticks
+            %
+            %     t = cv.TickMeter.getCPUTickCount()
+            %
+            % ## Output
+            % * __t__ number of CPU ticks.
+            %
+            % The function returns the current number of CPU ticks on some
+            % architectures (such as x86, x64, PowerPC). On other platforms
+            % the function is equivalent to cv.TickMeter.getTickCount. It can
+            % also be used for very accurate time measurements, as well as for
+            % RNG initialization. Note that in case of multi-CPU systems a
+            % thread, from which cv.TickMeter.getCPUTickCount is called, can
+            % be suspended and resumed at another CPU with its own counter.
+            % So, theoretically (and practically) the subsequent calls to the
+            % function do not necessary return the monotonically increasing
+            % values. Also, since modern CPUs varies the CPU frequency
+            % depending on the load, the number of CPU clocks spent in some
+            % code cannot be directly converted to time units. Therefore,
+            % cv.TickMeter.getTickCount is generally a preferable solution for
+            % measuring execution time.
+            %
+            % See also: cv.TickMeter.getTickFrequency
+            %
+            t = TickMeter_(0, 'getCPUTickCount');
+        end
+    end
+
 end

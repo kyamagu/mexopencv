@@ -1,6 +1,6 @@
 /**
  * @file TickMeter_.cpp
- * @brief mex interface for cv::TickMeter
+ * @brief mex interface for cv::TickMeter and related functions
  * @ingroup core
  * @author Amro
  * @date 2017
@@ -53,6 +53,22 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         obj_[++last_id] = makePtr<TickMeter>();
         plhs[0] = MxArray(last_id);
         mexLock();
+        return;
+    }
+    // static method calls
+    else if (method == "getTickCount") {
+        nargchk(nrhs==2 && nlhs<=1);
+        plhs[0] = toMxArray(getTickCount());
+        return;
+    }
+    else if (method == "getTickFrequency") {
+        nargchk(nrhs==2 && nlhs<=1);
+        plhs[0] = MxArray(getTickFrequency());
+        return;
+    }
+    else if (method == "getCPUTickCount") {
+        nargchk(nrhs==2 && nlhs<=1);
+        plhs[0] = toMxArray(getCPUTickCount());
         return;
     }
 
