@@ -11,12 +11,11 @@ using namespace std;
 using namespace cv;
 
 //HACK: detection_based_tracker.cpp requires C++11 threads or Unix pthreads
-//  to compile. On Windows, it means we need >= VS2012 (VS2010 doesnt work).
+//  to compile. On Windows, it means we need >= VS2013 (VS2010 doesnt work).
 //HACK: I'm excluding MinGW since not all builds have std::thread support,
 //  plus the detection code in opencv doesn't handle MinGW correctly.
-#if (defined(__linux__) || defined(__APPLE__) || \
-  (defined(__cplusplus) &&  __cplusplus > 199711L) || \
-  (defined(_MSC_VER) && _MSC_VER >= 1700)) && !defined(__MINGW32__)
+#if defined(__linux__) || defined(__APPLE__) || \
+    (defined(CV_CXX11) && !defined(__MINGW32__))
 
 namespace {
 // Persistent objects
