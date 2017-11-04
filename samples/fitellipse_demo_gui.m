@@ -1,18 +1,24 @@
 %% Fit ellipses demo
 % This program is demonstration for ellipse fitting. The program finds
-% contours and approximate them by ellipses.
+% contours and approximate them by ellipses using one of three methods:
+%
+% # OpenCV's original method which implements Fitzgibbon 1995 method.
+% # The Approximate Mean Square (AMS) method proposed by Taubin 1991.
+% # The Direct least square (Direct) method proposed by Fitzgibbon 1999.
 %
 % Trackbar specify threshold parameter.
 %
-% White lines are contours. Red lines are fitting ellipses.
+% White lines are contours points. Red lines are fitting ellipses.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/fitellipse.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.3.1/samples/cpp/fitellipse.cpp>
 %
 
 function varargout = fitellipse_demo_gui(im)
     % load source image
     if nargin < 1
-        im = fullfile(mexopencv.root(),'test','stuff.jpg');
+        im = fullfile(mexopencv.root(),'test','ellipses.jpg');
         src = cv.imread(im, 'Grayscale',true);
     elseif ischar(im)
         src = cv.imread(im, 'Grayscale',true);
@@ -31,31 +37,38 @@ function onChange(~,~,h)
     %ONCHANGE  Event handler for UI controls
 
     % retrieve current values from UI controls
+    algIdx = get(h.pop, 'Value');
+    algs = get(h.pop, 'String');
     thresh = round(get(h.slid, 'Value'));
     set(h.txt, 'String',sprintf('Threshold: %3d',thresh));
 
-    % threshold image and compute find contours
-    bimg = uint8(h.src >= thresh) * 255;
+    % threshold image and find contours
+    bimg = uint8(cv.blur(h.src) >= thresh) * 255;
     contours = cv.findContours(bimg, 'Mode','List', 'Method','None');
 
+    % filter out contours that are too simple, probably not an ellipse
+    % (note: fitEllipse requires at least 5 points)
+    contours(cellfun(@numel, contours) < 50) = [];
+
+    % {{[x y], [x y], ..}, ..} -> {[x y; x y; ..], ..}
+    contours = cellfun(@(c) cat(1,c{:}), contours, 'UniformOutput',false);
+
+    % draw all contours points
+    if true
+        cimg = cv.cvtColor(h.src * 0.3, 'GRAY2RGB');
+    else
+        cimg = zeros([size(bimg) 3], 'uint8');
+    end
+    cimg = cv.drawContours(cimg, contours, 'Color',[255 255 255]);
+
     % for each contour
-    cimg = zeros([size(bimg) 3], 'uint8');
     for i=1:numel(contours)
-        if numel(contours{i}) < 6
-            % skip: contour too simple, probably not an ellipse
-            continue;
-        end
-
         % approximate by an ellipse
-        rrect = cv.fitEllipse(contours{i});
+        rrect = cv.fitEllipse(contours{i}, 'Method',algs{algIdx});
         if max(rrect.size) > min(rrect.size)*30
-            % skip: rectangle too tall/wide
+            % skip if rectangle is too tall/wide
             continue;
         end
-
-        % draw contour
-        cimg = cv.drawContours(cimg, contours, 'ContourIdx',i-1, ...
-            'Color',[255 255 255]);
 
         % draw ellipse
         if true
@@ -104,14 +117,16 @@ function h = buildGUI(img)
         axes(h.ax);
         h.img = imshow(img);
     end
+    h.pop = uicontrol('Parent',h.fig, 'Style','popupmenu', ...
+       'Position',[5 5 70 20], 'String',{'Linear', 'Direct', 'AMS'});
     h.txt = uicontrol('Parent',h.fig, 'Style','text', 'FontSize',11, ...
-        'Position',[5 5 130 20], 'String',sprintf('Threshold: %3d',thresh));
+        'Position',[75 5 120 20], 'String',sprintf('Threshold: %3d',thresh));
     h.slid = uicontrol('Parent',h.fig, 'Style','slider', 'Value',thresh, ...
-        'Min',0, 'Max',max_thresh, 'SliderStep',[1 10]./(max_thresh-0), ...
-        'Position',[135 5 sz(2)-135-5 20]);
+        'Min',1, 'Max',max_thresh, 'SliderStep',[1 10]./(max_thresh-1), ...
+        'Position',[200 5 sz(2)-200-5 20]);
 
     % hook event handlers, and trigger default start
-    set(h.slid, 'Callback',{@onChange,h}, ...
+    set([h.slid, h.pop], 'Callback',{@onChange,h}, ...
         'Interruptible','off', 'BusyAction','cancel');
     onChange([],[],h);
 end
