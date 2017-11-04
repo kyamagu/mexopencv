@@ -19,6 +19,19 @@ classdef TestFitEllipse
             assert(all(ismember({'center','size','angle'}, fieldnames(rct))));
         end
 
+        function test_methods
+            % noisy circle
+            t = linspace(0, 2*pi, 50).';
+            points = bsxfun(@plus, [cos(t) sin(t)]*100, [150 150]);
+            points = bsxfun(@plus, points, randn(size(points))*10);
+
+            algs = {'Linear', 'Direct', 'AMS'};
+            for i=1:numel(algs)
+                rct = cv.fitEllipse(points, 'Method',algs{i});
+                validateattributes(rct, {'struct'}, {'scalar'});
+            end
+        end
+
         function test_error_argnum
             try
                 cv.fitEllipse();
