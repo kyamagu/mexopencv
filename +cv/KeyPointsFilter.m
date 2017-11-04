@@ -94,6 +94,20 @@ classdef KeyPointsFilter
             keypoints = KeyPointsFilter_('removeDuplicated', keypoints);
         end
 
+        function keypoints = removeDuplicatedSorted(keypoints)
+            %REMOVEDUPLICATEDSORTED  Remove duplicated keypoints and sort the remaining keypoints
+            %
+            %     keypoints = cv.KeyPointsFilter.removeDuplicatedSorted(keypoints)
+            %
+            % ## Input
+            % * __keypoints__ input collection of keypoints.
+            %
+            % ## Output
+            % * __keypoints__ output filtered keypoints.
+            %
+            keypoints = KeyPointsFilter_('removeDuplicatedSorted', keypoints);
+        end
+
         function keypoints = retainBest(keypoints, npoints)
             %RETAINBEST  Retain the specified number of the best keypoints (according to the response)
             %

@@ -32,6 +32,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         KeyPointsFilter::removeDuplicated(keypoints);
         plhs[0] = MxArray(keypoints);
     }
+    else if (method == "removeDuplicatedSorted") {
+        nargchk(nrhs==2 && nlhs<=1);
+        vector<KeyPoint> keypoints(rhs[1].toVector<KeyPoint>());
+        KeyPointsFilter::removeDuplicatedSorted(keypoints);
+        plhs[0] = MxArray(keypoints);
+    }
     else if (method == "retainBest") {
         nargchk(nrhs==3 && nlhs<=1);
         vector<KeyPoint> keypoints(rhs[1].toVector<KeyPoint>());
