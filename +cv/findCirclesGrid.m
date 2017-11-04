@@ -50,6 +50,10 @@
 %   * __EdgePenalty__ default -0.6
 %   * __ConvexHullFactor__ default 1.1
 %   * __MinRNGEdgeSwitchDist__ default 5.0
+%   * __SquareSize__ Distance between two adjacent points. Used by
+%     'Clustering' algorithm. default 1.0
+%   * __MaxRectifiedDistance__ Max deviation from predicion. Used by
+%     'Clustering' algorithm. default `SquareSize/2`
 %
 % The function attempts to determine whether the input image contains a grid
 % of circles. If it is, the function locates centers of the circles. The
