@@ -51,6 +51,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         s.set("AVX_512VBMI",    checkHardwareSupport(CV_CPU_AVX_512VBMI));
         s.set("AVX_512VL",      checkHardwareSupport(CV_CPU_AVX_512VL));
         s.set("NEON",           checkHardwareSupport(CV_CPU_NEON));
+        s.set("VSX",            checkHardwareSupport(CV_CPU_VSX));
         plhs[0] = s;
     }
     else if (method == "getBuildInformation") {
