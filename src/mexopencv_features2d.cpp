@@ -195,6 +195,7 @@ Ptr<GFTTDetector> createGFTTDetector(
     double qualityLevel = 0.01;
     double minDistance = 1;
     int blockSize = 3;
+    int gradientSize = 3;
     bool useHarrisDetector = false;
     double k = 0.04;
     for (; first != last; first += 2) {
@@ -208,6 +209,8 @@ Ptr<GFTTDetector> createGFTTDetector(
             minDistance = val.toDouble();
         else if (key == "BlockSize")
             blockSize = val.toInt();
+        else if (key == "GradientSize")
+            gradientSize = val.toInt();
         else if (key == "HarrisDetector")
             useHarrisDetector = val.toBool();
         else if(key == "K")
@@ -217,7 +220,7 @@ Ptr<GFTTDetector> createGFTTDetector(
                 "Unrecognized option %s", key.c_str());
     }
     return GFTTDetector::create(maxCorners, qualityLevel, minDistance,
-        blockSize, useHarrisDetector, k);
+        blockSize, gradientSize, useHarrisDetector, k);
 }
 
 Ptr<SimpleBlobDetector> createSimpleBlobDetector(

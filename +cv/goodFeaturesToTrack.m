@@ -32,6 +32,7 @@
 % * __BlockSize__ Size of an average block for computing a derivative
 %   covariation matrix over each pixel neighborhood. See
 %   cv.cornerEigenValsAndVecs. default 3
+% * __GradientSize__ Gradient window size to use on the input. default 3
 % * __UseHarrisDetector__ Parameter indicating whether to use a Harris detector
 %   (see cv.cornerHarris) or cv.cornerMinEigenVal, default false
 % * __K__ Free parameter of the Harris detector. default 0.04

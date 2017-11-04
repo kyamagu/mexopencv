@@ -80,6 +80,7 @@ classdef GFTTDetector < handle
             %   default 0.01
             % * __MinDistance__ See cv.GFTTDetector.MinDistance, default 1
             % * __BlockSize__ See cv.GFTTDetector.BlockSize, default 3
+            % * __GradientSize__ default 3
             % * __HarrisDetector__ See cv.GFTTDetector.HarrisDetector,
             %   default false
             % * __K__ See cv.GFTTDetector.K, default 0.04
