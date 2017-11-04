@@ -26,12 +26,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Option processing
     Mat R, P;
+    TermCriteria criteria(TermCriteria::MAX_ITER, 5, 0.01);
     for (int i=3; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "R")
             R = rhs[i+1].toMat(CV_64F);
         else if (key == "P")
             P = rhs[i+1].toMat(CV_64F);
+        else if (key == "Criteria")
+            criteria = rhs[i+1].toTermCriteria();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
@@ -43,7 +46,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         distCoeffs(rhs[2].toMat(CV_64F));
     bool cn1 = (src.channels() == 1);
     if (cn1) src = src.reshape(2,0);
-    undistortPoints(src, dst, cameraMatrix, distCoeffs, R, P);
+    undistortPoints(src, dst, cameraMatrix, distCoeffs, R, P, criteria);
     if (cn1) dst = dst.reshape(1,0);
     plhs[0] = MxArray(dst);
 }

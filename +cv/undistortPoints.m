@@ -26,6 +26,9 @@
 %   `P = [fxp 0 cxp tx; 0 fyp cyp ty; 0 0 tz]`. `P1` or `P2` computed by
 %   cv.stereoRectify can be passed here. If the matrix is empty, the identity
 %   new camera matrix is used. default empty
+% * __Criteria__ Termination criteria for the iterative distortion
+%   compensation. By default does 5 iterations to compute undistorted points.
+%   default `struct('type','Count', 'maxCount',5, 'epsilon',0.01)`
 %
 % The function is similar to cv.undistort and cv.initUndistortRectifyMap but
 % it operates on a sparse set of points instead of a raster image. Also the
