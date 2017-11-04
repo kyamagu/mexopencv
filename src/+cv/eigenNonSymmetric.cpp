@@ -1,9 +1,9 @@
 /**
- * @file eigen.cpp
- * @brief mex interface for cv::eigen
+ * @file eigenNonSymmetric.cpp
+ * @brief mex interface for cv::eigenNonSymmetric
  * @ingroup core
  * @author Amro
- * @date 2015
+ * @date 2017
  */
 #include "mexopencv.hpp"
 using namespace std;
@@ -19,7 +19,7 @@ using namespace cv;
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    nargchk(nrhs==1 && nlhs<=3);
+    nargchk(nrhs==1 && nlhs<=2);
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);
@@ -27,10 +27,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Process
     Mat src(rhs[0].toMat(rhs[0].isSingle() ? CV_32F : CV_64F));
     Mat evals, evects;
-    bool b = eigen(src, evals, (nlhs>1 ? evects : noArray()));
+    eigenNonSymmetric(src, evals, (nlhs>1 ? evects : noArray()));
     plhs[0] = MxArray(evals);
     if (nlhs > 1)
         plhs[1] = MxArray(evects);
-    if (nlhs > 2)
-        plhs[2] = MxArray(b);
 }
