@@ -58,7 +58,7 @@ Ptr<Retina> create_Retina(
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
     }
-    return createRetina(inputSize, colorMode, colorSamplingMethod,
+    return Retina::create(inputSize, colorMode, colorSamplingMethod,
         useRetinaLogSampling, reductionFactor, samplingStrength);
 }
 

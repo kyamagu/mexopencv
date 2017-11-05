@@ -39,7 +39,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Constructor is called. Create a new object from argument
     if (method == "new") {
         nargchk(nrhs==3 && nlhs<=1);
-        obj_[++last_id] = createRetinaFastToneMapping(rhs[2].toSize());
+        obj_[++last_id] = RetinaFastToneMapping::create(rhs[2].toSize());
         plhs[0] = MxArray(last_id);
         mexLock();
         return;
