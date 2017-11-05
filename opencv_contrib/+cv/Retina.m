@@ -938,6 +938,12 @@ classdef Retina < handle
             %
             % See also: cv.Retina.getParvo, cv.Retina.getMagno
             %
+            if true
+                %HACK: temp fix to get around an issue when OpenCL is enabled
+                val = cv.Utils.useOptimized();
+                cv.Utils.setUseOptimized(false);
+                cObj = onCleanup(@() cv.Utils.setUseOptimized(val));
+            end
             Retina_(this.id, 'run', inputImage);
         end
 
