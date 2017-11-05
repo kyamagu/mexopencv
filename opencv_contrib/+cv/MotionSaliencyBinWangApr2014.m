@@ -197,19 +197,6 @@ classdef MotionSaliencyBinWangApr2014 < handle
 
     %% Saliency, MotionSaliency
     methods
-        function className = getClassName(this)
-            %GETCLASSNAME  Get the name of the specific saliency type
-            %
-            %     className = obj.getClassName()
-            %
-            % ## Output
-            % * __className__ The name of the tracker initializer.
-            %
-            % See also: cv.MotionSaliencyBinWangApr2014.MotionSaliencyBinWangApr2014
-            %
-            className = MotionSaliencyBinWangApr2014_(this.id, 'getClassName');
-        end
-
         function saliencyMap = computeSaliency(this, img)
             %COMPUTESALIENCY  Compute the saliency
             %

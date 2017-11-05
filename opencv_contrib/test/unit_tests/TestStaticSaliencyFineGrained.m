@@ -6,8 +6,6 @@ classdef TestStaticSaliencyFineGrained
             img = imread(fullfile(mexopencv.root(),'test','balloon.jpg'));
 
             saliency = cv.StaticSaliencyFineGrained();
-            cname = saliency.getClassName();
-            validateattributes(cname, {'char'}, {'vector', 'nonempty'});
 
             saliencyMap = saliency.computeSaliency(img);
             validateattributes(saliencyMap, {'uint8'}, ...

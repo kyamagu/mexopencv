@@ -218,19 +218,6 @@ classdef ObjectnessBING < handle
 
     %% Saliency, Objectness
     methods
-        function className = getClassName(this)
-            %GETCLASSNAME  Get the name of the specific saliency type
-            %
-            %     className = obj.getClassName()
-            %
-            % ## Output
-            % * __className__ The name of the tracker initializer.
-            %
-            % See also: cv.ObjectnessBING.ObjectnessBING
-            %
-            className = ObjectnessBING_(this.id, 'getClassName');
-        end
-
         function objectnessBoundingBox = computeSaliency(this, img)
             %COMPUTESALIENCY  Compute the saliency
             %

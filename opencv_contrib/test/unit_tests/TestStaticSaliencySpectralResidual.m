@@ -7,9 +7,6 @@ classdef TestStaticSaliencySpectralResidual
             saliency.ImageWidth = 64;
             saliency.ImageHeight = 64;
 
-            cname = saliency.getClassName();
-            validateattributes(cname, {'char'}, {'vector', 'nonempty'});
-
             img = imread(fullfile(mexopencv.root(),'test','balloon.jpg'));
             saliencyMap = saliency.computeSaliency(img);
             validateattributes(saliencyMap, {'single'}, ...

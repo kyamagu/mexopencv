@@ -88,10 +88,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==2 && nlhs<=1);
         plhs[0] = MxArray(obj->getDefaultName());
     }
-    else if (method == "getClassName") {
-        nargchk(nrhs==2 && nlhs<=1);
-        plhs[0] = MxArray(obj->getClassName());
-    }
     else if (method == "computeSaliency") {
         nargchk(nrhs==3 && nlhs<=1);
         Mat image(rhs[2].toMat()),

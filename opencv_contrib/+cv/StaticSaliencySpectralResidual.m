@@ -183,19 +183,6 @@ classdef StaticSaliencySpectralResidual < handle
 
     %% Saliency
     methods
-        function className = getClassName(this)
-            %GETCLASSNAME  Get the name of the specific saliency type
-            %
-            %     className = obj.getClassName()
-            %
-            % ## Output
-            % * __className__ The name of the tracker initializer.
-            %
-            % See also: cv.StaticSaliencySpectralResidual.StaticSaliencySpectralResidual
-            %
-            className = StaticSaliencySpectralResidual_(this.id, 'getClassName');
-        end
-
         function saliencyMap = computeSaliency(this, img)
             %COMPUTESALIENCY  Compute the saliency
             %

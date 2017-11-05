@@ -67,7 +67,6 @@ switch alg
         error('Unrecognized saliency algorithm');
 end
 disp(saliency)
-fprintf('className = %s\n', saliency.getClassName());
 
 %% Compute saliency
 switch alg
