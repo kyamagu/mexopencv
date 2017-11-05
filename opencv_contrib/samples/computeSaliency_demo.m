@@ -91,8 +91,8 @@ switch alg
         saliency.init();
 
         % prepare plots
-        subplot(121); hImg(1) = imshow(zeros(sz(1:2),'uint8')); title('img')
-        subplot(122); hImg(2) = imshow(zeros(sz(1:2),'single')); title('saliencyMap')
+        subplot(121); hImg(1) = imshow(frame); title('img')
+        subplot(122); hImg(2) = imshow(false(sz(1:2))); title('saliencyMap')
 
         % loop over frames
         while all(ishghandle(hImg))
@@ -105,9 +105,10 @@ switch alg
             fprintf('frame #%3d: ', cap.PosFrames);
             frame = cv.cvtColor(frame, 'RGB2GRAY');
             tic, saliencyMap = saliency.computeSaliency(frame); toc
+            saliencyMap = logical(saliencyMap);
 
             % show
-            %NOTE: for the first dozen frames, saliency is all 1.0
+            %NOTE: for the first dozen frames, saliency is all 1
             set(hImg(2), 'CData',saliencyMap)
             drawnow
         end

@@ -203,14 +203,15 @@ classdef MotionSaliencyBinWangApr2014 < handle
             %     saliencyMap = obj.computeSaliency(img)
             %
             % ## Input
-            % * __img__ The input image, 8-bit.
+            % * __img__ The input image, 8-bit grayscale.
             %
             % ## Output
-            % * __saliencyMap__ The computed saliency map. Is a binarized map
-            %   that, in accordance with the nature of the algorithm,
-            %   highlights the moving objects or areas of change in the scene.
-            %   The saliency map is given by a matrix (one for each frame of
-            %   an hypothetical video stream).
+            % * __saliencyMap__ The computed saliency map
+            %   (background-foreground mask). Is a binarized map that, in
+            %   accordance with the nature of the algorithm, highlights the
+            %   moving objects or areas of change in the scene. The saliency
+            %   map is given by a matrix (one for each frame of an
+            %   hypothetical video stream).
             %
             % Performs all the operations and calls all internal functions
             % necessary for the accomplishment of the Fast Self-tuning

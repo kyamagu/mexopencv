@@ -19,7 +19,7 @@ classdef TestMotionSaliencyBinWangApr2014
                 img = cv.cvtColor(img, 'RGB2GRAY');
 
                 saliencyMap = saliency.computeSaliency(img);
-                validateattributes(saliencyMap, {'single'}, ...
+                validateattributes(saliencyMap, {'uint8'}, ...
                     {'size',[size(img,1) size(img,2)], 'binary'});
             end
         end

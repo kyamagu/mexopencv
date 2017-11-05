@@ -224,7 +224,7 @@ classdef ObjectnessBING < handle
             %     objectnessBoundingBox = obj.computeSaliency(img)
             %
             % ## Input
-            % * __img__ The input image, 8-bit.
+            % * __img__ The input image, 8-bit color.
             %
             % ## Output
             % * __objectnessBoundingBox__ objectness Bounding Box vector.
