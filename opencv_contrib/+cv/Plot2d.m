@@ -50,6 +50,18 @@ classdef Plot2d < handle
         PlotTextColor
         % plot dimensions `[w,h]` ([400,300] minimum size). default [600,400]
         PlotSize
+        % whether grid lines are drawn. default true
+        ShowGrid
+        % whether text is drawn. default true
+        ShowText
+        % number of grid lines. default 10
+        GridLinesNumber
+        % invert plot orientation. default false
+        InvertOrientation
+        % the index of the point in data array which coordinates will be
+        % printed on the top-left corner of the plot (if ShowText is true).
+        % defaults to last point
+        PointIdxToPrint
     end
 
     methods
@@ -236,6 +248,27 @@ classdef Plot2d < handle
         function set.PlotSize(this, value)
             Plot2d_(this.id, 'set', 'PlotSize', value);
         end
+
+        function set.ShowGrid(this, value)
+            Plot2d_(this.id, 'set', 'ShowGrid', value);
+        end
+
+        function set.ShowText(this, value)
+            Plot2d_(this.id, 'set', 'ShowText', value);
+        end
+
+        function set.GridLinesNumber(this, value)
+            Plot2d_(this.id, 'set', 'GridLinesNumber', value);
+        end
+
+        function set.InvertOrientation(this, value)
+            Plot2d_(this.id, 'set', 'InvertOrientation', value);
+        end
+
+        function set.PointIdxToPrint(this, value)
+            Plot2d_(this.id, 'set', 'PointIdxToPrint', value);
+        end
+
     end
 
 end
