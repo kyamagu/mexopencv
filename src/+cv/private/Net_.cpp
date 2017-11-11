@@ -120,12 +120,30 @@ LayerParams MxArrayToLayerParams(const MxArray& arr)
         for (int i = 0; i < dict.nfields(); ++i) {
             string key(dict.fieldname(i));
             const MxArray val(dict.at(key));
-            if (val.isChar())
-                params.set(key, val.toString());
-            else if (val.isFloat())
-                params.set(key, val.toDouble());
-            else
-                params.set(key, val.toInt());
+            if (val.isChar()) {
+                if (val.numel() == 1)
+                    params.set(key, val.toString());
+                else {
+                    vector<string> v(val.toVector<string>());
+                    params.set(key, DictValue::arrayString(v.begin(), v.size()));
+                }
+            }
+            else if (val.isFloat()) {
+                if (val.numel() == 1)
+                    params.set(key, val.toDouble());
+                else {
+                    vector<double> v(val.toVector<double>());
+                    params.set(key, DictValue::arrayReal(v.begin(), v.size()));
+                }
+            }
+            else {
+                if (val.numel() == 1)
+                    params.set(key, val.toInt());
+                else {
+                    vector<int> v(val.toVector<int>());
+                    params.set(key, DictValue::arrayInt(v.begin(), v.size()));
+                }
+            }
         }
     }
     if (arr.isField("blobs")) {
