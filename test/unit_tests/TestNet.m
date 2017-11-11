@@ -155,7 +155,7 @@ end
 
 function net = load_bvlc_googlenet()
     %TODO: download files (or run the sample "caffe_googlenet_demo.m")
-    rootdir = fullfile(mexopencv.root(), 'test', 'dnn');
+    rootdir = fullfile(mexopencv.root(), 'test', 'dnn', 'GoogLeNet');
     modelTxt = fullfile(rootdir, 'bvlc_googlenet.prototxt');
     modelBin = fullfile(rootdir, 'bvlc_googlenet.caffemodel');
     if exist(modelTxt, 'file') ~= 2 || exist(modelBin, 'file') ~= 2

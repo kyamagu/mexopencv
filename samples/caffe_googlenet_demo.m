@@ -17,7 +17,7 @@
 %   <http://image-net.org/challenges/LSVRC/2012/browse-synsets ILSVRC2012>
 %   classes: |synset_words.txt|.
 %
-dirDNN = fullfile(mexopencv.root(), 'test', 'dnn');
+dirDNN = fullfile(mexopencv.root(), 'test', 'dnn', 'GoogLeNet');
 modelLabels = fullfile(dirDNN, 'synset_words.txt');
 modelTxt = fullfile(dirDNN, 'bvlc_googlenet.prototxt');
 modelBin = fullfile(dirDNN, 'bvlc_googlenet.caffemodel');

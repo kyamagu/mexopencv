@@ -8,7 +8,7 @@
 %
 
 %% Model files
-dirDNN = fullfile(mexopencv.root(), 'test', 'dnn');
+dirDNN = fullfile(mexopencv.root(), 'test', 'dnn', 'FCN');
 modelLabels = fullfile(dirDNN, 'pascal-classes.txt');
 modelTxt = fullfile(dirDNN, 'fcn8s-heavy-pascal.prototxt');
 modelBin = fullfile(dirDNN, 'fcn8s-heavy-pascal.caffemodel');  % 513MB file
