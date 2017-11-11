@@ -33,6 +33,26 @@ const ConstMap<int,string> TargetsInvMap = ConstMap<int,string>
     (cv::dnn::DNN_TARGET_CPU,    "CPU")
     (cv::dnn::DNN_TARGET_OPENCL, "OpenCL");
 
+/**
+ * Create 4-dimensional blob from MATLAB array
+ * @param arr input MxArray object (numeric array).
+ * @return blob 4-dimensional cv::MatND.
+ * @see MxArray::toMatND
+ */
+MatND MxArrayToBlob(const MxArray& arr)
+{
+    MatND blob(arr.toMatND(CV_32F));
+    if (blob.dims < 4) {
+        //HACK: add trailing singleton dimensions (up to 4D)
+        // (needed because in MATLAB, size(zeros(2,10,1,1)) is [2 10],
+        // but some dnn methods expect blobs to have ndims==4)
+        int sz[4] = {1, 1, 1, 1};
+        std::copy(blob.size.p, blob.size.p + blob.dims, sz);
+        blob = blob.reshape(0, 4, sz);
+    }
+    return blob;
+}
+
 /** Convert MxArray to cv::dnn::Net::LayerId
  * @param arr MxArray object. In one of the following forms:
  * - a scalar integer.
@@ -112,7 +132,7 @@ LayerParams MxArrayToLayerParams(const MxArray& arr)
         vector<MxArray> blobs(arr.at("blobs").toVector<MxArray>());
         params.blobs.reserve(blobs.size());
         for (vector<MxArray>::const_iterator it = blobs.begin(); it != blobs.end(); ++it)
-            params.blobs.push_back(it->toMatND(CV_32F));
+            params.blobs.push_back(MxArrayToBlob(*it));
     }
     if (arr.isField("name")) params.name = arr.at("name").toString();
     if (arr.isField("type")) params.type = arr.at("type").toString();
@@ -438,7 +458,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "setInput") {
         nargchk((nrhs==3 || nrhs==4) && nlhs==0);
-        MatND blob(rhs[2].toMatND(CV_32F));
+        MatND blob(MxArrayToBlob(rhs[2]));
         if (nrhs > 3)
             obj->setInput(blob, rhs[3].toString());
         else
@@ -448,7 +468,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==5 && nlhs==0);
         Net::LayerId layer(MxArrayToLayerId(rhs[2]));
         int numParam = rhs[3].toInt();
-        MatND blob(rhs[4].toMatND(CV_32F));
+        MatND blob(MxArrayToBlob(rhs[4]));
         obj->setParam(layer, numParam, blob);
     }
     else if (method == "getParam") {
