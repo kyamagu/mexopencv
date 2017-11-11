@@ -14,6 +14,8 @@ classdef Net < handle
     % computations (i. e. network testing). A network training is in principle
     % not supported.
     %
+    % https://github.com/opencv/opencv/wiki/Deep-Learning-in-OpenCV
+    %
     % ## Net class
     % Neural network is presented as directed acyclic graph (DAG), where
     % vertices are Layer instances, and edges specify relationships between
@@ -22,7 +24,7 @@ classdef Net < handle
     % Each network layer has unique integer id and unique string name inside
     % its network. LayerId can store either layer name or layer id.
     %
-    % See also: cv.Net.Net, cv.Net.import, nnet.cnn.layer.Layer, trainNetwork,
+    % See also: cv.Net.Net, nnet.cnn.layer.Layer, trainNetwork,
     %  SeriesNetwork, importCaffeNetwork, importCaffeLayers, alexnet, vgg16,
     %  vgg19
     %
@@ -35,72 +37,60 @@ classdef Net < handle
     %% Constructor/destructor
     methods
         function this = Net(varargin)
-            %NET  Default constructor
+            %NET  Constructor and importer of trained serialized models from different dnn-frameworks
             %
             %     net = cv.Net()
-            %     net = cv.Net(...)
             %
-            % The first variant creates an empty network.
+            %     net = cv.Net('Caffe', prototxt)
+            %     net = cv.Net('Caffe', prototxt, caffeModel)
             %
-            % The second variant accepts the same parameters as the import
-            % method, in which case it forwards the call after construction.
+            %     net = cv.Net('Tensorflow', model)
+            %     net = cv.Net('Tensorflow', model, config)
             %
-            % See also: cv.Net.import, cv.Net.forward
+            %     net = cv.Net('Torch', filename)
+            %     net = cv.Net('Torch', filename, isBinary)
             %
-            this.id = Net_(0, 'new');
-            if nargin > 0
-                this.import(varargin{:});
-            end
-        end
-
-        function delete(this)
-            %DELETE  Destructor
-            %
-            %     net.delete()
-            %
-            % See also: cv.Net
-            %
-            if isempty(this.id), return; end
-            Net_(this.id, 'delete');
-        end
-    end
-
-    %% Importer
-    methods
-        function import(this, ntype, varargin)
-            %IMPORT  Load trained serialized models of different dnn-frameworks
-            %
-            %     net.import('Caffe', prototxt)
-            %     net.import('Caffe', prototxt, caffeModel)
-            %
-            %     net.import('Tensorflow', model)
-            %
-            %     net.import('Torch', filename)
-            %     net.import('Torch', filename, isBinary)
+            %     net = cv.Net('Darknet', cfgFile)
+            %     net = cv.Net('Darknet', cfgFile, darknetModel)
             %
             % ## Input
-            % * __prototxt__ path to the .prototxt file with text description
-            %   of the network architecture.
-            % * __caffeModel__ (optional) path to the .caffemodel file with
+            % * __prototxt__ path to the `.prototxt` file with text
+            %   description of the network architecture.
+            % * __caffeModel__ (optional) path to the `.caffemodel` file with
             %   learned network. Empty by default.
+            % * __model__ path to the `.pb` file with binary protobuf
+            %   description of the network architecture. Binary serialized
+            %   TensorFlow graph includes weights.
+            % * __config__ Optional path to the `.pbtxt` file with text
+            %   definition of TensorFlow graph. More flexible than binary
+            %   format and may be used to build the network using binary
+            %   format only as a weights storage. This approach is similar to
+            %   Caffe's `.prorotxt` and `.caffemodel`.
             % * __filename__ path to the file, dumped from Torch by using
             %   `torch.save()` function.
             % * __isBinary__ specifies whether the network was serialized in
             %   ascii mode or binary. default true.
-            % * __model__ path to the .pb file with binary protobuf
-            %   description of the network architecture.
+            % * __cfgFile__ path to the `.cfg` file with text description of
+            %   the network architecture.
+            % * __darknetModel__ (optional) path to the `.weights` file with
+            %   learned network.
             %
-            % Creates importer and adds loaded layers into the net and sets
-            % connections between them.
+            % The first variant creates an empty network.
             %
-            % The first variant reads a network model stored in
+            % The second variant reads a network model stored in
             % [Caffe](http://caffe.berkeleyvision.org) model files.
             %
-            % The second variant is an importer of
-            % [TensorFlow](http://www.tensorflow.org) framework network.
+            % The third variant is an importer of
+            % [TensorFlow](https://www.tensorflow.org) framework network.
             %
-            % The third variant is an importer of [Torch7](http://torch.ch)
+            % The fourth variant is an importer of [Torch7](http://torch.ch)
             % framework network.
+            %
+            % The fifth variant reads a network model stored in
+            % [Darknet](https://pjreddie.com/darknet/) model files.
+            %
+            % The importers first create a net, add loaded layers into it, and
+            % set connections between them.
             %
             % ### Notes for Torch
             %
@@ -131,9 +121,20 @@ classdef Net < handle
             % Also some equivalents of these classes from cunn, cudnn, and
             % fbcunn may be successfully imported.
             %
+            % See also: cv.Net, cv.Net.forward
+            %
+            this.id = Net_(0, 'new', varargin{:});
+        end
+
+        function delete(this)
+            %DELETE  Destructor
+            %
+            %     net.delete()
+            %
             % See also: cv.Net
             %
-            Net_(this.id, 'import', ntype, varargin{:});
+            if isempty(this.id), return; end
+            Net_(this.id, 'delete');
         end
     end
 
@@ -239,7 +240,7 @@ classdef Net < handle
             % listed in `outBlobNames`. It returns blobs for first outputs of
             % specified layers.
             %
-            % See also: cv.Net.forwardAll, cv.Net.Net, cv.Net.import
+            % See also: cv.Net.forwardAll, cv.Net.Net
             %
             blob = Net_(this.id, 'forward', varargin{:});
         end
@@ -273,7 +274,7 @@ classdef Net < handle
             % listed in `outBlobNames`. It returns all output blobs for each
             % layer specified in `outBlobNames`.
             %
-            % See also: cv.Net.forward, cv.Net.Net, cv.Net.import
+            % See also: cv.Net.forward, cv.Net.Net
             %
             blobs = Net_(this.id, 'forwardAll', varargin{:});
         end
@@ -295,6 +296,24 @@ classdef Net < handle
             %
             Net_(this.id, 'forwardOpt', toLayerId);
         end
+
+        function [timings, total] = getPerfProfile(this)
+            %GETPERFPROFILE  Returns overall time for inference and timings (in ticks) for layers
+            %
+            %     [timings, total] = net.getPerfProfile()
+            %
+            % ## Output
+            % * __timings__ vector for tick timings for all layers.
+            % * __total__ overall ticks for model inference.
+            %
+            % Indexes in returned vector correspond to layers ids. Some layers
+            % can be fused with others, in this case zero ticks count will be
+            % return for that skipped layers.
+            %
+            % See also: cv.Net.forward, cv.TickMeter
+            %
+            [timings, total] = Net_(this.id, 'getPerfProfile');
+        end
     end
 
     %% Net (network architecture)
@@ -307,7 +326,7 @@ classdef Net < handle
             % ## Output
             % * __b__ Boolean.
             %
-            % See also: cv.Net.import
+            % See also: cv.Net.Net
             %
             b = Net_(this.id, 'empty');
         end
@@ -360,6 +379,7 @@ classdef Net < handle
             % See also: cv.Net.addLayerToPrev, cv.Net.deleteLayer, cv.Net.connect
             %
             id = Net_(this.id, 'addLayer', name, layerType, params);
+            id = int32(id);
         end
 
         function id = addLayerToPrev(this, name, layerType, params)
@@ -381,6 +401,7 @@ classdef Net < handle
             % See also: cv.Net.addLayer, cv.Net.deleteLayer, cv.Net.connect
             %
             id = Net_(this.id, 'addLayerToPrev', name, layerType, params);
+            id = int32(id);
         end
 
         function id = getLayerId(this, name)
@@ -397,6 +418,7 @@ classdef Net < handle
             % See also: cv.Net.getLayer, cv.Net.getLayerNames
             %
             id = Net_(this.id, 'getLayerId', name);
+            id = int32(id);
         end
 
         function names = getLayerNames(this)
@@ -429,6 +451,8 @@ classdef Net < handle
             %     or other internal purposes.
             %   * __type__ Type name which was used for creating layer by
             %     layer factory.
+            %   * __preferableTarget__ preferred target for layer forwarding
+            %     (see cv.Net.setPreferableTarget).
             %
             % Layers are the building blocks of networks.
             %
@@ -588,7 +612,7 @@ classdef Net < handle
             % scheduling file or if no manual scheduling used at all,
             % automatic scheduling will be applied.
             %
-            % See also: cv.setPreferableBackend
+            % See also: cv.Net.setPreferableBackend
             %
             Net_(this.id, 'setHalideScheduler', scheduler);
         end
@@ -603,7 +627,7 @@ classdef Net < handle
             %   * __Default__
             %   * __Halide__
             %
-            % See also: cv.setPreferableTarget, cv.Net.setHalideScheduler
+            % See also: cv.Net.setPreferableTarget, cv.Net.setHalideScheduler
             %
             Net_(this.id, 'setPreferableBackend', backend);
         end
@@ -618,7 +642,7 @@ classdef Net < handle
             %   * __CPU__
             %   * __OpenCL__
             %
-            % See also: cv.setPreferableBackend
+            % See also: cv.Net.setPreferableBackend
             %
             Net_(this.id, 'setPreferableTarget', target);
         end
@@ -642,7 +666,7 @@ classdef Net < handle
             % * __IsBinary__ specifies whether blob file was serialized in
             %   ascii mode or binary. default true.
             %
-            % This function has the same limitations as cv.Net.import with
+            % This function has the same limitations as cv.Net.Net with
             % regards to the Torch importer.
             %
             % See also: cv.Net.setInput, cv.Net.blobFromImages
@@ -673,15 +697,21 @@ classdef Net < handle
             %   `SwapRB` is true. default [0,0,0]
             % * __ScaleFactor__ multiplier for images values. default 1.0
             % * __SwapRB__ flag which indicates that swap first and last
-            %   channels in 3-channel image is necessary. default true
+            %   channels in 3-channel image is necessary. For instance, Caffe
+            %   models are usually trained on BGR images, while TensorFlow
+            %   models expect RGB images as input. default true
+            % * __Crop__ flag which indicates whether image will be cropped
+            %   after resize or not. default true
             %
             % Creates blob and optionally resizes and crops the images from
             % center, subtracts mean values, scales values, and swaps blue and
             % red channels.
             %
-            % Input image is resized so one side after resize is equal to
-            % corresponing dimension in `Size` and another one is equal or
-            % larger. Then, crop from the center is performed.
+            % If `Crop` is true, input image is resized so one side after
+            % resize is equal to corresponing dimension in `Size` and another
+            % one is equal or larger. Then, crop from the center is performed.
+            % If `Crop` is false, direct resize without cropping and
+            % preserving aspect ratio is performed.
             %
             % A blob is a 4-dimensional matrix (so-called batch) with the
             % following shape: `[num, cn, rows, cols]`.
@@ -689,6 +719,26 @@ classdef Net < handle
             % See also: cv.Net.setInput
             %
             blob = Net_(0, 'blobFromImages', img, varargin{:});
+        end
+
+        function shrinkCaffeModel(src, dst)
+            %SHRINKCAFFEMODEL  Convert all weights of Caffe network to half precision floating point
+            %
+            %     cv.Net.shrinkCaffeModel(src, dst)
+            %
+            % ## Input
+            % * __src__ Path to origin model from Caffe framework contains
+            %   single precision floating point weights (usually has
+            %   `.caffemodel` extension).
+            % * __dst__ Path to destination model with updated weights.
+            %
+            % Note: Shrinked model has no origin `float32` weights so it can't
+            % be used in origin Caffe framework anymore. However the structure
+            % of data is taken from NVidia's
+            % <https://github.com/NVIDIA/caffe Caffe fork>. So the resulting
+            % model may be used there.
+            %
+            Net_(0, 'shrinkCaffeModel', src, dst);
         end
     end
 end

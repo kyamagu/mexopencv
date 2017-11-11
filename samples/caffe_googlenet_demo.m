@@ -70,8 +70,7 @@ fclose(fid);
 fprintf('%d classes\n', numel(labels));
 
 %% Create and initialize network from Caffe model
-net = cv.Net();
-net.import('Caffe', modelTxt, modelBin);
+net = cv.Net('Caffe', modelTxt, modelBin);
 assert(~net.empty(), 'Cant load network');
 
 %% Prepare blob from input image

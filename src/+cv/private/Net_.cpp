@@ -25,8 +25,13 @@ const ConstMap<string,int> BackendsMap = ConstMap<string,int>
 
 /// Computation target devices for option processing
 const ConstMap<string,int> TargetsMap = ConstMap<string,int>
-    ("CPU", cv::dnn::DNN_TARGET_CPU)
-    ("OpenCL",  cv::dnn::DNN_TARGET_OPENCL);
+    ("CPU",    cv::dnn::DNN_TARGET_CPU)
+    ("OpenCL", cv::dnn::DNN_TARGET_OPENCL);
+
+/// Computation target devices for option processing
+const ConstMap<int,string> TargetsInvMap = ConstMap<int,string>
+    (cv::dnn::DNN_TARGET_CPU,    "CPU")
+    (cv::dnn::DNN_TARGET_OPENCL, "OpenCL");
 
 /** Convert MxArray to cv::dnn::Net::LayerId
  * @param arr MxArray object. In one of the following forms:
@@ -125,6 +130,7 @@ MxArray toStruct(const Ptr<Layer> &layer)
     s.set("blobs", layer->blobs);
     s.set("name",  layer->name);
     s.set("type",  layer->type);
+    s.set("preferableTarget", TargetsInvMap[layer->preferableTarget]);
     return s;
 }
 
@@ -140,8 +146,68 @@ MxArray toStruct(const vector<Ptr<Layer> > &layers)
         s.set("blobs", layers[i]->blobs, i);
         s.set("name",  layers[i]->name,  i);
         s.set("type",  layers[i]->type,  i);
+        s.set("preferableTarget", TargetsInvMap[layers[i]->preferableTarget], i);
     }
     return s;
+}
+
+/** MxArray constructor from 64-bit integer.
+ * @param i int value.
+ * @return MxArray object, a scalar int64 array.
+ */
+MxArray toMxArray(int64_t i)
+{
+    MxArray arr(mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL));
+    if (arr.isNull())
+        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+    arr.set(0, i);
+    return arr;
+}
+
+/** Create an instance of Net using options in arguments
+ * @param type type of network to import, one of:
+ *    - "Caffe"
+ *    - "Tensorflow"
+ *    - "Torch"
+ *    - "Darknet"
+ * @param first iterator at the beginning of the vector range
+ * @param last iterator at the end of the vector range
+ * @return smart pointer to created Net
+ */
+Ptr<Net> readNetFrom(const string &type,
+    vector<MxArray>::const_iterator first,
+    vector<MxArray>::const_iterator last)
+{
+    ptrdiff_t len = std::distance(first, last);
+    Net net;
+    if (type == "Caffe") {
+        nargchk(len==1 || len==2);
+        string prototxt(first->toString()); ++first;
+        string caffeModel(len==2 ? first->toString() : string());
+        net = readNetFromCaffe(prototxt, caffeModel);
+    }
+    else if (type == "Tensorflow") {
+        nargchk(len==1 || len==2);
+        string model(first->toString()); ++first;
+        string config(len==2 ? first->toString() : string());
+        net = readNetFromTensorflow(model, config);
+    }
+    else if (type == "Torch") {
+        nargchk(len==1 || len==2);
+        string filename(first->toString()); ++first;
+        bool isBinary = (len==2 ? first->toBool() : true);
+        net = readNetFromTorch(filename, isBinary);
+    }
+    else if (type == "Darknet") {
+        nargchk(len==1 || len==2);
+        string cfgFile(first->toString()); ++first;
+        string darknetModel(len==2 ? first->toString() : string());
+        net = readNetFromDarknet(cfgFile, darknetModel);
+    }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unrecognized network type %s", type.c_str());
+    return makePtr<Net>(net);
 }
 }
 
@@ -155,7 +221,7 @@ MxArray toStruct(const vector<Ptr<Layer> > &layers)
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    nargchk(nrhs>=2 && nlhs<=1);
+    nargchk(nrhs>=2 && nlhs<=2);
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);
@@ -164,8 +230,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Constructor is called. Create a new object from argument
     if (method == "new") {
-        nargchk(nrhs==2 && nlhs<=1);
-        obj_[++last_id] = makePtr<Net>();
+        nargchk(nrhs>=2 && nlhs<=1);
+        obj_[++last_id] = (nrhs > 2) ?
+            readNetFrom(rhs[2].toString(), rhs.begin() + 3, rhs.end()) :
+            makePtr<Net>();
         plhs[0] = MxArray(last_id);
         mexLock();
         return;
@@ -193,6 +261,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         Size size;
         Scalar mean;
         bool swapRB = true;
+        bool crop = true;
         for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key == "ScaleFactor")
@@ -203,6 +272,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mean = rhs[i+1].toScalar();
             else if (key == "SwapRB")
                 swapRB = rhs[i+1].toBool();
+            else if (key == "Crop")
+                crop = rhs[i+1].toBool();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
@@ -217,13 +288,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 for (vector<MxArray>::const_iterator it = arr.begin(); it != arr.end(); ++it)
                     images.push_back(it->toMat(CV_32F));
             }
-            blob = blobFromImages(images, scalefactor, size, mean, swapRB);
+            blob = blobFromImages(images, scalefactor, size, mean, swapRB, crop);
         }
         else {
             Mat image(rhs[2].toMat(CV_32F));
-            blob = blobFromImage(image, scalefactor, size, mean, swapRB);
+            blob = blobFromImage(image, scalefactor, size, mean, swapRB, crop);
         }
         plhs[0] = MxArray(blob);
+        return;
+    }
+    else if (method == "shrinkCaffeModel") {
+        nargchk(nrhs==4 && nlhs==0);
+        string src(rhs[2].toString()),
+            dst(rhs[3].toString());
+        shrinkCaffeModel(src, dst);
         return;
     }
 
@@ -236,36 +314,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         obj_.erase(id);
         mexUnlock();
     }
-    else if (method == "import") {
-        nargchk(nrhs>=3 && nlhs==0);
-        Ptr<Importer> importer;
-        string type(rhs[2].toString());
-        if (type == "Caffe") {
-            nargchk(nrhs==4 || nrhs==5);
-            string prototxt(rhs[3].toString()), caffeModel;
-            if (nrhs == 5)
-                caffeModel = rhs[4].toString();
-            importer = createCaffeImporter(prototxt, caffeModel);
-        }
-        else if (type == "Tensorflow") {
-            nargchk(nrhs==4);
-            string model(rhs[3].toString());
-            importer = createTensorflowImporter(model);
-        }
-        else if (type == "Torch") {
-            nargchk(nrhs==4 || nrhs==5);
-            string filename(rhs[3].toString());
-            bool isBinary = (nrhs == 5) ? rhs[4].toBool() : true;
-            importer = createTorchImporter(filename, isBinary);
-        }
-        else
-            mexErrMsgIdAndTxt("mexopencv:error",
-                "Unrecognized importer type %s", type.c_str());
-        if (importer.empty())
-            mexErrMsgIdAndTxt("mexopencv:error", "Failed to create Importer");
-        importer->populateNet(*obj.get());
-        importer.release();
-    }
     else if (method == "empty") {
         nargchk(nrhs==2 && nlhs<=1);
         plhs[0] = MxArray(obj->empty());
@@ -275,22 +323,22 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         string name(rhs[2].toString()),
             type(rhs[3].toString());
         LayerParams params(MxArrayToLayerParams(rhs[4]));
-        int id = obj->addLayer(name, type, params);
-        plhs[0] = MxArray(id);
+        int lid = obj->addLayer(name, type, params);
+        plhs[0] = MxArray(lid);
     }
     else if (method == "addLayerToPrev") {
         nargchk(nrhs==5 && nlhs<=1);
         string name(rhs[2].toString()),
             type(rhs[3].toString());
         LayerParams params(MxArrayToLayerParams(rhs[4]));
-        int id = obj->addLayerToPrev(name, type, params);
-        plhs[0] = MxArray(id);
+        int lid = obj->addLayerToPrev(name, type, params);
+        plhs[0] = MxArray(lid);
     }
     else if (method == "getLayerId") {
         nargchk(nrhs==3 && nlhs<=1);
         string layer(rhs[2].toString());
-        int id = obj->getLayerId(layer);
-        plhs[0] = MxArray(id);  //TODO: return int32 scalar value
+        int lid = obj->getLayerId(layer);
+        plhs[0] = MxArray(lid);
     }
     else if (method == "getLayerNames") {
         nargchk(nrhs==2 && nlhs<=1);
@@ -430,6 +478,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "enableFusion") {
         nargchk(nrhs==3 && nlhs==0);
         obj->enableFusion(rhs[2].toBool());
+    }
+    else if (method == "getPerfProfile") {
+        nargchk(nrhs==2 && nlhs<=2);
+        vector<double> timings;
+        int64 total = obj->getPerfProfile(timings);
+        plhs[0] = MxArray(timings);
+        if (nlhs > 1)
+            plhs[1] = toMxArray(total);
     }
     //TODO:
     //else if (method == "getLayerShapes") {}
