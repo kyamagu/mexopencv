@@ -76,6 +76,13 @@ classdef TestUtils
             end
         end
 
+        function test_ocl_3
+            if cv.Utils.haveOpenCL()
+                p = cv.Utils.getPlatfomsInfo();
+                validateattributes(p, {'struct'}, {'vector'});
+            end
+        end
+
         function test_cuda
             n = cv.Utils.getCudaEnabledDeviceCount();
             validateattributes(n, {'numeric'}, {'scalar', 'integer'});
@@ -89,6 +96,9 @@ classdef TestUtils
 
                 cv.Utils.printShortCudaDeviceInfo(id);
                 cv.Utils.printCudaDeviceInfo(id);
+
+                s = cv.Utils.deviceInfo(id);
+                validateattributes(s, {'struct'}, {'scalar'});
 
                 cv.Utils.resetDevice();
             end
