@@ -2,34 +2,105 @@ classdef TestUtils
     %TestUtils
 
     methods (Static)
-        function test_1
+        function test_version
             info = cv.Utils.getBuildInformation();
-            assert(ischar(info) && ~isempty(info));
+            validateattributes(info, {'char'}, {'nonempty'});
 
             v = cv.Utils.version();
-            assert(ischar(v) && ~isempty(v));
+            validateattributes(v, {'char'}, {'row', 'nonempty'});
         end
 
-        function test_2
-            support = cv.Utils.checkHardwareSupport();
-            assert(isstruct(support) && isscalar(support));
+        function test_cpu
+            s = cv.Utils.checkHardwareSupport();
+            validateattributes(s, {'struct'}, {'scalar'});
         end
 
-        function test_3
+        function test_num_cpu
             n = cv.Utils.getNumberOfCPUs();
             validateattributes(n, {'numeric'}, {'scalar', 'integer', 'nonnegative'});
         end
 
-        function test_4
+        function test_num_threads
             n = cv.Utils.getNumThreads();
             validateattributes(n, {'numeric'}, {'scalar', 'integer'});
             cv.Utils.setNumThreads(n);
         end
 
-        function test_5
-            tf = cv.Utils.useOptimized();
-            validateattributes(tf, {'logical'}, {'scalar'});
-            cv.Utils.setUseOptimized(tf);
+        function test_optimization
+            b = cv.Utils.useOptimized();
+            validateattributes(b, {'logical'}, {'scalar'});
+            cv.Utils.setUseOptimized(b);
+        end
+
+        function test_ipp
+            str = cv.Utils.getIppVersion();
+            validateattributes(str, {'char'}, {'row', 'nonempty'});
+
+            if ~strcmpi(str, 'disabled')
+                b = cv.Utils.useIPP();
+                validateattributes(b, {'logical'}, {'scalar'});
+                cv.Utils.setUseIPP(b);
+            end
+        end
+
+        function test_ovx
+            b = cv.Utils.haveOpenVX();
+            validateattributes(b, {'logical'}, {'scalar'});
+
+            if b
+                b = cv.Utils.useOpenVX();
+                validateattributes(b, {'logical'}, {'scalar'});
+                cv.Utils.setUseOpenVX(b);
+            end
+        end
+
+        function test_ocl_1
+            b = cv.Utils.haveOpenCL();
+            validateattributes(b, {'logical'}, {'scalar'});
+
+            b = cv.Utils.haveAmdBlas();
+            validateattributes(b, {'logical'}, {'scalar'});
+
+            b = cv.Utils.haveAmdFft();
+            validateattributes(b, {'logical'}, {'scalar'});
+
+            b = cv.Utils.haveSVM();
+            validateattributes(b, {'logical'}, {'scalar'});
+        end
+
+        function test_ocl_2
+            if cv.Utils.haveOpenCL()
+                b = cv.Utils.useOpenCL();
+                validateattributes(b, {'logical'}, {'scalar'});
+                cv.Utils.setUseOpenCL(b);
+            end
+        end
+
+        function test_cuda
+            n = cv.Utils.getCudaEnabledDeviceCount();
+            validateattributes(n, {'numeric'}, {'scalar', 'integer'});
+            if n > 0
+                id = cv.Utils.getDevice();
+                validateattributes(id, {'numeric'}, {'scalar', 'integer'});
+                cv.Utils.setDevice(id);
+
+                s = cv.Utils.deviceSupports();
+                validateattributes(s, {'struct'}, {'scalar'});
+
+                cv.Utils.printShortCudaDeviceInfo(id);
+                cv.Utils.printCudaDeviceInfo(id);
+
+                cv.Utils.resetDevice();
+            end
+        end
+
+        function test_tega
+            % functions only defined for Tegra SoC
+            if false
+                b = cv.Utils.useTegra();
+                validateattributes(b, {'logical'}, {'scalar'});
+                cv.Utils.setUseTegra(b);
+            end
         end
     end
 
