@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<toc version="2.0">
+  <tocitem target="wiki/home.html">mexopencv
+    <tocitem image="HelpIcon.GETTING_STARTED" target="wiki/getting_started.html">Getting Started
+      <tocitem target="wiki/developing_a_new_mex_function.html">Developing a new MEX function</tocitem>
+      <tocitem target="wiki/gotchas.html">Gotchas</tocitem>
+    </tocitem>
+    <tocitem image="HelpIcon.USER_GUIDE" target="wiki/readme.html">Readme
+      <tocitem target="wiki/readme.html#build">Installation
+        <tocitem target="wiki/readme.html#opencv">OpenCV 3
+          <tocitem target="wiki/installation_(windows,_matlab,_opencv_3).html">Windows + MATLAB</tocitem>
+          <tocitem target="wiki/installation_(windows,_octave,_opencv_3).html">Windows + Octave</tocitem>
+          <tocitem target="wiki/installation_(linux,_matlab,_opencv_3).html">Linux + MATLAB</tocitem>
+          <tocitem target="wiki/installation_(linux,_octave,_opencv_3).html">Linux + Octave</tocitem>
+        </tocitem>
+        <tocitem target="wiki/readme.html#opencv">OpenCV 2
+          <tocitem target="wiki/installation_(windows,_matlab,_opencv_2).html">Linux + MATLAB</tocitem>
+        </tocitem>
+      </tocitem>
+      <tocitem target="wiki/readme.html#troubleshoot">Troubleshooting
+        <tocitem target="wiki/troubleshooting_(windows).html">Windows</tocitem>
+        <tocitem target="wiki/troubleshooting_(unix).html">UNIX</tocitem>
+      </tocitem>
+    </tocitem>
+    <tocitem image="HelpIcon.FUNCTION" target="matlab/index.html">Functions
+      <tocitem target="matlab/index_cat.html#opencv">opencv - Main Modules
+        <tocitem target="matlab/index_cat.html#core">core: Core Functionality
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.borderInterpolate.html">cv.borderInterpolate</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.copyMakeBorder.html">cv.copyMakeBorder</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.add.html">cv.add</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.subtract.html">cv.subtract</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.multiply.html">cv.multiply</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.divide.html">cv.divide</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.addWeighted.html">cv.addWeighted</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.convertScaleAbs.html">cv.convertScaleAbs</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.convertFp16.html">cv.convertFp16</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.LUT.html">cv.LUT</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.norm.html">cv.norm</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.PSNR.html">cv.PSNR</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.batchDistance.html">cv.batchDistance</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.normalize.html">cv.normalize</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.flip.html">cv.flip</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.rotate.html">cv.rotate</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.bitwise_and.html">cv.bitwise_and</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.bitwise_or.html">cv.bitwise_or</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.bitwise_xor.html">cv.bitwise_xor</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.bitwise_not.html">cv.bitwise_not</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.absdiff.html">cv.absdiff</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.inRange.html">cv.inRange</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.compare.html">cv.compare</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.polarToCart.html">cv.polarToCart</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.cartToPolar.html">cv.cartToPolar</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.phase.html">cv.phase</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.magnitude.html">cv.magnitude</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.transform.html">cv.transform</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.perspectiveTransform.html">cv.perspectiveTransform</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.invert.html">cv.invert</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.solve.html">cv.solve</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.eigen.html">cv.eigen</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.eigenNonSymmetric.html">cv.eigenNonSymmetric</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.calcCovarMatrix.html">cv.calcCovarMatrix</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Mahalanobis.html">cv.Mahalanobis</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.dft.html">cv.dft</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.dct.html">cv.dct</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.mulSpectrums.html">cv.mulSpectrums</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.getOptimalDFTSize.html">cv.getOptimalDFTSize</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.setRNGSeed.html">cv.setRNGSeed</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.PCA.html">cv.PCA</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.LDA.html">cv.LDA</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SVD.html">cv.SVD</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.kmeans.html">cv.kmeans</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Rect.html">cv.Rect</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.RotatedRect.html">cv.RotatedRect</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.copyTo.html">cv.copyTo</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.convertTo.html">cv.convertTo</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.FileStorage.html">cv.FileStorage</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.tempfile.html">cv.tempfile</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.glob.html">cv.glob</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Utils.html">cv.Utils</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.getBuildInformation.html">cv.getBuildInformation</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.TickMeter.html">cv.TickMeter</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.DownhillSolver.html">cv.DownhillSolver</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.ConjGradSolver.html">cv.ConjGradSolver</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.solveLP.html">cv.solveLP</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#imgproc">imgproc: Image Processing
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.GeneralizedHoughBallard.html">cv.GeneralizedHoughBallard</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.GeneralizedHoughGuil.html">cv.GeneralizedHoughGuil</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.CLAHE.html">cv.CLAHE</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Subdiv2D.html">cv.Subdiv2D</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.LineSegmentDetector.html">cv.LineSegmentDetector</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.getGaussianKernel.html">cv.getGaussianKernel</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.getDerivKernels.html">cv.getDerivKernels</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.getGaborKernel.html">cv.getGaborKernel</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.getStructuringElement.html">cv.getStructuringElement</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.medianBlur.html">cv.medianBlur</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.GaussianBlur.html">cv.GaussianBlur</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.bilateralFilter.html">cv.bilateralFilter</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.boxFilter.html">cv.boxFilter</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.sqrBoxFilter.html">cv.sqrBoxFilter</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.blur.html">cv.blur</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.filter2D.html">cv.filter2D</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.sepFilter2D.html">cv.sepFilter2D</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Sobel.html">cv.Sobel</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.spatialGradient.html">cv.spatialGradient</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Scharr.html">cv.Scharr</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Laplacian.html">cv.Laplacian</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Canny.html">cv.Canny</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Canny2.html">cv.Canny2</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.cornerMinEigenVal.html">cv.cornerMinEigenVal</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.cornerHarris.html">cv.cornerHarris</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.cornerEigenValsAndVecs.html">cv.cornerEigenValsAndVecs</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.preCornerDetect.html">cv.preCornerDetect</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.cornerSubPix.html">cv.cornerSubPix</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.goodFeaturesToTrack.html">cv.goodFeaturesToTrack</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.HoughLines.html">cv.HoughLines</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.HoughLinesP.html">cv.HoughLinesP</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.HoughCircles.html">cv.HoughCircles</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.erode.html">cv.erode</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.dilate.html">cv.dilate</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.morphologyEx.html">cv.morphologyEx</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.resize.html">cv.resize</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.warpAffine.html">cv.warpAffine</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.warpPerspective.html">cv.warpPerspective</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.remap.html">cv.remap</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.convertMaps.html">cv.convertMaps</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.getRotationMatrix2D.html">cv.getRotationMatrix2D</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.getAffineTransform.html">cv.getAffineTransform</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.invertAffineTransform.html">cv.invertAffineTransform</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.getPerspectiveTransform.html">cv.getPerspectiveTransform</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.getRectSubPix.html">cv.getRectSubPix</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.logPolar.html">cv.logPolar</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.linearPolar.html">cv.linearPolar</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.integral.html">cv.integral</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.accumulate.html">cv.accumulate</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.accumulateSquare.html">cv.accumulateSquare</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.accumulateProduct.html">cv.accumulateProduct</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.accumulateWeighted.html">cv.accumulateWeighted</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.phaseCorrelate.html">cv.phaseCorrelate</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.createHanningWindow.html">cv.createHanningWindow</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.threshold.html">cv.threshold</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.adaptiveThreshold.html">cv.adaptiveThreshold</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.pyrDown.html">cv.pyrDown</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.pyrUp.html">cv.pyrUp</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.buildPyramid.html">cv.buildPyramid</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.undistort.html">cv.undistort</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.initUndistortRectifyMap.html">cv.initUndistortRectifyMap</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.initWideAngleProjMap.html">cv.initWideAngleProjMap</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.getDefaultNewCameraMatrix.html">cv.getDefaultNewCameraMatrix</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.undistortPoints.html">cv.undistortPoints</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.calcHist.html">cv.calcHist</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.calcBackProject.html">cv.calcBackProject</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.compareHist.html">cv.compareHist</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.equalizeHist.html">cv.equalizeHist</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.EMD.html">cv.EMD</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.watershed.html">cv.watershed</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.pyrMeanShiftFiltering.html">cv.pyrMeanShiftFiltering</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.grabCut.html">cv.grabCut</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.distanceTransform.html">cv.distanceTransform</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.floodFill.html">cv.floodFill</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.cvtColor.html">cv.cvtColor</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.demosaicing.html">cv.demosaicing</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.moments.html">cv.moments</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.HuMoments.html">cv.HuMoments</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.matchTemplate.html">cv.matchTemplate</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.connectedComponents.html">cv.connectedComponents</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.findContours.html">cv.findContours</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.approxPolyDP.html">cv.approxPolyDP</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.arcLength.html">cv.arcLength</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.boundingRect.html">cv.boundingRect</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.contourArea.html">cv.contourArea</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.minAreaRect.html">cv.minAreaRect</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.boxPoints.html">cv.boxPoints</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.minEnclosingCircle.html">cv.minEnclosingCircle</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.minEnclosingTriangle.html">cv.minEnclosingTriangle</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.matchShapes.html">cv.matchShapes</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.convexHull.html">cv.convexHull</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.convexityDefects.html">cv.convexityDefects</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.isContourConvex.html">cv.isContourConvex</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.intersectConvexConvex.html">cv.intersectConvexConvex</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.fitEllipse.html">cv.fitEllipse</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.fitLine.html">cv.fitLine</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.pointPolygonTest.html">cv.pointPolygonTest</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.rotatedRectangleIntersection.html">cv.rotatedRectangleIntersection</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.blendLinear.html">cv.blendLinear</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.applyColorMap.html">cv.applyColorMap</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.line.html">cv.line</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.arrowedLine.html">cv.arrowedLine</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.rectangle.html">cv.rectangle</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.circle.html">cv.circle</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.ellipse.html">cv.ellipse</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.drawMarker.html">cv.drawMarker</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.fillConvexPoly.html">cv.fillConvexPoly</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.fillPoly.html">cv.fillPoly</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.polylines.html">cv.polylines</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.drawContours.html">cv.drawContours</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.clipLine.html">cv.clipLine</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.ellipse2Poly.html">cv.ellipse2Poly</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.putText.html">cv.putText</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.getTextSize.html">cv.getTextSize</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.LineIterator.html">cv.LineIterator</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#imgcodecs">imgcodecs: Image File Reading and Writing
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.imread.html">cv.imread</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.imreadmulti.html">cv.imreadmulti</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.imwrite.html">cv.imwrite</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.imdecode.html">cv.imdecode</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.imencode.html">cv.imencode</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#videoio">videoio: Video I/O
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.VideoCapture.html">cv.VideoCapture</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.VideoWriter.html">cv.VideoWriter</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#video">video: Video Analysis
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.CamShift.html">cv.CamShift</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.meanShift.html">cv.meanShift</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.buildOpticalFlowPyramid.html">cv.buildOpticalFlowPyramid</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.calcOpticalFlowPyrLK.html">cv.calcOpticalFlowPyrLK</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.calcOpticalFlowFarneback.html">cv.calcOpticalFlowFarneback</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.estimateRigidTransform.html">cv.estimateRigidTransform</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.findTransformECC.html">cv.findTransformECC</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.KalmanFilter.html">cv.KalmanFilter</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.DualTVL1OpticalFlow.html">cv.DualTVL1OpticalFlow</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.FarnebackOpticalFlow.html">cv.FarnebackOpticalFlow</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SparsePyrLKOpticalFlow.html">cv.SparsePyrLKOpticalFlow</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BackgroundSubtractorMOG2.html">cv.BackgroundSubtractorMOG2</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BackgroundSubtractorKNN.html">cv.BackgroundSubtractorKNN</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#calib3d">calib3d: Camera Calibration and 3D Reconstruction
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Rodrigues.html">cv.Rodrigues</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.findHomography.html">cv.findHomography</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.RQDecomp3x3.html">cv.RQDecomp3x3</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.decomposeProjectionMatrix.html">cv.decomposeProjectionMatrix</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.matMulDeriv.html">cv.matMulDeriv</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.composeRT.html">cv.composeRT</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.projectPoints.html">cv.projectPoints</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.solvePnP.html">cv.solvePnP</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.solvePnPRansac.html">cv.solvePnPRansac</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.solveP3P.html">cv.solveP3P</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.initCameraMatrix2D.html">cv.initCameraMatrix2D</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.findChessboardCorners.html">cv.findChessboardCorners</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.find4QuadCornerSubpix.html">cv.find4QuadCornerSubpix</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.drawChessboardCorners.html">cv.drawChessboardCorners</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.findCirclesGrid.html">cv.findCirclesGrid</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.calibrateCamera.html">cv.calibrateCamera</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.calibrationMatrixValues.html">cv.calibrationMatrixValues</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.stereoCalibrate.html">cv.stereoCalibrate</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.stereoRectify.html">cv.stereoRectify</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.stereoRectifyUncalibrated.html">cv.stereoRectifyUncalibrated</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.rectify3Collinear.html">cv.rectify3Collinear</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.getOptimalNewCameraMatrix.html">cv.getOptimalNewCameraMatrix</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.convertPointsToHomogeneous.html">cv.convertPointsToHomogeneous</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.convertPointsFromHomogeneous.html">cv.convertPointsFromHomogeneous</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.findFundamentalMat.html">cv.findFundamentalMat</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.findEssentialMat.html">cv.findEssentialMat</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.decomposeEssentialMat.html">cv.decomposeEssentialMat</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.recoverPose.html">cv.recoverPose</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.computeCorrespondEpilines.html">cv.computeCorrespondEpilines</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.triangulatePoints.html">cv.triangulatePoints</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.correctMatches.html">cv.correctMatches</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.filterSpeckles.html">cv.filterSpeckles</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.getValidDisparityROI.html">cv.getValidDisparityROI</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.validateDisparity.html">cv.validateDisparity</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.reprojectImageTo3D.html">cv.reprojectImageTo3D</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.sampsonDistance.html">cv.sampsonDistance</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.estimateAffine3D.html">cv.estimateAffine3D</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.estimateAffine2D.html">cv.estimateAffine2D</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.estimateAffinePartial2D.html">cv.estimateAffinePartial2D</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.decomposeHomographyMat.html">cv.decomposeHomographyMat</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.StereoBM.html">cv.StereoBM</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.StereoSGBM.html">cv.StereoSGBM</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#features2d">features2d: 2D Features Framework
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.KeyPointsFilter.html">cv.KeyPointsFilter</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.FeatureDetector.html">cv.FeatureDetector</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.DescriptorExtractor.html">cv.DescriptorExtractor</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BRISK.html">cv.BRISK</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.ORB.html">cv.ORB</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.MSER.html">cv.MSER</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.FAST.html">cv.FAST</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.FastFeatureDetector.html">cv.FastFeatureDetector</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.AGAST.html">cv.AGAST</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.AgastFeatureDetector.html">cv.AgastFeatureDetector</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.GFTTDetector.html">cv.GFTTDetector</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SimpleBlobDetector.html">cv.SimpleBlobDetector</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.KAZE.html">cv.KAZE</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.AKAZE.html">cv.AKAZE</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.DescriptorMatcher.html">cv.DescriptorMatcher</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.drawKeypoints.html">cv.drawKeypoints</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.drawMatches.html">cv.drawMatches</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.evaluateFeatureDetector.html">cv.evaluateFeatureDetector</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.computeRecallPrecisionCurve.html">cv.computeRecallPrecisionCurve</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BOWKMeansTrainer.html">cv.BOWKMeansTrainer</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BOWImgDescriptorExtractor.html">cv.BOWImgDescriptorExtractor</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#objdetect">objdetect: Object Detection
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SimilarRects.html">cv.SimilarRects</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.groupRectangles.html">cv.groupRectangles</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.groupRectangles_meanshift.html">cv.groupRectangles_meanshift</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.CascadeClassifier.html">cv.CascadeClassifier</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.HOGDescriptor.html">cv.HOGDescriptor</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.DetectionBasedTracker.html">cv.DetectionBasedTracker</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#dnn">dnn: Deep Neural Network
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Net.html">cv.Net</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#ml">ml: Machine Learning
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.NormalBayesClassifier.html">cv.NormalBayesClassifier</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.KNearest.html">cv.KNearest</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SVM.html">cv.SVM</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.EM.html">cv.EM</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.DTrees.html">cv.DTrees</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.RTrees.html">cv.RTrees</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Boost.html">cv.Boost</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.ANN_MLP.html">cv.ANN_MLP</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.LogisticRegression.html">cv.LogisticRegression</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SVMSGD.html">cv.SVMSGD</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.randMVNormal.html">cv.randMVNormal</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.createConcentricSpheresTestSet.html">cv.createConcentricSpheresTestSet</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#photo">photo: Computational Photography
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.inpaint.html">cv.inpaint</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.fastNlMeansDenoising.html">cv.fastNlMeansDenoising</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.fastNlMeansDenoisingColored.html">cv.fastNlMeansDenoisingColored</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.fastNlMeansDenoisingMulti.html">cv.fastNlMeansDenoisingMulti</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.fastNlMeansDenoisingColoredMulti.html">cv.fastNlMeansDenoisingColoredMulti</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.denoise_TVL1.html">cv.denoise_TVL1</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Tonemap.html">cv.Tonemap</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.TonemapDrago.html">cv.TonemapDrago</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.TonemapDurand.html">cv.TonemapDurand</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.TonemapReinhard.html">cv.TonemapReinhard</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.TonemapMantiuk.html">cv.TonemapMantiuk</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.AlignMTB.html">cv.AlignMTB</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.CalibrateDebevec.html">cv.CalibrateDebevec</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.CalibrateRobertson.html">cv.CalibrateRobertson</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.MergeDebevec.html">cv.MergeDebevec</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.MergeMertens.html">cv.MergeMertens</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.MergeRobertson.html">cv.MergeRobertson</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.decolor.html">cv.decolor</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.seamlessClone.html">cv.seamlessClone</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.colorChange.html">cv.colorChange</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.illuminationChange.html">cv.illuminationChange</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.textureFlattening.html">cv.textureFlattening</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.edgePreservingFilter.html">cv.edgePreservingFilter</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.detailEnhance.html">cv.detailEnhance</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.pencilSketch.html">cv.pencilSketch</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.stylization.html">cv.stylization</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#stitching">stitching: Images Stitching
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.RotationWarper.html">cv.RotationWarper</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.FeaturesFinder.html">cv.FeaturesFinder</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.FeaturesMatcher.html">cv.FeaturesMatcher</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Estimator.html">cv.Estimator</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BundleAdjuster.html">cv.BundleAdjuster</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.ExposureCompensator.html">cv.ExposureCompensator</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SeamFinder.html">cv.SeamFinder</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Blender.html">cv.Blender</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Timelapser.html">cv.Timelapser</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Stitcher.html">cv.Stitcher</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#shape">shape: Shape Distance and Matching
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.EMDL1.html">cv.EMDL1</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.ShapeTransformer.html">cv.ShapeTransformer</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.ShapeContextDistanceExtractor.html">cv.ShapeContextDistanceExtractor</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.HausdorffDistanceExtractor.html">cv.HausdorffDistanceExtractor</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#superres">superres: Super Resolution
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SuperResolution.html">cv.SuperResolution</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#videostab">videostab: Video Stabilization
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.estimateGlobalMotionLeastSquares.html">cv.estimateGlobalMotionLeastSquares</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.estimateGlobalMotionRansac.html">cv.estimateGlobalMotionRansac</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.calcBlurriness.html">cv.calcBlurriness</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.OnePassStabilizer.html">cv.OnePassStabilizer</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.TwoPassStabilizer.html">cv.TwoPassStabilizer</tocitem>
+        </tocitem>
+      </tocitem>
+      <tocitem target="matlab/index_cat.html#opencv_contrib">opencv_contrib - Extra Modules
+        <tocitem target="matlab/index_cat.html#aruco">aruco: ArUco Marker Detection
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.dictionaryDump.html">cv.dictionaryDump</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.detectMarkers.html">cv.detectMarkers</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.estimatePoseSingleMarkers.html">cv.estimatePoseSingleMarkers</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.boardDump.html">cv.boardDump</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.estimatePoseBoard.html">cv.estimatePoseBoard</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.refineDetectedMarkers.html">cv.refineDetectedMarkers</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.drawDetectedMarkers.html">cv.drawDetectedMarkers</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.drawAxis.html">cv.drawAxis</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.drawMarkerAruco.html">cv.drawMarkerAruco</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.drawPlanarBoard.html">cv.drawPlanarBoard</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.calibrateCameraAruco.html">cv.calibrateCameraAruco</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.getBoardObjectAndImagePoints.html">cv.getBoardObjectAndImagePoints</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.drawCharucoBoard.html">cv.drawCharucoBoard</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.interpolateCornersCharuco.html">cv.interpolateCornersCharuco</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.estimatePoseCharucoBoard.html">cv.estimatePoseCharucoBoard</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.drawDetectedCornersCharuco.html">cv.drawDetectedCornersCharuco</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.calibrateCameraCharuco.html">cv.calibrateCameraCharuco</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.detectCharucoDiamond.html">cv.detectCharucoDiamond</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.drawDetectedDiamonds.html">cv.drawDetectedDiamonds</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.drawCharucoDiamond.html">cv.drawCharucoDiamond</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#bgsegm">bgsegm: : Improved Background-Foreground Segmentation Methods
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BackgroundSubtractorMOG.html">cv.BackgroundSubtractorMOG</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BackgroundSubtractorGMG.html">cv.BackgroundSubtractorGMG</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BackgroundSubtractorCNT.html">cv.BackgroundSubtractorCNT</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#bioinspired">bioinspired: Biologically Inspired Vision Models and Derivated Tools
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Retina.html">cv.Retina</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.RetinaFastToneMapping.html">cv.RetinaFastToneMapping</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.TransientAreasSegmentationModule.html">cv.TransientAreasSegmentationModule</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#datasets">datasets: Framework for Working with Different Datasets
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Dataset.html">cv.Dataset</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#dpm">dpm: Deformable Part-based Models
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.DPMDetector.html">cv.DPMDetector</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#face">face: Face Recognition
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BasicFaceRecognizer.html">cv.BasicFaceRecognizer</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.LBPHFaceRecognizer.html">cv.LBPHFaceRecognizer</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BIF.html">cv.BIF</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#img_hash">img_hash: Image Hashing Algorithms
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.ImgHash.html">cv.ImgHash</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#line_descriptor">line_descriptor: Binary Descriptors for Lines Extracted from an Image
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BinaryDescriptor.html">cv.BinaryDescriptor</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.LSDDetector.html">cv.LSDDetector</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BinaryDescriptorMatcher.html">cv.BinaryDescriptorMatcher</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.drawLineMatches.html">cv.drawLineMatches</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.drawKeylines.html">cv.drawKeylines</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#optflow">optflow: Optical Flow Algorithms
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.OpticalFlowPCAFlow.html">cv.OpticalFlowPCAFlow</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.GPCForest.html">cv.GPCForest</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.calcOpticalFlowSF.html">cv.calcOpticalFlowSF</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.calcOpticalFlowDF.html">cv.calcOpticalFlowDF</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.calcOpticalFlowSparseToDense.html">cv.calcOpticalFlowSparseToDense</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.readOpticalFlow.html">cv.readOpticalFlow</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.writeOpticalFlow.html">cv.writeOpticalFlow</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.VariationalRefinement.html">cv.VariationalRefinement</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.DISOpticalFlow.html">cv.DISOpticalFlow</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.updateMotionHistory.html">cv.updateMotionHistory</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.calcMotionGradient.html">cv.calcMotionGradient</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.calcGlobalOrientation.html">cv.calcGlobalOrientation</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.segmentMotion.html">cv.segmentMotion</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#plot">plot: Plot Function for Mat Data
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Plot2d.html">cv.Plot2d</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#saliency">saliency: Saliency API
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.StaticSaliencySpectralResidual.html">cv.StaticSaliencySpectralResidual</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.StaticSaliencyFineGrained.html">cv.StaticSaliencyFineGrained</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.MotionSaliencyBinWangApr2014.html">cv.MotionSaliencyBinWangApr2014</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.ObjectnessBING.html">cv.ObjectnessBING</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#xfeatures2d">xfeatures2d: Extra 2D Features Framework
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SIFT.html">cv.SIFT</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SURF.html">cv.SURF</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.FREAK.html">cv.FREAK</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.StarDetector.html">cv.StarDetector</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BriefDescriptorExtractor.html">cv.BriefDescriptorExtractor</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.LUCID.html">cv.LUCID</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.LATCH.html">cv.LATCH</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.DAISY.html">cv.DAISY</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.MSDDetector.html">cv.MSDDetector</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.VGG.html">cv.VGG</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BoostDesc.html">cv.BoostDesc</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.PCTSignatures.html">cv.PCTSignatures</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.PCTSignaturesSQFD.html">cv.PCTSignaturesSQFD</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.HarrisLaplaceFeatureDetector.html">cv.HarrisLaplaceFeatureDetector</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.AffineFeature2D.html">cv.AffineFeature2D</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.FASTForPointSet.html">cv.FASTForPointSet</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#ximgproc">ximgproc: Extended Image Processing
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.DTFilter.html">cv.DTFilter</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.GuidedFilter.html">cv.GuidedFilter</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.AdaptiveManifoldFilter.html">cv.AdaptiveManifoldFilter</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.jointBilateralFilter.html">cv.jointBilateralFilter</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.bilateralTextureFilter.html">cv.bilateralTextureFilter</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.rollingGuidanceFilter.html">cv.rollingGuidanceFilter</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.FastGlobalSmootherFilter.html">cv.FastGlobalSmootherFilter</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.l0Smooth.html">cv.l0Smooth</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.DisparityWLSFilter.html">cv.DisparityWLSFilter</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.EdgeAwareInterpolator.html">cv.EdgeAwareInterpolator</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.StructuredEdgeDetection.html">cv.StructuredEdgeDetection</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SuperpixelSEEDS.html">cv.SuperpixelSEEDS</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SuperpixelSLIC.html">cv.SuperpixelSLIC</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SuperpixelLSC.html">cv.SuperpixelLSC</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.GraphSegmentation.html">cv.GraphSegmentation</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SelectiveSearchSegmentation.html">cv.SelectiveSearchSegmentation</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.FastHoughTransform.html">cv.FastHoughTransform</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.HoughPoint2Line.html">cv.HoughPoint2Line</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.FastLineDetector.html">cv.FastLineDetector</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.covarianceEstimation.html">cv.covarianceEstimation</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.weightedMedianFilter.html">cv.weightedMedianFilter</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.GradientPaillou.html">cv.GradientPaillou</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.GradientDeriche.html">cv.GradientDeriche</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.PeiLinNormalization.html">cv.PeiLinNormalization</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.niBlackThreshold.html">cv.niBlackThreshold</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.thinning.html">cv.thinning</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.anisotropicDiffusion.html">cv.anisotropicDiffusion</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#xobjdetect">xobjdetect: Extended Object Detection
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.WBDetector.html">cv.WBDetector</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#xphoto">xphoto: Additional Photo Processing Algorithms
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.inpaint2.html">cv.inpaint2</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SimpleWB.html">cv.SimpleWB</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.GrayworldWB.html">cv.GrayworldWB</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.LearningBasedWB.html">cv.LearningBasedWB</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.applyChannelGains.html">cv.applyChannelGains</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.dctDenoising.html">cv.dctDenoising</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.bm3dDenoising.html">cv.bm3dDenoising</tocitem>
+        </tocitem>
+      </tocitem>
+    </tocitem>
+    <tocitem image="$toolbox/matlab/icons/webicon.gif" target="wiki/home.html#links">Links
+      <tocitem image="$toolbox/matlab/icons/webicon.gif" target="https://github.com/kyamagu/mexopencv">mexopencv</tocitem>
+      <tocitem image="$toolbox/matlab/icons/webicon.gif" target="https://opencv.org/">OpenCV</tocitem>
+    </tocitem>
+  </tocitem>
+</toc>

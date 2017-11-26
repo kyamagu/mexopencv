@@ -23,8 +23,10 @@ octave-workspace
 
 # generated docs
 /doc/html/
-/doc/latex/
 /doc/matlab/
+/doc/wiki/
+/doc/helpsearch*/
+/doc/helpfuncbycat.xml
 
 # published samples
 /samples/html/
