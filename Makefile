@@ -13,7 +13,6 @@
 # MATLAB                MATLAB/Octave executable.
 # MEX                   MATLAB/Octave MEX compiler frontend.
 # MEXEXT                MATLAB/Octave extension of MEX-files.
-# DOXYGEN               Doxygen executable used to generate documentation.
 # NO_CV_PKGCONFIG_HACK  If set, disables fixing the output of pkg-config with
 #                       OpenCV. Not set by default, meaning hack is applied.
 # PKG_CONFIG_OPENCV     Name of OpenCV 3 pkg-config package. Default opencv.
@@ -35,6 +34,7 @@
 # clean    Deletes temporary and generated files.
 # doc      Generates source documentation using Doxygen.
 # test     Run MATLAB unit-tests.
+# testci   Similar to test, runs in batches (intended for CI).
 #
 # Note that the Makefile uses pkg-config to locate OpenCV, so you need to have
 # the opencv.pc file accessible from the PKG_CONFIG_PATH environment variable.
@@ -47,13 +47,12 @@
 ifdef WITH_OCTAVE
 MATLABDIR ?= /usr
 MEX       ?= $(MATLABDIR)/bin/mkoctfile --mex
-MATLAB    ?= $(MATLABDIR)/bin/octave-cli --no-gui --no-window-system --quiet
+MATLAB    ?= $(MATLABDIR)/bin/octave-cli --no-gui --no-window-system --no-init-file --quiet
 else
 MATLABDIR ?= /usr/local/matlab
 MEX       ?= $(MATLABDIR)/bin/mex
 MATLAB    ?= $(MATLABDIR)/bin/matlab -nodisplay -noFigureWindows -nosplash
 endif
-DOXYGEN   ?= doxygen
 
 # file extensions
 OBJEXT ?= o
@@ -136,7 +135,7 @@ vpath %.cpp opencv_contrib/src/+cv/private
 endif
 
 # special targets
-.PHONY: all contrib clean doc test
+.PHONY: all contrib clean doc test testci
 .SUFFIXES: .cpp .$(OBJEXT) .$(LIBEXT) .$(MEXEXT)
 
 # main targets
@@ -184,14 +183,31 @@ clean:
         opencv_contrib/+cv/private/*.$(MEXEXT)
 
 doc:
-	$(DOXYGEN) Doxyfile
+	doxygen Doxyfile
 
-#TODO: https://savannah.gnu.org/bugs/?41699
-# we can't always trust Octave's exit code on Windows! It throws 0xC0000005
-# on exit (access violation), even when it runs just fine.
+# test targets
+TEST_CMD := \
+	args = {'ContribModules',$(WITH_CONTRIB), 'Verbosity',2}; \
+	letter = getenv('CI_TEST_LETTER'); if ~isempty(letter), \
+	args = {args{:}, 'MatchPattern',['^Test' letter], 'XUnitFile','', \
+	'LogFile',sprintf('UnitTest_%s.log', letter)}; end, \
+	cvsetup(args{2}); [~,pass] = UnitTest(args{:}); exit(~pass);
+ALPHABET := A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+
+testci:
+ifdef WITH_OCTAVE
+	cd .ci && for letter in $(ALPHABET); do \
+		CI_TEST_LETTER=$$letter $(MATLAB) --eval "$(TEST_CMD)" || exit $$?; \
+	done
+else
+	cd .ci && for letter in $(ALPHABET); do \
+		CI_TEST_LETTER=$$letter $(MATLAB) -r "$(TEST_CMD)" || exit $$?; \
+	done
+endif
+
 test:
 ifdef WITH_OCTAVE
-	$(MATLAB) --eval "addpath(pwd);cd test;try,UnitTest('ContribModules',$(WITH_CONTRIB),'Verbosity',2);catch e,disp(e);exit(1);end;exit(0);" || echo "Exit code: $$?"
+	cd .ci && $(MATLAB) --eval "$(TEST_CMD)"
 else
-	$(MATLAB) -r "addpath(pwd);cd test;try,UnitTest('ContribModules',$(WITH_CONTRIB),'Verbosity',2);catch e,disp(e.getReport);end;exit;"
+	cd .ci && $(MATLAB) -r "$(TEST_CMD)"
 endif

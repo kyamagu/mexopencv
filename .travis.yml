@@ -29,8 +29,7 @@ env:
     # Octave options + optional Octave-Forge packages to install
     # (Note: latest image/stats packages requires a C++11 compiler to build,
     # Trusty has gcc-4.8 and must explicitly pass -std=c++11)
-    - OCTAVERC=$HOME/.octaverc
-    - OCTAVE_OPTS="--no-gui --no-window-system"
+    - OCTAVE_OPTS="--no-gui --no-window-system --no-init-file"
     - OCT_STATS=yes
     - OCT_IMAGE=yes
     - CXXFLAGS="-std=c++11"
@@ -117,22 +116,6 @@ install:
   - export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$INSTALL_PREFIX/lib/pkgconfig
   - sudo sh -c 'echo "$INSTALL_PREFIX/lib" > /etc/ld.so.conf.d/opencv.conf'
   - sudo ldconfig
-
-before_script:
-  # create .octaverc file (to setup path and load required packages on start)
-  #HACK: we also add private directories on path, http://savannah.gnu.org/bugs/?45444
-  - touch $OCTAVERC
-  - echo "crash_dumps_octave_core(false);" >> $OCTAVERC
-  - echo "more off" >> $OCTAVERC
-  - if [ "$OCT_STATS" = "yes" ]; then echo "try, pkg load statistics, end" >> $OCTAVERC ; fi
-  - if [ "$OCT_IMAGE" = "yes" ]; then echo "try, pkg load image, end" >> $OCTAVERC ; fi
-  - echo "warning('off', 'Octave:GraphicsMagic-Quantum-Depth');" >> $OCTAVERC
-  - echo "warning('off', 'Octave:shadowed-function');" >> $OCTAVERC
-  - echo "cd('$MCV_ROOT');" >> $OCTAVERC
-  - echo "addpath('$MCV_ROOT');" >> $OCTAVERC
-  - echo "addpath(fullfile('$MCV_ROOT','+cv','private'));" >> $OCTAVERC
-  - echo "addpath(fullfile('$MCV_ROOT','opencv_contrib'));" >> $OCTAVERC
-  - echo "addpath(fullfile('$MCV_ROOT','opencv_contrib','+cv','private'));" >> $OCTAVERC
 
 script:
   # compile mexopencv

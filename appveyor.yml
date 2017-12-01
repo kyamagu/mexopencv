@@ -11,7 +11,7 @@
 version: 3.3.0.{build}
 
 # clone directory
-clone_folder: c:\projects\mexopencv
+clone_folder: c:\dev\mexopencv
 
 # whitelisted branches to build
 branches:
@@ -26,8 +26,8 @@ deploy: off
 # build artifacts to keep
 artifacts:
   - path: mexopencv.7z
-  - path: test\UnitTest_*.log
-  - path: test\tests.xml
+  - path: .ci\*.log
+  - path: .ci\*.xml
 
 # global environment variables
 environment:
@@ -38,20 +38,22 @@ environment:
 
   # Octave options
   OCTAVE_HOME: c:\dev\octave-4.2.1
-  OCTAVE: octave-cli --no-gui --no-window-system
+  OCTAVE_OPTS: --no-gui --no-window-system --no-init-file
 
   # mexopencv options
   # (build choices: mexopencv.make() in Octave, or Makefile in shell)
   # (Note: Make 3.81 included has poor jobs support, we use Make 4.2 instead)
-  MCV_ROOT: c:\projects\mexopencv
+  MCV_ROOT: %APPVEYOR_BUILD_FOLDER%
   WITH_MAKE: yes
   MAKE_OPTS: MATLABDIR='/c/dev/octave-4.2.1' WITH_OCTAVE=true WITH_CONTRIB=true NO_CV_PKGCONFIG_HACK=true
   MAKE_EXTRA: -j2
   DOXY: yes
+  BUILD_CMD: cvsetup(true); mexopencv.make('opencv_path',getenv('OPENCV_DIR'), 'opencv_contrib',true, 'progress',false, 'verbose',1);
+  TEST_CMD: cvsetup(true); [~,pass] = UnitTest('ContribModules',true,'Verbosity',2); exit(~pass);
 
 install:
   # install dependencies (Doxygen, Make, OpenCV, Octave)
-  - mkdir "c:\dev" && cd "c:\dev"
+  - pushd "c:\dev"
   - if "%DOXY%" == "yes" ( choco install doxygen.portable -y > nul )
   - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.2.0/mingw32-make.exe" -FileName mingw32-make.exe
   - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.3.0/cv330_x86_mingw.7z" -FileName cv330_x86_mingw.7z
@@ -60,42 +62,14 @@ install:
   - 7z x "c:\dev\octave-4.2.1-w32.zip" -o"c:\dev" -y > nul
   - copy /y "%OCTAVE_HOME%\bin\libopenblas.dll" "%OCTAVE_HOME%\bin\libblas.dll" > nul
   - set "PATH=%OCTAVE_HOME%\bin;%OPENCV_DIR%\x86\mingw\bin;c:\dev;%PATH%"
-
-before_build:
-  # create .octaverc file (to setup path and load required packages on start)
-  # (one for SHELL=sh.exe and one for SHELL=cmd.exe)
-  #HACK: we also add private directories on path, http://savannah.gnu.org/bugs/?45444
-  - ps: |
-      $OctaveRC = @"
-        crash_dumps_octave_core(false);
-        more off
-        try, pkg load statistics, end
-        try, pkg load image, end
-        warning('off', 'Octave:GraphicsMagic-Quantum-Depth');
-        warning('off', 'Octave:shadowed-function');
-        cd(getenv('MCV_ROOT'));
-        addpath(getenv('MCV_ROOT'));
-        addpath(fullfile(getenv('MCV_ROOT'),'+cv','private'));
-        addpath(fullfile(getenv('MCV_ROOT'),'opencv_contrib'));
-        addpath(fullfile(getenv('MCV_ROOT'),'opencv_contrib','+cv','private'));
-      "@
-      $HomeDirs = @(
-        (Join-Path (Join-Path $env:OCTAVE_HOME 'home') $env:USERNAME),
-        $env:USERPROFILE
-      )
-      $HomeDirs | ForEach-Object {
-        $OctaveRCFile = (Join-Path $_ '.octaverc')
-        New-Item -ItemType File -Path "$OctaveRCFile" -Force | Out-Null
-        $OctaveRC | Out-File -FilePath "$OctaveRCFile" -Encoding ASCII
-      }
+  - popd
 
 build_script:
   # compile mexopencv
-  - cd "%MCV_ROOT%"
   - if "%WITH_MAKE%" == "yes" (
       sh --login -c "cd \"$MCV_ROOT\" && mingw32-make $MAKE_OPTS $MAKE_EXTRA all contrib"
     ) else (
-      %OCTAVE% --eval "mexopencv.make('opencv_path',getenv('OPENCV_DIR'), 'opencv_contrib',true, 'progress',false, 'verbose',1);"
+      cd "%MCV_ROOT%\.ci" && octave-cli %OCTAVE_OPTS% --eval "%BUILD_CMD%"
     )
 
   # build docs
@@ -103,21 +77,22 @@ build_script:
 
 after_build:
   # package MEX-files
-  - cd "%MCV_ROOT%" && 7z a -t7z "%APPVEYOR_BUILD_FOLDER%\mexopencv.7z" *.mex -r -y > nul
+  - cd "%MCV_ROOT%" && 7z a -t7z "%MCV_ROOT%\mexopencv.7z" *.mex -r -y > nul
 
-before_test:
-  # print cv build info
-  - call %OCTAVE% --eval "disp(cv.getBuildInformation())"
 
 test_script:
   # run test suite
-  #HACK: we reset %ERRORLEVEL% because we can't rely on Octave exit code
   - if "%WITH_MAKE%" == "yes" (
       sh --login -c "cd \"$MCV_ROOT\" && mingw32-make $MAKE_OPTS test"
     ) else (
-      %OCTAVE% --eval "cd test;try,UnitTest('ContribModules',true,'Verbosity',2);catch e,disp(e);exit(1);end;exit(0);" || ver > nul
+      cd "%MCV_ROOT%\.ci" && octave-cli %OCTAVE_OPTS% --eval "%TEST_CMD%"
     )
 
 after_test:
   # upload xUnit test results
-  - ps: (New-Object System.Net.WebClient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\test\tests.xml))
+  - ps: |
+      $xUnitFile = "$env:MCV_ROOT\.ci\tests.xml"
+      $url = "https://ci.appveyor.com/api/testresults/junit/$env:APPVEYOR_JOB_ID"
+      if (Test-Path -Path $xUnitFile) {
+        (New-Object System.Net.WebClient).UploadFile($url, $xUnitFile)
+      }
