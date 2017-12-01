@@ -4,14 +4,15 @@
 #
 # Note:
 # We use prepared opencv binaries built using the same MinGW/Octave config,
-# see: https://github.com/amroamroamro/opencv/blob/tag_3.3.0/appveyor.yml
+# see: https://github.com/amroamroamro/opencv/blob/tag_3.3.1/appveyor.yml
 #
 
 # version format
-version: 3.3.0.{build}
+version: 3.3.1.{build}
 
 # clone directory
 clone_folder: c:\dev\mexopencv
+shallow_clone: true
 
 # whitelisted branches to build
 branches:
@@ -38,31 +39,30 @@ environment:
 
   # Octave options
   OCTAVE_HOME: c:\dev\octave-4.2.1
-  OCTAVE_OPTS: --no-gui --no-window-system --no-init-file
+  OCTAVE_OPTS: --no-gui --no-window-system --no-init-file --quiet
 
   # mexopencv options
   # (build choices: mexopencv.make() in Octave, or Makefile in shell)
   # (Note: Make 3.81 included has poor jobs support, we use Make 4.2 instead)
-  MCV_ROOT: %APPVEYOR_BUILD_FOLDER%
+  MCV_ROOT: c:\dev\mexopencv
   WITH_MAKE: yes
-  MAKE_OPTS: MATLABDIR='/c/dev/octave-4.2.1' WITH_OCTAVE=true WITH_CONTRIB=true NO_CV_PKGCONFIG_HACK=true
+  MAKE_OPTS: MATLABDIR='/c/dev/octave-4.2.1' WITH_OCTAVE=true WITH_CONTRIB=true
   MAKE_EXTRA: -j2
-  DOXY: yes
   BUILD_CMD: cvsetup(true); mexopencv.make('opencv_path',getenv('OPENCV_DIR'), 'opencv_contrib',true, 'progress',false, 'verbose',1);
   TEST_CMD: cvsetup(true); [~,pass] = UnitTest('ContribModules',true,'Verbosity',2); exit(~pass);
+  WITH_DOXY: yes
 
 install:
   # install dependencies (Doxygen, Make, OpenCV, Octave)
-  - pushd "c:\dev"
-  - if "%DOXY%" == "yes" ( choco install doxygen.portable -y > nul )
-  - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.2.0/mingw32-make.exe" -FileName mingw32-make.exe
-  - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.3.0/cv330_x86_mingw.7z" -FileName cv330_x86_mingw.7z
-  - ps: Start-FileDownload "https://ftp.gnu.org/gnu/octave/windows/octave-4.2.1-w32.zip" -FileName octave-4.2.1-w32.zip
-  - 7z x "c:\dev\cv330_x86_mingw.7z" -o"c:\dev\build" -y > nul
+  - cd "c:\dev"
+  - if "%WITH_DOXY%" == "yes" ( choco install doxygen.portable -y -r )
+  - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.2.0/mingw32-make.exe"
+  - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.3.1/cv331_x86_mingw.7z"
+  - ps: Start-FileDownload "https://ftp.gnu.org/gnu/octave/windows/octave-4.2.1-w32.zip"
+  - 7z x "c:\dev\cv331_x86_mingw.7z" -o"c:\dev\build" -y > nul
   - 7z x "c:\dev\octave-4.2.1-w32.zip" -o"c:\dev" -y > nul
   - copy /y "%OCTAVE_HOME%\bin\libopenblas.dll" "%OCTAVE_HOME%\bin\libblas.dll" > nul
   - set "PATH=%OCTAVE_HOME%\bin;%OPENCV_DIR%\x86\mingw\bin;c:\dev;%PATH%"
-  - popd
 
 build_script:
   # compile mexopencv
@@ -72,13 +72,11 @@ build_script:
       cd "%MCV_ROOT%\.ci" && octave-cli %OCTAVE_OPTS% --eval "%BUILD_CMD%"
     )
 
-  # build docs
-  - if "%DOXY%" == "yes" ( doxygen Doxyfile )
-
-after_build:
   # package MEX-files
   - cd "%MCV_ROOT%" && 7z a -t7z "%MCV_ROOT%\mexopencv.7z" *.mex -r -y > nul
 
+  # build docs
+  - if "%WITH_DOXY%" == "yes" ( doxygen Doxyfile )
 
 test_script:
   # run test suite

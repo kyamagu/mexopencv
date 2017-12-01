@@ -58,7 +58,7 @@ Build
 Prerequisite
 
 - [MATLAB][4] or [Octave][5] (>= 4.0.0)
-- [OpenCV][6] (3.3.0)
+- [OpenCV][6] (3.3.1)
 
 Depending on your platform, you also need the required build tools:
 
@@ -74,7 +74,7 @@ Refer to the [wiki][3] for detailed build instructions.
 OpenCV
 ------
 
-Currently, mexopencv targets the final **3.3.0** stable version of OpenCV. You
+Currently, mexopencv targets the final **3.3.1** stable version of OpenCV. You
 must build it against this exact version, rather than using the bleeding-edge
 dev-version of `opencv` and `opencv_contrib`. UNIX users should consider using
 a package manager to install OpenCV if available.
@@ -83,12 +83,12 @@ a package manager to install OpenCV if available.
 - [OpenCV contributed modules][8]
 
 **DO NOT use the "master" branch of `opencv` and `opencv_contrib`!**
-**Only the 3.3.0 release is supported by mexopencv.**
+**Only the 3.3.1 release is supported by mexopencv.**
 
 Linux
 -----
 
-First make sure you have OpenCV 3.3.0 installed in the system:
+First make sure you have OpenCV 3.3.1 installed in the system:
 
 - if applicable, install OpenCV 3 package available in your package manager
   (e.g., `libopencv-dev` in Debian/Ubuntu, `opencv-devel` in Fedora).
@@ -182,7 +182,7 @@ Contrib modules are enabled as:
 If you have previously compiled mexopencv with a different configuration,
 don't forget to clean old artifacts before building:
 
-    >> mexopencv.make(..., 'clean',true)
+    >> mexopencv.make('clean',true, 'opencv_contrib',true)
 
 Usage
 =====
@@ -253,14 +253,14 @@ The code may be redistributed under the [BSD 3-Clause license](LICENSE).
 [1]: https://travis-ci.org/kyamagu/mexopencv
 [2]: https://ci.appveyor.com/project/kyamagu/mexopencv
 [3]: https://github.com/kyamagu/mexopencv/wiki
-[4]: https://www.mathworks.com/products/matlab/
+[4]: https://www.mathworks.com/products/matlab.html
 [5]: https://www.gnu.org/software/octave/
-[6]: http://opencv.org/
-[7]: https://github.com/opencv/opencv/releases/tag/3.3.0
-[8]: https://github.com/opencv/opencv_contrib/releases/tag/3.3.0
-[9]: http://packages.ubuntu.com/zesty/libopencv-dev
+[6]: https://opencv.org/
+[7]: https://github.com/opencv/opencv/releases/tag/3.3.1
+[8]: https://github.com/opencv/opencv_contrib/releases/tag/3.3.1
+[9]: https://packages.ubuntu.com/zesty/libopencv-dev
 [10]: https://people.freedesktop.org/~dbn/pkg-config-guide.html
-[11]: http://brew.sh/
+[11]: https://brew.sh/
 [12]: http://kyamagu.github.io/mexopencv/matlab
 [13]: https://github.com/kyamagu/mexopencv/wiki/Installation-%28Windows%2C-MATLAB%2C-OpenCV-3%29
 [14]: https://github.com/kyamagu/mexopencv/wiki/Installation-%28Linux%2C-MATLAB%2C-OpenCV-3%29

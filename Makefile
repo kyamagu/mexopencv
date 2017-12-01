@@ -13,8 +13,8 @@
 # MATLAB                MATLAB/Octave executable.
 # MEX                   MATLAB/Octave MEX compiler frontend.
 # MEXEXT                MATLAB/Octave extension of MEX-files.
-# NO_CV_PKGCONFIG_HACK  If set, disables fixing the output of pkg-config with
-#                       OpenCV. Not set by default, meaning hack is applied.
+# PKG_CONFIG_CV_HACK    If set, attempts to fix the output of pkg-config with
+#                       OpenCV. Not set by default (no hack).
 # PKG_CONFIG_OPENCV     Name of OpenCV 3 pkg-config package. Default opencv.
 # CXXFLAGS              Extra flags passed to the C++ MEX compiler.
 # LDFLAGS               Extra flags passed to the linker by the compiler.
@@ -51,7 +51,7 @@ MATLAB    ?= $(MATLABDIR)/bin/octave-cli --no-gui --no-window-system --no-init-f
 else
 MATLABDIR ?= /usr/local/matlab
 MEX       ?= $(MATLABDIR)/bin/mex
-MATLAB    ?= $(MATLABDIR)/bin/matlab -nodisplay -noFigureWindows -nosplash
+MATLAB    ?= $(MATLABDIR)/bin/matlab -nodesktop -nodisplay -noFigureWindows -nosplash
 endif
 
 # file extensions
@@ -78,7 +78,7 @@ ifneq ($(shell pkg-config --exists --atleast-version=3 $(PKG_CONFIG_OPENCV); ech
 endif
 CV_CFLAGS  := $(shell pkg-config --cflags $(PKG_CONFIG_OPENCV))
 CV_LDFLAGS := $(shell pkg-config --libs $(PKG_CONFIG_OPENCV))
-ifndef NO_CV_PKGCONFIG_HACK
+ifdef PKG_CONFIG_CV_HACK
 LIB_SUFFIX := %.so %.dylib %.a %.la %.dll.a %.dll
 CV_LDFLAGS := $(filter-out $(LIB_SUFFIX),$(CV_LDFLAGS)) \
               $(addprefix -L, \
