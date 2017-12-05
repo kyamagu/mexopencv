@@ -186,8 +186,13 @@ doc:
 	doxygen Doxyfile
 
 # test targets
+ifdef WITH_CONTRIB
+TEST_CONTRIB := true
+else
+TEST_CONTRIB := false
+endif
 TEST_CMD := \
-	args = {'ContribModules',$(WITH_CONTRIB), 'Verbosity',2}; \
+	args = {'ContribModules',$(TEST_CONTRIB), 'Verbosity',2}; \
 	letter = getenv('CI_TEST_LETTER'); if ~isempty(letter), \
 	args = {args{:}, 'MatchPattern',['^Test' letter], 'XUnitFile','', \
 	'LogFile',sprintf('UnitTest_%s.log', letter)}; end, \
