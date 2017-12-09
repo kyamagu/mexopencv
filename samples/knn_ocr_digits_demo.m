@@ -1,8 +1,10 @@
-%% OCR of Hand-written Data using kNN
+%% OCR of hand-written digits using kNN
 %
 % We will use kNN to build a basic OCR application.
 %
-% <http://docs.opencv.org/3.2.0/d8/d4b/tutorial_py_knn_opencv.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d8/d4b/tutorial_py_knn_opencv.html>
 %
 
 %% Hand-written Digits Dataset

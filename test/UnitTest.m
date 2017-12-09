@@ -1,60 +1,59 @@
 function varargout = UnitTest(varargin)
     %UNITTEST  Helper function for mexopencv unit testing
     %
-    %    [results, passed] = UnitTest()
-    %    [...] = UnitTest('OptionName',optionValue, ...)
+    %     [results, passed] = UnitTest()
+    %     [...] = UnitTest('OptionName',optionValue, ...)
     %
     % ## Options
     % * __MainModules__ enable main modules tests. default true
     % * __ContribModules__ enable contrib modules tests. default false
     % * __MatchPattern__ regex pattern to filter test classes. Only matched
-    %       tests are kept. default empty (no filtering)
+    %   tests are kept. default empty (no filtering)
     % * __Verbosity__ Verbosity level. default 1:
-    %       * __0__ quiet mode.
-    %       * __1__ dot-matrix output (one character per test,
-    %             either ".", "S", or "F"). Good for minimal output.
-    %       * __2__ verbose output, one line per test (test name and status),
-    %             along with error message and stack trace if any.
+    %   * __0__ quiet mode.
+    %   * __1__ dot-matrix output (one character per test, either ".", "S", or
+    %     "F"). Good for minimal output.
+    %   * __2__ verbose output, one line per test (test name and status),
+    %     along with error message and stack trace if any.
     % * __HotLinks__ Allow HTML hyperlinks in error messages. default 'default'
     % * __FilterStack__ remove test framework from exceptions stack traces.
-    %       default false
+    %   default false
     % * __DryRun__ dont actually run the tests, just print them. default false
     % * __Progress__ display a graphical progress bar. default false
     % * __LogFile__ name of log file (output logged using DIARY). default is a
-    %       timestamped file named `UnitTest_*.log` in current directory. Set
-    %       to empty string to disable logging.
+    %   timestamped file named `UnitTest_*.log` in current directory. Set to
+    %   empty string to disable logging.
     % * __XUnitFile__ export results to an XML file (in xUnit Format), this
-    %       can be consumed by several CI systems. default is `tests.xml`. Set
-    %       to empty string to disable report.
+    %   can be consumed by several CI systems. default is `tests.xml`. Set to
+    %   empty string to disable report.
     %
     % ## Output
     % * __results__ output structure of results with the following fields:
-    %       * __Duration__ total time elapsed running all tests.
-    %       * __Timestamp__ when test suite was executed (serial date number).
-    %       * __Passed__ number of tests passed.
-    %       * __Failed__ number of tests failed.
-    %       * __Incomplete__ number of tests skipped.
-    %       * __Details__ structure array (one struct for each test) with the
-    %             following fields:
-    %             * __Name__ test name.
-    %             * __Duration__ time elapsed running test.
-    %             * __Timestamp__ when test case was executed.
-    %             * __Passed__ boolean indicating if test passed.
-    %             * __Failed__ boolean indicating if test failed.
-    %             * __Incomplete__ boolean indicating if test was incomplete
-    %                   (skipped).
-    %             * __Exception__ exception thrown if failed/skipped.
-    %       * __Logs__ test runner log.
+    %   * __Duration__ total time elapsed running all tests.
+    %   * __Timestamp__ when test suite was executed (serial date number).
+    %   * __Passed__ number of tests passed.
+    %   * __Failed__ number of tests failed.
+    %   * __Incomplete__ number of tests skipped.
+    %   * __Details__ structure array (one struct for each test) with the
+    %     following fields:
+    %     * __Name__ test name.
+    %     * __Duration__ time elapsed running test.
+    %     * __Timestamp__ when test case was executed.
+    %     * __Passed__ boolean indicating if test passed.
+    %     * __Failed__ boolean indicating if test failed.
+    %     * __Incomplete__ boolean indicating if test was incomplete (skipped).
+    %     * __Exception__ exception thrown if failed/skipped.
+    %   * __Logs__ test runner log.
     % * __passed__ boolean indicates tests status (passed or failed).
     %
     % ## Usage
     %
-    %    cd test;
-    %    results = UnitTest('Verbosity',0);
-    %    t = struct2table(results.Details)
-    %    sortrows(t(t.Duration>1,:), 'Duration')  % inspect slow tests
-    %    t(t.Incomplete|t.Failed,:)               % inspect non-passing tests
-    %    disp(results.Log)
+    %     cd test;
+    %     results = UnitTest('Verbosity',0);
+    %     t = struct2table(results.Details)
+    %     sortrows(t(t.Duration>1,:), 'Duration')  % inspect slow tests
+    %     t(t.Incomplete|t.Failed,:)               % inspect non-passing tests
+    %     disp(results.Log)
     %
     % See also: matlab.unittest
     %
@@ -91,7 +90,7 @@ end
 function opts = parse_options(varargin)
     %PARSE_OPTIONS  Help function to parse input arguments
     %
-    %    opts = parse_options(...)
+    %     opts = parse_options(...)
     %
     % ## Output
     % * __opts__ options structure.
@@ -161,7 +160,7 @@ end
 function skip = skip_class(fpath)
     %SKIP_CLASS  Determine if test class should be skipped (Octave)
     %
-    %    skip = skip_class(fpath)
+    %     skip = skip_class(fpath)
     %
     % ## Input
     % * __fpath__ full absolute path to M-file to check.
@@ -191,7 +190,7 @@ end
 function tests = testsuite_fromFolder(dpath, opts)
     %TESTSUITE_FROMFOLDER  Create test suite from all test classes in a folder
     %
-    %    tests = testsuite_fromFolder(dpath, opts)
+    %     tests = testsuite_fromFolder(dpath, opts)
     %
     % ## Input
     % * __dpath__ Folder containing test classes `Test*.m`.
@@ -202,7 +201,7 @@ function tests = testsuite_fromFolder(dpath, opts)
     %
     % ## Usage
     %
-    %    t = testsuite_fromFolder(fullfile(mexopencv.root(),'test','unit_tests'));
+    %     t = testsuite_fromFolder(fullfile(mexopencv.root(),'test','unit_tests'));
     %
     % Test class files must be named with a "Test" prefix.
     %
@@ -243,12 +242,12 @@ end
 function tests = testsuite_fromPackage(name, opts)
     %TESTSUITE_FROMPACKAGE  Create test suite from package
     %
-    %    tests = testsuite_fromPackage(name, opts)
+    %     tests = testsuite_fromPackage(name, opts)
     %
     % ## Input
     % * __name__ Package. This can be specified as:
-    %       * name of a package as a string
-    %       * metapackage object associated with the package
+    %   * name of a package as a string
+    %   * metapackage object associated with the package
     % * __opts__ Options structure.
     %
     % ## Output
@@ -309,14 +308,14 @@ end
 function tests = testsuite_fromClass(klass, opts)
     %TESTSUITE_FROMCLASS  Create test suite from test class
     %
-    %    tests = testsuite_fromClass(klass, opts)
+    %     tests = testsuite_fromClass(klass, opts)
     %
     % ## Input
     % * __klass__ Test class. This can be specified as:
-    %       * name of class as a string
-    %       * path to class file as a string
-    %       * metaclass object associated with the test class
-    %       * instance of test class itself as object
+    %   * name of class as a string
+    %   * path to class file as a string
+    %   * metaclass object associated with the test class
+    %   * instance of test class itself as object
     % * __opts__ Options structure.
     %
     % ## Output
@@ -324,10 +323,10 @@ function tests = testsuite_fromClass(klass, opts)
     %
     % ## Usage
     %
-    %    t = testsuite_fromClass('TestBlur');
-    %    t = testsuite_fromClass(fullfile(mexopencv.root(),'test','unit_tests','TestBlur.m'));
-    %    t = testsuite_fromClass(?TestBlur);
-    %    t = testsuite_fromClass(TestBlur());
+    %     t = testsuite_fromClass('TestBlur');
+    %     t = testsuite_fromClass(fullfile(mexopencv.root(),'test','unit_tests','TestBlur.m'));
+    %     t = testsuite_fromClass(?TestBlur);
+    %     t = testsuite_fromClass(TestBlur());
     %
     % The class must be on the path and contains test methods
     % (static functions whose name start with "test").
@@ -379,7 +378,7 @@ end
 function [results, passed] = testsuite_run(tests, opts)
     %TESTSUITE_RUN  Execute all tests in a suite
     %
-    %    [results, passed] = testsuite_run(tests, opts)
+    %     [results, passed] = testsuite_run(tests, opts)
     %
     % ## Input
     % * __tests__ Cell array of test names to run.
@@ -428,7 +427,7 @@ end
 function status = testcase_run(t, opts)
     %TESTCASE_RUN  Run test
     %
-    %    status = testcase_run(t, opts)
+    %     status = testcase_run(t, opts)
     %
     % ## Input
     % * __t__ test name to run.
@@ -436,9 +435,9 @@ function status = testcase_run(t, opts)
     %
     % ## Output
     % * __status__ Result of running test. One of:
-    %       * __1__ pass
-    %       * __0__ fail
-    %       * __-1__ skip
+    %   * __1__ pass
+    %   * __0__ fail
+    %   * __-1__ skip
     %
     % See also: matlab.unittest.TestCase.run
     %
@@ -477,7 +476,7 @@ end
 function varargout = testrunner_monitor(opts, action, t, varargin)
     %TESTRUNNER_MONITOR  Test runner monitor
     %
-    %    [...] = testrunner_monitor(opts, action, t, ...)
+    %     [...] = testrunner_monitor(opts, action, t, ...)
     %
     % ## Input
     % * __opts__ Options structure.
@@ -615,7 +614,7 @@ end
 function print_version()
     %PRINT_VERSION  Display MATLAB/Octave version
     %
-    %    print_summary(results)
+    %     print_summary(results)
     %
     % See also: ver, version
     %
@@ -635,7 +634,7 @@ end
 function print_summary(results)
     %PRINT_SUMMARY  Display summary of tests totals
     %
-    %    print_summary(results)
+    %     print_summary(results)
     %
     % ## Input
     % * __results__ output structure of results.
@@ -650,7 +649,7 @@ end
 function print_faults(results, opts)
     %PRINT_FAULTS  Display list of exceptions thrown from tests
     %
-    %    print_faults(results, opts)
+    %     print_faults(results, opts)
     %
     % ## Input
     % * __results__ output structure of results.
@@ -683,7 +682,7 @@ end
 function export_xunit(results, opts)
     %EXPORT_XUNIT  Save test results in xUnit XML Format
     %
-    %    export_xunit(results, opts)
+    %     export_xunit(results, opts)
     %
     % ## Input
     % * __results__ output structure of results.
@@ -746,11 +745,11 @@ end
 function str = exception_getReport(ME, opts)
     %EXCEPTION_GETREPORT  Get error message for exception
     %
-    %    str = exception_getReport(ME, opts)
+    %     str = exception_getReport(ME, opts)
     %
     % ## Input
     % * __ME__ exception caught. Either a MATLAB MException object or an
-    %       Octave error structure.
+    %   Octave error structure.
     % * __opts__ Options structure.
     %
     % ## Output

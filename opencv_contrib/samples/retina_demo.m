@@ -1,6 +1,5 @@
 %% Retina demonstration
-% Demonstrates the use of is a wrapper class of the Gipsa/Listic Labs retina
-% model.
+% Demonstrates the use of wrapper class of the Gipsa/Listic Labs retina model.
 %
 % This retina model allows spatio-temporal image processing (applied on a
 % webcam sequences).
@@ -17,8 +16,10 @@
 % |RetinaDefaultParameters.xml|. You can use this to fine tune parameters and
 % load them if you save to file |RetinaSpecificParameters.xml|
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/bioinspired/samples/basicRetina.cpp>
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/bioinspired/samples/cpp/retinaDemo.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/bioinspired/samples/basicRetina.cpp>
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/bioinspired/samples/cpp/retinaDemo.cpp>
 %
 
 %% Webcam

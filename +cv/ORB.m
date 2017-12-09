@@ -18,7 +18,8 @@ classdef ORB < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -66,13 +67,12 @@ classdef ORB < handle
         WTA_K
         % Algorithm used to rank features.
         %
-        % * __Harris__ means that Harris algorithm is used to
-        %       rank features (the score is written to `keypoint.response` and
-        %       is used to retain best `NFeatures` features).
-        %       This is the default
+        % * __Harris__ means that Harris algorithm is used to rank features
+        %   (the score is written to `keypoint.response` and is used to retain
+        %   best `NFeatures` features). This is the default
         % * __FAST__ is alternative value of the parameter that produces
-        %       slightly less stable keypoints, but it is a little faster to
-        %       compute.
+        %   slightly less stable keypoints, but it is a little faster to
+        %   compute.
         ScoreType
         % Size of the patch used by the oriented BRIEF descriptor.
         %
@@ -90,8 +90,8 @@ classdef ORB < handle
         function this = ORB(varargin)
             %ORB  The ORB constructor
             %
-            %    obj = cv.ORB()
-            %    obj = cv.ORB(..., 'OptionName',optionValue, ...)
+            %     obj = cv.ORB()
+            %     obj = cv.ORB(..., 'OptionName',optionValue, ...)
             %
             % ## Options
             % * __MaxFeatures__ See cv.ORB.MaxFeatures, default 500
@@ -112,7 +112,7 @@ classdef ORB < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.ORB
             %
@@ -123,7 +123,7 @@ classdef ORB < handle
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
-            %    typename = obj.typeid()
+            %     typename = obj.typeid()
             %
             % ## Output
             % * __typename__ Name of C++ type
@@ -137,7 +137,7 @@ classdef ORB < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.ORB.empty, cv.ORB.load
             %
@@ -147,11 +147,11 @@ classdef ORB < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.ORB.clear, cv.ORB.load
             %
@@ -161,7 +161,7 @@ classdef ORB < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -177,21 +177,21 @@ classdef ORB < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -205,11 +205,11 @@ classdef ORB < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.ORB.save, cv.ORB.load
             %
@@ -222,16 +222,16 @@ classdef ORB < handle
         function ntype = defaultNorm(this)
             %DEFAULTNORM  Returns the default norm type
             %
-            %    ntype = obj.defaultNorm()
+            %     ntype = obj.defaultNorm()
             %
             % ## Output
             % * __ntype__ Norm type. One of `cv::NormTypes`:
-            %       * __Inf__
-            %       * __L1__
-            %       * __L2__
-            %       * __L2Sqr__
-            %       * __Hamming__
-            %       * __Hamming2__
+            %   * __Inf__
+            %   * __L1__
+            %   * __L2__
+            %   * __L2Sqr__
+            %   * __Hamming__
+            %   * __Hamming2__
             %
             % Always `Hamming` for ORB.
             %
@@ -243,7 +243,7 @@ classdef ORB < handle
         function sz = descriptorSize(this)
             %DESCRIPTORSIZE  Returns the descriptor size in bytes
             %
-            %    sz = obj.descriptorSize()
+            %     sz = obj.descriptorSize()
             %
             % ## Output
             % * __sz__ Descriptor size.
@@ -258,7 +258,7 @@ classdef ORB < handle
         function dtype = descriptorType(this)
             %DESCRIPTORTYPE  Returns the descriptor type
             %
-            %    dtype = obj.descriptorType()
+            %     dtype = obj.descriptorType()
             %
             % ## Output
             % * __dtype__ Descriptor type, one of numeric MATLAB class names.
@@ -273,27 +273,25 @@ classdef ORB < handle
         function keypoints = detect(this, img, varargin)
             %DETECT  Detects keypoints in an image or image set
             %
-            %    keypoints = obj.detect(img)
-            %    keypoints = obj.detect(imgs)
-            %    [...] = obj.detect(..., 'OptionName',optionValue, ...)
+            %     keypoints = obj.detect(img)
+            %     keypoints = obj.detect(imgs)
+            %     [...] = obj.detect(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __img__ Image (first variant), 8-bit grayscale image.
             % * __imgs__ Image set (second variant), cell array of images.
             %
             % ## Output
-            % * __keypoints__ The detected keypoints. In the first variant,
-            %       a 1-by-N structure array. In the second variant of the
-            %       method, `keypoints{i}` is a set of keypoints detected in
-            %       `imgs{i}`.
+            % * __keypoints__ The detected keypoints. In the first variant, a
+            %   1-by-N structure array. In the second variant of the method,
+            %   `keypoints{i}` is a set of keypoints detected in `imgs{i}`.
             %
             % ## Options
             % * __Mask__ A mask specifying where to look for keypoints
-            %       (optional). It must be a logical or 8-bit integer matrix
-            %       with non-zero values in the region of interest. In the
-            %       second variant, it is a cell-array of masks for each input
-            %       image, `masks{i}` is a mask for `imgs{i}`.
-            %       Not set by default.
+            %   (optional). It must be a logical or 8-bit integer matrix with
+            %   non-zero values in the region of interest. In the second
+            %   variant, it is a cell-array of masks for each input image,
+            %   `masks{i}` is a mask for `imgs{i}`. Not set by default.
             %
             % See also: cv.ORB.compute, cv.ORB.detectAndCompute
             %
@@ -303,26 +301,26 @@ classdef ORB < handle
         function [descriptors, keypoints] = compute(this, img, keypoints)
             %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set
             %
-            %    [descriptors, keypoints] = obj.compute(img, keypoints)
-            %    [descriptors, keypoints] = obj.compute(imgs, keypoints)
+            %     [descriptors, keypoints] = obj.compute(img, keypoints)
+            %     [descriptors, keypoints] = obj.compute(imgs, keypoints)
             %
             % ## Input
             % * __img__ Image (first variant), 8-bit grayscale image.
             % * __imgs__ Image set (second variant), cell array of images.
             % * __keypoints__ Input collection of keypoints. Keypoints for
-            %       which a descriptor cannot be computed are removed.
-            %       Sometimes new keypoints can be added, for example: cv.SIFT
-            %       duplicates keypoint with several dominant orientations
-            %       (for each orientation). In the first variant, this is a
-            %       struct-array of detected keypoints. In the second variant,
-            %       it is a cell-array, where `keypoints{i}` is a set of keypoints
-            %       detected in `imgs{i}` (a struct-array like before).
+            %   which a descriptor cannot be computed are removed. Sometimes
+            %   new keypoints can be added, for example: cv.SIFT duplicates
+            %   keypoint with several dominant orientations (for each
+            %   orientation). In the first variant, this is a struct-array of
+            %   detected keypoints. In the second variant, it is a cell-array,
+            %   where `keypoints{i}` is a set of keypoints detected in
+            %   `imgs{i}` (a struct-array like before).
             %
             % ## Output
             % * __descriptors__ Computed descriptors. In the second variant of
-            %       the method `descriptors{i}` are descriptors computed for a
-            %       `keypoints{i}`. Row `j` in `descriptors` (or
-            %       `descriptors{i}`) is the descriptor for `j`-th keypoint.
+            %   the method `descriptors{i}` are descriptors computed for a
+            %   `keypoints{i}`. Row `j` in `descriptors` (or `descriptors{i}`)
+            %   is the descriptor for `j`-th keypoint.
             % * __keypoints__ Optional output with possibly updated keypoints.
             %
             % See also: cv.ORB.detect, cv.ORB.detectAndCompute
@@ -333,41 +331,41 @@ classdef ORB < handle
         function [keypoints, descriptors] = detectAndCompute(this, img, varargin)
             %DETECTANDCOMPUTE  Finds keypoints in an image and computes their descriptors
             %
-            %    [keypoints, descriptors] = obj.detectAndCompute(img)
-            %    [...] = obj.detectAndCompute(..., 'OptionName',optionValue, ...)
+            %     [keypoints, descriptors] = obj.detectAndCompute(img)
+            %     [...] = obj.detectAndCompute(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __img__ Image, input 8-bit grayscale image.
             %
             % ## Output
             % * __keypoints__ The detected keypoints. A 1-by-N structure array
-            %       with the following fields:
-            %       * __pt__ coordinates of the keypoint `[x,y]`
-            %       * __size__ diameter of the meaningful keypoint neighborhood
-            %       * __angle__ computed orientation of the keypoint (-1 if not
-            %             applicable); it's in [0,360) degrees and measured
-            %             relative to image coordinate system (y-axis is
-            %             directed downward), i.e in clockwise.
-            %       * __response__ the response by which the most strong
-            %             keypoints have been selected. Can be used for further
-            %             sorting or subsampling.
-            %       * __octave__ octave (pyramid layer) from which the keypoint
-            %             has been extracted.
-            %       * **class_id** object class (if the keypoints need to be
-            %             clustered by an object they belong to).
+            %   with the following fields:
+            %   * __pt__ coordinates of the keypoint `[x,y]`
+            %   * __size__ diameter of the meaningful keypoint neighborhood
+            %   * __angle__ computed orientation of the keypoint (-1 if not
+            %     applicable); it's in [0,360) degrees and measured relative
+            %     to image coordinate system (y-axis is directed downward),
+            %     i.e in clockwise.
+            %   * __response__ the response by which the most strong keypoints
+            %     have been selected. Can be used for further sorting or
+            %     subsampling.
+            %   * __octave__ octave (pyramid layer) from which the keypoint
+            %     has been extracted.
+            %   * **class_id** object class (if the keypoints need to be
+            %     clustered by an object they belong to).
             % * __descriptors__ Computed descriptors. Output concatenated
-            %       vectors of descriptors. Each descriptor is a 32-element
-            %       vector, as returned by cv.ORB.descriptorSize, so the total
-            %       size of descriptors will be
-            %       `numel(keypoints) * obj.descriptorSize()`, i.e a matrix
-            %       of size `N-by-32` of class `uint8`, one row per keypoint.
+            %   vectors of descriptors. Each descriptor is a 32-element
+            %   vector, as returned by cv.ORB.descriptorSize, so the total
+            %   size of descriptors will be
+            %   `numel(keypoints) * obj.descriptorSize()`, i.e a matrix of
+            %   size `N-by-32` of class `uint8`, one row per keypoint.
             %
             % ## Options
             % * __Mask__ optional operation mask specifying where to look for
-            %       keypoints. Not set by default
+            %   keypoints. Not set by default
             % * __Keypoints__ If passed, then the method will use the provided
-            %       vector of keypoints instead of detecting them, and the
-            %       algorithm just computes their descriptors.
+            %   vector of keypoints instead of detecting them, and the
+            %   algorithm just computes their descriptors.
             %
             % See also: cv.ORB.detect, cv.ORB.compute
             %

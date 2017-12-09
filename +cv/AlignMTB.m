@@ -22,7 +22,8 @@ classdef AlignMTB < handle
     %
 
     properties (SetAccess = private)
-        id % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -43,8 +44,8 @@ classdef AlignMTB < handle
         function this = AlignMTB(varargin)
             %ALIGNMTB  Creates AlignMTB object
             %
-            %    obj = cv.AlignMTB()
-            %    obj = cv.AlignMTB('OptionName',optionValue, ...)
+            %     obj = cv.AlignMTB()
+            %     obj = cv.AlignMTB('OptionName',optionValue, ...)
             %
             % ## Options
             % * __MaxBits__ default 6
@@ -59,7 +60,7 @@ classdef AlignMTB < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.AlignMTB
             %
@@ -70,7 +71,7 @@ classdef AlignMTB < handle
         function shift = calculateShift(this, img0, img1)
             %CALCULATESHIFT  Calculates shift between two images
             %
-            %    shift = obj.calculateShift(img0, img1)
+            %     shift = obj.calculateShift(img0, img1)
             %
             % ## Input
             % * __img0__ first image (`uint8` grayscale).
@@ -90,7 +91,7 @@ classdef AlignMTB < handle
         function dst = shiftMat(this, src, shift)
             %SHIFTMAT  Helper function, that shift Mat filling new regions with zeros
             %
-            %    dst = obj.shiftMat(src, shift)
+            %     dst = obj.shiftMat(src, shift)
             %
             % ## Input
             % * __src__ input image.
@@ -107,14 +108,14 @@ classdef AlignMTB < handle
         function [tb, eb] = computeBitmaps(this, img)
             %COMPUTEBITMAPS  Computes median threshold and exclude bitmaps of given image
             %
-            %    [tb,eb] = obj.computeBitmaps(img)
+            %     [tb, eb] = obj.computeBitmaps(img)
             %
             % ## Input
             % * __img__ input image (`uint8` grayscale).
             %
             % ## Output
             % * __tb__ median threshold bitmap, of same size as `img` and
-            %       `uint8` type.
+            %   `uint8` type.
             % * __eb__ exclude bitmap, of same size as `img` and `uint8` type.
             %
             % See also: cv.AlignMTB.process
@@ -128,11 +129,11 @@ classdef AlignMTB < handle
         function dst = process(this, src)
             %PROCESS  Aligns images
             %
-            %    dst = obj.process(src)
+            %     dst = obj.process(src)
             %
             % ## Input
             % * __src__ cell array of input images (RGB), all of the same size
-            %       and `uint8` type.
+            %   and `uint8` type.
             %
             % ## Output
             % * __dst__ cell array of aligned images, of same length as `src`.
@@ -148,7 +149,7 @@ classdef AlignMTB < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.AlignMTB.empty, cv.AlignMTB.load
             %
@@ -158,11 +159,11 @@ classdef AlignMTB < handle
         function b = empty(this)
             %EMPTY  Returns true if the algorithm is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.AlignMTB.clear, cv.AlignMTB.load
             %
@@ -172,11 +173,11 @@ classdef AlignMTB < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.AlignMTB.save, cv.AlignMTB.load
             %
@@ -186,7 +187,7 @@ classdef AlignMTB < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -202,21 +203,21 @@ classdef AlignMTB < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous

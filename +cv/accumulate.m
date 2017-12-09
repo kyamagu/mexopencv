@@ -1,13 +1,13 @@
 %ACCUMULATE  Adds an image to the accumulator
 %
-%    dst = cv.accumulate(src, dst)
-%    dst = cv.accumulate(src, dst, 'OptionName',optionValue, ...)
+%     dst = cv.accumulate(src, dst)
+%     dst = cv.accumulate(src, dst, 'OptionName',optionValue, ...)
 %
 % ## Input
-% * __src__ Input image of type `uint8`, `uint16`, `single`, or `double, with
-%       any number of channels
+% * __src__ Input image of type `uint8`, `uint16`, `single`, or `double`, with
+%   any number of channels
 % * __dst__ Input accumulator image with the same number of channels as input
-%       image, and a depth of `single` or `double`.
+%   image, and a depth of `single` or `double`.
 %
 % ## Output
 % * __dst__ Output accumulator image.
@@ -17,7 +17,7 @@
 %
 % The function adds `src` or some of its elements to `dst`:
 %
-%    dst(x,y) = dst(x,y) + src(x,y)  if mask(x,y)~=0
+%     dst(x,y) = dst(x,y) + src(x,y)  if mask(x,y)~=0
 %
 % The function supports multi-channel images. Each channel is processed
 % independently.

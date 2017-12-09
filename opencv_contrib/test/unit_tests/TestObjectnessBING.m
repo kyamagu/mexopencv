@@ -4,8 +4,6 @@ classdef TestObjectnessBING
     methods (Static)
         function test_1
             saliency = cv.ObjectnessBING();
-            cname = saliency.getClassName();
-            validateattributes(cname, {'char'}, {'vector', 'nonempty'});
 
             resdir = tempname();
             cObj = onCleanup(@() deleteDir(resdir));

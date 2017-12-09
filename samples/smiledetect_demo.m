@@ -1,10 +1,12 @@
-%% Smile Detection demo
+%% Smile Detection
 % This program demonstrates the smile detector.
 %
 % NOTE: Smile intensity will only be valid after a first smile has been
 % detected.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/smiledetect.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/smiledetect.cpp>
 %
 
 %% Options
@@ -95,7 +97,7 @@ function img = detectAndDraw(img, cascadeF, cascadeS, scale, tryflip)
     faces = cascadeF.detect(gray, detectOpts{:});
     if tryflip
         faces2 = cascadeF.detect(cv.flip(gray, 1), detectOpts{:});
-        faces2 = cellfun(@(r) [w-r(1)-r(3) r(2:4)], faces2, 'Uniform',false);
+        faces2 = cellfun(@(r) [w-r(1)-r(3) r(2:4)], faces2, 'UniformOutput',false);
         faces = [faces(:); faces2(:)];
     end
     toc

@@ -7,8 +7,10 @@
 % * Use the OpenCV function |cv.Scharr| to calculate a more accurate
 %   derivative for a kernel of size 3x3
 %
-% <http://docs.opencv.org/3.2.0/d2/d2c/tutorial_sobel_derivatives.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/Sobel_Demo.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d2/d2c/tutorial_sobel_derivatives.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/Sobel_Demo.cpp>
 %
 
 %% Theory
@@ -22,7 +24,7 @@
 % derivatives in an image? Let's imagine we want to detect the _edges_ present
 % in the image. For instance:
 %
-% <<http://docs.opencv.org/3.2.0/Sobel_Derivatives_Tutorial_Theory_0.jpg>>
+% <<https://docs.opencv.org/3.2.0/Sobel_Derivatives_Tutorial_Theory_0.jpg>>
 %
 % You can easily notice that in an _edge_, the pixel intensity _changes_ in a
 % notorious way. A good way to express _changes_ is by using _derivatives_. A
@@ -31,12 +33,12 @@
 % To be more graphical, let's assume we have a 1D-image. An edge is shown by
 % the "jump" in intensity in the plot below:
 %
-% <<http://docs.opencv.org/3.2.0/Sobel_Derivatives_Tutorial_Theory_Intensity_Function.jpg>>
+% <<https://docs.opencv.org/3.2.0/Sobel_Derivatives_Tutorial_Theory_Intensity_Function.jpg>>
 %
 % The edge "jump" can be seen more easily if we take the first derivative
 % (actually, here appears as a maximum)
 %
-% <<http://docs.opencv.org/3.2.0/Sobel_Derivatives_Tutorial_Theory_dIntensity_Function.jpg>>
+% <<https://docs.opencv.org/3.2.0/Sobel_Derivatives_Tutorial_Theory_dIntensity_Function.jpg>>
 %
 % So, from the explanation above, we can deduce that a method to detect edges
 % in an image can be performed by locating pixel locations where the gradient
@@ -89,7 +91,8 @@
 %                -3 & 0 &  +3 \cr
 %               -10 & 0 & +10 \cr
 %                -3 & 0 &  +3
-%           }}\right]$$;
+%           }}\right]$$
+%
 % $$G_{y} = \left[{\matrix{
 %               -3 & -10 & -3 \cr
 %                0 &   0 &  0 \cr

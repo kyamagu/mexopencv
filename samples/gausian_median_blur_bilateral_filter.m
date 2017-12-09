@@ -7,7 +7,9 @@
 % * <matlab:doc('cv.medianBlur') cv.medianBlur>
 % * <matlab:doc('cv.bilateralFilter') cv.bilateralFilter>
 %
-% <http://docs.opencv.org/3.1.0/dc/dd3/tutorial_gausian_median_blur_bilateral_filter.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.1.0/dc/dd3/tutorial_gausian_median_blur_bilateral_filter.html>
 %
 
 %% Theory
@@ -133,7 +135,7 @@ xlabel('x'), ylabel('G(x)'), grid on
 % filter.
 %
 %%
-dbtype smoothing_demo 24:28
+dbtype smoothing_demo 26:30
 %%
 % We specify the following arguments (for more details, check the function
 % reference):
@@ -153,7 +155,7 @@ dbtype smoothing_demo 24:28
 % It is performed by the function |cv.GaussianBlur()|:
 %
 %%
-dbtype smoothing_demo 31:35
+dbtype smoothing_demo 33:37
 %%
 % Here we use the following arguments:
 %
@@ -174,7 +176,7 @@ dbtype smoothing_demo 31:35
 % This filter is provided by the |cv.medianBlur()| function:
 %
 %%
-dbtype smoothing_demo 38:42
+dbtype smoothing_demo 40:44
 %%
 % We use these arguments:
 %
@@ -190,7 +192,7 @@ dbtype smoothing_demo 38:42
 % Provided by OpenCV function |cv.bilateralFilter()|.
 %
 %%
-dbtype smoothing_demo 45:50
+dbtype smoothing_demo 47:52
 %%
 % We use the following arguments:
 %

@@ -1,7 +1,7 @@
 function [status, v] = require(name)
     %REQUIRE  Check if a toolbox/package is available
     %
-    %    [status, v] = mexopencv.require(name)
+    %     [status, v] = mexopencv.require(name)
     %
     % ## Input
     % * __name__ name of toolbox/packge to check.

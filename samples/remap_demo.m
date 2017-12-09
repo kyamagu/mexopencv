@@ -1,10 +1,12 @@
-%% Remapping
+%% Image Remapping
 %
 % In this demo, we show how to use the OpenCV function |cv.remap| to implement
 % simple remapping routines.
 %
-% <http://docs.opencv.org/3.2.0/d1/da0/tutorial_remap.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/Remap_Demo.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d1/da0/tutorial_remap.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/Remap_Demo.cpp>
 %
 
 %% Theory
@@ -24,19 +26,19 @@
 % the mapping function that operates on $(x,y)$.
 %
 % Let's think in a quick example. Imagine that we have an image $I$ and, say
-%  we want to do a remap such that:
+% we want to do a remap such that:
 %
 % $$h(x,y) = (I.cols - x, y )$$
 %
 % What would happen? It is easily seen that the image would flip in the $x$
 % direction. For instance, consider the input image:
 %
-% <<http://docs.opencv.org/3.2.0/Remap_Tutorial_Theory_0.jpg>>
+% <<https://docs.opencv.org/3.2.0/Remap_Tutorial_Theory_0.jpg>>
 %
 % observe how the red circle changes positions with respect to x (considering
 % $x$ the horizontal direction):
 %
-% <<http://docs.opencv.org/3.2.0/Remap_Tutorial_Theory_1.jpg>>
+% <<https://docs.opencv.org/3.2.0/Remap_Tutorial_Theory_1.jpg>>
 %
 % In OpenCV, the function |cv.remap| offers a simple remapping implementation.
 %

@@ -3,8 +3,10 @@
 % In this sample, we learn to exploit calib3d module to create some 3D effects
 % in images from a calibrated camera.
 %
-% <http://docs.opencv.org/3.2.0/d7/d53/tutorial_py_pose.html>,
-% <http://docs.opencv.org/3.2.0/dc/d43/tutorial_camera_calibration_square_chess.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d7/d53/tutorial_py_pose.html>
+% * <https://docs.opencv.org/3.2.0/dc/d43/tutorial_camera_calibration_square_chess.html>
 %
 
 %%

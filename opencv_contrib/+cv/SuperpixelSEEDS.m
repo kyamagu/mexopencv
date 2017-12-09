@@ -23,35 +23,36 @@ classdef SuperpixelSEEDS < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     methods
         function this = SuperpixelSEEDS(image_size, num_superpixels, num_levels, varargin)
             %SUPERPIXELSEEDS  Initializes a SuperpixelSEEDS object
             %
-            %    obj = cv.SuperpixelSEEDS(image_size, num_superpixels, num_levels)
-            %    obj = cv.SuperpixelSEEDS(..., 'OptionName',optionValue, ...)
+            %     obj = cv.SuperpixelSEEDS(image_size, num_superpixels, num_levels)
+            %     obj = cv.SuperpixelSEEDS(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * **image_size** Image size specified as `[height,width]` or
-            %       `[height,width,number_of_channels]`.
+            %   `[height,width,number_of_channels]`.
             % * **num_superpixels** Desired number of superpixels. Note that
-            %       the actual number may be smaller due to restrictions
-            %       (depending on the image size and `num_levels`). Use
-            %       cv.SuperpixelSEEDS.getNumberOfSuperpixels to get the
-            %       actual number.
+            %   the actual number may be smaller due to restrictions
+            %   (depending on the image size and `num_levels`). Use
+            %   cv.SuperpixelSEEDS.getNumberOfSuperpixels to get the actual
+            %   number.
             % * **num_levels** Number of block levels. The more levels, the
-            %       more accurate is the segmentation, but needs more memory
-            %       and CPU time. Minimum is 2.
+            %   more accurate is the segmentation, but needs more memory and
+            %   CPU time. Minimum is 2.
             %
             % ## Options
             % * __Prior__ enable 3x3 shape smoothing term if `> 0`. A larger
-            %       value leads to smoother shapes. Prior must be in the range
-            %       [0, 5]. default 2
+            %   value leads to smoother shapes. Prior must be in the range
+            %   [0, 5]. default 2
             % * __HistogramBins__ Number of histogram bins. default 5
             % * __DoubleStep__ If true, iterate each block level twice for
-            %       higher accuracy. default false
+            %   higher accuracy. default false
             %
             % The function initializes a SuperpixelSEEDS object for the input
             % image. It stores the parameters of the image: `image_width`,
@@ -69,7 +70,7 @@ classdef SuperpixelSEEDS < handle
             % level. An example of initialization of 4 block levels is
             % illustrated in the following figure.
             %
-            % ![image](http://docs.opencv.org/3.1.0/superpixels_blocks.png)
+            % ![image](https://docs.opencv.org/3.3.1/superpixels_blocks.png)
             %
             % See also: cv.SuperpixelSEEDS.iterate
             %
@@ -80,7 +81,7 @@ classdef SuperpixelSEEDS < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.SuperpixelSEEDS
             %
@@ -94,7 +95,7 @@ classdef SuperpixelSEEDS < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.SuperpixelSEEDS.empty, cv.SuperpixelSEEDS.load
             %
@@ -104,11 +105,11 @@ classdef SuperpixelSEEDS < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.SuperpixelSEEDS.clear, cv.SuperpixelSEEDS.load
             %
@@ -118,7 +119,7 @@ classdef SuperpixelSEEDS < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -134,21 +135,21 @@ classdef SuperpixelSEEDS < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -162,11 +163,11 @@ classdef SuperpixelSEEDS < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.SuperpixelSEEDS.save, cv.SuperpixelSEEDS.load
             %
@@ -179,7 +180,7 @@ classdef SuperpixelSEEDS < handle
         function num = getNumberOfSuperpixels(this)
             %GETNUMBEROFSUPERPIXELS  Calculates the superpixel segmentation on a given image stored in object
             %
-            %    num = obj.getNumberOfSuperpixels()
+            %     num = obj.getNumberOfSuperpixels()
             %
             % ## Output
             % * __num__ actual amount of superpixels.
@@ -195,19 +196,19 @@ classdef SuperpixelSEEDS < handle
         function iterate(this, img, varargin)
             %ITERATE  Calculates the superpixel segmentation on a given image with the initialized parameters in the object
             %
-            %    obj.iterate(img)
-            %    obj.iterate(img, 'OptionName',optionValue, ...)
+            %     obj.iterate(img)
+            %     obj.iterate(img, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __img__ Input image. Supported formats: `uint8`, `uint16`,
-            %       `single`. Image size & number of channels must match with
-            %       the initialized image size & channels with the
-            %       constructor. It should be in HSV or Lab color space. Lab
-            %       is a bit better, but also slower.
+            %   `single`. Image size & number of channels must match with the
+            %   initialized image size & channels with the constructor. It
+            %   should be in HSV or Lab color space. Lab is a bit better, but
+            %   also slower.
             %
             % ## Options
             % * __NumIterations__ Number of iterations. Higher number improves
-            %       the result. default 4
+            %   the result. default 4
             %
             % The function computes the superpixels segmentation of an image
             % with the parameters initialized with the constructor. The
@@ -217,7 +218,7 @@ classdef SuperpixelSEEDS < handle
             % proposing pixel updates. An illustrative example can be seen
             % below.
             %
-            % ![image](http://docs.opencv.org/3.1.0/superpixels_blocks2.png)
+            % ![image](https://docs.opencv.org/3.3.1/superpixels_blocks2.png)
             %
             % This function can be called again for other images without the
             % need of initializing the algorithm with constructor. This save
@@ -232,12 +233,12 @@ classdef SuperpixelSEEDS < handle
         function labels = getLabels(this)
             %GETLABELS  Returns the segmentation labeling of the image
             %
-            %    labels = obj.getLabels()
+            %     labels = obj.getLabels()
             %
             % ## Output
             % * __labels__ Return a `int32` integer array containing the
-            %       labels of the superpixel segmentation. The labels are in
-            %       the range `[0, obj.getNumberOfSuperpixels()]`.
+            %   labels of the superpixel segmentation. The labels are in the
+            %   range `[0, obj.getNumberOfSuperpixels()]`.
             %
             % The function returns an image with the labels of the superpixel
             % segmentation. The labels are in the range
@@ -254,22 +255,21 @@ classdef SuperpixelSEEDS < handle
         function img = getLabelContourMask(this, varargin)
             %GETLABELCONTOURMASK  Returns the mask of the superpixel segmentation stored in object
             %
-            %    img = obj.getLabelContourMask()
-            %    img = obj.getLabelContourMask('OptionName',optionValue, ...)
+            %     img = obj.getLabelContourMask()
+            %     img = obj.getLabelContourMask('OptionName',optionValue, ...)
             %
             % ## Output
             % * __img__ Return `logical` image mask where 1 indicates that the
-            %       pixel is a superpixel border, and 0 otherwise.
+            %   pixel is a superpixel border, and 0 otherwise.
             %
             % ## Options
             % * __ThickLine__ If false, the border is only one pixel wide,
-            %       otherwise all pixels at the border are masked.
-            %       default false
+            %   otherwise all pixels at the border are masked. default false
             %
             % The function return the boundaries of the superpixel
             % segmentation.
             %
-            % ![image](http://docs.opencv.org/3.1.0/superpixels_demo.png)
+            % ![image](https://docs.opencv.org/3.3.1/superpixels_demo.png)
             %
             % See also: cv.SuperpixelSEEDS.iterate, boundarymask
             %

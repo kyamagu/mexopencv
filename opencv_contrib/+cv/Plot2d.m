@@ -8,18 +8,19 @@ classdef Plot2d < handle
     %
     % ## Example
     %
-    %    x = linspace(-2*pi, 2*pi, 100);
-    %    y = sin(x) + randn(size(x))*0.1;
-    %    p = cv.Plot2d(x, y);
-    %    p.PlotSize = [640 480];
-    %    img = p.render();
-    %    imshow(img)
+    %     x = linspace(-2*pi, 2*pi, 100);
+    %     y = sin(x) + randn(size(x))*0.1;
+    %     p = cv.Plot2d(x, y);
+    %     p.PlotSize = [640 480];
+    %     img = p.render();
+    %     imshow(img)
     %
     % See also: cv.Plot2d.Plot2d, plot
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent, GetAccess = private)
@@ -49,20 +50,32 @@ classdef Plot2d < handle
         PlotTextColor
         % plot dimensions `[w,h]` ([400,300] minimum size). default [600,400]
         PlotSize
+        % whether grid lines are drawn. default true
+        ShowGrid
+        % whether text is drawn. default true
+        ShowText
+        % number of grid lines. default 10
+        GridLinesNumber
+        % invert plot orientation. default false
+        InvertOrientation
+        % the index of the point in data array which coordinates will be
+        % printed on the top-left corner of the plot (if ShowText is true).
+        % defaults to last point
+        PointIdxToPrint
     end
 
     methods
         function this = Plot2d(varargin)
             %PLOT2D  Creates Plot2d object
             %
-            %    obj = cv.Plot2d(dataY)
-            %    obj = cv.Plot2d(dataX, dataY)
+            %     obj = cv.Plot2d(dataY)
+            %     obj = cv.Plot2d(dataX, dataY)
             %
             % ## Input
             % * __dataY__ 1xN or Nx1 matrix containing `Y` values of points to
-            %       plot. In the first variant, `X` values will be equal to
-            %       indexes of corresponding elements in data matrix, i.e
-            %       `x = 0:(numel(y)-1)`.
+            %   plot. In the first variant, `X` values will be equal to
+            %   indexes of corresponding elements in data matrix, i.e
+            %   `x = 0:(numel(y)-1)`.
             % * __dataX__ 1xN or Nx1 matrix, `X` values of points to plot.
             %
             % See also: cv.Plot2d.render
@@ -73,7 +86,7 @@ classdef Plot2d < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.Plot2d
             %
@@ -84,16 +97,16 @@ classdef Plot2d < handle
         function plotResult = render(this, varargin)
             %RENDER  Renders the plot to a matrix
             %
-            %    plotResult = obj.render()
-            %    plotResult = obj.render('OptionName',optionValue, ...)
+            %     plotResult = obj.render()
+            %     plotResult = obj.render('OptionName',optionValue, ...)
             %
             % ## Output
             % * __plotResult__ Plot result, 8-bit 3-channel image.
             %
             % ## Options
             % * __FlipChannels__ whether to flip the order of color channels
-            %       in output, from OpenCV's BGR to between MATLAB's RGB.
-            %       default true
+            %   in output, from OpenCV's BGR to between MATLAB's RGB.
+            %   default true
             %
             % See also: plot, getframe, print
             %
@@ -106,7 +119,7 @@ classdef Plot2d < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.Plot2d.empty, cv.Plot2d.load
             %
@@ -116,11 +129,11 @@ classdef Plot2d < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.Plot2d.clear, cv.Plot2d.load
             %
@@ -130,7 +143,7 @@ classdef Plot2d < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -146,21 +159,21 @@ classdef Plot2d < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -174,11 +187,11 @@ classdef Plot2d < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.Plot2d.save, cv.Plot2d.load
             %
@@ -235,6 +248,27 @@ classdef Plot2d < handle
         function set.PlotSize(this, value)
             Plot2d_(this.id, 'set', 'PlotSize', value);
         end
+
+        function set.ShowGrid(this, value)
+            Plot2d_(this.id, 'set', 'ShowGrid', value);
+        end
+
+        function set.ShowText(this, value)
+            Plot2d_(this.id, 'set', 'ShowText', value);
+        end
+
+        function set.GridLinesNumber(this, value)
+            Plot2d_(this.id, 'set', 'GridLinesNumber', value);
+        end
+
+        function set.InvertOrientation(this, value)
+            Plot2d_(this.id, 'set', 'InvertOrientation', value);
+        end
+
+        function set.PointIdxToPrint(this, value)
+            Plot2d_(this.id, 'set', 'PointIdxToPrint', value);
+        end
+
     end
 
 end

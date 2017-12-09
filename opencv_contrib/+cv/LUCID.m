@@ -23,22 +23,23 @@ classdef LUCID < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     methods
         function this = LUCID(varargin)
             %LUCID  Constructor
             %
-            %    obj = cv.LUCID()
-            %    obj = cv.LUCID(..., 'OptionName',optionValue, ...)
+            %     obj = cv.LUCID()
+            %     obj = cv.LUCID(..., 'OptionName',optionValue, ...)
             %
             % ## Options
             % * __LucidKernel__ kernel for descriptor construction, where
-            %       1=3x3, 2=5x5, 3=7x7 and so forth. default 1
+            %   1=3x3, 2=5x5, 3=7x7 and so forth. default 1
             % * __BlurKernel__ kernel for blurring image prior to descriptor
-            %       construction, where 1=3x3, 2=5x5, 3=7x7 and so forth.
-            %       default 2
+            %   construction, where 1=3x3, 2=5x5, 3=7x7 and so forth.
+            %   default 2
             %
             % See also: cv.LUCID.compute
             %
@@ -48,7 +49,7 @@ classdef LUCID < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.LUCID
             %
@@ -59,7 +60,7 @@ classdef LUCID < handle
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
-            %    typename = obj.typeid()
+            %     typename = obj.typeid()
             %
             % ## Output
             % * __typename__ Name of C++ type
@@ -73,7 +74,7 @@ classdef LUCID < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.LUCID.empty
             %
@@ -83,11 +84,11 @@ classdef LUCID < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.LUCID.clear, cv.LUCID.load
             %
@@ -97,7 +98,7 @@ classdef LUCID < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -113,21 +114,21 @@ classdef LUCID < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -141,11 +142,11 @@ classdef LUCID < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.LUCID.save, cv.LUCID.load
             %
@@ -158,16 +159,16 @@ classdef LUCID < handle
         function ntype = defaultNorm(this)
             %DEFAULTNORM  Returns the default norm type
             %
-            %    ntype = obj.defaultNorm()
+            %     ntype = obj.defaultNorm()
             %
             % ## Output
             % * __ntype__ Norm type. One of `cv::NormTypes`:
-            %       * __Inf__
-            %       * __L1__
-            %       * __L2__
-            %       * __L2Sqr__
-            %       * __Hamming__
-            %       * __Hamming2__
+            %   * __Inf__
+            %   * __L1__
+            %   * __L2__
+            %   * __L2Sqr__
+            %   * __Hamming__
+            %   * __Hamming2__
             %
             % Always `Hamming` for LUCID.
             %
@@ -179,11 +180,11 @@ classdef LUCID < handle
         function sz = descriptorSize(this)
             %DESCRIPTORSIZE  Returns the descriptor size in bytes
             %
-            %    sz = obj.descriptorSize()
+            %     sz = obj.descriptorSize()
             %
             % ## Output
             % * __sz__ Descriptor size. Depends on `LucidKernel` argument in
-            %       constructor.
+            %   constructor.
             %
             % See also: cv.LUCID.descriptorType, cv.LUCID.compute
             %
@@ -193,7 +194,7 @@ classdef LUCID < handle
         function dtype = descriptorType(this)
             %DESCRIPTORTYPE  Returns the descriptor type
             %
-            %    dtype = obj.descriptorType()
+            %     dtype = obj.descriptorType()
             %
             % ## Output
             % * __dtype__ Descriptor type, one of numeric MATLAB class names.
@@ -208,26 +209,26 @@ classdef LUCID < handle
         function [descriptors, keypoints] = compute(this, img, keypoints)
             %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set
             %
-            %    [descriptors, keypoints] = obj.compute(img, keypoints)
-            %    [descriptors, keypoints] = obj.compute(imgs, keypoints)
+            %     [descriptors, keypoints] = obj.compute(img, keypoints)
+            %     [descriptors, keypoints] = obj.compute(imgs, keypoints)
             %
             % ## Input
             % * __img__ Image (first variant), 8-bit 3-channel color image.
             % * __imgs__ Image set (second variant), cell array of images.
             % * __keypoints__ Input collection of keypoints. Keypoints for
-            %       which a descriptor cannot be computed are removed.
-            %       Sometimes new keypoints can be added, for example: cv.SIFT
-            %       duplicates keypoint with several dominant orientations
-            %       (for each orientation). In the first variant, this is a
-            %       struct-array of detected keypoints. In the second variant,
-            %       it is a cell-array, where `keypoints{i}` is a set of keypoints
-            %       detected in `imgs{i}` (a struct-array like before).
+            %   which a descriptor cannot be computed are removed. Sometimes
+            %   new keypoints can be added, for example: cv.SIFT duplicates
+            %   keypoint with several dominant orientations (for each
+            %   orientation). In the first variant, this is a struct-array of
+            %   detected keypoints. In the second variant, it is a cell-array,
+            %   where `keypoints{i}` is a set of keypoints detected in
+            %   `imgs{i}` (a struct-array like before).
             %
             % ## Output
             % * __descriptors__ Computed descriptors. In the second variant of
-            %       the method `descriptors{i}` are descriptors computed for a
-            %       `keypoints{i}`. Row `j` in `descriptors` (or
-            %       `descriptors{i}`) is the descriptor for `j`-th keypoint.
+            %   the method `descriptors{i}` are descriptors computed for a
+            %   `keypoints{i}`. Row `j` in `descriptors` (or `descriptors{i}`)
+            %   is the descriptor for `j`-th keypoint.
             % * __keypoints__ Optional output with possibly updated keypoints.
             %
             % See also: cv.LUCID.LUCID

@@ -5,7 +5,9 @@
 % * understand the basics of FAST algorithm
 % * find corners using OpenCV functionalities for FAST algorithm.
 %
-% <http://docs.opencv.org/3.2.0/df/d0c/tutorial_py_fast.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/df/d0c/tutorial_py_fast.html>
 %
 
 %% Theory
@@ -30,7 +32,7 @@
 % * Consider a circle of 16 pixels around the pixel under test (See the image
 %   below)
 %
-% <<http://docs.opencv.org/3.2.0/fast_speedtest.jpg>>
+% <<https://docs.opencv.org/3.2.0/fast_speedtest.jpg>>
 %
 % * Now the pixel $p$ is a corner if there exists a set of $n$ contiguous
 %   pixels in the circle (of 16 pixels) which are all brighter than $I_p + t$,
@@ -66,7 +68,7 @@
 % * Each pixel (say $x$) in these 16 pixels can have one of the following
 %   three states:
 %
-% <<http://docs.opencv.org/3.2.0/fast_eqns.jpg>>
+% <<https://docs.opencv.org/3.2.0/fast_eqns.jpg>>
 %
 % * Depending on these states, the feature vector $P$ is subdivided into 3
 %   subsets, $P_d$, $P_s$, $P_b$.

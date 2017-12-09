@@ -12,7 +12,7 @@ classdef GrayworldWB < handle
     % Saturation is calculated using the following for a 3-channel RGB image
     % per pixel `I` and is in the range `[0,1]`:
     %
-    %    Saturation[I] = (max(R,G,B) - min(R,G,B)) / max(R,G,B)
+    %     Saturation[I] = (max(R,G,B) - min(R,G,B)) / max(R,G,B)
     %
     % A threshold of 1 means that all pixels are used to white-balance, while
     % a threshold of 0 means no pixels are used. Lower thresholds are useful
@@ -24,7 +24,8 @@ classdef GrayworldWB < handle
     %
 
     properties (SetAccess = private)
-        id % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -38,7 +39,7 @@ classdef GrayworldWB < handle
         function this = GrayworldWB()
             %GRAYWORLDWB  Creates an instance of GrayworldWB
             %
-            %    obj = cv.GrayworldWB()
+            %     obj = cv.GrayworldWB()
             %
             % See also: cv.GrayworldWB.balanceWhite
             %
@@ -48,7 +49,7 @@ classdef GrayworldWB < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.GrayworldWB
             %
@@ -62,7 +63,7 @@ classdef GrayworldWB < handle
         function dst = balanceWhite(this, src)
             %BALANCEWHITE  Applies white balancing to the input image
             %
-            %    dst = obj.balanceWhite(src)
+            %     dst = obj.balanceWhite(src)
             %
             % ## Input
             % * __src__ Input image, `uint8` or `uint16` color image.
@@ -81,7 +82,7 @@ classdef GrayworldWB < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.GrayworldWB.empty
             %
@@ -91,11 +92,11 @@ classdef GrayworldWB < handle
         function b = empty(this)
             %EMPTY  Returns true if the algorithm is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the algorithm is empty (e.g. in the very
-            %       beginning or after unsuccessful read).
+            %   beginning or after unsuccessful read).
             %
             % See also: cv.GrayworldWB.clear
             %
@@ -105,11 +106,11 @@ classdef GrayworldWB < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.GrayworldWB.save, cv.GrayworldWB.load
             %
@@ -119,7 +120,7 @@ classdef GrayworldWB < handle
         function save(this, filename)
             %SAVE  Saves the algorithm to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -134,21 +135,21 @@ classdef GrayworldWB < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from a file storage.
             % The previous model state is discarded.

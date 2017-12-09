@@ -6,7 +6,9 @@
 % matrix is not specified, the identity transformation is used to initialize
 % the algorithm.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/image_alignment.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/image_alignment.cpp>
 %
 
 %% Options

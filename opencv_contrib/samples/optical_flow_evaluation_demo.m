@@ -3,7 +3,9 @@
 % Computes flow field between two images using various methods and display it
 % (deepflow, simpleflow, sparsetodenseflow, Farneback, TV-L1).
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/optflow/samples/optical_flow_evaluation.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/optflow/samples/optical_flow_evaluation.cpp>
 %
 
 %% Input images
@@ -78,12 +80,16 @@ for i=1:numel(algorithms)
     toc
 
     % display the flow
-    [ang, mag] = cart2pol(flow(:,:,1), flow(:,:,2));
-    if mexopencv.isOctave()
-        %HACK: RAD2DEG not implemented in Octave
-        ang = (ang + pi) * (180 / pi);
+    if true
+        [mag, ang] = cv.cartToPolar(flow(:,:,1), flow(:,:,2), 'Degrees',true);
     else
-        ang = rad2deg(ang + pi);
+        [ang, mag] = cart2pol(flow(:,:,1), flow(:,:,2));
+        if mexopencv.isOctave()
+            %HACK: RAD2DEG not implemented in Octave
+            ang = (ang + pi) * (180 / pi);
+        else
+            ang = rad2deg(ang + pi);
+        end
     end
     mag = cv.normalize(mag, 'Alpha',0, 'Beta',1, 'NormType','MinMax');
     hsv = cat(3, ang, ones(size(ang),class(ang)), mag); % H=[0,360], S,V=[0,1]

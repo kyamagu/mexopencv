@@ -1,7 +1,7 @@
 %COLORCHANGE  Color Change
 %
-%    dst = cv.colorChange(src, mask)
-%    dst = cv.colorChange(src, mask, 'OptionName',optionValue, ...)
+%     dst = cv.colorChange(src, mask)
+%     dst = cv.colorChange(src, mask, 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __src__ Input 8-bit 3-channel image.
@@ -15,8 +15,8 @@
 % * __G__ G-channel multiply factor. default 1.0
 % * __B__ B-channel multiply factor. default 1.0
 % * __FlipChannels__ whether to flip the order of color channels in inputs
-%       `src` and `mask` and output `dst`, between MATLAB's RGB order and
-%       OpenCV's BGR (input: RGB->BGR, output: BGR->RGB). default false
+%   `src` and `mask` and output `dst`, between MATLAB's RGB order and OpenCV's
+%   BGR (input: RGB->BGR, output: BGR->RGB). default false
 %
 % Given an original color image, two differently colored versions of this
 % image can be mixed seamlessly.

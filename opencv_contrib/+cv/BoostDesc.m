@@ -18,41 +18,42 @@ classdef BoostDesc < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     methods
         function this = BoostDesc(varargin)
             %BOOSTDESC  Constructor
             %
-            %    obj = cv.BoostDesc()
-            %    obj = cv.BoostDesc('OptionName',optionValue, ...)
+            %     obj = cv.BoostDesc()
+            %     obj = cv.BoostDesc('OptionName',optionValue, ...)
             %
             % ## Options
             % * __Desc__ Type of descriptor to use, 'BinBoost256' is default
-            %       (256 bit long dimension). Available types are:
-            %       * __BGM__
-            %       * __BGMHard__
-            %       * __BGMBilinear__
-            %       * __LBGM__
-            %       * __BinBoost64__
-            %       * __BinBoost128__
-            %       * __BinBoost256__
+            %   (256 bit long dimension). Available types are:
+            %   * __BGM__
+            %   * __BGMHard__
+            %   * __BGMBilinear__
+            %   * __LBGM__
+            %   * __BinBoost64__
+            %   * __BinBoost128__
+            %   * __BinBoost256__
             % * __UseScaleOrientation__ Sample patterns using keypoints
-            %       orientation. default true
+            %   orientation. default true
             % * __ScaleFactor__ Adjust the sampling window of detected
-            %       keypoints.
-            %       * 6.25 is default and fits for cv.KAZE, cv.SURF detected
-            %         keypoints window ratio
-            %       * 6.75 should be the scale for cv.SIFT detected keypoints
-            %         window ratio
-            %       * 5.00 should be the scale for cv.AKAZE, cv.MSDDetector,
-            %         cv.AgastFeatureDetector, cv.FastFeatureDetector,
-            %         cv.BRISK keypoints window ratio
-            %       * 0.75 should be the scale for cv.ORB keypoints ratio
-            %       * 1.50 was the default in original implementation
+            %   keypoints.
+            %   * 6.25 is default and fits for cv.KAZE, cv.SURF detected
+            %     keypoints window ratio
+            %   * 6.75 should be the scale for cv.SIFT detected keypoints
+            %     window ratio
+            %   * 5.00 should be the scale for cv.AKAZE, cv.MSDDetector,
+            %     cv.AgastFeatureDetector, cv.FastFeatureDetector, cv.BRISK
+            %     keypoints window ratio
+            %   * 0.75 should be the scale for cv.ORB keypoints ratio
+            %   * 1.50 was the default in original implementation
             %
-            % ## Note
+            % ### Note
             % `BGM` is the base descriptor where each binary dimension is
             % computed as the output of a single weak learner. `BGMHard` and
             % `BGMBilinear` refer to same `BGM` but use different type of
@@ -77,7 +78,7 @@ classdef BoostDesc < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.BoostDesc
             %
@@ -88,7 +89,7 @@ classdef BoostDesc < handle
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
-            %    typename = obj.typeid()
+            %     typename = obj.typeid()
             %
             % ## Output
             % * __typename__ Name of C++ type
@@ -102,7 +103,7 @@ classdef BoostDesc < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.BoostDesc.empty, cv.BoostDesc.load
             %
@@ -112,11 +113,11 @@ classdef BoostDesc < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.BoostDesc.clear
             %
@@ -126,7 +127,7 @@ classdef BoostDesc < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -142,21 +143,21 @@ classdef BoostDesc < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -170,11 +171,11 @@ classdef BoostDesc < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.BoostDesc.save, cv.BoostDesc.load
             %
@@ -187,16 +188,16 @@ classdef BoostDesc < handle
         function ntype = defaultNorm(this)
             %DEFAULTNORM  Returns the default norm type
             %
-            %    ntype = obj.defaultNorm()
+            %     ntype = obj.defaultNorm()
             %
             % ## Output
             % * __ntype__ Norm type. One of `cv::NormTypes`:
-            %       * __Inf__
-            %       * __L1__
-            %       * __L2__
-            %       * __L2Sqr__
-            %       * __Hamming__
-            %       * __Hamming2__
+            %   * __Inf__
+            %   * __L1__
+            %   * __L2__
+            %   * __L2Sqr__
+            %   * __Hamming__
+            %   * __Hamming2__
             %
             % See also: cv.BoostDesc.compute, cv.DescriptorMatcher
             %
@@ -206,7 +207,7 @@ classdef BoostDesc < handle
         function sz = descriptorSize(this)
             %DESCRIPTORSIZE  Returns the descriptor size in bytes
             %
-            %    sz = obj.descriptorSize()
+            %     sz = obj.descriptorSize()
             %
             % ## Output
             % * __sz__ Descriptor size.
@@ -219,7 +220,7 @@ classdef BoostDesc < handle
         function dtype = descriptorType(this)
             %DESCRIPTORTYPE  Returns the descriptor type
             %
-            %    dtype = obj.descriptorType()
+            %     dtype = obj.descriptorType()
             %
             % ## Output
             % * __dtype__ Descriptor type, one of numeric MATLAB class names.
@@ -232,26 +233,26 @@ classdef BoostDesc < handle
         function [descriptors, keypoints] = compute(this, img, keypoints)
             %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set
             %
-            %    [descriptors, keypoints] = obj.compute(img, keypoints)
-            %    [descriptors, keypoints] = obj.compute(imgs, keypoints)
+            %     [descriptors, keypoints] = obj.compute(img, keypoints)
+            %     [descriptors, keypoints] = obj.compute(imgs, keypoints)
             %
             % ## Input
             % * __img__ Image (first variant), 8-bit grayscale image.
             % * __imgs__ Image set (second variant), cell array of images.
             % * __keypoints__ Input collection of keypoints. Keypoints for
-            %       which a descriptor cannot be computed are removed.
-            %       Sometimes new keypoints can be added, for example: cv.SIFT
-            %       duplicates keypoint with several dominant orientations
-            %       (for each orientation). In the first variant, this is a
-            %       struct-array of detected keypoints. In the second variant,
-            %       it is a cell-array, where `keypoints{i}` is a set of keypoints
-            %       detected in `imgs{i}` (a struct-array like before).
+            %   which a descriptor cannot be computed are removed. Sometimes
+            %   new keypoints can be added, for example: cv.SIFT duplicates
+            %   keypoint with several dominant orientations (for each
+            %   orientation). In the first variant, this is a struct-array of
+            %   detected keypoints. In the second variant, it is a cell-array,
+            %   where `keypoints{i}` is a set of keypoints detected in
+            %   `imgs{i}` (a struct-array like before).
             %
             % ## Output
             % * __descriptors__ Computed descriptors. In the second variant of
-            %       the method `descriptors{i}` are descriptors computed for a
-            %       `keypoints{i}`. Row `j` in `descriptors` (or
-            %       `descriptors{i}`) is the descriptor for `j`-th keypoint.
+            %   the method `descriptors{i}` are descriptors computed for a
+            %   `keypoints{i}`. Row `j` in `descriptors` (or `descriptors{i}`)
+            %   is the descriptor for `j`-th keypoint.
             % * __keypoints__ Optional output with possibly updated keypoints.
             %
             % See also: cv.BoostDesc.BoostDesc

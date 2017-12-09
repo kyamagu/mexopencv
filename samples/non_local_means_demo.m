@@ -1,10 +1,14 @@
-%% Image Denoising
+%% Non-Local Means Image Denoising
 %
 % In this demo, we will learn:
 %
 % * about Non-local Means Denoising algorithm to remove noise in an image.
 % * how to use functions like |cv.fastNlMeansDenoising|,
 %   |cv.fastNlMeansDenoisingColored|, and |cv.fastNlMeansDenoisingMulti|
+%
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d5/d69/tutorial_py_non_local_means.html>
 %
 
 %% Theory
@@ -38,7 +42,7 @@
 % find their average? For that particular window, that is fine. See an example
 % image below:
 %
-% <<http://docs.opencv.org/3.2.0/nlm_patch.jpg>>
+% <<https://docs.opencv.org/3.2.0/nlm_patch.jpg>>
 %
 % The blue patches in the image looks the similar. Green patches looks
 % similar. So we take a pixel, take small window around it, search for similar

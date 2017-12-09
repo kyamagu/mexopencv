@@ -1,6 +1,6 @@
 %% Camera Calibration
 %
-% This example demonstrates camera calibration in Opencv. It shows usage of
+% This example demonstrates camera calibration in OpenCV. It shows usage of
 % the following functions:
 %
 % * |cv.findChessboardCorners|, |cv.findCirclesGrid|
@@ -34,11 +34,13 @@
 % * about distortions in camera, intrinsic and extrinsic parameters of camera
 % * how to find these parameters, undistort images, etc.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/calibration.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/calibrate.py>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/calib3d/camera_calibration/camera_calibration.cpp>,
-% <http://docs.opencv.org/3.2.0/d4/d94/tutorial_camera_calibration.html>,
-% <http://docs.opencv.org/3.2.0/dc/dbb/tutorial_py_calibration.html>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/calibration.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/calibrate.py>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/calib3d/camera_calibration/camera_calibration.cpp>
+% * <https://docs.opencv.org/3.2.0/d4/d94/tutorial_camera_calibration.html>
+% * <https://docs.opencv.org/3.2.0/dc/dbb/tutorial_py_calibration.html>
 %
 
 %% Theory
@@ -61,10 +63,10 @@
 % shown below, where two edges of a chess board are marked with red lines. But
 % you can see that border is not a straight line and doesn't match with the
 % red line. All the expected straight lines are bulged out. See
-% <http://en.wikipedia.org/wiki/Distortion_%28optics%29 Distortion> for more
+% <https://en.wikipedia.org/wiki/Distortion_%28optics%29 Distortion> for more
 % details.
 %
-% <<http://docs.opencv.org/3.2.0/calib_radial.jpg>>
+% <<https://docs.opencv.org/3.2.0/calib_radial.jpg>>
 %
 % Tangential distortion occurs because the image taking lenses are not
 % perfectly parallel to the imaging plane. So some areas in image may look
@@ -78,7 +80,7 @@
 % So we have five distortion parameters which in OpenCV are presented as one
 % row matrix with 5 columns:
 %
-% $$distortion\_coefficients=(k_1, k_2, p_1, p_2, k_3)$$
+% $$distortion\_coefficients = (k_1, k_2, p_1, p_2, k_3)$$
 %
 % In addition to this, we need to find a few more information, like intrinsic
 % and extrinsic parameters of a camera. Intrinsic parameters are specific to a
@@ -111,7 +113,7 @@
 % * Symmetrical circle pattern
 % * Asymmetrical circle pattern
 %
-% <<http://docs.opencv.org/3.2.0/asymetricalPattern.jpg>>
+% <<https://docs.opencv.org/3.2.0/asymetricalPattern.jpg>>
 %
 % Basically, you need to take snapshots of these patterns with your camera and
 % let OpenCV find them. Each found pattern results in a new equation (we know
@@ -168,9 +170,9 @@
 % lens distortion. For example, you can see in the result below that all the
 % edges become straight.
 %
-% <<http://docs.opencv.org/3.2.0/fileListImage.jpg>>
+% <<https://docs.opencv.org/3.2.0/fileListImage.jpg>>
 %
-% <<http://docs.opencv.org/3.2.0/fileListImageUnDist.jpg>>
+% <<https://docs.opencv.org/3.2.0/fileListImageUnDist.jpg>>
 %
 
 %% Code
@@ -615,7 +617,7 @@ function visualizeDistortion(calib, opts)
     D = calib.D;
     if numel(D) < 14, D(14) = 0; end
 
-    % http://docs.opencv.org/3.2.0/d9/d0c/group__calib3d.html#details
+    % https://docs.opencv.org/3.2.0/d9/d0c/group__calib3d.html#details
     nstep = 20;
     [u,v] = meshgrid(linspace(0,opts.imageSize(1)-1,nstep), ...
         linspace(0,opts.imageSize(2)-1,nstep));

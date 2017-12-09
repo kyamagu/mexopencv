@@ -3,17 +3,17 @@
 % (global thresholding and adaptive thresholding) for an image with varying
 % illumination.
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.2.0/modules/ximgproc/samples/niblack_thresholding.cpp>
-% <http://docs.opencv.org/3.2.0/d7/d4d/tutorial_py_thresholding.html>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.2.0/modules/ximgproc/samples/niblack_thresholding.cpp>
+% * <https://docs.opencv.org/3.2.0/d7/d4d/tutorial_py_thresholding.html>
 %
 
 function niblack_thresholding_demo()
-    % Parameters
+    % Input 8-bit grayscale image + Parameters
     % - BS: block size (local neighborhood) [niblack, adaptive]
     % - K : constant multiplied by std dev next subtracted from mean [niblack]
     % - C : constant subtracted from mean [adaptive]
-
-    % Input 8-bit grayscale image
     if ~mexopencv.isOctave() && mexopencv.require('images')
         % image with dark pixels being foreground
         im = which('printedtext.png');
@@ -92,6 +92,9 @@ end
 function out = localNormalization(img, s1, s2)
     %LOCALNORMALIZATION  local normalization to get uniform local mean and variance
     %
+    %     out = localNormalization(img)
+    %     out = localNormalization(img, s1, s2)
+    %
     % The local normalization tends to uniformize the mean and variance of an
     % image around a local neighborhood. This is especially useful for correct
     % non-uniform illumination or shading artifacts.
@@ -105,7 +108,7 @@ function out = localNormalization(img, s1, s2)
     % ## Options
     % * __s1__ sigma to estimate the local mean. default 5
     % * __s2__ sigma to estimate the local variance. Often `s2` should be
-    %       larger than `s1`. default 15
+    %   larger than `s1`. default 15
     %
     % ## References
     % > http://bigwww.epfl.ch/sage/soft/localnormalization/

@@ -11,7 +11,8 @@ classdef DisparityWLSFilter < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -46,21 +47,20 @@ classdef DisparityWLSFilter < handle
         function this = DisparityWLSFilter(in)
             %DISPARITYWLSFILTER  Factory method to create instance of DisparityWLSFilter
             %
-            %    obj = cv.DisparityWLSFilter(matcher_left)
-            %    obj = cv.DisparityWLSFilter(use_confidence)
+            %     obj = cv.DisparityWLSFilter(matcher_left)
+            %     obj = cv.DisparityWLSFilter(use_confidence)
             %
             % ## Input
             % * **matcher_left** stereo matcher instance that will be used
-            %       with the filter. An object of one of the following
-            %       classes:
-            %       * __cv.StereoBM__ stereo correspondence using the block
-            %             matching algorithm.
-            %       * __cv.StereoSGBM__ stereo correspondence using the
-            %             semi-global block matching algorithm.
+            %   with the filter. An object of one of the following classes:
+            %   * __cv.StereoBM__ stereo correspondence using the block
+            %     matching algorithm.
+            %   * __cv.StereoSGBM__ stereo correspondence using the
+            %     semi-global block matching algorithm.
             % * **use_confidence** Boolean. Filtering with confidence requires
-            %       two disparity maps (for the left and right views) and is
-            %       approximately two times slower. However, quality is
-            %       typically significantly better.
+            %   two disparity maps (for the left and right views) and is
+            %   approximately two times slower. However, quality is typically
+            %   significantly better.
             %
             % The first variant is a convenience factory method that creates
             % an instance of DisparityWLSFilter and sets up all the relevant
@@ -86,7 +86,7 @@ classdef DisparityWLSFilter < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.DisparityWLSFilter
             %
@@ -100,7 +100,7 @@ classdef DisparityWLSFilter < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.DisparityWLSFilter.empty, cv.DisparityWLSFilter.load
             %
@@ -110,11 +110,11 @@ classdef DisparityWLSFilter < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.DisparityWLSFilter.clear, cv.DisparityWLSFilter.load
             %
@@ -124,7 +124,7 @@ classdef DisparityWLSFilter < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -140,21 +140,21 @@ classdef DisparityWLSFilter < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -168,11 +168,11 @@ classdef DisparityWLSFilter < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.DisparityWLSFilter.save, cv.DisparityWLSFilter.load
             %
@@ -185,34 +185,33 @@ classdef DisparityWLSFilter < handle
         function filtered_disparity_map = filter(this, disparity_map_left, disparity_map_right, left_view, varargin)
             %FILTER  Apply filtering to the disparity map
             %
-            %    filtered_disparity_map = obj.filter(disparity_map_left, disparity_map_right, left_view)
-            %    filtered_disparity_map = obj.filter(..., 'OptionName',optionValue, ...)
+            %     filtered_disparity_map = obj.filter(disparity_map_left, disparity_map_right, left_view)
+            %     filtered_disparity_map = obj.filter(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * **disparity_map_left** disparity map of the left view,
-            %       1 channel `int16` type. Implicitly assumes that disparity
-            %       values are scaled by 16 (one-pixel disparity corresponds
-            %       to the value of 16 in the disparity map). Disparity map
-            %       can have any resolution, it will be automatically resized
-            %       to fit `left_view` resolution.
+            %   1-channel `int16` type. Implicitly assumes that disparity
+            %   values are scaled by 16 (one-pixel disparity corresponds to
+            %   the value of 16 in the disparity map). Disparity map can have
+            %   any resolution, it will be automatically resized to fit
+            %   `left_view` resolution.
             % * **disparity_map_right** optional argument, some
-            %       implementations might also use the disparity map of the
-            %       right view to compute confidence maps, for instance.
-            %       Pass an empty matrix `[]` if not used.
+            %   implementations might also use the disparity map of the right
+            %   view to compute confidence maps, for instance. Pass an empty
+            %   matrix `[]` if not used.
             % * **left_view** left view of the original stereo-pair to guide
-            %       the filtering process, 8-bit single-channel or
-            %       three-channel image.
+            %   the filtering process, 8-bit single-channel or three-channel
+            %   image.
             %
             % ## Output
             % * **filtered_disparity_map** output disparity map.
             %
             % ## Options
             % * __ROI__ region of the disparity map to filter. Optional,
-            %       usually it should be set automatically. Not set by
-            %       default.
+            %   usually it should be set automatically. Not set by default.
             % * __RightView__ optional argument, some implementations might
-            %       also use the right view of the original stereo-pair. Not
-            %       set by default.
+            %   also use the right view of the original stereo-pair. Not set
+            %   by default.
             %
             % See also: cv.DisparityWLSFilter.DisparityWLSFilter
             %
@@ -226,14 +225,13 @@ classdef DisparityWLSFilter < handle
         function map = getConfidenceMap(this)
             %GETCONFIDENCEMAP  Get the confidence map that was used in the last filter call
             %
-            %    map = obj.getConfidenceMap()
+            %     map = obj.getConfidenceMap()
             %
             % ## Output
             % * __map__ confidence map. It is a `single` one-channel image
-            %       with values ranging from 0.0 (totally untrusted regions
-            %       of the raw disparity map) to 255.0 (regions containing
-            %       correct disparity values with a high degree of
-            %       confidence).
+            %   with values ranging from 0.0 (totally untrusted regions of the
+            %   raw disparity map) to 255.0 (regions containing correct
+            %   disparity values with a high degree of confidence).
             %
             % See also: cv.DisparityWLSFilter.getROI
             %
@@ -243,7 +241,7 @@ classdef DisparityWLSFilter < handle
         function rect = getROI(this)
             %GETROI  Get the ROI used in the last filter call
             %
-            %    rect = obj.getROI()
+            %     rect = obj.getROI()
             %
             % ## Output
             % * __rect__ region of interest `[x,y,w,h]`.
@@ -290,20 +288,19 @@ classdef DisparityWLSFilter < handle
         function matcher_right = createRightMatcher(matcher_left)
             %CREATERIGHTMATCHER  Convenience method to set up the matcher for computing the right-view disparity map that is required in case of filtering with confidence
             %
-            %    matcher_right = cv.DisparityWLSFilter.createRightMatcher(matcher_left)
+            %     matcher_right = cv.DisparityWLSFilter.createRightMatcher(matcher_left)
             %
             % ## Input
-            % * **matcher_left** main stereo matcher instance that will be
-            %       used with the filter. An object of one of the following
-            %       classes:
-            %       * __cv.StereoBM__ stereo correspondence using the block
-            %             matching algorithm.
-            %       * __cv.StereoSGBM__ stereo correspondence using the
-            %             semi-global block matching algorithm.
+            % * **matcher_left** main stereo matcher instance that will be used
+            %   with the filter. An object of one of the following classes:
+            %   * __cv.StereoBM__ stereo correspondence using the block
+            %     matching algorithm.
+            %   * __cv.StereoSGBM__ stereo correspondence using the
+            %     semi-global block matching algorithm.
             %
             % ## Output
             % * **matcher_right** output right matcher. An object of same
-            %       class as `matcher_left`.
+            %   class as `matcher_left`.
             %
             % See also: cv.DisparityWLSFilter.DisparityWLSFilter,
             %  cv.StereoBM, cv.StereoSGBM
@@ -316,11 +313,11 @@ classdef DisparityWLSFilter < handle
         function dst = readGT(src_path)
             %READGT  Function for reading ground truth disparity maps
             %
-            %    dst = cv.DisparityWLSFilter.readGT(src_path)
+            %     dst = cv.DisparityWLSFilter.readGT(src_path)
             %
             % ## Input
             % * **src_path**  path to the image, containing ground-truth
-            %       disparity map.
+            %   disparity map.
             %
             % ## Output
             % * __dst__ output disparity map, `int16` depth.
@@ -336,8 +333,8 @@ classdef DisparityWLSFilter < handle
         function mse = computeMSE(GT, src, varargin)
             %COMPUTEMSE  Function for computing mean square error for disparity maps
             %
-            %    mse = cv.DisparityWLSFilter.computeMSE(GT, src)
-            %    mse = cv.DisparityWLSFilter.computeMSE(..., 'OptionName',optionValue, ...)
+            %     mse = cv.DisparityWLSFilter.computeMSE(GT, src)
+            %     mse = cv.DisparityWLSFilter.computeMSE(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __GT__ ground truth disparity map (`int16`).
@@ -357,8 +354,8 @@ classdef DisparityWLSFilter < handle
         function prcnt = computeBadPixelPercent(GT, src, varargin)
             %COMPUTEBADPIXELPERCENT  Function for computing the percent of "bad" pixels in the disparity map
             %
-            %    prcnt = cv.DisparityWLSFilter.computeBadPixelPercent(GT, src)
-            %    prcnt = cv.DisparityWLSFilter.computeBadPixelPercent(..., 'OptionName',optionValue, ...)
+            %     prcnt = cv.DisparityWLSFilter.computeBadPixelPercent(GT, src)
+            %     prcnt = cv.DisparityWLSFilter.computeBadPixelPercent(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __GT__ ground truth disparity map (`int16`).
@@ -366,8 +363,8 @@ classdef DisparityWLSFilter < handle
             %
             % ## Output
             % * __prcnt__ returns percent of "bad" pixels between `GT` and
-            %       `src` (pixels where error is higher than a specified
-            %       threshold).
+            %   `src` (pixels where error is higher than a specified
+            %   threshold).
             %
             % ## Options
             % * __ROI__ region of interest `[x,y,w,h]`. Not set by default.
@@ -382,8 +379,8 @@ classdef DisparityWLSFilter < handle
         function dst = getDisparityVis(src, varargin)
             %GETDISPARITYVIS  Function for creating a disparity map visualization
             %
-            %    dst = cv.DisparityWLSFilter.getDisparityVis(src)
-            %    dst = cv.DisparityWLSFilter.getDisparityVis(src, 'OptionName',optionValue, ...)
+            %     dst = cv.DisparityWLSFilter.getDisparityVis(src)
+            %     dst = cv.DisparityWLSFilter.getDisparityVis(src, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __src__ input disparity map (`int16` depth).
@@ -393,7 +390,7 @@ classdef DisparityWLSFilter < handle
             %
             % ## Options
             % * __Scale__ disparity map will be multiplied by this value for
-            %       visualization. default 1.0
+            %   visualization. default 1.0
             %
             % See also: cv.DisparityWLSFilter.readGT
             %
@@ -406,7 +403,7 @@ classdef DisparityWLSFilter < handle
         function C = StereoMatcher2Cell(matcher)
             %STEREOMATCHER2CELL  Convert StereoMatcher object to a cell array of options
             %
-            %    C = cv.DisparityWLSFilter.StereoMatcher2Cell(matcher)
+            %     C = cv.DisparityWLSFilter.StereoMatcher2Cell(matcher)
             %
             % ## Input
             % * __matcher__ input matcher object.
@@ -448,7 +445,7 @@ classdef DisparityWLSFilter < handle
         function matcher = Struct2StereoMatcher(S)
             %STRUCT2STEREOMATCHER  Convert a struct of options to a StereoMatcher object
             %
-            %    matcher = cv.DisparityWLSFilter.Struct2StereoMatcher(S)
+            %     matcher = cv.DisparityWLSFilter.Struct2StereoMatcher(S)
             %
             % ## Input
             % * __S__ input struct.

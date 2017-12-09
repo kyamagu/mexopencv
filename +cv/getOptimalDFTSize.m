@@ -1,6 +1,6 @@
 %GETOPTIMALDFTSIZE  Returns the optimal DFT size for a given vector size
 %
-%    N = cv.getOptimalDFTSize(vecsize)
+%     N = cv.getOptimalDFTSize(vecsize)
 %
 % ## Input
 % * __vecsize__ vector size.

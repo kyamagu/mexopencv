@@ -4,8 +4,10 @@
 % algorithm, then demonstrate how to use kNN classifier for 2D point
 % classification.
 %
-% <http://docs.opencv.org/3.2.0/d5/d26/tutorial_py_knn_understanding.html>,
-% <http://docs.opencv.org/modules/ml/doc/k_nearest_neighbors.html#cvknearest-is-regression>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d5/d26/tutorial_py_knn_understanding.html>
+% * <https://docs.opencv.org/2.4/modules/ml/doc/k_nearest_neighbors.html#cvknearest-is-regression>
 %
 
 %% Theory
@@ -14,7 +16,7 @@
 % supervised learning. The idea is to search for closest match of the test
 % data in feature space. We will look into it with below image.
 %
-% <<http://docs.opencv.org/3.2.0/knn_theory.png>>
+% <<https://docs.opencv.org/3.2.0/knn_theory.png>>
 %
 % In the image, there are two families, Blue Squares and Red Triangles. We
 % call each family as *Class*. Their houses are shown in their town map which

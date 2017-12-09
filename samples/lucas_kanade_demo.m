@@ -7,7 +7,9 @@
 % * use functions like |cv.calcOpticalFlowPyrLK| to track feature points
 %   in a video.
 %
-% <http://docs.opencv.org/3.2.0/d7/d8b/tutorial_py_lucas_kanade.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d7/d8b/tutorial_py_lucas_kanade.html>
 %
 
 %% Optical Flow
@@ -17,7 +19,7 @@
 % vector field where each vector is a displacement vector showing the movement
 % of points from first frame to second. Consider the image below:
 %
-% <<http://docs.opencv.org/3.2.0/optical_flow_basic1.jpg>>
+% <<https://docs.opencv.org/3.2.0/optical_flow_basic1.jpg>>
 %
 % It shows a ball moving in 5 consecutive frames. The arrow shows its
 % displacement vector. Optical flow has many applications in areas like:
@@ -41,12 +43,15 @@
 % Then take taylor series approximation of right-hand side, remove common
 % terms and divide by $dt$ to get the following equation:
 %
-% $$f_x u + f_y v + f_t = 0 \;$$
+% $$f_x u + f_y v + f_t = 0$$
+%
 % where
-% $$f_x = \frac{\partial f}{\partial x}$$;
-% $$f_y = \frac{\partial f}{\partial y}$$;
-% $$u = \frac{dx}{dt}$$;
-% $$v = \frac{dy}{dt}$$
+%
+% $$f_x = \frac{\partial f}{\partial x} \quad ; \quad
+%   f_y = \frac{\partial f}{\partial y}$$
+%
+% $$u = \frac{dx}{dt} \quad ; \quad
+%   v = \frac{dy}{dt}$$
 %
 % Above equation is called Optical Flow equation. In it, we can find $f_x$ and
 % $f_y$, they are image gradients. Similarly $f_t$ is the gradient along time.

@@ -1,8 +1,10 @@
 %% High Dynamic Range Imaging
 %
-% <http://docs.opencv.org/3.2.0/d3/db7/tutorial_hdr_imaging.html>,
-% <http://docs.opencv.org/3.2.0/d2/df0/tutorial_py_hdr.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/photo/hdr_imaging/hdr_imaging.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d3/db7/tutorial_hdr_imaging.html>
+% * <https://docs.opencv.org/3.2.0/d2/df0/tutorial_py_hdr.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/photo/hdr_imaging/hdr_imaging.cpp>
 %
 
 %% Introduction

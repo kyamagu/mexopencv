@@ -1,10 +1,12 @@
-%% Lucas-Kanade tracker
+%% Lucas-Kanade Tracker
 %
 % Lucas-Kanade sparse optical flow demo. Uses |cv.goodFeaturesToTrack| for
 % track initialization and back-tracking for match verification between
 % frames.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/lk_track.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/lk_track.py>
 %
 
 %% Options

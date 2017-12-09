@@ -26,11 +26,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Process
     Mat src(rhs[0].toMat(rhs[0].isSingle() ? CV_32F : CV_64F));
-    Mat eigenvalues, eigenvectors;
-    bool b = eigen(src, eigenvalues, (nlhs>1 ? eigenvectors : noArray()));
-    plhs[0] = MxArray(eigenvalues);
+    Mat evals, evects;
+    bool b = eigen(src, evals, (nlhs>1 ? evects : noArray()));
+    plhs[0] = MxArray(evals);
     if (nlhs > 1)
-        plhs[1] = MxArray(eigenvectors);
+        plhs[1] = MxArray(evects);
     if (nlhs > 2)
         plhs[2] = MxArray(b);
 }

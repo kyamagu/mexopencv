@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<demos>
+  <name>mexopencv (contrib)</name>
+  <type>toolbox</type>
+  <icon>HelpIcon.DEMOS</icon>
+  <description>Examples to demonstrate how to use OpenCV in MATLAB.</description>
+  <website><a href="https://github.com/kyamagu/mexopencv">Homepage</a></website>
+
+  <!-- aruco -->
+  <demosection>
+    <label>aruco: ArUco Marker Detection</label>
+    <demoitem>
+      <label>ArUco Marker Image</label>
+      <type>M-file</type>
+      <source>aruco_create_marker_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Detection of ArUco Markers</label>
+      <type>M-file</type>
+      <source>aruco_detect_markers_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>ArUco Grid Board Image</label>
+      <type>M-file</type>
+      <source>aruco_create_board_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Detection of ArUco Board</label>
+      <type>M-file</type>
+      <source>aruco_detect_board_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>ChArUco Board Image</label>
+      <type>M-file</type>
+      <source>aruco_create_board_charuco_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Detection of ChArUco Corners</label>
+      <type>M-file</type>
+      <source>aruco_detect_board_charuco_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>ChArUco Diamond Image</label>
+      <type>M-file</type>
+      <source>aruco_create_diamond_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Detection of Diamond Markers</label>
+      <type>M-file</type>
+      <source>aruco_detect_diamonds_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Camera Calibration using ArUco Board</label>
+      <type>M-file</type>
+      <source>aruco_calibrate_camera_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Camera Calibration using ChArUco Board</label>
+      <type>M-file</type>
+      <source>aruco_calibrate_camera_charuco_demo</source>
+      <!-- implay -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+  </demosection>
+
+  <!-- bgsegm -->
+  <demosection>
+    <label>bgsegm: Improved Background-Foreground Segmentation Methods</label>
+    <demoitem>
+      <label>Background Subtractor</label>
+      <type>M-file</type>
+      <source>BackgroundSubtractorDemo</source>
+    </demoitem>
+  </demosection>
+
+  <!-- bioinspired -->
+  <demosection>
+    <label>bioinspired: Biologically Inspired Vision Models and Derivated Tools</label>
+    <demoitem>
+      <label>Retina demonstration</label>
+      <type>M-file</type>
+      <source>retina_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>OpenEXR images HDR Retina tone mapping</label>
+      <type>M-GUI</type>
+      <source>retina_hdr_tonemapping_demo_gui</source>
+    </demoitem>
+  </demosection>
+
+  <!-- datasets -->
+  <demosection>
+    <label>datasets: Framework for Working with Different Datasets</label>
+    <demoitem>
+      <label>The MNIST dataset of handwritten digits</label>
+      <type>M-file</type>
+      <source>dataset_mnist_demo</source>
+      <!-- montage -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+  </demosection>
+
+  <!-- dpm -->
+  <demosection>
+    <label>dpm: Deformable Part-based Models</label>
+  </demosection>
+
+  <!-- face -->
+  <demosection>
+    <label>face: Face Recognition</label>
+    <demoitem>
+      <label>Face recognition</label>
+      <type>M-file</type>
+      <source>facerec_demo</source>
+      <!-- montage -->
+      <dependency>Image Processing Toolbox</dependency>
+      <!-- cvpartition, confusionmat -->
+      <dependency>Statistics and Machine Learning Toolbox</dependency>
+    </demoitem>
+  </demosection>
+
+  <!-- img_hash -->
+  <demosection>
+    <label>img_hash: Image Hashing algorithms</label>
+  </demosection>
+
+  <!-- line_descriptor -->
+  <demosection>
+    <label>line_descriptor: Binary Descriptors for Lines Extracted from an Image</label>
+    <demoitem>
+      <label>Lines features</label>
+      <type>M-file</type>
+      <source>line_extraction_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Line descriptors matching</label>
+      <type>M-file</type>
+      <source>line_matching_demo</source>
+      <!-- cameraman.tif -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Line descriptors radius matching</label>
+      <type>M-file</type>
+      <source>line_radius_matching_demo</source>
+    </demoitem>
+  </demosection>
+
+  <!-- optflow -->
+  <demosection>
+    <label>optflow: Optical Flow Algorithms</label>
+    <demoitem>
+      <label>Optical Flow Evaluation</label>
+      <type>M-file</type>
+      <source>optical_flow_evaluation_demo</source>
+      <!-- imshowpair -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Global Patch Collider</label>
+      <type>M-file</type>
+      <source>gpc_demo</source>
+    </demoitem>
+  </demosection>
+
+  <!-- plot -->
+  <demosection>
+    <label>plot: Plot function for Mat data</label>
+    <demoitem>
+      <label>Plotting demo</label>
+      <type>M-file</type>
+      <source>plotting_demo</source>
+    </demoitem>
+  </demosection>
+
+  <!-- saliency -->
+  <demosection>
+    <label>saliency: Saliency API</label>
+    <demoitem>
+      <label>Saliency Algorithms</label>
+      <type>M-file</type>
+      <source>computeSaliency_demo</source>
+    </demoitem>
+  </demosection>
+
+  <!-- xfeatures2d -->
+  <demosection>
+    <label>xfeatures2d: Extra 2D Features Framework</label>
+    <demoitem>
+      <label>Introduction to SIFT (Scale-Invariant Feature Transform)</label>
+      <type>M-file</type>
+      <source>SIFT_detector</source>
+    </demoitem>
+    <demoitem>
+      <label>Introduction to SURF (Speeded-Up Robust Features)</label>
+      <type>M-file</type>
+      <source>SURF_detector</source>
+    </demoitem>
+    <demoitem>
+      <label>BRIEF (Binary Robust Independent Elementary Features)</label>
+      <type>M-file</type>
+      <source>descriptor_extractor_brief_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Feature Matching</label>
+      <type>M-file</type>
+      <source>SURF_descriptor</source>
+    </demoitem>
+  </demosection>
+
+  <!-- ximgproc -->
+  <demosection>
+    <label>ximgproc: Extended Image Processing</label>
+    <demoitem>
+      <label>Superpixels Segmentation</label>
+      <type>M-file</type>
+      <source>superpixels_demo</source>
+      <!-- imlincomb, label2rgb -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Line Finding with the Fast Hough transform</label>
+      <type>M-file</type>
+      <source>fast_hough_transform_demo</source>
+      <!-- houghpeaks -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Structured Forests for Fast Edge Detection</label>
+      <type>M-file</type>
+      <source>structured_edge_detection_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Graph-Based Image Segmentation</label>
+      <type>M-file</type>
+      <source>graphsegmentation_demo</source>
+      <!-- label2rgb -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Niblack Thresholding</label>
+      <type>M-file</type>
+      <source>niblack_thresholding_demo</source>
+      <!-- printedtext.png, rice.png, imtophat, strel, imadjust -->
+      <!--<dependency>Image Processing Toolbox</dependency>-->
+    </demoitem>
+    <demoitem>
+      <label>Domain Transform Filter</label>
+      <type>M-GUI</type>
+      <source>dtFilter_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Disparity Map Filtering</label>
+      <type>M-file</type>
+      <source>disparity_filtering_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Fast Line Detector</label>
+      <type>M-file</type>
+      <source>fld_lines_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Perona-Malik Anisotropic Diffusion</label>
+      <type>M-GUI</type>
+      <source>anisodiff_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Pei&amp;Lin Normalization</label>
+      <type>M-file</type>
+      <source>peilin_demo</source>
+    </demoitem>
+  </demosection>
+
+  <!-- xobjdetect -->
+  <demosection>
+    <label>xobjdetect: Extended Object Detection</label>
+  </demosection>
+
+  <!-- xphoto -->
+  <demosection>
+    <label>xphoto: Additional Photo Processing Algorithms</label>
+    <demoitem>
+      <label>White Balancing</label>
+      <type>M-file</type>
+      <source>color_balance_demo</source>
+    </demoitem>
+  </demosection>
+
+</demos>

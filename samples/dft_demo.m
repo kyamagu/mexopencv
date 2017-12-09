@@ -7,10 +7,12 @@
 % * What is a Fourier transform and why use it?
 % * Usage of OpenCV functions such as: |cv.dft| and |cv.getOptimalDFTSize|.
 %
-% <http://docs.opencv.org/3.2.0/d8/d01/tutorial_discrete_fourier_transform.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/core/discrete_fourier_transform/discrete_fourier_transform.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/dft.py>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/dft.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d8/d01/tutorial_discrete_fourier_transform.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/core/discrete_fourier_transform/discrete_fourier_transform.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/dft.py>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/dft.cpp>
 %
 
 %% Theory
@@ -23,7 +25,8 @@
 % images Fourier transform is:
 %
 % $$F(k,l) = \displaystyle\sum\limits_{i=0}^{N-1}\sum\limits_{j=0}^{N-1}
-%            f(i,j) e^{-i2\pi(\frac{ki}{N} + \frac{lj}{N})}$$,
+%            f(i,j) e^{-i2\pi(\frac{ki}{N} + \frac{lj}{N})}$$
+%
 % $$e^{ix} = \cos{x} + i\sin {x}$$
 %
 % Here $f$ is the image value in its spatial domain and $F$ in its frequency
@@ -158,11 +161,11 @@ magI = cv.normalize(magI, 'Alpha',0, 'Beta',1, 'NormType','MinMax');
 %
 % In case of the horizontal text:
 %
-% <<http://docs.opencv.org/3.2.0/result_normal.jpg>>
+% <<https://docs.opencv.org/3.2.0/result_normal.jpg>>
 %
 % In case of a rotated text:
 %
-% <<http://docs.opencv.org/3.2.0/result_rotated.jpg>>
+% <<https://docs.opencv.org/3.2.0/result_rotated.jpg>>
 %
 % You can see that the most influential components of the frequency domain
 % (brightest dots on the magnitude image) follow the geometric rotation of

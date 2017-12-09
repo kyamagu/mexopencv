@@ -3,7 +3,9 @@
 % It uses camera by default, but you can provide a path to video as an
 % argument.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/lkdemo.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/lkdemo.cpp>
 %
 
 function varargout = lk_demo_gui(varargin)

@@ -1,7 +1,7 @@
-%% Wiener deconvolution
+%% Wiener Deconvolution for Image Deblurring
 %
 % Sample shows how DFT can be used to perform
-% <http://en.wikipedia.org/wiki/Wiener_deconvolution Weiner deconvolution>
+% <https://en.wikipedia.org/wiki/Wiener_deconvolution Weiner deconvolution>
 % of an image with user-defined point spread function (PSF).
 %
 % Use controls to adjust PSF parameters, and swtich between linear/cirular PSF.
@@ -9,7 +9,9 @@
 % See also: |deconvwnr|,
 % <https://www.mathworks.com/help/images/image-restoration-deblurring.html>
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/deconvolution.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/deconvolution.py>
 %
 
 function varargout = weiner_deconvolution_demo_gui(im)
@@ -55,9 +57,12 @@ end
 function img = blur_edge(img, d)
     %BLUR_EDGE  Blur image edges to reduce ringing effect in deblurred image
     %
+    %     img = blur_edge(img)
+    %     img = blur_edge(img, d)
+    %
     % ## Input
     % * __img__ input image
-    % * __d__ gaussian size
+    % * __d__ gaussian size, default 31
     %
     % ## Output
     % * __img__ output image
@@ -81,10 +86,13 @@ end
 function kern = motion_kernel(ang, d, sz)
     %MOTION_KERNEL  Create linear motion filter
     %
+    %     kern = motion_kernel(ang, d)
+    %     kern = motion_kernel(ang, d, sz)
+    %
     % ## Input
     % * __ang__ linear motion angle
     % * __d__ linear motion length
-    % * __sz__ kernel size
+    % * __sz__ kernel size, default 65
     %
     % ## Output
     % * __kern__ kernel
@@ -103,9 +111,12 @@ end
 function kern = defocus_kernel(d, sz)
     %DEFOCUS_KERNEL  Create circular defocus kernel
     %
+    %     kern = defocus_kernel(d)
+    %     kern = defocus_kernel(d, sz)
+    %
     % ## Input
     % * __d__ circular motion diameter
-    % * __sz__ kernel size
+    % * __sz__ kernel size, default 65
     %
     % ## Output
     % * __kern__ kernel

@@ -6,8 +6,10 @@
 % cluster centers and uses kmeans to move those cluster centers to their
 % representitive location.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/kmeans.cpp>,
-% <http://docs.opencv.org/3.2.0/de/d4d/tutorial_py_kmeans_understanding.html>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/kmeans.cpp>
+% * <https://docs.opencv.org/3.2.0/de/d4d/tutorial_py_kmeans_understanding.html>
 %
 
 %% Theory
@@ -20,7 +22,7 @@
 % satisfy people of all sizes. So the company make a data of people's height
 % and weight, and plot them on to a graph, as below:
 %
-% <<http://docs.opencv.org/3.2.0/tshirt.jpg>>
+% <<https://docs.opencv.org/3.2.0/tshirt.jpg>>
 %
 % Company can't create t-shirts with all the sizes. Instead, they divide
 % people to Small, Medium and Large, and manufacture only these 3 models which
@@ -29,7 +31,7 @@
 % will satisfy all the people. And if it doesn't, company can divide people to
 % more groups, may be five, and so on. Check image below :
 %
-% <<http://docs.opencv.org/3.2.0/tshirt_grouped.jpg>>
+% <<https://docs.opencv.org/3.2.0/tshirt_grouped.jpg>>
 %
 % This algorithm is an iterative process. We will explain it step-by-step with
 % the help of images.
@@ -37,7 +39,7 @@
 % Consider a set of data as below (you can consider it as t-shirt problem).
 % We need to cluster this data into two groups.
 %
-% <<http://docs.opencv.org/3.2.0/testdata.jpg>>
+% <<https://docs.opencv.org/3.2.0/testdata.jpg>>
 %
 % *Step 1:* Algorithm randomly chooses two centroids, $C1$ and $C2$
 % (sometimes, any two data are taken as the centroids).
@@ -50,7 +52,7 @@
 % In our case, we will color all |0| labelled with red, and |1| labelled with
 % blue. So we get following image after above operations.
 %
-% <<http://docs.opencv.org/3.2.0/initial_labelling.jpg>>
+% <<https://docs.opencv.org/3.2.0/initial_labelling.jpg>>
 %
 % *Step 3:* Next we calculate the average of all blue points and red points
 % separately and that will be our new centroids. That is $C1$ and $C2$ shift
@@ -60,7 +62,7 @@
 % And again, perform step 2 with new centroids and label data to |0| and |1|.
 % So we get result as below :
 %
-% <<http://docs.opencv.org/3.2.0/update_centroid.jpg>>
+% <<https://docs.opencv.org/3.2.0/update_centroid.jpg>>
 %
 % Now step 2 and 3 are iterated until both centroids are converged to fixed
 % points. (Or it may be stopped depending on the criteria we provide, like
@@ -75,7 +77,7 @@
 %
 % Final result almost looks like below :
 %
-% <<http://docs.opencv.org/3.2.0/final_clusters.jpg>>
+% <<https://docs.opencv.org/3.2.0/final_clusters.jpg>>
 %
 % So this is just an intuitive understanding of K-Means Clustering. For more
 % details and mathematical explanation, please read any standard machine

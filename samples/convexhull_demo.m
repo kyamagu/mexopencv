@@ -1,7 +1,9 @@
-%% Convex Hull demo
+%% Convex Hull
 % This sample program demonstrates the use of the |cv.convexHull| function.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/convexhull.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/convexhull.cpp>
 %
 
 %% Points

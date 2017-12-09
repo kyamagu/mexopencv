@@ -4,7 +4,7 @@ classdef DownhillSolver < handle
     % defined on an `n`-dimensional Euclidean space, using the **Nelder-Mead**
     % method, also known as downhill simplex method. The basic idea about the
     % method can be obtained from
-    % [Nelder-Mead method](http://en.wikipedia.org/wiki/Nelder-Mead_method).
+    % [Nelder-Mead method](https://en.wikipedia.org/wiki/Nelder-Mead_method).
     %
     % It should be noted, that this method, although deterministic, is rather
     % a heuristic and therefore may converge to a local minima, not necessary
@@ -33,7 +33,8 @@ classdef DownhillSolver < handle
     %
 
     properties (SetAccess = private)
-        id  % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -79,21 +80,21 @@ classdef DownhillSolver < handle
         function this = DownhillSolver(varargin)
             %DOWNHILLSOLVER  Creates a DownhillSolver object
             %
-            %    solver = cv.DownhillSolver()
-            %    solver = cv.DownhillSolver('OptionName', optionValue, ...)
+            %     solver = cv.DownhillSolver()
+            %     solver = cv.DownhillSolver('OptionName', optionValue, ...)
             %
             % ## Options
             % * __Function__ Objective function that will be minimized,
-            %       specified as a structure with the following fields:
-            %       * __dims__ Number of dimensions
-            %       * __fun__ string, name of M-file that implements the
-            %             `calc` method. It should receive a vector of the
-            %             specified dimension, and return a scalar value of
-            %             the objective function evaluated at that point.
+            %   specified as a structure with the following fields:
+            %   * __dims__ Number of dimensions
+            %   * __fun__ string, name of M-file that implements the `calc`
+            %     method. It should receive a vector of the specified
+            %     dimension, and return a scalar value of the objective
+            %     function evaluated at that point.
             % * __InitStep__ Initial step, that will be used to construct the
-            %       initial simplex. default `[1, 1, 0.0]`.
+            %   initial simplex. default `[1, 1, 0.0]`.
             % * __TermCriteria__ Terminal criteria to the algorithm. default
-            %       `struct('type','Count+EPS', 'maxCount',5000, 'epsilon',1e-6)`
+            %   `struct('type','Count+EPS', 'maxCount',5000, 'epsilon',1e-6)`
             %
             % All the parameters are optional, so this procedure can be called
             % even without parameters at all. In this case, the default values
@@ -112,7 +113,7 @@ classdef DownhillSolver < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    solver.delete()
+            %     solver.delete()
             %
             % See also: cv.DownhillSolver
             %
@@ -123,16 +124,16 @@ classdef DownhillSolver < handle
         function [x,fx] = minimize(this, x0)
             %MINIMIZE  Runs the algorithm and performs the minimization
             %
-            %    [x,fx] = solver.minimize(x0)
+            %     [x,fx] = solver.minimize(x0)
             %
             % ## Input
             % * __x0__ The initial point, that will become a centroid of an
-            %       initial simplex.
+            %   initial simplex.
             %
             % ## Output
             % * __x__ After the algorithm will terminate, it will be setted
-            %       to the point where the algorithm stops, the point of
-            %       possible minimum.
+            %   to the point where the algorithm stops, the point of possible
+            %   minimum.
             % * __fx__ The value of a function at the point found.
             %
             % The sole input parameter determines the centroid of the starting
@@ -150,7 +151,7 @@ classdef DownhillSolver < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    solver.clear()
+            %     solver.clear()
             %
             % See also: cv.DownhillSolver.empty
             %
@@ -160,11 +161,11 @@ classdef DownhillSolver < handle
         function b = empty(this)
             %EMPTY  Returns true if the algorithm is empty
             %
-            %    b = solver.empty()
+            %     b = solver.empty()
             %
             % ## Output
-            % * __b__ returns true of the algorithm is empty
-            %       (e.g. in the very beginning or after unsuccessful read).
+            % * __b__ returns true of the algorithm is empty (e.g. in the very
+            %   beginning or after unsuccessful read).
             %
             % See also: cv.DownhillSolver.clear
             %
@@ -174,11 +175,11 @@ classdef DownhillSolver < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = solver.getDefaultName()
+            %     name = solver.getDefaultName()
             %
             % ## Output
-            % * __name__ This string is used as top level xml/yml node tag
-            %       when the object is saved to a file or string.
+            % * __name__ This string is used as top level XML/YML node tag
+            %   when the object is saved to a file or string.
             %
             % See also: cv.DownhillSolver.save, cv.DownhillSolver.load
             %
@@ -188,7 +189,7 @@ classdef DownhillSolver < handle
         function save(this, filename)
             %SAVE  Saves the algorithm to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -203,21 +204,21 @@ classdef DownhillSolver < handle
         function load(this, fname_or_str)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(filename)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
-            % * __filename__ Name of the file to read.
+            % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from a file storage.
             % The previous model state is discarded.

@@ -24,7 +24,7 @@ classdef StaticSaliencyFineGrained < handle
     %
     % Saliency UML diagram:
     %
-    % ![image](http://docs.opencv.org/3.1.0/saliency.png)
+    % ![image](https://docs.opencv.org/3.3.1/saliency.png)
     %
     % To see how API works, try tracker demo: `computeSaliency_demo.m`.
     %
@@ -50,14 +50,15 @@ classdef StaticSaliencyFineGrained < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     methods
         function this = StaticSaliencyFineGrained()
             %STATICSALIENCYFINEGRAINED  Constructor, creates a specialized saliency algorithm of this type
             %
-            %    obj = cv.StaticSaliencyFineGrained()
+            %     obj = cv.StaticSaliencyFineGrained()
             %
             % See also: cv.StaticSaliencyFineGrained.computeSaliency
             %
@@ -67,7 +68,7 @@ classdef StaticSaliencyFineGrained < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.StaticSaliencyFineGrained
             %
@@ -81,7 +82,7 @@ classdef StaticSaliencyFineGrained < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.StaticSaliencyFineGrained.empty,
             %  cv.StaticSaliencyFineGrained.load
@@ -92,11 +93,11 @@ classdef StaticSaliencyFineGrained < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.StaticSaliencyFineGrained.clear,
             %  cv.StaticSaliencyFineGrained.load
@@ -107,7 +108,7 @@ classdef StaticSaliencyFineGrained < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -123,21 +124,21 @@ classdef StaticSaliencyFineGrained < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -151,11 +152,11 @@ classdef StaticSaliencyFineGrained < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.StaticSaliencyFineGrained.save,
             %  cv.StaticSaliencyFineGrained.load
@@ -166,27 +167,14 @@ classdef StaticSaliencyFineGrained < handle
 
     %% Saliency
     methods
-        function className = getClassName(this)
-            %GETCLASSNAME  Get the name of the specific saliency type
-            %
-            %    className = obj.getClassName()
-            %
-            % ## Output
-            % * __className__ The name of the tracker initializer.
-            %
-            % See also: cv.StaticSaliencyFineGrained.StaticSaliencyFineGrained
-            %
-            className = StaticSaliencyFineGrained_(this.id, 'getClassName');
-        end
-
         function saliencyMap = computeSaliency(this, img)
             %COMPUTESALIENCY  Compute the saliency
             %
-            %    saliencyMap = obj.computeSaliency(img)
+            %     saliencyMap = obj.computeSaliency(img)
             %
             % ## Input
             % * __img__ The input image, 8-bit 1 or 3-channel (internally
-            %       converted to grayscale).
+            %   converted to grayscale).
             %
             % ## Output
             % * __saliencyMap__ The computed saliency map, `uint8` matrix.
@@ -202,15 +190,15 @@ classdef StaticSaliencyFineGrained < handle
         function binaryMap = computeBinaryMap(this, saliencyMap)
             %COMPUTEBINARYMAP  This function perform a binary map of given saliency map
             %
-            %    binaryMap = obj.computeBinaryMap(saliencyMap)
+            %     binaryMap = obj.computeBinaryMap(saliencyMap)
             %
             % ## Input
             % * __saliencyMap__ the saliency map obtained through one of the
-            %       specialized algorithms, `single` matrix.
+            %   specialized algorithms, `single` matrix.
             %
             % ## Output
             % * __binaryMap__ the binary map, `uint8` matrix with either 0 or
-            %       255 values.
+            %   255 values.
             %
             % This is obtained in this way:
             % In a first step, to improve the definition of interest areas and

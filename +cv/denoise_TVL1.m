@@ -1,26 +1,26 @@
 %DENOISE_TVL1  Primal-Dual algorithm to perform image denoising
 %
-%    result = cv.denoise_TVL1(observations)
-%    result = cv.denoise_TVL1(observations, 'OptionName',optionValue, ...)
+%     result = cv.denoise_TVL1(observations)
+%     result = cv.denoise_TVL1(observations, 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __observations__ This cell array should contain one or more noised
-%       versions of the image that is to be restored. All images should have
-%       the same size and `uint8` type (grayscale).
+%   versions of the image that is to be restored. All images should have the
+%   same size and `uint8` type (grayscale).
 %
 % ## Output
 % * __result__ the denoised 8-bit image.
 %
 % ## Options
 % * __Lambda__ Corresponds to `lambda` in the formulas below. As it is
-%       enlarged, the smooth (blurred) images are treated more favorably than
-%       detailed (but maybe more noised) ones. Roughly speaking, as it becomes
-%       smaller, the result will be more blur but more sever outliers will be
-%       removed. default 1.0
+%   enlarged, the smooth (blurred) images are treated more favorably than
+%   detailed (but maybe more noised) ones. Roughly speaking, as it becomes
+%   smaller, the result will be more blur but more sever outliers will be
+%   removed. default 1.0
 % * __NIters__ Number of iterations that the algorithm will run. Of course, as
-%       more iterations as better, but it is hard to quantitatively refine
-%       this statement, so just use the default and increase it if the results
-%       are poor. default 30
+%   more iterations as better, but it is hard to quantitatively refine this
+%   statement, so just use the default and increase it if the results are
+%   poor. default 30
 %
 % Primal-dual algorithm is an algorithm for solving special types of
 % variational problems (that is, finding a function to minimize some
@@ -42,7 +42,7 @@
 % We shall denote the noised images as `f_i` and with this view, given some
 % image `x` of the same size, we may measure how bad it is by the formula:
 %
-%    || nabla_x || + lambda * sum_i || x - f_i ||
+%     || nabla_x || + lambda * sum_i || x - f_i ||
 %
 % `|| . ||` here denotes L2-norm and as you see, the first addend states that
 % we want our image to be smooth (ideally, having zero gradient, thus being

@@ -1,5 +1,5 @@
 classdef WBDetector < handle
-    %WBDETECTOR  WaldBoost detector: Object Detection using Boosted Features
+    %WBDETECTOR  WaldBoost detector - Object Detection using Boosted Features
     %
     % Class for object detection using WaldBoost from [Sochman05].
     % Uses a Waldboost cascade and local binary patterns computed as integral
@@ -8,20 +8,20 @@ classdef WBDetector < handle
     % ## Example
     % The basic usage is the following:
     %
-    %    % train
-    %    detector = cv.WBDetector();
-    %    detector.train('/path/to/pos/', '/path/to/neg/');
-    %    detector.write('model.xml');
+    %     % train
+    %     detector = cv.WBDetector();
+    %     detector.train('/path/to/pos/', '/path/to/neg/');
+    %     detector.write('model.xml');
     %
-    %    % detect
-    %    detector = cv.WBDetector();
-    %    detector.read('model.xml');
-    %    img = cv.imread('image.png', 'Grayscale',true);
-    %    [bboxes,conf] = detector.detect(img);
-    %    for i=1:numel(bboxes)
-    %        img = cv.rectangle(img, bboxes{i}, 'Color',[0 255 0]);
-    %    end
-    %    imshow(img)
+    %     % detect
+    %     detector = cv.WBDetector();
+    %     detector.read('model.xml');
+    %     img = cv.imread('image.png', 'Grayscale',true);
+    %     [bboxes,conf] = detector.detect(img);
+    %     for i=1:numel(bboxes)
+    %         img = cv.rectangle(img, bboxes{i}, 'Color',[0 255 0]);
+    %     end
+    %     imshow(img)
     %
     % ## References
     % [Sochman05]:
@@ -42,7 +42,7 @@ classdef WBDetector < handle
         function this = WBDetector()
             %WBDETECTOR  Create instance of WBDetector
             %
-            %    detector = cv.WBDetector()
+            %     detector = cv.WBDetector()
             %
             % See also: cv.WBDetector, cv.WBDetector.train, cv.WBDetector.read
             %
@@ -52,7 +52,7 @@ classdef WBDetector < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    detector.delete()
+            %     detector.delete()
             %
             % See also: cv.WBDetector
             %
@@ -63,18 +63,18 @@ classdef WBDetector < handle
         function read(this, fname_or_str, varargin)
             %READ  Read detector from file
             %
-            %    detector.read(filename)
-            %    detector.read(str, 'FromString',true)
-            %    detector.read(..., 'OptionName', optionValue, ...)
+            %     detector.read(filename)
+            %     detector.read(str, 'FromString',true)
+            %     detector.read(..., 'OptionName', optionValue, ...)
             %
             % ## Input
             % * __filename__ Name of the file to read from.
             % * __str__ String containing serialized detector you want to load.
             %
             % ## Options
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized detector.
-            %       default false
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   a filename or a string containing the serialized detector.
+            %   default false
             %
             % See also: cv.WBDetector.write
             %
@@ -84,15 +84,15 @@ classdef WBDetector < handle
         function varargout = write(this, filename)
             %WRITE  Write detector to file
             %
-            %    detector.write(filename)
-            %    str = detector.write(filename)
+            %     detector.write(filename)
+            %     str = detector.write(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
             %
             % ## Output
             % * __str__ optional output. If requested, the object is persisted
-            %       to a string in memory instead of writing to disk.
+            %   to a string in memory instead of writing to disk.
             %
             % See also: cv.WBDetector.read
             %
@@ -102,13 +102,13 @@ classdef WBDetector < handle
         function train(this, pos_samples, neg_imgs)
             %TRAIN  Train WaldBoost detector
             %
-            %    detector.train(pos_samples, neg_imgs)
+            %     detector.train(pos_samples, neg_imgs)
             %
             % ## Input
             % * **pos_samples** Path to directory with cropped positive
-            %       samples.
+            %   samples.
             % * **neg_imgs** Path to directory with negative (background)
-            %       images.
+            %   images.
             %
             % See also: cv.WBDetector.detect
             %
@@ -118,7 +118,7 @@ classdef WBDetector < handle
         function [bboxes,confidences] = detect(this, img)
             %DETECT  Detect objects on image using WaldBoost detector
             %
-            %    [bboxes,confidences] = detector.detect(img)
+            %     [bboxes,confidences] = detector.detect(img)
             %
             % ## Input
             % * __img__ Input image for detection.

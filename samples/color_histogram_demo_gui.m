@@ -1,11 +1,13 @@
-%% Video histogram
+%% Video Histogram
 %
 % Demo to show live histogram of video, both 1D histograms of RGB channels
 % and 2D histogram of Hue-Saturation.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/color_histogram.py>,
-% <http://docs.opencv.org/3.2.0/dd/d0d/tutorial_py_2d_histogram.html>,
-% <http://docs.opencv.org/3.2.0/d1/db7/tutorial_py_histogram_begins.html>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/color_histogram.py>
+% * <https://docs.opencv.org/3.2.0/dd/d0d/tutorial_py_2d_histogram.html>
+% * <https://docs.opencv.org/3.2.0/d1/db7/tutorial_py_histogram_begins.html>
 %
 
 function varargout = color_histogram_demo_gui(varargin)

@@ -1,17 +1,17 @@
 %CALCGLOBALORIENTATION  Calculates a global motion orientation in a selected region
 %
-%    orient = cv.calcGlobalOrientation(orientation, mask, mhi, timestamp, duration)
+%     orient = cv.calcGlobalOrientation(orientation, mask, mhi, timestamp, duration)
 %
 % ## Input
 % * __orientation__ Motion gradient orientation image calculated by the
-%       function cv.calcMotionGradient
+%   function cv.calcMotionGradient
 % * __mask__ Mask image. It may be a conjunction of a valid gradient mask,
-%       also calculated by cv.calcMotionGradient, and the mask of a region
-%       whose direction needs to be calculated.
+%   also calculated by cv.calcMotionGradient, and the mask of a region whose
+%   direction needs to be calculated.
 % * __mhi__ Motion history image calculated by cv.updateMotionHistory.
 % * __timestamp__ Timestamp passed to cv.updateMotionHistory.
 % * __duration__ Maximum duration of a motion track in milliseconds, passed to
-%       cv.updateMotionHistory.
+%   cv.updateMotionHistory.
 %
 % ## Output
 % * __orient__ Output global orientation.

@@ -1,10 +1,12 @@
-%% Minimum Area Enclosing demo
+%% Minimum Area Enclosing
 % This program demonstrates finding the minimum enclosing box, triangle or
 % circle of a set of points using functions: |cv.minAreaRect|,
 % |cv.minEnclosingTriangle|, and |cv.minEnclosingCircle|.
 % Random points are generated and then enclosed.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/minarea.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.3.1/samples/cpp/minarea.cpp>
 %
 
 %% Points

@@ -3,8 +3,10 @@
 % In this demo, we show how to use the OpenCV function |cv.Laplacian| to
 % implement a discrete analog of the _Laplacian operator_.
 %
-% <http://docs.opencv.org/3.2.0/d5/db5/tutorial_laplace_operator.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/Laplace_Demo.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d5/db5/tutorial_laplace_operator.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/Laplace_Demo.cpp>
 %
 
 %% Theory
@@ -15,11 +17,11 @@
 % we observed that an edge is characterized by a maximum, as it can be seen in
 % the figure:
 %
-% <<http://docs.opencv.org/3.2.0/Laplace_Operator_Tutorial_Theory_Previous.jpg>>
+% <<https://docs.opencv.org/3.2.0/Laplace_Operator_Tutorial_Theory_Previous.jpg>>
 %
 % And what happens if we take the second derivative?
 %
-% <<http://docs.opencv.org/3.2.0/Laplace_Operator_Tutorial_Theory_ddIntensity.jpg>>
+% <<https://docs.opencv.org/3.2.0/Laplace_Operator_Tutorial_Theory_ddIntensity.jpg>>
 %
 % You can observe that the second derivative is zero! So, we can also use this
 % criterion to attempt to detect edges in an image. However, note that zeros

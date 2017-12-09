@@ -31,7 +31,7 @@ classdef BinaryDescriptorMatcher < handle
     % when `||h-g||_H <= r` (where `||.||_H` is the Hamming norm), there must
     % exist a substring `k` (with `1 <= k <= m`) such that:
     %
-    %    || h^(k) - g^(k) ||_H <= floor(r/m)
+    %     || h^(k) - g^(k) ||_H <= floor(r/m)
     %
     % That means that if Hamming distance between each of the `m` substring is
     % strictly greater than `floor(r/m)`, then `||h-g||_H` must be larger that
@@ -55,14 +55,15 @@ classdef BinaryDescriptorMatcher < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     methods
         function this = BinaryDescriptorMatcher()
             %BINARYDESCRIPTORMATCHER  Constructor
             %
-            %    matcher = cv.BinaryDescriptorMatcher()
+            %     matcher = cv.BinaryDescriptorMatcher()
             %
             % The BinaryDescriptorMatcher constructed is able to store and
             % manage 256-bits long entries.
@@ -75,7 +76,7 @@ classdef BinaryDescriptorMatcher < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    matcher.delete()
+            %     matcher.delete()
             %
             % See also: cv.BinaryDescriptorMatcher
             %
@@ -89,7 +90,7 @@ classdef BinaryDescriptorMatcher < handle
         function clear(this)
             %CLEAR  Clear dataset and internal data
             %
-            %    matcher.clear()
+            %     matcher.clear()
             %
             % See also: cv.BinaryDescriptorMatcher.empty
             %
@@ -99,7 +100,7 @@ classdef BinaryDescriptorMatcher < handle
         function status = empty(this)
             %EMPTY  Returns true if there are no train descriptors in the collection
             %
-            %    status = matcher.empty()
+            %     status = matcher.empty()
             %
             % ## Output
             % * __status__ boolean status
@@ -112,7 +113,7 @@ classdef BinaryDescriptorMatcher < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    matcher.save(filename)
+            %     matcher.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -128,21 +129,21 @@ classdef BinaryDescriptorMatcher < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    matcher.load(fname)
-            %    matcher.load(str, 'FromString',true)
-            %    matcher.load(..., 'OptionName',optionValue, ...)
+            %     matcher.load(fname)
+            %     matcher.load(str, 'FromString',true)
+            %     matcher.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -156,11 +157,11 @@ classdef BinaryDescriptorMatcher < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = matcher.getDefaultName()
+            %     name = matcher.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.BinaryDescriptorMatcher.save, cv.BinaryDescriptorMatcher.load
             %
@@ -173,13 +174,13 @@ classdef BinaryDescriptorMatcher < handle
         function add(this, descriptors)
             %ADD  Store locally new descriptors to be inserted in dataset, without updating dataset
             %
-            %    matcher.add(descriptors)
+            %     matcher.add(descriptors)
             %
             % ## Input
             % * __descriptors__ cell array of matrices containing descriptors
-            %       to be inserted into dataset. Each matrix `descriptors{i}`
-            %       should contain descriptors relative to lines extracted
-            %       from i-th image.
+            %   to be inserted into dataset. Each matrix `descriptors{i}`
+            %   should contain descriptors relative to lines extracted from
+            %   i-th image.
             %
             % See also: cv.BinaryDescriptorMatcher.clear
             %
@@ -189,7 +190,7 @@ classdef BinaryDescriptorMatcher < handle
         function train(this)
             %TRAIN  Update dataset by inserting into it all descriptors that were stored locally by add function
             %
-            %    matcher.train()
+            %     matcher.train()
             %
             % NOTE: Every time this function is invoked, current dataset is
             % deleted and locally stored descriptors are inserted into
@@ -204,9 +205,9 @@ classdef BinaryDescriptorMatcher < handle
         function matches = match(this, queryDescriptors, varargin)
             %MATCH  For every input query descriptor, retrieve the best matching one from a dataset provided from user or from the one internal to class
             %
-            %    matches = matcher.match(queryDescriptors, trainDescriptors)
-            %    matches = matcher.match(queryDescriptors)
-            %    [...] = matcher.match(..., 'OptionName', optionValue, ...)
+            %     matches = matcher.match(queryDescriptors, trainDescriptors)
+            %     matches = matcher.match(queryDescriptors)
+            %     [...] = matcher.match(..., 'OptionName', optionValue, ...)
             %
             % ## Input
             % * __queryDescriptors__ query descriptors.
@@ -217,10 +218,10 @@ classdef BinaryDescriptorMatcher < handle
             %
             % ## Options
             % * __Mask__ mask to select which input descriptors must be
-            %       matched to one in dataset. In the second variant, a vector
-            %       of masks (the i-th mask in vector indicates whether each
-            %       input query can be matched with descriptors in dataset
-            %       relative to i-th image). Not set by default.
+            %   matched to one in dataset. In the second variant, a vector of
+            %   masks (the i-th mask in vector indicates whether each input
+            %   query can be matched with descriptors in dataset relative to
+            %   i-th image). Not set by default.
             %
             % For every input descriptor, find the best matching one:
             %
@@ -236,28 +237,28 @@ classdef BinaryDescriptorMatcher < handle
         function matches = knnMatch(this, queryDescriptors, varargin)
             %KNNMATCH  For every input query descriptor, retrieve the best k matching ones from a dataset provided from user or from the one internal to class
             %
-            %    matches = matcher.knnMatch(queryDescriptors, trainDescriptors, k)
-            %    matches = matcher.knnMatch(queryDescriptors, k)
-            %    [...] = matcher.knnMatch(..., 'OptionName', optionValue, ...)
+            %     matches = matcher.knnMatch(queryDescriptors, trainDescriptors, k)
+            %     matches = matcher.knnMatch(queryDescriptors, k)
+            %     [...] = matcher.knnMatch(..., 'OptionName', optionValue, ...)
             %
             % ## Input
             % * __queryDescriptors__ query descriptors.
             % * __trainDescriptors__ dataset of descriptors furnished by user.
             % * __k__ number of the closest descriptors to be returned for
-            %       every input query.
+            %   every input query.
             %
             % ## Output
             % * __matches__ vector to host retrieved matches.
             %
             % ## Options
             % * __Mask__ mask to select which input descriptors must be
-            %       matched to ones in dataset. A vector of masks in the
-            %       second variant (the i-th mask in vector indicates whether
-            %       each input query can be matched with descriptors in
-            %       dataset relative to i-th image). Not set by default.
+            %   matched to ones in dataset. A vector of masks in the second
+            %   variant (the i-th mask in vector indicates whether each input
+            %   query can be matched with descriptors in dataset relative to
+            %   i-th image). Not set by default.
             % * __CompactResult__ flag to obtain a compact result (if true, a
-            %       vector that doesn't contain any matches for a given query
-            %       is not inserted in final result). default false
+            %   vector that doesn't contain any matches for a given query is
+            %   not inserted in final result). default false
             %
             % For every input descriptor, find the best k matching descriptors:
             %
@@ -274,9 +275,9 @@ classdef BinaryDescriptorMatcher < handle
         function matches = radiusMatch(this, queryDescriptors, varargin)
             %RADIUSMATCH  For every input query descriptor, retrieve, from a dataset provided from user or from the one internal to class, all the descriptors that are not further than maxDist from input query
             %
-            %    matches = matcher.radiusMatch(queryDescriptors, trainDescriptors, maxDistance)
-            %    matches = matcher.radiusMatch(queryDescriptors, maxDistance)
-            %    [...] = matcher.radiusMatch(..., 'OptionName', optionValue, ...)
+            %     matches = matcher.radiusMatch(queryDescriptors, trainDescriptors, maxDistance)
+            %     matches = matcher.radiusMatch(queryDescriptors, maxDistance)
+            %     [...] = matcher.radiusMatch(..., 'OptionName', optionValue, ...)
             %
             % ## Input
             % * __queryDescriptors__ query descriptors.
@@ -288,13 +289,13 @@ classdef BinaryDescriptorMatcher < handle
             %
             % ## Options
             % * __Mask__ mask to select which input descriptors must be
-            %       matched to ones in dataset. A vector of masks in the
-            %       second variant (the i-th mask in vector indicates whether
-            %       each input query can be matched with descriptors in
-            %       dataset relative to i-th image). Not set by default.
+            %   matched to ones in dataset. A vector of masks in the second
+            %   variant (the i-th mask in vector indicates whether each input
+            %   query can be matched with descriptors in dataset relative to
+            %   i-th image). Not set by default.
             % * __CompactResult__ flag to obtain a compact result (if true, a
-            %       vector that doesn't contain any matches for a given query
-            %       is not inserted in final result). default false
+            %   vector that doesn't contain any matches for a given query is
+            %   not inserted in final result). default false
             %
             % For every input desciptor, find all the ones falling in a
             % certaing matching radius:

@@ -23,12 +23,17 @@ octave-workspace
 
 # generated docs
 /doc/html/
-/doc/latex/
 /doc/matlab/
+/doc/wiki/
+/doc/helpsearch*/
+/doc/helpfuncbycat.xml
 
 # published samples
 /samples/html/
 /opencv_contrib/samples/html/
+
+# downloaded Java packages for generating docs
+/utils/jars/*/*.jar
 
 # downloaded files for samples and tests
 /test/768x576.avi
@@ -62,3 +67,7 @@ octave-workspace
 /test/imageText[NR].png
 /test/licenseplate_motion.jpg
 /test/aero[13].jpg
+/test/peilin_*.png
+/test/faceocc2.webm
+/test/dudek.webm
+/test/david.webm

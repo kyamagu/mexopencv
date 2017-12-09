@@ -2,7 +2,9 @@
 %
 % This sample demonstrates Perona-Malik anisotropic diffusion.
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.3.0/modules/ximgproc/samples/filterdemo.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.3.0/modules/ximgproc/samples/filterdemo.cpp>
 %
 
 function varargout = anisodiff_demo_gui(im)

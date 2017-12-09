@@ -1,6 +1,6 @@
 %EQUALIZEHIST  Equalizes the histogram of a grayscale image
 %
-%    dst = cv.equalizeHist(src)
+%     dst = cv.equalizeHist(src)
 %
 % ## Input
 % * __src__ Source 8-bit single channel image.

@@ -1,4 +1,4 @@
-%% Thresholding Operations using inRange
+%% inRange Thresholding Operations
 %
 % In this demo, we show how to:
 %
@@ -9,8 +9,10 @@
 % other colorspaces like HSV or LAB, where luma and chroma are represented
 % separately.
 %
-% <http://docs.opencv.org/3.2.0/da/d97/tutorial_threshold_inRange.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgProc/Threshold_inRange.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/da/d97/tutorial_threshold_inRange.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgProc/Threshold_inRange.cpp>
 %
 
 function varargout = threshold_inrange_demo_gui(im)

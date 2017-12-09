@@ -3,8 +3,10 @@
 %
 % This program illustrates Linear-Polar and Log-Polar image transforms.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/polar_transforms.cpp>
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/logpolar.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/polar_transforms.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/logpolar.py>
 %
 
 %%

@@ -8,8 +8,10 @@
 % * Learn to find and draw contours using the functions |cv.findContours| and
 %   |cv.drawContours|.
 %
-% <http://docs.opencv.org/3.2.0/d4/d73/tutorial_py_contours_begin.html>,
-% <http://docs.opencv.org/3.2.0/d9/d8b/tutorial_py_contours_hierarchy.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d4/d73/tutorial_py_contours_begin.html>
+% * <https://docs.opencv.org/3.2.0/d9/d8b/tutorial_py_contours_hierarchy.html>
 %
 
 %% Contours
@@ -71,7 +73,7 @@
 % shows points what you got with |None| (734 points) and second image shows
 % the one with |Simple| (only 4 points). See how much memory it saves!
 %
-% <<http://docs.opencv.org/3.2.0/none.jpg>>
+% <<https://docs.opencv.org/3.2.0/none.jpg>>
 %
 
 % image with a simple rectangular shape
@@ -110,7 +112,7 @@ title({'Method = Simlpe', sprintf('%d points', size(cntr2,1))})
 %
 % Consider an example image below :
 %
-% <<http://docs.opencv.org/3.2.0/hierarchy.png>>
+% <<https://docs.opencv.org/3.2.0/hierarchy.png>>
 %
 % In this image, there are a few shapes numbered from *0-5*. *2* and *2a*
 % denote the external and internal contours of the outermost box.
@@ -257,7 +259,7 @@ display(hierarchy)
 % labelled in red color and the hierarchy they belongs to, in green color
 % (either 1 or 2). The order is same as the order OpenCV detects contours.
 %
-% <<http://docs.opencv.org/3.2.0/ccomp_hierarchy.png>>
+% <<https://docs.opencv.org/3.2.0/ccomp_hierarchy.png>>
 %
 % So consider first contour, i.e *contour-0*. It is *hierarchy-1*. It has two
 % holes, contours *1,2*, and they belong to *hierarchy-2*. So for *contour-0*,
@@ -297,7 +299,7 @@ display(hierarchy)
 % contours as per the result given by OpenCV and analyze it. Again, red
 % letters give the contour number and green letters give the hierarchy order.
 %
-% <<http://docs.opencv.org/3.2.0/tree_hierarchy.png>>
+% <<https://docs.opencv.org/3.2.0/tree_hierarchy.png>>
 %
 % Take *contour-0*: It is in *hierarchy-0*. Next contour in same hierarchy is
 % *contour-7*. No previous contours. Child is *contour-1*. And no parent. So

@@ -61,7 +61,7 @@ classdef TestImencode
 
         function test_error_unrecognized_extension
             %TODO: crashes Octave
-            if mexopencv.isOctave()
+            if true
                 error('mexopencv:testskip', 'todo');
             end
 

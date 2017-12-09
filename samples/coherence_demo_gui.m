@@ -1,11 +1,13 @@
-%% Coherence-enhancing filtering
+%% Coherence-Enhancing Filtering
 %
 % Inspired by:
 %
 % * Joachim Weickert, "Coherence-Enhancing Shock Filters"
 %   <http://www.mia.uni-saarland.de/Publications/weickert-dagm03.pdf>
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/coherence.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/coherence.py>
 %
 
 function varargout = coherence_demo_gui(im)

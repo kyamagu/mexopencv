@@ -1,4 +1,4 @@
-%% Template Matching demo
+%% Template Matching
 % This program demonstrates template match with mask.
 %
 % In this demo, we show how to:
@@ -8,10 +8,12 @@
 % * Find the maximum and minimum values (as well as their positions) in a
 %   given array.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/mask_tmpl.cpp>,
-% <http://docs.opencv.org/3.2.0/d4/dc6/tutorial_py_template_matching.html>,
-% <http://docs.opencv.org/3.2.0/de/da9/tutorial_template_matching.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/Histograms_Matching/MatchTemplate_Demo.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/mask_tmpl.cpp>
+% * <https://docs.opencv.org/3.2.0/d4/dc6/tutorial_py_template_matching.html>
+% * <https://docs.opencv.org/3.2.0/de/da9/tutorial_template_matching.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/Histograms_Matching/MatchTemplate_Demo.cpp>
 %
 
 %% Theory
@@ -32,12 +34,12 @@
 %
 % our goal is to detect the highest matching area:
 %
-% <<http://docs.opencv.org/3.2.0/Template_Matching_Template_Theory_Summary.jpg>>
+% <<https://docs.opencv.org/3.2.0/Template_Matching_Template_Theory_Summary.jpg>>
 %
 % To identify the matching area, we have to _compare_ the template image
 % against the source image by sliding it:
 %
-% <<http://docs.opencv.org/3.2.0/Template_Matching_Template_Theory_Sliding.jpg>>
+% <<https://docs.opencv.org/3.2.0/Template_Matching_Template_Theory_Sliding.jpg>>
 %
 % By *sliding*, we mean moving the patch one pixel at a time (left to right,
 % up to down). At each location, a metric is calculated so it represents how
@@ -46,7 +48,7 @@
 % For each location of |T| over |I|, you _store_ the metric in the
 % _result matrix_ |R|. Each location $(x,y)$ in |R| contains the match metric:
 %
-% <<http://docs.opencv.org/3.2.0/Template_Matching_Template_Theory_Result.jpg>>
+% <<https://docs.opencv.org/3.2.0/Template_Matching_Template_Theory_Result.jpg>>
 %
 % the image above is the result |R| of sliding the patch with a metric
 % |CCorrNormed|. The brightest locations indicate the highest matches. As you
@@ -79,7 +81,7 @@
 % Since the input images in the sample are 3-channels, the mask is also read
 % as color image.
 %
-% <<http://docs.opencv.org/3.2.0/Template_Matching_Mask_Example.jpg>>
+% <<https://docs.opencv.org/3.2.0/Template_Matching_Mask_Example.jpg>>
 %
 % OpenCV implements template matching in the function |cv.matchTemplate|.
 % There are six available methods:

@@ -1,7 +1,7 @@
 %BILATERALFILTER  Applies the bilateral filter to an image
 %
-%    result = cv.bilateralFilter(img)
-%    result = cv.bilateralFilter(img, 'OptionName', optionValue, ...)
+%     result = cv.bilateralFilter(img)
+%     result = cv.bilateralFilter(img, 'OptionName', optionValue, ...)
 %
 % ## Input
 % * __img__ Source 8-bit or floating-point, 1-channel or 3-channel image.
@@ -11,19 +11,19 @@
 %
 % ## Options
 % * __Diameter__ Diameter of each pixel neighborhood that is used during
-%       filtering. If it is non-positive, it is computed from `SigmaSpace`.
-%       Default: 7
+%   filtering. If it is non-positive, it is computed from `SigmaSpace`.
+%   Default 7
 % * __SigmaColor__ Filter sigma in the color space. A larger value of the
-%       parameter means that farther colors within the pixel neighborhood (see
-%       `SigmaSpace`) will be mixed together, resulting in larger areas of
-%       semi-equal color. Default: 50.0
+%   parameter means that farther colors within the pixel neighborhood (see
+%   `SigmaSpace`) will be mixed together, resulting in larger areas of
+%   semi-equal color. Default 50.0
 % * __SigmaSpace__ Filter sigma in the coordinate space. A larger value of the
-%       parameter means that farther pixels will influence each other as long
-%       as their colors are close enough (see `SigmaColor`). When `Diameter>0`,
-%       it specifies the neighborhood size regardless of `SigmaSpace`.
-%       Otherwise, `Diameter` is proportional to `SigmaSpace`. Default: 50.0
+%   parameter means that farther pixels will influence each other as long as
+%   their colors are close enough (see `SigmaColor`). When `Diameter>0`, it
+%   specifies the neighborhood size regardless of `SigmaSpace`. Otherwise,
+%   `Diameter` is proportional to `SigmaSpace`. Default 50.0
 % * __BorderType__ border mode used to extrapolate pixels outside of the
-%       image. See cv.copyMakeBorder. Default: 'Default'
+%   image. See cv.copyMakeBorder. Default 'Default'
 %
 % The function applies bilateral filtering to the input image, as described
 % in [CVonline]. cv.bilateralFilter can reduce unwanted noise very well while

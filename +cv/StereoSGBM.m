@@ -23,9 +23,9 @@ classdef StereoSGBM < handle
     %
     % ## Usage
     %
-    %    bm = cv.StereoSGBM('MinDisparity',0, ...);
-    %    bm.BlockSize = ...;
-    %    disparity = bm.compute(left, right);
+    %     bm = cv.StereoSGBM('MinDisparity',0, ...);
+    %     bm.BlockSize = ...;
+    %     disparity = bm.compute(left, right);
     %
     % ## References
     % [HH08]:
@@ -83,7 +83,7 @@ classdef StereoSGBM < handle
         %
         % * __SGBM__ 5-directional version of the algorithm
         % * __HH__ 8-dir mode, runs the full-scale two-pass dynamic
-        %       programming algorithm (slowest, memory intensive)
+        %   programming algorithm (slowest, memory intensive)
         % * __SGBM3Way__ 3-dir mode (fastest)
         % * __HH4__ 4-directional variation of SGBM
         Mode
@@ -93,60 +93,58 @@ classdef StereoSGBM < handle
         function this = StereoSGBM(varargin)
             %STEREOSGBM  Creates StereoSGBM object
             %
-            %    bm = cv.StereoSGBM()
-            %    bm = cv.StereoSGBM('OptionName', optionValue, ...)
+            %     bm = cv.StereoSGBM()
+            %     bm = cv.StereoSGBM('OptionName', optionValue, ...)
             %
             % ## Options
             % * __MinDisparity__ Minimum possible disparity value. Normally,
-            %       it is zero but sometimes rectification algorithms can
-            %       shift images, so this parameter needs to be adjusted
-            %       accordingly. default 0
+            %   it is zero but sometimes rectification algorithms can shift
+            %   images, so this parameter needs to be adjusted accordingly.
+            %   default 0
             % * __NumDisparities__ Maximum disparity minus minimum disparity.
-            %       The value is always greater than zero. In the current
-            %       implementation, this parameter must be divisible by 16.
-            %       default 16
+            %   The value is always greater than zero. In the current
+            %   implementation, this parameter must be divisible by 16.
+            %   default 16
             % * __BlockSize__ Matched block size. It must be an odd number >=1.
-            %       Normally, it should be somewhere in the 3..11 range.
-            %       default 3
+            %   Normally, it should be somewhere in the 3..11 range. default 3
             % * __P1__ The first parameter controlling the disparity
-            %       smoothness. See `P2`. default 0 (which uses 2).
+            %   smoothness. See `P2`. default 0 (which uses 2).
             % * __P2__ The second parameter controlling the disparity
-            %       smoothness. The larger the values are, the smoother the
-            %       disparity is. `P1` is the penalty on the disparity change
-            %       by plus or minus 1 between neighbor pixels. `P2` is the
-            %       penalty on the disparity change by more than 1 between
-            %       neighbor pixels. The algorithm requires `P2 > P1`.
-            %       (Reasonably good `P1` and `P2` values are like
-            %       `8*number_of_image_channels*BlockSize*BlockSize` and
-            %       `32*number_of_image_channels*BlockSize*BlockSize`
-            %       respectively). default 0 (which uses `max(5,P1+1)`).
+            %   smoothness. The larger the values are, the smoother the
+            %   disparity is. `P1` is the penalty on the disparity change by
+            %   plus or minus 1 between neighbor pixels. `P2` is the penalty
+            %   on the disparity change by more than 1 between neighbor
+            %   pixels. The algorithm requires `P2 > P1`. (Reasonably good
+            %   `P1` and `P2` values are like
+            %   `8*number_of_image_channels*BlockSize*BlockSize` and
+            %   `32*number_of_image_channels*BlockSize*BlockSize`
+            %   respectively). default 0 (which uses `max(5,P1+1)`).
             % * __Disp12MaxDiff__ Maximum allowed difference (in integer pixel
-            %       units) in the left-right disparity check. Set it to a
-            %       non-positive value to disable the check. default 0
+            %   units) in the left-right disparity check. Set it to a
+            %   non-positive value to disable the check. default 0
             % * __PreFilterCap__ Truncation value for the prefiltered image
-            %       pixels. The algorithm first computes x-derivative at each
-            %       pixel and clips its value by `[-PreFilterCap,PreFilterCap]`
-            %       interval. The result values are passed to the
-            %       Birchfield-Tomasi pixel cost function. default 0
+            %   pixels. The algorithm first computes x-derivative at each
+            %   pixel and clips its value by `[-PreFilterCap,PreFilterCap]`
+            %   interval. The result values are passed to the
+            %   Birchfield-Tomasi pixel cost function. default 0
             % * __UniquenessRatio__ Margin in percentage by which the best
-            %       (minimum) computed cost function value should "win" the
-            %       second best value to consider the found match correct.
-            %       Normally, a value within the 5-15 range is good enough.
-            %       A negative value uses 10. default 0
+            %   (minimum) computed cost function value should "win" the second
+            %   best value to consider the found match correct. Normally, a
+            %   value within the 5-15 range is good enough. A negative value
+            %   uses 10. default 0
             % * __SpeckleWindowSize__ Maximum size of smooth disparity regions
-            %       to consider their noise speckles and invalidate. Set it to
-            %       0 to disable speckle filtering. Otherwise, set it
-            %       somewhere in the 50-200 range. default 0
+            %   to consider their noise speckles and invalidate. Set it to 0
+            %   to disable speckle filtering. Otherwise, set it somewhere in
+            %   the 50-200 range. default 0
             % * __SpeckleRange__ Maximum disparity variation within each
-            %       connected component. If you do speckle filtering, set the
-            %       parameter to a positive value, it will be implicitly
-            %       multiplied by 16. Normally, 1 or 2 is good enough.
-            %       default 0
+            %   connected component. If you do speckle filtering, set the
+            %   parameter to a positive value, it will be implicitly
+            %   multiplied by 16. Normally, 1 or 2 is good enough. default 0
             % * __Mode__ Set it to 'HH' to run the full-scale two-pass dynamic
-            %       programming algorithm. It will consume
-            %       `O(W * H * NumDisparities)` bytes, which is large for
-            %       640x480 stereo and huge for HD-size pictures. By default,
-            %       it is set to 'SGBM'.
+            %   programming algorithm. It will consume
+            %   `O(W * H * NumDisparities)` bytes, which is large for 640x480
+            %   stereo and huge for HD-size pictures. By default, it is set to
+            %   'SGBM'.
             %
             % See also: cv.StereoSGBM.compute
             %
@@ -156,7 +154,7 @@ classdef StereoSGBM < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    bm.delete()
+            %     bm.delete()
             %
             % See also: cv.StereoSGBM
             %
@@ -167,20 +165,19 @@ classdef StereoSGBM < handle
         function disparity = compute(this, left, right)
             %COMPUTE  Computes disparity map for the specified stereo pair
             %
-            %    disparity = bm.compute(left, right)
+            %     disparity = bm.compute(left, right)
             %
             % ## Input
             % * __left__ Left 8-bit single-channel or 3-channel image.
             % * __right__ Right image of the same size and the same type as
-            %       the left one.
+            %   the left one.
             %
             % ## Output
             % * __disparity__ Output disparity map. It has the same size as
-            %       the input images. Some algorithms, like cv.StereoBM or
-            %       cv.StereoSGBM compute 16-bit fixed-point disparity map
-            %       (where each disparity value has 4 fractional bits),
-            %       whereas other algorithms output 32-bit floating-point
-            %       disparity map.
+            %   the input images. Some algorithms, like cv.StereoBM or
+            %   cv.StereoSGBM compute 16-bit fixed-point disparity map (where
+            %   each disparity value has 4 fractional bits), whereas other
+            %   algorithms output 32-bit floating-point disparity map.
             %
             % The method executes the SGBM algorithm on a rectified stereo
             % pair.
@@ -196,7 +193,7 @@ classdef StereoSGBM < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.StereoSGBM.empty
             %
@@ -206,11 +203,11 @@ classdef StereoSGBM < handle
         function b = empty(this)
             %EMPTY  Checks if algorithm object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the algorithm object is empty
-            %       (e.g. in the very beginning or after unsuccessful read).
+            %   (e.g. in the very beginning or after unsuccessful read).
             %
             % See also: cv.StereoSGBM.clear
             %
@@ -220,11 +217,11 @@ classdef StereoSGBM < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.StereoSGBM.save, cv.StereoSGBM.load
             %
@@ -234,7 +231,7 @@ classdef StereoSGBM < handle
         function save(this, filename)
             %SAVE  Saves the algorithm to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -249,21 +246,21 @@ classdef StereoSGBM < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from a file storage.
             % The previous model state is discarded.

@@ -1,7 +1,7 @@
 %WRITEOPTICALFLOW  Write a .flo to disk
 %
-%    cv.writeOpticalFlow(path, flow)
-%    success = cv.writeOpticalFlow(path, flow)
+%     cv.writeOpticalFlow(path, flow)
+%     success = cv.writeOpticalFlow(path, flow)
 %
 % ## Input
 % * __path__ Path to the file to be written.

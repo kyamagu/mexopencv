@@ -3,7 +3,9 @@
 % We will learn how to use |cv.kmeans| for data clustering of pixels to
 % perform color quantization.
 %
-% <http://docs.opencv.org/3.2.0/d1/d5c/tutorial_py_kmeans_opencv.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d1/d5c/tutorial_py_kmeans_opencv.html>
 %
 
 %% Theory

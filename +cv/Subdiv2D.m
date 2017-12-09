@@ -21,19 +21,20 @@ classdef Subdiv2D < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     methods
         function this = Subdiv2D(varargin)
             %SUBDIV2D  Constructor
             %
-            %    obj = cv.Subdiv2D()
-            %    obj = cv.Subdiv2D(rect)
+            %     obj = cv.Subdiv2D()
+            %     obj = cv.Subdiv2D(rect)
             %
             % ## Input
             % * __rect__ Rectangle `[x,y,w,h]` that includes all of the 2D
-            %       points that are to be added to the subdivision.
+            %   points that are to be added to the subdivision.
             %
             % Creates an empty Delaunay subdivision object.
             % The second form is equivalent to creating an empty object, then
@@ -52,7 +53,7 @@ classdef Subdiv2D < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.Subdiv2D
             %
@@ -63,11 +64,11 @@ classdef Subdiv2D < handle
         function initDelaunay(this, rect)
             %INITDELAUNAY  Initialize
             %
-            %    obj.initDelaunay(rect)
+            %     obj.initDelaunay(rect)
             %
             % ## Input
             % * __rect__ Rectangle `[x,y,w,h]` that includes all of the 2D
-            %       points that are to be added to the subdivision.
+            %   points that are to be added to the subdivision.
             %
             % See also: cv.Subdiv2D.Subdiv2D
             %
@@ -77,9 +78,9 @@ classdef Subdiv2D < handle
         function varargout = insert(this, pt)
             %INSERT  Insert a single point or multiple points into a Delaunay triangulation
             %
-            %    obj.insert(pt)
-            %    curr_point = obj.insert(pt)
-            %    obj.insert(pts)
+            %     obj.insert(pt)
+            %     curr_point = obj.insert(pt)
+            %     obj.insert(pts)
             %
             % ## Input
             % * __pt__ Point to insert `[x,y]`
@@ -108,33 +109,32 @@ classdef Subdiv2D < handle
         function [location, edge, vertex] = locate(this, pt)
             %LOCATE  Returns the location of a point within a Delaunay triangulation
             %
-            %    [location, edge, vertex] = obj.locate(pt)
+            %     [location, edge, vertex] = obj.locate(pt)
             %
             % ## Input
             % * __pt__ Point `[x,y]` to locate.
             %
             % ## Output
             % * __location__ a string which specifies one of the following
-            %       five cases for point location:
-            %       * __Inside__ The point falls into some facet. The function
-            %             returns 'Inside' and edge will contain one of edges
-            %             of the facet.
-            %       * __OnEdge__ The point falls onto the edge. The function
-            %             returns 'OnEdge' and edge will contain this edge.
-            %       * __Vertex__ The point coincides with one of the
-            %             subdivision vertices. The function returns 'Vertex'
-            %             and vertex will contain a pointer to the vertex.
-            %       * __OutsideRect__ The point is outside the subdivision
-            %             reference rectangle. The function returns
-            %             'OutsideRect' and no other outputs are filled.
-            %       * __Error__ Point location error. One of input arguments
-            %             is invalid. A runtime error is raised or, if silent
-            %             or "parent" error processing mode is selected,
-            %             'Error' is returned.
+            %   five cases for point location:
+            %   * __Inside__ The point falls into some facet. The function
+            %     returns 'Inside' and edge will contain one of edges of the
+            %     facet.
+            %   * __OnEdge__ The point falls onto the edge. The function
+            %     returns 'OnEdge' and edge will contain this edge.
+            %   * __Vertex__ The point coincides with one of the subdivision
+            %     vertices. The function returns 'Vertex' and vertex will
+            %     contain a pointer to the vertex.
+            %   * __OutsideRect__ The point is outside the subdivision
+            %     reference rectangle. The function returns 'OutsideRect' and
+            %     no other outputs are filled.
+            %   * __Error__ Point location error. One of input arguments is
+            %     invalid. A runtime error is raised or, if silent or "parent"
+            %     error processing mode is selected, 'Error' is returned.
             % * __edge__ Output edge that the point belongs to or is located
-            %       to the right of it.
+            %   to the right of it.
             % * __vertex__ Optional output vertex the input point coincides
-            %       with.
+            %   with.
             %
             % The function locates the input point within the subdivision and
             % gives one of the triangle edges or vertices.
@@ -147,7 +147,7 @@ classdef Subdiv2D < handle
         function [vertex, nearestPt] = findNearest(this, pt)
             %FINDNEAREST  Finds the subdivision vertex closest to the given point
             %
-            %    [vertex, nearestPt] = obj.findNearest(pt)
+            %     [vertex, nearestPt] = obj.findNearest(pt)
             %
             % ## Input
             % * __pt__ Input point `[x,y]`
@@ -171,7 +171,7 @@ classdef Subdiv2D < handle
         function edgeList = getEdgeList(this)
             %GETEDGELIST  Returns a list of all edges
             %
-            %    edgeList = obj.getEdgeList()
+            %     edgeList = obj.getEdgeList()
             %
             % ## Output
             % * __edgeList__ Output vector `{[p1x,p1y, p2x,p2y], ...}`.
@@ -188,7 +188,7 @@ classdef Subdiv2D < handle
         function leadingEdgeList = getLeadingEdgeList(this)
             %GETLEADINGEDGELIST  Returns a list of the leading edge ID connected to each triangle
             %
-            %    leadingEdgeList = obj.getLeadingEdgeList()
+            %     leadingEdgeList = obj.getLeadingEdgeList()
             %
             % ## Output
             % * __leadingEdgeList__ Output vector.
@@ -203,11 +203,11 @@ classdef Subdiv2D < handle
         function triangleList = getTriangleList(this)
             %GETTRIANGLELIST  Returns a list of all triangles
             %
-            %    triangleList = obj.getTriangleList()
+            %     triangleList = obj.getTriangleList()
             %
             % ## Output
             % * __triangleList__ Output vector
-            %       `{[p1x,p1y, p2x,p2y, p3x,p3y], ...}`.
+            %   `{[p1x,p1y, p2x,p2y, p3x,p3y], ...}`.
             %
             % The function gives each triangle as a 6 numbers vector, where
             % each two are one of the triangle vertices. i.e. `p1_x = v[0]`,
@@ -222,17 +222,17 @@ classdef Subdiv2D < handle
         function [facetList, facetCenters] = getVoronoiFacetList(this, idx)
             %GETVORONOIFACETLIST  Returns a list of all Voroni facets
             %
-            %    [facetList, facetCenters] = obj.getVoronoiFacetList(idx)
+            %     [facetList, facetCenters] = obj.getVoronoiFacetList(idx)
             %
             % ## Input
             % * __idx__ Vector of vertices IDs to consider. For all vertices
-            %       you can pass empty vector.
+            %   you can pass empty vector.
             %
             % ## Output
             % * __facetList__ Output vector of the Voroni facets, an array of
-            %       array of points `{{[x,y], ...}, ...}`.
+            %   array of points `{{[x,y], ...}, ...}`.
             % * __facetCenters__ Output vector of the Voroni facets center
-            %       points, a vector of points `{[x,y], ...}`.
+            %   points, a vector of points `{[x,y], ...}`.
             %
             % See also: cv.Subdiv2D.getEdgeList, cv.Subdiv2D.getTriangleList
             %
@@ -242,7 +242,7 @@ classdef Subdiv2D < handle
         function [pt, firstEdge] = getVertex(this, vertex)
             %GETVERTEX  Returns vertex location from vertex ID
             %
-            %    [pt, firstEdge] = obj.getVertex(vertex)
+            %     [pt, firstEdge] = obj.getVertex(vertex)
             %
             % ## Input
             % * __vertex__ vertex ID.
@@ -250,7 +250,7 @@ classdef Subdiv2D < handle
             % ## Output
             % * __pt__ vertex `[x,y]`.
             % * __firstEdge__ Optional. The first edge ID which is connected
-            %       to the vertex.
+            %   to the vertex.
             %
             % See also: cv.Subdiv2D.getEdge
             %
@@ -260,30 +260,29 @@ classdef Subdiv2D < handle
         function e = getEdge(this, edge, nextEdgeType)
             %GETEDGE  Returns one of the edges related to the given edge
             %
-            %    e = obj.getEdge(edge, nextEdgeType)
+            %     e = obj.getEdge(edge, nextEdgeType)
             %
             % ## Input
             % * __edge__ Subdivision edge ID.
             % * __nextEdgeType__ Parameter specifying which of the related
-            %       edges to return. The following edge type navigation values
-            %       are possible:
-            %       * __NextAroundOrg__ next around the edge origin (`eOnext`
-            %             on the picture below if `e` is the input edge).
-            %       * __NextAroundDst__ next around the edge vertex (`eDnext`).
-            %       * __PrevAroundOrg__ previous around the edge origin
-            %             (reversed `eRnext`).
-            %       * __PrevAroundDst__ previous around the edge destination
-            %             (reversed `eLnext`).
-            %       * __NextAroundLeft__ next around the left facet (`eLnext`).
-            %       * __NextAroundRight__ next around the right facet
-            %             (`eRnext`).
-            %       * __PrevAroundLeft__ previous around the left facet
-            %             (reversed `eOnext`).
-            %       * __PrevAroundRight__ previous around the right facet
-            %             (reversed `eDnext`).
+            %   edges to return. The following edge type navigation values are
+            %   possible:
+            %   * __NextAroundOrg__ next around the edge origin (`eOnext` on
+            %     the picture below if `e` is the input edge).
+            %   * __NextAroundDst__ next around the edge vertex (`eDnext`).
+            %   * __PrevAroundOrg__ previous around the edge origin
+            %     (reversed `eRnext`).
+            %   * __PrevAroundDst__ previous around the edge destination
+            %     (reversed `eLnext`).
+            %   * __NextAroundLeft__ next around the left facet (`eLnext`).
+            %   * __NextAroundRight__ next around the right facet (`eRnext`).
+            %   * __PrevAroundLeft__ previous around the left facet
+            %     (reversed `eOnext`).
+            %   * __PrevAroundRight__ previous around the right facet
+            %     (reversed `eDnext`).
             %
             % ## Output
-            % * __e__  edge ID related to the input edge.
+            % * __e__ edge ID related to the input edge.
             %
             % A sample output is shown below:
             %
@@ -297,14 +296,14 @@ classdef Subdiv2D < handle
         function e = nextEdge(this, edge)
             %NEXTEDGE  Returns next edge around the edge origin
             %
-            %    e = obj.nextEdge(edge)
+            %     e = obj.nextEdge(edge)
             %
             % ## Input
             % * __edge__ Subdivision edge ID.
             %
             % ## Output
             % * __e__ an integer which is next edge ID around the edge origin
-            %       (`eOnext` on the picture shown if `e` is the input edge).
+            %   (`eOnext` on the picture shown if `e` is the input edge).
             %
             % See also: cv.Subdiv2D.getEdge
             %
@@ -314,23 +313,22 @@ classdef Subdiv2D < handle
         function e = rotateEdge(this, edge, rotate)
             %ROTATEEDGE  Returns another edge of the same quad-edge
             %
-            %    e = obj.rotateEdge(edge, rotate)
+            %     e = obj.rotateEdge(edge, rotate)
             %
             % ## Input
             % * __edge__ Subdivision edge ID.
             % * __rotate__ Parameter specifying which of the edges of the same
-            %       quad-edge as the input one to return. The following values
-            %       are possible:
-            %       * __0__ the input edge (`e` on the picture shown if `e` is
-            %             the input edge).
-            %       * __1__ the rotated edge (`eRot`).
-            %       * __2__ the reversed edge (reversed `e` (in green)).
-            %       * __3__ the reversed rotated edge (reversed `eRot`
-            %             (in green)).
+            %   quad-edge as the input one to return. The following values are
+            %   possible:
+            %   * __0__ the input edge (`e` on the picture shown if `e` is the
+            %     input edge).
+            %   * __1__ the rotated edge (`eRot`).
+            %   * __2__ the reversed edge (reversed `e` (in green)).
+            %   * __3__ the reversed rotated edge (reversed `eRot` (in green)).
             %
             % ## Output
             % * __e__ one of the edges ID of the same quad-edge as the input
-            %       edge.
+            %   edge.
             %
             % See also: cv.Subdiv2D.getEdge
             %
@@ -340,7 +338,7 @@ classdef Subdiv2D < handle
         function e = symEdge(this, edge)
             %SYMEDGE  Sym edge
             %
-            %    e = obj.symEdge(edge)
+            %     e = obj.symEdge(edge)
             %
             % ## Input
             % * __edge__ Subdivision edge ID.
@@ -356,7 +354,7 @@ classdef Subdiv2D < handle
         function [e, orgpt] = edgeOrg(this, edge)
             %EDGEORG  Returns the edge origin
             %
-            %    [e, orgpt] = obj.edgeOrg(edge)
+            %     [e, orgpt] = obj.edgeOrg(edge)
             %
             % ## Input
             % * __edge__ Subdivision edge ID.
@@ -373,7 +371,7 @@ classdef Subdiv2D < handle
         function [e, dstpt] = edgeDst(this, edge)
             %EDGEDST  Returns the edge destination
             %
-            %    [e, dstpt] = obj.edgeDst(edge)
+            %     [e, dstpt] = obj.edgeDst(edge)
             %
             % ## Input
             % * __edge__ Subdivision edge ID.

@@ -9,8 +9,10 @@
 %
 % We will use the OpenCV function |cv.morphologyEx|.
 %
-% <http://docs.opencv.org/3.3.0/db/d06/tutorial_hitOrMiss.html>,
-% <https://github.com/opencv/opencv/blob/3.3.0/samples/cpp/tutorial_code/ImgProc/HitMiss.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.3.0/db/d06/tutorial_hitOrMiss.html>
+% * <https://github.com/opencv/opencv/blob/3.3.0/samples/cpp/tutorial_code/ImgProc/HitMiss.cpp>
 %
 
 %% Theory
@@ -40,7 +42,7 @@
 % The structuring elements $B_1$ and $B_2$ can be combined into a single
 % element $B$. Let's see an example:
 %
-% <<http://docs.opencv.org/3.3.0/hitmiss_kernels.png>>
+% <<https://docs.opencv.org/3.3.0/hitmiss_kernels.png>>
 %
 % *Structuring elements (kernels). Left: kernel to 'hit'. Middle: kernel to
 % 'miss'. Right: final combined kernel*
@@ -51,11 +53,11 @@
 % any kind, we don't care about them. Now, let's apply this kernel to an input
 % image:
 %
-% <<http://docs.opencv.org/3.3.0/hitmiss_input.png>>
+% <<https://docs.opencv.org/3.3.0/hitmiss_input.png>>
 %
 % You can see that the pattern is found in just one location within the image.
 %
-% <<http://docs.opencv.org/3.3.0/hitmiss_output.png>>
+% <<https://docs.opencv.org/3.3.0/hitmiss_output.png>>
 %
 %% Other examples
 %
@@ -64,11 +66,11 @@
 %
 % * Kernel and output result for finding top-right corners
 %
-% <<http://docs.opencv.org/3.3.0/hitmiss_example2.png>>
+% <<https://docs.opencv.org/3.3.0/hitmiss_example2.png>>
 %
 % * Kernel and output result for finding left end points
 %
-% <<http://docs.opencv.org/3.3.0/hitmiss_example3.png>>
+% <<https://docs.opencv.org/3.3.0/hitmiss_example3.png>>
 %
 % Now try your own patterns!
 %

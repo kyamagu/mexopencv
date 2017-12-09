@@ -1,8 +1,10 @@
 %% Detection of Diamond Markers Demo
 % Detection and pose estimation using ChArUco markers.
 %
-% <http://docs.opencv.org/3.1.0/d5/d07/tutorial_charuco_diamond_detection.html>
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/aruco/samples/detect_diamonds.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.1.0/d5/d07/tutorial_charuco_diamond_detection.html>
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/aruco/samples/detect_diamonds.cpp>
 %
 
 %% Parameters

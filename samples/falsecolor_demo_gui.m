@@ -2,7 +2,9 @@
 %
 % Sample shows how to apply false color on a grayscale image.
 %
-% <https://github.com/opencv/opencv/blob/3.3.0/samples/cpp/falsecolor.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.3.0/samples/cpp/falsecolor.cpp>
 %
 
 function varargout = falsecolor_demo_gui(im)
@@ -18,12 +20,12 @@ function varargout = falsecolor_demo_gui(im)
             im = fullfile(mexopencv.root(), 'test', 'HappyFish.jpg');
             img = cv.imread(im, 'Grayscale',true);
         end
+        img = createRandomImage();
     elseif ischar(im)
         img = cv.imread(im, 'Grayscale',true);
     else
         img = im;
     end
-    img = createRandomImage();
 
     % create the UI
     h = buildGUI(img);
@@ -31,7 +33,7 @@ function varargout = falsecolor_demo_gui(im)
 end
 
 function img = createRandomImage(thick, num)
-    %CREATERANDOMIMAGE  Creates random image
+    %CREATERANDOMIMAGE  Creates image with random shapes
 
     if nargin < 1, thick = 2; end
     if nargin < 2, num = 256; end

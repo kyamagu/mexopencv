@@ -1,4 +1,4 @@
-%% Kalman filter example
+%% Tracking of rotating point using Kalman filter
 %
 % Tracking of rotating point.
 % Rotation speed is constant.
@@ -12,8 +12,10 @@
 % Pressing any key will reset the tracking with a different speed.
 % Close the window to stop the program.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/kalman.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/kalman.py>,
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/kalman.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/kalman.py>
 %
 
 %%

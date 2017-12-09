@@ -1,26 +1,26 @@
 %PYRMEANSHIFTFILTERING  Performs initial step of meanshift segmentation of an image
 %
-%    dst = cv.pyrMeanShiftFiltering(src)
-%    dst = cv.pyrMeanShiftFiltering(src, 'OptionName',optionValue, ...)
+%     dst = cv.pyrMeanShiftFiltering(src)
+%     dst = cv.pyrMeanShiftFiltering(src, 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __src__ The source 8-bit, 3-channel image.
 %
 % ## Output
 % * __dst__ The destination image of the same format and the same size as the
-%       source `src`.
+%   source `src`.
 %
 % ## Options
 % * __SP__ The spatial window radius. default 5
 % * __SR__ The color window radius. default 10
 % * __MaxLevel__ Maximum level of the pyramid for the segmentation. default 1
 % * __Criteria__ Termination criteria: when to stop meanshift iterations.
-%       default `struct('type','Count+EPS', 'maxCount',5, 'epsilon',1.0)`.
-%       Struct with the following fields is accepted:
-%       * __type__ one of 'Count', 'EPS', or 'Count+EPS' to indicate which
-%             criteria to use.
-%       * __maxCount__ maximum number of iterations
-%       * __epsilon__
+%   default `struct('type','Count+EPS', 'maxCount',5, 'epsilon',1.0)`.
+%   Struct with the following fields is accepted:
+%   * __type__ one of 'Count', 'EPS', or 'Count+EPS' to indicate which
+%     criteria to use.
+%   * __maxCount__ maximum number of iterations
+%   * __epsilon__
 %
 % The function implements the filtering stage of meanshift segmentation, that
 % is, the output of the function is the filtered "posterized" image with color
@@ -29,7 +29,7 @@
 % meanshift iterations, that is, the pixel `(X,Y)` neighborhood in the joint
 % space-color hyperspace is considered:
 %
-%    (x,y): X-sp <= x <= X+sp, Y-sp <= y <= Y+sp, ||(R,G,B) - (r,g,b)|| <= sr
+%     (x,y): X-sp <= x <= X+sp, Y-sp <= y <= Y+sp, ||(R,G,B) - (r,g,b)|| <= sr
 %
 % where `(R,G,B)` and `(r,g,b)` are the vectors of color components at `(X,Y)`
 % and `(x,y)`, respectively (though, the algorithm does not depend on the
@@ -38,13 +38,13 @@
 % vector `(R',G',B')` are found and they act as the neighborhood center on the
 % next iteration:
 %
-%    (X,Y) (X',Y'), (R,G,B) (R',G',B').
+%     (X,Y) (X',Y'), (R,G,B) (R',G',B').
 %
 % After the iterations over, the color components of the initial pixel (that
 % is, the pixel from where the iterations started) are set to the final value
 % (average color at the last iteration):
 %
-%    I(X,Y) = (R*,G*,B*)
+%     I(X,Y) = (R*,G*,B*)
 %
 % When `MaxLevel > 0`, the gaussian pyramid of `MaxLevel+1` levels is built,
 % and the above procedure is run on the smallest layer first. After that, the

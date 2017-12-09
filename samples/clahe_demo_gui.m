@@ -3,8 +3,10 @@
 % In this demo, we will learn the concepts of histogram equalization and use
 % it to improve the contrast of our images.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/tapi/clahe.cpp>,
-% <http://docs.opencv.org/3.2.0/d5/daf/tutorial_py_histogram_equalization.html>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/tapi/clahe.cpp>
+% * <https://docs.opencv.org/3.2.0/d5/daf/tutorial_py_histogram_equalization.html>
 %
 
 %% Histogram Equalization
@@ -16,14 +18,14 @@
 % below image, from Wikipedia) and that is what Histogram Equalization does
 % (in simple words). This normally improves the contrast of the image.
 %
-% <<http://docs.opencv.org/3.2.0/histogram_equalization.png>>
+% <<https://docs.opencv.org/3.2.0/histogram_equalization.png>>
 %
 % Refer to the Wikipedia page on
-% <http://en.wikipedia.org/wiki/Histogram_equalization Histogram Equalization>
+% <https://en.wikipedia.org/wiki/Histogram_equalization Histogram Equalization>
 % for more details about it. It has a very good explanation with worked out
 % examples.
 %
-% <<http://docs.opencv.org/3.2.0/histeq_numpy1.jpg>>
+% <<https://docs.opencv.org/3.2.0/histeq_numpy1.jpg>>
 %
 % You can see histogram lies in brighter region. We need the full spectrum.
 % For that, we need a transformation function which maps the input pixels in
@@ -37,7 +39,7 @@
 % transform. Next we calculate its histogram and CDF as before, and result
 % would look like below :
 %
-% <<http://docs.opencv.org/3.2.0/histeq_numpy2.jpg>>
+% <<https://docs.opencv.org/3.2.0/histeq_numpy2.jpg>>
 %
 % Another important feature is that, even if the image was a darker image
 % (instead of a brighter one we used), after equalization we will get almost
@@ -50,7 +52,7 @@
 % OpenCV has a function to do this, |cv.equalizeHist|. Its input is just
 % grayscale image and output is our histogram equalized image.
 %
-% <<http://docs.opencv.org/3.2.0/equalization_opencv.jpg>>
+% <<https://docs.opencv.org/3.2.0/equalization_opencv.jpg>>
 %
 % So now you can take different images with different light conditions,
 % equalize it and check the results.
@@ -67,7 +69,7 @@
 % of the image. In many cases, it is not a good idea. For example, below image
 % shows an input image and its result after global histogram equalization.
 %
-% <<http://docs.opencv.org/3.2.0/clahe_1.jpg>>
+% <<https://docs.opencv.org/3.2.0/clahe_1.jpg>>
 %
 % It is true that the background contrast has improved after histogram
 % equalization. But compare the face of statue in both images. We lost most of
@@ -88,9 +90,9 @@
 % See CLAHE result below and compare it with results above, especially the
 % statue region:
 %
-% <<http://docs.opencv.org/3.2.0/clahe_2.jpg>>
+% <<https://docs.opencv.org/3.2.0/clahe_2.jpg>>
 %
-% Also see <http://en.wikipedia.org/wiki/Adaptive_histogram_equalization>.
+% Also see <https://en.wikipedia.org/wiki/Adaptive_histogram_equalization>.
 %
 
 %% Code

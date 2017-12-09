@@ -252,7 +252,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else if (prop == "WeightB")
             plhs[0] = MxArray(obj->getWeightB());
         else if (prop == "WeightContrast")
-            plhs[0] = MxArray(obj->getWeightConstrast());  //NOTE: mispelled
+            plhs[0] = MxArray(obj->getWeightContrast());
         else if (prop == "WeightEntropy")
             plhs[0] = MxArray(obj->getWeightEntropy());
         else if (prop == "IterationCount")

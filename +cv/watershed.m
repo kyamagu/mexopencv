@@ -1,15 +1,15 @@
 %WATERSHED  Performs a marker-based image segmentation using the watershed algrorithm
 %
-%    marker = cv.watershed(image, marker)
+%     marker = cv.watershed(image, marker)
 %
 % ## Input
 % * __image__ Input 8-bit 3-channel image.
-% * __marker__ Input 32-bit single-channel image (map) of markers. It
-%       should have the same size as `image`.
+% * __marker__ Input 32-bit single-channel image (map) of markers. It should
+%   have the same size as `image`.
 %
 % ## Output
-% * __marker__ Output 32-bit single-channel image (map) of markers. It has
-%       the same size as `image`.
+% * __marker__ Output 32-bit single-channel image (map) of markers. It has the
+%   same size as `image`.
 %
 % The function implements one of the variants of watershed, non-parametric
 % marker-based segmentation algorithm, described in [Meyer92].
@@ -24,7 +24,7 @@
 % be set to 0's. In the function output, each pixel in markers is set to a
 % value of the "seed" components or to -1 at boundaries between the regions.
 %
-% ## Note
+% ### Note
 % Any two neighbor connected components are not necessarily separated by
 % a watershed boundary (-1 pixels); for example, they can touch each other in
 % the initial marker image passed to the function.

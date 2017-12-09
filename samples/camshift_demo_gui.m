@@ -1,4 +1,4 @@
-%% CAMShift Demo
+%% CAMShift
 %
 % In this demo, we learn about Meanshift and Camshift algorithms to find and
 % track objects in videos.
@@ -7,10 +7,12 @@
 % You select a color objects such as your face and it tracks it.
 % It reads from video camera by default.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/camshiftdemo.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/tapi/camshift.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/camshift.py>,
-% <http://docs.opencv.org/3.2.0/db/df8/tutorial_py_meanshift.html>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/camshiftdemo.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/tapi/camshift.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/camshift.py>
+% * <https://docs.opencv.org/3.2.0/db/df8/tutorial_py_meanshift.html>
 %
 
 %% Meanshift
@@ -21,7 +23,7 @@
 % to the area of maximum pixel density (or maximum number of points). It is
 % illustrated in the simple image given below:
 %
-% <<http://docs.opencv.org/3.2.0/meanshift_basics.jpg>>
+% <<https://docs.opencv.org/3.2.0/meanshift_basics.jpg>>
 %
 % The initial window is shown in blue circle with the name "C1". Its original
 % center is marked in blue rectangle, named "C1_o". But if you find the
@@ -36,7 +38,7 @@
 % see in image, it has maximum number of points. The whole process is
 % demonstrated on a static image below:
 %
-% <<http://docs.opencv.org/3.2.0/meanshift_face.gif>>
+% <<https://docs.opencv.org/3.2.0/meanshift_face.gif>>
 %
 % So we normally pass the histogram backprojected image and initial target
 % location. When the object moves, obviously the movement is reflected in
@@ -67,7 +69,7 @@
 % meanshift with new scaled search window and previous window location. The
 % process is continued until required accuracy is met.
 %
-% <<http://docs.opencv.org/3.2.0/camshift_face.gif>>
+% <<https://docs.opencv.org/3.2.0/camshift_face.gif>>
 %
 % In OpenCV, camshift is almost same as meanshift, but it returns a rotated
 % rectangle (that is our result) and box parameters (used to be passed as
@@ -75,7 +77,7 @@
 %
 % For additional resources, see:
 %
-% * French Wikipedia page on <http://fr.wikipedia.org/wiki/Camshift Camshift>.
+% * French Wikipedia page on <https://fr.wikipedia.org/wiki/Camshift Camshift>.
 %   (The two animations are taken from there)
 % * Bradski, G.R., "Real time face and object tracking as a component of a
 %   perceptual user interface," Applications of Computer Vision, 1998.

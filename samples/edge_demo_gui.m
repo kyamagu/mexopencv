@@ -1,14 +1,16 @@
-%% Canny Edge Detection demo
+%% Canny Edge Detection
 % This sample demonstrates Canny edge detection.
 %
 % In this demo, we show how to use the OpenCV function |cv.Canny| to implement
 % the Canny Edge Detector.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/edge.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/edge.py>,
-% <http://docs.opencv.org/3.2.0/da/d5c/tutorial_canny_detector.html>,
-% <http://docs.opencv.org/3.2.0/da/d22/tutorial_py_canny.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/CannyDetector_Demo.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/edge.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/edge.py>
+% * <https://docs.opencv.org/3.2.0/da/d5c/tutorial_canny_detector.html>
+% * <https://docs.opencv.org/3.2.0/da/d22/tutorial_py_canny.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/CannyDetector_Demo.cpp>
 %
 
 %% Theory
@@ -46,7 +48,8 @@
 %               -1 & 0 & +1 \cr
 %               -2 & 0 & +2 \cr
 %               -1 & 0 & +1
-%           }}\right]$$;
+%           }}\right]$$
+%
 % $$G_{y} = \left[{\matrix{
 %               -1 & -2 & -1 \cr
 %                0 &  0 &  0 \cr
@@ -57,7 +60,7 @@
 %   one of four possible angles (namely 0, 45, 90 or 135)
 %
 % $$G = \sqrt{ G_{x}^{2} + G_{y}^{2} }$$
-% and
+%
 % $$\theta = \arctan(\frac{ G_{y} }{ G_{x} })$$
 %
 % 3) _Non-maximum suppression_ is applied. This removes pixels that are not

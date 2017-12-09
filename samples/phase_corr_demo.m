@@ -1,8 +1,10 @@
-%% Phase Correlation demo
+%% Phase Correlation
 % Demonstrates estimating translational shift between two successive frames
 % using Phase Correlation.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/phase_corr.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/phase_corr.cpp>
 %
 
 %% Prepare video source

@@ -2,8 +2,10 @@
 %
 % In this demo, we implement a simple face tracker applied on an input video.
 %
-% <http://docs.opencv.org/3.2.0/db/df8/tutorial_py_meanshift.html>,
-% <https://www.mathworks.com/help/vision/examples/face-detection-and-tracking-using-camshift.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/db/df8/tutorial_py_meanshift.html>
+% * <https://www.mathworks.com/help/vision/examples/face-detection-and-tracking-using-camshift.html>
 %
 
 %% Video

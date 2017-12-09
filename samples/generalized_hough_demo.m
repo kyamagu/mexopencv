@@ -1,8 +1,10 @@
-%% Generalized Hough transform demo
+%% Generalized Hough transform
 % This program demonstrates arbitrary object finding with the Generalized
 % Hough transform.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/generalized_hough.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/generalized_hough.cpp>
 %
 
 %% Input images

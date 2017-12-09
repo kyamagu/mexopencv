@@ -30,6 +30,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double minDistance = 2.0;
     Mat mask;
     int blockSize = 3;
+    int gradientSize = 3;
     bool useHarrisDetector = false;
     double k = 0.04;
     for (int i=1; i<nrhs; i+=2) {
@@ -44,6 +45,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             mask = rhs[i+1].toMat(CV_8U);
         else if (key == "BlockSize")
             blockSize = rhs[i+1].toInt();
+        else if (key == "GradientSize")
+            gradientSize = rhs[i+1].toInt();
         else if (key == "UseHarrisDetector")
             useHarrisDetector = rhs[i+1].toBool();
         else if (key == "K")
@@ -57,6 +60,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Mat image(rhs[0].toMat(rhs[0].isUint8() ? CV_8U : CV_32F));
     vector<Point2f> corners;
     goodFeaturesToTrack(image, corners, maxCorners, qualityLevel, minDistance,
-        mask, blockSize, useHarrisDetector, k);
+        mask, blockSize, gradientSize, useHarrisDetector, k);
     plhs[0] = MxArray(corners);
 }

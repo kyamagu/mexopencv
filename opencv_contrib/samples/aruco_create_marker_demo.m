@@ -1,7 +1,9 @@
 %% ArUco Marker Image Demo
 % This example shows how to create an ArUco marker image.
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/aruco/samples/create_marker.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/aruco/samples/create_marker.cpp>
 %
 
 %% Marker

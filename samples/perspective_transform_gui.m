@@ -1,4 +1,4 @@
-%% Perspective Transformation demo
+%% Interactive Perspective Transformation
 % This program demonstrates Perspective Transformation.
 %
 % In this sample you will learn how to use the following OpenCV functions:

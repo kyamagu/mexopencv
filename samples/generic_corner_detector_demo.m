@@ -15,12 +15,14 @@
 % * To implement our own version of the Harris detector as well as the
 %   Shi-Tomasi detector, by using the two functions above.
 %
-% <http://docs.opencv.org/3.2.0/d9/dbc/tutorial_generic_corner_detector.html>,
-% <http://docs.opencv.org/3.2.0/d4/d7d/tutorial_harris_detector.html>,
-% <http://docs.opencv.org/3.2.0/dc/d0d/tutorial_py_features_harris.html>,
-% <http://docs.opencv.org/3.2.0/d4/d8c/tutorial_py_shi_tomasi.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/TrackingMotion/cornerDetector_Demo.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/TrackingMotion/cornerHarris_Demo.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d9/dbc/tutorial_generic_corner_detector.html>
+% * <https://docs.opencv.org/3.2.0/d4/d7d/tutorial_harris_detector.html>
+% * <https://docs.opencv.org/3.2.0/dc/d0d/tutorial_py_features_harris.html>
+% * <https://docs.opencv.org/3.2.0/d4/d8c/tutorial_py_shi_tomasi.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/TrackingMotion/cornerDetector_Demo.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/TrackingMotion/cornerHarris_Demo.cpp>
 %
 
 %% Theory
@@ -52,7 +54,7 @@
 % over $I$ (with displacements $u$ in the x direction and $v$ in the y
 % direction) and will calculate the variation of intensity.
 %
-% $$E(u,v) = \sum _{x,y} w(x,y)[ I(x+u,y+v) - I(x,y)]^{2}$$
+% $$E(u,v) = \sum_{x,y} w(x,y)[ I(x+u,y+v) - I(x,y)]^{2}$$
 %
 % where:
 %
@@ -64,18 +66,18 @@
 % with a large variation in intensity. Hence, we have to maximize the equation
 % above, specifically the term:
 %
-% $$\sum _{x,y}[ I(x+u,y+v) - I(x,y)]^{2}$$
+% $$\sum_{x,y}[ I(x+u,y+v) - I(x,y)]^{2}$$
 %
 % Using _Taylor expansion_:
 %
-% $$E(u,v) \approx \sum _{x,y}[ I(x,y) + u I_{x} + vI_{y} - I(x,y)]^{2}$$
+% $$E(u,v) \approx \sum_{x,y}[ I(x,y) + u I_{x} + vI_{y} - I(x,y)]^{2}$$
 %
 % Here, $I_x$ and $I_y$ are image derivatives in x and y directions
 % respectively (can be easily found out using |cv.Sobel|).
 %
 % Expanding the equation and cancelling properly:
 %
-% $$E(u,v) \approx \sum _{x,y} u^{2}I_{x}^{2} + 2uvI_{x}I_{y} + v^{2}I_{y}^{2}$$
+% $$E(u,v) \approx \sum_{x,y} u^{2}I_{x}^{2} + 2uvI_{x}I_{y} + v^{2}I_{y}^{2}$$
 %
 % Which can be expressed in a matrix form as:
 %
@@ -131,7 +133,7 @@
 %
 % It can be represented in a nice picture as follows:
 %
-% <<http://docs.opencv.org/3.2.0/harris_region.jpg>>
+% <<https://docs.opencv.org/3.2.0/harris_region.jpg>>
 %
 % So the result of Harris Corner Detection is a grayscale image with these
 % scores. Thresholding for a suitable give you the corners in the image.
@@ -151,7 +153,7 @@
 % we plot it in $\lambda_1 - \lambda_2$ space as we did in Harris Corner
 % Detector, we get an image as below:
 %
-% <<http://docs.opencv.org/3.2.0/shitomasi_space.png>>
+% <<https://docs.opencv.org/3.2.0/shitomasi_space.png>>
 %
 % From the figure, you can see that only when $\lambda_1$ and $\lambda_2$ are
 % above a minimum value, $\lambda_{min}$, it is conidered as a corner

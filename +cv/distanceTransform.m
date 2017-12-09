@@ -1,42 +1,42 @@
 %DISTANCETRANSFORM  Calculates the distance to the closest zero pixel for each pixel of the source image
 %
-%    dst = cv.distanceTransform(src)
-%    [dst, labels] = cv.distanceTransform(src)
-%    [...] = cv.distanceTransform(..., 'OptionName',optionValue, ...)
+%     dst = cv.distanceTransform(src)
+%     [dst, labels] = cv.distanceTransform(src)
+%     [...] = cv.distanceTransform(..., 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __src__ 8-bit, single-channel (binary) source image.
 %
 % ## Output
 % * __dst__ Output image with calculated distances. It is a 8-bit or 32-bit
-%       floating-point, single-channel image of the same size as `src`.
+%   floating-point, single-channel image of the same size as `src`.
 % * __labels__ Optional output 2D array of labels (the discrete Voronoi
-%       diagram). It has the type `int32` and the same size as `src`.
+%   diagram). It has the type `int32` and the same size as `src`.
 %
 % ## Options
 % * __DistanceType__ Type of distance, default 'L2'. One of:
-%       * __L1__ `distance = |x1-x2| + |y1-y2|`
-%       * __L2__ the simple euclidean distance
-%       * __C__ `distance = max(|x1-x2|,|y1-y2|)`
+%   * __L1__ `distance = |x1-x2| + |y1-y2|`
+%   * __L2__ the simple euclidean distance
+%   * __C__ `distance = max(|x1-x2|,|y1-y2|)`
 % * __MaskSize__ Size of the distance transform mask. The 'Precise' option is
-%       not supported by the second variant with `labels` output. In case of
-%       the 'L1' or 'C' distance type, the parameter is forced to 3 because a
-%       3x3 mask gives the same result as 5x5 or any larger aperture. The
-%       following options are available:
-%       * __3__ approximate distance transform with 3x3 mask (default)
-%       * __5__ approximate distance transform with 5x5 mask
-%       * __Precise__, __0__ precise distance transform
+%   not supported by the second variant with `labels` output. In case of the
+%   'L1' or 'C' distance type, the parameter is forced to 3 because a 3x3 mask
+%   gives the same result as 5x5 or any larger aperture. The following options
+%   are available:
+%   * __3__ approximate distance transform with 3x3 mask (default)
+%   * __5__ approximate distance transform with 5x5 mask
+%   * __Precise__, __0__ precise distance transform
 % * __LabelType__ Type of the label array to build, default 'CComp'. Only
-%       supported by the second variant with `labels` output. One of:
-%       * __CComp__ each connected component of zeros in `src` (as well as all
-%             the non-zero pixels closest to the connected component) will be
-%             assigned the same label.
-%       * __Pixel__ each zero pixel (and all the non-zero pixels closest to
-%             it) gets its own label.
+%   supported by the second variant with `labels` output. One of:
+%   * __CComp__ each connected component of zeros in `src` (as well as all the
+%     non-zero pixels closest to the connected component) will be assigned the
+%     same label.
+%   * __Pixel__ each zero pixel (and all the non-zero pixels closest to it)
+%     gets its own label.
 % * __DstType__ Type of output image `dst`. It can be `uint8` or `single`.
-%       Only supported by the first variant without `labels` output. Type
-%       `uint8` can be used only for the first variant of the function and
-%       `DistanceType = 'L1'`, otherwise the default `single` is assumed.
+%   Only supported by the first variant without `labels` output. Type `uint8`
+%   can be used only for the first variant of the function and
+%   `DistanceType = 'L1'`, otherwise the default `single` is assumed.
 %
 % The function cv.distanceTransform calculates the approximate or precise
 % distance from every binary image pixel to the nearest zero pixel. For zero
@@ -60,12 +60,12 @@
 % `c`, OpenCV uses the values suggested in the original paper:
 %
 % * __L1__
-%       * 3x3: `a = 1,     b = 2`
+%   * 3x3: `a = 1,     b = 2`
 % * __L2__
-%       * 3x3: `a = 0.955, b = 1.3693`
-%       * 5x5: `a = 1,     b = 1.4,    c = 2.1969`
+%   * 3x3: `a = 0.955, b = 1.3693`
+%   * 5x5: `a = 1,     b = 1.4,    c = 2.1969`
 % * __C__
-%       * 3x3: `a = 1,     b = 1`
+%   * 3x3: `a = 1,     b = 1`
 %
 % Typically, for a fast, coarse distance estimation 'L2', a 3x3 mask is used.
 % For a more accurate distance estimation 'L2', a 5x5 mask or the precise

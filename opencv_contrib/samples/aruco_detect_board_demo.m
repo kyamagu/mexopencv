@@ -2,8 +2,10 @@
 % Detection and pose estimation using a Board of markers
 % (an ArUco Planar Grid board).
 %
-% <http://docs.opencv.org/3.1.0/db/da9/tutorial_aruco_board_detection.html>
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/aruco/samples/detect_board.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.1.0/db/da9/tutorial_aruco_board_detection.html>
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/aruco/samples/detect_board.cpp>
 %
 
 %% Parameters

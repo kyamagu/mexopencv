@@ -1,4 +1,4 @@
-%% Rotated Rectangle demo
+%% Rotated Rectangle
 % The sample below demonstrates how to use |cv.RotatedRect|
 %
 

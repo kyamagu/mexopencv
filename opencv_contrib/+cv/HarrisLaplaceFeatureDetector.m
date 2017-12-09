@@ -14,27 +14,28 @@ classdef HarrisLaplaceFeatureDetector < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     methods
         function this = HarrisLaplaceFeatureDetector(varargin)
             %HARRISLAPLACEFEATUREDETECTOR  The full constructor
             %
-            %    obj = cv.HarrisLaplaceFeatureDetector()
-            %    obj = cv.HarrisLaplaceFeatureDetector('OptionName',optionValue, ...)
+            %     obj = cv.HarrisLaplaceFeatureDetector()
+            %     obj = cv.HarrisLaplaceFeatureDetector('OptionName',optionValue, ...)
             %
             % ## Options
             % * __NumOctaves__ the number of octaves in the scale-space
-            %       pyramid. default 6
+            %   pyramid. default 6
             % * __CornThresh__ the threshold for the Harris cornerness
-            %       measure. default 0.01
+            %   measure. default 0.01
             % * __DOGThresh__ the threshold for the Difference-of-Gaussians
-            %       scale selection. default 0.01
+            %   scale selection. default 0.01
             % * __MaxCorners__ the maximum number of corners to consider.
-            %       default 5000
+            %   default 5000
             % * __NumLayers__ the number of intermediate scales per octave.
-            %       default 4
+            %   default 4
             %
             % See also: cv.HarrisLaplaceFeatureDetector.detect
             %
@@ -44,7 +45,7 @@ classdef HarrisLaplaceFeatureDetector < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.HarrisLaplaceFeatureDetector
             %
@@ -55,7 +56,7 @@ classdef HarrisLaplaceFeatureDetector < handle
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
-            %    typename = obj.typeid()
+            %     typename = obj.typeid()
             %
             % ## Output
             % * __typename__ Name of C++ type
@@ -69,7 +70,7 @@ classdef HarrisLaplaceFeatureDetector < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.HarrisLaplaceFeatureDetector.empty,
             %  cv.HarrisLaplaceFeatureDetector.load
@@ -80,11 +81,11 @@ classdef HarrisLaplaceFeatureDetector < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.HarrisLaplaceFeatureDetector.clear
             %
@@ -94,7 +95,7 @@ classdef HarrisLaplaceFeatureDetector < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -110,21 +111,21 @@ classdef HarrisLaplaceFeatureDetector < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -138,11 +139,11 @@ classdef HarrisLaplaceFeatureDetector < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.HarrisLaplaceFeatureDetector.save,
             %  cv.HarrisLaplaceFeatureDetector.load
@@ -156,27 +157,25 @@ classdef HarrisLaplaceFeatureDetector < handle
         function keypoints = detect(this, img, varargin)
             %DETECT  Detects keypoints in an image or image set
             %
-            %    keypoints = obj.detect(img)
-            %    keypoints = obj.detect(imgs)
-            %    [...] = obj.detect(..., 'OptionName',optionValue, ...)
+            %     keypoints = obj.detect(img)
+            %     keypoints = obj.detect(imgs)
+            %     [...] = obj.detect(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __img__ Image (first variant), 8-bit grayscale image.
             % * __imgs__ Image set (second variant), cell array of images.
             %
             % ## Output
-            % * __keypoints__ The detected keypoints. In the first variant,
-            %       a 1-by-N structure array. In the second variant of the
-            %       method, `keypoints{i}` is a set of keypoints detected in
-            %       `imgs{i}`.
+            % * __keypoints__ The detected keypoints. In the first variant, a
+            %   1-by-N structure array. In the second variant of the method,
+            %   `keypoints{i}` is a set of keypoints detected in `imgs{i}`.
             %
             % ## Options
             % * __Mask__ A mask specifying where to look for keypoints
-            %       (optional). It must be a logical or 8-bit integer matrix
-            %       with non-zero values in the region of interest. In the
-            %       second variant, it is a cell-array of masks for each input
-            %       image, `masks{i}` is a mask for `imgs{i}`.
-            %       Not set by default.
+            %   (optional). It must be a logical or 8-bit integer matrix with
+            %   non-zero values in the region of interest. In the second
+            %   variant, it is a cell-array of masks for each input image,
+            %   `masks{i}` is a mask for `imgs{i}`. Not set by default.
             %
             % See also: cv.HarrisLaplaceFeatureDetector.HarrisLaplaceFeatureDetector
             %

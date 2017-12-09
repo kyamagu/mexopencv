@@ -17,12 +17,14 @@
 %   "A benchmark dataset for outdoor foreground/background extraction". In
 %   Computer Vision-ACCV 2012 Workshops, pages 291-300. Springer, 2013.
 %
-% <http://docs.opencv.org/3.2.0/db/d5c/tutorial_py_bg_subtraction.html>,
-% <http://docs.opencv.org/3.2.0/d1/dc5/tutorial_background_subtraction.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/video/bg_sub.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/bgfg_segm.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/tapi/bgfg_segm.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/bgfg_segm.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/db/d5c/tutorial_py_bg_subtraction.html>
+% * <https://docs.opencv.org/3.2.0/d1/dc5/tutorial_background_subtraction.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/video/bg_sub.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/bgfg_segm.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/tapi/bgfg_segm.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/bgfg_segm.cpp>
 %
 
 %% Theory
@@ -36,7 +38,7 @@
 % static part of the scene or, more in general, everything that can be
 % considered as background given the characteristics of the observed scene.
 %
-% <<http://docs.opencv.org/3.2.0/Background_Subtraction_Tutorial_Scheme.png>>
+% <<https://docs.opencv.org/3.2.0/Background_Subtraction_Tutorial_Scheme.png>>
 %
 % Background modeling consists of two main steps:
 %

@@ -1,6 +1,6 @@
 %MATMULDERIV  Computes partial derivatives of the matrix product for each multiplied matrix
 %
-%    [dABdA, dABdB] = cv.matMulDeriv(A, B)
+%     [dABdA, dABdB] = cv.matMulDeriv(A, B)
 %
 % ## Input
 % * __A__ First multiplied matrix.
@@ -8,9 +8,9 @@
 %
 % ## Output
 % * __dABdA__ First output derivative matrix `d(A*B)/dA` of size
-%       `(A.rows * B.cols)x(A.rows * A.cols)` and same type as `A`.
+%   `(A.rows * B.cols)x(A.rows * A.cols)` and same type as `A`.
 % * __dABdB__ Second output derivative matrix `d(A*B)/dB` of size
-%       `(A.rows * B.cols)x(B.rows * B.cols)` and same type as `A`.
+%   `(A.rows * B.cols)x(B.rows * B.cols)` and same type as `A`.
 %
 % The function computes partial derivatives of the elements of the matrix
 % product `A*B` with regard to the elements of each of the two input matrices.

@@ -17,16 +17,16 @@ const ConstMap<string,cv::CirclesGridFinderParameters::GridType> GridTypesMap =
     ("Symmetric",  cv::CirclesGridFinderParameters::SYMMETRIC_GRID)
     ("Asymmetric", cv::CirclesGridFinderParameters::ASYMMETRIC_GRID);
 
-/** Convert MxArray to cv::CirclesGridFinderParameters
+/** Convert MxArray to cv::CirclesGridFinderParameters2
  * @param arr MxArray object. In one of the following forms:
  * - a scalar struct
  * - a cell-array of the form: <tt>{GridType, ...}</tt> starting with the grid
  *   type ("Symmetric" or "Asymmetric") followed by pairs of key-value options
- * @return instance of CirclesGridFinderParameters object
+ * @return instance of CirclesGridFinderParameters2 object
  */
-CirclesGridFinderParameters MxArrayToFinderParameters(const MxArray &arr)
+CirclesGridFinderParameters2 MxArrayToFinderParameters(const MxArray &arr)
 {
-    CirclesGridFinderParameters params;
+    CirclesGridFinderParameters2 params;
     if (arr.isStruct()) {
         params.gridType = GridTypesMap[arr.at("gridType").toString()];
         if (arr.isField("densityNeighborhoodSize"))
@@ -55,6 +55,10 @@ CirclesGridFinderParameters MxArrayToFinderParameters(const MxArray &arr)
             params.convexHullFactor = arr.at("convexHullFactor").toFloat();
         if (arr.isField("minRNGEdgeSwitchDist"))
             params.minRNGEdgeSwitchDist = arr.at("minRNGEdgeSwitchDist").toFloat();
+        if (arr.isField("squareSize"))
+            params.squareSize = arr.at("squareSize").toFloat();
+        if (arr.isField("maxRectifiedDistance"))
+            params.maxRectifiedDistance = arr.at("maxRectifiedDistance").toFloat();
     }
     else {
         vector<MxArray> args(arr.toVector<MxArray>());
@@ -88,9 +92,13 @@ CirclesGridFinderParameters MxArrayToFinderParameters(const MxArray &arr)
                 params.convexHullFactor = args[i+1].toFloat();
             else if (key == "MinRNGEdgeSwitchDist")
                 params.minRNGEdgeSwitchDist = args[i+1].toFloat();
+            else if (key == "SquareSize")
+                params.squareSize = args[i+1].toFloat();
+            else if (key == "MaxRectifiedDistance")
+                params.maxRectifiedDistance = args[i+1].toFloat();
             else
                 mexErrMsgIdAndTxt("mexopencv:error",
-                    "Unrecognized CirclesGridFinderParameters option %s", key.c_str());
+                    "Unrecognized CirclesGridFinderParameters2 option %s", key.c_str());
         }
     }
     return params;
@@ -116,7 +124,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     bool symmetricGrid = true;
     bool clustering = false;
     Ptr<FeatureDetector> blobDetector;
-    CirclesGridFinderParameters params;
+    CirclesGridFinderParameters2 params;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "SymmetricGrid")
@@ -152,7 +160,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Mat image(rhs[0].toMat(CV_8U));
     Size patternSize(rhs[1].toSize());
     vector<Point2f> centers;
-    bool patternFound = findCirclesGrid(image, patternSize, centers, flags,
+    bool patternFound = findCirclesGrid2(image, patternSize, centers, flags,
         blobDetector, params);
     plhs[0] = MxArray(centers);
     if (nlhs > 1)

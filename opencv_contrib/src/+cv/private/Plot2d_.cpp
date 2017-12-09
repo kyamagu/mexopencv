@@ -9,7 +9,7 @@
 #include "opencv2/plot.hpp"
 using namespace std;
 using namespace cv;
-using namespace plot;
+using namespace cv::plot;
 
 // Persistent objects
 namespace {
@@ -42,12 +42,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         Ptr<Plot2d> p;
         if (nrhs == 3) {
             Mat data(rhs[2].toMat(CV_64F));
-            p = createPlot2d(data);
+            p = Plot2d::create(data);
         }
         else {
             Mat dataX(rhs[2].toMat(CV_64F)),
                 dataY(rhs[3].toMat(CV_64F));
-            p = createPlot2d(dataX, dataY);
+            p = Plot2d::create(dataX, dataY);
         }
         obj_[++last_id] = p;
         plhs[0] = MxArray(last_id);
@@ -165,6 +165,16 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             Size sz(rhs[3].toSize());
             obj->setPlotSize(sz.width, sz.height);
         }
+        else if (prop == "ShowGrid")
+            obj->setShowGrid(rhs[3].toBool());
+        else if (prop == "ShowText")
+            obj->setShowText(rhs[3].toBool());
+        else if (prop == "GridLinesNumber")
+            obj->setGridLinesNumber(rhs[3].toInt());
+        else if (prop == "InvertOrientation")
+            obj->setInvertOrientation(rhs[3].toBool());
+        else if (prop == "PointIdxToPrint")
+            obj->setPointIdxToPrint(rhs[3].toInt());
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized property %s", prop.c_str());

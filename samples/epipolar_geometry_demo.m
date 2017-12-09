@@ -5,7 +5,9 @@
 % * We will learn about the basics of multiview geometry
 % * We will see what is epipole, epipolar lines, epipolar constraint etc.
 %
-% <http://docs.opencv.org/3.2.0/da/de9/tutorial_py_epipolar_geometry.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/da/de9/tutorial_py_epipolar_geometry.html>
 %
 
 %% Theory
@@ -25,7 +27,7 @@
 % the image below which shows a basic setup with two cameras taking the image
 % of same scene.
 %
-% <<http://docs.opencv.org/3.2.0/epipolar.jpg>>
+% <<https://docs.opencv.org/3.2.0/epipolar.jpg>>
 %
 % If we are using only the left camera, we can't find the 3D point
 % corresponding to the point $x$ in image because every point on the line
@@ -62,7 +64,7 @@
 % relative to the first in global coordinates. See the image below
 % (Image courtesy: _Learning OpenCV_ by Gary Bradsky):
 %
-% <<http://docs.opencv.org/3.2.0/essential_matrix.jpg>>
+% <<https://docs.opencv.org/3.2.0/essential_matrix.jpg>>
 %
 % But we prefer measurements to be done in pixel coordinates, right?
 % Fundamental Matrix contains the same information as Essential Matrix in
@@ -92,7 +94,7 @@
 %
 % Below is the result we get:
 %
-% <<http://docs.opencv.org/3.2.0/epiresult.jpg>>
+% <<https://docs.opencv.org/3.2.0/epiresult.jpg>>
 %
 % You can see in the left image that all epilines are converging at a point
 % outside the image at right side. That meeting point is the epipole.
@@ -187,6 +189,8 @@ end
 
 function [img1,img2] = drawlines(img1, img2, lines, pts1, pts2, clrs)
     %DRAWLINES  Draw epilines and points on images
+    %
+    %     [img1,img2] = drawlines(img1, img2, lines, pts1, pts2, clrs)
     %
     % ## Input
     % * __img1__ first image

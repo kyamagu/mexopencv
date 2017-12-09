@@ -1,7 +1,9 @@
 %% ArUco Grid Board Image Demo
 % This example shows how to create an ArUco grid board image.
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/aruco/samples/create_board.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/aruco/samples/create_board.cpp>
 %
 
 %% Board

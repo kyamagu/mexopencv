@@ -11,7 +11,9 @@
 %   shrink to fit into the circle.
 % * convert the modified r-theta values back into x-y coordinates
 %
-% <http://sidekick.windforwings.com/2012/12/opencv-fun-with-remap.html>
+% Sources:
+%
+% * <http://sidekick.windforwings.com/2012/12/opencv-fun-with-remap.html>
 %
 
 %%

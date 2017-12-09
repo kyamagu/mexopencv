@@ -1,7 +1,9 @@
 %% The MNIST dataset of handwritten digits
 % Demonstrates loading the <http://yann.lecun.com/exdb/mnist/ MNIST dataset>.
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/datasets/samples/or_mnist.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/datasets/samples/or_mnist.cpp>
 %
 
 %% MNIST dataset

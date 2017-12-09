@@ -9,7 +9,7 @@ classdef PCTSignatures < handle
     % set of clusters is the signature of the input image.
     %
     % A signature is an array of 8-dimensional points. Used dimensions are:
-    % weight, x/y position; lab color L/a/b, contrast, entropy.
+    % weight, x/y position; Lab color L/a/b, contrast, entropy.
     %
     % ## References
     % [KrulisLS16]:
@@ -25,7 +25,8 @@ classdef PCTSignatures < handle
     %
 
     properties (SetAccess = private)
-        id % Object ID
+        % Object ID
+        id
     end
 
     % sampler (PCTSampler)
@@ -94,32 +95,32 @@ classdef PCTSignatures < handle
         function this = PCTSignatures(varargin)
             %PCTSIGNATURES  Creates PCTSignatures algorithm
             %
-            %    obj = cv.PCTSignatures()
-            %    obj = cv.PCTSignatures('OptionName',optionValue, ...)
+            %     obj = cv.PCTSignatures()
+            %     obj = cv.PCTSignatures('OptionName',optionValue, ...)
             %
-            %    obj = cv.PCTSignatures(initSamplingPoints, initSeedCount)
+            %     obj = cv.PCTSignatures(initSamplingPoints, initSeedCount)
             %
-            %    obj = cv.PCTSignatures(initSamplingPoints, initClusterSeedIndexes)
+            %     obj = cv.PCTSignatures(initSamplingPoints, initClusterSeedIndexes)
             %
             % ## Input
             % * __initSamplingPoints__ Sampling points used in image sampling.
             % * __initSeedCount__ Number of initial clusterization seeds. Must
-            %       be lower or equal to `length(initSamplingPoints)`.
+            %   be lower or equal to `length(initSamplingPoints)`.
             % * __initClusterSeedIndexes__ Indexes of initial clusterization
-            %       seeds. Its size must be lower or equal to
-            %       `length(initSamplingPoints)`.
+            %   seeds. Its size must be lower or equal to
+            %   `length(initSamplingPoints)`.
             %
             % ## Options (first variant)
             % * __InitSampleCount__ Number of points used for image sampling.
-            %       default 2000
+            %   default 2000
             % * __InitSeedCount__ Number of initial clusterization seeds. Must
-            %       be lower or equal to `InitSampleCount`. default 400
+            %   be lower or equal to `InitSampleCount`. default 400
             % * __PointDistribution__ Distribution of generated points.
-            %       Available:
-            %       * __Uniform__ (default) Generate numbers uniformly.
-            %       * __Regular__ Generate points in a regular grid.
-            %       * __Normal__ Generate points with normal (gaussian)
-            %             distribution.
+            %   Available:
+            %   * __Uniform__ (default) Generate numbers uniformly.
+            %   * __Regular__ Generate points in a regular grid.
+            %   * __Normal__ Generate points with normal (gaussian)
+            %     distribution.
             %
             % In the first variant, it creates PCTSignatures algorithm using
             % sample and seed count. It generates its own sets of sampling
@@ -141,7 +142,7 @@ classdef PCTSignatures < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.PCTSignatures
             %
@@ -154,15 +155,15 @@ classdef PCTSignatures < handle
         function initPoints = generateInitPoints(count, pointDistribution)
             %GENERATEINITPOINTS  Generates initial sampling points according to selected point distribution
             %
-            %    initPoints = cv.PCTSignatures.generateInitPoints(count, pointDistribution)
+            %     initPoints = cv.PCTSignatures.generateInitPoints(count, pointDistribution)
             %
             % ## Input
             % * __count__ Number of points to generate.
             % * __pointDistribution__ Point distribution selector. Available:
-            %       * __Uniform__ Generate numbers uniformly.
-            %       * __Regular__ Generate points in a regular grid.
-            %       * __Normal__ Generate points with normal (gaussian)
-            %             distribution.
+            %   * __Uniform__ Generate numbers uniformly.
+            %   * __Regular__ Generate points in a regular grid.
+            %   * __Normal__ Generate points with normal (gaussian)
+            %     distribution.
             %
             % ## Output
             % * __initPoints__ Output vector of generated points.
@@ -177,8 +178,8 @@ classdef PCTSignatures < handle
         function result = drawSignature(source, signature, varargin)
             %DRAWSIGNATURE  Draws signature in the source image and outputs the result
             %
-            %    result = cv.PCTSignatures.drawSignature(source, signature)
-            %    result = cv.PCTSignatures.drawSignature(..., 'OptionName',optionValue, ...)
+            %     result = cv.PCTSignatures.drawSignature(source, signature)
+            %     result = cv.PCTSignatures.drawSignature(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __source__ Source image.
@@ -189,9 +190,9 @@ classdef PCTSignatures < handle
             %
             % ## Options
             % * __RadiusToShorterSideRatio__ Determines maximal radius of
-            %       signature in the output image. default 1/8
+            %   signature in the output image. default 1/8
             % * __BorderThickness__ Border thickness of the visualized
-            %       signature. default 1
+            %   signature. default 1
             %
             % Signatures are visualized as a circle with radius based on
             % signature weight and color based on signature color. Contrast
@@ -208,7 +209,7 @@ classdef PCTSignatures < handle
         function signature = computeSignature(this, img)
             %COMPUTESIGNATURE  Computes signature of given image
             %
-            %    signature = obj.computeSignature(img)
+            %     signature = obj.computeSignature(img)
             %
             % ## Input
             % * __img__ Input color image of `uint8` type.
@@ -224,7 +225,7 @@ classdef PCTSignatures < handle
         function signatures = computeSignatures(this, imgs)
             %COMPUTESIGNATURES  Computes signatures for multiple images in parallel
             %
-            %    signatures = obj.computeSignatures(imgs)
+            %     signatures = obj.computeSignatures(imgs)
             %
             % ## Input
             % * __imgs__ Vector of input images of `uint8` type.
@@ -243,7 +244,7 @@ classdef PCTSignatures < handle
         function sampleCount = getSampleCount(this)
             %GETSAMPLECOUNT  Number of initial samples taken from the image
             %
-            %    sampleCount = obj.getSampleCount()
+            %     sampleCount = obj.getSampleCount()
             %
             % ## Output
             % * __sampleCount__ Number of initial samples taken from the image.
@@ -256,7 +257,7 @@ classdef PCTSignatures < handle
         function samplingPoints = getSamplingPoints(this)
             %GETSAMPLINGPOINTS  Initial samples taken from the image
             %
-            %    samplingPoints = obj.getSamplingPoints()
+            %     samplingPoints = obj.getSamplingPoints()
             %
             % ## Output
             % * __samplingPoints__ Initial samples taken from the image.
@@ -271,7 +272,7 @@ classdef PCTSignatures < handle
         function setSamplingPoints(this, samplingPoints)
             %SETSAMPLINGPOINTS  Sets sampling points used to sample the input image
             %
-            %    obj.setSamplingPoints(samplingPoints)
+            %     obj.setSamplingPoints(samplingPoints)
             %
             % ## Input
             % * __samplingPoints__ Vector of sampling points in range [0..1).
@@ -284,18 +285,18 @@ classdef PCTSignatures < handle
         function setWeight(this, idx, value)
             %SETWEIGHT  Sets weight (multiplicative constant) that linearly stretch individual axis of the feature space
             %
-            %    obj.setWeight(idx, value)
+            %     obj.setWeight(idx, value)
             %
             % ## Input
             % * __idx__ ID of the weight (0-based index). One of:
-            %       * __0__ weight.
-            %       * __1__ X.
-            %       * __2__ Y.
-            %       * __3__ L.
-            %       * __4__ A.
-            %       * __5__ B.
-            %       * __6__ Contrast.
-            %       * __7__ Entropy.
+            %   * __0__ weight.
+            %   * __1__ X.
+            %   * __2__ Y.
+            %   * __3__ L.
+            %   * __4__ A.
+            %   * __5__ B.
+            %   * __6__ Contrast.
+            %   * __7__ Entropy.
             % * __value__ Value of the weight.
             %
             % See also: cv.PCTSignatures.setWeights
@@ -306,11 +307,11 @@ classdef PCTSignatures < handle
         function setWeights(this, weights)
             %SETWEIGHTS  Sets weights (multiplicative constants) that linearly stretch individual axes of the feature space
             %
-            %    obj.setWeights(weights)
+            %     obj.setWeights(weights)
             %
             % ## Input
             % * __weights__ Values of all weights. A float vector of the form
-            %       `[weight, X, Y, L, A, B, Contrast, Entropy]`.
+            %   `[weight, X, Y, L, A, B, Contrast, Entropy]`.
             %
             % See also: cv.PCTSignatures.setWeight
             %
@@ -320,18 +321,18 @@ classdef PCTSignatures < handle
         function setTranslation(this, idx, value)
             %SETRANSLATION  Sets translation of the individual axis of the feature space
             %
-            %    obj.setTranslation(idx, value)
+            %     obj.setTranslation(idx, value)
             %
             % ## Input
             % * __idx__ ID of the translation (0-based index). One of:
-            %       * __0__ weight.
-            %       * __1__ X.
-            %       * __2__ Y.
-            %       * __3__ L.
-            %       * __4__ A.
-            %       * __5__ B.
-            %       * __6__ Contrast.
-            %       * __7__ Entropy.
+            %   * __0__ weight.
+            %   * __1__ X.
+            %   * __2__ Y.
+            %   * __3__ L.
+            %   * __4__ A.
+            %   * __5__ B.
+            %   * __6__ Contrast.
+            %   * __7__ Entropy.
             % * __value__ Value of the translation.
             %
             % See also: cv.PCTSignatures.setTranslations
@@ -342,11 +343,11 @@ classdef PCTSignatures < handle
         function setTranslations(this, translations)
             %SETRANSLATIONS  Sets translations of the individual axes of the feature space
             %
-            %    obj.setTranslations(translations)
+            %     obj.setTranslations(translations)
             %
             % ## Input
             % * __translations__ Values of all translations. A float vector
-            %       of the form `[weight, X, Y, L, A, B, Contrast, Entropy]`.
+            %   of the form `[weight, X, Y, L, A, B, Contrast, Entropy]`.
             %
             % See also: cv.PCTSignatures.setTranslation
             %
@@ -359,11 +360,11 @@ classdef PCTSignatures < handle
         function initSeedCount = getInitSeedCount(this)
             %GETINITSEEDCOUNT  Number of initial seeds for the k-means algorithm
             %
-            %    initSeedCount = obj.getInitSeedCount()
+            %     initSeedCount = obj.getInitSeedCount()
             %
             % ## Output
             % * __initSeedCount__ Number of initial seeds (initial number of
-            %       clusters) for the k-means algorithm.
+            %   clusters) for the k-means algorithm.
             %
             % See also: cv.PCTSignatures.getInitSeedIndexes
             %
@@ -373,11 +374,11 @@ classdef PCTSignatures < handle
         function initSeedIndexes = getInitSeedIndexes(this)
             %GETINITSEEDINDEXES  Initial seeds for the k-means algorithm
             %
-            %    initSeedIndexes = obj.getInitSeedIndexes()
+            %     initSeedIndexes = obj.getInitSeedIndexes()
             %
             % ## Output
             % * __initSeedIndexes__ Initial seeds (initial number of clusters)
-            %       for the k-means algorithm (0-based indices).
+            %   for the k-means algorithm (0-based indices).
             %
             % See also: cv.PCTSignatures.setInitSeedIndexes
             %
@@ -387,11 +388,11 @@ classdef PCTSignatures < handle
         function setInitSeedIndexes(this, initSeedIndexes)
             %SETINITSEEDINDEXES  Sets initial seed indexes for the k-means algorithm
             %
-            %    obj.setInitSeedIndexes(initSeedIndexes)
+            %     obj.setInitSeedIndexes(initSeedIndexes)
             %
             % ## Input
             % * __initSeedIndexes__ Vector of initial seed indexes for the
-            %       k-means algorithm (0-based indices).
+            %   k-means algorithm (0-based indices).
             %
             % See also: cv.PCTSignatures.getInitSeedIndexes
             %
@@ -404,7 +405,7 @@ classdef PCTSignatures < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.PCTSignatures.empty
             %
@@ -414,11 +415,11 @@ classdef PCTSignatures < handle
         function b = empty(this)
             %EMPTY  Returns true if the algorithm is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the algorithm is empty (e.g. in the very
-            %       beginning or after unsuccessful read).
+            %   beginning or after unsuccessful read).
             %
             % See also: cv.PCTSignatures.clear
             %
@@ -428,11 +429,11 @@ classdef PCTSignatures < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.PCTSignatures.save, cv.PCTSignatures.load
             %
@@ -442,7 +443,7 @@ classdef PCTSignatures < handle
         function save(this, filename)
             %SAVE  Saves the algorithm to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -457,21 +458,21 @@ classdef PCTSignatures < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from a file storage.
             % The previous model state is discarded.

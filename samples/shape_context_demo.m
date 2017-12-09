@@ -1,11 +1,13 @@
-%% Shape context demo for shape matching
+%% Shape context for shape matching
 % This program demonstrates a method for shape comparison based on Shape
 % Context.
 %
 % We use 20 sample images from OpenCV:
 % https://github.com/opencv/opencv/tree/3.1.0/samples/data/shape_sample/*.png
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/shape_example.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/shape_example.cpp>
 %
 
 %%

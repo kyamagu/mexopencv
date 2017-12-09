@@ -1,7 +1,7 @@
 %ILLUMINATIONCHANGE  Illumination Change
 %
-%    dst = cv.illuminationChange(src, mask)
-%    dst = cv.illuminationChange(src, mask, 'OptionName',optionValue, ...)
+%     dst = cv.illuminationChange(src, mask)
+%     dst = cv.illuminationChange(src, mask, 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __src__ Input 8-bit 3-channel image.
@@ -14,8 +14,8 @@
 % * __Alpha__ Value ranges between 0-2. default 0.2
 % * __Beta__ Value ranges between 0-2. default 0.4
 % * __FlipChannels__ whether to flip the order of color channels in inputs
-%       `src` and `mask` and output `dst`, between MATLAB's RGB order and
-%       OpenCV's BGR (input: RGB->BGR, output: BGR->RGB). default false
+%   `src` and `mask` and output `dst`, between MATLAB's RGB order and OpenCV's
+%   BGR (input: RGB->BGR, output: BGR->RGB). default false
 %
 % Applying an appropriate non-linear transformation to the gradient field
 % inside the selection and then integrating back with a Poisson solver,

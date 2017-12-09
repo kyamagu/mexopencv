@@ -1,4 +1,4 @@
-%% Basic Drawing
+%% Basic Geometric Drawing
 % In this demo, we show how to:
 %
 % * Draw a line by using the function |cv.line|
@@ -7,8 +7,10 @@
 % * Draw a circle by using the function |cv.circle|
 % * Draw a filled polygon by using the function |cv.fillPoly|
 %
-% <http://docs.opencv.org/3.2.0/d3/d96/tutorial_basic_geometric_drawing.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/core/Matrix/Drawing_1.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d3/d96/tutorial_basic_geometric_drawing.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/core/Matrix/Drawing_1.cpp>
 %
 
 %%

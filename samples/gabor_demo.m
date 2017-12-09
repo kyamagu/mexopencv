@@ -4,7 +4,9 @@
 % get <http://www.redfieldplugins.com/filterFractalius.htm Fractalius-like>
 % image effect.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/gabor_threads.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/gabor_threads.py>
 %
 
 %%

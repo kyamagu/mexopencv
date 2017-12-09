@@ -1,15 +1,15 @@
 %MINENCLOSINGTRIANGLE  Finds a triangle of minimum area enclosing a 2D point set and returns its area
 %
-%    [triangle,area] = cv.minEnclosingTriangle(points)
+%     [triangle,area] = cv.minEnclosingTriangle(points)
 %
 % ## Input
 % * __points__ Input vector of 2D points with depth `int32` or `single`,
-%       stored in numeric array (Nx2/Nx1x2/1xNx2) or cell array of 2-element
-%       vectors (`{[x,y], ...}`).
+%   stored in numeric array (Nx2/Nx1x2/1xNx2) or cell array of 2-element
+%   vectors (`{[x,y], ...}`).
 %
 % ## Output
 % * __triangle__ Output vector of three 2D points defining the vertices of the
-%       triangle.
+%   triangle.
 % * __area__ triangle area
 %
 % The function finds a triangle of minimum area enclosing the given set of 2D

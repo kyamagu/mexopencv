@@ -24,8 +24,8 @@ classdef TestNet
 
             % forward pass (blob from multiple images)
             blob = cv.Net.blobFromImages({img1,img2}, 'Size',[224 224]);
-            net.setInput(blob, 'data');
-            prob = net.forward('prob');
+            net.setInput(blob);
+            prob = net.forward();
             validateattributes(prob, {'numeric'}, ...
                 {'size',[2 1000], 'real', '>=',0, '<=',1});
             [p,idx] = max(prob,[],2);
@@ -51,6 +51,16 @@ classdef TestNet
             blobs = net.forwardAll('conv1/7x7_s2');
         end
 
+        function test_shrink_caffe_fp16
+            model = fullfile(mexopencv.root(), 'test', 'dnn', 'GoogLeNet', ...
+                'bvlc_googlenet.caffemodel');
+            model_fp16 = fullfile(tempdir(), 'bvlc_googlenet_fp16.caffemodel');
+
+            cObj = onCleanup(@() delete(model_fp16));
+            cv.Net.shrinkCaffeModel(model, model_fp16);
+            assert(exist(model_fp16, 'file') == 2);
+        end
+
         function test_layers
             % Convolution layer
             % (64 filters each of size 7x7, 3x3 padding, 2x2 stride)
@@ -71,14 +81,13 @@ classdef TestNet
             % add layer
             net = cv.Net();
             lp_id = net.addLayer(lp.name, lp.type, lp);
-            validateattributes(lp_id, {'numeric'}, {'scalar', 'integer'});
+            validateattributes(lp_id, {'int32'}, {'scalar', 'integer'});
             assert(lp_id ~= -1);
-            lp_id = int32(lp_id);
 
             % connect input layer to conv layer
             net.setInputsNames('data');
             if true
-                net.connect(int32(0), 0, int32(lp_id), 0);
+                net.connect(0, 0, lp_id, 0);
             elseif true
                 %net.connect('_input.0', lp.name);
                 net.connect('_input', lp.name);
@@ -125,7 +134,6 @@ classdef TestNet
 
             id = net.getLayerId(names{1});
             validateattributes(id, {'numeric'}, {'scalar', 'integer'});
-            id = int32(id);
             assert(lp_id ~= -1);
             %assert(isequal(id, lp_id))
 
@@ -155,14 +163,13 @@ end
 
 function net = load_bvlc_googlenet()
     %TODO: download files (or run the sample "caffe_googlenet_demo.m")
-    rootdir = fullfile(mexopencv.root(), 'test', 'dnn');
-    modelTxt = fullfile(rootdir, 'bvlc_googlenet.prototxt');
+    rootdir = fullfile(mexopencv.root(), 'test', 'dnn', 'GoogLeNet');
+    modelTxt = fullfile(rootdir, 'deploy.prototxt');
     modelBin = fullfile(rootdir, 'bvlc_googlenet.caffemodel');
     if exist(modelTxt, 'file') ~= 2 || exist(modelBin, 'file') ~= 2
         error('mexopencv:testskip', 'missing data');
     end
 
-    net = cv.Net();
-    net.import('Caffe', modelTxt, modelBin);
+    net = cv.Net('Caffe', modelTxt, modelBin);
     assert(~net.empty());
 end

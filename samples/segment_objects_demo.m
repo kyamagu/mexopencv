@@ -6,7 +6,9 @@
 % When the program starts, it begins learning the background.
 % You can toggle background learning on and off using the checkbox.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/segment_objects.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/segment_objects.cpp>
 %
 
 %% Set up video source: video file or camera

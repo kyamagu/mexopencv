@@ -6,9 +6,11 @@
 % Inpainting repairs damage to images by flood-filling the damage with
 % surrounding image areas.
 %
+% Sources:
+%
 % * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/inpaint.cpp>
 % * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/inpaint.py>
-% * <http://docs.opencv.org/3.2.0/df/d3d/tutorial_py_inpainting.html>
+% * <https://docs.opencv.org/3.2.0/df/d3d/tutorial_py_inpainting.html>
 %
 
 %% Theory
@@ -20,9 +22,9 @@
 % a technique called image inpainting is used. The basic idea is simple:
 % Replace those bad marks with its neighbouring pixels so that it looks like
 % the neigbourhood. Consider the image shown below (taken from
-% <http://en.wikipedia.org/wiki/Inpainting Wikipedia>):
+% <https://en.wikipedia.org/wiki/Inpainting Wikipedia>):
 %
-% <<http://docs.opencv.org/3.2.0/inpaint_basics.jpg>>
+% <<https://docs.opencv.org/3.2.0/inpaint_basics.jpg>>
 %
 % Several algorithms were designed for this purpose and OpenCV provides two of
 % them. Both can be accessed by the same function, |cv.inpaint|.

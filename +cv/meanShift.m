@@ -1,12 +1,12 @@
 %MEANSHIFT  Finds an object on a back projection image
 %
-%    window = cv.meanShift(probImage, window)
-%    [window,iter] = cv.meanShift(probImage, window)
-%    [...] = cv.meanShift(..., 'OptionName', optionValue, ...)
+%     window = cv.meanShift(probImage, window)
+%     [window,iter] = cv.meanShift(probImage, window)
+%     [...] = cv.meanShift(..., 'OptionName', optionValue, ...)
 %
 % ## Input
 % * __probImage__ Back projection of the object histogram. See
-%       cv.calcBackProject for details.
+%   cv.calcBackProject for details.
 % * __window__ Initial search window `[x,y,w,h]`.
 %
 % ## Output
@@ -15,8 +15,8 @@
 %
 % ## Options
 % * __Criteria__ Stop criteria for the iterative search algorithm. Accepts a
-%       struct with 'type', 'maxCount', and 'epsilon' fields.
-%       Default `struct('type','Count+EPS', 'maxCount',100, 'epsilon',1.0)`
+%   struct with 'type', 'maxCount', and 'epsilon' fields. Default
+%   `struct('type','Count+EPS', 'maxCount',100, 'epsilon',1.0)`
 %
 % The function implements the iterative object search algorithm. It takes the
 % input back projection of an object and the initial position. The mass center

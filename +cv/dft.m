@@ -1,7 +1,7 @@
 %DFT  Performs a forward or inverse Discrete Fourier transform of a 1D or 2D floating-point array
 %
-%    dst = cv.dft(src)
-%    dst = cv.dft(src, 'OptionName',optionValue, ...)
+%     dst = cv.dft(src)
+%     dst = cv.dft(src, 'OptionName',optionValue, ...)
 %
 % ## Input
 % * __src__ input floating-point array that could be real or complex.
@@ -11,75 +11,72 @@
 %
 % ## Options
 % * __Inverse__ performs an inverse 1D or 2D transform instead of the default
-%       forward transform. default false
+%   forward transform. default false
 % * __Scale__ scales the result: divide it by the number of array elements.
-%       Normally, it is combined with the `Inverse` flag, as it guarantees
-%       that the inverse of the inverse will have the correct normalization.
-%       default false
+%   Normally, it is combined with the `Inverse` flag, as it guarantees that
+%   the inverse of the inverse will have the correct normalization.
+%   default false
 % * __Rows__ performs a forward or inverse transform of every individual row
-%       of the input matrix; this flag enables you to transform multiple
-%       vectors simultaneously and can be used to decrease the overhead (which
-%       is sometimes several times larger than the processing itself) to
-%       perform 3D and higher-dimensional transformations and so forth.
-%       default false
+%   of the input matrix; this flag enables you to transform multiple vectors
+%   simultaneously and can be used to decrease the overhead (which is sometimes
+%   several times larger than the processing itself) to perform 3D and
+%   higher-dimensional transformations and so forth. default false
 % * __ComplexOutput__ performs a forward transformation of 1D or 2D real
-%       array; the result, though being a complex array, has complex-conjugate
-%       symmetry (*CCS*, see the function description below for details), and
-%       such an array can be packed into a real array of the same size as
-%       input, which is the fastest option and which is what the function does
-%       by default; however, you may wish to get a full complex array (for
-%       simpler spectrum analysis, and so on), pass the flag to enable the
-%       function to produce a full-size complex output array. default false
+%   array; the result, though being a complex array, has complex-conjugate
+%   symmetry (*CCS*, see the function description below for details), and such
+%   an array can be packed into a real array of the same size as input, which
+%   is the fastest option and which is what the function does by default;
+%   however, you may wish to get a full complex array (for simpler spectrum
+%   analysis, and so on), pass the flag to enable the function to produce a
+%   full-size complex output array. default false
 % * __RealOutput__ performs an inverse transformation of a 1D or 2D complex
-%       array; the result is normally a complex array of the same size,
-%       however, if the input array has conjugate-complex symmetry (for
-%       example, it is a result of forward transformation with `ComplexOutput`
-%       flag), the output is a real array; while the function itself does not
-%       check whether the input is symmetrical or not, you can pass the flag
-%       and then the function will assume the symmetry and produce the real
-%       output array (note that when the input is packed into a real array and
-%       inverse transformation is executed, the function treats the input as a
-%       packed complex-conjugate symmetrical array, and the output will also
-%       be a real array). default false
+%   array; the result is normally a complex array of the same size, however,
+%   if the input array has conjugate-complex symmetry (for example, it is a
+%   result of forward transformation with `ComplexOutput` flag), the output is
+%   a real array; while the function itself does not check whether the input
+%   is symmetrical or not, you can pass the flag and then the function will
+%   assume the symmetry and produce the real output array (note that when the
+%   input is packed into a real array and inverse transformation is executed,
+%   the function treats the input as a packed complex-conjugate symmetrical
+%   array, and the output will also be a real array). default false
 % * __ComplexInput__ specifies that input is complex input. If this flag is
-%       set, the input must have 2 channels. On the other hand, for backwards
-%       compatibility reason, if input has 2 channels, input is already
-%       considered complex. default false
+%   set, the input must have 2 channels. On the other hand, for backwards
+%   compatibility reason, if input has 2 channels, input is already considered
+%   complex. default false
 % * __NonzeroRows__ when the parameter is not zero, the function assumes that
-%       only the first `NonzeroRows` rows of the input array (`Inverse` is not
-%       set) or only the first `NonzeroRows` of the output array (`Inverse` is
-%       set) contain non-zeros, thus, the function can handle the rest of the
-%       rows more efficiently and save some time; this technique is very
-%       useful for calculating array cross-correlation or convolution using
-%       DFT. default 0
+%   only the first `NonzeroRows` rows of the input array (`Inverse` is not set)
+%   or only the first `NonzeroRows` of the output array (`Inverse` is set)
+%   contain non-zeros, thus, the function can handle the rest of the rows more
+%   efficiently and save some time; this technique is very useful for
+%   calculating array cross-correlation or convolution using DFT. default 0
 %
 % The function cv.dft performs one of the following:
 %
 % * Forward the Fourier transform of a 1D vector of N elements:
 %
-%        Y = FN * X
+%       Y = FN * X
 %
 %   where
 %
-%        FN(j,k) = exp(-2*pi * 1i * j * k/N)
+%       FN(j,k) = exp(-2*pi * 1i * j * k/N)
 %
 %   and `1i = sqrt(-1)`
 %
 % * Inverse the Fourier transform of a 1D vector of N elements:
 %
-%        X'= inv(FN) * Y = ctranspose(FN) * Y
-%        X = (1/N) * X'
+%       X'= inv(FN) * Y = ctranspose(FN) * Y
+%       X = (1/N) * X'
 %
 %   where `ctranspose(F) = transpose(conj(F)) = transpose(real(F) - 1i*imag(F))`
 %
 % * Forward the 2D Fourier transform of a MxN matrix:
 %
-%        Y = FM * X * FN
+%       Y = FM * X * FN
 %
 % * Inverse the 2D Fourier transform of a MxN matrix:
 %
-%        X'= ctranspose(FM) * Y * ctranspose(FN)
-%        X = (1/(M*N)) * X'
+%       X'= ctranspose(FM) * Y * ctranspose(FN)
+%       X = (1/(M*N)) * X'
 %
 % In case of real (single-channel) data, the output spectrum of the forward
 % Fourier transform or input spectrum of the inverse Fourier transform can be
@@ -87,15 +84,15 @@
 % It was borrowed from IPL (Intel Image Processing Library). Here is how 2D
 % *CCS* spectrum looks:
 %
-%    CCS = [
-%      ReY(0,0), ReY(0,1), ImY(0,1), ..., ReY(0,N/2-1), ImY(0,N/2-1), ReY(0,N/2)
-%      ReY(1,0), ReY(1,1), ImY(1,1), ..., ReY(1,N/2-1), ImY(1,N/2-1), ReY(1,N/2)
-%      ImY(1,0), ReY(2,1), ImY(2,1), ..., ReY(2,N/2-1), ImY(2,N/2-1), ImY(1,N/2)
-%      ...
-%      ReY(M/2-1,0), ReY(M-3,1), ImY(M-3,1), ..., ReY(M-3,N/2-1), ImY(M-3,N/2-1), ReY(M/2-1,N/2)
-%      ImY(M/2-1,0), ReY(M-2,1), ImY(M-2,1), ..., ReY(M-2,N/2-1), ImY(M-2,N/2-1), ImY(M/2-1,N/2)
-%      ReY(M/2,  0), ReY(M-1,1), ImY(M-1,1), ..., ReY(M-1,N/2-1), ImY(M-1,N/2-1), ReY(M/2,  N/2)
-%    ]
+%     CCS = [
+%       ReY(0,0), ReY(0,1), ImY(0,1), ..., ReY(0,N/2-1), ImY(0,N/2-1), ReY(0,N/2)
+%       ReY(1,0), ReY(1,1), ImY(1,1), ..., ReY(1,N/2-1), ImY(1,N/2-1), ReY(1,N/2)
+%       ImY(1,0), ReY(2,1), ImY(2,1), ..., ReY(2,N/2-1), ImY(2,N/2-1), ImY(1,N/2)
+%       ...
+%       ReY(M/2-1,0), ReY(M-3,1), ImY(M-3,1), ..., ReY(M-3,N/2-1), ImY(M-3,N/2-1), ReY(M/2-1,N/2)
+%       ImY(M/2-1,0), ReY(M-2,1), ImY(M-2,1), ..., ReY(M-2,N/2-1), ImY(M-2,N/2-1), ImY(M/2-1,N/2)
+%       ReY(M/2,  0), ReY(M-1,1), ImY(M-1,1), ..., ReY(M-1,N/2-1), ImY(M-1,N/2-1), ReY(M/2,  N/2)
+%     ]
 %
 % In case of 1D transform of a real vector, the output looks like the first
 % row of the matrix above.
@@ -144,40 +141,40 @@
 % The sample below illustrates how to calculate a DFT-based convolution of two
 % 2D real arrays:
 %
-%    function C = convolveDFT(A, B)
-%        % calculate the size of DFT transform
-%        dftSize = size(A) + size(B) - 1;
-%        dftSize(1) = cv.getOptimalDFTSize(dftSize(1));
-%        dftSize(2) = cv.getOptimalDFTSize(dftSize(2));
+%     function C = convolveDFT(A, B)
+%         % calculate the size of DFT transform
+%         dftSize = size(A) + size(B) - 1;
+%         dftSize(1) = cv.getOptimalDFTSize(dftSize(1));
+%         dftSize(2) = cv.getOptimalDFTSize(dftSize(2));
 %
-%        % allocate temporary buffers and initialize them with 0's
-%        tempA = zeros(dftSize, class(A));
-%        tempB = zeros(dftSize, class(B));
+%         % allocate temporary buffers and initialize them with 0's
+%         tempA = zeros(dftSize, class(A));
+%         tempB = zeros(dftSize, class(B));
 %
-%        % copy A/B to the top-left corners of tempA/tempB respectively
-%        tempA(1:size(A,1), 1:size(A,2)) = A;
-%        tempB(1:size(B,1), 1:size(B,2)) = B;
+%         % copy A/B to the top-left corners of tempA/tempB respectively
+%         tempA(1:size(A,1), 1:size(A,2)) = A;
+%         tempB(1:size(B,1), 1:size(B,2)) = B;
 %
-%        % now transform the padded A & B in-place;
-%        % use 'NonzeroRows' hint for faster processing
-%        tempA = cv.dft(tempA, 'NonzeroRows',size(A,1));
-%        tempB = cv.dft(tempB, 'NonzeroRows',size(B,1));
+%         % now transform the padded A & B in-place;
+%         % use 'NonzeroRows' hint for faster processing
+%         tempA = cv.dft(tempA, 'NonzeroRows',size(A,1));
+%         tempB = cv.dft(tempB, 'NonzeroRows',size(B,1));
 %
-%        % multiply the spectrums;
-%        % the function handles packed spectrum representations well
-%        C = cv.mulSpectrums(tempA, tempB);
+%         % multiply the spectrums;
+%         % the function handles packed spectrum representations well
+%         C = cv.mulSpectrums(tempA, tempB);
 %
-%        % the output array size
-%        sz = abs(size(A) - size(B)) + 1;
+%         % the output array size
+%         sz = abs(size(A) - size(B)) + 1;
 %
-%        % transform the product back from the frequency domain.
-%        % Even though all the result rows will be non-zero,
-%        % you need only the first sz(1) of them
-%        C = cv.dft(C, 'Inverse',true, 'Scale',true, 'NonzeroRows',sz(1));
+%         % transform the product back from the frequency domain.
+%         % Even though all the result rows will be non-zero,
+%         % you need only the first sz(1) of them
+%         C = cv.dft(C, 'Inverse',true, 'Scale',true, 'NonzeroRows',sz(1));
 %
-%        % now slice the result part from C
-%        C = C(1:sz(1), 1:sz(2));
-%    end
+%         % now slice the result part from C
+%         C = C(1:sz(1), 1:sz(2));
+%     end
 %
 % To optimize this sample, consider the following approaches:
 %

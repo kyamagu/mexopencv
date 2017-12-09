@@ -23,7 +23,8 @@ classdef MergeMertens < handle
     %
 
     properties (SetAccess = private)
-        id % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -40,8 +41,8 @@ classdef MergeMertens < handle
         function this = MergeMertens(varargin)
             %MERGEMERTENS  Creates MergeMertens object
             %
-            %    obj = cv.MergeMertens()
-            %    obj = cv.MergeMertens('OptionName',optionValue, ...)
+            %     obj = cv.MergeMertens()
+            %     obj = cv.MergeMertens('OptionName',optionValue, ...)
             %
             % ## Options
             % * __ContrastWeight__ default 1.0
@@ -56,7 +57,7 @@ classdef MergeMertens < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.MergeMertens
             %
@@ -70,11 +71,11 @@ classdef MergeMertens < handle
         function dst = process(this, src)
             %PROCESS  Merges images
             %
-            %    dst = obj.process(src)
+            %     dst = obj.process(src)
             %
             % ## Input
             % * __src__ vector of input images (1- or 3-channels), all of the
-            %       same size and `uint8` type.
+            %   same size and `uint8` type.
             %
             % ## Output
             % * __dst__ result image, same size as `src{i}` and `single` type.
@@ -90,7 +91,7 @@ classdef MergeMertens < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.MergeMertens.empty, cv.MergeMertens.load
             %
@@ -100,11 +101,11 @@ classdef MergeMertens < handle
         function b = empty(this)
             %EMPTY  Returns true if the algorithm is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.MergeMertens.clear, cv.MergeMertens.load
             %
@@ -114,11 +115,11 @@ classdef MergeMertens < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.MergeMertens.save, cv.MergeMertens.load
             %
@@ -128,7 +129,7 @@ classdef MergeMertens < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -144,21 +145,21 @@ classdef MergeMertens < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous

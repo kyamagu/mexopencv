@@ -1,16 +1,18 @@
-%% Non-Photorealistic Rendering demo
+%% Non-Photorealistic Rendering
 % This tutorial demonstrates how to use OpenCV Non-Photorealistic Rendering
 % Module:
 %
 % * Edge Preserve Smoothing
-%    - Using Normalized convolution Filter
-%    - Using Recursive Filter
+%   - Using Normalized convolution Filter
+%   - Using Recursive Filter
 % * Detail Enhancement
 % * Pencil sketch/Color Pencil Drawing
 % * Stylization
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/npr_demo.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/photo/non_photorealistic_rendering/npr_demo.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/npr_demo.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/photo/non_photorealistic_rendering/npr_demo.cpp>
 %
 
 %% Input Image

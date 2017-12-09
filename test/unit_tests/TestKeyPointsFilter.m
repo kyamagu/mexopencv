@@ -39,6 +39,10 @@ classdef TestKeyPointsFilter
             validateattributes(kp, {'struct'}, {'vector'});
             assert(all(ismember(TestKeyPointsFilter.fields, fieldnames(kp))));
 
+            kp = cv.KeyPointsFilter.removeDuplicatedSorted(kpts);
+            validateattributes(kp, {'struct'}, {'vector'});
+            assert(all(ismember(TestKeyPointsFilter.fields, fieldnames(kp))));
+
             num = 50;
             kp = cv.KeyPointsFilter.retainBest(kpts, num);
             validateattributes(kp, {'struct'}, {'vector'});

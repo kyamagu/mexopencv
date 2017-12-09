@@ -1,6 +1,6 @@
 %RANDGAUSSMIXTURE  Generates sample from gaussian mixture distribution
 %
-%    [samples, sampClasses] = cv.randGaussMixture(means, covs, weights, nsamples)
+%     [samples, sampClasses] = cv.randGaussMixture(means, covs, weights, nsamples)
 %
 % ## Input
 % * __means__ matrix of mean row vectors `Kxd`
@@ -11,7 +11,7 @@
 % ## Output
 % * __samples__ returned samples array `nsamples-by-d`.
 % * __sampClasses__ indices of corresponding components from which samples
-%       were generated `nsamples-by-1`.
+%   were generated `nsamples-by-1`.
 %
 % See also: cv.randMVNormal, gmdistribution.random
 %

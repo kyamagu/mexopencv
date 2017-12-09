@@ -5,8 +5,10 @@
 % In this sample you will learn how to perform basic thresholding operations
 % using OpenCV function <matlab:doc('cv.threshold') cv.threshold>.
 %
-% <http://docs.opencv.org/3.1.0/db/d8e/tutorial_threshold.html>
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ImgProc/Threshold.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.1.0/db/d8e/tutorial_threshold.html>
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ImgProc/Threshold.cpp>
 %
 
 function varargout = threshold_demo_gui(im)

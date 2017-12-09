@@ -22,9 +22,11 @@
 %
 % Example video: <http://www.youtube.com/watch?v=pzVbhxx6aog>.
 %
-% <http://docs.opencv.org/3.2.0/dc/d16/tutorial_akaze_tracking.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/features2D/AKAZE_tracking/planar_tracking.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/plane_tracker.py>
+% Sources:
+%
+% * <https://docs.opencv.org/3.3.1/dc/d16/tutorial_akaze_tracking.html>
+% * <https://github.com/opencv/opencv/blob/3.3.1/samples/cpp/tutorial_code/features2D/AKAZE_tracking/planar_tracking.cpp>
+% * <https://github.com/opencv/opencv/blob/3.3.1/samples/python/plane_tracker.py>
 %
 
 function varargout = planar_tracker_demo(fname)
@@ -113,7 +115,7 @@ function varargout = planar_tracker_demo(fname)
     vid.release();
 
     % show average stats
-    stats = stats ./ counter;
+    stats = stats ./ (counter / app.show_every_frame);
     stats(:,1:3) = round(stats(:,1:3));
     for i=1:numel(f)
         disp(['-- ' f(i).name ' --']);
@@ -219,22 +221,30 @@ function str = printStats(stats)
         sprintf('Matches: %d', stats(2))
         sprintf('Inliers: %d', stats(3))
         sprintf('Inliers Ratio: %.0f%%', stats(4)*100)
+        sprintf('FPS: %.2f', stats(5))
     };
 end
 
 function [kp, desc, stats] = processFirstFrame(f, app)
     %PROCESSFIRSTFRAME Process first frame
 
+    % init stats
+    stats = [0, 0, 0, 0, 0];
+
     % create ROI mask
     mask = zeros(app.sz(1:2), 'uint8');
     mask = cv.fillPoly(mask, app.bb0, 'Color',255);
 
+    tm = cv.TickMeter();
+    tm.start();
+
     % detect and compute features of first frame in ROI region
     [kp, desc] = f.detector.detectAndCompute(app.frame0, 'Mask',mask);
     assert(~isempty(kp), 'No keypoints detected in first frame');
+    stats(1) = numel(kp);
 
-    % init stats
-    stats = [numel(kp), 0, 0, 0];
+    tm.stop();
+    stats(5) = 1 / tm.TimeSec;
 end
 
 function [out, bb1, stats] = processFrame(f, app, frame1)
@@ -243,7 +253,10 @@ function [out, bb1, stats] = processFrame(f, app, frame1)
     % initialize output
     out = [app.frame0, frame1];
     bb1 = nan(size(app.bb0));
-    stats = [0 0 0 0];
+    stats = [0 0 0 0 0];
+
+    tm = cv.TickMeter();
+    tm.start();
 
     % detect and compute features in current frame
     [kp1, desc1] = f.detector.detectAndCompute(frame1);
@@ -276,6 +289,9 @@ function [out, bb1, stats] = processFrame(f, app, frame1)
     stats(3) = nnz(inliers);
     stats(4) = stats(3) / stats(2);
     if isempty(H), return; end
+
+    tm.stop();
+    stats(5) = 1 / tm.TimeSec;
 
     % project object bounding box using homography to locate it in new frame
     bb1 = cv.perspectiveTransform(app.bb0, H);

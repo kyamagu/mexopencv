@@ -174,7 +174,7 @@ const ConstMap<int,std::string> NormTypeInv = ConstMap<int,std::string>
     do {                                \
         if ((TF)) { (NUM) |=  (BIT); }  \
         else      { (NUM) &= ~(BIT); }  \
-    } while(0)
+    } while (0)
 
 /// Alias for input/output arguments number check
 inline void nargchk(bool cond)
@@ -211,7 +211,7 @@ std::vector<cv::Point_<T> > MxArrayToVectorPoint(const MxArray& arr)
         if (arr.numel() == 2)
             vp.push_back(arr.toPoint_<T>());
         else
-            arr.toMat(cv::DataType<T>::depth).reshape(2, 0).copyTo(vp);
+            arr.toMat(cv::traits::Depth<cv::Point_<T> >::value).reshape(2, 0).copyTo(vp);
     }
     else if (arr.isCell()) {
         /*
@@ -253,7 +253,7 @@ std::vector<cv::Point3_<T> > MxArrayToVectorPoint3(const MxArray& arr)
         if (arr.numel() == 3)
             vp.push_back(arr.toPoint3_<T>());
         else
-            arr.toMat(cv::DataType<T>::depth).reshape(3, 0).copyTo(vp);
+            arr.toMat(cv::traits::Depth<cv::Point3_<T> >::value).reshape(3, 0).copyTo(vp);
     }
     else if (arr.isCell()) {
         /*
@@ -296,7 +296,7 @@ std::vector<cv::Rect_<T> > MxArrayToVectorRect(const MxArray& arr)
         if (arr.numel() == 4)
             vr.push_back(arr.toRect_<T>());
         else
-            arr.toMat(cv::DataType<T>::depth).reshape(4, 0).copyTo(vr);
+            arr.toMat(cv::traits::Depth<cv::Rect_<T> >::value).reshape(4, 0).copyTo(vr);
     }
     else if (arr.isCell()) {
         /*
@@ -339,7 +339,7 @@ std::vector<cv::Vec<T,cn> > MxArrayToVectorVec(const MxArray& arr)
         if (arr.numel() == cn)
             vv.push_back(arr.toVec<T,cn>());
         else
-            arr.toMat(cv::Vec<T,cn>::depth).reshape(cn, 0).copyTo(vv);
+            arr.toMat(cv::traits::Depth<cv::Vec<T,cn> >::value).reshape(cn, 0).copyTo(vv);
     }
     else if (arr.isCell()) {
         /*

@@ -1,4 +1,4 @@
-%% Distance Transform Demo
+%% Distance Transform
 % Program to demonstrate the use of the distance transform function
 % between edge images.
 %
@@ -20,8 +20,10 @@
 % * |CComp|: switch to Voronoi diagram mode.
 % * |Pixel|: switch to pixel-based Voronoi diagram mode.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/distrans.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/distrans.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/distrans.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/distrans.py>
 %
 
 function varargout = distrans_demo_gui(im)

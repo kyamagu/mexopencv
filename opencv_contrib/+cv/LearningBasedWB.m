@@ -9,7 +9,7 @@ classdef LearningBasedWB < handle
     % To mask out saturated pixels this function uses only pixels that satisfy
     % the following condition:
     %
-    %    max(R,G,B)/RangeMaxVal < SaturationThreshold
+    %     max(R,G,B)/RangeMaxVal < SaturationThreshold
     %
     % Currently supports RGB images of type `uint8` and `uint16`.
     %
@@ -24,7 +24,8 @@ classdef LearningBasedWB < handle
     %
 
     properties (SetAccess = private)
-        id % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -47,12 +48,12 @@ classdef LearningBasedWB < handle
         function this = LearningBasedWB(varargin)
             %LEARNINGBASEDWB  Creates an instance of LearningBasedWB
             %
-            %    obj = cv.LearningBasedWB()
-            %    obj = cv.LearningBasedWB('OptionName',optionValue, ...)
+            %     obj = cv.LearningBasedWB()
+            %     obj = cv.LearningBasedWB('OptionName',optionValue, ...)
             %
             % ## Options
             % * __PathToModel__ Path to a .yml file with the model. If not
-            %       specified, the default model is used. Not set by default.
+            %   specified, the default model is used. Not set by default.
             %
             % See also: cv.LearningBasedWB.balanceWhite
             %
@@ -62,7 +63,7 @@ classdef LearningBasedWB < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.LearningBasedWB
             %
@@ -76,7 +77,7 @@ classdef LearningBasedWB < handle
         function dst = balanceWhite(this, src)
             %BALANCEWHITE  Applies white balancing to the input image
             %
-            %    dst = obj.balanceWhite(src)
+            %     dst = obj.balanceWhite(src)
             %
             % ## Input
             % * __src__ Input image, `uint8` or `uint16` color image.
@@ -95,14 +96,14 @@ classdef LearningBasedWB < handle
         function dst = extractSimpleFeatures(this, src)
             %EXTRACTSIMPLEFEATURES  Implements the feature extraction part of the algorithm
             %
-            %    dst = obj.extractSimpleFeatures(src)
+            %     dst = obj.extractSimpleFeatures(src)
             %
             % ## Input
             % * __src__ Input 3-channel image (BGR color space is assumed).
             %
             % ## Output
             % * __dst__ An array of four (r,g) chromaticity tuples
-            %       corresponding to the features listed below.
+            %   corresponding to the features listed below.
             %
             % In accordance with [Cheng2015], computes the following features
             % for the input image:
@@ -130,7 +131,7 @@ classdef LearningBasedWB < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.LearningBasedWB.empty
             %
@@ -140,11 +141,11 @@ classdef LearningBasedWB < handle
         function b = empty(this)
             %EMPTY  Returns true if the algorithm is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the algorithm is empty (e.g. in the very
-            %       beginning or after unsuccessful read).
+            %   beginning or after unsuccessful read).
             %
             % See also: cv.LearningBasedWB.clear
             %
@@ -154,11 +155,11 @@ classdef LearningBasedWB < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.LearningBasedWB.save, cv.LearningBasedWB.load
             %
@@ -168,7 +169,7 @@ classdef LearningBasedWB < handle
         function save(this, filename)
             %SAVE  Saves the algorithm to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -183,21 +184,21 @@ classdef LearningBasedWB < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from a file storage.
             % The previous model state is discarded.

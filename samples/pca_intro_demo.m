@@ -3,8 +3,10 @@
 % In this demo, you will learn how to use the OpenCV class |cv.PCA| to
 % calculate the orientation of an object.
 %
-% <http://docs.opencv.org/3.2.0/d1/dee/tutorial_introduction_to_pca.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ml/introduction_to_pca/introduction_to_pca.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d1/dee/tutorial_introduction_to_pca.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ml/introduction_to_pca/introduction_to_pca.cpp>
 %
 
 %% Theory
@@ -12,7 +14,7 @@
 % Principal Component Analysis (PCA) is a statistical procedure that extracts
 % the most important features of a dataset.
 %
-% <<http://docs.opencv.org/3.2.0/pca_line.png>>
+% <<https://docs.opencv.org/3.2.0/pca_line.png>>
 %
 % Consider that you have a set of 2D points as it is shown in the figure
 % above. Each dimension corresponds to a feature you are interested in. Here
@@ -36,7 +38,7 @@
 % consist of 2 vectors called _eigenvectors_ which are the
 % _principal components_ of the data set.
 %
-% <<http://docs.opencv.org/3.2.0/pca_eigen.png>>
+% <<https://docs.opencv.org/3.2.0/pca_eigen.png>>
 %
 % The size of each eigenvector is encoded in the corresponding eigenvalue and
 % indicates how much the data vary along the principal component. The
@@ -213,7 +215,7 @@ end
 %% References
 %
 % * <https://robospace.wordpress.com/2013/10/09/object-orientation-principal-component-analysis-opencv/>
-% * <http://en.wikipedia.org/wiki/Principal_component_analysis>
+% * <https://en.wikipedia.org/wiki/Principal_component_analysis>
 %
 % And special thanks to Svetlin Penkov for the original tutorial.
 %

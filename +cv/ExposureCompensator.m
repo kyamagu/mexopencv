@@ -5,27 +5,27 @@ classdef ExposureCompensator < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     methods
         function this = ExposureCompensator(compensatorType, varargin)
             %EXPOSURECOMPENSATOR  Constructor
             %
-            %    obj = cv.ExposureCompensator(compensatorType)
-            %    obj = cv.ExposureCompensator(compensatorType, 'OptionName',optionValue, ...)
+            %     obj = cv.ExposureCompensator(compensatorType)
+            %     obj = cv.ExposureCompensator(compensatorType, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __compensatorType__ exposure compensator type. One of:
-            %       * __NoExposureCompensator__ Stub exposure compensator
-            %             which does nothing.
-            %       * __GainCompensator__ Exposure compensator which tries to
-            %             remove exposure related artifacts by adjusting image
-            %             intensities, see [BL07] and [WJ10] for details.
-            %       * __BlocksGainCompensator__ Exposure compensator which
-            %             tries to remove exposure related artifacts by
-            %             adjusting image block intensities, see [UES01] for
-            %             details.
+            %   * __NoExposureCompensator__ Stub exposure compensator which
+            %     does nothing.
+            %   * __GainCompensator__ Exposure compensator which tries to
+            %     remove exposure related artifacts by adjusting image
+            %     intensities, see [BL07] and [WJ10] for details.
+            %   * __BlocksGainCompensator__ Exposure compensator which tries
+            %     to remove exposure related artifacts by adjusting image
+            %     block intensities, see [UES01] for details.
             %
             % ## Options
             % The following are options for the various algorithms:
@@ -61,7 +61,7 @@ classdef ExposureCompensator < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.ExposureCompensator
             %
@@ -72,7 +72,10 @@ classdef ExposureCompensator < handle
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
-            %    typename = obj.typeid()
+            %     typename = obj.typeid()
+            %
+            % ## Output
+            % * __typename__ Name of C++ type
             %
             typename = ExposureCompensator_(this.id, 'typeid');
         end
@@ -83,14 +86,14 @@ classdef ExposureCompensator < handle
         function feed(this, corners, images, masks)
             %FEED  Processes the images
             %
-            %    obj.feed(corners, images, masks)
+            %     obj.feed(corners, images, masks)
             %
             % ## Input
             % * __corners__ Source image top-left corners. Cell-array of 2D
-            %       points `{[x,y], ...}`.
+            %   points `{[x,y], ...}`.
             % * __images__ Source cell-array of images.
             % * __masks__ Cell-array of image masks to update (the value 255
-            %       is used to detect where image is).
+            %   is used to detect where image is).
             %
             % See also: cv.ExposureCompensator.apply
             %
@@ -100,7 +103,7 @@ classdef ExposureCompensator < handle
         function image = apply(this, index, corner, image, mask)
             %APPLY  Compensate exposure in the specified image
             %
-            %    image = obj.apply(index, corner, image, mask)
+            %     image = obj.apply(index, corner, image, mask)
             %
             % ## Input
             % * __index__ Image index.
@@ -122,7 +125,7 @@ classdef ExposureCompensator < handle
         function g = gains(this)
             %GAINS  Gains
             %
-            %    g = obj.gains()
+            %     g = obj.gains()
             %
             % ## Output
             % * __g__ double vector of gains.

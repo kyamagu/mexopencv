@@ -8,7 +8,8 @@ classdef FarnebackOpticalFlow < handle
     %
 
     properties (SetAccess = private)
-        id % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -35,7 +36,7 @@ classdef FarnebackOpticalFlow < handle
         function this = FarnebackOpticalFlow()
             %FARNEBACKOPTICALFLOW  Creates instance of FarnebackOpticalFlow
             %
-            %    obj = cv.FarnebackOpticalFlow()
+            %     obj = cv.FarnebackOpticalFlow()
             %
             % See also: cv.FarnebackOpticalFlow.calc
             %
@@ -45,7 +46,7 @@ classdef FarnebackOpticalFlow < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.FarnebackOpticalFlow
             %
@@ -59,17 +60,17 @@ classdef FarnebackOpticalFlow < handle
         function flow = calc(this, I0, I1, varargin)
             %CALC  Calculates an optical flow
             %
-            %    flow = obj.calc(I0, I1)
-            %    flow = obj.calc(I0, I1, 'OptionName',optionValue, ...)
+            %     flow = obj.calc(I0, I1)
+            %     flow = obj.calc(I0, I1, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __I0__ first 8-bit single-channel input image.
             % * __I1__ second input image of the same size and the same type
-            %       as `I0`.
+            %   as `I0`.
             %
             % ## Output
             % * __flow__ computed flow image that has the same size as `I0`
-            %       and type `single` (2-channels).
+            %   and type `single` (2-channels).
             %
             % ## Options
             % * __InitialFlow__ specify the initial flow. Not set by default.
@@ -82,7 +83,7 @@ classdef FarnebackOpticalFlow < handle
         function collectGarbage(this)
             %COLLECTGARBAGE  Releases all inner buffers
             %
-            %    obj.collectGarbage()
+            %     obj.collectGarbage()
             %
             FarnebackOpticalFlow_(this.id, 'collectGarbage');
         end
@@ -93,7 +94,7 @@ classdef FarnebackOpticalFlow < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.FarnebackOpticalFlow.empty
             %
@@ -103,11 +104,11 @@ classdef FarnebackOpticalFlow < handle
         function b = empty(this)
             %EMPTY  Returns true if the algorithm is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the algorithm is empty (e.g. in the very
-            %       beginning or after unsuccessful read).
+            %   beginning or after unsuccessful read).
             %
             % See also: cv.FarnebackOpticalFlow.clear
             %
@@ -117,11 +118,11 @@ classdef FarnebackOpticalFlow < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.FarnebackOpticalFlow.save, cv.FarnebackOpticalFlow.load
             %
@@ -131,7 +132,7 @@ classdef FarnebackOpticalFlow < handle
         function save(this, filename)
             %SAVE  Saves the algorithm to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -146,21 +147,21 @@ classdef FarnebackOpticalFlow < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from a file storage.
             % The previous model state is discarded.

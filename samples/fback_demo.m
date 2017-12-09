@@ -1,9 +1,11 @@
-%% Farneback Optical Flow demo
+%% Farneback Optical Flow
 % This program demonstrates dense optical flow algorithm by Gunnar Farneback,
 % mainly the function |cv.calcOpticalFlowFarneback|.
 % It captures from the camera by default.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/fback.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/fback.cpp>
 %
 
 %% Input video

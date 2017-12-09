@@ -1,9 +1,11 @@
-%% Laplacian Edge Detection demo
+%% Laplacian Edge Detection
 % This program demonstrates Laplace point/edge detection using OpenCV
 % function |cv.Laplacian|.
 % It captures from the camera by default.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/laplace.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/laplace.cpp>
 %
 
 function varargout = laplace_demo_gui()

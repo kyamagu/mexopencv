@@ -1,14 +1,16 @@
-%% Support Vector Machines
+%% Support Vector Machines (SVM)
 %
 % In this sample, you will learn how to use the OpenCV function |cv.SVM.train|
 % to build a classifier based on SVMs and |cv.SVM.predict| to test its
 % performance.
 %
-% <http://docs.opencv.org/3.2.0/d1/d73/tutorial_introduction_to_svm.html>,
-% <http://docs.opencv.org/3.2.0/d0/dcc/tutorial_non_linear_svms.html>,
-% <http://docs.opencv.org/3.2.0/d4/db1/tutorial_py_svm_basics.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ml/introduction_to_svm/introduction_to_svm.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ml/non_linear_svms/non_linear_svms.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d1/d73/tutorial_introduction_to_svm.html>
+% * <https://docs.opencv.org/3.2.0/d0/dcc/tutorial_non_linear_svms.html>
+% * <https://docs.opencv.org/3.2.0/d4/db1/tutorial_py_svm_basics.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ml/introduction_to_svm/introduction_to_svm.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ml/non_linear_svms/non_linear_svms.cpp>
 %
 
 %% Introduction to Support Vector Machines
@@ -22,7 +24,7 @@
 % following simple problem; For a linearly separable set of 2D-points which
 % belong to one of two classes, find a separating straight line.
 %
-% <<http://docs.opencv.org/3.2.0/separating-lines.png>>
+% <<https://docs.opencv.org/3.2.0/separating-lines.png>>
 %
 % Note: In this example we deal with lines and points in the Cartesian plane
 % instead of hyperplanes and vectors in a high dimensional space. This is a
@@ -44,13 +46,13 @@
 % Therefore, the optimal separating hyperplane _maximizes_ the margin of the
 % training data.
 %
-% <<http://docs.opencv.org/3.2.0/optimal-hyperplane.png>>
+% <<https://docs.opencv.org/3.2.0/optimal-hyperplane.png>>
 %
 %%
 % To undertand how the optimal hyperplane is computed, let's introduce the
 % notation used to define formally a hyperplane:
 %
-% $$f(x) = \beta_{0} + \beta^{T} x,$$
+% $$f(x) = \beta_{0} + \beta^{T} x$$
 %
 % where $\beta$ is known as the _weight vector_ and $\beta_{0}$ as the _bias_.
 %
@@ -92,9 +94,9 @@
 % constraints model the requirement for the hyperplane to classify correctly
 % all the training examples $x_{i}$. Formally,
 %
-% $$\min_{\beta, \beta_{0}} L(\beta) = \frac{1}{2}||\beta||^{2}$$
-% subject to
-% $$y_{i}(\beta^{T} x_{i} + \beta_{0}) \geq 1 \forall i$$
+% $$\min_{\beta, \beta_{0}} L(\beta) = \frac{1}{2}||\beta||^{2} \\
+%   \quad \textrm{subject to} \quad
+%   y_{i}(\beta^{T} x_{i} + \beta_{0}) \geq 1 \; \forall i$$
 %
 % where $y_{i}$ represents each of the labels of the training examples.
 %
@@ -131,9 +133,9 @@
 % We start here from the formulation of the optimization problem of finding
 % the hyperplane which maximizes the *margin*:
 %
-% $$\min_{\beta, \beta_{0}} L(\beta) = \frac{1}{2}||\beta||^{2}$$
-% subject to
-% $$y_{i}(\beta^{T} x_{i} + \beta_{0}) \geq 1 \forall i$$
+% $$\min_{\beta, \beta_{0}} L(\beta) = \frac{1}{2}||\beta||^{2} \\
+%   \quad \textrm{subject to} \quad
+%   y_{i}(\beta^{T} x_{i} + \beta_{0}) \geq 1 \; \forall i$$
 %
 % There are multiple ways in which this model can be modified so it takes into
 % account the misclassification errors. For example, one could think of
@@ -158,7 +160,7 @@
 % hyperplane and the distances to their correct regions of the samples that
 % are misclassified.
 %
-% <<http://docs.opencv.org/3.2.0/sample-errors-dist.png>>
+% <<https://docs.opencv.org/3.2.0/sample-errors-dist.png>>
 %
 % Note: Only the distances of the samples that are misclassified are shown in
 % the picture. The distances of the rest of the samples are zero since they
@@ -171,11 +173,11 @@
 %
 % Finally, the new formulation for the optimization problem is:
 %
-% $$\min_{\beta, \beta_{0}} L(\beta) = ||\beta||^{2} + C \sum_{i} {\xi_{i}}$$
-% subject to
-% $$y_{i}(\beta^{T} x_{i} + \beta_{0}) \geq 1 - \xi_{i}$$
-% and
-% $$\xi_{i} \geq 0 \forall i$$
+% $$\min_{\beta, \beta_{0}} L(\beta) = ||\beta||^{2} + C \sum_{i} {\xi_{i}} \\
+%   \quad \textrm{subject to} \quad
+%   y_{i}(\beta^{T} x_{i} + \beta_{0}) \geq 1 - \xi_{i} \\
+%   \quad \textrm{and} \quad
+%   \xi_{i} \geq 0 \; \forall i$$
 %
 % How should the parameter $C$ be chosen? It is obvious that the answer to
 % this question depends on how the training data is distributed. Although
@@ -206,7 +208,8 @@
 % $q=(q_1,q_2)$. Let $\phi$ be a mapping function which maps a two-dimensional
 % point to three-dimensional space as follows:
 %
-% $$\phi(p) = (p_{1}^2, p_{2}^2, \sqrt{2} p_1 p_2)$$,
+% $$\phi(p) = (p_{1}^2, p_{2}^2, \sqrt{2} p_1 p_2)$$
+%
 % $$\phi(q) = (q_{1}^2, q_{2}^2, \sqrt{2} q_1 q_2)$$
 %
 % Let us define a kernel function $K(p,q)$ which does a dot product between

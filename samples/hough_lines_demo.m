@@ -5,11 +5,13 @@
 % We show how to use the OpenCV functions |cv.HoughLines| and |cv.HoughLinesP|
 % to detect lines in an image.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/houghlines.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/houghlines.py>,
-% <http://docs.opencv.org/3.2.0/d9/db0/tutorial_hough_lines.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/HoughLines_Demo.cpp>,
-% <http://docs.opencv.org/3.2.0/d6/d10/tutorial_py_houghlines.html>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/houghlines.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/houghlines.py>
+% * <https://docs.opencv.org/3.2.0/d9/db0/tutorial_hough_lines.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ImgTrans/HoughLines_Demo.cpp>
+% * <https://docs.opencv.org/3.2.0/d6/d10/tutorial_py_houghlines.html>
 %
 
 %% Theory
@@ -26,7 +28,7 @@
 % * In the *Cartesian coordinate system:* Parameters: $(m,b)$.
 % * In the *Polar coordinate system:* Parameters: $(r,\theta)$
 %
-% <<http://docs.opencv.org/3.2.0/Hough_Lines_Tutorial_Theory_0.jpg>>
+% <<https://docs.opencv.org/3.2.0/Hough_Lines_Tutorial_Theory_0.jpg>>
 %
 % For Hough Transforms, we will express lines in the _Polar system_. Hence, a
 % line equation can be written as:
@@ -39,7 +41,7 @@
 % In general for each point $(x_{0}, y_{0})$, we can define the family of
 % lines that goes through that point as:
 %
-% $$r_{\theta} = x_{0} \cdot \cos \theta  + y_{0} \cdot \sin \theta$$
+% $$r_{\theta} = x_{0} \cdot \cos \theta + y_{0} \cdot \sin \theta$$
 %
 % Meaning that each pair $(r_{\theta},\theta)$ represents each line that
 % passes by $(x_{0}, y_{0})$.
@@ -48,7 +50,7 @@
 % through it, we get a sinusoid. For instance, for $x_{0} = 8$ and $y_{0} = 6$
 % we get the following plot (in a plane $\theta$ - $r$):
 %
-% <<http://docs.opencv.org/3.2.0/Hough_Lines_Tutorial_Theory_1.jpg>>
+% <<https://docs.opencv.org/3.2.0/Hough_Lines_Tutorial_Theory_1.jpg>>
 %
 % We consider only points such that $r > 0$ and $0< \theta < 2 \pi$.
 %
@@ -58,7 +60,7 @@
 % the example above and drawing the plot for two more points:
 % $x_{1} = 4$, $y_{1} = 9$ and $x_{2} = 12$, $y_{2} = 3$, we get:
 %
-% <<http://docs.opencv.org/3.2.0/Hough_Lines_Tutorial_Theory_2.jpg>>
+% <<https://docs.opencv.org/3.2.0/Hough_Lines_Tutorial_Theory_2.jpg>>
 %
 % The three plots intersect in one single point $(0.925, 9.6)$, these
 % coordinates are the parameters ($\theta, r$) or the line in which

@@ -1,7 +1,9 @@
 %% ChArUco Marker Image Demo
 % This example shows how to create a ChArUco marker image.
 %
-% <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/aruco/samples/create_diamond.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/aruco/samples/create_diamond.cpp>
 %
 
 %% Diamond

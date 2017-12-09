@@ -1,11 +1,13 @@
-%% Watershed demo
+%% Watershed Demo
 % An example using the watershed algorithm.
 %
 % This program demonstrates the famous watershed segmentation algorithm
 % in OpenCV.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/watershed.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/watershed.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/watershed.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/watershed.py>
 %
 
 function varargout = watershed_demo_gui(im)

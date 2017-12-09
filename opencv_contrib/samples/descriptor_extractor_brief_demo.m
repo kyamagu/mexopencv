@@ -2,7 +2,9 @@
 %
 % In this demo, we will see the basics of BRIEF algorithm.
 %
-% <http://docs.opencv.org/3.2.0/dc/d7d/tutorial_py_brief.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/dc/d7d/tutorial_py_brief.html>
 %
 
 %% Theory
@@ -84,5 +86,5 @@ disp(brief.descriptorSize())
 %   "BRIEF: Binary Robust Independent Elementary Features", 11th European
 %   Conference on Computer Vision (ECCV), Heraklion, Crete. LNCS Springer,
 %   September 2010.
-% * LSH (Locality Sensitive Hasing) at wikipedia.
+% * <https://en.wikipedia.org/wiki/Locality-sensitive_hashing LSH (Locality Sensitive Hashing)>.
 %

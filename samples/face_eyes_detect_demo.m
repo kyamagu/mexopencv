@@ -1,21 +1,24 @@
-%% Face and Eyes Detection demo
+%% Face and Eyes Detection
 %
 % In this demo, we will learn the basics of face detection using Haar
 % Feature-based Cascade Classifiers, and how the same extends for eye
 % detection, etc.
 %
-% This program demonstrates the cascade classifier, with either Haar or LBP
-% features. This classifier can detect many kinds of rigid objects, once the
-% appropriate classifier is trained. It's most known use is for faces.
+% This program demonstrates the use of |cv.CascadeClassifier| class to detect
+% objects (face + eyes). You can use Haar or LBP features. This classifier can
+% detect many kinds of rigid objects, once the appropriate classifier is
+% trained. It's most known use is for faces.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/facedetect.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/tapi/ufacedetect.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/cascadeclassifier.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/facedetect.py>,
-% <http://docs.opencv.org/3.2.0/db/d28/tutorial_cascade_classifier.html>,
-% <http://docs.opencv.org/3.2.0/d7/d8b/tutorial_py_face_detection.html>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/objectDetection/objectDetection.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/objectDetection/objectDetection2.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/facedetect.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/tapi/ufacedetect.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/gpu/cascadeclassifier.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/facedetect.py>
+% * <https://docs.opencv.org/3.2.0/db/d28/tutorial_cascade_classifier.html>
+% * <https://docs.opencv.org/3.2.0/d7/d8b/tutorial_py_face_detection.html>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/objectDetection/objectDetection.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/objectDetection/objectDetection2.cpp>
 %
 
 %% Theory
@@ -35,7 +38,7 @@
 % subtracting sum of pixels under white rectangle from sum of pixels under
 % black rectangle.
 %
-% <<http://docs.opencv.org/3.2.0/haar_features.jpg>>
+% <<https://docs.opencv.org/3.2.0/haar_features.jpg>>
 %
 % Now all possible sizes and locations of each kernel is used to calculate
 % plenty of features. (Just imagine how much computation it needs? Even a
@@ -54,7 +57,7 @@
 % place is irrelevant. So how do we select the best features out of 160000+
 % features? It is achieved by *Adaboost*.
 %
-% <<http://docs.opencv.org/3.2.0/haar.png>>
+% <<https://docs.opencv.org/3.2.0/haar.png>>
 %
 % For this, we apply each and every feature on all the training images. For
 % each feature, it finds the best threshold which will classify the faces to
@@ -215,7 +218,7 @@ function img = detectAndDraw(img, cascadeF, cascadeE, scale, tryflip)
     faces = cascadeF.detect(gray, detectOpts{:});
     if tryflip
         faces2 = cascadeF.detect(cv.flip(gray, 1), detectOpts{:});
-        faces2 = cellfun(@(r) [w-r(1)-r(3) r(2:4)], faces2, 'Uniform',false);
+        faces2 = cellfun(@(r) [w-r(1)-r(3) r(2:4)], faces2, 'UniformOutput',false);
         faces = [faces(:); faces2(:)];
     end
     toc

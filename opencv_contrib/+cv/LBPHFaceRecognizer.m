@@ -28,32 +28,32 @@ classdef LBPHFaceRecognizer < handle
     % Here is an example of setting a threshold for the Eigenfaces method,
     % when creating the model:
     %
-    %    % Let's say we want to keep 10 Eigenfaces and have a threshold value of 10.0
-    %    num_components = 10;
-    %    threshold = 10.0;
-    %    % Then if you want to have a face recognizer with a confidence threshold,
-    %    % create the concrete implementation with the appropiate parameters:
-    %    model = cv.BasicFaceRecognizer('Eigenfaces', ...
-    %        'NumComponents',num_components, 'Threshold',threshold);
+    %     % Let's say we want to keep 10 Eigenfaces and have a threshold value of 10.0
+    %     num_components = 10;
+    %     threshold = 10.0;
+    %     % Then if you want to have a face recognizer with a confidence threshold,
+    %     % create the concrete implementation with the appropiate parameters:
+    %     model = cv.BasicFaceRecognizer('Eigenfaces', ...
+    %         'NumComponents',num_components, 'Threshold',threshold);
     %
     % Sometimes it's impossible to train the model, just to experiment with
     % threshold values. It's possible to set model thresholds during runtime.
     % Let's see how we would set/get the prediction for the Eigenface model,
     % we've created above:
     %
-    %    % The following line reads the threshold from the Eigenfaces model:
-    %    current_threshold = model.Threshold;
-    %    % And this line sets the threshold to 0.0:
-    %    model.Threshold = 0.0;
+    %     % The following line reads the threshold from the Eigenfaces model:
+    %     current_threshold = model.Threshold;
+    %     % And this line sets the threshold to 0.0:
+    %     model.Threshold = 0.0;
     %
     % If you've set the threshold to 0.0 as we did above, then:
     %
-    %    img = cv.imread('person1/3.jpg', 'Grayscale',true);
-    %    % Get a prediction from the model. Note: We've set a threshold of 0.0 above,
-    %    % since the distance is almost always larger than 0.0, you'll get -1 as
-    %    % label, which indicates, this face is unknown
-    %    predicted_label = model.predict(img);
-    %    % ...
+    %     img = cv.imread('person1/3.jpg', 'Grayscale',true);
+    %     % Get a prediction from the model. Note: We've set a threshold of 0.0 above,
+    %     % since the distance is almost always larger than 0.0, you'll get -1 as
+    %     % label, which indicates, this face is unknown
+    %     predicted_label = model.predict(img);
+    %     % ...
     %
     % is going to yield -1 as predicted label, which states this face is
     % unknown.
@@ -68,7 +68,8 @@ classdef LBPHFaceRecognizer < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     properties (Dependent)
@@ -89,26 +90,27 @@ classdef LBPHFaceRecognizer < handle
         function this = LBPHFaceRecognizer(varargin)
             %LBPHFACERECOGNIZER  Constructor
             %
-            %    obj = cv.LBPHFaceRecognizer('OptionName',optionValue, ...)
+            %     obj = cv.LBPHFaceRecognizer('OptionName',optionValue, ...)
             %
             % ## Options
             % * __Radius__ The radius used for building the Circular Local
-            %       Binary Pattern. The greater the radius, the.. default 1
+            %   Binary Pattern. The greater the radius, the smoother the image
+            %   but more spatial information you can get. default 1
             % * __Neighbors__ The number of sample points to build a Circular
-            %       Local Binary Pattern from. An appropriate value is to use
-            %       8 sample points. Keep in mind: the more sample points you
-            %       include, the higher the computational cost. default 8
-            % * __GridX__ The number of cells in the horizontal direction,
-            %       8 is a common value used in publications. The more cells,
-            %       the finer the grid, the higher the dimensionality of the
-            %       resulting feature vector. default 8
+            %   Local Binary Pattern from. An appropriate value is to use 8
+            %   sample points. Keep in mind: the more sample points you
+            %   include, the higher the computational cost. default 8
+            % * __GridX__ The number of cells in the horizontal direction, 8
+            %   is a common value used in publications. The more cells, the
+            %   finer the grid, the higher the dimensionality of the resulting
+            %   feature vector. default 8
             % * __GridY__ The number of cells in the vertical direction, 8 is
-            %       a common value used in publications. The more cells, the
-            %       finer the grid, the higher the dimensionality of the
-            %       resulting feature vector. default 8
+            %   a common value used in publications. The more cells, the finer
+            %   the grid, the higher the dimensionality of the resulting
+            %   feature vector. default 8
             % * __Threshold__ The threshold applied in the prediction. If the
-            %       distance to the nearest neighbor is larger than the
-            %       threshold, the prediction returns -1. default `realmax`
+            %   distance to the nearest neighbor is larger than the threshold,
+            %   the prediction returns -1. default `realmax`
             %
             % Initializes this LBPH Model. The current implementation is
             % rather fixed as it uses the Extended Local Binary Patterns per
@@ -119,7 +121,6 @@ classdef LBPHFaceRecognizer < handle
             % spatial histograms.
             %
             % ### Notes
-            %
             % - The Circular Local Binary Patterns (used in training and
             %   prediction) expect the data given as grayscale images, use
             %   cv.cvtColor to convert between the color spaces.
@@ -133,7 +134,7 @@ classdef LBPHFaceRecognizer < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.LBPHFaceRecognizer
             %
@@ -144,7 +145,7 @@ classdef LBPHFaceRecognizer < handle
         function typename = typeid(this)
             %TYPEID  Name of the C++ type (RTTI)
             %
-            %    typename = obj.typeid()
+            %     typename = obj.typeid()
             %
             % ## Output
             % * __typename__ Name of C++ type
@@ -158,7 +159,7 @@ classdef LBPHFaceRecognizer < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.LBPHFaceRecognizer.empty, cv.LBPHFaceRecognizer.load
             %
@@ -168,11 +169,11 @@ classdef LBPHFaceRecognizer < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.LBPHFaceRecognizer.clear, cv.LBPHFaceRecognizer.load
             %
@@ -182,16 +183,16 @@ classdef LBPHFaceRecognizer < handle
         function varargout = save(this, filename)
             %SAVE  Saves a FaceRecognizer and its model state
             %
-            %    obj.save(filename)
-            %    str = obj.save(filename)
+            %     obj.save(filename)
+            %     str = obj.save(filename)
             %
             % ## Input
             % * __filename__ The filename to store this FaceRecognizer to
-            %       (either XML/YAML).
+            %   (either XML/YAML).
             %
             % ## Output
             % * __str__ optional output. If requested, the model is persisted
-            %       to a string in memory instead of writing to disk.
+            %   to a string in memory instead of writing to disk.
             %
             % Saves this model to a given filename, either as XML or YAML.
             %
@@ -205,19 +206,19 @@ classdef LBPHFaceRecognizer < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads a FaceRecognizer and its model state
             %
-            %    obj.load(filename)
-            %    obj.load(str, 'FromString',true)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
             %
             % ## Input
-            % * __filename__ The filename to load this FaceRecognizer from
-            %       (either XML/YAML).
+            % * __fname__ The filename to load this FaceRecognizer from
+            %   (either XML/YAML).
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % Loads a persisted model and state from a given XML or YAML file.
             %
@@ -229,11 +230,11 @@ classdef LBPHFaceRecognizer < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.LBPHFaceRecognizer.save, cv.LBPHFaceRecognizer.load
             %
@@ -246,14 +247,13 @@ classdef LBPHFaceRecognizer < handle
         function train(this, src, labels)
             %TRAIN  Trains a FaceRecognizer with given data and associated labels
             %
-            %    obj.train(src, labels)
+            %     obj.train(src, labels)
             %
             % ## Input
             % * __src__ The training images, that means the faces you want to
-            %       learn. The data has to be given as a cell array of
-            %       matrices.
+            %   learn. The data has to be given as a cell array of matrices.
             % * __labels__ The labels corresponding to the images. have to be
-            %       given as an integer vector.
+            %   given as an integer vector.
             %
             % The following source code snippet shows you how to learn a
             % Fisherfaces model on a given set of images. The images are read
@@ -264,39 +264,39 @@ classdef LBPHFaceRecognizer < handle
             % FaceRecognizer you don't have to pay any attention to the order
             % of the labels, just make sure same persons have the same label:
             %
-            %    % holds images and labels
-            %    images = {};
-            %    labels = [];
-            %    % images for first person
-            %    images{end+1} = cv.imread('person0/0.jpg', 'Grayscale',true);
-            %    labels{end+1} = 0;
-            %    images{end+1} = cv.imread('person0/1.jpg', 'Grayscale',true);
-            %    labels{end+1} = 0;
-            %    images{end+1} = cv.imread('person0/2.jpg', 'Grayscale',true);
-            %    labels{end+1} = 0;
-            %    % images for second person
-            %    images{end+1} = cv.imread('person1/0.jpg', 'Grayscale',true);
-            %    labels{end+1} = 1;
-            %    images{end+1} = cv.imread('person1/1.jpg', 'Grayscale',true);
-            %    labels{end+1} = 1;
-            %    images{end+1} = cv.imread('person1/2.jpg', 'Grayscale',true);
-            %    labels{end+1} = 1;
+            %     % holds images and labels
+            %     images = {};
+            %     labels = [];
+            %     % images for first person
+            %     images{end+1} = cv.imread('person0/0.jpg', 'Grayscale',true);
+            %     labels{end+1} = 0;
+            %     images{end+1} = cv.imread('person0/1.jpg', 'Grayscale',true);
+            %     labels{end+1} = 0;
+            %     images{end+1} = cv.imread('person0/2.jpg', 'Grayscale',true);
+            %     labels{end+1} = 0;
+            %     % images for second person
+            %     images{end+1} = cv.imread('person1/0.jpg', 'Grayscale',true);
+            %     labels{end+1} = 1;
+            %     images{end+1} = cv.imread('person1/1.jpg', 'Grayscale',true);
+            %     labels{end+1} = 1;
+            %     images{end+1} = cv.imread('person1/2.jpg', 'Grayscale',true);
+            %     labels{end+1} = 1;
             %
             % Now that you have read some images, we can create a new
             % FaceRecognizer. In this example I'll create a Fisherfaces model
             % and decide to keep all of the possible Fisherfaces:
             %
-            %    % Create a new Fisherfaces model and retain all available
-            %    % Fisherfaces, this is the most common usage of this specific
-            %    % FaceRecognizer:
-            %    model = cv.BasicFaceRecognizer('Fisherfaces');
+            %     % Create a new Fisherfaces model and retain all available
+            %     % Fisherfaces, this is the most common usage of this specific
+            %     % FaceRecognizer:
+            %     model = cv.BasicFaceRecognizer('Fisherfaces');
             %
             % And finally train it on the given dataset (the face images and
             % labels):
             %
-            %    % This is the common interface to train all of the available FaceRecognizer
-            %    % implementations:
-            %    model.train(images, labels);
+            %     % This is the common interface to train all of the available FaceRecognizer
+            %     % implementations:
+            %     model.train(images, labels);
             %
             % See also: cv.LBPHFaceRecognizer.predict
             %
@@ -306,14 +306,13 @@ classdef LBPHFaceRecognizer < handle
         function update(this, src, labels)
             %UPDATE  Updates a FaceRecognizer with given data and associated labels
             %
-            %    obj.update(src, labels)
+            %     obj.update(src, labels)
             %
             % ## Input
             % * __src__ The training images, that means the faces you want to
-            %       learn. The data has to be given as a cell array of
-            %       matrices.
+            %   learn. The data has to be given as a cell array of matrices.
             % * __labels__ The labels corresponding to the images. have to be
-            %       given as an integer vector.
+            %   given as an integer vector.
             %
             % This method updates a (probably trained) FaceRecognizer, but
             % only if the algorithm supports it. The Local Binary Patterns
@@ -324,30 +323,30 @@ classdef LBPHFaceRecognizer < handle
             % train empties the existing model and learns a new model, while
             % update does not delete any model data.
             %
-            %    % Create a new LBPH model (it can be updated) and use the
-            %    % default parameters, this is the most common usage of this
-            %    % specific FaceRecognizer:
-            %    model = cv.LBPHFaceRecognizer();
-            %    % This is the common interface to train all of the available
-            %    % FaceRecognizer implementations:
-            %    model.train(images, labels);
-            %    % Some containers to hold new image.
-            %    % You should add some images to the containers:
-            %    newImages = {..};
-            %    newLabels = [..];
-            %    % Now updating the model is as easy as calling:
-            %    model.update(newImages,newLabels);
-            %    % This will preserve the old model data and extend the
-            %    % existing model with the new features extracted from
-            %    % newImages!
+            %     % Create a new LBPH model (it can be updated) and use the
+            %     % default parameters, this is the most common usage of this
+            %     % specific FaceRecognizer:
+            %     model = cv.LBPHFaceRecognizer();
+            %     % This is the common interface to train all of the available
+            %     % FaceRecognizer implementations:
+            %     model.train(images, labels);
+            %     % Some containers to hold new image.
+            %     % You should add some images to the containers:
+            %     newImages = {..};
+            %     newLabels = [..];
+            %     % Now updating the model is as easy as calling:
+            %     model.update(newImages,newLabels);
+            %     % This will preserve the old model data and extend the
+            %     % existing model with the new features extracted from
+            %     % newImages!
             %
             % Calling update on an Eigenfaces model (see
             % cv.BasicFaceRecognizer), which doesn't support updating, will
             % throw an error similar to:
             %
-            %    OpenCV Error: The function/feature is not implemented (This
-            %    FaceRecognizer (FaceRecognizer.Eigenfaces) does not support
-            %    updating, you have to use FaceRecognizer::train to update it.)
+            %     OpenCV Error: The function/feature is not implemented (This
+            %     FaceRecognizer (FaceRecognizer.Eigenfaces) does not support
+            %     updating, you have to use FaceRecognizer::train to update it.)
             %
             % NOTE: The FaceRecognizer does not store your training images,
             % because this would be very memory intense and it's not the
@@ -362,7 +361,7 @@ classdef LBPHFaceRecognizer < handle
         function [label, confidence] = predict(this, src)
             %PREDICT  Predicts a label and associated confidence (e.g. distance) for a given input image
             %
-            %    [label, confidence] = obj.predict(src)
+            %     [label, confidence] = obj.predict(src)
             %
             % ## Input
             % * __src__ Sample image to get a prediction from.
@@ -370,24 +369,24 @@ classdef LBPHFaceRecognizer < handle
             % ## Output
             % * __label__ The predicted label for the given image.
             % * __confidence__ Associated confidence (e.g. distance) for the
-            %       predicted label.
+            %   predicted label.
             %
             % The following example shows how to get a prediction from a
             % trained model:
             %
-            %    % Do your initialization here (create the FaceRecognizer model) ...
-            %    % Read in a sample image:
-            %    img = cv.imread('person1/3.jpg', 'Grayscale',true);
-            %    % And get a prediction from the FaceRecognizer:
-            %    predicted = model.predict(img);
+            %     % Do your initialization here (create the FaceRecognizer model) ...
+            %     % Read in a sample image:
+            %     img = cv.imread('person1/3.jpg', 'Grayscale',true);
+            %     % And get a prediction from the FaceRecognizer:
+            %     predicted = model.predict(img);
             %
             % Or to get a prediction and the associated confidence (e.g.
             % distance):
             %
-            %    % Do your initialization here (create the FaceRecognizer model) ...
-            %    img = cv.imread('person1/3.jpg', 'Grayscale',true);
-            %    % Get the prediction and associated confidence from the model
-            %    [predicted_label, predicted_confidence] = model.predict(img);
+            %     % Do your initialization here (create the FaceRecognizer model) ...
+            %     img = cv.imread('person1/3.jpg', 'Grayscale',true);
+            %     % Get the prediction and associated confidence from the model
+            %     [predicted_label, predicted_confidence] = model.predict(img);
             %
             % See also: cv.LBPHFaceRecognizer.train
             %
@@ -397,19 +396,19 @@ classdef LBPHFaceRecognizer < handle
         function results = predict_collect(this, src, varargin)
             %PREDICT_COLLECT  send all result of prediction to collector for custom result handling
             %
-            %    results = obj.predict_collect(src)
-            %    results = obj.predict_collect(src, 'OptionName',optionValue, ...)
+            %     results = obj.predict_collect(src)
+            %     results = obj.predict_collect(src, 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __src__ Sample image to get a prediction from.
             %
             % ## Output
             % * __results__ A struct array of all collected predictions labels
-            %       and associated prediction distances for the given image.
+            %   and associated prediction distances for the given image.
             %
             % ## Options
             % * __Sorted__ If set, results will be sorted by distance. Each
-            %       value is a pair of label and distance. default false
+            %   value is a pair of label and distance. default false
             %
             % See also: cv.LBPHFaceRecognizer.predict
             %
@@ -419,7 +418,7 @@ classdef LBPHFaceRecognizer < handle
         function setLabelInfo(this, label, strInfo)
             %SETLABELINFO  Sets string info for the specified model's label
             %
-            %    obj.setLabelInfo(label, strInfo)
+            %     obj.setLabelInfo(label, strInfo)
             %
             % ## Input
             % * __label__ label id.
@@ -436,7 +435,7 @@ classdef LBPHFaceRecognizer < handle
         function strInfo = getLabelInfo(this, label)
             %GETLABELINFO  Gets string information by label
             %
-            %    strInfo = obj.getLabelInfo(label)
+            %     strInfo = obj.getLabelInfo(label)
             %
             % ## Input
             % * __label__ label id.
@@ -456,7 +455,7 @@ classdef LBPHFaceRecognizer < handle
         function labels = getLabelsByString(this, str)
             %GETLABELSBYSTRING  Gets vector of labels by string
             %
-            %    labels = obj.getLabelsByString(str)
+            %     labels = obj.getLabelsByString(str)
             %
             % ## Input
             % * __str__ string information (substring matching).
@@ -478,15 +477,14 @@ classdef LBPHFaceRecognizer < handle
         function hists = getHistograms(this)
             %GETHISTOGRAMS  Get calculated LBP histograms
             %
-            %    hists = obj.getHistograms()
+            %     hists = obj.getHistograms()
             %
             % ## Output
             % * __hists__ Local Binary Patterns Histograms calculated from the
-            %       given training data (empty if none was given).
-            %       A cell array of length `N` (training set size), each cell
-            %       contains a `single` vector of length `B` representing the
-            %       number of features (it depends on the image and grid sizes
-            %       and number of neighbors).
+            %   given training data (empty if none was given). A cell array of
+            %   length `N` (training set size), each cell contains a `single`
+            %   vector of length `B` representing the number of features (it
+            %   depends on the image and grid sizes and number of neighbors).
             %
             % See also: cv.LBPHFaceRecognizer.getLabels
             %
@@ -496,12 +494,12 @@ classdef LBPHFaceRecognizer < handle
         function labels = getLabels(this)
             %GETLABELS  Get labels
             %
-            %    labels = obj.getLabels()
+            %     labels = obj.getLabels()
             %
             % ## Output
             % * __labels__ Labels corresponding to the calculated Local Binary
-            %       Patterns Histograms.
-            %       An integer vector of length `N` (training set size).
+            %   Patterns Histograms. An integer vector of length `N` (training
+            %   set size).
             %
             % Note: returns an empty mat if the model is not trained.
             %

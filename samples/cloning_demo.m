@@ -1,4 +1,4 @@
-%% Seamless Cloning demo
+%% Seamless Cloning
 % This tutorial demonstrates how to use OpenCV seamless cloning module.
 %
 % * Normal Cloning
@@ -13,9 +13,11 @@
 %
 % Test images are downloaded from |opencv_extra| on Github.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/cloning_demo.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/cloning_gui.cpp>,
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/photo/seamless_cloning/cloning_demo.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/cloning_demo.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/cloning_gui.cpp>
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/photo/seamless_cloning/cloning_demo.cpp>
 %
 
 %% Test images

@@ -1,12 +1,14 @@
-%% FileStorage demo
+%% Reading/Writing XML and YAML files
 % Demonstration of reading/writing from/to XML and YAML file storages.
 %
-% <http://docs.opencv.org/3.1.0/d4/da4/group__core__xml.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.1.0/d4/da4/group__core__xml.html>
 %
 
 %% Data
 % First we create some different variables to save.
-% We have an integer, text string (calibration date), 2 matrices,
+% We have an integer, a text string (calibration date), 2 matrices,
 % and a custom structure "feature" (struct-array), which includes feature
 % coordinates and LBP (local binary pattern) value.
 frameCount = int32(5);

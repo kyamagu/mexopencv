@@ -1,8 +1,10 @@
-%% SVMSGD Interactive Demo
+%% SVMSGD Interactive Classification
 % Train with SVMSGD algorithm.
 % The classifier can handle linearly separable 2-class dataset.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/train_svmsgd.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/train_svmsgd.cpp>
 %
 
 function varargout = train_svmsgd_demo_gui()
@@ -119,6 +121,8 @@ end
 
 function [weights, shift] = doTrain(samples, responses)
     %DOTRAIN  Train with SVMSGD algorithm
+    %
+    %     [weights, shift] = doTrain(samples, responses)
     %
     % ## Input
     % * __samples__, __responses__ train set

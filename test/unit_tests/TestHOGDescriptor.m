@@ -67,7 +67,7 @@ classdef TestHOGDescriptor
             end
 
             % group similar rectangles
-            rects = cellfun(@(p) [p hog.WinSize], pts, 'Uniform',false);
+            rects = cellfun(@(p) [p hog.WinSize], pts, 'UniformOutput',false);
             [rects, weights] = hog.groupRectangles(rects, weights, ...
                 'GroupThreshold',1, 'EPS',0.2);
             if ~isempty(rects)

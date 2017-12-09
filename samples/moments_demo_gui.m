@@ -1,4 +1,4 @@
-%% Image Moments demo
+%% Image Moments
 % We learn to calculate the moments of an image.
 %
 % In this sample you will learn how to use the following OpenCV functions:
@@ -7,8 +7,10 @@
 % * <matlab:doc('cv.contourArea') cv.contourArea>
 % * <matlab:doc('cv.arcLength') cv.arcLength>
 %
-% <http://docs.opencv.org/3.1.0/d0/d49/tutorial_moments.html>
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ShapeDescriptors/moments_demo.cpp>
+% Sources:
+%
+% * <https://docs.opencv.org/3.1.0/d0/d49/tutorial_moments.html>
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ShapeDescriptors/moments_demo.cpp>
 %
 
 function varargout = moments_demo_gui(im)

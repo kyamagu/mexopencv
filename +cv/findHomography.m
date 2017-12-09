@@ -1,50 +1,49 @@
 %FINDHOMOGRAPHY  Finds a perspective transformation between two planes
 %
-%    H = cv.findHomography(srcPoints, dstPoints)
-%    [H, mask] = cv.findHomography(...)
-%    [...] = cv.findHomography(..., 'OptionName', optionValue, ...)
+%     H = cv.findHomography(srcPoints, dstPoints)
+%     [H, mask] = cv.findHomography(...)
+%     [...] = cv.findHomography(..., 'OptionName', optionValue, ...)
 %
 % ## Input
 % * __srcPoints__ Coordinates of the points in the original plane, a numeric
-%       array of size Nx2/1xNx2/Nx1x2 or cell array of 2-elements vectors
-%       `{[x,y], ...}` (single floating-point precision).
+%   array of size Nx2/1xNx2/Nx1x2 or cell array of 2-elements vectors
+%   `{[x,y], ...}` (single floating-point precision).
 % * __dstPoints__ Coordinates of the points in the target plane, of same size
-%       and type as `srcPoints`.
+%   and type as `srcPoints`.
 %
 % ## Output
 % * __H__ 3x3 Homography matrix.
 % * __mask__ Nx1 mask array of same length as input points, indicates inliers
-%       (which points were actually used in the best computation of `H`).
+%   (which points were actually used in the best computation of `H`).
 %
 % ## Options
 % * __Method__ Method used to computed a homography matrix. The following
-%       methods are possible:
-%       * __0__ a regular method using all the points. (default)
-%       * __Ransac__ RANSAC-based robust method.
-%       * __LMedS__ Least-Median robust method.
-%       * __Rho__ PROSAC-based robust method, introduced in [Bazargani15].
-%             (weighted RANSAC modification, faster in the case of many
-%             outliers).
+%   methods are possible:
+%   * __0__ a regular method using all the points. (default)
+%   * __Ransac__ RANSAC-based robust method.
+%   * __LMedS__ Least-Median robust method.
+%   * __Rho__ PROSAC-based robust method, introduced in [Bazargani15].
+%     (weighted RANSAC modification, faster in the case of many outliers).
 % * __RansacReprojThreshold__ Maximum allowed reprojection error to treat a
-%       point pair as an inlier (used in the RANSAC and RHO methods only).
-%       That is, if
-%       `|| dstPoints_i - convertPointsToHomogeneous(H*srcPoints_i) || > RansacReprojThreshold`
-%       then the point `i` is considered an outlier. If `srcPoints` and
-%       `dstPoints` are measured in pixels, it usually makes sense to set
-%       this parameter somewhere in the range of 1 to 10. default 3.0.
+%   point pair as an inlier (used in the RANSAC and RHO methods only). That
+%   is, if
+%   `|| dstPoints_i - convertPointsToHomogeneous(H*srcPoints_i) || > RansacReprojThreshold`
+%   then the point `i` is considered an outlier. If `srcPoints` and `dstPoints`
+%   are measured in pixels, it usually makes sense to set this parameter
+%   somewhere in the range of 1 to 10. default 3.0.
 % * __MaxIters__ The maximum number of RANSAC iterations, 2000 is the maximum
-%       it can be. default 2000
+%   it can be. default 2000
 % * __Confidence__ Confidence level, between 0 and 1. default 0.995
 %
 % The function finds and returns the perspective transformation `H` between
 % the source and the destination planes:
 %
-%    s_i * [x_i'; y_i'; 1] ~ H * [x_i; y_i; 1]
+%     s_i * [x_i'; y_i'; 1] ~ H * [x_i; y_i; 1]
 %
 % so that the back-projection error:
 %
-%    sum_{i} (x_i' - (h11*x_i + h12*y_i + h13)/(h31*x_i + h32*y_i + h33))^2 +
-%            (y_i' - (h21*x_i + h22*y_i + h23)/(h31*x_i + h32*y_i + h33))^2
+%     sum_{i} (x_i' - (h11*x_i + h12*y_i + h13)/(h31*x_i + h32*y_i + h33))^2 +
+%             (y_i' - (h21*x_i + h22*y_i + h23)/(h31*x_i + h32*y_i + h33))^2
 %
 % is minimized. If the parameter method is set to the default value 0, the
 % function uses all the point pairs to compute an initial homography estimate

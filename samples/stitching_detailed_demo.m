@@ -1,81 +1,81 @@
 %% Rotation model images stitcher
 % A detailed example on image stitching.
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/stitching_detailed.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/stitching_detailed.cpp>
 %
 % See also:
-% <http://www.mathworks.com/help/vision/examples/feature-based-panoramic-image-stitching.html>
+% <https://www.mathworks.com/help/vision/examples/feature-based-panoramic-image-stitching.html>
 %
 
 %%
 % Description of parameters:
 %
 % * *preview* (true|false)
-%     Run stitching in the preview mode. Works faster than usual mode,
-%     but output image will have lower resolution.
+%   Run stitching in the preview mode. Works faster than usual mode, but output
+%   image will have lower resolution.
 % * *try_cuda* (true|false)
-%     Try to use CUDA. The default value is false. All default values
-%     are for CPU mode.
+%   Try to use CUDA. The default value is false. All default values are for CPU
+%   mode.
 % * *work_megapix* (float)
-%     Resolution for image registration step. The default is 0.6 Mpx.
+%   Resolution for image registration step. The default is 0.6 Mpx.
 % * *features_type* (SurfFeaturesFinder|OrbFeaturesFinder|AKAZEFeaturesFinder)
-%     Type of features used for images matching. The default is SURF.
+%   Type of features used for images matching. The default is SURF.
 % * *matcher_type* (homography|affine)
-%     Matcher used for pairwise image matching. The default is homography.
+%   Matcher used for pairwise image matching. The default is homography.
 % * *estimator_type* (HomographyBasedEstimator|AffineBasedEstimator)
-%     Type of estimator used for transformation estimation. The default is
-%     homography.
+%   Type of estimator used for transformation estimation. The default is
+%   homography.
 % * *match_conf* (float)
-%     Confidence for feature matching step. The default is 0.65 for SURF
-%     and 0.3 for ORB.
+%   Confidence for feature matching step. The default is 0.65 for SURF and 0.3
+%   for ORB.
 % * *conf_thresh* (float)
-%     Threshold for two images are from the same panorama confidence.
-%     The default is 1.0.
+%   Threshold for two images are from the same panorama confidence. The default
+%   is 1.0.
 % * *ba_cost_func* (NoBundleAdjuster|BundleAdjusterReproj|BundleAdjusterRay|BundleAdjusterAffinePartial)
-%     Bundle adjustment cost function. The default is Ray.
+%   Bundle adjustment cost function. The default is Ray.
 % * *ba_refine_mask* (mask)
-%     Set refinement mask for bundle adjustment. It looks like 'x_xxx',
-%     where 'x' means refine respective parameter and '_' means don't
-%     refine one, and has the following format:
-%     {fx, skew, ppx, aspect, ppy}. The default mask is 'xxxxx'. If bundle
-%     adjustment doesn't support estimation of selected parameter then
-%     the respective flag is ignored.
+%   Set refinement mask for bundle adjustment. It looks like 'x_xxx', where 'x'
+%   means refine respective parameter and '_' means don't refine one, and has
+%   the following format: |{fx, skew, ppx, aspect, ppy}|. The default mask is
+%   'xxxxx'. If bundle adjustment doesn't support estimation of selected
+%   parameter then the respective flag is ignored.
 % * *do_wave_correct* (true|false)
-%     Default true
+%   Default true
 % * *wave_correct* (Horiz|Vert)
-%     Perform wave effect correction. The default is 'Horiz'.
+%   Perform wave effect correction. The default is 'Horiz'.
 % * *save_graph* (true|false)
-%     Save matches graph represented in DOT language and print it.
-%     Labels description: Nm is number of matches, Ni is number of inliers,
-%     C is confidence.
+%   Save matches graph represented in DOT language and print it. Labels
+%   description: Nm is number of matches, Ni is number of inliers, C is
+%   confidence.
 % * *warp_type* (affine|plane|cylindrical|spherical|fisheye|stereographic|
-%              compressedPlaneA2B1|compressedPlaneA1.5B1|
-%              compressedPlanePortraitA2B1|compressedPlanePortraitA1.5B1|
-%              paniniA2B1|paniniA1.5B1|paniniPortraitA2B1|
-%              paniniPortraitA1.5B1|mercator|transverseMercator)
-%     Warp surface type. The default is 'spherical'.
+%     compressedPlaneA2B1|compressedPlaneA1.5B1|compressedPlanePortraitA2B1|
+%     compressedPlanePortraitA1.5B1|paniniA2B1|paniniA1.5B1|paniniPortraitA2B1|
+%     paniniPortraitA1.5B1|mercator|transverseMercator)
+%   Warp surface type. The default is 'spherical'.
 % * *seam_megapix* (float)
-%     Resolution for seam estimation step. The default is 0.1 Mpx.
+%   Resolution for seam estimation step. The default is 0.1 Mpx.
 % * *seam_find_type* (no|voronoi|gc_color|gc_colorgrad|dp_color|dp_colorgrad)
-%     Seam estimation method. The default is 'gc_color'.
+%   Seam estimation method. The default is 'gc_color'.
 % * *compose_megapix* (float)
-%     Resolution for compositing step. Use -1 for original resolution.
-%     The default is -1.
+%   Resolution for compositing step. Use -1 for original resolution. The
+%   default is -1.
 % * *expos_comp_type* (NoExposureCompensator|GainCompensator|BlocksGainCompensator)
-%     Exposure compensation method. The default is 'BlocksGainCompensator'.
+%   Exposure compensation method. The default is 'BlocksGainCompensator'.
 % * *blend_type* (NoBlender|FeatherBlender|MultiBandBlender)
-%     Blending method. The default is 'MultiBandBlender'.
+%   Blending method. The default is 'MultiBandBlender'.
 % * *blend_strength* (float)
-%     Blending strength from [0,100] range. The default is 5.
+%   Blending strength from [0,100] range. The default is 5.
 % * *output* (filename)
-%     The default is 'stitching_result.jpg'.
+%   The default is 'stitching_result.jpg'.
 % * *timelapse* (true|false)
-%     Default false
+%   Default false
 % * *timelapse_type* (AsIs|Crop)
-%     Output warped images separately as frames of a time lapse movie,
-%     with 'fixed_' prepended to input file names
+%   Output warped images separately as frames of a time lapse movie, with
+%   'fixed_' prepended to input file names
 % * *timelapse_range* (float)
-%     Range width to limit number of images to match with, default 5
+%   Range width to limit number of images to match with, default 5
 %
 
 %% Images

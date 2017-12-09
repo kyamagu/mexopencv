@@ -1,11 +1,11 @@
 %DCTDENOISING  The function implements simple dct-based denoising
 %
-%    dst = cv.dctDenoising(src)
-%    dst = cv.dctDenoising(src, 'OptionName',optionValue, ...)
+%     dst = cv.dctDenoising(src)
+%     dst = cv.dctDenoising(src, 'OptionName',optionValue, ...)
 %
 % ## Input
-% * __src__ source image (gray or RGB).
-%       Internally the function operates on `single` data type.
+% * __src__ source image (gray or RGB). Internally the function operates on
+%   `single` data type.
 %
 % ## Output
 % * __dst__ destination image, same size and type as input `src`.

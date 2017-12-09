@@ -1,6 +1,6 @@
 %HUMOMENTS  Calculates seven Hu invariants
 %
-%    hu = cv.HuMoments(mo)
+%     hu = cv.HuMoments(mo)
 %
 % ## Input
 % * __mo__ Input moments computed with cv.moments
@@ -9,18 +9,18 @@
 % * __hu__ Output Hu invariants, a vector of length 7.
 %
 % The function calculates seven Hu invariants (introduced in [Hu62]; see also
-% [Image moment](http://en.wikipedia.org/wiki/Image_moment)), defined as:
+% [Image moment](https://en.wikipedia.org/wiki/Image_moment)), defined as:
 %
-%    hu[0] =  eta_20 + eta_02
-%    hu[1] = (eta_20 - eta_02)^2 + 4*eta_11^2
-%    hu[2] = (eta_30 - 3*eta_12)^2 + (3*eta_21 - eta_03)^2
-%    hu[3] = (eta_30 + eta_12)^2 + (eta_21 + eta_03)^2
-%    hu[4] = (eta_30 - 3*eta_12)*(eta_30 + eta_12)*[(eta_30 + eta_12)^2 - 3*(eta_21 + eta_03)^2] +
-%            (3*eta_21 - eta_03)*(eta_21 + eta_03)*[3*(eta_30 + eta_12)^2-(eta_21 + eta_03)^2]
-%    hu[5] = (eta_20 - eta_02)*[(eta_30 + eta_12)^2 - (eta_21 + eta_03)^2] +
-%            4*eta_11(eta_30 + eta_12)*(eta_21 + eta_03)
-%    hu[6] = (3*eta_21 - eta_03)*(eta_21 + eta_03)*[3*(eta_30 + eta_12)^2-(eta_21 + eta_03)^2] -
-%            (eta_30 - 3*eta_12)*(eta_21 + eta_03)*[3*(eta_30 + eta_12)^2-(eta_21 + eta_03)^2]
+%     hu[0] =  eta_20 + eta_02
+%     hu[1] = (eta_20 - eta_02)^2 + 4*eta_11^2
+%     hu[2] = (eta_30 - 3*eta_12)^2 + (3*eta_21 - eta_03)^2
+%     hu[3] = (eta_30 + eta_12)^2 + (eta_21 + eta_03)^2
+%     hu[4] = (eta_30 - 3*eta_12)*(eta_30 + eta_12)*[(eta_30 + eta_12)^2 - 3*(eta_21 + eta_03)^2] +
+%             (3*eta_21 - eta_03)*(eta_21 + eta_03)*[3*(eta_30 + eta_12)^2-(eta_21 + eta_03)^2]
+%     hu[5] = (eta_20 - eta_02)*[(eta_30 + eta_12)^2 - (eta_21 + eta_03)^2] +
+%             4*eta_11(eta_30 + eta_12)*(eta_21 + eta_03)
+%     hu[6] = (3*eta_21 - eta_03)*(eta_21 + eta_03)*[3*(eta_30 + eta_12)^2-(eta_21 + eta_03)^2] -
+%             (eta_30 - 3*eta_12)*(eta_21 + eta_03)*[3*(eta_30 + eta_12)^2-(eta_21 + eta_03)^2]
 %
 % where `eta_ji` stands for `mo.nu[ji]`.
 %

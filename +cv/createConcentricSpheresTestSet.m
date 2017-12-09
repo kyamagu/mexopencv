@@ -1,6 +1,6 @@
 %CREATECONCENTRICSPHERESTESTSET  Creates test set
 %
-%    [samples, responses] = cv.createConcentricSpheresTestSet(nsamples, nfeatures, nclasses)
+%     [samples, responses] = cv.createConcentricSpheresTestSet(nsamples, nfeatures, nclasses)
 %
 % ## Input
 % * __nsamples__ returned samples count.

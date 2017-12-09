@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<productinfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://www.mathworks.com/namespace/info/v1/info.xsl">
+  <?xml-stylesheet type="text/xsl" href="http://www.mathworks.com/namespace/info/v1/info.xsl"?>
+  <matlabrelease>14</matlabrelease>
+  <name>mexopencv</name>
+  <type>toolbox</type>
+  <icon>$toolbox/matlab/icons/bookicon.gif</icon>
+  <help_location>doc</help_location>
+  <help_contents_icon>doc/opencv.png</help_contents_icon>
+</productinfo>

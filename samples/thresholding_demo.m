@@ -4,7 +4,9 @@
 % thresholding, Otsu's thresholding, and how to use corresponding OpenCV
 % functions: |cv.threshold|, |cv.adaptiveThreshold|, etc.
 %
-% <http://docs.opencv.org/3.2.0/d7/d4d/tutorial_py_thresholding.html>
+% Sources:
+%
+% * <https://docs.opencv.org/3.2.0/d7/d4d/tutorial_py_thresholding.html>
 %
 
 %% Simple Thresholding

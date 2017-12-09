@@ -1,9 +1,11 @@
-%% Multi-Scale Turing Patterns generator
+%% Multi-Scale Turing Patterns Generator
 %
 % Inspired by:
 % <http://www.jonathanmccabe.com/Cyclic_Symmetric_Multi-Scale_Turing_Patterns.pdf>
 %
-% <https://github.com/opencv/opencv/blob/3.2.0/samples/python/turing.py>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.2.0/samples/python/turing.py>
 %
 
 function turing_patterns_demo()
@@ -28,9 +30,20 @@ function turing_patterns_demo()
     %%
     % Prepare video writer
     if write_vid
-        vidfile = fullfile(tempdir(), 'turing.avi');
-        vid = cv.VideoWriter(vidfile, [sz sz], ...
-            'FourCC','DIB ', 'FPS',30, 'Color',false);
+        if true
+            % builtin MJPG encoder, should work across all systems
+            vidext = 'avi';
+            fourcc = 'MJPG';
+        else
+            % FFmpeg in OpenCV can use OpenH264 for encoding H.264,
+            % download binaries and set OPENH264_LIBRARY environment variable
+            % https://github.com/opencv/opencv/tree/3.3.1/3rdparty/ffmpeg
+            % https://github.com/cisco/openh264/releases
+            vidext = 'mp4';
+            fourcc = 'H264';
+        end
+        vidfile = fullfile(tempdir(), ['turing.' vidext]);
+        vid = cv.VideoWriter(vidfile, [sz sz], 'FourCC',fourcc);
         assert(vid.isOpened(), 'Could not open output video');
     end
 
@@ -51,7 +64,10 @@ function turing_patterns_demo()
         a = (a - min(a(:))) / (max(a(:)) - min(a(:)));
 
         % write video frame
-        if write_vid, vid.write(a); end
+        if write_vid
+            frame = repmat(uint8(a*255), [1 1 3]); % 8-bit RGB
+            vid.write(frame);
+        end
 
         % show result
         set(hImg, 'CData',a);

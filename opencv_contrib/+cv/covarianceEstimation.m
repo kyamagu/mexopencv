@@ -1,18 +1,18 @@
 %COVARIANCEESTIMATION  Computes the estimated covariance matrix of an image using the sliding window forumlation
 %
-%    dst = cv.covarianceEstimation(src, windowSize)
+%     dst = cv.covarianceEstimation(src, windowSize)
 %
 % ## Input
-% * __src__ The source image. Input image must be of a complex type
-%       and floating-point type. Input should be arranged as a 2-channels
-%       matrix `size(src,3)==2` (corresponding to real and imaginary parts).
+% * __src__ The source image. Input image must be of a complex type and
+%   floating-point type. Input should be arranged as a 2-channels matrix
+%   `size(src,3)==2` (corresponding to real and imaginary parts).
 % * __windowSize__ The number of rows and cols in the window
-%       `[windowRows,windowCols]`.
+%   `[windowRows,windowCols]`.
 %
 % ## Output
 % * __dst__ The destination estimated covariance matrix. Output matrix will be
-%       of size `[windowRows*windowCols, windowRows*windowCols, 2]` (channels
-%       correspond to real and imaginary parts).
+%   of size `[windowRows*windowCols, windowRows*windowCols, 2]` (channels
+%   correspond to real and imaginary parts).
 %
 % The window size parameters control the accuracy of the estimation. The
 % sliding window moves over the entire image from the top-left corner to the

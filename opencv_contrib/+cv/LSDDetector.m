@@ -33,14 +33,15 @@ classdef LSDDetector < handle
     %
 
     properties (SetAccess = private)
-        id    % Object ID
+        % Object ID
+        id
     end
 
     methods
         function this = LSDDetector()
             %LSDDETECTOR  Creates an LSDDetector object
             %
-            %    obj = cv.LSDDetector()
+            %     obj = cv.LSDDetector()
             %
             % See also: cv.LSDDetector.detect
             %
@@ -50,7 +51,7 @@ classdef LSDDetector < handle
         function delete(this)
             %DELETE  Destructor
             %
-            %    obj.delete()
+            %     obj.delete()
             %
             % See also: cv.LSDDetector
             %
@@ -64,7 +65,7 @@ classdef LSDDetector < handle
         function clear(this)
             %CLEAR  Clears the algorithm state
             %
-            %    obj.clear()
+            %     obj.clear()
             %
             % See also: cv.LSDDetector.empty, cv.LSDDetector.load
             %
@@ -74,11 +75,11 @@ classdef LSDDetector < handle
         function b = empty(this)
             %EMPTY  Checks if detector object is empty
             %
-            %    b = obj.empty()
+            %     b = obj.empty()
             %
             % ## Output
             % * __b__ Returns true if the detector object is empty (e.g in the
-            %       very beginning or after unsuccessful read).
+            %   very beginning or after unsuccessful read).
             %
             % See also: cv.LSDDetector.clear
             %
@@ -88,7 +89,7 @@ classdef LSDDetector < handle
         function save(this, filename)
             %SAVE  Saves the algorithm parameters to a file
             %
-            %    obj.save(filename)
+            %     obj.save(filename)
             %
             % ## Input
             % * __filename__ Name of the file to save to.
@@ -104,21 +105,21 @@ classdef LSDDetector < handle
         function load(this, fname_or_str, varargin)
             %LOAD  Loads algorithm from a file or a string
             %
-            %    obj.load(fname)
-            %    obj.load(str, 'FromString',true)
-            %    obj.load(..., 'OptionName',optionValue, ...)
+            %     obj.load(fname)
+            %     obj.load(str, 'FromString',true)
+            %     obj.load(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __fname__ Name of the file to read.
             % * __str__ String containing the serialized model you want to
-            %       load.
+            %   load.
             %
             % ## Options
             % * __ObjName__ The optional name of the node to read (if empty,
-            %       the first top-level node will be used). default empty
-            % * __FromString__ Logical flag to indicate whether the input is
-            %       a filename or a string containing the serialized model.
-            %       default false
+            %   the first top-level node will be used). default empty
+            % * __FromString__ Logical flag to indicate whether the input is a
+            %   filename or a string containing the serialized model.
+            %   default false
             %
             % This method reads algorithm parameters from the specified XML or
             % YAML file (either from disk or serialized string). The previous
@@ -132,11 +133,11 @@ classdef LSDDetector < handle
         function name = getDefaultName(this)
             %GETDEFAULTNAME  Returns the algorithm string identifier
             %
-            %    name = obj.getDefaultName()
+            %     name = obj.getDefaultName()
             %
             % ## Output
             % * __name__ This string is used as top level XML/YML node tag
-            %       when the object is saved to a file or string.
+            %   when the object is saved to a file or string.
             %
             % See also: cv.LSDDetector.save, cv.LSDDetector.load
             %
@@ -149,9 +150,9 @@ classdef LSDDetector < handle
         function keylines = detect(this, img, varargin)
             %DETECT  Detect lines inside an image or image set
             %
-            %    keylines = obj.detect(img)
-            %    keylines = obj.detect(imgs)
-            %    [...] = obj.detect(..., 'OptionName',optionValue, ...)
+            %     keylines = obj.detect(img)
+            %     keylines = obj.detect(imgs)
+            %     [...] = obj.detect(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __img__ Input image (first variant), 8-bit grayscale.
@@ -159,41 +160,39 @@ classdef LSDDetector < handle
             %
             % ## Output
             % * __keylines__ Extracted lines for one or more images. In the
-            %       first variant, a 1-by-N structure array. In the second
-            %       variant of the method, `keylines{i}` is a set of keylines
-            %       detected in `imgs{i}`. Each keyline is described with a
-            %       `KeyLine` structure with the following fields:
-            %       * __angle__ orientation of the line.
-            %       * **class_id** object ID, that can be used to cluster
-            %             keylines by the line they represent.
-            %       * __octave__ octave (pyramid layer), from which the
-            %             keyline has been extracted.
-            %       * __pt__ coordinates of the middlepoint `[x,y]`.
-            %       * __response__ the response, by which the strongest
-            %             keylines have been selected. It's represented by the
-            %             ratio between line's length and maximum between
-            %             image's width and height.
-            %       * __size__ minimum area containing line.
-            %       * __startPoint__ the start point of the line in the
-            %             original image `[x,y]`.
-            %       * __endPoint__ the end point of the line in the original
-            %             image `[x,y]`.
-            %       * __startPointInOctave__ the start point of the line in
-            %             the octave it was extracted from `[x,y]`.
-            %       * __endPointInOctave__ the end point of the line in the
-            %             octave it was extracted from `[x,y]`.
-            %       * __lineLength__ the length of line.
-            %       * __numOfPixels__ number of pixels covered by the line.
+            %   first variant, a 1-by-N structure array. In the second
+            %   variant of the method, `keylines{i}` is a set of keylines
+            %   detected in `imgs{i}`. Each keyline is described with a
+            %   `KeyLine` structure with the following fields:
+            %   * __angle__ orientation of the line.
+            %   * **class_id** object ID, that can be used to cluster keylines
+            %     by the line they represent.
+            %   * __octave__ octave (pyramid layer), from which the keyline
+            %     has been extracted.
+            %   * __pt__ coordinates of the middlepoint `[x,y]`.
+            %   * __response__ the response, by which the strongest keylines
+            %     have been selected. It's represented by the ratio between
+            %     line's length and maximum between image's width and height.
+            %   * __size__ minimum area containing line.
+            %   * __startPoint__ the start point of the line in the original
+            %     image `[x,y]`.
+            %   * __endPoint__ the end point of the line in the original image
+            %     `[x,y]`.
+            %   * __startPointInOctave__ the start point of the line in the
+            %     octave it was extracted from `[x,y]`.
+            %   * __endPointInOctave__ the end point of the line in the octave
+            %     it was extracted from `[x,y]`.
+            %   * __lineLength__ the length of line.
+            %   * __numOfPixels__ number of pixels covered by the line.
             %
             % ## Options
             % * __Scale__ scale factor used in pyramids generation. default 2
             % * __NumOctaves__ number of octaves inside pyramid. default 1
             % * __Mask__ optional mask matrix to detect only `KeyLines` of
-            %       interest. It must be a logical or 8-bit integer matrix
-            %       with non-zero values in the region of interest. In the
-            %       second variant, it is a cell-array of masks for each
-            %       input image, `masks{i}` is a mask for `imgs{i}`.
-            %       Not set by default.
+            %   interest. It must be a logical or 8-bit integer matrix with
+            %   non-zero values in the region of interest. In the second
+            %   variant, it is a cell-array of masks for each input image,
+            %   `masks{i}` is a mask for `imgs{i}`. Not set by default.
             %
             % `KeyLine` is a struct to represent a line.
             %

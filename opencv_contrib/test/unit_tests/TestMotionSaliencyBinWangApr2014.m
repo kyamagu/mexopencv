@@ -14,15 +14,12 @@ classdef TestMotionSaliencyBinWangApr2014
             assert(isequal(saliency.ImageWidth, size(img,2)));
             assert(isequal(saliency.ImageHeight, size(img,1)));
 
-            cname = saliency.getClassName();
-            validateattributes(cname, {'char'}, {'vector', 'nonempty'});
-
             for i=1:min(5,cap.FrameCount)
                 img = cap.read();
                 img = cv.cvtColor(img, 'RGB2GRAY');
 
                 saliencyMap = saliency.computeSaliency(img);
-                validateattributes(saliencyMap, {'single'}, ...
+                validateattributes(saliencyMap, {'uint8'}, ...
                     {'size',[size(img,1) size(img,2)], 'binary'});
             end
         end

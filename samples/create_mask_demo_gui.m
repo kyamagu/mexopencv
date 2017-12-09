@@ -5,7 +5,9 @@
 % The program takes as input a source image and outputs its corresponding
 % mask image.
 %
-% <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/create_mask.cpp>
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/create_mask.cpp>
 %
 
 function varargout = create_mask_demo_gui(im)
