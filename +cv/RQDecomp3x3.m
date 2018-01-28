@@ -25,7 +25,7 @@
 % there is always more than one sequence of rotations about the three
 % principal axes that results in the same orientation of an object, eg. see
 % [Slabaugh]. Returned tree rotation matrices and corresponding three Euler
-% angules are only one of the possible solutions.
+% angles are only one of the possible solutions.
 %
 % ## References
 % [Slabaugh]:

@@ -24,7 +24,10 @@
 %   the second variant of the function with the `Mask` option. On output,
 %   pixels in the mask corresponding to filled pixels in the image are set
 %   to 1 or to the value specified in `MaskFillValue` option as described
-%   below.
+%   below. Additionally, the function fills the border of the mask with ones
+%   to simplify internal processing. It is therefore possible to use the same
+%   mask in multiple calls to the function to make sure the filled areas do
+%   not overlap.
 %
 % ## Options
 % * __LoDiff__ Maximal lower brightness/color difference between the currently
@@ -45,9 +48,7 @@
 % * __Mask__ Operation mask that should be a single-channel 8-bit image, 2
 %   pixels wider and 2 pixels taller than image. Flood-filling cannot go
 %   across non-zero pixels in the input mask. For example, an edge detector
-%   output can be used as a mask to stop filling at edges. It is possible to
-%   use the same mask in multiple calls to the function to make sure the
-%   filled areas do not overlap. Not set by default.
+%   output can be used as a mask to stop filling at edges. Not set by default.
 % * __MaskOnly__ If set, the function does not change the image in the output
 %   (`newVal` is ignored), and only fills the output `mask` with the value
 %   specified in `MaskFillValue` as described. This option only make sense in

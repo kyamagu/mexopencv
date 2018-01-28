@@ -16,7 +16,7 @@
 %   which points are inliers.
 %
 % ## Options
-% * __Method__ Robust method used to compute tranformation. RANSAC is the
+% * __Method__ Robust method used to compute transformation. RANSAC is the
 %   default method. The following methods are possible:
 %   * __Ransac__ RANSAC-based robust method.
 %   * __LMedS__ Least-Median robust method

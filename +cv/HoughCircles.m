@@ -51,9 +51,10 @@
 % ### Note
 % Usually the function detects the centers of circles well. However, it may
 % fail to find correct radii. You can assist to the function by specifying the
-% radius range (`MinRadius` and `MaxRadius`) if you know it. Or, you may
-% ignore the returned radius, use only the center, and find the correct radius
-% using an additional procedure.
+% radius range (`MinRadius` and `MaxRadius`) if you know it. Or, you may set
+% `MaxRadius` to 0 to return centers only without radius search, and find the
+% correct radius using an additional procedure.
+%
 %
 % ## References
 % [Yuen90]:

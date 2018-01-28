@@ -1,4 +1,4 @@
-%ACCUMULATE  Adds an image to the accumulator
+%ACCUMULATE  Adds an image to the accumulator image
 %
 %     dst = cv.accumulate(src, dst)
 %     dst = cv.accumulate(src, dst, 'OptionName',optionValue, ...)
@@ -22,7 +22,7 @@
 % The function supports multi-channel images. Each channel is processed
 % independently.
 %
-% The functions accumulate* can be used, for example, to collect statistics
+% The function cv.accumulate can be used, for example, to collect statistics
 % of a scene background viewed by a still camera and for the further
 % foreground-background segmentation.
 %

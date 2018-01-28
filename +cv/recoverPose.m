@@ -19,7 +19,8 @@
 % * __mask__ Output mask for inliers in `points1` and `points2`. In the output
 %   mask only inliers which pass the cheirality check. Vector of length N, see
 %   the `Mask` input option.
-% * __triangulatedPoints__ 3D points which were reconstructed by triangulation.
+% * __triangulatedPoints__ 3D points which were reconstructed by triangulation,
+%   see cv.triangulatePoints
 %
 % ## Options
 % * __CameraMatrix__ Camera matrix `K = [fx 0 cx; 0 fy cy; 0 0 1]`. Note that

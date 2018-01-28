@@ -40,7 +40,7 @@ classdef LineSegmentDetector < handle
             %   norm. default 2.0
             % * __AngleTol__ Gradient angle tolerance in degrees. default 22.5
             % * __DetectionThreshold__ Detection threshold:
-            %   `-log10(NFA) > DetectionThreshold`. Used only when advancent
+            %   `-log10(NFA) > DetectionThreshold`. Used only when advanced
             %   refinement is chosen. default 0
             % * __MinDensity__ Minimal density of aligned region points in the
             %   enclosing rectangle. default 0.7

@@ -24,7 +24,7 @@
 % three Euler angles that could be used in OpenGL. Note, there is always more
 % than one sequence of rotations about the three principal axes that results
 % in the same orientation of an object, eg. see [Slabaugh]. Returned three
-% rotation matrices and corresponding three Euler angules are only one of the
+% rotation matrices and corresponding three Euler angles are only one of the
 % possible solutions.
 %
 % The function is based on cv.RQDecomp3x3

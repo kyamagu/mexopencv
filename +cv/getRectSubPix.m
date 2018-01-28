@@ -24,11 +24,12 @@
 %     dst(x,y) = src(x + center(1) - (size(dst,2)-1)*0.5,
 %                    y + center(2) - (size(dst,1)-1)*0.5)
 %
-% where the values of the pixels at non-integer coordinates are retrieved using
-% bilinear interpolation. Every channel of multi-channel images is processed
-% independently. While the center of the rectangle must be inside the image,
-% parts of the rectangle may be outside. In this case, the replication border
-% mode is used to extrapolate the pixel values outside of the image.
+% where the values of the pixels at non-integer coordinates are retrieved
+% using bilinear interpolation. Every channel of multi-channel images is
+% processed independently. Also the image should be a single channel or three
+% channel image. While the center of the rectangle must be inside the image,
+% parts of the rectangle may be outside. In this case, the pixel values
+% outside of the image are extrapolated.
 %
 % See also: cv.Rect.crop, cv.warpAffine, cv.warpPerspective
 %

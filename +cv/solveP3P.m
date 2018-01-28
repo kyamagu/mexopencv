@@ -33,5 +33,17 @@
 % corresponding image projections, as well as the camera matrix and the
 % distortion coefficients.
 %
+% ## References
+% [gao2003complete]:
+% > X.S. Gao, X.R. Hou, J. Tang, H.F. Chang; "Complete Solution
+% > Classification for the Perspective-Three-Point Problem",
+% > IEEE Trans. on PAMI, vol. 25, No. 8, p. 930-943, August 2003.
+%
+% [Ke17]:
+% > T. Ke, S. Roumeliotis; "An Efficient Algebraic Solution to the
+% > Perspective-Three-Point Problem", IEEE Conference on Computer Vision and
+% > Pattern Recognition (CVPR), 2017
+% > [PDF](https://arxiv.org/pdf/1701.08237.pdf)
+%
 % See also: cv.solvePnP
 %

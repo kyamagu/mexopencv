@@ -19,7 +19,8 @@ classdef RotatedRect
             % ## Input
             % * __pt1__, __pt2__, __pt3__ Any 3 end points `[x,y]` of the
             %   rotated rectangle. They must be given in order (either
-            %   clockwise or anticlockwise).
+            %   clockwise or anticlockwise). By definition, the two sides
+            %   formed by these three points must be perpendicular.
             %
             % ## Output
             % * __rrect__ output rotated rectangle. A structure with the

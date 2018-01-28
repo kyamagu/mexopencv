@@ -11,7 +11,7 @@
 % * __rect2__ Second rectangle. Similar struct to first.
 %
 % ## Output
-% * __intersectingRegion__ The output array of the verticies of the
+% * __intersectingRegion__ The output array of the vertices of the
 %   intersecting region. It returns at most 8 vertices. A cell array of 2D
 %   points `{[x,y], ...}`
 % * __result__ types of intersection between rectangles. One of:

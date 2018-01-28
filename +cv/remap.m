@@ -67,7 +67,7 @@
 % pairs `(floor(x), floor(y))` and `map2` contains indices in a table of
 % interpolation coefficients.
 %
-% Note: Due to current implementaion limitations, the size of an input and
+% Note: Due to current implementation limitations, the size of an input and
 % output images should be less than 32767x32767.
 %
 % See also: cv.convertMaps, interp2, imwarp

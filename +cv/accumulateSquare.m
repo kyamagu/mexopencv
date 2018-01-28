@@ -1,4 +1,4 @@
-%ACCUMULATESQUARE  Adds the square of a source image to the accumulator
+%ACCUMULATESQUARE  Adds the square of a source image to the accumulator image
 %
 %     dst = cv.accumulateSquare(src, dst)
 %     dst = cv.accumulateSquare(src, dst, 'OptionName',optionValue, ...)
