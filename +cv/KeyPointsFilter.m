@@ -165,12 +165,12 @@ classdef KeyPointsFilter
             %   feature detection algorithm like SIFT/SURF/ORB.
             %
             % ## Options
-            % * __Size__ keypoint diameter.
+            % * __Size__ keypoint diameter. default 1.0
             % * __Response__ keypoint detector response on the keypoint (that
-            %   is, strength of the keypoint).
+            %   is, strength of the keypoint). default 1.0
             % * __Octave__ pyramid octave in which the keypoint has been
-            %   detected.
-            % * __ClassId__ object id.
+            %   detected. default 0
+            % * __ClassId__ object id. default -1
             %
             % See also: cv.KeyPointsFilter.convertToPoints
             %
