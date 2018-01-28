@@ -5,8 +5,8 @@
 %
 % Sources:
 %
-% * <https://docs.opencv.org/3.2.0/d1/dee/tutorial_introduction_to_pca.html>
-% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ml/introduction_to_pca/introduction_to_pca.cpp>
+% * <https://docs.opencv.org/3.4.0/d1/dee/tutorial_introduction_to_pca.html>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/cpp/tutorial_code/ml/introduction_to_pca/introduction_to_pca.cpp>
 %
 
 %% Theory
@@ -14,7 +14,7 @@
 % Principal Component Analysis (PCA) is a statistical procedure that extracts
 % the most important features of a dataset.
 %
-% <<https://docs.opencv.org/3.2.0/pca_line.png>>
+% <<https://docs.opencv.org/3.4.0/pca_line.png>>
 %
 % Consider that you have a set of 2D points as it is shown in the figure
 % above. Each dimension corresponds to a feature you are interested in. Here
@@ -38,7 +38,7 @@
 % consist of 2 vectors called _eigenvectors_ which are the
 % _principal components_ of the data set.
 %
-% <<https://docs.opencv.org/3.2.0/pca_eigen.png>>
+% <<https://docs.opencv.org/3.4.0/pca_eigen.png>>
 %
 % The size of each eigenvector is encoded in the corresponding eigenvalue and
 % indicates how much the data vary along the principal component. The
@@ -131,7 +131,7 @@ function pca_intro_demo()
     fname = fullfile(mexopencv.root(), 'test', 'pca_test1.jpg');
     if exist(fname, 'file') ~= 2
         disp('Downloading image...')
-        url = 'https://cdn.rawgit.com/opencv/opencv/3.2.0/samples/data/pca_test1.jpg';
+        url = 'https://cdn.rawgit.com/opencv/opencv/3.4.0/samples/data/pca_test1.jpg';
         urlwrite(url, fname);
     end
     src = cv.imread(fname, 'Color',true);
@@ -142,7 +142,7 @@ function pca_intro_demo()
 
     %%
     % Find all the contours in the thresholded image
-    [contours, hierarchy] = cv.findContours(bw, 'Mode','List', 'Method','None');
+    contours = cv.findContours(bw, 'Mode','List', 'Method','None');
     for i=1:numel(contours)
         % Calculate the area of each contour
         a = cv.contourArea(contours{i});
@@ -152,8 +152,8 @@ function pca_intro_demo()
         end
 
         % Draw each contour only for visualisation purposes
-        src = cv.drawContours(src, contours, 'Hierarchy',hierarchy, ...
-            'ContourIdx',i-1, 'MaxLevel',0, 'Color',[255 0 0], 'Thickness',2);
+        src = cv.drawContours(src, contours, ...
+            'ContourIdx',i-1, 'Color',[255 0 0], 'Thickness',2);
 
         % Find the orientation of each shape
         [src, ang] = getOrientation(src, contours{i});

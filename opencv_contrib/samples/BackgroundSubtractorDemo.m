@@ -38,7 +38,7 @@
 % static part of the scene or, more in general, everything that can be
 % considered as background given the characteristics of the observed scene.
 %
-% <<https://docs.opencv.org/3.2.0/Background_Subtraction_Tutorial_Scheme.png>>
+% <<https://docs.opencv.org/3.4.0/Background_Subtraction_Tutorial_Scheme.png>>
 %
 % Background modeling consists of two main steps:
 %
@@ -52,24 +52,23 @@
 
 %% Basics
 %
-% Background subtraction is a major preprocessing steps in many vision based
-% applications. For example, consider the cases like visitor counter where a
+% Background subtraction is a major preprocessing step in many vision based
+% applications. For example, consider the case of a visitor counter where a
 % static camera takes the number of visitors entering or leaving the room, or
 % a traffic camera extracting information about the vehicles etc. In all these
 % cases, first you need to extract the person or vehicles alone. Technically,
 % you need to extract the moving foreground from static background.
 %
-% If you have an image of background alone, like image of the room without
+% If you have an image of background alone, like an image of the room without
 % visitors, image of the road without vehicles etc, it is an easy job. Just
 % subtract the new image from the background. You get the foreground objects
 % alone. But in most of the cases, you may not have such an image, so we need
 % to extract the background from whatever images we have. It become more
-% complicated when there is shadow of the vehicles. Since shadow is also
-% moving, simple subtraction will mark that also as foreground. It complicates
-% things.
+% complicated when there are shadows of the vehicles. Since shadow also move,
+% simple subtraction will mark that also as foreground. It complicates things.
 %
 % Several algorithms were introduced for this purpose. OpenCV has implemented
-% four such algorithms which is very easy to use. We will see them one-by-one.
+% four such algorithms which are very easy to use. We will see them one-by-one.
 %
 %% BackgroundSubtractorMOG
 %
@@ -106,17 +105,17 @@
 % better adaptibility to varying scenes due illumination changes etc.
 %
 % As in previous case, we have to create a background subtractor object. Here,
-% you have an option of selecting whether shadow to be detected or not. If
-% |DetectShadows| is true (which is so by default), it detects and marks
-% shadows, but decreases the speed. Shadows will be marked in gray color.
+% you have an option of detecting shadows or not. If |DetectShadows| is true
+% (which is so by default), it detects and marks shadows, but decreases the
+% speed. Shadows will be marked in gray color.
 %
 %% BackgroundSubtractorGMG
 %
 % This algorithm combines statistical background image estimation and
 % per-pixel Bayesian segmentation. It was introduced by:
 %
-% * Andrew B. Godbehere, Akihiro Matsukawa, Ken Goldberg, "Visual Tracking of
-%   Human Visitors under Variable-Lighting Conditions for a Responsive Audi
+% * Andrew B. Godbehere, Akihiro Matsukawa, and Ken Goldberg, "Visual Tracking
+%   of Human Visitors under Variable-Lighting Conditions for a Responsive Audi
 %   Art Installation" in 2012.
 %
 % As per the paper, the system ran a successful interactive audio art

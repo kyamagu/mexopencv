@@ -5,8 +5,8 @@
 %
 % Sources:
 %
-% * <https://docs.opencv.org/3.2.0/dc/d48/tutorial_point_polygon_test.html>
-% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ShapeDescriptors/pointPolygonTest_demo.cpp>
+% * <https://docs.opencv.org/3.4.0/dc/d48/tutorial_point_polygon_test.html>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/cpp/tutorial_code/ShapeDescriptors/pointPolygonTest_demo.cpp>
 %
 
 %%
@@ -22,7 +22,7 @@ src = cv.line(src, vert, circshift(vert,-1,1), 'Color',255, 'Thickness',3);
 
 %%
 % get the contours
-[contours, hierarchy] = cv.findContours(src, 'Mode','Tree', 'Method','Simple');
+contours = cv.findContours(src, 'Mode','Tree', 'Method','Simple');
 contours = cellfun(@(C) cat(1,C{:}), contours, 'UniformOutput',false);
 assert(~isempty(contours));
 

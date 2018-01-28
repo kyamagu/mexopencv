@@ -20,7 +20,9 @@
 function varargout = corner_subpixels_demo_gui(im)
     % load source image
     if nargin < 1
-        src = imread(fullfile(mexopencv.root(),'test','blox.jpg'));
+        %im = fullfile(mexopencv.root(),'test','pic3.png');
+        im = fullfile(mexopencv.root(),'test','blox.jpg');
+        src = imread(im);
     elseif ischar(im)
         src = imread(im);
     else
