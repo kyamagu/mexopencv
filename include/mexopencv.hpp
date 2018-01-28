@@ -272,6 +272,48 @@ std::vector<cv::Point3_<T> > MxArrayToVectorPoint3(const MxArray& arr)
     return vp;
 }
 
+/** Convert an MxArray to std::vector<cv::Size_<T>>
+ *
+ * @param arr MxArray object. In one of the following forms:
+ * - a cell-array of sizes (2-element vectors) of length \c N,
+ *   e.g: <tt>{[w,h], [w,h], ...}</tt>
+ * - a numeric matrix of size \c Nx2, \c Nx1x2, or \c 1xNx2 in the form:
+ *   <tt>[w,h; w,h; ...]</tt> or <tt>cat(3, [w,h], [w,h], ...)</tt>
+ * @return vector of sizes of size \c N
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Size2d> vs = MxArrayToVectorSize<double>(cellArray);
+ * @endcode
+ */
+template <typename T>
+std::vector<cv::Size_<T> > MxArrayToVectorSize(const MxArray& arr)
+{
+    std::vector<cv::Size_<T> > vs;
+    if (arr.isNumeric()) {
+        if (arr.numel() == 2)
+            vs.push_back(arr.toSize_<T>());
+        else
+            arr.toMat(cv::traits::Depth<cv::Size_<T> >::value).reshape(2, 0).copyTo(vs);
+    }
+    else if (arr.isCell()) {
+        /*
+        std::vector<MxArray> va(arr.toVector<MxArray>());
+        vs.reserve(va.size());
+        for (std::vector<MxArray>::const_iterator it = va.begin(); it != va.end(); ++it)
+            vs.push_back(it->toSize_<T>());
+        */
+        vs = arr.toVector(
+            std::const_mem_fun_ref_t<cv::Size_<T>, MxArray>(
+                &MxArray::toSize_<T>));
+    }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unable to convert MxArray to std::vector<cv::Size_<T>>");
+    return vs;
+}
+
 /** Convert an MxArray to std::vector<cv::Rect_<T>>
  *
  * @param arr MxArray object. In one of the following forms:
