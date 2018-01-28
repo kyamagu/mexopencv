@@ -12,7 +12,12 @@ classdef TestImwrite
                 filename = [tempname() frmts(i).ext];
                 cObj = onCleanup(@() TestImwrite.deleteFile(filename));
                 try
-                    cv.imwrite(filename, TestImwrite.im, frmts(i).opts{:});
+                    if strcmp(frmts(i).ext, '.exr')
+                        img = single(TestImwrite.im) / 255;
+                    else
+                        img = TestImwrite.im;
+                    end
+                    cv.imwrite(filename, img, frmts(i).opts{:});
                     assert(exist(filename,'file')==2, ...
                         'Failed to write %s', frmts(i).name);
                 catch ME
@@ -110,6 +115,7 @@ classdef TestImwrite
             frmts(8).ext = '.jp2';
             frmts(9).name = 'OpenEXR';
             frmts(9).ext = '.exr';
+            frmts(9).opts = {'ExrType','Float'};
             frmts(10).name = 'Radiance HDR';
             frmts(10).ext = '.hdr';
             frmts(11).name = 'PAM';

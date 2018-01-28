@@ -44,7 +44,13 @@ const ConstMap<string,int> PngStrategyMap = ConstMap<string,int>
     ("RLE",         cv::IMWRITE_PNG_STRATEGY_RLE)
     ("Fixed",       cv::IMWRITE_PNG_STRATEGY_FIXED);
 
-/// PAM tupletypes for option processing
+/// EXR storage types for option processing
+const ConstMap<string,int> ExrTypeMap = ConstMap<string,int>
+    //("Int",   cv::IMWRITE_EXR_TYPE_UNIT)
+    ("Half",  cv::IMWRITE_EXR_TYPE_HALF)
+    ("Float", cv::IMWRITE_EXR_TYPE_FLOAT);
+
+/// PAM tuple types for option processing
 const ConstMap<string,int> PamFormatMap = ConstMap<string,int>
     ("Null",           cv::IMWRITE_PAM_FORMAT_NULL)
     ("BlackWhite",     cv::IMWRITE_PAM_FORMAT_BLACKANDWHITE)
@@ -167,6 +173,11 @@ struct ImwriteOptionsParser
                 params.push_back(cv::CAP_PROP_IMAGES_BASE +
                     cv::IMWRITE_PXM_BINARY);
                 params.push_back(val.toBool() ? 1 : 0);
+            }
+            else if (key == "ExrType") {
+                params.push_back(cv::CAP_PROP_IMAGES_BASE +
+                    cv::IMWRITE_EXR_TYPE);
+                params.push_back(ExrTypeMap[val.toString()]);
             }
             else if (key == "WebpQuality") {
                 params.push_back(cv::CAP_PROP_IMAGES_BASE +
