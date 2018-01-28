@@ -40,10 +40,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
     }
+
     // Process
     Mat cameraMatrix(rhs[0].toMat(rhs[0].isSingle() ? CV_32F : CV_64F)),
         distCoeffs(rhs[1].toMat(rhs[1].isSingle() ? CV_32F : CV_64F));
-    Size imageSize(rhs[2].toSize());;
+    Size imageSize(rhs[2].toSize());
     Rect validPixROI;
     Mat A = getOptimalNewCameraMatrix(cameraMatrix, distCoeffs, imageSize,
         alpha, newImageSize, (nlhs>1 ? &validPixROI : NULL),
