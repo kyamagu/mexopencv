@@ -83,11 +83,12 @@ const ConstMap<int,std::string> BorderTypeInv = ConstMap<int,std::string>
 
 /// Interpolation type map for option processing
 const ConstMap<std::string,int> InterpType = ConstMap<std::string,int>
-    ("Nearest",  cv::INTER_NEAREST)   // nearest neighbor interpolation
-    ("Linear",   cv::INTER_LINEAR)    // bilinear interpolation
-    ("Cubic",    cv::INTER_CUBIC)     // bicubic interpolation
-    ("Area",     cv::INTER_AREA)      // area-based (or super) interpolation
-    ("Lanczos4", cv::INTER_LANCZOS4); // Lanczos interpolation over 8x8 neighborhood
+    ("Nearest",     cv::INTER_NEAREST)       // nearest neighbor interpolation
+    ("Linear",      cv::INTER_LINEAR)        // bilinear interpolation
+    ("Cubic",       cv::INTER_CUBIC)         // bicubic interpolation
+    ("Area",        cv::INTER_AREA)          // area-based (or super) interpolation
+    ("Lanczos4",    cv::INTER_LANCZOS4)      // Lanczos interpolation over 8x8 neighborhood
+    ("LinearExact", cv::INTER_LINEAR_EXACT); // Bit exact bilinear interpolation
 
 /// Thresholding type map for option processing
 const ConstMap<std::string,int> ThreshType = ConstMap<std::string,int>
