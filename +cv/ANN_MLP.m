@@ -120,7 +120,9 @@ classdef ANN_MLP < handle
         % Default 'RProp'. Possible values are:
         %
         % * __Backprop__ The back-propagation algorithm.
-        % * __RProp__ (default) The RPROP algorithm. See [101] for details.
+        % * __RProp__ (default) The RPROP algorithm. See [RPROP93] for details.
+        % * __Anneal__ The simulated annealing algorithm. See [Kirkpatrick83]
+        %   for details.
         %
         % See also: cv.ANN_MLP.setTrainMethod
         TrainMethod
@@ -178,6 +180,16 @@ classdef ANN_MLP < handle
         %
         % It must be >1. Default value is 50.
         RpropDWMax
+        % ANNEAL: initial temperature. It must be >= 0. Default value is 10.0.
+        AnnealInitialT
+        % ANNEAL: final temperature. It must be >= 0 and less than
+        % `AnnealInitialT`. Default value is 0.1.
+        AnnealFinalT
+        % ANNEAL: cooling ratio. It must be > 0 and less than 1. Default value
+        % is 0.95.
+        AnnealCoolingRatio
+        % ANNEAL: iteration per step. It must be > 0. Default value is 10.
+        AnnealItePerStep
     end
 
     properties (Dependent, GetAccess = private)
@@ -591,21 +603,30 @@ classdef ANN_MLP < handle
             % ## Input
             % * __method__ Available training methods:
             %   * __Backprop__ The back-propagation algorithm.
-            %   * __RProp__ (default) The RPROP algorithm. See [101] for
+            %   * __RProp__ (default) The RPROP algorithm. See [RPROP93] for
             %     details.
+            %   * __Anneal__ The simulated annealing algorithm. See
+            %     [Kirkpatrick83] for details.
             %
             % ## Options
             % * __Param1__ sets `RpropDW0` property for 'RProp' and sets
-            %   `BackpropWeightScale` property for 'Backprop'. default 0
+            %   `BackpropWeightScale` property for 'Backprop' and sets
+            %   `AnnealInitialT` for `Anneal`. default 0
             % * __Param2__ sets `RpropDWMin` property for 'RProp' and sets
-            %   `BackpropMomentumScale` property for 'Backprop'. default 0
+            %   `BackpropMomentumScale` property for 'Backprop' and sets
+            %   `AnnealFinalT` for `Anneal`. default 0
             %
             % ## References
-            % [101]:
+            % [RPROP93]:
             % > Martin Riedmiller and Heinrich Braun. "A direct adaptive method
             % > for faster backpropagation learning: The rprop algorithm".
             % > In Neural Networks, 1993., IEEE International Conference on,
             % > pages 586-591. IEEE, 1993.
+            %
+            % [Kirkpatrick83]:
+            % > S. Kirkpatrick, C. D. Jr Gelatt, and M. P. Vecchi.
+            % > "Optimization by simulated annealing". Science,
+            % > 220(4598):671-680, 1983.
             %
             % See also: cv.ANN_MLP.TrainMethod
             %
@@ -626,7 +647,10 @@ classdef ANN_MLP < handle
             %     `f(x) = beta * (1-exp(-alpha*x))/(1+exp(-alpha*x))`. See
             %     note below.
             %   * __Gaussian__ Gaussian function:
-            %     `f(x) = beta * exp(-alpha*x*x)`
+            %     `f(x) = beta * exp(-alpha^2*x*x)`
+            %   * __ReLU__ ReLU function: `f(x) = max(0,x)`
+            %   * __LeakyReLU__ Leaky ReLU function: `f(x) = x, for x>0` and
+            %     `f(x) = alpha*x, for x<=0`
             %
             % ## Options
             % * __Param1__ The first parameter of the activation function,
@@ -642,6 +666,8 @@ classdef ANN_MLP < handle
             % the default parameter values `Param1=0` and `Param2=0` then the
             % function used is `y = 1.7159*tanh(2/3 * x)`, so the output will
             % range from [-1.7159, 1.7159], instead of [0,1].
+            % Recall that by definition
+            % `tanh(x) = (1 - exp(-2*x)) / (1 + exp(-2*x))`.
             %
             % See also: cv.ANN_MLP.ActivationFunction
             %
@@ -723,6 +749,34 @@ classdef ANN_MLP < handle
         end
         function set.RpropDWMax(this, value)
             ANN_MLP_(this.id, 'set', 'RpropDWMax', value);
+        end
+
+        function value = get.AnnealInitialT(this)
+            value = ANN_MLP_(this.id, 'get', 'AnnealInitialT');
+        end
+        function set.AnnealInitialT(this, value)
+            ANN_MLP_(this.id, 'set', 'AnnealInitialT', value);
+        end
+
+        function value = get.AnnealFinalT(this)
+            value = ANN_MLP_(this.id, 'get', 'AnnealFinalT');
+        end
+        function set.AnnealFinalT(this, value)
+            ANN_MLP_(this.id, 'set', 'AnnealFinalT', value);
+        end
+
+        function value = get.AnnealCoolingRatio(this)
+            value = ANN_MLP_(this.id, 'get', 'AnnealCoolingRatio');
+        end
+        function set.AnnealCoolingRatio(this, value)
+            ANN_MLP_(this.id, 'set', 'AnnealCoolingRatio', value);
+        end
+
+        function value = get.AnnealItePerStep(this)
+            value = ANN_MLP_(this.id, 'get', 'AnnealItePerStep');
+        end
+        function set.AnnealItePerStep(this, value)
+            ANN_MLP_(this.id, 'set', 'AnnealItePerStep', value);
         end
     end
 

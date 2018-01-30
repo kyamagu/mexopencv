@@ -21,24 +21,30 @@ map<int,Ptr<ANN_MLP> > obj_;
 /// Option values for ANN_MLP train types
 const ConstMap<string,int> ANN_MLPTrain = ConstMap<string,int>
     ("Backprop", cv::ml::ANN_MLP::BACKPROP)
-    ("RProp",    cv::ml::ANN_MLP::RPROP);
+    ("RProp",    cv::ml::ANN_MLP::RPROP)
+    ("Anneal",   cv::ml::ANN_MLP::ANNEAL);
 
 /// Inverse option values for ANN_MLP train types
 const ConstMap<int,string> InvANN_MLPTrain = ConstMap<int,string>
     (cv::ml::ANN_MLP::BACKPROP, "Backprop")
-    (cv::ml::ANN_MLP::RPROP,    "RProp");
+    (cv::ml::ANN_MLP::RPROP,    "RProp")
+    (cv::ml::ANN_MLP::ANNEAL,   "Anneal");
 
 /// Option values for ANN_MLP activation function
 const ConstMap<string,int> ActivateFunc = ConstMap<string,int>
-    ("Identity", cv::ml::ANN_MLP::IDENTITY)
-    ("Sigmoid",  cv::ml::ANN_MLP::SIGMOID_SYM)
-    ("Gaussian", cv::ml::ANN_MLP::GAUSSIAN);
+    ("Identity",  cv::ml::ANN_MLP::IDENTITY)
+    ("Sigmoid",   cv::ml::ANN_MLP::SIGMOID_SYM)
+    ("Gaussian",  cv::ml::ANN_MLP::GAUSSIAN)
+    ("ReLU",      cv::ml::ANN_MLP::RELU)
+    ("LeakyReLU", cv::ml::ANN_MLP::LEAKYRELU);
 
 /// Inverse option values for ANN_MLP activation function
 const ConstMap<int,string> InvActivateFunc = ConstMap<int,string>
     (cv::ml::ANN_MLP::IDENTITY,    "Identity")
     (cv::ml::ANN_MLP::SIGMOID_SYM, "Sigmoid")
-    (cv::ml::ANN_MLP::GAUSSIAN,    "Gaussian");
+    (cv::ml::ANN_MLP::GAUSSIAN,    "Gaussian")
+    (cv::ml::ANN_MLP::RELU,        "ReLU")
+    (cv::ml::ANN_MLP::LEAKYRELU,   "LeakyReLU");
 }
 
 /**
@@ -246,26 +252,34 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "get") {
         nargchk(nrhs==3 && nlhs<=1);
         string prop(rhs[2].toString());
-        if (prop == "BackpropMomentumScale")
-            plhs[0] = MxArray(obj->getBackpropMomentumScale());
-        else if (prop == "BackpropWeightScale")
-            plhs[0] = MxArray(obj->getBackpropWeightScale());
+        if (prop == "TrainMethod")
+            plhs[0] = MxArray(InvANN_MLPTrain[obj->getTrainMethod()]);
         else if (prop == "LayerSizes")
             plhs[0] = MxArray(obj->getLayerSizes());
-        else if (prop == "RpropDW0")
-            plhs[0] = MxArray(obj->getRpropDW0());
-        else if (prop == "RpropDWMax")
-            plhs[0] = MxArray(obj->getRpropDWMax());
-        else if (prop == "RpropDWMin")
-            plhs[0] = MxArray(obj->getRpropDWMin());
-        else if (prop == "RpropDWMinus")
-            plhs[0] = MxArray(obj->getRpropDWMinus());
-        else if (prop == "RpropDWPlus")
-            plhs[0] = MxArray(obj->getRpropDWPlus());
         else if (prop == "TermCriteria")
             plhs[0] = MxArray(obj->getTermCriteria());
-        else if (prop == "TrainMethod")
-            plhs[0] = MxArray(InvANN_MLPTrain[obj->getTrainMethod()]);
+        else if (prop == "BackpropWeightScale")
+            plhs[0] = MxArray(obj->getBackpropWeightScale());
+        else if (prop == "BackpropMomentumScale")
+            plhs[0] = MxArray(obj->getBackpropMomentumScale());
+        else if (prop == "RpropDW0")
+            plhs[0] = MxArray(obj->getRpropDW0());
+        else if (prop == "RpropDWPlus")
+            plhs[0] = MxArray(obj->getRpropDWPlus());
+        else if (prop == "RpropDWMinus")
+            plhs[0] = MxArray(obj->getRpropDWMinus());
+        else if (prop == "RpropDWMin")
+            plhs[0] = MxArray(obj->getRpropDWMin());
+        else if (prop == "RpropDWMax")
+            plhs[0] = MxArray(obj->getRpropDWMax());
+        else if (prop == "AnnealInitialT")
+            plhs[0] = MxArray(obj->getAnnealInitialT());
+        else if (prop == "AnnealFinalT")
+            plhs[0] = MxArray(obj->getAnnealFinalT());
+        else if (prop == "AnnealCoolingRatio")
+            plhs[0] = MxArray(obj->getAnnealCoolingRatio());
+        else if (prop == "AnnealItePerStep")
+            plhs[0] = MxArray(obj->getAnnealItePerStep());
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized property %s", prop.c_str());
@@ -273,28 +287,36 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "set") {
         nargchk(nrhs==4 && nlhs==0);
         string prop(rhs[2].toString());
-        if (prop == "BackpropMomentumScale")
-            obj->setBackpropMomentumScale(rhs[3].toDouble());
-        else if (prop == "BackpropWeightScale")
-            obj->setBackpropWeightScale(rhs[3].toDouble());
-        else if (prop == "LayerSizes")
-            obj->setLayerSizes(rhs[3].toMat());
-        else if (prop == "RpropDW0")
-            obj->setRpropDW0(rhs[3].toDouble());
-        else if (prop == "RpropDWMax")
-            obj->setRpropDWMax(rhs[3].toDouble());
-        else if (prop == "RpropDWMin")
-            obj->setRpropDWMin(rhs[3].toDouble());
-        else if (prop == "RpropDWMinus")
-            obj->setRpropDWMinus(rhs[3].toDouble());
-        else if (prop == "RpropDWPlus")
-            obj->setRpropDWPlus(rhs[3].toDouble());
-        else if (prop == "TermCriteria")
-            obj->setTermCriteria(rhs[3].toTermCriteria());
-        else if (prop == "TrainMethod")
+        if (prop == "TrainMethod")
             obj->setTrainMethod(ANN_MLPTrain[rhs[3].toString()]);
         else if (prop == "ActivationFunction")
             obj->setActivationFunction(ActivateFunc[rhs[3].toString()]);
+        else if (prop == "LayerSizes")
+            obj->setLayerSizes(rhs[3].toMat());
+        else if (prop == "TermCriteria")
+            obj->setTermCriteria(rhs[3].toTermCriteria());
+        else if (prop == "BackpropWeightScale")
+            obj->setBackpropWeightScale(rhs[3].toDouble());
+        else if (prop == "BackpropMomentumScale")
+            obj->setBackpropMomentumScale(rhs[3].toDouble());
+        else if (prop == "RpropDW0")
+            obj->setRpropDW0(rhs[3].toDouble());
+        else if (prop == "RpropDWPlus")
+            obj->setRpropDWPlus(rhs[3].toDouble());
+        else if (prop == "RpropDWMinus")
+            obj->setRpropDWMinus(rhs[3].toDouble());
+        else if (prop == "RpropDWMin")
+            obj->setRpropDWMin(rhs[3].toDouble());
+        else if (prop == "RpropDWMax")
+            obj->setRpropDWMax(rhs[3].toDouble());
+        else if (prop == "AnnealInitialT")
+            obj->setAnnealInitialT(rhs[3].toDouble());
+        else if (prop == "AnnealFinalT")
+            obj->setAnnealFinalT(rhs[3].toDouble());
+        else if (prop == "AnnealCoolingRatio")
+            obj->setAnnealCoolingRatio(rhs[3].toDouble());
+        else if (prop == "AnnealItePerStep")
+            obj->setAnnealItePerStep(rhs[3].toInt());
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized property %s", prop.c_str());
