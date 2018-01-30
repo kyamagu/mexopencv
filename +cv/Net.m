@@ -14,7 +14,7 @@ classdef Net < handle
     % computations (i. e. network testing). A network training is in principle
     % not supported.
     %
-    % https://github.com/opencv/opencv/wiki/Deep-Learning-in-OpenCV
+    % [Wiki](https://github.com/opencv/opencv/wiki/Deep-Learning-in-OpenCV)
     %
     % ## Net class
     % Neural network is presented as directed acyclic graph (DAG), where
@@ -44,7 +44,7 @@ classdef Net < handle
             %     net = cv.Net('Caffe', prototxt)
             %     net = cv.Net('Caffe', prototxt, caffeModel)
             %
-            %     net = cv.Net('Tensorflow', model)
+            %     net = cv.Net('Tensorflow', modelmodel)
             %     net = cv.Net('Tensorflow', model, config)
             %
             %     net = cv.Net('Torch', filename)
@@ -61,11 +61,12 @@ classdef Net < handle
             % * __model__ path to the `.pb` file with binary protobuf
             %   description of the network architecture. Binary serialized
             %   TensorFlow graph includes weights.
-            % * __config__ Optional path to the `.pbtxt` file with text
-            %   definition of TensorFlow graph. More flexible than binary
-            %   format and may be used to build the network using binary
-            %   format only as a weights storage. This approach is similar to
-            %   Caffe's `.prorotxt` and `.caffemodel`.
+            % * __config__ Optional path to the `.pbtxt` file that contains
+            %   text graph definition in protobuf format. Resulting net is
+            %   built by text graph using weights from a binary one. This is
+            %   more flexible than binary format and may be used to build the
+            %   network using binary format only as a weights storage. This
+            %   approach is similar to Caffe's `.prorotxt` and `.caffemodel`.
             % * __filename__ path to the file, dumped from Torch by using
             %   `torch.save()` function.
             % * __isBinary__ specifies whether the network was serialized in
@@ -78,13 +79,13 @@ classdef Net < handle
             % The first variant creates an empty network.
             %
             % The second variant reads a network model stored in
-            % [Caffe](http://caffe.berkeleyvision.org) model files.
+            % [Caffe](http://caffe.berkeleyvision.org) framework's format.
             %
-            % The third variant is an importer of
-            % [TensorFlow](https://www.tensorflow.org) framework network.
+            % The third variant reads a network model stored in
+            % [TensorFlow](https://www.tensorflow.org/) framework's format.
             %
-            % The fourth variant is an importer of [Torch7](http://torch.ch)
-            % framework network.
+            % The fourth variant reads a network model stored in
+            % [Torch7](http://torch.ch) framework's format.
             %
             % The fifth variant reads a network model stored in
             % [Darknet](https://pjreddie.com/darknet/) model files.
@@ -93,9 +94,6 @@ classdef Net < handle
             % set connections between them.
             %
             % ### Notes for Torch
-            %
-            % Warning: Torch7 importer is experimental now, you need
-            % explicitly set CMake flag to compile it.
             %
             % NOTE: ASCII mode of Torch serializer is more preferable, because
             % binary mode extensively use `long` type of C language, which has
@@ -240,18 +238,18 @@ classdef Net < handle
             % listed in `outBlobNames`. It returns blobs for first outputs of
             % specified layers.
             %
-            % See also: cv.Net.forwardAll, cv.Net.Net
+            % See also: cv.Net.forwardAndRetrieve, cv.Net.Net
             %
             blob = Net_(this.id, 'forward', varargin{:});
         end
 
-        function blobs = forwardAll(this, varargin)
-            %FORWARDALL  Runs forward pass
+        function blobs = forwardAndRetrieve(this, varargin)
+            %FORWARDANDRETRIEVE  Runs forward pass
             %
-            %     blobs = net.forwardAll()
-            %     blobs = net.forwardAll(outputName)
+            %     blobs = net.forwardAndRetrieve()
+            %     blobs = net.forwardAndRetrieve(outputName)
             %
-            %     blobsArr = net.forwardAll(outBlobNames)
+            %     blobsArr = net.forwardAndRetrieve(outBlobNames)
             %
             % ## Input
             % * __outputName__ name for layer which output is needed to get.
@@ -276,25 +274,7 @@ classdef Net < handle
             %
             % See also: cv.Net.forward, cv.Net.Net
             %
-            blobs = Net_(this.id, 'forwardAll', varargin{:});
-        end
-
-        function forwardOpt(this, toLayerId)
-            %FORWARDOPT  Optimized forward
-            %
-            %     net.forwardOpt(toLayerId)
-            %
-            % ## Input
-            % * __toLayerId__ layer name or layer id (one or several).
-            %
-            % Makes forward only those layers which weren't changed after
-            % previous cv.Net.forward.
-            %
-            % Warning: Not yet implemented.
-            %
-            % See also: cv.Net.forward
-            %
-            Net_(this.id, 'forwardOpt', toLayerId);
+            blobs = Net_(this.id, 'forwardAndRetrieve', varargin{:});
         end
 
         function [timings, total] = getPerfProfile(this)
@@ -682,8 +662,8 @@ classdef Net < handle
             %     blob = cv.Net.blobFromImages(..., 'OptionName',optionValue, ...)
             %
             % ## Input
-            % * __img__ input image (with 1- or 3-channels).
-            % * __imgs__ input images (all with 1- or 3-channels).
+            % * __img__ input image (with 1-, 3- or 4-channels).
+            % * __imgs__ input images (all with 1-, 3- or 4-channels).
             %
             % ## Output
             % * __blob__ 4-dimansional array with NCHW dimensions order.
@@ -721,10 +701,11 @@ classdef Net < handle
             blob = Net_(0, 'blobFromImages', img, varargin{:});
         end
 
-        function shrinkCaffeModel(src, dst)
+        function shrinkCaffeModel(src, dst, varargin)
             %SHRINKCAFFEMODEL  Convert all weights of Caffe network to half precision floating point
             %
             %     cv.Net.shrinkCaffeModel(src, dst)
+            %     cv.Net.shrinkCaffeModel(..., 'OptionName',optionValue, ...)
             %
             % ## Input
             % * __src__ Path to origin model from Caffe framework contains
@@ -732,13 +713,45 @@ classdef Net < handle
             %   `.caffemodel` extension).
             % * __dst__ Path to destination model with updated weights.
             %
+            % ## Options
+            % * __LayersTypes__ Set of layers types which parameters will be
+            %   converted. By default (not set), converts only Convolutional
+            %   and Fully-Connected layers' weights,
+            %   i.e `{'Convolution', 'InnerProduct'}`.
+            %
             % Note: Shrinked model has no origin `float32` weights so it can't
             % be used in origin Caffe framework anymore. However the structure
             % of data is taken from NVidia's
             % <https://github.com/NVIDIA/caffe Caffe fork>. So the resulting
             % model may be used there.
             %
-            Net_(0, 'shrinkCaffeModel', src, dst);
+            Net_(0, 'shrinkCaffeModel', src, dst, varargin{:});
+        end
+
+        function indices = NMSBoxes(bboxes, scores, score_threshold, nms_threshold, varargin)
+            %NMSBOXES  Performs non-maximum suppression given boxes and corresponding scores
+            %
+            %     indices = cv.Net.NMSBoxes(bboxes, scores, score_threshold, nms_threshold)
+            %     indices = cv.Net.NMSBoxes(..., 'OptionName',optionValue, ...)
+            %
+            % ## Input
+            % * __bboxes__ a set of bounding boxes to apply NMS.
+            % * __scores__ a set of corresponding confidences.
+            % * **score_threshold** a threshold used to filter boxes by score.
+            % * **nms_threshold** a threshold used in non maximum suppression.
+            %
+            % ## Output
+            % * __indices__ the kept indices of bboxes after NMS.
+            %
+            % ## Options
+            % * __Eta__ a coefficient in adaptive threshold formula:
+            %   `nms_threshold_{i+1} = eta * nms_threshold_{i}`. default 1.0
+            % * __TopK__ if `> 0`, keep at most `TopK` picked indices.
+            %   default 0
+            %
+            % See also: cv.groupRectangles
+            %
+            indices = Net_(0, 'NMSBoxes', bboxes, scores, score_threshold, nms_threshold, varargin{:});
         end
     end
 end

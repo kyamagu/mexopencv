@@ -336,10 +336,44 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         return;
     }
     else if (method == "shrinkCaffeModel") {
-        nargchk(nrhs==4 && nlhs==0);
+        nargchk(nrhs>=4 && (nrhs%2)==0 && nlhs==0);
+        vector<string> layersTypes;
+        for (int i=4; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key == "LayersTypes")
+                layersTypes = rhs[i+1].toVector<string>();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
+        }
         string src(rhs[2].toString()),
             dst(rhs[3].toString());
-        shrinkCaffeModel(src, dst);
+        shrinkCaffeModel(src, dst,
+            vector<String>(layersTypes.begin(), layersTypes.end()));
+        return;
+    }
+    else if (method == "NMSBoxes") {
+        nargchk(nrhs>=6 && (nrhs%2)==0 && nlhs<=1);
+        float eta = 1.0f;
+        int top_k = 0;
+        for (int i=6; i<nrhs; i+=2) {
+            string key(rhs[i].toString());
+            if (key == "Eta")
+                eta = rhs[i+1].toFloat();
+            else if (key == "TopK")
+                top_k = rhs[i+1].toInt();
+            else
+                mexErrMsgIdAndTxt("mexopencv:error",
+                    "Unrecognized option %s", key.c_str());
+        }
+        vector<Rect> bboxes(rhs[2].toVector<Rect>());
+        vector<float> scores(rhs[3].toVector<float>());
+        float score_threshold = rhs[4].toFloat();
+        float nms_threshold = rhs[5].toFloat();
+        vector<int> indices;
+        NMSBoxes(bboxes, scores, score_threshold, nms_threshold, indices,
+            eta, top_k);
+        plhs[0] = MxArray(indices);
         return;
     }
 
@@ -434,7 +468,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             plhs[0] = MxArray(outputBlobs);
         }
     }
-    else if (method == "forwardAll") {
+    else if (method == "forwardAndRetrieve") {
         nargchk((nrhs==2 || nrhs==3) && nlhs<=1);
         if (nrhs == 2 || rhs[2].isChar()) {
             string outputName;
@@ -452,16 +486,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             plhs[0] = MxArray(outputBlobs);
         }
     }
-    /*
-    //TODO: linking error; unresolved external symbol
-    else if (method == "forwardOpt") {
-        nargchk(nrhs==3 && nlhs==0);
-        if (rhs[2].numel() == 1)
-            obj->forwardOpt(MxArrayToLayerId(rhs[2]));
-        else
-            obj->forwardOpt(MxArrayToVectorLayerId(rhs[2]));
-    }
-    */
     else if (method == "setHalideScheduler") {
         nargchk(nrhs==3 && nlhs==0);
         obj->setHalideScheduler(rhs[2].toString());
