@@ -11,9 +11,6 @@ using namespace std;
 using namespace cv;
 using namespace cv::xfeatures2d;
 
-//TODO: due to a bug in opencv, function always returns empty keypoints
-// https://github.com/opencv/opencv_contrib/pull/1435
-
 namespace {
 /// FAST neighborhood types
 const ConstMap<string, int> FASTTypeMap = ConstMap<string, int>
