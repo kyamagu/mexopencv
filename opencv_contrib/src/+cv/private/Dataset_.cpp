@@ -918,7 +918,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else if (method == "split") {
         nargchk(nrhs==5 && nlhs<=1);
         string s(rhs[3].toString());
-        char delim = rhs[4].toString()[0];
+        char delim = (!rhs[4].isEmpty()) ? rhs[4].toString()[0] : ' ';
         vector<string> elems;
         cv::datasets::split(s, elems, delim);
         plhs[0] = MxArray(elems);
