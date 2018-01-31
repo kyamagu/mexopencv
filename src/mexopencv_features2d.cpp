@@ -547,6 +547,7 @@ Ptr<LATCH> createLATCH(
     int bytes = 32;
     bool rotationInvariance = true;
     int half_ssd_size = 3;
+    double sigma = 2.0;
     for (; first != last; first += 2) {
         string key(first->toString());
         const MxArray& val = *(first + 1);
@@ -556,11 +557,13 @@ Ptr<LATCH> createLATCH(
             rotationInvariance = val.toBool();
         else if (key == "HalfSize")
             half_ssd_size = val.toInt();
+        else if (key == "Sigma")
+            sigma = val.toDouble();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
     }
-    return LATCH::create(bytes, rotationInvariance, half_ssd_size);
+    return LATCH::create(bytes, rotationInvariance, half_ssd_size, sigma);
 }
 
 Ptr<DAISY> createDAISY(
