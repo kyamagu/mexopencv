@@ -190,11 +190,11 @@ classdef DisparityWLSFilter < handle
             %
             % ## Input
             % * **disparity_map_left** disparity map of the left view,
-            %   1-channel `int16` type. Implicitly assumes that disparity
-            %   values are scaled by 16 (one-pixel disparity corresponds to
-            %   the value of 16 in the disparity map). Disparity map can have
-            %   any resolution, it will be automatically resized to fit
-            %   `left_view` resolution.
+            %   1-channel `int16` or `single` type. Implicitly assumes that
+            %   disparity values are scaled by 16 (one-pixel disparity
+            %   corresponds to the value of 16 in the disparity map). Disparity
+            %   map can have any resolution, it will be automatically resized
+            %   to fit `left_view` resolution.
             % * **disparity_map_right** optional argument, some
             %   implementations might also use the disparity map of the right
             %   view to compute confidence maps, for instance. Pass an empty
@@ -337,8 +337,8 @@ classdef DisparityWLSFilter < handle
             %     mse = cv.DisparityWLSFilter.computeMSE(..., 'OptionName',optionValue, ...)
             %
             % ## Input
-            % * __GT__ ground truth disparity map (`int16`).
-            % * __src__ disparity map to evaluate (`int16`).
+            % * __GT__ ground truth disparity map (`int16` or `single`).
+            % * __src__ disparity map to evaluate (`int16` or `single`).
             %
             % ## Output
             % * __mse__ returns mean square error between `GT` and `src`.
@@ -358,8 +358,8 @@ classdef DisparityWLSFilter < handle
             %     prcnt = cv.DisparityWLSFilter.computeBadPixelPercent(..., 'OptionName',optionValue, ...)
             %
             % ## Input
-            % * __GT__ ground truth disparity map (`int16`).
-            % * __src__ disparity map to evaluate (`int16`).
+            % * __GT__ ground truth disparity map (`int16` or `single`).
+            % * __src__ disparity map to evaluate (`int16` or `single`).
             %
             % ## Output
             % * __prcnt__ returns percent of "bad" pixels between `GT` and
@@ -383,7 +383,7 @@ classdef DisparityWLSFilter < handle
             %     dst = cv.DisparityWLSFilter.getDisparityVis(src, 'OptionName',optionValue, ...)
             %
             % ## Input
-            % * __src__ input disparity map (`int16` depth).
+            % * __src__ input disparity map (`int16` or `single` depth).
             %
             % ## Output
             % * __dst__ output visualization (clamped `uint8` image).
