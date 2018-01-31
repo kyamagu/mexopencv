@@ -144,18 +144,23 @@
 
 %%
 % Create BG subtractor object
+nHistory = 50;
 if true
-    bs = cv.BackgroundSubtractorMOG(...
-        'History',50, 'NMixtures',5, 'BackgroundRatio',0.2, 'NoiseSigma',7);
+    bs = cv.BackgroundSubtractorMOG('History',nHistory, ...
+        'NMixtures',5, 'BackgroundRatio',0.2, 'NoiseSigma',7);
 elseif true
-    bs = cv.BackgroundSubtractorMOG2('History',50);
+    bs = cv.BackgroundSubtractorMOG2('History',nHistory);
 elseif true
-    bs = cv.BackgroundSubtractorKNN('History',50);
-elseif false
+    bs = cv.BackgroundSubtractorKNN('History',nHistory);
+elseif true
     bs = cv.BackgroundSubtractorGMG(...
         'InitializationFrames',20, 'DecisionThreshold',0.7);
-elseif false
+elseif true
     bs = cv.BackgroundSubtractorCNT();
+elseif true
+    bs = cv.BackgroundSubtractorLSBP();
+else
+    bs = cv.BackgroundSubtractorGSOC();
 end
 
 %%
@@ -180,7 +185,7 @@ disp('Keep out of the frame.');
 % used for updating the background, or use -1 to instruct the algorithm
 % to automatically chose a learning rate.
 hImg = imshow(im);
-for t = 1:bs.History
+for t = 1:nHistory
     % Get an image
     im = cap.read();
     if isempty(im), break; end
@@ -191,7 +196,7 @@ for t = 1:bs.History
 
     % Show current frame and progress
     set(hImg, 'CData',im);
-    title(sprintf('%d / %d', t, bs.History));
+    title(sprintf('%d / %d', t, nHistory));
     drawnow;
 end
 disp('Finished.');
