@@ -1,12 +1,15 @@
 %% Structured Edge Detection demo
-% This sample demonstrates structured forests for fast edge detection.
+% This sample demonstrates structured forests for fast edge detection, and
+% edgeboxes.
 %
 % The structered edge demo requires you to provide a model.
 % This demo downloads a model from the opencv_extra repository on Github.
 %
 % Sources:
 %
-% * <https://github.com/opencv/opencv_contrib/blob/3.3.0/modules/ximgproc/samples/structured_edge_detection.cpp>
+% * <https://github.com/opencv/opencv_contrib/blob/3.4.0/modules/ximgproc/samples/structured_edge_detection.cpp>
+% * <https://github.com/opencv/opencv_contrib/blob/3.4.0/modules/ximgproc/samples/edgeboxes_demo.cpp>
+% * <https://github.com/opencv/opencv_contrib/blob/3.4.0/modules/ximgproc/samples/edgeboxes_demo.py>
 %
 
 %% Load image
@@ -46,9 +49,17 @@ orientation_map = pDollar.computeOrientation(edges);
 
 %%
 % suppress edges
-edge_nms = pDollar.edgesNms(edges, orientation_map);
+edges_nms = pDollar.edgesNms(edges, orientation_map);
+
+%%
+% generate object bounding box proposals using edges
+ebx = cv.EdgeBoxes('MaxBoxes',30);
+boxes = ebx.getBoundingBoxes(edges_nms, orientation_map);
+out = cv.rectangle(img, boxes, 'Color',[0 255 0], 'LineType','AA');
 
 %% Display result
+figure('Position',[200 200 800 600])
 subplot(221), imshow(img), title('image')
 subplot(222), imshow(e8u), title('edges')
-subplot(223), imshow(edge_nms), title('edges NMS')
+subplot(223), imshow(edges_nms), title('edges NMS')
+subplot(224), imshow(out), title('object proposals')
