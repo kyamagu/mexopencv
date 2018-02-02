@@ -71,3 +71,8 @@ octave-workspace
 /test/faceocc2.webm
 /test/dudek.webm
 /test/david.webm
+/test/face_landmark_model.dat
+/test/lbfmodel.yaml
+/test/facemark/helen/
+/test/facemark/ibug/
+/test/facemark/lfpw/
