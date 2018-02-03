@@ -3,7 +3,7 @@
 %
 % Sources:
 %
-% * <https://github.com/opencv/opencv_contrib/blob/3.1.0/modules/saliency/samples/computeSaliency.cpp>
+% * <https://github.com/opencv/opencv_contrib/blob/3.4.0/modules/saliency/samples/computeSaliency.cpp>
 %
 
 %% Options
@@ -124,28 +124,32 @@ switch alg
         objectnessBoundingBox = saliency.computeSaliency(frame);
         objectnessValues = saliency.getObjectnessValues();
         toc
-        disp('Objectness done');
+        fprintf('Objectness done. ndet = %d\n', numel(objectnessBoundingBox));
         dir(fullfile(tempdir(),'Results'))
 
         %TODO: poor bounding boxes, are they ordered correctly?
-        %{
-        % sort by values
-        [objectnessValues, idx] = sort(objectnessValues, 'descend');
-        objectnessBoundingBox = objectnessBoundingBox(idx);
-        % keep best K
-        num = 10;
-        objectnessValues(num+1:end) = [];
-        objectnessBoundingBox(num+1:end) = [];
-        %}
+        if false
+            % sort by values (ascending or descending ?)
+            [objectnessValues, idx] = sort(objectnessValues, 'descend');
+            objectnessBoundingBox = objectnessBoundingBox(idx);
+        end
 
         % plot bounding boxes around possible objects
-        for i=1:min(10, numel(objectnessBoundingBox))
-            clr = randi([0 255], [1 3]);
+        % (results are sorted by objectness, we use the first few boxes here)
+        maxd = 7;
+        clr = round(255 * lines(maxd));
+        for i=1:min(maxd, numel(objectnessBoundingBox))
             bb = objectnessBoundingBox{i};
             val = objectnessValues(i);
-            frame = cv.rectangle(frame, bb(1:2), bb(3:4), 'Color',clr);
-            frame = cv.putText(frame, num2str(val), bb(1:2)-[0 2], ...
-                'Color',clr, 'FontScale',0.5);
+            % add jitter to seperate single rects
+            off = rand(1,2) * 2 * 9 - 9;
+            frame = cv.rectangle(frame, bb(1:2)+off, bb(3:4)+off, ...
+                'Color',clr(i,:), 'Thickness',2);
+            frame = cv.putText(frame, num2str(val), bb(1:2)+off+[2 -3], ...
+                'Color',clr(i,:), 'FontScale',0.5);
+            % mini temperature scale
+            frame = cv.rectangle(frame, [20 20+(i-1)*10 10 10], ...
+                'Color',clr(i,:), 'Thickness',-1);
         end
         imshow(frame), title('Objectness')
 end
