@@ -10,10 +10,10 @@
 %
 % Sources:
 %
-% * <https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/caffe_googlenet.cpp>
-% * <https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/googlenet_python.py>
-% * <https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/tf_inception.cpp>
-% * <https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/squeezenet_halide.cpp>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/caffe_googlenet.cpp>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/googlenet_python.py>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/tf_inception.cpp>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/squeezenet_halide.cpp>
 %
 
 function dnn_image_classification_demo(im, name, crop)

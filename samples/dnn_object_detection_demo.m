@@ -1,7 +1,7 @@
 %% DNN Object Detection
 %
-% This sample uses Single-Shot Detector (SSD) or You Only Look Once (YOLO) to
-% detect objects on image (produces bounding boxes and corresponding labels).
+% This sample uses DNN to detect objects on image (produces bounding boxes and
+% corresponding labels), using different methods:
 %
 % * <https://arxiv.org/abs/1311.2524 R-CNN>
 % * <https://arxiv.org/abs/1504.08083 Fast R-CNN>
@@ -12,11 +12,12 @@
 %
 % Sources:
 %
-% * <https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/ssd_object_detection.cpp>
-% * <https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/ssd_mobilenet_object_detection.cpp>
-% * <https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/mobilenet_ssd_python.py>
-% * <https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/mobilenet_ssd_accuracy.py>
-% * <https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/yolo_object_detection.cpp>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/ssd_object_detection.cpp>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/ssd_mobilenet_object_detection.cpp>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/mobilenet_ssd_python.py>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/mobilenet_ssd_accuracy.py>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/yolo_object_detection.cpp>
+% * <https://docs.opencv.org/3.4.0/da/d9d/tutorial_dnn_yolo.html>
 %
 
 function dnn_object_detection_demo(im, name, crop, min_conf)
@@ -50,7 +51,8 @@ function dnn_object_detection_demo(im, name, crop, min_conf)
     blobOpts = ['Crop',crop, blobOpts];
     opts = parseBlobOpts(blobOpts{:});
     blob = cv.Net.blobFromImages(img, blobOpts{:});
-    net.setInput(blob);
+    net.setInput(blob);  % net.setInput(blob, 'data');
+    isz = [opts.Size(1), opts.Size(2)];
 
     % run forward pass
     fprintf('Forward pass... '); tic;
@@ -58,26 +60,13 @@ function dnn_object_detection_demo(im, name, crop, min_conf)
     toc;
 
     % prepare output image
-    if opts.Crop
-        % center cropped as fed to network
-        out = cropImage(img, opts);
-    else
-        if false
-            % resized image (squashed) as fed to network
-            out = imageFromBlob(blob, opts);
-        else
-            % unmodified original image
-            out = img;
-        end
-    end
-    out = flip(out, 3);  % BGR to RGB
+    out = outputImage(img, blob, opts);
+    osz = [size(out,2) size(out,1)];
 
-    % build detections struct (adjust relative bounding boxes to image size)
-    detections = processOutput(detections, name, [size(out,2) size(out,1)]);
-
-    % filter-out weak detections according to a minimum confidence threshold
+    % build detections struct, keeping only strong detections
+    % (according to a minimum confidence threshold)
     if nargin < 4, min_conf = 0.2; end
-    detections = detections([detections.confidence] >= min_conf);
+    detections = processOutput(detections, name, isz, osz, min_conf);
 
     % localization: show bounding boxes
     for i=1:numel(detections)
@@ -200,37 +189,92 @@ function img = cropImage(img, opts)
     end
 end
 
-function detections = processOutput(output, name, sz)
-    isYOLO = strcmpi(name, 'yolo');
-    if isYOLO
-        % YOLO output is already ndetections-by-25-by-1-by-1
-        % (20+5 for VOC, 80+5 for COCO)
+function out = outputImage(img, blob, opts)
+    if opts.Crop
+        % center cropped as fed to network
+        out = cropImage(img, opts);
     else
-        % SSD output is 1-by-1-by-ndetections-by-7
-        output = permute(output, [3 4 2 1]);
-    end
-    num = size(output,1);
-
-    % note: bounding boxes returned are percentages relative to image size
-    detections = struct('img_id',[], 'class_id',[], 'confidence',[], 'rect',[]);
-    detections = repmat(detections, num, 1);
-    for i=1:num
-        if isYOLO
-            % (center_x, center_y, width, height, unused_t0, probability_for_each_class[20])
-            rrect = struct('center',output(i,1:2) .* sz, ...
-                'size',output(i,3:4) .* sz, 'angle',0);
-            detections(i).rect = cv.RotatedRect.boundingRect(rrect);
-            [detections(i).confidence, detections(i).class_id] = max(output(i,6:end));
-            detections(i).img_id = 0;
+        if false
+            % resized image (squashed) as fed to network
+            out = imageFromBlob(blob, opts);
         else
-            % (img_id, class_id, confidence, xLeftBottom, yLeftBottom, xRightTop, yRightTop)
-            detections(i).img_id = output(i,1);
-            detections(i).class_id = output(i,2);
-            detections(i).confidence = output(i,3);
-            detections(i).rect = round(cv.Rect.from2points(...
-                output(i,4:5) .* sz, output(i,6:7) .* sz));
+            % unmodified original image
+            out = img;
         end
     end
+    out = flip(out, 3);  % BGR to RGB
+end
+
+function S = processOutput(output, name, isz, osz, thresh)
+    %PROCESSOUTPUT  Process output into detections structure
+    %
+    %     S = processOutput(output, name, isz, osz, thresh)
+    %
+    % ## Input
+    % * __output__ network output blob
+    % * __name__ network model name
+    % * __isz__ size of input image blob `[w,h]`
+    % * __osz__ size of output image where detections are drawn `[w,h]`
+    % * __thresh__ minimum confidence threshold
+    %
+    % ## Output
+    % * __S__ struct-array of detections, with the following fields:
+    %   * **img_id** index of image
+    %   * **class_id** index of class
+    %   * __confidence__ detection confidence
+    %   * __rect__ detection bounding box `[x,y,w,h]`
+    %
+
+    % reshape and adjust coordinates when necessary
+    if strcmpi(name, 'yolo')
+        % YOLO output is already ndetections-by-25-by-1-by-1
+        % (20+5 for VOC, 80+5 for COCO)
+        % (center_x, center_y, width, height, unused_t0, probability_for_each_class[20])
+
+        % adjust relative coordinates to image size
+        output(:,1:4) = bsxfun(@times, output(:,1:4), [osz osz]);
+
+        % test predictions confidence against threshold
+        idx = max(output(:,6:end), [], 2) > thresh;
+    else
+        % SSD output is 1-by-1-by-ndetections-by-7
+        % (img_id, class_id, confidence, left, bottom, right, top)
+        output = permute(output, [3 4 2 1]);
+
+        % adjust relative coordinates to image size
+        output(:,4:7) = bsxfun(@times, output(:,4:7), [osz osz]);
+
+        % test predictions confidence against threshold
+        idx = output(:,3) > thresh;
+    end
+
+    % filter out weak detections
+    output = output(idx,:);
+    num = size(output,1);
+
+    % detections struct-array
+    S = struct('img_id',[], 'class_id',[], 'confidence',[], 'rect',[]);
+    S = repmat(S, num, 1);
+    for i=1:num
+        if strcmpi(name, 'yolo')
+            S(i).img_id = 0;
+            [S(i).confidence, S(i).class_id] = max(output(i,6:end));
+            rect = cv.RotatedRect.boundingRect(struct(...
+                'center',output(i,1:2), 'size',output(i,3:4), 'angle',0));
+        else
+            S(i).img_id = output(i,1);
+            S(i).class_id = output(i,2);
+            S(i).confidence = output(i,3);
+            rect = cv.Rect.from2points(output(i,4:5), output(i,6:7));
+        end
+        % clamp coordinates
+        rect = cv.Rect.intersect(rect, [0 0 osz]);
+        S(i).rect = round(rect);
+    end
+
+    % remove small detections (and out-of-bound rects after clamping)
+    idx = cv.Rect.area(cat(1, S.rect)) > 5;
+    S = S(idx);
 end
 
 function img = insertAnnotation(img, rect, str, varargin)
@@ -326,7 +370,6 @@ function [net, labels, blobOpts] = VGGNetSSD(imageset)
     % (VOC: 20 classes, ILSVRC: 200 classes, http://image-net.org/challenges/LSVRC/2016/browse-det-synsets)
     imageset = validatestring(imageset, {'VOC', 'ILSVRC'});
     dname = get_dnn_dir(fullfile('VGGNetSSD', imageset));
-    blobOpts = {'SwapRB',false, 'Size',[300 300], 'Mean',[104 117 123]};
     if strcmp(imageset, 'VOC')
         net = cv.Net('Caffe', ...
             fullfile(dname, 'deploy.prototxt'), ...
@@ -334,10 +377,11 @@ function [net, labels, blobOpts] = VGGNetSSD(imageset)
         labels = readLabelsColors(fullfile(dname, 'pascal-classes.txt'), false);
     else
         net = cv.Net('Caffe', ...
-            fullfile(dname, 'ssd_vgg16.prototxt'), ...
+            fullfile(dname, 'deploy.prototxt'), ...
             fullfile(dname, 'VGG_ILSVRC2016_SSD_300x300_iter_440000.caffemodel'));
         labels = readLabelsProtoTxt(fullfile(dname, 'labelmap_ilsvrc_det.prototxt'), false);
     end
+    blobOpts = {'SwapRB',false, 'Size',[300 300], 'Mean',[104 117 123]};
 end
 
 function [net, labels, blobOpts] = MobileNetSSD(imageset)

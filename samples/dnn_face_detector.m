@@ -4,7 +4,8 @@
 %
 % Sources:
 %
-% * <https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/resnet_ssd_face_python.py>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/resnet_ssd_face_python.py>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/resnet_ssd_face.cpp>
 %
 
 %%
@@ -86,13 +87,13 @@ end
 function [net, blobOpts] = ResNetSSD_FaceDetector()
     %RESNETSSD_FACEDETECTOR  face detector based on SSD framework with reduced ResNet-10 backbone
     %
-    % homepage = https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/face_detector/how_to_train_face_detector.txt
+    % homepage = https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/face_detector/how_to_train_face_detector.txt
     %
     % ## Model
     %
     % file = test/dnn/ResNetSSD_FaceDetector/deploy.prototxt
-    % url  = https://github.com/opencv/opencv/raw/3.3.1/samples/dnn/face_detector/deploy.prototxt
-    % hash = 5fd52177a483cbac12fd61e9ecd87c762829ecbe
+    % url  = https://github.com/opencv/opencv/raw/3.4.0/samples/dnn/face_detector/deploy.prototxt
+    % hash = 006BAF926232DF6F6332DEFB9C24F94BB9F3764E
     %
     % ## Weights
     %

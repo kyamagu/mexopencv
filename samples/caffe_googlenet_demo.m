@@ -7,9 +7,9 @@
 %
 % Sources:
 %
-% * <https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/caffe_googlenet.cpp>
-% * <https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/googlenet_python.py>
-% * <https://docs.opencv.org/3.3.1/d5/de7/tutorial_dnn_googlenet.html>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/caffe_googlenet.cpp>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/googlenet_python.py>
+% * <https://docs.opencv.org/3.4.0/d5/de7/tutorial_dnn_googlenet.html>
 %
 
 %% BVLC GoogLeNet
@@ -26,8 +26,8 @@ modelTxt = fullfile(dirDNN, 'deploy.prototxt');
 modelBin = fullfile(dirDNN, 'bvlc_googlenet.caffemodel');  % 51 MB file
 files = {modelLabels, modelTxt, modelBin};
 urls = {
-    'https://cdn.rawgit.com/opencv/opencv/3.3.1/samples/data/dnn/synset_words.txt';
-    'https://cdn.rawgit.com/opencv/opencv/3.3.1/samples/data/dnn/bvlc_googlenet.prototxt';
+    'https://cdn.rawgit.com/opencv/opencv/3.4.0/samples/data/dnn/synset_words.txt';
+    'https://cdn.rawgit.com/opencv/opencv/3.4.0/samples/data/dnn/bvlc_googlenet.prototxt';
     'http://dl.caffe.berkeleyvision.org/bvlc_googlenet.caffemodel';
 };
 if ~isdir(dirDNN), mkdir(dirDNN); end
