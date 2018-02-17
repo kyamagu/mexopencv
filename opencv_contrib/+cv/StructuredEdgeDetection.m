@@ -69,11 +69,11 @@ classdef StructuredEdgeDetection < handle
             %         % src: source image to extract features
             %         % features: output n-channel floating-point feature matrix
             %         % opts: struct of options
-            %         gnrmRad = opts.gradientNormalizationRadius;
-            %         gsmthRad = opts.gradientSmoothingRadius;
-            %         shrink = opts.shrinkNumber;
-            %         outNum = opts.numberOfOutputChannels;
-            %         gradNum = opts.numberOfGradientOrientations;
+            %         gnrmRad = opts.normRad;    % gradientNormalizationRadius
+            %         gsmthRad = opts.grdSmooth; % gradientSmoothingRadius
+            %         shrink = opts.shrink;      % shrinkNumber
+            %         outNum = opts.nChns;       % numberOfOutputChannels
+            %         gradNum = opts.nOrients;   % numberOfGradientOrientations
             %
             %         nsize = [size(src,1) size(src,2)] ./ shrink;
             %         features = zeros([nsize outNum], 'single');
@@ -256,6 +256,39 @@ classdef StructuredEdgeDetection < handle
             %  cv.StructuredEdgeDetection.computeOrientation
             %
             dst = StructuredEdgeDetection_(this.id, 'edgesNms', edge_image, orientation_image, varargin{:});
+        end
+    end
+
+    %% Static functions
+    methods (Static)
+        function features = getFeatures(src, opts)
+            %GETFEATURES  Extracts features from image
+            %
+            %     features = cv.StructuredEdgeDetection.getFeatures(src, opts)
+            %
+            % ## Input
+            % * __src__ source image to extract features (RGB float in [0;1]).
+            % * __opts__ a scalar struct of random forest options
+            %   (feature params), with the following fields:
+            %   * __normRad__ `gradientNormalizationRadius` gradient
+            %     normalization radius.
+            %   * __grdSmooth__ `gradientSmoothingRadius` radius for smoothing
+            %     of gradients (using convolution with triangle filter).
+            %   * __shrink__ `shrinkNumber` amount to shrink channels.
+            %   * __nChns__ `numberOfOutputChannels` number of edge
+            %     orientation bins for output.
+            %   * __nOrients__ `numberOfGradientOrientations` number of
+            %     orientations per gradient scale.
+            %
+            % ## Output
+            % * __features__ extracted features.
+            %
+            % Extracted features are appropriate for StructuredEdgeDetection
+            % training.
+            %
+            % See also: cv.StructuredEdgeDetection.StructuredEdgeDetection
+            %
+            features = StructuredEdgeDetection_(0, 'getFeatures', src, opts);
         end
     end
 

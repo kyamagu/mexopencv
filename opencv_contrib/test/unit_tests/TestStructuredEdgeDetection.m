@@ -27,9 +27,9 @@ classdef TestStructuredEdgeDetection
         end
 
         function test_custom_feat_extract
-            %TODO: custom feature extractor
-            if true
-                error('mexopencv:testskip', 'todo');
+            % skip test if external M-file is not found on the path
+            if ~exist('myRFFeatureGetter.m', 'file')
+                error('mexopencv:testskip', 'undefined function');
             end
 
             img = imread(TestStructuredEdgeDetection.im);
@@ -40,14 +40,38 @@ classdef TestStructuredEdgeDetection
                 'myRFFeatureGetter');
             E = pDollar.detectEdges(img);
         end
+
+        function test_get_features
+            img = imread(TestStructuredEdgeDetection.im);
+            img = single(img) / 255.0;
+
+            opts = struct();
+            opts.normRad = 4;
+            opts.grdSmooth = 0;
+            opts.shrink = 2;
+            opts.nChns = 13;
+            opts.nOrients = 4;
+
+            features = cv.StructuredEdgeDetection.getFeatures(img, opts);
+            validateattributes(features, {'numeric'}, {'real', 'ndims',3});
+            sz = size(features);
+            %assert(sz(1) * opts.shrink == size(img,1));
+            %assert(sz(2) * opts.shrink == size(img,2));
+            assert(sz(3) == opts.nChns);
+        end
     end
 
 end
 
 function features = myRFFeatureGetter(src, opts)
-    nsize = [size(src,1) size(src,2)] ./ opts.shrinkNumber;
-    features = zeros([nsize opts.numberOfOutputChannels], 'single');
-    %TODO: ... compute features
+    if false
+        nsize = fix([size(src,1) size(src,2)] ./ opts.shrink);
+        features = zeros([nsize opts.nChns], 'single');
+        %TODO: ... compute features
+    else
+        % call opencv's implementation
+        features = cv.StructuredEdgeDetection.getFeatures(src, opts);
+    end
 end
 
 function fname = get_model_file()
