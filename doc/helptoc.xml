@@ -269,6 +269,15 @@
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.decomposeHomographyMat.html">cv.decomposeHomographyMat</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.StereoBM.html">cv.StereoBM</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.StereoSGBM.html">cv.StereoSGBM</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.fisheyeProjectPoints.html">cv.fisheyeProjectPoints</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.fisheyeDistortPoints.html">cv.fisheyeDistortPoints</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.fisheyeUndistortPoints.html">cv.fisheyeUndistortPoints</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.fisheyeInitUndistortRectifyMap.html">cv.fisheyeInitUndistortRectifyMap</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.fisheyeUndistortImage.html">cv.fisheyeUndistortImage</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.fisheyeEstimateNewCameraMatrixForUndistortRectify.html">cv.fisheyeEstimateNewCameraMatrixForUndistortRectify</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.fisheyeCalibrate.html">cv.fisheyeCalibrate</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.fisheyeStereoRectify.html">cv.fisheyeStereoRectify</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.fisheyeStereoCalibrate.html">cv.fisheyeStereoCalibrate</tocitem>
         </tocitem>
         <tocitem target="matlab/index_cat.html#features2d">features2d: 2D Features Framework
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.KeyPointsFilter.html">cv.KeyPointsFilter</tocitem>
@@ -402,6 +411,9 @@
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BackgroundSubtractorMOG.html">cv.BackgroundSubtractorMOG</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BackgroundSubtractorGMG.html">cv.BackgroundSubtractorGMG</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BackgroundSubtractorCNT.html">cv.BackgroundSubtractorCNT</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BackgroundSubtractorGSOC.html">cv.BackgroundSubtractorGSOC</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BackgroundSubtractorLSBP.html">cv.BackgroundSubtractorLSBP</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SyntheticSequenceGenerator.html">cv.SyntheticSequenceGenerator</tocitem>
         </tocitem>
         <tocitem target="matlab/index_cat.html#bioinspired">bioinspired: Biologically Inspired Vision Models and Derivated Tools
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Retina.html">cv.Retina</tocitem>
@@ -414,10 +426,12 @@
         <tocitem target="matlab/index_cat.html#dpm">dpm: Deformable Part-based Models
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.DPMDetector.html">cv.DPMDetector</tocitem>
         </tocitem>
-        <tocitem target="matlab/index_cat.html#face">face: Face Recognition
+        <tocitem target="matlab/index_cat.html#face">face: Face Analysis
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BasicFaceRecognizer.html">cv.BasicFaceRecognizer</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.LBPHFaceRecognizer.html">cv.LBPHFaceRecognizer</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BIF.html">cv.BIF</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Facemark.html">cv.Facemark</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.FacemarkKazemi.html">cv.FacemarkKazemi</tocitem>
         </tocitem>
         <tocitem target="matlab/index_cat.html#img_hash">img_hash: Image Hashing Algorithms
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.ImgHash.html">cv.ImgHash</tocitem>
@@ -483,6 +497,7 @@
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.DisparityWLSFilter.html">cv.DisparityWLSFilter</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.EdgeAwareInterpolator.html">cv.EdgeAwareInterpolator</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.StructuredEdgeDetection.html">cv.StructuredEdgeDetection</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.EdgeBoxes.html">cv.EdgeBoxes</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SuperpixelSEEDS.html">cv.SuperpixelSEEDS</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SuperpixelSLIC.html">cv.SuperpixelSLIC</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SuperpixelLSC.html">cv.SuperpixelLSC</tocitem>
@@ -496,6 +511,9 @@
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.GradientPaillou.html">cv.GradientPaillou</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.GradientDeriche.html">cv.GradientDeriche</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.PeiLinNormalization.html">cv.PeiLinNormalization</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.ContourFitting.html">cv.ContourFitting</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.RidgeDetectionFilter.html">cv.RidgeDetectionFilter</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BrightEdges.html">cv.BrightEdges</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.niBlackThreshold.html">cv.niBlackThreshold</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.thinning.html">cv.thinning</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.anisotropicDiffusion.html">cv.anisotropicDiffusion</tocitem>

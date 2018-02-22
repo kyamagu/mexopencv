@@ -74,12 +74,12 @@ install:
   #- sudo apt-get install -y libgdcm2-dev libgdal-dev
   #- sudo apt-get install -y libgtk-3-dev libvtk6-dev libopenblas-dev
 
-  # build OpenCV 3.3.1 from source (opencv + opencv_contrib)
+  # build OpenCV 3.4.0 from source (opencv + opencv_contrib)
   - mkdir $HOME/cv && pushd $HOME/cv
-  - wget -O opencv-3.3.1.zip https://github.com/opencv/opencv/archive/3.3.1.zip
-  - wget -O opencv_contrib-3.3.1.zip https://github.com/opencv/opencv_contrib/archive/3.3.1.zip
-  - unzip opencv-3.3.1.zip > /dev/null
-  - unzip opencv_contrib-3.3.1.zip > /dev/null
+  - wget -O opencv-3.4.0.zip https://github.com/opencv/opencv/archive/3.4.0.zip
+  - wget -O opencv_contrib-3.4.0.zip https://github.com/opencv/opencv_contrib/archive/3.4.0.zip
+  - unzip opencv-3.4.0.zip > /dev/null
+  - unzip opencv_contrib-3.4.0.zip > /dev/null
   - mkdir build && cd build
   - cmake -G "$CMAKE_GEN" -Wno-dev
       -DBUILD_DOCS:BOOL=OFF
@@ -89,8 +89,10 @@ install:
       -DBUILD_TESTS:BOOL=OFF
       -DBUILD_WITH_DEBUG_INFO:BOOL=OFF
       -DBUILD_ITT:BOOL=OFF
+      -DBUILD_JAVA:BOOL=OFF
       -DCV_TRACE:BOOL=OFF
       -DENABLE_PYLINT:BOOL=OFF
+      -DENABLE_CXX11:BOOL=ON
       -DWITH_CUDA:BOOL=OFF
       -DWITH_CUBLAS:BOOL=OFF
       -DWITH_CUFFT:BOOL=OFF
@@ -116,10 +118,10 @@ install:
       -DBUILD_opencv_js:BOOL=OFF
       -DBUILD_opencv_python2:BOOL=OFF
       -DBUILD_opencv_python3:BOOL=OFF
+      -DBUILD_opencv_python_bindings_generator:BOOL=OFF
       -DBUILD_opencv_ts:BOOL=OFF
       -DBUILD_opencv_viz:BOOL=OFF
       -DBUILD_opencv_world:BOOL=OFF
-      -DBUILD_opencv_contrib_world:BOOL=OFF
       -DBUILD_opencv_matlab:BOOL=OFF
       -DBUILD_opencv_ccalib:BOOL=OFF
       -DBUILD_opencv_cvv:BOOL=OFF
@@ -130,7 +132,7 @@ install:
       -DCMAKE_BUILD_TYPE:STRING=Release
       -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_PREFIX
       -DOPENCV_ENABLE_NONFREE:BOOL=ON
-      -DOPENCV_EXTRA_MODULES_PATH:PATH=$HOME/cv/opencv_contrib-3.3.1/modules $HOME/cv/opencv-3.3.1
+      -DOPENCV_EXTRA_MODULES_PATH:PATH=$HOME/cv/opencv_contrib-3.4.0/modules $HOME/cv/opencv-3.4.0
   - cmake --build .
   - sudo cmake --build . --target install
   - popd

@@ -71,6 +71,11 @@
       <type>M-file</type>
       <source>BackgroundSubtractorDemo</source>
     </demoitem>
+    <demoitem>
+      <label>Evaluation of background subtraction algorithms on synthetic sequence</label>
+      <type>M-file</type>
+      <source>bgsegm_synthetic_seq_demo</source>
+    </demoitem>
   </demosection>
 
   <!-- bioinspired -->
@@ -107,7 +112,7 @@
 
   <!-- face -->
   <demosection>
-    <label>face: Face Recognition</label>
+    <label>face: Face Analysis</label>
     <demoitem>
       <label>Face recognition</label>
       <type>M-file</type>
@@ -116,6 +121,53 @@
       <dependency>Image Processing Toolbox</dependency>
       <!-- cvpartition, confusionmat -->
       <dependency>Statistics and Machine Learning Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Face landmark detection in an image</label>
+      <type>M-file</type>
+      <source>facemark_kazemi_detect_img_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Face landmark detection in a video</label>
+      <type>M-file</type>
+      <source>facemark_kazemi_detect_vid_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Training face landmark detector</label>
+      <type>M-file</type>
+      <source>facemark_kazemi_train_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Training face landmark detector</label>
+      <type>M-file</type>
+      <source>facemark_kazemi_train2_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Parameters for training face landmark detector</label>
+      <type>M-file</type>
+      <source>facemark_kazemi_train_config_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Facemark AAM training demo</label>
+      <type>M-file</type>
+      <source>facemark_aam_train_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Facemark LBF training demo</label>
+      <type>M-file</type>
+      <source>facemark_lbf_train_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Face landmark detection in a video (LBF)</label>
+      <type>M-file</type>
+      <source>facemark_lbf_fitting_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Face swapping using face landmark detection</label>
+      <type>M-file</type>
+      <source>face_swapping_demo</source>
+      <!-- kids.tif -->
+      <dependency>Image Processing Toolbox</dependency>
     </demoitem>
   </demosection>
 
@@ -268,6 +320,16 @@
       <label>Pei&amp;Lin Normalization</label>
       <type>M-file</type>
       <source>peilin_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Bright edges detection</label>
+      <type>M-GUI</type>
+      <source>brightedges_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Fourier Descriptors</label>
+      <type>M-GUI</type>
+      <source>fourier_descriptors_demo_gui</source>
     </demoitem>
   </demosection>
 
