@@ -4,7 +4,8 @@
 %
 % Sources:
 %
-% * <https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/resnet_ssd_face_python.py>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/resnet_ssd_face_python.py>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/resnet_ssd_face.cpp>
 %
 
 %%
@@ -20,38 +21,28 @@ confThreshold = 0.5;
 % prepare video input
 cap = cv.VideoCapture();
 pause(1);
-assert(cap.isOpened());
+assert(cap.isOpened(), 'Could not initialize capturing');
 
 %%
 % prepare figure
 frame = cap.read();
-assert(~isempty(frame));
+assert(~isempty(frame), 'Could not read frame');
 hImg = imshow(frame);
-sz = [size(frame,2) size(frame,1)];
 
 %%
-% video feed
+% main loop over video feed
 while ishghandle(hImg)
     % read frame
     frame = cap.read();
     if isempty(frame), break; end
 
     % detect faces
-    net.setInput(cv.Net.blobFromImages(flip(frame,3), blobOpts{:}));
-    detections = net.forward();  % SSD output is 1-by-1-by-ndetections-by-7
-    detections = permute(detections, [3 4 2 1]);
-
-    % draw detections
-    for i=1:size(detections,1)
-        % only strong detections
-        d = detections(i,:);
-        if d(2) == 1 && d(3) > confThreshold  % 0: background, 1: face
-            % plot bounding boxes (coordinates are relative to image size)
-            frame = cv.rectangle(frame, d(4:5).*sz, d(6:7).*sz, ...
-                'Color',[0 255 0], 'Thickness',2);
-            frame = cv.putText(frame, sprintf('conf = %3.0f%%', d(3)*100), ...
-                d(4:5).*sz - [0 4], 'Color',[255 0 0], 'FontScale',0.5);
-        end
+    [rects, confs] = detectFaces(frame, net, blobOpts, confThreshold);
+    for i=1:size(rects,1)
+        frame = cv.rectangle(frame, rects(i,:), ...
+            'Color',[0 255 0], 'Thickness',2);
+        frame = cv.putText(frame, sprintf('conf = %3.0f%%', confs(i)*100), ...
+            rects(i,1:2) - [0 4], 'Color',[255 0 0], 'FontScale',0.5);
     end
 
     % show inference timing
@@ -67,7 +58,42 @@ end
 cap.release();
 
 %%
-% Helper function
+% Helper functions
+
+function [rects, confs] = detectFaces(img, net, blobOpts, thresh)
+    %DETECTFACES  Run face detection network to detect faces on input image
+    %
+    % You may play with input blob sizes to balance detection quality and
+    % efficiency. The bigger input blob the smaller faces may be detected.
+    %
+
+    % detect faces
+    net.setInput(cv.Net.blobFromImages(flip(img,3), blobOpts{:}));
+    dets = net.forward();
+
+    % SSD output is 1-by-1-by-ndetections-by-7
+    % d = [img_id, class_id, confidence, left, bottom, right, top]
+    dets = permute(dets, [3 4 2 1]);
+
+    % filter out weak detections
+    if nargin < 4, thresh = 0.5; end
+    idx = (dets(:,2) == 1 & dets(:,3) > thresh);  % 0: background, 1: face
+    dets = dets(idx,:);
+
+    % adjust relative coordinates to image size
+    sz = [size(img,2) size(img,1)];
+    dets(:,4:7) = bsxfun(@times, dets(:,4:7), [sz sz]);
+
+    % output detections (clamp coords and remove small and out-of-bound rects)
+    rects = cv.Rect.from2points(dets(:,4:5), dets(:,6:7));
+    rects = cv.Rect.intersect(rects, [0 0 sz]);
+    idx = (cv.Rect.area(rects) >= 10);
+    rects = rects(idx,:);
+    confs = dets(idx,3);
+end
+
+%%
+% Pretrained models
 
 function dname = get_dnn_dir(dname)
     %GET_DNN_DIR  Path to model files, and show where to get them if missing
@@ -86,13 +112,13 @@ end
 function [net, blobOpts] = ResNetSSD_FaceDetector()
     %RESNETSSD_FACEDETECTOR  face detector based on SSD framework with reduced ResNet-10 backbone
     %
-    % homepage = https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/face_detector/how_to_train_face_detector.txt
+    % homepage = https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/face_detector/how_to_train_face_detector.txt
     %
     % ## Model
     %
     % file = test/dnn/ResNetSSD_FaceDetector/deploy.prototxt
-    % url  = https://github.com/opencv/opencv/raw/3.3.1/samples/dnn/face_detector/deploy.prototxt
-    % hash = 5fd52177a483cbac12fd61e9ecd87c762829ecbe
+    % url  = https://github.com/opencv/opencv/raw/3.4.0/samples/dnn/face_detector/deploy.prototxt
+    % hash = 006BAF926232DF6F6332DEFB9C24F94BB9F3764E
     %
     % ## Weights
     %

@@ -39,6 +39,9 @@ classdef LATCH < handle
             %   example, if we would like to compare triplets of patches of
             %   size 7x7x then the `half_ssd_size` should be `(7-1)/2 = 3`.
             %   default 3
+            % * __Sigma__ sigma value for cv.GaussianBlur smoothing of the
+            %   source image. Source image will be used without smoothing in
+            %   case sigma value is 0. default 2.0
             %
             % See also: cv.LATCH.compute
             %
@@ -212,7 +215,8 @@ classdef LATCH < handle
             %     [descriptors, keypoints] = obj.compute(imgs, keypoints)
             %
             % ## Input
-            % * __img__ Image (first variant), 8-bit grayscale image.
+            % * __img__ Image (first variant), 8-bit grayscale image
+            %   (color images are converted as such).
             % * __imgs__ Image set (second variant), cell array of images.
             % * __keypoints__ Input collection of keypoints. Keypoints for
             %   which a descriptor cannot be computed are removed. Sometimes

@@ -16,10 +16,10 @@
 % * __AlphaDerive__ double see paper. default 1.0
 % * __AlphaMean__ double see paper. default 1.0
 %
-% For more details about this implementation, please see [deriche1987using].
+% For more details about this implementation, please see [deriche1987].
 %
 % ## References
-% [deriche1987using]:
+% [deriche1987]:
 % > Rachid Deriche. "Using Canny's criteria to derive a recursively
 % > implemented optimal edge detector". International Journal of Computer
 % > Vision, Volume 1 Issue 2, pages 167-187, 1987.

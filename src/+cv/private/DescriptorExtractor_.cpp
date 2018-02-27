@@ -96,6 +96,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         //*/
     }
     else if (method == "save") {
+        //TODO: crashes due to bug in opencv
+        // (getDefaultName contains "." which is not allowed in serialized mapping name)
         nargchk(nrhs==3 && nlhs==0);
         obj->save(rhs[2].toString());
     }

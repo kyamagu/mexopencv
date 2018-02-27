@@ -83,7 +83,7 @@ xlabel('x'), ylabel('G(x)'), grid on
 % $$ G_{0}(x, y) = A e^{ \frac{ -(x - \mu_{x})^{2} }{ 2\sigma^{2}_{x} } +
 %                        \frac{ -(y - \mu_{y})^{2} }{ 2\sigma^{2}_{y} } } $$
 %
-% where $\mu$ is the mean (the peak) and $\sigma$ represents the variance
+% where $\mu$ is the mean (the peak) and $\sigma^{2}$ represents the variance
 % (per each of the variables $x$ and $y$).
 %
 

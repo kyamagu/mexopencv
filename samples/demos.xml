@@ -78,6 +78,11 @@
       <type>M-file</type>
       <source>dft_demo</source>
     </demoitem>
+    <demoitem>
+      <label>Kaleidoscope</label>
+      <type>M-file</type>
+      <source>kaleidoscope_demo</source>
+    </demoitem>
   </demosection>
 
   <!-- imgproc -->
@@ -799,6 +804,16 @@
       <label>DNN Face Detection</label>
       <type>M-file</type>
       <source>dnn_face_detector</source>
+    </demoitem>
+    <demoitem>
+      <label>DNN Face Detection and Recognition</label>
+      <type>M-file</type>
+      <source>dnn_face_recognition</source>
+    </demoitem>
+    <demoitem>
+      <label>DNN: Style Transfer</label>
+      <type>M-file</type>
+      <source>dnn_style_transfer</source>
     </demoitem>
   </demosection>
 

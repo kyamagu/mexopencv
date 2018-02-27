@@ -28,7 +28,7 @@ classdef Estimator < handle
             %   * __HomographyBasedEstimator__ Homography based rotation
             %     estimator.
             %   * __AffineBasedEstimator__ Affine transformation based
-            %     estimator. This estimator uses pairwise tranformations
+            %     estimator. This estimator uses pairwise transformations
             %     estimated by matcher to estimate final transformation for
             %     each camera.
             %

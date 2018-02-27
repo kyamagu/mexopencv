@@ -73,8 +73,6 @@ classdef ImgHash < handle
     properties (SetAccess = private)
         % Object ID
         id
-        % Object class
-        klass
     end
 
     %% Constructor/destructor
@@ -121,8 +119,7 @@ classdef ImgHash < handle
             %
             % See also: cv.ImgHash.compute, cv.ImgHash.compare
             %
-            this.klass = alg;
-            this.id = ImgHash_(0, 'new', this.klass, varargin{:});
+            this.id = ImgHash_(0, 'new', alg, varargin{:});
         end
 
         function delete(this)
@@ -133,7 +130,7 @@ classdef ImgHash < handle
             % See also: cv.ImgHash
             %
             if isempty(this.id), return; end
-            ImgHash_(this.id, 'delete', this.klass);
+            ImgHash_(this.id, 'delete');
         end
 
         function typename = typeid(this)
@@ -144,7 +141,7 @@ classdef ImgHash < handle
             % ## Output
             % * __typename__ Name of C++ type
             %
-            typename = ImgHash_(this.id, 'typeid', this.klass);
+            typename = ImgHash_(this.id, 'typeid');
         end
     end
 
@@ -156,14 +153,14 @@ classdef ImgHash < handle
             %     hash = obj.compute(img)
             %
             % ## Input
-            % * __img__ input image want to compute hash value.
+            % * __img__ input image wanting to compute its hash value.
             %
             % ## Output
             % * __hash__ hash of the image.
             %
             % See also: cv.ImgHash.compare
             %
-            hash = ImgHash_(this.id, 'compute', this.klass, img);
+            hash = ImgHash_(this.id, 'compute', img);
         end
 
         function val = compare(this, hashOne, hashTwo)
@@ -181,7 +178,7 @@ classdef ImgHash < handle
             %
             % See also: cv.ImgHash.compute
             %
-            val = ImgHash_(this.id, 'compare', this.klass, hashOne, hashTwo);
+            val = ImgHash_(this.id, 'compare', hashOne, hashTwo);
         end
     end
 
@@ -202,7 +199,7 @@ classdef ImgHash < handle
             %
             % See also: cv.ImgHash.ImgHash, cv.ImgHash.compute
             %
-            hash = ImgHash_(0, 'averageHash', '', img);
+            hash = ImgHash_(0, 'averageHash', img);
         end
 
         function hash = blockMeanHash(img, varargin)
@@ -228,7 +225,7 @@ classdef ImgHash < handle
             %
             % See also: cv.ImgHash.ImgHash, cv.ImgHash.compute
             %
-            hash = ImgHash_(0, 'blockMeanHash', '', img, varargin{:});
+            hash = ImgHash_(0, 'blockMeanHash', img, varargin{:});
         end
 
         function hash = colorMomentHash(img)
@@ -247,7 +244,7 @@ classdef ImgHash < handle
             %
             % See also: cv.ImgHash.ImgHash, cv.ImgHash.compute
             %
-            hash = ImgHash_(0, 'colorMomentHash', '', img);
+            hash = ImgHash_(0, 'colorMomentHash', img);
         end
 
         function hash = marrHildrethHash(img, varargin)
@@ -270,7 +267,7 @@ classdef ImgHash < handle
             %
             % See also: cv.ImgHash.ImgHash, cv.ImgHash.compute
             %
-            hash = ImgHash_(0, 'marrHildrethHash', '', img, varargin{:});
+            hash = ImgHash_(0, 'marrHildrethHash', img, varargin{:});
         end
 
         function hash = pHash(img)
@@ -287,7 +284,7 @@ classdef ImgHash < handle
             %
             % See also: cv.ImgHash.ImgHash, cv.ImgHash.compute
             %
-            hash = ImgHash_(0, 'pHash', '', img);
+            hash = ImgHash_(0, 'pHash', img);
         end
 
         function hash = radialVarianceHash(img, varargin)
@@ -310,7 +307,7 @@ classdef ImgHash < handle
             %
             % See also: cv.ImgHash.ImgHash, cv.ImgHash.compute
             %
-            hash = ImgHash_(0, 'radialVarianceHash', '', img, varargin{:});
+            hash = ImgHash_(0, 'radialVarianceHash', img, varargin{:});
         end
     end
 

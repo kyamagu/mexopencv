@@ -8,8 +8,8 @@
 %
 % Sources:
 %
-% * <https://docs.opencv.org/3.2.0/da/d0c/tutorial_bounding_rects_circles.html>
-% * <https://github.com/opencv/opencv/blob/3.2.0/samples/cpp/tutorial_code/ShapeDescriptors/generalContours_demo1.cpp>
+% * <https://docs.opencv.org/3.4.0/da/d0c/tutorial_bounding_rects_circles.html>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/cpp/tutorial_code/ShapeDescriptors/generalContours_demo1.cpp>
 %
 
 %% Input

@@ -122,34 +122,34 @@ Ptr<ImgHashBase> createImgHashBase(
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    nargchk(nrhs>=3 && nlhs<=1);
+    nargchk(nrhs>=2 && nlhs<=1);
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);
     int id = rhs[0].toInt();
     string method(rhs[1].toString());
-    string klass(rhs[2].toString());
 
     // Constructor is called. Create a new object from argument
     if (method == "new") {
         nargchk(nrhs>=3 && nlhs<=1);
-        obj_[++last_id] = createImgHashBase(klass, rhs.begin() + 3, rhs.end());
+        obj_[++last_id] = createImgHashBase(
+            rhs[2].toString(), rhs.begin() + 3, rhs.end());
         plhs[0] = MxArray(last_id);
         mexLock();
         return;
     }
     // static methods calls
     else if (method == "averageHash") {
-        nargchk(nrhs==4 && nlhs<=1);
-        Mat img(rhs[3].toMat()), hash;
+        nargchk(nrhs==3 && nlhs<=1);
+        Mat img(rhs[2].toMat(CV_8U)), hash;
         averageHash(img, hash);
         plhs[0] = MxArray(hash);
         return;
     }
     else if (method == "blockMeanHash") {
-        nargchk(nrhs>=4 && (nrhs%2)==0 && nlhs<=1);
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
         int mode = BLOCK_MEAN_HASH_MODE_0;
-        for (int i=4; i<nrhs; i+=2) {
+        for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key == "Mode")
                 mode = BlockMeanHashModeMap[rhs[i+1].toString()];
@@ -157,23 +157,23 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat img(rhs[3].toMat()), hash;
+        Mat img(rhs[2].toMat(CV_8U)), hash;
         blockMeanHash(img, hash, mode);
         plhs[0] = MxArray(hash);
         return;
     }
     else if (method == "colorMomentHash") {
-        nargchk(nrhs==4 && nlhs<=1);
-        Mat img(rhs[3].toMat()), hash;
+        nargchk(nrhs==3 && nlhs<=1);
+        Mat img(rhs[2].toMat(CV_8U)), hash;
         colorMomentHash(img, hash);
         plhs[0] = MxArray(hash);
         return;
     }
     else if (method == "marrHildrethHash") {
-        nargchk(nrhs>=4 && (nrhs%2)==0 && nlhs<=1);
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
         float alpha = 2.0f;
         float scale = 1.0f;
-        for (int i=4; i<nrhs; i+=2) {
+        for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key == "Alpha")
                 alpha = rhs[i+1].toFloat();
@@ -183,23 +183,23 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat img(rhs[3].toMat()), hash;
+        Mat img(rhs[2].toMat(CV_8U)), hash;
         marrHildrethHash(img, hash, alpha, scale);
         plhs[0] = MxArray(hash);
         return;
     }
     else if (method == "pHash") {
-        nargchk(nrhs==4 && nlhs<=1);
-        Mat img(rhs[3].toMat()), hash;
+        nargchk(nrhs==3 && nlhs<=1);
+        Mat img(rhs[2].toMat(CV_8U)), hash;
         pHash(img, hash);
         plhs[0] = MxArray(hash);
         return;
     }
     else if (method == "radialVarianceHash") {
-        nargchk(nrhs>=4 && (nrhs%2)==0 && nlhs<=1);
+        nargchk(nrhs>=3 && (nrhs%2)==1 && nlhs<=1);
         double sigma = 1;
         int numOfAngleLine = 180;
-        for (int i=4; i<nrhs; i+=2) {
+        for (int i=3; i<nrhs; i+=2) {
             string key(rhs[i].toString());
             if (key == "Sigma")
                 sigma = rhs[i+1].toDouble();
@@ -209,7 +209,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat img(rhs[3].toMat()), hash;
+        Mat img(rhs[2].toMat(CV_8U)), hash;
         radialVarianceHash(img, hash, sigma, numOfAngleLine);
         plhs[0] = MxArray(hash);
         return;
@@ -220,27 +220,32 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     if (obj.empty())
         mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
-        nargchk(nrhs==3 && nlhs==0);
+        nargchk(nrhs==2 && nlhs==0);
         obj_.erase(id);
         mexUnlock();
     }
     else if (method == "typeid") {
-        nargchk(nrhs==3 && nlhs<=1);
+        nargchk(nrhs==2 && nlhs<=1);
         plhs[0] = MxArray(string(typeid(*obj).name()));
     }
     else if (method == "compute") {
-        nargchk(nrhs==4 && nlhs<=1);
-        Mat img(rhs[3].toMat()), hash;
+        nargchk(nrhs==3 && nlhs<=1);
+        Mat img(rhs[2].toMat(CV_8U)), hash;
         obj->compute(img, hash);
         plhs[0] = MxArray(hash);
     }
     else if (method == "compare") {
-        nargchk(nrhs==5 && nlhs<=1);
-        Mat hashOne(rhs[3].toMat()),
-            hashTwo(rhs[4].toMat());
+        nargchk(nrhs==4 && nlhs<=1);
+        Mat hashOne(rhs[2].toMat()),
+            hashTwo(rhs[3].toMat());  // hashes CV_8U or CV_64F
         double val = obj->compare(hashOne, hashTwo);
         plhs[0] = MxArray(val);
     }
+    //TODO: expose derived-class specific methods:
+    // BlockMeanHash::getMean
+    // RadialVarianceHash::getFeatures
+    // RadialVarianceHash::getPixPerLine
+    // RadialVarianceHash::getProjection
     else
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unrecognized operation %s",method.c_str());

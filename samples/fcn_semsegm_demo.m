@@ -6,7 +6,7 @@
 %
 % Sources:
 %
-% * <https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/fcn_semsegm.cpp>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/fcn_semsegm.cpp>
 %
 
 %% Model files
@@ -16,8 +16,8 @@ modelTxt = fullfile(dirDNN, 'fcn8s-heavy-pascal.prototxt');
 modelBin = fullfile(dirDNN, 'fcn8s-heavy-pascal.caffemodel');  % 513 MB file
 files = {modelLabels, modelTxt, modelBin};
 urls = {
-    'https://cdn.rawgit.com/opencv/opencv/3.3.1/samples/data/dnn/pascal-classes.txt';
-    'https://cdn.rawgit.com/opencv/opencv/3.3.1/samples/data/dnn/fcn8s-heavy-pascal.prototxt';
+    'https://cdn.rawgit.com/opencv/opencv/3.4.0/samples/data/dnn/pascal-classes.txt';
+    'https://cdn.rawgit.com/opencv/opencv/3.4.0/samples/data/dnn/fcn8s-heavy-pascal.prototxt';
     'http://dl.caffe.berkeleyvision.org/fcn8s-heavy-pascal.caffemodel';
 };
 if ~isdir(dirDNN), mkdir(dirDNN); end

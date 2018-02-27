@@ -26,6 +26,7 @@
 %     method for image decimation, as it gives moire-free results. But when
 %     the image is zoomed, it is similar to the 'Nearest' method.
 %   * __Lanczos4__ a Lanczos interpolation over 8x8 pixel neighborhood
+%   * __LinearExact__ a bit exact bilinear interpolation
 %
 % The function cv.resize resizes the image `src` down to or up to the
 % specified size. The size and type of `dst` are derived from `src`, `dsize`,

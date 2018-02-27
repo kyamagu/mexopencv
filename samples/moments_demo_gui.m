@@ -9,8 +9,8 @@
 %
 % Sources:
 %
-% * <https://docs.opencv.org/3.1.0/d0/d49/tutorial_moments.html>
-% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ShapeDescriptors/moments_demo.cpp>
+% * <https://docs.opencv.org/3.4.0/d0/d49/tutorial_moments.html>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/cpp/tutorial_code/ShapeDescriptors/moments_demo.cpp>
 %
 
 function varargout = moments_demo_gui(im)
@@ -45,8 +45,7 @@ function onChange(~,~,h)
     canny_output = cv.Canny(h.src, [thresh thresh*2], 'ApertureSize',3);
 
     % Find contours
-    [contours, hierarchy] = cv.findContours(canny_output, ...
-        'Mode','Tree', 'Method','Simple');
+    contours = cv.findContours(canny_output, 'Mode','Tree', 'Method','Simple');
 
     % Get the moments and compute the mass center
     mu = cell(size(contours));
@@ -60,11 +59,10 @@ function onChange(~,~,h)
     drawing = zeros([size(canny_output) 3], 'uint8');
     for i=1:numel(contours)
         clr = randi([0 255], [1 3], 'uint8');
-        drawing = cv.drawContours(drawing, contours, ...
-            'Hierarchy',hierarchy, 'ContourIdx',i-1, 'MaxLevel',0, ...
-            'Color',clr, 'Thickness',2, 'LineType',8);
+        drawing = cv.drawContours(drawing, contours, 'ContourIdx',i-1, ...
+            'Color',clr, 'Thickness',2);
         drawing = cv.circle(drawing, mc{i}, 4, ...
-            'Color',clr, 'Thickness','Filled', 'LineType',8);
+            'Color',clr, 'Thickness','Filled');
     end
 
     % show result

@@ -6,14 +6,14 @@
 %
 % Sources:
 %
-% * <https://docs.opencv.org/3.1.0/d7/d1d/tutorial_hull.html>
-% * <https://github.com/opencv/opencv/blob/3.1.0/samples/cpp/tutorial_code/ShapeDescriptors/hull_demo.cpp>
+% * <https://docs.opencv.org/3.4.0/d7/d1d/tutorial_hull.html>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/cpp/tutorial_code/ShapeDescriptors/hull_demo.cpp>
 %
 
 function varargout = hull_demo_gui(im)
     % load source image
     if nargin < 1
-        src = imread(fullfile(mexopencv.root(),'test','HappyFish.jpg'));
+        src = cv.imread(fullfile(mexopencv.root(),'test','stuff.jpg'));
     elseif ischar(im)
         src = imread(im);
     else

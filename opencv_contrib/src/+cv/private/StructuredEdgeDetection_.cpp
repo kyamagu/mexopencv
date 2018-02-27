@@ -46,11 +46,11 @@ public:
     {
         // create input to evaluate kernel function
         MxArray opts(MxArray::Struct());
-        opts.set("gradientNormalizationRadius",  gnrmRad);
-        opts.set("gradientSmoothingRadius",      gsmthRad);
-        opts.set("shrinkNumber",                 shrink);
-        opts.set("numberOfOutputChannels",       outNum);
-        opts.set("numberOfGradientOrientations", gradNum);
+        opts.set("normRad",   gnrmRad);
+        opts.set("grdSmooth", gsmthRad);
+        opts.set("shrink",    shrink);
+        opts.set("nChns",     outNum);
+        opts.set("nOrients",  gradNum);
         mxArray *lhs, *rhs[3];
         rhs[0] = MxArray(fun_name);
         rhs[1] = MxArray(src);  // CV_32FC3
@@ -129,6 +129,21 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             model, howToGetFeatures);
         plhs[0] = MxArray(last_id);
         mexLock();
+        return;
+    }
+    // static method call
+    else if (method == "getFeatures") {
+        nargchk(nrhs==4 && nlhs<=1);
+        Mat src(rhs[2].toMat(CV_32F)),
+            features;
+        int gnrmRad = rhs[3].at("normRad").toInt(),
+            gsmthRad = rhs[3].at("grdSmooth").toInt(),
+            shrink = rhs[3].at("shrink").toInt(),
+            outNum = rhs[3].at("nChns").toInt(),
+            gradNum = rhs[3].at("nOrients").toInt();
+        createRFFeatureGetter()->getFeatures(src, features,
+            gnrmRad, gsmthRad, shrink, outNum, gradNum);
+        plhs[0] = MxArray(features);
         return;
     }
 

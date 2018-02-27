@@ -6,8 +6,12 @@ classdef TestImencode
             frmts = TestImwrite.getFormats();
             for i=1:numel(frmts)
                 try
-                    buf = cv.imencode(frmts(i).ext, TestImwrite.im, ...
-                        frmts(i).opts{:});
+                    if strcmp(frmts(i).ext, '.exr')
+                        img = single(TestImwrite.im) / 255;
+                    else
+                        img = TestImwrite.im;
+                    end
+                    buf = cv.imencode(frmts(i).ext, img, frmts(i).opts{:});
                     validateattributes(buf, {'uint8'}, {'vector', 'nonempty'});
                 catch ME
                     %TODO: some codecs are not available on all platforms

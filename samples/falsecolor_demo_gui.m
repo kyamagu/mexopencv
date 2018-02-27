@@ -4,12 +4,13 @@
 %
 % Sources:
 %
-% * <https://github.com/opencv/opencv/blob/3.3.0/samples/cpp/falsecolor.cpp>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/cpp/falsecolor.cpp>
 %
 
 function varargout = falsecolor_demo_gui(im)
     % load source image
     if nargin < 1
+        %{
         if ~mexopencv.isOctave()
             S = load(which('penny.mat'));
             img = cv.resize(uint8(S.P), 4, 4);
@@ -20,6 +21,7 @@ function varargout = falsecolor_demo_gui(im)
             im = fullfile(mexopencv.root(), 'test', 'HappyFish.jpg');
             img = cv.imread(im, 'Grayscale',true);
         end
+        %}
         img = createRandomImage();
     elseif ischar(im)
         img = cv.imread(im, 'Grayscale',true);
@@ -82,6 +84,8 @@ function showColormaps(~,~,h)
     for i=1:N
         if strcmp(cmaps{i}, 'Gray')
             out{i} = cv.cvtColor(gray, 'GRAY2RGB');
+        elseif strcmp(cmaps{i}, 'Random')
+            out{i} = cv.applyColorMap(gray, h.user);
         else
             out{i} = cv.applyColorMap(gray, cmaps{i});
         end
@@ -100,6 +104,8 @@ function onChange(~,~,h)
     idx = get(h.pop, 'Value');
     if strcmp(cmaps{idx}, 'Gray')
         out = cv.cvtColor(h.gray, 'GRAY2RGB');
+    elseif strcmp(cmaps{idx}, 'Random')
+        out = cv.applyColorMap(h.gray, h.user);
     else
         out = cv.applyColorMap(h.gray, cmaps{idx});
     end
@@ -114,12 +120,14 @@ function h = buildGUI(img)
 
     % params
     cmaps = {'Gray', 'Autumn', 'Bone', 'Cool', 'Hot', 'Ocean', 'Parula', ...
-        'Pink', 'Spring', 'Summer', 'Winter', 'Jet', 'Rainbow', 'HSV'};
+        'Pink', 'Spring', 'Summer', 'Winter', 'Jet', 'Rainbow', 'HSV', ...
+        'Random'};
     sz = size(img);
 
     % build the user interface (no resizing to keep it simple)
     h = struct();
     h.gray = img;
+    h.user = randi(255, [256 1 3], 'uint8');  % user-defined random colormap
     h.fig = figure('Name','Colormap Demo', ...
         'NumberTitle','off', 'Menubar','none', 'Resize','off', ...
         'Position',[200 200 sz(2) sz(1)+29]);

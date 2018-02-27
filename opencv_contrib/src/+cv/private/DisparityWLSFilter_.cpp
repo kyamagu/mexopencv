@@ -304,8 +304,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat GT(rhs[2].toMat(CV_16S)),
-            src(rhs[3].toMat(CV_16S));
+        Mat GT(rhs[2].toMat(rhs[2].isInt16() ? CV_16S : CV_32F)),
+            src(rhs[3].toMat(rhs[3].isInt16() ? CV_16S : CV_32F));
         if (ROI.area() == 0)
             ROI = Rect(0, 0, src.cols, src.rows);
         double mse = computeMSE(GT, src, ROI);
@@ -326,8 +326,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat GT(rhs[2].toMat(CV_16S)),
-            src(rhs[3].toMat(CV_16S));
+        Mat GT(rhs[2].toMat(rhs[2].isInt16() ? CV_16S : CV_32F)),
+            src(rhs[3].toMat(rhs[3].isInt16() ? CV_16S : CV_32F));
         if (ROI.area() == 0)
             ROI = Rect(0, 0, src.cols, src.rows);
         double prcnt = computeBadPixelPercent(GT, src, ROI, thresh);
@@ -345,7 +345,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat src(rhs[2].toMat(CV_16S)), dst;
+        Mat src(rhs[2].toMat(rhs[2].isInt16() ? CV_16S : CV_32F)),
+            dst;
         getDisparityVis(src, dst, scale);
         plhs[0] = MxArray(dst);
         return;
@@ -421,8 +422,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat disparity_map_left(rhs[2].toMat(CV_16S)),
-            disparity_map_right(rhs[3].toMat(CV_16S)),
+        Mat disparity_map_left(rhs[2].toMat(rhs[2].isInt16() ? CV_16S : CV_32F)),
+            disparity_map_right(rhs[3].toMat(rhs[3].isInt16() ? CV_16S : CV_32F)),
             left_view(rhs[4].toMat(CV_8U)),
             filtered_disparity_map;
         obj->filter(disparity_map_left, left_view, filtered_disparity_map,

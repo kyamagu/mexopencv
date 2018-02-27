@@ -48,7 +48,7 @@ classdef TestNet
 
             blob = cv.Net.blobFromImages({img1,img2}, 'Size',[224 224]);
             net.setInput(blob, 'data');
-            blobs = net.forwardAll('conv1/7x7_s2');
+            blobs = net.forwardAndRetrieve('conv1/7x7_s2');
         end
 
         function test_shrink_caffe_fp16

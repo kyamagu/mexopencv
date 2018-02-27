@@ -56,6 +56,10 @@
 %   bytes as small as possible. default is false.
 % * __PxmBinary__ For PPM, PGM, or PBM, it can be a binary format flag, 0 or 1,
 %   to specify ASCII or binary encoding. default is true.
+% * __ExrType__ override EXR storage type. Note that the EXR encoder only
+%   accepts `single` images. One of:
+%   * __Half__ store as half precision (FP16), see cv.convertFp16
+%   * __Float__ store as single precision (FP32), this is the default.
 % * __WebpQuality__ For WEBP, it can be a quality from 1 to 100 (the higher is
 %   the better). By default (without any parameter) and for quality above 100
 %   the lossless compression is used.

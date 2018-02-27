@@ -83,11 +83,12 @@ const ConstMap<int,std::string> BorderTypeInv = ConstMap<int,std::string>
 
 /// Interpolation type map for option processing
 const ConstMap<std::string,int> InterpType = ConstMap<std::string,int>
-    ("Nearest",  cv::INTER_NEAREST)   // nearest neighbor interpolation
-    ("Linear",   cv::INTER_LINEAR)    // bilinear interpolation
-    ("Cubic",    cv::INTER_CUBIC)     // bicubic interpolation
-    ("Area",     cv::INTER_AREA)      // area-based (or super) interpolation
-    ("Lanczos4", cv::INTER_LANCZOS4); // Lanczos interpolation over 8x8 neighborhood
+    ("Nearest",     cv::INTER_NEAREST)       // nearest neighbor interpolation
+    ("Linear",      cv::INTER_LINEAR)        // bilinear interpolation
+    ("Cubic",       cv::INTER_CUBIC)         // bicubic interpolation
+    ("Area",        cv::INTER_AREA)          // area-based (or super) interpolation
+    ("Lanczos4",    cv::INTER_LANCZOS4)      // Lanczos interpolation over 8x8 neighborhood
+    ("LinearExact", cv::INTER_LINEAR_EXACT); // Bit exact bilinear interpolation
 
 /// Thresholding type map for option processing
 const ConstMap<std::string,int> ThreshType = ConstMap<std::string,int>
@@ -270,6 +271,48 @@ std::vector<cv::Point3_<T> > MxArrayToVectorPoint3(const MxArray& arr)
         mexErrMsgIdAndTxt("mexopencv:error",
             "Unable to convert MxArray to std::vector<cv::Point3_<T>>");
     return vp;
+}
+
+/** Convert an MxArray to std::vector<cv::Size_<T>>
+ *
+ * @param arr MxArray object. In one of the following forms:
+ * - a cell-array of sizes (2-element vectors) of length \c N,
+ *   e.g: <tt>{[w,h], [w,h], ...}</tt>
+ * - a numeric matrix of size \c Nx2, \c Nx1x2, or \c 1xNx2 in the form:
+ *   <tt>[w,h; w,h; ...]</tt> or <tt>cat(3, [w,h], [w,h], ...)</tt>
+ * @return vector of sizes of size \c N
+ *
+ * Example:
+ * @code
+ * MxArray cellArray(prhs[0]);
+ * vector<Size2d> vs = MxArrayToVectorSize<double>(cellArray);
+ * @endcode
+ */
+template <typename T>
+std::vector<cv::Size_<T> > MxArrayToVectorSize(const MxArray& arr)
+{
+    std::vector<cv::Size_<T> > vs;
+    if (arr.isNumeric()) {
+        if (arr.numel() == 2)
+            vs.push_back(arr.toSize_<T>());
+        else
+            arr.toMat(cv::traits::Depth<cv::Size_<T> >::value).reshape(2, 0).copyTo(vs);
+    }
+    else if (arr.isCell()) {
+        /*
+        std::vector<MxArray> va(arr.toVector<MxArray>());
+        vs.reserve(va.size());
+        for (std::vector<MxArray>::const_iterator it = va.begin(); it != va.end(); ++it)
+            vs.push_back(it->toSize_<T>());
+        */
+        vs = arr.toVector(
+            std::const_mem_fun_ref_t<cv::Size_<T>, MxArray>(
+                &MxArray::toSize_<T>));
+    }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error",
+            "Unable to convert MxArray to std::vector<cv::Size_<T>>");
+    return vs;
 }
 
 /** Convert an MxArray to std::vector<cv::Rect_<T>>

@@ -23,7 +23,7 @@
 %   parameter is greater than zero, all the point pairs that do not comply
 %   with the epipolar geometry (that is, the points for which
 %   `|points2{i}' * F * points1{i}| > Threshold`) are rejected prior to
-%   computing the homographies. Otherwise,all the points are considered
+%   computing the homographies. Otherwise, all the points are considered
 %   inliers. default 5
 %
 % The function computes the rectification transformations without knowing

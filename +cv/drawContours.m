@@ -67,5 +67,14 @@
 %     subplot(121), imshow(src), title('Source')
 %     subplot(122), imshow(dst), title('Components')
 %
+% ### Note
+% When `Thickness='Filled'`, the function is designed to handle connected
+% components with holes correctly even when no hierarchy date is provided.
+% This is done by analyzing all the outlines together using even-odd rule.
+% This may give incorrect results if you have a joint collection of separately
+% retrieved contours. In order to solve this problem, you need to call
+% cv.drawContours separately for each sub-group of contours, or iterate over
+% the collection using `ContourIdx` parameter.
+%
 % See also: cv.findContours, cv.fillPoly, visboundaries, bwlabel
 %

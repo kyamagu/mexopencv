@@ -8,8 +8,8 @@
 %
 % Sources:
 %
-% * <https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/fcn_semsegm.cpp>
-% * <https://github.com/opencv/opencv/blob/3.3.1/samples/dnn/torch_enet.cpp>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/fcn_semsegm.cpp>
+% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/torch_enet.cpp>
 %
 
 function dnn_semantic_segmentation_demo(im, name, crop)
@@ -48,14 +48,7 @@ function dnn_semantic_segmentation_demo(im, name, crop)
     toc;
 
     % prepare output image
-    if opts.Crop
-        % center cropped as fed to network
-        out = cropImage(img, opts);
-    else
-        % resized image (squashed) as fed to network
-        out = imageFromBlob(blob, opts);
-    end
-    out = flip(out, 3);  % BGR to RGB
+    out = outputImage(img, blob, opts);
 
     % pixel-wise segmentation (predict class with max score)
     score = permute(score, [3 4 2 1]);  % H-by-W-by-nclasses
@@ -155,6 +148,17 @@ function img = cropImage(img, opts)
             img = cv.resize(img, opts.Size);
         end
     end
+end
+
+function out = outputImage(img, blob, opts)
+    if opts.Crop
+        % center cropped as fed to network
+        out = cropImage(img, opts);
+    else
+        % resized image (squashed) as fed to network
+        out = imageFromBlob(blob, opts);
+    end
+    out = flip(out, 3);  % BGR to RGB
 end
 
 function img = createLabelsLegend(labels)

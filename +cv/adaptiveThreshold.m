@@ -45,5 +45,8 @@
 % where `T(x,y)` is a threshold calculated individually for each pixel (see
 % `Method` parameter).
 %
+% Note: Internally the options `'BorderType','Replicate', 'Isolated',true` are
+% used to process boundaries (see cv.copyMakeBorder).
+%
 % See also: cv.threshold, cv.blur, cv.GaussianBlur, adaptthresh, imbinarize
 %

@@ -444,7 +444,7 @@ classdef Stitcher < handle
             %   * __HomographyBasedEstimator__ Homography based rotation
             %     estimator.
             %   * __AffineBasedEstimator__ Affine transformation based
-            %     estimator. This estimator uses pairwise tranformations
+            %     estimator. This estimator uses pairwise transformations
             %     estimated by matcher to estimate final transformation for
             %     each camera.
             %
@@ -515,7 +515,7 @@ classdef Stitcher < handle
             %
             % The class uses `BundleAdjusterRay` by default.
             %
-            % See also: cv.Stitcher.getBundleAdjuster, cv.cv.BundleAdjuster
+            % See also: cv.Stitcher.getBundleAdjuster, cv.BundleAdjuster
             %
             Stitcher_(this.id, 'setBundleAdjuster', adjusterType, varargin{:});
         end

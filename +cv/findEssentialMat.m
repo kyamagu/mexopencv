@@ -21,7 +21,7 @@
 % * __CameraMatrix__ Camera matrix `K = [fx 0 cx; 0 fy cy; 0 0 1]`. Note that
 %   this function assumes that `points1` and `points2` are feature points from
 %   cameras with the same camera matrix. default `eye(3)`.
-% * __Method__ Method for computing a essential matrix. One of:
+% * __Method__ Method for computing an essential matrix. One of:
 %   * __Ransac__ for the RANSAC algorithm. (default)
 %   * __LMedS__ for the LMedS algorithm.
 % * __Confidence__ Parameter used for the RANSAC or LMedS methods only. It

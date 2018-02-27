@@ -51,16 +51,48 @@
 %
 % The function estimates the object pose given a set of object points,
 % their corresponding image projections, as well as the camera matrix and
-% the distortion coefficients.
+% the distortion coefficients. See the figure below (more precisely, the
+% X-axis of the camera frame is pointing to the right, the Y-axis downward and
+% the Z-axis forward):
 %
-% Note: The methods `DLS` and `UPnP` cannot be used as the current
-% implementations are unstable and sometimes give completly wrong results. If
-% you pass one of these two flags, `EPnP` method will be used instead.
+% ![image](https://docs.opencv.org/3.4.0/pnp.jpg)
 %
-% Note: The minimum number of points is 4. In the case of `P3P` and `AP3P`
-% methods, it is required to use exactly 4 points (the first 3 points are used
-% to estimate all the solutions of the P3P problem, the last one is used to
-% retain the best solution that minimizes the reprojection error).
+% Points expressed in the world frame `X_w` are projected into the image plane
+% `[u,v]` using the perspective projection model `Pi` and the camera intrinsic
+% parameters matrix `A`:
+%
+%     [u; v; 1] = A * Pi * M_w^c * [X_w; Y_w; Z_w; 1]
+%
+%     [u; v; 1] = [fx 0 cx; 0 fy cy; 0 0 1] *
+%                 [1 0 0 0; 0 1 0 0; 0 0 1 0] *
+%                 [r11 r12 r13 tx; r21 r22 r23 ty; r31 r32 r33 tz] *
+%                 [X_w; Y_w; Z_w; 1]
+%
+% The estimated pose is thus the rotation (`rvec`) and the translation (`tvec`)
+% vectors that allow to transform a 3D point expressed in the world frame into
+% the camera frame:
+%
+%     [X_c; Y_c; Z_c; 1] = M_w^c * [X_w; Y_w; Z_w; 1]
+%
+%     [X_c; Y_c; Z_c; 1] = [r11 r12 r13 tx; r21 r22 r23 ty; r31 r32 r33 tz] *
+%                          [X_w; Y_w; Z_w; 1]
+%
+% ### Notes
+%
+% * The methods `DLS` and `UPnP` cannot be used as the current implementations
+%   are unstable and sometimes give completely wrong results. If you pass one
+%   of these two flags, `EPnP` method will be used instead.
+%
+% * The minimum number of points is 4 in the general case. In the case of
+%   `P3P` and `AP3P` methods, it is required to use exactly 4 points (the
+%   first 3 points are used to estimate all the solutions of the P3P problem,
+%   the last one is used to retain the best solution that minimizes the
+%   reprojection error).
+%
+% * With `Iterative` method and `UseExtrinsicGuess=true`, the minimum number
+%   of points is 3 (3 points are sufficient to compute a pose but there are up
+%   to 4 solutions). The initial solution should be close to the global
+%   solution to converge.
 %
 % ## References
 % [gao2003complete]:

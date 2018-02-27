@@ -12,9 +12,21 @@ MATLAB's native data type and OpenCV data types. The package is suitable for
 fast prototyping of OpenCV application in MATLAB, use of OpenCV as an external
 toolbox in MATLAB, and development of custom MEX functions.
 
-The current version of mexopencv is compatible with OpenCV 3.3.
-For older OpenCV versions, please checkout the corresponding branches
-([v3.2][21], [v3.1][20], [v3.0][19], [v2.4][18], [v2.3][17], and [v2.1][16]).
+The current version of mexopencv is compatible with OpenCV 3.4.0.
+
+For previous OpenCV 3.x versions, checkout the corresponding tags:
+
+- [v3.3.1][23]
+- [v3.3.0][22]
+- [v3.2.0][21]
+- [v3.1.0][20]
+- [v3.0.0][19]
+
+For OpenCV 2.x, checkout these older branches:
+
+- [v2.4][18] (last tested with OpenCV v2.4.11)
+- [v2.3][17]
+- [v2.1][16]
 
 Consult the [wiki][3] for help.
 
@@ -58,7 +70,7 @@ Build
 Prerequisite
 
 - [MATLAB][4] or [Octave][5] (>= 4.0.0)
-- [OpenCV][6] (3.3.1)
+- [OpenCV][6] (3.4.0)
 
 Depending on your platform, you also need the required build tools:
 
@@ -74,7 +86,7 @@ Refer to the [wiki][3] for detailed build instructions.
 OpenCV
 ------
 
-Currently, mexopencv targets the final **3.3.1** stable version of OpenCV. You
+Currently, mexopencv targets the final **3.4.0** stable version of OpenCV. You
 must build it against this exact version, rather than using the bleeding-edge
 dev-version of `opencv` and `opencv_contrib`. UNIX users should consider using
 a package manager to install OpenCV if available.
@@ -83,19 +95,18 @@ a package manager to install OpenCV if available.
 - [OpenCV contributed modules][8]
 
 **DO NOT use the "master" branch of `opencv` and `opencv_contrib`!**
-**Only the 3.3.1 release is supported by mexopencv.**
+**Only the 3.4.0 release is supported by mexopencv.**
 
 Linux
 -----
 
-First make sure you have OpenCV 3.3.1 installed in the system:
+First make sure you have OpenCV 3.4.0 installed in the system:
 
 - if applicable, install OpenCV 3 package available in your package manager
   (e.g., `libopencv-dev` in Debian/Ubuntu, `opencv-devel` in Fedora).
-  Sadly the [OpenCV package][9] provided in Ubuntu 17.04 is still behind
-  with OpenCV 2.4, which can only be used with the [v2.4 release][18] of
-  mexopencv.
-- otherwise, you need to build and install OpenCV from [source][7]:
+  Note that these packages are not always up-to-date, so you might need to use
+  older mexopencv versions to match their [opencv package][9] version.
+- otherwise, you can always build and install OpenCV from [source][7]:
 
         $ cd <opencv_build_dir>
         $ cmake <options> <opencv_src_dir>
@@ -104,7 +115,7 @@ First make sure you have OpenCV 3.3.1 installed in the system:
 
 At this point, you should make sure that the [`pkg-config`][10] command can
 identify and locate OpenCV libraries (if needed, set the `PKG_CONFIG_PATH`
-environment variable to help it find `opencv.pc`):
+environment variable to help it find the `opencv.pc` file):
 
     $ pkg-config --cflags --libs opencv
 
@@ -117,7 +128,7 @@ directory if you installed MATLAB to a non-default location:
 
     $ make MATLABDIR=/opt/local/MATLAB/R2017a
 
-You can also work with [Octave][5] by specifying:
+You can also work with [Octave][5] instead of MATLAB by specifying:
 
     $ make WITH_OCTAVE=true
 
@@ -127,7 +138,7 @@ mexopencv as:
 
     $ make all contrib
 
-Optionally you can test mexopencv functionality:
+Finally you can test mexopencv functionality:
 
     $ make test
 
@@ -152,7 +163,8 @@ OpenCV 3:
 
 Otherwise, you can build OpenCV from [source][7], similar to the Linux case.
 
-If you have all the prerequisites, go to the mexopencv directory and type:
+If you have all the prerequisites, go to the mexopencv directory and run
+(modifying the options as needed):
 
     $ make MATLABDIR=/Applications/MATLAB_R2016a.app PKG_CONFIG_MATLAB=opencv3 LDFLAGS=-L/usr/local/share/OpenCV/3rdparty/lib -j2
 
@@ -256,9 +268,9 @@ The code may be redistributed under the [BSD 3-Clause license](LICENSE).
 [4]: https://www.mathworks.com/products/matlab.html
 [5]: https://www.gnu.org/software/octave/
 [6]: https://opencv.org/
-[7]: https://github.com/opencv/opencv/releases/tag/3.3.1
-[8]: https://github.com/opencv/opencv_contrib/releases/tag/3.3.1
-[9]: https://packages.ubuntu.com/zesty/libopencv-dev
+[7]: https://github.com/opencv/opencv/releases/tag/3.4.0
+[8]: https://github.com/opencv/opencv_contrib/releases/tag/3.4.0
+[9]: https://packages.ubuntu.com/artful/libopencv-dev
 [10]: https://people.freedesktop.org/~dbn/pkg-config-guide.html
 [11]: https://brew.sh/
 [12]: http://kyamagu.github.io/mexopencv/matlab
@@ -268,6 +280,8 @@ The code may be redistributed under the [BSD 3-Clause license](LICENSE).
 [16]: https://github.com/kyamagu/mexopencv/tree/v2.1
 [17]: https://github.com/kyamagu/mexopencv/tree/v2.3
 [18]: https://github.com/kyamagu/mexopencv/tree/v2.4
-[19]: https://github.com/kyamagu/mexopencv/tree/v3.0
-[20]: https://github.com/kyamagu/mexopencv/tree/v3.1
-[21]: https://github.com/kyamagu/mexopencv/tree/v3.2
+[19]: https://github.com/kyamagu/mexopencv/tree/v3.0.0
+[20]: https://github.com/kyamagu/mexopencv/tree/v3.1.0.1
+[21]: https://github.com/kyamagu/mexopencv/tree/v3.2.0
+[22]: https://github.com/kyamagu/mexopencv/tree/v3.3.0
+[23]: https://github.com/kyamagu/mexopencv/tree/v3.3.1

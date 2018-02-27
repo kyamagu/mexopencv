@@ -1,5 +1,5 @@
 % mexopencv
-% Version 3.3.1 (R2017a) 26-November-2017
+% Version 3.4.0 (R2017a) 22-February-2018
 %
 %% opencv: Main Modules
 %
@@ -111,8 +111,8 @@
 %   cv.logPolar                         - Remaps an image to semilog-polar coordinates space
 %   cv.linearPolar                      - Remaps an image to polar coordinates space
 %   cv.integral                         - Calculates the integral of an image
-%   cv.accumulate                       - Adds an image to the accumulator
-%   cv.accumulateSquare                 - Adds the square of a source image to the accumulator
+%   cv.accumulate                       - Adds an image to the accumulator image
+%   cv.accumulateSquare                 - Adds the square of a source image to the accumulator image
 %   cv.accumulateProduct                - Adds the per-element product of two input images to the accumulator
 %   cv.accumulateWeighted               - Updates a running average
 %   cv.phaseCorrelate                   - Detect translational shifts that occur between two images
@@ -248,6 +248,15 @@
 %   cv.decomposeHomographyMat           - Decompose a homography matrix to rotation(s), translation(s) and plane normal(s)
 %   cv.StereoBM                         - Class for computing stereo correspondence using the block matching algorithm
 %   cv.StereoSGBM                       - Class for computing stereo correspondence using the semi-global block matching algorithm
+%   cv.fisheyeProjectPoints             - Projects points using fisheye model
+%   cv.fisheyeDistortPoints             - Distorts 2D points using fisheye model
+%   cv.fisheyeUndistortPoints           - Undistorts 2D points using fisheye model
+%   cv.fisheyeInitUndistortRectifyMap   - Computes undistortion and rectification maps (fisheye)
+%   cv.fisheyeUndistortImage            - Transforms an image to compensate for fisheye lens distortion
+%   cv.fisheyeEstimateNewCameraMatrixForUndistortRectify - Estimates new camera matrix for undistortion or rectification (fisheye)
+%   cv.fisheyeCalibrate                 - Performs camera calibaration (fisheye)
+%   cv.fisheyeStereoRectify             - Stereo rectification for fisheye camera model
+%   cv.fisheyeStereoCalibrate           - Performs stereo calibration (fisheye)
 %
 % features2d: 2D Features Framework
 %   cv.KeyPointsFilter                  - Methods to filter a vector of keypoints
@@ -381,6 +390,9 @@
 %   cv.BackgroundSubtractorMOG          - Gaussian Mixture-based Background/Foreground Segmentation Algorithm
 %   cv.BackgroundSubtractorGMG          - Background Subtractor module
 %   cv.BackgroundSubtractorCNT          - Background subtraction based on counting
+%   cv.BackgroundSubtractorGSOC         - Background Subtraction implemented during GSOC
+%   cv.BackgroundSubtractorLSBP         - Background Subtraction using Local SVD Binary Pattern
+%   cv.SyntheticSequenceGenerator       - Synthetic frame sequence generator for testing background subtraction algorithms
 %
 % bioinspired: Biologically Inspired Vision Models and Derivated Tools
 %   cv.Retina                           - A biological retina model for image spatio-temporal noise and luminance changes enhancement
@@ -393,10 +405,12 @@
 % dpm: Deformable Part-based Models
 %   cv.DPMDetector                      - Deformable Part-based Models (DPM) detector
 %
-% face: Face Recognition
+% face: Face Analysis
 %   cv.BasicFaceRecognizer              - Face Recognition based on Eigen-/Fisher-faces
 %   cv.LBPHFaceRecognizer               - Face Recognition based on Local Binary Patterns
 %   cv.BIF                              - Implementation of bio-inspired features (BIF)
+%   cv.Facemark                         - Base class for all facemark models
+%   cv.FacemarkKazemi                   - Face Alignment
 %
 % img_hash: Image Hashing Algorithms
 %   cv.ImgHash                          - Base class for Image Hashing algorithms
@@ -462,6 +476,7 @@
 %   cv.DisparityWLSFilter               - Disparity map filter based on Weighted Least Squares filter
 %   cv.EdgeAwareInterpolator            - Sparse match interpolation algorithm
 %   cv.StructuredEdgeDetection          - Class implementing edge detection algorithm
+%   cv.EdgeBoxes                        - Class implementing Edge Boxes algorithm
 %   cv.SuperpixelSEEDS                  - Class implementing the SEEDS (Superpixels Extracted via Energy-Driven Sampling) superpixels algorithm
 %   cv.SuperpixelSLIC                   - Class implementing the SLIC (Simple Linear Iterative Clustering) superpixels algorithm
 %   cv.SuperpixelLSC                    - Class implementing the LSC (Linear Spectral Clustering) superpixels algorithm
@@ -475,6 +490,9 @@
 %   cv.GradientPaillou                  - Applies Paillou filter to an image
 %   cv.GradientDeriche                  - Applies Deriche filter to an image
 %   cv.PeiLinNormalization              - Calculates an affine transformation that normalize given image using Pei/Lin Normalization
+%   cv.ContourFitting                   - Contour Fitting algorithm using Fourier descriptors
+%   cv.RidgeDetectionFilter             - Ridge Detection Filter
+%   cv.BrightEdges                      - Bright edges detector
 %   cv.niBlackThreshold                 - Performs thresholding on input images using Niblack's technique or some of the popular variations it inspired
 %   cv.thinning                         - Applies a binary blob thinning operation, to achieve a skeletization of the input image
 %   cv.anisotropicDiffusion             - Performs anisotropic diffusion on an image

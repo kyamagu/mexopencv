@@ -34,7 +34,7 @@
 % free scaling parameter. By varying this parameter, you may retrieve only
 % sensible pixels `Alpha=0`, keep all the original image pixels if there is
 % valuable information in the corners `Alpha=1`, or get something in between.
-% When `Alpha>0`, the undistortion result is likely to have some black pixels
+% When `Alpha>0`, the undistorted result is likely to have some black pixels
 % corresponding to "virtual" pixels outside of the captured distorted image.
 % The original camera matrix, distortion coefficients, the computed new camera
 % matrix, and `newImageSize` should be passed to cv.initUndistortRectifyMap to

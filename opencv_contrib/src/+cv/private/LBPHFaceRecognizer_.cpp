@@ -132,7 +132,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             FileStorage fs(fname, FileStorage::READ + FileStorage::MEMORY);
             if (!fs.isOpened())
                 mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
-            obj->read(fs.root());  //TODO: root or getFirstTopLevelNode ?
+            obj->read(fs.getFirstTopLevelNode());
         }
         else
             obj->read(fname);
@@ -145,7 +145,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             FileStorage fs(fname, FileStorage::WRITE + FileStorage::MEMORY);
             if (!fs.isOpened())
                 mexErrMsgIdAndTxt("mexopencv:error", "Failed to open file");
+            fs << obj->getDefaultName() << "{";
             obj->write(fs);
+            fs << "}";
             plhs[0] = MxArray(fs.releaseAndGetString());
         }
         else

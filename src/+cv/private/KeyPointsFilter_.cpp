@@ -88,7 +88,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs>=2 && (nrhs%2)==0 && nlhs<=1);
         float size = 1.0f;
         float response = 1.0f;
-        int octave = 1;
+        int octave = 0;
         int class_id = -1;
         for (int i=2; i<nrhs; i+=2) {
             string key(rhs[i].toString());
