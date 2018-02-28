@@ -108,16 +108,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "compute") {
         nargchk(nrhs==4 && nlhs<=2);
-//HACK: VGG::compute isn't overloaded to take an image set
-#if 1
-        Mat image(rhs[2].toMat(CV_8U)),
-            descriptors;
-        vector<KeyPoint> keypoints(rhs[3].toVector<KeyPoint>());
-        obj->compute(image, keypoints, descriptors);
-        plhs[0] = MxArray(descriptors);
-        if (nlhs > 1)
-            plhs[1] = MxArray(keypoints);
-#else
         if (rhs[2].isNumeric()) {  // first variant that accepts an image
             Mat image(rhs[2].toMat(CV_8U)),
                 descriptors;
@@ -146,7 +136,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         }
         else
             mexErrMsgIdAndTxt("mexopencv:error", "Invalid arguments");
-#endif
     }
     else if (method == "get") {
         nargchk(nrhs==3 && nlhs<=1);

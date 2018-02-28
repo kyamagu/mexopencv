@@ -88,11 +88,6 @@ classdef TestDescriptorExtractor
                 end
                 imgs = {im, im};
 
-                % VGG doesn't have a compute() version that takes image set
-                if strcmp(TestDescriptorExtractor.extractors{i}, 'LUCID')
-                    continue;
-                end
-
                 [descs, kpts] = obj.compute(imgs, kpts);
                 validateattributes(kpts, {'cell'}, {'vector'});
                 validateattributes(descs, {'cell'}, ...

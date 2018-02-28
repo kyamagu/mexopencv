@@ -21,6 +21,20 @@ classdef TestVGG
                 {'size',[numel(kpts2) obj.descriptorSize()]});
         end
 
+        function test_compute_imgset
+            img = imread(TestVGG.im);
+            imgs = {img, img};
+            kpts = cv.FAST(img, 'Threshold',20);
+            kpts = {kpts, kpts};
+
+            obj = cv.VGG();
+            [descs, kpts] = obj.compute(imgs, kpts);
+            validateattributes(kpts, {'cell'}, {'vector'});
+            validateattributes(descs, {'cell'}, {'vector', 'numel',numel(imgs)});
+            cellfun(@(d,k) validateattributes(d, {obj.descriptorType()}, ...
+                {'size',[numel(k) obj.descriptorSize()]}), descs, kpts);
+        end
+
         function test_error_1
             try
                 cv.VGG('foobar');
