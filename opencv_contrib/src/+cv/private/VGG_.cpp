@@ -148,6 +148,40 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             mexErrMsgIdAndTxt("mexopencv:error", "Invalid arguments");
 #endif
     }
+    else if (method == "get") {
+        nargchk(nrhs==3 && nlhs<=1);
+        string prop(rhs[2].toString());
+        if (prop == "Sigma")
+            plhs[0] = MxArray(obj->getSigma());
+        else if (prop == "UseNormalizeImage")
+            plhs[0] = MxArray(obj->getUseNormalizeImage());
+        else if (prop == "UseScaleOrientation")
+            plhs[0] = MxArray(obj->getUseScaleOrientation());
+        else if (prop == "ScaleFactor")
+            plhs[0] = MxArray(obj->getScaleFactor());
+        else if (prop == "UseNormalizeDescriptor")
+            plhs[0] = MxArray(obj->getUseNormalizeDescriptor());
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
+    }
+    else if (method == "set") {
+        nargchk(nrhs==4 && nlhs==0);
+        string prop(rhs[2].toString());
+        if (prop == "Sigma")
+            obj->setSigma(rhs[3].toFloat());
+        else if (prop == "UseNormalizeImage")
+            obj->setUseNormalizeImage(rhs[3].toBool());
+        else if (prop == "UseScaleOrientation")
+            obj->setUseScaleOrientation(rhs[3].toBool());
+        else if (prop == "ScaleFactor")
+            obj->setScaleFactor(rhs[3].toFloat());
+        else if (prop == "UseNormalizeDescriptor")
+            obj->setUseNormalizeDescriptor(rhs[3].toBool());
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
+    }
     //else if (method == "detect")
     //else if (method == "detectAndCompute")
     else

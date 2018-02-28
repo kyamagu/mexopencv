@@ -18,6 +18,19 @@ classdef VGG < handle
         id
     end
 
+    properties (Dependent)
+        % Gaussian kernel value for image blur.
+        Sigma
+        % Use image sample intensity normalization.
+        UseNormalizeImage
+        % Sample patterns using keypoints orientation.
+        UseScaleOrientation
+        % Adjust the sampling window of detected keypoints.
+        ScaleFactor
+        % Use 8-bit normalized descriptors.
+        UseNormalizeDescriptor
+    end
+
     methods
         function this = VGG(varargin)
             %VGG  Constructor
@@ -236,6 +249,44 @@ classdef VGG < handle
             % See also: cv.VGG.VGG
             %
             [descriptors, keypoints] = VGG_(this.id, 'compute', img, keypoints);
+        end
+    end
+
+    %% Getters/Setters
+    methods
+        function value = get.Sigma(this)
+            value = VGG_(this.id, 'get', 'Sigma');
+        end
+        function set.Sigma(this, value)
+            VGG_(this.id, 'set', 'Sigma', value);
+        end
+
+        function value = get.UseNormalizeImage(this)
+            value = VGG_(this.id, 'get', 'UseNormalizeImage');
+        end
+        function set.UseNormalizeImage(this, value)
+            VGG_(this.id, 'set', 'UseNormalizeImage', value);
+        end
+
+        function value = get.UseScaleOrientation(this)
+            value = VGG_(this.id, 'get', 'UseScaleOrientation');
+        end
+        function set.UseScaleOrientation(this, value)
+            VGG_(this.id, 'set', 'UseScaleOrientation', value);
+        end
+
+        function value = get.ScaleFactor(this)
+            value = VGG_(this.id, 'get', 'ScaleFactor');
+        end
+        function set.ScaleFactor(this, value)
+            VGG_(this.id, 'set', 'ScaleFactor', value);
+        end
+
+        function value = get.UseNormalizeDescriptor(this)
+            value = VGG_(this.id, 'get', 'UseNormalizeDescriptor');
+        end
+        function set.UseNormalizeDescriptor(this, value)
+            VGG_(this.id, 'set', 'UseNormalizeDescriptor', value);
         end
     end
 
