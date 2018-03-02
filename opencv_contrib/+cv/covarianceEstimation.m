@@ -1,4 +1,4 @@
-%COVARIANCEESTIMATION  Computes the estimated covariance matrix of an image using the sliding window forumlation
+%COVARIANCEESTIMATION  Computes the estimated covariance matrix of an image using the sliding window formulation
 %
 %     dst = cv.covarianceEstimation(src, windowSize)
 %

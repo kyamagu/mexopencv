@@ -56,7 +56,7 @@
 %
 % ## References
 % [Arthur2007]:
-% > D. Arthur, S. Vassilvitskii: "k-means++: the advantages of carefull seeding".
+% > D. Arthur, S. Vassilvitskii: "k-means++: The Advantages of Careful Seeding".
 % > In Proceedings of the eighteenth annual ACM-SIAM symposium
 % > on Discrete algorithms, 1027-1035, 2007.
 %

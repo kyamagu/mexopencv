@@ -1,4 +1,4 @@
-%FLIP  Rotates a 2D array in multiples of 90 degrees
+%ROTATE  Rotates a 2D array in multiples of 90 degrees
 %
 %     dst = cv.rotate(src, rotateCode)
 %

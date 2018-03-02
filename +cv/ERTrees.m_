@@ -11,9 +11,9 @@ classdef ERTrees < handle
     %    constract the training samples for each tree. The same input training
     %    set is used to train all trees.
     % 2. Extremely randomized trees pick a node split very extremely (both a
-    %    variable index and variable spliting value are chosen randomly),
+    %    variable index and variable splitting value are chosen randomly),
     %    whereas Random Forest finds the best split (optimal one by variable
-    %    index and variable spliting value) among random subset of variables.
+    %    index and variable splitting value) among random subset of variables.
     %
     % ## References
     % [ERT06]:

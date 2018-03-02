@@ -15,8 +15,8 @@
 % * __Color__ 3-element floating-point vector specifying circle color.
 %   default is a black color
 % * __Thickness__ Thickness of the circle outline, if positive. Negative
-%   thickness means that a filled circle is to be drawn (-1 or the string
-%   'Filled'). default 1.
+%   values (like -1 or the string 'Filled') mean that a filled circle is to be
+%   drawn . default 1.
 % * __LineType__ Type of the circle boundary. One of:
 %   * __4__ 4-connected line
 %   * __8__ 8-connected line (default)

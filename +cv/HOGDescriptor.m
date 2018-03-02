@@ -408,7 +408,7 @@ classdef HOGDescriptor < handle
             % ## Options
             % * __HitThreshold__ Threshold for the distance between features
             %   and SVM classifying plane. Usually it is 0 and should be
-            %   specfied in the detector coefficients (as the last free
+            %   specified in the detector coefficients (as the last free
             %   coefficient). But if the free coefficient is omitted (which is
             %   allowed), you can specify it manually here. default 0
             % * __WinStride__ Window stride `[w,h]`. It must be a multiple of
@@ -416,7 +416,7 @@ classdef HOGDescriptor < handle
             %   `CellSize`.
             % * __Padding__ Padding `[w,h]`. default [0,0]
             % * __Locations__ cell array of 2-element points `{[x,y],...}` of
-            %   requrested locations at which detector is evaluated. Not set
+            %   requested locations at which detector is evaluated. Not set
             %   by default, in which case the whole image is searched with a
             %   sliding window.
             %
@@ -445,7 +445,7 @@ classdef HOGDescriptor < handle
             % ## Options
             % * __HitThreshold__ Threshold for the distance between features
             %   and SVM classifying plane. Usually it is 0 and should be
-            %   specfied in the detector coefficients (as the last free
+            %   specified in the detector coefficients (as the last free
             %   coefficient). But if the free coefficient is omitted (which is
             %   allowed), you can specify it manually here. default 0
             % * __WinStride__ Window stride `[w,h]`. It must be a multiple of
@@ -508,7 +508,7 @@ classdef HOGDescriptor < handle
             % ## Options
             % * __HitThreshold__ Threshold for the distance between features
             %   and SVM classifying plane. Usually it is 0 and should be
-            %   specfied in the detector coefficients (as the last free
+            %   specified in the detector coefficients (as the last free
             %   coefficient). But if the free coefficient is omitted (which is
             %   allowed), you can specify it manually here. default 0
             % * __WinStride__ Window stride `[w,h]`. It must be a multiple of
@@ -533,7 +533,7 @@ classdef HOGDescriptor < handle
             %   candidate locations to search for object detections at
             %   different scales. An struct array with the following fields:
             %   * __scale__ scale (size) of the bounding box, scalar.
-            %   * __locations__ set of requrested locations to be evaluated,
+            %   * __locations__ set of requested locations to be evaluated,
             %     cell array of points `{[x,y], ...}`.
             %   * __confidences__ vector that will contain confidence values
             %     for each location. Not required on input, this will be
@@ -548,7 +548,7 @@ classdef HOGDescriptor < handle
             % ## Options
             % * __HitThreshold__ Threshold for the distance between features
             %   and SVM classifying plane. Usually it is 0 and should be
-            %   specfied in the detector coefficients (as the last free
+            %   specified in the detector coefficients (as the last free
             %   coefficient). But if the free coefficient is omitted (which is
             %   allowed), you can specify it manually here. default 0
             % * __GroupThreshold__ Minimum possible number of rectangles in a

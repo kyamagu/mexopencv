@@ -126,8 +126,8 @@
 % cv.calibrateCamera), you are recommended to do so and then pass
 % `FixIntrinsic` flag to the function along with the computed intrinsic
 % parameters. Otherwise, if all the parameters are estimated at once, it makes
-% sense to restrict some parameters, for example, pass 'SameFocalLength' and
-% 'ZeroTangentDist' flags, which is usually a reasonable assumption.
+% sense to restrict some parameters, for example, pass `SameFocalLength` and
+% `ZeroTangentDist` flags, which is usually a reasonable assumption.
 %
 % Similarly to cv.calibrateCamera, the function minimizes the total
 % re-projection error for all the points in all the available views from both

@@ -1,5 +1,5 @@
 classdef HarrisLaplaceFeatureDetector < handle
-    %HARRISLAPLACEFEATUREDETECTOR  Class implementing the Harris-Laplace feature detector.
+    %HARRISLAPLACEFEATUREDETECTOR  Class implementing the Harris-Laplace feature detector
     %
     % As described in [Mikolajczyk2004].
     %

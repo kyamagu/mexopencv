@@ -250,7 +250,7 @@ classdef TransientAreasSegmentationModule < handle
         end
 
         function varargout = write(this, fs)
-            %WRITE  Write xml/yml formated parameters information
+            %WRITE  Write xml/yml formatted parameters information
             %
             %     obj.write(fs)
             %     str = obj.write(fs)

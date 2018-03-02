@@ -12,7 +12,7 @@ classdef SuperpixelSLIC < handle
     % Several optimizations are available for SLIC class:
     %
     % * SLICO stands for "Zero parameter SLIC" and it is an optimization of
-    %   baseline SLIC descibed in [Achanta2012].
+    %   baseline SLIC described in [Achanta2012].
     % * MSLIC stands for "Manifold SLIC" and it is an optimization of baseline
     %   SLIC described in [Liu_2017_IEEE].
     %

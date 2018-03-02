@@ -1,4 +1,4 @@
-%WATERSHED  Performs a marker-based image segmentation using the watershed algrorithm
+%WATERSHED  Performs a marker-based image segmentation using the watershed algorithm
 %
 %     marker = cv.watershed(image, marker)
 %

@@ -1,7 +1,7 @@
 classdef BackgroundSubtractorKNN < handle
-    %BACKGROUNDSUBTRACTORKNN  K-nearest neigbours based Background/Foreground Segmentation Algorithm
+    %BACKGROUNDSUBTRACTORKNN  K-nearest neighbours based Background/Foreground Segmentation Algorithm
     %
-    % The class implements the K-nearest neigbours background subtraction
+    % The class implements the K-nearest neighbours background subtraction
     % described in [Zivkovic2006]. Very efficient if number of foreground
     % pixels is low.
     %

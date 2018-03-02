@@ -9,7 +9,7 @@ classdef AdaptiveManifoldFilter < handle
     % * `SigmaR = 0.2` Color space standard deviation.
     % * `TreeHeight = -1` Height of the manifold tree
     %   (default = -1 : automatically computed).
-    % * `PCAIterations = 1` Number of iterations to computed the eigenvector.
+    % * `PCAIterations = 1` Number of iterations to compute the eigenvector.
     % * `AdjustOutliers = false` Specify adjust outliers using Eq. 9 or not.
     % * `UseRNG = true` Specify use random number generator to compute
     %   eigenvector or not.
@@ -35,7 +35,7 @@ classdef AdaptiveManifoldFilter < handle
         SigmaR
         % Height of the manifold tree.
         TreeHeight
-        % Number of iterations to computed the eigenvector.
+        % Number of iterations to compute the eigenvector.
         PCAIterations
         % Specify adjust outliers using Eq. 9 or not.
         AdjustOutliers

@@ -30,7 +30,7 @@
 %   * __Reflect__ `fedcba|abcdefgh|hgfedcb`
 %   * __Reflect101__ `gfedcb|abcdefgh|gfedcba`
 %   * __Wrap__ `cdefgh|abcdefgh|abcdefg`
-%   * __Transparent__ `uvwxyz|absdefgh|ijklmno`
+%   * __Transparent__ `uvwxyz|abcdefgh|ijklmno`
 %   * __Default__ same as 'Reflect101'
 % * __BorderValue__ Value used in case of a constant border. default 0
 % * __Dst__ Optional initial image for the output. If not set, it is

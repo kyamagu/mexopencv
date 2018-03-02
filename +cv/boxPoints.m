@@ -15,7 +15,8 @@
 %
 % The function finds the four vertices of a rotated rectangle. This function
 % is useful to draw the rectangle. You can also use cv.RotatedRect.points
-% method. Please visit the tutorial on bounding rectangle for more information.
+% method. Please visit the tutorial on "Creating Bounding rotated boxes and
+% ellipses for contours" for more information.
 %
 % See also: cv.RotatedRect
 %

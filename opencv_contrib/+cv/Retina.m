@@ -260,7 +260,7 @@ classdef Retina < handle
     % - take a look at `imagelogpolprojection.hpp` to discover retina spatial
     %   log sampling which originates from Barthelemy Durette phd with Jeanny
     %   Herault. A Retina / V1 cortex projection is also proposed and
-    %   originates from Jeanny's discussions. More informations in the above
+    %   originates from Jeanny's discussions. More information in the above
     %   cited Jeanny Heraults's book.
     %
     % - Meylan et al. work on HDR tone mapping that is implemented as a
@@ -823,8 +823,8 @@ classdef Retina < handle
             % luminance (low frequency energy) IPL parvo is the OPL next
             % processing stage, it refers to a part of the Inner Plexiform
             % layer of the retina, it allows high contours sensitivity in
-            % foveal vision. See reference papers for more informations. For
-            % more informations, please have a look at the paper [Benoit2010].
+            % foveal vision. See reference papers for more information. For
+            % more information, please have a look at the paper [Benoit2010].
             %
             % See also: cv.Retina.setupIPLMagnoChannel
             %
@@ -905,7 +905,7 @@ classdef Retina < handle
         end
 
         function varargout = write(this, fs)
-            %WRITE  Write xml/yml formated parameters information
+            %WRITE  Write xml/yml formatted parameters information
             %
             %     obj.write(fs)
             %     str = obj.write(fs)

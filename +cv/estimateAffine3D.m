@@ -5,14 +5,16 @@
 %     [...] = cv.estimateAffine3D(..., 'OptionName', optionValue, ...)
 %
 % ## Input
-% * __src__ First input 3D point set. Cell array of 3-element vectors
-%   `{[x,y,z],...}` or Nx3/Nx1x3/1xNx3 numeric array.
-% * __dst__ Second input 3D point set. Same size and type as `src`.
+% * __src__ First input 3D point set containing `(X,Y,Z)`. Cell array of
+%   3-element vectors `{[x,y,z],...}` or Nx3/Nx1x3/1xNx3 numeric array.
+% * __dst__ Second input 3D point set containing `(x,y,z)`. Same size and type
+%   as `src`.
 %
 % ## Output
-% * __M__ Output 3D affine transformation matrix 3x4
+% * __M__ Output 3D affine transformation matrix 3x4 of the form
+%   `[a11 a12 a13 b1; a21 a22 a23 b2; a31 a32 a33 b3]`
 % * __inliers__ Output vector of same length as number of points, indicating
-%   which points are inliers.
+%   which points are inliers (1-inlier, 0-outlier).
 % * __result__ success flag.
 %
 % ## Options
@@ -23,6 +25,10 @@
 %   Values too close to 1 can slow down the estimation significantly. Values
 %   lower than 0.8-0.9 can result in an incorrectly estimated transformation.
 %   default 0.99.
+%
+% It computes:
+%
+%     [x; y; z] = [a11 a12 a13; a21 a22 a23; a31 a32 a33] * [X; Y; Z] + [b1; b2; b3]
 %
 % The function estimates an optimal 3D affine transformation between two 3D
 % point sets using the RANSAC algorithm.

@@ -43,7 +43,8 @@
 %   corresponding to the larger accumulator values, will be returned first.
 %   default 100.
 % * __MinRadius__ Minimum circle radius. default 0.
-% * __MaxRadius__ Maximum circle radius. default 0.
+% * __MaxRadius__ Maximum circle radius. If <= 0, uses the maximum image
+%   dimension. If < 0, returns centers without finding the radius. default 0.
 %
 % The function finds circles in a grayscale image using a modification of the
 % Hough transform.
@@ -52,9 +53,8 @@
 % Usually the function detects the centers of circles well. However, it may
 % fail to find correct radii. You can assist to the function by specifying the
 % radius range (`MinRadius` and `MaxRadius`) if you know it. Or, you may set
-% `MaxRadius` to 0 to return centers only without radius search, and find the
-% correct radius using an additional procedure.
-%
+% `MaxRadius` to a negative number to return centers only without radius
+% search, and find the correct radius using an additional procedure.
 %
 % ## References
 % [Yuen90]:

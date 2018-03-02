@@ -9,7 +9,7 @@
 %   also a cell array of feature points `{[x,y], ...}` or two-channel array of
 %   size 1xNx2 or Nx1x2.
 % * __projPoints2__ 2xN array of corresponding points in the second image. It
-%   can be also a cell array of feature points `{[x,y], ...}` ortwo-channel
+%   can be also a cell array of feature points `{[x,y], ...}` or two-channel
 %   array of size 1xNx2 or Nx1x2.
 %
 % ## Output

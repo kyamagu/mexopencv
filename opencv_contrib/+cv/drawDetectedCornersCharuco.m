@@ -1,4 +1,4 @@
-%DRAWDETECTEDCORNERSCHARUCO  Draws a set of Charuco corners
+%DRAWDETECTEDCORNERSCHARUCO  Draws a set of ChArUco corners
 %
 %     img = cv.drawDetectedCornersCharuco(img, charucoCorners)
 %     img = cv.drawDetectedCornersCharuco(..., 'OptionName',optionValue, ...)
@@ -16,7 +16,7 @@
 % * __CornerColor__ color of the square surrounding each corner.
 %   default [255,0,0].
 %
-% This function draws a set of detected Charuco corners. If identifiers
+% This function draws a set of detected ChArUco corners. If identifiers
 % vector is provided, it also draws the id of each corner.
 %
 % See also: cv.interpolateCornersCharuco, cv.drawDetectedMarkers,

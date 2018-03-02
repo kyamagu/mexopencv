@@ -29,7 +29,7 @@
 % * __UseExtrinsicGuess__ defines whether initial guess for `rvec` and `tvec`
 %   will be used or not. default false.
 %
-% This function estimates a Charuco board pose from some detected corners.
+% This function estimates a ChArUco board pose from some detected corners.
 %
 % See also: cv.interpolateCornersCharuco, cv.estimatePoseBoard, cv.drawAxis,
 %  cv.drawCharucoBoard, cv.Rodrigues, cv.solvePnP

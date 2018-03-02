@@ -1,4 +1,4 @@
-%BLUR  Smoothes an image using the normalized box filter
+%BLUR  Smooths an image using the normalized box filter
 %
 %     dst = cv.blur(src)
 %     dst = cv.blur(src, 'OptionName',optionValue, ...)

@@ -39,13 +39,15 @@ classdef ORB < handle
         % The number of pyramid levels.
         %
         % The smallest level will have linear size equal to
-        % `numel(input_image)/(ScaleFactor ^ NLevels)`. default 8
+        % `numel(input_image)/(ScaleFactor ^ (NLevels - FirstLevel))`.
+        % default 8
         NLevels
         % This is size of the border where the features are not detected.
         %
         % It should roughly match the `PatchSize` parameter. default 31
         EdgeThreshold
-        % It should be 0 in the current implementation.
+        % The level of pyramid to put source image to. Previous layers are
+        % filled with upscaled source image.
         %
         % default 0
         FirstLevel

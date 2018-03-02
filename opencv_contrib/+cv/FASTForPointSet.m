@@ -1,4 +1,4 @@
-%FASTFORPOINTSET  Estimates cornerness for prespecified KeyPoints using the FAST algorithm
+%FASTFORPOINTSET  Estimates cornerness for pre-specified KeyPoints using the FAST algorithm
 %
 %     keypoints = cv.FASTForPointSet(im, keypoints)
 %     keypoints = cv.FASTForPointSet(im, keypoints, 'OptionName', optionValue, ...)

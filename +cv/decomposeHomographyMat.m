@@ -19,7 +19,13 @@
 % mathematical solution sets. At least two of the solutions may further be
 % invalidated if point correspondences are available by applying positive
 % depth constraint (all points must be in front of the camera). The
-% decomposition method is described in detail in [Malis].
+% decomposition method is described in detail in [Malis]:
+%
+%     H = s * K * (R{i} + t{i} * n{i}') * inv(K),  for i=1:nsols
+%
+% `s` is a scaling factor approximated as:
+%
+%     s = median(svd(inv(K) * H * K))
 %
 % ## References
 % [Malis]:

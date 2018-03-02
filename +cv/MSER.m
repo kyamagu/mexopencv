@@ -66,7 +66,7 @@ classdef MSER < handle
             %   default 60.
             % * __MaxArea__ prune the area which bigger than maxArea.
             %   default 14400.
-            % * __MaxVariation__ prune the area have simliar size to its
+            % * __MaxVariation__ prune the area have similar size to its
             %   children. default 0.25
             % * __MinDiversity__ for color image, trace back to cut off mser
             %   with diversity less than `MinDiversity`. default 0.2.

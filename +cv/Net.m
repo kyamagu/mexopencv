@@ -7,7 +7,7 @@ classdef Net < handle
     %   networks;
     % - set of built-in most-useful Layers;
     % - API to constuct and modify comprehensive neural networks from layers;
-    % - functionality for loading serialized networks models from differnet
+    % - functionality for loading serialized networks models from different
     %   frameworks.
     %
     % Functionality of this module is designed only for forward pass
@@ -688,7 +688,7 @@ classdef Net < handle
             % red channels.
             %
             % If `Crop` is true, input image is resized so one side after
-            % resize is equal to corresponing dimension in `Size` and another
+            % resize is equal to corresponding dimension in `Size` and another
             % one is equal or larger. Then, crop from the center is performed.
             % If `Crop` is false, direct resize without cropping and
             % preserving aspect ratio is performed.

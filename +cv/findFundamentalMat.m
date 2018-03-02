@@ -13,7 +13,7 @@
 %
 % ## Output
 % * __F__ Fundamental matrix, 3x3 (or 9x3 in some cases, see below).
-% * __mask__ Optional output mask set by a robust method (RANSAC or LMEDS),
+% * __mask__ Optional output mask set by a robust method (RANSAC or LMedS),
 %   indicates inliers. Vector of same length as number of points.
 %
 % ## Options
@@ -21,7 +21,9 @@
 %   * __7Point__ for a 7-point algorithm. `N = 7`.
 %   * __8Point__ for an 8-point algorithm. `N >= 8`.
 %   * __Ransac__ for the RANSAC algorithm. `N >= 8`. (default)
+%     It needs at least 15 points. 7-point algorithm is used.
 %   * __LMedS__ for the LMedS least-median-of-squares algorithm. `N >= 8`.
+%     7-point algorithm is used.
 % * __Param1__ Parameter used for RANSAC. It is the maximum distance from a
 %   point to an epipolar line in pixels, beyond which the point is considered
 %   an outlier and is not used for computing the final fundamental matrix. It
