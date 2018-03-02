@@ -97,29 +97,7 @@
 % channel goes last. Fully transparent pixels should have alpha set to 0,
 % fully opaque pixels should have alpha set to 255/65535.
 % Note: WEBP format can also store images with alpha channel.
-%
-% ## Example
-% The sample below shows how to create such a RGBA image and store to PNG file.
-% It also demonstrates how to set custom compression parameters:
-%
-%     % Create mat with alpha channel
-%     nrows = 480; ncols = 640;
-%     [I,J] = ndgrid(1:nrows, 1:ncols);
-%     img = zeros(nrows, ncols, 4, 'uint8');
-%     img(:,:,1) = uint8(255 * (nrows-I+1)/nrows);     % red
-%     img(:,:,2) = uint8(255 * (ncols-J+1)/ncols);     % green
-%     img(:,:,3) = uint8(255);                         % blue
-%     img(:,:,4) = uint8(0.5 * sum(img(:,:,[1 2]),3)); % alpha
-%
-%     % save PNG file with alpha data
-%     %imwrite(img(:,:,1:3), 'alpha.png', 'Alpha',img(:,:,4))
-%     cv.imwrite('alpha.png', img, 'PngCompression',9, 'PngStrategy','RLE');
-%     imfinfo('alpha.png')
-%
-%     % show image with alpha transparency
-%     figure('Menubar','none', 'Color','k')
-%     image(img(:,:,1:3), 'AlphaData',img(:,:,4))
-%     axis image off
+% See `rgba_png_demo.m` sample for an example.
 %
 % See also: cv.imread, cv.imencode, imwrite, dicomwrite, hdrwrite
 %
