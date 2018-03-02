@@ -32,6 +32,35 @@ classdef TestImwrite
             end
         end
 
+        function test_write_multi
+            if true
+                fname = which('mri.mat');
+                if isempty(fname)
+                    error('mexopencv:testskip', 'missing data');
+                end
+                mri = load(fname);
+                imgs = cell(size(mri.D,4), 1);
+                for i=1:size(mri.D,4)
+                    imgs{i} = ind2gray(mri.D(:,:,1,i), mri.map);
+                end
+            else
+                fnames = dir(fullfile(toolboxdir('images'), 'imdata', 'AT3_*.tif'));
+                if isempty(fnames)
+                    error('mexopencv:testskip', 'missing data');
+                end
+                imgs = cell(numel(fnames), 1);
+                for i=1:numel(fnames)
+                    imgs{i} = imread(fullfile(fnames(i).folder, fnames(i).name));
+                end
+            end
+
+            filename = [tempname() '.tiff'];
+            cObj = onCleanup(@() TestImwrite.deleteFile(filename));
+
+            cv.imwrite(filename, imgs);
+            assert(exist(filename,'file')==2, 'Failed to write TIFF');
+        end
+
         function test_verify_lossless_png
             filename = [tempname() '.png'];
             cObj = onCleanup(@() TestImwrite.deleteFile(filename));

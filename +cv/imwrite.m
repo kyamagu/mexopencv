@@ -1,12 +1,15 @@
 %IMWRITE  Saves an image to a specified file
 %
 %     cv.imwrite(filename, img)
+%     cv.imwrite(filename, imgs)
 %     cv.imwrite(filename, img, 'OptionName', optionValue, ...)
 %     success = cv.imwrite(...)
 %
 % ## Input
 % * __filename__ Name of the file.
 % * __img__ Image to be saved.
+% * __imgs__ A cell-array of images, to be saved as one multi-page image
+%   (currently only supported by Tiff encoder).
 %
 % ## Output
 % * __success__ optional output flag, true on success, false otherwise. If not
