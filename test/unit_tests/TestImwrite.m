@@ -17,6 +17,9 @@ classdef TestImwrite
                     else
                         img = TestImwrite.im;
                     end
+                    if any(strcmp(frmts(i).ext, {'.pbm', '.pgm'}))
+                        img = cv.cvtColor(img, 'RGB2GRAY');
+                    end
                     cv.imwrite(filename, img, frmts(i).opts{:});
                     assert(exist(filename,'file')==2, ...
                         'Failed to write %s', frmts(i).name);

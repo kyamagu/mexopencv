@@ -68,10 +68,10 @@ classdef TestNet
             lp = struct();
             lp.name = 'conv/7x7_s2';
             lp.type = 'Convolution';
-            lp.dict.num_output = 64;
-            lp.dict.kernel_size = 7;
-            lp.dict.stride = 2;
-            lp.dict.pad = 3;
+            lp.dict.num_output = int32(64);
+            lp.dict.kernel_size = int32(7);
+            lp.dict.stride = int32(2);
+            lp.dict.pad = int32(3);
             lp.dict.bias_term = true;
             lp.blobs = {
                 rand(64,3,7,7,'single')*2-1,  % weights

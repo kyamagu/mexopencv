@@ -17,8 +17,8 @@ classdef TestDPMDetector
 
             img = imread(TestDPMDetector.im);
             objects = detector.detect(img);
+            validateattributes(objects, {'struct'}, {'vector'});
             if ~isempty(objects)
-                validateattributes(objects, {'struct'}, {'vector'});
                 arrayfun(@(S) validateattributes(S.rect, {'numeric'}, ...
                     {'vector', 'integer', 'numel',4}), objects);
                 arrayfun(@(S) validateattributes(S.score, {'numeric'}, ...
