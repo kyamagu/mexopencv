@@ -85,7 +85,7 @@
 % produce noticeable inaccuracies (after all, Sobel is only an approximation
 % of the derivative). OpenCV addresses this inaccuracy for kernels of size 3
 % by using the |cv.Scharr| function. This is as fast but more accurate than
-% the standar Sobel function. It implements the following kernels:
+% the standard Sobel function. It implements the following kernels:
 %
 % $$G_{x} = \left[{\matrix{
 %                -3 & 0 &  +3 \cr

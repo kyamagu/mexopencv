@@ -96,7 +96,7 @@
 %
 % It is several times faster than other existing corner detectors.
 %
-% But it is not robust to high levels of noise. It is dependant on a
+% But it is not robust to high levels of noise. It is dependent on a
 % threshold.
 %
 

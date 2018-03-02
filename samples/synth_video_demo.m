@@ -13,9 +13,9 @@ if true
     %cap = createVideoCapture(0, 'aruco');
     cap = createVideoCapture([], 'chess');
 else
-    %cap = createVideoCapture('synth|class=scene|bg=../../test/lena.jpg|fg=../../test/mask.png|noise=0.1|size=400x400|speed=1');
-    %cap = createVideoCapture('synth|class=scene|bg=../../test/fruits.jpg|noise=0.1|size=512x480|speed=1|deformation=true');
-    cap = createVideoCapture('synth|class=chess|framecount=500|bg=../../test/lena.jpg|size=320x320|noise=0.1|gridsize=9x6');
+    %cap = createVideoCapture('synth|class=scene|bg=../test/lena.jpg|fg=../test/mask.png|noise=0.1|size=400x400|speed=1');
+    %cap = createVideoCapture('synth|class=scene|bg=../test/fruits.jpg|noise=0.1|size=512x480|speed=1|deformation=true');
+    cap = createVideoCapture('synth|class=chess|framecount=500|bg=../test/lena.jpg|size=320x320|noise=0.1|gridsize=9x6');
 end
 assert(cap.isOpened());
 

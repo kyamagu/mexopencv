@@ -180,14 +180,14 @@ end
 
 function [rvec, tvec] = getSyntheticRT(t, sz)
     % compute eye/target positions for transformed image
-    center = [0.5*sz 0];
+    center = [0.5*sz(:); 0];
     phi = pi/3 + sin(t*3)*pi/8;
-    ofs = [sin(1.2*t) cos(1.8*t) 0] * sz(1) * 0.2;
-    eye_pos = center + [cos(t)*cos(phi) sin(t)*cos(phi) sin(phi)] * 15*60 + ofs;
+    ofs = [sin(1.2*t); cos(1.8*t); 0] * sz(1) * 0.2;
+    eye_pos = center + [cos(t)*cos(phi); sin(t)*cos(phi); sin(phi)] * 15*60 + ofs;
     target_pos = center + ofs;
 
     % compute rotation matrix, translation vector (extrinsic parameters)
-    [R, tvec] = lookat(eye_pos(:), target_pos(:));
+    [R, tvec] = lookat(eye_pos, target_pos);
     rvec = mtx2rvec(R);
 end
 
@@ -198,7 +198,7 @@ function [R, tvec] = lookat(eyePos, targetPos, up)
     right = cross(fwd, up);
     right = right / norm(right);
     down = cross(fwd, right);
-    R = [right, down, fwd]';
+    R = [right(:), down(:), fwd(:)]';
     tvec = -R * eyePos(:);
 end
 

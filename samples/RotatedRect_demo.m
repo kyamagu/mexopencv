@@ -1,6 +1,10 @@
 %% Rotated Rectangle
 % The sample below demonstrates how to use |cv.RotatedRect|
 %
+% Sources:
+%
+% * <https://github.com/opencv/opencv/blob/3.4.1/samples/cpp/tutorial_code/snippets/core_various.cpp>
+%
 
 %%
 % A rotated rectangle is specified by the center point (mass center),

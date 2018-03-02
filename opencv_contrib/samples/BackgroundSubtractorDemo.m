@@ -94,7 +94,7 @@
 % It is also a Gaussian Mixture-based Background/Foreground Segmentation
 % Algorithm. It is based on two papers by Z. Zivkovic:
 %
-% * "Improved adaptive Gausian mixture model for background subtraction" in
+% * "Improved adaptive Gaussian mixture model for background subtraction" in
 %   2004.
 % * "Efficient Adaptive Density Estimation per Image Pixel for the Task of
 %   Background Subtraction" in 2006.

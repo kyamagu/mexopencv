@@ -40,7 +40,7 @@ if exist(groundTruths{1}, 'file') ~= 2
 end
 
 %%
-% Global Patch Collider training paramters
+% Global Patch Collider training parameters
 params = {
     'MaxTreeDepth',20, ...      % Maximum tree depth to stop partitioning
     'MinNumberOfSamples',3, ... % Minimum number of samples in the node to stop partitioning

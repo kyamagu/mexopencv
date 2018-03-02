@@ -1,5 +1,5 @@
 %% Fourier Descriptors Demo
-% Demostrates using Fourier descriptors for contour matching.
+% Demonstrates using Fourier descriptors for contour matching.
 %
 % Sources
 %

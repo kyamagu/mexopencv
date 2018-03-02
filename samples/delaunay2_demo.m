@@ -1,6 +1,6 @@
 %% Delaunay triangulation
-% This program demostrates iterative construction of
-% delaunay triangulation and voronoi tesselation.
+% This program demonstrates iterative construction of
+% delaunay triangulation and voronoi tessellation.
 %
 % It draws a random set of points in an image and then
 % delaunay triangulates them.

@@ -34,7 +34,7 @@ params.MinConvexity = 0.95;
 params.MaxConvexity = 1e37;
 
 %%
-% we are going to detect blobs with 6 differents param configurations
+% we are going to detect blobs with 6 different param configurations
 p = repmat(params, 6, 1);
 
 %%

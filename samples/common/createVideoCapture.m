@@ -93,7 +93,7 @@ end
 function [params, klass] = parse_string(source)
     % parse key/value pairs
     params = regexp(source(7:end), '\|', 'split');
-    params = cellfun(@(s) regexp(s, '=', 'split'), params, 'UniformOutput',false);
+    params = cellfun(@(s) regexp(s, '=', 'split', 'once'), params, 'UniformOutput',false);
     params = [params{:}];
     params(cellfun(@isempty, params)) = [];
     if mod(numel(params), 2) == 0
@@ -132,7 +132,7 @@ function val = parse_value(str)
     % size
     tok = regexp(str, '^(\d+)x(\d+)$', 'tokens', 'once', 'ignorecase');
     if ~isempty(tok)
-        val = str2double(tok);
+        val = reshape(str2double(tok), 1, 2);
         return;
     end
 
@@ -144,12 +144,63 @@ function val = parse_value(str)
     end
 
     % image file path
-    [~,~,ext] = fileparts(str);
-    fmts = imformats();
-    fmts = strcat('.', [fmts.ext]);
-    if any(strcmpi(ext, fmts)) && exist(str, 'file') == 2
-        val = cv.imread(which(str), 'Color',true);
+    if is_image_file(str) && file_exist(str)
+        try
+            val = cv.imread(resolve_path(str), 'Color',true);
+        end
         return;
+    end
+end
+
+function b = is_image_file(fpath)
+    % check file extension is one of recognized image formats
+    [~,~,ext] = fileparts(fpath);
+    if isempty(ext)
+        b = false;
+    else
+        fmts = imformats();
+        fmts = strcat('.', [fmts.ext]);
+        b = any(strcmpi(ext, fmts));
+    end
+end
+
+function b = file_exist(fpath)
+    if mexopencv.isOctave() || verLessThan('matlab', '9.3')  % R2017b
+        b = exist(fpath, 'file') == 2;
+    else
+        b = isfile(fpath);
+    end
+end
+
+function fpath = resolve_path(fpath)
+    % convert relative to absolute path
+    if false && strncmp(fpath, '.', 1)
+        % base directory
+        if true
+            % current working directory
+            dpath = pwd();
+        else
+            % directory of calling function
+            st = dbstack();
+            ind = find(strcmpi({st.file}, [mfilename('fullpath') '.m']), 1, 'last');
+            assert(~isempty(ind) && ind < numel(st));
+            dpath = fileparts(st(ind + 1).file);
+        end
+        fpath = fullfile(dpath, fpath);
+    end
+
+    % convert to canonical path
+    if true
+        fpath = which(fpath);
+    elseif true
+        s = what(fpath);
+        fpath = s.path;
+    elseif true
+        s = fileattrib(fpath);
+        fpath = s.Name;
+    else
+        obj = javaObject('java.io.File', fpath);
+        fpath = char(obj.getCanonicalPath());
     end
 end
 

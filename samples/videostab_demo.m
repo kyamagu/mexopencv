@@ -80,7 +80,7 @@
 %   The default is 5.0.
 %
 % * *color_inpaint*=(no|average|ns|telea)
-%   Do color inpainting. The defailt is 'no'.
+%   Do color inpainting. The default is 'no'.
 % * *ci_radius*=<float>
 %   Set color inpainting radius (for 'ns' and 'telea' options only).
 %   The default is 2.0
@@ -120,9 +120,9 @@
 %   Use CUDA optimization whenever possible. The default is false.
 %
 % * *output*=<file_path>
-%   Set output file path explicitely. The default is 'stabilized.avi'.
+%   Set output file path explicitly. The default is 'stabilized.avi'.
 % * *fps*=(<float>|auto)
-%   Set output video FPS explicitely. By default the source FPS is used (auto).
+%   Set output video FPS explicitly. By default the source FPS is used (auto).
 % * *quiet*
 %   Don't show output video frames.
 % * *logger*=(LogToMATLAB|NullLog)

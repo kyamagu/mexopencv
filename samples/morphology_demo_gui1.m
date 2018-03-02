@@ -66,7 +66,7 @@
 % compute the minimal pixel value overlapped by $B$ and replace the image
 % pixel under the anchor point with that minimal value.
 %
-% Analagously to the example for dilation, we can apply the erosion operator
+% Analogously to the example for dilation, we can apply the erosion operator
 % to the original image (shown above). You can see in the result below that
 % the bright areas of the image (the background, apparently), get thinner,
 % whereas the dark zones (the "writing") gets bigger.
