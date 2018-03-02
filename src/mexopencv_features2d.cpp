@@ -24,9 +24,10 @@ Ptr<BRISK> createBRISK(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    ptrdiff_t len = std::distance(first, last);
+    nargchk((len % 2) == 0);
     // second/third variants for a custom pattern
-    if ((last-first) >= 2 && !first->isChar()) {
+    if (len >= 2 && !first->isChar()) {
         vector<float> radiusList(first->toVector<float>()); ++first;
         vector<int> numberList(first->toVector<int>()); ++first;
         int thresh = 20;
@@ -79,7 +80,7 @@ Ptr<ORB> createORB(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     int nfeatures = 500;
     float scaleFactor = 1.2f;
     int nlevels = 8;
@@ -122,7 +123,7 @@ Ptr<MSER> createMSER(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     int delta = 5;
     int min_area = 60;
     int max_area = 14400;
@@ -166,7 +167,7 @@ Ptr<FastFeatureDetector> createFastFeatureDetector(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     int threshold = 10;
     bool nonmaxSuppression = true;
     int type = FastFeatureDetector::TYPE_9_16;
@@ -190,7 +191,7 @@ Ptr<GFTTDetector> createGFTTDetector(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     int maxCorners = 1000;
     double qualityLevel = 0.01;
     double minDistance = 1;
@@ -227,7 +228,7 @@ Ptr<SimpleBlobDetector> createSimpleBlobDetector(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     SimpleBlobDetector::Params parameters;
     for (; first != last; first += 2) {
         string key((*first).toString());
@@ -281,7 +282,7 @@ Ptr<KAZE> createKAZE(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     bool extended = false;
     bool upright = false;
     float threshold = 0.001f;
@@ -315,7 +316,7 @@ Ptr<AKAZE> createAKAZE(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     int descriptor_type = AKAZE::DESCRIPTOR_MLDB;
     int descriptor_size = 0;
     int descriptor_channels = 3;
@@ -352,7 +353,7 @@ Ptr<AgastFeatureDetector> createAgastFeatureDetector(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     int threshold = 10;
     bool nonmaxSuppression = true;
     int type = AgastFeatureDetector::OAST_9_16;
@@ -377,7 +378,7 @@ Ptr<SIFT> createSIFT(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     int nfeatures = 0;
     int nOctaveLayers = 3;
     double contrastThreshold = 0.04;
@@ -408,7 +409,7 @@ Ptr<SURF> createSURF(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     double hessianThreshold = 100;
     int nOctaves = 4;
     int nOctaveLayers = 3;
@@ -439,7 +440,7 @@ Ptr<FREAK> createFREAK(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     bool orientationNormalized = true;
     bool scaleNormalized = true;
     float patternScale = 22.0f;
@@ -470,7 +471,7 @@ Ptr<StarDetector> createStarDetector(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     int maxSize = 45;
     int responseThreshold = 30;
     int lineThresholdProjected = 10;
@@ -501,7 +502,7 @@ Ptr<BriefDescriptorExtractor> createBriefDescriptorExtractor(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     int bytes = 32;
     bool use_orientation = false;
     for (; first != last; first += 2) {
@@ -522,7 +523,7 @@ Ptr<LUCID> createLUCID(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     int lucid_kernel = 1;
     int blur_kernel = 2;
     for (; first != last; first += 2) {
@@ -543,7 +544,7 @@ Ptr<LATCH> createLATCH(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     int bytes = 32;
     bool rotationInvariance = true;
     int half_ssd_size = 3;
@@ -570,7 +571,7 @@ Ptr<DAISY> createDAISY(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     float radius = 15;
     int q_radius = 3;
     int q_theta = 8;
@@ -610,7 +611,7 @@ Ptr<MSDDetector> createMSDDetector(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     int patch_radius = 3;
     int search_area_radius = 5;
     int nms_radius = 5;
@@ -654,7 +655,7 @@ Ptr<VGG> createVGG(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     int desc = VGG::VGG_120;
     float isigma = 1.4f;
     bool img_normalize = true;
@@ -688,7 +689,7 @@ Ptr<BoostDesc> createBoostDesc(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     int desc = BoostDesc::BINBOOST_256;
     bool use_scale_orientation = true;
     float scale_factor = 6.25f;
@@ -712,7 +713,7 @@ Ptr<HarrisLaplaceFeatureDetector> createHarrisLaplaceFeatureDetector(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     int numOctaves = 6;
     float corn_thresh = 0.01f;
     float DOG_thresh = 0.01f;
@@ -1026,7 +1027,7 @@ Ptr<FlannBasedMatcher> createFlannBasedMatcher(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     Ptr<flann::IndexParams> indexParams;
     Ptr<flann::SearchParams> searchParams;
     for (; first != last; first += 2) {
@@ -1052,7 +1053,7 @@ Ptr<BFMatcher> createBFMatcher(
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    nargchk(((last-first) % 2) == 0);
+    nargchk((std::distance(first, last) % 2) == 0);
     int normType = cv::NORM_L2;
     bool crossCheck = false;
     for (; first != last; first += 2) {
@@ -1075,7 +1076,7 @@ Ptr<DescriptorMatcher> createDescriptorMatcher(
     vector<MxArray>::const_iterator last)
 {
     Ptr<DescriptorMatcher> p;
-    if ((last-first) > 0) {
+    if (std::distance(first, last) > 0) {
         if (type == "FlannBasedMatcher")
             p = createFlannBasedMatcher(first, last);
         else if (type == "BFMatcher")

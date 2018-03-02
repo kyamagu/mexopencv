@@ -20,8 +20,8 @@
 // ==================== XXX ====================
 
 /// motion model types for option processing
-const ConstMap<std::string,cv::videostab::MotionModel> MotionModelMap =
-    ConstMap<std::string,cv::videostab::MotionModel>
+const ConstMap<std::string, cv::videostab::MotionModel> MotionModelMap =
+    ConstMap<std::string, cv::videostab::MotionModel>
     ("Translation",         cv::videostab::MM_TRANSLATION)
     ("TranslationAndScale", cv::videostab::MM_TRANSLATION_AND_SCALE)
     ("Rotation",            cv::videostab::MM_ROTATION)
@@ -32,8 +32,8 @@ const ConstMap<std::string,cv::videostab::MotionModel> MotionModelMap =
     ("Unknown",             cv::videostab::MM_UNKNOWN);
 
 /// inverse motion model types for option processing
-const ConstMap<cv::videostab::MotionModel,std::string> MotionModelInvMap =
-    ConstMap<cv::videostab::MotionModel,std::string>
+const ConstMap<cv::videostab::MotionModel, std::string> MotionModelInvMap =
+    ConstMap<cv::videostab::MotionModel, std::string>
     (cv::videostab::MM_TRANSLATION,           "Translation")
     (cv::videostab::MM_TRANSLATION_AND_SCALE, "TranslationAndScale")
     (cv::videostab::MM_ROTATION,              "Rotation")

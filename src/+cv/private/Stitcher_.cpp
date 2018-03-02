@@ -60,8 +60,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        //Stitcher::createDefault(try_use_gpu);
-        //createStitcher(try_use_gpu);
         obj_[++last_id] = Stitcher::create(mode, try_use_gpu);
         plhs[0] = MxArray(last_id);
         mexLock();

@@ -82,7 +82,7 @@ struct OptionsParser
           fps(25),
           isColor(true)
     {
-        nargchk(((last-first) % 2) == 0);
+        nargchk((std::distance(first, last) % 2) == 0);
         for (; first != last; first += 2) {
             string key((*first).toString());
             const MxArray& val = *(first + 1);
@@ -120,7 +120,7 @@ struct ImwriteOptionsParser
     ImwriteOptionsParser(vector<MxArray>::const_iterator first,
                          vector<MxArray>::const_iterator last)
     {
-        nargchk(((last-first) % 2) == 0);
+        nargchk((std::distance(first, last) % 2) == 0);
         for (; first != last; first += 2) {
             string key((*first).toString());
             const MxArray& val = *(first + 1);

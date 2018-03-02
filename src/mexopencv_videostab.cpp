@@ -19,7 +19,7 @@ using namespace cv::videostab;
 // ==================== XXX ====================
 
 /// inpainting algorithm types for option processing
-const ConstMap<string,int> InpaintingAlgMap = ConstMap<string,int>
+const ConstMap<string, int> InpaintingAlgMap = ConstMap<string, int>
     ("NS",    cv::INPAINT_NS)
     ("Telea", cv::INPAINT_TELEA);
 
@@ -79,7 +79,7 @@ MxArray toStruct(Ptr<IFrameSource> p)
 {
     MxArray s(MxArray::Struct());
     if (!p.empty()) {
-        s.set("TypeId",     string(typeid(*p).name()));
+        s.set("TypeId", string(typeid(*p).name()));
         Ptr<VideoFileSource> pp = p.dynamicCast<VideoFileSource>();
         if (!pp.empty()) {
             s.set("Width",  pp->width());
@@ -95,12 +95,12 @@ MxArray toStruct(Ptr<DeblurerBase> p)
 {
     MxArray s(MxArray::Struct());
     if (!p.empty()) {
-        s.set("TypeId",              string(typeid(*p).name()));
-        s.set("Radius",              p->radius());
+        s.set("TypeId", string(typeid(*p).name()));
+        s.set("Radius", p->radius());
         // Frames, Motions, BlurrinessRates: data from stabilizer
         Ptr<WeightingDeblurer> pp = p.dynamicCast<WeightingDeblurer>();
         if (!pp.empty()) {
-            s.set("Sensitivity",     pp->sensitivity());
+            s.set("Sensitivity", pp->sensitivity());
         }
     }
     return s;
@@ -110,10 +110,11 @@ MxArray toStruct(Ptr<MotionEstimatorBase> p)
 {
     MxArray s(MxArray::Struct());
     if (!p.empty()) {
-        s.set("TypeId",                 string(typeid(*p).name()));
-        s.set("MotionModel",            MotionModelInvMap[p->motionModel()]);
+        s.set("TypeId",      string(typeid(*p).name()));
+        s.set("MotionModel", MotionModelInvMap[p->motionModel()]);
         {
-            Ptr<MotionEstimatorRansacL2> pp = p.dynamicCast<MotionEstimatorRansacL2>();
+            Ptr<MotionEstimatorRansacL2> pp =
+                p.dynamicCast<MotionEstimatorRansacL2>();
             if (!pp.empty()) {
                 s.set("RansacParams",   toStruct(pp->ransacParams()));
                 s.set("MinInlierRatio", pp->minInlierRatio());
@@ -137,8 +138,9 @@ MxArray toStruct(Ptr<ISparseOptFlowEstimator> p)
 {
     MxArray s(MxArray::Struct());
     if (!p.empty()) {
-        s.set("TypeId",       string(typeid(*p).name()));
-        Ptr<SparsePyrLkOptFlowEstimator> pp = p.dynamicCast<SparsePyrLkOptFlowEstimator>();
+        s.set("TypeId", string(typeid(*p).name()));
+        Ptr<SparsePyrLkOptFlowEstimator> pp =
+            p.dynamicCast<SparsePyrLkOptFlowEstimator>();
         if (!pp.empty()) {
             s.set("WinSize",  pp->winSize());
             s.set("MaxLevel", pp->maxLevel());
@@ -151,10 +153,11 @@ MxArray toStruct(Ptr<IDenseOptFlowEstimator> p)
 {
     MxArray s(MxArray::Struct());
     if (!p.empty()) {
-        s.set("TypeId",       string(typeid(*p).name()));
+        s.set("TypeId", string(typeid(*p).name()));
         //TODO: no CPU version, only CUDA
         /*
-        Ptr<DensePyrLkOptFlowEstimatorGpu> pp = p.dynamicCast<DensePyrLkOptFlowEstimatorGpu>();
+        Ptr<DensePyrLkOptFlowEstimatorGpu> pp =
+            p.dynamicCast<DensePyrLkOptFlowEstimatorGpu>();
         if (!pp.empty()) {
             s.set("WinSize",  pp->winSize());
             s.set("MaxLevel", pp->maxLevel());
@@ -168,8 +171,9 @@ MxArray toStruct(Ptr<IOutlierRejector> p)
 {
     MxArray s(MxArray::Struct());
     if (!p.empty()) {
-        s.set("TypeId",           string(typeid(*p).name()));
-        Ptr<TranslationBasedLocalOutlierRejector> pp = p.dynamicCast<TranslationBasedLocalOutlierRejector>();
+        s.set("TypeId", string(typeid(*p).name()));
+        Ptr<TranslationBasedLocalOutlierRejector> pp =
+            p.dynamicCast<TranslationBasedLocalOutlierRejector>();
         if (!pp.empty()) {
             s.set("CellSize",     pp->cellSize());
             s.set("RansacParams", toStruct(pp->ransacParams()));
@@ -182,9 +186,10 @@ MxArray toStruct(Ptr<ImageMotionEstimatorBase> p)
 {
     MxArray s(MxArray::Struct());
     if (!p.empty()) {
-        s.set("TypeId",                   string(typeid(*p).name()));
-        s.set("MotionModel",              MotionModelInvMap[p->motionModel()]);
-        Ptr<KeypointBasedMotionEstimator> pp = p.dynamicCast<KeypointBasedMotionEstimator>();
+        s.set("TypeId",      string(typeid(*p).name()));
+        s.set("MotionModel", MotionModelInvMap[p->motionModel()]);
+        Ptr<KeypointBasedMotionEstimator> pp =
+            p.dynamicCast<KeypointBasedMotionEstimator>();
         if (!pp.empty()) {
             s.set("Detector",             toStruct(pp->detector()));             // Ptr<FeatureDetector>
             s.set("OpticalFlowEstimator", toStruct(pp->opticalFlowEstimator())); // Ptr<ISparseOptFlowEstimator>
@@ -198,14 +203,15 @@ MxArray toStruct(Ptr<InpainterBase> p)
 {
     MxArray s(MxArray::Struct());
     if (!p.empty()) {
-        s.set("TypeId",                     string(typeid(*p).name()));
-        s.set("MotionModel",                MotionModelInvMap[p->motionModel()]);
-        s.set("Radius",                     p->radius());
+        s.set("TypeId",      string(typeid(*p).name()));
+        s.set("MotionModel", MotionModelInvMap[p->motionModel()]);
+        s.set("Radius",      p->radius());
         // Frames, Motions, StabilizedFrames, StabilizationMotions: data from stabilizer
         {
-            Ptr<ConsistentMosaicInpainter> pp = p.dynamicCast<ConsistentMosaicInpainter>();
+            Ptr<ConsistentMosaicInpainter> pp =
+                p.dynamicCast<ConsistentMosaicInpainter>();
             if (!pp.empty())
-                s.set("StdevThresh",        pp->stdevThresh());
+                s.set("StdevThresh", pp->stdevThresh());
         }
         {
             Ptr<MotionInpainter> pp = p.dynamicCast<MotionInpainter>();
@@ -219,7 +225,7 @@ MxArray toStruct(Ptr<InpainterBase> p)
         {
             Ptr<InpaintingPipeline> pp = p.dynamicCast<InpaintingPipeline>();
             if (!pp.empty())
-                s.set("Empty",              pp->empty());
+                s.set("Empty", pp->empty());
         }
     }
     return s;
@@ -229,7 +235,7 @@ MxArray toStruct(Ptr<MotionFilterBase> p)
 {
     MxArray s(MxArray::Struct());
     if (!p.empty()) {
-        s.set("TypeId",     string(typeid(*p).name()));
+        s.set("TypeId", string(typeid(*p).name()));
         Ptr<GaussianMotionFilter> pp = p.dynamicCast<GaussianMotionFilter>();
         if (!pp.empty()) {
             s.set("Radius", pp->radius());
@@ -243,7 +249,7 @@ MxArray toStruct(Ptr<IMotionStabilizer> p)
 {
     MxArray s(MxArray::Struct());
     if (!p.empty()) {
-        s.set("TypeId",              string(typeid(*p).name()));
+        s.set("TypeId", string(typeid(*p).name()));
         {
             Ptr<LpMotionStabilizer> pp = p.dynamicCast<LpMotionStabilizer>();
             if (!pp.empty()) {
@@ -259,14 +265,15 @@ MxArray toStruct(Ptr<IMotionStabilizer> p)
         {
             Ptr<GaussianMotionFilter> pp = p.dynamicCast<GaussianMotionFilter>();
             if (!pp.empty()) {
-                s.set("Radius",      pp->radius());
-                s.set("Stdev",       pp->stdev());
+                s.set("Radius", pp->radius());
+                s.set("Stdev",  pp->stdev());
             }
         }
         {
-            Ptr<MotionStabilizationPipeline> pp = p.dynamicCast<MotionStabilizationPipeline>();
+            Ptr<MotionStabilizationPipeline> pp =
+                p.dynamicCast<MotionStabilizationPipeline>();
             if (!pp.empty())
-                s.set("Empty",       pp->empty());
+                s.set("Empty", pp->empty());
         }
     }
     return s;
@@ -276,12 +283,13 @@ MxArray toStruct(Ptr<WobbleSuppressorBase> p)
 {
     MxArray s(MxArray::Struct());
     if (!p.empty()) {
-        s.set("TypeId",                   string(typeid(*p).name()));
-        s.set("MotionEstimator",          toStruct(p->motionEstimator())); // Ptr<ImageMotionEstimatorBase>
+        s.set("TypeId",          string(typeid(*p).name()));
+        s.set("MotionEstimator", toStruct(p->motionEstimator())); // Ptr<ImageMotionEstimatorBase>
         // FrameCount, Motions, Motions2, StabilizationMotions: data from stabilizer
-        Ptr<MoreAccurateMotionWobbleSuppressorBase> pp = p.dynamicCast<MoreAccurateMotionWobbleSuppressorBase>();
+        Ptr<MoreAccurateMotionWobbleSuppressorBase> pp =
+            p.dynamicCast<MoreAccurateMotionWobbleSuppressorBase>();
         if (!pp.empty())
-            s.set("Period",               pp->period());
+            s.set("Period", pp->period());
     }
     return s;
 }
@@ -531,7 +539,8 @@ Ptr<TranslationBasedLocalOutlierRejector> createTranslationBasedLocalOutlierReje
 {
     ptrdiff_t len = std::distance(first, last);
     nargchk((len%2)==0);
-    Ptr<TranslationBasedLocalOutlierRejector> p = makePtr<TranslationBasedLocalOutlierRejector>();
+    Ptr<TranslationBasedLocalOutlierRejector> p =
+        makePtr<TranslationBasedLocalOutlierRejector>();
     if (p.empty())
         mexErrMsgIdAndTxt("mexopencv:error",
             "Failed to create TranslationBasedLocalOutlierRejector");
@@ -1011,7 +1020,8 @@ Ptr<MoreAccurateMotionWobbleSuppressor> createMoreAccurateMotionWobbleSuppressor
 {
     ptrdiff_t len = std::distance(first, last);
     nargchk((len%2)==0);
-    Ptr<MoreAccurateMotionWobbleSuppressor> p = makePtr<MoreAccurateMotionWobbleSuppressor>();
+    Ptr<MoreAccurateMotionWobbleSuppressor> p =
+        makePtr<MoreAccurateMotionWobbleSuppressor>();
     if (p.empty())
         mexErrMsgIdAndTxt("mexopencv:error",
             "Failed to create MoreAccurateMotionWobbleSuppressor");
