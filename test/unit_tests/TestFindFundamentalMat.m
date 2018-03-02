@@ -11,7 +11,8 @@ classdef TestFindFundamentalMat
                 for i=1:numel(estMethods)
                     F = cv.findFundamentalMat(p1, p2, 'Method',estMethods{i});
                     [F, mask] = cv.findFundamentalMat(p1, p2, ...
-                        'Method',estMethods{i}, 'Param1',3.0, 'Param2',0.99);
+                        'Method',estMethods{i}, ...
+                        'RansacReprojThreshold',3.0, 'Confidence',0.99);
                     if ~isempty(F)
                         validateattributes(F, {'numeric'}, ...
                             {'real', 'size',[NaN 3]});
