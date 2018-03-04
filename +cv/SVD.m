@@ -36,7 +36,7 @@ classdef SVD < handle
             %     svd = cv.SVD(src, 'OptionName', optionValue, ...)
             %
             % ## Input
-            % * __src__ decomposed matrix.
+            % * __src__ decomposed matrix (floating-point type).
             %
             % ## Options
             % Same option as cv.SVD.compute method.
@@ -71,7 +71,8 @@ classdef SVD < handle
             %     svd.compute(A, 'OptionName', optionValue, ...)
             %
             % ## Input
-            % * __A__ decomposed matrix, `A = u*diag(w)*vt`
+            % * __A__ decomposed matrix (floating-point type),
+            %   `A = u*diag(w)*vt`
             %
             % ## Options
             % * __Flags__ operation flags. default 0
@@ -168,7 +169,8 @@ classdef SVD < handle
             %     [...] = cv.SVD.Compute(..., 'OptionName', optionValue, ...)
             %
             % ## Input
-            % * __A__ Decomposed matrix, A = u*diag(w)*vt
+            % * __A__ Decomposed matrix (floating-point type),
+            %   `A = u*diag(w)*vt`
             %
             % ## Output
             % * __w__ Computed singular values
@@ -238,7 +240,7 @@ classdef SVD < handle
             %     dst = cv.SVD.SolveZ(A)
             %
             % ## Input
-            % * __A__ Left-hand-side matrix.
+            % * __A__ Left-hand-side matrix (floating-point type).
             %
             % ## Output
             % * __dst__ Found solution `x`.
