@@ -13,6 +13,9 @@ classdef TestUtils
         function test_cpu
             s = cv.Utils.checkHardwareSupport();
             validateattributes(s, {'struct'}, {'scalar'});
+
+            name = cv.Utils.getHardwareFeatureName(int32(1));
+            validateattributes(name, {'char'}, {'row', 'nonempty'});
         end
 
         function test_num_cpu

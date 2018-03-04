@@ -18,7 +18,26 @@ classdef Utils
             %   `setUseOptimized=true` is called. This way user can
             %   dynamically switch on and off the optimized code in OpenCV.
             %
+            % See also: cv.Utils.getHardwareFeatureName
+            %
             s = Utils_('checkHardwareSupport');
+        end
+
+        function name = getHardwareFeatureName(feature)
+            %GETHARDWAREFEATURENAME  Returns feature name by ID
+            %
+            %     name = cv.Utils.getHardwareFeatureName(feature)
+            %
+            % ## Input
+            % * __feature__ feature ID (integer).
+            %
+            % ## Output
+            % * __name__ feature name. It returns empty string if feature is
+            %   not defined.
+            %
+            % See also: cv.Utils.checkHardwareSupport
+            %
+            name = Utils_('getHardwareFeatureName', feature);
         end
 
         function info = getBuildInformation()
@@ -520,6 +539,16 @@ classdef Utils
             % See also: cv.Utils.haveOpenCL
             %
             platforms = Utils_('getPlatfomsInfo');
+        end
+
+        function dumpOpenCLInformation()
+            %DUMPOPENCLINFORMATION  Dump OpenCL information
+            %
+            %     cv.Utils.dumpOpenCLInformation()
+            %
+            % See also: cv.Utils.getPlatfomsInfo
+            %
+            Utils_('dumpOpenCLInformation');
         end
     end
 
