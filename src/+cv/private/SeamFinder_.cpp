@@ -7,6 +7,7 @@
  */
 #include "mexopencv.hpp"
 #include "mexopencv_stitching.hpp"
+#include "opencv2/stitching.hpp"
 #include <typeinfo>
 using namespace std;
 using namespace cv;

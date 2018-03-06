@@ -4,14 +4,9 @@
  * @ingroup imgproc
  * @author Kota Yamaguchi
  * @date 2011
- * @details
- *
- * Usage:
- * @code
- *   result = bilateralFilter(img, 'Diameter', 7, ...)
- * @endcode
  */
 #include "mexopencv.hpp"
+#include "opencv2/imgproc.hpp"
 using namespace std;
 using namespace cv;
 
