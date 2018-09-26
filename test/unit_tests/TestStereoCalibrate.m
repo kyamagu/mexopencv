@@ -71,6 +71,9 @@ classdef TestStereoCalibrate
             validateattributes(S.E, {'numeric'}, {'size',[3 3]});
             validateattributes(S.F, {'numeric'}, {'size',[3 3]});
             validateattributes(S.reprojErr, {'numeric'}, {'scalar'});
+
+            S = cv.stereoCalibrate(opts, ipts1, ipts2, imgSize, ...
+                'R',S.R, 'T',S.T, 'UseExtrinsicGuess',true, 'FixIntrinsic',false);
         end
 
         function test_error_argnum
