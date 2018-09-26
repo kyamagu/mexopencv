@@ -32,6 +32,8 @@
 %   * __E__ output 3x3 essential matrix.
 %   * __F__ output 3x3 fundamental matrix.
 %   * __reprojErr__ output final re-projection error (scalar).
+% * __perViewErrors__ Output matrix of the RMS re-projection error estimated
+%   for each pattern view.
 %
 % ## Options
 % * __CameraMatrix1__, __CameraMatrix2__ Initial camera matrices. If any of

@@ -32,7 +32,7 @@ classdef TestStereoCalibrate
             for i=1:N
                 [opts{i}, ipts1{i}, ipts2{i}, imgSize] = getPointsPair(i);
             end
-            S = cv.stereoCalibrate(opts, ipts1, ipts2, imgSize, ...
+            [S, errs] = cv.stereoCalibrate(opts, ipts1, ipts2, imgSize, ...
                 'FixIntrinsic',false);
             validateattributes(S, {'struct'}, {'scalar'});
             assert(all(ismember(TestStereoCalibrate.fields, fieldnames(S))));
@@ -45,6 +45,7 @@ classdef TestStereoCalibrate
             validateattributes(S.E, {'numeric'}, {'size',[3 3]});
             validateattributes(S.F, {'numeric'}, {'size',[3 3]});
             validateattributes(S.reprojErr, {'numeric'}, {'scalar'});
+            validateattributes(errs, {'numeric'}, {'size',[N 2]});
         end
 
         function test_options

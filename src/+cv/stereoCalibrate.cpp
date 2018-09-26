@@ -52,7 +52,7 @@ MxArray toStruct(const Mat& cameraMatrix1, const Mat& distCoeffs1,
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    nargchk(nrhs>=4 && (nrhs%2)==0 && nlhs<=1);
+    nargchk(nrhs>=4 && (nrhs%2)==0 && nlhs<=2);
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);
@@ -126,10 +126,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<vector<Point2f> > imagePoints1(MxArrayToVectorVectorPoint<float>(rhs[1]));
     vector<vector<Point2f> > imagePoints2(MxArrayToVectorVectorPoint<float>(rhs[2]));
     Size imageSize(rhs[3].toSize());
-    Mat R, T, E, F;
+    Mat R, T, E, F, perViewErrors;
     double reprojErr = stereoCalibrate(objectPoints, imagePoints1, imagePoints2,
         cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, imageSize,
-        R, T, E, F, flags, criteria);
+        R, T, E, F, (nlhs>1 ? perViewErrors : noArray()), flags, criteria);
     plhs[0] = toStruct(cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2,
         R, T, E, F, reprojErr);
+    if (nlhs > 1)
+        plhs[1] = MxArray(perViewErrors);
 }
