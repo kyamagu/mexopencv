@@ -336,6 +336,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         plhs[0] = MxArray(blob);
         return;
     }
+    else if (method == "imagesFromBlob") {
+        nargchk(nrhs==3 && nlhs<=1);
+        MatND blob(MxArrayToBlob(rhs[2]));
+        vector<Mat> images;
+        imagesFromBlob(blob, images);
+        plhs[0] = MxArray(images);
+        return;
+    }
     else if (method == "shrinkCaffeModel") {
         nargchk(nrhs>=4 && (nrhs%2)==0 && nlhs==0);
         vector<string> layersTypes;

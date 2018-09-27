@@ -7,6 +7,16 @@ classdef TestNet
     end
 
     methods (Static)
+        function test_blobs
+            imgs = cell(1,4);
+            for i=1:numel(imgs)
+                imgs{i} = rand(50, 50, 3, 'single');
+            end
+            blob = cv.Net.blobFromImages(imgs, 'SwapRB',false, 'Crop',false);
+            out = cv.Net.imagesFromBlob(blob);
+            assert(isequal(out, imgs));
+        end
+
         function test_caffe_googlenet
             % load net and images
             net = load_bvlc_googlenet();
