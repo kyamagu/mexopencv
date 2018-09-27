@@ -151,6 +151,7 @@ function img = cropImage(img, opts)
 end
 
 function out = outputImage(img, blob, opts)
+    % See also: cv.Net.imagesFromBlob
     if opts.Crop
         % center cropped as fed to network
         out = cropImage(img, opts);

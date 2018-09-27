@@ -4,8 +4,8 @@
 %
 % Sources:
 %
-% * <https://docs.opencv.org/3.4.0/d5/d86/tutorial_dnn_javascript.html>
-% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/js_face_recognition.html>
+% * <https://docs.opencv.org/3.4.1/d5/d86/tutorial_dnn_javascript.html>
+% * <https://github.com/opencv/opencv/blob/3.4.1/samples/dnn/js_face_recognition.html>
 %
 %% Face detection
 % Face detection network gets BGR image as input and produces set of bounding
@@ -144,7 +144,7 @@ function [rects, confs] = detectFaces(img, net, blobOpts, thresh)
     dets = net.forward();
 
     % SSD output is 1-by-1-by-ndetections-by-7
-    % d = [img_id, class_id, confidence, left, bottom, right, top]
+    % d = [img_id, class_id, confidence, left, top, right, bottom]
     dets = permute(dets, [3 4 2 1]);
 
     % filter out weak detections
@@ -303,18 +303,33 @@ function [net, blobOpts] = ResNetSSD_FaceDetector()
     % url  = https://github.com/opencv/opencv/raw/3.4.0/samples/dnn/face_detector/deploy.prototxt
     % hash = 006BAF926232DF6F6332DEFB9C24F94BB9F3764E
     %
-    % ## Weights
+    % ## Weights (FP32)
     %
     % file = test/dnn/ResNetSSD_FaceDetector/res10_300x300_ssd_iter_140000.caffemodel
     % url  = https://github.com/opencv/opencv_3rdparty/raw/dnn_samples_face_detector_20170830/res10_300x300_ssd_iter_140000.caffemodel
     % hash = 15aa726b4d46d9f023526d85537db81cbc8dd566
     % size = 10.1 MB
     %
+    % ## Weights (FP16)
+    %
+    % file = test/dnn/ResNetSSD_FaceDetector/res10_300x300_ssd_iter_140000_fp16.caffemodel
+    % url  = https://github.com/opencv/opencv_3rdparty/raw/dnn_samples_face_detector_20180205_fp16/res10_300x300_ssd_iter_140000_fp16.caffemodel
+    % hash = 31fc22bfdd907567a04bb45b7cfad29966caddc1
+    % size = 5.1 MB
+    %
 
     dname = get_dnn_dir('ResNetSSD_FaceDetector');
-    net = cv.Net('Caffe', ...
-        fullfile(dname, 'deploy.prototxt'), ...
-        fullfile(dname, 'res10_300x300_ssd_iter_140000.caffemodel'));
+    if true
+        % fp32
+        net = cv.Net('Caffe', ...
+            fullfile(dname, 'deploy.prototxt'), ...
+            fullfile(dname, 'res10_300x300_ssd_iter_140000.caffemodel'));
+    else
+        % fp16: weights converted to half-precision floats (2x less model size)
+        net = cv.Net('Caffe', ...
+            fullfile(dname, 'deploy.prototxt'), ...
+            fullfile(dname, 'res10_300x300_ssd_iter_140000_fp16.caffemodel'));
+    end
     blobOpts = {'SwapRB',false, 'Crop',false, 'Size',[300 300], 'Mean',[104 117 123]};
 end
 
