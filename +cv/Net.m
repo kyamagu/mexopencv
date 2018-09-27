@@ -605,7 +605,8 @@ classdef Net < handle
             % ## Input
             % * __backend__ computation backend supported by layers, one of:
             %   * __Default__
-            %   * __Halide__
+            %   * __Halide__ Halide language backend.
+            %   * __InferenceEngine__ Intel's Deep Learning Inference Engine.
             %
             % See also: cv.Net.setPreferableTarget, cv.Net.setHalideScheduler
             %

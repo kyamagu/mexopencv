@@ -20,8 +20,9 @@ map<int,Ptr<Net> > obj_;
 
 /// Computation backends for option processing
 const ConstMap<string,int> BackendsMap = ConstMap<string,int>
-    ("Default", cv::dnn::DNN_BACKEND_DEFAULT)
-    ("Halide",  cv::dnn::DNN_BACKEND_HALIDE);
+    ("Default",         cv::dnn::DNN_BACKEND_DEFAULT)
+    ("Halide",          cv::dnn::DNN_BACKEND_HALIDE)
+    ("InferenceEngine", cv::dnn::DNN_BACKEND_INFERENCE_ENGINE);
 
 /// Computation target devices for option processing
 const ConstMap<string,int> TargetsMap = ConstMap<string,int>
