@@ -115,6 +115,7 @@
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.goodFeaturesToTrack.html">cv.goodFeaturesToTrack</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.HoughLines.html">cv.HoughLines</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.HoughLinesP.html">cv.HoughLinesP</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.HoughLinesPointSet.html">cv.HoughLinesPointSet</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.HoughCircles.html">cv.HoughCircles</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.erode.html">cv.erode</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.dilate.html">cv.dilate</tocitem>
@@ -159,6 +160,7 @@
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.distanceTransform.html">cv.distanceTransform</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.floodFill.html">cv.floodFill</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.cvtColor.html">cv.cvtColor</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.cvtColorTwoPlane.html">cv.cvtColorTwoPlane</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.demosaicing.html">cv.demosaicing</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.moments.html">cv.moments</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.HuMoments.html">cv.HuMoments</tocitem>
@@ -198,6 +200,7 @@
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.ellipse2Poly.html">cv.ellipse2Poly</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.putText.html">cv.putText</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.getTextSize.html">cv.getTextSize</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.getFontScaleFromHeight.html">cv.getFontScaleFromHeight</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.LineIterator.html">cv.LineIterator</tocitem>
         </tocitem>
         <tocitem target="matlab/index_cat.html#imgcodecs">imgcodecs: Image File Reading and Writing
@@ -423,6 +426,9 @@
         <tocitem target="matlab/index_cat.html#datasets">datasets: Framework for Working with Different Datasets
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Dataset.html">cv.Dataset</tocitem>
         </tocitem>
+        <tocitem target="matlab/index_cat.html#dnn_objdetect">dnn_objdetect: DNN used for Object Detection
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.InferBbox.html">cv.InferBbox</tocitem>
+        </tocitem>
         <tocitem target="matlab/index_cat.html#dpm">dpm: Deformable Part-based Models
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.DPMDetector.html">cv.DPMDetector</tocitem>
         </tocitem>
@@ -432,6 +438,9 @@
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.BIF.html">cv.BIF</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.Facemark.html">cv.Facemark</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.FacemarkKazemi.html">cv.FacemarkKazemi</tocitem>
+        </tocitem>
+        <tocitem target="matlab/index_cat.html#hfs">hfs: Hierarchical Feature Selection for Efficient Image Segmentation
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.HfsSegment.html">cv.HfsSegment</tocitem>
         </tocitem>
         <tocitem target="matlab/index_cat.html#img_hash">img_hash: Image Hashing Algorithms
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.ImgHash.html">cv.ImgHash</tocitem>
@@ -467,6 +476,9 @@
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.MotionSaliencyBinWangApr2014.html">cv.MotionSaliencyBinWangApr2014</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.ObjectnessBING.html">cv.ObjectnessBING</tocitem>
         </tocitem>
+        <tocitem target="matlab/index_cat.html#text">text: Scene Text Detection and Recognition
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.TextDetectorCNN.html">cv.TextDetectorCNN</tocitem>
+        </tocitem>
         <tocitem target="matlab/index_cat.html#xfeatures2d">xfeatures2d: Extra 2D Features Framework
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SIFT.html">cv.SIFT</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.SURF.html">cv.SURF</tocitem>
@@ -484,6 +496,7 @@
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.HarrisLaplaceFeatureDetector.html">cv.HarrisLaplaceFeatureDetector</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.AffineFeature2D.html">cv.AffineFeature2D</tocitem>
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.FASTForPointSet.html">cv.FASTForPointSet</tocitem>
+          <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.matchGMS.html">cv.matchGMS</tocitem>
         </tocitem>
         <tocitem target="matlab/index_cat.html#ximgproc">ximgproc: Extended Image Processing
           <tocitem image="HelpIcon.FUNCTION" target="matlab/cv.DTFilter.html">cv.DTFilter</tocitem>

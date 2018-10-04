@@ -529,6 +529,11 @@
       <type>M-file</type>
       <source>image_similarity_demo</source>
     </demoitem>
+    <demoitem>
+      <label>Create PNG image with alpha transparency</label>
+      <type>M-file</type>
+      <source>rgba_png_demo</source>
+    </demoitem>
   </demosection>
 
   <!-- videoio -->
