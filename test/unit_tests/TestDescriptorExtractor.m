@@ -33,9 +33,21 @@ classdef TestDescriptorExtractor
                 % KAZE/AKAZE descriptors only work with their own detectors
                 switch TestDescriptorExtractor.extractors{i}
                     case 'KAZE'
-                        kpts = detect(cv.KAZE(), img);
+                        if ~mexopencv.isOctave()
+                            kpts = detect(cv.KAZE(), img);
+                        else
+                            %HACK: https://savannah.gnu.org/bugs/index.php?54800
+                            o = cv.KAZE();
+                            kpts = o.detect(img);
+                        end
                     case 'AKAZE'
-                        kpts = detect(cv.AKAZE(), img);
+                        if ~mexopencv.isOctave()
+                            kpts = detect(cv.AKAZE(), img);
+                        else
+                            %HACK: https://savannah.gnu.org/bugs/index.php?54800
+                            o = cv.AKAZE();
+                            kpts = o.detect(img);
+                        end
                     otherwise
                         kpts = kpts0;
                 end
@@ -72,9 +84,21 @@ classdef TestDescriptorExtractor
                 % KAZE/AKAZE descriptors only work with their own detectors
                 switch TestDescriptorExtractor.extractors{i}
                     case 'KAZE'
-                        kpts = detect(cv.KAZE(), img);
+                        if ~mexopencv.isOctave()
+                            kpts = detect(cv.KAZE(), img);
+                        else
+                            %HACK: https://savannah.gnu.org/bugs/index.php?54800
+                            o = cv.KAZE();
+                            kpts = o.detect(img);
+                        end
                     case 'AKAZE'
-                        kpts = detect(cv.AKAZE(), img);
+                        if ~mexopencv.isOctave()
+                            kpts = detect(cv.AKAZE(), img);
+                        else
+                            %HACK: https://savannah.gnu.org/bugs/index.php?54800
+                            o = cv.AKAZE();
+                            kpts = o.detect(img);
+                        end
                     otherwise
                         kpts = kpts0;
                 end

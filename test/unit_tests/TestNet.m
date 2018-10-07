@@ -65,6 +65,9 @@ classdef TestNet
             model = fullfile(mexopencv.root(), 'test', 'dnn', 'GoogLeNet', ...
                 'bvlc_googlenet.caffemodel');
             model_fp16 = fullfile(tempdir(), 'bvlc_googlenet_fp16.caffemodel');
+            if exist(model, 'file') ~= 2
+                error('mexopencv:testskip', 'missing data');
+            end
 
             cObj = onCleanup(@() delete(model_fp16));
             cv.Net.shrinkCaffeModel(model, model_fp16);

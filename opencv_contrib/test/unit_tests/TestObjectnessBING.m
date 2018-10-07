@@ -26,6 +26,10 @@ end
 
 function deleteDir(fname)
     if isdir(fname)
+        if mexopencv.isOctave()
+            %HACK: dont ask for confirmation
+            confirm_recursive_rmdir(false, 'local');
+        end
         rmdir(fname, 's');
     end
 end
