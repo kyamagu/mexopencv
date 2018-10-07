@@ -33,7 +33,7 @@
 %
 % Equalization implies _mapping_ one distribution (the given histogram) to
 % another distribution (a wider and more uniform distribution of intensity
-% values) so the intensity values are spreaded over the whole range.
+% values) so the intensity values are spread over the whole range.
 % To accomplish the equalization effect, the remapping should be the
 % _cumulative distribution function (cdf)_ (more details, refer to
 % _Learning OpenCV_). For the histogram $H(i)$, its _cumulative distribution_

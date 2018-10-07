@@ -425,7 +425,7 @@ classdef VideoCapture < handle
             % result might happens along this chain.
             % `VideoCapture -> API Backend -> Operating System -> Device Driver -> Device Hardware`
             % The returned value might be different from what really used by
-            % the device or it could be encoded using device dependant rules
+            % the device or it could be encoded using device dependent rules
             % (eg. steps or percentage). Effective behaviour depends from
             % device driver and API Backend.
             %

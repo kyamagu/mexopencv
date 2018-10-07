@@ -17,22 +17,22 @@
 %   (which points were actually used in the best computation of `H`).
 %
 % ## Options
-% * __Method__ Method used to computed a homography matrix. The following
+% * __Method__ Method used to compute a homography matrix. The following
 %   methods are possible:
-%   * __0__ a regular method using all the points. (default)
+%   * __0__ a regular method using all the points, i.e. the least squares
+%     method (default)
 %   * __Ransac__ RANSAC-based robust method.
-%   * __LMedS__ Least-Median robust method.
+%   * __LMedS__ Least-Median of squares robust method.
 %   * __Rho__ PROSAC-based robust method, introduced in [Bazargani15].
 %     (weighted RANSAC modification, faster in the case of many outliers).
 % * __RansacReprojThreshold__ Maximum allowed reprojection error to treat a
 %   point pair as an inlier (used in the RANSAC and RHO methods only). That
 %   is, if
-%   `|| dstPoints_i - convertPointsToHomogeneous(H*srcPoints_i) || > RansacReprojThreshold`
-%   then the point `i` is considered an outlier. If `srcPoints` and `dstPoints`
-%   are measured in pixels, it usually makes sense to set this parameter
-%   somewhere in the range of 1 to 10. default 3.0.
-% * __MaxIters__ The maximum number of RANSAC iterations, 2000 is the maximum
-%   it can be. default 2000
+%   `|| dstPoints_i - convertPointsToHomogeneous(H*srcPoints_i) ||_2 > RansacReprojThreshold`
+%   then the point `i` is considered as an outlier. If `srcPoints` and
+%   `dstPoints` are measured in pixels, it usually makes sense to set this
+%   parameter somewhere in the range of 1 to 10. default 3.0.
+% * __MaxIters__ The maximum number of RANSAC iterations. default 2000
 % * __Confidence__ Confidence level, between 0 and 1. default 0.995
 %
 % The function finds and returns the perspective transformation `H` between
@@ -52,14 +52,14 @@
 % However, if not all of the point pairs `(srcPoints_i, dstPoints_i)` fit the
 % rigid perspective transformation (that is, there are some outliers), this
 % initial estimate will be poor. In this case, you can use one of the three
-% robust methods. The methods RANSAC, LMeDS and RHO try many different
-% random subsets of the corresponding point pairs (of four pairs each),
-% estimate the homography matrix using this subset and a simple
-% least-square algorithm, and then compute the quality/goodness of the
-% computed homography (which is the number of inliers for RANSAC or the
-% median re-projection error for LMeDs). The best subset is then used to
-% produce the initial estimate of the homography matrix and the mask of
-% inliers/outliers.
+% robust methods. The methods RANSAC, LMedS and RHO try many different
+% random subsets of the corresponding point pairs (of four pairs each,
+% collinear pairs are discarded), estimate the homography matrix using this
+% subset and a simple least-squares algorithm, and then compute the
+% quality/goodness of the computed homography (which is the number of inliers
+% for RANSAC or the least median re-projection error for LMedS). The best
+% subset is then used to produce the initial estimate of the homography matrix
+% and the mask of inliers/outliers.
 %
 % Regardless of the method, robust or not, the computed homography matrix
 % is refined further (using inliers only in case of a robust method) with
@@ -67,7 +67,7 @@
 % more.
 %
 % The methods RANSAC and RHO handle practically any ratio of outliers but
-% need a threshold to distinguish inliers from outliers. The method LMeDS
+% need a threshold to distinguish inliers from outliers. The method LMedS
 % does not need any threshold but it works correctly only when there are
 % more than 50% of inliers. Finally, if there are no outliers and the noise
 % is rather small, use the default method (`Method=0`).
@@ -89,8 +89,8 @@
 % > American Statistical Association, 79 (1984): 871-880.
 %
 % [Inui03]:
-% > Inui, K., S. Kaneko, and S. Igarashi. "Robust line fitting using LmedS
-% > clustering", Systems and Computers in Japan 34 (2003): 92-100.
+% > Inui, K., S. Kaneko, and S. Igarashi. "Robust Line Fitting using LMedS
+% > Clustering", Systems and Computers in Japan 34 (2003): 92-100.
 %
 % [Bazargani15]:
 % > Hamid Bazargani, Olexa Bilaniuk, and Robert Laganiere. "A fast and robust

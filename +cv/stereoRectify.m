@@ -74,7 +74,7 @@
 %              0 0 1      0]
 %
 %    where `Tx` is a horizontal shift between the cameras and `cx1=cx2` if
-%    'ZeroDisparity' is set.
+%    `ZeroDisparity` is set.
 %
 % 2. **Vertical stereo**: the first and the second camera views are shifted
 %    relative to each other mainly in vertical direction (and probably a bit
@@ -91,7 +91,7 @@
 %              0 0 1      0]
 %
 %    where `Ty` is a vertical shift between the cameras and `cy1=cy2` if
-%    'ZeroDisparity' is set.
+%    `ZeroDisparity` is set.
 %
 % As you can see, the first three columns of `P1` and `P2` will effectively be
 % the new "rectified" camera matrices. The matrices, together with `R1` and

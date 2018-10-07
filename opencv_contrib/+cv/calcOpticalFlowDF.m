@@ -26,7 +26,7 @@
 %   default 0.95
 % * __FixedPointIterations__ How many iterations on each level of the pyramid.
 %   default 5
-% * __SorIterations__ Iterations of Succesive Over-Relaxation (solver).
+% * __SorIterations__ Iterations of Successive Over-Relaxation (solver).
 %   default 25
 % * __Omega__ Relaxation factor in SOR. default 1.6
 %

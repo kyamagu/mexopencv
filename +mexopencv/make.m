@@ -272,6 +272,14 @@ function mex_flags = mex_options(opts)
         mex_flags = ['-largeArrayDims ' mex_flags];
     end
 
+    % real/imaginary storage format for complex arrays
+    if ~mexopencv.isOctave() && ~verLessThan('matlab', '9.4')
+        % keep using the "separate complex storage", as opposed to the
+        % "interleaved complex storage" introduced in R2018a
+        % (see MX_HAS_INTERLEAVED_COMPLEX)
+        mex_flags = ['-R2017b' mex_flags];
+    end
+
     % verbosity
     if opts.verbose > 1
         % verbose mex output

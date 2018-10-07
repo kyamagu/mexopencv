@@ -17,8 +17,8 @@ classdef LogisticRegression < handle
     % for more details). Logistic  Regression is implemented as a C++ class in
     % cv.LogisticRegression.
     %
-    % In Logistic Regression, we try to optimize the training paramater
-    % `theta` such that the hypothesis `0 <= h_theta(x) <= 1` is acheived. We
+    % In Logistic Regression, we try to optimize the training parameter
+    % `theta` such that the hypothesis `0 <= h_theta(x) <= 1` is achieved. We
     % have `h_theta(x) = g(h_theta(x))` and `g(z)=1/(1+e^(-z))` as the
     % logistic or sigmoid function. The term "Logistic" in Logistic Regression
     % refers to this function. For given data of a binary classification
@@ -49,7 +49,7 @@ classdef LogisticRegression < handle
     %   methods with Batch Gradient Descent or the MiniBatch Gradient Descent.
     %   To specify this, set `TrainMethod` property as either `Batch` or
     %   `MiniBatch`. If training method is set to `MiniBatch`, the size of the
-    %   mini batch has to be to a postive integer set with `MiniBatchSize`
+    %   mini batch has to be to a positive integer set with `MiniBatchSize`
     %   property.
     %
     % ## Example
@@ -510,12 +510,12 @@ classdef LogisticRegression < handle
     %% LogisticRegression
     methods
         function thetas = getLearntThetas(this)
-            %GETLEARNTTHETAS  Returns the trained paramters
+            %GETLEARNTTHETAS  Returns the trained parameters
             %
             %     thetas = model.getLearntThetas()
             %
             % ## Output
-            % * __thetas__ It returns learnt paramters of the Logistic
+            % * __thetas__ It returns learnt parameters of the Logistic
             %   Regression as a matrix of type `single` arranged across rows.
             %   For a two-class classifcation problem, it returns a single row
             %   matrix.

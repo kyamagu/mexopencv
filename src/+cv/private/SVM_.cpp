@@ -7,6 +7,7 @@
  */
 #include "mexopencv.hpp"
 #include "mexopencv_ml.hpp"
+#include "opencv2/ml.hpp"
 using namespace std;
 using namespace cv;
 using namespace cv::ml;
@@ -89,7 +90,7 @@ ParamGrid toParamGrid(const MxArray& m)
         mexErrMsgIdAndTxt("mexopencv:error",
             "Invalid argument to grid parameter");
     // SVM::trainAuto permits setting step<=1 if we want to disable optimizing
-    // a certain paramter, in which case the value is taken from the props.
+    // a certain parameter, in which case the value is taken from the props.
     // Besides the check is done by function itself, so its not needed here.
     /*
     if (!g.check())

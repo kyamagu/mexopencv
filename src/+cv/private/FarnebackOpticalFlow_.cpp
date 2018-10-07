@@ -6,6 +6,7 @@
  * @date 2017
  */
 #include "mexopencv.hpp"
+#include "opencv2/video.hpp"
 using namespace std;
 using namespace cv;
 

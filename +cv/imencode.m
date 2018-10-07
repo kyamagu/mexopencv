@@ -75,7 +75,7 @@
 %   * __RGB__
 %   * __RGBA__
 %
-% For advanced uses, you can directly pass a vector of paramters:
+% For advanced uses, you can directly pass a vector of parameters:
 %
 % * __Params__ Format-specific save parameters encoded as pairs:
 %   `[paramId_1, paramValue_1, paramId_2, paramValue_2, ...]`.

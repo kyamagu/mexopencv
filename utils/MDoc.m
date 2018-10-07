@@ -427,6 +427,8 @@ function generate_all_docs(opts)
             else
                 % non-existant cv function
                 % (doc/help/help2html cannot process hidden and private methods)
+                %TODO: it seems thats no longer the case in recent versions,
+                % we need to filter them in enumerate_mexopencv_members
                 status = 'MISSING';
             end
             if opts.Verbose, fprintf('[%s] %s\n', status, topic); end
@@ -477,7 +479,7 @@ function txt = generate_index(opts, topic)
     txt = char(pre.text());
     t = create_files_table(opts, txt);
 
-    % format it as HTML table
+    % format it as HTML table(s)
     switch topic
         case '-index'
             % one big table
@@ -489,13 +491,13 @@ function txt = generate_index(opts, topic)
             txt = '';
     end
 
-    % insert table
+    % insert table(s)
     div = pre.parent();
     assert(~isempty(div), '<div> not found');
     div.removeClass('helptext').addClass('helpcontent');
     div.html(txt);
 
-    % style table
+    % style table(s)
     tabl = div.select('table');
     assert(~isempty(tabl), '<table> not found');
     tabl.addClass('table');
@@ -813,11 +815,13 @@ function jdoc = parse_help2html(opts, topic)
     inject_css_file(jdoc, 'helpwin_custom.css');
 
     % change title
-    txt = strrep(char(jdoc.title()), 'MATLAB File Help: ', '');
+    txt = char(jdoc.title());
+    txt = strrep(txt, 'MATLAB File Help: ', '');
+    txt = strrep(txt, ' - MATLAB File Help', '');
     jdoc.title([txt ' - mexopencv']);
 
     % add generator meta tag
-    mt = jdoc.head().appendElement('meta');
+    mt = append_element(jdoc.head(), 'meta');
     mt.attr('name', 'generator').attr('content', ['MATLAB ' version()]);
 
     % remove highlighting of function names
@@ -838,7 +842,7 @@ function jdoc = parse_help2html(opts, topic)
 
             % add description meta tag (using H1-line description)
             desc = [topic ' - ' char(p.text())];
-            mt = jdoc.head().appendElement('meta');
+            mt = append_element(jdoc.head(), 'meta');
             mt.attr('name', 'description').attr('content', desc);
         end
     end
@@ -1089,6 +1093,7 @@ function names = enumerate_mexopencv_members(opts)
     end
 
     %NOTE: we're taking all methods/props/events, including hidden and private
+    %TODO: filter out hidden and private members
 
     mt = meta.package.fromName('cv');
 
@@ -1198,7 +1203,7 @@ end
 function inject_css_file(jdoc, url)
     %INJECT_CSS_FILE  Inject CSS stylesheet
 
-    link = jdoc.head().appendElement('link');
+    link = append_element(jdoc.head(), 'link');
     link.attr('rel', 'stylesheet');
     link.attr('type', 'text/css');
     link.attr('href', url);
@@ -1207,7 +1212,7 @@ end
 function inject_css(jdoc, txt)
     %INJECT_CSS  Inject CSS code
 
-    style = jdoc.head().appendElement('style');
+    style = append_element(jdoc.head(), 'style');
     style.attr('type', 'text/css');
     append_data_node(style, txt);
 end
@@ -1215,7 +1220,7 @@ end
 function inject_js_file(jdoc, url)
     %INJECT_JS_FILE  Inject JavaScript file
 
-    script = jdoc.body().appendElement('script');
+    script = append_element(jdoc.body(), 'script');
     script.attr('type', 'text/javascript');
     script.attr('src', url);
 end
@@ -1223,7 +1228,7 @@ end
 function inject_js(jdoc, txt)
     %INJECT_JS  Inject JavaScript code
 
-    script = jdoc.body().appendElement('script');
+    script = append_element(jdoc.body(), 'script');
     script.attr('type', 'text/javascript');
     append_data_node(script, txt);
 end
@@ -1235,6 +1240,21 @@ function append_data_node(node, txt)
     if ~isempty(node)
         node.appendChild(...
             javaObject('org.jsoup.nodes.DataNode', txt, node.baseUri()));
+    end
+end
+
+function el = append_element(node, tagName)
+    %APPEND_ELEMENT  Create new element by tag name and append it to node
+
+    % create by tag name, append to node, and return newly created element
+    assert(~isempty(node), 'empty node');
+    el = node.appendElement(tagName);
+
+    %HACK: insert a newline to avoid long lines (assuming prettyPrint=false)
+    if true
+        el.after(sprintf('\n'));
+    else
+        node.append(sprintf('\n'));
     end
 end
 

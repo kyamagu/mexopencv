@@ -600,7 +600,7 @@ classdef RTrees < handle
             %     votes = model.getVotes(..., 'OptionName',optionValue, ...)
             %
             % ## Input
-            % * __samples__ matrix containg the samples for which votes will
+            % * __samples__ matrix containing the samples for which votes will
             %   be calculated.
             %
             % ## Output

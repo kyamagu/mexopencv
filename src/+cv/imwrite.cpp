@@ -6,6 +6,7 @@
  * @date 2012
  */
 #include "mexopencv.hpp"
+#include "opencv2/imgcodecs.hpp"
 using namespace std;
 using namespace cv;
 
@@ -123,14 +124,36 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Process
     string filename(rhs[0].toString());
-    Mat img(rhs[1].toMat(rhs[1].isFloat() ? CV_32F :
-        (rhs[1].isUint16() ? CV_16U : CV_8U)));
-    if (flip && (img.channels() == 3 || img.channels() == 4)) {
-        // OpenCV's default is BGR/BGRA while MATLAB's is RGB/RGBA
-        cvtColor(img, img, (img.channels()==3 ?
-            cv::COLOR_RGB2BGR : cv::COLOR_RGBA2BGRA));
+    bool success;
+    if (rhs[1].isNumeric()) {
+        Mat img(rhs[1].toMat(rhs[1].isFloat() ? CV_32F :
+            (rhs[1].isUint16() ? CV_16U : CV_8U)));
+        if (flip && (img.channels() == 3 || img.channels() == 4)) {
+            // OpenCV's default is BGR/BGRA while MATLAB's is RGB/RGBA
+            cvtColor(img, img, (img.channels()==3 ?
+                cv::COLOR_RGB2BGR : cv::COLOR_RGBA2BGRA));
+        }
+        success = imwrite(filename, img, params);
     }
-    bool success = imwrite(filename, img, params);
+    else if (rhs[1].isCell()) {
+        //vector<Mat> img_vec(rhs[1].toVector<Mat>());
+        vector<MxArray> vec(rhs[1].toVector<MxArray>());
+        vector<Mat> img_vec;
+        img_vec.reserve(vec.size());
+        for (vector<MxArray>::const_iterator it = vec.begin(); it != vec.end(); ++it) {
+            Mat img(it->toMat(it->isFloat() ? CV_32F :
+                (it->isUint16() ? CV_16U : CV_8U)));
+            if (flip && (img.channels() == 3 || img.channels() == 4)) {
+                // OpenCV's default is BGR/BGRA while MATLAB's is RGB/RGBA
+                cvtColor(img, img, (img.channels()==3 ?
+                    cv::COLOR_RGB2BGR : cv::COLOR_RGBA2BGRA));
+            }
+            img_vec.push_back(img);
+        }
+        success = imwrite(filename, img_vec, params);
+    }
+    else
+        mexErrMsgIdAndTxt("mexopencv:error", "Invalid image argument");
     if (nlhs > 0)
         plhs[0] = MxArray(success);
     else if (!success)

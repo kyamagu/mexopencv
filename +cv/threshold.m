@@ -13,7 +13,8 @@
 %
 % ## Output
 % * __dst__ Output array of the same size and type as `src`.
-% * __thresh__ Threshold value used.
+% * __thresh__ the computed threshold value if Otsu's or Triangle methods are
+%   used.
 %
 % ## Options
 % * __MaxValue__ Maximum value to use with the 'Binary' and 'BinaryInv'
@@ -33,9 +34,10 @@
 % They are determined by `Type` parameter.
 %
 % When `thresh` is set 'Otsu' or 'Triangle', the function determines the
-% optimal threshold value using the Otsu's or Triangle algorithm. The function
-% returns the computed threshold value. Currently, the Otsu's and Triangle
-% methods are implemented only for 8-bit single-channel images.
+% optimal threshold value using the Otsu's or Triangle algorithm.
+%
+% Note: Currently, the Otsu's and Triangle methods are implemented only for
+% 8-bit single-channel images.
 %
 % See also: cv.adaptiveThreshold, cv.findContours, cv.compare,
 %  im2bw, graythresh, multithresh, imbinarize, otsuthresh, grayslice

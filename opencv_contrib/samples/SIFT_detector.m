@@ -78,7 +78,7 @@
 %
 % DoG has higher response for edges, so edges also need to be removed. For
 % this, a concept similar to Harris corner detector is used. They used a 2x2
-% Hessian matrix (H) to compute the pricipal curvature. We know from Harris
+% Hessian matrix (H) to compute the principal curvature. We know from Harris
 % corner detector that for edges, one eigen value is larger than the other. So
 % here they used a simple function.
 %
@@ -91,7 +91,7 @@
 %% 3. Orientation Assignment
 %
 % Now an orientation is assigned to each keypoint to achieve invariance to
-% image rotation. A neigbourhood is taken around the keypoint location
+% image rotation. A neighbourhood is taken around the keypoint location
 % depending on the scale, and the gradient magnitude and direction is
 % calculated in that region. An orientation histogram with 36 bins covering
 % 360 degrees is created. (It is weighted by gradient magnitude and
@@ -104,7 +104,7 @@
 %% 4. Keypoint Descriptor
 %
 % Now keypoint descriptor is created. A 16x16 neighbourhood around the
-% keypoint is taken. It is devided into 16 sub-blocks of 4x4 size. For each
+% keypoint is taken. It is divided into 16 sub-blocks of 4x4 size. For each
 % sub-block, 8 bin orientation histogram is created. So a total of 128 bin
 % values are available. It is represented as a vector to form keypoint
 % descriptor. In addition to this, several measures are taken to achieve

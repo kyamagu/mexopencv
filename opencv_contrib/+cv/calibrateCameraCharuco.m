@@ -1,4 +1,4 @@
-%CALIBRATECAMERACHARUCO  Calibrate a camera using Charuco corners
+%CALIBRATECAMERACHARUCO  Calibrate a camera using ChArUco corners
 %
 %     [cameraMatrix, distCoeffs, reprojErr] = cv.calibrateCameraCharuco(charucoCorners, charucoIds, board, imageSize)
 %     [cameraMatrix, distCoeffs, reprojErr, rvecs, tvecs, stdDevsIntrinsics, stdDevsExtrinsics, perViewErrors] = cv.calibrateCameraCharuco(...)
@@ -50,7 +50,7 @@
 % * __Criteria__ Termination criteria for the iterative optimization algorithm.
 %   default `struct('type','Count+EPS', 'maxCount',30, 'epsilon',eps)`
 %
-% This function calibrates a camera using a set of corners of a Charuco Board.
+% This function calibrates a camera using a set of corners of a ChArUco Board.
 % The function receives a list of detected corners and its identifiers from
 % several views of the Board.
 %

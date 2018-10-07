@@ -105,6 +105,21 @@
     </demoitem>
   </demosection>
 
+  <!-- dnn_objdetect -->
+  <demosection>
+    <label>dnn_objdetect: DNN used for Object Detection</label>
+    <demoitem>
+      <label>DNN for image classification</label>
+      <type>M-file</type>
+      <source>dnn_img_classify_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Object Detection using Convolutional Neural Networks</label>
+      <type>M-file</type>
+      <source>dnn_objdetect_demo</source>
+    </demoitem>
+  </demosection>
+
   <!-- dpm -->
   <demosection>
     <label>dpm: Deformable Part-based Models</label>
@@ -167,6 +182,18 @@
       <type>M-file</type>
       <source>face_swapping_demo</source>
       <!-- kids.tif -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+  </demosection>
+
+  <!-- hfs -->
+  <demosection>
+    <label>hfs: Hierarchical Feature Selection for Efficient Image Segmentation</label>
+    <demoitem>
+      <label>Image Segmentation using Hierachical Feature Selection (HFS)</label>
+      <type>M-file</type>
+      <source>hfs_segment_demo</source>
+      <!-- label2rgb -->
       <dependency>Image Processing Toolbox</dependency>
     </demoitem>
   </demosection>
@@ -235,6 +262,21 @@
     </demoitem>
   </demosection>
 
+  <!-- text -->
+  <demosection>
+    <label>text: Scene Text Detection and Recognition</label>
+    <demoitem>
+      <label>Scene Text Detection using CNN</label>
+      <type>M-file</type>
+      <source>textboxes_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Scene Text Detection using CNN</label>
+      <type>M-file</type>
+      <source>textboxes_dnn_demo</source>
+    </demoitem>
+  </demosection>
+
   <!-- xfeatures2d -->
   <demosection>
     <label>xfeatures2d: Extra 2D Features Framework</label>
@@ -257,6 +299,16 @@
       <label>Feature Matching</label>
       <type>M-file</type>
       <source>SURF_descriptor</source>
+    </demoitem>
+    <demoitem>
+      <label>GMS matching strategy (image)</label>
+      <type>M-file</type>
+      <source>gms_matcher_img_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>GMS matching strategy (video)</label>
+      <type>M-file</type>
+      <source>gms_matcher_vid_demo</source>
     </demoitem>
   </demosection>
 

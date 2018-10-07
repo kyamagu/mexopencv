@@ -19,11 +19,11 @@ disp('Face detection demo. Press any key when done.');
 %%
 % Set up display window, and start the main loop
 
-window = figure('KeyPressFcn',@(o,e) setappdata(o,'flag',true));
-setappdata(window, 'flag',false);
+hFig = figure('KeyPressFcn',@(o,e) setappdata(o,'flag',true));
+setappdata(hFig, 'flag',false);
 
 % Start main loop
-while ishghandle(window)
+while ishghandle(hFig)
     % Grab and preprocess an image
     im = camera.read();
     if isempty(im), break; end
@@ -42,7 +42,7 @@ while ishghandle(window)
     end
 
     % Terminate if any user input
-    flag = getappdata(window, 'flag');
+    flag = getappdata(hFig, 'flag');
     if isempty(flag) || flag, break; end
     pause(0.1);
 end

@@ -3,7 +3,7 @@ classdef SuperResolution < handle
     %
     % The Super Resolution module contains a set of functions and classes that
     % can be used to solve the problem of resolution enhancement. There are a
-    % few methods implemented, most of them are descibed in the papers
+    % few methods implemented, most of them are described in the papers
     % [Farsiu03] and [Mitzel09].
     %
     % ## Example

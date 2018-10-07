@@ -217,7 +217,7 @@ class MxArray
      * @return MxArray object, a numeric or a cell array.
      *
      * The constructor forwards the call to an appropriate overloaded method
-     * according to the paramter type (tag dispatching by instance).
+     * according to the parameter type (tag dispatching by instance).
      * In the general case, vectors of primitive types are converted to
      * numeric arrays of the equivalent MATLAB type, while other types are
      * converted to cell arrays.

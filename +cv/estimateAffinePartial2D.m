@@ -19,11 +19,10 @@
 % * __Method__ Robust method used to compute transformation. RANSAC is the
 %   default method. The following methods are possible:
 %   * __Ransac__ RANSAC-based robust method.
-%   * __LMedS__ Least-Median robust method
+%   * __LMedS__ Least-Median of squares robust method
 % * __RansacThreshold__ Maximum reprojection error in the RANSAC algorithm to
 %   consider a point as an inlier. Applies only to RANSAC. default 3.0.
-% * __MaxIters__ The maximum number of robust method iterations, 2000
-%   (default) is the maximum it can be.
+% * __MaxIters__ The maximum number of robust method iterations. default 2000
 % * __Confidence__ Confidence level, between 0 and 1, for the estimated
 %   transformation. Anything between 0.95 and 0.99 is usually good enough.
 %   Values too close to 1 can slow down the estimation significantly. Values
@@ -50,7 +49,7 @@
 % translations in `x, y` axes respectively.
 %
 % Note: The RANSAC method can handle practically any ratio of outliers but
-% need a threshold to distinguish inliers from outliers. The method LMeDS does
+% need a threshold to distinguish inliers from outliers. The method LMedS does
 % not need any threshold but it works correctly only when there are more than
 % 50% of inliers.
 %

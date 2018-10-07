@@ -1,7 +1,7 @@
 %% DNN Object Detection
 %
 % This sample uses DNN to detect objects on image (produces bounding boxes and
-% corresponding labels), using different methods:
+% corresponding labels), using different CNN topologies:
 %
 % * <https://arxiv.org/abs/1311.2524 R-CNN>
 % * <https://arxiv.org/abs/1504.08083 Fast R-CNN>
@@ -13,13 +13,13 @@
 %
 % Sources:
 %
-% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/ssd_object_detection.cpp>
-% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/ssd_mobilenet_object_detection.cpp>
-% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/mobilenet_ssd_python.py>
-% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/mobilenet_ssd_accuracy.py>
-% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/yolo_object_detection.cpp>
-% * <https://docs.opencv.org/3.4.0/da/d9d/tutorial_dnn_yolo.html>
-% * <https://github.com/opencv/opencv/blob/3.4.0/samples/dnn/faster_rcnn.cpp>
+% * <https://github.com/opencv/opencv/blob/3.4.1/samples/dnn/ssd_object_detection.cpp>
+% * <https://github.com/opencv/opencv/blob/3.4.1/samples/dnn/ssd_mobilenet_object_detection.cpp>
+% * <https://github.com/opencv/opencv/blob/3.4.1/samples/dnn/mobilenet_ssd_python.py>
+% * <https://github.com/opencv/opencv/blob/3.4.1/samples/dnn/mobilenet_ssd_accuracy.py>
+% * <https://github.com/opencv/opencv/blob/3.4.1/samples/dnn/yolo_object_detection.cpp>
+% * <https://docs.opencv.org/3.4.1/da/d9d/tutorial_dnn_yolo.html>
+% * <https://github.com/opencv/opencv/blob/3.4.1/samples/dnn/faster_rcnn.cpp>
 %
 
 function dnn_object_detection_demo(im, name, crop, min_conf)
@@ -70,7 +70,7 @@ function dnn_object_detection_demo(im, name, crop, min_conf)
     blobOpts = ['Crop',crop, blobOpts];
     opts = parseBlobOpts(blobOpts{:});
     blob = cv.Net.blobFromImages(img, blobOpts{:});
-    net.setInput(blob);  % net.setInput(blob, 'data');
+    net.setInput(blob);
     isz = [opts.Size(1), opts.Size(2)];
 
     % run forward pass
@@ -209,6 +209,7 @@ function img = cropImage(img, opts)
 end
 
 function out = outputImage(img, blob, opts)
+    % See also: cv.Net.imagesFromBlob
     if opts.Crop
         % center cropped as fed to network
         out = cropImage(img, opts);
@@ -293,7 +294,7 @@ function S = processOutput(output, name, isz, osz, thresh)
         idx = max(output(:,6:end), [], 2) > thresh;
     else
         % SSD/region-proposal output is 1-by-1-by-ndetections-by-7
-        % (img_id, class_id, confidence, left, bottom, right, top)
+        % (img_id, class_id, confidence, left=xmin, top=ymin, right=xmax, bottom=ymax)
         output = permute(output, [3 4 2 1]);
 
         % unify cases by always having coordinates relative to image size
@@ -456,20 +457,20 @@ function [net, labels, blobOpts] = MobileNetSSD(imageset)
     %
     % ## Model
     %
-    % file = test/dnn/MobileNetSSD/MobileNetSSD_deploy.prototxt
+    % file = test/dnn/MobileNetSSD/VOC/MobileNetSSD_deploy.prototxt
     % url  = https://github.com/chuanqi305/MobileNet-SSD/raw/master/MobileNetSSD_deploy.prototxt
     % hash = d77c9cf09619470d49b82a9dd18704813a2043cd
     %
     % ## Weights
     %
-    % file = test/dnn/MobileNetSSD/MobileNetSSD_deploy.caffemodel
+    % file = test/dnn/MobileNetSSD/VOC/MobileNetSSD_deploy.caffemodel
     % url  = https://drive.google.com/open?id=0B3gersZ2cHIxRm5PMWRoTkdHdHc
     % hash = 994d30a8afaa9e754d17d2373b2d62a7dfbaaf7a
     % size = 22.0 MB
     %
     % ## Classes
     %
-    % file = test/dnn/MobileNetSSD/pascal-classes.txt
+    % file = test/dnn/MobileNetSSD/VOC/pascal-classes.txt
     % url  = https://github.com/opencv/opencv/raw/3.3.1/samples/data/dnn/pascal-classes.txt
     %
     % # MobileNet-SSD, trained on COCO dataset [TensorFlow]
@@ -478,20 +479,20 @@ function [net, labels, blobOpts] = MobileNetSSD(imageset)
     %
     % ## Model
     %
-    % file = test/dnn/MobileNetSSD_COCO/ssd_mobilenet_v1_coco.pbtxt
+    % file = test/dnn/MobileNetSSD/COCO/ssd_mobilenet_v1_coco.pbtxt
     % url  = https://github.com/opencv/opencv_extra/raw/3.3.1/testdata/dnn/ssd_mobilenet_v1_coco.pbtxt
     % hash = f58916645baac2511f521332fbd574a71b8f80bf
     %
     % ## Weights
     %
-    % file = test/dnn/MobileNetSSD_COCO/frozen_inference_graph.pb
+    % file = test/dnn/MobileNetSSD/COCO/frozen_inference_graph.pb
     % url  = http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_11_06_2017.tar.gz
     % hash = a88a18cca9fe4f9e496d73b8548bfd157ad286e2
     % size = 122 MB
     %
     % ## Classes
     %
-    % file = test/dnn/MobileNetSSD_COCO/mscoco_label_map.pbtxt
+    % file = test/dnn/MobileNetSSD/COCO/mscoco_label_map.pbtxt
     % url  = https://github.com/tensorflow/models/blob/master/research/object_detection/data/mscoco_label_map.pbtxt
     %
 

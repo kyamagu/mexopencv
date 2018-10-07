@@ -18,16 +18,18 @@ MxArray toStruct(Ptr<HistogramCostExtractor> p)
 {
     MxArray s(MxArray::Struct());
     if (!p.empty()) {
-        s.set("TypeId",           string(typeid(*p).name()));
-        s.set("NDummies",         p->getNDummies());
-        s.set("DefaultCost",      p->getDefaultCost());
+        s.set("TypeId",      string(typeid(*p).name()));
+        s.set("NDummies",    p->getNDummies());
+        s.set("DefaultCost", p->getDefaultCost());
         {
-            Ptr<NormHistogramCostExtractor> pp = p.dynamicCast<NormHistogramCostExtractor>();
+            Ptr<NormHistogramCostExtractor> pp =
+                p.dynamicCast<NormHistogramCostExtractor>();
             if (!pp.empty())
                 s.set("NormFlag", DistTypeInv[pp->getNormFlag()]);
         }
         {
-            Ptr<EMDHistogramCostExtractor> pp = p.dynamicCast<EMDHistogramCostExtractor>();
+            Ptr<EMDHistogramCostExtractor> pp =
+                p.dynamicCast<EMDHistogramCostExtractor>();
             if (!pp.empty())
                 s.set("NormFlag", DistTypeInv[pp->getNormFlag()]);
         }
@@ -39,16 +41,17 @@ MxArray toStruct(Ptr<ShapeTransformer> p)
 {
     MxArray s(MxArray::Struct());
     if (!p.empty()) {
-        s.set("TypeId",                          string(typeid(*p).name()));
+        s.set("TypeId", string(typeid(*p).name()));
         {
-            Ptr<ThinPlateSplineShapeTransformer> pp = p.dynamicCast<ThinPlateSplineShapeTransformer>();
+            Ptr<ThinPlateSplineShapeTransformer> pp =
+                p.dynamicCast<ThinPlateSplineShapeTransformer>();
             if (!pp.empty())
                 s.set("RegularizationParameter", pp->getRegularizationParameter());
         }
         {
             Ptr<AffineTransformer> pp = p.dynamicCast<AffineTransformer>();
             if (!pp.empty())
-                s.set("FullAffine",              pp->getFullAffine());
+                s.set("FullAffine", pp->getFullAffine());
         }
     }
     return s;

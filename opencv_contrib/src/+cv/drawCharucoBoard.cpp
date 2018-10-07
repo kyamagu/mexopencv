@@ -7,6 +7,7 @@
  */
 #include "mexopencv.hpp"
 #include "mexopencv_aruco.hpp"
+#include "opencv2/aruco.hpp"
 using namespace std;
 using namespace cv;
 using namespace cv::aruco;

@@ -6,6 +6,7 @@
  * @date 2011
  */
 #include "mexopencv.hpp"
+#include "opencv2/calib3d.hpp"
 using namespace std;
 using namespace cv;
 
@@ -35,16 +36,16 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // Option processing
     int method = cv::FM_RANSAC;
-    double param1 = 3.0;
-    double param2 = 0.99;
+    double ransacReprojThreshold = 3.0;
+    double confidence = 0.99;
     for (int i=2; i<nrhs; i+=2) {
         string key(rhs[i].toString());
         if (key == "Method")
             method = FMMethod[rhs[i+1].toString()];
-        else if (key == "Param1")
-            param1 = rhs[i+1].toDouble();
-        else if (key == "Param2")
-            param2 = rhs[i+1].toDouble();
+        else if (key == "RansacReprojThreshold")
+            ransacReprojThreshold = rhs[i+1].toDouble();
+        else if (key == "Confidence")
+            confidence = rhs[i+1].toDouble();
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized option %s", key.c_str());
@@ -55,13 +56,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     if (rhs[0].isNumeric() && rhs[1].isNumeric()) {
         Mat points1(rhs[0].toMat(CV_32F)),
             points2(rhs[1].toMat(CV_32F));
-        F = findFundamentalMat(points1, points2, method, param1, param2,
+        F = findFundamentalMat(points1, points2, method,
+            ransacReprojThreshold, confidence,
             (nlhs>1 ? mask : noArray()));
     }
     else if (rhs[0].isCell() && rhs[1].isCell()) {
         vector<Point2f> points1(rhs[0].toVector<Point2f>()),
                         points2(rhs[1].toVector<Point2f>());
-        F = findFundamentalMat(points1, points2, method, param1, param2,
+        F = findFundamentalMat(points1, points2, method,
+            ransacReprojThreshold, confidence,
             (nlhs>1 ? mask : noArray()));
     }
     else

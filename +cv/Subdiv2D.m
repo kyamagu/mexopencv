@@ -1,5 +1,5 @@
 classdef Subdiv2D < handle
-    %SUBDIV2D  Delaunay triangulation and Voronoi tesselation
+    %SUBDIV2D  Delaunay triangulation and Voronoi tessellation
     %
     % ## Planar Subdivision
     %

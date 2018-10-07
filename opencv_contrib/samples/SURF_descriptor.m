@@ -39,7 +39,7 @@
 % it is true, Matcher returns only those matches with value (i,j) such that
 % i-th descriptor in set A has j-th descriptor in set B as the best match and
 % vice-versa. That is, the two features in both sets should match each other.
-% It provides consistant result, and is a good alternative to ratio test
+% It provides consistent result, and is a good alternative to ratio test
 % proposed by D.Lowe in SIFT paper.
 %
 % Once it is created, two important methods are |cv.DescriptorMatcher.match|

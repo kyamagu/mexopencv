@@ -57,7 +57,7 @@
 % where $\beta$ is known as the _weight vector_ and $\beta_{0}$ as the _bias_.
 %
 % For a more in-depth description of this and hyperplanes you can find in the
-% section 4.5 (_Seperating Hyperplanes_) of the book:
+% section 4.5 (_Separating Hyperplanes_) of the book:
 %
 % * "Elements of Statistical Learning" by T. Hastie, R. Tibshirani and
 %   J. H. Friedman.

@@ -6,7 +6,7 @@
  * @date 2015
  */
 #include "mexopencv.hpp"
-#include "opencv2/objdetect/detection_based_tracker.hpp"
+#include "opencv2/objdetect.hpp"
 using namespace std;
 using namespace cv;
 

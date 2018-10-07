@@ -8,6 +8,7 @@ classdef TestBoostDesc
     methods (Static)
         function test_compute_img
             obj = cv.BoostDesc('Desc','BinBoost256', 'ScaleFactor',5.0);
+            assert(obj.ScaleFactor == 5.0);
             typename = obj.typeid();
             ntype = obj.defaultNorm();
 

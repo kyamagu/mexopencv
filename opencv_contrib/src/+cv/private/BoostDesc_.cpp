@@ -137,6 +137,28 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         else
             mexErrMsgIdAndTxt("mexopencv:error", "Invalid arguments");
     }
+    else if (method == "get") {
+        nargchk(nrhs==3 && nlhs<=1);
+        string prop(rhs[2].toString());
+        if (prop == "UseScaleOrientation")
+            plhs[0] = MxArray(obj->getUseScaleOrientation());
+        else if (prop == "ScaleFactor")
+            plhs[0] = MxArray(obj->getScaleFactor());
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
+    }
+    else if (method == "set") {
+        nargchk(nrhs==4 && nlhs==0);
+        string prop(rhs[2].toString());
+        if (prop == "UseScaleOrientation")
+            obj->setUseScaleOrientation(rhs[3].toBool());
+        else if (prop == "ScaleFactor")
+            obj->setScaleFactor(rhs[3].toFloat());
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized property %s", prop.c_str());
+    }
     //else if (method == "detect")
     //else if (method == "detectAndCompute")
     else

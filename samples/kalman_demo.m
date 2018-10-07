@@ -36,7 +36,7 @@ drawCross = @(img,center,clr,d) cv.line(...
         'Thickness',1, 'LineType','AA');
 
 %%
-% create and intialize Kalman filter
+% create and initialize Kalman filter
 KF = cv.KalmanFilter(2, 1);
 state = zeros(2,1);  % [phi; delta_phi]
 processNoise = zeros(2,1);

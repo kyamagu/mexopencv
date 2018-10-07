@@ -358,12 +358,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // Operation switch
     if (method == "checkHardwareSupport") {
         nargchk(nrhs==1 && nlhs<=1);
-        const char *fields[23] = {"MMX", "SSE", "SSE2", "SSE3", "SSSE3",
+        const char *fields[24] = {"MMX", "SSE", "SSE2", "SSE3", "SSSE3",
             "SSE4_1", "SSE4_2", "POPCNT", "FP16", "AVX", "AVX2", "FMA3",
             "AVX_512F", "AVX_512BW", "AVX_512CD", "AVX_512DQ", "AVX_512ER",
-            "AVX_512IFMA512", "AVX_512PF", "AVX_512VBMI", "AVX_512VL", "NEON",
-            "VSX"};
-        MxArray s = MxArray::Struct(fields, 23);
+            "AVX_512IFMA", "AVX_512PF", "AVX_512VBMI", "AVX_512VL", "NEON",
+            "VSX", "AVX512_SKX"};
+        MxArray s = MxArray::Struct(fields, 24);
         s.set(fields[0],  checkHardwareSupport(CV_CPU_MMX));
         s.set(fields[1],  checkHardwareSupport(CV_CPU_SSE));
         s.set(fields[2],  checkHardwareSupport(CV_CPU_SSE2));
@@ -381,13 +381,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         s.set(fields[14], checkHardwareSupport(CV_CPU_AVX_512CD));
         s.set(fields[15], checkHardwareSupport(CV_CPU_AVX_512DQ));
         s.set(fields[16], checkHardwareSupport(CV_CPU_AVX_512ER));
-        s.set(fields[17], checkHardwareSupport(CV_CPU_AVX_512IFMA512));
+        s.set(fields[17], checkHardwareSupport(CV_CPU_AVX_512IFMA));
         s.set(fields[18], checkHardwareSupport(CV_CPU_AVX_512PF));
         s.set(fields[19], checkHardwareSupport(CV_CPU_AVX_512VBMI));
         s.set(fields[20], checkHardwareSupport(CV_CPU_AVX_512VL));
         s.set(fields[21], checkHardwareSupport(CV_CPU_NEON));
         s.set(fields[22], checkHardwareSupport(CV_CPU_VSX));
+        s.set(fields[23], checkHardwareSupport(CV_CPU_AVX512_SKX));
         plhs[0] = s;
+    }
+    else if (method == "getHardwareFeatureName") {
+        nargchk(nrhs==2 && nlhs<=1);
+        int feature = rhs[1].toInt();
+        string name = getHardwareFeatureName(feature);
+        plhs[0] = MxArray(name);
     }
     else if (method == "getBuildInformation") {
         nargchk(nrhs==1 && nlhs<=1);
@@ -479,6 +486,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         ocl::getPlatfomsInfo(vpi);
         plhs[0] = toStruct(vpi);
     }
+#if 0
+    else if (method == "dumpOpenCLInformation") {
+        nargchk(nrhs==1 && nlhs==0);
+        dumpOpenCLInformation();
+    }
+#endif
     else if (method == "getCudaEnabledDeviceCount") {
         nargchk(nrhs==1 && nlhs<=1);
         plhs[0] = MxArray(cuda::getCudaEnabledDeviceCount());

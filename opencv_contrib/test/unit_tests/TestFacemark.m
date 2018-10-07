@@ -18,6 +18,7 @@ classdef TestFacemark
 
         function test_haar_detect
             img = cv.imread(fullfile(TestFacemark.root,'david1.jpg'));
+            download_classifier_xml(TestFacemark.fCascade);
             [faces, b] = cv.Facemark.getFacesHAAR(img, TestFacemark.fCascade);
             validateattributes(faces, {'cell'}, {'vector'});
             cellfun(@(f) validateattributes(f, {'numeric'}, ...
@@ -27,6 +28,7 @@ classdef TestFacemark
 
         function test_default_detector
             img = cv.imread(fullfile(TestFacemark.root,'david1.jpg'));
+            download_classifier_xml(TestFacemark.fCascade);
             obj = cv.Facemark('LBF', 'CascadeFace',TestFacemark.fCascade);
             [faces, b] = obj.getFaces(img);
             validateattributes(faces, {'cell'}, {'vector'});
@@ -68,6 +70,7 @@ classdef TestFacemark
             opts = {'Verbose',false, ...
                 'ModelFilename',modelFilename, 'SaveModel',true};
             if true
+                download_classifier_xml(TestFacemark.fCascade);
                 obj = cv.Facemark('LBF', ...
                     'CascadeFace',TestFacemark.fCascade, opts{:});
             else
@@ -93,6 +96,7 @@ classdef TestFacemark
         end
 
         function test_detect
+            download_classifier_xml(TestFacemark.fCascade);
             obj = cv.Facemark('LBF', 'CascadeFace',TestFacemark.fCascade);
             obj.loadModel(get_model_file());
 
@@ -179,6 +183,24 @@ function modelFile = get_model_file()
         % download model from GitHub (~ 54MB)
         url = 'https://github.com/kurnianggoro/GSOC2017/raw/master/data/lbfmodel.yaml';
         urlwrite(url, modelFile);
+    end
+end
+
+function download_classifier_xml(fname)
+    if exist(fname, 'file') ~= 2
+        % attempt to download trained Haar/LBP/HOG classifier from Github
+        url = 'https://cdn.rawgit.com/opencv/opencv/3.4.0/data/';
+        [~, f, ext] = fileparts(fname);
+        if strncmpi(f, 'haarcascade_', length('haarcascade_'))
+            url = [url, 'haarcascades/'];
+        elseif strncmpi(f, 'lbpcascade_', length('lbpcascade_'))
+            url = [url, 'lbpcascades/'];
+        elseif strncmpi(f, 'hogcascade_', length('hogcascade_'))
+            url = [url, 'hogcascades/'];
+        else
+            error('File not found');
+        end
+        urlwrite([url f ext], fname);
     end
 end
 

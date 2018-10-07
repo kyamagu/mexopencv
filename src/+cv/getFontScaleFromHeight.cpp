@@ -1,0 +1,51 @@
+/**
+ * @file getFontScaleFromHeight.cpp
+ * @brief mex interface for cv::getFontScaleFromHeight
+ * @ingroup imgproc
+ * @author Amro
+ * @date 2018
+ */
+#include "mexopencv.hpp"
+#include "opencv2/imgproc.hpp"
+using namespace std;
+using namespace cv;
+
+/**
+ * Main entry called from Matlab
+ * @param nlhs number of left-hand-side arguments
+ * @param plhs pointers to mxArrays in the left-hand-side
+ * @param nrhs number of right-hand-side arguments
+ * @param prhs pointers to mxArrays in the right-hand-side
+ */
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
+{
+    // Check the number of arguments
+    nargchk(nrhs>=1 && (nrhs%2)==1 && nlhs<=1);
+
+    // Argument vector
+    vector<MxArray> rhs(prhs, prhs+nrhs);
+
+    // Option processing
+    int fontFace = cv::FONT_HERSHEY_SIMPLEX;
+    int fontStyle = 0;
+    int thickness = 1;
+    for (int i=1; i<nrhs; i+=2) {
+        string key(rhs[i].toString());
+        if (key == "FontFace")
+            fontFace = FontFace[rhs[i+1].toString()];
+        else if (key == "FontStyle")
+            fontStyle = FontStyle[rhs[i+1].toString()];
+        else if (key == "Thickness")
+            thickness = (rhs[i+1].isChar()) ?
+                ThicknessType[rhs[i+1].toString()] : rhs[i+1].toInt();
+        else
+            mexErrMsgIdAndTxt("mexopencv:error",
+                "Unrecognized option %s", key.c_str());
+    }
+    fontFace |= fontStyle;
+
+    // Process
+    int pixelHeight = rhs[0].toInt();
+    double fontScale = getFontScaleFromHeight(fontFace, pixelHeight, thickness);
+    plhs[0] = MxArray(fontScale);
+}

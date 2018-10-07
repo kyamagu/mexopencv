@@ -133,7 +133,7 @@ classdef ConjGradSolver < handle
             %   initial simplex.
             %
             % ## Output
-            % * __x__ After the algorithm will terminate, it will be setted
+            % * __x__ After the algorithm will terminate, it will be set
             %   to the point where the algorithm stops, the point of possible
             %   minimum.
             % * __fx__ The value of a function at the point found.

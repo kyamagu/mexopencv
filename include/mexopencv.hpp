@@ -69,7 +69,7 @@ const ConstMap<std::string,int> BorderType = ConstMap<std::string,int>
     ("Reflect",     cv::BORDER_REFLECT)     // fedcba|abcdefgh|hgfedcb
     ("Reflect101",  cv::BORDER_REFLECT_101) // gfedcb|abcdefgh|gfedcba
     ("Wrap",        cv::BORDER_WRAP)        // cdefgh|abcdefgh|abcdefg
-    ("Transparent", cv::BORDER_TRANSPARENT) // uvwxyz|absdefgh|ijklmno
+    ("Transparent", cv::BORDER_TRANSPARENT) // uvwxyz|abcdefgh|ijklmno
     ("Default",     cv::BORDER_DEFAULT);    // same as "Reflect101"
 
 /// Inverse border type map for option processing

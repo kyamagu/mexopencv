@@ -20,8 +20,9 @@ map<int,Ptr<Net> > obj_;
 
 /// Computation backends for option processing
 const ConstMap<string,int> BackendsMap = ConstMap<string,int>
-    ("Default", cv::dnn::DNN_BACKEND_DEFAULT)
-    ("Halide",  cv::dnn::DNN_BACKEND_HALIDE);
+    ("Default",         cv::dnn::DNN_BACKEND_DEFAULT)
+    ("Halide",          cv::dnn::DNN_BACKEND_HALIDE)
+    ("InferenceEngine", cv::dnn::DNN_BACKEND_INFERENCE_ENGINE);
 
 /// Computation target devices for option processing
 const ConstMap<string,int> TargetsMap = ConstMap<string,int>
@@ -333,6 +334,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             blob = blobFromImage(image, scalefactor, size, mean, swapRB, crop);
         }
         plhs[0] = MxArray(blob);
+        return;
+    }
+    else if (method == "imagesFromBlob") {
+        nargchk(nrhs==3 && nlhs<=1);
+        MatND blob(MxArrayToBlob(rhs[2]));
+        vector<Mat> images;
+        imagesFromBlob(blob, images);
+        plhs[0] = MxArray(images);
         return;
     }
     else if (method == "shrinkCaffeModel") {

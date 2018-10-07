@@ -30,7 +30,8 @@
 %
 % The function cv.convexHull finds the convex hull of a 2D point set using the
 % Sklansky's algorithm [Sklansky82] that has `O(N logN)` complexity in the
-% current implementation.
+% current implementation. See the sample `convexhull_demo.m` that demonstrates
+% the usage of the function.
 %
 % ## References
 % [Sklansky82]:

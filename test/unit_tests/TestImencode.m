@@ -11,6 +11,9 @@ classdef TestImencode
                     else
                         img = TestImwrite.im;
                     end
+                    if any(strcmp(frmts(i).ext, {'.pbm', '.pgm'}))
+                        img = cv.cvtColor(img, 'RGB2GRAY');
+                    end
                     buf = cv.imencode(frmts(i).ext, img, frmts(i).opts{:});
                     validateattributes(buf, {'uint8'}, {'vector', 'nonempty'});
                 catch ME

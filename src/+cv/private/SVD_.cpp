@@ -44,10 +44,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "backSubst_static") {
         nargchk(nrhs==6 && nlhs<=1);
-        Mat w(rhs[2].toMat()),
-            u(rhs[3].toMat()),
-            vt(rhs[4].toMat()),
-            src(rhs[5].toMat()),
+        Mat w(rhs[2].toMat(rhs[2].isSingle() ? CV_32F : CV_64F)),
+            u(rhs[3].toMat(rhs[3].isSingle() ? CV_32F : CV_64F)),
+            vt(rhs[4].toMat(rhs[4].isSingle() ? CV_32F : CV_64F)),
+            src(rhs[5].toMat(rhs[5].isSingle() ? CV_32F : CV_64F)),
             dst;
         SVD::backSubst(w, u, vt, src, dst);
         plhs[0] = MxArray(dst);
@@ -55,7 +55,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     else if (method == "solveZ_static") {
         nargchk(nrhs==3 && nlhs<=1);
-        Mat src(rhs[2].toMat()), dst;
+        Mat src(rhs[2].toMat(rhs[2].isSingle() ? CV_32F : CV_64F)),
+            dst;
         SVD::solveZ(src, dst);
         plhs[0] = MxArray(dst);
         return;
@@ -77,7 +78,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat src(rhs[2].toMat()), w, u, vt;
+        Mat src(rhs[2].toMat(rhs[2].isSingle() ? CV_32F : CV_64F)),
+            w, u, vt;
         SVD::compute(src, w, u, vt, flags);
         plhs[0] = MxArray(w);
         if (nlhs>1)
@@ -113,12 +115,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 mexErrMsgIdAndTxt("mexopencv:error",
                     "Unrecognized option %s", key.c_str());
         }
-        Mat src(rhs[2].toMat());
+        Mat src(rhs[2].toMat(rhs[2].isSingle() ? CV_32F : CV_64F));
         obj->operator()(src, flags);
     }
     else if (method == "backSubst") {
         nargchk(nrhs==3 && nlhs<=1);
-        Mat src(rhs[2].toMat()), dst;
+        Mat src(rhs[2].toMat(rhs[2].isSingle() ? CV_32F : CV_64F)),
+            dst;
         obj->backSubst(src, dst);
         plhs[0] = MxArray(dst);
     }
@@ -139,11 +142,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==4 && nlhs==0);
         string prop(rhs[2].toString());
         if (prop == "u")
-            obj->u = rhs[3].toMat();
+            obj->u = rhs[3].toMat(rhs[3].isSingle() ? CV_32F : CV_64F);
         else if (prop == "vt")
-            obj->vt = rhs[3].toMat();
+            obj->vt = rhs[3].toMat(rhs[3].isSingle() ? CV_32F : CV_64F);
         else if (prop == "w")
-            obj->w = rhs[3].toMat();
+            obj->w = rhs[3].toMat(rhs[3].isSingle() ? CV_32F : CV_64F);
         else
             mexErrMsgIdAndTxt("mexopencv:error",
                 "Unrecognized property %s", prop.c_str());

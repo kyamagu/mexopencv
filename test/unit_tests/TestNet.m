@@ -7,6 +7,16 @@ classdef TestNet
     end
 
     methods (Static)
+        function test_blobs
+            imgs = cell(1,4);
+            for i=1:numel(imgs)
+                imgs{i} = rand(50, 50, 3, 'single');
+            end
+            blob = cv.Net.blobFromImages(imgs, 'SwapRB',false, 'Crop',false);
+            out = cv.Net.imagesFromBlob(blob);
+            assert(isequal(out, imgs));
+        end
+
         function test_caffe_googlenet
             % load net and images
             net = load_bvlc_googlenet();
@@ -55,6 +65,9 @@ classdef TestNet
             model = fullfile(mexopencv.root(), 'test', 'dnn', 'GoogLeNet', ...
                 'bvlc_googlenet.caffemodel');
             model_fp16 = fullfile(tempdir(), 'bvlc_googlenet_fp16.caffemodel');
+            if exist(model, 'file') ~= 2
+                error('mexopencv:testskip', 'missing data');
+            end
 
             cObj = onCleanup(@() delete(model_fp16));
             cv.Net.shrinkCaffeModel(model, model_fp16);
@@ -68,10 +81,10 @@ classdef TestNet
             lp = struct();
             lp.name = 'conv/7x7_s2';
             lp.type = 'Convolution';
-            lp.dict.num_output = 64;
-            lp.dict.kernel_size = 7;
-            lp.dict.stride = 2;
-            lp.dict.pad = 3;
+            lp.dict.num_output = int32(64);
+            lp.dict.kernel_size = int32(7);
+            lp.dict.stride = int32(2);
+            lp.dict.pad = int32(3);
             lp.dict.bias_term = true;
             lp.blobs = {
                 rand(64,3,7,7,'single')*2-1,  % weights

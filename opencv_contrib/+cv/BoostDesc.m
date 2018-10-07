@@ -22,6 +22,13 @@ classdef BoostDesc < handle
         id
     end
 
+    properties (Dependent)
+        % Sample patterns using keypoints orientation.
+        UseScaleOrientation
+        % Adjust the sampling window of detected keypoints.
+        ScaleFactor
+    end
+
     methods
         function this = BoostDesc(varargin)
             %BOOSTDESC  Constructor
@@ -258,6 +265,23 @@ classdef BoostDesc < handle
             % See also: cv.BoostDesc.BoostDesc
             %
             [descriptors, keypoints] = BoostDesc_(this.id, 'compute', img, keypoints);
+        end
+    end
+
+    %% Getters/Setters
+    methods
+        function value = get.UseScaleOrientation(this)
+            value = BoostDesc_(this.id, 'get', 'UseScaleOrientation');
+        end
+        function set.UseScaleOrientation(this, value)
+            BoostDesc_(this.id, 'set', 'UseScaleOrientation', value);
+        end
+
+        function value = get.ScaleFactor(this)
+            value = BoostDesc_(this.id, 'get', 'ScaleFactor');
+        end
+        function set.ScaleFactor(this, value)
+            BoostDesc_(this.id, 'set', 'ScaleFactor', value);
         end
     end
 

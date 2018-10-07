@@ -1,4 +1,4 @@
-%FISHEYECALIBRATE  Performs camera calibaration (fisheye)
+%FISHEYECALIBRATE  Performs camera calibration (fisheye)
 %
 %     [K, D, rms] = cv.fisheyeCalibrate(objectPoints, imagePoints, imageSize)
 %     [K, D, rms, rvecs, tvecs] = cv.fisheyeCalibrate(...)

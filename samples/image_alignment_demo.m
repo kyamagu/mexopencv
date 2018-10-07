@@ -1,6 +1,6 @@
 %% Image Alignment using ECC algorithm
 %
-% This sample demostrates the use of the ECC image alignment algorithm. When
+% This sample demonstrates the use of the ECC image alignment algorithm. When
 % one image is given, the template image is artificially formed by a random
 % warp given the motion type. Otherwise supply both images. If input warp
 % matrix is not specified, the identity transformation is used to initialize

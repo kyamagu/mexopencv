@@ -160,7 +160,7 @@ classdef DescriptorMatcher < handle
             % * __CBIndex__ This parameter (cluster boundary index) influences
             %   the way exploration is performed in the hierarchical kmeans
             %   tree. When `CBIndex` is zero the next kmeans domain to be
-            %   explored is choosen to be the one with the closest center. A
+            %   explored is chosen to be the one with the closest center. A
             %   value greater then zero also takes into account the size of
             %   the domain. default 0.2
             %

@@ -6,8 +6,24 @@
  * @date 2015
  */
 #include "mexopencv.hpp"
+#include "opencv2/features2d.hpp"
 using namespace std;
 using namespace cv;
+
+namespace {
+/** Convert size type to MxArray.
+ * @param i value.
+ * @return MxArray object, a scalar uint64 array.
+ */
+MxArray toMxArray(size_t i)
+{
+    MxArray arr(mxCreateNumericMatrix(1, 1, mxUINT64_CLASS, mxREAL));
+    if (arr.isNull())
+        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+    arr.set(0, static_cast<uint64_t>(i));
+    return arr;
+}
+}
 
 /**
  * Main entry called from Matlab
@@ -121,12 +137,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         nargchk(nrhs==2 && nlhs<=1);
         KeyPoint kp = rhs[1].toKeyPoint();
         size_t val = kp.hash();
-        //plhs[0] = MxArray(val);
-        plhs[0] = mxCreateNumericMatrix(1, 1, mxUINT64_CLASS, mxREAL);
-        {
-            uint64_t *data = reinterpret_cast<uint64_t*>(mxGetData(plhs[0]));
-            data[0] = static_cast<uint64_t>(val);
-        }
+        plhs[0] = toMxArray(val);
     }
     else
         mexErrMsgIdAndTxt("mexopencv:error",

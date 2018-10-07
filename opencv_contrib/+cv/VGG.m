@@ -18,6 +18,19 @@ classdef VGG < handle
         id
     end
 
+    properties (Dependent)
+        % Gaussian kernel value for image blur.
+        Sigma
+        % Use image sample intensity normalization.
+        UseNormalizeImage
+        % Sample patterns using keypoints orientation.
+        UseScaleOrientation
+        % Adjust the sampling window of detected keypoints.
+        ScaleFactor
+        % Use 8-bit normalized descriptors.
+        UseNormalizeDescriptor
+    end
+
     methods
         function this = VGG(varargin)
             %VGG  Constructor
@@ -215,27 +228,71 @@ classdef VGG < handle
         end
 
         function [descriptors, keypoints] = compute(this, img, keypoints)
-            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image
+            %COMPUTE  Computes the descriptors for a set of keypoints detected in an image or image set
             %
             %     [descriptors, keypoints] = obj.compute(img, keypoints)
+            %     [descriptors, keypoints] = obj.compute(imgs, keypoints)
             %
             % ## Input
-            % * __img__ Image to extract descriptors, 8-bit grayscale image.
-            % * __keypoints__ Input collection of keypoints of interest within
-            %   image. Keypoints for which a descriptor cannot be computed are
-            %   removed. Sometimes new keypoints can be added, for example:
-            %   cv.SIFT duplicates keypoint with several dominant orientations
-            %   (for each orientation). This is a struct-array of detected
-            %   keypoints.
+            % * __img__ Image (first variant), 8-bit grayscale image.
+            % * __imgs__ Image set (second variant), cell array of images.
+            % * __keypoints__ Input collection of keypoints. Keypoints for
+            %   which a descriptor cannot be computed are removed. Sometimes
+            %   new keypoints can be added, for example: cv.SIFT duplicates
+            %   keypoint with several dominant orientations (for each
+            %   orientation). In the first variant, this is a struct-array of
+            %   detected keypoints. In the second variant, it is a cell-array,
+            %   where `keypoints{i}` is a set of keypoints detected in
+            %   `imgs{i}` (a struct-array like before).
             %
             % ## Output
-            % * __descriptors__ Computed descriptors. Row `j` in `descriptors`
+            % * __descriptors__ Computed descriptors. In the second variant of
+            %   the method `descriptors{i}` are descriptors computed for a
+            %   `keypoints{i}`. Row `j` in `descriptors` (or `descriptors{i}`)
             %   is the descriptor for `j`-th keypoint.
             % * __keypoints__ Optional output with possibly updated keypoints.
             %
             % See also: cv.VGG.VGG
             %
             [descriptors, keypoints] = VGG_(this.id, 'compute', img, keypoints);
+        end
+    end
+
+    %% Getters/Setters
+    methods
+        function value = get.Sigma(this)
+            value = VGG_(this.id, 'get', 'Sigma');
+        end
+        function set.Sigma(this, value)
+            VGG_(this.id, 'set', 'Sigma', value);
+        end
+
+        function value = get.UseNormalizeImage(this)
+            value = VGG_(this.id, 'get', 'UseNormalizeImage');
+        end
+        function set.UseNormalizeImage(this, value)
+            VGG_(this.id, 'set', 'UseNormalizeImage', value);
+        end
+
+        function value = get.UseScaleOrientation(this)
+            value = VGG_(this.id, 'get', 'UseScaleOrientation');
+        end
+        function set.UseScaleOrientation(this, value)
+            VGG_(this.id, 'set', 'UseScaleOrientation', value);
+        end
+
+        function value = get.ScaleFactor(this)
+            value = VGG_(this.id, 'get', 'ScaleFactor');
+        end
+        function set.ScaleFactor(this, value)
+            VGG_(this.id, 'set', 'ScaleFactor', value);
+        end
+
+        function value = get.UseNormalizeDescriptor(this)
+            value = VGG_(this.id, 'get', 'UseNormalizeDescriptor');
+        end
+        function set.UseNormalizeDescriptor(this, value)
+            VGG_(this.id, 'set', 'UseNormalizeDescriptor', value);
         end
     end
 

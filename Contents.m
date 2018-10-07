@@ -1,5 +1,5 @@
 % mexopencv
-% Version 3.4.0 (R2017a) 22-February-2018
+% Version 3.4.1 (R2018a) 01-October-2018
 %
 %% opencv: Main Modules
 %
@@ -19,7 +19,7 @@
 %   cv.batchDistance                    - Naive nearest neighbor finder
 %   cv.normalize                        - Normalizes the norm or value range of an array
 %   cv.flip                             - Flips a 2D array around vertical, horizontal, or both axes
-%   cv.rotate                           - FLIP  Rotates a 2D array in multiples of 90 degrees
+%   cv.rotate                           - Rotates a 2D array in multiples of 90 degrees
 %   cv.bitwise_and                      - Calculates the per-element bit-wise conjunction of two arrays or an array and a scalar
 %   cv.bitwise_or                       - Calculates the per-element bit-wise disjunction of two arrays or an array and a scalar
 %   cv.bitwise_xor                      - Calculates the per-element bit-wise "exclusive or" operation on two arrays or an array and a scalar
@@ -66,18 +66,18 @@
 %   cv.GeneralizedHoughBallard          - Generalized Hough transform
 %   cv.GeneralizedHoughGuil             - Generalized Hough transform
 %   cv.CLAHE                            - Contrast Limited Adaptive Histogram Equalization
-%   cv.Subdiv2D                         - Delaunay triangulation and Voronoi tesselation
+%   cv.Subdiv2D                         - Delaunay triangulation and Voronoi tessellation
 %   cv.LineSegmentDetector              - Line segment detector class
 %   cv.getGaussianKernel                - Returns Gaussian filter coefficients
 %   cv.getDerivKernels                  - Returns filter coefficients for computing spatial image derivatives
 %   cv.getGaborKernel                   - Returns Gabor filter coefficients
 %   cv.getStructuringElement            - Returns a structuring element of the specified size and shape for morphological operations
 %   cv.medianBlur                       - Blurs an image using the median filter
-%   cv.GaussianBlur                     - Smoothes an image using a Gaussian filter
+%   cv.GaussianBlur                     - Smooths an image using a Gaussian filter
 %   cv.bilateralFilter                  - Applies the bilateral filter to an image
 %   cv.boxFilter                        - Blurs an image using the box filter
 %   cv.sqrBoxFilter                     - Calculates the normalized sum of squares of the pixel values overlapping the filter
-%   cv.blur                             - Smoothes an image using the normalized box filter
+%   cv.blur                             - Smooths an image using the normalized box filter
 %   cv.filter2D                         - Convolves an image with the kernel
 %   cv.sepFilter2D                      - Applies a separable linear filter to an image
 %   cv.Sobel                            - Calculates the first, second, third, or mixed image derivatives using an extended Sobel operator
@@ -94,6 +94,7 @@
 %   cv.goodFeaturesToTrack              - Determines strong corners on an image
 %   cv.HoughLines                       - Finds lines in a binary image using the standard Hough transform
 %   cv.HoughLinesP                      - Finds line segments in a binary image using the probabilistic Hough transform
+%   cv.HoughLinesPointSet               - Finds lines in a set of points using the standard Hough transform
 %   cv.HoughCircles                     - Finds circles in a grayscale image using the Hough transform
 %   cv.erode                            - Erodes an image by using a specific structuring element
 %   cv.dilate                           - Dilates an image by using a specific structuring element
@@ -132,12 +133,13 @@
 %   cv.compareHist                      - Compares two histograms
 %   cv.equalizeHist                     - Equalizes the histogram of a grayscale image
 %   cv.EMD                              - Computes the "minimal work" distance between two weighted point configurations
-%   cv.watershed                        - Performs a marker-based image segmentation using the watershed algrorithm
+%   cv.watershed                        - Performs a marker-based image segmentation using the watershed algorithm
 %   cv.pyrMeanShiftFiltering            - Performs initial step of meanshift segmentation of an image
 %   cv.grabCut                          - Runs the GrabCut algorithm
 %   cv.distanceTransform                - Calculates the distance to the closest zero pixel for each pixel of the source image
 %   cv.floodFill                        - Fills a connected component with the given color
 %   cv.cvtColor                         - Converts an image from one color space to another
+%   cv.cvtColorTwoPlane                 - Dual-plane color conversion modes
 %   cv.demosaicing                      - Demosaicing algorithm
 %   cv.moments                          - Calculates all of the moments up to the third order of a polygon or rasterized shape
 %   cv.HuMoments                        - Calculates seven Hu invariants
@@ -177,6 +179,7 @@
 %   cv.ellipse2Poly                     - Approximates an elliptic arc with a polyline
 %   cv.putText                          - Draws a text string
 %   cv.getTextSize                      - Calculates the width and height of a text string
+%   cv.getFontScaleFromHeight           - Calculates the font-specific size to use to achieve a given height in pixels
 %   cv.LineIterator                     - Raster line iterator
 %
 % imgcodecs: Image File Reading and Writing
@@ -203,7 +206,7 @@
 %   cv.FarnebackOpticalFlow             - Dense optical flow using the Gunnar Farneback's algorithm
 %   cv.SparsePyrLKOpticalFlow           - Class used for calculating a sparse optical flow
 %   cv.BackgroundSubtractorMOG2         - Gaussian Mixture-based Background/Foreground Segmentation Algorithm
-%   cv.BackgroundSubtractorKNN          - K-nearest neigbours based Background/Foreground Segmentation Algorithm
+%   cv.BackgroundSubtractorKNN          - K-nearest neighbours based Background/Foreground Segmentation Algorithm
 %
 % calib3d: Camera Calibration and 3D Reconstruction
 %   cv.Rodrigues                        - Converts a rotation matrix to a rotation vector or vice versa
@@ -254,7 +257,7 @@
 %   cv.fisheyeInitUndistortRectifyMap   - Computes undistortion and rectification maps (fisheye)
 %   cv.fisheyeUndistortImage            - Transforms an image to compensate for fisheye lens distortion
 %   cv.fisheyeEstimateNewCameraMatrixForUndistortRectify - Estimates new camera matrix for undistortion or rectification (fisheye)
-%   cv.fisheyeCalibrate                 - Performs camera calibaration (fisheye)
+%   cv.fisheyeCalibrate                 - Performs camera calibration (fisheye)
 %   cv.fisheyeStereoRectify             - Stereo rectification for fisheye camera model
 %   cv.fisheyeStereoCalibrate           - Performs stereo calibration (fisheye)
 %
@@ -380,8 +383,8 @@
 %   cv.drawCharucoBoard                 - Draw a ChArUco board
 %   cv.interpolateCornersCharuco        - Interpolate position of ChArUco board corners
 %   cv.estimatePoseCharucoBoard         - Pose estimation for a ChArUco board given some of their corners
-%   cv.drawDetectedCornersCharuco       - Draws a set of Charuco corners
-%   cv.calibrateCameraCharuco           - Calibrate a camera using Charuco corners
+%   cv.drawDetectedCornersCharuco       - Draws a set of ChArUco corners
+%   cv.calibrateCameraCharuco           - Calibrate a camera using ChArUco corners
 %   cv.detectCharucoDiamond             - Detect ChArUco Diamond markers
 %   cv.drawDetectedDiamonds             - Draw a set of detected ChArUco Diamond markers
 %   cv.drawCharucoDiamond               - Draw a ChArUco Diamond marker
@@ -402,6 +405,9 @@
 % datasets: Framework for Working with Different Datasets
 %   cv.Dataset                          - Class for working with different datasets
 %
+% dnn_objdetect: DNN used for Object Detection
+%   cv.InferBbox                        - Post-process DNN object detection model predictions
+%
 % dpm: Deformable Part-based Models
 %   cv.DPMDetector                      - Deformable Part-based Models (DPM) detector
 %
@@ -411,6 +417,9 @@
 %   cv.BIF                              - Implementation of bio-inspired features (BIF)
 %   cv.Facemark                         - Base class for all facemark models
 %   cv.FacemarkKazemi                   - Face Alignment
+%
+% hfs: Hierarchical Feature Selection for Efficient Image Segmentation
+%   cv.HfsSegment                       - Hierarchical Feature Selection for Efficient Image Segmentation
 %
 % img_hash: Image Hashing Algorithms
 %   cv.ImgHash                          - Base class for Image Hashing algorithms
@@ -446,6 +455,9 @@
 %   cv.MotionSaliencyBinWangApr2014     - A Fast Self-tuning Background Subtraction Algorithm for Motion Saliency
 %   cv.ObjectnessBING                   - The Binarized normed gradients algorithm for Objectness
 %
+% text: Scene Text Detection and Recognition
+%   cv.TextDetectorCNN                  - Class providing functionality of text detection
+%
 % xfeatures2d: Extra 2D Features Framework
 %   cv.SIFT                             - Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform (SIFT)
 %   cv.SURF                             - Class for extracting Speeded Up Robust Features from an image
@@ -460,9 +472,10 @@
 %   cv.BoostDesc                        - Class implementing BoostDesc (Learning Image Descriptors with Boosting)
 %   cv.PCTSignatures                    - Class implementing PCT (Position-Color-Texture) signature extraction
 %   cv.PCTSignaturesSQFD                - Class implementing Signature Quadratic Form Distance (SQFD)
-%   cv.HarrisLaplaceFeatureDetector     - Class implementing the Harris-Laplace feature detector.
+%   cv.HarrisLaplaceFeatureDetector     - Class implementing the Harris-Laplace feature detector
 %   cv.AffineFeature2D                  - Class implementing affine adaptation for key points
-%   cv.FASTForPointSet                  - Estimates cornerness for prespecified KeyPoints using the FAST algorithm
+%   cv.FASTForPointSet                  - Estimates cornerness for pre-specified KeyPoints using the FAST algorithm
+%   cv.matchGMS                         - GMS (Grid-based Motion Statistics) feature matching strategy
 %
 % ximgproc: Extended Image Processing
 %   cv.DTFilter                         - Interface for realizations of Domain Transform filter
@@ -485,7 +498,7 @@
 %   cv.FastHoughTransform               - Calculates 2D Fast Hough transform of an image
 %   cv.HoughPoint2Line                  - Calculates coordinates of line segment corresponded by point in Hough space
 %   cv.FastLineDetector                 - Class implementing the FLD (Fast Line Detector) algorithm
-%   cv.covarianceEstimation             - Computes the estimated covariance matrix of an image using the sliding window forumlation
+%   cv.covarianceEstimation             - Computes the estimated covariance matrix of an image using the sliding window formulation
 %   cv.weightedMedianFilter             - Applies weighted median filter to an image
 %   cv.GradientPaillou                  - Applies Paillou filter to an image
 %   cv.GradientDeriche                  - Applies Deriche filter to an image

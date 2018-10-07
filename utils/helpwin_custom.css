@@ -105,8 +105,8 @@ code a:hover, .footerlink a:hover {
     padding: 4px 10px;
 }
 .table thead {
-    background-color: #eee;
-    color: #666666;
+    background-color: #ddd;
+    color: #666;
     font-weight: bold;
     line-height: 1.3;
     cursor: pointer;

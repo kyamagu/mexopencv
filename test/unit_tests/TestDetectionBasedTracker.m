@@ -9,6 +9,7 @@ classdef TestDetectionBasedTracker
             end
 
             cascadeFile = fullfile(mexopencv.root(),'test','lbpcascade_frontalface.xml');
+            download_classifier_xml(cascadeFile);
             tracker = cv.DetectionBasedTracker(cascadeFile, ...
                 {cascadeFile, 'ScaleFactor',1.1}, 'MaxTrackLifetime',5);
             tracker.setParameters('MaxTrackLifetime',5);
@@ -52,4 +53,22 @@ classdef TestDetectionBasedTracker
         end
     end
 
+end
+
+function download_classifier_xml(fname)
+    if exist(fname, 'file') ~= 2
+        % attempt to download trained Haar/LBP/HOG classifier from Github
+        url = 'https://cdn.rawgit.com/opencv/opencv/3.4.0/data/';
+        [~, f, ext] = fileparts(fname);
+        if strncmpi(f, 'haarcascade_', length('haarcascade_'))
+            url = [url, 'haarcascades/'];
+        elseif strncmpi(f, 'lbpcascade_', length('lbpcascade_'))
+            url = [url, 'lbpcascades/'];
+        elseif strncmpi(f, 'hogcascade_', length('hogcascade_'))
+            url = [url, 'hogcascades/'];
+        else
+            error('File not found');
+        end
+        urlwrite([url f ext], fname);
+    end
 end

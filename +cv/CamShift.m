@@ -19,7 +19,7 @@
 %   struct with 'type', 'maxCount', and 'epsilon' fields. Default
 %   `struct('type','Count+EPS', 'maxCount',100, 'epsilon',1.0)`
 %
-% The function implements the CAMSHIFT object tracking algrorithm
+% The function implements the CAMSHIFT object tracking algorithm
 % [Bradski98]. First, it finds an object center using cv.meanShift and then
 % adjusts the window size and finds the optimal rotation. The function
 % returns the rotated rectangle structure that includes the object

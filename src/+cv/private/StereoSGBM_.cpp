@@ -6,6 +6,7 @@
  * @date 2012, 2015
  */
 #include "mexopencv.hpp"
+#include "opencv2/calib3d.hpp"
 using namespace std;
 using namespace cv;
 

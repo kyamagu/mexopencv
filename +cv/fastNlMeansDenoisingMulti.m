@@ -34,7 +34,7 @@
 %   * __L1__
 %
 % Modification of cv.fastNlMeansDenoising function for images sequence where
-% consequtive images have been captured in small period of time. For example
+% consecutive images have been captured in small period of time. For example
 % video. This version of the function is for grayscale images or for manual
 % manipulation with colorspaces. For more details see:
 % [CiteSeerX](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.131.6394)

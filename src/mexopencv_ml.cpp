@@ -36,7 +36,7 @@ MxArray toStruct(const vector<DTrees::Node>& nodes)
     const char* fields[] = {"value", "classIdx", "parent", "left", "right",
         "defaultDir", "split"};
     MxArray s = MxArray::Struct(fields, 7, 1, nodes.size());
-    for (size_t i=0; i<nodes.size(); ++i) {
+    for (size_t i = 0; i < nodes.size(); ++i) {
         s.set("value",      nodes[i].value,      i);
         s.set("classIdx",   nodes[i].classIdx,   i);
         s.set("parent",     nodes[i].parent,     i);
@@ -53,7 +53,7 @@ MxArray toStruct(const vector<DTrees::Split>& splits)
     const char* fields[] = {"varIdx", "inversed", "quality", "next", "c",
         "subsetOfs"};
     MxArray s = MxArray::Struct(fields, 6, 1, splits.size());
-    for (size_t i=0; i<splits.size(); ++i) {
+    for (size_t i = 0; i < splits.size(); ++i) {
         s.set("varIdx",    splits[i].varIdx,    i);
         s.set("inversed",  splits[i].inversed,  i);
         s.set("quality",   splits[i].quality,   i);

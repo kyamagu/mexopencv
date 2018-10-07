@@ -6,6 +6,7 @@
  * @date 2011
  */
 #include "mexopencv.hpp"
+#include "opencv2/calib3d.hpp"
 using namespace std;
 using namespace cv;
 
@@ -52,14 +53,15 @@ MxArray toStruct(const Mat& cameraMatrix1, const Mat& distCoeffs1,
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // Check the number of arguments
-    nargchk(nrhs>=4 && (nrhs%2)==0 && nlhs<=1);
+    nargchk(nrhs>=4 && (nrhs%2)==0 && nlhs<=2);
 
     // Argument vector
     vector<MxArray> rhs(prhs, prhs+nrhs);
 
     // Option processing
     Mat cameraMatrix1, distCoeffs1,
-        cameraMatrix2, distCoeffs2;
+        cameraMatrix2, distCoeffs2,
+        R, T;
     int flags = cv::CALIB_FIX_INTRINSIC;
     TermCriteria criteria(TermCriteria::COUNT+TermCriteria::EPS, 30, 1e-6);
     for (int i=4; i<nrhs; i+=2) {
@@ -72,10 +74,16 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             cameraMatrix2 = rhs[i+1].toMat(CV_64F);
         else if (key == "DistCoeffs2")
             distCoeffs2 = rhs[i+1].toMat(CV_64F);
+        else if (key == "R")
+            R = rhs[i+1].toMat(CV_64F);
+        else if (key == "T")
+            T = rhs[i+1].toMat(CV_64F);
         else if (key == "FixIntrinsic")
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_FIX_INTRINSIC);
         else if (key == "UseIntrinsicGuess")
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_USE_INTRINSIC_GUESS);
+        else if (key == "UseExtrinsicGuess")
+            UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_USE_EXTRINSIC_GUESS);
         else if (key == "FixPrincipalPoint")
             UPDATE_FLAG(flags, rhs[i+1].toBool(), cv::CALIB_FIX_PRINCIPAL_POINT);
         else if (key == "FixFocalLength")
@@ -126,10 +134,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<vector<Point2f> > imagePoints1(MxArrayToVectorVectorPoint<float>(rhs[1]));
     vector<vector<Point2f> > imagePoints2(MxArrayToVectorVectorPoint<float>(rhs[2]));
     Size imageSize(rhs[3].toSize());
-    Mat R, T, E, F;
+    Mat E, F, perViewErrors;
     double reprojErr = stereoCalibrate(objectPoints, imagePoints1, imagePoints2,
         cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, imageSize,
-        R, T, E, F, flags, criteria);
+        R, T, E, F, (nlhs>1 ? perViewErrors : noArray()), flags, criteria);
     plhs[0] = toStruct(cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2,
         R, T, E, F, reprojErr);
+    if (nlhs > 1)
+        plhs[1] = MxArray(perViewErrors);
 }

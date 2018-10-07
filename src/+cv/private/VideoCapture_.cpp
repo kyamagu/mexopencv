@@ -6,6 +6,7 @@
  * @date 2012
  */
 #include "mexopencv.hpp"
+#include "opencv2/videoio.hpp"
 using namespace std;
 using namespace cv;
 
@@ -57,7 +58,9 @@ const ConstMap<string,int> CapProp = ConstMap<string,int>
     ("Iris",          cv::CAP_PROP_IRIS)
     ("Settings",      cv::CAP_PROP_SETTINGS)
     ("Buffersize",    cv::CAP_PROP_BUFFERSIZE)
-    ("Autofocus",     cv::CAP_PROP_AUTOFOCUS);
+    ("Autofocus",     cv::CAP_PROP_AUTOFOCUS)
+    ("SARNum",        cv::CAP_PROP_SAR_NUM)
+    ("SARDen",        cv::CAP_PROP_SAR_DEN);
 
 /// Camera API map for option processing
 const ConstMap<string,int> CameraApiMap = ConstMap<string,int>

@@ -167,7 +167,7 @@
 %
 % ## RGB &#8660; YCrCb JPEG (or YCC)
 %
-%     Y = 0.299*R + 0.587G + 0.114B
+%     Y = 0.299*R + 0.587*G + 0.114*B
 %     Cb = (R-Y)*0.713 + delta
 %     Cr = (B-Y)*0.564 + delta
 %     R = Y + 1.403*(Cr-delta)

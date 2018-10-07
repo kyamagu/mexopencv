@@ -7,7 +7,7 @@ classdef Net < handle
     %   networks;
     % - set of built-in most-useful Layers;
     % - API to constuct and modify comprehensive neural networks from layers;
-    % - functionality for loading serialized networks models from differnet
+    % - functionality for loading serialized networks models from different
     %   frameworks.
     %
     % Functionality of this module is designed only for forward pass
@@ -605,7 +605,8 @@ classdef Net < handle
             % ## Input
             % * __backend__ computation backend supported by layers, one of:
             %   * __Default__
-            %   * __Halide__
+            %   * __Halide__ Halide language backend.
+            %   * __InferenceEngine__ Intel's Deep Learning Inference Engine.
             %
             % See also: cv.Net.setPreferableTarget, cv.Net.setHalideScheduler
             %
@@ -688,7 +689,7 @@ classdef Net < handle
             % red channels.
             %
             % If `Crop` is true, input image is resized so one side after
-            % resize is equal to corresponing dimension in `Size` and another
+            % resize is equal to corresponding dimension in `Size` and another
             % one is equal or larger. Then, crop from the center is performed.
             % If `Crop` is false, direct resize without cropping and
             % preserving aspect ratio is performed.
@@ -699,6 +700,29 @@ classdef Net < handle
             % See also: cv.Net.setInput
             %
             blob = Net_(0, 'blobFromImages', img, varargin{:});
+        end
+
+        function imgs = imagesFromBlob(blob)
+            %IMAGESFROMBLOB  Parse a 4D blob and output the images it contains
+            %
+            %     imgs = cv.Net.imagesFromBlob(blob)
+            %
+            % ## Input
+            % * __blob__ 4-dimensional array `(images, channels, height, width)`
+            %   in floating-point precision (`single`) from which you would
+            %   like to extract the images.
+            %
+            % ## Output
+            % * __imgs__ cell-array of matrices containing the images
+            %   extracted from the blob in floating-point precision (`single`).
+            %   They are non-normalized neither mean-added. The number of
+            %   returned images equals the first dimension of the blob
+            %   (batch size). Every image has a number of channels equals to
+            %   the second dimension of the blob (depth).
+            %
+            % See also: cv.Net.blobFromImages
+            %
+            imgs = Net_(0, 'imagesFromBlob', blob);
         end
 
         function shrinkCaffeModel(src, dst, varargin)

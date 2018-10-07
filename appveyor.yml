@@ -4,11 +4,11 @@
 #
 # Note:
 # We use prepared opencv binaries built using the same MinGW/Octave config,
-# see: https://github.com/amroamroamro/opencv/blob/tag_3.4.0/appveyor.yml
+# see: https://github.com/amroamroamro/opencv/blob/tag_3.4.1/appveyor.yml
 #
 
 # version format
-version: 3.4.0.{build}
+version: 3.4.1.{build}
 
 # clone directory
 clone_folder: c:\dev\mexopencv
@@ -38,7 +38,7 @@ environment:
   PKG_CONFIG_PATH: /c/dev/build/install
 
   # Octave options
-  OCTAVE_HOME: c:\dev\octave-4.2.1
+  OCTAVE_HOME: c:\dev\octave-4.4.1-w32
   OCTAVE_OPTS: --no-gui --no-window-system --no-init-file --quiet
 
   # mexopencv options
@@ -46,7 +46,7 @@ environment:
   # (Note: Make 3.81 included has poor jobs support, we use Make 4.2 instead)
   MCV_ROOT: c:\dev\mexopencv
   WITH_MAKE: yes
-  MAKE_OPTS: MATLABDIR='/c/dev/octave-4.2.1' WITH_OCTAVE=true WITH_CONTRIB=true
+  MAKE_OPTS: MATLABDIR='/c/dev/octave-4.4.1-w32' WITH_OCTAVE=true WITH_CONTRIB=true
   MAKE_EXTRA: -j2
   BUILD_CMD: cvsetup(true); mexopencv.make('opencv_path',getenv('OPENCV_DIR'), 'opencv_contrib',true, 'progress',false, 'verbose',1);
   TEST_CMD: cvsetup(true); [~,pass] = UnitTest('ContribModules',true,'Verbosity',2); exit(~pass);
@@ -57,10 +57,10 @@ install:
   - cd "c:\dev"
   - if "%WITH_DOXY%" == "yes" ( choco install doxygen.portable -y -r )
   - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.2.0/mingw32-make.exe"
-  - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.4.0/cv340_x86_mingw.7z"
-  - ps: Start-FileDownload "https://ftp.gnu.org/gnu/octave/windows/octave-4.2.1-w32.zip"
-  - 7z x "c:\dev\cv340_x86_mingw.7z" -o"c:\dev\build" -y > nul
-  - 7z x "c:\dev\octave-4.2.1-w32.zip" -o"c:\dev" -y > nul
+  - ps: Start-FileDownload "https://github.com/amroamroamro/opencv/releases/download/3.4.1/cv341_x86_mingw.7z"
+  - ps: Start-FileDownload "https://ftp.gnu.org/gnu/octave/windows/octave-4.4.1-w32.7z"
+  - 7z x "c:\dev\cv341_x86_mingw.7z" -o"c:\dev\build" -y > nul
+  - 7z x "c:\dev\octave-4.4.1-w32.7z" -o"c:\dev" -y > nul
   - copy /y "%OCTAVE_HOME%\bin\libopenblas.dll" "%OCTAVE_HOME%\bin\libblas.dll" > nul
   - set "PATH=%OCTAVE_HOME%\bin;%OPENCV_DIR%\x86\mingw\bin;c:\dev;%PATH%"
 

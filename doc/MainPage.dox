@@ -126,7 +126,7 @@ example is shown below:
 \code
     %MYFUNC  brief description about myfunc
     %
-    %    out = cv.myfunc(in)
+    %     out = cv.myfunc(in)
     %
     % ## Input
     % * __in__ input image.

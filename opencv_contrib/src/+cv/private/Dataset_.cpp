@@ -7,6 +7,7 @@
  */
 #include "mexopencv.hpp"
 #include "opencv2/datasets/dataset.hpp"
+#include "opencv2/datasets/util.hpp"
 #include "opencv2/datasets/ar_hmdb.hpp"
 #include "opencv2/datasets/ar_sports.hpp"
 #include "opencv2/datasets/fr_adience.hpp"

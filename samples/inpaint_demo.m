@@ -21,7 +21,7 @@
 % black structures with white structures which is of no use. In these cases,
 % a technique called image inpainting is used. The basic idea is simple:
 % Replace those bad marks with its neighbouring pixels so that it looks like
-% the neigbourhood. Consider the image shown below (taken from
+% the neighbourhood. Consider the image shown below (taken from
 % <https://en.wikipedia.org/wiki/Inpainting Wikipedia>):
 %
 % <<https://docs.opencv.org/3.2.0/inpaint_basics.jpg>>
@@ -36,8 +36,8 @@
 % a region in the image to be inpainted. Algorithm starts from the boundary of
 % this region and goes inside the region gradually filling everything in the
 % boundary first. It takes a small neighbourhood around the pixel on the
-% neigbourhood to be inpainted. This pixel is replaced by normalized weighted
-% sum of all the known pixels in the neigbourhood. Selection of the weights is
+% neighbourhood to be inpainted. This pixel is replaced by normalized weighted
+% sum of all the known pixels in the neighbourhood. Selection of the weights is
 % an important matter. More weightage is given to those pixels lying near to
 % the point, near to the normal of the boundary and those lying on the
 % boundary contours. Once a pixel is inpainted, it moves to next nearest pixel

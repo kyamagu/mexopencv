@@ -1,4 +1,4 @@
-%GAUSSIANBLUR  Smoothes an image using a Gaussian filter
+%GAUSSIANBLUR  Smooths an image using a Gaussian filter
 %
 %     dst = cv.GaussianBlur(src)
 %     dst = cv.GaussianBlur(src, 'OptionName',optionValue, ...)

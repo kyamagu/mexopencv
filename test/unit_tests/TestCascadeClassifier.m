@@ -78,7 +78,14 @@ classdef TestCascadeClassifier
             assert(~cc.isOldFormatCascade());
             cc.setMaskGenerator('FaceDetectionMaskGenerator');  %TODO
             S = cc.getMaskGenerator();
-            validateattributes(S, {'struct'}, {'scalar'});
+            if ~mexopencv.isOctave()
+                validateattributes(S, {'struct'}, {'scalar'});
+            else
+                %HACK: mxCreateStructMatrix(1,1,0,NULL) incorrectly returns
+                % 0x0 struct in Octave, instead of 1x1 struct
+                % https://savannah.gnu.org/bugs/index.php?54799
+                validateattributes(S, {'struct'}, {});
+            end
 
             im = imread(fullfile(mexopencv.root(),'test','tsukuba.png'));
             rects = cc.detect(im);

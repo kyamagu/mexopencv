@@ -104,7 +104,9 @@ function faces = myFaceDetector(img)
     persistent obj
     if isempty(obj)
         obj = cv.CascadeClassifier();
-        obj.load(fullfile(mexopencv.root(),'test','lbpcascade_frontalface.xml'));
+        xmlfile = fullfile(mexopencv.root(),'test','lbpcascade_frontalface.xml');
+        assert(exist(xmlfile, 'file') == 2, 'missing cascade classifier file');
+        obj.load(xmlfile);
     end
 
     if size(img,3) > 1

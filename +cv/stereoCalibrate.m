@@ -32,6 +32,8 @@
 %   * __E__ output 3x3 essential matrix.
 %   * __F__ output 3x3 fundamental matrix.
 %   * __reprojErr__ output final re-projection error (scalar).
+% * __perViewErrors__ Output matrix of the RMS re-projection error estimated
+%   for each pattern view.
 %
 % ## Options
 % * __CameraMatrix1__, __CameraMatrix2__ Initial camera matrices. If any of
@@ -39,12 +41,18 @@
 %   `FixFocalLength` are specified, some or all of the matrix components must
 %   be initialized. See the flags description for details.
 % * __DistCoeffs1__, __DistCoeffs2__ Initial lens distortion coefficients.
+% * __R__, __T__ Initial extrinsic parameters `R` and `T`.
+%   If `UseExtrinsicGuess` is set, these must be initialized. Not set by
+%   default.
 % * __FixIntrinsic__ Fix `cameraMatrix1`,`cameraMatrix2` and `distCoeffs1`,
 %   `distCoeffs2` so that only `R`, `T`, `E`, and `F` matrices are estimated.
 %   default true.
 % * __UseIntrinsicGuess__ Optimize some or all of the intrinsic parameters
 %   according to the specified flags. Initial values are provided by the user.
 %   default false.
+% * __UseExtrinsicGuess__ `R`, `T` contain valid initial values that are
+%   optimized further. Otherwise `R`, `T` are initialized to the median value
+%   of the pattern views (each dimension separately). default false
 % * __FixPrincipalPoint__ Fix the principal points during the optimization.
 %   default false.
 % * __FixFocalLength__ Fix `fx1`,`fx2` and `fy1`,`fy2`. default false.
@@ -126,8 +134,8 @@
 % cv.calibrateCamera), you are recommended to do so and then pass
 % `FixIntrinsic` flag to the function along with the computed intrinsic
 % parameters. Otherwise, if all the parameters are estimated at once, it makes
-% sense to restrict some parameters, for example, pass 'SameFocalLength' and
-% 'ZeroTangentDist' flags, which is usually a reasonable assumption.
+% sense to restrict some parameters, for example, pass `SameFocalLength` and
+% `ZeroTangentDist` flags, which is usually a reasonable assumption.
 %
 % Similarly to cv.calibrateCamera, the function minimizes the total
 % re-projection error for all the points in all the available views from both

@@ -9,8 +9,8 @@
 %   convenience, column-vector may be also submitted, in the latter case it is
 %   understood to correspond to `c'`.
 % * __Constr__ m-by-n+1 matrix, whose rightmost column corresponds to `b` in
-%   formulation above and the remaining to `A`. It should containt 32- or
-%   64-bit floating-point numbers.
+%   formulation above and the remaining to `A`. It should contain 32 or 64-bit
+%   floating-point numbers.
 %
 % ## Output
 % * __z__ The solution will be returned here as a column-vector, it

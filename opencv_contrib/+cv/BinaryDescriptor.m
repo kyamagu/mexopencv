@@ -138,7 +138,7 @@ classdef BinaryDescriptor < handle
             % * __WidthOfBand__ the width of band; default 7
             %
             % If no argument is provided, constructor sets default values.
-            % Default values are strongly reccomended.
+            % Default values are strongly recommended.
             %
             % See also: cv.BinaryDescriptor.detectAndCompute
             %
