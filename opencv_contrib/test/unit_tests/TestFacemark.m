@@ -122,6 +122,10 @@ classdef TestFacemark
         end
 
         function test_load_dataset_list
+            %TODO: these text files contain hardcoded paths
+            if true
+                error('mexopencv:testskip', 'todo');
+            end
             [imgFiles, ptsFiles, b] = cv.Facemark.loadDatasetList(...
                 fullfile(TestFacemark.root,'images.txt'), ...
                 fullfile(TestFacemark.root,'annotations.txt'));
@@ -134,6 +138,10 @@ classdef TestFacemark
         end
 
         function test_load_data_1
+            %TODO: these text files contain hardcoded paths
+            if true
+                error('mexopencv:testskip', 'todo');
+            end
             [imgFiles, pts, b] = cv.Facemark.loadTrainingData1(...
                 fullfile(TestFacemark.root,'images.txt'), ...
                 fullfile(TestFacemark.root,'annotations.txt'));
@@ -148,6 +156,10 @@ classdef TestFacemark
         end
 
         function test_load_data_2
+            %TODO: these text files contain hardcoded paths
+            if true
+                error('mexopencv:testskip', 'todo');
+            end
             [imgFiles, pts, b] = cv.Facemark.loadTrainingData2(...
                 fullfile(TestFacemark.root,'points.txt'));
             validateattributes(imgFiles, {'cell'}, {'vector'});
@@ -161,6 +173,10 @@ classdef TestFacemark
         end
 
         function test_load_data_3
+            %TODO: these text files contain hardcoded paths
+            if true
+                error('mexopencv:testskip', 'todo');
+            end
             fPoints = cv.glob(fullfile(TestFacemark.root,'david*.txt'));
             [imgFiles, pts, b] = cv.Facemark.loadTrainingData3(fPoints);
             validateattributes(imgFiles, {'cell'}, ...
