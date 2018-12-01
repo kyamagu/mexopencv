@@ -277,7 +277,7 @@ function mex_flags = mex_options(opts)
         % keep using the "separate complex storage", as opposed to the
         % "interleaved complex storage" introduced in R2018a
         % (see MX_HAS_INTERLEAVED_COMPLEX)
-        mex_flags = ['-R2017b' mex_flags];
+        mex_flags = ['-R2017b ' mex_flags];
     end
 
     % verbosity
