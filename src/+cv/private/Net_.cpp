@@ -435,10 +435,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         vector<Ptr<Layer> > layers = obj->getLayerInputs(MxArrayToLayerId(rhs[2]));
         plhs[0] = toStruct(layers);
     }
-    else if (method == "deleteLayer") {
+    /*else if (method == "deleteLayer") {
         nargchk(nrhs==3 && nlhs==0);
         obj->deleteLayer(MxArrayToLayerId(rhs[2]));
-    }
+    }*/
     else if (method == "connect") {
         nargchk((nrhs==4 || nrhs==6) && nlhs==0);
         if (nrhs == 4) {

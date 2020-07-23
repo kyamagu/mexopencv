@@ -7,9 +7,11 @@
  */
 #include "mexopencv.hpp"
 #include "opencv2/photo.hpp"
+#include "opencv2/xphoto/tonemap.hpp"
+
 using namespace std;
 using namespace cv;
-
+using namespace xphoto;
 // Persistent objects
 namespace {
 /// Last object id to allocate
