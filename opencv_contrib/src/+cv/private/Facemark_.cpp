@@ -16,7 +16,7 @@ namespace {
 /// Last object id to allocate
 int last_id = 0;
 /// Object container
-map<int,Ptr<Facemark> > obj_;
+map<int,Ptr<FacemarkTrain> > obj_;
 /// name of MATLAB function to evaluate (custom face detector)
 string func;
 
@@ -195,12 +195,12 @@ Ptr<FacemarkAAM> createFacemarkAAM(
  * @param last iterator at the end of the vector range
  * @return smart pointer to created cv::face::Facemark
  */
-Ptr<Facemark> createFacemark(
+Ptr<FacemarkTrain> createFacemark(
     const string& type,
     vector<MxArray>::const_iterator first,
     vector<MxArray>::const_iterator last)
 {
-    Ptr<Facemark> p;
+    Ptr<FacemarkTrain> p;
     if (type == "LBF")
         p = createFacemarkLBF(first, last);
     else if (type == "AAM")
@@ -370,7 +370,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // Big operation switch
-    Ptr<Facemark> obj = obj_[id];
+    Ptr<FacemarkTrain> obj = obj_[id];
     if (obj.empty())
         mexErrMsgIdAndTxt("mexopencv:error", "Object not found id=%d", id);
     if (method == "delete") {
@@ -455,8 +455,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         Mat image(rhs[3].toMat(CV_8U));
         vector<Rect> faces(rhs[4].toVector<Rect>());
         vector<vector<Point2f> > landmarks;
-        bool b = obj->fit(image, faces, landmarks,
-            !configs.empty() ? &configs : NULL);
+        bool b = obj->fit(image, faces, landmarks);
+        //bool b = obj->fit(image, faces, landmarks,
+        //    !configs.empty() ? &configs : NULL);
         plhs[0] = MxArray(landmarks);
         if (nlhs > 1)
             plhs[1] = MxArray(b);

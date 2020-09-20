@@ -226,7 +226,7 @@ cv::Ptr<cv::AgastFeatureDetector> createAgastFeatureDetector(
  * @param last iterator at the end of the vector range
  * @return smart pointer to an instance cv::xfeatures2d::SIFT
  */
-cv::Ptr<cv::xfeatures2d::SIFT> createSIFT(
+cv::Ptr<cv::SIFT> createSIFT(
     std::vector<MxArray>::const_iterator first,
     std::vector<MxArray>::const_iterator last);
 
