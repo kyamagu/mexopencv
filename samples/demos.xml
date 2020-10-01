@@ -1,0 +1,1020 @@
+<?xml version="1.0" encoding="utf-8"?>
+<demos>
+  <name>mexopencv</name>
+  <type>toolbox</type>
+  <icon>HelpIcon.DEMOS</icon>
+  <description>Examples to demonstrate how to use OpenCV in MATLAB.</description>
+  <website><a href="https://github.com/kyamagu/mexopencv">Homepage</a></website>
+
+  <demosection>
+    <label>Video Tutorials (OpenCV 2.4)</label>
+    <demoitem>
+      <label>Tutorial 1: Setup (3 min, 23 sec)</label>
+      <type>video</type>
+      <callback>web('https://www.youtube.com/watch?v=RQHQQWTqT8g&amp;index=1&amp;list=PLmcMMZCV897pofUfG1yH-8fcjpUTFUSaJ','-browser')</callback>
+    </demoitem>
+    <demoitem>
+      <label>Tutorial 2: Face Detection (1 min, 42 sec)</label>
+      <type>video</type>
+      <callback>web('https://www.youtube.com/watch?v=kRu1dLrJoMo&amp;index=2&amp;list=PLmcMMZCV897pofUfG1yH-8fcjpUTFUSaJ','-browser')</callback>
+    </demoitem>
+    <demoitem>
+      <label>Tutorial 3: Webcam Input (1 min, 14 sec)</label>
+      <type>video</type>
+      <callback>web('https://www.youtube.com/watch?v=9VLZ3FpmdjM&amp;index=3&amp;list=PLmcMMZCV897pofUfG1yH-8fcjpUTFUSaJ','-browser')</callback>
+    </demoitem>
+    <demoitem>
+      <label>Tutorial 4: Feature Extraction and Matching (2 min, 21 sec)</label>
+      <type>video</type>
+      <callback>web('https://www.youtube.com/watch?v=IWNcFuAHHyY&amp;index=4&amp;list=PLmcMMZCV897pofUfG1yH-8fcjpUTFUSaJ','-browser')</callback>
+    </demoitem>
+  </demosection>
+
+  <!-- core -->
+  <demosection>
+    <label>core: Core Functionality</label>
+    <demoitem>
+      <label>Rotated Rectangle</label>
+      <type>M-file</type>
+      <source>RotatedRect_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Reading/Writing XML and YAML files</label>
+      <type>M-file</type>
+      <source>FileStorage_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Serialization Functionality</label>
+      <type>M-file</type>
+      <source>file_storage_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Image Blending</label>
+      <type>M-GUI</type>
+      <source>linear_blending_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Bitwise Operations on Images</label>
+      <type>M-file</type>
+      <source>image_bitwise_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Brightness and contrast adjustments</label>
+      <type>M-GUI</type>
+      <source>linear_transform_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Image padding</label>
+      <type>M-GUI</type>
+      <source>padding_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>inRange Thresholding Operations</label>
+      <type>M-GUI</type>
+      <source>threshold_inrange_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Discrete Fourier Transform</label>
+      <type>M-file</type>
+      <source>dft_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Kaleidoscope</label>
+      <type>M-file</type>
+      <source>kaleidoscope_demo</source>
+    </demoitem>
+  </demosection>
+
+  <!-- imgproc -->
+  <demosection>
+    <label>imgproc: Image Processing</label>
+    <demoitem>
+      <label>Demonstration of drawing functions</label>
+      <type>M-file</type>
+      <source>drawing_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Basic Geometric Drawing</label>
+      <type>M-file</type>
+      <source>drawing_basic_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Demonstration of text drawing functions</label>
+      <type>M-file</type>
+      <source>draw_text_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Colormaps</label>
+      <type>M-GUI</type>
+      <source>falsecolor_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Delaunay triangulation</label>
+      <type>M-GUI</type>
+      <source>delaunay2_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Convex Hull demo</label>
+      <type>M-GUI</type>
+      <source>hull_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Retrieve and label connected components from a binary image.</label>
+      <type>M-file</type>
+      <source>contours_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Contours Demo</label>
+      <type>M-file</type>
+      <source>contours2_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Watershed Demo</label>
+      <type>M-GUI</type>
+      <source>watershed_demo_gui</source>
+      <!-- imlincomb -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Contours in OpenCV</label>
+      <type>M-file</type>
+      <source>contours_hierarchy_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Finding contours in an image</label>
+      <type>M-GUI</type>
+      <source>findContours_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Flood-filling in an image</label>
+      <type>M-GUI</type>
+      <source>ffilldemo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Flood-Fill demo</label>
+      <type>M-file</type>
+      <source>floodfill_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Image Thresholding</label>
+      <type>M-file</type>
+      <source>thresholding_demo</source>
+      <!-- imnoise -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Threshold demo</label>
+      <type>M-GUI</type>
+      <source>threshold_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Smoothing Demo</label>
+      <type>M-file</type>
+      <source>smoothing_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Smoothing Images</label>
+      <type>M-file</type>
+      <source>gausian_median_blur_bilateral_filter</source>
+      <!-- normpdf -->
+      <dependency>Statistics and Machine Learning Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Polar Transforms demo</label>
+      <type>M-GUI</type>
+      <source>polar_transforms_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Erosion and Dilation</label>
+      <type>M-GUI</type>
+      <source>morphology_demo_gui1</source>
+    </demoitem>
+    <demoitem>
+      <label>Advanced Morphology Transformations Demo</label>
+      <type>M-GUI</type>
+      <source>morphology_demo_gui2</source>
+    </demoitem>
+    <demoitem>
+      <label>Extracting horizontal and vertical lines using morphology</label>
+      <type>M-file</type>
+      <source>morphology_demo_3</source>
+    </demoitem>
+    <demoitem>
+      <label>Hit-or-Miss Morphological Operation</label>
+      <type>M-file</type>
+      <source>hitmiss_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Creating Bounding boxes and circles for contours</label>
+      <type>M-file</type>
+      <source>generalContours_demo1</source>
+    </demoitem>
+    <demoitem>
+      <label>Creating Bounding rotated boxes and ellipses for contours</label>
+      <type>M-file</type>
+      <source>generalContours_demo2</source>
+    </demoitem>
+    <demoitem>
+      <label>Fit ellipses</label>
+      <type>M-GUI</type>
+      <source>fitellipse_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Robust Line Fitting</label>
+      <type>M-GUI</type>
+      <source>fitline_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Image Moments</label>
+      <type>M-GUI</type>
+      <source>moments_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Gabor Filter demo</label>
+      <type>M-GUI</type>
+      <source>gabor_filter_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Fractalius-like image effect using Gabor filters</label>
+      <type>M-file</type>
+      <source>gabor_demo</source>
+      <!-- montage -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Line Segment Detector demo</label>
+      <type>M-file</type>
+      <source>lsd_lines_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Hough line detector</label>
+      <type>M-file</type>
+      <source>hough_lines_demo</source>
+      <!-- *.png -->
+      <!--<dependency>Image Processing Toolbox</dependency>-->
+    </demoitem>
+    <demoitem>
+      <label>Hough circle detector</label>
+      <type>M-file</type>
+      <source>hough_circles_demo</source>
+      <!-- *.png -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Generalized Hough transform</label>
+      <type>M-file</type>
+      <source>generalized_hough_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Interactive foreground extraction using GrabCut</label>
+      <type>M-GUI</type>
+      <source>grabcut_demo_gui</source>
+      <!-- poly2mask -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Image pyramids for image blending</label>
+      <type>M-file</type>
+      <source>pyramids_blending</source>
+    </demoitem>
+    <demoitem>
+      <label>Laplacian Pyramid Construction and Merging</label>
+      <type>M-GUI</type>
+      <source>lap_pyr_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Image Warping</label>
+      <type>M-GUI</type>
+      <source>warp_perspective_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Interactive Perspective Transformation</label>
+      <type>M-GUI</type>
+      <source>perspective_transform_gui</source>
+      <!-- impoly -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Image Alignment using ECC algorithm</label>
+      <type>M-file</type>
+      <source>image_alignment_demo</source>
+      <!-- imfuse -->
+      <dependency>Computer Vision System Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Corner Detection</label>
+      <type>M-file</type>
+      <source>generic_corner_detector_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Refining Corner Locations</label>
+      <type>M-GUI</type>
+      <source>corner_subpixels_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Template Matching</label>
+      <type>M-file</type>
+      <source>mask_tmpl_demo</source>
+      <!-- *.png -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Phase Correlation</label>
+      <type>M-GUI</type>
+      <source>phase_corr_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Convex Hull</label>
+      <type>M-file</type>
+      <source>convexhull_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Minimum Area Enclosing</label>
+      <type>M-file</type>
+      <source>minarea_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Connected Components</label>
+      <type>M-GUI</type>
+      <source>connected_components_demo_gui</source>
+      <!-- label2rgb -->
+      <!--<dependency>Image Processing Toolbox</dependency>-->
+    </demoitem>
+    <demoitem>
+      <label>Canny Edge Detection</label>
+      <type>M-GUI</type>
+      <source>edge_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Laplacian Edge Detection</label>
+      <type>M-GUI</type>
+      <source>laplace_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Create Binary Mask Interactively</label>
+      <type>M-GUI</type>
+      <source>create_mask_demo_gui</source>
+      <!-- imgetfile -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Create Binary Mask Interactively (IPT)</label>
+      <type>M-file</type>
+      <source>create_mask_ipt_demo</source>
+      <!-- imgca, impoly, makeConstrainToRectFcn -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Interactive Rectangle Selection</label>
+      <type>M-file</type>
+      <source>mouse_and_match_demo</source>
+      <!-- imrect -->
+      <!--<dependency>Image Processing Toolbox</dependency>-->
+    </demoitem>
+    <demoitem>
+      <label>Distance Transform</label>
+      <type>M-GUI</type>
+      <source>distrans_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Intensity Image Histogram</label>
+      <type>M-GUI</type>
+      <source>hist_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Histogram Calculation</label>
+      <type>M-file</type>
+      <source>histogram_calculation_demo</source>
+      <!-- imhist -->
+      <!--<dependency>Image Processing Toolbox</dependency>-->
+    </demoitem>
+    <demoitem>
+      <label>Histogram Equalization</label>
+      <type>M-file</type>
+      <source>histogram_equalization_demo</source>
+      <!-- *.tif, histeq, imhist -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Histogram Comparison</label>
+      <type>M-file</type>
+      <source>histogram_comparison_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>2D Histogram</label>
+      <type>M-file</type>
+      <source>histogram_2d_demo</source>
+      <!-- *.jpg, *.png -->
+      <!--<dependency>Image Processing Toolbox</dependency>-->
+      <!-- hist3 -->
+      <!--<dependency>Statistics and Machine Learning Toolbox</dependency>-->
+    </demoitem>
+    <demoitem>
+      <label>Video Histogram</label>
+      <type>M-GUI</type>
+      <source>color_histogram_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Back Projection</label>
+      <type>M-GUI</type>
+      <source>backproject_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>CAMShift</label>
+      <type>M-GUI</type>
+      <source>camshift_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Histogram-based face tracker with CAMShift</label>
+      <type>M-file</type>
+      <source>camshift_track_demo</source>
+      <!-- vipcolorsegmentation.avi, visionface.avi -->
+      <dependency>Computer Vision System Toolbox</dependency>
+      <!-- imrect -->
+      <!--<dependency>Image Processing Toolbox</dependency>-->
+    </demoitem>
+    <demoitem>
+      <label>CLAHE (Contrast Limited Adaptive Histogram Equalization)</label>
+      <type>M-GUI</type>
+      <source>clahe_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Image Remapping</label>
+      <type>M-file</type>
+      <source>remap_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Fun with remap</label>
+      <type>M-file</type>
+      <source>remap_fun_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Image Affine Transformation</label>
+      <type>M-file</type>
+      <source>warp_affine_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Image Pyramids</label>
+      <type>M-GUI</type>
+      <source>pyramids_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Sobel Derivatives</label>
+      <type>M-file</type>
+      <source>sobel_derivatives_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Laplace Operator</label>
+      <type>M-file</type>
+      <source>laplace_operator_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Point Polygon Test</label>
+      <type>M-file</type>
+      <source>pointPolygonTest_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Points Inside Convex Polygon</label>
+      <type>M-file</type>
+      <source>points_polygon_demo</source>
+      <!-- gscatter -->
+      <dependency>Statistics and Machine Learning Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Image Segmentation with Distance Transform and Watershed Algorithm</label>
+      <type>M-file</type>
+      <source>watershed_segmentation_demo</source>
+      <!-- tabulate -->
+      <dependency>Statistics and Machine Learning Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Wiener Deconvolution for Image Deblurring</label>
+      <type>M-GUI</type>
+      <source>weiner_deconvolution_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Texture flow direction estimation</label>
+      <type>M-file</type>
+      <source>texture_flow_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Coherence-Enhancing Filtering</label>
+      <type>M-GUI</type>
+      <source>coherence_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Multi-Scale Turing Patterns Generator</label>
+      <type>M-file</type>
+      <source>turing_patterns_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Hi-Resolution Image Navigation</label>
+      <type>M-GUI</type>
+      <source>hi_res_browse_demo</source>
+      <!-- concordaerial.png, axes2pix -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Squares Detector</label>
+      <type>M-file</type>
+      <source>squares_detector_demo</source>
+    </demoitem>
+  </demosection>
+
+  <!-- imgcodecs -->
+  <demosection>
+    <label>imgcodecs: Image File Reading and Writing</label>
+    <demoitem>
+      <label>Image similarity under lossy compression</label>
+      <type>M-file</type>
+      <source>image_similarity_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Create PNG image with alpha transparency</label>
+      <type>M-file</type>
+      <source>rgba_png_demo</source>
+    </demoitem>
+  </demosection>
+
+  <!-- videoio -->
+  <demosection>
+    <label>videoio: Media I/O</label>
+    <demoitem>
+      <label>Video Capture</label>
+      <type>M-GUI</type>
+      <source>capture_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Creating a video</label>
+      <type>M-file</type>
+      <source>video_write_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Synthetic video</label>
+      <type>M-file</type>
+      <source>synth_video_demo</source>
+    </demoitem>
+  </demosection>
+
+  <!-- video -->
+  <demosection>
+    <label>video: Video Analysis</label>
+    <demoitem>
+      <label>Segment objects in Background Subtractor</label>
+      <type>M-GUI</type>
+      <source>segment_objects_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Tracking of rotating point using Kalman filter</label>
+      <type>M-GUI</type>
+      <source>kalman_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Dual TV-L1 Optical Flow</label>
+      <type>M-file</type>
+      <source>tvl1_optical_flow_demo</source>
+      <!-- implay, imshowpair -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Farneback Optical Flow</label>
+      <type>M-GUI</type>
+      <source>fback_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Dense Optical Flow</label>
+      <type>M-GUI</type>
+      <source>opt_flow_demo</source>
+      <!-- visiontraffic.avi -->
+      <!--<dependency>Computer Vision System Toolbox</dependency>-->
+    </demoitem>
+    <demoitem>
+      <label>Sparse Optical Flow</label>
+      <type>M-GUI</type>
+      <source>lucas_kanade_demo</source>
+      <!-- visiontraffic.avi -->
+      <!--<dependency>Computer Vision System Toolbox</dependency>-->
+    </demoitem>
+    <demoitem>
+      <label>Lucas-Kanade Sparse Optical Flow</label>
+      <type>M-GUI</type>
+      <source>pyrlk_optical_flow_demo</source>
+      <!-- visiontraffic.avi -->
+      <!--<dependency>Computer Vision System Toolbox</dependency>-->
+    </demoitem>
+    <demoitem>
+      <label>Lucas-Kanade Optical Flow</label>
+      <type>M-GUI</type>
+      <source>lk_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>Lucas-Kanade Tracker</label>
+      <type>M-GUI</type>
+      <source>lk_track_demo</source>
+      <!-- visiontraffic.avi -->
+      <!--<dependency>Computer Vision System Toolbox</dependency>-->
+    </demoitem>
+    <demoitem>
+      <label>Lucas-Kanade Homography Tracker</label>
+      <type>M-GUI</type>
+      <source>lk_homography_demo</source>
+      <!-- visiontraffic.avi -->
+      <!--<dependency>Computer Vision System Toolbox</dependency>-->
+    </demoitem>
+  </demosection>
+
+  <!-- calib3d -->
+  <demosection>
+    <label>calib3d: Camera Calibration and 3D Reconstruction</label>
+    <demoitem>
+      <label>Collect Calibration Pattern Images</label>
+      <type>M-file</type>
+      <source>calibration_capture_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Camera Calibration</label>
+      <type>M-file</type>
+      <source>calibration_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Pose Estimation</label>
+      <type>M-file</type>
+      <source>calibration_pose_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Stereo Calibration with square chessboard</label>
+      <type>M-file</type>
+      <source>stereo_calibration_demo</source>
+      <!-- *.png -->
+      <!--<dependency>Computer Vision System Toolbox</dependency>-->
+    </demoitem>
+    <demoitem>
+      <label>Stereo Image Matching</label>
+      <type>M-file</type>
+      <source>stereo_match_demo</source>
+      <!-- pointCloud, pcshow, pcwrite -->
+      <dependency>Computer Vision System Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Epipolar Geometry</label>
+      <type>M-file</type>
+      <source>epipolar_geometry_demo</source>
+      <!-- imshowpair -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+  </demosection>
+
+  <!-- features2d -->
+  <demosection>
+    <label>feature2d: 2D Features Framework</label>
+    <demoitem>
+      <label>FAST Algorithm for Corner Detection</label>
+      <type>M-file</type>
+      <source>feature_detector_fast_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>ORB (Oriented FAST and Rotated BRIEF)</label>
+      <type>M-file</type>
+      <source>orb_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Feature Matching + Homography to find a known object</label>
+      <type>M-file</type>
+      <source>feature_homography_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Affine invariant feature-based image matching</label>
+      <type>M-file</type>
+      <source>asift_demo</source>
+      <!-- impoly -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>AKAZE local features matching</label>
+      <type>M-file</type>
+      <source>akaze_match_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>AKAZE and ORB planar tracking</label>
+      <type>M-file</type>
+      <source>planar_tracker_demo</source>
+      <!-- imrect -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Detect, Compute, and Match Descriptors</label>
+      <type>M-file</type>
+      <source>descriptors_compute_match_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Blob Detection</label>
+      <type>M-file</type>
+      <source>detect_blob_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Maximally Stable Extremal Regions (MSER)</label>
+      <type>M-file</type>
+      <source>mser_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Multi-target planar tracking</label>
+      <type>M-file</type>
+      <source>plane_tracker_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Feature homography based planar tracking</label>
+      <type>M-file</type>
+      <source>feature_homography_track_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Planar augmented reality</label>
+      <type>M-file</type>
+      <source>plane_ar_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Correlation-based Tracking using MOSSE Filters</label>
+      <type>M-file</type>
+      <source>mosse_demo</source>
+    </demoitem>
+  </demosection>
+
+  <!-- objdetect -->
+  <demosection>
+    <label>objdetect: Object Detection</label>
+    <demoitem>
+      <label>Face Detection</label>
+      <type>M-GUI</type>
+      <source>facedetect</source>
+    </demoitem>
+    <demoitem>
+      <label>Face and Eyes Detection</label>
+      <type>M-GUI</type>
+      <source>face_eyes_detect_demo</source>
+      <!-- imcrop -->
+      <!--<dependency>Image Processing Toolbox</dependency>-->
+    </demoitem>
+    <demoitem>
+      <label>Facial Features Detection</label>
+      <type>M-file</type>
+      <source>facial_features_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Smile Detection</label>
+      <type>M-GUI</type>
+      <source>smiledetect_demo</source>
+      <!-- imcrop -->
+      <!--<dependency>Image Processing Toolbox</dependency>-->
+    </demoitem>
+    <demoitem>
+      <label>DBT Face Detection</label>
+      <type>M-GUI</type>
+      <source>dbt_face_detection_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>People Detection using HoG</label>
+      <type>M-GUI</type>
+      <source>peopledetect_demo</source>
+    </demoitem>
+  </demosection>
+
+  <!-- dnn -->
+  <demosection>
+    <label>dnn: Deep Neural Network module</label>
+    <demoitem>
+      <label>Deep Neural Network with Caffe models</label>
+      <type>M-file</type>
+      <source>caffe_googlenet_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Fully-Convolutional Networks for Semantic Segmentation</label>
+      <type>M-file</type>
+      <source>fcn_semsegm_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>DNN Image Classification</label>
+      <type>M-file</type>
+      <source>dnn_image_classification_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>DNN Semantic Segmentation</label>
+      <type>M-file</type>
+      <source>dnn_semantic_segmentation_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>DNN Object Detection</label>
+      <type>M-file</type>
+      <source>dnn_object_detection_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>DNN Face Detection</label>
+      <type>M-file</type>
+      <source>dnn_face_detector</source>
+    </demoitem>
+    <demoitem>
+      <label>DNN Face Detection and Recognition</label>
+      <type>M-file</type>
+      <source>dnn_face_recognition</source>
+    </demoitem>
+    <demoitem>
+      <label>DNN: Style Transfer</label>
+      <type>M-file</type>
+      <source>dnn_style_transfer</source>
+    </demoitem>
+  </demosection>
+
+  <!-- ml -->
+  <demosection>
+    <label>ml: Machine Learning</label>
+    <demoitem>
+      <label>K-Means Clustering</label>
+      <type>M-file</type>
+      <source>kmeans_demo</source>
+      <!-- gscatter -->
+      <dependency>Statistics and Machine Learning Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>EM Clustering</label>
+      <type>M-file</type>
+      <source>em_demo</source>
+      <!-- gscatter -->
+      <dependency>Statistics and Machine Learning Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Gaussian Mixture Model (GMM)</label>
+      <type>M-file</type>
+      <source>gaussian_mix_demo</source>
+      <!-- mvnrnd, cholcov -->
+      <dependency>Statistics and Machine Learning Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>K-Means Color Quantization</label>
+      <type>M-file</type>
+      <source>kmeans_color_quantize_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Comparison of different classifiers on the same dataset</label>
+      <type>M-file</type>
+      <source>classification_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Showcase different classifiers</label>
+      <type>M-file</type>
+      <source>ml_demo</source>
+      <!-- gscatter -->
+      <dependency>Statistics and Machine Learning Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Logistic Regression</label>
+      <type>M-file</type>
+      <source>logistic_regression_demo</source>
+      <!-- montage -->
+      <dependency>Image Processing Toolbox</dependency>
+      <!-- confusionmat -->
+      <dependency>Statistics and Machine Learning Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Support Vector Machines (SVM)</label>
+      <type>M-file</type>
+      <source>svm_intro_demo</source>
+      <!-- tabulate -->
+      <dependency>Statistics and Machine Learning Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>K-Nearest Neighbors (KNN)</label>
+      <type>M-file</type>
+      <source>knn_demo</source>
+      <!-- tabulate -->
+      <dependency>Statistics and Machine Learning Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Principal Component Analysis (PCA)</label>
+      <type>M-file</type>
+      <source>pca_intro_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>PCA for dimensionality reduction</label>
+      <type>M-file</type>
+      <source>pca_demo</source>
+      <!-- montage -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>SVMSGD Interactive Classification</label>
+      <type>M-GUI</type>
+      <source>train_svmsgd_demo_gui</source>
+    </demoitem>
+    <demoitem>
+      <label>OCR of hand-written digits using KNN</label>
+      <type>M-file</type>
+      <source>knn_ocr_digits_demo</source>
+      <!-- montage -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>OCR of English letters using KNN</label>
+      <type>M-file</type>
+      <source>knn_ocr_letters_demo</source>
+      <!-- tabulate -->
+      <dependency>Statistics and Machine Learning Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>OCR of hand-written digits using HoG and SVM</label>
+      <type>M-file</type>
+      <source>svm_hog_ocr_digits_demo</source>
+      <!-- extractHOGFeatures -->
+      <dependency>Computer Vision System Toolbox</dependency>
+      <!-- tabulate -->
+      <dependency>Statistics and Machine Learning Toolbox</dependency>
+      <!-- imtool, montage -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+  </demosection>
+
+  <!-- photo -->
+  <demosection>
+    <label>photo: Computational Photography</label>
+    <demoitem>
+      <label>High Dynamic Range Imaging</label>
+      <type>M-file</type>
+      <source>hdr_imaging_demo</source>
+      <!-- *.jpg, montage, makehdr, hdrread, tonemap -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Inpainting</label>
+      <type>M-GUI</type>
+      <source>inpaint_demo</source>
+      <!-- imgetfile, axes2pix -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+    <demoitem>
+      <label>Non-Photorealistic Rendering</label>
+      <type>M-file</type>
+      <source>npr_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Seamless Cloning</label>
+      <type>M-file</type>
+      <source>cloning_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Non-Local Means Image Denoising</label>
+      <type>M-file</type>
+      <source>non_local_means_demo</source>
+      <!-- imnoise, implay, *.tif -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+  </demosection>
+
+  <!-- stitching -->
+  <demosection>
+    <label>stitching: Images Stitching</label>
+    <demoitem>
+      <label>Simple rotation model images stitcher</label>
+      <type>M-file</type>
+      <source>stitching_demo</source>
+    </demoitem>
+    <demoitem>
+      <label>Rotation model images stitcher</label>
+      <type>M-file</type>
+      <source>stitching_detailed_demo</source>
+      <!-- *.jpg -->
+      <dependency>Computer Vision System Toolbox</dependency>
+      <!-- montage -->
+      <dependency>Image Processing Toolbox</dependency>
+    </demoitem>
+  </demosection>
+
+  <!-- shape -->
+  <demosection>
+    <label>shape: Shape Distance and Matching</label>
+    <demoitem>
+      <label>Shape context for shape matching</label>
+      <type>M-file</type>
+      <source>shape_context_demo</source>
+    </demoitem>
+  </demosection>
+
+  <!-- superres -->
+  <demosection>
+    <label>superres: Super Resolution</label>
+    <demoitem>
+      <label>Super Resolution algorithms for video sequence</label>
+      <type>M-file</type>
+      <source>super_resolution_demo</source>
+    </demoitem>
+  </demosection>
+
+  <!-- videostab -->
+  <demosection>
+    <label>videostab: Video Stabilization</label>
+    <demoitem>
+      <label>Video Stabilizer</label>
+      <type>M-file</type>
+      <source>videostab_demo</source>
+      <!-- shaky_car.avi -->
+      <dependency>Computer Vision System Toolbox</dependency>
+    </demoitem>
+  </demosection>
+
+</demos>
