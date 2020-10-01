@@ -345,16 +345,18 @@ function files = download_wiki(opts)
 
     % download from GitHub
     % (git clone https://github.com/kyamagu/mexopencv.wiki.git)
-    url = 'https://rawgit.com/wiki/kyamagu/mexopencv/';
+    % rawgit is decomissioned singe 2019.
+    url = 'https://raw.githubusercontent.com/wiki/kyamagu/mexopencv/';
     if ~isdir(dname), mkdir(dname); end
     copyfile(fullfile(mexopencv.root(), 'README.markdown'), fullfile(dname, files{1}));
+    
     for i=2:numel(files)
-        fname = fullfile(dname, files{i});
-        if exist(fname, 'file') ~= 2 % || opts.Force
-            if opts.Verbose, fprintf('Downloading %s...\n', files{i}); end
-            urlwrite([url files{i}], fname);
-        end
-    end
+         fname = fullfile(dname, files{i});
+         if exist(fname, 'file') ~= 2 % || opts.Force
+             if opts.Verbose, fprintf('Downloading %s...\n', files{i}); end
+             urlwrite([url files{i}], fname);
+         end
+     end
 end
 
 function generate_wiki(opts)
