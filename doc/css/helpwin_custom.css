@@ -1,0 +1,113 @@
+/* global font */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic|Open+Sans+Condensed:700|Droid+Serif);
+body {
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    white-space: normal;
+}
+
+/* headers */
+h1, h2, h3, h4, h5, h6 {
+    color: #990000;
+}
+h1, h2, h3 {
+    border-bottom: 1px dotted black;
+}
+
+/* all code sections */
+pre, code, tt, kbd, samp {
+    font-family: Consolas, 'DejaVu Sans Mono', Menlo, Courier, monospace;
+    font-size: 1em;
+    white-space: pre;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -o-pre-wrap;
+}
+
+/* references */
+blockquote {
+    font-family: 'Droid Serif', 'DejaVu Serif', Georgia, serif;
+    line-height: 140%;
+    text-align: justify;
+    padding: 1px 10px;
+    background-color: #F9F9F9;
+    border-left: 10px solid #CCC;
+    border-right: 3px solid #CCC;
+       -moz-box-shadow: 2px 2px 15px #CCC;
+    -webkit-box-shadow: 2px 2px 15px #CCC;
+            box-shadow: 2px 2px 15px #CCC;
+}
+
+/* block code */
+pre {
+    line-height: 140%;
+    margin: 0em 2em;
+    padding: 0.5em 1em;
+    background-color: #E7EBF7;
+       -moz-box-shadow: 2px 2px 15px #CCC;
+    -webkit-box-shadow: 2px 2px 15px #CCC;
+            box-shadow: 2px 2px 15px #CCC;
+}
+
+/* inline code */
+code {
+    background-color: #FAF8F0;
+}
+pre code {
+    background-color: transparent; /* HACK */
+    background-color: inherit;
+}
+
+.helpcontent {
+    white-space: normal;
+}
+
+/* function name in title */
+.title {
+    font-family: 'Open Sans Condensed', Helvetica, Arial, sans-serif;
+    font-size: 2.6em;
+    font-weight: bold;
+}
+/* H1 line: subtitle underneath function name */
+/* p.h1line */
+.helpcontent > p:first-child {
+    font-size: 1.25em;
+    font-style: italic;
+    margin: 10px 20px 20px 20px;
+}
+
+/* "See also" section */
+.footerlinktitle {
+    font-size: 1.2em;
+    font-weight: bold;
+    border-top: solid #DDD thin;
+    margin-top: 30pt;
+    padding-top: 10pt;
+}
+.footerlink {
+    margin-left: 20px;
+}
+
+/* hyperlinks inside code or in SeeAlso section */
+code a, .footerlink a {
+    text-decoration: none;
+}
+code a:hover, .footerlink a:hover {
+    text-decoration: underline;
+}
+
+/* table of functions in index page */
+.table {
+    border-collapse: collapse;
+}
+.table td, .table th {
+    border: 1px solid #eee;
+    padding: 4px 10px;
+}
+.table thead {
+    background-color: #ddd;
+    color: #666;
+    font-weight: bold;
+    line-height: 1.3;
+    cursor: pointer;
+}

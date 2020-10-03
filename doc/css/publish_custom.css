@@ -1,0 +1,86 @@
+/* Stylesheet extracted and customized from: */
+/* C:\Program Files\MATLAB\R2017a\toolbox\matlab\codetools\private\mxdom2simplehtml.xsl */
+
+/* css reset */
+
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}
+body{line-height:1}
+ol,ul{list-style:none}
+blockquote,q{quotes:none}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}
+:focus{outine:0}
+ins{text-decoration:none}
+del{text-decoration:line-through}
+table{border-collapse:collapse;border-spacing:0}
+
+/* page */
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; font-family:Arial, Helvetica, sans-serif; font-size:10px; line-height:140%; color:#000; background:#fff none; overflow-y:scroll; }
+
+p { margin:0px 0px 20px; }
+
+.content { padding:20px; font-size:1.2em; line-height:140%; }
+
+/* headers */
+
+h1 { margin:0px 0px 25px; font-size:1.5em; font-weight:normal; line-height:100%; color:#d55000; }
+h2 { margin:0px 0px 8px; border-bottom:1px solid #d6d4d4; font-size:1.2em; font-weight:bold; line-height:140%; }
+h3 { margin:0px 0px 5px; font-size:1.1em; font-weight:bold; line-height:140%; }
+
+/* hyperlinks */
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+/* lists */
+
+ul { margin:0px 0px 20px 23px; list-style:square; }
+ul li { margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+/* images */
+
+img:not(.equation) { margin:0px 5px 20px; }
+
+/* tables */
+
+table th, table td { padding:7px 5px; border:1px solid #d6d4d4; text-align:left; }
+table th { vertical-align:middle; font-weight:bold; }
+table td { vertical-align:top; }
+
+/* code */
+
+pre, code { font-size:1em; }
+tt { font-size:1.2em; }
+pre { padding:10px; margin:0px 0px 20px; }
+pre.code-matlab { border:1px solid #d3d3d3; }
+pre.codeinput { border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput, pre.code-matlab { width:100%; word-wrap:break-word; } }
+
+/* syntax highlighting */
+
+span.keyword { color:#0000FF }
+span.string { color:#A020F0 }
+span.comment { color:#228B22 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+/* footer */
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; font-style:italic; color:#878787; }
+.footer p { margin:0; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
