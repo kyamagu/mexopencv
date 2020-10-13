@@ -273,12 +273,12 @@ function mex_flags = mex_options(opts)
     end
 
     % real/imaginary storage format for complex arrays
-    if ~mexopencv.isOctave() && ~verLessThan('matlab', '9.4')
-        % keep using the "separate complex storage", as opposed to the
-        % "interleaved complex storage" introduced in R2018a
-        % (see MX_HAS_INTERLEAVED_COMPLEX)
-        mex_flags = ['-R2017b' mex_flags];
-    end
+%     if ~mexopencv.isOctave() && ~verLessThan('matlab', '9.4')
+%         % keep using the "separate complex storage", as opposed to the
+%         % "interleaved complex storage" introduced in R2018a
+%         % (see MX_HAS_INTERLEAVED_COMPLEX)
+%         mex_flags = ['-R2017b ' mex_flags];
+%     end
 
     % verbosity
     if opts.verbose > 1
@@ -382,6 +382,8 @@ function s = compiler_str()
         elseif strcmp(cc.Manufacturer, 'Microsoft')
             if ~isempty(strfind(cc.Name, 'Visual'))  % Visual Studio
                 switch cc.Version
+                    case '16.0'
+                        s = 'vc15';    % VS2019
                     case '15.0'
                         s = 'vc15';    % VS2017
                     case '14.0'
