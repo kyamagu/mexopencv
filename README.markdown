@@ -159,8 +159,7 @@ Currently, the recommended approach to install OpenCV in OS X is
 [Homebrew][11]. Install Homebrew first, and do the following to install
 OpenCV 3:
 
-    $ brew install pkg-config homebrew/science/opencv3
-    $ brew link opencv3
+    $ brew install pkg-config opencv@3
 
 Otherwise, you can build OpenCV from [source][7], similar to the Linux case.
 
