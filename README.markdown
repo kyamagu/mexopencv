@@ -12,7 +12,7 @@ MATLAB's native data type and OpenCV data types. The package is suitable for
 fast prototyping of OpenCV application in MATLAB, use of OpenCV as an external
 toolbox in MATLAB, and development of custom MEX functions.
 
-The current version of mexopencv is compatible with OpenCV 3.4.1.
+The current version of mexopencv is compatible with OpenCV 3.4.11.
 
 For previous OpenCV 3.x versions, checkout the corresponding tags:
 
