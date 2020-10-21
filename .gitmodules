@@ -1,0 +1,6 @@
+[submodule "build/contrib"]
+	path = build/contrib
+	url = https://github.com/opencv/opencv_contrib.git
+[submodule "build/opencv"]
+	path = build/opencv
+	url = https://github.com/opencv/opencv.git

@@ -1,0 +1,1583 @@
+<deployment-project plugin="plugin.toolbox" plugin-version="1.0">
+  <configuration build-checksum="409401322" file="C:\temp\build_opencv\mexopencv_win64.prj" location="C:\temp\build_opencv" name="mexopencv_win64" target="target.toolbox" target-name="Package Toolbox">
+    <param.appname>mexopencv</param.appname>
+    <param.authnamewatermark>Philippe Gagné</param.authnamewatermark>
+    <param.email />
+    <param.company />
+    <param.summary>Access OpenCV from Matlab.</param.summary>
+    <param.description />
+    <param.screenshot>${PROJECT_ROOT}\OpenCV_Logo.png</param.screenshot>
+    <param.version>3.4.11.4</param.version>
+    <param.output>${PROJECT_ROOT}\mexopencv.mltbx</param.output>
+    <param.products.name />
+    <param.products.id />
+    <param.products.version />
+    <param.platforms />
+    <param.guid>480a9483-bfbe-41ce-9aed-6cc0e4f0d36d</param.guid>
+    <param.exclude.filters>% List files contained in your toolbox folder that you would like to exclude
+% from packaging.  Excludes should be listed relative to the toolbox folder.
+% Some examples of how to specify excludes are provided below:
+%
+% A single file in the toolbox folder:
+% .svn
+%
+% A single file in a subfolder of the toolbox folder:
+% example/.svn
+%
+% All files in a subfolder of the toolbox folder:
+% example/*
+%
+% All files of a certain name in all subfolders of the toolbox folder:
+% **/.svn
+%
+% All files matching a pattern in all subfolders of the toolbox folder:
+% **/*.bak
+%
+**/.DS_Store
+.ci/
+.git/
+.*
+lib/
+appveyor.yml
+opencv_contrib/+cv
+test/dnn/A*
+test/dnn/C*
+test/dnn/E*
+test/dnn/F*
+test/dnn/I*
+test/dnn/M*
+test/dnn/O*
+test/dnn/R*
+test/dnn/S*
+test/dnn/V*</param.exclude.filters>
+    <param.exclude.pcodedmfiles>true</param.exclude.pcodedmfiles>
+    <param.examples>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;examples&gt;
+   &lt;exampleCategory name="saliency: Saliency API"&gt;
+      &lt;example name="Saliency Algorithms" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/computeSaliency_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="dnn_objdetect: DNN used for Object Detection"&gt;
+      &lt;example name="DNN for image classification" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/dnn_img_classify_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Object Detection using Convolutional Neural Networks" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/dnn_objdetect_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="optflow: Optical Flow Algorithms"&gt;
+      &lt;example name="Optical Flow Evaluation" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/optical_flow_evaluation_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/optical_flow_evaluation_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/optical_flow_evaluation_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/optical_flow_evaluation_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/optical_flow_evaluation_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/optical_flow_evaluation_demo_04.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/optical_flow_evaluation_demo_05.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/optical_flow_evaluation_demo_06.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/optical_flow_evaluation_demo_07.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/optical_flow_evaluation_demo_08.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/optical_flow_evaluation_demo_09.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/optical_flow_evaluation_demo_10.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/optical_flow_evaluation_demo_11.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Global Patch Collider" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/gpc_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/gpc_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/gpc_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/gpc_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/gpc_demo_03.png&lt;/file&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="Video Tutorials (OpenCV 2.4)"&gt;
+      &lt;example name="Tutorial 1: Setup (3 min, 23 sec)" type="html"&gt;
+         &lt;file type="source"/&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Tutorial 2: Face Detection (1 min, 42 sec)" type="html"&gt;
+         &lt;file type="source"/&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Tutorial 3: Webcam Input (1 min, 14 sec)" type="html"&gt;
+         &lt;file type="source"/&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Tutorial 4: Feature Extraction and Matching (2 min, 21 sec)" type="html"&gt;
+         &lt;file type="source"/&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="aruco: ArUco Marker Detection"&gt;
+      &lt;example name="ArUco Marker Image" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/aruco_create_marker_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/aruco_create_marker_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/aruco_create_marker_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Detection of ArUco Markers" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/aruco_detect_markers_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="ArUco Grid Board Image" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/aruco_create_board_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/aruco_create_board_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/aruco_create_board_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Detection of ArUco Board" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/aruco_detect_board_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="ChArUco Board Image" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/aruco_create_board_charuco_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/aruco_create_board_charuco_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/aruco_create_board_charuco_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Detection of ChArUco Corners" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/aruco_detect_board_charuco_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="ChArUco Diamond Image" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/aruco_create_diamond_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/aruco_create_diamond_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/aruco_create_diamond_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Detection of Diamond Markers" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/aruco_detect_diamonds_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Camera Calibration using ArUco Board" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/aruco_calibrate_camera_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Camera Calibration using ChArUco Board" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/aruco_calibrate_camera_charuco_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="ximgproc: Extended Image Processing"&gt;
+      &lt;example name="Superpixels Segmentation" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/superpixels_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/superpixels_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/superpixels_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Line Finding with the Fast Hough transform" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/fast_hough_transform_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/fast_hough_transform_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/fast_hough_transform_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/fast_hough_transform_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/fast_hough_transform_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/fast_hough_transform_demo_04.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Structured Forests for Fast Edge Detection" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/structured_edge_detection_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/structured_edge_detection_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/structured_edge_detection_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Graph-Based Image Segmentation" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/graphsegmentation_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/graphsegmentation_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/graphsegmentation_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Niblack Thresholding" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/niblack_thresholding_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/niblack_thresholding_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/niblack_thresholding_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Domain Transform Filter" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/dtFilter_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Disparity Map Filtering" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/disparity_filtering_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/disparity_filtering_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/disparity_filtering_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Fast Line Detector" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/fld_lines_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Perona-Malik Anisotropic Diffusion" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/anisodiff_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Pei&amp;amp;Lin Normalization" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/peilin_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/peilin_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/peilin_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Bright edges detection" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/brightedges_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Fourier Descriptors" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/fourier_descriptors_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="objdetect: Object Detection"&gt;
+      &lt;example name="Face Detection" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/facedetect.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Face and Eyes Detection" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/face_eyes_detect_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Facial Features Detection" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/facial_features_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/facial_features_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/facial_features_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Smile Detection" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/smiledetect_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="DBT Face Detection" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/dbt_face_detection_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="People Detection using HoG" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/peopledetect_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="plot: Plot function for Mat data"&gt;
+      &lt;example name="Plotting demo" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/plotting_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/plotting_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/plotting_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/plotting_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/plotting_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/plotting_demo_04.png&lt;/file&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="xphoto: Additional Photo Processing Algorithms"&gt;
+      &lt;example name="White Balancing" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/color_balance_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/color_balance_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/color_balance_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="photo: Computational Photography"&gt;
+      &lt;example name="High Dynamic Range Imaging" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/hdr_imaging_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/hdr_imaging_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/hdr_imaging_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/hdr_imaging_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/hdr_imaging_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/hdr_imaging_demo_04.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/hdr_imaging_demo_05.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Inpainting" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/inpaint_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Non-Photorealistic Rendering" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/npr_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/npr_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/npr_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/npr_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/npr_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/npr_demo_04.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Seamless Cloning" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/cloning_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/cloning_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/cloning_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/cloning_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/cloning_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/cloning_demo_04.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/cloning_demo_05.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/cloning_demo_06.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Non-Local Means Image Denoising" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/non_local_means_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="feature2d: 2D Features Framework"&gt;
+      &lt;example name="FAST Algorithm for Corner Detection" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/feature_detector_fast_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/feature_detector_fast_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/feature_detector_fast_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="ORB (Oriented FAST and Rotated BRIEF)" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/orb_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/orb_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/orb_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Feature Matching + Homography to find a known object" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/feature_homography_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/feature_homography_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/feature_homography_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/feature_homography_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/feature_homography_demo_03.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Affine invariant feature-based image matching" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/asift_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="AKAZE local features matching" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/akaze_match_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/akaze_match_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/akaze_match_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="AKAZE and ORB planar tracking" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/planar_tracker_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Detect, Compute, and Match Descriptors" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/descriptors_compute_match_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/descriptors_compute_match_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_04.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_05.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_06.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_07.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_08.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_09.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_10.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_11.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_12.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_13.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_14.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_15.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_16.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_17.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_18.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_19.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/descriptors_compute_match_demo_20.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Blob Detection" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/detect_blob_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/detect_blob_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/detect_blob_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/detect_blob_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/detect_blob_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/detect_blob_demo_04.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/detect_blob_demo_05.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/detect_blob_demo_06.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Maximally Stable Extremal Regions (MSER)" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/mser_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Multi-target planar tracking" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/plane_tracker_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Feature homography based planar tracking" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/feature_homography_track_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Planar augmented reality" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/plane_ar_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Correlation-based Tracking using MOSSE Filters" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/mosse_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="datasets: Framework for Working with Different Datasets"&gt;
+      &lt;example name="The MNIST dataset of handwritten digits" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/dataset_mnist_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/dataset_mnist_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/dataset_mnist_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/dataset_mnist_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="calib3d: Camera Calibration and 3D Reconstruction"&gt;
+      &lt;example name="Collect Calibration Pattern Images" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/calibration_capture_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Camera Calibration" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/calibration_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/calibration_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/calibration_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/calibration_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/calibration_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/calibration_demo_04.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/calibration_demo_05.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/calibration_demo_06.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Pose Estimation" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/calibration_pose_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/calibration_pose_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/calibration_pose_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/calibration_pose_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Stereo Calibration with square chessboard" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/stereo_calibration_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/stereo_calibration_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/stereo_calibration_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/stereo_calibration_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/stereo_calibration_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/stereo_calibration_demo_04.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/stereo_calibration_demo_05.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Stereo Image Matching" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/stereo_match_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/stereo_match_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/stereo_match_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/stereo_match_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/stereo_match_demo_03.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Epipolar Geometry" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/epipolar_geometry_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/epipolar_geometry_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/epipolar_geometry_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="hfs: Hierarchical Feature Selection for Efficient Image Segmentation"&gt;
+      &lt;example name="Image Segmentation using Hierachical Feature Selection (HFS)" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/hfs_segment_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/hfs_segment_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/hfs_segment_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/hfs_segment_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="videoio: Media I/O"&gt;
+      &lt;example name="Video Capture" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/capture_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Creating a video" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/video_write_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Synthetic video" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/synth_video_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="bgsegm: Improved Background-Foreground Segmentation Methods"&gt;
+      &lt;example name="Background Subtractor" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/BackgroundSubtractorDemo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Evaluation of background subtraction algorithms on synthetic sequence" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/bgsegm_synthetic_seq_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="dnn: Deep Neural Network module"&gt;
+      &lt;example name="Deep Neural Network with Caffe models" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/caffe_googlenet_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/caffe_googlenet_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/caffe_googlenet_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Fully-Convolutional Networks for Semantic Segmentation" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/fcn_semsegm_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/fcn_semsegm_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/fcn_semsegm_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/fcn_semsegm_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="DNN Image Classification" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/dnn_image_classification_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/dnn_image_classification_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/dnn_image_classification_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="DNN Semantic Segmentation" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/dnn_semantic_segmentation_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/dnn_semantic_segmentation_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/dnn_semantic_segmentation_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/dnn_semantic_segmentation_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="DNN Object Detection" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/dnn_object_detection_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="DNN Face Detection" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/dnn_face_detector.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="DNN Face Detection and Recognition" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/dnn_face_recognition.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="DNN: Style Transfer" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/dnn_style_transfer.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/dnn_style_transfer.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/dnn_style_transfer_01.png&lt;/file&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="face: Face Analysis"&gt;
+      &lt;example name="Face recognition" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/facerec_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Face landmark detection in an image" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/facemark_kazemi_detect_img_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Face landmark detection in a video" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/facemark_kazemi_detect_vid_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Training face landmark detector" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/facemark_kazemi_train_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Parameters for training face landmark detector" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/facemark_kazemi_train_config_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Facemark AAM training demo" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/facemark_aam_train_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Facemark LBF training demo" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/facemark_lbf_train_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Face landmark detection in a video (LBF)" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/facemark_lbf_fitting_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Face swapping using face landmark detection" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/face_swapping_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="xfeatures2d: Extra 2D Features Framework"&gt;
+      &lt;example name="Introduction to SIFT (Scale-Invariant Feature Transform)" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/SIFT_detector.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Introduction to SURF (Speeded-Up Robust Features)" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/SURF_detector.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/SURF_detector.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/SURF_detector_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/SURF_detector_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/SURF_detector_03.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="BRIEF (Binary Robust Independent Elementary Features)" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/descriptor_extractor_brief_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Feature Matching" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/SURF_descriptor.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/SURF_descriptor.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/SURF_descriptor_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/SURF_descriptor_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/SURF_descriptor_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/SURF_descriptor_04.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/SURF_descriptor_05.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/SURF_descriptor_06.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="GMS matching strategy (image)" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/gms_matcher_img_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/opencv_contrib/samples/html/gms_matcher_img_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/opencv_contrib/samples/html/gms_matcher_img_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="GMS matching strategy (video)" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/gms_matcher_vid_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="core: Core Functionality"&gt;
+      &lt;example name="Rotated Rectangle" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/RotatedRect_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/RotatedRect_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/RotatedRect_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Reading/Writing XML and YAML files" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/FileStorage_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Serialization Functionality" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/file_storage_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Image Blending" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/linear_blending_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Bitwise Operations on Images" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/image_bitwise_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/image_bitwise_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/image_bitwise_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/image_bitwise_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/image_bitwise_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/image_bitwise_demo_04.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/image_bitwise_demo_05.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/image_bitwise_demo_06.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/image_bitwise_demo_07.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Brightness and contrast adjustments" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/linear_transform_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Image padding" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/padding_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="inRange Thresholding Operations" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/threshold_inrange_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Discrete Fourier Transform" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/dft_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/dft_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/dft_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/dft_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Kaleidoscope" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/kaleidoscope_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/kaleidoscope_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/kaleidoscope_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="imgcodecs: Image File Reading and Writing"&gt;
+      &lt;example name="Image similarity under lossy compression" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/image_similarity_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/image_similarity_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/image_similarity_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Create PNG image with alpha transparency" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/rgba_png_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/rgba_png_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/rgba_png_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="imgproc: Image Processing"&gt;
+      &lt;example name="Demonstration of drawing functions" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/drawing_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/drawing_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/drawing_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/drawing_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/drawing_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/drawing_demo_04.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/drawing_demo_05.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/drawing_demo_06.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/drawing_demo_07.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/drawing_demo_08.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/drawing_demo_09.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Basic Geometric Drawing" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/drawing_basic_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/drawing_basic_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/drawing_basic_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/drawing_basic_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Demonstration of text drawing functions" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/draw_text_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/draw_text_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/draw_text_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Colormaps" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/falsecolor_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Delaunay triangulation" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/delaunay2_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/delaunay2_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/delaunay2_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/delaunay2_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Convex Hull demo" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/hull_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Retrieve and label connected components from a binary image." type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/contours_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/contours_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/contours_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/contours_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/contours_demo_03.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Contours Demo" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/contours2_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/contours2_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/contours2_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/contours2_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Watershed Demo" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/watershed_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Contours in OpenCV" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/contours_hierarchy_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/contours_hierarchy_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/contours_hierarchy_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/contours_hierarchy_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/contours_hierarchy_demo_03.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Finding contours in an image" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/findContours_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Flood-filling in an image" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/ffilldemo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Flood-Fill demo" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/floodfill_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/floodfill_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/floodfill_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/floodfill_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/floodfill_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/floodfill_demo_04.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/floodfill_demo_05.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Image Thresholding" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/thresholding_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Threshold demo" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/threshold_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Smoothing Demo" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/smoothing_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/smoothing_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/smoothing_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/smoothing_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/smoothing_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/smoothing_demo_04.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/smoothing_demo_05.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Smoothing Images" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/gausian_median_blur_bilateral_filter.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Polar Transforms demo" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/polar_transforms_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Erosion and Dilation" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/morphology_demo_gui1.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/morphology_demo_gui1.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/morphology_demo_gui1_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Advanced Morphology Transformations Demo" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/morphology_demo_gui2.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/morphology_demo_gui2.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/morphology_demo_gui2_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Extracting horizontal and vertical lines using morphology" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/morphology_demo_3.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/morphology_demo_3.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/morphology_demo_3_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/morphology_demo_3_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/morphology_demo_3_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/morphology_demo_3_04.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/morphology_demo_3_05.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Hit-or-Miss Morphological Operation" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/hitmiss_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/hitmiss_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/hitmiss_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/hitmiss_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/hitmiss_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/hitmiss_demo_04.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Creating Bounding boxes and circles for contours" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/generalContours_demo1.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/generalContours_demo1.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/generalContours_demo1_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/generalContours_demo1_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/generalContours_demo1_03.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Creating Bounding rotated boxes and ellipses for contours" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/generalContours_demo2.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/generalContours_demo2.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/generalContours_demo2_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/generalContours_demo2_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/generalContours_demo2_03.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Fit ellipses" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/fitellipse_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Robust Line Fitting" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/fitline_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Image Moments" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/moments_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Gabor Filter demo" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/gabor_filter_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Fractalius-like image effect using Gabor filters" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/gabor_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/gabor_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/gabor_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/gabor_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/gabor_demo_03.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Line Segment Detector demo" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/lsd_lines_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Hough line detector" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/hough_lines_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/hough_lines_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/hough_lines_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/hough_lines_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/hough_lines_demo_03.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Hough circle detector" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/hough_circles_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/hough_circles_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/hough_circles_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/hough_circles_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Generalized Hough transform" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/generalized_hough_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/generalized_hough_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/generalized_hough_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/generalized_hough_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/generalized_hough_demo_03.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Interactive foreground extraction using GrabCut" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/grabcut_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Image pyramids for image blending" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/pyramids_blending.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/pyramids_blending.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/pyramids_blending_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/pyramids_blending_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/pyramids_blending_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/pyramids_blending_04.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Laplacian Pyramid Construction and Merging" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/lap_pyr_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Image Warping" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/warp_perspective_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Interactive Perspective Transformation" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/perspective_transform_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Image Alignment using ECC algorithm" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/image_alignment_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/image_alignment_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/image_alignment_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Corner Detection" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/generic_corner_detector_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/generic_corner_detector_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/generic_corner_detector_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/generic_corner_detector_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/generic_corner_detector_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/generic_corner_detector_demo_04.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Refining Corner Locations" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/corner_subpixels_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Template Matching" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/mask_tmpl_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/mask_tmpl_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/mask_tmpl_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/mask_tmpl_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Phase Correlation" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/phase_corr_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Convex Hull" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/convexhull_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/convexhull_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/convexhull_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Minimum Area Enclosing" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/minarea_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/minarea_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/minarea_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Connected Components" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/connected_components_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Canny Edge Detection" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/edge_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Laplacian Edge Detection" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/laplace_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Create Binary Mask Interactively" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/create_mask_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Create Binary Mask Interactively (IPT)" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/create_mask_ipt_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Interactive Rectangle Selection" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/mouse_and_match_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Distance Transform" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/distrans_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Intensity Image Histogram" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/hist_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Histogram Calculation" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/histogram_calculation_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/histogram_calculation_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/histogram_calculation_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/histogram_calculation_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/histogram_calculation_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/histogram_calculation_demo_04.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/histogram_calculation_demo_05.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Histogram Equalization" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/histogram_equalization_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/histogram_equalization_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/histogram_equalization_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Histogram Comparison" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/histogram_comparison_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/histogram_comparison_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/histogram_comparison_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="2D Histogram" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/histogram_2d_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/histogram_2d_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/histogram_2d_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/histogram_2d_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/histogram_2d_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/histogram_2d_demo_04.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Video Histogram" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/color_histogram_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Back Projection" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/backproject_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="CAMShift" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/camshift_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Histogram-based face tracker with CAMShift" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/camshift_track_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="CLAHE (Contrast Limited Adaptive Histogram Equalization)" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/clahe_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Image Remapping" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/remap_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/remap_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/remap_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/remap_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/remap_demo_03.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Fun with remap" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/remap_fun_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/remap_fun_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/remap_fun_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Image Affine Transformation" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/warp_affine_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/warp_affine_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/warp_affine_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/warp_affine_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Image Pyramids" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/pyramids_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Sobel Derivatives" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/sobel_derivatives_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/sobel_derivatives_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/sobel_derivatives_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Laplace Operator" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/laplace_operator_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/laplace_operator_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/laplace_operator_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Point Polygon Test" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/pointPolygonTest_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/pointPolygonTest_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/pointPolygonTest_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Points Inside Convex Polygon" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/points_polygon_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/points_polygon_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/points_polygon_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Image Segmentation with Distance Transform and Watershed Algorithm" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/watershed_segmentation_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Wiener Deconvolution for Image Deblurring" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/weiner_deconvolution_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Texture flow direction estimation" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/texture_flow_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/texture_flow_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/texture_flow_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/texture_flow_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/texture_flow_demo_03.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Coherence-Enhancing Filtering" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/coherence_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Multi-Scale Turing Patterns Generator" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/turing_patterns_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Hi-Resolution Image Navigation" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/hi_res_browse_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/hi_res_browse_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/hi_res_browse_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/hi_res_browse_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Squares Detector" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/squares_detector_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/squares_detector_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/squares_detector_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/squares_detector_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/squares_detector_demo_03.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/squares_detector_demo_04.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/squares_detector_demo_05.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/squares_detector_demo_06.png&lt;/file&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="superres: Super Resolution"&gt;
+      &lt;example name="Super Resolution algorithms for video sequence" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/super_resolution_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="videostab: Video Stabilization"&gt;
+      &lt;example name="Video Stabilizer" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/videostab_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="stitching: Images Stitching"&gt;
+      &lt;example name="Simple rotation model images stitcher" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/stitching_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/stitching_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/stitching_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/stitching_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Rotation model images stitcher" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/stitching_detailed_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/stitching_detailed_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/stitching_detailed_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/stitching_detailed_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="video: Video Analysis"&gt;
+      &lt;example name="Segment objects in Background Subtractor" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/segment_objects_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Tracking of rotating point using Kalman filter" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/kalman_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Dual TV-L1 Optical Flow" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/tvl1_optical_flow_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Farneback Optical Flow" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/fback_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Dense Optical Flow" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/opt_flow_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Sparse Optical Flow" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/lucas_kanade_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Lucas-Kanade Sparse Optical Flow" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/pyrlk_optical_flow_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Lucas-Kanade Optical Flow" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/lk_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Lucas-Kanade Tracker" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/lk_track_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Lucas-Kanade Homography Tracker" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/lk_homography_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="shape: Shape Distance and Matching"&gt;
+      &lt;example name="Shape context for shape matching" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/shape_context_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/shape_context_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/shape_context_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="ml: Machine Learning"&gt;
+      &lt;example name="K-Means Clustering" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/kmeans_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/kmeans_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/kmeans_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/kmeans_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="EM Clustering" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/em_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/em_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/em_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/em_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Gaussian Mixture Model (GMM)" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/gaussian_mix_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/gaussian_mix_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/gaussian_mix_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/gaussian_mix_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/gaussian_mix_demo_03.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="K-Means Color Quantization" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/kmeans_color_quantize_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/kmeans_color_quantize_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/kmeans_color_quantize_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Comparison of different classifiers on the same dataset" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/classification_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Showcase different classifiers" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/ml_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/ml_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/ml_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Logistic Regression" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/logistic_regression_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/logistic_regression_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/logistic_regression_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="Support Vector Machines (SVM)" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/svm_intro_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/svm_intro_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/svm_intro_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/svm_intro_demo_02.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="K-Nearest Neighbors (KNN)" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/knn_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Principal Component Analysis (PCA)" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/pca_intro_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/pca_intro_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/pca_intro_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="PCA for dimensionality reduction" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/pca_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/pca_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/pca_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/pca_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/pca_demo_03.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="SVMSGD Interactive Classification" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/train_svmsgd_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="OCR of hand-written digits using KNN" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/knn_ocr_digits_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/knn_ocr_digits_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/knn_ocr_digits_demo_01.png&lt;/file&gt;
+      &lt;/example&gt;
+      &lt;example name="OCR of English letters using KNN" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/knn_ocr_letters_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="OCR of hand-written digits using HoG and SVM" type="html"&gt;
+         &lt;file type="source"&gt;/samples/html/svm_hog_ocr_digits_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"&gt;/samples/html/svm_hog_ocr_digits_demo.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/svm_hog_ocr_digits_demo_01.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/svm_hog_ocr_digits_demo_02.png&lt;/file&gt;
+         &lt;file type="image"&gt;/samples/html/svm_hog_ocr_digits_demo_03.png&lt;/file&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="line_descriptor: Binary Descriptors for Lines Extracted from an Image"&gt;
+      &lt;example name="Lines features" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/line_extraction_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Line descriptors matching" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/line_matching_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="Line descriptors radius matching" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/line_radius_matching_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="bioinspired: Biologically Inspired Vision Models and Derivated Tools"&gt;
+      &lt;example name="Retina demonstration" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/retina_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+      &lt;example name="OpenEXR images HDR Retina tone mapping" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/retina_hdr_tonemapping_demo_gui.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="text: Scene Text Detection and Recognition"&gt;
+      &lt;example name="Scene Text Detection using CNN" type="html"&gt;
+         &lt;file type="source"&gt;/opencv_contrib/samples/html/textboxes_demo.html&lt;/file&gt;
+         &lt;file type="main"/&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
+&lt;/examples&gt;</param.examples>
+    <param.demosxml />
+    <param.apps />
+    <param.registered.apps />
+    <param.docs>${PROJECT_ROOT}\mexopencv\info.xml</param.docs>
+    <param.getting.started.guide>${PROJECT_ROOT}\mexopencv\doc\GettingStarted.mlx</param.getting.started.guide>
+    <param.matlabpath.excludes />
+    <param.javaclasspath.excludes>
+      <item>/utils/jars/commonmark-java/commonmark-0.15.2.jar</item>
+      <item>/utils/jars/jsoup/jsoup-1.13.1.jar</item>
+    </param.javaclasspath.excludes>
+    <param.exported.on.package>false</param.exported.on.package>
+    <param.required.addons>
+      <requiredaddons />
+    </param.required.addons>
+    <param.matlab.project.id />
+    <param.matlab.project.name />
+    <param.release.start />
+    <param.release.end />
+    <param.release.current.only>false</param.release.current.only>
+    <param.compatiblity.windows>true</param.compatiblity.windows>
+    <param.compatiblity.macos>false</param.compatiblity.macos>
+    <param.compatiblity.linux>false</param.compatiblity.linux>
+    <param.compatiblity.matlabonline>false</param.compatiblity.matlabonline>
+    <param.installation.map />
+    <param.additional.sw.names />
+    <param.additional.sw.licenses />
+    <param.additional.sw.win.url />
+    <param.additional.sw.mac.url />
+    <param.additional.sw.linux.url />
+    <unset>
+      <param.email />
+      <param.company />
+      <param.description />
+      <param.output />
+      <param.products.name />
+      <param.products.id />
+      <param.products.version />
+      <param.platforms />
+      <param.exclude.pcodedmfiles />
+      <param.demosxml />
+      <param.apps />
+      <param.registered.apps />
+      <param.matlabpath.excludes />
+      <param.exported.on.package />
+      <param.matlab.project.id />
+      <param.matlab.project.name />
+      <param.release.current.only />
+      <param.compatiblity.windows />
+      <param.installation.map />
+      <param.additional.sw.names />
+      <param.additional.sw.licenses />
+      <param.additional.sw.win.url />
+      <param.additional.sw.mac.url />
+      <param.additional.sw.linux.url />
+    </unset>
+    <fileset.rootdir>
+      <file>${PROJECT_ROOT}\mexopencv</file>
+    </fileset.rootdir>
+    <fileset.rootfiles>
+      <file>${PROJECT_ROOT}\mexopencv\+cv</file>
+      <file>${PROJECT_ROOT}\mexopencv\+mexopencv</file>
+      <file>${PROJECT_ROOT}\mexopencv\Contents.m</file>
+      <file>${PROJECT_ROOT}\mexopencv\demos.xml</file>
+      <file>${PROJECT_ROOT}\mexopencv\doc</file>
+      <file>${PROJECT_ROOT}\mexopencv\Doxyfile</file>
+      <file>${PROJECT_ROOT}\mexopencv\include</file>
+      <file>${PROJECT_ROOT}\mexopencv\info.xml</file>
+      <file>${PROJECT_ROOT}\mexopencv\LICENSE</file>
+      <file>${PROJECT_ROOT}\mexopencv\Makefile</file>
+      <file>${PROJECT_ROOT}\mexopencv\mexopencv_setup.m</file>
+      <file>${PROJECT_ROOT}\mexopencv\opencv</file>
+      <file>${PROJECT_ROOT}\mexopencv\opencv_contrib</file>
+      <file>${PROJECT_ROOT}\mexopencv\README.markdown</file>
+      <file>${PROJECT_ROOT}\mexopencv\samples</file>
+      <file>${PROJECT_ROOT}\mexopencv\src</file>
+      <file>${PROJECT_ROOT}\mexopencv\test</file>
+      <file>${PROJECT_ROOT}\mexopencv\utils</file>
+    </fileset.rootfiles>
+    <fileset.depfun.included />
+    <fileset.depfun.excluded />
+    <fileset.package />
+    <build-deliverables>
+      <file location="${PROJECT_ROOT}" name="mexopencv.mltbx" optional="false">C:\temp\build_opencv\mexopencv.mltbx</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2020b</root>
+      <toolboxes>
+        <toolbox name="neuralnetwork" />
+      </toolboxes>
+      <toolbox>
+        <neuralnetwork>
+          <enabled>true</enabled>
+        </neuralnetwork>
+      </toolbox>
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>10.0</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>
