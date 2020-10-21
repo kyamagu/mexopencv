@@ -1,8 +1,14 @@
+
+[![License](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg)](LICENSE)
+
+Important Notice
+================
+
+This fork was made in order to compile mexopencv with opencv 3.4.11. There is another
+github project that use this as a submodule to build and package mexopencv for MATLAB.
+
 mexopencv
 =========
-[![Travis](https://img.shields.io/travis/kyamagu/mexopencv/master.svg)][1]
-[![AppVeyor](https://img.shields.io/appveyor/ci/kyamagu/mexopencv/master.svg)][2]
-[![License](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg)](LICENSE)
 
 Collection and development kit of MATLAB MEX functions for OpenCV library.
 
@@ -12,7 +18,7 @@ MATLAB's native data type and OpenCV data types. The package is suitable for
 fast prototyping of OpenCV application in MATLAB, use of OpenCV as an external
 toolbox in MATLAB, and development of custom MEX functions.
 
-The current version of mexopencv is compatible with OpenCV 3.4.1.
+The current version of mexopencv is compatible with OpenCV 3.4.11.
 
 For previous OpenCV 3.x versions, checkout the corresponding tags:
 
@@ -71,7 +77,7 @@ Build
 Prerequisite
 
 - [MATLAB][4] or [Octave][5] (>= 4.0.0)
-- [OpenCV][6] (3.4.1)
+- [OpenCV][6] (3.4.11)
 
 Depending on your platform, you also need the required build tools:
 
@@ -87,7 +93,7 @@ Refer to the [wiki][3] for detailed build instructions.
 OpenCV
 ------
 
-Currently, mexopencv targets the final **3.4.1** stable version of OpenCV. You
+Currently, mexopencv targets the final **3.4.11** stable version of OpenCV. You
 must build it against this exact version, rather than using the bleeding-edge
 dev-version of `opencv` and `opencv_contrib`. UNIX users should consider using
 a package manager to install OpenCV if available.
@@ -96,12 +102,12 @@ a package manager to install OpenCV if available.
 - [OpenCV contributed modules][8]
 
 **DO NOT use the "master" branch of `opencv` and `opencv_contrib`!**
-**Only the 3.4.1 release is supported by mexopencv.**
+**Only the 3.4.11 release is supported by mexopencv.**
 
 Linux
 -----
 
-First make sure you have OpenCV 3.4.1 installed in the system:
+First make sure you have OpenCV 3.4.11 installed in the system:
 
 - if applicable, install OpenCV 3 package available in your package manager
   (e.g., `libopencv-dev` in Debian/Ubuntu, `opencv-devel` in Fedora).

@@ -137,7 +137,11 @@ else  % Windows
                     mex_flags, files(i).src, objs, files(i).dst);
             end
             if opts.verbose > 0, disp(cmd); end
-            if ~opts.dryrun, eval(cmd); end
+            try
+                if ~opts.dryrun, eval(cmd); end
+            catch me
+                warning('Can''t compile %s.\n', files(i).src);
+            end
         else
             if opts.verbose > 0, fprintf('Skipped "%s"\n', files(i).src); end
         end
@@ -268,16 +272,16 @@ function mex_flags = mex_options(opts)
         comp_flags, link_flags, include_dirs(opts), cv_cflags, cv_libs, opts.extra);
 
     % large-array-handling API for 64-bit platforms
-    if ~mexopencv.isOctave()
-        mex_flags = ['-largeArrayDims ' mex_flags];
-    end
+    %if ~mexopencv.isOctave()
+    %    mex_flags = ['-largeArrayDims ' mex_flags];
+    %end
 
     % real/imaginary storage format for complex arrays
     if ~mexopencv.isOctave() && ~verLessThan('matlab', '9.4')
         % keep using the "separate complex storage", as opposed to the
         % "interleaved complex storage" introduced in R2018a
         % (see MX_HAS_INTERLEAVED_COMPLEX)
-        mex_flags = ['-R2017b' mex_flags];
+        mex_flags = ['-R2017b ' mex_flags];
     end
 
     % verbosity
@@ -330,7 +334,10 @@ function [cflags,libs] = pkg_config(opts)
 
     L_path = fullfile(opts.opencv_path, arch_str(), compiler_str(), 'lib');
     if ~isdir(L_path)
-        error('mexopencv:make', 'OpenCV library path not found: %s', L_path);
+        L_path = fullfile(opts.opencv_path, 'lib');
+        if ~isdir(L_path)
+            error('mexopencv:make', 'OpenCV library path not found: %s', L_path);
+        end
     end
 
     l_options = strcat({' -l'}, lib_names(L_path));
@@ -382,6 +389,8 @@ function s = compiler_str()
         elseif strcmp(cc.Manufacturer, 'Microsoft')
             if ~isempty(strfind(cc.Name, 'Visual'))  % Visual Studio
                 switch cc.Version
+                    case '16.0'
+                        s = 'vc16';    % VS2019
                     case '15.0'
                         s = 'vc15';    % VS2017
                     case '14.0'
