@@ -13,8 +13,8 @@ addpath(fullfile(pwd,'opencv_contrib'));
 addpath(fullfile(pwd,'utils'));
 
 % Build
-mexopencv.make('clean', true, 'opencv_path', fullfile(pwd, 'libopencv'), 'opencv_contrib', true);
-mexopencv.make('opencv_path', fullfile(pwd, 'libopencv'), 'opencv_contrib', true);
+mexopencv.make('clean', true, 'opencv_path', fullfile(pwd, 'opencv'), 'opencv_contrib', true);
+mexopencv.make('opencv_path', fullfile(pwd, 'opencv'), 'opencv_contrib', true);
 
 % Documentation
 MDoc('-clean');
