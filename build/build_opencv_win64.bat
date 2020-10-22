@@ -3,12 +3,6 @@ call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxili
 rem call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
 set lib_output=vc16
 
-cd opencv
-git checkout 3.4.12
-cd ..\contrib
-git checkout 3.4.12
-cd ..
-
 if exist dist (
     del /F /S /Q dist
 ) else (

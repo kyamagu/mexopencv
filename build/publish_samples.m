@@ -1,19 +1,20 @@
-%% Go to mexopencv folder
+%% Keep this script in path, then go to mexopencv folder
 addpath(pwd);
 cd ..
+addpath(pwd);
 
 %% Add all dnn networks
 if exist('dnn.zip', 'file')
-    %unzip('dnn.zip', fullfile('mexopencv', 'test'));
+    %unzip('dnn.zip', 'test');
 end
 
 %%
 % No need to add open_contrib because we copied it into +cv
-% addpath(fullfile('mexopencv', 'open_contrib'))
-addpath('mexopencv')
+% addpath(fullfile(pwd, 'open_contrib'))
+addpath(pwd)
 %% Publish samples
-publish_files = dir(fullfile('mexopencv', 'samples', '*.m'));
-addpath(fullfile('mexopencv', 'samples'));
+publish_files = dir(fullfile(pwd, 'samples', '*.m'));
+addpath(fullfile(pwd, 'samples'));
 
 no_compile = {'asift_demo', 'calibration_capture_demo', ...
     'create_mask_ipt_demo', 'dbt_face_detection_demo', ...
@@ -55,11 +56,11 @@ for f_idx = 1:length(publish_files)
     end
 end
 
-rmpath(fullfile('mexopencv', 'samples'));
+rmpath(fullfile(pwd, 'samples'));
 %% Publish opencv_contrib/samples
 
-publish_files = dir(fullfile('mexopencv', 'opencv_contrib', 'samples', '*.m'));
-addpath(fullfile('mexopencv', 'opencv_contrib', 'samples'));
+publish_files = dir(fullfile(pwd, 'opencv_contrib', 'samples', '*.m'));
+addpath(fullfile(pwd, 'opencv_contrib', 'samples'));
 
 no_compile = {'aruco_calibrate_camera_charuco_demo', 'aruco_calibrate_camera_demo', ...
     'aruco_detect_board_charuco_demo', 'aruco_detect_board_demo', ...
@@ -97,10 +98,7 @@ for f_idx = 1:length(publish_files)
     end
 end
 
-rmpath(fullfile('mexopencv', 'opencv_contrib', 'samples'))
-%% Add searchable DB
+rmpath(fullfile(pwd, 'opencv_contrib', 'samples'))
 
-addpath(pwd)
-cd mexopencv
+%% Add searchable DB
 builddocsearchdb(fullfile(pwd, 'doc'));
-cd ..

@@ -1,4 +1,4 @@
-%MEX_BUILD compile opencv bindings for Matlab or octave.
+%MEX_COMPILE compile opencv bindings for Matlab or octave.
 % Tested for win64 build. Mac and Linux use makefile.
 
 % Keep this script in path.
@@ -13,8 +13,8 @@ addpath(fullfile(pwd,'opencv_contrib'));
 addpath(fullfile(pwd,'utils'));
 
 % Build
-mexopencv.make('clean', true, 'opencv_path', fullfile(pwd, 'opencv'), 'opencv_contrib', true);
-mexopencv.make('opencv_path', fullfile(pwd, 'opencv'), 'opencv_contrib', true);
+mexopencv.make('clean', true, 'opencv_path', 'opencv', 'opencv_contrib', true);
+mexopencv.make('opencv_path', 'opencv', 'opencv_contrib', true);
 
 % Documentation
 MDoc('-clean');
