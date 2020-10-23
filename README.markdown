@@ -1,11 +1,50 @@
 
 [![License](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg)](LICENSE)
 
-Important Notice
-================
+mexopencv
+=========
 
-This fork was made in order to compile mexopencv with opencv 3.4.11. There is another
-github project that use this as a submodule to build and package mexopencv for MATLAB.
+About this fork
+---------------
+
+This fork was made in order to compile mexopencv with opencv 3.4.12.
+
+Compilation
+-----------
+
+Three steps:
+
+* Build OpenCV
+* Build Mexopencv
+* Packaging
+
+1. Opencv
+
+For MacOSX:
+
+    cd build
+    ./build_opencv_macos.sh
+
+For Windows 10:
+
+    cd build
+    .\build_opencv_win64.bat
+
+In either case the result will be in ./dist
+
+2. Compiling Mexopencv
+
+For MacOSX:
+
+    ./build_mex_macos.sh
+
+For Windows 10:
+
+    .\build_mex_win64.bat
+
+3. Packaging the toolbox
+
+In MATLAB, double-click on mexopencv_mac64.prj or mexopencv_win64.prj.
 
 mexopencv
 =========
